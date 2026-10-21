@@ -3,6 +3,7 @@ import { expect } from 'earl'
 import { type FlatEntry, FlatWorkspace } from './FlatWorkspace'
 import { listCalls } from './listCalls'
 import { resolveDefinition } from './resolveDefinition'
+import { visibleMembers } from './scope'
 
 const EDGE = `address constant TARGET = 0x2222222222222222222222222222222222222222;
 
@@ -361,8 +362,12 @@ describe(`${resolveDefinition.name} edge cases`, () => {
       `twice:${declaredAt('function twice(uint256 a, uint256 b)')}`,
     ])
     expect(
-      workspace.source('/p/.flat/Edge.sol').findFunctions('Edge', 'pick', 1)
-        .length,
+      visibleMembers(
+        workspace.source('/p/.flat/Edge.sol'),
+        'Edge',
+        'pick',
+        'Edge',
+      ).length,
     ).toEqual(2)
   })
 

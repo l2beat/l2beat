@@ -2,40 +2,47 @@ import { assert } from '@l2beat/shared-pure'
 import type {
   BaseASTNode,
   BinaryOperation,
-  CatchClause,
+  Block,
   ContractDefinition,
   Expression,
+  FileLevelConstant,
+  ForStatement,
   FunctionCall,
   FunctionDefinition,
   Identifier,
+  MemberAccess,
   ModifierDefinition,
-  TryStatement,
+  ModifierInvocation,
+  StateVariableDeclarationVariable,
   TupleExpression,
   UnaryOperation,
+  UsingForDeclaration,
   VariableDeclaration,
   VariableDeclarationStatement,
 } from '@mradomski/fast-solidity-parser'
-import { childrenOf, parameterSignature, type SourceIndex } from './SourceIndex'
+import {
+  childrenOf,
+  declarationName,
+  type Member,
+  type SourceIndex,
+  signatureOf,
+  typeKey,
+} from './SourceIndex'
 
 export interface Scope {
   index: SourceIndex
+  ancestors: BaseASTNode[]
   contract: string | undefined
   callable: FunctionDefinition | ModifierDefinition | undefined
   offset: number
 }
 
-export type Declaration =
-  | {
-      kind: 'variable'
-      node: VariableDeclaration
-      isState: boolean
-      initialValue: Expression | null
-    }
-  | { kind: 'functions'; nodes: FunctionDefinition[] }
-  | { kind: 'contract'; node: ContractDefinition }
-  // Same-arity overloads of an event or error.
-  | { kind: 'overloads'; nodes: BaseASTNode[]; name: string }
-  | { kind: 'other'; node: BaseASTNode; name: string }
+// What a name stands for, and for a variable the expression it is known to
+// hold, if any.
+export interface Binding {
+  node: BaseASTNode
+  value: Expression | null
+}
 
 export function scopeAt(
   index: SourceIndex,
@@ -48,214 +55,282 @@ export function scopeAt(
     if (node.type === 'ContractDefinition') {
       contract = (node as ContractDefinition).name
     }
-    if (node.type === 'FunctionDefinition') {
-      callable = node as FunctionDefinition
-    }
-    if (node.type === 'ModifierDefinition') {
-      callable = node as ModifierDefinition
+    if (
+      node.type === 'FunctionDefinition' ||
+      node.type === 'ModifierDefinition'
+    ) {
+      callable = node as FunctionDefinition | ModifierDefinition
     }
   }
-  return { index, contract, callable, offset }
+  return { index, ancestors, contract, callable, offset }
 }
 
-export function resolveName(
-  scope: Scope,
-  name: string,
-  arity: number | undefined,
-): Declaration | undefined {
+export function lookupName(scope: Scope, name: string): Binding[] {
   const local = findLocal(scope, name)
   if (local !== undefined) {
-    return local
+    return [local]
   }
   const { index, contract } = scope
   if (contract !== undefined) {
-    const variable = index.findStateVariable(contract, name)
-    if (variable !== undefined) {
-      return {
-        kind: 'variable',
-        node: variable,
-        isState: true,
-        initialValue:
-          variable.isDeclaredConst || variable.isImmutable
-            ? variable.expression
-            : null,
-      }
-    }
-    const privateFunctions = ownPrivateFunctions(index, contract, name, arity)
-    const privateSignatures = privateFunctions.map(parameterSignature)
-    const dispatch = index.dispatchContract(contract)
-    const functions = [
-      ...privateFunctions,
-      ...index
-        .findFunctions(dispatch, name, arity)
-        .filter((fn) => !privateSignatures.includes(parameterSignature(fn))),
-    ]
-    if (functions.length > 0) {
-      return { kind: 'functions', nodes: functions }
-    }
-    const members = index.findMembers(contract, name, arity)
-    if (members.length > 1) {
-      return { kind: 'overloads', nodes: members, name }
-    }
-    const member = members[0] ?? index.findMember(contract, name)
-    if (member !== undefined) {
-      return { kind: 'other', node: member, name }
+    const members = visibleMembers(index, contract, name, contract)
+    if (members.length > 0) {
+      return members.map((member) => ({
+        node: dispatched(index, contract, member),
+        value: constantValue(member.node),
+      }))
     }
   }
-  const freeFunctions = index.findFreeFunctions(name, arity)
-  if (freeFunctions.length > 0) {
-    return { kind: 'functions', nodes: freeFunctions }
-  }
-  const topLevel = index.findTopLevel(name)
-  if (topLevel?.type === 'ContractDefinition') {
-    return { kind: 'contract', node: topLevel as ContractDefinition }
-  }
-  if (topLevel !== undefined) {
-    return { kind: 'other', node: topLevel, name }
-  }
-  return undefined
+  return (index.topLevel.get(name) ?? []).map((node) => ({
+    node,
+    value: constantValue(node),
+  }))
 }
 
-// `try f() returns (bytes32 slot) { ... } catch Error(string memory reason) { ... }`
-// declares variables that are visible only inside their own block.
-function clauseParameter(
-  node: BaseASTNode,
-  name: string,
-  offset: number,
-): VariableDeclaration | undefined {
-  if (node.type === 'TryStatement') {
-    const statement = node as TryStatement
-    if (encloses(statement.body, offset)) {
-      return statement.returnParameters?.find((p) => p.name === name)
-    }
-  }
-  if (node.type === 'CatchClause') {
-    const clause = node as CatchClause
-    if (encloses(clause.body, offset)) {
-      return clause.parameters?.find((p) => p.name === name)
-    }
-  }
-  return undefined
-}
-
-const BLOCKS = ['Block', 'ForStatement', 'UncheckedStatement']
-
-function encloses(node: BaseASTNode, offset: number): boolean {
-  const range = node.range
-  return range !== undefined && range[0] <= offset && offset <= range[1]
-}
-
-function findLocal(scope: Scope, name: string): Declaration | undefined {
-  const { callable, offset } = scope
-  if (callable === undefined) {
-    return undefined
-  }
-  let found: Declaration | undefined
-  let foundStart = -1
-  const stack: BaseASTNode[] = callable.body ? [callable.body] : []
-  while (stack.length > 0) {
-    const node = stack.pop()
-    if (node === undefined || (node.range?.[0] ?? 0) > offset) {
-      continue
-    }
-    // A block the cursor is not in has ended, and so have its locals.
-    if (BLOCKS.includes(node.type) && !encloses(node, offset)) {
-      continue
-    }
-    if (node.type === 'VariableDeclarationStatement') {
-      const statement = node as VariableDeclarationStatement
-      const variables = statement.variables as (VariableDeclaration | null)[]
-      const variable = variables.find((v) => v?.name === name)
-      const start = statement.range?.[0] ?? 0
-      if (variable && start < offset && start > foundStart) {
-        // A later write may reach the use instead of the initializer.
-        const initialValue =
-          variables.length === 1 && !isAssigned(callable, name)
-            ? statement.initialValue
-            : null
-        found = {
-          kind: 'variable',
-          node: variable,
-          isState: false,
-          initialValue,
-        }
-        foundStart = start
-      }
-    }
-    const clauseVariable = clauseParameter(node, name, offset)
-    const start = node.range?.[0] ?? 0
-    if (clauseVariable !== undefined && start > foundStart) {
-      found = {
-        kind: 'variable',
-        node: clauseVariable,
-        isState: false,
-        initialValue: null,
-      }
-      foundStart = start
-    }
-    stack.push(...childrenOf(node))
-  }
-  if (found !== undefined) {
-    return found
-  }
-  const parameters = [
-    ...(callable.parameters ?? []),
-    ...('returnParameters' in callable
-      ? (callable.returnParameters ?? [])
-      : []),
-  ]
-  const parameter = parameters.find((p) => p.name === name)
-  if (parameter !== undefined) {
-    return {
-      kind: 'variable',
-      node: parameter,
-      isState: false,
-      initialValue: null,
-    }
-  }
-  return undefined
-}
-
-// Private functions are bound statically, a derived contract cannot override
-// them.
-function ownPrivateFunctions(
+// An override or redeclaration hides what it replaces, an implementation
+// hides a bodyless declaration, and a private member is seen only by the
+// contract declaring it.
+export function visibleMembers(
   index: SourceIndex,
   contract: string,
   name: string,
-  arity: number | undefined,
+  from: string | undefined,
+): Member[] {
+  const bySignature = new Map<string, Member>()
+  for (const member of index.named(contract, name)) {
+    if (isPrivate(member.node) && member.owner !== from) {
+      continue
+    }
+    const key = `${kindOf(member.node)} ${signatureOf(member.node)}`
+    const found = bySignature.get(key)
+    if (
+      found === undefined ||
+      (lacksBody(found.node) && !lacksBody(member.node))
+    ) {
+      bySignature.set(key, member)
+    }
+  }
+  return [...bySignature.values()]
+}
+
+// A public state variable's getter implements a function of an interface.
+function kindOf(node: BaseASTNode): string {
+  const isState = (node as VariableDeclaration).isStateVar
+  return node.type === 'VariableDeclaration' && isState
+    ? 'FunctionDefinition'
+    : node.type
+}
+
+export function lacksBody(node: BaseASTNode): boolean {
+  return (node as { body?: unknown }).body === null
+}
+
+function isPrivate(node: BaseASTNode): boolean {
+  return (node as { visibility?: string }).visibility === 'private'
+}
+
+// Private functions bind statically, everything else virtual runs the
+// override of the deployed contract.
+function dispatched(
+  index: SourceIndex,
+  contract: string,
+  member: Member,
+): BaseASTNode {
+  const { node } = member
+  const main = index.dispatchContract(contract)
+  const isVirtual =
+    node.type === 'FunctionDefinition' || node.type === 'ModifierDefinition'
+  if (!isVirtual || isPrivate(node) || main === contract) {
+    return node
+  }
+  const signature = signatureOf(node)
+  const override = visibleMembers(
+    index,
+    main,
+    declarationName(node) ?? '',
+    main,
+  )
+    .map((m) => m.node)
+    .find((m) => kindOf(m) === kindOf(node) && signatureOf(m) === signature)
+  return override ?? node
+}
+
+// Only constants and immutables keep the value they are declared with.
+function constantValue(node: BaseASTNode): Expression | null {
+  if (node.type === 'FileLevelConstant') {
+    return (node as FileLevelConstant).initialValue
+  }
+  const variable = node as StateVariableDeclarationVariable
+  if (node.type === 'VariableDeclaration' && variable.isStateVar) {
+    const fixed = variable.isDeclaredConst || variable.isImmutable
+    return fixed ? variable.expression : null
+  }
+  return null
+}
+
+// Since 0.7 a contract does not inherit using directives, before it did.
+// Code that compiles finds the function among its own directives first.
+export function boundFunctions(
+  index: SourceIndex,
+  contract: string,
+  receiverType: string | undefined,
+  name: string,
 ): FunctionDefinition[] {
-  const members = index.contracts.get(contract)?.node.subNodes ?? []
-  return members.filter((node): node is FunctionDefinition => {
-    const fn = node as FunctionDefinition
-    return (
-      node.type === 'FunctionDefinition' &&
-      fn.name === name &&
-      fn.visibility === 'private' &&
-      (arity === undefined || fn.parameters.length === arity)
+  const linearization = index.contracts.get(contract)?.linearization ?? []
+  const subNodes = (owner: string) =>
+    index.contracts.get(owner)?.node.subNodes ?? []
+  const own = [...childrenOf(index.root), ...subNodes(contract)]
+  for (const nodes of [own, linearization.flatMap(subNodes)]) {
+    const found = nodes.flatMap((node) =>
+      functionsBoundBy(index, node, receiverType, name),
+    )
+    if (found.length > 0) {
+      return [...new Set(found)]
+    }
+  }
+  return []
+}
+
+function functionsBoundBy(
+  index: SourceIndex,
+  node: BaseASTNode,
+  receiverType: string | undefined,
+  name: string,
+): FunctionDefinition[] {
+  if (node.type !== 'UsingForDeclaration') {
+    return []
+  }
+  const using = node as UsingForDeclaration
+  const type = typeKey(using.typeName)
+  if (
+    type !== undefined &&
+    receiverType !== undefined &&
+    type !== receiverType
+  ) {
+    return []
+  }
+  // `using {L.f, g} for T` binds single functions instead of a library.
+  const paths = using.libraryName
+    ? [`${using.libraryName}.${name}`]
+    : using.functions
+  return paths.flatMap((path) => {
+    const dot = path.lastIndexOf('.')
+    if (path.slice(dot + 1) !== name) {
+      return []
+    }
+    const nodes =
+      dot === -1
+        ? (index.topLevel.get(name) ?? [])
+        : visibleMembers(index, path.slice(0, dot), name, undefined).map(
+            (m) => m.node,
+          )
+    return nodes.filter(
+      (n): n is FunctionDefinition => n.type === 'FunctionDefinition',
     )
   })
 }
 
-const writtenDuringCall = new WeakMap<BaseASTNode, Set<string>>()
+// Walking out from the cursor, the nearest declaration wins: an earlier
+// statement of an enclosing block, a for loop's initializer, the variables of
+// the try or catch clause the cursor is in, then the parameters.
+function findLocal(scope: Scope, name: string): Binding | undefined {
+  const { ancestors, callable } = scope
+  for (let i = ancestors.length - 1; i >= 0; i--) {
+    const node = ancestors[i]
+    assert(node !== undefined)
+    const found = localIn(scope, node, name)
+    if (found !== undefined || node === callable) {
+      return found
+    }
+  }
+  return undefined
+}
 
-// Applied modifiers and the internal functions it calls run in the same call,
-// so their writes count too.
-export function isWrittenInCall(scope: Scope, name: string): boolean {
-  const callable = scope.callable
+function localIn(
+  scope: Scope,
+  node: BaseASTNode,
+  name: string,
+): Binding | undefined {
+  let variables: (VariableDeclaration | null)[] | null | undefined
+  switch (node.type) {
+    case 'Block': {
+      let found: Binding | undefined
+      for (const statement of (node as Block).statements) {
+        if ((statement.range?.[0] ?? 0) < scope.offset) {
+          found = declaredBy(scope, statement, name) ?? found
+        }
+      }
+      return found
+    }
+    case 'ForStatement':
+      return declaredBy(scope, (node as ForStatement).initExpression, name)
+    case 'TryStatement':
+    case 'CatchClause': {
+      const clause = node as unknown as {
+        body: BaseASTNode
+        returnParameters?: VariableDeclaration[] | null
+        parameters?: VariableDeclaration[] | null
+      }
+      const range = clause.body.range
+      const inBody =
+        range && range[0] <= scope.offset && scope.offset <= range[1]
+      variables = inBody ? (clause.returnParameters ?? clause.parameters) : null
+      break
+    }
+    case 'FunctionDefinition':
+    case 'ModifierDefinition': {
+      const callable = node as FunctionDefinition
+      variables = [
+        ...(callable.parameters ?? []),
+        ...(callable.returnParameters ?? []),
+      ]
+      break
+    }
+  }
+  const variable = variables?.find((v) => v?.name === name)
+  return variable ? { node: variable, value: null } : undefined
+}
+
+function declaredBy(
+  scope: Scope,
+  statement: BaseASTNode | null,
+  name: string,
+): Binding | undefined {
+  if (statement?.type !== 'VariableDeclarationStatement') {
+    return undefined
+  }
+  const declaration = statement as VariableDeclarationStatement
+  const variables = declaration.variables as (VariableDeclaration | null)[]
+  const variable = variables.find((v) => v?.name === name)
+  if (!variable) {
+    return undefined
+  }
+  // A later write may reach the use instead of the initializer.
+  const single = variables.length === 1 && !isWrittenDuring(scope, name)
+  return { node: variable, value: single ? declaration.initialValue : null }
+}
+
+const writtenCache = new WeakMap<BaseASTNode, Set<string>>()
+
+// Within one call, what the callable, its modifiers and whatever they call
+// write may change a value before it is read. Callees are matched by name,
+// which can only make the answer more cautious.
+export function isWrittenDuring(scope: Scope, name: string): boolean {
+  const { index, contract, callable } = scope
   if (callable === undefined) {
     return false
   }
-  let names = writtenDuringCall.get(callable)
+  let names = writtenCache.get(callable)
   if (names === undefined) {
-    names = namesWrittenDuring(scope, callable)
-    writtenDuringCall.set(callable, names)
+    names = namesWritten(index, contract, callable)
+    writtenCache.set(callable, names)
   }
   return names.has(name)
 }
 
-function namesWrittenDuring(
-  scope: Scope,
-  callable: FunctionDefinition | ModifierDefinition,
+function namesWritten(
+  index: SourceIndex,
+  contract: string | undefined,
+  callable: BaseASTNode,
 ): Set<string> {
   const names = new Set<string>()
   const visited = new Set<BaseASTNode>()
@@ -267,18 +342,16 @@ function namesWrittenDuring(
       continue
     }
     visited.add(current)
-    if (current.type === 'FunctionDefinition') {
-      callables.push(...appliedModifiers(scope, current))
-    }
-    const nodes: BaseASTNode[] = current.body ? [current.body] : []
+    const nodes = [current]
     while (nodes.length > 0) {
       const node = nodes.pop()
       assert(node !== undefined)
       for (const written of writtenNames(node)) {
         names.add(written)
       }
-      if (node.type === 'FunctionCall') {
-        callables.push(...internalCallees(scope, node as FunctionCall))
+      const callee = calleeName(node)
+      if (callee !== undefined) {
+        callables.push(...callablesNamed(index, contract, callee))
       }
       nodes.push(...childrenOf(node))
     }
@@ -286,66 +359,52 @@ function namesWrittenDuring(
   return names
 }
 
-function internalCallees(
-  scope: Scope,
-  call: FunctionCall,
-): FunctionDefinition[] {
-  if (call.expression.type !== 'Identifier') {
-    return []
+function calleeName(node: BaseASTNode): string | undefined {
+  if (node.type === 'ModifierInvocation') {
+    return (node as ModifierInvocation).name
   }
-  const name = (call.expression as Identifier).name
-  const declaration = resolveName(scope, name, call.arguments.length)
-  return declaration?.kind === 'functions'
-    ? declaration.nodes.filter((fn) => fn.body !== null)
-    : []
+  if (node.type !== 'FunctionCall') {
+    return undefined
+  }
+  const callee = (node as FunctionCall).expression
+  if (callee.type === 'Identifier') {
+    return (callee as Identifier).name
+  }
+  const access = callee as MemberAccess
+  const base = access.expression as Identifier | undefined
+  const isSelf = base?.name === 'this' || base?.name === 'super'
+  return callee.type === 'MemberAccess' && isSelf
+    ? access.memberName
+    : undefined
 }
 
-function appliedModifiers(
-  scope: Scope,
-  fn: FunctionDefinition,
-): ModifierDefinition[] {
-  return fn.modifiers.flatMap((invocation) => {
-    const declaration = resolveName(scope, invocation.name, undefined)
-    return declaration?.kind === 'other' &&
-      declaration.node.type === 'ModifierDefinition'
-      ? [declaration.node as ModifierDefinition]
-      : []
-  })
-}
-
-function isAssigned(
-  callable: FunctionDefinition | ModifierDefinition,
+function callablesNamed(
+  index: SourceIndex,
+  contract: string | undefined,
   name: string,
-): boolean {
-  const stack: BaseASTNode[] = callable.body ? [callable.body] : []
-  while (stack.length > 0) {
-    const node = stack.pop()
-    assert(node !== undefined)
-    if (writtenNames(node).includes(name)) {
-      return true
-    }
-    stack.push(...childrenOf(node))
-  }
-  return false
+): BaseASTNode[] {
+  const members = contract
+    ? index.named(index.dispatchContract(contract), name).map((m) => m.node)
+    : []
+  return [...members, ...(index.topLevel.get(name) ?? [])].filter(
+    (node) =>
+      node.type === 'FunctionDefinition' || node.type === 'ModifierDefinition',
+  )
 }
 
 function writtenNames(node: BaseASTNode): string[] {
+  let target: BaseASTNode | undefined
   if (node.type === 'BinaryOperation') {
     const operation = node as BinaryOperation
-    return operation.operator === '=' ? targetNames(operation.left) : []
+    target = operation.operator === '=' ? operation.left : undefined
   }
   if (node.type === 'UnaryOperation') {
     const operation = node as UnaryOperation
-    return operation.operator === 'delete'
-      ? targetNames(operation.subExpression)
-      : []
+    target =
+      operation.operator === 'delete' ? operation.subExpression : undefined
   }
-  return []
-}
-
-function targetNames(target: BaseASTNode): string[] {
   const targets =
-    target.type === 'TupleExpression'
+    target?.type === 'TupleExpression'
       ? (target as TupleExpression).components
       : [target]
   return targets.flatMap((t) =>

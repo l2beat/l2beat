@@ -29,7 +29,6 @@ export function listCalls(
     workspace,
     entry,
     functionName,
-    undefined,
     'in-file',
     'all',
   ).filter((d) => d.declaration.type === 'FunctionDefinition')

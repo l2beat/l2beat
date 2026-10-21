@@ -4,12 +4,11 @@ import {
   type BaseASTNode,
   type ContractDefinition,
   type ElementaryTypeName,
-  type FunctionDefinition,
+  type Mapping,
   parse,
-  type StateVariableDeclarationVariable,
+  type StateVariableDeclaration,
   type TypeName,
   type UserDefinedTypeName,
-  type UsingForDeclaration,
   type VariableDeclaration,
 } from '@mradomski/fast-solidity-parser'
 
@@ -18,15 +17,21 @@ export interface TextPosition {
   column: number
 }
 
+export interface Member {
+  node: BaseASTNode
+  owner: string
+}
+
 export interface ContractInfo {
   node: ContractDefinition
   linearization: string[]
+  own: Map<string, BaseASTNode[]>
 }
 
 export class SourceIndex {
   readonly root: BaseASTNode
   readonly contracts = new Map<string, ContractInfo>()
-  readonly topLevel: BaseASTNode[]
+  readonly topLevel = new Map<string, BaseASTNode[]>()
   readonly mainContract: ContractInfo | undefined
   private readonly lineStarts: number[]
 
@@ -36,156 +41,71 @@ export class SourceIndex {
   ) {
     const unit = parse(text, { range: true })
     this.root = unit
-    this.topLevel = unit.children
+    let main: ContractInfo | undefined
     for (const child of unit.children) {
+      addNamed(this.topLevel, child)
       if (child.type !== 'ContractDefinition') {
         continue
       }
-      const bases = child.baseContracts.map((b) => b.baseName.namePath)
-      const linearization = linearize(child.name, bases, this.contracts)
-      this.contracts.set(child.name, { node: child, linearization })
+      const node = child as ContractDefinition
+      const bases = node.baseContracts.map((b) => b.baseName.namePath)
+      const own = new Map<string, BaseASTNode[]>()
+      for (const member of node.subNodes) {
+        addNamed(own, member)
+      }
+      const linearization = linearize(node.name, bases, this.contracts)
+      main = { node, linearization, own }
+      this.contracts.set(node.name, main)
     }
-    this.mainContract = findMainContract(unit.children, this.contracts)
+    // The flattener emits the deployed contract after everything it uses.
+    this.mainContract = main
     this.lineStarts = computeLineStarts(text)
   }
 
-  members(contractName: string): BaseASTNode[] {
-    const contract = this.contracts.get(contractName)
-    if (contract === undefined) {
-      return []
-    }
-    return contract.linearization.flatMap(
-      (name) => this.contracts.get(name)?.node.subNodes ?? [],
+  // Every member with this name, most derived first.
+  named(contract: string, name: string): Member[] {
+    const linearization = this.contracts.get(contract)?.linearization ?? []
+    return linearization.flatMap((owner) =>
+      (this.contracts.get(owner)?.own.get(name) ?? []).map((node) => ({
+        node,
+        owner,
+      })),
     )
   }
 
-  findFunctions(
-    contractName: string,
-    name: string,
-    arity: number | undefined,
-  ): FunctionDefinition[] {
-    // Most derived first, so overrides hide what they override, and an
-    // implementation hides a bodyless declaration listed before it.
-    const bySignature = new Map<string, FunctionDefinition>()
-    for (const member of this.members(contractName)) {
-      if (member.type !== 'FunctionDefinition') {
-        continue
-      }
-      const fn = member as FunctionDefinition
-      const fnArity = fn.parameters.length
-      if (fn.name !== name || (arity !== undefined && fnArity !== arity)) {
-        continue
-      }
-      const signature = parameterSignature(fn)
-      const found = bySignature.get(signature)
-      if (found === undefined || (found.body === null && fn.body !== null)) {
-        bySignature.set(signature, fn)
-      }
-    }
-    return [...bySignature.values()]
-  }
-
   // Inside a base contract, virtual calls land in the deployed contract.
-  dispatchContract(contractName: string): string {
+  dispatchContract(contract: string): string {
     const main = this.mainContract
-    if (main?.linearization.includes(contractName)) {
-      return main.node.name
+    return main?.linearization.includes(contract) ? main.node.name : contract
+  }
+
+  findType(namePath: string, contract: string | undefined) {
+    const dot = namePath.lastIndexOf('.')
+    if (dot !== -1) {
+      return this.named(namePath.slice(0, dot), namePath.slice(dot + 1))[0]
+        ?.node
     }
-    return contractName
-  }
-
-  // A base's private variable is invisible to the contracts deriving from it.
-  findStateVariable(
-    contractName: string,
-    name: string,
-  ): StateVariableDeclarationVariable | undefined {
-    const linearization = this.contracts.get(contractName)?.linearization ?? []
-    for (const owner of linearization) {
-      for (const member of this.contracts.get(owner)?.node.subNodes ?? []) {
-        if (member.type !== 'StateVariableDeclaration') {
-          continue
-        }
-        const declaration = member as unknown as {
-          variables: StateVariableDeclarationVariable[]
-        }
-        const variable = declaration.variables.find((v) => v.name === name)
-        if (variable === undefined) {
-          continue
-        }
-        if (variable.visibility !== 'private' || owner === contractName) {
-          return variable
-        }
-      }
-    }
-    return undefined
-  }
-
-  findMember(
-    contractName: string,
-    name: string,
-    arity?: number,
-  ): BaseASTNode | undefined {
-    return this.findMembers(contractName, name, arity)[0]
-  }
-
-  // A redeclared event or an overriding modifier hides the base one.
-  findMembers(
-    contractName: string,
-    name: string,
-    arity: number | undefined,
-  ): BaseASTNode[] {
-    const signatures = new Set<string>()
-    return this.members(contractName).filter((member) => {
-      if (declarationName(member) !== name) {
-        return false
-      }
-      const parameters =
-        (member as { parameters?: VariableDeclaration[] | null }).parameters ??
-        []
-      if (arity !== undefined && parameters.length !== arity) {
-        return false
-      }
-      const signature = parameters.map((p) => typeKey(p.typeName)).join()
-      if (signatures.has(signature)) {
-        return false
-      }
-      signatures.add(signature)
-      return true
-    })
+    const seen = contract ? this.named(contract, namePath)[0]?.node : undefined
+    return (
+      seen ??
+      this.topLevel.get(namePath)?.[0] ??
+      [...this.contracts.values()]
+        .map((info) => info.own.get(namePath)?.[0])
+        .find((node) => node !== undefined)
+    )
   }
 
   contractOf(node: BaseASTNode): string | undefined {
     const start = node.range?.[0] ?? -1
     for (const [name, contract] of this.contracts) {
       const range = contract.node.range
-      if (
-        contract.node !== node &&
-        range &&
-        range[0] <= start &&
-        start <= range[1]
-      ) {
-        return name
+      if (contract.node !== node && range && range[0] <= start) {
+        if (start <= range[1]) {
+          return name
+        }
       }
     }
     return undefined
-  }
-
-  findTopLevel(name: string): BaseASTNode | undefined {
-    return this.topLevel.find((child) => declarationName(child) === name)
-  }
-
-  findType(namePath: string, contract: string | undefined) {
-    const dot = namePath.lastIndexOf('.')
-    if (dot !== -1) {
-      return this.findMember(namePath.slice(0, dot), namePath.slice(dot + 1))
-    }
-    return (
-      (contract ? this.findMember(contract, namePath) : undefined) ??
-      this.findTopLevel(namePath) ??
-      [...this.contracts.keys()]
-        .map((name) => this.findMember(name, namePath))
-        .find((node) => node !== undefined)
-    )
   }
 
   pathAt(offset: number): BaseASTNode[] {
@@ -198,80 +118,6 @@ export class SourceIndex {
       }
     }
     return path
-  }
-
-  // Since 0.7 a contract does not inherit using directives, before it did.
-  // Code that compiles finds the function among its own directives first.
-  boundFunctions(
-    contractName: string,
-    receiverType: string | undefined,
-    name: string,
-    arity: number | undefined,
-  ): FunctionDefinition[] {
-    const own = this.contracts.get(contractName)?.node.subNodes ?? []
-    const found = this.functionsBoundBy(
-      [...this.topLevel, ...own],
-      receiverType,
-      name,
-      arity,
-    )
-    if (found.length > 0) {
-      return found
-    }
-    return this.functionsBoundBy(
-      this.members(contractName),
-      receiverType,
-      name,
-      arity,
-    )
-  }
-
-  private functionsBoundBy(
-    nodes: BaseASTNode[],
-    receiverType: string | undefined,
-    name: string,
-    arity: number | undefined,
-  ): FunctionDefinition[] {
-    const bindings = usingForBindings(nodes).filter(
-      (b) =>
-        b.type === undefined ||
-        receiverType === undefined ||
-        b.type === receiverType,
-    )
-    const boundArity = arity === undefined ? undefined : arity + 1
-    const found = new Set<FunctionDefinition>()
-    for (const binding of bindings) {
-      const fromLibrary = binding.library
-        ? this.findFunctions(binding.library, name, boundArity)
-        : []
-      const listed = binding.functions.flatMap((path) => {
-        const dot = path.lastIndexOf('.')
-        if (path.slice(dot + 1) !== name) {
-          return []
-        }
-        return dot === -1
-          ? this.findFreeFunctions(name, boundArity)
-          : this.findFunctions(path.slice(0, dot), name, boundArity)
-      })
-      for (const fn of [...fromLibrary, ...listed]) {
-        found.add(fn)
-      }
-    }
-    return [...found]
-  }
-
-  findFreeFunctions(
-    name: string,
-    arity: number | undefined,
-  ): FunctionDefinition[] {
-    return this.topLevel.filter((node): node is FunctionDefinition => {
-      const fn = node as FunctionDefinition
-      return (
-        node.type === 'FunctionDefinition' &&
-        fn.name === name &&
-        (arity === undefined || fn.parameters.length === arity)
-      )
-    })
   }
 
   positionOf(offset: number): TextPosition {
@@ -302,8 +148,12 @@ export class SourceIndex {
     return offset
   }
 
-  // The first whole word after the keyword, whatever whitespace is between.
+  // Where the declared name is, whatever whitespace follows the keyword.
   nameOffset(node: BaseASTNode, name: string): number {
+    const identifier = (node as VariableDeclaration).identifier
+    if (node.type === 'VariableDeclaration' && identifier?.range) {
+      return identifier.range[0]
+    }
     assert(node.range !== undefined)
     const text = this.text.slice(node.range[0], node.range[1] + 1)
     const [first] = wordOccurrences(text, name)
@@ -311,13 +161,41 @@ export class SourceIndex {
   }
 }
 
-export interface UsingFor {
-  library: string | undefined
-  // `using {L.f, g} for T` binds single functions instead of a library.
-  functions: string[]
-  // Undefined for `using L for *`.
-  type: string | undefined
+function addNamed(map: Map<string, BaseASTNode[]>, node: BaseASTNode) {
+  const named =
+    node.type === 'StateVariableDeclaration'
+      ? (node as StateVariableDeclaration).variables
+      : [node]
+  for (const declaration of named) {
+    const name =
+      declaration.type === 'VariableDeclaration'
+        ? (declaration as VariableDeclaration).name
+        : declarationName(declaration)
+    if (name) {
+      map.set(name, [...(map.get(name) ?? []), declaration])
+    }
+  }
 }
+
+export function declarationName(node: BaseASTNode): string | undefined {
+  if (!NAMED_DECLARATIONS.includes(node.type)) {
+    return undefined
+  }
+  return (node as unknown as { name: string | null }).name ?? undefined
+}
+
+const NAMED_DECLARATIONS = [
+  'ContractDefinition',
+  'FunctionDefinition',
+  'ModifierDefinition',
+  'EventDefinition',
+  'CustomErrorDefinition',
+  'StructDefinition',
+  'EnumDefinition',
+  'EnumValue',
+  'TypeDefinition',
+  'FileLevelConstant',
+]
 
 export function typeKey(type: TypeName | null | undefined): string | undefined {
   switch (type?.type) {
@@ -349,78 +227,31 @@ const ELEMENTARY_ALIASES: Record<string, string> = {
   byte: 'bytes1',
 }
 
-export const NUMBER_LITERAL = 'number literal'
-
-// Named arguments are all of them or, for a bound library call, all but the
-// receiver.
-export interface CallArguments {
-  keys: (string | undefined)[]
-  names: string[]
+export function parametersOf(node: BaseASTNode): VariableDeclaration[] {
+  return (
+    (node as { parameters?: VariableDeclaration[] | null }).parameters ?? []
+  )
 }
 
-export function acceptsArguments(
-  node: BaseASTNode,
-  args: CallArguments,
-): boolean {
-  const parameters = (node as { parameters?: VariableDeclaration[] | null })
-    .parameters
-  if (!PARAMETERIZED.includes(node.type) || !parameters) {
-    return true
+// A state variable's getter takes one key per mapping and one index per array.
+export function signatureOf(node: BaseASTNode): string {
+  const variable = node as VariableDeclaration
+  if (node.type !== 'VariableDeclaration' || !variable.isStateVar) {
+    return parametersOf(node)
+      .map((p) => typeKey(p.typeName))
+      .join()
   }
-  if (parameters.length !== args.keys.length) {
-    return false
+  const keys: (string | undefined)[] = []
+  let type = variable.typeName
+  while (type?.type === 'Mapping' || type?.type === 'ArrayTypeName') {
+    const mapping = type as Mapping
+    keys.push(type.type === 'Mapping' ? typeKey(mapping.keyType) : 'uint256')
+    type =
+      type.type === 'Mapping'
+        ? mapping.valueType
+        : (type as ArrayTypeName).baseTypeName
   }
-  const positional = args.keys.length - args.names.length
-  return parameters.every((p, i) => {
-    const named = args.names.indexOf(p.name ?? '')
-    if (i >= positional && named === -1) {
-      return false
-    }
-    const key = i < positional ? args.keys[i] : args.keys[positional + named]
-    const parameter = typeKey(p.typeName) ?? ''
-    if (key === NUMBER_LITERAL) {
-      return parameter.startsWith('uint') || parameter.startsWith('int')
-    }
-    return key === undefined || parameter === key || widens(key, parameter)
-  })
-}
-
-const PARAMETERIZED = [
-  'FunctionDefinition',
-  'EventDefinition',
-  'CustomErrorDefinition',
-]
-
-// Integers convert implicitly to a wider integer of the same signedness.
-function widens(from: string, to: string): boolean {
-  for (const prefix of ['uint', 'int']) {
-    if (from.startsWith(prefix) && to.startsWith(prefix)) {
-      return bitsOf(from, prefix) <= bitsOf(to, prefix)
-    }
-  }
-  return false
-}
-
-function bitsOf(type: string, prefix: string): number {
-  const bits = type.slice(prefix.length)
-  return bits === '' ? 256 : Number(bits)
-}
-
-export function declarationName(node: BaseASTNode): string | undefined {
-  switch (node.type) {
-    case 'ContractDefinition':
-    case 'FunctionDefinition':
-    case 'ModifierDefinition':
-    case 'EventDefinition':
-    case 'CustomErrorDefinition':
-    case 'StructDefinition':
-    case 'EnumDefinition':
-    case 'TypeDefinition':
-    case 'FileLevelConstant':
-      return (node as unknown as { name: string | null }).name ?? undefined
-    default:
-      return undefined
-  }
+  return keys.join()
 }
 
 export function childrenOf(node: BaseASTNode): BaseASTNode[] {
@@ -429,21 +260,13 @@ export function childrenOf(node: BaseASTNode): BaseASTNode[] {
     if (key === 'range' || key === 'loc' || key === 'comments') {
       continue
     }
-    if (Array.isArray(value)) {
-      for (const item of value) {
-        if (isNode(item)) {
-          children.push(item)
-        }
+    for (const item of Array.isArray(value) ? value : [value]) {
+      if (typeof item === 'object' && item !== null && 'type' in item) {
+        children.push(item)
       }
-    } else if (isNode(value)) {
-      children.push(value)
     }
   }
   return children
-}
-
-function isNode(value: unknown): value is BaseASTNode {
-  return typeof value === 'object' && value !== null && 'type' in value
 }
 
 // Some nodes carry no range (e.g. a `for` loop's update statement), so the
@@ -457,18 +280,11 @@ function childContaining(
   for (const child of pending) {
     if (child.range === undefined) {
       pending.push(...childrenOf(child))
-    } else if (contains(child, offset)) {
+    } else if (child.range[0] <= offset && offset <= child.range[1]) {
       return child
     }
   }
   return undefined
-}
-
-function contains(node: BaseASTNode, offset: number): boolean {
-  if (node.range === undefined) {
-    return false
-  }
-  return node.range[0] <= offset && offset <= node.range[1]
 }
 
 // C3, the order Solidity uses to resolve overrides and `super`. Bases listed
@@ -476,7 +292,7 @@ function contains(node: BaseASTNode, offset: number): boolean {
 export function linearize(
   name: string,
   bases: string[],
-  known: Map<string, ContractInfo>,
+  known: Map<string, { linearization: string[] }>,
 ): string[] {
   const reversedBases = [...bases].reverse()
   const sequences = [
@@ -508,20 +324,6 @@ export function linearize(
   }
 }
 
-// The flattener emits the deployed contract after everything it depends on.
-function findMainContract(
-  children: BaseASTNode[],
-  contracts: Map<string, ContractInfo>,
-): ContractInfo | undefined {
-  for (let i = children.length - 1; i >= 0; i--) {
-    const child = children[i]
-    if (child?.type === 'ContractDefinition') {
-      return contracts.get((child as ContractDefinition).name)
-    }
-  }
-  return undefined
-}
-
 function computeLineStarts(text: string): number[] {
   const starts = [0]
   let index = text.indexOf('\n')
@@ -530,23 +332,6 @@ function computeLineStarts(text: string): number[] {
     index = text.indexOf('\n', index + 1)
   }
   return starts
-}
-
-function usingForBindings(nodes: BaseASTNode[]): UsingFor[] {
-  return nodes
-    .filter((node) => node.type === 'UsingForDeclaration')
-    .map((node) => {
-      const declaration = node as UsingForDeclaration
-      return {
-        library: declaration.libraryName ?? undefined,
-        functions: declaration.functions,
-        type: typeKey(declaration.typeName),
-      }
-    })
-}
-
-export function parameterSignature(fn: FunctionDefinition): string {
-  return fn.parameters.map((p) => typeKey(p.typeName)).join()
 }
 
 export function wordOccurrences(text: string, word: string): number[] {
