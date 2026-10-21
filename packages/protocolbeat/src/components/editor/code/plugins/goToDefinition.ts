@@ -78,6 +78,8 @@ export class GoToDefinitionPlugin implements EditorPlugin {
         }
         event.preventDefault()
         this.underline(null)
+        view.focus()
+        view.dispatch({ selection: { anchor: word.offset } })
         this.handlers?.goToDefinition(word.offset)
         return true
       },

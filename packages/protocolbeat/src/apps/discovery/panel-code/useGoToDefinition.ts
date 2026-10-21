@@ -51,7 +51,11 @@ export function useGoToDefinition(
   // References stay listed so several can be visited one after another.
   const navigate = (target: CodeLocation, keepOpen = false) => {
     const offset = plugin?.cursorOffset()
-    if (address !== undefined && sourceIndex !== undefined && offset) {
+    if (
+      address !== undefined &&
+      sourceIndex !== undefined &&
+      offset !== undefined
+    ) {
       history.current.push({ address, sourceIndex, offset, length: 0 })
     }
     if (!keepOpen) {
