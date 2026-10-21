@@ -3,7 +3,7 @@
   "project": "umbra",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
+    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
   },
   "discoveredAt": 1786959877,
   "collections": {

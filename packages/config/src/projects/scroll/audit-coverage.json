@@ -3,7 +3,7 @@
   "project": "scroll",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
+    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
   },
   "discoveredAt": 1791455050,
   "collections": {
@@ -14,6 +14,7 @@
     "celo": { "name": "Celo", "kind": "project" },
     "mantle": { "name": "Mantle", "kind": "project" },
     "morph": { "name": "Morph", "kind": "project" },
+    "optimism": { "name": "OP Mainnet", "kind": "project" },
     "scroll": { "name": "Scroll", "kind": "project" },
     "zksync2": { "name": "ZKsync Era", "kind": "project" }
   },
@@ -196,6 +197,13 @@
       "auditor": "Nethermind Security",
       "date": "2026-08-17",
       "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-nethermind.pdf"
+    },
+    "openzeppelin-agora-governor-v6-2023-11": {
+      "collections": ["optimism"],
+      "title": "Agora Optimism Governance Audit (OpenZeppelin)",
+      "auditor": "OpenZeppelin",
+      "date": "2023-11-22",
+      "document": "optimism/reports/2023_11-Governor-OpenZeppelin.pdf"
     },
     "openzeppelin-agora-partial-delegation-2024-06": {
       "collections": ["_libs/agora"],
@@ -420,6 +428,13 @@
       "date": "2023-03-27",
       "document": "celo/reports/Verilog - Staked Celo PRs 72-120.js"
     },
+    "zachobront-agora-governor-v5-2023-05": {
+      "collections": ["optimism"],
+      "title": "Agora Audit Report - Optimism Governor & Approval Voting Module",
+      "auditor": "Zach Obront",
+      "date": "2023-05-12",
+      "document": "optimism/reports/2023_05-Governor-ZachObront.md"
+    },
     "zellic-kalos-scroll-zkevm-circuits-part1": {
       "collections": ["scroll"],
       "title": "Scroll zkEVM - ZK Circuit Security Assessment",
@@ -524,6 +539,12 @@
       "commit": "6d415c508be94ef8391ed6525df365452466da76",
       "path": "contracts/ownership/Ownable.sol",
       "blob": "0b6cbdc349739e1422b349d1bbbe108566550c84"
+    },
+    "0b72714bacc7": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "0b72714bacc7c6ebe6d72585672b2230e3024852"
     },
     "0b8ab296c0f9": {
       "repository": "safe-fndn/safe-smart-account",
@@ -651,6 +672,12 @@
       "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
       "blob": "1cf7e0b2edfce1fb89d4f1ab51380cec2b9960aa"
     },
+    "1e67fa067d1d": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/proxies/SafeProxy.sol",
+      "blob": "1e67fa067d1d24febb335bb0fe37eb6fe390f9ea"
+    },
     "1e9cc1db4167": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
@@ -698,6 +725,12 @@
       "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
       "path": "contracts/utils/structs/EnumerableSet.sol",
       "blob": "272851b2f81b2c71dcf5115a063892668f38275f"
+    },
+    "28c9fe226594": {
+      "repository": "voteagora/optimism-gov",
+      "commit": "35f441738bd7864bd37949a40842486bc0ac51b0",
+      "path": "src/lib/v2/GovernorUpgradeableV2.sol",
+      "blob": "28c9fe22659420d96056b1c51c9aebfd11b749a2"
     },
     "2a56119aa12b": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -771,6 +804,12 @@
       "path": "src/misc/IPausable.sol",
       "blob": "3e8a644c45d24d354be395bf9a87a0e8ffe315f0"
     },
+    "405def6bb198": {
+      "repository": "voteagora/optimism-gov",
+      "commit": "35f441738bd7864bd37949a40842486bc0ac51b0",
+      "path": "src/lib/v2/GovernorCountingSimpleUpgradeableV2.sol",
+      "blob": "405def6bb1981246300936cdaae3873056d9f371"
+    },
     "40a91cf35445": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
@@ -801,29 +840,11 @@
       "path": "contracts/src/libraries/ScrollMessengerBase.sol",
       "blob": "423f5c1d1fb7d4092844bb43c043779db60ce4fa"
     },
-    "4272cb5a06c3": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-      "path": "contracts/base/FallbackManager.sol",
-      "blob": "4272cb5a06c3d4803df5f2861d7b6713bd9216dd"
-    },
-    "428cc5ce6a43": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
-      "path": "contracts/proxies/SafeProxy.sol",
-      "blob": "428cc5ce6a4363c7b81e367eca0d33295cf7a241"
-    },
     "47bbd6bc07f1": {
       "repository": "morph-l2/morph",
       "commit": "c56fb938a8a3da81d1e8979b2c49a9d7b3acc7ec",
       "path": "contracts/contracts/l2/gateways/L2ERC20Gateway.sol",
       "blob": "47bbd6bc07f1ebdf2ac677f5a54164e236e045ee"
-    },
-    "489422336212": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-      "path": "contracts/common/StorageAccessible.sol",
-      "blob": "4894223362122f481eacda4fe1c8a53701ede349"
     },
     "49ecd154d1c1": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -842,6 +863,12 @@
       "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
       "path": "src/L1/gateways/L1GatewayRouter.sol",
       "blob": "4b62be02fffb3b6c4009d7dbbf485f748b39679d"
+    },
+    "4e60bb9d6ba0": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "4e60bb9d6ba0e46aab3d2167e776930f12e8d6a0"
     },
     "4f2b7eb85601": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -897,6 +924,12 @@
       "path": "contracts/contracts/L2/gateways/L2GatewayRouter.sol",
       "blob": "5f0fd9ac2b57dc980157504eec6cb8bbaeef9bb2"
     },
+    "62a4ee973483": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "62a4ee97348305cd83c45d8d489f35e8d97e5484"
+    },
     "62a6a034c1b7": {
       "repository": "scroll-tech/scroll",
       "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
@@ -911,7 +944,7 @@
     },
     "668700b0b04b": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
       "path": "contracts/Safe.sol",
       "blob": "668700b0b04ba1a29b9777695f29c5896700bdde"
     },
@@ -1005,6 +1038,12 @@
       "path": "contracts/governance/TimelockController.sol",
       "blob": "7f2115c21b1c82237d98305a35883e931ec44136"
     },
+    "82fa53b0cf17": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "82fa53b0cf17d10cfb3f05dd59626a66ed97e7ab"
+    },
     "841bdb6c27bb": {
       "repository": "voteagora/ERC20VotesPartialDelegationUpgradeable",
       "commit": "c88170013fed385076def23a005b768de59cbad2",
@@ -1029,17 +1068,23 @@
       "path": "src/ERC20VotesPartialDelegationUpgradeable.sol",
       "blob": "86e69367fcf3dc7a2902ced1ae76fd59b2c68740"
     },
-    "898739cbc764": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-      "path": "contracts/common/SelfAuthorized.sol",
-      "blob": "898739cbc764ffba051eb57699b730e8950ab732"
-    },
     "89a3e6314f67": {
       "repository": "OffchainLabs/token-bridge-contracts",
       "commit": "6396a178e001da2b86509bb21c775488530fd541",
       "path": "contracts/tokenbridge/libraries/ERC165.sol",
       "blob": "89a3e6314f6724bede3e5452edc2f838220e95c0"
+    },
+    "8a8dbd0b11a2": {
+      "repository": "voteagora/optimism-gov",
+      "commit": "35f441738bd7864bd37949a40842486bc0ac51b0",
+      "path": "src/lib/v2/GovernorVotesUpgradeableV2.sol",
+      "blob": "8a8dbd0b11a2bca5082da2db4a55f20a091b0d5c"
+    },
+    "8a91f736710d": {
+      "repository": "voteagora/optimism-gov",
+      "commit": "35f441738bd7864bd37949a40842486bc0ac51b0",
+      "path": "src/lib/v2/GovernorSettingsUpgradeableV2.sol",
+      "blob": "8a91f736710d919b871530f954d19da0835471c2"
     },
     "8ceda74818d9": {
       "repository": "scroll-tech/scroll-contracts",
@@ -1103,7 +1148,7 @@
     },
     "9c421d7aa0fb": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
       "path": "contracts/base/ModuleManager.sol",
       "blob": "9c421d7aa0fb31e3e58b27bf827520b148963b59"
     },
@@ -1112,6 +1157,12 @@
       "commit": "69224ebb935d499c055c7859c1c8ade57244249c",
       "path": "contracts/src/lido/L2LidoGateway.sol",
       "blob": "9e6e789b00a17b1885621eae0b962618b4c87877"
+    },
+    "9eaa9f3efbcf": {
+      "repository": "voteagora/optimism-gov",
+      "commit": "a22052d3957b4c963d57f78b52c12f9f8609a720",
+      "path": "src/interfaces/IProposalTypesConfigurator.sol",
+      "blob": "9eaa9f3efbcfb321bde162bca500c12423058fc1"
     },
     "9f02979f1ee6": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1124,6 +1175,12 @@
       "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
       "path": "contracts/common/Singleton.sol",
       "blob": "9fafeba8c0589b764fe558a913411217e9420a9a"
+    },
+    "a03b5c68f6ab": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "eb93dbb0f62e2dc1b308ac4c110038062df0a8c9",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "a03b5c68f6ab858adc50da74746e74dca7b9b6a7"
     },
     "a19535a30046": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1161,12 +1218,6 @@
       "path": "contracts/governance/extensions/GovernorTimelockControl.sol",
       "blob": "a7868008bfac4d502ba49c391c390bc4fd9d3bde"
     },
-    "a80233fcb423": {
-      "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "adbb8c9d27e77452bc2253397908d3d044808e62",
-      "path": "contracts/governance/extensions/GovernorCountingSimple.sol",
-      "blob": "a80233fcb4231c97929b76614b62718c5997b200"
-    },
     "a835bb85e837": {
       "repository": "scroll-tech/scroll-contracts",
       "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
@@ -1178,12 +1229,6 @@
       "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
       "path": "src/L1/rollup/L1MessageQueueV2.sol",
       "blob": "a8a5b670b4dac37e9f4db9ec301b1f4d069f1d60"
-    },
-    "aab31696d64e": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-      "path": "contracts/base/OwnerManager.sol",
-      "blob": "aab31696d64e9fbce70c6280db56b39a2a3eebac"
     },
     "ae1d68428704": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1257,6 +1302,12 @@
       "path": "contracts/utils/math/Math.sol",
       "blob": "c477df6e1faa446b7cb9e184e2ed3228bf4fe79c"
     },
+    "c7272dcae560": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "eb93dbb0f62e2dc1b308ac4c110038062df0a8c9",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "c7272dcae5607debf788d5059e833734435e024d"
+    },
     "c8f243d15377": {
       "repository": "safe-fndn/safe-smart-account",
       "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
@@ -1317,11 +1368,23 @@
       "path": "contracts/contracts/interfaces/IUSDCBurnableSourceBridge.sol",
       "blob": "d01e30091975d2d4e9fabbf213591f2ee5eddf27"
     },
+    "d0d036bf8dba": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "d0d036bf8dba824e74d2fdc1e97ae7d9bee8ff13"
+    },
     "d2a927d58c33": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "121be5dd09caa2f7ce731f0806b0e14761023bd6",
       "path": "contracts/proxy/ERC1967/ERC1967Proxy.sol",
       "blob": "d2a927d58c3302e723c766b904f909d73a920b05"
+    },
+    "d2cd2e5fed06": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "d2cd2e5fed06065c7792f9de07d9e1c7d1fbfb17"
     },
     "d35e69f611df": {
       "repository": "scroll-tech/scroll",
@@ -1370,12 +1433,6 @@
       "commit": "baa48b7018b2b4ca4ec39a94bbdfae82fabf74f5",
       "path": "contracts/src/libraries/token/ScrollStandardERC20Factory.sol",
       "blob": "d9b7473b9a2990af6a08568cfce04447df496667"
-    },
-    "db5213089b05": {
-      "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "ca822213f2275a14c26167bd387ac3522da67fe9",
-      "path": "contracts/governance/Governor.sol",
-      "blob": "db5213089b05bd759decdb06353db8a07ae51878"
     },
     "df3a61369191": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1521,12 +1578,6 @@
       "path": "contracts/token/ERC721/IERC721Receiver.sol",
       "blob": "f93d219f21bd9c817755d1500100013ef1ca310d"
     },
-    "f9b6674650dd": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-      "path": "contracts/interfaces/ISignatureValidator.sol",
-      "blob": "f9b6674650dd96ad6c22ce5aebb85dcda371cd67"
-    },
     "fa39dcb7609e": {
       "repository": "morph-l2/morph",
       "commit": "1f623e0eaece566ef92a22615ab8ddff9bcee206",
@@ -1599,7 +1650,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
     },
     "571e63d071b4": {
       "name": "ERC165",
@@ -1720,20 +1771,15 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "16eb9f2e8752": {
       "name": "SelfAuthorized",
       "kind": "contract",
       "lines": 11,
       "status": "identical",
-      "audited": { "object": "898739cbc764", "lines": [6, 16] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "4e60bb9d6ba0", "lines": [8, 18] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "40ce0b25499c": {
       "name": "Enum",
@@ -1767,13 +1813,8 @@
       "kind": "contract",
       "lines": 142,
       "status": "identical",
-      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "a03b5c68f6ab", "lines": [13, 169] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "2ec005ea16b3": {
       "name": "SignatureDecoder",
@@ -1799,8 +1840,9 @@
       "kind": "contract",
       "lines": 4,
       "status": "identical",
-      "audited": { "object": "f9b6674650dd", "lines": [4, 7] },
+      "audited": { "object": "d2cd2e5fed06", "lines": [4, 7] },
       "reports": [
+        "ackee-safe-1-4-0",
         "certora-safe-1-3-0",
         "g0-safe-1-1-0",
         "g0-safe-1-1-1",
@@ -1813,25 +1855,16 @@
       "kind": "contract",
       "lines": 46,
       "status": "identical",
-      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "c7272dcae560", "lines": [10, 63] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "bc18eb3148bc": {
       "name": "StorageAccessible",
       "kind": "contract",
       "lines": 42,
       "status": "identical",
-      "audited": { "object": "489422336212", "lines": [6, 47] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "0b72714bacc7", "lines": [10, 51] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "bd90fb921f2d": {
       "name": "GuardManager",
@@ -1875,12 +1908,8 @@
       "kind": "abstract",
       "lines": 12,
       "status": "identical",
-      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial"
-      ]
+      "audited": { "object": "d2cd2e5fed06", "lines": [9, 20] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "3e84ad780965": {
       "name": "GnosisSafe",
@@ -1911,12 +1940,9 @@
       "name": "SafeProxy",
       "kind": "contract",
       "lines": 34,
-      "status": "differs",
-      "audited": { "object": "428cc5ce6a43", "lines": [18, 60] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"],
-      "added": [[18, 18], [21, 21], [27, 27], [29, 29]],
-      "removed": [[18, 22, 22], [21, 31, 31], [27, 37, 37]],
-      "covered": 30
+      "status": "identical",
+      "audited": { "object": "1e67fa067d1d", "lines": [17, 48] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "150878a81f46": {
       "name": "Singleton",
@@ -1924,7 +1950,7 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "447d1057dc7c": {
       "name": "NativeCurrencyPaymentFallback",
@@ -1932,20 +1958,15 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "aa97dd1bf3f1": {
       "name": "SelfAuthorized",
       "kind": "abstract",
       "lines": 11,
       "status": "identical",
-      "audited": { "object": "898739cbc764", "lines": [6, 16] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "4e60bb9d6ba0", "lines": [8, 18] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "06a60947381e": {
       "name": "Executor",
@@ -1961,7 +1982,7 @@
       "lines": 176,
       "status": "differs",
       "audited": { "object": "9c421d7aa0fb", "lines": [17, 196] },
-      "reports": ["nethermind-safe-1-3-0"],
+      "reports": ["ackee-safe-1-4-0"],
       "added": [[22, 22]],
       "removed": [[22, 22, 22]],
       "covered": 175
@@ -1970,17 +1991,9 @@
       "name": "OwnerManager",
       "kind": "abstract",
       "lines": 150,
-      "status": "differs",
-      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ],
-      "added": [[1, 2]],
-      "removed": [[1, 1, 2]],
-      "covered": 148
+      "status": "identical",
+      "audited": { "object": "82fa53b0cf17", "lines": [13, 169] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "13e5d12afa8b": {
       "name": "SignatureDecoder",
@@ -2005,29 +2018,17 @@
       "name": "FallbackManager",
       "kind": "abstract",
       "lines": 73,
-      "status": "differs",
-      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "nethermind-safe-1-3-0"
-      ],
-      "added": [[1, 1], [11, 25]],
-      "removed": [[1, 1, 1]],
-      "covered": 61
+      "status": "identical",
+      "audited": { "object": "62a4ee973483", "lines": [10, 79] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "e213c56fc229": {
       "name": "StorageAccessible",
       "kind": "abstract",
       "lines": 42,
       "status": "identical",
-      "audited": { "object": "489422336212", "lines": [6, 47] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "0b72714bacc7", "lines": [10, 51] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "b3dc850565d8": {
       "name": "IERC165",
@@ -2035,37 +2036,23 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
     },
     "051f4e0bd8fb": {
       "name": "Guard",
       "kind": "interface",
       "lines": 17,
-      "status": "differs",
-      "audited": { "object": "c9ed9c0487ff", "lines": [7, 23] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "nethermind-safe-1-3-0"
-      ],
-      "added": [[0, 0]],
-      "removed": [[0, 0, 0]],
-      "covered": 16
+      "status": "identical",
+      "audited": { "object": "d0d036bf8dba", "lines": [8, 24] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "d63eef9ff914": {
       "name": "GuardManager",
       "kind": "abstract",
       "lines": 42,
-      "status": "differs",
-      "audited": { "object": "c9ed9c0487ff", "lines": [27, 51] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "nethermind-safe-1-3-0"
-      ],
-      "added": [[1, 1], [16, 18]],
-      "removed": [[1, 1, 1]],
-      "covered": 38
+      "status": "identical",
+      "audited": { "object": "d0d036bf8dba", "lines": [37, 78] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "6cd3fcc5ec00": {
       "name": "SafeMath",
@@ -2080,12 +2067,8 @@
       "kind": "abstract",
       "lines": 12,
       "status": "identical",
-      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial"
-      ]
+      "audited": { "object": "d2cd2e5fed06", "lines": [9, 20] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "268c431cb6b0": {
       "name": "Safe",
@@ -2093,7 +2076,7 @@
       "lines": 409,
       "status": "differs",
       "audited": { "object": "668700b0b04b", "lines": [36, 467] },
-      "reports": ["nethermind-safe-1-3-0"],
+      "reports": ["ackee-safe-1-4-0"],
       "added": [[14, 14]],
       "removed": [[14, 14, 14]],
       "covered": 408
@@ -2480,7 +2463,7 @@
         "lines": [5, 15],
         "name": "IERC165"
       },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
     },
     "5db5046f9887": {
       "name": "IERC721Upgradeable",
@@ -3620,103 +3603,22 @@
       "kind": "abstract",
       "lines": 570,
       "status": "differs",
-      "audited": {
-        "object": "db5213089b05",
-        "lines": [29, 613],
-        "name": "Governor"
-      },
-      "reports": ["contracts__audits__2023-05-v4.9"],
-      "added": [
-        [0, 7],
-        [9, 11],
-        [18, 19],
-        [22, 23],
-        [28, 28],
-        [34, 34],
-        [55, 66],
-        [78, 78],
-        [82, 84],
-        [89, 92],
-        [151, 151],
-        [157, 157],
-        [172, 172],
-        [179, 179],
-        [202, 202],
-        [237, 237],
-        [246, 251],
-        [253, 254],
-        [258, 258],
-        [310, 310],
-        [379, 380],
-        [386, 386],
-        [393, 393],
-        [439, 441],
-        [457, 457],
-        [501, 501],
-        [521, 521],
-        [562, 568]
-      ],
-      "removed": [
-        [0, 0, 2],
-        [18, 10, 16],
-        [28, 26, 26],
-        [34, 32, 32],
-        [55, 53, 59],
-        [78, 71, 71],
-        [89, 76, 79],
-        [91, 81, 82],
-        [150, 140, 141],
-        [151, 143, 143],
-        [157, 149, 149],
-        [172, 171, 171],
-        [179, 178, 178],
-        [181, 180, 186],
-        [202, 201, 201],
-        [236, 235, 237],
-        [237, 239, 239],
-        [250, 248, 248],
-        [251, 250, 261],
-        [258, 265, 265],
-        [296, 303, 317],
-        [310, 332, 332],
-        [379, 402, 403],
-        [386, 409, 409],
-        [393, 416, 416],
-        [439, 462, 463],
-        [457, 479, 479],
-        [501, 523, 523],
-        [521, 543, 543]
-      ],
-      "covered": 513
+      "audited": { "object": "28c9fe226594", "lines": [23, 599] },
+      "reports": ["zachobront-agora-governor-v5-2023-05"],
+      "added": [[23, 23]],
+      "removed": [],
+      "covered": 569
     },
     "6deaafe6c404": {
       "name": "GovernorCountingSimpleUpgradeableV2",
       "kind": "abstract",
       "lines": 102,
       "status": "differs",
-      "audited": {
-        "object": "a80233fcb423",
-        "lines": [11, 103],
-        "name": "GovernorCountingSimple"
-      },
-      "reports": ["contracts__audits__2023-10-v5.0"],
-      "added": [
-        [0, 3],
-        [7, 7],
-        [18, 18],
-        [21, 21],
-        [80, 81],
-        [91, 91],
-        [94, 100]
-      ],
-      "removed": [
-        [0, 0, 0],
-        [18, 14, 14],
-        [21, 17, 17],
-        [80, 76, 79],
-        [91, 89, 89]
-      ],
-      "covered": 94
+      "audited": { "object": "405def6bb198", "lines": [13, 118] },
+      "reports": ["zachobront-agora-governor-v5-2023-05"],
+      "added": [[21, 21]],
+      "removed": [[21, 21, 21]],
+      "covered": 101
     },
     "a615aaa984cb": {
       "name": "IVotesUpgradeable",
@@ -3737,13 +3639,17 @@
       "name": "GovernorVotesUpgradeableV2",
       "kind": "abstract",
       "lines": 31,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "8a8dbd0b11a2", "lines": [14, 48] },
+      "reports": ["zachobront-agora-governor-v5-2023-05"]
     },
     "1699270bc7c0": {
       "name": "GovernorSettingsUpgradeableV2",
       "kind": "abstract",
       "lines": 117,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "8a91f736710d", "lines": [13, 129] },
+      "reports": ["zachobront-agora-governor-v5-2023-05"]
     },
     "b5418dc29174": {
       "name": "IGovernorTimelockUpgradeable",
@@ -3862,7 +3768,12 @@
       "name": "IProposalTypesConfigurator",
       "kind": "interface",
       "lines": 43,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "9eaa9f3efbcf", "lines": [4, 36] },
+      "reports": ["openzeppelin-agora-governor-v6-2023-11"],
+      "added": [[7, 8], [14, 14], [24, 24], [26, 31], [33, 33], [35, 40]],
+      "removed": [[14, 12, 12], [26, 23, 26], [33, 28, 28], [35, 30, 30]],
+      "covered": 30
     },
     "fcdc03d0e54f": {
       "name": "VotingModule",

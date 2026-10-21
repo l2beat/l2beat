@@ -3,7 +3,7 @@
   "project": "roninnetwork",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
+    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
   },
   "discoveredAt": 1790944906,
   "collections": {
@@ -13,8 +13,6 @@
     "arbitrum": { "name": "Arbitrum One", "kind": "project" },
     "bob": { "name": "BOB", "kind": "project" },
     "celo": { "name": "Celo", "kind": "project" },
-    "ethscriptions": { "name": "Ethscriptions", "kind": "project" },
-    "facet": { "name": "Facet", "kind": "project" },
     "mantle": { "name": "Mantle", "kind": "project" },
     "optimism": { "name": "OP Mainnet", "kind": "project" },
     "roninnetwork": { "name": "Ronin", "kind": "project" },
@@ -22,6 +20,13 @@
     "zksync2": { "name": "ZKsync Era", "kind": "project" }
   },
   "reports": {
+    "ackee-safe-1-4-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Contracts 1.4.0 Security Review",
+      "auditor": "Ackee Blockchain",
+      "date": "2023-03-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
+    },
     "ackee-safe-1-5-0": {
       "collections": ["_libs/safe"],
       "title": "Safe Smart Account Security Review",
@@ -57,12 +62,26 @@
       "date": "2023-03-03",
       "document": "roninnetwork/reports/Beosin - Ronin Network (2023-03).pdf"
     },
+    "cantina-custom-gas-token-2025-11": {
+      "collections": ["optimism"],
+      "title": "Optimism: Custom Gas Token Security Review (Cantina Managed)",
+      "auditor": "Cantina",
+      "date": "2025-11-18",
+      "document": "optimism/reports/2025_11-Custom-Gas-Token-Spearbit.pdf"
+    },
     "cantina-eip7702-2025-02": {
       "collections": ["optimism"],
       "title": "Optimism Security Review (Cantina, EIP-7702 / Pectra impact)",
       "auditor": "Cantina",
       "date": "2025-03-09",
       "document": "optimism/reports/2025_02-EIP7702-Cantina.pdf"
+    },
+    "cantina-fault-proofs-mips-2024-08": {
+      "collections": ["optimism"],
+      "title": "Base fault proofs mips Security Review (Cantina)",
+      "auditor": "Cantina",
+      "date": "2024-08-14",
+      "document": "optimism/reports/2024_08_Fault-Proofs-MIPS_Cantina.pdf"
     },
     "cantina-interop-l2-rereview-2026-06": {
       "collections": ["optimism"],
@@ -84,6 +103,27 @@
       "auditor": "Cantina",
       "date": "2024-02-15",
       "document": "optimism/reports/2024_02-MCP_L1-Cantina.pdf"
+    },
+    "cantina-opcmv2-2026-06": {
+      "collections": ["optimism"],
+      "title": "Optimism OPCMv2 Security Review (Cantina)",
+      "auditor": "Cantina",
+      "date": "2026-06-08",
+      "document": "optimism/reports/2026_06-OPCMv2-Cantina.pdf"
+    },
+    "cantina-policyenginestaking-2026-03": {
+      "collections": ["optimism"],
+      "title": "Optimism: PolicyEngine Staking Contract Security Review (Cantina)",
+      "auditor": "Cantina",
+      "date": "2026-03-27",
+      "document": "optimism/reports/2026_03-PolicyEngineStaking-Cantina.pdf"
+    },
+    "cantina-safe-extensions-2024-06": {
+      "collections": ["optimism"],
+      "title": "Optimism Safe Extensions Competition (Cantina)",
+      "auditor": "Cantina",
+      "date": "2024-06-06",
+      "document": "optimism/reports/2024_05_SafeLivenessExtensions-Cantina.pdf"
     },
     "cantina-u17-2025-10": {
       "collections": ["optimism"],
@@ -294,6 +334,13 @@
       "date": "2026-02-28",
       "document": "celo/reports/Hashlock - Celo Optimism and Superchain (2nd Audit).pdf"
     },
+    "milotruck-deputypausemodule-2025-01": {
+      "collections": ["optimism"],
+      "title": "Optimism DeputyPauseModule (MiloTruck)",
+      "auditor": "MiloTruck",
+      "date": "2025-01-07",
+      "document": "optimism/reports/2024_12-DPM-MiloTruck.pdf"
+    },
     "nethermind-nm-0561-celo-custom-gas-token-2025-07-01": {
       "collections": ["celo"],
       "title": "NM-0561 Celo Custom Gas Token Security Review",
@@ -364,6 +411,13 @@
       "date": "2024-04-22",
       "document": "bob/reports/Pashov - BOB USDC Bridge (Apr 2024).pdf"
     },
+    "radiantlabs-deputypausemodule-2024-12": {
+      "collections": ["optimism"],
+      "title": "DeputyPauseModule Security Review (Radiant Labs)",
+      "auditor": "Radiant Labs",
+      "date": "2024-12-28",
+      "document": "optimism/reports/2024_12-DPM-RadiantLabs.pdf"
+    },
     "secure3-mantle-v1-contest-2023-07": {
       "collections": ["mantle"],
       "title": "Mantle Competitive Security Assessment",
@@ -391,6 +445,20 @@
       "auditor": "Secure3",
       "date": "2024-03-04",
       "document": "mantle/reports/2024_03-secure3-mantle-v2-tectonic-competitive-security-assessment.pdf"
+    },
+    "sherlock-bedrock-2023-03": {
+      "collections": ["optimism"],
+      "title": "Sherlock Security Review for Optimism (Bedrock)",
+      "auditor": "Sherlock",
+      "date": "2023-03-03",
+      "document": "optimism/reports/2023_03-Bedrock-Sherlock.pdf"
+    },
+    "sherlock-fault-proofs-2024-06": {
+      "collections": ["optimism"],
+      "title": "Sherlock Security Review for Optimism (Fault Proofs)",
+      "auditor": "Sherlock",
+      "date": "2024-06-07",
+      "document": "optimism/reports/2024_05-FaultProofs-Sherlock.pdf"
     },
     "sigma-prime-taiko-smart-contracts-2024-02": {
       "collections": ["taiko"],
@@ -424,19 +492,19 @@
       "date": "2024-08-14",
       "document": "optimism/reports/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf"
     },
-    "spearbit-interop-portal-2025-05": {
-      "collections": ["optimism"],
-      "title": "Optimism Security Review",
-      "auditor": "Spearbit",
-      "date": "2025-05-20",
-      "document": "optimism/reports/2025_05-Interop-Portal-Spearbit.pdf"
-    },
     "spearbit-mt-cannon-2025-02": {
       "collections": ["optimism"],
       "title": "Optimism Mt Cannon Security Review (Spearbit)",
       "auditor": "Spearbit",
       "date": "2025-02-20",
       "document": "optimism/reports/2025_01-MT-Cannon-Spearbit.pdf"
+    },
+    "spearbit-safersafes-2025-11": {
+      "collections": ["optimism"],
+      "title": "Optimism SaferSafes Security Review (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2025-11-13",
+      "document": "optimism/reports/2025_11-SaferSafes-Spearbit.pdf"
     },
     "spearbit-u16a-2025-09": {
       "collections": ["optimism"],
@@ -452,33 +520,12 @@
       "date": "2025-05-20",
       "document": "optimism/reports/2025_05-Upgrade16-Spearbit.pdf"
     },
-    "trailofbits-bold-dac-rewards-updates-2024-08": {
-      "collections": ["arbitrum"],
-      "title": "Offchain Labs BoLD and DAC Rewards Updates Security Assessment (Trail of Bits, June 2024)",
-      "auditor": "Trail of Bits",
-      "date": "2024-08-05",
-      "document": "arbitrum/reports/2024-06-offchain-labs-bold-dac-rewards-updates-securityreview.pdf"
-    },
-    "trailofbits-custom-fee-erc20-bridge-upgrade-eip7702-2025-03": {
-      "collections": ["arbitrum"],
-      "title": "Offchain Labs Custom Fee ERC-20 Bridge Upgrade and EIP-7702 Fixes Summary Report (Trail of Bits, March 2025)",
-      "auditor": "Trail of Bits",
-      "date": "2025-03-31",
-      "document": "arbitrum/reports/2025-03-offchain-custom-fee-erc20-bridge-securityreview.pdf"
-    },
     "trailofbits-custom-fee-token-2024-08": {
       "collections": ["arbitrum"],
       "title": "Offchain Labs Custom Fee Token Security Assessment Summary Report (Trail of Bits, 2023)",
       "auditor": "Trail of Bits",
       "date": "2024-08-01",
       "document": "arbitrum/reports/2024-08-offchain-labs-custom-fee-token-securityreview.pdf"
-    },
-    "trailofbits-governance-actions-2023-08": {
-      "collections": ["arbitrum"],
-      "title": "Offchain Labs Governance Actions Security Assessment Summary Report (Trail of Bits, August 2023)",
-      "auditor": "Trail of Bits",
-      "date": "2023-08-21",
-      "document": "arbitrum/reports/2023_08_21_trail_of_bits_governance_actions_summary_report.pdf"
     },
     "trailofbits-governance-token-bridge-2023-06": {
       "collections": ["arbitrum"],
@@ -493,20 +540,6 @@
       "auditor": "Trail of Bits",
       "date": "2022-11-10",
       "document": "optimism/reports/2022_11-Invariant_Testing-TrailOfBits.pdf"
-    },
-    "trailofbits-nitro-2-of-2-2022-10": {
-      "collections": ["arbitrum"],
-      "title": "Arbitrum Nitro Security Assessment (Trail of Bits, second Nitro review, 2022)",
-      "auditor": "Trail of Bits",
-      "date": "2022-10-10",
-      "document": "arbitrum/reports/2022_10_22_trail_of_bits_security_audit_nitro_2_of_2.pdf"
-    },
-    "trailofbits-nitro-contracts-with-bold-2024-10": {
-      "collections": ["arbitrum"],
-      "title": "Offchain Labs Nitro Contracts with BoLD Security Assessment Summary Report (Trail of Bits, October 2024)",
-      "auditor": "Trail of Bits",
-      "date": "2024-10-30",
-      "document": "arbitrum/reports/2024-10-30-Offchain-NitroContractswithBoLD-securityreview.pdf"
     },
     "trailofbits-opnode-fix-review-2022-07": {
       "collections": ["optimism"],
@@ -556,13 +589,6 @@
       "auditor": "xuwinnie",
       "date": "2024-07-31",
       "document": "_libs/solady/reports/cbrt-proof__audits__xuwinnie-solady-cbrt-proof.pdf"
-    },
-    "zellic-facet-bridge-2024-11-04": {
-      "collections": ["ethscriptions", "facet"],
-      "title": "Facet Bridge Smart Contract Security Assessment",
-      "auditor": "Zellic",
-      "date": "2024-11-04",
-      "document": "ethscriptions/reports/Zellic_Facet_Bridge_Audit_Report.pdf"
     }
   },
   "auditedFiles": {
@@ -584,12 +610,6 @@
       "path": "code/system-contracts/contracts/openzeppelin/utils/Address.sol",
       "blob": "07a6de4542ee31b3221052eaa6ec898744866607"
     },
-    "08654fbfcc82": {
-      "repository": "ethereum-optimism/optimism",
-      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
-      "path": "packages/contracts-bedrock/src/libraries/Encoding.sol",
-      "blob": "08654fbfcc82fcddd1f9ebd8b994e449ffbf221a"
-    },
     "08de18902cd8": {
       "repository": "axieinfinity/ronin-dpos-contracts",
       "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
@@ -601,6 +621,30 @@
       "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
       "path": "contracts/libraries/Ballot.sol",
       "blob": "08f13047e623a0ab741f2cb677f158203243eff4"
+    },
+    "0909f3a5d633": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/L1/ISuperchainConfig.sol",
+      "blob": "0909f3a5d633a86007ba4d0187b54c4e16a7193c"
+    },
+    "0a41d930ce81": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/universal/IERC721Bridge.sol",
+      "blob": "0a41d930ce8167ae8532938c7869ba29850d5ab4"
+    },
+    "0aaa4e851772": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/L1/ResourceMetering.sol",
+      "blob": "0aaa4e851772572905e7124162a3c4edd5bc0238"
+    },
+    "0b72714bacc7": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "0b72714bacc7c6ebe6d72585672b2230e3024852"
     },
     "0b859cc51b9a": {
       "repository": "ethereum-optimism/optimism",
@@ -614,6 +658,12 @@
       "path": "contracts/base/Executor.sol",
       "blob": "0b8ab296c0f951e04b18400891a007fb78620462"
     },
+    "0c089ff9a341": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f888ede1940fce20f71db89fc13039fdd96757e",
+      "path": "packages/contracts-bedrock/interfaces/L2/IL2ERC721Bridge.sol",
+      "blob": "0c089ff9a3419e2e2320f974653bf6b8adc36357"
+    },
     "0ec1ecc1cc35": {
       "repository": "ethereum-optimism/optimism",
       "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
@@ -626,35 +676,17 @@
       "path": "crates/contracts/foundry/src/KailuaGame.sol",
       "blob": "0fbc0a1a474d8f3c2fe4c17e553be9bc42c16873"
     },
-    "10bfc5e90f72": {
-      "repository": "OffchainLabs/nitro-contracts",
-      "commit": "961a498b3ae3e218535a2a9fd28c306aaa04f3ee",
-      "path": "src/bridge/IOwnable.sol",
-      "blob": "10bfc5e90f72d3e7ce827e676e03461aced66bd8"
-    },
-    "11522e3740d7": {
-      "repository": "ethereum-optimism/optimism",
-      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
-      "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
-      "blob": "11522e3740d7cc2ed41fb72e4295656b2f683c85"
-    },
     "12f4e72a9005": {
       "repository": "ronin-chain/bridge-contract",
       "commit": "acad51e4d056f173a186ef7e787745f0afecdb84",
       "path": "src/interfaces/IMainchainGatewayV3.sol",
       "blob": "12f4e72a9005518c73297563c8c5aeeb481c38f3"
     },
-    "16c007f7a290": {
-      "repository": "code-423n4/2024-03-taiko",
-      "commit": "f58384f44dbf4c6535264a472322322705133b11",
-      "path": "packages/protocol/contracts/thirdparty/optimism/trie/MerkleTrie.sol",
-      "blob": "16c007f7a2902e3754fd064f43ea3f6288d8767d"
-    },
-    "199ee4175f1f": {
+    "168944986ab9": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
-      "path": "packages/contracts-bedrock/src/dispute/interfaces/IDisputeGameFactory.sol",
-      "blob": "199ee4175f1faf3f463a654c412778c710bcb1d5"
+      "commit": "1f888ede1940fce20f71db89fc13039fdd96757e",
+      "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+      "blob": "168944986ab9d692ec50c618d539c372e4f76ef9"
     },
     "1a56eb43bd1e": {
       "repository": "safe-fndn/safe-smart-account",
@@ -674,6 +706,12 @@
       "path": "contracts/access/AccessControl.sol",
       "blob": "1c4aeb9fb2a036093ba444a5b9146aece4f213a2"
     },
+    "1c5a5174b333": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/L1/IResourceMetering.sol",
+      "blob": "1c5a5174b33303149664fcea58c740c5ed00209a"
+    },
     "1cc118f42f1e": {
       "repository": "ethereum-optimism/optimism",
       "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
@@ -685,6 +723,12 @@
       "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
       "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
       "blob": "1cf7e0b2edfce1fb89d4f1ab51380cec2b9960aa"
+    },
+    "1e67fa067d1d": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/proxies/SafeProxy.sol",
+      "blob": "1e67fa067d1d24febb335bb0fe37eb6fe390f9ea"
     },
     "1e9cc1db4167": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -704,11 +748,11 @@
       "path": "src/utils/FixedPointMathLib.sol",
       "blob": "1f18f98e389b9b4263b3f5952af2a44c7deb15d3"
     },
-    "206e1ba146f6": {
+    "2019a49d122b": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
-      "path": "packages/contracts-bedrock/src/libraries/DevFeatures.sol",
-      "blob": "206e1ba146f6fd4dac9482514225f667048ad384"
+      "commit": "1f888ede1940fce20f71db89fc13039fdd96757e",
+      "path": "packages/contracts-bedrock/src/libraries/Preinstalls.sol",
+      "blob": "2019a49d122b7d5c4d669f2e8b9f1fa3146a2d69"
     },
     "221e2fd82b46": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -716,9 +760,21 @@
       "path": "contracts/utils/math/Math.sol",
       "blob": "221e2fd82b462fbb96d43b2da9a19e8cc0284e53"
     },
+    "22a5ddebdaf1": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/universal/ISemver.sol",
+      "blob": "22a5ddebdaf180987d07338e51c8f6b9adfa339b"
+    },
+    "23f9c36c6f9e": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/universal/IProxyAdmin.sol",
+      "blob": "23f9c36c6f9e2dc5910598a051722b9f78cbdf5e"
+    },
     "254cf6eabe82": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
       "path": "packages/contracts-bedrock/src/libraries/EOA.sol",
       "blob": "254cf6eabe822a91673f3ebd898a5455ecbccf5e"
     },
@@ -727,6 +783,12 @@
       "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
       "path": "contracts/token/ERC1155/extensions/ERC1155Burnable.sol",
       "blob": "2679683639cc72dc8386c2b07026a110a14c2e2a"
+    },
+    "26d0a17edae4": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/CannonTypes.sol",
+      "blob": "26d0a17edae4da60a66061d0f34129b01bf5b1ac"
     },
     "272851b2f81b": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -746,11 +808,11 @@
       "path": "contracts/proxy/utils/Initializable.sol",
       "blob": "2a56119aa12b8bf6088f9490433596450145f7bd"
     },
-    "2addf0516442": {
+    "2bdde4095aab": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
-      "path": "packages/contracts-bedrock/src/dispute/weth/WETH98.sol",
-      "blob": "2addf0516442396b9ac86bbb17aab6db3a953afe"
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/trie/MerkleTrie.sol",
+      "blob": "2bdde4095aabdb362c5d4ce60c903b2de6889586"
     },
     "2c998995e878": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -764,41 +826,29 @@
       "path": "contracts/token/ERC1155/extensions/ERC1155Pausable.sol",
       "blob": "2d2055fda09085e78f48d2ee4ee476ff2c16fec1"
     },
-    "2d2735ba716c": {
-      "repository": "celo-org/optimism",
-      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
-      "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
-      "blob": "2d2735ba716c2fbda69364eb76b42346e7b0ebcf"
-    },
     "2d517987d5b4": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
       "path": "contracts/utils/Context.sol",
       "blob": "2d517987d5b49aee1a37634c95a69dae911b9d7a"
     },
-    "2d531d2ea0d2": {
+    "30881fd7a3fa": {
       "repository": "ethereum-optimism/optimism",
       "commit": "fa9974a2cd38d9e7633a12f9024d52f41de55f86",
-      "path": "packages/contracts-bedrock/src/libraries/Hashing.sol",
-      "blob": "2d531d2ea0d2dc88012df7fae69dc070acf03f53"
+      "path": "packages/contracts-bedrock/src/libraries/DevFeatures.sol",
+      "blob": "30881fd7a3fac13a3827b9fc689b04bd8e859d20"
     },
-    "2e7c50ed862d": {
-      "repository": "code-423n4/2024-07-optimism",
-      "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
-      "path": "packages/contracts-bedrock/src/cannon/libraries/CannonTypes.sol",
-      "blob": "2e7c50ed862d1c8c7ae8869400836fa3c711c2a0"
+    "31f8e09a4aca": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "a00b39720a3f61276d2fa3991abfb672c9dd35ce",
+      "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+      "blob": "31f8e09a4acabd44e29ee45eb5eced14c54bed7b"
     },
     "332d2a2984e9": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
       "path": "contracts/utils/Strings.sol",
       "blob": "332d2a2984e917adbca3dd915d8f6a7dc5561504"
-    },
-    "33729a1da4d5": {
-      "repository": "mantle-xyz/mantle-v2",
-      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
-      "path": "packages/contracts-bedrock/contracts/libraries/SafeCall.sol",
-      "blob": "33729a1da4d53e5887b4f6c7b729391b77fa3324"
     },
     "33d08b4a94b8": {
       "repository": "ethereum-optimism/optimism",
@@ -824,9 +874,15 @@
       "path": "contracts/interfaces/consumers/VoteStatusConsumer.sol",
       "blob": "36d0ba1c1ecc3454ed0b14ce6874f5fcb57a9333"
     },
+    "3783f94f26a4": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/cannon/IPreimageOracle.sol",
+      "blob": "3783f94f26a4279281b92df25bfa9a18b08c0978"
+    },
     "3b6a2b1659a5": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
       "path": "packages/contracts-bedrock/src/universal/ReinitializableBase.sol",
       "blob": "3b6a2b1659a5c08effbeef2953f31c1c4cf2014a"
     },
@@ -835,6 +891,12 @@
       "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
       "path": "contracts/utils/Address.sol",
       "blob": "3bcafda6d740e2879b7594c7587995b0a83cc32d"
+    },
+    "3c18c4e1bc15": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/Types.sol",
+      "blob": "3c18c4e1bc1511614d0049777bd524c4756f582b"
     },
     "3cbab179881e": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -854,29 +916,23 @@
       "path": "contracts/interfaces/consumers/SignatureConsumer.sol",
       "blob": "402b18d8aafe89af354ce21747e4be04d8a2136a"
     },
-    "423248cc7d0c": {
-      "repository": "code-423n4/2024-03-taiko",
-      "commit": "f58384f44dbf4c6535264a472322322705133b11",
-      "path": "packages/protocol/contracts/thirdparty/optimism/Bytes.sol",
-      "blob": "423248cc7d0cfcc8fc058e490e3c555cc3fd3ef8"
-    },
-    "4272cb5a06c3": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-      "path": "contracts/base/FallbackManager.sol",
-      "blob": "4272cb5a06c3d4803df5f2861d7b6713bd9216dd"
-    },
-    "428cc5ce6a43": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
-      "path": "contracts/proxies/SafeProxy.sol",
-      "blob": "428cc5ce6a4363c7b81e367eca0d33295cf7a241"
+    "42b05511e680": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "5137f3b74c6ebcac4f0f5a118b0f4909df03aec6",
+      "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+      "blob": "42b05511e6803f7a8599e6bc25248e67c1800b39"
     },
     "43212ea60fab": {
       "repository": "ethereum-optimism/optimism",
       "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
       "path": "packages/contracts-bedrock/src/L1/SuperchainConfig.sol",
       "blob": "43212ea60fab95da149a526a83482a7cd7e668e5"
+    },
+    "43541048d14a": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/interfaces/universal/IOptimismMintableERC20.sol",
+      "blob": "43541048d14aa9b399f79272832448f00b698b94"
     },
     "46e79cb472f7": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -890,17 +946,11 @@
       "path": "contracts/token/ERC1155/ERC1155.sol",
       "blob": "4808360619856a9b4ba826f9ceedb4d24af832e2"
     },
-    "489422336212": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-      "path": "contracts/common/StorageAccessible.sol",
-      "blob": "4894223362122f481eacda4fe1c8a53701ede349"
-    },
-    "4ccae82dfed6": {
+    "4e1a5780eb4b": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
-      "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
-      "blob": "4ccae82dfed64459d2c29e742a7f4210941688d7"
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/Bytes.sol",
+      "blob": "4e1a5780eb4b7be8361fc3b01f1c401b5a9643e9"
     },
     "4e5854cade26": {
       "repository": "ronin-chain/bridge-contract",
@@ -908,17 +958,17 @@
       "path": "src/ronin/gateway/PauseEnforcer.sol",
       "blob": "4e5854cade263793433a1e279db28f35b42bb980"
     },
-    "52d790cbee51": {
-      "repository": "mantle-xyz/mantle-v2",
-      "commit": "00ce7b04bef0b4866200b9fcf98633d475290792",
-      "path": "packages/contracts-bedrock/contracts/libraries/Types.sol",
-      "blob": "52d790cbee515702f832a836660f7326c38b1705"
+    "4e60bb9d6ba0": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "4e60bb9d6ba0e46aab3d2167e776930f12e8d6a0"
     },
-    "5470681ebbfb": {
-      "repository": "celo-org/optimism",
-      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
-      "path": "packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
-      "blob": "5470681ebbfb26f20a43fcb64b3ec646104c5277"
+    "510887ad897c": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/rlp/RLPWriter.sol",
+      "blob": "510887ad897c114384daeeae5df5bbdd1db2dc2f"
     },
     "56477c92a27d": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -932,23 +982,17 @@
       "path": "contracts/common/NativeCurrencyPaymentFallback.sol",
       "blob": "5903ba1d7b2604d83e023273a135acf87fa78caa"
     },
-    "5968b45f9bfb": {
-      "repository": "ethereum-optimism/optimism",
-      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
-      "path": "packages/contracts-bedrock/src/dispute/interfaces/IInitializable.sol",
-      "blob": "5968b45f9bfb5b2eb0643708ec59a6a94fa8d064"
-    },
     "59788fc944b7": {
       "repository": "axieinfinity/ronin-dpos-contracts",
       "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
       "path": "contracts/extensions/sequential-governance/governance-relay/GovernanceRelay.sol",
       "blob": "59788fc944b7919b1b63291ff4a7dab4d3f121e3"
     },
-    "5bafd968611c": {
+    "5ae20ddc024c": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
-      "path": "packages/contracts-bedrock/src/dispute/lib/LibPosition.sol",
-      "blob": "5bafd968611cee92c56500183e5726d93f882851"
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
+      "blob": "5ae20ddc024c6cbb3b97ca93baee7a74759ccfd2"
     },
     "5bbd73283f02": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -956,11 +1000,23 @@
       "path": "contracts/utils/cryptography/ECDSA.sol",
       "blob": "5bbd73283f02dfd4a88829b4fb87138698bbb237"
     },
-    "5cfccdbaa45d": {
-      "repository": "code-423n4/2024-03-taiko",
-      "commit": "f58384f44dbf4c6535264a472322322705133b11",
-      "path": "packages/protocol/contracts/thirdparty/optimism/trie/SecureMerkleTrie.sol",
-      "blob": "5cfccdbaa45d16a794ceaa232ea56f194a904795"
+    "60d75c0c84e7": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/dispute/IBigStepper.sol",
+      "blob": "60d75c0c84e7252210df9ccae2fcedf028becf86"
+    },
+    "62a4ee973483": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "62a4ee97348305cd83c45d8d489f35e8d97e5484"
+    },
+    "62f289b9befc": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/dispute/lib/LibPosition.sol",
+      "blob": "62f289b9befc5d30a4bca69cd5038cf7442399ac"
     },
     "65224759f58c": {
       "repository": "axieinfinity/ronin-dpos-contracts",
@@ -970,7 +1026,7 @@
     },
     "668700b0b04b": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
       "path": "contracts/Safe.sol",
       "blob": "668700b0b04ba1a29b9777695f29c5896700bdde"
     },
@@ -992,17 +1048,23 @@
       "path": "packages/contracts-bedrock/src/dispute/AnchorStateRegistry.sol",
       "blob": "6974af456c9b808bdad2160bd0fa132e993d2bf2"
     },
+    "69fe00ad124a": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/dispute/IDelayedWETH.sol",
+      "blob": "69fe00ad124a87df11ad869a1bd39fdae1587867"
+    },
     "6ae6fcbfca2d": {
       "repository": "axieinfinity/ronin-dpos-contracts",
       "commit": "66903dbcdfb64964abe16994b4b2e7d5d9057ded",
       "path": "contracts/extensions/TransparentUpgradeableProxyV2.sol",
       "blob": "6ae6fcbfca2d443d1394381f5d3c21c8236de622"
     },
-    "6b58a07e098b": {
+    "6c066ca7ff06": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "4fc9181a73795334f0c657a79ea8177b8de1814c",
-      "path": "packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
-      "blob": "6b58a07e098be55571966b3a813568df4a989852"
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/src/universal/WETH98.sol",
+      "blob": "6c066ca7ff06f5662324a784df81d0e39d17fcaa"
     },
     "6c98a39dab1e": {
       "repository": "axieinfinity/ronin-dpos-contracts",
@@ -1046,17 +1108,29 @@
       "path": "contracts/external/GnosisSafeMath.sol",
       "blob": "763455f04af3b886884a3d9ee56f325ea9ffa2b1"
     },
-    "765ac0a781f8": {
-      "repository": "mantle-xyz/mantle-v2",
-      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
-      "path": "packages/contracts-bedrock/contracts/libraries/Burn.sol",
-      "blob": "765ac0a781f8cdc4cf210c88683ba190d65926e2"
+    "772747fb94fa": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "a00b39720a3f61276d2fa3991abfb672c9dd35ce",
+      "path": "packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
+      "blob": "772747fb94fa077b6e57fc9ccf13685669c86ee0"
     },
     "786d4d0f11d7": {
       "repository": "ethereum-optimism/optimism",
       "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/src/universal/OptimismMintableERC20Factory.sol",
       "blob": "786d4d0f11d7a1467f00c3f0b7610dfe8df1a1d7"
+    },
+    "78a2a0632a32": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/universal/IOwnable.sol",
+      "blob": "78a2a0632a326622276314189114b8d985cf264e"
+    },
+    "794f7ba95b86": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+      "blob": "794f7ba95b863605079005af860876cf58f7640b"
     },
     "7e11f59c4288": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1082,11 +1156,29 @@
       "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
       "blob": "8259df1c162bc9a04875a8591f919ca79b08e36f"
     },
+    "82cac572c953": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+      "blob": "82cac572c953c6d1b18d4d50d2710d1b28319c43"
+    },
+    "82fa53b0cf17": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "82fa53b0cf17d10cfb3f05dd59626a66ed97e7ab"
+    },
     "85efd6d294e3": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "106a201788c23f8d8419053d05fd250969e7af28",
       "path": "contracts/utils/cryptography/Hashes.sol",
       "blob": "85efd6d294e3f8a3f239e26466e8b1281a6a12a7"
+    },
+    "863c89906751": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f888ede1940fce20f71db89fc13039fdd96757e",
+      "path": "packages/contracts-bedrock/interfaces/legacy/IL1ChugSplashProxy.sol",
+      "blob": "863c89906751b48e1bc854e9bb355b3c2ac7854a"
     },
     "8699afc9d67a": {
       "repository": "safe-fndn/safe-smart-account",
@@ -1094,17 +1186,17 @@
       "path": "contracts/common/EtherPaymentFallback.sol",
       "blob": "8699afc9d67a512502ebf5beae4a812a28957627"
     },
-    "898739cbc764": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-      "path": "contracts/common/SelfAuthorized.sol",
-      "blob": "898739cbc764ffba051eb57699b730e8950ab732"
-    },
     "89a3e6314f67": {
       "repository": "OffchainLabs/token-bridge-contracts",
       "commit": "6396a178e001da2b86509bb21c775488530fd541",
       "path": "contracts/tokenbridge/libraries/ERC165.sol",
       "blob": "89a3e6314f6724bede3e5452edc2f838220e95c0"
+    },
+    "8a405913baad": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "5137f3b74c6ebcac4f0f5a118b0f4909df03aec6",
+      "path": "packages/contracts-bedrock/src/libraries/Arithmetic.sol",
+      "blob": "8a405913baad2b865e82df894cd69b6720367380"
     },
     "8d366ae9c470": {
       "repository": "ethereum-optimism/optimism",
@@ -1160,9 +1252,15 @@
       "path": "crates/contracts/foundry/src/KailuaLib.sol",
       "blob": "9a19be7ce3c0e2b56b26d3153f2d5f1f54dce901"
     },
+    "9a1d3ebc1b29": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/Hashing.sol",
+      "blob": "9a1d3ebc1b292f499d3af3b70f79c30087d933d0"
+    },
     "9c421d7aa0fb": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
       "path": "contracts/base/ModuleManager.sol",
       "blob": "9c421d7aa0fb31e3e58b27bf827520b148963b59"
     },
@@ -1196,6 +1294,12 @@
       "path": "contracts/common/Singleton.sol",
       "blob": "9fafeba8c0589b764fe558a913411217e9420a9a"
     },
+    "a03b5c68f6ab": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "eb93dbb0f62e2dc1b308ac4c110038062df0a8c9",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "a03b5c68f6ab858adc50da74746e74dca7b9b6a7"
+    },
     "a19535a30046": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
@@ -1204,15 +1308,33 @@
     },
     "a1d689e731db": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "b8c011f18c79d735e01168345fc1c6f02fac584f",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
       "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Arch.sol",
       "blob": "a1d689e731dba1e5e6f7d429028418f8c00c0f0a"
+    },
+    "a2a1340e8038": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/interfaces/dispute/IFaultDisputeGame.sol",
+      "blob": "a2a1340e80389aaa5d6ed7122ed99a1b14996638"
+    },
+    "a2b2568634a9": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/interfaces/dispute/IDisputeGame.sol",
+      "blob": "a2b2568634a9d485e944b22f2242fa01ae8b7b48"
     },
     "a2cd6ce57ad5": {
       "repository": "ethereum-optimism/optimism",
       "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
       "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
       "blob": "a2cd6ce57ad582cba4ea7ec515b66d354e0fba60"
+    },
+    "a3bb74b82f3a": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/dispute/IInitializable.sol",
+      "blob": "a3bb74b82f3a6959d5c8385e05ec61334f1e2b4a"
     },
     "a3cb9793bed6": {
       "repository": "ethereum-optimism/optimism",
@@ -1238,23 +1360,41 @@
       "path": "contracts/interfaces/IERC1967.sol",
       "blob": "a57f767f11326c1c9d3b662269d1a7259274269a"
     },
-    "aab31696d64e": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-      "path": "contracts/base/OwnerManager.sol",
-      "blob": "aab31696d64e9fbce70c6280db56b39a2a3eebac"
+    "a70c37573cf7": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/dispute/IDisputeGameFactory.sol",
+      "blob": "a70c37573cf76cc09e6a92b80570a1e3a93fc096"
+    },
+    "a7ecfeead33d": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/universal/ProxyAdminOwnedBase.sol",
+      "blob": "a7ecfeead33dee98e92cf7e6a8622cfef43cf09b"
+    },
+    "aae9c49bfc06": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/Arithmetic.sol",
+      "blob": "aae9c49bfc063c78875a4472a853cf049bbe31b9"
+    },
+    "ac46a327c801": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/Storage.sol",
+      "blob": "ac46a327c801f19e09f1f0de2c7b0a7d7d575853"
+    },
+    "ad59c52e0569": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/legacy/IAddressManager.sol",
+      "blob": "ad59c52e0569135b20a83d8df0af5e43a4bb1380"
     },
     "ae1d68428704": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
       "path": "contracts/access/extensions/AccessControlEnumerable.sol",
       "blob": "ae1d684287046c8928e7a528f441f996fa6779bb"
-    },
-    "af2928eaf2f4": {
-      "repository": "code-423n4/2024-03-taiko",
-      "commit": "f58384f44dbf4c6535264a472322322705133b11",
-      "path": "packages/protocol/contracts/thirdparty/optimism/rlp/RLPWriter.sol",
-      "blob": "af2928eaf2f4d08de62e260e656f63a41342fb4b"
     },
     "b0e9189675cc": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1268,17 +1408,23 @@
       "path": "contracts/utils/introspection/ERC165.sol",
       "blob": "b21f7e9bd3670ef8b51f30c2eeb4ca03c1f9b373"
     },
-    "b303f0d27597": {
-      "repository": "ethereum-optimism/optimism",
-      "commit": "b31d35b67755479645dd150e7cc8c6710f0b4a56",
-      "path": "packages/contracts-bedrock/contracts/libraries/Burn.sol",
-      "blob": "b303f0d275973c1451f6fdfcabf5b4a6fae77e5f"
-    },
     "b406861857ce": {
       "repository": "ronin-chain/bridge-contract",
       "commit": "acad51e4d056f173a186ef7e787745f0afecdb84",
       "path": "src/extensions/WithdrawalLimitation.sol",
       "blob": "b406861857cef04def699e056d93b2a0345de316"
+    },
+    "b6f48de59b28": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "a00b39720a3f61276d2fa3991abfb672c9dd35ce",
+      "path": "packages/contracts-bedrock/interfaces/universal/IOwnable.sol",
+      "blob": "b6f48de59b28ddf3ce0fa0fef4ccdad9ba44d221"
+    },
+    "b75870f3ae9e": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/universal/IProxyAdminOwnedBase.sol",
+      "blob": "b75870f3ae9e69bb708d1abe42157136a56f5cff"
     },
     "b945774de74b": {
       "repository": "axieinfinity/ronin-dpos-contracts",
@@ -1292,11 +1438,11 @@
       "path": "contracts/token/ERC1155/IERC1155Receiver.sol",
       "blob": "ba10c900a3dbd2339cd3eab887c3e674afe55ec4"
     },
-    "ba1bb6e060a0": {
+    "bcaf6bab5e65": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
-      "path": "packages/contracts-bedrock/src/dispute/lib/LibUDT.sol",
-      "blob": "ba1bb6e060a0ba72ce638e205fadae50dac1af37"
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/dispute/IAnchorStateRegistry.sol",
+      "blob": "bcaf6bab5e65f89a5f7875c45cfdfbd401079480"
     },
     "bce9237d9700": {
       "repository": "ethereum-optimism/optimism",
@@ -1316,15 +1462,9 @@
       "path": "contracts/extensions/collections/HasContracts.sol",
       "blob": "c144c3c12521e793e104b9429fb1165edebd730d"
     },
-    "c29005491aea": {
-      "repository": "ethereum-optimism/optimism",
-      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
-      "path": "packages/contracts-bedrock/src/dispute/interfaces/IBigStepper.sol",
-      "blob": "c29005491aea6e79367a13e4fe65d8628ae0312f"
-    },
     "c3f36cb881fd": {
-      "repository": "code-423n4/2024-07-optimism",
-      "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+      "repository": "ethereum-optimism/optimism",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
       "path": "packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
       "blob": "c3f36cb881fd328c3b6224523d6dd5e16a6c4ddf"
     },
@@ -1336,15 +1476,15 @@
     },
     "c6c458e0aa0c": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "b8c011f18c79d735e01168345fc1c6f02fac584f",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
       "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Memory.sol",
       "blob": "c6c458e0aa0c90403050956f5912aac70d4cc79e"
     },
-    "c7c27e763d21": {
-      "repository": "mantle-xyz/mantle-v2",
-      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
-      "path": "packages/contracts-bedrock/contracts/L1/ResourceMetering.sol",
-      "blob": "c7c27e763d212ca746272b05471ac2a1adea43fd"
+    "c7272dcae560": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "eb93dbb0f62e2dc1b308ac4c110038062df0a8c9",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "c7272dcae5607debf788d5059e833734435e024d"
     },
     "c8f243d15377": {
       "repository": "safe-fndn/safe-smart-account",
@@ -1370,12 +1510,6 @@
       "path": "packages/contracts-bedrock/src/L1/L1CrossDomainMessenger.sol",
       "blob": "cb50e3377d766c4fc4f38729b468bf38033abbdb"
     },
-    "cb94cc994045": {
-      "repository": "celo-org/optimism",
-      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
-      "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",
-      "blob": "cb94cc994045333b641bbd36f9ec08d672047e3f"
-    },
     "cbc5aef79df2": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
@@ -1387,6 +1521,12 @@
       "commit": "acad51e4d056f173a186ef7e787745f0afecdb84",
       "path": "src/extensions/GatewayV3.sol",
       "blob": "cbfbbced160ef09f349bf7be1a56983712713e23"
+    },
+    "ccb74b186331": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/rlp/RLPReader.sol",
+      "blob": "ccb74b186331cba6adb6df4698ef564698007a02"
     },
     "ccb979f61c95": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1406,17 +1546,17 @@
       "path": "contracts/utils/math/SignedMath.sol",
       "blob": "cd8c88f25a356ceff4ebe27e5c7c367de196fc65"
     },
-    "cdbc92380b25": {
-      "repository": "0xFacet/facet-optimism",
-      "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
-      "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
-      "blob": "cdbc92380b2528e6ac3374333fe44334ec799006"
+    "d0419bc7f5d5": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/L1/IETHLockbox.sol",
+      "blob": "d0419bc7f5d5bb383a0af6cae299a7fa58c306c1"
     },
-    "ce662c6592b6": {
-      "repository": "mantle-xyz/mantle-v2",
-      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
-      "path": "packages/contracts-bedrock/contracts/universal/IOptimismMintableERC20.sol",
-      "blob": "ce662c6592b6ab79d598ed2d0d5205bde3fbc8de"
+    "d0d036bf8dba": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "d0d036bf8dba824e74d2fdc1e97ae7d9bee8ff13"
     },
     "d2649680e8dc": {
       "repository": "axieinfinity/ronin-dpos-contracts",
@@ -1429,6 +1569,12 @@
       "commit": "121be5dd09caa2f7ce731f0806b0e14761023bd6",
       "path": "contracts/proxy/ERC1967/ERC1967Proxy.sol",
       "blob": "d2a927d58c3302e723c766b904f909d73a920b05"
+    },
+    "d2cd2e5fed06": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "d2cd2e5fed06065c7792f9de07d9e1c7d1fbfb17"
     },
     "d3ce256f556f": {
       "repository": "ronin-chain/bridge-contract",
@@ -1454,6 +1600,18 @@
       "path": "packages/contracts-bedrock/src/dispute/PermissionedDisputeGame.sol",
       "blob": "d508d2de925e8fffaea7d05f88d744b3fb016451"
     },
+    "d6d096a743bb": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/universal/IReinitializableBase.sol",
+      "blob": "d6d096a743bbe412d77c95b2fac73505db50586c"
+    },
+    "d92130fd5143": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/SafeCall.sol",
+      "blob": "d92130fd51436c431ce6fa98aa8cef4df263336b"
+    },
     "d934eddafe9c": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
@@ -1466,17 +1624,23 @@
       "path": "l2-contracts/contracts/vendor/AddressAliasHelper.sol",
       "blob": "da0282ed88c86d592b56169d27c5d8f71e4fa1e8"
     },
-    "da81f8933044": {
+    "dc671f8ceab3": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
-      "path": "packages/contracts-bedrock/src/dispute/interfaces/IDisputeGame.sol",
-      "blob": "da81f8933044326a8fb66e995a00a3e841650975"
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/trie/SecureMerkleTrie.sol",
+      "blob": "dc671f8ceab329a15c3fef87478ce5da71ab34c8"
     },
     "e2c3c2f19a71": {
       "repository": "boundless-xyz/kailua",
       "commit": "ccf2771857721a9cda5f7943ed7ef1d236c20bbd",
       "path": "crates/contracts/foundry/src/KailuaTournament.sol",
       "blob": "e2c3c2f19a71c00ea14dfd585f06fc710651ab9c"
+    },
+    "e39db23068d6": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f888ede1940fce20f71db89fc13039fdd96757e",
+      "path": "packages/contracts-bedrock/interfaces/dispute/IAnchorStateRegistry.sol",
+      "blob": "e39db23068d61ae661638900a1dadde5c1b878af"
     },
     "e49768ab9765": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1502,23 +1666,11 @@
       "path": "packages/contracts/contracts/chugsplash/TransparentUpgradeableProxy.sol",
       "blob": "e7ae54c6e765ae6500b430faeff0f50fa7d53419"
     },
-    "eb0529a71f33": {
-      "repository": "ethereum-optimism/optimism",
-      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
-      "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
-      "blob": "eb0529a71f332a5b6cfc565133e83a00ec3866ee"
-    },
     "eb0b1dc1396d": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "b0c5d1e476e1d6c8a3eaa11b17c01ff5824d5950",
       "path": "contracts/token/ERC1155/utils/ERC1155Holder.sol",
       "blob": "eb0b1dc1396d35a878babea70458a344004761d7"
-    },
-    "eb2ea3a3e2b2": {
-      "repository": "mantle-xyz/mantle-v2",
-      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
-      "path": "packages/contracts-bedrock/contracts/libraries/Arithmetic.sol",
-      "blob": "eb2ea3a3e2b27c315d9801b5f393e2cd8cf7f38c"
     },
     "ec004a31130c": {
       "repository": "celo-org/optimism",
@@ -1538,11 +1690,17 @@
       "path": "src/mainchain/MainchainGatewayV3.sol",
       "blob": "ed616d19229764a2ff3f2088ce4febd56e335a54"
     },
-    "f05bf3b042ab": {
-      "repository": "taikoxyz/taiko-mono",
-      "commit": "dd8725f8d27f835102fa3c5a013003090268357d",
-      "path": "packages/protocol/contracts/thirdparty/optimism/rlp/RLPReader.sol",
-      "blob": "f05bf3b042ab7554fcd603c1eaaf5a37911b00b3"
+    "ed91314c7424": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/universal/ICrossDomainMessenger.sol",
+      "blob": "ed91314c742480a6ad9ae1e76742897ef61039cf"
+    },
+    "edc9b5a6ea74": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/Encoding.sol",
+      "blob": "edc9b5a6ea7405480c3cffb328a47b40e41bcedb"
     },
     "f189ff3cf77c": {
       "repository": "ethereum-optimism/optimism",
@@ -1568,11 +1726,17 @@
       "path": "contracts/interfaces/draft-IERC1822.sol",
       "blob": "f452b5e34b744cf925b808e42e338e7146b14a8c"
     },
-    "f8313c732a79": {
+    "f775356ad924": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
-      "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
-      "blob": "f8313c732a79f288743ca1d2cc1321a2c9987dec"
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",
+      "blob": "f775356ad924548bd4eaea50f5271260f673ceae"
+    },
+    "f79445c548ce": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/Burn.sol",
+      "blob": "f79445c548ced4851c9cfa4e1aadd7a60a201616"
     },
     "f93d219f21bd": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1580,11 +1744,23 @@
       "path": "contracts/token/ERC721/IERC721Receiver.sol",
       "blob": "f93d219f21bd9c817755d1500100013ef1ca310d"
     },
-    "f9b6674650dd": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-      "path": "contracts/interfaces/ISignatureValidator.sol",
-      "blob": "f9b6674650dd96ad6c22ce5aebb85dcda371cd67"
+    "fa5ef6dd918f": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/interfaces/legacy/ILegacyMintableERC20.sol",
+      "blob": "fa5ef6dd918f2cb3b8ec2214ee0e427e71575f66"
+    },
+    "faa98e95c6b4": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/dispute/IDisputeGame.sol",
+      "blob": "faa98e95c6b4ca34019a2fc6cd3b1fe29ddb07f0"
+    },
+    "fdf2d47c7762": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/dispute/lib/LibUDT.sol",
+      "blob": "fdf2d47c7762db52afe9e95f8bccf088820abfbc"
     }
   },
   "units": {
@@ -1611,7 +1787,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
     },
     "550e7ec19a1f": {
       "name": "ERC165",
@@ -1744,11 +1920,8 @@
       "kind": "library",
       "lines": 20,
       "status": "identical",
-      "audited": { "object": "eb2ea3a3e2b2", "lines": [11, 38] },
-      "reports": [
-        "secure3-mantle-v2-public-contest-2024-04",
-        "secure3-mantle-v2-public-contest-final-2024-05"
-      ]
+      "audited": { "object": "8a405913baad", "lines": [9, 28] },
+      "reports": ["sherlock-fault-proofs-2024-06"]
     },
     "26ad7b61b37b": {
       "name": "Math",
@@ -1774,13 +1947,21 @@
       "kind": "contract",
       "lines": 5,
       "status": "identical",
-      "audited": { "object": "765ac0a781f8", "lines": [38, 42] },
+      "audited": { "object": "f79445c548ce", "lines": [28, 32] },
       "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
         "openzeppelin-bedrock-bridge-2022-05",
+        "openzeppelin-bedrock-periphery-2022-09",
         "openzeppelin-mantle-v2-solidity-contracts-2024-03",
         "secure3-mantle-v2-public-contest-2024-04",
         "secure3-mantle-v2-public-contest-final-2024-05",
         "secure3-mantle-v2-tectonic-2024-03",
+        "sherlock-bedrock-2023-03",
+        "sherlock-fault-proofs-2024-06",
+        "spearbit-upgrade16-2025-05",
         "trailofbits-invariant-testing-2022-11",
         "trailofbits-opnode-fix-review-2022-07"
       ]
@@ -1790,8 +1971,15 @@
       "kind": "library",
       "lines": 17,
       "status": "identical",
-      "audited": { "object": "b303f0d27597", "lines": [8, 30] },
-      "reports": ["trailofbits-invariant-testing-2022-11"]
+      "audited": { "object": "f79445c548ce", "lines": [6, 22] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "sherlock-fault-proofs-2024-06",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "2d60ee7f3ed2": {
       "name": "ResourceMetering",
@@ -1809,12 +1997,9 @@
       "name": "Constants",
       "kind": "library",
       "lines": 37,
-      "status": "differs",
-      "audited": { "object": "cdbc92380b25", "lines": [10, 54] },
-      "reports": ["zellic-facet-bridge-2024-11-04"],
-      "added": [],
-      "removed": [[22, 22, 29]],
-      "covered": 37
+      "status": "identical",
+      "audited": { "object": "42b05511e680", "lines": [10, 46] },
+      "reports": ["sherlock-fault-proofs-2024-06"]
     },
     "3f3d60f9e37d": {
       "name": "Proxy",
@@ -1849,31 +2034,73 @@
       "name": "IOwnable",
       "kind": "interface",
       "lines": 15,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "78a2a0632a32", "lines": [6, 20] },
+      "reports": ["cantina-upgrade20-2026-08"]
     },
     "ed326933a23e": {
       "name": "IAddressManager",
       "kind": "interface",
       "lines": 8,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "ad59c52e0569", "lines": [8, 15] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "e2b40f3d642c": {
       "name": "IProxyAdmin",
       "kind": "interface",
       "lines": 29,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "23f9c36c6f9e", "lines": [6, 34] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "e59a41a9002d": {
       "name": "Storage",
       "kind": "library",
       "lines": 83,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "ac46a327c801", "lines": [6, 88] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "sherlock-fault-proofs-2024-06",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "e60933e352ce": {
       "name": "IResourceMetering",
       "kind": "interface",
       "lines": 24,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "1c5a5174b333", "lines": [4, 27] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "spearbit-safersafes-2025-11",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "c7852b22a645": {
       "name": "Constants",
@@ -1891,8 +2118,13 @@
       "kind": "abstract",
       "lines": 87,
       "status": "identical",
-      "audited": { "object": "6b58a07e098b", "lines": [22, 108] },
-      "reports": ["spearbit-interop-portal-2025-05"]
+      "audited": { "object": "a7ecfeead33d", "lines": [20, 107] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "498007571a41": {
       "name": "ReinitializableBase",
@@ -1900,145 +2132,246 @@
       "lines": 20,
       "status": "identical",
       "audited": { "object": "3b6a2b1659a5", "lines": [6, 27] },
-      "reports": ["spearbit-upgrade16-2025-05"]
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "b61f946296f1": {
       "name": "ISemver",
       "kind": "interface",
       "lines": 7,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "22a5ddebdaf1", "lines": [7, 13] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-fault-proofs-mips-2024-08",
+        "cantina-interop-l2-rereview-2026-06",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-policyenginestaking-2026-03",
+        "cantina-safe-extensions-2024-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "sherlock-fault-proofs-2024-06",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-safersafes-2025-11",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "b5dcc6adafd5": {
       "name": "IProxyAdminOwnedBase",
       "kind": "interface",
       "lines": 11,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "b75870f3ae9e", "lines": [6, 16] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "9e1f6b2ac65d": {
       "name": "ISuperchainConfig",
       "kind": "interface",
       "lines": 31,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "0909f3a5d633", "lines": [6, 36] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08"
+      ]
     },
     "1bc80c4939df": {
       "name": "ISystemConfig",
       "kind": "interface",
       "lines": 108,
-      "status": "differs",
-      "audited": { "object": "11522e3740d7", "lines": [8, 110] },
-      "reports": ["cantina-upgrade20-2026-08"],
-      "added": [[29, 30], [42, 42], [58, 58], [87, 87]],
-      "removed": [[29, 29, 29]],
-      "covered": 104
+      "status": "identical",
+      "audited": { "object": "31f8e09a4aca", "lines": [8, 114] },
+      "reports": ["cantina-opcmv2-2026-06"]
     },
     "803ad8f660e7": {
       "name": "IReinitializableBase",
       "kind": "interface",
       "lines": 8,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "d6d096a743bb", "lines": [4, 11] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "4185e87640c2": {
       "name": "LibGameType",
       "kind": "library",
       "lines": 10,
       "status": "identical",
-      "audited": { "object": "ba1bb6e060a0", "lines": [219, 228] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+      "audited": { "object": "fdf2d47c7762", "lines": [216, 225] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "f596c9295bd4": {
       "name": "LibTimestamp",
       "kind": "library",
       "lines": 10,
       "status": "identical",
-      "audited": { "object": "ba1bb6e060a0", "lines": [187, 196] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+      "audited": { "object": "fdf2d47c7762", "lines": [184, 193] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "sherlock-fault-proofs-2024-06",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "7d1791449349": {
       "name": "LibGameId",
       "kind": "library",
       "lines": 37,
       "status": "identical",
-      "audited": { "object": "ba1bb6e060a0", "lines": [82, 114] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+      "audited": { "object": "fdf2d47c7762", "lines": [83, 111] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "28cc2b40fa61": {
       "name": "LibPosition",
       "kind": "library",
       "lines": 190,
       "status": "identical",
-      "audited": { "object": "5bafd968611c", "lines": [15, 201] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+      "audited": { "object": "62f289b9befc", "lines": [15, 200] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "043c3c292b42": {
       "name": "LibHash",
       "kind": "library",
       "lines": 10,
       "status": "identical",
-      "audited": { "object": "ba1bb6e060a0", "lines": [171, 180] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+      "audited": { "object": "fdf2d47c7762", "lines": [168, 177] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "sherlock-fault-proofs-2024-06",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "401eb66867f1": {
       "name": "LibClaim",
       "kind": "library",
       "lines": 31,
       "status": "identical",
-      "audited": { "object": "ba1bb6e060a0", "lines": [121, 147] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+      "audited": { "object": "fdf2d47c7762", "lines": [118, 144] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "28c2fba54f06": {
       "name": "IInitializable",
       "kind": "interface",
       "lines": 3,
       "status": "identical",
-      "audited": { "object": "5968b45f9bfb", "lines": [6, 10] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+      "audited": { "object": "a3bb74b82f3a", "lines": [4, 6] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "b667763fb033": {
       "name": "IDisputeGame",
       "kind": "interface",
       "lines": 17,
-      "status": "differs",
-      "audited": { "object": "da81f8933044", "lines": [10, 69] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"],
-      "added": [[3, 5], [9, 9], [11, 11], [15, 15]],
-      "removed": [
-        [3, 7, 7],
-        [4, 11, 11],
-        [5, 15, 15],
-        [9, 32, 35],
-        [11, 37, 40]
-      ],
-      "covered": 11
+      "status": "identical",
+      "audited": { "object": "faa98e95c6b4", "lines": [7, 23] },
+      "reports": ["cantina-opcmv2-2026-06", "cantina-upgrade20-2026-08"]
     },
     "c957ce169cf6": {
       "name": "IDisputeGameFactory",
       "kind": "interface",
       "lines": 71,
-      "status": "differs",
-      "audited": { "object": "199ee4175f1f", "lines": [10, 121] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"],
-      "added": [
-        [0, 0],
-        [8, 11],
-        [15, 15],
-        [17, 18],
-        [20, 23],
-        [41, 46],
-        [59, 62],
-        [64, 64],
-        [66, 69]
-      ],
-      "removed": [
-        [0, 0, 3],
-        [15, 11, 14],
-        [20, 68, 73],
-        [28, 77, 81],
-        [42, 55, 61],
-        [43, 39, 39],
-        [59, 66, 66],
-        [64, 83, 87]
-      ],
-      "covered": 46
+      "status": "identical",
+      "audited": { "object": "a70c37573cf7", "lines": [9, 63] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08"
+      ]
     },
     "0bfebde49e5b": {
       "name": "AnchorStateRegistry",
@@ -2053,8 +2386,21 @@
       "kind": "library",
       "lines": 76,
       "status": "identical",
-      "audited": { "object": "2e7c50ed862d", "lines": [20, 95] },
-      "reports": ["code4rena-superchain-2024-08"]
+      "audited": { "object": "26d0a17edae4", "lines": [20, 95] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "code4rena-superchain-2024-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "fe0a638f2551": {
       "name": "PreimageKeyLib",
@@ -2063,8 +2409,12 @@
       "status": "identical",
       "audited": { "object": "c3f36cb881fd", "lines": [6, 59] },
       "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-fault-proofs-mips-2024-08",
         "code4rena-superchain-2024-08",
-        "spearbit-fault-proofs-no-mips-2024-08"
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
       ]
     },
     "dad13f394614": {
@@ -2220,34 +2570,9 @@
       "name": "WETH98",
       "kind": "contract",
       "lines": 128,
-      "status": "differs",
-      "audited": { "object": "2addf0516442", "lines": [26, 99] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"],
-      "added": [
-        [0, 0],
-        [4, 28],
-        [42, 42],
-        [48, 48],
-        [51, 65],
-        [68, 69],
-        [76, 77],
-        [92, 93],
-        [112, 117],
-        [120, 121]
-      ],
-      "removed": [
-        [0, 0, 0],
-        [4, 2, 4],
-        [42, 17, 17],
-        [48, 22, 22],
-        [68, 27, 28],
-        [76, 34, 35],
-        [92, 46, 47],
-        [114, 59, 59],
-        [115, 61, 63],
-        [120, 66, 67]
-      ],
-      "covered": 100
+      "status": "identical",
+      "audited": { "object": "6c066ca7ff06", "lines": [25, 152] },
+      "reports": ["spearbit-upgrade16-2025-05"]
     },
     "cb9cc7f64ae0": {
       "name": "DelayedWETH",
@@ -2286,20 +2611,35 @@
       "name": "IDisputeGame",
       "kind": "interface",
       "lines": 16,
-      "status": "differs",
-      "audited": { "object": "da81f8933044", "lines": [10, 69] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"],
-      "added": [[3, 5], [10, 10], [14, 14]],
-      "removed": [[3, 7, 7], [4, 11, 11], [5, 15, 15], [10, 37, 40]],
-      "covered": 11
+      "status": "identical",
+      "audited": { "object": "a2b2568634a9", "lines": [7, 22] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "3a8d9764d8a4": {
       "name": "LibDuration",
       "kind": "library",
       "lines": 10,
       "status": "identical",
-      "audited": { "object": "ba1bb6e060a0", "lines": [155, 164] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+      "audited": { "object": "fdf2d47c7762", "lines": [152, 161] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "sherlock-fault-proofs-2024-06",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "67e1af83529c": {
       "name": "KailuaPayLib",
@@ -2319,102 +2659,160 @@
       "name": "IOwnable",
       "kind": "interface",
       "lines": 9,
-      "status": "differs",
-      "audited": { "object": "10bfc5e90f72", "lines": [8, 10] },
+      "status": "identical",
+      "audited": { "object": "b6f48de59b28", "lines": [6, 14] },
       "reports": [
-        "trailofbits-bold-dac-rewards-updates-2024-08",
-        "trailofbits-custom-fee-erc20-bridge-upgrade-eip7702-2025-03",
-        "trailofbits-governance-actions-2023-08",
-        "trailofbits-nitro-2-of-2-2022-10",
-        "trailofbits-nitro-contracts-with-bold-2024-10"
-      ],
-      "added": [[1, 2], [4, 7]],
-      "removed": [],
-      "covered": 5
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "50f26d5b74f2": {
       "name": "LibClock",
       "kind": "library",
       "lines": 41,
       "status": "identical",
-      "audited": { "object": "ba1bb6e060a0", "lines": [27, 67] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+      "audited": { "object": "fdf2d47c7762", "lines": [28, 68] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "sherlock-fault-proofs-2024-06",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "a8ac2aff9c48": {
       "name": "IPreimageOracle",
       "kind": "interface",
       "lines": 111,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "3783f94f26a4", "lines": [7, 105] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "6d4853d36d81": {
       "name": "IBigStepper",
       "kind": "interface",
       "lines": 19,
       "status": "identical",
-      "audited": { "object": "c29005491aea", "lines": [27, 41] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+      "audited": { "object": "60d75c0c84e7", "lines": [27, 41] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "2d5a290990a9": {
       "name": "ISystemConfig",
       "kind": "interface",
       "lines": 99,
       "status": "differs",
-      "audited": { "object": "2d2735ba716c", "lines": [9, 111] },
-      "reports": ["hashlock-celo-optimism-superchain-2026-02"],
+      "audited": { "object": "168944986ab9", "lines": [8, 106] },
+      "reports": ["cantina-custom-gas-token-2025-11"],
       "added": [],
-      "removed": [[18, 18, 18], [46, 47, 49], [61, 64, 64]],
+      "removed": [[96, 95, 95]],
       "covered": 99
     },
     "3aa811a41203": {
       "name": "IDelayedWETH",
       "kind": "interface",
       "lines": 58,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "69fe00ad124a", "lines": [8, 65] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08"
+      ]
     },
     "e9aa0f101d68": {
       "name": "Types",
       "kind": "library",
       "lines": 91,
-      "status": "differs",
-      "audited": { "object": "52d790cbee51", "lines": [8, 86] },
-      "reports": ["secure3-mantle-v2-tectonic-2024-03"],
-      "added": [[25, 42], [59, 59], [78, 78], [82, 89]],
-      "removed": [[25, 32, 34], [59, 50, 50], [61, 52, 52], [78, 73, 74]],
-      "covered": 76
+      "status": "identical",
+      "audited": { "object": "3c18c4e1bc15", "lines": [6, 96] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-l2-rereview-2026-06",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "782035a44473": {
       "name": "IFaultDisputeGame",
       "kind": "interface",
       "lines": 132,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "a2a1340e8038", "lines": [11, 142] },
+      "reports": ["cantina-custom-gas-token-2025-11", "cantina-u18-2026-01"]
     },
     "77ea6aae461b": {
       "name": "IAnchorStateRegistry",
       "kind": "interface",
       "lines": 48,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "e39db23068d6", "lines": [12, 56] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "83f950fd95a2": {
       "name": "IETHLockbox",
       "kind": "interface",
       "lines": 30,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "d0419bc7f5d5", "lines": [11, 40] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "8d97523d07b7": {
       "name": "IOptimismPortal2",
       "kind": "interface",
       "lines": 93,
       "status": "differs",
-      "audited": { "object": "5470681ebbfb", "lines": [14, 103] },
-      "reports": ["hashlock-celo-optimism-superchain-2026-02"],
-      "added": [],
-      "removed": [
-        [1, 1, 1],
-        [22, 23, 25],
-        [36, 40, 40],
-        [37, 42, 49],
-        [88, 84, 84]
+      "audited": { "object": "772747fb94fa", "lines": [14, 87] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01"
       ],
+      "added": [],
+      "removed": [[10, 10, 10]],
       "covered": 93
     },
     "3fe88216bdc3": {
@@ -2954,12 +3352,9 @@
       "name": "SafeProxy",
       "kind": "contract",
       "lines": 34,
-      "status": "differs",
-      "audited": { "object": "428cc5ce6a43", "lines": [18, 60] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"],
-      "added": [[18, 18], [21, 21], [27, 27], [29, 29]],
-      "removed": [[18, 22, 22], [21, 31, 31], [27, 37, 37]],
-      "covered": 30
+      "status": "identical",
+      "audited": { "object": "1e67fa067d1d", "lines": [17, 48] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "150878a81f46": {
       "name": "Singleton",
@@ -2967,7 +3362,7 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "447d1057dc7c": {
       "name": "NativeCurrencyPaymentFallback",
@@ -2975,20 +3370,15 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "aa97dd1bf3f1": {
       "name": "SelfAuthorized",
       "kind": "abstract",
       "lines": 11,
       "status": "identical",
-      "audited": { "object": "898739cbc764", "lines": [6, 16] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "4e60bb9d6ba0", "lines": [8, 18] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "40ce0b25499c": {
       "name": "Enum",
@@ -3010,7 +3400,7 @@
       "lines": 176,
       "status": "differs",
       "audited": { "object": "9c421d7aa0fb", "lines": [17, 196] },
-      "reports": ["nethermind-safe-1-3-0"],
+      "reports": ["ackee-safe-1-4-0"],
       "added": [[22, 22]],
       "removed": [[22, 22, 22]],
       "covered": 175
@@ -3019,17 +3409,9 @@
       "name": "OwnerManager",
       "kind": "abstract",
       "lines": 150,
-      "status": "differs",
-      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ],
-      "added": [[1, 2]],
-      "removed": [[1, 1, 2]],
-      "covered": 148
+      "status": "identical",
+      "audited": { "object": "82fa53b0cf17", "lines": [13, 169] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "13e5d12afa8b": {
       "name": "SignatureDecoder",
@@ -3055,8 +3437,9 @@
       "kind": "contract",
       "lines": 4,
       "status": "identical",
-      "audited": { "object": "f9b6674650dd", "lines": [4, 7] },
+      "audited": { "object": "d2cd2e5fed06", "lines": [4, 7] },
       "reports": [
+        "ackee-safe-1-4-0",
         "certora-safe-1-3-0",
         "g0-safe-1-1-0",
         "g0-safe-1-1-1",
@@ -3068,29 +3451,17 @@
       "name": "FallbackManager",
       "kind": "abstract",
       "lines": 73,
-      "status": "differs",
-      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "nethermind-safe-1-3-0"
-      ],
-      "added": [[1, 1], [11, 25]],
-      "removed": [[1, 1, 1]],
-      "covered": 61
+      "status": "identical",
+      "audited": { "object": "62a4ee973483", "lines": [10, 79] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "e213c56fc229": {
       "name": "StorageAccessible",
       "kind": "abstract",
       "lines": 42,
       "status": "identical",
-      "audited": { "object": "489422336212", "lines": [6, 47] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "0b72714bacc7", "lines": [10, 51] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "b3dc850565d8": {
       "name": "IERC165",
@@ -3098,37 +3469,23 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
     },
     "051f4e0bd8fb": {
       "name": "Guard",
       "kind": "interface",
       "lines": 17,
-      "status": "differs",
-      "audited": { "object": "c9ed9c0487ff", "lines": [7, 23] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "nethermind-safe-1-3-0"
-      ],
-      "added": [[0, 0]],
-      "removed": [[0, 0, 0]],
-      "covered": 16
+      "status": "identical",
+      "audited": { "object": "d0d036bf8dba", "lines": [8, 24] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "d63eef9ff914": {
       "name": "GuardManager",
       "kind": "abstract",
       "lines": 42,
-      "status": "differs",
-      "audited": { "object": "c9ed9c0487ff", "lines": [27, 51] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "nethermind-safe-1-3-0"
-      ],
-      "added": [[1, 1], [16, 18]],
-      "removed": [[1, 1, 1]],
-      "covered": 38
+      "status": "identical",
+      "audited": { "object": "d0d036bf8dba", "lines": [37, 78] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "6cd3fcc5ec00": {
       "name": "SafeMath",
@@ -3143,12 +3500,8 @@
       "kind": "abstract",
       "lines": 12,
       "status": "identical",
-      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial"
-      ]
+      "audited": { "object": "d2cd2e5fed06", "lines": [9, 20] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "268c431cb6b0": {
       "name": "Safe",
@@ -3156,7 +3509,7 @@
       "lines": 409,
       "status": "differs",
       "audited": { "object": "668700b0b04b", "lines": [36, 467] },
-      "reports": ["nethermind-safe-1-3-0"],
+      "reports": ["ackee-safe-1-4-0"],
       "added": [[14, 14]],
       "removed": [[14, 14, 14]],
       "covered": 408
@@ -3165,7 +3518,16 @@
       "name": "ICrossDomainMessenger",
       "kind": "interface",
       "lines": 40,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "ed91314c7424", "lines": [4, 41] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "a4a11528bc42": {
       "name": "EOA",
@@ -3173,62 +3535,56 @@
       "lines": 20,
       "status": "identical",
       "audited": { "object": "254cf6eabe82", "lines": [6, 25] },
-      "reports": ["cantina-eip7702-2025-02"]
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-eip7702-2025-02",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "0255f34a839a": {
       "name": "ERC721Bridge",
       "kind": "abstract",
       "lines": 183,
-      "status": "differs",
-      "audited": { "object": "f8313c732a79", "lines": [12, 186] },
-      "reports": ["cantina-mcp-l1-2024-02"],
-      "added": [[7, 7], [11, 11], [60, 62], [75, 75], [83, 83], [126, 126]],
-      "removed": [
-        [7, 7, 7],
-        [11, 11, 11],
-        [60, 61, 61],
-        [75, 73, 73],
-        [83, 81, 81],
-        [126, 122, 122]
-      ],
-      "covered": 175
+      "status": "identical",
+      "audited": { "object": "82cac572c953", "lines": [15, 188] },
+      "reports": ["spearbit-upgrade16-2025-05"]
     },
     "700c3d5545e0": {
       "name": "DevFeatures",
       "kind": "library",
       "lines": 48,
-      "status": "differs",
-      "audited": { "object": "206e1ba146f6", "lines": [30, 72] },
-      "reports": ["cantina-upgrade20-2026-08"],
-      "added": [[4, 6], [13, 15], [33, 34], [36, 36]],
-      "removed": [[33, 27, 27], [36, 29, 29]],
-      "covered": 44
+      "status": "identical",
+      "audited": { "object": "30881fd7a3fa", "lines": [30, 81] },
+      "reports": ["cantina-interop-l2-rereview-2026-06"]
     },
     "1a109846495d": {
       "name": "Predeploys",
       "kind": "library",
       "lines": 255,
       "status": "differs",
-      "audited": { "object": "eb0529a71f33", "lines": [9, 265] },
-      "reports": ["cantina-u18-2026-01"],
+      "audited": { "object": "5ae20ddc024c", "lines": [7, 238] },
+      "reports": ["spearbit-upgrade16-2025-05"],
       "added": [
-        [99, 104],
+        [93, 104],
         [123, 123],
-        [137, 138],
-        [156, 161],
+        [135, 138],
+        [158, 159],
+        [161, 161],
         [167, 189],
         [209, 253]
       ],
       "removed": [
         [93, 93, 105],
-        [99, 112, 114],
-        [123, 161, 162],
-        [135, 197, 205],
-        [138, 212, 213],
-        [156, 224, 224],
-        [171, 229, 239]
+        [123, 152, 153],
+        [136, 188, 189],
+        [137, 191, 192],
+        [138, 194, 195],
+        [171, 207, 214]
       ],
-      "covered": 193
+      "covered": 192
     },
     "6052ff08685e": {
       "name": "IERC721",
@@ -3245,13 +3601,30 @@
       "name": "IERC721Bridge",
       "kind": "interface",
       "lines": 44,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "0a41d930ce81", "lines": [6, 47] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "bf98f394dbe3": {
       "name": "IL2ERC721Bridge",
       "kind": "interface",
       "lines": 15,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "0c089ff9a341", "lines": [6, 19] },
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "spearbit-upgrade16-2025-05"
+      ],
+      "added": [[0, 0]],
+      "removed": [[0, 0, 0]],
+      "covered": 14
     },
     "35b38a2e0c49": {
       "name": "L1ERC721Bridge",
@@ -3366,20 +3739,15 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "16eb9f2e8752": {
       "name": "SelfAuthorized",
       "kind": "contract",
       "lines": 11,
       "status": "identical",
-      "audited": { "object": "898739cbc764", "lines": [6, 16] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "4e60bb9d6ba0", "lines": [8, 18] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "68dd4bd4433d": {
       "name": "Executor",
@@ -3407,13 +3775,8 @@
       "kind": "contract",
       "lines": 142,
       "status": "identical",
-      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "a03b5c68f6ab", "lines": [13, 169] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "2ec005ea16b3": {
       "name": "SignatureDecoder",
@@ -3439,25 +3802,16 @@
       "kind": "contract",
       "lines": 46,
       "status": "identical",
-      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "c7272dcae560", "lines": [10, 63] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "bc18eb3148bc": {
       "name": "StorageAccessible",
       "kind": "contract",
       "lines": 42,
       "status": "identical",
-      "audited": { "object": "489422336212", "lines": [6, 47] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "nethermind-safe-1-3-0"
-      ]
+      "audited": { "object": "0b72714bacc7", "lines": [10, 51] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "bd90fb921f2d": {
       "name": "GuardManager",
@@ -3501,12 +3855,8 @@
       "kind": "abstract",
       "lines": 12,
       "status": "identical",
-      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
-      "reports": [
-        "certora-safe-1-3-0",
-        "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial"
-      ]
+      "audited": { "object": "d2cd2e5fed06", "lines": [9, 20] },
+      "reports": ["ackee-safe-1-4-0"]
     },
     "3e84ad780965": {
       "name": "GnosisSafe",
@@ -3580,6 +3930,7 @@
       "status": "identical",
       "audited": { "object": "9ec9f07fc0ec", "lines": [14, 64] },
       "reports": [
+        "openzeppelin-bedrock-periphery-2022-09",
         "secure3-mantle-v2-public-contest-2024-04",
         "secure3-mantle-v2-public-contest-final-2024-05"
       ]
@@ -3602,13 +3953,8 @@
       "kind": "interface",
       "lines": 5,
       "status": "identical",
-      "audited": { "object": "cd36168f725d", "lines": [23, 27] },
-      "reports": [
-        "code4rena-base-2023-08",
-        "openzeppelin-bedrock-periphery-2022-09",
-        "secure3-mantle-v2-public-contest-2024-04",
-        "secure3-mantle-v2-public-contest-final-2024-05"
-      ]
+      "audited": { "object": "863c89906751", "lines": [22, 25] },
+      "reports": ["cantina-custom-gas-token-2025-11"]
     },
     "d2fdb69068e3": {
       "name": "Proxy",
@@ -3759,17 +4105,20 @@
       "name": "Preinstalls",
       "kind": "library",
       "lines": 173,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "2019a49d122b", "lines": [7, 243] },
+      "reports": ["cantina-custom-gas-token-2025-11"]
     },
     "197395080909": {
       "name": "ILegacyMintableERC20",
       "kind": "interface",
       "lines": 7,
       "status": "identical",
-      "audited": { "object": "ce662c6592b6", "lines": [28, 34] },
+      "audited": { "object": "fa5ef6dd918f", "lines": [11, 17] },
       "reports": [
         "secure3-mantle-v2-public-contest-2024-04",
-        "secure3-mantle-v2-public-contest-final-2024-05"
+        "secure3-mantle-v2-public-contest-final-2024-05",
+        "spearbit-upgrade16-2025-05"
       ]
     },
     "efa75a106aeb": {
@@ -3777,10 +4126,11 @@
       "kind": "interface",
       "lines": 9,
       "status": "identical",
-      "audited": { "object": "ce662c6592b6", "lines": [12, 20] },
+      "audited": { "object": "43541048d14a", "lines": [10, 18] },
       "reports": [
         "secure3-mantle-v2-public-contest-2024-04",
-        "secure3-mantle-v2-public-contest-final-2024-05"
+        "secure3-mantle-v2-public-contest-final-2024-05",
+        "spearbit-upgrade16-2025-05"
       ]
     },
     "7be25136d99c": {
@@ -4183,36 +4533,37 @@
       "name": "Arithmetic",
       "kind": "library",
       "lines": 46,
-      "status": "differs",
-      "audited": { "object": "eb2ea3a3e2b2", "lines": [11, 38] },
+      "status": "identical",
+      "audited": { "object": "aae9c49bfc06", "lines": [10, 55] },
       "reports": [
-        "secure3-mantle-v2-public-contest-2024-04",
-        "secure3-mantle-v2-public-contest-final-2024-05"
-      ],
-      "added": [[19, 44]],
-      "removed": [],
-      "covered": 36
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "7768d7b8daff": {
       "name": "ResourceMetering",
       "kind": "abstract",
       "lines": 158,
-      "status": "differs",
-      "audited": { "object": "c7c27e763d21", "lines": [15, 184] },
+      "status": "identical",
+      "audited": { "object": "0aaa4e851772", "lines": [16, 173] },
       "reports": [
-        "secure3-mantle-v2-public-contest-2024-04",
-        "secure3-mantle-v2-public-contest-final-2024-05",
-        "secure3-mantle-v2-tectonic-2024-03"
-      ],
-      "added": [[1, 2], [114, 116], [136, 142]],
-      "removed": [[1, 1, 2], [114, 127, 130], [136, 151, 153]],
-      "covered": 151
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "9f38f3086c8f": {
       "name": "IAnchorStateRegistry",
       "kind": "interface",
       "lines": 49,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "bcaf6bab5e65", "lines": [11, 56] },
+      "reports": ["cantina-opcmv2-2026-06", "cantina-upgrade20-2026-08"]
     },
     "beef9d9054b0": {
       "name": "IOptimismPortal2",
@@ -4240,36 +4591,36 @@
       "name": "RLPWriter",
       "kind": "library",
       "lines": 155,
-      "status": "differs",
-      "audited": { "object": "af2928eaf2f4", "lines": [9, 70] },
+      "status": "identical",
+      "audited": { "object": "510887ad897c", "lines": [9, 163] },
       "reports": [
-        "code4rena-taiko-2024-04",
-        "openzeppelin-taiko-protocol-2024-06"
-      ],
-      "added": [[11, 32], [40, 47], [91, 153]],
-      "removed": [],
-      "covered": 96
+        "cantina-interop-l2-rereview-2026-06",
+        "cantina-upgrade20-2026-08"
+      ]
     },
     "4676b736bef2": {
       "name": "Encoding",
       "kind": "library",
       "lines": 336,
-      "status": "differs",
-      "audited": { "object": "08654fbfcc82", "lines": [12, 277] },
-      "reports": ["cantina-u17-2025-10"],
-      "added": [[6, 8], [293, 334]],
-      "removed": [],
-      "covered": 301
+      "status": "identical",
+      "audited": { "object": "edc9b5a6ea74", "lines": [11, 321] },
+      "reports": [
+        "cantina-interop-l2-rereview-2026-06",
+        "cantina-upgrade20-2026-08"
+      ]
     },
     "3e463bddb22c": {
       "name": "Hashing",
       "kind": "library",
       "lines": 147,
       "status": "identical",
-      "audited": { "object": "2d531d2ea0d2", "lines": [11, 140] },
+      "audited": { "object": "9a1d3ebc1b29", "lines": [10, 139] },
       "reports": [
+        "cantina-custom-gas-token-2025-11",
         "cantina-interop-l2-rereview-2026-06",
         "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -4277,66 +4628,41 @@
       "name": "RLPReader",
       "kind": "library",
       "lines": 232,
-      "status": "differs",
-      "audited": { "object": "f05bf3b042ab", "lines": [9, 262] },
+      "status": "identical",
+      "audited": { "object": "ccb74b186331", "lines": [19, 283] },
       "reports": [
-        "code4rena-taiko-2024-04",
-        "openzeppelin-taiko-protocol-2024-06",
-        "sigma-prime-taiko-smart-contracts-2024-02"
-      ],
-      "added": [
-        [27, 28],
-        [43, 46],
-        [90, 93],
-        [122, 125],
-        [141, 142],
-        [148, 149],
-        [155, 156],
-        [162, 163],
-        [169, 172],
-        [179, 180],
-        [186, 187],
-        [193, 194],
-        [200, 203]
-      ],
-      "removed": [
-        [27, 27, 28],
-        [43, 43, 46],
-        [90, 90, 93],
-        [122, 122, 125],
-        [141, 141, 144],
-        [148, 150, 154],
-        [155, 160, 164],
-        [162, 170, 173],
-        [169, 179, 185],
-        [179, 192, 193],
-        [186, 199, 203],
-        [193, 209, 212],
-        [200, 218, 224]
-      ],
-      "covered": 215
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "7eadf5cfd6c0": {
       "name": "Bytes",
       "kind": "library",
       "lines": 139,
       "status": "identical",
-      "audited": { "object": "423248cc7d0c", "lines": [6, 144] },
-      "reports": [
-        "code4rena-taiko-2024-04",
-        "openzeppelin-taiko-protocol-2024-06"
-      ]
+      "audited": { "object": "4e1a5780eb4b", "lines": [6, 144] },
+      "reports": ["cantina-upgrade20-2026-08"]
     },
     "6f6f5cc580d2": {
       "name": "MerkleTrie",
       "kind": "library",
       "lines": 210,
       "status": "identical",
-      "audited": { "object": "16c007f7a290", "lines": [11, 215] },
+      "audited": { "object": "2bdde4095aab", "lines": [12, 216] },
       "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
         "code4rena-taiko-2024-04",
         "openzeppelin-taiko-protocol-2024-06",
-        "sigma-prime-taiko-smart-contracts-2024-02"
+        "sherlock-fault-proofs-2024-06",
+        "sigma-prime-taiko-smart-contracts-2024-02",
+        "spearbit-upgrade16-2025-05"
       ]
     },
     "1e116b431cf7": {
@@ -4344,26 +4670,32 @@
       "kind": "library",
       "lines": 41,
       "status": "identical",
-      "audited": { "object": "5cfccdbaa45d", "lines": [9, 44] },
+      "audited": { "object": "dc671f8ceab3", "lines": [10, 45] },
       "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
         "code4rena-taiko-2024-04",
         "openzeppelin-taiko-protocol-2024-06",
-        "sigma-prime-taiko-smart-contracts-2024-02"
+        "sherlock-fault-proofs-2024-06",
+        "sigma-prime-taiko-smart-contracts-2024-02",
+        "spearbit-upgrade16-2025-05"
       ]
     },
     "aeebc2fe3441": {
       "name": "SafeCall",
       "kind": "library",
       "lines": 163,
-      "status": "differs",
-      "audited": { "object": "33729a1da4d5", "lines": [8, 150] },
+      "status": "identical",
+      "audited": { "object": "d92130fd5143", "lines": [6, 155] },
       "reports": [
-        "secure3-mantle-v2-public-contest-2024-04",
-        "secure3-mantle-v2-public-contest-final-2024-05"
-      ],
-      "added": [[6, 18], [20, 26], [33, 37], [40, 53], [55, 69]],
-      "removed": [[6, 9, 23], [20, 26, 28], [33, 34, 48], [55, 51, 52]],
-      "covered": 122
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "d0e269c9f6e8": {
       "name": "AddressAliasHelper",
@@ -4436,8 +4768,10 @@
       "kind": "interface",
       "lines": 3,
       "status": "identical",
-      "audited": { "object": "f20ab01bcd2b", "lines": [7, 9] },
+      "audited": { "object": "863c89906751", "lines": [28, 30] },
       "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "openzeppelin-bedrock-periphery-2022-09",
         "secure3-mantle-v2-public-contest-2024-04",
         "secure3-mantle-v2-public-contest-final-2024-05"
       ]
@@ -4482,15 +4816,9 @@
       "name": "StandardBridge",
       "kind": "abstract",
       "lines": 466,
-      "status": "differs",
-      "audited": { "object": "cb94cc994045", "lines": [28, 466] },
-      "reports": [
-        "hashlock-celo-optimism-superchain-2026-02",
-        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01"
-      ],
-      "added": [],
-      "removed": [[112, 109, 117], [226, 220, 220], [294, 284, 284]],
-      "covered": 466
+      "status": "identical",
+      "audited": { "object": "f775356ad924", "lines": [24, 451] },
+      "reports": ["spearbit-upgrade16-2025-05"]
     },
     "6a1ed4d6f29f": {
       "name": "L1StandardBridge",
@@ -4515,7 +4843,7 @@
       "lines": 14,
       "status": "identical",
       "audited": { "object": "bce9237d9700", "lines": [7, 20] },
-      "reports": ["base-mt64cannon-2025-02"]
+      "reports": ["base-mt64cannon-2025-02", "spearbit-mt-cannon-2025-02"]
     },
     "ae124b181c4d": {
       "name": "MIPS64Arch",
@@ -4523,7 +4851,11 @@
       "lines": 6,
       "status": "identical",
       "audited": { "object": "a1d689e731db", "lines": [4, 9] },
-      "reports": ["base-mt64cannon-2025-02"]
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "9da5a5b8c58c": {
       "name": "MIPS64Memory",
@@ -4531,7 +4863,11 @@
       "lines": 171,
       "status": "identical",
       "audited": { "object": "c6c458e0aa0c", "lines": [7, 173] },
-      "reports": ["base-mt64cannon-2025-02", "spearbit-mt-cannon-2025-02"]
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "cea6f66bdc5c": {
       "name": "MIPS64Syscalls",
@@ -4557,8 +4893,21 @@
       "kind": "library",
       "lines": 10,
       "status": "identical",
-      "audited": { "object": "ba1bb6e060a0", "lines": [203, 212] },
-      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+      "audited": { "object": "fdf2d47c7762", "lines": [200, 209] },
+      "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
+        "radiantlabs-deputypausemodule-2024-12",
+        "sherlock-fault-proofs-2024-06",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "e304276af8e0": {
       "name": "VMStatuses",
@@ -4628,11 +4977,20 @@
       "status": "identical",
       "audited": { "object": "33d08b4a94b8", "lines": [124, 139] },
       "reports": [
+        "base-mt64cannon-2025-02",
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-opcmv2-2026-06",
         "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "milotruck-deputypausemodule-2025-01",
         "offbeatlabs-incident-response-updates-2025-01",
-        "spearbit-fault-proofs-no-mips-2024-08"
+        "radiantlabs-deputypausemodule-2024-12",
+        "sherlock-fault-proofs-2024-06",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-mt-cannon-2025-02",
+        "spearbit-upgrade16-2025-05"
       ]
     },
     "59c1837f9107": {
@@ -4777,6 +5135,7 @@
         "cantina-mcp-l1-2024-02",
         "hashlock-celo-optimism-superchain-2026-02",
         "nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "spearbit-upgrade16-2025-05",
         "trust-superchainconfig-upgrade-2024-01"
       ]
     },
@@ -4791,6 +5150,7 @@
         "cantina-mcp-l1-2024-02",
         "hashlock-celo-optimism-superchain-2026-02",
         "nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "spearbit-upgrade16-2025-05",
         "trust-superchainconfig-upgrade-2024-01"
       ]
     },
@@ -4799,8 +5159,8 @@
       "kind": "abstract",
       "lines": 354,
       "status": "identical",
-      "audited": { "object": "4ccae82dfed6", "lines": [90, 440] },
-      "reports": ["cantina-eip7702-2025-02"]
+      "audited": { "object": "794f7ba95b86", "lines": [89, 438] },
+      "reports": ["spearbit-upgrade16-2025-05"]
     },
     "5b810932d460": {
       "name": "L1CrossDomainMessenger",

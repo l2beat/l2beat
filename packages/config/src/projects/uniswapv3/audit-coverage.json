@@ -3,7 +3,7 @@
   "project": "uniswapv3",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
+    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
   },
   "discoveredAt": 1786913047,
   "collections": {
@@ -34,19 +34,19 @@
       "date": "2021-05-04",
       "document": "uniswapv3/reports/audit-3.pdf"
     },
+    "ackee-safe-1-4-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Contracts 1.4.0 Security Review",
+      "auditor": "Ackee Blockchain",
+      "date": "2023-03-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
+    },
     "ackee-safe-1-5-0": {
       "collections": ["_libs/safe"],
       "title": "Safe Smart Account Security Review",
       "auditor": "Ackee Blockchain Security",
       "date": "2025-05-28",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_5_0_Ackee.pdf"
-    },
-    "certora-safe-1-5-0": {
-      "collections": ["_libs/safe"],
-      "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
-      "auditor": "Certora",
-      "date": "2025-01-14",
-      "document": "_libs/safe/reports/safe-verification__docs__Safe_Audit_Report_1_5_0_Certora.pdf"
     },
     "certora-vault-bridge-2025-05": {
       "collections": ["katana"],
@@ -223,13 +223,13 @@
     },
     "1138570bc167": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/libraries/FixedPoint96.sol",
       "blob": "1138570bc167aaf339de5de829f134b49c5497f9"
     },
     "1a59de42c5d0": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
       "blob": "1a59de42c5d0983d397019c658cfc6bc55c538ad"
     },
@@ -265,7 +265,7 @@
     },
     "216d5ddf2e57": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/callback/IUniswapV3SwapCallback.sol",
       "blob": "216d5ddf2e579161ac56fabc02d845459c80d777"
     },
@@ -295,7 +295,7 @@
     },
     "2eeb24b7812c": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol",
       "blob": "2eeb24b7812cef9cb98413b76691966e786031e2"
     },
@@ -397,7 +397,7 @@
     },
     "7c781dbafd08": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/IERC20Minimal.sol",
       "blob": "7c781dbafd0895434bbc9e31cc8b2db1bb6318d1"
     },
@@ -421,7 +421,7 @@
     },
     "8aa1e5b61ce8": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/libraries/FixedPoint128.sol",
       "blob": "8aa1e5b61ce8db63b3205555cbba846c5fa5c2b0"
     },
@@ -533,11 +533,11 @@
       "path": "contracts/NoDelegateCall.sol",
       "blob": "daac1671a4c72a826ae7acda2acb0e879eb27be1"
     },
-    "dfe5020b47cd": {
+    "dff6307ef81f": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/IUniswapV3Pool.sol",
-      "blob": "dfe5020b47cd586697429f7957edcc77c833c16a"
+      "blob": "dff6307ef81f086e44f8fd8e31411ae1a773d97c"
     },
     "f486ba94eacc": {
       "repository": "Uniswap/v3-periphery",
@@ -547,7 +547,7 @@
     },
     "f7c87028768a": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/pool/IUniswapV3PoolImmutables.sol",
       "blob": "f7c87028768ab9490b4bc281ef0179d83a1e1252"
     },
@@ -738,7 +738,10 @@
       "lines": 43,
       "status": "identical",
       "audited": { "object": "7c781dbafd08", "lines": [6, 48] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "d868cebabdae": {
       "name": "CurrencyLibrary",
@@ -872,7 +875,10 @@
       "lines": 19,
       "status": "identical",
       "audited": { "object": "8776a081aa23", "lines": [8, 20] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "8614d448ca1f": {
       "name": "IUniswapV3PoolImmutables",
@@ -880,7 +886,10 @@
       "lines": 30,
       "status": "identical",
       "audited": { "object": "f7c87028768a", "lines": [6, 35] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "b107006c5152": {
       "name": "IUniswapV3PoolState",
@@ -899,7 +908,10 @@
       "lines": 34,
       "status": "differs",
       "audited": { "object": "1a59de42c5d0", "lines": [7, 32] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ],
       "added": [[14, 32]],
       "removed": [[1, 1, 10], [14, 24, 24]],
       "covered": 25
@@ -918,7 +930,10 @@
       "lines": 18,
       "status": "identical",
       "audited": { "object": "2eeb24b7812c", "lines": [6, 21] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "e41c74af84d8": {
       "name": "IUniswapV3PoolEvents",
@@ -936,8 +951,11 @@
       "kind": "interface",
       "lines": 10,
       "status": "identical",
-      "audited": { "object": "dfe5020b47cd", "lines": [16, 23] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "audited": { "object": "dff6307ef81f", "lines": [15, 22] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "5103eec0044e": {
       "name": "NoDelegateCall",
@@ -1038,7 +1056,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "8aa1e5b61ce8", "lines": [6, 8] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "71939b50b567": {
       "name": "Position",
@@ -1087,7 +1108,10 @@
       "lines": 47,
       "status": "identical",
       "audited": { "object": "7c781dbafd08", "lines": [6, 48] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "31a8cc41b835": {
       "name": "FixedPoint96",
@@ -1095,7 +1119,10 @@
       "lines": 4,
       "status": "identical",
       "audited": { "object": "1138570bc167", "lines": [7, 10] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "5024ee9859f6": {
       "name": "UnsafeMath",
@@ -1156,7 +1183,10 @@
       "lines": 16,
       "status": "identical",
       "audited": { "object": "216d5ddf2e57", "lines": [6, 16] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "a724e854e1b5": {
       "name": "IUniswapV3FlashCallback",
@@ -1785,7 +1815,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
     },
     "6052ff08685e": {
       "name": "IERC721",

@@ -11,6 +11,7 @@ import {
   MAJOR_FINDING_DESCRIPTION,
 } from '~/components/audits/auditStatus'
 import { contractAnchorId } from '~/components/audits/contractAnchor'
+import { groupUnitsForDisplay } from '~/components/audits/groupUnitsForDisplay'
 import {
   Tooltip,
   TooltipContent,
@@ -19,6 +20,7 @@ import {
 import { ChevronIcon } from '~/icons/Chevron'
 import type { AuditsContractEntry } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
+import { AuditedUnitsLine } from './AuditedUnitsLine'
 import { UnitRow } from './UnitRow'
 
 interface Props {
@@ -28,8 +30,9 @@ interface Props {
 
 /**
  * One collapsible row per deployed contract, expanding to its verified
- * sources (proxy and implementations) and their units. Filtering by unit
- * name is local state.
+ * sources (proxy and implementations) and their units. Unaudited and
+ * differing units come first as full rows; units identical to audited code
+ * are listed compactly by name. Filtering by unit name is local state.
  */
 function anchorOf(contract: AuditsContractEntry): string {
   return contractAnchorId(contract.chain, contract.shortAddress)
@@ -234,8 +237,10 @@ export function ContractCoverageList({ slug, contracts }: Props) {
                         : 'No units match the name filter.'}
                     </p>
                   )}
-                  {sources.map(({ source, units }) =>
-                    units.length === 0 ? null : (
+                  {sources.map(({ source, units }) => {
+                    if (units.length === 0) return null
+                    const { rows, audited } = groupUnitsForDisplay(units)
+                    return (
                       <div key={source.address}>
                         <div className="flex flex-wrap items-baseline gap-x-3 bg-surface-secondary px-3 py-1.5 text-xs">
                           <span className="font-medium text-secondary uppercase">
@@ -245,20 +250,23 @@ export function ContractCoverageList({ slug, contracts }: Props) {
                             {source.address}
                           </span>
                         </div>
-                        <div className="hidden px-3 py-1.5 font-medium text-2xs text-secondary uppercase tracking-wider md:grid md:grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1.4fr)_minmax(0,1.5fr)_176px_240px] md:gap-x-3">
-                          <span>Type</span>
-                          <span>Name</span>
-                          <span>Status</span>
-                          <span>Audited source</span>
-                          <span className="text-right">Diff</span>
-                          <span />
-                        </div>
-                        {units.map((unit) => (
+                        {rows.length > 0 && (
+                          <div className="hidden px-3 py-1.5 font-medium text-2xs text-secondary uppercase tracking-wider md:grid md:grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1.4fr)_minmax(0,1.5fr)_176px_240px] md:gap-x-3">
+                            <span>Type</span>
+                            <span>Name</span>
+                            <span>Status</span>
+                            <span>Audited source</span>
+                            <span className="text-right">Diff</span>
+                            <span />
+                          </div>
+                        )}
+                        {rows.map((unit) => (
                           <UnitRow key={unit.id} slug={slug} unit={unit} />
                         ))}
+                        <AuditedUnitsLine units={audited} />
                       </div>
-                    ),
-                  )}
+                    )
+                  })}
                 </div>
               )}
             </div>

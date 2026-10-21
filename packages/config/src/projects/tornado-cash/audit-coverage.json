@@ -3,7 +3,7 @@
   "project": "tornado-cash",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
+    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
   },
   "discoveredAt": 1791454331,
   "collections": {
@@ -68,6 +68,13 @@
       "auditor": "ABDK Consulting",
       "date": "2021-03-23",
       "document": "uniswapv3/reports/audit-2.pdf"
+    },
+    "ackee-safe-1-4-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Contracts 1.4.0 Security Review",
+      "auditor": "Ackee Blockchain",
+      "date": "2023-03-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
     },
     "akhunov-audit-results-note": {
       "collections": ["_libs/safe"],
@@ -298,7 +305,7 @@
     },
     "1a59de42c5d0": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
       "blob": "1a59de42c5d0983d397019c658cfc6bc55c538ad"
     },
@@ -322,7 +329,7 @@
     },
     "2eeb24b7812c": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol",
       "blob": "2eeb24b7812cef9cb98413b76691966e786031e2"
     },
@@ -506,17 +513,23 @@
       "path": "contracts/base/Executor.sol",
       "blob": "d0603b6fcb75d3afba7ce21757e14dc99a580332"
     },
+    "d2cd2e5fed06": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "d2cd2e5fed06065c7792f9de07d9e1c7d1fbfb17"
+    },
     "d713de78d874": {
       "repository": "celo-org/celo-monorepo",
       "commit": "c1bd057484c4601436eb35c563d431f80d5f94b6",
       "path": "packages/protocol/contracts/common/libraries/ReentrancyGuard.sol",
       "blob": "d713de78d87478f1b8d7c589b134e0eb40025f38"
     },
-    "dfe5020b47cd": {
+    "dff6307ef81f": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/IUniswapV3Pool.sol",
-      "blob": "dfe5020b47cd586697429f7957edcc77c833c16a"
+      "blob": "dff6307ef81f086e44f8fd8e31411ae1a773d97c"
     },
     "e140d6f1be6c": {
       "repository": "tornadocash/tornado-anonymity-mining",
@@ -550,15 +563,9 @@
     },
     "f7c87028768a": {
       "repository": "Uniswap/v3-core",
-      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/pool/IUniswapV3PoolImmutables.sol",
       "blob": "f7c87028768ab9490b4bc281ef0179d83a1e1252"
-    },
-    "f9b6674650dd": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
-      "path": "contracts/interfaces/ISignatureValidator.sol",
-      "blob": "f9b6674650dd96ad6c22ce5aebb85dcda371cd67"
     }
   },
   "units": {
@@ -1722,7 +1729,10 @@
       "lines": 30,
       "status": "identical",
       "audited": { "object": "f7c87028768a", "lines": [6, 35] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "b107006c5152": {
       "name": "IUniswapV3PoolState",
@@ -1741,7 +1751,10 @@
       "lines": 34,
       "status": "differs",
       "audited": { "object": "1a59de42c5d0", "lines": [7, 32] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ],
       "added": [[14, 32]],
       "removed": [[1, 1, 10], [14, 24, 24]],
       "covered": 25
@@ -1760,7 +1773,10 @@
       "lines": 18,
       "status": "identical",
       "audited": { "object": "2eeb24b7812c", "lines": [6, 21] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "e41c74af84d8": {
       "name": "IUniswapV3PoolEvents",
@@ -1778,8 +1794,11 @@
       "kind": "interface",
       "lines": 10,
       "status": "identical",
-      "audited": { "object": "dfe5020b47cd", "lines": [16, 23] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "audited": { "object": "dff6307ef81f", "lines": [15, 22] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
     },
     "ca327c6eb2b1": {
       "name": "TickMath",
@@ -2069,8 +2088,9 @@
       "kind": "contract",
       "lines": 4,
       "status": "identical",
-      "audited": { "object": "f9b6674650dd", "lines": [4, 7] },
+      "audited": { "object": "d2cd2e5fed06", "lines": [4, 7] },
       "reports": [
+        "ackee-safe-1-4-0",
         "certora-safe-1-3-0",
         "g0-safe-1-1-0",
         "g0-safe-1-1-1",
