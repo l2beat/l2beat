@@ -74,6 +74,7 @@ export class RangeHighlightPlugin implements EditorPlugin {
     const highlight = options?.highlight ? { from, to } : null
 
     this.view.dispatch({
+      selection: { anchor: from },
       effects: [
         setHighlight.of(highlight),
         EditorView.scrollIntoView(EditorSelection.range(from, to), {
