@@ -1,7 +1,7 @@
 {
   "name": "katana",
   "timestamp": 1792144034,
-  "configHash": "0x2256c047c393af620400a7f94b399cde10eb90aa28191a1301eb6436529f66d0",
+  "configHash": "0x8ec0069625521603dcc9417c79737aab3730b7b0430d5f556abc95a584421c3b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -289,8 +289,8 @@
         "initVersion": 3,
         "messenger": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
         "MESSENGER": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
-        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000014",
-        "otherBridge": "eth:0x4200000000000000000000000000000000000014",
+        "OTHER_BRIDGE": "katana:0x4200000000000000000000000000000000000014",
+        "otherBridge": "katana:0x4200000000000000000000000000000000000014",
         "paused": false,
         "proxyAdmin": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
         "proxyAdminOwner": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -302,6 +302,9 @@
         "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F": "Proxy",
         "eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e": "L1ERC721Bridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "katana" } }
+      ],
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -487,8 +490,8 @@
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "eth:0x4200000000000000000000000000000000000007",
-        "otherMessenger": "eth:0x4200000000000000000000000000000000000007",
+        "OTHER_MESSENGER": "katana:0x4200000000000000000000000000000000000007",
+        "otherMessenger": "katana:0x4200000000000000000000000000000000000007",
         "paused": false,
         "portal": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
         "PORTAL": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
@@ -510,6 +513,9 @@
         "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E": "ResolvedDelegateProxy",
         "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0": "L1CrossDomainMessenger"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "katana" } }
+      ],
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1948,11 +1954,11 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "initVersion": 3,
-        "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "katana:0x4200000000000000000000000000000000000010",
         "messenger": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
         "MESSENGER": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
-        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
-        "otherBridge": "eth:0x4200000000000000000000000000000000000010",
+        "OTHER_BRIDGE": "katana:0x4200000000000000000000000000000000000010",
+        "otherBridge": "katana:0x4200000000000000000000000000000000000010",
         "paused": false,
         "proxyAdmin": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
         "proxyAdminOwner": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -1965,6 +1971,9 @@
         "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC": "L1ChugSplashProxy",
         "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891": "L1StandardBridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "katana" } }
+      ],
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -3032,11 +3041,6 @@
       }
     },
     {
-      "address": "katana:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "AgglayerBridgeL2",
       "address": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "type": "Contract",
@@ -3477,8 +3481,8 @@
         "$upgradeCount": 2,
         "messenger": "katana:0x4200000000000000000000000000000000000007",
         "MESSENGER": "katana:0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "katana:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
-        "otherBridge": "katana:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
+        "OTHER_BRIDGE": "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
+        "otherBridge": "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
         "paused": false,
         "proxyAdmin": "katana:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -3488,6 +3492,9 @@
         "katana:0x4200000000000000000000000000000000000014": "Proxy",
         "katana:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833": "L2ERC721Bridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -7057,7 +7064,7 @@
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
-    "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/L2ERC721Bridge": "0x134c37b08d464eb53a9ae063f26e795155695ec752fda38644e23175466793ca",
     "opstack/Layer2/L2ProxyAdmin_karst": "0x70d00d08dd524425b6612b13b16781498c13da3b7e3fac0a5ccd63078eeb5644",
     "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
@@ -7076,7 +7083,7 @@
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 26204291, "katana": 45401223 },
-  "permissionsConfigHash": "0x12c812479311180a992f2fb47d0b5c01e98c807ace35549b7480e6da46931f69",
+  "permissionsConfigHash": "0xa6f2dde2d5e76d32cd16ddcb52353b6a68775d3c095f5882ea8d9bace75047da",
   "modelledAgainst": {
     "shared-polygon-cdk": "0xe9304873e93dfe13b5bffa1058853e7cf85f6a7b0a8666193059e58f9208571b"
   },

@@ -1,24 +1,100 @@
-Generated with discovered.json: 0xc257e4081670ca84a395fe4868a370650c4ff5ac
+Generated with discovered.json: 0xe20cd586387e530be6754ab042312c9fb97da591
 
-# Diff at Tue, 20 Oct 2026 10:37:26 GMT:
+# Diff at Tue, 20 Oct 2026 12:40:06 GMT:
 
-- id: 4af8ffd4
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1791896958
-- current timestamp: 1792492581
+- id: 259a4d70
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1791896958
+- current timestamp: 1791896958
 
 ## Description
 
-Queued and executed ZIP-18 (resubmission of v31 upgrade).
+Undo the L2 alias of L1 addresses
 
-## Watched changes
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791896958 (main branch discovery), not current.
 
 ```diff
-    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
-    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
-      values.proposalQueuedCount:
--        17
-+        18
+    contract Guardians (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) [shared-zk-stack/Guardians] {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      receivedPermissions.2:
++        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
+    }
+```
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","role":".PROPOSE_GUARDIAN"}
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC","role":".owner"}
+      directlyReceivedPermissions.9:
++        {"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"control all roles in the ZkToken access control, including the minter roles.","role":".DefaultAdmin"}
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111) [shared-zk-stack/EmergencyUpgradeBoard] {
+    +++ description: A custom contract allowing a 3/3 of eth:0x59195219d1176E42f8e607e9AC114926D47f9035, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.6:
++        {"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"control all roles in the ZkToken access control, including the minter roles.","role":".DefaultAdmin","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","role":"admin","via":[{"address":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) [shared-zk-stack/ZkToken] {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.DefaultAdmin.0:
+-        "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.PROPOSE_GUARDIAN:
+-        "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D"
++        "eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
+      values.VETO_GUARDIAN:
+-        "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9"
++        "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8"
+    }
+```
+
+```diff
+    contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) [global/ProxyAdmin] {
+    +++ description: None
++++ severity: MEDIUM
+      values.owner:
+-        "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.VETO_GUARDIAN:
+-        "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9"
++        "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8"
     }
 ```
 

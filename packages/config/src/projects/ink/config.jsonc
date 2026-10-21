@@ -19,7 +19,6 @@
     "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
   ],
   "names": {
-    "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias",
     "ink:0x4200000000000000000000000000000000000017": "OptimismMintableERC721Factory",
     "eth:0x4cBFBA0AfEb3a36878eb52fAE78335751076250C": "FaultDisputeGame"
   },
@@ -81,6 +80,143 @@
     // ResolvedDelegateProxies only; the SuperchainConfig that Ink shares is a plain
     // EIP-1967 proxy (proxyType 0), and Ink's own messenger resolves through Ink's
     // AddressManager (eth:0x9b7C9BbD...). Outside the Ink perimeter.
-    "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {}
+    "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {},
+    "eth:0x661235a238B11191211fa95D4Dd9E423d521E0Be": {
+      "fields": {
+        "OTHER_BRIDGE": { "edit": ["format", "InkAddress"] },
+        "otherBridge": { "edit": ["format", "InkAddress"] }
+      }
+    },
+    "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f": {
+      "fields": {
+        "OTHER_MESSENGER": { "edit": ["format", "InkAddress"] },
+        "otherMessenger": { "edit": ["format", "InkAddress"] }
+      }
+    },
+    "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0": {
+      "fields": {
+        "l2TokenBridge": { "edit": ["format", "InkAddress"] },
+        "OTHER_BRIDGE": { "edit": ["format", "InkAddress"] },
+        "otherBridge": { "edit": ["format", "InkAddress"] }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000007": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000010": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000011": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000012": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000014": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000015": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000017": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000019": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "ink:0x420000000000000000000000000000000000001A": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000018": {
+      "fields": {
+        "owner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    }
+  },
+  "types": {
+    "InkAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": {
+        "prefix": "ink"
+      }
+    }
   }
 }

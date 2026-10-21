@@ -1,42 +1,83 @@
-Generated with discovered.json: 0x5eed46199ca30f8b6e7e7a781b942682ca5cc4ca
+Generated with discovered.json: 0x6303a1313b9959f6daf1072b81fa506d5fe817ad
 
-# Diff at Tue, 20 Oct 2026 10:35:55 GMT:
+# Diff at Tue, 20 Oct 2026 12:40:07 GMT:
 
-- id: 278775b5
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1792144211
-- current timestamp: 1792492486
+- id: 0ca871d0
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1792144211
+- current timestamp: 1792144211
 
 ## Description
 
-Sophon chain admin ms increased execution delay from 3 hours to 1 day (following governance proposal ZIP-17).
+Undo the L2 alias of L1 addresses
 
-Also added a new ms member.
+## Config/verification related changes
 
-## Watched changes
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144211 (main branch discovery), not current.
 
 ```diff
-    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
-    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
-+++ severity: HIGH
-      values.executionDelaySophon:
--        10800
-+        86400
-+++ severity: HIGH
-      values.executionDelaySophon_fmt:
--        "3h"
-+        "1d"
+    external contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC","role":".owner"}
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"control all roles in the ZkToken access control, including the minter roles.","role":".DefaultAdmin"}
     }
 ```
 
 ```diff
-    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    external contract (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) {
     +++ description: None
-      values.$members.0:
-+        "eth:0x1b3CfD17505Bb60a39CbAc152Db73d9343Cf2FDe"
-      values.multisigThreshold:
--        "2 of 6 (33%)"
-+        "2 of 7 (29%)"
+      receivedPermissions.2:
++        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
+    }
+```
+
+```diff
+    external contract (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111) {
+    +++ description: None
+      receivedPermissions.7:
++        {"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"control all roles in the ZkToken access control, including the minter roles.","role":".DefaultAdmin","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","role":"admin","via":[{"address":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
+    external contract (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","role":".PROPOSE_GUARDIAN"}
+    }
+```
+
+```diff
+    external contract (zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"},{"permission":"interact","from":"zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}]
+    }
+```
+
+```diff
+    external contract (zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"control all roles in the ZkToken access control, including the minter roles.","role":".DefaultAdmin"},{"permission":"upgrade","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","role":"admin","via":[{"address":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC","role":".owner"}]
+    }
+```
+
+```diff
+    external contract (zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","role":".PROPOSE_GUARDIAN"}]
     }
 ```
 

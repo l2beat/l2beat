@@ -17,11 +17,16 @@ export function Search() {
   }
 
   return (
-    <Dialog.Root open={opened} onOpenChange={(open) => setOpen(open)}>
+    <Dialog.Root
+      modal={false}
+      open={opened}
+      onOpenChange={(open) => setOpen(open)}
+    >
       <Dialog.Trigger>
         <ClosedSearch />
       </Dialog.Trigger>
       <Dialog.Body
+        nonModal
         noCloseButton
         className="h-[400px] rounded-sm bg-coffee-800 p-0"
       >
