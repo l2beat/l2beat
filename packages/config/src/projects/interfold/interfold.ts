@@ -84,7 +84,7 @@ export const interfold: BaseProject = {
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning:
-      'Early mainnet: Interfold runs with an initial set of ciphernode operators, and only a few votes have taken place. L2BEAT does not measure the anonymity set of past votes; the rating reflects the protocol design only.',
+      'Early mainnet: Interfold runs with an initial set of ciphernode operators, and only a few votes have taken place. L2BEAT does not measure the anonymity set of past votes. The rating reflects the protocol design only.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
