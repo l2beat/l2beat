@@ -39,7 +39,7 @@ export function TvsBreakdownPageHeader({
             },
           ]}
         />
-        <SearchBarButton className="max-lg:hidden" />
+        <SearchBarButton className="max-lg:hidden" label="Search projects" />
       </div>
 
       <div className="flex flex-col items-start justify-between gap-[10px] md:mb-4 md:flex-row md:items-center">

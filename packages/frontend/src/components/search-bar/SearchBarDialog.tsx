@@ -90,7 +90,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   return (
     <CommandDialog
       title="Search"
-      description="Search projects, tokens and protocols by name or address"
+      description="Search for projects by name or address"
       open={open}
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
@@ -99,7 +99,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
       <Command shouldFilter={false} className="rounded-none">
         <CommandInput
           ref={inputRef}
-          placeholder="Search projects, tokens, protocols or addresses"
+          placeholder="Search for projects by name or address"
           value={value}
           onValueChange={setValue}
         >

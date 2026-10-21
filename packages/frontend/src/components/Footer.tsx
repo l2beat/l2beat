@@ -1,27 +1,7 @@
-import { externalLinks } from '~/consts/externalLinks'
 import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import { CustomLink } from './link/CustomLink'
-
-/**
- * About L2BEAT and its resources; the side nav keeps to the sections, so for
- * some of these pages this is the only way in.
- */
-const FOOTER_LINKS = [
-  { title: 'About Us', href: '/about-us' },
-  { title: 'Publications', href: '/publications' },
-  { title: 'Changelog', href: '/changelog' },
-  { title: 'Native Rollups', href: '/native-rollups' },
-  { title: 'Forum', href: externalLinks.forum },
-  { title: 'Tools', href: externalLinks.tools },
-  { title: 'Glossary', href: '/glossary' },
-  { title: 'FAQ', href: '/faq' },
-  { title: 'Jobs', href: externalLinks.jobs },
-  { title: 'Donate', href: '/donate' },
-  { title: 'Brand Kit', href: '/brand-kit' },
-  { title: 'Terms of Service', href: '/terms-of-service' },
-]
 
 interface Props {
   className?: string
@@ -43,23 +23,22 @@ export function Footer({ className, innerContainerClassName }: Props) {
     >
       <div
         className={cn(
-          'mx-auto flex max-w-[1216px] flex-col items-start gap-3 text-secondary md:min-h-6 md:flex-row md:flex-wrap md:items-center md:gap-x-8',
+          'mx-auto flex max-w-[1216px] flex-col items-center gap-2 text-secondary md:h-6 md:flex-row md:justify-between',
           innerContainerClassName,
         )}
       >
-        <nav className="flex flex-wrap gap-x-4 gap-y-2">
-          {FOOTER_LINKS.map((link) => (
-            <CustomLink
-              key={link.title}
-              href={link.href}
-              variant="plain"
-              underline={false}
-              className="font-medium text-secondary text-xs underline-offset-2 hover:text-primary hover:underline"
-            >
-              {link.title}
-            </CustomLink>
-          ))}
-        </nav>
+        <p className="text-center font-medium text-xs leading-none">
+          Made with 💗 by the L2BEAT team
+        </p>
+        <p>
+          <CustomLink
+            href="/terms-of-service"
+            variant="plain"
+            className="font-medium text-secondary text-xs"
+          >
+            Terms of Service
+          </CustomLink>
+        </p>
         {/* For agents, which follow only links in the page body: they skip <head> links and headers. */}
         <ul className="sr-only">
           <li>
@@ -75,7 +54,7 @@ export function Footer({ className, innerContainerClassName }: Props) {
             </li>
           )}
         </ul>
-        <p className="font-medium text-xs leading-none">
+        <p className="text-center font-medium text-xs leading-none md:text-right">
           Copyright {currentYear} L2BEAT
         </p>
       </div>

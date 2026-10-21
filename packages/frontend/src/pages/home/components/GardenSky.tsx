@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react'
+import { CropPlant, type PlantMotion } from '~/components/garden/CropPlant'
 import { cn } from '~/utils/cn'
-import { CropPlant, type PlantMotion } from './CropPlant'
 
-// The garden's landscape, shared by its page backdrop and the CROPS banners
-// elsewhere, so the garden looks the same wherever it shows: four ridges that
-// fade with distance and a low sun behind the farthest one, a moon in dark mode.
+// The garden's landscape behind the home page's CROPS banners: four ridges
+// that fade with distance and a low sun behind the farthest one, a moon in
+// dark mode.
 // Each ridge rises from the ground at its left end, where a banner puts its
 // text, so a strip that starts partway across a card shows the hills whole.
 

@@ -89,29 +89,26 @@ function Sidebar({
   if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-        {/* From the left, where the desktop sidebar sits: the whole screen
-            on phones, the desktop sidebar's width from tablets up. */}
         <SheetContent
           // iOS Safari tints its toolbars from the overlay and swaps the tint in
           // one frame, so a full-width sheet needs a matching overlay and no
           // animation. The 1% see-through keeps Chrome drawing the page beneath,
           // so closing isn't delayed on Android. From `sm` the sheet is
           // `max-w-sm`, so the page beside it stays dimmed.
-          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background/99 p-0 text-primary md:max-w-(--sidebar-width-desktop) [&>button]:hidden"
+          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background/99 p-0 text-primary [&>button]:hidden"
           overlayClassName="animate-none! max-sm:bg-background/99"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
-              '--sidebar-width-desktop': SIDEBAR_WIDTH,
             } as React.CSSProperties
           }
-          side="left"
+          side="right"
         >
           <SheetHeader className="sr-only">
             <SheetTitle>Sidebar</SheetTitle>
             <SheetDescription>Displays the mobile sidebar.</SheetDescription>
           </SheetHeader>
-          <div className="flex size-full flex-col gap-6">{children}</div>
+          <div className="flex size-full flex-col gap-4">{children}</div>
         </SheetContent>
       </Sheet>
     )
@@ -197,22 +194,6 @@ function SidebarGroupItem({
   )
 }
 
-/** A heading over a run of groups, e.g. "And more": sentence case, like the links under it. */
-function SidebarGroupLabel({
-  className,
-  ...props
-}: React.ComponentProps<'span'>) {
-  return (
-    <span
-      className={cn(
-        'pl-1.5 font-medium text-label-value-13 text-secondary',
-        className,
-      )}
-      {...props}
-    />
-  )
-}
-
 function SidebarGroupLink({
   isActive = false,
   className,
@@ -225,7 +206,30 @@ function SidebarGroupLink({
       data-active={isActive}
       className={cn(
         'group flex h-8 w-full items-center gap-2 overflow-hidden rounded-md p-1.5 text-left text-base outline-none ring-brand focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0',
-        'data-[active=true]:text-nav-active',
+        'data-[active=true]:text-brand',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
+function SidebarGroupSmallLink({
+  isActive = false,
+  className,
+  ...props
+}: React.ComponentProps<'a'> & {
+  href: string
+  isActive?: boolean
+}) {
+  const isInternalLink = props.href.startsWith('/')
+
+  return (
+    <a
+      target={isInternalLink ? undefined : '_blank'}
+      className={cn(
+        'flex items-center gap-1 pl-1.5 text-primary text-xs leading-none transition-colors hover:text-secondary',
+        isActive && 'text-brand hover:text-brand',
         className,
       )}
       {...props}
@@ -261,7 +265,7 @@ function SidebarGroupSubButton({
       data-active={isActive}
       className={cn(
         '-translate-x-px flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded px-2.5 py-1.5 text-primary outline-none ring-brand hover:bg-surface-tertiary hover:text-primary focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0 [&>svg]:text-primary',
-        'data-[active=true]:bg-nav-active data-[active=true]:text-primary-invert',
+        'data-[active=true]:bg-brand data-[active=true]:text-primary-invert',
         className,
       )}
       {...props}
@@ -281,7 +285,7 @@ function SidebarGroupSubLink({
       data-active={isActive}
       className={cn(
         'font-medium text-label-value-14',
-        'data-[active=true]:text-nav-active',
+        'data-[active=true]:text-brand',
         className,
       )}
       {...props}
@@ -296,8 +300,8 @@ export {
   SidebarGroup,
   SidebarHeader,
   SidebarGroupLink,
+  SidebarGroupSmallLink,
   SidebarGroupItem,
-  SidebarGroupLabel,
   SidebarGroupSub,
   SidebarGroupSubButton,
   SidebarGroupSubLink,

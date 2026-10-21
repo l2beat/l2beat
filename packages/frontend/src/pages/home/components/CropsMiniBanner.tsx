@@ -13,9 +13,8 @@ const FLOWERS: GardenFlower[] = [
 ]
 
 /**
- * The garden as a small highlighted banner: the sidebar sets it above the
- * sections, and the home page's section tiles start with it on the screens
- * without the sidebar.
+ * The garden as a small highlighted banner: the home page's section tiles
+ * start with it on the screens without the sidebar.
  */
 export function CropsMiniBanner({
   isActive = false,
@@ -41,8 +40,8 @@ export function CropsMiniBanner({
         className="left-[68%]"
         lightClassName="top-[38%] left-[58%] size-12"
       >
-        {/* A menu tile is narrower than the sidebar and the subtitle reaches
-            the flowers there, so it keeps only the hills. */}
+        {/* In a narrow tile the subtitle reaches the flowers, so it keeps
+            only the hills. */}
         <span className="@max-[165px]/crops:hidden">
           <GardenFlowers flowers={FLOWERS} motion="still" />
         </span>

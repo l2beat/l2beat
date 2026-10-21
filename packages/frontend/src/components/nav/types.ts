@@ -1,4 +1,4 @@
-export type NavGroup = (
+export type NavGroup =
   | {
       type: 'multiple'
       title: string
@@ -13,16 +13,13 @@ export type NavGroup = (
       match: string
       icon: React.ReactNode
     } & NavLink)
-) & {
-  /** 'more' lists the group under the sidebar's "And more" label. */
-  section?: 'more'
-}
 
 export interface NavLink {
   title: string
   shortTitle?: string
   href: string
   disabled?: boolean
+  accessory?: React.ReactNode
   subLinks?: NavLink[]
   exactMatch?: boolean
 }

@@ -25,8 +25,8 @@ function getPlantKind(
 
 /**
  * How a plant moves: `sway` grows in and then idles, as in the garden;
- * `grow` grows in and stands still; `still` is drawn grown, for scenery
- * shown on every page, where even the growing in would replay at each load.
+ * `grow` grows in and stands still; `still` is drawn grown, for small
+ * scenery where the growing in would only distract.
  */
 export type PlantMotion = 'sway' | 'grow' | 'still'
 

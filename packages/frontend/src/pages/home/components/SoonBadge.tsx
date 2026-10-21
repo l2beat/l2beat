@@ -1,6 +1,6 @@
 import { cn } from '~/utils/cn'
 
-/** A section that is not out yet, beside its name in the nav and its menus. */
+/** A section that is not out yet, beside its name. */
 export function SoonBadge({ className }: { className?: string }) {
   return (
     <span

@@ -1,9 +1,4 @@
 import { CROP_COLUMNS, type CropKey } from '~/components/garden/crops'
-import {
-  type GardenFlower,
-  GardenFlowers,
-  GardenLandscape,
-} from '~/components/garden/GardenSky'
 import { GARDEN_PATH } from '~/pages/garden/paths'
 import { cn } from '~/utils/cn'
 import type { HomeCropsProject } from '../getHomeCropsProjects'
@@ -12,6 +7,7 @@ import {
   HOME_BANNER_TITLE_CLASS,
   HOME_TEXT,
 } from '../homeStyles'
+import { type GardenFlower, GardenFlowers, GardenLandscape } from './GardenSky'
 import { HomeCard } from './HomeCard'
 import { HomeStackedIcons } from './HomeStackedIcons'
 

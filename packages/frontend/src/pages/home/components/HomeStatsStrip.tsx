@@ -1,6 +1,4 @@
 import { formatInteger } from '@l2beat/shared-pure'
-import { SoonBadge } from '~/components/badge/SoonBadge'
-import { CropsMiniBanner } from '~/components/garden/CropsMiniBanner'
 import { env } from '~/env'
 import { ChevronIcon } from '~/icons/Chevron'
 import { L2Icon } from '~/icons/pages/L2'
@@ -8,7 +6,9 @@ import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { cn } from '~/utils/cn'
 import type { HomeProjectCounts } from '../getHomeProjectCounts'
+import { CropsMiniBanner } from './CropsMiniBanner'
 import { HomeCard } from './HomeCard'
+import { SoonBadge } from './SoonBadge'
 
 interface TileMetric {
   count: number
