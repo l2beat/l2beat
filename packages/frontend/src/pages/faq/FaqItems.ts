@@ -17,7 +17,7 @@ const items: { question: string; answer: string | string[] }[] = [
     answer: [
       '- **[Layer 2s](/layer2s/summary)** - risk analysis, Stages, value secured, activity, liveness and costs of Ethereum scaling projects.',
       '- **[Interop](/interop/summary)** - how value moves across chains: cross-chain volumes and flows, protocols compared by bridge type, token frameworks and intent bridges.',
-      '- **[Privacy](/privacy/summary)** - live balances, flows and privacy assessments of privacy protocols on Ethereum.',
+      '- **[Privacy](/privacy/summary)** - reviews of privacy protocols on Ethereum: what each one hides and from whom, anonymity sets, trusted setups and exit windows, alongside value locked, volume and deposit and withdrawal counts.',
       '- **[ZK Catalog](/zk-catalog)** - the ZK proving systems used by blockchain projects, including their trusted setups and onchain verifiers.',
     ],
   },
