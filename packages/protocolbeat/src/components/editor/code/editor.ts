@@ -21,7 +21,6 @@ import {
   EditorState,
   type Extension,
   type StateEffect,
-  Transaction,
 } from '@codemirror/state'
 import {
   drawSelection,
@@ -219,7 +218,7 @@ export class Editor {
       drawSelection(),
       bracketMatching(),
       highlightSelectionMatches({ highlightWordAroundCursor: true }),
-      history(),
+      historyCompartment.of(history()),
       centeredSearch,
       scrollPastEnd(),
       theme,
@@ -293,6 +292,10 @@ function restoreViewState(view: EditorView, cached: FileViewState) {
 
 // Replaces only the span that differs, so the cursor, folds and scroll
 // position outside of it survive.
+// Text set from outside, like a file loaded or saved, starts a new history,
+// as Monaco's setValue did, so undo never steps into text it did not record.
+const historyCompartment = new Compartment()
+
 function replaceContent(view: EditorView, content: string) {
   const current = view.state.doc.toString()
   if (current === content) {
@@ -320,6 +323,7 @@ function replaceContent(view: EditorView, content: string) {
       to: current.length - suffixLength,
       insert: content.slice(prefixLength, content.length - suffixLength),
     },
-    annotations: Transaction.addToHistory.of(false),
+    effects: historyCompartment.reconfigure([]),
   })
+  view.dispatch({ effects: historyCompartment.reconfigure(history()) })
 }
