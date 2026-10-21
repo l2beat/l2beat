@@ -8,12 +8,11 @@ interface DiffEditorComponentProps {
 }
 
 export function DiffEditorComponent({ editorKey }: DiffEditorComponentProps) {
-  const monacoEl = useRef<HTMLDivElement>(null)
-  const resizeObserverRef = useRef<ResizeObserver | null>(null)
+  const editorElement = useRef<HTMLDivElement>(null)
   const { setDiffEditor, getDiffEditor, removeDiffEditor } = useCodeStore()
 
   useEffect(() => {
-    const element = monacoEl.current
+    const element = editorElement.current
 
     if (!element) {
       return
@@ -34,18 +33,16 @@ export function DiffEditorComponent({ editorKey }: DiffEditorComponentProps) {
 
     setDiffEditor(editorKey, editor)
 
-    const resizeObserver = new ResizeObserver(() => {
-      editor.resize()
-    })
-    resizeObserver.observe(element)
-    resizeObserverRef.current = resizeObserver
-
     return () => {
-      resizeObserver.disconnect()
       editor.dispose()
       removeDiffEditor(editorKey)
     }
   }, [editorKey, setDiffEditor, getDiffEditor, removeDiffEditor])
 
-  return <div className="h-full w-full" ref={monacoEl} />
+  return (
+    <div
+      className="min-h-0 w-full flex-1 bg-coffee-900 [&>.cm-mergeView]:h-full"
+      ref={editorElement}
+    />
+  )
 }

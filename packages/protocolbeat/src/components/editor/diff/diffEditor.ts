@@ -1,15 +1,43 @@
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
-import 'monaco-editor/esm/vs/editor/edcore.main'
-import 'monaco-editor/esm/vs/language/json/monaco.contribution'
-
-import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
-import { cyrb64 } from '../hashes/cyrb-hash'
-import { EditorPluginStore } from '../pluginStore'
+import { MergeView } from '@codemirror/merge'
+import { highlightSelectionMatches, searchKeymap } from '@codemirror/search'
 import {
-  getSharedDiffProvider,
-  type LineRange,
-  type LineRangeMapping,
-} from './customDiffProvider'
+  EditorState,
+  type Extension,
+  type Range,
+  RangeSet,
+  type Text,
+} from '@codemirror/state'
+import {
+  Decoration,
+  drawSelection,
+  EditorView,
+  GutterMarker,
+  gutterLineClass,
+  keymap,
+  lineNumbers,
+} from '@codemirror/view'
+import { assert } from '@l2beat/shared-pure'
+import { cyrb64 } from '../hashes/cyrb-hash'
+import { indentGuides } from '../indentGuides'
+import { solidity } from '../languages/solidity'
+import {
+  type EditorPlugin,
+  type EditorPluginClass,
+  EditorPluginStore,
+} from '../plugin'
+import { centeredSearch } from '../search'
+import { theme } from '../theme'
+import {
+  clearCollapseEffect,
+  collapseEffect,
+  collapseUnchanged,
+  collapsibleRegions,
+  expandEffect,
+  type UnchangedRegion,
+} from './collapseUnchanged'
+import { type ComputedDiff, computeDiff } from './computeDiff'
+import { diffTheme } from './diffTheme'
+import type { LineRange, LineRangeMapping } from './utils/diffFilter'
 
 export interface Change {
   readonly left: [number, number]
@@ -22,191 +50,111 @@ export interface Diff {
   changes: Change[]
 }
 
-export class DiffEditor extends EditorPluginStore<'diff'> {
-  private models: Record<string, editor.IDiffEditorModel | null> = {}
-  private viewStates: Record<string, editor.IDiffEditorViewState | null> = {}
-  private currentCodeHash = ''
+interface Disposable {
+  dispose(): void
+}
+
+// The merge view diffs once when created and again on edits, so a change to
+// the texts or to the comment filter builds a new one. Both happen rarely.
+export class DiffEditor {
+  private mergeView: MergeView | undefined
+  private readonly plugins = new EditorPluginStore<DiffEditor>(this)
+  private readonly buildListeners = new Set<() => void>()
+  private readonly diffListeners = new Set<(diff: Diff) => void>()
+  private texts: { left: string; right: string } | undefined
+  private ignoreComments = false
+  private folding = false
+  private lastDiff: Diff | undefined
+  private unchangedRegions: UnchangedRegion[] = []
+  // Where each kept change starts on the right side. The merge view's chunks
+  // also hold filtered out changes, so navigation goes by these instead.
+  private changeStarts: number[] = []
+  // Scroll position per pair of texts, to come back to after a toggle.
+  private readonly scrollTops = new Map<string, number>()
+  private builtTextsKey: string | undefined
+  private buildScheduled = false
   private disposed = false
-  private originalAlignmentZoneIds = new Set<string>()
-  private modifiedAlignmentZoneIds = new Set<string>()
 
-  constructor(element: HTMLElement) {
-    super(element, 'diff')
-    // Hide our alignment zones from Monaco's diff-alignment computation.
-    // `getAdditionalLineHeights` (diffEditorViewZones.js:500) walks the
-    // inner editor's getWhitespaces() and treats anything not in its
-    // private ignore-set as content needing compensation on the other
-    // side. Since the public ignore-set isn't reachable, we filter our
-    // IDs out at the API boundary instead. The inner editor's own
-    // rendering/layout uses viewLayout.getWhitespaces() directly
-    // (codeEditorWidget.js:388) and is unaffected.
-    this.shadowGetWhitespaces(
-      this.editor.getOriginalEditor(),
-      this.originalAlignmentZoneIds,
-    )
-    this.shadowGetWhitespaces(
-      this.editor.getModifiedEditor(),
-      this.modifiedAlignmentZoneIds,
-    )
-    this.trackDisposable(
-      this.editor.onDidUpdateDiff(() => this.syncAlignmentZones()),
-    )
+  constructor(private readonly element: HTMLElement) {}
+
+  get view(): MergeView | undefined {
+    return this.mergeView
   }
 
-  private shadowGetWhitespaces(
-    innerEditor: monaco.editor.ICodeEditor,
-    ourIds: Set<string>,
-  ) {
-    const target = innerEditor as unknown as {
-      getWhitespaces: () => {
-        id: string
-        afterLineNumber: number
-        height: number
-      }[]
-    }
-    const original = target.getWhitespaces.bind(target)
-    target.getWhitespaces = () => original().filter((w) => !ourIds.has(w.id))
+  usePlugin<V extends EditorPlugin>(clazz: EditorPluginClass<DiffEditor, V>) {
+    // Plugins join the views when the merge view is built.
+    assert(this.texts === undefined, 'Plugin added after the texts')
+    this.plugins.add(clazz)
   }
 
-  setDiff(codeLeft: string, codeRight: string) {
-    // See Editor.setFile: a remount can drive the previous, already-disposed
-    // editor instance, which throws "InstantiationService has been disposed".
-    if (this.disposed) {
+  getPlugin<V extends EditorPlugin>(clazz: EditorPluginClass<DiffEditor, V>) {
+    return this.plugins.get(clazz)
+  }
+
+  // Settings arrive one React effect at a time, so the build waits for all
+  // of them instead of diffing once per setting.
+  setDiff(left: string, right: string) {
+    if (this.texts?.left === left && this.texts.right === right) {
       return
     }
-    const currentModel = this.editor.getModel()
+    this.texts = { left, right }
+    this.scheduleBuild()
+  }
 
-    if (currentModel) {
-      this.models[this.currentCodeHash] = currentModel
-      this.viewStates[this.currentCodeHash] = this.editor.saveViewState()
+  setIgnoreComments(ignoreComments: boolean) {
+    if (this.ignoreComments === ignoreComments) {
+      return
     }
-
-    const newCodeHash = cyrb64(cyrb64(codeLeft) + cyrb64(codeRight))
-    this.currentCodeHash = newCodeHash
-
-    if (this.models[newCodeHash] === undefined) {
-      this.models[newCodeHash] = {
-        original: monaco.editor.createModel(codeLeft, 'solidity'),
-        modified: monaco.editor.createModel(codeRight, 'solidity'),
-      }
-    }
-
-    this.editor.setModel(this.models[newCodeHash] ?? null)
-    this.editor.restoreViewState(this.viewStates[newCodeHash] ?? null)
+    this.ignoreComments = ignoreComments
+    this.scheduleBuild()
   }
 
-  onComputedDiff(listener: (diff: Diff) => void): monaco.IDisposable {
-    const disposable = this.editor.onDidUpdateDiff(() => {
-      const lineChanges = this.editor.getLineChanges() ?? []
-      let deletions = 0
-      let additions = 0
-
-      const changes: Change[] = []
-      for (const c of lineChanges) {
-        changes.push({
-          left: [c.originalStartLineNumber, c.originalEndLineNumber],
-          right: [c.modifiedStartLineNumber, c.modifiedEndLineNumber],
-        })
-
-        if (c.originalEndLineNumber > 0) {
-          deletions += c.originalEndLineNumber - c.originalStartLineNumber + 1
-        }
-        if (c.modifiedEndLineNumber > 0) {
-          additions += c.modifiedEndLineNumber - c.modifiedStartLineNumber + 1
-        }
-      }
-
-      listener({ deletions, additions, changes })
-    })
-
-    return this.trackDisposable(disposable)
-  }
-
-  resize() {
-    this.editor.layout()
-  }
-
+  // Keeps the line at the top of the view in place, or the bar that hides
+  // it. Scrolling by position would also scroll sideways to a bar, which is
+  // as wide as the longest line.
   setFolding(folding: boolean) {
-    this.editor.updateOptions({
-      hideUnchangedRegions: {
-        enabled: folding,
+    this.folding = folding
+    const mergeView = this.mergeView
+    if (mergeView === undefined) {
+      return
+    }
+    const scroller = mergeView.dom
+    const view = mergeView.b
+    const topPosition = view.lineBlockAtHeight(
+      scroller.getBoundingClientRect().top - view.documentTop,
+    ).from
+    this.applyFolding()
+    view.requestMeasure({
+      read: () =>
+        view.documentTop -
+        scroller.getBoundingClientRect().top +
+        scroller.scrollTop +
+        view.lineBlockAt(topPosition).top,
+      write: (scrollTop) => {
+        scroller.scrollTop = scrollTop
       },
     })
   }
 
+  onComputedDiff(listener: (diff: Diff) => void): Disposable {
+    this.diffListeners.add(listener)
+    if (this.lastDiff !== undefined) {
+      listener(this.lastDiff)
+    }
+    return { dispose: () => this.diffListeners.delete(listener) }
+  }
+
+  onBuild(listener: () => void): Disposable {
+    this.buildListeners.add(listener)
+    return { dispose: () => this.buildListeners.delete(listener) }
+  }
+
   toNextDiff() {
-    this.editor.goToDiff('next')
+    this.goToChange(1)
   }
 
   toPreviousDiff() {
-    this.editor.goToDiff('previous')
-  }
-
-  // For each filtered range, add a view zone on the side with fewer lines
-  // so Monaco's alignment for the kept changes still lines up. This covers
-  // fully dropped changes and the lead/trail slices around a narrowed change.
-  // Monaco listens to onDidChangeViewZones and re-runs its alignment pass
-  // when our zones land (diffEditorViewZones.js:64-69).
-  private syncAlignmentZones() {
-    const model = this.editor.getModel()
-    if (!model) {
-      return
-    }
-
-    const alignmentGaps = getSharedDiffProvider().getAlignmentGaps(
-      model.modified,
-    )
-
-    this.padShorterSide(
-      this.editor.getOriginalEditor(),
-      this.originalAlignmentZoneIds,
-      alignmentGaps,
-      (d) => d.original,
-      (d) => d.modified,
-    )
-    this.padShorterSide(
-      this.editor.getModifiedEditor(),
-      this.modifiedAlignmentZoneIds,
-      alignmentGaps,
-      (d) => d.modified,
-      (d) => d.original,
-    )
-  }
-
-  private padShorterSide(
-    innerEditor: monaco.editor.ICodeEditor,
-    ourIds: Set<string>,
-    gaps: readonly LineRangeMapping[],
-    hereSide: (d: LineRangeMapping) => LineRange,
-    otherSide: (d: LineRangeMapping) => LineRange,
-  ) {
-    innerEditor.changeViewZones((accessor) => {
-      for (const id of ourIds) {
-        accessor.removeZone(id)
-      }
-      ourIds.clear()
-      for (const gap of gaps) {
-        const here = hereSide(gap)
-        const other = otherSide(gap)
-        const delta =
-          other.endLineNumberExclusive -
-          other.startLineNumber -
-          (here.endLineNumberExclusive - here.startLineNumber)
-        if (delta <= 0) {
-          continue
-        }
-        const domNode = document.createElement('div')
-        domNode.className = 'diagonal-fill'
-        const id = accessor.addZone({
-          afterLineNumber: here.endLineNumberExclusive - 1,
-          heightInLines: delta,
-          domNode,
-          showInHiddenAreas: true,
-          suppressMouseDown: true,
-        })
-        ourIds.add(id)
-      }
-    })
+    this.goToChange(-1)
   }
 
   dispose() {
@@ -214,16 +162,234 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
       return
     }
     this.disposed = true
-    Object.values(this.models).forEach((model) => {
-      if (model) {
-        model.original.dispose()
-        model.modified.dispose()
+    this.diffListeners.clear()
+    this.buildListeners.clear()
+    this.plugins.dispose()
+    this.mergeView?.destroy()
+    this.mergeView = undefined
+  }
+
+  // Moves the cursor of the right side to the next or previous change,
+  // wrapping around, and centers it like Monaco does.
+  private goToChange(direction: 1 | -1) {
+    const mergeView = this.mergeView
+    if (mergeView === undefined || this.changeStarts.length === 0) {
+      return
+    }
+    const view = mergeView.b
+    const head = view.state.selection.main.head
+    const target =
+      direction === 1
+        ? nextStart(this.changeStarts, head)
+        : previousStart(this.changeStarts, head)
+    view.dispatch({
+      selection: { anchor: target },
+      effects: EditorView.scrollIntoView(target, { y: 'center' }),
+    })
+  }
+
+  private scheduleBuild() {
+    if (this.buildScheduled) {
+      return
+    }
+    this.buildScheduled = true
+    queueMicrotask(() => {
+      this.buildScheduled = false
+      if (!this.disposed) {
+        this.build()
       }
     })
-    this.models = {}
-    this.viewStates = {}
-    this.disposeCallbacks()
-    this.disposePlugins()
-    this.editor.dispose()
   }
+
+  private build() {
+    const texts = this.texts
+    assert(texts !== undefined, 'Build without texts')
+    if (this.mergeView && this.builtTextsKey !== undefined) {
+      this.scrollTops.set(this.builtTextsKey, this.mergeView.dom.scrollTop)
+    }
+    this.mergeView?.destroy()
+    this.builtTextsKey = cyrb64(cyrb64(texts.left) + cyrb64(texts.right))
+
+    const computed = computeDiff(texts.left, texts.right, this.ignoreComments)
+    this.mergeView = new MergeView({
+      a: {
+        doc: texts.left,
+        extensions: this.sideExtensions(
+          filteredLines(computed.filteredChanges, 'original', texts.left),
+        ),
+      },
+      b: {
+        doc: texts.right,
+        extensions: this.sideExtensions(
+          filteredLines(computed.filteredChanges, 'modified', texts.right),
+        ),
+      },
+      parent: this.element,
+      gutter: true,
+      highlightChanges: true,
+      diffConfig: {
+        override: (left, right) => {
+          assert(left === texts.left && right === texts.right, 'Stale diff')
+          return computed.textChanges
+        },
+      },
+    })
+    const rightDoc = this.mergeView.b.state.doc
+    this.changeStarts = computed.lineChanges.map((change) =>
+      lineStart(rightDoc, change.modified.startLineNumber),
+    )
+    this.unchangedRegions = collapsibleRegions(
+      computed.lineChanges,
+      computed.filteredChanges,
+      this.mergeView.a.state.doc.lines,
+      this.mergeView.b.state.doc.lines,
+    )
+    this.applyFolding()
+    this.mergeView.dom.scrollTop = this.scrollTops.get(this.builtTextsKey) ?? 0
+
+    for (const listener of this.buildListeners) {
+      listener()
+    }
+    this.lastDiff = summarize(computed)
+    for (const listener of this.diffListeners) {
+      listener(this.lastDiff)
+    }
+  }
+
+  private applyFolding() {
+    const mergeView = this.mergeView
+    if (mergeView === undefined) {
+      return
+    }
+    const expand = (regionIndex: number) => {
+      mergeView.a.dispatch({ effects: expandEffect(regionIndex) })
+      mergeView.b.dispatch({ effects: expandEffect(regionIndex) })
+    }
+    const sides = [
+      [mergeView.a, 'original'],
+      [mergeView.b, 'modified'],
+    ] as const
+    for (const [view, side] of sides) {
+      view.dispatch({
+        effects: this.folding
+          ? collapseEffect(view.state, this.unchangedRegions, side, expand)
+          : clearCollapseEffect(),
+      })
+    }
+  }
+
+  private sideExtensions(filtered: Extension): Extension {
+    return [
+      lineNumbers(),
+      drawSelection(),
+      highlightSelectionMatches({ highlightWordAroundCursor: true }),
+      centeredSearch,
+      keymap.of(searchKeymap),
+      EditorState.readOnly.of(true),
+      solidity,
+      indentGuides,
+      theme,
+      diffTheme,
+      filtered,
+      collapseUnchanged,
+      this.plugins.extensions(),
+    ]
+  }
+}
+
+function lineStart(doc: Text, lineNumber: number): number {
+  return lineNumber > doc.lines ? doc.length : doc.line(lineNumber).from
+}
+
+function nextStart(starts: number[], position: number): number {
+  for (const start of starts) {
+    if (start > position) {
+      return start
+    }
+  }
+  return starts[0] as number
+}
+
+function previousStart(starts: number[], position: number): number {
+  for (let index = starts.length - 1; index >= 0; index--) {
+    const start = starts[index] as number
+    if (start < position) {
+      return start
+    }
+  }
+  return starts[starts.length - 1] as number
+}
+
+// Monaco's ILineChange shape, which the inline diff copy reads: line numbers
+// are inclusive, and an empty side has an end of 0 and a start on the line
+// before the change.
+function summarize(computed: ComputedDiff): Diff {
+  let deletions = 0
+  let additions = 0
+  const changes: Change[] = []
+  for (const change of computed.lineChanges) {
+    changes.push({
+      left: inclusiveLines(change.original),
+      right: inclusiveLines(change.modified),
+    })
+    deletions += lineCount(change.original)
+    additions += lineCount(change.modified)
+  }
+  return { deletions, additions, changes }
+}
+
+function inclusiveLines(range: LineRange): [number, number] {
+  if (lineCount(range) === 0) {
+    return [range.startLineNumber - 1, 0]
+  }
+  return [range.startLineNumber, range.endLineNumberExclusive - 1]
+}
+
+function lineCount(range: LineRange): number {
+  return range.endLineNumberExclusive - range.startLineNumber
+}
+
+// Filtered out changes are chunks to the merge view, so it keeps the sides
+// aligned around them. Their lines get a class that undoes the change
+// highlight.
+function filteredLines(
+  changes: LineRangeMapping[],
+  side: 'original' | 'modified',
+  text: string,
+): Extension {
+  const starts = lineStartOffsets(text)
+  const lines: Range<Decoration>[] = []
+  const gutterLines: Range<GutterMarker>[] = []
+  for (const change of changes) {
+    const range = change[side]
+    for (
+      let line = range.startLineNumber;
+      line < range.endLineNumberExclusive;
+      line++
+    ) {
+      const start = starts[line - 1] as number
+      lines.push(filteredLine.range(start))
+      gutterLines.push(filteredGutterLine.range(start))
+    }
+  }
+  return [
+    EditorView.decorations.of(Decoration.set(lines)),
+    gutterLineClass.of(RangeSet.of(gutterLines)),
+  ]
+}
+
+const filteredLine = Decoration.line({ class: 'cm-filteredLine' })
+
+const filteredGutterLine = new (class extends GutterMarker {
+  override elementClass = 'cm-filteredLine'
+})()
+
+function lineStartOffsets(text: string): number[] {
+  const starts: number[] = []
+  let start = 0
+  for (const line of text.split('\n')) {
+    starts.push(start)
+    start += line.length + 1
+  }
+  return starts
 }
