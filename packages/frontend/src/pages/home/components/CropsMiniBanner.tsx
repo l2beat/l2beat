@@ -48,7 +48,7 @@ export function CropsMiniBanner({
       </GardenLandscape>
       <span className="relative flex min-w-0 flex-col gap-1">
         <span className="font-semibold text-sm leading-none">CROPS</span>
-        <span className="truncate font-roboto-serif text-secondary text-xs leading-none">
+        <span className="truncate text-secondary text-xs leading-none">
           The Infinite Garden
         </span>
       </span>
