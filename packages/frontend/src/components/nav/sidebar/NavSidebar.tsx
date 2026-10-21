@@ -26,6 +26,7 @@ import {
 import { DarkThemeToggle } from '../../DarkThemeToggle'
 import { Logo } from '../../Logo'
 import { SocialLinks } from '../../SocialLinks'
+import { NavWhatsNew } from '../../whats-new/NavWhatsNew'
 import { MobileNavTriggerClose } from '../mobile/MobileNavTrigger'
 import type { NavGroup, NavLink } from '../types'
 
@@ -99,6 +100,7 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
             </SidebarGroupItem>
           ))}
         </SidebarGroup>
+        <NavWhatsNew onNavigate={closeMobileSidebar} />
       </SidebarContent>
       <SidebarFooter>
         <div className="flex gap-2 lg:justify-between">

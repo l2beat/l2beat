@@ -194,6 +194,22 @@ function SidebarGroupItem({
   )
 }
 
+/** A small heading over a nav group, e.g. "What's new". */
+function SidebarGroupLabel({
+  className,
+  ...props
+}: React.ComponentProps<'span'>) {
+  return (
+    <span
+      className={cn(
+        'pl-1.5 font-medium text-label-value-13 text-secondary',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
 function SidebarGroupLink({
   isActive = false,
   className,
@@ -302,6 +318,7 @@ export {
   SidebarGroupLink,
   SidebarGroupSmallLink,
   SidebarGroupItem,
+  SidebarGroupLabel,
   SidebarGroupSub,
   SidebarGroupSubButton,
   SidebarGroupSubLink,

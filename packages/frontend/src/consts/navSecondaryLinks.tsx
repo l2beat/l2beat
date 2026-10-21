@@ -1,6 +1,5 @@
 import compact from 'lodash/compact'
 import { HiringBadge } from '~/components/badge/HiringBadge'
-import { ChangelogUnreadBadge } from '~/components/changelog/ChangelogUnreadBadge'
 import type { NavLink } from '~/components/nav/types'
 import { externalLinks } from '~/consts/externalLinks'
 import { env } from '~/env'
@@ -17,7 +16,6 @@ export const navSecondaryLinks: NavLink[] = compact([
   {
     title: 'Changelog',
     href: '/changelog',
-    accessory: <ChangelogUnreadBadge />,
   },
   {
     title: 'Forum',
