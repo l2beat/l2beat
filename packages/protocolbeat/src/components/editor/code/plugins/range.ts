@@ -1,5 +1,11 @@
-import { EditorSelection, StateEffect, StateField } from '@codemirror/state'
-import { Decoration, type DecorationSet, EditorView } from '@codemirror/view'
+import { EditorSelection, StateEffect } from '@codemirror/state'
+import {
+  Decoration,
+  type DecorationSet,
+  EditorView,
+  ViewPlugin,
+  type ViewUpdate,
+} from '@codemirror/view'
 import colors from '../../../../colors.json'
 import type { EditorPlugin } from '../../plugin'
 
@@ -7,24 +13,30 @@ const setHighlight = StateEffect.define<{ from: number; to: number } | null>()
 
 const highlightMark = Decoration.mark({ class: 'cm-range-highlight' })
 
-const highlightField = StateField.define<DecorationSet>({
-  create: () => Decoration.none,
-  update(highlight, transaction) {
-    let next = highlight.map(transaction.changes)
-    for (const effect of transaction.effects) {
-      if (effect.is(setHighlight)) {
-        next =
-          effect.value === null || effect.value.from === effect.value.to
-            ? Decoration.none
-            : Decoration.set(
-                highlightMark.range(effect.value.from, effect.value.to),
-              )
+// A view plugin rather than a state field: switching files swaps the state
+// and recreates view plugins, so a highlight never outlives its file's tab.
+const highlighter = ViewPlugin.fromClass(
+  class {
+    decorations: DecorationSet = Decoration.none
+
+    update(update: ViewUpdate) {
+      this.decorations = this.decorations.map(update.changes)
+      for (const transaction of update.transactions) {
+        for (const effect of transaction.effects) {
+          if (effect.is(setHighlight)) {
+            this.decorations =
+              effect.value === null || effect.value.from === effect.value.to
+                ? Decoration.none
+                : Decoration.set(
+                    highlightMark.range(effect.value.from, effect.value.to),
+                  )
+          }
+        }
       }
     }
-    return next
   },
-  provide: (field) => EditorView.decorations.from(field),
-})
+  { decorations: (plugin) => plugin.decorations },
+)
 
 // An outline, unlike a border, leaves the text where it is.
 const highlightTheme = EditorView.theme({
@@ -36,7 +48,7 @@ const highlightTheme = EditorView.theme({
 })
 
 export class RangeHighlightPlugin implements EditorPlugin {
-  readonly extension = [highlightField, highlightTheme]
+  readonly extension = [highlighter, highlightTheme]
   private highlightTimeout: ReturnType<typeof setTimeout> | null = null
 
   constructor(readonly view: EditorView) {}
