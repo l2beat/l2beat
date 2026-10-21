@@ -40,8 +40,7 @@ export function createCropAttestationsModule({
   const sync = new CropAttestationSync(
     {
       db,
-      chainId: source.chainId,
-      attester: attester.address,
+      source: { ...source, attester: attester.address },
       readCurrent: () =>
         readCurrentCropAttestation(rpc, {
           eas: source.eas,

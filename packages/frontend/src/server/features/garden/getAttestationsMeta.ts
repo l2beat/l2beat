@@ -1,5 +1,4 @@
 import {
-  CROP_ATTESTATION_SOURCE,
   type CropsAttestationsMeta,
   getCropsAttestationsMeta,
 } from '@l2beat/config'
@@ -13,20 +12,16 @@ export type { CropsAttestationsMeta }
  * The attester's current attestation, as the backend last read it from EAS.
  * Only the projects it names count as reviewed: a CROPS evaluation in config
  * that no attestation names yet is not shown.
+ * Stamped with the source the backend read it from, not this build's config,
+ * so after a source change it shows the previous attestation, not nothing,
+ * until the backend switches.
  */
 export async function getAttestationsMeta(): Promise<CropsAttestationsMeta> {
   if (env.MOCK) {
     return getMockAttestationsMeta()
   }
-  const source = CROP_ATTESTATION_SOURCE
-  if (!source.attester) {
-    return getCropsAttestationsMeta(undefined)
-  }
-  const record = await getDb().cropAttestation.find(
-    source.chainId,
-    source.attester.address,
-  )
-  return getCropsAttestationsMeta(record)
+  const record = await getDb().cropAttestation.findCurrent()
+  return getCropsAttestationsMeta(record, record)
 }
 
 /** Without a database, every project with an evaluation reads as attested. */

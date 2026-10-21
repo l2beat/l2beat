@@ -3,11 +3,24 @@ import type { Database } from '@l2beat/database'
 import type { CropAttestation } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { CropAttestationSync } from './CropAttestationSync'
+import {
+  CropAttestationSync,
+  type CropAttestationSyncSource,
+  createCropAttestationConfigId,
+} from './CropAttestationSync'
 import type { CropsApiDeployer } from './CropsApiDeployer'
 
-const CHAIN_ID = 1
-const ATTESTER = '0x19BEC50A4e61B0e1540C37cEB3F62f56AAfb74DB'
+const SOURCE: CropAttestationSyncSource = {
+  network: 'ethereum',
+  chainId: 1,
+  eas: '0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587',
+  explorer: 'https://easscan.org',
+  schema: 'string[] projectIds,uint64 reviewedAt,uint32 revision',
+  schemaUid:
+    '0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb',
+  attester: '0x19BEC50A4e61B0e1540C37cEB3F62f56AAfb74DB',
+}
+const CONFIG_ID = createCropAttestationConfigId(SOURCE)
 
 const CURRENT: CropAttestation = {
   uid: '0x2f31d8c9018e2718ea82f4df9612ff7f95534cd0f41d44337f5d75e92adad112',
@@ -19,9 +32,10 @@ const CURRENT: CropAttestation = {
 }
 
 describe(CropAttestationSync.name, () => {
-  it('stores the current attestation of the configured attester', async () => {
+  it('stores the current attestation with its source', async () => {
     const repository = mockObject<Database['cropAttestation']>({
       upsert: mockFn().resolvesTo(undefined),
+      deleteAllExcept: mockFn().resolvesTo(0),
     })
     const sync = createSync(repository, async () => CURRENT)
 
@@ -29,8 +43,8 @@ describe(CropAttestationSync.name, () => {
     await sync.run()
 
     expect(repository.upsert).toHaveBeenOnlyCalledWith({
-      chainId: CHAIN_ID,
-      attester: ATTESTER,
+      configId: CONFIG_ID,
+      ...SOURCE,
       uid: CURRENT.uid,
       revision: 1,
       reviewedAt: UnixTime(1792022400),
@@ -45,18 +59,32 @@ describe(CropAttestationSync.name, () => {
   it('removes the stored attestation when the attester has none', async () => {
     const repository = mockObject<Database['cropAttestation']>({
       delete: mockFn().resolvesTo(1),
+      deleteAllExcept: mockFn().resolvesTo(0),
     })
     const sync = createSync(repository, async () => undefined)
 
     await sync.run()
 
-    expect(repository.delete).toHaveBeenOnlyCalledWith(CHAIN_ID, ATTESTER)
+    expect(repository.delete).toHaveBeenOnlyCalledWith(CONFIG_ID)
+  })
+
+  it('removes the attestations of a previous source', async () => {
+    const repository = mockObject<Database['cropAttestation']>({
+      upsert: mockFn().resolvesTo(undefined),
+      deleteAllExcept: mockFn().resolvesTo(1),
+    })
+    const sync = createSync(repository, async () => CURRENT)
+
+    await sync.run()
+
+    expect(repository.deleteAllExcept).toHaveBeenOnlyCalledWith(CONFIG_ID)
   })
 
   it('keeps the stored attestation when the read fails', async () => {
     const repository = mockObject<Database['cropAttestation']>({
       upsert: mockFn().resolvesTo(undefined),
       delete: mockFn().resolvesTo(0),
+      deleteAllExcept: mockFn().resolvesTo(0),
     })
     const sync = createSync(repository, async () => {
       throw new Error('RPC down')
@@ -65,12 +93,14 @@ describe(CropAttestationSync.name, () => {
     await expect(sync.run()).toBeRejectedWith('RPC down')
     expect(repository.upsert).not.toHaveBeenCalled()
     expect(repository.delete).not.toHaveBeenCalled()
+    expect(repository.deleteAllExcept).not.toHaveBeenCalled()
   })
 
   it('has the CROPS API deployed with what it read', async () => {
     const repository = mockObject<Database['cropAttestation']>({
       upsert: mockFn().resolvesTo(undefined),
       delete: mockFn().resolvesTo(1),
+      deleteAllExcept: mockFn().resolvesTo(0),
     })
     const deployer = mockObject<CropsApiDeployer>({
       ensureDeployed: mockFn().resolvesTo(undefined),
@@ -95,8 +125,7 @@ function createSync(
   return new CropAttestationSync(
     {
       db: mockObject<Database>({ cropAttestation }),
-      chainId: CHAIN_ID,
-      attester: ATTESTER,
+      source: SOURCE,
       readCurrent,
       deployer,
       intervalMs: 1000,

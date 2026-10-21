@@ -62,17 +62,29 @@ export interface CropsAttestationsMeta {
   } | null
 }
 
+/**
+ * A source as the stamp shows it: the attester by address alone. The backend
+ * stores the one it read with each attestation.
+ */
+type CropsAttestationsMetaSource = Omit<CropAttestationSource, 'attester'> & {
+  attester: string | null
+}
+
+/** Stamped with the configured source unless told which one it was read from. */
 export function getCropsAttestationsMeta(
   current: CropAttestation | undefined,
+  source: CropsAttestationsMetaSource = {
+    ...CROP_ATTESTATION_SOURCE,
+    attester: CROP_ATTESTATION_SOURCE.attester?.address ?? null,
+  },
 ): CropsAttestationsMeta {
-  const source = CROP_ATTESTATION_SOURCE
   return {
     network: source.network,
     chainId: source.chainId,
     eas: source.eas,
     schemaUid: source.schemaUid,
     schema: source.schema,
-    attester: source.attester?.address ?? null,
+    attester: source.attester,
     current: current
       ? {
           uid: current.uid,
