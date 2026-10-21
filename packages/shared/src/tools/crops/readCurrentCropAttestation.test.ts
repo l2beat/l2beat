@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 import type { EVMLog } from '../../clients/rpc/types'
 import type { LogsTopicFilter } from '../../clients/types'
 import {
-  type CropAttestation,
+  type CropAttestationCandidate,
   type CropAttestationRpc,
   pickCurrentCropAttestation,
   readCurrentCropAttestation,
@@ -147,13 +147,18 @@ describe(readCurrentCropAttestation.name, () => {
 })
 
 describe(pickCurrentCropAttestation.name, () => {
-  const at = (revision: number, blockNumber: number): CropAttestation => ({
-    uid: uid(revision * 100 + blockNumber),
+  const at = (
+    revision: number,
+    blockNumber: number,
+    logIndex = 0,
+  ): CropAttestationCandidate => ({
+    uid: uid(revision * 100 + blockNumber * 10 + logIndex),
     revision,
     reviewedAt: 0,
     projectIds: [],
     txHash: '0x',
     blockNumber,
+    logIndex,
   })
 
   it('picks the highest revision, and the later one on a tie', () => {
@@ -161,6 +166,9 @@ describe(pickCurrentCropAttestation.name, () => {
       at(3, 6),
     )
     expect(pickCurrentCropAttestation([at(2, 9), at(2, 4)])).toEqual(at(2, 9))
+    expect(pickCurrentCropAttestation([at(2, 9, 3), at(2, 9, 7)])).toEqual(
+      at(2, 9, 7),
+    )
     expect(pickCurrentCropAttestation([])).toEqual(undefined)
   })
 })

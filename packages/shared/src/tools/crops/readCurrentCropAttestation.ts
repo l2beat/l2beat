@@ -66,7 +66,7 @@ export async function readCurrentCropAttestation(
     .split(',')
     .map((param) => param.trim().split(' ')[0])
 
-  const attestations: CropAttestation[] = []
+  const attestations: CropAttestationCandidate[] = []
   for (const log of logs) {
     const [uid] = utils.defaultAbiCoder.decode(['bytes32'], log.data)
     const raw = await rpc.call(
@@ -92,25 +92,39 @@ export async function readCurrentCropAttestation(
         ...payload,
         txHash: log.transactionHash,
         blockNumber: log.blockNumber,
+        logIndex: log.logIndex,
       })
     }
   }
-  return pickCurrentCropAttestation(attestations)
+  const current = pickCurrentCropAttestation(attestations)
+  if (!current) {
+    return undefined
+  }
+  const { logIndex: _, ...attestation } = current
+  return attestation
 }
 
-/** The highest revision wins; the later one breaks a tie. */
+/** Where in the chain it was attested, to order attestations of one revision. */
+export type CropAttestationCandidate = CropAttestation & { logIndex: number }
+
+/** The highest revision wins; the later one, by block then log, breaks a tie. */
 export function pickCurrentCropAttestation(
-  attestations: CropAttestation[],
-): CropAttestation | undefined {
-  return attestations.reduce<CropAttestation | undefined>(
-    (best, a) =>
-      !best ||
-      a.revision > best.revision ||
-      (a.revision === best.revision && a.blockNumber > best.blockNumber)
-        ? a
-        : best,
+  attestations: CropAttestationCandidate[],
+): CropAttestationCandidate | undefined {
+  return attestations.reduce<CropAttestationCandidate | undefined>(
+    (best, a) => (!best || isLater(a, best) ? a : best),
     undefined,
   )
+}
+
+function isLater(a: CropAttestationCandidate, b: CropAttestationCandidate) {
+  if (a.revision !== b.revision) {
+    return a.revision > b.revision
+  }
+  if (a.blockNumber !== b.blockNumber) {
+    return a.blockNumber > b.blockNumber
+  }
+  return a.logIndex > b.logIndex
 }
 
 function decodePayload(
