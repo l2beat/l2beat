@@ -26,27 +26,15 @@ import type {
   ApiTvlResponse,
 } from './types'
 
-export async function getProjects(): Promise<ApiProjectsResponse> {
-  const res = await fetch('/api/projects')
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiProjectsResponse
+export function getProjects(): Promise<ApiProjectsResponse> {
+  return fetchJson('/api/projects')
 }
 
-export async function getAddressUsage(): Promise<ApiAddressUsageResponse> {
-  const res = await fetch('/api/address-usage')
-  if (!res.ok) {
-    throw new Error('Failed to fetch address usage', {
-      cause: { status: res.status },
-    })
-  }
-  const data = await res.json()
-  return data as ApiAddressUsageResponse
+export function getAddressUsage(): Promise<ApiAddressUsageResponse> {
+  return fetchJson('/api/address-usage')
 }
 
-export async function getProject(
+export function getProject(
   project: string,
   maxDepth?: number,
 ): Promise<ApiProjectResponse> {
@@ -55,12 +43,7 @@ export async function getProject(
     params.set('maxDepth', String(maxDepth))
   }
   const qs = params.toString()
-  const res = await fetch(`/api/projects/${project}${qs ? `?${qs}` : ''}`)
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiProjectResponse
+  return fetchJson(`/api/projects/${project}${qs ? `?${qs}` : ''}`)
 }
 
 export async function getCode(
@@ -70,15 +53,10 @@ export async function getCode(
   if (!address) {
     return { entryName: undefined, sources: [] }
   }
-  const res = await fetch(`/api/projects/${project}/code/${address}`)
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiCodeResponse
+  return await fetchJson(`/api/projects/${project}/code/${address}`)
 }
 
-export async function getDefinition(
+export function getDefinition(
   project: string,
   address: string,
   sourceIndex: number,
@@ -89,16 +67,10 @@ export async function getDefinition(
     source: sourceIndex.toString(),
     offset: offset.toString(),
   })
-  const res = await fetch(`/api/projects/${project}/definition?${query}`)
-  if (!res.ok) {
-    throw new Error('Code lookup failed', {
-      cause: { status: res.status },
-    })
-  }
-  return (await res.json()) as ApiDefinitionResponse
+  return fetchJson(`/api/projects/${project}/definition?${query}`)
 }
 
-export async function getReferences(
+export function getReferences(
   project: string,
   address: string,
   sourceIndex: number,
@@ -109,16 +81,10 @@ export async function getReferences(
     source: sourceIndex.toString(),
     offset: offset.toString(),
   })
-  const res = await fetch(`/api/projects/${project}/references?${query}`)
-  if (!res.ok) {
-    throw new Error('Code lookup failed', {
-      cause: { status: res.status },
-    })
-  }
-  return (await res.json()) as ApiReferencesResponse
+  return fetchJson(`/api/projects/${project}/references?${query}`)
 }
 
-export async function searchCode(
+export function searchCode(
   project: string,
   searchTerm: string,
   address?: string,
@@ -126,29 +92,16 @@ export async function searchCode(
   const query = new URLSearchParams(
     withoutUndefinedKeys({ searchTerm, address }) as Record<string, string>,
   )
-
-  const url = `/api/projects/${project}/codeSearch?${query.toString()}`
-  const res = await fetch(url)
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiCodeSearchResponse
+  return fetchJson(`/api/projects/${project}/codeSearch?${query.toString()}`)
 }
 
-export async function getPreview(project: string): Promise<ApiPreviewResponse> {
-  const res = await fetch(`/api/projects/${project}/preview`)
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiPreviewResponse
+export function getPreview(project: string): Promise<ApiPreviewResponse> {
+  return fetchJson(`/api/projects/${project}/preview`)
 }
 
 // `top` bounds the sweep to that many tokens by market cap, so valuing many
 // addresses at once stays affordable.
-export async function getTvl(
+export function getTvl(
   address: string,
   top?: number,
   signal?: AbortSignal,
@@ -158,14 +111,9 @@ export async function getTvl(
     params.set('top', String(top))
   }
   const qs = params.toString()
-  const res = await fetch(`/api/projects/tvl/${address}${qs ? `?${qs}` : ''}`, {
+  return fetchJson(`/api/projects/tvl/${address}${qs ? `?${qs}` : ''}`, {
     signal,
   })
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiTvlResponse
 }
 
 export function executeDiscover(
@@ -196,13 +144,8 @@ export function executeDownloadAllShapes(): EventSource {
   return new EventSource('/api/terminal/download-all-shapes')
 }
 
-export async function listTemplates(): Promise<ApiListTemplatesResponse> {
-  const res = await fetch('/api/templates')
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiListTemplatesResponse
+export function listTemplates(): Promise<ApiListTemplatesResponse> {
+  return fetchJson('/api/templates')
 }
 
 export async function readTemplateFile(
@@ -211,16 +154,9 @@ export async function readTemplateFile(
   if (!templateId) {
     return { template: '', shapes: undefined, criteria: undefined }
   }
-
-  const res = await fetch(
+  return await fetchJson(
     `/api/template-files?templateId=${encodeURIComponent(templateId)}`,
   )
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-
-  return data as ApiTemplateFileResponse
 }
 
 export async function readConfigFile(
@@ -229,18 +165,10 @@ export async function readConfigFile(
   if (!project) {
     return { config: '' }
   }
-
-  const res = await fetch(`/api/config-files/${project}`)
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-
-  return data as ApiConfigFileResponse
+  return await fetchJson(`/api/config-files/${project}`)
 }
 
-export async function getDiffHistory(
+export function getDiffHistory(
   project: string,
   offset: number,
   limit: number,
@@ -249,12 +177,7 @@ export async function getDiffHistory(
     offset: String(offset),
     limit: String(limit),
   })
-  const res = await fetch(`/api/projects/${project}/diff-history?${params}`)
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiDiffHistoryResponse
+  return fetchJson(`/api/projects/${project}/diff-history?${params}`)
 }
 
 export async function listProjectLayouts(
@@ -290,41 +213,23 @@ export async function saveProjectLayout(
 ): Promise<ApiProjectLayoutResponse> {
   const res = await fetch(
     `/api/projects/${project}/layouts/${encodeURIComponent(name)}`,
-    {
-      method: 'PUT',
-      body: JSON.stringify({ layout, overwrite }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
+    jsonRequest('PUT', { layout, overwrite }),
   )
-
   if (!res.ok) {
     throw new Error(await readErrorMessage(res))
   }
-
   const data = await res.json()
   return data as ApiProjectLayoutResponse
 }
 
-export async function getConfigSyncStatus(
+export function getConfigSyncStatus(
   project: string,
 ): Promise<ApiConfigSyncStatusResponse> {
-  const res = await fetch(`/api/config/sync-status/${project}`)
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiConfigSyncStatusResponse
+  return fetchJson(`/api/config/sync-status/${project}`)
 }
 
-export async function getConfigHealth(): Promise<ApiConfigHealthResponse> {
-  const res = await fetch('/api/config/health')
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiConfigHealthResponse
+export function getConfigHealth(): Promise<ApiConfigHealthResponse> {
+  return fetchJson('/api/config/health')
 }
 
 export async function createConfigFile(
@@ -334,62 +239,35 @@ export async function createConfigFile(
   maxDepth?: number,
   maxAddresses?: number,
 ) {
-  const res = await fetch('/api/config-files', {
-    method: 'POST',
-    body: JSON.stringify({
+  const res = await fetch(
+    '/api/config-files',
+    jsonRequest('POST', {
       project,
       initialAddresses,
       overwrite,
       maxDepth,
       maxAddresses,
     }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-
+  )
   const data: ApiCreateConfigFileResponse = await res.json()
-
   if (!data.success) {
     throw new Error(data.error)
   }
 }
 
 export async function updateConfigFile(project: string, content: string) {
-  const res = await fetch(`/api/config-files/${project}`, {
-    method: 'PUT',
-    body: JSON.stringify({ content }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
+  await fetchOk(`/api/config-files/${project}`, jsonRequest('PUT', { content }))
 }
 
 export async function writeTemplateFile(templateId: string, content: string) {
-  const res = await fetch('/api/template-files', {
-    method: 'POST',
-    body: JSON.stringify({ templateId, content }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
+  await fetchOk(
+    '/api/template-files',
+    jsonRequest('POST', { templateId, content }),
+  )
 }
 
-export async function getHandlers(): Promise<ApiHandlersResponse> {
-  const res = await fetch('/api/handlers')
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiHandlersResponse
+export function getHandlers(): Promise<ApiHandlersResponse> {
+  return fetchJson('/api/handlers')
 }
 
 export async function getAnalyzers(): Promise<AnalyzersApiResponse> {
@@ -407,18 +285,13 @@ export async function runAnalyzer(
   analyzerId: string,
   entrypoint: string,
 ): Promise<AnalyzerResultApiResponse> {
-  const res = await fetch(`/api/projects/${project}/analyze/${address}`, {
-    method: 'POST',
-    body: JSON.stringify({ analyzerId, entrypoint }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-
+  const res = await fetch(
+    `/api/projects/${project}/analyze/${address}`,
+    jsonRequest('POST', { analyzerId, entrypoint }),
+  )
   if (!res.ok) {
     throw new Error(await readErrorMessage(res))
   }
-
   const data = await res.json()
   return AnalyzerResultApiResponse.parse(data)
 }
@@ -430,32 +303,26 @@ export async function createShape(
   templateId: string,
   fileName: string,
 ) {
-  const body = { chain, addresses, blockNumber, templateId, fileName }
-
-  const res = await fetch('/api/templates/create-shape', {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-
+  const res = await fetch(
+    '/api/templates/create-shape',
+    jsonRequest('POST', {
+      chain,
+      addresses,
+      blockNumber,
+      templateId,
+      fileName,
+    }),
+  )
   const data: ApiCreateShapeResponse = await res.json()
-
   if (!data.success) {
     throw new Error(data.error)
   }
 }
 
-export async function getFlatSource(
+export function getFlatSource(
   address: string,
 ): Promise<{ name: string; sources: Record<string, string> }> {
-  const res = await fetch(`/api/flat-sources/${address.toLowerCase()}`)
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as { name: string; sources: Record<string, string> }
+  return fetchJson(`/api/flat-sources/${address.toLowerCase()}`)
 }
 
 export function executeFindMinters(address: string): EventSource {
@@ -463,6 +330,50 @@ export function executeFindMinters(address: string): EventSource {
     address,
   })
   return new EventSource(`/api/terminal/find-minters?${params}`)
+}
+
+export async function updateModuleEntrypoints(
+  module: string,
+  change: { create: boolean; remove: string[] },
+) {
+  const res = await fetch(
+    `/api/modules/${module}/entrypoints`,
+    jsonRequest('POST', change),
+  )
+  if (!res.ok) {
+    throw new Error('Module entrypoints update failed', {
+      cause: { status: res.status, error: await readErrorMessage(res) },
+    })
+  }
+}
+
+export function getModules(): Promise<string[]> {
+  return fetchJson('/api/modules')
+}
+
+export function getStaleModuleConsumers(): Promise<string[]> {
+  return fetchJson('/api/modules/stale-consumers')
+}
+
+async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
+  const res = await fetchOk(url, init)
+  return (await res.json()) as T
+}
+
+async function fetchOk(url: string, init?: RequestInit): Promise<Response> {
+  const res = await fetch(url, init)
+  if (!res.ok) {
+    throw new Error('HTTP error', { cause: { url, status: res.status } })
+  }
+  return res
+}
+
+function jsonRequest(method: 'POST' | 'PUT', body: unknown): RequestInit {
+  return {
+    method,
+    body: JSON.stringify(body),
+    headers: { 'Content-Type': 'application/json' },
+  }
 }
 
 async function readErrorMessage(res: Response): Promise<string> {
@@ -476,40 +387,4 @@ async function readErrorMessage(res: Response): Promise<string> {
   } catch {
     return res.statusText
   }
-}
-
-export async function updateModuleEntrypoints(
-  module: string,
-  change: { create: boolean; remove: string[] },
-) {
-  const res = await fetch(`/api/modules/${module}/entrypoints`, {
-    method: 'POST',
-    body: JSON.stringify(change),
-    headers: { 'Content-Type': 'application/json' },
-  })
-  if (!res.ok) {
-    throw new Error('Module entrypoints update failed', {
-      cause: { status: res.status, error: await readErrorMessage(res) },
-    })
-  }
-}
-
-export async function getModules(): Promise<string[]> {
-  const res = await fetch('/api/modules')
-  if (!res.ok) {
-    throw new Error('Module list request failed', {
-      cause: { status: res.status },
-    })
-  }
-  return (await res.json()) as string[]
-}
-
-export async function getStaleModuleConsumers(): Promise<string[]> {
-  const res = await fetch('/api/modules/stale-consumers')
-  if (!res.ok) {
-    throw new Error('Stale module consumers request failed', {
-      cause: { status: res.status },
-    })
-  }
-  return (await res.json()) as string[]
 }
