@@ -4,8 +4,16 @@ import { BaseRepository } from '../BaseRepository'
 import type { CropAttestation } from '../kysely/generated/types'
 
 export interface CropAttestationRecord {
+  /** Hash of the source the attestation was read from. */
+  configId: string
+  network: string
   chainId: number
-  /** Lowercase. */
+  /** EAS contract address. */
+  eas: string
+  /** easscan host, no trailing slash. */
+  explorer: string
+  schemaUid: string
+  schema: string
   attester: string
   uid: string
   revision: number
@@ -27,23 +35,23 @@ function toRecord(row: Selectable<CropAttestation>): CropAttestationRecord {
 function toRow(record: CropAttestationRecord): Insertable<CropAttestation> {
   return {
     ...record,
-    attester: record.attester.toLowerCase(),
     reviewedAt: UnixTime.toDate(record.reviewedAt),
     updatedAt: UnixTime.toDate(record.updatedAt),
   }
 }
 
-/** One row per attester: its current attestation, which the backend replaces as it changes. */
+/**
+ * The current attestation of the backend's attestation source, with the source
+ * it was read from, so readers need no config of their own. The backend keeps
+ * only its current source's row, and replaces it as it changes.
+ */
 export class CropAttestationRepository extends BaseRepository {
-  async find(
-    chainId: number,
-    attester: string,
-  ): Promise<CropAttestationRecord | undefined> {
+  /** Newest first, in case a previous source's row is not removed yet. */
+  async findCurrent(): Promise<CropAttestationRecord | undefined> {
     const row = await this.db
       .selectFrom('CropAttestation')
       .selectAll()
-      .where('chainId', '=', chainId)
-      .where('attester', '=', attester.toLowerCase())
+      .orderBy('updatedAt', 'desc')
       .limit(1)
       .executeTakeFirst()
     return row && toRecord(row)
@@ -54,7 +62,7 @@ export class CropAttestationRepository extends BaseRepository {
       .insertInto('CropAttestation')
       .values(toRow(record))
       .onConflict((oc) =>
-        oc.columns(['chainId', 'attester']).doUpdateSet((eb) => ({
+        oc.column('configId').doUpdateSet((eb) => ({
           uid: eb.ref('excluded.uid'),
           revision: eb.ref('excluded.revision'),
           reviewedAt: eb.ref('excluded.reviewedAt'),
@@ -67,11 +75,19 @@ export class CropAttestationRepository extends BaseRepository {
       .execute()
   }
 
-  async delete(chainId: number, attester: string): Promise<number> {
+  async delete(configId: string): Promise<number> {
     const result = await this.db
       .deleteFrom('CropAttestation')
-      .where('chainId', '=', chainId)
-      .where('attester', '=', attester.toLowerCase())
+      .where('configId', '=', configId)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  /** Removes the rows of every other source, left behind when the source changes. */
+  async deleteAllExcept(configId: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('CropAttestation')
+      .where('configId', '!=', configId)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

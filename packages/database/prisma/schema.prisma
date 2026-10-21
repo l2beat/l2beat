@@ -561,9 +561,17 @@ model InteropTransfer {
   @@index([dstAbstractTokenId, timestamp(sort: Desc)])
 }
 
-/// The current CROPS attestation of each attester, as the backend last read it from EAS
+/// The current CROPS attestation, as the backend last read it from EAS, with the
+/// source it was read from. The backend keeps only its current source's row.
 model CropAttestation {
+  /// Hash of the source fields below, network to attester
+  configId    String   @db.VarChar(12)
+  network     String   @db.VarChar(255)
   chainId     Int
+  eas         String   @db.VarChar(42)
+  explorer    String   @db.VarChar(255)
+  schemaUid   String   @db.VarChar(66)
+  schema      String   @db.VarChar(255)
   attester    String   @db.VarChar(42)
   uid         String   @db.VarChar(66)
   revision    Int
@@ -574,7 +582,7 @@ model CropAttestation {
   /// When the backend last read it, so a stalled read is visible
   updatedAt   DateTime @db.Timestamp(6)
 
-  @@id([chainId, attester])
+  @@id([configId])
 }
 
 model EcosystemToken {
