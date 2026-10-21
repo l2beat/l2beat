@@ -216,6 +216,7 @@ export class Editor {
       highlightSpecialChars(),
       indentGuides,
       drawSelection(),
+      EditorState.allowMultipleSelections.of(true),
       bracketMatching(),
       highlightSelectionMatches({ highlightWordAroundCursor: true }),
       historyCompartment.of(history()),
