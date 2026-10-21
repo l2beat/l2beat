@@ -10,10 +10,11 @@ export async function getIntegrateCropsData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const [appLayoutProps, examples, attestations] = await Promise.all([
+  // One read, so the examples and the attestation section show the same one.
+  const attestations = await getAttestationsMeta()
+  const [appLayoutProps, examples] = await Promise.all([
     getAppLayoutProps(),
-    getIntegrateExamples(),
-    getAttestationsMeta(),
+    getIntegrateExamples(attestations),
   ])
   return {
     head: {
