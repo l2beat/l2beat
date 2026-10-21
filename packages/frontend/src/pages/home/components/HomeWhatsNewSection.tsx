@@ -1,10 +1,10 @@
 import { pluralize } from '@l2beat/shared-pure'
-import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { formatPublicationDate } from '~/utils/dates'
 import type { HomeRecentProject } from '../getHomeData'
 import type { HomeResearchItem } from '../getHomeResearch'
 import {
+  HOME_BANNER_CLASS,
   HOME_BANNER_TITLE_CLASS,
   HOME_ICON_CLASS,
   HOME_ROW_CLASS,
@@ -55,7 +55,8 @@ export function HomeWhatsNewProjects({
 }
 
 /**
- * Project changes of the last 7 days: the whole card opens the list of them,
+ * Project changes of the last 7 days, as a banner like the garden and the
+ * mandate, with a diff in the corner: the whole card opens the list of them,
  * its icons a glimpse of which projects changed.
  */
 export function HomeProjectChangesSection({
@@ -67,55 +68,52 @@ export function HomeProjectChangesSection({
   projects: HomeRecentChangesProject[]
   className?: string
 }) {
-  const title = (
-    <span className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
-      <h2 className={cn(HOME_TEXT.title, HOME_BANNER_TITLE_CLASS)}>
-        Project changes
-      </h2>
-      <span className={HOME_TEXT.subtitle}>Last 7 days</span>
-    </span>
+  const content = (
+    <>
+      {/* Lifts toward the reader on hover, like the mandate. */}
+      <ChangesSheet className="-bottom-6 group-hover:-translate-y-1.5 pointer-events-none absolute right-1 w-24 rotate-[6deg] transition-[rotate,translate] duration-300 ease-out group-hover:rotate-[3deg] lg:w-28" />
+      <div className="relative flex flex-col gap-1.5">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <h2
+            className={cn(
+              HOME_TEXT.title,
+              count > 0 && HOME_BANNER_TITLE_CLASS,
+            )}
+          >
+            Project changes
+          </h2>
+          {count > 0 && (
+            <span className="flex items-center gap-2">
+              <HomeStackedIcons items={projects} max={CHANGED_PROJECT_ICONS} />
+              <span className={HOME_TEXT.meta}>
+                {projects.length} {pluralize(projects.length, 'project')}
+              </span>
+            </span>
+          )}
+        </div>
+        <p className={cn('max-w-[62%]', HOME_TEXT.body)}>
+          {count > 0
+            ? `${count} ${pluralize(count, 'change')} handled in the last 7 days.`
+            : 'None handled in the last 7 days.'}
+        </p>
+      </div>
+    </>
   )
   if (count === 0) {
     return (
-      <HomeCard
-        className={cn('flex items-center justify-between gap-3', className)}
-      >
-        {title}
-        <span className={HOME_TEXT.meta}>None this week</span>
+      <HomeCard className={cn(HOME_BANNER_CLASS, className)}>
+        {content}
       </HomeCard>
     )
   }
-  const rest = projects.length - CHANGED_PROJECT_ICONS
   return (
     <RecentChangesDialog
       trigger={
         <HomeCard
           asChild
-          className={cn(
-            'group flex w-full items-center gap-3 text-left',
-            className,
-          )}
+          className={cn(HOME_BANNER_CLASS, 'w-full text-left', className)}
         >
-          <button type="button">
-            {title}
-            <span className="sr-only">
-              {count} {pluralize(count, 'change')} in {projects.length}{' '}
-              {pluralize(projects.length, 'project')}
-            </span>
-            <span className="ml-auto flex shrink-0 items-center gap-1.5">
-              <HomeStackedIcons
-                items={projects}
-                max={CHANGED_PROJECT_ICONS}
-                className="size-6"
-              />
-              {rest > 0 && (
-                <span className="font-semibold text-label-value-15 tabular-nums">
-                  +{rest}
-                </span>
-              )}
-            </span>
-            <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-colors group-hover:fill-primary" />
-          </button>
+          <button type="button">{content}</button>
         </HomeCard>
       }
     />
@@ -123,6 +121,97 @@ export function HomeProjectChangesSection({
 }
 
 const CHANGED_PROJECT_ICONS = 3
+
+/** The sheet's rows: [y, width, kind], as in a diff. */
+const DIFF_LINES = [
+  [48, 74, 'same'],
+  [64, 96, 'removed'],
+  [80, 82, 'removed'],
+  [96, 104, 'added'],
+  [112, 88, 'added'],
+  [128, 66, 'same'],
+  [144, 92, 'same'],
+] as const
+
+const DIFF_CLASSES = {
+  same: { row: '', line: 'fill-surface-tertiary' },
+  removed: { row: 'fill-negative/12', line: 'fill-negative/55' },
+  added: { row: 'fill-positive/12', line: 'fill-positive/55' },
+}
+
+/** A file changed: two lines out, two lines in. */
+function ChangesSheet({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 180 170"
+      aria-hidden
+      className={cn('overflow-visible', className)}
+    >
+      <rect
+        x="26"
+        y="14"
+        width="140"
+        height="164"
+        rx="8"
+        className="fill-surface-secondary"
+      />
+      {/* The file's name. */}
+      <path
+        d="M26 22a8 8 0 0 1 8-8h124a8 8 0 0 1 8 8v14H26z"
+        className="fill-surface-tertiary"
+      />
+      <rect
+        x="38"
+        y="22.5"
+        width="48"
+        height="5"
+        rx="2.5"
+        className="fill-surface-secondary"
+      />
+      {DIFF_LINES.map(([y, width, kind]) => (
+        <g key={y}>
+          {kind !== 'same' && (
+            <>
+              <rect
+                x="26"
+                y={y - 5}
+                width="140"
+                height="15"
+                className={DIFF_CLASSES[kind].row}
+              />
+              <rect
+                x="35"
+                y={y + 1.25}
+                width="7"
+                height="2.5"
+                rx="1.25"
+                className={DIFF_CLASSES[kind].line}
+              />
+            </>
+          )}
+          {kind === 'added' && (
+            <rect
+              x="37.25"
+              y={y - 1}
+              width="2.5"
+              height="7"
+              rx="1.25"
+              className={DIFF_CLASSES[kind].line}
+            />
+          )}
+          <rect
+            x="50"
+            y={y}
+            width={width}
+            height="5"
+            rx="2.5"
+            className={DIFF_CLASSES[kind].line}
+          />
+        </g>
+      ))}
+    </svg>
+  )
+}
 
 /** Our latest research, as on the Research tab of /publications. */
 export function HomeLatestArticlesSection({
