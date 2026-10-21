@@ -94,7 +94,7 @@ export const molten: ScalingProject = orbitStackL3({
       url: 'https://arbiscan.io/tx/0x9a8ae683e857b80a843f7f071b0f831ac8162c6ac2c09fd9a8a514809d80c7af',
       date: '2024-11-13T00:00:00Z',
       description:
-        'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge',
+        'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge.',
       type: 'general',
     },
   ],

@@ -1217,6 +1217,7 @@ export type PrivacyCategoryId =
   | 'shieldedLedger'
   | 'stealthAddress'
   | 'confidentialAmounts'
+  | 'secretBallot'
 
 export interface PrivacyCategory {
   id: PrivacyCategoryId
@@ -1527,16 +1528,6 @@ export type PrivacyFlowExtractorConfig =
       extractor: 'umbraAmount'
       params: {
         tokenAddress: EthereumAddress
-      }
-    }
-  | {
-      extractor: 'zamaWrap'
-      params: Record<string, never>
-    }
-  | {
-      extractor: 'zamaUnwrap'
-      params: {
-        rate: string
       }
     }
   | {
@@ -2056,6 +2047,9 @@ interface InteropConfigBase {
   /** Permissions displayed on the interop project page. For canonical bridges,
    * this is intentionally a different (narrower) set than the chain page. */
   permissions?: Record<string, ProjectPermissions>
+  /** Milestones displayed on the interop project page. For canonical bridges,
+   * these are separate from the chain's milestones. */
+  milestones?: Milestone[]
 }
 
 export type InteropConfig =

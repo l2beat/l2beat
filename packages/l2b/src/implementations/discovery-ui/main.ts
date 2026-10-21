@@ -20,6 +20,7 @@ import { DiffoveryController } from './diffovery/DiffoveryController'
 import { FlatSourceClient } from './diffovery/FlatSourceClient'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
+import { buildAddressUsage, readUsageSources } from './getAddressUsage'
 import {
   getCodeFromDisk,
   getCodeFromEtherscan,
@@ -31,6 +32,7 @@ import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { getTvl } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
+import { attachModulesRouter } from './modules'
 import { ProviderCache } from './ProviderCache'
 import { searchCode } from './searchCode'
 import { TvlCache } from './TvlCache'
@@ -305,6 +307,7 @@ export function createDiscoveryUiApp({
     attachAnalyzeRouter(app, configReader)
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
+    attachModulesRouter(app, configReader, templateService, paths.discovery)
 
     app.get('/api/config/health', (_, res) => {
       const response = getConfigHealth(
@@ -313,6 +316,10 @@ export function createDiscoveryUiApp({
         configHealthService,
       )
       res.json(response)
+    })
+
+    app.get('/api/address-usage', (_req, res) => {
+      res.json(buildAddressUsage(readUsageSources(configReader)))
     })
 
     app.get('/api/handlers', (_req, res) => {

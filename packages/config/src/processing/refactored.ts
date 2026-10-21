@@ -29,6 +29,7 @@ import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
 import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
+import { interfold } from '../projects/interfold/interfold'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
 import { lido } from '../projects/lido/lido'
@@ -154,4 +155,5 @@ export const refactored: BaseProject[] = [
   privacyBoost,
   zkmoney,
   zkapi,
+  interfold,
 ]

@@ -21,8 +21,11 @@ export default defineConfig(({ mode }) => {
             groups: [
               {
                 name(id) {
+                  // Monaco stays out of the groups: a group also captures
+                  // what its modules import, like the dynamic import helper
+                  // the app shares, which would make Monaco load eagerly.
                   if (id.includes('node_modules/monaco-editor')) {
-                    return 'monaco'
+                    return null
                   }
                   if (id.includes('node_modules')) {
                     return 'vendor'

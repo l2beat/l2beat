@@ -24,6 +24,7 @@ import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import { diffDiscovery } from './output/diffDiscovery'
+import { printFrontier } from './output/printFrontier'
 import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
@@ -53,12 +54,22 @@ function getTimestamp(
 
   const configuredTimestamp =
     config.timestamp ??
-    (config.dev
+    (config.dev && configReader.hasDiscovery(config.project)
       ? configReader.readDiscovery(config.project).timestamp
       : undefined) ??
     UnixTime.now() - UnixTime.MINUTE
 
   return UnixTime.toDate(configuredTimestamp)
+}
+
+function readProjectConfig(
+  configReader: ConfigReader,
+  config: DiscoveryModuleConfig,
+): ConfigRegistry {
+  if (config.maxDepth === undefined) {
+    return configReader.readConfig(config.project)
+  }
+  return configReader.readConfig(config.project, { maxDepth: config.maxDepth })
 }
 
 export async function runDiscovery(
@@ -69,7 +80,7 @@ export async function runDiscovery(
   chainConfigs: DiscoveryChainConfig[],
   logger: Logger,
 ): Promise<void> {
-  const projectConfig = configReader.readConfig(config.project)
+  const projectConfig = readProjectConfig(configReader, config)
 
   const timestampDate = getTimestamp(configReader, config)
 
@@ -127,6 +138,15 @@ export async function runDiscovery(
     templateService,
   )
 
+  if (addressStats.beyondMaxDepth.length > 0) {
+    printFrontier(
+      logger,
+      result,
+      addressStats.beyondMaxDepth,
+      projectConfig.structure.maxDepth,
+    )
+  }
+
   if (addressStats.skipped > 0) {
     printMaxAddressesWarning(
       logger,
@@ -172,7 +192,7 @@ export async function dryRunDiscovery(
   const now = UnixTime.now() - UnixTime.MINUTE
   const yesterday = now - UnixTime.DAY
 
-  const projectConfig = configReader.readConfig(config.project)
+  const projectConfig = readProjectConfig(configReader, config)
 
   const [discovered, discoveredYesterday] = await Promise.all([
     justDiscover(

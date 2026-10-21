@@ -5,6 +5,7 @@ import { ConfigHealthReportPage } from './ConfigHealthReportPage'
 import { NotificationsRoot } from './components/Notifications'
 import { HomePage } from './HomePage'
 import { ConfigModelsProvider } from './hooks/useConfigModels'
+import { DeferredSelectionProvider } from './hooks/useDeferredSelection'
 import { NewProjectPage } from './NewProjectPage'
 import { ProjectPage } from './ProjectPage'
 import { RendererBenchPage } from './RendererBenchPage'
@@ -33,10 +34,12 @@ export const DiscoveryAppModule: AppModule = {
         {
           path: 'p/:project',
           element: (
-            <ConfigModelsProvider>
-              <NotificationsRoot />
-              <ProjectPage />
-            </ConfigModelsProvider>
+            <DeferredSelectionProvider>
+              <ConfigModelsProvider>
+                <NotificationsRoot />
+                <ProjectPage />
+              </ConfigModelsProvider>
+            </DeferredSelectionProvider>
           ),
         },
         {

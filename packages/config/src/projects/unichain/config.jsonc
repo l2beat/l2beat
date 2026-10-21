@@ -27,7 +27,6 @@
     "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833": "UnichainProxyAdminOwner",
     "unichain:0x4200000000000000000000000000000000000002": "DeployerWhitelist",
     "unichain:0x7E6c183F538abb8572F5cd17109C617b994d6944": "UnichainProxyAdminOwner_L2Alias",
-    "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias",
     "unichain:0x420000000000000000000000000000000000000F": "GasPriceOracle",
     "unichain:0x4200000000000000000000000000000000000015": "L1Block"
   },
@@ -134,6 +133,152 @@
     "unichain:0x4200000000000000000000000000000000000015": {
       "manualSourcePaths": {
         "unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": "https://unichain.blockscout.com/address/0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
+      },
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA": {
+      "fields": {
+        "l2TokenBridge": { "edit": ["format", "UnichainAddress"] },
+        "OTHER_BRIDGE": { "edit": ["format", "UnichainAddress"] },
+        "otherBridge": { "edit": ["format", "UnichainAddress"] }
+      }
+    },
+    "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6": {
+      "fields": {
+        "OTHER_MESSENGER": { "edit": ["format", "UnichainAddress"] },
+        "otherMessenger": { "edit": ["format", "UnichainAddress"] }
+      }
+    },
+    "eth:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf": {
+      "fields": {
+        "OTHER_BRIDGE": { "edit": ["format", "UnichainAddress"] },
+        "otherBridge": { "edit": ["format", "UnichainAddress"] }
+      }
+    },
+    "unichain:0x4200000000000000000000000000000000000007": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "unichain:0x4200000000000000000000000000000000000010": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "unichain:0x4200000000000000000000000000000000000011": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "unichain:0x4200000000000000000000000000000000000012": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "unichain:0x4200000000000000000000000000000000000014": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "unichain:0x4200000000000000000000000000000000000017": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "unichain:0x4200000000000000000000000000000000000019": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "unichain:0x420000000000000000000000000000000000001A": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "unichain:0x4200000000000000000000000000000000000018": {
+      "fields": {
+        "owner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003": {
+      "fields": {
+        "owner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    }
+  },
+  "types": {
+    "UnichainAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": {
+        "prefix": "unichain"
       }
     }
   }

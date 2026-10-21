@@ -223,6 +223,7 @@ function getPerimeter(sources: OssificationSources): Map<string, Member> {
     const { since, until } = bounds(flag)
     const created = sources.changes.filter(
       (change) =>
+        change.section === 'watched-changes' &&
         change.status === 'created' &&
         key(change.address.toString()) === address,
     )
@@ -361,6 +362,7 @@ function getDiffHistoryEvents(
 
   const relevant = sources.changes.filter(
     (change) =>
+      change.section === 'watched-changes' &&
       !ignoredUpdates.has(change.entryId) &&
       !superseded.has(blockKey(change)) &&
       !has(ignoredTransactions, change.upgrade?.transaction),

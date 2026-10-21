@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x272be52c7f69b43d5b0b3c919832fdad7ff04669
+
+# Diff at Tue, 20 Oct 2026 10:39:28 GMT:
+
+- id: 62c0458c
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1784193913
+- current timestamp: 1792492705
+
+## Description
+
+Upgraded one ms contract to Safe 1.5.0.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
++        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      values.$implementation:
+-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b"
+      values.getChainId:
+-        1
+      values.VERSION:
+-        "1.4.1"
++        "1.5.0"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Paradex Multisig 2/Safe.sol                    | 1537 ++++++++++++++------
+ 1 file changed, 1059 insertions(+), 478 deletions(-)
+```
+
 Generated with discovered.json: 0xc0239d58cdc30b925b696b57fa1ef7a2188d8714
 
 # Diff at Fri, 16 Oct 2026 10:35:43 GMT:

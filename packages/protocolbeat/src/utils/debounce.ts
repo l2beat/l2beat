@@ -2,7 +2,7 @@ import { useCallback, useLayoutEffect, useRef } from 'react'
 
 const DEFAULT_DELAY_MS = 2_000
 
-export function useDebouncedCallback<T extends (...args: unknown[]) => unknown>(
+export function useDebouncedCallback<T extends (...args: never[]) => unknown>(
   callback: T,
   delay = DEFAULT_DELAY_MS,
 ) {

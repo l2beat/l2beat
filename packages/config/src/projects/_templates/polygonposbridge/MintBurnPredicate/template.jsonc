@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Immutable predicate that burns deposited tokens and mints them again on proven exits. It holds no tokens. Only the RootChainManager can call it.",
+  "category": "core"
+}

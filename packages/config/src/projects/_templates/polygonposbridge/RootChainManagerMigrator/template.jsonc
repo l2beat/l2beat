@@ -1,10 +1,44 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": ["USDT_ADDRESS", "tokensMapped"],
+  "description": "Main configuration contract to manage tokens, token types and the escrows (predicates) for each token type. It is the entry point for deposits and withdrawals and verifies exits against the checkpoints of the checkpoint manager.",
+  "category": "core",
+  // childChainManagerAddress is an address on the child chain, not on Ethereum
+  "ignoreRelatives": [
+    "USDT_ADDRESS",
+    "tokensMapped",
+    "childChainManagerAddress"
+  ],
   "ignoreInWatchMode": ["tokensMapped"],
   "fields": {
     "accessControl": { "handler": { "type": "accessControl" } },
+    "defaultAdminAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the checkpoint manager and the state sender, register predicates, remap or unmap tokens and manage all roles. A malicious checkpoint manager can authorize arbitrary exits from all escrows."
+        }
+      ]
+    },
+    "mapperAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "MAPPER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "map new root tokens to child tokens and token types."
+        }
+      ]
+    },
     "migrator": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "MIGRATION_MANAGER_ROLE"
@@ -15,6 +49,13 @@
           "description": "can migrate the canonically bridged USDT token to a native or external version."
         }
       ]
+    },
+    "PREDICATES": {
+      "handler": {
+        "type": "event",
+        "select": "predicateAddress",
+        "add": { "event": "PredicateRegistered" }
+      }
     },
     "tokensMapped": {
       "handler": {

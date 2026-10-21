@@ -5,7 +5,7 @@ import type {
   EditorSaveCallback,
 } from '../../../../../components/editor/code/editor'
 import { useCodeStore } from '../../../../../components/editor/store'
-import { EditorView } from '../../../../../components/editor/views/EditorView'
+import { EditorView } from '../../../../../components/editor/views/lazy'
 
 type HandlerEditorProps = {
   context: 'config' | 'template'

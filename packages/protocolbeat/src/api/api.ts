@@ -4,6 +4,7 @@ import {
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
 import type {
+  ApiAddressUsageResponse,
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
@@ -30,6 +31,17 @@ export async function getProjects(): Promise<ApiProjectsResponse> {
   }
   const data = await res.json()
   return data as ApiProjectsResponse
+}
+
+export async function getAddressUsage(): Promise<ApiAddressUsageResponse> {
+  const res = await fetch('/api/address-usage')
+  if (!res.ok) {
+    throw new Error('Failed to fetch address usage', {
+      cause: { status: res.status },
+    })
+  }
+  const data = await res.json()
+  return data as ApiAddressUsageResponse
 }
 
 export async function getProject(
@@ -422,4 +434,40 @@ async function readErrorMessage(res: Response): Promise<string> {
   } catch {
     return res.statusText
   }
+}
+
+export async function updateModuleEntrypoints(
+  module: string,
+  change: { create: boolean; remove: string[] },
+) {
+  const res = await fetch(`/api/modules/${module}/entrypoints`, {
+    method: 'POST',
+    body: JSON.stringify(change),
+    headers: { 'Content-Type': 'application/json' },
+  })
+  if (!res.ok) {
+    throw new Error('Module entrypoints update failed', {
+      cause: { status: res.status, error: await readErrorMessage(res) },
+    })
+  }
+}
+
+export async function getModules(): Promise<string[]> {
+  const res = await fetch('/api/modules')
+  if (!res.ok) {
+    throw new Error('Module list request failed', {
+      cause: { status: res.status },
+    })
+  }
+  return (await res.json()) as string[]
+}
+
+export async function getStaleModuleConsumers(): Promise<string[]> {
+  const res = await fetch('/api/modules/stale-consumers')
+  if (!res.ok) {
+    throw new Error('Stale module consumers request failed', {
+      cause: { status: res.status },
+    })
+  }
+  return (await res.json()) as string[]
 }

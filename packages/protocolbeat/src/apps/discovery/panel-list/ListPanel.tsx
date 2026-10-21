@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { Link, useParams } from 'react-router'
 import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
+import { IS_READONLY } from '../../../config/readonly'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { IconEyeClosed } from '../../../icons/IconEyeClosed'
@@ -18,6 +19,7 @@ import { useStore as useNodesStore } from '../panel-nodes/store/store'
 import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
+import { UsageBadge } from '../usage/UsageBadge'
 
 export function ListPanel() {
   const { project } = useParams()
@@ -39,6 +41,7 @@ export function ListPanel() {
             key={`${chain.project}-${i}`}
             entry={chain}
             first={i === 0}
+            openedProject={project}
           />
         ))}
       </ol>
@@ -46,12 +49,13 @@ export function ListPanel() {
   )
 }
 
-function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
+function ListItemChain(props: {
+  entry: ApiProjectChain
+  first: boolean
+  openedProject: string
+}) {
   const [open, setOpen] = useState(true)
-
-  function onFocus() {
-    setOpen(true)
-  }
+  const onFocus = useCallback(() => setOpen(true), [])
 
   return Object.entries(props.entry.blockNumbers).map(
     ([chain, blockNumber]) => (
@@ -68,6 +72,14 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
             {!open && <IconChevronRight />}
             {`${props.entry.project} on ${chain}`}
           </button>
+          {props.entry.project !== props.openedProject && (
+            <Link
+              to={`/ui/p/${props.entry.project}`}
+              className="mr-2 whitespace-nowrap text-coffee-400 text-xs underline hover:text-coffee-100"
+            >
+              open
+            </Link>
+          )}
           <span className="whitespace-nowrap text-coffee-400 text-xs italic group-hover:text-coffee-200">
             @ {blockNumber}
           </span>
@@ -79,12 +91,16 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
               onFocus={onFocus}
               entries={props.entry.initialContracts}
               chain={chain}
+              openedProject={props.openedProject}
+              sourceProject={props.entry.project}
             />
             <ListItemContracts
               title="Discovered"
               onFocus={onFocus}
               entries={props.entry.discoveredContracts}
               chain={chain}
+              openedProject={props.openedProject}
+              sourceProject={props.entry.project}
             />
             <ListItemContracts
               startClosed
@@ -92,6 +108,8 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
               onFocus={onFocus}
               entries={props.entry.eoas}
               chain={chain}
+              openedProject={props.openedProject}
+              sourceProject={props.entry.project}
             />
           </>
         )}
@@ -106,25 +124,33 @@ function ListItemContracts(props: {
   onFocus?: () => void
   startClosed?: boolean
   chain: string
+  openedProject: string
+  sourceProject: string
 }) {
   const [open, setOpen] = useState(!props.startClosed)
-  const selected = usePanelStore((state) => state.selected)
-
-  const filteredEntries = props.entries.filter(
-    (entry) => entry.chain === props.chain,
+  const sortedEntries = useMemo(
+    () =>
+      props.entries
+        .filter((entry) => entry.chain === props.chain)
+        .sort((a, b) => b.type.localeCompare(a.type)),
+    [props.entries, props.chain],
   )
+  const addresses = useMemo(
+    () => new Set(sortedEntries.map((entry) => entry.address)),
+    [sortedEntries],
+  )
+  const selectedHere = usePanelStore((state) =>
+    state.selected.find((address) => addresses.has(address)),
+  )
+  const { onFocus } = props
   useEffect(() => {
-    const selectedSet = new Set<string>(selected)
-    for (const { address } of filteredEntries) {
-      if (selectedSet.has(address)) {
-        setOpen(true)
-        props.onFocus?.()
-        break
-      }
+    if (selectedHere !== undefined) {
+      setOpen(true)
+      onFocus?.()
     }
-  }, [filteredEntries, selected, props.onFocus])
+  }, [selectedHere, onFocus])
 
-  if (filteredEntries.length === 0) {
+  if (sortedEntries.length === 0) {
     return null
   }
   return (
@@ -149,18 +175,29 @@ function ListItemContracts(props: {
       </button>
       {open && (
         <ol>
-          {filteredEntries
-            .toSorted((a, b) => b.type.localeCompare(a.type))
-            .map((entry) => (
-              <AddressEntry key={entry.address} entry={entry} />
-            ))}
+          {sortedEntries.map((entry) => (
+            <AddressEntry
+              key={entry.address}
+              entry={entry}
+              openedProject={props.openedProject}
+              sourceProject={props.sourceProject}
+            />
+          ))}
         </ol>
       )}
     </>
   )
 }
 
-function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
+const AddressEntry = memo(function AddressEntry({
+  entry,
+  openedProject,
+  sourceProject,
+}: {
+  entry: ApiAddressEntry
+  openedProject: string
+  sourceProject: string
+}) {
   const isSelected = usePanelStore((state) =>
     state.selected.includes(entry.address),
   )
@@ -191,10 +228,18 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
       <span className="overflow-hidden text-ellipsis tabular-nums">
         {entry.name ?? toShortenedAddress(entry.address)}
       </span>
-      <div className="mr-1 ml-auto flex gap-1 text-coffee-400">
+      <div className="mr-1 ml-auto flex items-center gap-1 text-coffee-400">
+        {!IS_READONLY && (
+          <UsageBadge
+            address={entry.address}
+            openedProject={openedProject}
+            sourceProject={sourceProject}
+            isSelected={isSelected}
+          />
+        )}
         {isHidden && <IconEyeClosed />}
         {!entry.isReachable && <IconUnlinked />}
       </div>
     </li>
   )
-}
+})

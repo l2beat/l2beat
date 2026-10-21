@@ -22,6 +22,7 @@ export function useDiscoveryCommand() {
 
     queryClient.invalidateQueries({ queryKey: ['projects', project] })
     queryClient.invalidateQueries({ queryKey: ['config-sync-status', project] })
+    queryClient.invalidateQueries({ queryKey: ['address-usage'] })
 
     if (isOk) {
       toast.success('Discovery finished successfully', { id: toastId })

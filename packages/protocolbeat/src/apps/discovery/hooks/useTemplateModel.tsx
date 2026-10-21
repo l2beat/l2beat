@@ -8,6 +8,7 @@ import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingComma
 import { toggleInList } from '../../../utils/toggleInList'
 import { ContractConfigModel } from '../models/ContractConfigModel'
 import type { FieldConfigModel } from '../models/FieldConfigModel'
+import { invalidateProjectPayloads } from './projectQuery'
 
 type Props = {
   templateId?: string
@@ -29,11 +30,10 @@ export function useTemplateModel({ templateId, files }: Props) {
     setTemplateModel(ContractConfigModel.fromRawJsonc(files.template))
   }
 
-  const debouncedInvalidateSyncStatus = useDebouncedCallback(() =>
-    queryClient.invalidateQueries({
-      queryKey: ['config-sync-status'],
-    }),
-  )
+  const debouncedInvalidateProject = useDebouncedCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ['config-sync-status'] })
+    invalidateProjectPayloads(queryClient)
+  })
 
   const toggleIgnoreMethods = (fieldName: string) => {
     const current = templateModel.ignoreMethods ?? []
@@ -139,7 +139,7 @@ export function useTemplateModel({ templateId, files }: Props) {
       await queryClient.invalidateQueries({
         queryKey: ['templates', templateId],
       })
-      debouncedInvalidateSyncStatus()
+      debouncedInvalidateProject()
     },
     onError: (error) => {
       toast.error(`Failed to save template file - ${templateId}`, {

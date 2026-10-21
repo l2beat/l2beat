@@ -77,11 +77,11 @@
     }
   },
   "overrides": {
-    // Escrows in the ossification perimeter: every StarkGate escrow governed by StarkWare, with
-    // an L2 side governed by Starknet. ETH and STRK sit under the protocol governance (Security
-    // Council + DelayedExecutor), the others under Starkware Multisig 2 or StarkWare EOAs. The
-    // bridge templates carry no critical flag because the Maker DAI escrow and the immutable
-    // LORDS escrow stay out.
+    // Escrows in the ossification perimeter (specs/l2b_specs/canonical_bridge.md): ETH and STRK,
+    // the canonical escrows under the core governance (Security Council + DelayedExecutor on L1,
+    // Starknet governance on L2). The other StarkGate escrows sit under Starkware Multisig 2 or
+    // StarkWare EOAs, an additional trust assumption, so they stay out and are watched at MEDIUM.
+    // The Maker DAI escrow and the immutable LORDS escrow stay out too.
     // The STRK token itself (eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766) is not a proxy, so
     // its code cannot change and it stays outside the perimeter.
     // The governing Safes (Security Council, Multisig 1, 4, SCMinority) are actor containers and
@@ -97,7 +97,6 @@
     },
     "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10": {
       // halted, TVS stops counting it when SolvBTC moved to OFT bridging
-      "critical": { "untilTimestamp": 1768848971 },
       "category": "non-critical",
       "ignoreRelatives": [
         "l2TokenContract",
@@ -113,8 +112,10 @@
         "tokenHaltCompleted": { "severity": "MEDIUM" }
       }
     },
+    // LBTC and LUSD escrows are upgradeable by a StarkWare EOA. non-critical keeps the EOA red
+    // warning off, which reads the category until it reads the perimeter.
     "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": {
-      "critical": true,
+      "category": "non-critical",
       "ignoreRelatives": [
         "l2TokenContract",
         "bridgedToken",
@@ -127,7 +128,7 @@
       }
     },
     "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": {
-      "critical": true,
+      "category": "non-critical",
       "fields": {
         "withdrawalLimitStatus": { "severity": "MEDIUM" },
         "accessControl": { "severity": "MEDIUM" }
@@ -146,7 +147,6 @@
       "ignoreDiscovery": true
     },
     "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4": {
-      "critical": true,
       "ignoreRelatives": ["cleareanceAddress"],
       "fields": {
         "withdrawalLimitStatus": { "severity": "MEDIUM" },
@@ -155,66 +155,57 @@
         "tokenHaltCompleted": { "severity": "MEDIUM" }
       }
     },
-    // StarkGate escrows under Starkware Multisig 2. Withdrawal limits, access control and
-    // token halts stay MEDIUM.
+    // StarkGate escrows under Starkware Multisig 2, outside the perimeter. Withdrawal limits and
+    // access control stay MEDIUM so that changes reach the monitor.
     "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816": {
-      "critical": true,
       "fields": {
         "withdrawalLimitStatus": { "severity": "MEDIUM" },
         "accessControl": { "severity": "MEDIUM" }
       }
     },
     "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605": {
-      "critical": true,
       "fields": {
         "withdrawalLimitStatus": { "severity": "MEDIUM" },
         "accessControl": { "severity": "MEDIUM" }
       }
     },
     "eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B": {
-      "critical": true,
       "fields": {
         "withdrawalLimitStatus": { "severity": "MEDIUM" },
         "accessControl": { "severity": "MEDIUM" }
       }
     },
     "eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2": {
-      "critical": true,
       "fields": {
         "withdrawalLimitStatus": { "severity": "MEDIUM" },
         "accessControl": { "severity": "MEDIUM" }
       }
     },
     "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B": {
-      "critical": true,
       "fields": {
         "withdrawalLimitStatus": { "severity": "MEDIUM" },
         "accessControl": { "severity": "MEDIUM" }
       }
     },
     "eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb": {
-      "critical": true,
       "fields": {
         "withdrawalLimitStatus": { "severity": "MEDIUM" },
         "accessControl": { "severity": "MEDIUM" }
       }
     },
     "eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C": {
-      "critical": true,
       "fields": {
         "withdrawalLimitStatus": { "severity": "MEDIUM" },
         "accessControl": { "severity": "MEDIUM" }
       }
     },
     "eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8": {
-      "critical": true,
       "fields": {
         "withdrawalLimitStatus": { "severity": "MEDIUM" },
         "accessControl": { "severity": "MEDIUM" }
       }
     },
     "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": {
-      "critical": true,
       "fields": {
         "withdrawalLimitStatus": { "severity": "MEDIUM" },
         "accessControl": { "severity": "MEDIUM" }

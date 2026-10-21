@@ -1,3 +1,4 @@
+import { ChainSpecificAddress, formatJson } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { ConfigModel } from './ConfigModel'
 
@@ -140,6 +141,62 @@ describe('ConfigModel', () => {
       const model = ConfigModel.fromRawJsonc(jsonc)
 
       expect(model.hasComments()).toEqual(false)
+    })
+  })
+
+  describe('initial addresses', () => {
+    const A = ChainSpecificAddress(
+      'eth:0x0000000000000000000000000000000000000001',
+    )
+    const B = ChainSpecificAddress(
+      'eth:0x0000000000000000000000000000000000000002',
+    )
+    const C = ChainSpecificAddress(
+      'eth:0x0000000000000000000000000000000000000003',
+    )
+
+    // Module configs like shared-sp1 keep commented-out addresses in the array.
+    it('adds and removes them without dropping comments inside the array', () => {
+      const model = ConfigModel.fromRawJsonc(`{
+        // Top comment
+        "name": "shared-test",
+        "initialAddresses": [
+          "${A}",
+          // "${C}",
+          "${B}"
+        ]
+      }`)
+
+      const text = model
+        .updateInitialAddresses({ add: [C], remove: [A] })
+        .toFileContents()
+
+      expect(text).toInclude('Top comment')
+      expect(text).toInclude(`// "${C}"`)
+      expect(text).not.toInclude(`"${A}"`)
+      expect(text.indexOf(`// "${C}"`)).toBeLessThan(text.indexOf(`"${B}"`))
+      expect(text.lastIndexOf(`"${C}"`)).toBeGreaterThan(text.indexOf(`"${B}"`))
+    })
+
+    it('leaves the model it was called on unchanged', () => {
+      const model = ConfigModel.fromRawJsonc(
+        `{ "name": "shared-test", "initialAddresses": ["${A}"] }`,
+      )
+
+      model.updateInitialAddresses({ add: [B], remove: [A] })
+
+      expect(model.toFileContents()).toInclude(`"${A}"`)
+      expect(model.toFileContents()).not.toInclude(`"${B}"`)
+    })
+
+    it('writes the repository format when there are no comments', () => {
+      const model = ConfigModel.fromRawJsonc(
+        `{ "name": "shared-test", "initialAddresses": ["${A}"] }`,
+      )
+
+      expect(
+        model.updateInitialAddresses({ add: [], remove: [A] }).toFileContents(),
+      ).toEqual(formatJson({ name: 'shared-test', initialAddresses: [] }))
     })
   })
 })

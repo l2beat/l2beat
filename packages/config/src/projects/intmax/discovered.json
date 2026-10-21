@@ -45,11 +45,6 @@
       }
     },
     {
-      "address": "eth:0x1c88459D014e571c332BF9199aD2D35C93219A2e",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x1eB7d5898A9b3dCB8145e37B564ef00bC4cB794D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -371,7 +366,7 @@
         "RELAY_LIMIT": 450,
         "relayer": ["eth:0xA8E0Db294aD54E9187CeE41c4d471186bf5Aa7A6"],
         "RELAYER": "0xab4f864e5201b0fde9b5ee3e4cf96384802b0ffdfcf7f9de4699ce21a30afc4f",
-        "rollup": "eth:0x1c88459D014e571c332BF9199aD2D35C93219A2e",
+        "rollup": "scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "WITHDRAWAL": "0x738128fe393bef1bcd8a524796fff40618b938cd467c71fcf37850ab0ba4f7d7",
         "WITHDRAWAL_FEE_RATIO_LIMIT": 1500
@@ -379,7 +374,8 @@
       "implementationNames": {
         "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3": "ERC1967Proxy",
         "eth:0x890662DF84603CcF62b940292252BDd3aa0b5382": "LiquidityV2"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }]
     },
     {
       "name": "PredicateServiceManager",
@@ -1651,14 +1647,14 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "intmax/Claim": "0x96ba300a18f4cb6ac05e9c5f4fcc8b3916daca44ae2a839e88592b0a700c1638",
     "intmax/Contribution": "0x5b054bae35b8a718a705f49eb6b59b86926069d57f1a3a7b698ea12aad64e991",
-    "intmax/Liquidity": "0xb66a29e642609550379d8fb5b70944ab64807620f147511c229d4524d94d4e00",
+    "intmax/Liquidity": "0xde8c9d16e1b1ecf716deda44f8ebfcc07bf0b913130b73b8b5645e58afcae1cf",
     "intmax/PlonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "intmax/PredicatePermitter": "0x3558c47cc4cc15bddb87c33f9c6166935da9199ad3d5a55bd77681d197be6728",
     "intmax/Rollup": "0x9efdc4c4aebfdd09e6ab16141180d3f9fa8e1bfe833622003535a1d9b98836c6",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
   "usedBlockNumbers": { "ethereum": 25796469, "scroll": 34702306 },
-  "permissionsConfigHash": "0x26d93d95b28b06fa31f1c53175afe54dbf953f83b862f1c0c986162c4b1145cf",
+  "permissionsConfigHash": "0x7e731e0a36203f41439c20d9ccd5f4244a1cb290b16204a02ee213a8e8bf3781",
   "permissions": {
     "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E": {
       "directlyReceivedPermissions": [

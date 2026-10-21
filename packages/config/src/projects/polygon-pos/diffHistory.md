@@ -1,3 +1,522 @@
+Generated with discovered.json: 0x191dd372d41a986c8b24fc272909feb7fcbb8acd
+
+# Diff at Fri, 16 Oct 2026 15:41:09 GMT:
+
+- id: 4c830b56
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fb5631b3f310638441a584e1a8740a9dc717c3ca block: 1792144380
+- current timestamp: 1792144380
+
+## Description
+
+Config-only: every contract now has a template with a description and category. New templates for the Timelock, the remaining predicates, EventsHub, MaticWETH, ValidatorShareFactory and StakeManagerExtension. The RootChainManager admin and mapper roles are modelled as permissions, and so are the upgrade rights of the proxy owner of RootChain, DepositManager, WithdrawManager and Governance. Discovery no longer follows `childChainManagerAddress`, an address on Polygon PoS that happens to hold a library on Ethereum.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144380 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract CustomPredicate (eth:0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35) [polygonposbridge/CustomPredicate] {
+    +++ description: Predicate that forwards proven exit data to the root contract instead of moving tokens. It holds no tokens.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
++++ severity: MEDIUM
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
++++ severity: MEDIUM
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+      template:
++        "polygonposbridge/CustomPredicate"
+      description:
++        "Predicate that forwards proven exit data to the root contract instead of moving tokens. It holds no tokens."
+      fieldMeta:
++        {"managersAC":{"severity":"MEDIUM"},"defaultAdminAC":{"severity":"MEDIUM"}}
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract ERC20EscrowPredicate (eth:0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4) [polygonposbridge/EscrowPredicateImmutable] {
+    +++ description: Immutable escrow (predicate) for one token type. Only the RootChainManager can lock deposits and release them on proven exits.
+      template:
++        "polygonposbridge/EscrowPredicateImmutable"
+      description:
++        "Immutable escrow (predicate) for one token type. Only the RootChainManager can lock deposits and release them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract WithdrawManager (eth:0x2A88696e0fFA76bAA1338F2C74497cC013495922) [polygonposbridge/WithdrawManager] {
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]}}
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      template:
++        "polygonposbridge/predicate"
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Registry (eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) [polygonposbridge/Registry] {
+    +++ description: Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ERC721PredicateBurnOnly (eth:0x36C2503d53C6948331144b85D1e74a3B96731d1b) [polygonposbridge/PredicateBurnOnly] {
+    +++ description: Legacy plasma exit predicate of the WithdrawManager. Users start withdrawals of burnt tokens here. Its exit challenge function is empty, so exits cannot be challenged.
+      template:
++        "polygonposbridge/PredicateBurnOnly"
+      description:
++        "Legacy plasma exit predicate of the WithdrawManager. Users start withdrawals of burnt tokens here. Its exit challenge function is empty, so exits cannot be challenged."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract DepositManager (eth:0x401F6c983eA34274ec46f84D70b31C151321188b) [polygonposbridge/DepositManager] {
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ERC20Predicate (eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract PolygonMultisig2 (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "PolygonMultisig2"
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","description":"map new root tokens to child tokens and token types.","role":".mapperAC"}]
+    }
+```
+
+```diff
+    contract PolygonERC20MintBurnPredicate (eth:0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5) [polygonposbridge/MintBurnPredicate] {
+    +++ description: Immutable predicate that burns deposited tokens and mints them again on proven exits. It holds no tokens. Only the RootChainManager can call it.
+      template:
++        "polygonposbridge/MintBurnPredicate"
+      description:
++        "Immutable predicate that burns deposited tokens and mints them again on proven exits. It holds no tokens. Only the RootChainManager can call it."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    EOA (eth:0x4580559314cbBd84B595a6EC52e4dF5cdD54EFc4) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "issue and revoke the single-use passes that new Polygon PoS validators need to join the validator set."
++        "approve new validators to join the Polygon PoS validator set."
+    }
+```
+
+```diff
+    contract StakingNFT (eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F) [polygonposbridge/StakingNFT] {
+    +++ description: NFT that represents each validator slot. The holder controls the validator.
+      description:
++        "NFT that represents each validator slot. The holder controls the validator."
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract ERC20PredicateBurnOnly (eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0) [polygonposbridge/PredicateBurnOnly] {
+    +++ description: Legacy plasma exit predicate of the WithdrawManager. Users start withdrawals of burnt tokens here. Its exit challenge function is empty, so exits cannot be challenged.
+      template:
++        "polygonposbridge/PredicateBurnOnly"
+      description:
++        "Legacy plasma exit predicate of the WithdrawManager. Users start withdrawals of burnt tokens here. Its exit challenge function is empty, so exits cannot be challenged."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RootChainInitialImplementation (eth:0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the validator set, stakes and rewards. The RootChain uses it to check that each checkpoint is signed by more than 2/3 of the stake.
+      description:
+-        "Manages the Polygon PoS validator set."
++        "Manages the validator set, stakes and rewards. The RootChain uses it to check that each checkpoint is signed by more than 2/3 of the stake."
+    }
+```
+
+```diff
+    contract EventsHub (eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) [polygonposbridge/EventsHub] {
+    +++ description: Emits staking events on behalf of the StakeManager and the validator share contracts.
+      template:
++        "polygonposbridge/EventsHub"
+      description:
++        "Emits staking events on behalf of the StakeManager and the validator share contracts."
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract Governance (eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) [polygonposbridge/Governance] {
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+      directlyReceivedPermissions.0.role:
+-        ".defaultAdminAC"
++        ".passIssuerAC"
+      directlyReceivedPermissions.0.description:
+-        "grant and revoke the role that issues validator passes."
++        "approve new validators to join the Polygon PoS validator set."
+      directlyReceivedPermissions.1.role:
+-        ".passIssuerAC"
++        ".defaultAdminAC"
+      directlyReceivedPermissions.1.description:
+-        "issue and revoke the single-use passes that new Polygon PoS validators need to join the validator set."
++        "grant and revoke the role that approves new validators."
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract EtherPredicate (eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract RootChain (eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) [polygonposbridge/RootChain] {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ValidatorPass (eth:0x938529C189525e9a03c66C417D337BE9B5762bA4) [polygon-pos/ValidatorPass] {
+    +++ description: Validator entry gate registered in the Registry under `validatorPass`. The StakeManager only admits new validators approved here.
+      description:
+-        "Validator entry gate registered in the Registry under `validatorPass`. The StakeManager only admits a new validator who redeems a single-use pass bound to their address, consensus key and delegation choice."
++        "Validator entry gate registered in the Registry under `validatorPass`. The StakeManager only admits new validators approved here."
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+      template:
++        "polygonposbridge/predicate"
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract RootChainManager (eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) [polygonposbridge/RootChainManagerMigrator] {
+    +++ description: Main configuration contract to manage tokens, token types and the escrows (predicates) for each token type. It is the entry point for deposits and withdrawals and verifies exits against the checkpoints of the checkpoint manager.
++++ severity: MEDIUM
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
++++ severity: MEDIUM
+      values.mapperAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4"]
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35","description":"forward exit data to root contracts.","role":".managersAC"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      description:
++        "Main configuration contract to manage tokens, token types and the escrows (predicates) for each token type. It is the entry point for deposits and withdrawals and verifies exits against the checkpoints of the checkpoint manager."
+      fieldMeta:
++        {"defaultAdminAC":{"severity":"MEDIUM"},"mapperAC":{"severity":"MEDIUM"},"migrator":{"severity":"MEDIUM"}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract MaticWETH (eth:0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8) [polygon-pos/MaticWETH] {
+    +++ description: Wrapped ETH of the legacy plasma bridge. The DepositManager wraps ETH deposits here, so this contract holds that ETH.
+      template:
++        "polygon-pos/MaticWETH"
+      description:
++        "Wrapped ETH of the legacy plasma bridge. The DepositManager wraps ETH deposits here, so this contract holds that ETH."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract StakingInfo (eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) [polygonposbridge/StakingInfo] {
+    +++ description: Contains logging and getter functions about staking.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MerklePatriciaProof (eth:0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract ValidatorShareFactory (eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642) [polygonposbridge/ValidatorShareFactory] {
+    +++ description: Deploys the ValidatorShare proxy through which delegators stake with a validator.
+      template:
++        "polygonposbridge/ValidatorShareFactory"
+      description:
++        "Deploys the ValidatorShare proxy through which delegators stake with a validator."
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract Timelock (eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) [polygon-pos/Timelock] {
+    +++ description: A standard timelock with access control. Proposers can also cancel queued transactions. The current minimum delay is 0s.
++++ severity: MEDIUM
+      values.executorAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
++++ severity: HIGH
+      values.minDelayFormatted:
++        "0s"
++++ severity: MEDIUM
+      values.proposerAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
++++ severity: MEDIUM
+      values.timelockAdminAC:
++        ["eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"]
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x401F6c983eA34274ec46f84D70b31C151321188b","description":"can update the root chain it references.","role":".owner"},{"permission":"interact","from":"eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287","description":"can delete arbitrary checkpoints.","role":".owner"},{"permission":"interact","from":"eth:0x938529C189525e9a03c66C417D337BE9B5762bA4","description":"grant and revoke the role that issues validator passes.","role":".defaultAdminAC","via":[{"address":"eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"}]},{"permission":"interact","from":"eth:0x938529C189525e9a03c66C417D337BE9B5762bA4","description":"issue and revoke the single-use passes that new Polygon PoS validators need to join the validator set.","role":".passIssuerAC","via":[{"address":"eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"}]},{"permission":"upgrade","from":"eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","role":"admin"},{"permission":"upgrade","from":"eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7","role":"admin"},{"permission":"upgrade","from":"eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","role":"admin"},{"permission":"upgrade","from":"eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908","role":"admin"},{"permission":"upgrade","from":"eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b","role":"admin"},{"permission":"upgrade","from":"eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","role":"admin"},{"permission":"upgrade","from":"eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","role":"admin"},{"permission":"upgrade","from":"eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4","role":"admin"},{"permission":"upgrade","from":"eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","role":"admin"},{"permission":"upgrade","from":"eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD","role":"admin"}]
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x401F6c983eA34274ec46f84D70b31C151321188b","description":"can update the root chain it references.","role":".owner"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287","description":"can delete arbitrary checkpoints.","role":".owner"}
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC"}
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","role":"admin"}
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x2A88696e0fFA76bAA1338F2C74497cC013495922","role":".owner"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7","role":"admin"}
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0x401F6c983eA34274ec46f84D70b31C151321188b","role":".owner"}
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","role":"admin"}
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908","role":"admin"}
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b","role":"admin"}
+      directlyReceivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48","role":".owner"}
+      directlyReceivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","role":"admin"}
+      directlyReceivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287","role":".owner"}
+      directlyReceivedPermissions.14:
++        {"permission":"upgrade","from":"eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","role":"admin"}
+      directlyReceivedPermissions.15:
++        {"permission":"upgrade","from":"eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4","role":"admin"}
+      directlyReceivedPermissions.16:
++        {"permission":"upgrade","from":"eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","role":"admin"}
+      directlyReceivedPermissions.17:
++        {"permission":"upgrade","from":"eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD","role":"admin"}
+      template:
++        "polygon-pos/Timelock"
+      description:
++        "A standard timelock with access control. Proposers can also cancel queued transactions. The current minimum delay is 0s."
+      fieldMeta:
++        {"getMinDelay":{"severity":"HIGH"},"minDelayFormatted":{"severity":"HIGH"},"accessControl":{"severity":"MEDIUM"},"timelockAdminAC":{"severity":"MEDIUM"},"proposerAC":{"severity":"MEDIUM"},"executorAC":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313","eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+      values.defaultAdminAC:
++        ["eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313"]
+      values.managersAC:
++        ["eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313","eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+      template:
++        "polygonposbridge/predicate"
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ExitNFT (eth:0xDF74156420Bd57ab387B195ed81EcA36F9fABAca) [polygonposbridge/ExitNFT] {
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract ERC721Predicate (eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) [polygonposbridge/predicate] {
+    +++ description: Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits.
+      description:
++        "Escrow (predicate) for one token type. The RootChainManager locks deposits here and releases them on proven exits."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract StakeManagerExtension (eth:0xef49Ea6996073752b6840CDA34773FFA78F78166) [polygon-pos/StakeManagerExtension] {
+    +++ description: Logic that the StakeManager delegatecalls to update checkpoint reward parameters and commission rates and to migrate validator data. Its own storage is unused.
+      template:
++        "polygon-pos/StakeManagerExtension"
+      description:
++        "Logic that the StakeManager delegatecalls to update checkpoint reward parameters and commission rates and to migrate validator data. Its own storage is unused."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract PolygonMultisig (eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35","description":"manage the roles of the predicate.","role":".defaultAdminAC"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x401F6c983eA34274ec46f84D70b31C151321188b","description":"can update the root chain it references.","role":".owner","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287","description":"can delete arbitrary checkpoints.","role":".owner","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x938529C189525e9a03c66C417D337BE9B5762bA4","description":"approve new validators to join the Polygon PoS validator set.","role":".passIssuerAC","via":[{"address":"eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"},{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x938529C189525e9a03c66C417D337BE9B5762bA4","description":"grant and revoke the role that approves new validators.","role":".defaultAdminAC","via":[{"address":"eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"},{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.13:
++        {"permission":"interact","from":"eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","description":"map new root tokens to child tokens and token types.","role":".mapperAC"}
+      receivedPermissions.14:
++        {"permission":"interact","from":"eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","description":"replace the checkpoint manager and the state sender, register predicates, remap or unmap tokens and manage all roles. A malicious checkpoint manager can authorize arbitrary exits from all escrows.","role":".defaultAdminAC"}
+      receivedPermissions.15:
++        {"permission":"interact","from":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","description":"execute transactions that are ready.","role":".executorAC"}
+      receivedPermissions.16:
++        {"permission":"interact","from":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.17:
++        {"permission":"interact","from":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","description":"propose and cancel transactions.","role":".proposerAC"}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","role":"admin","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"eth:0x2A88696e0fFA76bAA1338F2C74497cC013495922","role":".owner","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7","role":"admin","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"eth:0x401F6c983eA34274ec46f84D70b31C151321188b","role":".owner","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","role":"admin","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908","role":"admin","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.25:
++        {"permission":"upgrade","from":"eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b","role":"admin","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.26:
++        {"permission":"upgrade","from":"eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48","role":".owner","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","role":"admin","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.28:
++        {"permission":"upgrade","from":"eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287","role":".owner","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.29:
++        {"permission":"upgrade","from":"eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","role":"admin","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.30:
++        {"permission":"upgrade","from":"eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4","role":"admin","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.31:
++        {"permission":"upgrade","from":"eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","role":"admin","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      receivedPermissions.33:
++        {"permission":"upgrade","from":"eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD","role":"admin","via":[{"address":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","role":".executorAC"}]
+    }
+```
+
 Generated with discovered.json: 0xa7cd9551eb4c744b6cf7f288416de68fc987dfae
 
 # Diff at Fri, 16 Oct 2026 10:10:31 GMT:

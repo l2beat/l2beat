@@ -8,6 +8,7 @@ import { asciiProgressBar, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { boolean, command, flag, option, optional, string } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
+import { inspect } from 'util'
 import {
   type CliLogger,
   createCliLogger,
@@ -223,8 +224,24 @@ function formatReport(
 }
 
 function getErrorMessage(error: unknown): string {
-  const message = error instanceof Error ? error.message : String(error)
-  return message.split('\n')[0]
+  if (!(error instanceof Error)) {
+    return firstLine(String(error))
+  }
+  if (error.cause === undefined) {
+    return firstLine(error.message)
+  }
+  return `${firstLine(error.message)} ${describeCause(error.cause)}`
+}
+
+function describeCause(cause: unknown): string {
+  if (cause instanceof Error) {
+    return `(cause: ${firstLine(cause.message)})`
+  }
+  return inspect(cause, { depth: 4, breakLength: Number.POSITIVE_INFINITY })
+}
+
+function firstLine(text: string): string {
+  return text.split('\n')[0]
 }
 
 function colorMap(toColor: string, value: number, multiplier = 1): string {

@@ -250,6 +250,12 @@ export type InteropProtocolTransferDetailsItem = {
 export type InteropProtocolTransfersResponse = {
   items: InteropProtocolTransferDetailsItem[]
   nextCursor: InteropProtocolTransfersCursor | undefined
+  /**
+   * Set, with no items, when the selection includes a lane carried over from
+   * an older snapshot: its count covers that snapshot's window, not the one
+   * the transfers would be listed from. The oldest such snapshot.
+   */
+  carriedFrom?: number
 }
 
 export type AggregatedInteropTransferWithTokens =

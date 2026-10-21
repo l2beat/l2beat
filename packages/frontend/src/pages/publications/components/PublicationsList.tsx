@@ -7,12 +7,18 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
-import { LinkWithThumbnail } from '~/components/LinkWithThumbnail'
+import { PlainLink } from '~/components/PlainLink'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { externalLinks } from '~/consts/externalLinks'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
+import { CustomLinkIcon } from '~/icons/Outlink'
 import { formatPublicationDate } from '~/utils/dates'
-import type { PublicationEntry } from '../utils/getPublicationEntry'
+import { isExternalUrl } from '~/utils/isExternalUrl'
+import {
+  getPublicationTagLabel,
+  type PublicationEntry,
+} from '../utils/getPublicationEntry'
 
 export function PublicationsList({
   publications,
@@ -71,7 +77,7 @@ function PublicationsGrid({
   newsletterBgUrl: string
 }) {
   return (
-    <div className="grid grid-cols-1 gap-x-4 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
       <div
         className="col-span-full row-start-2 flex w-full items-center justify-center gap-6 rounded-lg bg-center bg-cover py-5 pr-8 pl-6 text-white max-md:flex-col"
         style={{ backgroundImage: `url(${newsletterBgUrl})` }}
@@ -103,30 +109,42 @@ function PublicationsGrid({
 
 function PublicationCard({ publication }: { publication: PublicationEntry }) {
   return (
-    <LinkWithThumbnail
-      {...publication.thumbnail}
+    <PlainLink
       href={publication.url}
-      title={publication.shortTitle ?? publication.title}
-      topAccessory={
-        <div className="flex items-center gap-2">
-          <PublicationTag tag={publication.tag} />
-          <span className="font-medium text-brand text-label-value-12">
-            {formatPublicationDate(UnixTime.toDate(publication.publishedOn))}
-          </span>
-        </div>
-      }
-      description={publication.description}
-      customCtaText={publication.customCtaText}
-      orientation="vertical"
-      className="justify-self-center"
-    />
-  )
-}
-
-export function PublicationTag({ tag }: { tag: PublicationEntry['tag'] }) {
-  return (
-    <div className="whitespace-nowrap rounded-sm border border-brand px-[5px] py-[4.5px] font-bold text-brand text-label-value-13 uppercase">
-      {tag === 'monthly-update' ? 'Monthly Update' : tag}
-    </div>
+      className="group flex flex-col overflow-hidden rounded-lg border border-divider bg-pure-white transition-[border-color,box-shadow] hover:border-brand/40 hover:shadow-[0_6px_20px_-10px] hover:shadow-brand/40 dark:bg-surface-secondary"
+    >
+      <div className="overflow-hidden border-divider border-b">
+        <img
+          {...publication.thumbnail}
+          alt={`Thumbnail of ${publication.title}`}
+          className="aspect-video w-full object-cover object-center transition-[scale] will-change-transform group-hover:scale-[1.03]"
+        />
+      </div>
+      <div className="flex-1 px-4 pt-4">
+        <p className="text-balance text-heading-18">
+          {publication.shortTitle ?? publication.title}
+        </p>
+        {publication.description && (
+          <p className="mt-2 line-clamp-3 text-paragraph-14 text-secondary">
+            {publication.description}
+          </p>
+        )}
+      </div>
+      <div className="mx-4 mt-4 flex items-center gap-2 border-divider border-t py-3">
+        <span className="font-bold text-brand text-label-value-12 uppercase">
+          {getPublicationTagLabel(publication.tag)}
+        </span>
+        <span className="text-label-value-12 text-secondary">
+          {formatPublicationDate(UnixTime.toDate(publication.publishedOn))}
+        </span>
+        <span className="ml-auto grid size-7 place-items-center rounded-full text-secondary transition-colors group-hover:bg-brand group-hover:text-pure-white">
+          {isExternalUrl(publication.url) ? (
+            <CustomLinkIcon className="size-3.5 fill-current" />
+          ) : (
+            <ArrowRightIcon className="size-3.5 fill-current" />
+          )}
+        </span>
+      </div>
+    </PlainLink>
   )
 }

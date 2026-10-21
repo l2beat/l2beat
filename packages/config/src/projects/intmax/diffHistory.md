@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xa8bf6407909d8f72b842a637c7f0df353b2855b6
+
+# Diff at Tue, 20 Oct 2026 07:51:31 GMT:
+
+- id: accc7ddb
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1787230588
+- current timestamp: 1787230588
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787230588 (main branch discovery), not current.
+
+```diff
+    contract LiquidityV2 (eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3) [intmax/Liquidity] {
+    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract.
+      values.rollup:
+-        "eth:0x1c88459D014e571c332BF9199aD2D35C93219A2e"
++        "scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+    }
+```
+
 Generated with discovered.json: 0x39297e2543e367782502b6409cf7fb19c814273a
 
 # Diff at Fri, 16 Oct 2026 05:36:50 GMT:
