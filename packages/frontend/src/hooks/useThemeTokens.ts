@@ -9,6 +9,7 @@ export interface ThemeTokens {
   surface: string
   surfaceSecondary: string
   divider: string
+  negative: string
 }
 
 const LIGHT_TOKENS: ThemeTokens = {
@@ -19,6 +20,7 @@ const LIGHT_TOKENS: ThemeTokens = {
   surface: '#fafafa',
   surfaceSecondary: '#e6e7ec',
   divider: '#ccd0da',
+  negative: '#d70000',
 }
 
 /** Follows the theme toggle, which swaps a class on the root element */
@@ -41,6 +43,7 @@ export function useThemeTokens(): ThemeTokens {
           LIGHT_TOKENS.surfaceSecondary,
         ),
         divider: value('--divider', LIGHT_TOKENS.divider),
+        negative: value('--negative', LIGHT_TOKENS.negative),
       })
     }
     read()

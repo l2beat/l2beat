@@ -133,23 +133,21 @@ export function drawCrowdScene(
     10,
   )
   ctx.fill()
-  ctx.setLineDash([3, 4])
-  ctx.strokeStyle = toRgba(tokens.secondary, 0.6)
+  ctx.strokeStyle = toRgba(tokens.secondary, 0.35)
   ctx.beginPath()
   ctx.moveTo(now, 12)
   ctx.lineTo(now, height - 18)
   ctx.stroke()
-  ctx.setLineDash([])
 
-  ctx.font = '600 10px Roboto, sans-serif'
+  ctx.font = '500 11px Roboto, sans-serif'
   ctx.textBaseline = 'middle'
   ctx.fillStyle = tokens.secondary
   ctx.textAlign = 'left'
-  ctx.fillText('WITHDRAWALS', left, 12)
-  ctx.fillText('DEPOSITS', left, laneTop - 22)
-  ctx.fillText('← EARLIER', left, height - 8)
+  ctx.fillText('Withdrawals', left, 12)
+  ctx.fillText('Deposits', left, laneTop - 22)
+  ctx.fillText('Earlier', left, height - 8)
   ctx.textAlign = 'right'
-  ctx.fillText('NOW', width - 2, height - 8)
+  ctx.fillText('Now', width - 2, height - 8)
 
   // Fans, oldest first
   scene.withdrawals.forEach((w, i) => {
@@ -168,7 +166,7 @@ export function drawCrowdScene(
       ctx.strokeStyle = own
         ? toRgba(tokens.brand, fade)
         : single
-          ? toRgba('#ef4444', 0.8 * fade)
+          ? toRgba(tokens.negative, 0.8 * fade)
           : toRgba(
               mine ? tokens.secondary : tokens.brand,
               (mine ? 0.3 : 0.28) * fade,
@@ -183,7 +181,7 @@ export function drawCrowdScene(
 
     ctx.beginPath()
     ctx.arc(wx, withdrawY, 7, 0, Math.PI * 2)
-    ctx.fillStyle = toRgba(single ? '#ef4444' : tokens.brand, fade)
+    ctx.fillStyle = toRgba(single ? tokens.negative : tokens.brand, fade)
     ctx.fill()
     if (mine) {
       ctx.strokeStyle = toRgba(tokens.brand, fade)
@@ -203,7 +201,7 @@ export function drawCrowdScene(
     }
     ctx.globalAlpha = fade
     ctx.textAlign = 'right'
-    ctx.fillStyle = single ? '#ef4444' : tokens.brand
+    ctx.fillStyle = single ? tokens.negative : tokens.brand
     ctx.fillText(withdrawalLabel(w), wx - 12, withdrawY)
     ctx.globalAlpha = 1
   })
@@ -229,7 +227,7 @@ export function drawCrowdScene(
       ctx.font = '700 10px Roboto, sans-serif'
       ctx.textAlign = 'center'
       ctx.fillStyle = tokens.brand
-      ctx.fillText('YOU', p.x, p.y - 18)
+      ctx.fillText('You', p.x, p.y - 18)
     }
     ctx.globalAlpha = 1
   }

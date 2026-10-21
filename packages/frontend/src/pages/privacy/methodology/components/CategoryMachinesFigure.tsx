@@ -82,17 +82,17 @@ export function CategoryMachinesFigure({
           return (
             <div
               key={category}
-              className="flex flex-col rounded-lg border border-divider bg-surface-primary p-3"
+              className="flex flex-col rounded-lg border border-divider bg-surface-primary p-4"
             >
-              <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
-                <span className="font-bold text-label-value-14">{label}</span>
-                <span className="whitespace-nowrap rounded-full bg-brand/10 px-2 py-0.5 font-semibold text-brand text-label-value-12">
+              <p className="text-label-value-14">
+                <span className="font-bold">{label}</span>{' '}
+                <span className="text-secondary">
                   hides the{' '}
                   {hides === 'vote'
                     ? 'vote'
                     : byId(data.fields, hides).label.toLowerCase()}
                 </span>
-              </div>
+              </p>
               <LiveSvg
                 running={running}
                 still={reducedMotion ? still : undefined}
@@ -138,7 +138,7 @@ function LiveSvg({
     <svg
       ref={ref}
       viewBox="0 0 200 110"
-      className="my-2 h-36 w-full"
+      className="my-3 h-36 w-full"
       aria-hidden
     >
       {children}
@@ -278,7 +278,6 @@ function Box({ x, width }: { x: number; width: number }) {
       height={82}
       rx={12}
       fill="var(--surface-secondary)"
-      stroke="var(--divider)"
     />
   )
 }
@@ -295,7 +294,7 @@ function Label({
   anchor?: 'start' | 'middle' | 'end'
 }) {
   return (
-    <text x={x} y={y} textAnchor={anchor} fontSize={7} fill={GREY}>
+    <text x={x} y={y} textAnchor={anchor} fontSize={8} fill={GREY}>
       {children}
     </text>
   )
@@ -462,19 +461,8 @@ function Envelope({
             .join(';')}
           {...timing}
         />
-        {/* A line icon, in one even stroke like the site's icons */}
-        <rect
-          x={-9}
-          y={-6}
-          width={18}
-          height={12}
-          rx={2}
-          fill="var(--surface-primary)"
-          stroke={GREY}
-          strokeWidth={1.2}
-        />
-        <g transform="translate(0 -6)">
-          <g>
+        <EnvelopeIcon
+          flap={
             <animateTransform
               attributeName="transform"
               type="scale"
@@ -482,17 +470,50 @@ function Envelope({
               keyTimes={flap.map((f) => f[0]).join(';')}
               {...timing}
             />
-            <path
-              d="M -8.4 0.6 L 0 6.6 L 8.4 0.6"
-              fill="none"
-              stroke={GREY}
-              strokeWidth={1.2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </g>
+          }
+        />
+      </g>
+    </g>
+  )
+}
+
+/**
+ * A sealed envelope as a line icon, in one even stroke like the site's icons,
+ * with a stamp: its metadata. `flap` animates the flap open and shut.
+ */
+function EnvelopeIcon({
+  flap,
+  stamp = true,
+}: {
+  flap?: ReactNode
+  stamp?: boolean
+}) {
+  return (
+    <>
+      <rect
+        x={-9}
+        y={-6}
+        width={18}
+        height={12}
+        rx={2}
+        fill="var(--surface-primary)"
+        stroke={GREY}
+        strokeWidth={1.2}
+      />
+      <g transform="translate(0 -6)">
+        <g>
+          {flap}
+          <path
+            d="M -8.4 0.6 L 0 6.6 L 8.4 0.6"
+            fill="none"
+            stroke={GREY}
+            strokeWidth={1.2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </g>
-        {/* The stamp: the envelope's metadata, always on it */}
+      </g>
+      {stamp && (
         <rect
           x={3.5}
           y={1}
@@ -502,8 +523,22 @@ function Envelope({
           fill={GREY}
           opacity={0.35}
         />
-      </g>
-    </g>
+      )}
+    </>
+  )
+}
+
+/** A redaction bar: a value that is there but cannot be read. */
+function Redacted({ x, y, width }: { x: number; y: number; width: number }) {
+  return (
+    <rect
+      x={x}
+      y={y - 3.5}
+      width={width}
+      height={7}
+      rx={1.5}
+      fill="var(--primary)"
+    />
   )
 }
 
@@ -592,9 +627,7 @@ function AccessMachine() {
         width={52}
         height={70}
         rx={12}
-        fill="none"
-        stroke="var(--divider)"
-        strokeDasharray="4 3"
+        fill="var(--surface-secondary)"
       />
       {members.map((m) => (
         <circle key={m.color} cx={m.x} cy={m.y} r={7} fill={m.color}>
@@ -617,7 +650,6 @@ function AccessMachine() {
         height={42}
         rx={8}
         fill="var(--surface-secondary)"
-        stroke="var(--divider)"
       />
       <rect
         x={150}
@@ -661,7 +693,7 @@ function AccessMachine() {
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <text y={-13} textAnchor="middle" fontSize={7} fill={GREY}>
+        <text y={-13} textAnchor="middle" fontSize={8} fill={GREY}>
           proof
         </text>
       </g>
@@ -694,7 +726,6 @@ function StealthMachine() {
                 height={16}
                 rx={4}
                 fill="var(--surface-secondary)"
-                stroke="var(--divider)"
               />
               <text x={124} y={y + 3} textAnchor="middle" fontSize={7}>
                 <tspan fill={GREY}>{address}</tspan>
@@ -748,11 +779,13 @@ function ConfidentialMachine() {
     <>
       <circle cx={22} cy={62} r={9} fill={BLUE} />
       <circle cx={178} cy={62} r={9} fill={ORANGE} />
-      <text x={22} y={86} textAnchor="middle" fontSize={8} fill={GREY}>
-        ••• ETH
+      <Redacted x={8} y={84} width={16} />
+      <text x={27} y={87} fontSize={8} fill={GREY}>
+        ETH
       </text>
-      <text x={178} y={86} textAnchor="middle" fontSize={8} fill={GREY}>
-        ••• ETH
+      <Redacted x={164} y={84} width={16} />
+      <text x={183} y={87} fontSize={8} fill={GREY}>
+        ETH
       </text>
       <line
         x1={34}
@@ -776,29 +809,9 @@ function ConfidentialMachine() {
           keySplines="0 0 1 1;0.45 0 0.55 1;0 0 1 1"
         />
         <circle r={5} fill={BLUE} />
-        <rect
-          x={-22}
-          y={-26}
-          width={44}
-          height={14}
-          rx={7}
-          fill="var(--brand)"
-          opacity={0.15}
-        />
-        <text
-          y={-16}
-          textAnchor="middle"
-          fontSize={8}
-          fontWeight={700}
-          fill="var(--brand)"
-        >
-          <animate
-            attributeName="opacity"
-            values="1;0.5;1"
-            dur="1.4s"
-            repeatCount="indefinite"
-          />
-          ▒▒▒ ETH
+        <Redacted x={-14} y={-15} width={16} />
+        <text x={5} y={-12} fontSize={8} fontWeight={700} fill="var(--primary)">
+          ETH
         </text>
       </g>
       <Label x={22} y={104}>
@@ -838,24 +851,7 @@ function BallotMachine() {
               repeatCount="indefinite"
             />
             <Shown from={begin} to={begin + 0.32} dur={`${DUR}s`} />
-            <rect
-              x={-9}
-              y={-6}
-              width={18}
-              height={12}
-              rx={2}
-              fill="var(--brand)"
-              opacity={0.85}
-            />
-            <text
-              y={3}
-              textAnchor="middle"
-              fontSize={7}
-              fontWeight={700}
-              fill="var(--primary-invert)"
-            >
-              ▒▒
-            </text>
+            <EnvelopeIcon stamp={false} />
           </g>
         )
       })}

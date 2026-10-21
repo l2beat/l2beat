@@ -40,19 +40,17 @@ export interface PoolDesign {
 /** A withdrawal with this many coins waiting, itself included, is caught. */
 const CAUGHT_AT = 2
 
-/** Owner colours; kept clear of the green, yellow and red of the ratings. */
+/**
+ * Owner colours, from the site's chart palette; kept clear of the green,
+ * yellow and red of the ratings and of the brand purple.
+ */
 export const OWNER_COLORS = [
-  '#3b82f6',
-  '#14b8a6',
-  '#8b5cf6',
-  '#ec4899',
-  '#f97316',
+  '#2a5bd8',
+  '#36a3a3',
+  '#9576d1',
+  '#ef43b3',
+  '#f98a24',
 ]
-const CAUGHT_COLOR = '#ef4444'
-/** The future adversary's quantum attack. */
-const QUANTUM_CYAN = '#22d3ee'
-const QUANTUM_VIOLET = '#a78bfa'
-const QUANTUM_SPARKS = [QUANTUM_CYAN, QUANTUM_VIOLET, '#f0abfc']
 const HOME_IPS = [
   '84.21.7.13',
   '91.66.3.140',
@@ -62,14 +60,16 @@ const HOME_IPS = [
 ]
 
 const OWNERS = OWNER_COLORS.length
+/** The radius of a sender's or recipient's dot. */
+const PERSON_R = 10
 const TRAVEL_S = 1.4
 const FADE_S = 0.8
 /** How long a logged connection stays in the network observer's view. */
 const LOG_S = 9
 /** How long an archived note resists the future adversary. */
 const CRACK_S = 0.9
-/** How long a cracked note sparkles. */
-const BURST_S = 0.8
+/** How long a broken lock takes to spring open and fade. */
+const UNLOCK_S = 0.6
 /** How long the chain analyst's magnifier takes to reach a stamp. */
 const MAGNIFIER_MOVE_S = 0.4
 /** How long it stays on a stamp to read it. */
@@ -329,8 +329,6 @@ interface DrawOptions {
   width: number
   height: number
   lens: Lens
-  /** Seconds since the lens changed, for the sweep between views. */
-  lensAge: number
   tokens: ThemeTokens
   design: PoolDesign
 }
@@ -338,7 +336,7 @@ interface DrawOptions {
 export function drawPoolScene(
   ctx: CanvasRenderingContext2D,
   scene: PoolScene,
-  { width, height, lens, lensAge, tokens, design }: DrawOptions,
+  { width, height, lens, tokens, design }: DrawOptions,
 ) {
   const l = getLayout(width, height)
   ctx.clearRect(0, 0, width, height)
@@ -362,19 +360,14 @@ export function drawPoolScene(
         ? 'key broken'
         : undefined
 
-  // Zones
-  for (const band of [l.leftBand, l.rightBand]) {
-    ctx.fillStyle = network
-      ? toRgba(tokens.brand, 0.1)
-      : toRgba(tokens.divider, tokens.isDark ? 0.5 : 0.3)
-    ctx.beginPath()
-    ctx.roundRect(band.x, l.top, band.width, l.bottom - l.top, 8)
-    ctx.fill()
-    if (network) {
-      ctx.setLineDash([4, 4])
-      ctx.strokeStyle = toRgba(tokens.brand, 0.6)
-      ctx.stroke()
-      ctx.setLineDash([])
+  // The network between people and pool exists only for the network
+  // observer; the other views leave it as open ground for the coins.
+  if (network) {
+    for (const band of [l.leftBand, l.rightBand]) {
+      ctx.beginPath()
+      ctx.roundRect(band.x, l.top, band.width, l.bottom - l.top, 8)
+      ctx.fillStyle = toRgba(tokens.brand, 0.08)
+      ctx.fill()
     }
   }
 
@@ -382,7 +375,7 @@ export function drawPoolScene(
     for (const side of ['in', 'out'] as const) {
       const band = side === 'in' ? l.leftBand : l.rightBand
       const entries = scene.requests.filter((r) => r.side === side).slice(-7)
-      ctx.font = '500 10px ui-monospace, monospace'
+      ctx.font = '500 11px Roboto, sans-serif'
       ctx.textAlign = 'left'
       entries.forEach((entry, i) => {
         const fromBottom = entries.length - 1 - i
@@ -390,7 +383,7 @@ export function drawPoolScene(
         const y = l.bottom - 14 - (fromBottom + enter - 1) * 16
         ctx.fillStyle = toRgba(tokens.brand, (1 - entry.age / LOG_S) * enter)
         ctx.fillText(
-          `${entry.ip} → ${side === 'in' || design.publicRpc ? 'RPC' : 'relayer'}`,
+          `${entry.ip} to ${side === 'in' || design.publicRpc ? 'RPC' : 'relayer'}`,
           band.x + 10,
           y,
         )
@@ -402,41 +395,46 @@ export function drawPoolScene(
   ctx.roundRect(l.pool.x, l.top, l.pool.width, l.bottom - l.top, 14)
   ctx.fillStyle = seesInside ? toRgba(tokens.brand, 0.1) : tokens.surface
   ctx.fill()
-  ctx.lineWidth = seesInside ? 2 : 1
-  ctx.strokeStyle = seesInside ? tokens.brand : tokens.divider
-  ctx.stroke()
-  ctx.lineWidth = 1
-  if (future) drawQuantumScan(ctx, l, scene.time)
+  // Outlined only for the operator, who can open it.
+  if (seesInside) {
+    ctx.lineWidth = 2
+    ctx.strokeStyle = tokens.brand
+    ctx.stroke()
+    ctx.lineWidth = 1
+  }
 
   // Headings
-  ctx.font = '600 10px Roboto, sans-serif'
-  ctx.textAlign = 'center'
+  ctx.font = '500 11px Roboto, sans-serif'
   ctx.textBaseline = 'middle'
   ctx.fillStyle = tokens.secondary
   ctx.textAlign = 'left'
-  ctx.fillText('SENDERS', 2, 14)
+  ctx.fillText('Senders', 2, 14)
   ctx.textAlign = 'right'
-  ctx.fillText('RECIPIENTS', width - 2, 14)
+  ctx.fillText('Recipients', width - 2, 14)
   ctx.textAlign = 'center'
   // The chain analyst's heading counts the waiting coins, drawn last.
   if (lens !== 'chainAnalyst') {
     ctx.fillText(
-      insider ? "POOL · OPERATOR'S VIEW" : future ? 'POOL · YEAR 2040' : 'POOL',
+      insider
+        ? 'The pool, as its operator sees it'
+        : future
+          ? 'The pool, read in 2040'
+          : 'The pool',
       l.pool.x + l.pool.width / 2,
       14,
     )
   }
-  if (l.leftBand.width > 90) {
-    ctx.fillStyle = network ? tokens.brand : tokens.secondary
-    ctx.fillText('NETWORK', l.leftBand.x + l.leftBand.width / 2, 14)
-    ctx.fillText('NETWORK', l.rightBand.x + l.rightBand.width / 2, 14)
+  if (network && l.leftBand.width > 90) {
+    ctx.fillStyle = tokens.brand
+    ctx.fillText('Network', l.leftBand.x + l.leftBand.width / 2, 14)
+    ctx.fillText('Network', l.rightBand.x + l.rightBand.width / 2, 14)
   }
 
   // People: senders are public addresses, recipients fresh ones.
   for (let i = 0; i < OWNERS; i++) {
     const color = OWNER_COLORS[i] ?? tokens.secondary
     ctx.beginPath()
-    ctx.arc(l.senderX, l.rowY(i), 10, 0, Math.PI * 2)
+    ctx.arc(l.senderX, l.rowY(i), PERSON_R, 0, Math.PI * 2)
     ctx.fillStyle = color
     ctx.fill()
 
@@ -445,7 +443,7 @@ export function drawPoolScene(
     )
     const linkColor = link && links ? OWNER_COLORS[link.owner] : undefined
     ctx.beginPath()
-    ctx.arc(l.recipientX, l.rowY(i), 10, 0, Math.PI * 2)
+    ctx.arc(l.recipientX, l.rowY(i), PERSON_R, 0, Math.PI * 2)
     ctx.fillStyle =
       link && linkColor
         ? toRgba(linkColor, 0.25 + 0.75 * (1 - link.age / link.life))
@@ -457,56 +455,49 @@ export function drawPoolScene(
     ctx.lineWidth = 1
   }
 
-  // Traces
+  // Traces. Each runs from dot edge to dot edge; only the newest tag on a
+  // recipient is drawn, so tags never stack.
+  const tags = new Map<number, Parameters<typeof tag>>()
   for (const trace of scene.traces) {
     const fade = 1 - trace.age / trace.life
     const to = { x: l.recipientX, y: l.rowY(trace.recipient) }
+    const from = (owner: number) => ({ x: l.senderX, y: l.rowY(owner) })
+    const corner = (text: string, color: string, background: string) =>
+      tags.set(trace.recipient, [
+        ctx,
+        text,
+        to.x - 18,
+        to.y - 18,
+        { color, background, opacity: fade, align: 'right' },
+      ])
     if (lens === 'chainAnalyst' && trace.kind === 'fan') {
       ctx.setLineDash([3, 4])
       ctx.strokeStyle = toRgba(tokens.secondary, 0.45 * fade)
       for (const owner of new Set(trace.candidates)) {
-        line(ctx, { x: l.senderX + 12, y: l.rowY(owner) }, to)
+        link(ctx, from(owner), to)
       }
       ctx.setLineDash([])
-      tag(ctx, `1 of ${trace.candidates.length}`, to.x - 18, to.y - 18, {
-        color: tokens.secondary,
-        background: tokens.surface,
-        opacity: fade,
-        align: 'right',
-      })
+      corner(
+        `1 of ${trace.candidates.length}`,
+        tokens.secondary,
+        tokens.surface,
+      )
     }
     // The future adversary inherits every catch the chain analyst makes.
     if ((lens === 'chainAnalyst' || future) && trace.kind === 'caught') {
-      ctx.strokeStyle = toRgba(CAUGHT_COLOR, fade)
+      ctx.strokeStyle = toRgba(tokens.negative, fade)
       ctx.lineWidth = 2
-      line(ctx, { x: l.senderX + 12, y: l.rowY(trace.owner) }, to)
+      link(ctx, from(trace.owner), to)
       ctx.lineWidth = 1
-      tag(ctx, 'timing match', to.x - 18, to.y - 18, {
-        color: '#ffffff',
-        background: CAUGHT_COLOR,
-        opacity: fade,
-        align: 'right',
-      })
+      corner('timing match', '#ffffff', tokens.negative)
     }
     if (links && trace.kind === 'link') {
       const color = OWNER_COLORS[trace.owner] ?? tokens.secondary
-      const from = { x: l.senderX + 12, y: l.rowY(trace.owner) }
-      if (breaksNotes) {
-        drawQuantumBeam(ctx, from, to, color, scene.time, fade)
-      } else {
-        ctx.strokeStyle = toRgba(color, 0.8 * fade)
-        ctx.lineWidth = 2
-        line(ctx, from, to)
-        ctx.lineWidth = 1
-      }
-      if (linkLabel) {
-        tag(ctx, linkLabel, to.x - 18, to.y - 18, {
-          color: '#ffffff',
-          background: CAUGHT_COLOR,
-          opacity: fade,
-          align: 'right',
-        })
-      }
+      ctx.strokeStyle = toRgba(color, 0.8 * fade)
+      ctx.lineWidth = 2
+      link(ctx, from(trace.owner), to)
+      ctx.lineWidth = 1
+      if (linkLabel) corner(linkLabel, '#ffffff', tokens.negative)
     }
     // The chain analyst and future adversary mark withdrawals with timing catches instead.
     if (
@@ -515,14 +506,21 @@ export function drawPoolScene(
       lens !== 'chainAnalyst' &&
       !future
     ) {
-      tag(ctx, '?', to.x, to.y - 20 - 6 * (1 - fade), {
-        color: tokens.secondary,
-        background: tokens.surface,
-        opacity: fade,
-        align: 'center',
-      })
+      tags.set(trace.recipient, [
+        ctx,
+        '?',
+        to.x,
+        to.y - 20 - 6 * (1 - fade),
+        {
+          color: tokens.secondary,
+          background: tokens.surface,
+          opacity: fade,
+          align: 'center',
+        },
+      ])
     }
   }
+  for (const args of tags.values()) tag(...args)
 
   // Envelopes, lowest last so they overlap like a stack
   const envelopes = scene.notes
@@ -565,17 +563,11 @@ export function drawPoolScene(
         },
       )
     }
-    if (future && note.phase === 'pool') {
-      if (!cracked && seal > 0.6) {
-        ctx.beginPath()
-        ctx.arc(sealPoint.x, sealPoint.y, 5, 0, Math.PI * 2)
-        ctx.fillStyle = tokens.secondary
-        ctx.fill()
-        drawLock(ctx, sealPoint.x, sealPoint.y, tokens.surface)
-        if (!design.ellipticCurves) drawShieldGlint(ctx, p, l, scene.time)
-      } else if (cracked && note.sincePool < CRACK_S + BURST_S) {
-        drawQuantumBurst(ctx, p, (note.sincePool - CRACK_S) / BURST_S, note.id)
-      }
+    // The future adversary's view: each envelope is locked by its
+    // cryptography, and an elliptic-curve lock springs open once broken.
+    if (future && note.phase === 'pool' && seal > 0.6) {
+      const opened = breaksNotes ? (note.sincePool - CRACK_S) / UNLOCK_S : 0
+      if (opened < 1) drawLock(ctx, sealPoint, Math.max(0, opened), tokens)
     }
   }
 
@@ -595,40 +587,11 @@ export function drawPoolScene(
       ((publicLinks || ipLinks) && left)
     const opacity = note.phase === 'done' ? 1 - note.t / FADE_S : 1
 
-    if (note.phase === 'in' || note.phase === 'out') {
-      for (let k = 1; k <= 5; k++) {
-        const past = notePosition(
-          { ...note, t: Math.max(0, note.t - k * 0.035) },
-          l,
-        )
-        ctx.globalAlpha = (opacity * 0.12 * (6 - k)) / 5
-        ctx.beginPath()
-        ctx.arc(past.x, past.y, 6 - k * 0.6, 0, Math.PI * 2)
-        ctx.fillStyle = revealed ? ownerColor : tokens.secondary
-        ctx.fill()
-      }
-    }
     ctx.globalAlpha = opacity
     ctx.beginPath()
     ctx.arc(p.x, p.y, 6, 0, Math.PI * 2)
-    ctx.fillStyle = toRgba(tokens.secondary, 0.6)
+    ctx.fillStyle = revealed ? ownerColor : tokens.secondary
     ctx.fill()
-    if (revealed) {
-      ctx.shadowColor = ownerColor
-      ctx.shadowBlur = 10
-      ctx.fillStyle = ownerColor
-      ctx.fill()
-      ctx.shadowBlur = 0
-    }
-
-    if (future && note.phase !== 'in') {
-      if (!cracked) {
-        drawLock(ctx, p.x, p.y, tokens.surface)
-        if (!design.ellipticCurves) drawShieldGlint(ctx, p, l, scene.time)
-      } else if (note.sincePool < CRACK_S + BURST_S) {
-        drawQuantumBurst(ctx, p, (note.sincePool - CRACK_S) / BURST_S, note.id)
-      }
-    }
 
     if (network) {
       const inLeft = note.phase === 'in' && p.x < l.pool.x
@@ -648,23 +611,18 @@ export function drawPoolScene(
   if (lens === 'chainAnalyst') {
     const waiting = countWaiting(scene)
     // In the heading, clear of the stamps on the envelopes below.
-    tag(ctx, `POOL · ${waiting} WAITING`, l.pool.x + l.pool.width / 2, 14, {
-      color: waiting <= 2 ? '#ffffff' : tokens.secondary,
-      background: waiting <= 2 ? CAUGHT_COLOR : tokens.surface,
-      opacity: 1,
-      align: 'center',
-    })
-  }
-
-  // A sweep across the scene when the view changes.
-  if (lensAge < 0.6) {
-    const x = (lensAge / 0.6) * (width + 120) - 60
-    const gradient = ctx.createLinearGradient(x - 60, 0, x + 60, 0)
-    gradient.addColorStop(0, toRgba(tokens.brand, 0))
-    gradient.addColorStop(0.5, toRgba(tokens.brand, 0.22))
-    gradient.addColorStop(1, toRgba(tokens.brand, 0))
-    ctx.fillStyle = gradient
-    ctx.fillRect(x - 60, 0, 120, height)
+    tag(
+      ctx,
+      `${waiting} waiting in the pool`,
+      l.pool.x + l.pool.width / 2,
+      14,
+      {
+        color: waiting <= 2 ? '#ffffff' : tokens.secondary,
+        background: waiting <= 2 ? tokens.negative : tokens.surface,
+        opacity: 1,
+        align: 'center',
+      },
+    )
   }
 }
 
@@ -758,169 +716,32 @@ function drawMagnifier(
   ctx.restore()
 }
 
-/** The height of the future adversary's scan across the pool. */
-function quantumScanY(l: Layout, time: number) {
-  const k = (time % 3.2) / 3.2
-  return l.top + k * (l.bottom - l.top)
-}
-
-function drawQuantumScan(
-  ctx: CanvasRenderingContext2D,
-  l: Layout,
-  time: number,
-) {
-  const y = quantumScanY(l, time)
-  ctx.save()
-  const gradient = ctx.createLinearGradient(0, y - 18, 0, y + 2)
-  gradient.addColorStop(0, toRgba(QUANTUM_CYAN, 0))
-  gradient.addColorStop(1, toRgba(QUANTUM_CYAN, 0.22))
-  ctx.fillStyle = gradient
-  ctx.fillRect(l.pool.x + 1, y - 18, l.pool.width - 2, 20)
-  ctx.shadowColor = QUANTUM_CYAN
-  ctx.shadowBlur = 8
-  ctx.strokeStyle = toRgba(QUANTUM_CYAN, 0.7)
-  line(ctx, { x: l.pool.x + 6, y }, { x: l.pool.x + l.pool.width - 6, y })
-  ctx.restore()
-}
-
-/** A post-quantum note: the scan glances off its shield. */
-function drawShieldGlint(
-  ctx: CanvasRenderingContext2D,
-  p: { x: number; y: number },
-  l: Layout,
-  time: number,
-) {
-  const near = 1 - Math.abs(p.y - quantumScanY(l, time)) / 16
-  if (near <= 0) return
-  ctx.save()
-  ctx.globalAlpha *= near
-  ctx.shadowColor = QUANTUM_CYAN
-  ctx.shadowBlur = 10
-  ctx.strokeStyle = QUANTUM_CYAN
-  ctx.lineWidth = 1.5
-  ctx.beginPath()
-  for (let i = 0; i <= 6; i++) {
-    const a = (i * Math.PI) / 3 + Math.PI / 6
-    const x = p.x + Math.cos(a) * 10
-    const y = p.y + Math.sin(a) * 10
-    if (i === 0) ctx.moveTo(x, y)
-    else ctx.lineTo(x, y)
-  }
-  ctx.stroke()
-  ctx.restore()
-}
-
-/** An elliptic-curve note breaking open, `k` from 0 to 1. */
-function drawQuantumBurst(
-  ctx: CanvasRenderingContext2D,
-  p: { x: number; y: number },
-  k: number,
-  seed: number,
-) {
-  ctx.save()
-  ctx.globalAlpha *= 1 - k
-  ctx.shadowColor = QUANTUM_VIOLET
-  ctx.shadowBlur = 12
-  ctx.beginPath()
-  ctx.arc(p.x, p.y, 6 + k * 14, 0, Math.PI * 2)
-  ctx.strokeStyle = QUANTUM_CYAN
-  ctx.lineWidth = 2 * (1 - k) + 0.5
-  ctx.stroke()
-  for (let i = 0; i < 7; i++) {
-    const a = (i * Math.PI * 2) / 7 + seed
-    const d = 4 + easeOut(k) * (14 + (i % 3) * 5)
-    sparkle(
-      ctx,
-      p.x + Math.cos(a) * d,
-      p.y + Math.sin(a) * d,
-      3.2 * (1 - k) + 0.8,
-      QUANTUM_SPARKS[i % QUANTUM_SPARKS.length] ?? QUANTUM_CYAN,
-    )
-  }
-  ctx.restore()
-}
-
-/** The link a quantum attack recovers: a shimmering, sparkling beam. */
-function drawQuantumBeam(
-  ctx: CanvasRenderingContext2D,
-  from: { x: number; y: number },
-  to: { x: number; y: number },
-  color: string,
-  time: number,
-  fade: number,
-) {
-  const dx = to.x - from.x
-  const dy = to.y - from.y
-  const length = Math.hypot(dx, dy) || 1
-  const at = (s: number, wave: number) => ({
-    x: from.x + dx * s - (dy / length) * wave,
-    y: from.y + dy * s + (dx / length) * wave,
-  })
-  ctx.save()
-  ctx.globalAlpha *= fade
-  const gradient = ctx.createLinearGradient(from.x, from.y, to.x, to.y)
-  gradient.addColorStop(0, color)
-  gradient.addColorStop(0.5, QUANTUM_CYAN)
-  gradient.addColorStop(1, color)
-  ctx.strokeStyle = gradient
-  ctx.shadowColor = QUANTUM_VIOLET
-  ctx.shadowBlur = 10
-  for (const [phase, width] of [
-    [0, 2],
-    [Math.PI, 1],
-  ] as const) {
-    ctx.lineWidth = width
-    ctx.beginPath()
-    for (let i = 0; i <= 48; i++) {
-      const s = i / 48
-      const wave =
-        Math.sin(Math.PI * s) * 4 * Math.sin(s * 22 - time * 9 + phase)
-      const point = at(s, wave)
-      if (i === 0) ctx.moveTo(point.x, point.y)
-      else ctx.lineTo(point.x, point.y)
-    }
-    ctx.stroke()
-  }
-  for (let i = 0; i < 4; i++) {
-    const s = (time * 0.7 + i / 4) % 1
-    const point = at(s, 0)
-    sparkle(ctx, point.x, point.y, 3.5, '#ffffff')
-  }
-  ctx.restore()
-}
-
-/** A four-pointed star. */
-function sparkle(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  size: number,
-  color: string,
-) {
-  ctx.beginPath()
-  ctx.moveTo(x, y - size)
-  ctx.quadraticCurveTo(x, y, x + size, y)
-  ctx.quadraticCurveTo(x, y, x, y + size)
-  ctx.quadraticCurveTo(x, y, x - size, y)
-  ctx.quadraticCurveTo(x, y, x, y - size)
-  ctx.fillStyle = color
-  ctx.fill()
-}
-
+/**
+ * A padlock on an envelope's seal; `open` from 0 (shut) to 1 (sprung open
+ * and gone).
+ */
 function drawLock(
   ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  color: string,
+  at: { x: number; y: number },
+  open: number,
+  tokens: ThemeTokens,
 ) {
-  ctx.fillStyle = color
+  const { x, y } = at
+  const lift = easeInOut(Math.min(1, open * 2)) * 3
+  ctx.save()
+  ctx.globalAlpha *= 1 - Math.max(0, open * 2 - 1)
+  ctx.beginPath()
+  ctx.arc(x, y, 5.5, 0, Math.PI * 2)
+  ctx.fillStyle = tokens.secondary
+  ctx.fill()
+  ctx.fillStyle = tokens.surface
   ctx.fillRect(x - 2.5, y - 1, 5, 4)
   ctx.beginPath()
-  ctx.arc(x, y - 1.5, 1.8, Math.PI, 0)
-  ctx.strokeStyle = color
+  ctx.arc(x, y - 1.5 - lift, 1.8, Math.PI, 0)
+  ctx.strokeStyle = tokens.surface
   ctx.lineWidth = 1.2
   ctx.stroke()
-  ctx.lineWidth = 1
+  ctx.restore()
 }
 
 function tag(
@@ -954,6 +775,23 @@ function tag(
   ctx.restore()
 }
 
+/** A line between two people, stopping short of both dots. */
+function link(
+  ctx: CanvasRenderingContext2D,
+  from: { x: number; y: number },
+  to: { x: number; y: number },
+) {
+  const gap = PERSON_R + 3
+  const dx = to.x - from.x
+  const dy = to.y - from.y
+  const length = Math.hypot(dx, dy) || 1
+  line(
+    ctx,
+    { x: from.x + (dx / length) * gap, y: from.y + (dy / length) * gap },
+    { x: to.x - (dx / length) * gap, y: to.y - (dy / length) * gap },
+  )
+}
+
 function line(
   ctx: CanvasRenderingContext2D,
   from: { x: number; y: number },
@@ -963,10 +801,6 @@ function line(
   ctx.moveTo(from.x, from.y)
   ctx.lineTo(to.x, to.y)
   ctx.stroke()
-}
-
-function easeOut(k: number) {
-  return 1 - (1 - k) ** 3
 }
 
 function easeInOut(k: number) {

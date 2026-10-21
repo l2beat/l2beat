@@ -18,7 +18,6 @@ import { prepareCanvas } from '~/utils/prepareCanvas'
 import { PRIVACY_ADVERSARY_VERDICT } from '../../adversaries/privacyAdversaryUi'
 import { PrivacySentimentDot } from '../../PrivacySentimentDot'
 import type { PrivacyMethodologyFigureData } from '../getPrivacyMethodologyFigureData'
-import { FigureProgress } from './FigureProgress'
 import { MethodologyFigure } from './MethodologyFigure'
 import {
   createPoolScene,
@@ -30,11 +29,12 @@ import {
   stepPoolScene,
 } from './poolLensScene'
 import { getPoolVerdicts } from './poolVerdicts'
+
+type PoolVerdicts = ReturnType<typeof getPoolVerdicts>
+
 import { useFigureAutoplay } from './useFigureAutoplay'
 
 const INTERVAL_MS = 9000
-/** How long a view is watched before its verdict shows. */
-const REVEAL_MS = 2800
 
 const INITIAL_DESIGN: PoolDesign = {
   linksDeposit: false,
@@ -72,11 +72,10 @@ function cachedCaughtShare(traffic: number) {
 }
 
 function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
-  const { step, pick, playing, animate, reducedMotion, containerProps } =
+  const { step, pick, animate, reducedMotion, containerProps } =
     useFigureAutoplay(data.adversaries.length, INTERVAL_MS)
   const { track } = useTracking()
   const adversary = data.adversaries[step] ?? data.adversaries[0]
-  const lens = adversary?.id
 
   const [design, setDesign] = useState(INITIAL_DESIGN)
   const sceneRef = useRef<PoolScene>(undefined)
@@ -90,20 +89,6 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
     [design.traffic],
   )
   const verdicts = getPoolVerdicts(design, caughtShare)
-
-  // A verdict is the conclusion of watching a view, so it shows only after
-  // the reader has seen the pool through those eyes for a moment.
-  const [seen, setSeen] = useState<ReadonlySet<Lens>>(() => new Set())
-  useEffect(() => {
-    if (!lens || seen.has(lens) || (!animate && !reducedMotion)) return
-    const timeout = setTimeout(
-      () => setSeen((current) => new Set(current).add(lens)),
-      reducedMotion ? 0 : REVEAL_MS,
-    )
-    return () => clearTimeout(timeout)
-  }, [lens, seen, animate, reducedMotion])
-  const shown = (id: Lens) =>
-    seen.has(id) ? verdicts[id].sentiment : undefined
 
   const tabsRef = useRef<HTMLDivElement>(null)
   // On phones the tabs scroll sideways; keep the current one in view without
@@ -120,7 +105,6 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
 
   if (!adversary) return null
   const verdict = verdicts[adversary.id]
-  const sentiment = shown(adversary.id)
 
   const change = (next: Partial<PoolDesign>) => {
     pick(step)
@@ -141,7 +125,7 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
         className="scrollbar-hide -mx-4 relative flex gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0"
       >
         {data.adversaries.map(({ id, label }, i) => {
-          const tabSentiment = shown(id)
+          const current = i === step
           return (
             <Tabs.Trigger
               key={id}
@@ -151,39 +135,21 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
               onClick={() => pick(i)}
               className={cn(
                 'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13 transition-[color,background-color,border-color,scale] duration-150 ease-out active:scale-[0.97]',
-                i === step
+                current
                   ? 'border-brand bg-brand text-primary-invert'
                   : 'border-divider bg-surface-primary text-secondary hover:border-brand/50 hover:text-primary',
               )}
             >
-              {tabSentiment ? (
-                <PrivacySentimentDot
-                  key={tabSentiment}
-                  sentiment={tabSentiment}
-                  className="motion-safe:zoom-in-50 motion-safe:fade-in motion-safe:animate-in"
-                />
-              ) : (
-                <span
-                  aria-hidden
-                  className={cn(
-                    // As big as the verdict dot, so the tab keeps its size.
-                    'size-5 shrink-0 rounded-full border-2 border-dashed',
-                    i === step ? 'border-primary-invert/70' : 'border-divider',
-                  )}
-                />
-              )}
+              <PrivacySentimentDot
+                key={verdicts[id].sentiment}
+                sentiment={verdicts[id].sentiment}
+                className="motion-safe:zoom-in-50 motion-safe:fade-in motion-safe:animate-in"
+              />
               {label}
             </Tabs.Trigger>
           )
         })}
       </Tabs.List>
-      <FigureProgress
-        steps={data.adversaries.length}
-        step={step}
-        playing={playing}
-        intervalMs={INTERVAL_MS}
-        className="mt-3"
-      />
       {/* One panel that follows the tab, so the canvas is never remounted.
           It holds controls, so it needs no tab stop of its own. */}
       <Tabs.Content value={adversary.id} tabIndex={-1} className="outline-none">
@@ -198,39 +164,26 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
         <div className="mt-3 flow-root sm:flex sm:items-center sm:gap-4">
           <VerdictRosette
             data={data}
-            shown={shown}
+            verdicts={verdicts}
             selected={adversary.label}
           />
           <div
             key={adversary.id}
             className="motion-safe:fade-in motion-safe:slide-in-from-bottom-1 min-w-0 flex-1 motion-safe:animate-in motion-safe:duration-300"
           >
-            <p className="flex flex-wrap items-baseline gap-x-2 font-bold text-label-value-16">
-              {adversary.label} sees
-              {sentiment ? (
-                <SentimentText
-                  key={sentiment}
-                  sentiment={sentiment}
-                  vibrant
-                  className="motion-safe:fade-in font-bold text-label-value-14 motion-safe:animate-in"
-                >
-                  {`→ ${PRIVACY_ADVERSARY_VERDICT[sentiment]}`}
-                </SentimentText>
-              ) : (
-                <span className="font-medium text-label-value-14 text-secondary motion-safe:animate-pulse">
-                  watching…
-                </span>
-              )}
+            <p className="font-bold text-label-value-16">
+              {adversary.label}:{' '}
+              <SentimentText
+                key={verdict.sentiment}
+                sentiment={verdict.sentiment}
+                vibrant
+                className="motion-safe:fade-in font-bold motion-safe:animate-in"
+              >
+                {PRIVACY_ADVERSARY_VERDICT[verdict.sentiment]}
+              </SentimentText>
             </p>
-            <p
-              className={cn(
-                'mt-1 text-paragraph-14 transition-opacity duration-500',
-                !seen.has(adversary.id) && 'opacity-0',
-              )}
-            >
-              {verdict.sees}
-            </p>
-            {verdict.inheritedFrom && seen.has(adversary.id) && (
+            <p className="mt-1 text-paragraph-14">{verdict.sees}</p>
+            {verdict.inheritedFrom && (
               <InheritedNote
                 label={adversary.label}
                 from={
@@ -352,7 +305,7 @@ function DesignControl({
     <div
       key={lens}
       // As tall for a slider as for a choice, so the scene below never moves.
-      className="motion-safe:fade-in mt-3 flex min-h-[50px] flex-wrap items-center gap-x-3 gap-y-2 rounded-md border border-brand/40 border-dashed bg-brand/5 px-3 py-2 motion-safe:animate-in"
+      className="motion-safe:fade-in mt-3 flex min-h-[50px] flex-wrap items-center gap-x-3 gap-y-2 rounded-md bg-surface-primary px-3 py-2 motion-safe:animate-in"
     >
       {control}
     </div>
@@ -382,7 +335,7 @@ function InheritedNote({
         onClick={onGo}
         className="font-semibold text-brand underline underline-offset-2"
       >
-        Look at the {from.toLowerCase()} →
+        See the {from.toLowerCase()}
       </button>
     </p>
   )
@@ -433,13 +386,8 @@ function PoolCanvas({
 }) {
   const boxRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const lensChange = useRef({ lens, at: 0 })
   const size = useElementSize(boxRef)
   const tokens = useThemeTokens()
-
-  if (lensChange.current.lens !== lens) {
-    lensChange.current = { lens, at: scene().time }
-  }
 
   const draw = () => {
     const canvas = canvasRef.current
@@ -450,7 +398,6 @@ function PoolCanvas({
       width: size.width,
       height: size.height,
       lens,
-      lensAge: running ? scene().time - lensChange.current.at : 1,
       tokens,
       design,
     })
@@ -479,32 +426,27 @@ function PoolCanvas({
   )
 }
 
-/** The rosette of this made-up pool, filling in as the reader watches. */
+/** The rosette of this made-up pool, following its design. */
 function VerdictRosette({
   data,
-  shown,
+  verdicts,
   selected,
 }: {
   data: PrivacyMethodologyFigureData
-  shown: (id: Lens) => PrivacyAdversarySentiment | undefined
+  verdicts: PoolVerdicts
   selected: string
 }) {
   const rosette = useRosetteTooltipContext()
   const setSelected = rosette?.setSelectedRisk
-  const key = data.adversaries.map(({ id }) => shown(id) ?? '-').join()
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `key` stands for the shown verdicts
+  const key = data.adversaries.map(({ id }) => verdicts[id].sentiment).join()
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `key` stands for the verdicts
   const values: RosetteValue[] = useMemo(
     () =>
-      data.adversaries.map(({ id, label }) => {
-        const sentiment = shown(id)
-        return {
-          name: label,
-          value: sentiment
-            ? PRIVACY_ADVERSARY_VERDICT[sentiment]
-            : 'Not watched yet',
-          sentiment: sentiment ?? 'neutral',
-        }
-      }),
+      data.adversaries.map(({ id, label }) => ({
+        name: label,
+        value: PRIVACY_ADVERSARY_VERDICT[verdicts[id].sentiment],
+        sentiment: verdicts[id].sentiment,
+      })),
     [data, key],
   )
   const value = values.find((v) => v.name === selected)
