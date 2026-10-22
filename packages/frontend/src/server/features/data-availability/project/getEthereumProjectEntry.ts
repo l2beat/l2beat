@@ -6,6 +6,7 @@ import {
   getEthereumProjectSections,
 } from '~/pages/ethereum/utils/getEthereumProjectSections'
 import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import {
@@ -45,6 +46,7 @@ export interface EthereumProjectPageEntry {
 /** Ethereum's DA bridge is enshrined: the layer and the bridge are one project. */
 export async function getEthereumProjectEntry(
   ethereum: EthereumProject,
+  helpers: SsrHelpers,
 ): Promise<EthereumProjectPageEntry> {
   const layerGrissiniValues = mapLayerRisksToRosetteValues(
     getDaLayerRisks(ethereum.daLayer),
@@ -56,7 +58,11 @@ export async function getEthereumProjectEntry(
   const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
-  const interopData = await getProjectInteropData(ethereum.id, interopProjects)
+  const interopData = await getProjectInteropData(
+    ethereum.id,
+    interopProjects,
+    helpers,
+  )
 
   const [economicSecurity, tvsPerProject, sections, validators] =
     await Promise.all([
