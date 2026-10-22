@@ -11,6 +11,11 @@ interface State {
    * `null` means unlimited (server default).
    */
   readonly maxReachableDepth: number | null
+  /**
+   * If true, go to definition shows the definition inline under the line
+   * instead of jumping to it.
+   */
+  readonly peekDefinitions: boolean
 }
 
 interface Actions {
@@ -20,6 +25,7 @@ interface Actions {
 const INITIAL_STATE: State = {
   markUnreachableEntries: true,
   maxReachableDepth: null,
+  peekDefinitions: false,
 }
 
 export const useGlobalSettingsStore = create<State & Actions>()(

@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import type { ApiDefinition, ApiReference } from '../../../api/types'
-import { rowsOf, title } from './lookupRows'
+import { peekContent, rowsOf, title } from './lookupRows'
 
 const DEFINITION: ApiDefinition = {
   address: 'eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
@@ -13,6 +13,11 @@ const DEFINITION: ApiDefinition = {
   offset: 31653,
   length: 21,
   alsoIn: 0,
+  declaration: {
+    line: 863,
+    offset: 31600,
+    text: '    /// @notice The count.\n    uint256 public sequencerMessageCount;',
+  },
 }
 
 const REFERENCE: ApiReference = {
@@ -74,6 +79,21 @@ describe('lookup rows', () => {
     expect(title(lookup)).toEqual(
       'AbsBridge.sequencerMessageCount: 2 references',
     )
+  })
+
+  it('peeks a definition at its place in the file', () => {
+    const onOpen = () => {}
+
+    expect(peekContent(DEFINITION, onOpen)).toEqual({
+      key: 'eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a:1:31653',
+      title: 'AbsBridge.sequencerMessageCount',
+      location: 'Bridge.sol lines 863–864',
+      owner: 'Bridge eth:0x8315…ed3a',
+      text: DEFINITION.declaration.text,
+      firstLine: 863,
+      origin: { address: DEFINITION.address, sourceIndex: 1, offset: 31600 },
+      onOpen,
+    })
   })
 
   it('explains empty answers', () => {

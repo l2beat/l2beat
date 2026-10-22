@@ -1,4 +1,5 @@
 import type { ApiDefinition, ApiReference } from '../../../api/types'
+import type { PeekContent } from '../../../components/editor/code/plugins/peek'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import type { CodeLocation, DefinitionLookup } from './useGoToDefinition'
 
@@ -70,4 +71,26 @@ export function title(lookup: DefinitionLookup): string {
       : 'Nothing to go to here'
   }
   return `${symbol}: ${definitions.length} candidates`
+}
+
+export function peekContent(
+  definition: ApiDefinition,
+  onOpen: () => void,
+): PeekContent {
+  const { line, offset, text } = definition.declaration
+  const lastLine = line + text.split('\n').length - 1
+  return {
+    key: `${definition.address}:${definition.sourceIndex}:${definition.offset}`,
+    title: definition.label,
+    location: `${definition.fileName} lines ${line}–${lastLine}`,
+    owner: `${definition.name} ${toShortenedAddress(definition.address)}`,
+    text,
+    firstLine: line,
+    origin: {
+      address: definition.address,
+      sourceIndex: definition.sourceIndex,
+      offset,
+    },
+    onOpen,
+  }
 }

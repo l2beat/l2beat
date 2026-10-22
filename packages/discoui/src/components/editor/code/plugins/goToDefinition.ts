@@ -1,4 +1,4 @@
-import { StateEffect } from '@codemirror/state'
+import { type Extension, StateEffect } from '@codemirror/state'
 import {
   Decoration,
   type DecorationSet,
@@ -8,10 +8,24 @@ import {
   type ViewUpdate,
 } from '@codemirror/view'
 import type { EditorPlugin } from '../../plugin'
+import {
+  type PeekContent,
+  type PeekOrigin,
+  peekExtension,
+  peekOrigin,
+  togglePeek,
+} from './peek'
+
+// The view is the code panel's own or a peek inside it.
+export interface DefinitionRequest {
+  view: EditorView
+  offset: number
+  origin: PeekOrigin | undefined
+}
 
 export interface DefinitionHandlers {
-  goToDefinition(offset: number): void
-  findReferences(offset: number): void
+  goToDefinition(request: DefinitionRequest): void
+  findReferences(request: DefinitionRequest): void
   goBack(): void
 }
 
@@ -51,16 +65,19 @@ const underliner = ViewPlugin.fromClass(
 
 export class GoToDefinitionPlugin implements EditorPlugin {
   // Control on every platform, as Cmd+- on macOS zooms the page.
-  readonly extension = [
+  readonly extension: Extension = [
     underliner,
+    peekExtension,
     keymap.of([
       {
         key: 'F12',
-        run: () => this.run((offset) => this.handlers?.goToDefinition(offset)),
+        run: (view) =>
+          this.run(view, (request) => this.handlers?.goToDefinition(request)),
       },
       {
         key: 'Shift-F12',
-        run: () => this.run((offset) => this.handlers?.findReferences(offset)),
+        run: (view) =>
+          this.run(view, (request) => this.handlers?.findReferences(request)),
       },
       {
         key: 'Ctrl--',
@@ -77,22 +94,22 @@ export class GoToDefinitionPlugin implements EditorPlugin {
           return false
         }
         event.preventDefault()
-        this.underline(null)
+        underline(view, null)
         view.focus()
         view.dispatch({ selection: { anchor: word.offset } })
-        this.handlers?.goToDefinition(word.offset)
+        this.handlers?.goToDefinition(requestAt(view, word.offset))
         return true
       },
       mousemove: (event, view) => {
-        this.underline(linkedWord(view, event)?.range ?? null)
+        underline(view, linkedWord(view, event)?.range ?? null)
         return false
       },
-      mouseleave: () => {
-        this.underline(null)
+      mouseleave: (_, view) => {
+        underline(view, null)
         return false
       },
-      keyup: () => {
-        this.underline(null)
+      keyup: (_, view) => {
+        underline(view, null)
         return false
       },
     }),
@@ -113,19 +130,30 @@ export class GoToDefinitionPlugin implements EditorPlugin {
     return this.view.state.selection.main.head
   }
 
-  private run(action: (offset: number) => void): boolean {
-    this.underline(null)
-    action(this.cursorOffset())
-    return true
+  peek(request: DefinitionRequest, content: PeekContent) {
+    togglePeek(request.view, request.offset, content, this.extension)
   }
 
-  private underline(range: WordRange | null) {
-    const current = this.view.plugin(underliner)?.range ?? null
-    if (range?.from === current?.from && range?.to === current?.to) {
-      return
-    }
-    this.view.dispatch({ effects: setUnderline.of(range) })
+  private run(
+    view: EditorView,
+    action: (request: DefinitionRequest) => void,
+  ): boolean {
+    underline(view, null)
+    action(requestAt(view, view.state.selection.main.head))
+    return true
   }
+}
+
+function requestAt(view: EditorView, offset: number): DefinitionRequest {
+  return { view, offset, origin: view.state.facet(peekOrigin) }
+}
+
+function underline(view: EditorView, range: WordRange | null) {
+  const current = view.plugin(underliner)?.range ?? null
+  if (range?.from === current?.from && range?.to === current?.to) {
+    return
+  }
+  view.dispatch({ effects: setUnderline.of(range) })
 }
 
 function linkedWord(

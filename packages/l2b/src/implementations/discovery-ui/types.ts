@@ -234,6 +234,8 @@ export interface ApiDefinitionResponse {
     offset: number
     length: number
     alsoIn: number
+    // Whole lines, from the comment above the declaration to its end.
+    declaration: { line: number; offset: number; text: string }
   }[]
 }
 
