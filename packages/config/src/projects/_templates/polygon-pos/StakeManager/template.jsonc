@@ -5,11 +5,46 @@
       "description": "min POL stake for new validators",
       "edit": ["format", "Undecimal18"]
     },
-    "replacementCoolDown": {
+    "validatorPass": {
       "severity": "HIGH",
-      "description": "startAuction() can only be called after this epoch (compare with current epoch). this effectively closes the validator set if the cap is hit because no validators can be replaced."
+      "description": "Validator entry gate read from the Registry on every new stake. While set, a new validator must redeem a pass from it. The zero address makes entry permissionless up to the validator cap.",
+      "handler": {
+        "type": "call",
+        "address": "{{ registry }}",
+        "method": "function contractMap(bytes32) view returns (address)",
+        "args": [
+          "0x81e9d636385e45c4e7e95e4cf7eee1179c712953b8e2ae51f5aea75ab826fa88"
+        ]
+      }
     }
   },
+  "ignoreRelatives": ["token", "tokenMatic", "migration"],
+  // validator auctions were removed, auctionPeriod and replacementCoolDown are unused
+  "ignoreMethods": [
+    "auctionPeriod",
+    "replacementCoolDown",
+    "getValidatorContract",
+    "delegatedAmount",
+    "isValidator",
+    "latestSignerUpdateEpoch",
+    "signers",
+    "validatorAuction",
+    "validators",
+    "validatorStake",
+    "validatorStateChanges",
+    "accountStateRoot"
+  ],
+  "ignoreInWatchMode": [
+    "currentEpoch",
+    "currentValidatorSetTotalStake",
+    "epoch",
+    "rewardPerStake",
+    "totalRewardsLiquidated",
+    "totalStaked",
+    "validatorState",
+    "totalHeimdallFee",
+    "NFTCounter"
+  ],
   "category": "core",
-  "description": "Manages the Polygon PoS validator set."
+  "description": "Manages the validator set, stakes and rewards. The RootChain uses it to check that each checkpoint is signed by more than 2/3 of the stake."
 }

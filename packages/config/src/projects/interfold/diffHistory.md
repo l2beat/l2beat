@@ -1,3 +1,2294 @@
+Generated with discovered.json: 0xcd92a4a8c5734f485cb99171fb24b9e34eed37df
+
+# Diff at Mon, 19 Oct 2026 13:04:16 GMT:
+
+- id: bb1702a3
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@63980edf2f672b670bf785d95749e721fa156171 block: 1792144337
+- current timestamp: 1792414952
+
+## Description
+
+Config: discover the two unverified CRISP ballot verifiers from CRISPProgram's constructor arguments and track the committee size of each committee preset on Interfold. Model ciphernode operators as registry participants instead of multisig members, and resolve the VotingEscrowMultisig plugin's members.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144337 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x0a3E22cb9778A10b188eC2BF149D628ab91A76a9) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x0dB1A5DA3481Ce66B81FC7A48dD982FA0AcFCC99) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry] {
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits. It checkpoints bond ownership so that committee sortition admits at most one operator key per bond owner, and applies an owner-set admission policy (cooldown and pause) to future committees.
+      fieldMeta.activeOperators.description:
+-        "Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation."
++        "Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation. The committee role itself is on CiphernodeRegistry.registeredCiphernodes."
+      fieldMeta.activeOperators.type:
+-        "PERMISSION"
+    }
+```
+
+```diff
+    EOA (eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x160AC642aC8Ef8bd4491d22A46772B773960B4b5) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x18ddBf8Aa6F72FC4D9E1911527d0CE1E9f3597d8) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x18F98f8F44a37d4179888f286191f4F856CB4663) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x1dF428833f2C9FB1eF098754e5D710432450d706) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.0.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.0.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    contract CRISPProgram (eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28) [interfold/CRISPProgramOpenVm] {
+    +++ description: CRISP encrypted-ballot E3 application. It verifies ballot eligibility and encryption proofs, commits ciphertext inputs, checks that an OpenVM tally proof is bound to its input root and parameters, and decodes the threshold-decrypted tally.
++++ description: Immutable verifier of ballot proofs for rounds whose voters are listed in a Merkle tree.
+      values.ballotVerifier:
++        "eth:0x6E1eC1e74162D9c141e12B593Cad390aEfFb6bD0"
+      values.constructorArgs:
++        {"_initialOwner":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","_openVmVerifier":"eth:0x0dd5E45414629F0f7D757cbb0310A9cfdc5B400b","_honkVerifier":"eth:0x6E1eC1e74162D9c141e12B593Cad390aEfFb6bD0","_onchainHonkVerifier":"eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8","_dataAvailabilityVerifier":"eth:0x9B5088112Ae1D682782236486290120E27Eb32e3","_availabilityFinalizationWindow":"10800","_inputAvailabilitySigner":"eth:0x34655732dB9BBfA627021D18d786EfF7Bde211F7","_imageId":"0x126eb3ea8c2d24cbf8e89f7e41dd2f0be5050be7a28276f0bcd4cb0546acdf52"}
++++ description: Immutable verifier of ballot proofs for rounds that read voting power from the token at the snapshot, as DAO votes do.
+      values.onchainBallotVerifier:
++        "eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8"
+      fieldMeta.ballotVerifier:
++        {"description":"Immutable verifier of ballot proofs for rounds whose voters are listed in a Merkle tree.","type":"CODE_CHANGE"}
+      fieldMeta.onchainBallotVerifier:
++        {"description":"Immutable verifier of ballot proofs for rounds that read voting power from the token at the snapshot, as DAO votes do.","type":"CODE_CHANGE"}
+    }
+```
+
+```diff
+    EOA (eth:0x1fD2b3d4a9f4Aeb62877cab9dF70A5a6e976b118) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x2048E0750655298E628155Ca5024F0b30D896e51) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x2179a7A0bE3EB10c45A9aeec11F260E2bC4B1A7C) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x222D696D0242194457eD491b0c52aBbF9250342F) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x2358424b1E347f1FAADB7F54C5eB57eeA3A2738d) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x252a6c33C87C0b439671b983C3f730D2C46a5F1d) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    contract Interfold (eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715) [interfold/Interfold] {
+    +++ description: Coordinator for Encrypted Execution Environments (E3s). It accepts requests for allowlisted programs, selects a ciphernode committee, snapshots the configured proof system, and verifies the encrypted result and threshold decryption before publishing plaintext output.
++++ description: Members of a Micro committee (CommitteeSize 1). The compiled-in key-reconstruction threshold for this size is 5.
+      values.committeeMembersMicro:
++        9
++++ description: Members of a Minimum committee (CommitteeSize 0). The compiled-in key-reconstruction threshold for this size is 2.
+      values.committeeMembersMinimum:
++        3
++++ description: Members of a Small committee (CommitteeSize 2). The compiled-in key-reconstruction threshold for this size is 10.
+      values.committeeMembersSmall:
++        19
+      fieldMeta.MAX_COMMITTEE_SIZE.description:
+-        "Committee size of the compiled-in active BFV configuration; the matching decryption threshold and assumed-honest count are constants of the ActiveCryptoConfig library in the verified source and are not readable onchain."
++        "Committee size of the compiled-in active BFV configuration; the matching decryption threshold is a constant of the ActiveCryptoConfig library in the verified source and is not readable onchain."
+      fieldMeta.committeeMembersMinimum:
++        {"description":"Members of a Minimum committee (CommitteeSize 0). The compiled-in key-reconstruction threshold for this size is 2.","type":"RISK_PARAMETER"}
+      fieldMeta.committeeMembersMicro:
++        {"description":"Members of a Micro committee (CommitteeSize 1). The compiled-in key-reconstruction threshold for this size is 5.","type":"RISK_PARAMETER"}
+      fieldMeta.committeeMembersSmall:
++        {"description":"Members of a Small committee (CommitteeSize 2). The compiled-in key-reconstruction threshold for this size is 10.","type":"RISK_PARAMETER"}
+    }
+```
+
+```diff
+    EOA (eth:0x291bD021638B9aef86c6d47e29CdA1cF3804bafb) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x2A2Df1e79ec3be51c0B050175E3D897e3911dC42) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x3394971Ee0cb5bc6336F8C36bc8807CDAA8BB017) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x3b62d921EFdbc295B017fAb9Ba8a521457F037d3) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x4429dB606a7c476762E4c7003963603f97a3C031) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x455e3DEFBC6b48D9127CF6acC609F5cEa87cA759) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change cooldowns and exit fees and upgrade the voting-escrow exit queue.","role":".exitQueueAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin settings.","role":".multisigSettingsAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin settings.","role":".multisigSettingsAdmins","via":[{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins","via":[{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change transfer whitelist settings and upgrade the voting-lock NFT.","role":".lockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change voting epochs and upgrade the voting-escrow Clock.","role":".clockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change voting-power curve parameters and upgrade the Curve implementation.","role":".curveAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"complete queued voting-escrow withdrawals.","role":".exitQueueWithdrawers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the voting-escrow DAO.","role":".veDaoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"manage gauge metadata and the voting-power update hook.","role":".gaugeAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"pause and unpause voting-escrow operations.","role":".votingEscrowPausers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"pause the escrow voting-power adapter, manage delegation settings and upgrade its implementation.","role":".votesAdapterAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"replace voting-power dependencies, change minimum deposits and split rules, and upgrade VotingEscrow.","role":".votingEscrowAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"sweep unaccounted tokens and NFTs from VotingEscrow.","role":".votingEscrowSweepers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"update delegated voting power through the escrow voting adapter.","role":".delegationTokenManagers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".clockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".curveAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".exitQueueAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".gaugeUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".lockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".veDaoUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".votesAdapterAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".votingEscrowAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}]
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA (eth:0x516C12B6D622A62166bDe3580628d6d23ae5b310) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    contract InterfoldSafeA (eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.7.description:
+-        "change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage."
++        "change the settings of the CRISP token-voting plugin used as the IPP voting stage, including the committee size of future votes."
+    }
+```
+
+```diff
+    EOA (eth:0x58C40cEC1ebAc2e383B5091ed47fa719a29f00A4) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x59461947EC279863138fae477C35B0c551A5c3a6) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x5BA3ef7913D6dD46e2b4EBd8A05eF4615ae8Be5B) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x5cFc8841C3fBb3CA8dCb2BfBD3a39a98dE5B942a) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x5Fb0854aB8fb2810b80d3DE276b3107a9e5281b1) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x60cd23981430e4909957EA1fB214E9A21468175A) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x62b2dF039198096259F8dc619cE5E79507806A00) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    contract InterfoldDAO (eth:0x652a31c669f9AB37f6040f279139a75D04F2679e) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+      directlyReceivedPermissions.12.description:
+-        "change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage."
++        "change the settings of the CRISP token-voting plugin used as the IPP voting stage, including the committee size of future votes."
+    }
+```
+
+```diff
+    EOA (eth:0x69760AF47771F8F763B5E3cb88601C197b0ee235) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x6B035c1b0B099555284C8676e48e2C3CB8b3d4B0) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x76f3491D36138450F957b03F657dDa258Ad4c0E7) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x780c1bB4Abc6F4324813e58a52C9d2FEF055ef78) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x7E94eEd05e81679F69dA44157a45F0528DA9Ce66) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x86Ab0b3C4A36cAB3037d750C850D660cE710e2a1) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x86FBE1027577A343c1C9DcCAEc470d2B613cB347) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x88ED57A03E98931a81dBa7A9Bc2dc95B48929E45) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    contract InterfoldSafeB (eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.7.description:
+-        "change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage."
++        "change the settings of the CRISP token-voting plugin used as the IPP voting stage, including the committee size of future votes."
+    }
+```
+
+```diff
+    EOA (eth:0x8DEeF8799921D549BAC469aD6d37912DBeB2432a) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x980AaA907E51a4e3cc89b8FF8e37Aa0D55D46597) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x9aCc89CCD297064779C4e0f1c353079975C731b6) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    contract PublicStagedProposalProcessor (eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb) [interfold/StagedProposalProcessor] {
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      receivedPermissions.8.description:
+-        "change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage."
++        "change the settings of the CRISP token-voting plugin used as the IPP voting stage, including the committee size of future votes."
+    }
+```
+
+```diff
+    EOA (eth:0x9D129a1733ab0f56460cCCfdC807C797b5a1a53c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0x9EC16384b956D7B2A71284711FD32d156e6b33c6) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xA2bA6A63335cdB2789b0e636987Ce12C3D44662a) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xA303d8Cb0CE470F772A459b4a87AcB11b2978DB8) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xAF062fC363c3AE910ec76676346f798792bEB851) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xAF92b142F15eb873f7D1d9F05c8c9b1855698249) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0xB6Bb517ca0bD9a8b0eD2817e604b327d31626190) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xBf11E6B5be2ff90CDC6860BAe7941e44aa52DEc3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    contract ProtocolProposalProcessor (eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3) [interfold/StagedProposalProcessor] {
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      receivedPermissions.8.description:
+-        "change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage."
++        "change the settings of the CRISP token-voting plugin used as the IPP voting stage, including the committee size of future votes."
+    }
+```
+
+```diff
+    EOA (eth:0xc6E48712E56F6E9548c54a0A983eBe992eFA26Bd) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xc798b5f60150FbB2Db9b061817831DF62D2b269C) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry] {
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection (admitting at most one operator key per bond owner, and only when the BondingRegistry counts at least as many distinct active bond owners as the committee size), records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.
+      values.$members:
+-        ["eth:0xA303d8Cb0CE470F772A459b4a87AcB11b2978DB8","eth:0x291bD021638B9aef86c6d47e29CdA1cF3804bafb","eth:0x980AaA907E51a4e3cc89b8FF8e37Aa0D55D46597","eth:0x0a3E22cb9778A10b188eC2BF149D628ab91A76a9","eth:0xD81f88b9Ae6261d684f8BfEb6a642692213dAe86","eth:0x3b62d921EFdbc295B017fAb9Ba8a521457F037d3","eth:0x252a6c33C87C0b439671b983C3f730D2C46a5F1d","eth:0xCdc8B4379dDF736f8e34B0A65585E07dE7060A84","eth:0x18F98f8F44a37d4179888f286191f4F856CB4663","eth:0x18ddBf8Aa6F72FC4D9E1911527d0CE1E9f3597d8","eth:0xc798b5f60150FbB2Db9b061817831DF62D2b269C","eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8","eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513","eth:0xB6Bb517ca0bD9a8b0eD2817e604b327d31626190","eth:0x1dF428833f2C9FB1eF098754e5D710432450d706","eth:0x59461947EC279863138fae477C35B0c551A5c3a6","eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe","eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671","eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F","eth:0xdBEd503093A01EA08f21144114542E53594536D6","eth:0x222D696D0242194457eD491b0c52aBbF9250342F","eth:0xc6E48712E56F6E9548c54a0A983eBe992eFA26Bd","eth:0x1fD2b3d4a9f4Aeb62877cab9dF70A5a6e976b118","eth:0x9EC16384b956D7B2A71284711FD32d156e6b33c6","eth:0xd2b46ceC7b4d8046eF2D7bCb32aF3220Ef7bc1dd","eth:0xd3336047DCf4d7C7393b3BF5Fa47A31478C22d47","eth:0xA2bA6A63335cdB2789b0e636987Ce12C3D44662a","eth:0xd698bC33a4A98a019881c6e2664f1dAc62c4B3B5","eth:0x5Fb0854aB8fb2810b80d3DE276b3107a9e5281b1","eth:0x88ED57A03E98931a81dBa7A9Bc2dc95B48929E45","eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1","eth:0xAF062fC363c3AE910ec76676346f798792bEB851","eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988","eth:0x60cd23981430e4909957EA1fB214E9A21468175A","eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1","eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4","eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F","eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC","eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554","eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A","eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61","eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877","eth:0xDb78ebaB8597AF977B686E540DCe734E613Eba88","eth:0x86Ab0b3C4A36cAB3037d750C850D660cE710e2a1","eth:0x516C12B6D622A62166bDe3580628d6d23ae5b310"]
+      fieldMeta.$members:
+-        {"description":"Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.","type":"PERMISSION"}
+      fieldMeta.registeredCiphernodes:
++        {"description":"Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.","type":"PERMISSION"}
+    }
+```
+
+```diff
+    EOA (eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xcD34cF9C66F524c91A14e67D3eF68157f809Abf7) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0xCdc8B4379dDF736f8e34B0A65585E07dE7060A84) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xd2b46ceC7b4d8046eF2D7bCb32aF3220Ef7bc1dd) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xd3336047DCf4d7C7393b3BF5Fa47A31478C22d47) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xd698bC33a4A98a019881c6e2664f1dAc62c4B3B5) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xD81f88b9Ae6261d684f8BfEb6a642692213dAe86) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xd99672d25e783F245D3E0183581fAae0c154B8b6) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0xDa1D20efb36e7F3bb47CEDbF471feB099051e717) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0xDb78ebaB8597AF977B686E540DCe734E613Eba88) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    EOA (eth:0xdBEd503093A01EA08f21144114542E53594536D6) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    contract VotingEscrowMultisig (eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change cooldowns and exit fees and upgrade the voting-escrow exit queue.","role":".exitQueueAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin settings.","role":".multisigSettingsAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin settings.","role":".multisigSettingsAdmins"},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins"},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change transfer whitelist settings and upgrade the voting-lock NFT.","role":".lockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change voting epochs and upgrade the voting-escrow Clock.","role":".clockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change voting-power curve parameters and upgrade the Curve implementation.","role":".curveAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"complete queued voting-escrow withdrawals.","role":".exitQueueWithdrawers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the voting-escrow DAO.","role":".veDaoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"manage gauge metadata and the voting-power update hook.","role":".gaugeAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"pause and unpause voting-escrow operations.","role":".votingEscrowPausers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"pause the escrow voting-power adapter, manage delegation settings and upgrade its implementation.","role":".votesAdapterAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"replace voting-power dependencies, change minimum deposits and split rules, and upgrade VotingEscrow.","role":".votingEscrowAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"sweep unaccounted tokens and NFTs from VotingEscrow.","role":".votingEscrowSweepers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"update delegated voting power through the escrow voting adapter.","role":".delegationTokenManagers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".clockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".curveAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".exitQueueAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".gaugeUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".lockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".veDaoUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".votesAdapterAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".votingEscrowAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}]}]
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin settings.","role":".multisigSettingsAdmins"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins"}
+    }
+```
+
+```diff
+    EOA (eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+      receivedPermissions.1.role:
+-        ".$members"
++        ".registeredCiphernodes"
+      receivedPermissions.1.description:
+-        "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
++        "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3."
+      receivedPermissions.1.permission:
+-        "member"
++        "interact"
+    }
+```
+
+```diff
+    contract AdminPlugin (eth:0xF21e25455988887EE797050080141eba67B33920) [interfold/AdminPlugin] {
+    +++ description: Non-upgradeable Aragon Admin plugin. Holders of its DAO-granted EXECUTE_PROPOSAL permission can submit actions that the plugin forwards immediately, without a vote or onchain delay.
+      receivedPermissions.8.description:
+-        "change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage."
++        "change the settings of the CRISP token-voting plugin used as the IPP voting stage, including the committee size of future votes."
+    }
+```
+
+```diff
+    EOA (eth:0xfbe2eEB95eb083F89bBb1C9c384328d9cfE43d47) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0xfC16c9513bB6b4FE7978723bB2468E99D8A34d70) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0xFcEdB9Af33A338A80DA84785023BfDb988CaAd6E) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0xFD97D727CdF9867944de554E45499D5162bDBfAc) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
+    EOA (eth:0xFF79709339F5dBCA606c8b9D4940390d61cB4B29) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CrispBallotVerifier (eth:0x6E1eC1e74162D9c141e12B593Cad390aEfFb6bD0) [N/A]
+    +++ description: Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds whose voters are listed in a Merkle tree.
+```
+
+```diff
++   Status: CREATED
+    contract CrispOnchainBallotVerifier (eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8) [N/A]
+    +++ description: Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every DAO vote.
+```
+
+Generated with discovered.json: 0xd10c8835708426fd34fe6d9ed41a9ffa158b6f67
+
+# Diff at Fri, 16 Oct 2026 11:49:18 GMT:
+
+- id: 022c6b27
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@057e1be0541e2f14dceafc168a09d2f233d19782 block: 1791789528
+- current timestamp: 1792144337
+
+## Description
+
+Interfold v0.19.0 upgrade. L2BEAT reproduced and verified it on Sourcify and Etherscan, with the OpenVM Halo2 verifier from the OpenVM v2.0.2 artifacts. New requests are **unpaused**, and the crypto config id changed to the new BFV parameter set (`0xa174862e…`).
+- coordinator: https://disco.l2beat.com/diff/eth:0xad5C8CA4bd0d086272039400Fa532019A920dD43/eth:0xA1FAB087d7315d2220910C6e0dEcaf659F3f4d2d
+- pk router: https://disco.l2beat.com/diff/eth:0x7CD10057c25674bd5666A9deEE3193f1b29563d1/eth:0x3E9614e711ee301DAC3FeF7D86031ED015bc406b
+- decryption router: https://disco.l2beat.com/diff/eth:0xA66CAb7AE230698b2a9ee1E0E967BaD4651FeEa7/eth:0xbbFF7101A3Be43e06b64B00e2e656529E6aDf2eE
+
+The ciphertext output is now proven with OpenVM instead of RISC Zero. The OpenVmBfvCiphertextVerifier pins one image ID. The OpenVmReceiptVerifier binds it to fixed app executable and VM commitments, checked by an immutable OpenVM Halo2 verifier.
+- ciphertext verifier: https://disco.l2beat.com/diff/eth:0x80D217d3b2e16fF2ecc178cC75655C773895c549/eth:0x6cD258E0a893612Aea41c42dC47450ac1A6E2dD1
+
+The DKG and decryption routes point to new secure-8192 wrappers and Honk aggregation verifiers. A new CRISPProgram (eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28) with OpenVM tally proofs is registered as an E3 program. Its owner, the DAO, can replace its OpenVM verifier immediately.
+
+The DAO replaced its Interfold Protocol Proposal pipeline. A new StagedProposalProcessor holds EXECUTE on the DAO. It comes with a new proposal condition and a new CRISP voting plugin. The plugin reads voting power from a new BondedVotes, which gives treasury Safes no voting power. The old processor and CRISP plugin are detached.
+- CRISP voting: https://disco.l2beat.com/diff/eth:0xb3d51BDe9cB8401cE9C630448Da2619279eF97DA/eth:0x8153c6dce903b3a4a886399d310668fb8c97cec6
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DkgAggregatorVerifier (eth:0x00a586aB1E533e2544daAF4BB7388e176320572F) [interfold/DkgAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV distributed-key-generation aggregation circuit.
+```
+
+```diff
+-   Status: DELETED
+    contract BfvDecryptionVerifier (eth:0x0Be6f92594ee8776C7c658eFA1ec6Ca12F5D9701) [interfold/BfvDecryptionVerifier]
+    +++ description: Threshold-decryption proof wrapper. It checks the generated circuit proof and binds its parties and public-key context to the committee recorded by CiphernodeRegistry.
+```
+
+```diff
+    EOA (eth:0x0dB1A5DA3481Ce66B81FC7A48dD982FA0AcFCC99) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0x160AC642aC8Ef8bd4491d22A46772B773960B4b5) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DkgAggregatorVerifier (eth:0x1Eba833dd9CBC32c925B4a54DBC7682Ac276f302) [interfold/DkgAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV distributed-key-generation aggregation circuit.
+```
+
+```diff
+    EOA (eth:0x2048E0750655298E628155Ca5024F0b30D896e51) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0x2358424b1E347f1FAADB7F54C5eB57eeA3A2738d) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    contract Interfold (eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715) [interfold/Interfold] {
+    +++ description: Coordinator for Encrypted Execution Environments (E3s). It accepts requests for allowlisted programs, selects a ciphernode committee, snapshots the configured proof system, and verifies the encrypted result and threshold decryption before publishing plaintext output.
+      sourceHashes.1:
+-        "0x2df58a27c4061f9543d01a5d32f6f88aefd401d25a50c1c574ecae4a01236915"
++        "0xf368ee0ace4e9c82f5dc0c9f99a92a493b1bc3a7325cb27798ad1fcb4e970e9b"
+      values.$implementation:
+-        "eth:0xad5C8CA4bd0d086272039400Fa532019A920dD43"
++        "eth:0xA1FAB087d7315d2220910C6e0dEcaf659F3f4d2d"
+      values.$pastUpgrades.3:
++        ["2026-10-12T13:43:59.000Z","0x0cdf46abaaa48475a18ffd505f6c07d736083ddf936364f4faea18cbef77030c",["eth:0xA1FAB087d7315d2220910C6e0dEcaf659F3f4d2d"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: Compiled-in identifier of the BFV parameter set and circuit configuration accepted for new requests. Changing it requires a new implementation.
++++ severity: HIGH
+      values.activeCryptoConfigId:
+-        "0xd9c86e581f8291ffb5b63595600e8d096ed30b16e2e0a6634a76c22b1f58fb4e"
++        "0xa174862efd4487031d423ca96516807775ade0191c714e513aab93d0cc289baa"
++++ description: Verifier used for the encrypted computation output of future BFV E3s.
++++ severity: HIGH
+      values.bfvCiphertextVerifier:
+-        "eth:0x80D217d3b2e16fF2ecc178cC75655C773895c549"
++        "eth:0x6cD258E0a893612Aea41c42dC47450ac1A6E2dD1"
++++ description: Verifier used for BFV threshold-decryption proofs for future E3s.
++++ severity: HIGH
+      values.bfvDecryptionVerifier:
+-        "eth:0xA66CAb7AE230698b2a9ee1E0E967BaD4651FeEa7"
++        "eth:0xbbFF7101A3Be43e06b64B00e2e656529E6aDf2eE"
++++ description: Verifier used for BFV distributed-key-generation proofs for future E3s.
++++ severity: HIGH
+      values.bfvPkVerifier:
+-        "eth:0x7CD10057c25674bd5666A9deEE3193f1b29563d1"
++        "eth:0x3E9614e711ee301DAC3FeF7D86031ED015bc406b"
++++ description: E3 application contracts permanently allowlisted by governance. Registration cannot be revoked in the current implementation.
+      values.registeredE3Programs.3:
++        "eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28"
++++ description: Whether new E3 requests are disabled.
+      values.requestsPaused:
+-        true
++        false
+      implementationNames.eth:0xad5C8CA4bd0d086272039400Fa532019A920dD43:
+-        "Interfold"
+      implementationNames.eth:0xA1FAB087d7315d2220910C6e0dEcaf659F3f4d2d:
++        "Interfold"
+    }
+```
+
+```diff
+    EOA (eth:0x2A2Df1e79ec3be51c0B050175E3D897e3911dC42) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0x3394971Ee0cb5bc6336F8C36bc8807CDAA8BB017) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0x34655732dB9BBfA627021D18d786EfF7Bde211F7) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28","description":"attest that ballot inputs are available so a CRISP round can proceed.","role":".inputAvailabilitySigner"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BfvPkVerifier (eth:0x3C1C772B1D800ff4E6F8d0c02E1e6D07293c0059) [interfold/BfvPkVerifier]
+    +++ description: BFV public-key proof wrapper. It binds the generated circuit verifier to the expected DKG-fold and C5 verification-key hashes.
+```
+
+```diff
+    EOA (eth:0x4429dB606a7c476762E4c7003963603f97a3C031) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    contract InterfoldSafeA (eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28","description":"set census roots and replace the application OpenVM receipt verifier, and with it the image ID, immediately. Such replacement cannot change the verifier snapshotted by Interfold, but can make an in-flight round fail.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage.","role":".crispVotingSettingsManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed CRISP vote actions to another executor or target.","role":".crispVotingTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed Interfold Protocol Proposal actions to another executor or target.","role":".ippTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.14:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to IPP proposal transactions.","role":".ippTrustedForwarderManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.16:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate creation of Interfold Protocol Proposals.","role":".ippConditionRuleManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals.","role":".ippStageManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BfvPkVerifier (eth:0x55F7379898512dEdCc994109a590e7d6a6eB50D8) [interfold/BfvPkVerifier]
+    +++ description: BFV public-key proof wrapper. It binds the generated circuit verifier to the expected DKG-fold and C5 verification-key hashes.
+```
+
+```diff
+    EOA (eth:0x58C40cEC1ebAc2e383B5091ed47fa719a29f00A4) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0x5BA3ef7913D6dD46e2b4EBd8A05eF4615ae8Be5B) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0x5cFc8841C3fBb3CA8dCb2BfBD3a39a98dE5B942a) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0x62b2dF039198096259F8dc619cE5E79507806A00) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    contract InterfoldDAO (eth:0x652a31c669f9AB37f6040f279139a75D04F2679e) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.31:
+-        {"permissionId":"0x8c433a4cd6b51969eca37f974940894297b9fcf4b282a213fea5cd8f85289c90","where":"eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB","who":"eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF","condition":"eth:0xaE0F1082039E715609495Fdb2265b3B53f1296C9"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.33:
+-        {"permissionId":"0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d","where":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","who":"eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.33:
++        {"permissionId":"0x568cc693d84eb1901f8bcecba154cbdef23ca3cf67efc0a0b698528a06c660f7","where":"eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c","who":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.34:
++        {"permissionId":"0x2cf8b99554b63927353c04c2e1cee7fe05352aeb3c52d2576a2f7fd7fb8e180a","where":"eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c","who":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.35:
++        {"permissionId":"0x4707e94b25cfce1a7c363508fbb838c35864388ad77284b248282b9746982b9b","where":"eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c","who":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.36:
++        {"permissionId":"0x6f36f8bf0398781285f5a40c489dbf3268ce3e205aba87f21e49e6805391b5a1","where":"eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3","who":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.37:
++        {"permissionId":"0xf281525e53675515a6ba7cc7bea8a81e649b3608423ee2d73be1752cea887889","where":"eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3","who":"eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.38:
++        {"permissionId":"0x06d294bc8cbad2e393408b20dd019a772661f60b8d633e56761157cb1ec85f8c","where":"eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3","who":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.39:
++        {"permissionId":"0x568cc693d84eb1901f8bcecba154cbdef23ca3cf67efc0a0b698528a06c660f7","where":"eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3","who":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.40:
++        {"permissionId":"0x4707e94b25cfce1a7c363508fbb838c35864388ad77284b248282b9746982b9b","where":"eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3","who":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.41:
++        {"permissionId":"0x8c433a4cd6b51969eca37f974940894297b9fcf4b282a213fea5cd8f85289c90","where":"eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3","who":"eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF","condition":"eth:0x4c9D0A2B8E5917c480bdF3E42F1b1c9365EF2115"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.42:
++        {"permissionId":"0xb014ce248804cab6a144581acce1eeb70ce5d54f08433b989d73bb0ccee3d3f9","where":"eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3","who":"eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.43:
++        {"permissionId":"0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d","where":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","who":"eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.44:
++        {"permissionId":"0xd3d98e95f3486fc234d80c098cf0d2a0a3fb187833d7e9cc930f8c4f8335a0e7","where":"eth:0x4c9D0A2B8E5917c480bdF3E42F1b1c9365EF2115","who":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","condition":"eth:0x0000000000000000000000000000000000000002"}
+      values.$activePermissions.35.who:
+-        "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB"
++        "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3"
+      values.$activePermissions.35.where:
+-        "eth:0x197be4E09614285Abb4b74b672377c404FD44d54"
++        "eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c"
++++ description: Current grantees allowed to open votes in the CRISP token-voting plugin.
+      values.crispVotingProposalCreators.0:
++        "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3"
++++ description: Current grantees of the settings-update permission (id 0x2cf8b995...) on the CRISP token-voting plugin.
+      values.crispVotingSettingsManagers.0:
++        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++++ description: Current grantees allowed to redirect the CRISP token-voting plugin's execution target.
+      values.crispVotingTargetManagers.0:
++        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++++ description: Current grantees of Aragon's EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.
+      values.daoExecutors.2:
+-        "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB"
++        "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3"
++++ description: Current grantees allowed to advance Interfold Protocol Proposals whose stage conditions have passed.
+      values.ippAdvancers.0:
++        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
++++ description: Current grantees allowed to replace the IPP proposal-creation condition rules.
+      values.ippConditionRuleManagers.0:
++        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++++ description: Current grantees allowed to execute an Interfold Protocol Proposal after its stages have passed.
+      values.ippExecutors.0:
++        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
++++ description: Current grantees allowed to create Interfold Protocol Proposals. Conditional grants remain visible in $activePermissions.
+      values.ippProposalCreators.0:
++        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
++++ description: Current grantees allowed to replace the Interfold Protocol Proposal (IPP) staged process.
+      values.ippStageManagers.0:
++        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++++ description: Current grantees allowed to redirect the IPP processor's execution target.
+      values.ippTargetManagers.0:
++        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++++ description: Current grantees allowed to replace the IPP processor's trusted meta-transaction forwarder.
+      values.ippTrustedForwarderManagers.0:
++        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++++ description: Current multisig target-configuration grantees derived from Aragon grant/revoke events.
++++ severity: HIGH
+      values.multisigTargetConfigAdmins.5:
++        {"where":"eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c","who":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}
++++ description: Current multisig target-configuration grantees derived from Aragon grant/revoke events.
++++ severity: HIGH
+      values.multisigTargetConfigAdmins.6:
++        {"where":"eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3","who":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}
++++ description: Multisig plugins with public proposal creation configured through Aragon grant/revoke events.
++++ severity: LOW
+      values.publicProposalCreators.1:
+-        "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB"
++        "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3"
++++ description: Multisig plugins with public proposal execution configured through Aragon grant/revoke events.
++++ severity: LOW
+      values.publicProposalExecutors.3:
++        "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3"
+      directlyReceivedPermissions.7:
++        {"permission":"interact","from":"eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28","description":"set census roots and replace the application OpenVM receipt verifier, and with it the image ID, immediately. Such replacement cannot change the verifier snapshotted by Interfold, but can make an in-flight round fail.","role":".owner"}
+      directlyReceivedPermissions.12:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage.","role":".crispVotingSettingsManagers"}
+      directlyReceivedPermissions.15:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed CRISP vote actions to another executor or target.","role":".crispVotingTargetManagers"}
+      directlyReceivedPermissions.16:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed Interfold Protocol Proposal actions to another executor or target.","role":".ippTargetManagers"}
+      directlyReceivedPermissions.19:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to IPP proposal transactions.","role":".ippTrustedForwarderManagers"}
+      directlyReceivedPermissions.21:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate creation of Interfold Protocol Proposals.","role":".ippConditionRuleManagers"}
+      directlyReceivedPermissions.23:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals.","role":".ippStageManagers"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BfvPkVerifier (eth:0x67DDfB579EB5dC7df9B3f7Cfd942f325a792Afc3) [interfold/BfvPkVerifier]
+    +++ description: BFV public-key proof wrapper. It binds the generated circuit verifier to the expected DKG-fold and C5 verification-key hashes.
+```
+
+```diff
+    EOA (eth:0x69760AF47771F8F763B5E3cb88601C197b0ee235) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0x6B035c1b0B099555284C8676e48e2C3CB8b3d4B0) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0x76f3491D36138450F957b03F657dDa258Ad4c0E7) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0x780c1bB4Abc6F4324813e58a52C9d2FEF055ef78) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BfvPkVerifierRouter (eth:0x7CD10057c25674bd5666A9deEE3193f1b29563d1) [interfold/BfvPkVerifierRouter]
+    +++ description: Immutable router for BFV distributed-key-generation proofs. It forwards each proof to the per-committee-size BfvPkVerifier whose public-input length and circuit verification-key hashes match, so committees of every supported size share one verifier entry point.
+```
+
+```diff
+    EOA (eth:0x7E94eEd05e81679F69dA44157a45F0528DA9Ce66) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Risc0BfvCiphertextVerifier (eth:0x80D217d3b2e16fF2ecc178cC75655C773895c549) [interfold/Risc0BfvCiphertextVerifier]
+    +++ description: Ciphertext-output verifier for BFV E3s. It accepts a RISC Zero receipt for the immutable guest image ID against the E3-specific journal constructed by Interfold.
+```
+
+```diff
+-   Status: DELETED
+    contract BfvDecryptionVerifier (eth:0x86ba053b37a844FcD2dd52aBC69fc4D69D965Ad8) [interfold/BfvDecryptionVerifier]
+    +++ description: Threshold-decryption proof wrapper. It checks the generated circuit proof and binds its parties and public-key context to the committee recorded by CiphernodeRegistry.
+```
+
+```diff
+    EOA (eth:0x86FBE1027577A343c1C9DcCAEc470d2B613cB347) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    contract InterfoldSafeB (eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28","description":"set census roots and replace the application OpenVM receipt verifier, and with it the image ID, immediately. Such replacement cannot change the verifier snapshotted by Interfold, but can make an in-flight round fail.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage.","role":".crispVotingSettingsManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed CRISP vote actions to another executor or target.","role":".crispVotingTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed Interfold Protocol Proposal actions to another executor or target.","role":".ippTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.14:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to IPP proposal transactions.","role":".ippTrustedForwarderManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.16:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate creation of Interfold Protocol Proposals.","role":".ippConditionRuleManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals.","role":".ippStageManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
+    EOA (eth:0x8DEeF8799921D549BAC469aD6d37912DBeB2432a) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0x9aCc89CCD297064779C4e0f1c353079975C731b6) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    contract PublicStagedProposalProcessor (eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb) [interfold/StagedProposalProcessor] {
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28","description":"set census roots and replace the application OpenVM receipt verifier, and with it the image ID, immediately. Such replacement cannot change the verifier snapshotted by Interfold, but can make an in-flight round fail.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage.","role":".crispVotingSettingsManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed CRISP vote actions to another executor or target.","role":".crispVotingTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.13:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed Interfold Protocol Proposal actions to another executor or target.","role":".ippTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.16:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to IPP proposal transactions.","role":".ippTrustedForwarderManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate creation of Interfold Protocol Proposals.","role":".ippConditionRuleManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.20:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals.","role":".ippStageManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
+    EOA (eth:0x9D129a1733ab0f56460cCCfdC807C797b5a1a53c) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    contract NodeReleaseRegistry (eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A) [interfold/NodeReleaseRegistry] {
+    +++ description: Registry of ciphernode software releases. Operators self-attest the release they run; staying eligible for new E3 committees requires an attestation matching the exact governance-set protocol version and at least the required node generation. Raising the requirement instantly invalidates every operator's cached eligibility until they re-attest.
++++ description: Minimum ciphernode software generation operators must attest to remain eligible.
+      values.requiredNodeGeneration:
+-        1
++        2
++++ description: Exact ciphernode protocol version operators must attest to remain eligible.
+      values.requiredProtocolVersion:
+-        4
++        8
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BfvDecryptionVerifierRouter (eth:0xA66CAb7AE230698b2a9ee1E0E967BaD4651FeEa7) [interfold/BfvDecryptionVerifierRouter]
+    +++ description: Immutable router for BFV threshold-decryption proofs. It forwards each proof to the per-committee-size BfvDecryptionVerifier whose public-input length and circuit verification-key hashes match, so committees of every supported size share one verifier entry point.
+```
+
+```diff
+-   Status: DELETED
+    contract DkgAggregatorVerifier (eth:0xaC784625D32Ce7840D3f0EBD7E5832ea34C188C0) [interfold/DkgAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV distributed-key-generation aggregation circuit.
+```
+
+```diff
+    EOA (eth:0xAF92b142F15eb873f7D1d9F05c8c9b1855698249) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DecryptionAggregatorVerifier (eth:0xbeF207838845b227394Eb46579372FEE5E2a95fd) [interfold/DecryptionAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV threshold-decryption aggregation circuit.
+```
+
+```diff
+    EOA (eth:0xBf11E6B5be2ff90CDC6860BAe7941e44aa52DEc3) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DecryptionAggregatorVerifier (eth:0xBFAE594dc43f4b910F478ec00D285B8daC66855F) [interfold/DecryptionAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV threshold-decryption aggregation circuit.
+```
+
+```diff
+    contract ProtocolProposalProcessor (eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3) [interfold/StagedProposalProcessor] {
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
++++ description: Index of the stage configuration used by newly created proposals. Existing proposals retain their earlier snapshot.
+      values.getCurrentConfigIndex:
+-        0
++        1
++++ description: Latest proposal-stage configuration reconstructed from events, including voting bodies, approval and veto thresholds, timing windows, and edit/cancel flags.
+      values.currentStages:
++        [[[["eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c",false,true,1]],1296000,0,432000,1,0,false,false],[[["eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593",true,false,1]],432000,0,0,1,0,false,false]]
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; set the committee-admission cooldown or pause admissions to future committees; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x1940eF168f4E0B3dA24BEca539856684793B0F6e","description":"change the work-allocation split, coordinator and treasury without an onchain delay.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28","description":"set census roots and replace the application OpenVM receipt verifier, and with it the image ID, immediately. Such replacement cannot change the verifier snapshotted by Interfold, but can make an in-flight round fail.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715","description":"pause or unpause new requests; replace the registry, bonding, slashing, refund and node-release dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing (including the flat randomness fee), timeouts, parameter sets and committee thresholds without an onchain delay.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x53FCdb21E73A461CfE6c64B19855204384B91BA3","description":"set census roots and replace the application RISC Zero verifier or guest image ID immediately. Such replacement cannot change the verifier snapshotted by Interfold, but can make an in-flight round fail.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins"},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change support, participation, duration, proposer-power and minimum-approval requirements for future votes.","role":".tokenVotingSettingsManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage.","role":".crispVotingSettingsManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"open a CRISP token vote using the caller-supplied proposal payload.","role":".crispVotingProposalCreators"},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect calls made by the Admin plugin to another executor or target.","role":".adminTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed CRISP vote actions to another executor or target.","role":".crispVotingTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed Interfold Protocol Proposal actions to another executor or target.","role":".ippTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed proposal actions to another executor or target.","role":".sppTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed vote actions to another executor or target.","role":".tokenVotingTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to IPP proposal transactions.","role":".ippTrustedForwarderManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to proposal transactions.","role":".sppTrustedForwarderManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate creation of Interfold Protocol Proposals.","role":".ippConditionRuleManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate public creation of staged proposals.","role":".conditionRuleManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals.","role":".ippStageManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future public proposals.","role":".sppStageManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4","description":"create or disable slash policies, grant or revoke evidence slashers, resolve appeals, close E3 assignments and propose, confirm or remove operator bans.","role":".governanceMembers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4","description":"replace the coordinator, bonding registry, ciphernode registry and refund manager, and grant or revoke governance membership. A transfer of the default-admin role itself has the configured delay.","role":".defaultAdmins","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f","description":"set census roots and replace the application RISC Zero verifier or guest image ID immediately. Such replacement cannot change the verifier snapshotted by Interfold, but can make an in-flight round fail.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A","description":"raise the required ciphernode protocol version and node generation, which instantly invalidates every operator's cached eligibility until they attest the new release. The requirement can only increase, and only while new E3 requests are paused and no E3s or committees are active.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change cooldowns and exit fees and upgrade the voting-escrow exit queue.","role":".exitQueueAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin settings.","role":".multisigSettingsAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change transfer whitelist settings and upgrade the voting-lock NFT.","role":".lockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change voting epochs and upgrade the voting-escrow Clock.","role":".clockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change voting-power curve parameters and upgrade the Curve implementation.","role":".curveAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"complete queued voting-escrow withdrawals.","role":".exitQueueWithdrawers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the voting-escrow DAO.","role":".veDaoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"manage gauge metadata and the voting-power update hook.","role":".gaugeAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"pause and unpause voting-escrow operations.","role":".votingEscrowPausers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"pause the escrow voting-power adapter, manage delegation settings and upgrade its implementation.","role":".votesAdapterAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"replace voting-power dependencies, change minimum deposits and split rules, and upgrade VotingEscrow.","role":".votingEscrowAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"sweep unaccounted tokens and NFTs from VotingEscrow.","role":".votingEscrowSweepers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"update delegated voting power through the escrow voting adapter.","role":".delegationTokenManagers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0xC0B5b49a3949eC4B520eF21BaCFE16e3695F3B5D","description":"schedule and activate a registry replacement after one day when all ticket liabilities are zero, and rescue ERC-20s other than the underlying sUSDS.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0xC60919F8Bd128B76E11F4B071C8c38e1391a3e00","description":"replace the Chainlink VRF coordinator that delivers the sortition entropy.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"interact","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"replace the coordinator, bonding, slashing and randomness-provider dependencies; add or remove ciphernodes; change the sortition window and randomness timeout; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate. Randomness settings can only change while new requests are paused and no committees are outstanding.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","role":"admin","via":[{"address":"eth:0xf1511Fc32abf7Bd3a3213ddCF08C07259b53972b"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x1940eF168f4E0B3dA24BEca539856684793B0F6e","role":"admin","via":[{"address":"eth:0x9393573a9EF85c9A37d91E32702a340084A48b6E"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715","role":"admin","via":[{"address":"eth:0xB3985D7fF844FA0F5E0aaC5feb5DD8BE15e88580"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".clockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".curveAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".exitQueueAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".gaugeUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".lockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".veDaoUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".votesAdapterAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".votingEscrowAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]},{"permission":"upgrade","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","role":"admin","via":[{"address":"eth:0x2DFb93A8C3cE68Be3d8129479d7870646d89aDa7"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"execute arbitrary calls from the DAO, including calls to protocol owners and ProxyAdmins.","role":".daoExecutors"}]
+    }
+```
+
+```diff
+    contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry] {
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection (admitting at most one operator key per bond owner, and only when the BondingRegistry counts at least as many distinct active bond owners as the committee size), records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.
+      values.unreleasedCommitteeCount:
+-        0
++        2
+    }
+```
+
+```diff
+    EOA (eth:0xcD34cF9C66F524c91A14e67D3eF68157f809Abf7) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0xd99672d25e783F245D3E0183581fAae0c154B8b6) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0xDa1D20efb36e7F3bb47CEDbF471feB099051e717) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DecryptionAggregatorVerifier (eth:0xEB4D0d5FfbDD508d6FF352255DCFc7b13FA28EC0) [interfold/DecryptionAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV threshold-decryption aggregation circuit.
+```
+
+```diff
+    contract CrispTokenVoting (eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c) [interfold/CrispVoting] {
+    +++ description: Upgradeable Aragon voting plugin from the interfold-crisp plugin repo. Votes are cast as encrypted CRISP ballots and tallied through an Interfold E3, so individual votes stay confidential to the ciphernode committee threshold. Used as the token-holder voting stage of the Interfold Protocol Proposal path.
+      values.getCurrentTargetConfig.target:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x56ce4D8006292Abf418291FaE813C1E3769240A4"
+      values.getCurrentTargetConfig.operation:
+-        0
++        1
+      values.getTargetConfig.target:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++        "eth:0x56ce4D8006292Abf418291FaE813C1E3769240A4"
+      values.getTargetConfig.operation:
+-        0
++        1
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins"}]
+    }
+```
+
+```diff
+    contract AdminPlugin (eth:0xF21e25455988887EE797050080141eba67B33920) [interfold/AdminPlugin] {
+    +++ description: Non-upgradeable Aragon Admin plugin. Holders of its DAO-granted EXECUTE_PROPOSAL permission can submit actions that the plugin forwards immediately, without a vote or onchain delay.
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28","description":"set census roots and replace the application OpenVM receipt verifier, and with it the image ID, immediately. Such replacement cannot change the verifier snapshotted by Interfold, but can make an in-flight round fail.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage.","role":".crispVotingSettingsManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed CRISP vote actions to another executor or target.","role":".crispVotingTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed Interfold Protocol Proposal actions to another executor or target.","role":".ippTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.15:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to IPP proposal transactions.","role":".ippTrustedForwarderManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.17:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate creation of Interfold Protocol Proposals.","role":".ippConditionRuleManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.19:
++        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals.","role":".ippStageManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BfvDecryptionVerifier (eth:0xf6ed505997d2F572717f5E946b70efd65D55c986) [interfold/BfvDecryptionVerifier]
+    +++ description: Threshold-decryption proof wrapper. It checks the generated circuit proof and binds its parties and public-key context to the committee recorded by CiphernodeRegistry.
+```
+
+```diff
+    EOA (eth:0xfbe2eEB95eb083F89bBb1C9c384328d9cfE43d47) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0xfC16c9513bB6b4FE7978723bB2468E99D8A34d70) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0xFcEdB9Af33A338A80DA84785023BfDb988CaAd6E) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0xFD97D727CdF9867944de554E45499D5162bDBfAc) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    EOA (eth:0xFF79709339F5dBCA606c8b9D4940390d61cB4B29) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DkgAggregatorVerifier (eth:0x0a4D70bBD4e71b9e515Efc417F423c64D85197cb) [interfold/DkgAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV distributed-key-generation aggregation circuit.
+```
+
+```diff
++   Status: CREATED
+    contract BfvDecryptionVerifier (eth:0x194A489c918b74F11C6b03e12Ea26F198110f9A5) [interfold/BfvDecryptionVerifier]
+    +++ description: Threshold-decryption proof wrapper. It checks the generated circuit proof and binds its parties and public-key context to the committee recorded by CiphernodeRegistry.
+```
+
+```diff
++   Status: CREATED
+    contract CRISPProgram (eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28) [interfold/CRISPProgramOpenVm]
+    +++ description: CRISP encrypted-ballot E3 application. It verifies ballot eligibility and encryption proofs, commits ciphertext inputs, checks that an OpenVM tally proof is bound to its input root and parameters, and decodes the threshold-decrypted tally.
+```
+
+```diff
++   Status: CREATED
+    contract BfvDecryptionVerifier (eth:0x31715a243b80484629040592Eaff619729E98B39) [interfold/BfvDecryptionVerifier]
+    +++ description: Threshold-decryption proof wrapper. It checks the generated circuit proof and binds its parties and public-key context to the committee recorded by CiphernodeRegistry.
+```
+
+```diff
++   Status: CREATED
+    contract BfvPkVerifierRouter (eth:0x3E9614e711ee301DAC3FeF7D86031ED015bc406b) [interfold/BfvPkVerifierRouter]
+    +++ description: Immutable router for BFV distributed-key-generation proofs. It forwards each proof to the per-committee-size BfvPkVerifier whose public-input length and circuit verification-key hashes match, so committees of every supported size share one verifier entry point.
+```
+
+```diff
++   Status: CREATED
+    contract BfvDecryptionVerifier (eth:0x43c65d641A693962c942407A2834A7d923cEE1d8) [interfold/BfvDecryptionVerifier]
+    +++ description: Threshold-decryption proof wrapper. It checks the generated circuit proof and binds its parties and public-key context to the committee recorded by CiphernodeRegistry.
+```
+
+```diff
++   Status: CREATED
+    contract BfvPkVerifier (eth:0x5b93A3D59f8D65548748fc303f75a21b082EB2f4) [interfold/BfvPkVerifier]
+    +++ description: BFV public-key proof wrapper. It binds the generated circuit verifier to the expected DKG-fold and C5 verification-key hashes.
+```
+
+```diff
++   Status: CREATED
+    contract BfvPkVerifier (eth:0x5CcE227e613A41239b7E07764ad8b5a1cCA0a2CE) [interfold/BfvPkVerifier]
+    +++ description: BFV public-key proof wrapper. It binds the generated circuit verifier to the expected DKG-fold and C5 verification-key hashes.
+```
+
+```diff
++   Status: CREATED
+    contract DecryptionAggregatorVerifier (eth:0x769C243b712aD4D844bCbAed3981F7C24fA64Ada) [interfold/DecryptionAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV threshold-decryption aggregation circuit.
+```
+
+```diff
++   Status: CREATED
+    contract DkgAggregatorVerifier (eth:0x7987EF7cd79478Ee1ed51A279eEF46D2996a793c) [interfold/DkgAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV distributed-key-generation aggregation circuit.
+```
+
+```diff
++   Status: CREATED
+    contract BfvPkVerifier (eth:0x8d4c0bd5c796a5FEd7C419deA56f6A88EdB51023) [interfold/BfvPkVerifier]
+    +++ description: BFV public-key proof wrapper. It binds the generated circuit verifier to the expected DKG-fold and C5 verification-key hashes.
+```
+
+```diff
++   Status: CREATED
+    contract AvailVectorXDataAvailabilityVerifier (eth:0x9B5088112Ae1D682782236486290120E27Eb32e3) [interfold/AvailVectorXDataAvailabilityVerifier]
+    +++ description: Immutable verifier of Avail blob inclusion used by the CRISP program to attest that encrypted ballot inputs were published. It checks inclusion proofs against the Avail bridge and VectorX light-client contracts fixed at deployment.
+```
+
+```diff
++   Status: CREATED
+    contract DkgAggregatorVerifier (eth:0xBb643dC305794364E435C883B6DC1E7666dA4fEc) [interfold/DkgAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV distributed-key-generation aggregation circuit.
+```
+
+```diff
++   Status: CREATED
+    contract BfvDecryptionVerifierRouter (eth:0xbbFF7101A3Be43e06b64B00e2e656529E6aDf2eE) [interfold/BfvDecryptionVerifierRouter]
+    +++ description: Immutable router for BFV threshold-decryption proofs. It forwards each proof to the per-committee-size BfvDecryptionVerifier whose public-input length and circuit verification-key hashes match, so committees of every supported size share one verifier entry point.
+```
+
+```diff
++   Status: CREATED
+    contract DecryptionAggregatorVerifier (eth:0xbe012465a45179170cFb863405427f8ecAcb5C80) [interfold/DecryptionAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV threshold-decryption aggregation circuit.
+```
+
+```diff
++   Status: CREATED
+    contract DecryptionAggregatorVerifier (eth:0xC590b979c9BDA89f87443EBE134321272a5dD013) [interfold/DecryptionAggregatorVerifier]
+    +++ description: Immutable generated Honk verifier for the BFV threshold-decryption aggregation circuit.
+```
+
+## Source code changes
+
+```diff
+...0x9B5088112Ae1D682782236486290120E27Eb32e3.sol} |     0
+ ...:0xC038C7ba5717bDa886115e5d954085bce069069E.sol |   130 +
+ ...0x194A489c918b74F11C6b03e12Ea26F198110f9A5.sol} |   484 +-
+ ...0x31715a243b80484629040592Eaff619729E98B39.sol} |   484 +-
+ ...0x43c65d641A693962c942407A2834A7d923cEE1d8.sol} |   484 +-
+ ...0x5CcE227e613A41239b7E07764ad8b5a1cCA0a2CE.sol} |     0
+ ...0x5b93A3D59f8D65548748fc303f75a21b082EB2f4.sol} |     0
+ ...0x8d4c0bd5c796a5FEd7C419deA56f6A88EdB51023.sol} |     0
+ ...:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28.sol | 12258 +++++++++++++++++++
+ ...0x847A22303639017bcDB7F7E49EEa4a4629c1169f.sol} |     0
+ ...0x769C243b712aD4D844bCbAed3981F7C24fA64Ada.sol} |   110 +-
+ ...0xC590b979c9BDA89f87443EBE134321272a5dD013.sol} |   110 +-
+ ...0xbe012465a45179170cFb863405427f8ecAcb5C80.sol} |   110 +-
+ ...0x0a4D70bBD4e71b9e515Efc417F423c64D85197cb.sol} |    86 +-
+ ...0x7987EF7cd79478Ee1ed51A279eEF46D2996a793c.sol} |    86 +-
+ ...0xBb643dC305794364E435C883B6DC1E7666dA4fEc.sol} |    86 +-
+ .../Interfold/Interfold.sol                        |    20 +-
+ .../Risc0BfvCiphertextVerifier.sol => /dev/null    |   165 -
+ 18 files changed, 13936 insertions(+), 677 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789528 (main branch discovery), not current.
+
+```diff
+    contract BondedVotes (eth:0x028deEA644258c78b1B5B2eacF469F5D781Fb43E) [interfold/BondedVotes] {
+    +++ description: Voting-power adapter used by PublicTokenVoting. It counts voting-escrow power, FOLD bonded to ciphernode operators, and eligible vesting-locked wallet FOLD while using FOLD total supply as the quorum denominator.
+      fieldMeta.excludedAccounts:
++        {"description":"Immutable accounts, such as treasury Safes, whose FOLD counts for no voting power."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CrispTokenVoting (eth:0x197be4E09614285Abb4b74b672377c404FD44d54) [interfold/CrispVoting]
+    +++ description: Upgradeable Aragon voting plugin from the interfold-crisp plugin repo. Votes are cast as encrypted CRISP ballots and tallied through an Interfold E3, so individual votes stay confidential to the ciphernode committee threshold. Used as the token-holder voting stage of the Interfold Protocol Proposal path.
+```
+
+```diff
+-   Status: DELETED
+    contract ProtocolProposalProcessor (eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB) [interfold/StagedProposalProcessor]
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+```
+
+```diff
+-   Status: DELETED
+    contract Risc0BfvCiphertextVerifier (eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c) [interfold/Risc0BfvCiphertextVerifier]
+    +++ description: Ciphertext-output verifier for BFV E3s. It accepts a RISC Zero receipt for the immutable guest image ID against the E3-specific journal constructed by Interfold.
+```
+
+```diff
+    contract InterfoldSafeA (eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.6:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage.","role":".crispVotingSettingsManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.9:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed CRISP vote actions to another executor or target.","role":".crispVotingTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed Interfold Protocol Proposal actions to another executor or target.","role":".ippTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.13:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to IPP proposal transactions.","role":".ippTrustedForwarderManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.15:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate creation of Interfold Protocol Proposals.","role":".ippConditionRuleManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.17:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals.","role":".ippStageManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
+    contract InterfoldDAO (eth:0x652a31c669f9AB37f6040f279139a75D04F2679e) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
++++ description: Current grantees allowed to open votes in the CRISP token-voting plugin.
+      values.crispVotingProposalCreators.0:
+-        "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB"
++++ description: Current grantees of the settings-update permission (id 0x2cf8b995...) on the CRISP token-voting plugin.
+      values.crispVotingSettingsManagers.0:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++++ description: Current grantees allowed to redirect the CRISP token-voting plugin's execution target.
+      values.crispVotingTargetManagers.0:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++++ description: Current grantees allowed to advance Interfold Protocol Proposals whose stage conditions have passed.
+      values.ippAdvancers.0:
+-        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
++++ description: Current grantees allowed to replace the IPP proposal-creation condition rules.
+      values.ippConditionRuleManagers.0:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++++ description: Current grantees allowed to execute an Interfold Protocol Proposal after its stages have passed.
+      values.ippExecutors.0:
+-        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
++++ description: Current grantees allowed to create Interfold Protocol Proposals. Conditional grants remain visible in $activePermissions.
+      values.ippProposalCreators.0:
+-        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
++++ description: Current grantees allowed to replace the Interfold Protocol Proposal (IPP) staged process.
+      values.ippStageManagers.0:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++++ description: Current grantees allowed to redirect the IPP processor's execution target.
+      values.ippTargetManagers.0:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++++ description: Current grantees allowed to replace the IPP processor's trusted meta-transaction forwarder.
+      values.ippTrustedForwarderManagers.0:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
+      directlyReceivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage.","role":".crispVotingSettingsManagers"}
+      directlyReceivedPermissions.14:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed CRISP vote actions to another executor or target.","role":".crispVotingTargetManagers"}
+      directlyReceivedPermissions.15:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed Interfold Protocol Proposal actions to another executor or target.","role":".ippTargetManagers"}
+      directlyReceivedPermissions.18:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to IPP proposal transactions.","role":".ippTrustedForwarderManagers"}
+      directlyReceivedPermissions.20:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate creation of Interfold Protocol Proposals.","role":".ippConditionRuleManagers"}
+      directlyReceivedPermissions.22:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals.","role":".ippStageManagers"}
+    }
+```
+
+```diff
+    contract InterfoldSafeB (eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.6:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage.","role":".crispVotingSettingsManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.9:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed CRISP vote actions to another executor or target.","role":".crispVotingTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed Interfold Protocol Proposal actions to another executor or target.","role":".ippTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.13:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to IPP proposal transactions.","role":".ippTrustedForwarderManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.15:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate creation of Interfold Protocol Proposals.","role":".ippConditionRuleManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.17:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals.","role":".ippStageManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
+    contract PublicStagedProposalProcessor (eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb) [interfold/StagedProposalProcessor] {
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      receivedPermissions.7:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage.","role":".crispVotingSettingsManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed CRISP vote actions to another executor or target.","role":".crispVotingTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.12:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed Interfold Protocol Proposal actions to another executor or target.","role":".ippTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.15:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to IPP proposal transactions.","role":".ippTrustedForwarderManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.17:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate creation of Interfold Protocol Proposals.","role":".ippConditionRuleManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.19:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals.","role":".ippStageManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProtocolProposalCondition (eth:0xaE0F1082039E715609495Fdb2265b3B53f1296C9) [interfold/SPPRuleCondition]
+    +++ description: Aragon condition attached to the public CREATE_PROPOSAL permission. Its mutable rule program determines which callers and proposal calls qualify for the otherwise-public grant.
+```
+
+```diff
+    contract AdminPlugin (eth:0xF21e25455988887EE797050080141eba67B33920) [interfold/AdminPlugin] {
+    +++ description: Non-upgradeable Aragon Admin plugin. Holders of its DAO-granted EXECUTE_PROPOSAL permission can submit actions that the plugin forwards immediately, without a vote or onchain delay.
+      receivedPermissions.7:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage.","role":".crispVotingSettingsManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed CRISP vote actions to another executor or target.","role":".crispVotingTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"redirect passed Interfold Protocol Proposal actions to another executor or target.","role":".ippTargetManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.14:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the address trusted to append the effective caller to IPP proposal transactions.","role":".ippTrustedForwarderManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.16:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the rules that gate creation of Interfold Protocol Proposals.","role":".ippConditionRuleManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.18:
+-        {"permission":"interact","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"replace the stages, bodies, thresholds and timing rules for future Interfold Protocol Proposals.","role":".ippStageManagers","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OpenVmReceiptVerifier (eth:0x0dd5E45414629F0f7D757cbb0310A9cfdc5B400b) [interfold/OpenVmReceiptVerifier]
+    +++ description: Immutable OpenVM receipt verifier. It checks a Halo2 proof whose only public value is the journal digest, bound to one OpenVM executable and VM commitment.
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolProposalCondition (eth:0x4c9D0A2B8E5917c480bdF3E42F1b1c9365EF2115) [interfold/SPPRuleCondition]
+    +++ description: Aragon condition attached to the public CREATE_PROPOSAL permission. Its mutable rule program determines which callers and proposal calls qualify for the otherwise-public grant.
+```
+
+```diff
++   Status: CREATED
+    contract OpenVmBfvCiphertextVerifier (eth:0x6cD258E0a893612Aea41c42dC47450ac1A6E2dD1) [interfold/OpenVmBfvCiphertextVerifier]
+    +++ description: Ciphertext-output verifier for BFV E3s. It accepts an OpenVM proof for the immutable guest image ID against the E3-specific journal constructed by Interfold.
+```
+
+```diff
++   Status: CREATED
+    contract BondedVotes (eth:0x6Cd2976AD3d908E503c6D93A5E010392E25DcFB6) [interfold/BondedVotes]
+    +++ description: Voting-power adapter used by PublicTokenVoting. It counts voting-escrow power, FOLD bonded to ciphernode operators, and eligible vesting-locked wallet FOLD while using FOLD total supply as the quorum denominator.
+```
+
+```diff
++   Status: CREATED
+    contract OpenVmHalo2Verifier (eth:0x75cECF62f1ADe2C7b95d5a93460f450c6885F904) [interfold/OpenVmHalo2Verifier]
+    +++ description: Immutable Halo2 verifier generated by the OpenVM 2.0 SDK. It checks the final proof of an OpenVM execution against the app executable and VM commitments passed by the caller.
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolProposalProcessor (eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3) [interfold/StagedProposalProcessor]
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+```
+
+```diff
++   Status: CREATED
+    contract CrispTokenVoting (eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c) [interfold/CrispVoting]
+    +++ description: Upgradeable Aragon voting plugin from the interfold-crisp plugin repo. Votes are cast as encrypted CRISP ballots and tallied through an Interfold E3, so individual votes stay confidential to the ciphernode committee threshold. Used as the token-holder voting stage of the Interfold Protocol Proposal path.
+```
+
+Generated with discovered.json: 0x69776a853969b6660550677e3b34211994725fb3
+
+# Diff at Fri, 16 Oct 2026 05:36:50 GMT:
+
+- id: 354c2369
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791789528
+- current timestamp: 1791789528
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789528 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x2DFb93A8C3cE68Be3d8129479d7870646d89aDa7) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x9393573a9EF85c9A37d91E32702a340084A48b6E) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xB3985D7fF844FA0F5E0aaC5feb5DD8BE15e88580) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xf1511Fc32abf7Bd3a3213ddCF08C07259b53972b) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0xf8c04fcbbdd7039823c9beaec7808849385bb89d
+
+# Diff at Mon, 12 Oct 2026 07:20:28 GMT:
+
+- id: 9821718a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1790850461
+- current timestamp: 1791789528
+
+## Description
+
+Three operator keys joined the registries. The valid active-operator count rose from 70 to 74.
+
+## Watched changes
+
+```diff
+    contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry] {
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits. It checkpoints bond ownership so that committee sortition admits at most one operator key per bond owner, and applies an owner-set admission policy (cooldown and pause) to future committees.
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.72:
++        "eth:0xDb78ebaB8597AF977B686E540DCe734E613Eba88"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.73:
++        "eth:0x86Ab0b3C4A36cAB3037d750C850D660cE710e2a1"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.74:
++        "eth:0x516C12B6D622A62166bDe3580628d6d23ae5b310"
++++ description: Number of operators whose active status is valid under the current eligibility-configuration version. Unlike activeOperators, this drops immediately when the version is bumped, so it is the signal for a mass invalidation.
+      values.numActiveOperators:
+-        70
++        74
+    }
+```
+
+```diff
+    contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry] {
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection (admitting at most one operator key per bond owner, and only when the BondingRegistry counts at least as many distinct active bond owners as the committee size), records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.72:
++        "eth:0xDb78ebaB8597AF977B686E540DCe734E613Eba88"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.73:
++        "eth:0x86Ab0b3C4A36cAB3037d750C850D660cE710e2a1"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.74:
++        "eth:0x516C12B6D622A62166bDe3580628d6d23ae5b310"
+      values.unreleasedCommitteeCount:
+-        2
++        0
+    }
+```
+
 Generated with discovered.json: 0x9363e201a33c7138bd48f90902119e89f6cd97a0
 
 # Diff at Thu, 01 Oct 2026 11:10:36 GMT:

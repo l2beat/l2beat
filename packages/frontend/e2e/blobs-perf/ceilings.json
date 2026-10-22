@@ -1,0 +1,14 @@
+{
+  "1440x1000": {
+    "restyledPerRowLanded": 4922,
+    "quietPaintsPerSecond": 74,
+    "layouts": 124,
+    "beltPaints": 622
+  },
+  "402x874": {
+    "restyledPerRowLanded": 4440,
+    "quietPaintsPerSecond": 72,
+    "layouts": 120,
+    "beltPaints": 634
+  }
+}

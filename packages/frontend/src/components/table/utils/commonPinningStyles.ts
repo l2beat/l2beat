@@ -37,6 +37,7 @@ export function getCommonPinningStyles<T>(
       : undefined
 
   return {
+    ...getStickyStyles(isLastPinned),
     left:
       isPinned === 'left'
         ? `var(${getPinnedLeftVariable(column.getPinnedIndex())}, ${
@@ -47,24 +48,61 @@ export function getCommonPinningStyles<T>(
       isPinned === 'right'
         ? `${column.getAfter('right') - STICKY_OVERLAP_PX}px`
         : undefined,
+    width: column.getSize(),
+  }
+}
+
+/**
+ * For tables that lay out their own cells rather than through TanStack. The
+ * cell sits `start` px in until the sticky header measures the real offset.
+ */
+export function getLeftPinnedCellStyles(
+  pinnedIndex: number,
+  start: number,
+  isLast: boolean,
+): CSSProperties {
+  return {
+    ...getStickyStyles(isLast ? 'left' : undefined),
+    left: `var(${getPinnedLeftVariable(pinnedIndex)}, ${start - STICKY_OVERLAP_PX}px)`,
+  }
+}
+
+/** The last pinned column fades where the rest scroll under */
+function getStickyStyles(lastPinned: 'left' | 'right' | undefined) {
+  return {
     position:
       `var(${PINNED_POSITION_VARIABLE}, sticky)` as CSSProperties['position'],
-    width: column.getSize(),
     maskImage:
-      isLastPinned &&
+      lastPinned &&
       `linear-gradient(to ${
-        isLastPinned === 'left' ? 'right' : 'left'
+        lastPinned === 'left' ? 'right' : 'left'
       }, transparent 0, black 0px, black calc(100% - ${EDGE_FADE_WIDTH_PX}px), transparent 100%)`,
     zIndex: 10,
   }
 }
 
+/**
+ * X's Android app injects a script into linked pages that lifts any sticky
+ * element reaching the bottom of the screen, as if it were a footer, by the
+ * height of the sheet it overlays. Sticky cells below the fold count too, so
+ * they end up rows above their own. The script skips elements carrying its own
+ * marker for consent dialogs it has already padded.
+ */
+export const NOT_A_FOOTER_PROPS = { 'data-x-lv-consent-pad': 'not-a-footer' }
+
 /** Marks pinned header cells, for the sticky header copy to tell them apart. */
 export const PINNED_CELL_ATTRIBUTE = 'data-pinned'
 
-export function getPinnedHeaderCellProps<T>(column: Column<T>) {
+export function getPinnedCellProps<T>(column: Column<T>) {
   return {
     style: getCommonPinningStyles(column),
+    ...(column.getIsPinned() && NOT_A_FOOTER_PROPS),
+  }
+}
+
+export function getPinnedHeaderCellProps<T>(column: Column<T>) {
+  return {
+    ...getPinnedCellProps(column),
     [PINNED_CELL_ATTRIBUTE]: column.getIsPinned() ? '' : undefined,
   }
 }

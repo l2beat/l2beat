@@ -342,7 +342,6 @@ export interface Badge {
 export type BadgeAction =
   | BadgeScalingFilterAction
   | BadgeSelfScalingFilterAction
-  | BadgePublicDaHighlightAction
   | BadgeselfDaHighlightAction
 
 // Move to scaling/summary with given filterId and value
@@ -358,13 +357,7 @@ export type BadgeSelfScalingFilterAction = {
   id: BadgeFilterId
 }
 
-// Move to data-availability/summary and highlight project with given slug
-export type BadgePublicDaHighlightAction = {
-  type: 'publicDaHighlight'
-  slug: string
-}
-
-// Move to data-availability/summary and highlight project with the same slug as the project
+// Move to layer2s/risk/data-availability and highlight the project
 export type BadgeselfDaHighlightAction = {
   type: 'selfDaHighlight'
 }
@@ -825,7 +818,6 @@ export interface ProjectDaLayer {
   throughput?: DaLayerThroughput[]
   /** The time it takes to finalize the data. @unit seconds */
   finality?: number
-  dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
   /** Config for getting the number of validators. Type: `static` means the number is fixed. Type: `dynamic` means we need to fetch it (has to be implemented in BE). */
   validators?: DaValidators
@@ -890,11 +882,6 @@ export interface DaLayerThroughput {
   sinceTimestamp: number
 }
 
-export interface DataAvailabilitySampling {
-  erasureCodingScheme: '1D Reed-Solomon' | '2D Reed-Solomon'
-  erasureCodingProof: 'Validity proofs' | 'Fraud proofs' | 'None'
-}
-
 export interface DaEconomicSecurity {
   token: {
     symbol: string
@@ -919,14 +906,6 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
-  relayerType?: TableReadyValue<'Permissioned' | 'SelfRelay'>
-  validationType?: DaBridgeValidationType
-}
-
-type DaBridgeValidationType = TableReadyValue<
-  'Validity Proof' | 'BLS Signature'
-> & {
-  zkCatalogId?: ProjectId
 }
 
 export interface DaBridgeRisks {
@@ -1118,6 +1097,7 @@ export interface ProjectPrivacyInfo {
     | { type: 'partially-attributed' }
     /** Too few users to matter, so exact tracking is not set up. */
     | { type: 'too-small' }
+    | ProjectPrivacyKeyRegistrationsAnonymitySet
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
@@ -1137,6 +1117,22 @@ export interface ProjectPrivacyInfo {
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
+}
+
+/**
+ * Stealth-address protocols have no pool, so their anonymity set counts the
+ * addresses that registered keys in a registry, in place of bucket sets.
+ */
+export type ProjectPrivacyKeyRegistrationsAnonymitySet = {
+  type: 'key-registrations'
+  registry: ChainSpecificAddress
+  sinceTimestamp: UnixTime
+} & PrivacyAnonymitySetRegistrationSource
+
+export type PrivacyAnonymitySetRegistrationSource = {
+  event: string
+  /** StealthKeyChanged: the registrant is the indexed event arg. */
+  extractor: 'umbraStealthKeyChanged'
 }
 
 export type ProjectPrivacyRelayerTracking =
@@ -1216,10 +1212,12 @@ export interface PrivacyAttribute {
 }
 
 export type PrivacyCategoryId =
+  | 'anonymousAccess'
   | 'pool'
   | 'shieldedLedger'
   | 'stealthAddress'
   | 'confidentialAmounts'
+  | 'secretBallot'
 
 export interface PrivacyCategory {
   id: PrivacyCategoryId
@@ -1373,6 +1371,8 @@ export interface PrivacyPromise {
 
 export interface PrivacyAdversariesConfig {
   promise: PrivacyPromise
+  /** Overrides the default field description for this project, e.g. when linkage means something other than a transfer link. */
+  fieldDescriptions?: Partial<Record<PrivacyField, string>>
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
 }
 
@@ -1428,6 +1428,8 @@ interface ProjectPrivacyBucketBase {
   sinceTimestamp: UnixTime
   denomination?: string
   withdrawal: PrivacyFlowSource
+  /** Other payout events of this bucket, tracked without a second bucket that would double-count deposits. */
+  additionalWithdrawals?: PrivacyFlowSource[]
 }
 
 export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
@@ -1441,7 +1443,6 @@ export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
            */
           minimumAmounts: string[]
         }
-        address: ChainSpecificAddress
         deposit: PrivacyAnonymitySetDepositSource
       }
     | {
@@ -1472,11 +1473,22 @@ export type PrivacyAnonymitySetDepositSource = {
       | 'fixedAmount'
       | 'privacyPoolsValue'
       | 'railgunShield'
+      | 'strk20Deposit'
       | 'zkMoneyDeposit'
   }
 >
 
 export type PrivacyFlowExtractorConfig =
+  | {
+      /** Deposited note amount, in whole `weiPerUnit` units (e.g. gwei). */
+      extractor: 'zkApiDeposit'
+      params: { weiPerUnit: string }
+    }
+  | {
+      /** User payout (final balance) of a cooperative close or finalized escape, in whole `weiPerUnit` units (e.g. gwei). */
+      extractor: 'zkApiWithdrawal'
+      params: { weiPerUnit: string }
+    }
   | {
       extractor: 'fixedAmount'
       params: {
@@ -1516,16 +1528,6 @@ export type PrivacyFlowExtractorConfig =
       extractor: 'umbraAmount'
       params: {
         tokenAddress: EthereumAddress
-      }
-    }
-  | {
-      extractor: 'zamaWrap'
-      params: Record<string, never>
-    }
-  | {
-      extractor: 'zamaUnwrap'
-      params: {
-        rate: string
       }
     }
   | {
@@ -1727,24 +1729,10 @@ export interface ProjectCostsInfo {
 export interface SovereignProjectDaTrackingConfig {
   projectId: ProjectId
   name: string
-  daTrackingConfig: (
-    | Omit<EthereumDaTrackingConfig, 'daLayer'>
-    | Omit<CelestiaDaTrackingConfig, 'daLayer'>
-    | Omit<AvailDaTrackingConfig, 'daLayer'>
-    | Omit<EigenDaTrackingConfig, 'daLayer'>
-  )[]
+  daTrackingConfig: Omit<EthereumDaTrackingConfig, 'daLayer'>[]
 }
 
-export type ProjectDaTrackingConfig =
-  | BlockDaTrackingConfig
-  | TimestampDaTrackingConfig
-
-export type BlockDaTrackingConfig =
-  | EthereumDaTrackingConfig
-  | CelestiaDaTrackingConfig
-  | AvailDaTrackingConfig
-
-export type TimestampDaTrackingConfig = EigenDaTrackingConfig
+export type ProjectDaTrackingConfig = EthereumDaTrackingConfig
 
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
@@ -1754,30 +1742,6 @@ export interface EthereumDaTrackingConfig {
   topics?: string[]
   sinceBlock: number
   untilBlock?: number
-}
-
-export interface CelestiaDaTrackingConfig {
-  type: 'celestia'
-  daLayer: ProjectId
-  namespace: string
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export interface AvailDaTrackingConfig {
-  type: 'avail'
-  daLayer: ProjectId
-  appIds: string[]
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export interface EigenDaTrackingConfig {
-  type: 'eigen-da'
-  daLayer: ProjectId
-  customerId: string
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
 }
 
 export interface ProjectEcosystemInfo {
@@ -2083,6 +2047,9 @@ interface InteropConfigBase {
   /** Permissions displayed on the interop project page. For canonical bridges,
    * this is intentionally a different (narrower) set than the chain page. */
   permissions?: Record<string, ProjectPermissions>
+  /** Milestones displayed on the interop project page. For canonical bridges,
+   * these are separate from the chain's milestones. */
+  milestones?: Milestone[]
 }
 
 export type InteropConfig =

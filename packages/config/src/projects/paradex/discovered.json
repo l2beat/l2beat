@@ -1,6 +1,6 @@
 {
   "name": "paradex",
-  "timestamp": 1784193913,
+  "timestamp": 1792492705,
   "configHash": "0xcfa1f9e17791d0498c0171d47aa3e107cca224aeae77f9e9b1f634e8cf6d1a0c",
   "entries": [
     {
@@ -132,7 +132,7 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "accessControl": {
@@ -255,7 +255,7 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "govAdminAC": {
@@ -402,6 +402,7 @@
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
         "$admin": {
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
@@ -425,6 +426,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -533,7 +535,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 33152,
+        "l1ToL2MessageNonce": 34060,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": [
@@ -556,9 +558,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "3481158512219903683920468098704109930653191888146505450267964826707009924825",
-        "stateBlockNumber": 2418414,
-        "stateRoot": "3423448762288603387985394761083414206813856215203798233715347992452170206794",
+        "stateBlockHash": "2128090067897836625834324740263527995444130579297534747029853152929894067057",
+        "stateBlockNumber": 2935371,
+        "stateRoot": "2715297826899215842047139228127352933244673522321022509489378936669613038633",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -566,6 +568,7 @@
         "isFrozen": { "severity": "MEDIUM" },
         "messageCancellationDelay": { "severity": "HIGH" },
         "$admin": {
+          "severity": "MEDIUM",
           "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks."
         },
         "isFinalized": {
@@ -590,6 +593,11 @@
         },
         "feeCollector": {
           "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
+          "type": "RISK_PARAMETER"
+        },
+        "getMinL1MsgFee": {
+          "severity": "MEDIUM",
+          "description": "Minimum fee in wei for an L1 -> L2 message. Governance can raise it up to the 1 ETH maximum fee, also after the application configuration is finalized.",
           "type": "RISK_PARAMETER"
         },
         "programHash": {
@@ -665,7 +673,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -674,7 +682,7 @@
       "sinceBlock": 22143036,
       "values": {
         "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$implementation": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
         "$members": [
           "eth:0x721e0A5e09A6e0Bf9641193a4D82901607837Df9",
           "eth:0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199",
@@ -685,15 +693,14 @@
         ],
         "$threshold": 3,
         "domainSeparator": "0x79153287c895edf58c6e5294023273405c02b4865dae9e64742d80f476d9b88d",
-        "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 64,
-        "VERSION": "1.4.1"
+        "nonce": 68,
+        "VERSION": "1.5.0"
       },
       "implementationNames": {
         "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": "Safe"
       }
     }
   ],
@@ -747,54 +754,6 @@
       "function revokeTokenAdmin(address account)",
       "function revokeUpgradeGovernor(address account)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
-    ],
-    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
-      "constructor()",
-      "event AddedOwner(address indexed owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address indexed handler)",
-      "event ChangedGuard(address indexed guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address indexed module)",
-      "event EnabledModule(address indexed module)",
-      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
-      "event RemovedOwner(address indexed owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "eth:0x61D146CfE95Dc5Ba6d9c5d9C83c39C1bff018bD3": [
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -1156,6 +1115,56 @@
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
+    "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedModuleGuard(address indexed moduleGuard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkNSignatures(address executor, bytes32 dataHash, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function checkSignatures(address executor, bytes32 dataHash, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32 txHash)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setModuleGuard(address moduleGuard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
     "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0": [
       "constructor(address _singleton)"
     ]
@@ -1164,10 +1173,10 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "starknet/StarkgateManager": "0x4b9115f849ab55459358778c2380fc07a7c113eba4d1ea123fccc3b0ee31385d",
     "starknet/StarkgateRegistry": "0x146d95b0ca7a2c08ff095b65a07bf282d92759ed499c9c175b0aae23c17c1072",
-    "starknet/Starknet": "0x9f41e18c29973c9b481a2ab38a8b269210c793a9ad8ee66c4fbf1a7474478550",
+    "starknet/Starknet": "0x5caf86cdc077825b806c0e86952e3afd076544d299bc2e2df20cf87ac334ff77",
     "starknet/StarknetERC20Bridge": "0x2e2541f04c46b7c8acf11507b954418d31524b2fb5f1e661281ca8efeb18f765"
   },
-  "usedBlockNumbers": { "ethereum": 25544316 },
+  "usedBlockNumbers": { "ethereum": 26233248 },
   "permissionsConfigHash": "0xe69b64b36507ebebac5499139024ec2ba1ac1ae0a910d42da20b91acda2a65b4",
   "modelledAgainst": {
     "shared-sharp-verifier": "0x55ea05f7815e6a5ee9fc317fca979b081994720f95bea922d0655ad38ba6618f"

@@ -1,3 +1,302 @@
+Generated with discovered.json: 0xfcdf2c09992effa088d8fda5e2e2e9c98ba8b02a
+
+# Diff at Tue, 20 Oct 2026 12:40:06 GMT:
+
+- id: 1b6a509c
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1792144197
+- current timestamp: 1792144197
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144197 (main branch discovery), not current.
+
+```diff
+    external contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC","role":".owner"}
+      directlyReceivedPermissions.9:
++        {"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"control all roles in the ZkToken access control, including the minter roles.","role":".DefaultAdmin"}
+    }
+```
+
+```diff
+    external contract (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
+    }
+```
+
+```diff
+    external contract (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"control all roles in the ZkToken access control, including the minter roles.","role":".DefaultAdmin","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","role":"admin","via":[{"address":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
+    external contract (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","role":".PROPOSE_GUARDIAN"}
+    }
+```
+
+```diff
+    external contract (zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"},{"permission":"interact","from":"zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}]
+    }
+```
+
+```diff
+    external contract (zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"control all roles in the ZkToken access control, including the minter roles.","role":".DefaultAdmin"},{"permission":"upgrade","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","role":"admin","via":[{"address":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC","role":".owner"}]
+    }
+```
+
+```diff
+    external contract (zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","role":".PROPOSE_GUARDIAN"}]
+    }
+```
+
+Generated with discovered.json: 0xcf2799255bbc6f222d3db01487db2b2ac29ba42b
+
+# Diff at Fri, 16 Oct 2026 10:35:42 GMT:
+
+- id: 3e47563b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1790944827
+- current timestamp: 1792144197
+
+## Description
+
+The Lens execution delay in the ValidatorTimelock went from 3h to 1d via the new chain-specific delay. Lens batches now wait at least 1d between commitment and execution. Avail Multisig 1 swapped one signer.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
++++ severity: HIGH
+      values.executionDelayLens:
+-        10800
++        86400
++++ severity: HIGH
+      values.executionDelayLens_fmt:
+-        "3h"
++        "1d"
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
++        "eth:0x50d0667992467421f3B359C8138928C0157cB444"
+    }
+```
+
+Generated with discovered.json: 0xa8ac85ca907c7d83f9fd41a64325a731b1ba332f
+
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
+
+- id: 95fc53f3
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790944827
+- current timestamp: 1790944827
+
+## Description
+
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790944827 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract LensZkEvmAdmin (eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x4968A0E4b025eD7d095753E54058377969b41abC act through it.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Diamond (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getAdmin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x089162f9f3b08bb9725ab00e0b3398da85cb33e8
+
+# Diff at Mon, 05 Oct 2026 10:54:18 GMT:
+
+- id: c57de3e2
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@a75295231feb8dffb1ce44d0210944af7687f7e0 block: 1790944827
+- current timestamp: 1790944827
+
+## Description
+
+Vector contracts are now discovered here instead of referenced from the vector project, which was removed with the rest of the alt-DA projects.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790944827 (main branch discovery), not current.
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) [succinct/SP1Vector] {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      type:
+-        "Reference"
++        "Contract"
+      targetType:
+-        "Contract"
+      targetProject:
+-        "vector"
+      template:
++        "succinct/SP1Vector"
+      sourceHashes:
++        ["0x0940bdd2da00547eb0c190e7c4c5648e1147c96389d9771c2749b98270fc6315","0xe7fda3c09c3912281f605cde13565f94a164de607ec5784e028531883f3a6077"]
+      proxyType:
++        "EIP1967 proxy"
+      description:
++        "The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum."
+      deployerAddress:
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      sinceTimestamp:
++        1720128227
+      sinceBlock:
++        20235805
+      values:
++        {"$admin":"eth:0x0000000000000000000000000000000000000000","$implementation":"eth:0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D","$pastUpgrades":[["2024-07-04T21:23:47.000Z","0x6c2c609d7a13fbdad53b1530d34d740ffa36653f29b5f14220429d7c0d6a3ffc",["eth:0x2434564f3524b44258B11643729343Ef57D60989"]],["2024-07-20T01:29:35.000Z","0x13d7977b9fca12882ea6ba47ce1b20a87de540c358b5e260584e0d921e786f5e",["eth:0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"]]],"$upgradeCount":2,"accessControl":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]}},"checkRelayer":true,"DEFAULT_ADMIN_ROLE":"0x0000000000000000000000000000000000000000000000000000000000000000","frozen":false,"gateway_deprecated":"eth:0x0000000000000000000000000000000000000000","GUARDIAN_ROLE":"0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041","guardians":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],"headerRangeCommitmentTreeSize":2048,"headerRangeFunctionId_deprecated":"0x0000000000000000000000000000000000000000000000000000000000000000","isRelayerApproved":true,"latestAuthoritySetId":895,"latestBlock":3538176,"relayers":["eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"],"rotateFunctionId_deprecated":"0x0000000000000000000000000000000000000000000000000000000000000000","TIMELOCK_ROLE":"0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05","timelocks":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],"vectorXProgramVkey":"0x005f3914526e9f0d261b56a3613985801d3060584f95874548c70fda5f81efdb","verifier":"eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e","VERSION":"2.0.0"}
+    }
+```
+
+```diff
+    contract AvailBridgeV1 (eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a) [avail/AvailBridgeV1] {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      type:
+-        "Reference"
++        "Contract"
+      targetType:
+-        "Contract"
+      targetProject:
+-        "vector"
+      template:
++        "avail/AvailBridgeV1"
+      sourceHashes:
++        ["0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413","0x3903ac9a0d6e9221ce37976cf87cacfc141984011d05bf62c9bfffc3479f77c0"]
+      proxyType:
++        "EIP1967 proxy"
+      description:
++        "Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum."
+      deployerAddress:
++        "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42"
+      sinceTimestamp:
++        1720568903
+      sinceBlock:
++        20272316
+      values:
++        {"$admin":"eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B","$implementation":"eth:0x737539737b44493F65c17eAfE165197b6410d254","$pastUpgrades":[["2024-07-09T23:48:23.000Z","0x980ea7f295336624f103c47b5ec482f90c2c90f4b7d05140ceb5d40aa077963c",["eth:0x737539737b44493F65c17eAfE165197b6410d254"]]],"$upgradeCount":1,"accessControl":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x45828180bbE489350D621d002968A0585406d487"]},"PAUSER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"]}},"avail":"eth:0xEeB4d8400AEefafC1B2953e0094134A887C76Bd8","DEFAULT_ADMIN_ROLE":"0x0000000000000000000000000000000000000000000000000000000000000000","defaultAdmin":"eth:0x45828180bbE489350D621d002968A0585406d487","defaultAdminAC":["eth:0x45828180bbE489350D621d002968A0585406d487"],"defaultAdminDelay":0,"defaultAdminDelayIncreaseWait":432000,"feePerByte":0,"feeRecipient":"eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","fees":0,"messageId":1885,"owner":"eth:0x45828180bbE489350D621d002968A0585406d487","paused":false,"pauserAC":["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],"pendingDefaultAdmin":{"newAdmin":"eth:0x0000000000000000000000000000000000000000","schedule":0},"pendingDefaultAdminDelay":{"newDelay":0,"schedule":0},"vectorx":"eth:0x02993cdC11213985b9B13224f3aF289F03bf298d"}
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 2 (eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    external contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa0f9ef28596d550621777251e801ce0b139be38e
 
 # Diff at Mon, 05 Oct 2026 08:44:00 GMT:

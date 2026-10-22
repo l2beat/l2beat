@@ -122,7 +122,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x1c37A831e405e2F3dd76eb8C9ecE483370D53AfE": "TransparentUpgradeableProxy",
@@ -188,10 +188,11 @@
         "sequencerReportedSubMessageCount": 2604882
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "allowedOutboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Can make calls as the bridge, steal all funds."
         },
         "outboxHistory": {
@@ -199,7 +200,7 @@
           "description": "All Outboxes that were ever set as allowed in the bridge."
         },
         "allowedDelayedInboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
         },
         "inboxHistory": {
@@ -257,8 +258,9 @@
         "rollup": "arb1:0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x38Cb5EfbCb3e8783abbBb00210522586e79Ea1D8": "TransparentUpgradeableProxy",
@@ -355,7 +357,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "maxTimeVariation": {
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -571,8 +573,9 @@
         "executors": ["arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x65e556838D665e04737Be37816d12Fae633c7d83": "TransparentUpgradeableProxy",
@@ -762,7 +765,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0xBB769cAfc77b8Eadbcdeb8FAAE7369F9df244754": "TransparentUpgradeableProxy",
@@ -838,6 +841,7 @@
         "$immutable": true,
         "owner": "arb1:0x65e556838D665e04737Be37816d12Fae633c7d83"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "arb1:0xDAa72c39422ad709DDd609e12E75A13267474347": "ProxyAdmin"
       }
@@ -886,11 +890,13 @@
         "whitelist": "arb1:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "defaultGateway": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "whitelist": { "severity": "HIGH" },
         "router": { "severity": "HIGH" },
         "inbox": { "severity": "HIGH" },
         "counterpartGateway": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0xE72E807A72c7D36717a3ea9e7668ea690A2bf0E1": "TransparentUpgradeableProxy",

@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
@@ -41,14 +41,6 @@ export const molten: ScalingProject = orbitStackL3({
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
-  daTracking: [
-    {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      sinceBlock: 5305699,
-      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpNR57blEA=',
-    },
-  ],
   customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   associatedTokens: ['MOLTEN'],
   chainConfig: {
@@ -102,7 +94,7 @@ export const molten: ScalingProject = orbitStackL3({
       url: 'https://arbiscan.io/tx/0x9a8ae683e857b80a843f7f071b0f831ac8162c6ac2c09fd9a8a514809d80c7af',
       date: '2024-11-13T00:00:00Z',
       description:
-        'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge',
+        'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge.',
       type: 'general',
     },
   ],

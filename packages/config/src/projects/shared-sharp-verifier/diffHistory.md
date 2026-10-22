@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xb5f4f0be2f3ee3ab5f45ba7a0fd454411ba7a6f1
+
+# Diff at Fri, 16 Oct 2026 05:36:53 GMT:
+
+- id: f757f30b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1788530147
+- current timestamp: 1788530147
+
+## Description
+
+Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788530147 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) [shared-sharp-verifier/SHARPVerifierCallProxy] {
+    +++ description: Upgradeable call router through which Starknet and other applications access SHARP fact registries. It uses `call`, not `delegatecall`, so facts and immutable verifier configuration remain at each target registry. The explicit `isValid` entry point always queries the default target. Other calls handled by the fallback, principally proof submissions, can be routed per caller to a still-active registry in the default target's reference chain. The default target can be replaced by eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 after 8d.
+      fieldMeta.$admin.severity:
++        "MEDIUM"
+      fieldMeta.governanceAdminAC:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x455240415232448cdd807b3716924e5f481cafec
 
 # Diff at Sun, 04 Oct 2026 05:55:36 GMT:

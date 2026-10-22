@@ -8,6 +8,8 @@
     "ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3"
   ],
   "names": {
+    "ethereal:0xEB9a61e37A28828E84D97e1487D66b444800a280": "Liquidation",
+    "ethereal:0x719256070f9Ec31DFa8df58791FDB80602e431A4": "Deleverage",
     "arb1:0x33Fbf4E75d54bBec0e432B6dc27bDEa0ca5DEdf9": "Ethereal Multisig"
   }
 }

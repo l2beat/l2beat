@@ -1,5 +1,6 @@
 import type {
   PrivacyAnonymitySetDepositSource,
+  PrivacyAnonymitySetRegistrationSource,
   PrivacyFlowExtractorConfig,
   PrivacyRelayerExtractorConfig,
   ProjectPrivacyInfo,
@@ -16,6 +17,7 @@ export interface PrivacyProjectConfig {
 export interface PrivacyConfig {
   projects: PrivacyProjectConfig[]
   anonymitySetConfigs: PrivacyAnonymitySetIndexerConfig[]
+  starknetAnonymitySetConfigs: StarknetPrivacyAnonymitySetIndexerConfig[]
   flowConfigs: PrivacyFlowIndexerConfig[]
   starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[]
   relayerConfigs: PrivacyRelayerActivityIndexerConfig[]
@@ -25,6 +27,15 @@ export interface PrivacyConfig {
   chains: string[]
 }
 
+/**
+ * Anonymity-set sources read from EVM logs. STRK-20 deposits come from
+ * Starknet events and go through their own indexer.
+ */
+export type EvmPrivacyAnonymitySetSource =
+  | Exclude<PrivacyAnonymitySetDepositSource, { extractor: 'strk20Deposit' }>
+  // The configuration id hashes params, which registrations have none of.
+  | (PrivacyAnonymitySetRegistrationSource & { params: Record<string, never> })
+
 export type PrivacyAnonymitySetIndexerConfigProperties = {
   projectId: string
   bucketId: string
@@ -32,11 +43,24 @@ export type PrivacyAnonymitySetIndexerConfigProperties = {
   address: EthereumAddress
   event: string
   sinceTimestamp: UnixTime
-} & PrivacyAnonymitySetDepositSource
+} & EvmPrivacyAnonymitySetSource
 
 export type PrivacyAnonymitySetIndexerConfig = {
   id: string
 } & PrivacyAnonymitySetIndexerConfigProperties
+
+export type StarknetPrivacyAnonymitySetIndexerConfigProperties = {
+  projectId: string
+  bucketId: string
+  chain: string
+  address: string
+  event: string
+  sinceTimestamp: UnixTime
+} & Extract<PrivacyAnonymitySetDepositSource, { extractor: 'strk20Deposit' }>
+
+export type StarknetPrivacyAnonymitySetIndexerConfig = {
+  id: string
+} & StarknetPrivacyAnonymitySetIndexerConfigProperties
 
 /**
  * Filters on the indexed event args starting at topic1, null matching
@@ -57,7 +81,9 @@ export type PrivacyFlowIndexerConfig = {
   sinceTimestamp: UnixTime
   priceId: string
   decimals: number
-} & Exclude<
+} & EvmPrivacyFlowExtractorConfig
+
+export type EvmPrivacyFlowExtractorConfig = Exclude<
   PrivacyFlowExtractorConfig,
   { extractor: 'strk20Deposit' | 'strk20Withdrawal' }
 >

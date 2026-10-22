@@ -40,7 +40,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x02f3a60D25abF1844740a39cd9679227309a1Fa6": "TransparentUpgradeableProxy",
@@ -123,6 +123,7 @@
         "$immutable": true,
         "owner": "eth:0x6a23390d8a086c1091188f8Db702E91DCA38805F"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x256bBeDabDBa636a9Cd17890841C941a28e9437e": "ProxyAdmin"
       }
@@ -162,6 +163,7 @@
         "$immutable": true,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x2A7F4d60fE6dD63c4690Dd9f11C26D0BE53b3110": "ProxyAdmin"
       }
@@ -323,10 +325,11 @@
         "sequencerReportedSubMessageCount": 13135345
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "allowedOutboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Can make calls as the bridge, steal all funds."
         },
         "outboxHistory": {
@@ -334,7 +337,7 @@
           "description": "All Outboxes that were ever set as allowed in the bridge."
         },
         "allowedDelayedInboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
         },
         "inboxHistory": {
@@ -394,8 +397,9 @@
         "executors": ["eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x6a23390d8a086c1091188f8Db702E91DCA38805F": "TransparentUpgradeableProxy",
@@ -485,7 +489,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x7d4509336b154C17Df80D03A19C051ddAcdA2e7f": "TransparentUpgradeableProxy",
@@ -537,11 +541,13 @@
         "whitelist": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "defaultGateway": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "whitelist": { "severity": "HIGH" },
         "router": { "severity": "HIGH" },
         "inbox": { "severity": "HIGH" },
         "counterpartGateway": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x8b4b4328455615fCb7aaE14460cfa90767B1df55": "TransparentUpgradeableProxy",
@@ -648,7 +654,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "maxTimeVariation": {
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -793,8 +799,9 @@
         "rollup": "eth:0xc3196FEE2b194bf699076865060d566c7Cb02892"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xc0dd0a059a8a948B7737D00bfC9024475C791259": "TransparentUpgradeableProxy",
@@ -881,9 +888,12 @@
         "baseStake": { "severity": "HIGH" },
         "validatorAfkBlocks": { "severity": "HIGH" },
         "challengeGracePeriodBlocks": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "getValidators": { "severity": "LOW" },
+        "challengeManager": { "severity": "HIGH" },
+        "validatorWhitelistDisabled": { "severity": "HIGH" },
         "anyTrustFastConfirmer": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "minimumAssertionPeriod": {
           "severity": "HIGH",
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
@@ -1052,7 +1062,7 @@
         "challengePeriodBlocks": { "severity": "HIGH" },
         "oneStepProofEntry": { "severity": "HIGH" },
         "assertionChain": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xfFfEB1c8C3ec3c45c17E4E1EB547452DF9FF1A76": "TransparentUpgradeableProxy",

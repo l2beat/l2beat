@@ -1,5 +1,11 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import {
+  BATCH_REJECTED,
+  isBatchRejected,
+  RpcBatcher,
+  type RpcBatcherOptions,
+} from '../clients/rpc/RpcBatcher'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
 import type { Http } from './Http'
 
@@ -29,13 +35,18 @@ export interface FilterParameter {
 }
 
 export class EthRpcClient {
+  private readonly batcher: RpcBatcher
+
   constructor(
     private http: Http,
     private url: string,
     private nextId: () => string | number = randomId,
     private timeout?: number,
     private readonly rpcMetrics?: RpcMetricsRecorder,
-  ) {}
+    batching?: RpcBatcherOptions,
+  ) {
+    this.batcher = new RpcBatcher(batching)
+  }
 
   async getChainId(): Promise<bigint> {
     const data = await this.rawCall('eth_chainId')
@@ -197,7 +208,7 @@ export class EthRpcClient {
     return ReceiptResponse.parse(data)
   }
 
-  /** In one batch request, in the order of `hashes` */
+  /** In batch requests, in the order of `hashes` */
   async getTransactionReceipts(
     hashes: string[],
   ): Promise<(RpcReceipt | null)[]> {
@@ -231,7 +242,20 @@ export class EthRpcClient {
     method: string,
     paramsList: unknown[],
   ): Promise<unknown[]> {
+    return await this.batcher.run(
+      method,
+      paramsList,
+      (chunk) => this.sendBatch(method, chunk),
+      (params) => this.rawCall(method, params),
+    )
+  }
+
+  private async sendBatch(
+    method: string,
+    paramsList: unknown[],
+  ): Promise<unknown[] | typeof BATCH_REJECTED> {
     const ids = paramsList.map(() => this.nextId())
+    let rejected = false
 
     try {
       const response = await this.http.fetch(this.url, {
@@ -251,6 +275,10 @@ export class EthRpcClient {
       try {
         data = JSON.parse(response.body)
       } catch {}
+      if (isBatchRejected(response.status, data)) {
+        rejected = true
+        return BATCH_REJECTED
+      }
       const parsed = v.array(JsonRpcResponse).safeValidate(data)
       if (!parsed.success) {
         throw new Error(
@@ -273,7 +301,10 @@ export class EthRpcClient {
         return envelope.result
       })
     } finally {
-      this.rpcMetrics?.record({ method, count: paramsList.length })
+      // The calls of a rejected batch are recorded when sent again
+      if (!rejected) {
+        this.rpcMetrics?.record({ method, count: paramsList.length })
+      }
     }
   }
 

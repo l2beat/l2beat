@@ -7,6 +7,7 @@ import { expect, test } from 'playwright/test'
  * the section, at a desktop and a tablet width.
  */
 const PAGE = '/scaling/projects/base'
+const INTEROP_TOKEN_PAGE = '/interop/tokens/usdc01'
 const DESKTOP = { width: 1400, height: 900 }
 const TABLET = { width: 900, height: 900 }
 const viewports = [DESKTOP, TABLET]
@@ -19,6 +20,10 @@ for (const viewport of viewports) {
     const page = await context.newPage()
     await page.goto(`${PAGE}#permissions`, { waitUntil: 'networkidle' })
     await page.waitForTimeout(1500)
+    // The page scrolls smoothly, so on a slow runner the jump to the fragment
+    // can still be on its way.
+    await expect.poll(() => sectionTop(page, 'permissions')).toBeLessThan(100)
+    await waitForScrollToSettle(page)
     expect(await sectionTop(page, 'permissions')).toBeLessThan(100)
     expect(await sectionTop(page, 'permissions')).toBeGreaterThanOrEqual(0)
     await context.close()
@@ -36,6 +41,37 @@ test('section navigation click lands on the section', async ({ browser }) => {
     expect(await sectionTop(page, id), id).toBeLessThan(100)
     expect(await sectionTop(page, id), id).toBeGreaterThanOrEqual(0)
   }
+  await context.close()
+})
+
+// A fragment click fires popstate, which the interop chain selector answers
+// with a state update, so this page re-renders sections not yet hydrated.
+// Doing so must keep their server markup, or the jump finds nothing to land on.
+test('section navigation click keeps unhydrated sections', async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ viewport: DESKTOP })
+  const page = await context.newPage()
+  await page.goto(INTEROP_TOKEN_PAGE, { waitUntil: 'networkidle' })
+  await page.waitForTimeout(1500)
+  // Mounting a section swaps its markup in one batch; a wipe leaves the
+  // wrapper empty.
+  await page.evaluate(`(() => {
+    window.__emptiedWrappers = 0
+    for (const section of document.querySelectorAll('section[id]')) {
+      const wrapper = section.parentElement
+      new MutationObserver(() => {
+        if (wrapper.childElementCount === 0) window.__emptiedWrappers++
+      }).observe(wrapper, { childList: true })
+    }
+  })()`)
+  await page.locator('a[href="#onchain-deployments"]:visible').first().click()
+  await waitForScrollToSettle(page)
+  expect(await page.evaluate('window.__emptiedWrappers')).toBe(0)
+  expect(await sectionTop(page, 'onchain-deployments')).toBeLessThan(100)
+  expect(await sectionTop(page, 'onchain-deployments')).toBeGreaterThanOrEqual(
+    0,
+  )
   await context.close()
 })
 

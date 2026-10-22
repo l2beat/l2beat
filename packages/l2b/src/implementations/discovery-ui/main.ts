@@ -9,7 +9,6 @@ import {
 } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
-import { config as dotenv } from 'dotenv'
 import express, { type Express } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
@@ -21,6 +20,7 @@ import { DiffoveryController } from './diffovery/DiffoveryController'
 import { FlatSourceClient } from './diffovery/FlatSourceClient'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
+import { buildAddressUsage, readUsageSources } from './getAddressUsage'
 import {
   getCodeFromDisk,
   getCodeFromEtherscan,
@@ -32,6 +32,7 @@ import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { getTvl } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
+import { attachModulesRouter } from './modules'
 import { ProviderCache } from './ProviderCache'
 import { searchCode } from './searchCode'
 import { TvlCache } from './TvlCache'
@@ -39,6 +40,7 @@ import {
   attachTemplateRouter,
   listTemplateFilesSchema,
 } from './templates/router'
+import { attachXrefRouter } from './xref/router'
 
 const safeStringSchema = z
   .string()
@@ -107,7 +109,6 @@ const diffHistoryQuerySchema = z.object({
 })
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
-  dotenv()
   const port = process.env.PORT ?? 2021
   const app = createDiscoveryUiApp({ readonly })
 
@@ -125,7 +126,7 @@ export function createDiscoveryUiApp({
 }): Express {
   const app = express()
 
-  const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
+  const STATIC_ROOT = join(__dirname, '../../../../discoui/build')
 
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
@@ -307,6 +308,8 @@ export function createDiscoveryUiApp({
     attachAnalyzeRouter(app, configReader)
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
+    attachModulesRouter(app, configReader, templateService, paths.discovery)
+    attachXrefRouter(app, configReader)
 
     app.get('/api/config/health', (_, res) => {
       const response = getConfigHealth(
@@ -315,6 +318,10 @@ export function createDiscoveryUiApp({
         configHealthService,
       )
       res.json(response)
+    })
+
+    app.get('/api/address-usage', (_req, res) => {
+      res.json(buildAddressUsage(readUsageSources(configReader)))
     })
 
     app.get('/api/handlers', (_req, res) => {

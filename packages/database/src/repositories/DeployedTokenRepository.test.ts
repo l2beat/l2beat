@@ -612,6 +612,74 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
     })
   })
 
+  describe(
+    DeployedTokenRepository.prototype.getAbstractTokensByAddress.name,
+    () => {
+      it('returns abstract tokens deployed at the address on any chain, once each', async () => {
+        await chains.insert(mockChain({ name: 'ethereum', chainId: 1 }))
+        await chains.insert(mockChain({ name: 'arbitrum', chainId: 42161 }))
+        await chains.insert(mockChain({ name: 'optimism', chainId: 10 }))
+        await abstractTokens.insert(
+          abstractToken({
+            id: 'TK0001',
+            symbol: 'USDC',
+            issuer: 'circle',
+            category: 'stablecoin',
+            iconUrl: 'https://example.com/usdc.png',
+          }),
+        )
+        await abstractTokens.insert(abstractToken({ id: 'TK0002' }))
+        await abstractTokens.insert(abstractToken({ id: 'TK0003' }))
+
+        const address = '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+        await repository.insert(
+          deployedToken({
+            chain: 'ethereum',
+            address,
+            abstractTokenId: 'TK0001',
+          }),
+        )
+        await repository.insert(
+          deployedToken({
+            chain: 'arbitrum',
+            address,
+            abstractTokenId: 'TK0001',
+          }),
+        )
+        await repository.insert(
+          deployedToken({
+            chain: 'optimism',
+            address,
+            abstractTokenId: 'TK0002',
+            ignored: true,
+          }),
+        )
+        await repository.insert(
+          deployedToken({
+            chain: 'ethereum',
+            address: '0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+            abstractTokenId: 'TK0003',
+          }),
+        )
+
+        const result = await repository.getAbstractTokensByAddress(
+          '0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        )
+
+        expect(result).toEqual([
+          {
+            id: 'TK0001',
+            symbol: 'USDC',
+            issuer: 'circle',
+            category: 'stablecoin',
+            iconUrl: 'https://example.com/usdc.png',
+            isPriceUnreliable: false,
+          },
+        ])
+      })
+    },
+  )
+
   describe(DeployedTokenRepository.prototype.deleteByPrimaryKeys.name, () => {
     it('removes selected records', async () => {
       const chainRecord1 = mockChain({ name: 'ethereum', chainId: 1 })

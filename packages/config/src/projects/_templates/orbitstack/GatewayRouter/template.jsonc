@@ -5,6 +5,13 @@
   "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
   "category": "bridge-external",
   "fields": {
+    // a changed default gateway redirects future deposits of unmapped tokens.
+    "defaultGateway": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "MEDIUM"
+    },
     "whitelist": {
       "severity": "HIGH"
     },
@@ -18,7 +25,7 @@
       "severity": "HIGH"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

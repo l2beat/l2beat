@@ -1,7 +1,7 @@
 {
   "name": "mantle",
-  "timestamp": 1789917555,
-  "configHash": "0x5d4554a82fd1c0f1abdd46386061c3cbc4ac373cce105437468bfcfa92286e8b",
+  "timestamp": 1792586696,
+  "configHash": "0x6ca9993b54f955fe6182607825e85ce48c83c40d51bba523ac1c6329bc733630",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -25,6 +25,7 @@
         "$immutable": true,
         "owner": "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "ProxyAdmin"
       }
@@ -132,10 +133,10 @@
         "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 100892546,
-        "latestOutputIndex": 22066,
-        "nextBlockNumber": 100894346,
-        "nextOutputIndex": 22067,
+        "latestBlockNumber": 102226346,
+        "latestOutputIndex": 22807,
+        "nextBlockNumber": 102228146,
+        "nextOutputIndex": 22808,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
@@ -154,6 +155,7 @@
         "FINALIZATION_PERIOD_SECONDS": { "severity": "HIGH" },
         "submissionInterval": { "severity": "MEDIUM" },
         "SUBMISSION_INTERVAL": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "challenger": { "severity": "MEDIUM" },
         "aggregationVkey": {
           "severity": "HIGH",
@@ -232,6 +234,7 @@
         "totalSupply": "6219316794889999291248757829"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "mintCapNumerator": {
           "severity": "HIGH",
           "description": "MNT inflation policy: yearly mint cap as a fraction of total supply (numerator over 10000, hard-capped at 200 = 2%)."
@@ -321,6 +324,7 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage."
         },
+        "owner": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -455,8 +459,13 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "defaultAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -511,11 +520,11 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704465",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704609",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "eth:0x4200000000000000000000000000000000000007",
+        "OTHER_MESSENGER": "mantle:0x4200000000000000000000000000000000000007",
         "PORTAL": "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
         "RELAY_CALL_OVERHEAD": 40000,
         "RELAY_CONSTANT_OVERHEAD": 200000,
@@ -530,6 +539,9 @@
         "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120": "Lib_ResolvedDelegateProxy",
         "eth:0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308": "L1CrossDomainMessenger"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "mantle" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -550,6 +562,7 @@
         "$immutable": true,
         "owner": "eth:0xca35F8338054739D138884685e08b39EE2217794"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": "Lib_AddressManager"
       },
@@ -581,10 +594,10 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-        "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "mantle:0x4200000000000000000000000000000000000010",
         "messenger": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "MESSENGER": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
-        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
+        "OTHER_BRIDGE": "mantle:0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
       },
       "fieldMeta": { "paused": { "severity": "MEDIUM" } },
@@ -592,6 +605,9 @@
         "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": "L1ChugSplashProxy",
         "eth:0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f": "L1StandardBridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "mantle" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -657,14 +673,18 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 591926,
-          "prevBlockNum": 26018579
+          "prevBoughtGas": 593654,
+          "prevBlockNum": 26239921
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
         "version": "1.7.0"
       },
-      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": "Proxy",
         "eth:0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7": "OptimismPortal"
@@ -699,20 +719,17 @@
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "addressManager": {
-          "severity": "HIGH",
           "description": "AddressManager whose mappings this ProxyAdmin can update, including the L1CrossDomainMessenger implementation."
         },
         "l1CrossDomainMessengerProxyType": {
-          "severity": "HIGH",
           "description": "Upgrade mechanism selected by ProxyAdmin for L1CrossDomainMessenger (2 is ResolvedDelegateProxy)."
         },
         "l1CrossDomainMessengerImplementationName": {
-          "severity": "HIGH",
           "description": "AddressManager key that ProxyAdmin updates when upgrading L1CrossDomainMessenger."
         },
         "l1StandardBridgeProxyType": {
-          "severity": "HIGH",
           "description": "Upgrade mechanism selected by ProxyAdmin for L1StandardBridge (1 is L1ChugSplashProxy)."
         }
       },
@@ -752,6 +769,260 @@
     },
     {
       "address": "eth:0xFFEEDDCcBbAA0000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "mantle:0x09734bB3980906Bb217305EA6Bd34256feEAB105",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "mantle:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
+      "sinceTimestamp": 1689475625,
+      "sinceBlock": 5244,
+      "values": {
+        "$immutable": false,
+        "$implementation": "mantle:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$members": [
+          "mantle:0xc77E153e3c7ab09e9216a21Bd3fa2e1f4C24118D",
+          "mantle:0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498",
+          "mantle:0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1",
+          "mantle:0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F",
+          "mantle:0xdC3644e172813ADbF6D130262e2416975Ac48Af3",
+          "mantle:0x50dCf0B40E593301aA75DcB54f36f379607595CE",
+          "mantle:0x63a7E8AbD9A3771aF5ac0bfdef04769C2f9e2916",
+          "mantle:0xA081e53597173e4e405Ef907C630585c22ef089b",
+          "mantle:0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089",
+          "mantle:0xe75D7324d6BC4E70A200c5E268160332F43b2d2B",
+          "mantle:0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070",
+          "mantle:0xc4143711aA5bd6d37F1b0A690120AA5859e32A93",
+          "mantle:0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb",
+          "mantle:0xE6a04E34D329f912Aca478Df7FDbe378E30eb0E5"
+        ],
+        "$threshold": 6,
+        "domainSeparator": "0xf51b6f88603117f7d7be4cb7b5cba88eff2e4ea32320b393699d540004da2b9f",
+        "getChainId": 5000,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "6 of 14 (43%)",
+        "nonce": 22,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "mantle:0x09734bB3980906Bb217305EA6Bd34256feEAB105": "GnosisSafeProxy",
+        "mantle:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
+      }
+    },
+    {
+      "address": "mantle:0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "L2CrossDomainMessenger",
+      "address": "mantle:0x4200000000000000000000000000000000000007",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
+        "0x46d1d9f816d7a595a59047aefe4ed07ca3f64ebc6b39bb1c9e67ea76c192d188"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "critical": true,
+      "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "mantle:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1688314886,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "mantle:0x4200000000000000000000000000000000000018",
+        "$implementation": "mantle:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "HASH_MESSAGE_BASE_GAS": 800,
+        "HASH_MESSAGE_GAS_PER_BYTE": 2,
+        "L1_MNT_ADDRESS": "mantle:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+        "l1CrossDomainMessenger": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
+        "MESSAGE_VERSION": 1,
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629809",
+        "MIN_GAS_CALLDATA_OVERHEAD": 16,
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
+        "OTHER_MESSENGER": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
+        "RELAY_CALL_OVERHEAD": 40000,
+        "RELAY_CONSTANT_OVERHEAD": 200000,
+        "RELAY_GAS_CHECK_BUFFER": 55000,
+        "RELAY_RESERVED_GAS": 90000,
+        "version": "1.5.0"
+      },
+      "implementationNames": {
+        "mantle:0x4200000000000000000000000000000000000007": "Proxy",
+        "mantle:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": "L2CrossDomainMessenger"
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
+    },
+    {
+      "name": "L2StandardBridge",
+      "address": "mantle:0x4200000000000000000000000000000000000010",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
+        "0xe7197b0fce932aa64875f9cd718bae0c0da1db9d324695f9a872450a612f1256"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "critical": true,
+      "deployerAddress": "mantle:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1688314886,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "mantle:0x4200000000000000000000000000000000000018",
+        "$implementation": "mantle:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "L1_MNT_ADDRESS": "mantle:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+        "l1TokenBridge": "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+        "messenger": "mantle:0x4200000000000000000000000000000000000007",
+        "MESSENGER": "mantle:0x4200000000000000000000000000000000000007",
+        "OTHER_BRIDGE": "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+        "version": "1.1.0"
+      },
+      "implementationNames": {
+        "mantle:0x4200000000000000000000000000000000000010": "Proxy",
+        "mantle:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": "L2StandardBridge"
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
+    },
+    {
+      "name": "L2ToL1MessagePasser",
+      "address": "mantle:0x4200000000000000000000000000000000000016",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
+        "0xae13c5797c86b59e0c0baf7e1de4dc495cc9a3a42fc6d754bf9f7e7ffcf486fa"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "critical": true,
+      "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "mantle:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1688314886,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "mantle:0x4200000000000000000000000000000000000018",
+        "$implementation": "mantle:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "L1_MNT_ADDRESS": "mantle:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+        "MESSAGE_VERSION": 1,
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629813",
+        "version": "1.0.0"
+      },
+      "implementationNames": {
+        "mantle:0x4200000000000000000000000000000000000016": "Proxy",
+        "mantle:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "L2ToL1MessagePasser"
+      }
+    },
+    {
+      "name": "L2ProxyAdmin",
+      "address": "mantle:0x4200000000000000000000000000000000000018",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
+        "0xa510711ae0af721cd5ff6e6f84ec6fc47aa4df032bb00aa784eecec2795ec667"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "critical": true,
+      "deployerAddress": "mantle:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1688314886,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "mantle:0x4200000000000000000000000000000000000018",
+        "$implementation": "mantle:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "owner": "mantle:0x09734bB3980906Bb217305EA6Bd34256feEAB105"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "mantle:0x4200000000000000000000000000000000000018": "Proxy",
+        "mantle:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": ""
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://basescan.org/address/0xc0d3c0d3c0d3c0d3c0d3c0d3c0d3c0d3c0d30018#code"
+        }
+      ]
+    },
+    {
+      "address": "mantle:0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0x50dCf0B40E593301aA75DcB54f36f379607595CE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0x63a7E8AbD9A3771aF5ac0bfdef04769C2f9e2916",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0xA081e53597173e4e405Ef907C630585c22ef089b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0xc4143711aA5bd6d37F1b0A690120AA5859e32A93",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0xc77E153e3c7ab09e9216a21Bd3fa2e1f4C24118D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0xdC3644e172813ADbF6D130262e2416975Ac48Af3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0xE6a04E34D329f912Aca478Df7FDbe378E30eb0E5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0xe75D7324d6BC4E70A200c5E268160332F43b2d2B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1198,6 +1469,172 @@
       "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
       "function unpause()",
       "function version() view returns (string)"
+    ],
+    "mantle:0x09734bB3980906Bb217305EA6Bd34256feEAB105": [
+      "constructor(address _singleton)"
+    ],
+    "mantle:0x4200000000000000000000000000000000000007": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "mantle:0x4200000000000000000000000000000000000010": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "mantle:0x4200000000000000000000000000000000000016": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "mantle:0x4200000000000000000000000000000000000018": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "mantle:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": [
+      "constructor(address _l1CrossDomainMessenger, address l1mnt)",
+      "event FailedRelayedMessage(bytes32 indexed msgHash)",
+      "event Initialized(uint8 version)",
+      "event RelayedMessage(bytes32 indexed msgHash)",
+      "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)",
+      "event SentMessageExtension1(address indexed sender, uint256 mntValue, uint256 ethValue)",
+      "function HASH_MESSAGE_BASE_GAS() view returns (uint64)",
+      "function HASH_MESSAGE_GAS_PER_BYTE() view returns (uint64)",
+      "function L1_MNT_ADDRESS() view returns (address)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function MIN_GAS_CALLDATA_OVERHEAD() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR() view returns (uint64)",
+      "function OTHER_MESSENGER() view returns (address)",
+      "function RELAY_CALL_OVERHEAD() view returns (uint64)",
+      "function RELAY_CONSTANT_OVERHEAD() view returns (uint64)",
+      "function RELAY_GAS_CHECK_BUFFER() view returns (uint64)",
+      "function RELAY_RESERVED_GAS() view returns (uint64)",
+      "function baseGas(bytes _message, uint32 _minGasLimit) pure returns (uint64)",
+      "function failedMessages(bytes32) view returns (bool)",
+      "function initialize()",
+      "function l1CrossDomainMessenger() view returns (address)",
+      "function messageNonce() view returns (uint256)",
+      "function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _mntValue, uint256 _ethValue, uint256 _minGasLimit, bytes _message) payable",
+      "function sendMessage(address _target, bytes _message, uint32 _minGasLimit) payable",
+      "function sendMessage(uint256 _ethAmount, address _target, bytes _message, uint32 _minGasLimit) payable",
+      "function successfulMessages(bytes32) view returns (bool)",
+      "function version() view returns (string)",
+      "function xDomainMessageSender() view returns (address)"
+    ],
+    "mantle:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": [
+      "constructor(address _otherBridge, address _l1mnt)",
+      "event DepositFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event MNTBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event MNTBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event WithdrawalInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "function L1_MNT_ADDRESS() view returns (address)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint256 _value, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETHTo(uint256 _value, address _to, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeMNT(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeMNTTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function finalizeBridgeMNT(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function finalizeDeposit(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function l1TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function version() view returns (string)",
+      "function withdraw(address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
+      "function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable"
+    ],
+    "mantle:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": [
+      "constructor(address _l1mnt)",
+      "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 mntValue, uint256 ethValue, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
+      "event WithdrawerBalanceBurnt(uint256 indexed amount)",
+      "function L1_MNT_ADDRESS() view returns (address)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function burn()",
+      "function initiateWithdrawal(uint256 _ethValue, address _target, uint256 _gasLimit, bytes _data) payable",
+      "function messageNonce() view returns (uint256)",
+      "function sentMessages(bytes32) view returns (bool)",
+      "function version() view returns (string)"
+    ],
+    "mantle:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ]
   },
   "usedTemplates": {
@@ -1211,10 +1648,10 @@
     "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x9a1f78fb3786e973f0204ba0c2838e0a89a5abeba36441b67f62257a9fe0d58c"
   },
-  "usedBlockNumbers": { "ethereum": 26019578 },
-  "permissionsConfigHash": "0x5a4ca829301771fe1a73e47d0b99dee5280105796ca82deb2c0d934f29b68b1c",
+  "usedBlockNumbers": { "ethereum": 26241056, "mantle": 102228192 },
+  "permissionsConfigHash": "0xd2a275f13393a14154a6c99f6e2b9f162872e129287327fd49cc40f880b08108",
   "modelledAgainst": {
-    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
+    "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"
   },
   "permissions": {
     "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": {
@@ -1456,6 +1893,73 @@
         {
           "permission": "upgrade",
           "from": "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
+          "role": "admin"
+        }
+      ]
+    },
+    "mantle:0x09734bB3980906Bb217305EA6Bd34256feEAB105": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000007",
+          "role": "admin",
+          "via": [
+            { "address": "mantle:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000010",
+          "role": "admin",
+          "via": [
+            { "address": "mantle:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000016",
+          "role": "admin",
+          "via": [
+            { "address": "mantle:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000018",
+          "role": "admin",
+          "via": [
+            { "address": "mantle:0x4200000000000000000000000000000000000018" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "mantle:0x4200000000000000000000000000000000000018",
+          "role": ".owner"
+        }
+      ]
+    },
+    "mantle:0x4200000000000000000000000000000000000018": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000007",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000010",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000016",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000018",
           "role": "admin"
         }
       ]

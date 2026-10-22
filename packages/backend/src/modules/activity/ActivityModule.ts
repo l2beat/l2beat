@@ -58,7 +58,7 @@ export function initActivityModule({
         )
 
         const provider = providers.activityBlock.getProvider(project.chainName)
-        const txsCountService = new BlockTxsCountService(
+        const blockSource = new BlockTxsCountService(
           {
             provider,
             projectId: project.id,
@@ -73,7 +73,7 @@ export function initActivityModule({
             batchSize: project.activityConfig.batchSize ?? 100,
             minHeight: project.activityConfig.startBlock ?? 1,
             parents: [blockTargetIndexer],
-            txsCountService,
+            blockSource,
             indexerService,
             db: database,
           },
@@ -109,7 +109,7 @@ export function initActivityModule({
         )
 
         const provider = providers.svmBlock.getBlockProvider(project.chainName)
-        const txsCountService = new SlotTxsCountService(
+        const blockSource = new SlotTxsCountService(
           {
             provider,
             projectId: project.id,
@@ -123,7 +123,7 @@ export function initActivityModule({
             batchSize: project.activityConfig.batchSize ?? 100,
             minHeight: project.activityConfig.startSlot ?? 1,
             parents: [slotTargetIndexer],
-            txsCountService,
+            blockSource,
             indexerService,
             db: database,
           },

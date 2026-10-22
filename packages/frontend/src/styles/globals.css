@@ -3,6 +3,7 @@
 @import "./markdown.css" layer(base);
 @import "./article.css" layer(base);
 @import "./sticky-table.css";
+@import "./section-navigation.css";
 
 @plugin "tailwindcss-animate";
 
@@ -23,6 +24,16 @@
      wraps a block image, where a solid outline would draw nothing. */
   :focus-visible {
     outline-color: var(--brand);
+  }
+
+  /* Not a selection: utility on body: that compiles to a descendant rule
+     which makes every full style recalc about 50% slower. */
+  ::selection {
+    background-color: color-mix(
+      in oklab,
+      var(--brand) var(--selection-brand-share),
+      transparent
+    );
   }
 }
 
@@ -70,6 +81,7 @@
   --warning: #ab8000;
   --negative: #d70000;
   --brand: #9621bf;
+  --selection-brand-share: 30%;
   --background: #e6e7ec;
   --surface-primary: #fafafa;
   --surface-primary-hover: #e6ecef;
@@ -141,6 +153,7 @@
   --warning: #ffc107;
   --negative: #ff3d3d;
   --brand: #db8bf7;
+  --selection-brand-share: 50%;
   --background: #07080c;
   --surface-primary: #1b1e2a;
   --surface-primary-hover: #272b3a;
@@ -213,8 +226,7 @@
 
   --font-\*: initial;
   --font-roboto: "Roboto", "Arial", sans-serif;
-  --font-roboto-serif: "Roboto Serif", serif;
-  --font-roboto-serif-ext: "Roboto Serif Ext", "Roboto Serif", serif;
+  --font-inter: "Inter", "Arial", sans-serif;
   --font-lora: "Lora", serif;
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",

@@ -51,6 +51,45 @@ describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
   })
 })
 
+describe(TemplateService.prototype.admitsAddress.name, () => {
+  let root: string
+  beforeEach(() => {
+    root = mkdtempSync(join(tmpdir(), 'template-service-'))
+  })
+  afterEach(() => rmSync(root, { recursive: true, force: true }))
+
+  function writeTemplate(templateId: string, validAddresses?: string[]) {
+    const directory = join(root, '_templates', templateId)
+    mkdirSync(directory, { recursive: true })
+    writeFileSync(join(directory, 'template.jsonc'), '{}')
+    if (validAddresses !== undefined) {
+      writeFileSync(
+        join(directory, 'criteria.json'),
+        JSON.stringify({ validAddresses }),
+      )
+    }
+  }
+
+  it('admits any address to a template without criteria, and only the listed ones to a template with them', () => {
+    writeTemplate('proj/Open')
+    writeTemplate('proj/Listed', [CORRECT_SUPERCHAIN_CONFIG_ADDR.toString()])
+    const templateService = new TemplateService(root)
+
+    expect(
+      templateService.admitsAddress('proj/Open', FAKE_SUPERCHAIN_CONFIG_ADDR),
+    ).toEqual(true)
+    expect(
+      templateService.admitsAddress(
+        'proj/Listed',
+        CORRECT_SUPERCHAIN_CONFIG_ADDR,
+      ),
+    ).toEqual(true)
+    expect(
+      templateService.admitsAddress('proj/Listed', FAKE_SUPERCHAIN_CONFIG_ADDR),
+    ).toEqual(false)
+  })
+})
+
 describe(TemplateService.prototype.reload.name, () => {
   const HASH_A = Hash256('0x' + 'a'.repeat(64))
   const HASH_B = Hash256('0x' + 'b'.repeat(64))
@@ -101,6 +140,80 @@ describe(TemplateService.prototype.reload.name, () => {
     expect(Object.keys(templateService.getAllShapes()).sort()).toEqual([
       'first',
       'nested/second',
+    ])
+  })
+})
+
+describe(TemplateService.prototype.loadContractTemplate.name, () => {
+  let rootPath: string
+
+  beforeEach(() => {
+    rootPath = mkdtempSync(join(tmpdir(), 'template-service-'))
+  })
+
+  afterEach(() => {
+    rmSync(rootPath, { recursive: true, force: true })
+  })
+
+  function writeTemplate(templateId: string, template: unknown) {
+    const path = join(rootPath, '_templates', templateId)
+    mkdirSync(path, { recursive: true })
+    writeFileSync(join(path, 'template.jsonc'), JSON.stringify(template))
+  }
+
+  function loadProblems(templateId: string): unknown {
+    const templateService = new TemplateService(rootPath)
+    try {
+      templateService.loadContractTemplate(templateId)
+    } catch (error) {
+      expect(error).toBeA(Error)
+      expect((error as Error).message).toEqual('Invalid template.jsonc')
+      return ((error as Error).cause as { problems: unknown }).problems
+    }
+    throw new Error('Template loaded')
+  }
+
+  it('rejects a template that sets ignoreDiscovery', () => {
+    writeTemplate('ignoring', { ignoreDiscovery: true })
+
+    expect(loadProblems('ignoring')).toEqual([
+      expect.includes('ignoreDiscovery cannot be set in a template'),
+    ])
+  })
+
+  it('keeps the reason of the parser when the walk finds only unknown keys', () => {
+    writeTemplate('named', { name: 'Rollup', ignoreDiscovery: true })
+
+    expect(loadProblems('named')).toEqual([
+      expect.includes('name: unexpected key'),
+      'At @: ignoreDiscovery cannot be set in a template',
+    ])
+  })
+
+  it('reports only the reason of the parser for a template that is not an object', () => {
+    writeTemplate('empty', null)
+
+    expect(loadProblems('empty')).toEqual(['At @: Expected object, got null.'])
+  })
+
+  it('reports every mistake of a template at its path', () => {
+    writeTemplate('typos', {
+      $schema: '../schema.json',
+      ignoreMethod: ['a'],
+      fields: {
+        owner: { handler: { type: 'call', methd: 'owner', args: [] } },
+        slot: { handler: { type: 'storag', slot: 3 } },
+      },
+    })
+
+    expect(loadProblems('typos')).toEqual([
+      expect.includes(
+        'ignoreMethod: unexpected key (did you mean "ignoreMethods"?)',
+      ),
+      expect.includes(
+        'fields.owner.handler.methd: unexpected key (did you mean "method"?)',
+      ),
+      expect.includes('fields.slot.handler.type: expected one of'),
     ])
   })
 })

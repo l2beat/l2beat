@@ -1,7 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type RawBuilder, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { Activity } from '../kysely/generated/types'
+import { addToStored } from '../utils/addToStored'
 
 export interface ActivityRecord {
   projectId: ProjectId
@@ -62,6 +63,31 @@ export class ActivityRepository extends BaseRepository {
             start: eb.ref('excluded.start'),
             end: eb.ref('excluded.end'),
           })),
+        )
+        .execute()
+    })
+    return records.length
+  }
+
+  /**
+   * Adds each record to the day stored before, as blocks of a day come in
+   * more than one batch. The block range widens to cover both
+   */
+  async addMany(records: ActivityRecord[]): Promise<number> {
+    if (records.length === 0) return 0
+
+    const rows = records.map(toRow)
+    await this.batch(rows, 5_000, async (batch) => {
+      await this.db
+        .insertInto('Activity')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.columns(['timestamp', 'projectId']).doUpdateSet({
+            count: sql`"Activity"."count" + excluded."count"`,
+            uopsCount: addToStored('Activity', 'uopsCount'),
+            start: sql`least("Activity"."start", excluded."start")`,
+            end: sql`greatest("Activity"."end", excluded."end")`,
+          }),
         )
         .execute()
     })
@@ -229,56 +255,24 @@ export class ActivityRepository extends BaseRepository {
   }
 
   async getMaxCountsForProjects() {
-    const uopsSubquery = this.db
+    const rows = await this.db
       .selectFrom('Activity')
       .select([
         'projectId',
-        (eb) =>
-          eb.fn
-            .max(eb.fn.coalesce('Activity.uopsCount', 'Activity.count'))
-            .as('max_uops_count'),
+        maxWithTimestamp(sql`coalesce("uopsCount", "count")`).as('maxUops'),
+        maxWithTimestamp(sql.ref('count')).as('maxCount'),
       ])
       .groupBy('projectId')
-      .as('t2')
-
-    const rows = await this.db
-      .selectFrom('Activity as t1')
-      .innerJoin(uopsSubquery, (join) =>
-        join
-          .onRef('t1.projectId', '=', 't2.projectId')
-          .onRef(
-            (eb) => eb.fn.coalesce('t1.uopsCount', 't1.count'),
-            '=',
-            't2.max_uops_count',
-          ),
-      )
-      .innerJoin('Activity as count_table', (join) =>
-        join
-          .onRef('t1.projectId', '=', 'count_table.projectId')
-          .onRef('count_table.count', '=', (eb) =>
-            eb
-              .selectFrom('Activity as max_count')
-              .select(eb.fn.max('count').as('max_count'))
-              .whereRef('max_count.projectId', '=', 't1.projectId'),
-          ),
-      )
-      .select([
-        't1.projectId',
-        (eb) => eb.fn.coalesce('t1.uopsCount', 't1.count').as('max_uops_count'),
-        't1.timestamp as uops_timestamp',
-        'count_table.count as max_count',
-        'count_table.timestamp as count_timestamp',
-      ])
       .execute()
 
     return Object.fromEntries(
       rows.map((row) => [
         row.projectId,
         {
-          uopsCount: Number(row.max_uops_count),
-          uopsTimestamp: UnixTime.fromDate(row.uops_timestamp),
-          count: Number(row.max_count),
-          countTimestamp: UnixTime.fromDate(row.count_timestamp),
+          uopsCount: Number(row.maxUops[0]),
+          uopsTimestamp: UnixTime(Number(row.maxUops[1])),
+          count: Number(row.maxCount[0]),
+          countTimestamp: UnixTime(Number(row.maxCount[1])),
         },
       ]),
     )
@@ -473,4 +467,10 @@ export class ActivityRepository extends BaseRepository {
 
     return latestRecord?.end
   }
+}
+
+function maxWithTimestamp(value: RawBuilder<unknown>) {
+  return sql<
+    [string, string]
+  >`max(array[${value}::bigint, extract(epoch from "timestamp")::bigint])`
 }

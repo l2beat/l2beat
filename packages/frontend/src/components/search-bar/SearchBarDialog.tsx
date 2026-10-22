@@ -90,7 +90,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   return (
     <CommandDialog
       title="Search"
-      description="Search for projects by name or address"
+      description="Search for projects and tokens by name or address"
       open={open}
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
@@ -99,7 +99,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
       <Command shouldFilter={false} className="rounded-none">
         <CommandInput
           ref={inputRef}
-          placeholder="Search for projects by name or address"
+          placeholder="Search for projects and tokens by name or address"
           value={value}
           onValueChange={setValue}
         >
@@ -276,12 +276,12 @@ function entryToLabel(entry: AnySearchBarEntry) {
   if (entry.type === 'token') return 'Token'
 
   switch (entry.kind) {
+    case 'ethereum':
+      return 'Base layer'
     case 'layer2':
       return 'Layer 2'
     case 'layer3':
       return 'Layer 3'
-    case 'da':
-      return 'DA Layer'
     case 'interop':
       return 'Interop'
     case 'zkCatalog':

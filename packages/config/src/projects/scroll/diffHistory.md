@@ -1,3 +1,552 @@
+Generated with discovered.json: 0x9e7ea0a61c410c82430c3e84659fc36f9085c680
+
+# Diff at Tue, 20 Oct 2026 07:52:41 GMT:
+
+- id: fcd4e195
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1791455050
+- current timestamp: 1791455050
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791455050 (main branch discovery), not current.
+
+```diff
+    contract L2LidoGateway (scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9) [N/A] {
+    +++ description: None
+      values.counterpart:
+-        "scr:0x6625C6332c9F91F2D27c304E729B86db87A3f504"
++        "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+Generated with discovered.json: 0xa887d640070a725229a67a4d7c7c674c5ec60287
+
+# Diff at Fri, 16 Oct 2026 05:36:53 GMT:
+
+- id: 4572473d
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791455050
+- current timestamp: 1791455050
+
+## Description
+
+Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791455050 (main branch discovery), not current.
+
+```diff
+    contract TimelockSCEmergency (eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TimelockFast (eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TimelockSCSlow (eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) [scroll/MultipleVersionRollupVerifier] {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L1MessageQueueV2 (eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a) [scroll/L1MessageQueue] {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) [scroll/L1ERC721Gateway] {
+    +++ description: Contract used to bridge ERC721 tokens from L1 to L2.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract DaiEscrow (eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515) [N/A] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) [scroll/L1ScrollMessenger] {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) [scroll/EnforcedTxGateway] {
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ScrollOwner (eth:0x798576400F7D662961BA15C6b3F3d813447a26a6) [scroll/ScrollOwner] {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      fieldMeta:
++        {"accessControl":{"severity":"MEDIUM"},"scNoDelay":{"severity":"MEDIUM"},"opsFast":{"severity":"MEDIUM"},"opsNoDelay":{"severity":"MEDIUM"},"scMinorityNoDelay":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1WETHGateway (eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) [scroll/L1WETHGateway] {
+    +++ description: Contract used to bridge WETH from L1 to L2.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1ETHGateway (eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) [scroll/L1ETHGateway] {
+    +++ description: Contract used to bridge ETH from L1 to L2.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract TimelockEmergency (eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D) [scroll/SystemConfig] {
+    +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract pufETHEscrow (eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) [scroll/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ScrollChain (eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556) [scroll/ScrollChain] {
+    +++ description: The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff) [scroll/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract PauseController (eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b) [scroll/PauseController] {
+    +++ description: None
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (eth:0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) [scroll/L1ERC1155Gateway] {
+    +++ description: Contract used to bridge ERC1155 tokens from L1 to L2.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) [scroll/L1StandardERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1USDCGateway (eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) [scroll/L1USDCGateway] {
+    +++ description: Contract used to bridge USDC tokens from L1 to L2.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) [scroll/L1GatewayRouter] {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Scroll USDC (scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4) [N/A] {
+    +++ description: Contract of the USDC token on Scroll.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ScrollOwner (scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) [scroll/ScrollOwnerL2] {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      fieldMeta:
++        {"accessControl":{"severity":"MEDIUM"},"scNoDelay":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract TimelockSCEmergencyScroll (scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TimelockFast (scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) [N/A] {
+    +++ description: Used to propose and manage onchain governance proposals.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.manager:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L2USDCGateway (scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142) [N/A] {
+    +++ description: None
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L2GatewayRouter (scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79) [N/A] {
+    +++ description: Counterpart to the L1GatewayRouter contract.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L2MessageQueue (scr:0x5300000000000000000000000000000000000000) [N/A] {
+    +++ description: Used to append messages to the L2MessageQueue from the L2ScrollMessenger.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L2ERC1155Gateway (scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc) [N/A] {
+    +++ description: Counterpart to the L1ERC1155Gateway contract.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L2CustomERC20Gateway (scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988) [N/A] {
+    +++ description: Counterpart to the L1CustomERC20Gateway contract.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ScrollStandardERC20Factory (scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484) [N/A] {
+    +++ description: Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L2ETHGateway (scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0) [N/A] {
+    +++ description: Contract of the L2ScrollMessenger contract.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L2WETHGateway (scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9) [N/A] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L2ScrollMessenger (scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC) [N/A] {
+    +++ description: ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L2ERC721Gateway (scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582) [N/A] {
+    +++ description: Counterpart to the L1ERC721Gateway contract.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62","role":"admin"}
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract TimelockEmergency (scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L2PauseController (scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd) [scroll/PauseController] {
+    +++ description: None
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract MasterMinter (scr:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE) [tokens/circle/MasterMinter] {
+    +++ description:  Contract that uses controllers to manage minters for USDC on Scroll.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SCRToken (scr:0xd29687c813D741E2F938F4aC377128810E217b1b) [N/A] {
+    +++ description: None
+      fieldMeta:
++        {"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L2GatewayRouter (scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A) [N/A] {
+    +++ description: Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L2DaiGateway (scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62) [N/A]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x14eba8deb8c84d77c2add5ec8d64997ce6f895d9
 
 # Diff at Thu, 08 Oct 2026 10:25:25 GMT:

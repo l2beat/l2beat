@@ -160,6 +160,13 @@
       "contract": "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
       "transaction": "0xa4b448b1c4a0f417a5104b78e001bbf01e6a7327062a11e50d2b801142c1db85",
       "reason": "Permanently renounced verifier-upgrade authority over the 1000 DAI pool."
+    },
+    {
+      "timestamp": 1617324953,
+      "type": "code",
+      "contract": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
+      "transaction": "0x861ac2d8d689303627f0c3b5a5b56f1c5a1844919ccf1fdbc3b17f027449d6c6",
+      "reason": "First deposit into a 2021 pool, the first custody of the rewritten ERC20Tornado code (solc 0.7.6, new Merkle tree, external hasher)."
     }
   ]
 }

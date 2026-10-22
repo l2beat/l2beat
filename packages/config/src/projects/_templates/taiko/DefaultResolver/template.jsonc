@@ -4,6 +4,14 @@
   "description": "Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.",
   "ignoreMethods": ["proxiableUUID"],
   "types": {
+    "EthereumAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "eth" }
+    },
+    "TaikoAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "taiko" }
+    },
     "Bytes32ToName": {
       "typeCaster": "Mapping",
       "arg": {
@@ -23,6 +31,7 @@
     }
   },
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "pendingOwner": {
       "severity": "MEDIUM"
     },
@@ -33,6 +42,7 @@
       "severity": "HIGH"
     },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -44,17 +54,36 @@
       "severity": "HIGH",
       "handler": {
         "type": "event",
-        "select": "newAddress",
-        "groupBy": "name",
-        "set": {
+        "select": ["chainId", "name", "newAddress"],
+        "dedupBy": ["chainId", "name"],
+        "add": {
           "event": "AddressRegistered"
         },
         "ignoreRelative": true
       },
+      "description": "Current contract registrations, keyed by both chain ID and name. Counterparties and default bridged token implementations are security-critical.",
       "edit": [
-        "pipe",
-        ["to_entries"],
-        ["map", ["shape", ["name", ["format", "Bytes32ToName"]], "address"]]
+        "map",
+        [
+          "pipe",
+          [
+            "shape",
+            "chainId",
+            ["name", ["format", "Bytes32ToName"]],
+            "address"
+          ],
+          [
+            "if",
+            ["=", ["get", "chainId"], 1],
+            ["set", "address", ["format", "EthereumAddress"]],
+            [
+              "if",
+              ["=", ["get", "chainId"], 167000],
+              ["set", "address", ["format", "TaikoAddress"]],
+              ["shape", "chainId", "name", "address"]
+            ]
+          ]
+        ]
       ]
     }
   }

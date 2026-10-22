@@ -229,7 +229,7 @@ function SimpleChartContainer({
 }
 SimpleChartContainer.displayName = 'Chart'
 
-function ChartTooltip(props: RechartsPrimitive.TooltipProps<number, string>) {
+function ChartTooltip(props: RechartsPrimitive.TooltipProps) {
   const coordinate = RechartsPrimitive.useActiveTooltipCoordinate()
   const plotArea = RechartsPrimitive.usePlotArea()
   const showOnLeft =
@@ -252,7 +252,48 @@ type CustomChartTooltipProps = Omit<
 >
 
 function ChartTooltipWrapper({ children }: { children: React.ReactNode }) {
-  return <div className={tooltipContentVariants()}>{children}</div>
+  const ref = React.useRef<HTMLDivElement>(null)
+  useKeepTooltipInWindow(ref)
+  return (
+    <div ref={ref} className={tooltipContentVariants()}>
+      {children}
+    </div>
+  )
+}
+
+/** The least room left between a tooltip and the window's edge. */
+const TOOLTIP_WINDOW_MARGIN = 8
+
+/**
+ * A tooltip may leave its chart (see `ChartTooltip`) but not the window: past
+ * an edge it is cut off, and past the right one it also widens the page,
+ * which phones answer by zooming the whole page out. After every render of
+ * the content, once recharts has placed its wrapper, this moves the wrapper
+ * back inside, before the frame is painted.
+ */
+function useKeepTooltipInWindow(ref: React.RefObject<HTMLDivElement | null>) {
+  React.useLayoutEffect(() => {
+    const wrapper = ref.current?.closest<HTMLElement>(
+      '.recharts-tooltip-wrapper',
+    )
+    const chart = wrapper?.offsetParent
+    if (!wrapper || !chart) return
+    // The inline transform is where recharts sends the wrapper, also while
+    // it is still sliding there. Rewriting it, rather than adding an offset
+    // of our own, keeps every frame of the slide inside the window too.
+    const { m41: x, m42: y } = new DOMMatrixReadOnly(wrapper.style.transform)
+    const left = chart.getBoundingClientRect().left + x
+    const right = left + wrapper.offsetWidth
+    const max = document.documentElement.clientWidth - TOOLTIP_WINDOW_MARGIN
+    let shift = 0
+    if (right > max) shift = max - right
+    if (left + shift < TOOLTIP_WINDOW_MARGIN) {
+      shift = TOOLTIP_WINDOW_MARGIN - left
+    }
+    if (shift !== 0) {
+      wrapper.style.transform = `translate(${x + shift}px, ${y}px)`
+    }
+  })
 }
 
 const ChartLegend = RechartsPrimitive.Legend

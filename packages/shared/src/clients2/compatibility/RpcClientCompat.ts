@@ -5,7 +5,10 @@ import type {
   MulticallV3Client,
   MulticallV3Response,
 } from '../../clients/rpc/multicall/MulticallV3Client'
-import { isLimitExceededError } from '../../clients/rpc/RpcClient'
+import {
+  isLimitExceededError,
+  NotFoundOnRpcError,
+} from '../../clients/rpc/RpcClient'
 import type { RpcMetricsAggregator } from '../../clients/rpc/RpcMetricsAggregator'
 import type {
   CallParameters,
@@ -53,6 +56,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   multicallClient?: MulticallV3Client
   rpcMetricsAggregator?: RpcMetricsAggregator
   timeout?: number
+  maxBatchSize?: number
 }
 
 export interface IRpcClient extends BlockClient, LogsClient {
@@ -71,7 +75,7 @@ export interface IRpcClient extends BlockClient, LogsClient {
   getBlockTimestamps(blockNumbers: number[]): Promise<Map<number, number>>
   getTransaction(txHash: string): Promise<EVMTransaction>
   getTransactionReceipt(txHash: string): Promise<Receipt>
-  /** In one batch request, in the order of `txHashes` */
+  /** In batch requests, in the order of `txHashes` */
   getTransactionReceipts(txHashes: string[]): Promise<Receipt[]>
   getBalance(
     holder: EthereumAddress,
@@ -124,6 +128,7 @@ export class RpcClientCompat implements IRpcClient {
         rpcChain: deps.chain,
         rpcClient: RpcClientCompat.name,
       }),
+      { maxBatchSize: deps.maxBatchSize, logger },
     )
     const retryOptions = toRetryOptions(deps.retryStrategy)
     const compat = new RpcClientCompat(client, deps.chain, deps.multicallClient)
@@ -225,12 +230,13 @@ export class RpcClientCompat implements IRpcClient {
 
   async getTransactionReceipts(txHashes: string[]): Promise<Receipt[]> {
     const receipts = await this.ethRpcClient.getTransactionReceipts(txHashes)
-    return receipts.map((receipt, i) => {
-      if (receipt === null) {
-        throw new Error(`Transaction ${txHashes[i]} not found`)
-      }
-      return toReceipt(receipt)
-    })
+    const found = receipts.filter((r): r is RpcReceipt => r !== null)
+    if (found.length < receipts.length) {
+      throw new NotFoundOnRpcError('Receipts not found', {
+        cause: { txHashes: txHashes.filter((_, i) => receipts[i] === null) },
+      })
+    }
+    return found.map(toReceipt)
   }
 
   async getBalance(
@@ -259,6 +265,7 @@ export class RpcClientCompat implements IRpcClient {
       return logs.map(toEVMLog)
     } catch (e) {
       if (
+        from < to &&
         e instanceof Error &&
         e.message.startsWith('RPC call failed') &&
         isLimitExceededError(e)
@@ -374,7 +381,7 @@ export function toEVMBlock(
   block: RpcBlock | RpcBlockWithTransactions | null,
 ): EVMBlock | EVMBlockWithTransactions {
   if (block === null) {
-    throw new Error(`Block ${blockNumber} not found`)
+    throw new NotFoundOnRpcError('Block not found', { cause: { blockNumber } })
   }
   if (block.hash === null || block.number === null) {
     throw new Error(`Block ${blockNumber} is pending`)

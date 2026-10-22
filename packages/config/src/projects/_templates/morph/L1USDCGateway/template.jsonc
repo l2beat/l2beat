@@ -6,6 +6,8 @@
   "ignoreMethods": ["l1USDC"],
   "ignoreInWatchMode": ["totalBridgedUSDC"],
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
     "withdrawPaused": {
       "severity": "MEDIUM"
     },

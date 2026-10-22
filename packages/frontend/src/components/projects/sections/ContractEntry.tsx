@@ -115,14 +115,14 @@ export function ContractEntry({
           <div className="flex flex-wrap items-center gap-x-2 text-paragraph-15 md:text-paragraph-16">
             <strong
               id={contract.id}
-              className="word-break-word relative scroll-mt-14 md:scroll-mt-10"
+              className="word-break-word relative scroll-mt-section-nav"
             >
               {contract.additionalAnchorIds?.map((anchorId) => (
                 <span
                   key={anchorId}
                   id={anchorId}
                   aria-hidden="true"
-                  className="pointer-events-none absolute top-0 left-0 size-px scroll-mt-14 md:scroll-mt-10"
+                  className="pointer-events-none absolute top-0 left-0 size-px scroll-mt-section-nav"
                 />
               ))}
               {contract.name}
@@ -155,7 +155,7 @@ export function ContractEntry({
                   }
                   href={address.href}
                   address={address.address}
-                  className="flex scroll-mt-14 items-center gap-0.5 md:scroll-mt-10"
+                  className="flex scroll-mt-section-nav items-center gap-0.5"
                 >
                   {address.verificationStatus === 'unverified' &&
                   color !== 'red' ? (

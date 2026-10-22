@@ -1,7 +1,7 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1790944906,
-  "configHash": "0x10fce1053e455a7c200de2e02b641e2785529553d18414eb9374637f9e2b0e1b",
+  "timestamp": 1791965839,
+  "configHash": "0x00b9091e36ad924e920f1aee38bf3f386bd970a9a4d5e6770213acbe2a56c0d7",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -382,6 +382,33 @@
             "data": "0xd547741ffd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": 259200
+          },
+          {
+            "id": "0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910",
+            "index": 1,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910",
+            "index": 2,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
           }
         ],
         "Canceller": ["eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"],
@@ -397,8 +424,13 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "defaultAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         },
         "callsScheduled": {
@@ -449,13 +481,13 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0xe5389be41008c736666484df75e64f3261CC64C2",
+        "anchorGame": "eth:0xf30d71C9625ae43436Fe75Bb4d24A87a8ef65dfF",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x252f0462341dfefb2e96ade70677f1c51a341b54838f5e3bf875891323ba0584",
-          61431458
+          "0x8dbb6c3fc7b3625b18aa1c9dd3fcbbf84cc356b17a5275a159af8d0e6f6474bc",
+          61928577
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -569,7 +601,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9"
       },
       "fieldMeta": {
@@ -737,6 +769,11 @@
       }
     },
     {
+      "address": "eth:0x299F344F0c6cC03cbb250E0f2dDdCD22Ae267c0c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RiscZeroGroth16Verifier",
       "address": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D",
       "type": "Contract",
@@ -776,6 +813,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Governance and proxy-admin contract for the legacy MainchainGateway bridge. Holds the operator/governor set, tallies stake-weighted votes for bridge proposals (operator rotations, threshold changes, withdrawals).",
+      "critical": true,
       "deployerAddress": "eth:0xA62DddCC58E769bCFd2f9A7A61CDF331f18c2650",
       "sinceTimestamp": 1722414335,
       "sinceBlock": 20425326,
@@ -914,12 +952,49 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "MEDIUM" },
-        "getThreshold": { "severity": "MEDIUM" },
-        "getBridgeOperators": { "severity": "MEDIUM" }
+        "getThreshold": { "severity": "HIGH" },
+        "getBridgeOperators": { "severity": "MEDIUM" },
+        "getGovernors": { "severity": "MEDIUM" },
+        "getFullBridgeOperatorInfos": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": "TransparentProxyV2",
         "eth:0x0ac26945032143f6196d4bb5Ae03592BfAf822FD": "MainchainBridgeManager"
+      }
+    },
+    {
+      "name": "MultiSigWalletWithDailyLimit",
+      "address": "eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x34de320a4a2a66cb410c0b6b04558c98586ea66fe69b35df6ee3ff7816eae03b"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x01bf1d7C5e192313C26414e134584275F46271cF",
+      "sinceTimestamp": 1562142059,
+      "sinceBlock": 8077308,
+      "values": {
+        "$immutable": true,
+        "calcMaxWithdraw": 0,
+        "dailyLimit": 0,
+        "getOwners": [
+          "eth:0xE5EB222996967BE79468C28bA39D665fd96E8b30",
+          "eth:0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0",
+          "eth:0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192"
+        ],
+        "lastDay": 1653566443,
+        "MAX_OWNER_COUNT": 50,
+        "owners": [
+          "eth:0xE5EB222996967BE79468C28bA39D665fd96E8b30",
+          "eth:0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0",
+          "eth:0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192"
+        ],
+        "required": 2,
+        "spentToday": 0,
+        "transactionCount": 28
+      },
+      "implementationNames": {
+        "eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96": "MultiSigWalletWithDailyLimit"
       }
     },
     {
@@ -943,15 +1018,15 @@
           "eth:0x10B0589c16a8851450BD7FEE274cD349fB9d6A0E",
           "eth:0x751708D6341b36c0C258754fc2DbF96074f5BdC7",
           "eth:0xbF58b6DE2B893e7ab707edc6cf99Bb6989C173a4",
-          "eth:0xd5D43445d0227a47cA2eACCb9392352746eD9926",
+          "eth:0x9a017883e4A6BB2a6261D92D70f71107F2C39D12",
           "eth:0xDA8e7102681f9652FB8a10b70949CF7F260e0A01"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x47737e89c747e1ee0cc9da891edc10788a1f86d914aaa945fc62aa1ef3165426",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 4,
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1121,7 +1196,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 287,
+        "gameCount": 310,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -1132,7 +1207,7 @@
         "initVersion": 1,
         "owner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
         "permissionedGameArgs": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54cacc005dcd857b401e4732e6f7837135a22825cfa0b95ff1d1b113bac3e29ac0bbf2089126c9ae81a2562ae2fb030274e3ceb63fcd32c232ab0fcec6d00000000000000000000000000000000000000000000000000000000000007e4d379de941e78ab394d4d4917fcce1cc45b6cd6204a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 84,
+        "permissionedGamesTotal": 107,
         "proposerFromDGF": "eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620",
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
@@ -1141,6 +1216,7 @@
         "wethFromDGF": "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "game1337": { "severity": "HIGH" },
         "game621": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
@@ -1189,6 +1265,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x47870D35cdfF193a428C98a3468c833c23488393",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x47cfcb64f8EA44d6Ea7FAB32f13EFa2f8E65Eec1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1233,7 +1314,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 327,
+        "nonce": 334,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1311,6 +1392,7 @@
         "isUpgrading": false,
         "owner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34": "ProxyAdmin"
       }
@@ -1440,6 +1522,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x58a8DcFdeF9BB5E164382562317C13D6F2A706F4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x58aBcBCAb52dEE942491700CD0DB67826BBAA8C6",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1464,6 +1551,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Legacy multi-sig-secured Ronin bridge contract holding the L1 side of deposits made before the April 2025 Chainlink CCIP migration. Still custodies residual user balances (ETH backing legacy WETH on Ronin, the deprecated WBTC contract, and dust). Withdrawals authorised by the Ronin BridgeOperator stake-weighted threshold via MainchainBridgeManager.",
+      "critical": true,
       "deployerAddress": "eth:0xAA1d342354d755EC515F40e7d5E83CB4184bB9ee",
       "sinceTimestamp": 1655883630,
       "sinceBlock": 15006576,
@@ -1514,6 +1602,26 @@
           ]
         ],
         "$upgradeCount": 8,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96"]
+          },
+          "WITHDRAWAL_UNLOCKER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x58a8DcFdeF9BB5E164382562317C13D6F2A706F4",
+              "eth:0xE5EB222996967BE79468C28bA39D665fd96E8b30",
+              "eth:0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0",
+              "eth:0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192"
+            ]
+          },
+          "0x600e5f1c60beb469a3fa6dd3814a4ae211cc6259a6d033bae218a742f2af01d3": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"]
+          }
+        },
+        "bridgeManager": "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositCount": 111354,
         "DOMAIN_SEPARATOR": "0x2b00d883a78a8b8d324cfe3cc451d9550b8509512a316b5dba270df178853071",
@@ -1530,8 +1638,11 @@
       "fieldMeta": {
         "$admin": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
-        "getThreshold": { "severity": "MEDIUM" },
-        "getHighTierVoteWeightThreshold": { "severity": "MEDIUM" }
+        "emergencyPauser": { "severity": "MEDIUM" },
+        "getThreshold": { "severity": "HIGH" },
+        "getHighTierVoteWeightThreshold": { "severity": "HIGH" },
+        "bridgeManager": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": "TransparentUpgradeableProxyV2",
@@ -1627,6 +1738,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "eth:0x660Ef9c5a8a92070b03fc5BBC2AC006D0B0Ead33",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x66225AcC78Be789C57a11C9a18F051C779d678B5",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1648,7 +1764,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": true,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97"
       },
       "fieldMeta": {
@@ -1713,6 +1829,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "AddressManager",
       "address": "eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C",
       "type": "Contract",
@@ -1731,6 +1852,7 @@
         "OVM_L1CrossDomainMessenger": "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0",
         "owner": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C": "AddressManager"
       },
@@ -1770,6 +1892,7 @@
         "isUpgrading": false,
         "owner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC": "ProxyAdmin"
       }
@@ -1810,7 +1933,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85"
       },
       "fieldMeta": {
@@ -1908,12 +2031,13 @@
         "verifier_f536085a": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1"
       },
       "fieldMeta": {
-        "verifier_310fe598": { "severity": "HIGH" },
-        "verifier_9f39696c": { "severity": "HIGH" },
-        "verifier_f536085a": { "severity": "HIGH" },
-        "verifier_bb001d44": { "severity": "HIGH" },
-        "verifier_73c457ba": { "severity": "HIGH" },
-        "verifier_242f9d5b": { "severity": "HIGH" }
+        "owner": { "severity": "MEDIUM" },
+        "verifier_310fe598": { "severity": "MEDIUM" },
+        "verifier_9f39696c": { "severity": "MEDIUM" },
+        "verifier_f536085a": { "severity": "MEDIUM" },
+        "verifier_bb001d44": { "severity": "MEDIUM" },
+        "verifier_73c457ba": { "severity": "MEDIUM" },
+        "verifier_242f9d5b": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": "RiscZeroVerifierRouter"
@@ -1926,6 +2050,16 @@
     },
     {
       "address": "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x944b1282cb9B3e62794f38733F3B6336536c30cc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x9a017883e4A6BB2a6261D92D70f71107F2C39D12",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1960,7 +2094,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D"
       },
       "fieldMeta": {
@@ -2034,6 +2168,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RiscZeroGroth16Verifier",
       "address": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9",
       "type": "Contract",
@@ -2090,7 +2229,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2029192707584681760568700"
+        "totalSupply": "2200826587983521701899691"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -2154,6 +2293,9 @@
         "disputeGameFactory": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
+        "enabledFeatures": [
+          "0x435553544f4d5f4741535f544f4b454e00000000000000000000000000000000"
+        ],
         "gasLimit": 60000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e",
@@ -2220,10 +2362,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1": "Proxy",
@@ -2322,6 +2470,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xcb8225AA9D1029Af2E8cA537027E26bbe3056353",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2333,11 +2486,6 @@
     },
     {
       "address": "eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xd5D43445d0227a47cA2eACCb9392352746eD9926",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2368,7 +2516,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": true,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF"
       },
       "fieldMeta": {
@@ -2494,6 +2642,11 @@
     },
     {
       "address": "eth:0xe38aFbE7738b6Ec4280A6bCa1176c1C1A928A19C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xE5EB222996967BE79468C28bA39D665fd96E8b30",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2653,15 +2806,39 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency.",
+      "critical": true,
       "deployerAddress": "eth:0xeC42Db8Ad8a9a601bF329708C3372e676bd34042",
       "sinceTimestamp": 1743765359,
       "sinceBlock": 22195196,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96",
+              "eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"
+            ]
+          },
+          "SENTRY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x944b1282cb9B3e62794f38733F3B6336536c30cc",
+              "eth:0x299F344F0c6cC03cbb250E0f2dDdCD22Ae267c0c",
+              "eth:0xcb8225AA9D1029Af2E8cA537027E26bbe3056353",
+              "eth:0x660Ef9c5a8a92070b03fc5BBC2AC006D0B0Ead33",
+              "eth:0x47870D35cdfF193a428C98a3468c833c23488393"
+            ]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergency": false,
         "SENTRY_ROLE": "0x5bea60102f2a7acc9e82b1af0e3bd4069661102bb5dd143a6051cd1980dded1c",
         "target": "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
+      },
+      "fieldMeta": {
+        "emergency": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": "PauseEnforcer"
@@ -3127,6 +3304,45 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)",
       "function functionDelegateCall(bytes data) payable"
+    ],
+    "eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96": [
+      "function owners(uint256) view returns (address)",
+      "function removeOwner(address owner)",
+      "function revokeConfirmation(uint256 transactionId)",
+      "function isOwner(address) view returns (bool)",
+      "function confirmations(uint256, address) view returns (bool)",
+      "function calcMaxWithdraw() view returns (uint256)",
+      "function getTransactionCount(bool pending, bool executed) view returns (uint256 count)",
+      "function dailyLimit() view returns (uint256)",
+      "function lastDay() view returns (uint256)",
+      "function addOwner(address owner)",
+      "function isConfirmed(uint256 transactionId) view returns (bool)",
+      "function getConfirmationCount(uint256 transactionId) view returns (uint256 count)",
+      "function transactions(uint256) view returns (address destination, uint256 value, bytes data, bool executed)",
+      "function getOwners() view returns (address[])",
+      "function getTransactionIds(uint256 from, uint256 to, bool pending, bool executed) view returns (uint256[] _transactionIds)",
+      "function getConfirmations(uint256 transactionId) view returns (address[] _confirmations)",
+      "function transactionCount() view returns (uint256)",
+      "function changeRequirement(uint256 _required)",
+      "function confirmTransaction(uint256 transactionId)",
+      "function submitTransaction(address destination, uint256 value, bytes data) returns (uint256 transactionId)",
+      "function changeDailyLimit(uint256 _dailyLimit)",
+      "function MAX_OWNER_COUNT() view returns (uint256)",
+      "function required() view returns (uint256)",
+      "function replaceOwner(address owner, address newOwner)",
+      "function executeTransaction(uint256 transactionId)",
+      "function spentToday() view returns (uint256)",
+      "constructor(address[] _owners, uint256 _required, uint256 _dailyLimit)",
+      "event DailyLimitChange(uint256 dailyLimit)",
+      "event Confirmation(address indexed sender, uint256 indexed transactionId)",
+      "event Revocation(address indexed sender, uint256 indexed transactionId)",
+      "event Submission(uint256 indexed transactionId)",
+      "event Execution(uint256 indexed transactionId)",
+      "event ExecutionFailure(uint256 indexed transactionId)",
+      "event Deposit(address indexed sender, uint256 value)",
+      "event OwnerAddition(address indexed owner)",
+      "event OwnerRemoval(address indexed owner)",
+      "event RequirementChange(uint256 required)"
     ],
     "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609": [
       "constructor(address _singleton)"
@@ -4453,7 +4669,7 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba",
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
     "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",
     "risc0/KailuaTreasury": "0xd9dd804b2c26d406824c61c22dca9d370ef24361dcb89aef9e249f305fd19d4d",
     "risc0/RiscZeroSetVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -4462,8 +4678,8 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26104707 },
-  "permissionsConfigHash": "0x99c3a163d265dd822d77a7e47e1fa58c2b9cde3082f000bf5285cdf5c3a6ddb7",
+  "usedBlockNumbers": { "ethereum": 26189487 },
+  "permissionsConfigHash": "0xb2f76cbe2ed985f9156f5ed7c7566e757fdd3708bff432719e020452c1cba2a2",
   "permissions": {
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
       "directlyReceivedPermissions": [

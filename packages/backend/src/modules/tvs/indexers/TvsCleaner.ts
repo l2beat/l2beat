@@ -37,26 +37,29 @@ export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
     to: number,
     configurations: Configuration<TvsCleanerConfig>[],
   ) {
-    // If not a midnight, skip the update
-    // On first run, run even not at midnight and round `to` to the previous midnight
-    if (from !== 0 && to !== UnixTime.toStartOf(to, 'day')) {
+    const lastMidnight = UnixTime.toStartOf(to, 'day')
+    if (from !== 0 && lastMidnight < from) {
       return Promise.resolve(() => Promise.resolve(to))
     }
-    const adjustedTo = UnixTime.toStartOf(to, 'day')
+    // `from - 1` is the previous safe height, and every midnight up to it is already cleaned
+    const cleanedMidnight =
+      from !== 0 ? UnixTime.toStartOf(from - 1, 'day') : undefined
 
     const hourlyRange = {
       from:
-        from !== 0
-          ? this.$.syncOptimizer.getHourlyCutOffWithGracePeriod(from)
+        cleanedMidnight !== undefined
+          ? this.$.syncOptimizer.getHourlyCutOffWithGracePeriod(cleanedMidnight)
           : undefined,
-      to: this.$.syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedTo),
+      to: this.$.syncOptimizer.getHourlyCutOffWithGracePeriod(lastMidnight),
     }
     const sixHourlyRange = {
       from:
-        from !== 0
-          ? this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(from)
+        cleanedMidnight !== undefined
+          ? this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(
+              cleanedMidnight,
+            )
           : undefined,
-      to: this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedTo),
+      to: this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(lastMidnight),
     }
 
     return Promise.resolve(async () => {
@@ -75,7 +78,7 @@ export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
 
       this.logger.info('Cleaned TVS records', {
         from,
-        to: adjustedTo,
+        to: lastMidnight,
         ...details,
       })
 

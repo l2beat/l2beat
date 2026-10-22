@@ -38,7 +38,6 @@ const BLOBSTREAM: DaProjectTableValue = {
   sentiment: 'warning',
   description:
     'The Blobstream DA bridge is used to attest to the data availability on Celestia.',
-  projectId: ProjectId('blobstream'),
 }
 
 const VECTOR: DaProjectTableValue = {
@@ -46,7 +45,6 @@ const VECTOR: DaProjectTableValue = {
   sentiment: 'warning',
   description:
     'The Vector DA bridge is used to attest to the data availability on Avail.',
-  projectId: ProjectId('vector'),
 }
 
 const PLASMA: DaProjectTableValue = {
@@ -61,7 +59,6 @@ const TEE_BRIDGE: DaProjectTableValue = {
   sentiment: 'bad',
   description:
     'The TEE Bridge is used to attest to the data availability on the DA layer by using a program running in a Trusted Execution Environment (TEE).',
-  projectId: ProjectId('tee-bridge'),
 }
 
 const HOTSHOT_LIGHT_CLIENT: DaProjectTableValue = {
@@ -69,7 +66,6 @@ const HOTSHOT_LIGHT_CLIENT: DaProjectTableValue = {
   sentiment: 'warning',
   description:
     'The HotShot Light Client is used to attest to the data availability on Espresso.',
-  projectId: ProjectId('espresso'),
 }
 
 function DAC_MEMBERS({

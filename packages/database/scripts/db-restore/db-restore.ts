@@ -38,6 +38,7 @@ const FEATURES: Record<string, string[]> = {
     'IndexerState',
     'IndexerConfiguration',
     'Activity',
+    'HourlyActivity',
     'SyncMetadata',
   ],
   shared: [

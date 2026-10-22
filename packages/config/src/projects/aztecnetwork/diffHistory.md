@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x4ea4897eee41346e3c69a0d5808c05091400fb50
+
+# Diff at Fri, 16 Oct 2026 09:53:08 GMT:
+
+- id: 7b640c9b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791877468
+- current timestamp: 1792144307
+
+## Description
+
+New governance proposal 5 (payload `V6UpgradePayload` eth:0xE8D663a8B355415f331A54d694F36685346b5433), pending. It adds a new Rollup (eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f) to the Registry and the GSE, which makes it the canonical rollup, and sets an EscapeHatch (eth:0x613ff7d166c834816384feaea2b48568363a4d57) on it. It also changes the reward config of the old rollup and moves reward funds. If the vote passes, it is executable from 2026-10-26.
+- new rollup: https://disco.l2beat.com/diff/eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34/eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.proposalCount:
+-        5
++        6
+    }
+```
+
+Generated with discovered.json: 0xb290b82ff4a9adf3b12fa7ff0d06b2c7dbaae909
+
+# Diff at Wed, 14 Oct 2026 08:25:21 GMT:
+
+- id: f06a5080
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02aa817a9a0b68ecae973986967fe6fdd1d56d56 block: 1790759557
+- current timestamp: 1791877468
+
+## Description
+
+Track the Aztec v5 verification key hash and add sUSDS escrow (zkmoney).
+
+## Watched changes
+
+```diff
+    contract ZkMoneyPortal_sUSDS (eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      template:
++        "zkmoney/ZkMoneyPortal"
+      sourceHashes:
++        ["0x7020e3729f66f6c8ddada17eeb82b33ae8b7f623c0ffb3bb6c921bf966a7f6a8"]
+      description:
++        "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint."
+      critical:
++        true
+      deployerAddress:
++        "eth:0xa3533FD3dAC685D54df722B970772b54128a717C"
+      sinceTimestamp:
++        1791316739
+      sinceBlock:
++        26135579
+      values:
++        {"_$cachedAvailable":"49997504449688617568427","_$freezeArchive":"0x0000000000000000000000000000000000000000000000000000000000000000","_$freezeCheckpointCount":0,"_$freezeCheckpointNumber":0,"_$freezeEpochNumber":0,"_$frozen":false,"_$initialized":true,"_$l2Portal":"0x2bb708cb67bbda3ec2c79b842ef5d3b3d55897663d29cac5b5518c2e9af7171b","_$lastUpdatedTime":1791874367,"$immutable":true,"approvedPcr0Hashes":["0xbfdd552587f517a9f18ef6ed588e3bd57a21ac2070fda39ac4612558df3e72c8"],"FPC_FUNDER":"eth:0x37cD81C39Bf276ea7e1c6a416A254f688c70eAFb","FPC_FUNDING_CUT":0,"FROZEN_DEPOSIT_REFUND_VERIFIER":"eth:0x2E0C30821b9fcCf1CDB47F4e3a3A993593344522","FROZEN_NOTES_REFUND_VERIFIER":"eth:0xd24a49321878AB82E46992ab853A11903882abf2","getCurrentAvailable":"50000000000000000000000","GLOBAL_LIMIT":"50000000000000000000000","INBOX":"eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA","L2_PORTAL":"0x2bb708cb67bbda3ec2c79b842ef5d3b3d55897663d29cac5b5518c2e9af7171b","OUTBOX":"eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7","owner":"eth:0x0000000000000000000000000000000000000000","RATE":"578703703703703703","REGISTRY":"eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298","ROLLUP":"eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34","ROLLUP_VERSION":4248422647,"TEE_ATTESTATION_MAX_AGE":3600,"TEE_CERT_MANAGER":"eth:0xdfe52FD98aa0Cc8Ce7778a2b00ac7B7Dc9595875","TEE_NITRO_VALIDATOR":"eth:0x0119bC52a09Ac6e7998378BadC16D0e9A866Be56","teeSigners":["eth:0x367eD02480809f5020234181B61D9069a08974dD","eth:0x5F03984126AdFDb72B2823b553988Ccebe1F781e","eth:0x05406F53174EC1bFE5C94aF253CdD62A4adF2F29"],"UNDERLYING":"eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD","UNPROCESSED_DEPOSIT_REFUND_VERIFIER":"eth:0x8ACcBa3958cEF8E30b255c70A4C16CD2D14fb787"}
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"},"approvedPcr0Hashes":{"severity":"HIGH","description":"Hashes of the AWS Nitro enclave images (PCR0) whose attestations can register TEE signers."},"teeSigners":{"description":"Registered TEE signers. Registrations are permanent."},"_$l2Portal":{"description":"zk.money token contract on Aztec whose L2->L1 messages can release funds."},"_$frozen":{"severity":"MEDIUM","description":"Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership."},"REGISTRY":{"description":"Aztec Registry. If its canonical rollup is no longer ROLLUP, anyone can freeze this portal."},"FPC_FUNDER":{"description":"Receives FPC_FUNDING_CUT from every deposit and withdrawal to fund Aztec fees for zk.money users."},"GLOBAL_LIMIT":{"description":"Deposit capacity (wei), refilling at RATE per second. Withdrawals are only limited by a hardcoded per-transaction cap.","type":"RISK_PARAMETER"}}
+      implementationNames:
++        {"eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f":"OxidePortal"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+## Source code changes
+
+```diff
+.../aztecnetwork/.flat/ZkMoneyPortal_sUSDS.sol     | 5266 ++++++++++++++++++++
+ 1 file changed, 5266 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790759557 (main branch discovery), not current.
+
+```diff
+    contract HonkVerifier (eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC) [aztecnetwork/HonkVerifier_v5] {
+    +++ description: UltraHonk verifier for Aztec v5 epoch proofs with an immutable verification key.
+      template:
+-        "aztecnetwork/HonkVerifier"
++        "aztecnetwork/HonkVerifier_v5"
+      description:
+-        "ZK proof verification contract."
++        "UltraHonk verifier for Aztec v5 epoch proofs with an immutable verification key."
++++ description: Root-rollup circuit verification key hash embedded in the verified Solidity source.
++++ severity: HIGH
+      values.verificationKeyHash:
++        "0x2f0ca3e610369fc41f7fb8a69995a96428fbf69d7dffd2b576e63ba4d9511ee1"
+      fieldMeta:
++        {"verificationKeyHash":{"severity":"HIGH","description":"Root-rollup circuit verification key hash embedded in the verified Solidity source.","type":"CODE_CHANGE"}}
+    }
+```
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      description:
+-        "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds that need a zk proof and a TEE signature. L2 transfers are not disabled but do not change refundable ownership."
++        "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint."
+    }
+```
+
 Generated with discovered.json: 0xec03ab5174612a74b5e36333140d18ddcf2154d8
 
 # Diff at Mon, 05 Oct 2026 09:38:03 GMT:

@@ -1,9 +1,9 @@
+import { DatabaseSync, type SQLInputValue } from 'node:sqlite'
 import {
   type AssetId,
   assertUnreachable,
   type LegacyToken,
 } from '@l2beat/shared-pure'
-import sqlite3 from 'sqlite3'
 import type { BaseProject } from './types'
 
 type SqliteType =
@@ -81,61 +81,61 @@ const schema = {
 } satisfies Schema<BaseProject>
 
 export class ProjectDatabase {
-  private readonly db: sqlite3.Database
+  private readonly db: DatabaseSync
   constructor(path: string) {
-    this.db = new sqlite3.Database(path)
+    this.db = new DatabaseSync(path, { timeout: 1000 })
   }
 
-  async init() {
+  init() {
     const entries = Object.entries(schema)
       .map(([name, type]) => `${name} ${type}`)
       .join(',\n')
-    await this.query(`
+    this.db.exec(`
       CREATE TABLE IF NOT EXISTS projects (
         ${entries}
       )`)
-    await this.query('CREATE INDEX projects_slug ON projects(slug)')
-    await this.query(`
+    this.db.exec('CREATE INDEX projects_slug ON projects(slug)')
+    this.db.exec(`
       CREATE TABLE IF NOT EXISTS tokens (
         id TEXT PRIMARY KEY,
         data TEXT NOT NULL
       )`)
   }
 
-  async transaction<T>(callback: () => Promise<T>): Promise<T> {
-    await this.query('BEGIN TRANSACTION')
+  transaction<T>(callback: () => T): T {
+    this.db.exec('BEGIN TRANSACTION')
     try {
-      const result = await callback()
-      await this.query('COMMIT')
+      const result = callback()
+      this.db.exec('COMMIT')
       return result
     } catch (error) {
-      await this.query('ROLLBACK')
+      this.db.exec('ROLLBACK')
       throw error
     }
   }
 
-  async saveProject(project: BaseProject) {
+  saveProject(project: BaseProject) {
     const keys = Object.keys(schema) as (keyof BaseProject)[]
     const valueKeys = keys.map((_) => '?')
-    await this.query(
+    this.query(
       `INSERT INTO projects(${keys.join(', ')}) VALUES(${valueKeys.join(', ')})`,
       keys.map((k) => toSqliteValue(k, project[k])),
     )
   }
 
-  async getProject(query: {
+  getProject(query: {
     id?: string
     slug?: string
     select: (keyof BaseProject)[]
     whereNull: (keyof BaseProject)[]
     whereNotNull: (keyof BaseProject)[]
-  }): Promise<BaseProject | undefined> {
+  }): BaseProject | undefined {
     const select = [...BASIC_KEYS, ...query.select]
     const where: string[] = []
     if (query.id !== undefined) {
-      where.push('id = $1')
+      where.push('id = ?')
     } else if (query.slug !== undefined) {
-      where.push('slug = $1')
+      where.push('slug = ?')
     } else {
       throw new Error('Please provide id or slug')
     }
@@ -145,7 +145,7 @@ export class ProjectDatabase {
     for (const key of query.whereNotNull) {
       where.push(`${key} IS NOT NULL`)
     }
-    const rows = await this.query(
+    const rows = this.query(
       `SELECT ${select.join(', ')} FROM projects WHERE ${where.join(' AND ')}`,
       [query.id ?? query.slug],
     )
@@ -155,13 +155,13 @@ export class ProjectDatabase {
     }
   }
 
-  async getProjects(query: {
+  getProjects(query: {
     ids?: string[]
     slugs?: string[]
     select: (keyof BaseProject)[]
     whereNull: (keyof BaseProject)[]
     whereNotNull: (keyof BaseProject)[]
-  }): Promise<BaseProject[]> {
+  }): BaseProject[] {
     const select = [...BASIC_KEYS, ...query.select]
     const where: string[] = []
     const parameters: unknown[] = []
@@ -180,7 +180,7 @@ export class ProjectDatabase {
       where.push(`${key} IS NOT NULL`)
     }
     const whereStr = where.length > 0 ? `WHERE ${where.join(' AND ')}` : ''
-    const rows = await this.query(
+    const rows = this.query(
       `SELECT ${select.join(', ')} FROM projects ${whereStr}`,
       parameters,
     )
@@ -189,35 +189,30 @@ export class ProjectDatabase {
     )
   }
 
-  async saveToken(token: LegacyToken) {
-    await this.query('INSERT INTO tokens(id, data) VALUES(?, ?)', [
+  saveToken(token: LegacyToken) {
+    this.query('INSERT INTO tokens(id, data) VALUES(?, ?)', [
       token.id,
       JSON.stringify(token),
     ])
   }
 
-  async getToken(id: AssetId): Promise<LegacyToken | undefined> {
-    const rows = await this.query('SELECT data FROM tokens WHERE id = ?', [id])
+  getToken(id: AssetId): LegacyToken | undefined {
+    const rows = this.query('SELECT data FROM tokens WHERE id = ?', [id])
     const row = rows[0]
     if (row) {
       return JSON.parse((row as { data: string }).data) as LegacyToken
     }
   }
 
-  async getTokens(): Promise<LegacyToken[]> {
-    const rows = await this.query('SELECT data FROM tokens')
+  getTokens(): LegacyToken[] {
+    const rows = this.query('SELECT data FROM tokens')
     return rows.map(
       (row): LegacyToken => JSON.parse((row as { data: string }).data),
     )
   }
 
-  private query(query: string, values?: unknown[]): Promise<unknown[]> {
-    return new Promise<unknown[]>((resolve, reject) => {
-      this.db.all(query, values, (err: Error | null, rows: unknown[]) => {
-        if (err) reject(err)
-        resolve(rows)
-      })
-    })
+  private query(query: string, values: unknown[] = []): unknown[] {
+    return this.db.prepare(query).all(...(values as SQLInputValue[]))
   }
 }
 

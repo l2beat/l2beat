@@ -1,3 +1,144 @@
+Generated with discovered.json: 0x9811ca322b1fec68f7d624b261d007987be2481b
+
+# Diff at Fri, 16 Oct 2026 10:36:26 GMT:
+
+- id: 634eb4cd
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791789583
+- current timestamp: 1792144404
+
+## Description
+
+The CreditMessaging owner minted credits without crosschain messages for ten USDT pool paths and one ETH path. The onchain reason is consolidating balances before the USDT pools are deprecated on 2026-10-23. Nethermind DVN rotated its signers: one removed, two added, quorum stays 1.
+
+## Watched changes
+
+```diff
+    contract CreditMessagingMintableBurnable (eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173) [stargate/CreditMessagingMintableBurnable] {
+    +++ description: A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits across chains, the owner can increase/decrease them arbitrarily.
++++ description: Credits minted manually by the owner without crosschain messages.
+      values.creditsMinted.3:
++        {"batches":[[2,[[30110,26332395649],[30106,47295908170],[30102,139002869454],[30153,2829443156],[30101,125011714920],[30177,38272026229],[30181,62874011651],[30151,39563827179],[30111,17422465496],[30109,7308496081]]],[13,[[30151,31942]]]],"reason":"Minting 26332.395649 USDT for arbitrum (eid 30110), 47295.908170 USDT for avalanche (eid 30106), 139002.869454 USDT for bsc (eid 30102), 2829.443156 USDT for coredao (eid 30153), 125011.714920 USDT for ethereum (eid 30101), 38272.026229 USDT for kava (eid 30177), 62874.011651 USDT for mantle (eid 30181), 39563.827179 USDT for metis (eid 30151), 17422.465496 USDT for optimism (eid 30111), 7308.496081 USDT for polygon (eid 30109), 0.031942 ETH for metis (eid 30151), to consolidate balance and credit as part of USDT pools deprecation next Oct 23rd, 2026"}
+    }
+```
+
+```diff
+    contract Nethermind DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) [layerzero/DVN] {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      values.signerSize:
+-        1
++        2
+    }
+```
+
+Generated with discovered.json: 0x230dbfb4d1def467b884bfe0d2295e9b3e5c5ef2
+
+# Diff at Fri, 16 Oct 2026 05:36:54 GMT:
+
+- id: 803a2692
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791789583
+- current timestamp: 1791789583
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789583 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0xb4665e8727b7c2dd07c67292dde828d45b34fabb
+
+# Diff at Mon, 12 Oct 2026 07:57:28 GMT:
+
+- id: d14ac086
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1790851350
+- current timestamp: 1791789583
+
+## Description
+
+The shared LayerZero executor on Ethereum upgraded to an unverified implementation.
+
+[Executor diff](https://disco.l2beat.com/diff/eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805/eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0).
+
+## Watched changes
+
+```diff
+    contract LayerZero Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) [N/A] {
+    +++ description: Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source.
+      template:
+-        "layerzero/LayerZeroExecutor"
+      sourceHashes:
+-        ["0x4a43bdaa7c21f911802bc9e3457cf5fef469f43b372ea6944d53823caf2f53f2","0x914fbceaba4b6418a09bd2104433bfcb47eed119a783154a8f7f6301c06a6d2b"]
+      values.$implementation:
+-        "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"
++        "eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0"
+      values.$pastUpgrades.3:
++        ["2026-10-02T00:08:11.000Z","0x682248f5070d80b5c52e90030913f204331e1f0516ed6a0e5d471e6417c3fb52",["eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.allowlistSize:
+-        0
+      values.DEFAULT_ADMIN_ROLE:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.defaultMultiplierBps:
+-        12000
+      values.endpoint:
+-        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.localEidV2:
+-        30101
+      values.paused:
+-        false
+      values.priceFeed:
+-        "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      values.receiveUln301:
+-        "eth:0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC"
+      values.workerFeeLib:
+-        "eth:0x4e9C57FD2Bd0f47C43F2D62642C1b05894fb9ed0"
+      implementationNames.eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805:
+-        "Executor"
+      implementationNames.eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0:
++        ""
+      unverified:
++        true
+    }
+```
+
+## Source code changes
+
+```diff
+.../LayerZero Executor/Executor.sol => /dev/null   | 2928 --------------------
+ 1 file changed, 2928 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790851350 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) [layerzero/LayerZeroExecutor] {
+    +++ description: Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source.
+      description:
+-        "Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint."
++        "Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source."
+    }
+```
+
 Generated with discovered.json: 0x6f909c4bb428a1d39ace77cf9fab688ceb192d40
 
 # Diff at Thu, 01 Oct 2026 11:11:01 GMT:

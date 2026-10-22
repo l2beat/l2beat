@@ -53,6 +53,8 @@ export const getAltDaStage = (
   }
 }
 
+// Capped at Stage 1: Stage 2 hinged on DA economic security, which research
+// no longer assesses for Validiums and Optimiums.
 const getBlueprint = (opts?: GetAltDaStageOptions) =>
   ({
     stage0: {
@@ -172,39 +174,6 @@ const getBlueprint = (opts?: GetAltDaStageOptions) =>
             'The sources of all programs used are public and program hashes can be independently regenerated.',
           negative:
             'Not all program sources are public or not all program hashes can be independently regenerated.',
-        },
-      },
-    },
-    stage2: {
-      name: 'Stage 2',
-      items: {
-        fraudProofSystemIsPermissionless: {
-          positive: 'Fraud proof submission is open to everyone.',
-          negative:
-            'Fraud proof submission is open only to whitelisted actors.',
-        },
-        delayWith30DExitWindow: {
-          positive:
-            'Upgrades unrelated to onchain provable bugs, including upgrades to the DA verifier, provide at least 30d to exit.',
-          negative:
-            'Upgrades unrelated to onchain provable bugs, including upgrades to the DA verifier, provide less than 30d to exit.',
-        },
-        proofSystemOverriddenOnlyInCaseOfABug: {
-          positive:
-            'The Security Council is limited to acting solely on onchain provable bugs.',
-          negative: `The Security Council's actions are not confined to onchain provable bugs.`,
-        },
-        daVerifier30DayExitWindow: {
-          positive:
-            'The DA verifier (and related contracts) is non-upgradeable, or upgrades to it provide at least a 30d independent exit window.',
-          negative:
-            'The DA verifier (and related contracts) is upgradeable with less than 30d independent exit window.',
-        },
-        daMechanismEconomicSecurity: {
-          positive:
-            'The DA mechanism has economic security (as per DA risk framework): staked assets at risk for DA misbehavior with slashable value higher than TVS.',
-          negative:
-            'The DA mechanism relies on reputational security alone; no staked assets are at risk for DA misbehavior or slashable < TVS.',
         },
       },
     },

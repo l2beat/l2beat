@@ -1,5 +1,6 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
+import { DailyIndexer } from '../../tools/DailyIndexer'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -8,6 +9,7 @@ import { PrivacyBlockTimestampIndexer } from './indexers/PrivacyBlockTimestampIn
 import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
 import { PrivacyRelayerActivityIndexer } from './indexers/PrivacyRelayerActivityIndexer'
+import { StarknetPrivacyAnonymitySetIndexer } from './indexers/StarknetPrivacyAnonymitySetIndexer'
 import { StarknetPrivacyFlowIndexer } from './indexers/StarknetPrivacyFlowIndexer'
 import { PrivacyRelayerSampler } from './PrivacyRelayerSampler'
 import { RailgunBroadcasterProvider } from './railgun/RailgunBroadcasterProvider'
@@ -15,6 +17,7 @@ import type {
   PrivacyAnonymitySetIndexerConfig,
   PrivacyFlowIndexerConfig,
   PrivacyRelayerActivityIndexerConfig,
+  StarknetPrivacyAnonymitySetIndexerConfig,
   StarknetPrivacyFlowIndexerConfig,
 } from './types'
 
@@ -35,6 +38,7 @@ export function createPrivacyModule({
   const indexers: Indexer[] = []
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const dailyIndexer = new DailyIndexer(logger, clock)
   const priceIndexer =
     config.privacy.priceConfigs.length > 0
       ? new PrivacyPriceIndexer(
@@ -73,6 +77,18 @@ export function createPrivacyModule({
     ])
   }
 
+  const starknetAnonymitySetConfigsByChain = new Map<
+    string,
+    StarknetPrivacyAnonymitySetIndexerConfig[]
+  >()
+  for (const anonymitySetConfig of config.privacy.starknetAnonymitySetConfigs) {
+    starknetAnonymitySetConfigsByChain.set(anonymitySetConfig.chain, [
+      ...(starknetAnonymitySetConfigsByChain.get(anonymitySetConfig.chain) ??
+        []),
+      anonymitySetConfig,
+    ])
+  }
+
   const starknetFlowConfigsByChain = new Map<
     string,
     StarknetPrivacyFlowIndexerConfig[]
@@ -103,6 +119,8 @@ export function createPrivacyModule({
     const flowConfigs = flowConfigsByChain.get(blockTimestampConfig.chain) ?? []
     const anonymitySetConfigs =
       anonymitySetConfigsByChain.get(blockTimestampConfig.chain) ?? []
+    const starknetAnonymitySetConfigs =
+      starknetAnonymitySetConfigsByChain.get(blockTimestampConfig.chain) ?? []
     const starknetFlowConfigs =
       starknetFlowConfigsByChain.get(blockTimestampConfig.chain) ?? []
     const relayerConfigs =
@@ -135,12 +153,9 @@ export function createPrivacyModule({
         new PrivacyAnonymitySetIndexer(
           {
             chain: blockTimestampConfig.chain,
-            parents: [hourlyIndexer],
+            parents: [blockTimestampIndexer, dailyIndexer],
             indexerService,
-            blockTimestampProvider: providers.blockTimestamp,
-            blockProvider: providers.block.getBlockProvider(
-              blockTimestampConfig.chain,
-            ),
+            blockProvider,
             logsProvider: providers.logs.getLogsProvider(
               blockTimestampConfig.chain,
             ),
@@ -178,6 +193,32 @@ export function createPrivacyModule({
               maxHeight: null,
               properties: flowConfig,
             })),
+            db,
+          },
+          logger,
+        ),
+      )
+    }
+
+    if (starknetAnonymitySetConfigs.length > 0) {
+      indexers.push(
+        new StarknetPrivacyAnonymitySetIndexer(
+          {
+            chain: blockTimestampConfig.chain,
+            parents: [blockTimestampIndexer],
+            indexerService,
+            blockProvider,
+            starknetClient: providers.clients.getStarknetClient(
+              blockTimestampConfig.chain,
+            ),
+            configurations: starknetAnonymitySetConfigs.map(
+              (anonymitySetConfig) => ({
+                id: anonymitySetConfig.id,
+                minHeight: anonymitySetConfig.sinceTimestamp,
+                maxHeight: null,
+                properties: anonymitySetConfig,
+              }),
+            ),
             db,
           },
           logger,
@@ -258,6 +299,8 @@ export function createPrivacyModule({
     projects: config.privacy.projects.length,
     flowConfigs: config.privacy.flowConfigs.length,
     anonymitySetConfigs: config.privacy.anonymitySetConfigs.length,
+    starknetAnonymitySetConfigs:
+      config.privacy.starknetAnonymitySetConfigs.length,
     starknetFlowConfigs: config.privacy.starknetFlowConfigs.length,
     relayerConfigs: config.privacy.relayerConfigs.length,
     relayerSampleConfigs: config.privacy.relayerSampleConfigs.length,
@@ -273,6 +316,7 @@ export function createPrivacyModule({
       logger.info('Starting...')
       if (hasOnchainIndexers) {
         await hourlyIndexer.start()
+        await dailyIndexer.start()
         await priceIndexer?.start()
         for (const indexer of indexers) {
           await indexer.start()

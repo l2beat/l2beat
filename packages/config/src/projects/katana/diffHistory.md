@@ -1,3 +1,423 @@
+Generated with discovered.json: 0x3bf57e01a8880b8d87667f25bb4f9775dd87bdee
+
+# Diff at Tue, 20 Oct 2026 07:51:33 GMT:
+
+- id: 6824c505
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1792144034
+- current timestamp: 1792144034
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144034 (main branch discovery), not current.
+
+```diff
+    contract L1ERC721Bridge (eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000014"
++        "katana:0x4200000000000000000000000000000000000014"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000014"
++        "katana:0x4200000000000000000000000000000000000014"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"katana"}}]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.OTHER_MESSENGER:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "katana:0x4200000000000000000000000000000000000007"
+      values.otherMessenger:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "katana:0x4200000000000000000000000000000000000007"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"katana"}}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.l2TokenBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "katana:0x4200000000000000000000000000000000000010"
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "katana:0x4200000000000000000000000000000000000010"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "katana:0x4200000000000000000000000000000000000010"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"katana"}}]
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (katana:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      values.OTHER_BRIDGE:
+-        "katana:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
++        "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
+      values.otherBridge:
+-        "katana:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
++        "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+Generated with discovered.json: 0xd520eebc77ecf391ea1376b4bbca7fc721fb506a
+
+# Diff at Fri, 16 Oct 2026 10:35:37 GMT:
+
+- id: a6c713f2
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791788974
+- current timestamp: 1792144034
+
+## Description
+
+Yearn Strategist Multisig (a member of Katana vaultBridge Multisig 2) removed two signers, now 3 of 6.
+
+## Watched changes
+
+```diff
+    contract Yearn Strategist Multisig (eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F"
+      values.$members.4:
+-        "eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xd0c34f97422f70691d0f23702eab87bf2e93a9fc
+
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
+
+- id: b0db0d0e
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791788974
+- current timestamp: 1791788974
+
+## Description
+
+Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791788974 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) [katana/OptimismPortal2] {
+    +++ description: Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x263b251D67BB154DD6b8352539466ACE7948ED56) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract vbWBTC (eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta.yieldVault.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.migrationManager.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.minimumReservePercentage.severity:
+-        "MEDIUM"
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract vbETH (eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta.yieldVault.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.migrationManager.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.minimumReservePercentage.severity:
+-        "MEDIUM"
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract vbUSDS (eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta.yieldVault.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.migrationManager.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.minimumReservePercentage.severity:
+-        "MEDIUM"
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract vbUSDC (eth:0x53E82ABbb12638F09d9e624578ccB666217a765e) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta.yieldVault.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.migrationManager.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.minimumReservePercentage.severity:
+-        "MEDIUM"
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract vbUSDT (eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta.yieldVault.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.migrationManager.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.minimumReservePercentage.severity:
+-        "MEDIUM"
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xD1e389c046FB734D2a0c7C390312210c408ba832) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (katana:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x8bc0ff2799e6113495ae76087e150dd9bc1050e1
+
+# Diff at Mon, 12 Oct 2026 07:12:12 GMT:
+
+- id: 6eb37dd3
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1791217041
+- current timestamp: 1791788974
+
+## Description
+
+The Steakhouse/Morpho Safe rotated all seven signers, added two more and raised its threshold from 2/7 to 3/9.
+
+## Watched changes
+
+```diff
+    contract Katana Steakhouse Financial / Morpho Multisig (eth:0x827e86072B06674a077f592A531dcE4590aDeCdB) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x1710932cf538F38E7bcFC30AAae389B24dD004f6"
+      values.$members.1:
++        "eth:0x44e6E4152a60D594c175BFeD42E68ad62FFB5871"
+      values.$members.0:
+-        "eth:0xfc615395336aADe67fd853a0157001a215Ea1279"
++        "eth:0xfB3e98B5d59505Ceb259E9874b4553fD27FCCe3c"
+      values.$members.1:
+-        "eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6"
++        "eth:0x7307Bf07641a794fdBc2391d0983a7f1cFa36E4B"
+      values.$members.2:
+-        "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b"
++        "eth:0x1936552B58Be97fFD9c7c1DD28E675b7B022F16d"
+      values.$members.3:
+-        "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b"
++        "eth:0xd824031D4A115590e6Ff26e4e23fC346ab4cB2Db"
+      values.$members.4:
+-        "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f"
++        "eth:0x4c23E86A9D8506a43046C15Be1b7fA0B6F3427DE"
+      values.$members.5:
+-        "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344"
++        "eth:0x5868aaa8d66023137365ADAe9634A9D8834d488d"
+      values.$members.6:
+-        "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120"
++        "eth:0x1Dc4354B39554251d4a2C4b571906e7EbAe535A3"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 7 (29%)"
++        "3 of 9 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x48c73b80ebd60653d03e3fe758ffbc8cd65003c0
 
 # Diff at Wed, 07 Oct 2026 14:48:12 GMT:

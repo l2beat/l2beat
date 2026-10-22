@@ -17,8 +17,7 @@
   "fields": {
     "isEmergencyState": {
       // plain pause (no authority-path change on the bridge itself): MEDIUM per the
-      // cohort pause doctrine; the manager-side isEmergencyState stays HIGH because
-      // it also unlocks instant upgrades through the timelock.
+      // cohort pause doctrine.
       "description": "pauses the bridge, managed by the PolygonRollupManager.",
       "severity": "MEDIUM"
     },

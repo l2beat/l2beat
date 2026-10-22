@@ -60,14 +60,14 @@ export const lighterprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0x83147f4163d7731f85f475fb56f316f1f46443d3601cb3494465d27790533fec',
+        hash: '0xb0e177d196747b9ca82584a5c0121ee4c6ebf780c590df940f7407ef9da581b2',
         name: 'Lighter verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0xc4c2067ece6e33e50a30087ec14096715e56aE11',
+              '0x9dF23Dd94d71228EFec935EdC2B5be4A861227ca',
             ),
           },
         ],
@@ -77,38 +77,55 @@ export const lighterprover: BaseProject = {
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
-      // {
-      //   hash: '0x22144b137118fca5e4cb93568ffcbda4da15553546261fcfe4795783aa00aa53',
-      //   name: 'Lighter verifier',
-      //   sourceLink:
-      //     'https://github.com/elliottech/lighter-prover/tree/28ae613d9c264192e7a36b42f15dda5df3f7103f/circuit/src',
-      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-      //   knownDeployments: [
-      //     {
-      //       address: ChainSpecificAddress.fromLong(
-      //         'ethereum',
-      //         '0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046',
-      //       ),
-      //     },
-      //   ],
-      //   verificationStatus: 'successful',
-      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-      //   verificationSteps: readProjectMarkdown(
-      //     'lighterprover',
-      //     'verificationSteps-0x22144b13',
-      //   ),
-      //   description:
-      //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
-      // },
       {
-        hash: '0x0b3f7515b28812264c235ac2bba289e19a42cecfbceb2eef9856bd6f591a2308',
+        hash: '0x1532ef3582326b95ca539ef4e2c4684f018acef145cd47980aa56bf41e705be3',
+        name: 'Lighter verifier',
+        sourceLink:
+          'https://github.com/elliottech/lighter-prover/tree/16c0f36d75f2306ee242e26e507e4c237f7f4074/circuit/src',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xE586511973e02b5A3bB9e4290adc4F406Aa8f463',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'lighterprover',
+          'verificationSteps-0x1532ef35',
+        ),
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      },
+      {
+        hash: '0xa29ec4d3bd2bd13606a2504774017527b16f8e107649e09389e817da1ad205a2',
         name: 'Lighter on Robinhood verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'robinhood',
-              '0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2',
+              '0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      },
+      {
+        // DesertVerifier
+        hash: '0xe519ae1119a83c6ad569daf26ae1d61e9bbdac185aec5fae55c1e0a7c0aa4969',
+        name: 'Lighter on Robinhood Desert verifier',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'robinhood',
+              '0x93c83bdA3A45241729Ce150C1e3677bA7389c0D0',
             ),
           },
         ],
@@ -128,12 +145,6 @@ export const lighterprover: BaseProject = {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
               '0x866418061d4C1168e1c8E8f6facE79675395E008',
-            ),
-          },
-          {
-            address: ChainSpecificAddress.fromLong(
-              'robinhood',
-              '0x56aeED6920DBB9E198C2C0072147A45684A06E10',
             ),
           },
         ],

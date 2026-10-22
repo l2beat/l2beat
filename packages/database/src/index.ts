@@ -56,6 +56,7 @@ export type {
   FlatSourcesJsonRecord,
   FlatSourcesRecord,
 } from './repositories/FlatSourcesRepository'
+export type { HourlyActivityRecord } from './repositories/HourlyActivityRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
 export type {
@@ -111,6 +112,7 @@ export type {
   LivePostedRecord,
 } from './repositories/LiveBlobBatchRepository'
 export type {
+  LiveBlockBucketRecord,
   LiveBlockRecord,
   LiveSlotRange,
 } from './repositories/LiveBlockRepository'

@@ -1,3 +1,303 @@
+Generated with discovered.json: 0xff22924d127c3d6ba9c48fff2b7fc7ee7e1de55c
+
+# Diff at Tue, 20 Oct 2026 12:39:54 GMT:
+
+- id: c4a2de3d
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1791538610
+- current timestamp: 1791538610
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791538610 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (base:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
++++ severity: MEDIUM
+      values.owner:
+-        "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d"
++        "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000007","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000010","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000011","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000012","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000013","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000014","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000015","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000016","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000017","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000019","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"base:0x420000000000000000000000000000000000001A","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000020","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000021","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"base:0x4200000000000000000000000000000000000018","role":".owner"}
+    }
+```
+
+Generated with discovered.json: 0x67a6245dc85527b7b1743bb70bc3189eb32d19f6
+
+# Diff at Tue, 20 Oct 2026 07:51:27 GMT:
+
+- id: 65ca45bd
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1791538610
+- current timestamp: 1791538610
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791538610 (main branch discovery), not current.
+
+```diff
+    contract L2ERC721Bridge (base:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      values.OTHER_BRIDGE:
+-        "base:0x608d94945A64503E642E6370Ec598e519a2C1E53"
++        "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53"
+      values.otherBridge:
+-        "base:0x608d94945A64503E642E6370Ec598e519a2C1E53"
++        "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.l2TokenBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "base:0x4200000000000000000000000000000000000010"
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "base:0x4200000000000000000000000000000000000010"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "base:0x4200000000000000000000000000000000000010"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"base"}}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x608d94945A64503E642E6370Ec598e519a2C1E53) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000014"
++        "base:0x4200000000000000000000000000000000000014"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000014"
++        "base:0x4200000000000000000000000000000000000014"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"base"}}]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.OTHER_MESSENGER:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "base:0x4200000000000000000000000000000000000007"
+      values.otherMessenger:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "base:0x4200000000000000000000000000000000000007"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"base"}}]
+    }
+```
+
+Generated with discovered.json: 0x6211e043deda35dc351e99d23e117877b931f3ac
+
+# Diff at Fri, 16 Oct 2026 09:37:44 GMT:
+
+- id: cb677374
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791538610
+- current timestamp: 1791538610
+
+## Description
+
+Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791538610 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (base:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses. Signer registration requires a valid AWS Nitro attestation document.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract CertManager (eth:0x7227d8C477CD0A9EC1446A19b1FCf940Ba3Fba17) [base/CertManager] {
+    +++ description: Verifies and caches AWS Nitro certificate chains against a pinned root certificate.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c) [opstack/SuperchainConfig_base] {
+    +++ description: Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. Each pause automatically expires after 3mo 1d.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xdc32E228636273285Befa5F001dBB5142517C106) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0x90181b0ea77b5240271b4a27e91e1d4997f41b3b
+
+# Diff at Fri, 09 Oct 2026 09:39:26 GMT:
+
+- id: 6a0aeb99
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1790951049
+- current timestamp: 1791538610
+
+## Description
+
+OptimismPortal2 6.0.0 → 6.0.1: a failed withdrawal call to a 7702-delegated EOA now reverts instead of finalizing, upgraded by the Base Governance Multisig.
+https://disco.l2beat.com/diff/eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C/eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      sourceHashes.1:
+-        "0xe19e03ee1eceea55b82f2982dcbf9d11d2a194352be04181edc1b6cfe1e9dcb3"
++        "0xa3692169a2d67b0edeeee11f2dd643e4bebd7d1178b87d899f03ff7c580d5dc2"
+      values.$implementation:
+-        "eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C"
++        "eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70"
+      values.$pastUpgrades.12:
++        ["2026-10-07T17:44:47.000Z","0x12b3bf5bb0a8f921321f9a91303240ce01fde9f99ba9f97234f89d114c077bf6",["eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70"]]
+      values.$upgradeCount:
+-        12
++        13
+      values.version:
+-        "6.0.0"
++        "6.0.1"
+      implementationNames.eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C:
+-        "OptimismPortal2"
+      implementationNames.eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70:
++        "OptimismPortal2"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OptimismPortal2/OptimismPortal2.sol            | 36 ++++++++++++++--------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
+```
+
 Generated with discovered.json: 0xbd46189f0ce0eab6de17de34d5379e787f49cfe0
 
 # Diff at Wed, 07 Oct 2026 14:46:31 GMT:

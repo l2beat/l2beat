@@ -8,6 +8,13 @@
       "reason": "First recorded upgrade of Inbox replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
     },
     {
+      "timestamp": 1624568079,
+      "type": "code",
+      "contract": "arb1:0x096760F208390250649E3e8763348E783AEF5562",
+      "transaction": "0xaaac60311dae18f4986c17b15b0cd82557cf2cf9f13d73b8fc1b9b3654164fbe",
+      "reason": "First recorded upgrade of L2CustomGateway replaced an already initialized implementation (0x1a28362f set in the proxy constructor, counterpartGateway set before this tx): a real code change, not an initialization."
+    },
+    {
       "timestamp": 1624716065,
       "type": "code",
       "contract": "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
@@ -55,6 +62,13 @@
       "contract": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
       "transaction": "0x5eac0a26fe108aefb7fe582a4e496463befe69c8fccdb041de9fadbf72190662",
       "reason": "First recorded upgrade of L2GatewayRouter replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1630185464,
+      "type": "code",
+      "contract": "eth:0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A",
+      "transaction": "0x490c1f675679e238ed74064f47cc8294bdcdd16e0db1b8df76a3b5011f595208",
+      "reason": "First recorded upgrade of ClassicRollup replaced the live implementation 0xae71755b set at deployment (324 nodes created before this tx): a real code change, not an initialization."
     },
     {
       "timestamp": 1630187713,
@@ -209,7 +223,6 @@
       "type": "state",
       "contract": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
       "transaction": "0xf2929a5ee3c2a073de95293f91f163b4d743fdec38e4dceaa7c4796e090783c3",
-      "updateId": "7ec2eb8d",
       "reason": "SwitchManagerRolesAction: moved MEMBER_ADDER, MEMBER_REPLACER, MEMBER_ROTATOR and MEMBER_REMOVER roles on the SecurityCouncilManager from the emergency Security Council (0x423552c0) to the non-emergency Security Council (0xADd68bCb)."
     },
     {
@@ -266,5 +279,9 @@
       "updateId": "b0f8c079",
       "reason": "Changed the current rollup execution wasmModuleRoot to ArbOS 61."
     }
+  ],
+  "ignoredTransactions": [
+    "0x079984c56c5670108f5c6f664904178f9b364340351949a42e4637d1f645f770",
+    "0xc2e247e5869aaf5b57ff1cc5da8b56f6675161ad6f980b547846f209e43e145b"
   ]
 }

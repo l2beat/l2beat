@@ -1,3 +1,355 @@
+Generated with discovered.json: 0xb573653535562c9a7aa02bcef1d3233e02725688
+
+# Diff at Wed, 21 Oct 2026 13:50:19 GMT:
+
+- id: 525b49ad
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@39da84c441e4ad2ce4105a231c0bc2276f1ddd51 block: 1790862365
+- current timestamp: 1792587967
+
+## Description
+
+OpFoundationUpgradeSafe: Member rotated.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
++        "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104"
+    }
+```
+
+Generated with discovered.json: 0x66260a5dcb7c4a2fa2fa2729fc911f7c07da00c2
+
+# Diff at Tue, 20 Oct 2026 12:40:08 GMT:
+
+- id: aae47fba
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1790862365
+- current timestamp: 1790862365
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862365 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000002","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000007","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"unichain:0x420000000000000000000000000000000000000F","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000010","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000011","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000012","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000013","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000014","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000015","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000016","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000017","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.25:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.26:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000019","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"unichain:0x420000000000000000000000000000000000001A","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.28:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000020","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.29:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000021","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"unichain:0x4200000000000000000000000000000000000018","role":".owner"}
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (unichain:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L2StandardBridge (unichain:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (unichain:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault] {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (unichain:0x4200000000000000000000000000000000000012) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (unichain:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L1Block (unichain:0x4200000000000000000000000000000000000015) [opstack/Layer2/L1Block] {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (unichain:0x4200000000000000000000000000000000000017) [opstack/Layer2/OptimismMintableERC721Factory] {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (unichain:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
++++ severity: MEDIUM
+      values.owner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract BaseFeeVault (unichain:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault_karst] {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L1FeeVault (unichain:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault_karst] {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L1Splitter (unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) [unichain/L1Splitter] {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15).
+      values.owner:
+-        "unichain:0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2"
++        "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1"
+    }
+```
+
+Generated with discovered.json: 0x3c5318fcea74a171ae90e860e3f3f367cfcbb32d
+
+# Diff at Tue, 20 Oct 2026 07:51:46 GMT:
+
+- id: fca43b9d
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1790862365
+- current timestamp: 1790862365
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862365 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.l2TokenBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "unichain:0x4200000000000000000000000000000000000010"
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "unichain:0x4200000000000000000000000000000000000010"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "unichain:0x4200000000000000000000000000000000000010"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"unichain"}}]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.OTHER_MESSENGER:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "unichain:0x4200000000000000000000000000000000000007"
+      values.otherMessenger:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "unichain:0x4200000000000000000000000000000000000007"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"unichain"}}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000014"
++        "unichain:0x4200000000000000000000000000000000000014"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000014"
++        "unichain:0x4200000000000000000000000000000000000014"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"unichain"}}]
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (unichain:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      values.OTHER_BRIDGE:
+-        "unichain:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf"
++        "eth:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf"
+      values.otherBridge:
+-        "unichain:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf"
++        "eth:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+Generated with discovered.json: 0xb24d7a8fa2dc59ea89f5c9b9167b556655441369
+
+# Diff at Fri, 16 Oct 2026 09:37:51 GMT:
+
+- id: bed9f26f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790862365
+- current timestamp: 1790862365
+
+## Description
+
+Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862365 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x27Cf508E4E3Aa8d30b3226aC3b5Ea0e8bcaCAFF9) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.disputeGameFinalityDelaySeconds.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x2F12d621a16e2d3285929C9996f478508951dFe4) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x8098F676033A377b9Defe302e9fE6877cD63D575) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        ["0x4554485f4c4f434b424f58000000000000000000000000000000000000000000"]
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (unichain:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x0cdbd65d54558271cb2fa3a22595a02a7a5028e8
 
 # Diff at Wed, 07 Oct 2026 14:48:17 GMT:

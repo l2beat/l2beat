@@ -17,16 +17,27 @@ import { TEMPLATES_PATH, TemplateService } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { ConfigRegistry } from './config/ConfigRegistry'
 import type { DiscoveryPaths } from './config/getDiscoveryPaths'
-import type { AddressStats } from './engine/DiscoveryEngine'
+import type { StructureConfig } from './config/StructureConfig'
+import { makeEntryStructureConfig } from './config/structureUtils'
+import type { AddressStats, BetweenLevels } from './engine/DiscoveryEngine'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
+import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import { diffDiscovery } from './output/diffDiscovery'
+import { printFrontier } from './output/printFrontier'
 import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import type { DiscoveryOutput } from './output/types'
+import type { AllProviders } from './provider/AllProviders'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
+import {
+  gatherRequest,
+  Templatizer,
+  type TemplatizerSettings,
+} from './templatizer/Templatizer'
+import { getTemplatizerSettings } from './templatizer/templatizerSettings'
 
 function getTimestamp(
   configReader: ConfigReader,
@@ -43,12 +54,22 @@ function getTimestamp(
 
   const configuredTimestamp =
     config.timestamp ??
-    (config.dev
+    (config.dev && configReader.hasDiscovery(config.project)
       ? configReader.readDiscovery(config.project).timestamp
       : undefined) ??
     UnixTime.now() - UnixTime.MINUTE
 
   return UnixTime.toDate(configuredTimestamp)
+}
+
+function readProjectConfig(
+  configReader: ConfigReader,
+  config: DiscoveryModuleConfig,
+): ConfigRegistry {
+  if (config.maxDepth === undefined) {
+    return configReader.readConfig(config.project)
+  }
+  return configReader.readConfig(config.project, { maxDepth: config.maxDepth })
 }
 
 export async function runDiscovery(
@@ -59,7 +80,7 @@ export async function runDiscovery(
   chainConfigs: DiscoveryChainConfig[],
   logger: Logger,
 ): Promise<void> {
-  const projectConfig = configReader.readConfig(config.project)
+  const projectConfig = readProjectConfig(configReader, config)
 
   const timestampDate = getTimestamp(configReader, config)
 
@@ -72,6 +93,7 @@ export async function runDiscovery(
       timestampDate,
       http,
       config.overwriteCache,
+      await getTemplatizerSettings(config, paths, configReader),
     )
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
@@ -115,6 +137,15 @@ export async function runDiscovery(
     projectConfig.color,
     templateService,
   )
+
+  if (addressStats.beyondMaxDepth.length > 0) {
+    printFrontier(
+      logger,
+      result,
+      addressStats.beyondMaxDepth,
+      projectConfig.structure.maxDepth,
+    )
+  }
 
   if (addressStats.skipped > 0) {
     printMaxAddressesWarning(
@@ -161,7 +192,7 @@ export async function dryRunDiscovery(
   const now = UnixTime.now() - UnixTime.MINUTE
   const yesterday = now - UnixTime.DAY
 
-  const projectConfig = configReader.readConfig(config.project)
+  const projectConfig = readProjectConfig(configReader, config)
 
   const [discovered, discoveredYesterday] = await Promise.all([
     justDiscover(
@@ -231,6 +262,7 @@ export async function discover(
   timestampDate: Date | undefined,
   http: HttpClient,
   overwriteCache: boolean,
+  templatizerSettings?: TemplatizerSettings,
 ): Promise<{
   result: Analysis[]
   timestamp: UnixTime
@@ -244,7 +276,7 @@ export async function discover(
     ? new OverwriteCacheWrapper(sqliteCache)
     : sqliteCache
 
-  const { allProviders, discoveryEngine } = getDiscoveryEngine(
+  const { allProviders, discoveryEngine, templateService } = getDiscoveryEngine(
     paths,
     chainConfigs,
     cache,
@@ -253,7 +285,22 @@ export async function discover(
   )
   const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
   const { analyses: result, stats: addressStats } =
-    await discoveryEngine.discover(allProviders, config.structure, timestamp)
+    await discoveryEngine.discover(
+      allProviders,
+      config.structure,
+      timestamp,
+      undefined,
+      templatizerSettings === undefined
+        ? undefined
+        : templatizeBetweenLevels({
+            templateService,
+            allProviders,
+            structure: config.structure,
+            timestamp,
+            settings: templatizerSettings,
+            logger,
+          }),
+    )
   const chains = unique(
     result.map((c) => ChainSpecificAddress.longChain(c.address)),
   )
@@ -270,5 +317,42 @@ export async function discover(
     usedBlockNumbers,
     providerStats: allProviders.getStats(),
     addressStats,
+  }
+}
+
+interface TemplatizeContext {
+  templateService: TemplateService
+  allProviders: AllProviders
+  structure: StructureConfig
+  timestamp: UnixTime
+  settings: TemplatizerSettings
+  logger: Logger
+}
+
+/**
+ * `--ai`: the templatizer runs between the levels of discovery, over every
+ * contract found so far, one at a time. The engine then analyzes again each
+ * contract a written template now applies to, and follows the relatives of
+ * that analysis, not of the one made without the template. It shares the
+ * analyzer's `TemplateService`, which then needs no second load.
+ */
+function templatizeBetweenLevels(context: TemplatizeContext): BetweenLevels {
+  const templatizer = new Templatizer(
+    context.templateService,
+    new HandlerExecutor(),
+    context.settings,
+    context.logger.for('Templatizer'),
+  )
+  const requestFor = async (address: ChainSpecificAddress) =>
+    gatherRequest(
+      await context.allProviders.get(
+        ChainSpecificAddress.longChain(address),
+        context.timestamp,
+      ),
+      address,
+      makeEntryStructureConfig(context.structure, address),
+    )
+  return async (analyses) => {
+    await templatizer.templatizeDiscovered(analyses, requestFor)
   }
 }

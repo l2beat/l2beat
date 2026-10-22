@@ -1,4 +1,8 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 
 import { BADGES } from '../../common/badges'
@@ -49,12 +53,22 @@ export const sxnetwork: ScalingProject = orbitStackL2({
   chainConfig: {
     name: 'sxnetwork',
     chainId: 4162,
+    explorerUrl: 'https://explorerl2.sx.technology',
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 7208281,
+        version: '3',
+      },
+    ],
     apis: [
       {
         type: 'rpc',
         url: 'https://rpc-rollup.sx.technology',
         callsPerMinute: 100,
       },
+      { type: 'blockscout', url: 'https://explorerl2.sx.technology/api' },
     ],
     gasTokens: ['SX'],
   },

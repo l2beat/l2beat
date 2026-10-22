@@ -1,3 +1,169 @@
+Generated with discovered.json: 0x123ee34c95263fea6531af95151030a8c85883eb
+
+# Diff at Tue, 20 Oct 2026 10:44:00 GMT:
+
+- id: 9d12743b
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1791897358
+- current timestamp: 1792492958
+
+## Description
+
+Configured pause guardian and emergency guardian addresses, following previous governance upgrade that introduced the pause logic. 
+
+Pause guardian paused Lighter L2 operation for 2h on Oct 17, in what looks like a test.
+
+New verifier deployed (no sources published yet).
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      values.versionId:
+-        75
++        76
+    }
+```
+
+```diff
+    contract Governance (eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1) [lighter/GovernancePausable] {
+    +++ description: Manages the list of validators, the network governor and the emergency pause guardians.
++++ description: Can halt batch processing and withdrawals for up to 72h, with a 7d cooldown between pauses.
++++ severity: MEDIUM
+      values.emergencyGuardian:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x26Bb4084573e27CF57394593A0c95FF0cd14dd16"
++++ description: Can halt batch processing and withdrawals for up to 24h, with a 24h cooldown between pauses.
++++ severity: MEDIUM
+      values.pauseGuardian:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x3896449AFb8a6D07a7Dd3E7e1cDF4810112EA47a"
+      values.pauseGuardianState.startedAt:
+-        0
++        1792223063
+      values.pauseGuardianState.expiresAt:
+-        0
++        1792230263
+      values.pauseGuardianState.cooldownEndsAt:
+-        0
++        1792316663
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0xb90e379e327aaf48e4d92789e2d24b41ab6c89ed69c958ddbab73b0fb6f47290"
++        "0x75beb39791d703e365a12e1aba1268f8971a636d6962a8a88960872f239102b2"
+      values.$implementation:
+-        "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463"
++        "eth:0x9dF23Dd94d71228EFec935EdC2B5be4A861227ca"
+      values.getTarget:
+-        "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463"
++        "eth:0x9dF23Dd94d71228EFec935EdC2B5be4A861227ca"
+      implementationNames.eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0x9dF23Dd94d71228EFec935EdC2B5be4A861227ca:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol                       | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+Generated with discovered.json: 0xdc8cec6f6473c8d196ef0d1487fc8fe7fce22f3d
+
+# Diff at Fri, 16 Oct 2026 05:36:51 GMT:
+
+- id: c28316b0
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791897358
+- current timestamp: 1791897358
+
+## Description
+
+Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791897358 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      fieldMeta.securityCouncilAddress:
++        {"severity":"MEDIUM"}
+      fieldMeta.getMaster:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Governance (eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1) [lighter/GovernancePausable] {
+    +++ description: Manages the list of validators, the network governor and the emergency pause guardians.
+      fieldMeta.networkGovernor:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0x885535fa9f7e1efc35697a15b6aad5e4e2c15487
+
+# Diff at Tue, 13 Oct 2026 13:17:25 GMT:
+
+- id: eff7f903
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f86fa8ee6214e9cba302685affb910adddc04f2d block: 1790947397
+- current timestamp: 1791897358
+
+## Description
+
+New verifier deployed. The verifier is regenerated from sources.
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      values.versionId:
+-        74
++        75
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0x4dc54ffb4008a4ca0179446fed46565fbd602cc3963270f555f70ed93eea7cbe"
++        "0xb90e379e327aaf48e4d92789e2d24b41ab6c89ed69c958ddbab73b0fb6f47290"
+      values.$implementation:
+-        "eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11"
++        "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463"
+      values.getTarget:
+-        "eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11"
++        "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463"
+      implementationNames.eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol        | 45 +++++++++++-----------
+ 1 file changed, 23 insertions(+), 22 deletions(-)
+```
+
 Generated with discovered.json: 0xcc1f45ba10d9b1ef318fd5f388dcab97286d5148
 
 # Diff at Mon, 05 Oct 2026 08:49:21 GMT:

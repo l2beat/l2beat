@@ -89,7 +89,7 @@ export type SectionId =
   | 'audit-reports'
   | 'audit-diff'
 
-type GroupId = 'da-layer' | 'da-bridge'
+type GroupId = 'da-layer'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
 

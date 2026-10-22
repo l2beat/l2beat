@@ -27,7 +27,6 @@ export function getScalingMetadataDescription(project: {
 
 export function getDaMetadataDescription(project: {
   name: string
-  bridge: { name: string; isNoBridge: boolean } | undefined
   tvs: number
   economicSecurity: number | undefined
   description: string
@@ -35,24 +34,11 @@ export function getDaMetadataDescription(project: {
   return describe(
     [
       unlessMentioned('DA layer', project.description),
-      unlessMentioned(bridgeFact(project.bridge), project.description),
       usd(project.tvs, 'TVS'),
       usd(project.economicSecurity, 'economic security'),
     ],
     project,
   )
-}
-
-// A layer has one page per bridge, all sharing the layer's description; the
-// bridge tells them apart.
-function bridgeFact(bridge: { name: string; isNoBridge: boolean } | undefined) {
-  if (!bridge) {
-    return undefined
-  }
-  if (bridge.isNoBridge) {
-    return 'no DA bridge'
-  }
-  return /bridge$/i.test(bridge.name) ? bridge.name : `${bridge.name} bridge`
 }
 
 export function getZkCatalogMetadataDescription(project: {
@@ -90,6 +76,7 @@ export function getPrivacyMetadataDescription(project: {
   name: string
   category: string
   description: string
+  promise: string
 }) {
   return describe(
     [
@@ -98,8 +85,23 @@ export function getPrivacyMetadataDescription(project: {
         `${project.name} ${project.description}`,
       ),
     ],
-    project,
+    {
+      name: project.name,
+      description: withPromise(project.description, project.promise),
+    },
   )
+}
+
+// The promise's first sentence ("Hides which deposit funds which
+// withdrawal.") answers searches like "is Tornado Cash private". It goes
+// last, so the length cap drops it before any of the description. Some
+// descriptions already say what they hide, in nearly the promise's words.
+function withPromise(description: string, promise: string) {
+  if (mentions(description, 'hide')) {
+    return description
+  }
+  const [whatItHides] = splitSentences(collapseWhitespace(promise) ?? '')
+  return whatItHides ? `${description} ${whatItHides}` : description
 }
 
 /** For project pages that have no key facts to lead with. */

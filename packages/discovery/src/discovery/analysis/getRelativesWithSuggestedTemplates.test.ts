@@ -1,7 +1,10 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
+import {
+  getFollowedParameters,
+  getRelativesWithSuggestedTemplates,
+} from './getRelativesWithSuggestedTemplates'
 
 describe(getRelativesWithSuggestedTemplates.name, () => {
   const ADDRESS_A = ChainSpecificAddress.random()
@@ -153,5 +156,23 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       [ADDRESS_A.toString()]: new Set(['template1', 'template2']),
       [ADDRESS_D.toString()]: new Set(),
     })
+  })
+})
+
+describe(getFollowedParameters.name, () => {
+  const parameters = [
+    { field: 'a', value: 1 },
+    { field: 'b', value: 2, ignoreRelative: true },
+    { field: 'c', value: 3 },
+  ]
+
+  it('keeps the fields that are not ignored', () => {
+    const followed = getFollowedParameters(parameters, ['c'])
+
+    expect(followed.map((param) => param.field)).toEqual(['a'])
+  })
+
+  it('keeps no field when every field is ignored', () => {
+    expect(getFollowedParameters(parameters, true)).toEqual([])
   })
 })

@@ -1,4 +1,4 @@
-// This file is duplicated in protocolbeat and l2b!
+// This file is duplicated in discoui and l2b!
 
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
@@ -12,6 +12,23 @@ export interface ApiProjectEntry {
 
 export interface ApiProjectResponse {
   entries: ApiProjectChain[]
+}
+
+export interface ApiAddressUsageResponse {
+  sharedAddresses: Record<string, ApiAddressUsage[]>
+  moduleConsumers: Record<string, string[]>
+  entrypoints: Record<string, ApiEntrypointInfo>
+}
+
+export interface ApiAddressUsage {
+  project: string
+  name?: string
+  viaModule?: string
+}
+
+export interface ApiEntrypointInfo {
+  project: string
+  name?: string
 }
 
 export type ApiTvlResponse = ApiTvlEntry[]
@@ -200,6 +217,44 @@ export interface ApiCodeSearchResponse {
       index: number
       offset: number
     }[]
+  }[]
+}
+
+export interface ApiDefinitionResponse {
+  symbol: string
+  receiver: { address: string; name: string | undefined } | undefined
+  definitions: {
+    address: string
+    name: string
+    label: string
+    resolution: 'discovered-value' | 'abi-match' | 'in-file'
+    fileName: string
+    line: number
+    sourceIndex: number
+    offset: number
+    length: number
+    alsoIn: number
+    // Whole lines, from the comment above the declaration to its end.
+    declaration: { line: number; offset: number; text: string }
+  }[]
+}
+
+export interface ApiReferencesResponse {
+  symbol: string
+  definitions: ApiDefinitionResponse['definitions']
+  references: {
+    address: string
+    name: string
+    fileName: string
+    line: number
+    sourceIndex: number
+    offset: number
+    length: number
+    resolution: 'discovered-value' | 'abi-match' | 'in-file'
+    isCall: boolean
+    elsewhere: boolean
+    text: string
+    copies: number
   }[]
 }
 

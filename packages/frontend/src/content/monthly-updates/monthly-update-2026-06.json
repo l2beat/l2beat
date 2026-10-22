@@ -170,30 +170,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "EigenCloud Releases Version 4 of Eigen Skills for TEE Lifecycle Management",
-          "content": "EigenCloud [announced](https://x.com/zeeshan_utd/status/2062287248285155634) the launch of version 4 of Eigen Skills, significantly upgrading the tooling available for operating verifiable applications within Trusted Execution Environments. The update introduces 12 specialized tools that cover the complete TEE lifecycle, enabling developers to securely manage cryptographically verifiable compute instances directly from their AI workflows.\n\nA primary enhancement includes the ability to verify a deployment instantly against its onchain image digest and scaffold provenance-signed builds using a single command. The release also expands developer flexibility by implementing remote Model Context Protocol support over HTTP using streamable architectures and server-sent events.\n\nThis enables seamless connection from web-based integrated development environments via a direct URL, eliminating the need for local processes. Optimized to function as an open server, the updated version integrates directly with AI development tools such as Cursor, Claude Desktop, and Cline."
-        },
-        {
-          "title": "EigenCloud Launches Post AGI Media Platform for the Agent Economy",
-          "content": "EigenCloud [announced](https://x.com/eigencloud/status/2065477467805229322) the official launch of Post AGI, a specialized media and dialogue platform designed to address the deep societal, economic, and political shifts following the emergence of artificial general intelligence. Moving beyond foundational infrastructure development, the initiative focuses on answering critical questions regarding who the expanding agent economy ultimately serves.\n\nThe upcoming broadcast series intends to explore the impacts of autonomous intelligence on employment, personal finance, state governance, and global data ownership. The debut episode marks a strategic effort by Eigen Labs to foster open communication around human-agent coordination and individual agency.\n\nAs decentralized networks evolve to support autonomous software entities, establishing open cross-sector conversations becomes vital for aligning machine capabilities with human interests. EigenCloud positioned the launch as a forum for analyzing the broader agent economy and navigating the societal landscape of programmable markets."
-        },
-        {
-          "title": "Eigen Labs Deploys Darkbloom Distributed Inference Network on OpenRouter",
-          "content": "Eigen Labs [announced](https://x.com/eigenlabs/status/2066591846550343745) that Darkbloom, its decentralized private AI inference network, is officially live on OpenRouter. The protocol allows individuals with Apple Silicon Mac hardware to contribute idle computing resources to serve artificial intelligence workloads, turning consumer devices into a securely verified private inference marketplace.\n\nThe deployment introduces immediate free capacity to OpenRouter developers, starting with optimization support for open-source models including gpt-oss-20b and Gemma 4 26B. By utilizing hardware attestation and secure enclave architectures, Darkbloom preserves data privacy by preventing host machine operators from inspecting user prompts or model outputs during processing.\n\nThe system connects underutilized consumer hardware directly to marketplace demand, lowering execution costs compared to traditional centralized cloud hyperscalers. Eigen Labs positioned the rollout as a major structural milestone for distributed compute capacity."
-        },
-        {
-          "title": "Eigen Labs Unveils Vision and Verifiable Infrastructure for Post AGI Human-Agent Coordination",
-          "content": "Eigen Labs founder Sreeram Kannan [published](https://x.com/eigenlabs/status/2070938161774244169) a comprehensive manifesto outlining the organization's strategic focus toward building core coordination technology for the post-artificial-general-intelligence era. The research lab behind EigenLayer and EigenCloud expressed concerns over the concentration of AI leverage within a handful of centralized corporate labs and government entities.\n\nThe newly defined roadmap centers on three primary objectives: analyzing how humans and autonomous entities interact, prototyping tools that allow open networks to compete with centralized intelligence, and deploying verifiable infrastructure to govern machine actions.\n\nBy accelerating decentralized engineering, the lab aims to provide independent creators with the tools needed to coordinate at machine speed. Eigen Labs positioned the initiative as a movement to ensure that the emerging agent economy serves human progress while preserving individual agency across global markets and data networks."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

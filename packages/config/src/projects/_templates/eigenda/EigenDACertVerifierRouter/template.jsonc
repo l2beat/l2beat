@@ -4,6 +4,7 @@
   "fields": {
     "DAVerifiers": {
       "description": "The DA verifier contracts indexed by activation block number.",
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": ["activationBlockNumber", "certVerifier"],
@@ -11,6 +12,14 @@
           "event": "CertVerifierAdded"
         }
       }
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can add cert verifiers to the router, changing which contract validates DA certificates from a chosen block onwards."
+        }
+      ]
     }
   }
 }

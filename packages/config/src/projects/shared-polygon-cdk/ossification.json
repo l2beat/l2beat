@@ -1,6 +1,14 @@
 {
   "events": [
     {
+      "timestamp": 1748947067,
+      "type": "state",
+      "contract": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+      "transaction": "0xf6445e143165a2bff796ad596399a55514907e86c2bf39828f1526614f09bdff",
+      "updateId": "d45a69df",
+      "reason": "PolygonAdminMultisig, the only proposer and executor of the Timelock, went from 2 of 3 to 5 of 12 signers (ChangedThreshold)."
+    },
+    {
       "timestamp": 1750689983,
       "type": "code",
       "contract": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
