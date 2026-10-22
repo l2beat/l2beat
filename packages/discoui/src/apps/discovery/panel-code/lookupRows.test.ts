@@ -1,4 +1,6 @@
-import { expect } from 'earl'
+import { Text } from '@codemirror/state'
+import type { EditorView } from '@codemirror/view'
+import { expect, mockObject } from 'earl'
 import type { ApiDefinition, ApiReference } from '../../../api/types'
 import { peekContent, rowsOf, title } from './lookupRows'
 
@@ -20,6 +22,11 @@ const DEFINITION: ApiDefinition = {
   },
 }
 
+const ASKED_AT = {
+  request: { view: mockObject<EditorView>({}), offset: 0, origin: undefined },
+  doc: Text.empty,
+}
+
 const REFERENCE: ApiReference = {
   address: 'eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
   name: 'SequencerInbox',
@@ -39,6 +46,7 @@ describe('lookup rows', () => {
   it('describes where each definition is and how it was found', () => {
     const lookup = {
       status: 'definitions' as const,
+      ...ASKED_AT,
       response: {
         symbol: 'bridge.sequencerMessageCount',
         receiver: undefined,
@@ -99,6 +107,7 @@ describe('lookup rows', () => {
   it('explains empty answers', () => {
     const none = {
       status: 'definitions' as const,
+      ...ASKED_AT,
       response: {
         symbol: 'target.ping',
         receiver: { address: DEFINITION.address, name: undefined },
