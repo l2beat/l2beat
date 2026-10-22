@@ -1085,8 +1085,8 @@ export interface ProjectPrivacyInfo {
   relayerTracking?: ProjectPrivacyRelayerTracking
   /**
    * The released open-source client the adversary ratings assume, at the
-   * commit they were reviewed against. Absent when the client is closed.
-   * `l2b client-drift` lists what changed upstream since.
+   * commit they were reviewed against. `l2b client-drift` lists what changed
+   * upstream since. Absent for closed clients and for reviews that pin none.
    */
   referenceClient?: ProjectPrivacyReferenceClient
   /** The deployed mechanism. Decides the promised field, not the grade. */

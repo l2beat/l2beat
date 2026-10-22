@@ -8,13 +8,33 @@ const poolVaultInterface = new utils.Interface([
   'event Deposited(uint256 outputCommitment, address indexed asset, uint256 depositedValue, address indexed caller)',
   'event Transacted(uint256[] outputCommitments, uint256[] nullifierHashes, address indexed asset, uint256 withdrawnValue, address indexed caller)',
   'event Ragequit(address indexed ragequitter, address indexed asset, uint256 value, uint256 commitment, uint256 nullifierHash, uint256 label)',
-  'function transact((uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, (address processor, bytes data) _transactParams, (bytes32 hint, bytes data)[] _noteData)',
 ])
 
-const TRANSACTED_TOPIC = poolVaultInterface.getEventTopic('Transacted')
+// The processors a withdrawal goes through: the plain relay, a yield router
+// and the swap processor.
+export const privacyPoolsV2RelayInterface = new utils.Interface([
+  'event Relayed(address indexed _asset, address indexed _recipient, uint256 _recipientAmount, address indexed _feeRecipient, uint256 _fee, uint256 _gasFunding)',
+  'event RelayedBatch(address indexed _asset, address indexed _recipient, uint256 _recipientAmount, address indexed _feeRecipient, uint256 _fee, uint256 _gasFunding, uint256 _count)',
+])
 
-const PAYOUT_ROUTING =
-  'tuple(address recipient, address feeRecipient, uint256 feeAmount, uint256 nativeGas)'
+export const privacyPoolsV2RouterInterface = new utils.Interface([
+  'event WithdrawnToUnderlying(address indexed _asset, address indexed _underlying, address indexed _recipient, uint256 _sharesOut, uint256 _underlyingToRecipient, address _feeRecipient, uint256 _feeShares, uint256 _underlyingFee, uint256 _gasFunding)',
+])
+
+// The deployed RelaySwaps matches no published source, but its logs carry this
+// event, with amounts that add up to the withdrawals they process.
+export const privacyPoolsV2SwapsInterface = new utils.Interface([
+  'event Executed(address indexed inputToken, address indexed outputToken, uint256 inputAmount, address feeRecipient, uint256 feeAmount)',
+])
+
+const DEPOSITED_TOPIC = poolVaultInterface.getEventTopic('Deposited')
+const TRANSACTED_TOPIC = poolVaultInterface.getEventTopic('Transacted')
+const PROCESSOR_TOPICS = new Set([
+  privacyPoolsV2RelayInterface.getEventTopic('Relayed'),
+  privacyPoolsV2RelayInterface.getEventTopic('RelayedBatch'),
+  privacyPoolsV2RouterInterface.getEventTopic('WithdrawnToUnderlying'),
+  privacyPoolsV2SwapsInterface.getEventTopic('Executed'),
+])
 
 interface PrivacyPoolsV2Event {
   asset: EthereumAddress
@@ -41,10 +61,13 @@ export function extractPrivacyPoolsV2Event(
 }
 
 /**
- * A relayed private transfer pays the relayer's fee out of the vault, so its
- * Transacted looks like a withdrawal. Its relayer calls the vault directly and
- * binds PayoutRouting{recipient: feeRecipient, feeAmount: 0}; a withdrawal
- * goes through a processor (self-relays included) or binds other data.
+ * The vault pays a Transacted's withdrawn value to its caller. A withdrawal's
+ * caller is a processor, which reports the payout in the same transaction. A
+ * relayed private transfer has the relayer call the vault, directly or through
+ * a wrapper, and take its fee as that payout, so it looks like a withdrawal.
+ * A user calling the vault directly to withdraw looks the same, so these rare
+ * self-withdrawals drop too, as do withdrawals through a processor that emits
+ * none of the known events.
  */
 export async function isPrivacyPoolsV2RelayedTransfer(
   log: Log,
@@ -53,32 +76,33 @@ export async function isPrivacyPoolsV2RelayedTransfer(
   if (log.topics[0] !== TRANSACTED_TOPIC) {
     return false
   }
+  const caller = EthereumAddress(poolVaultInterface.parseLog(log).args.caller)
+  const receiptLogs = await context.receipts.get(log.transactionHash)
+  return !receiptLogs.some(
+    (receiptLog) =>
+      receiptLog.topics[0] !== undefined &&
+      PROCESSOR_TOPICS.has(receiptLog.topics[0]) &&
+      EthereumAddress(receiptLog.address) === caller,
+  )
+}
 
-  const transaction = await context.receipts.getTransaction(log.transactionHash)
-  if (
-    transaction.to === undefined ||
-    transaction.data === undefined ||
-    EthereumAddress(transaction.to) !== EthereumAddress(log.address)
-  ) {
+/**
+ * A reshield withdraws into the swap processor and deposits the swapped asset
+ * again in the same transaction. 0xbow's relayer sends it, so the transaction
+ * names no depositor.
+ */
+export async function isPrivacyPoolsV2Reshield(
+  log: Log,
+  context: PrivacyRpcContext,
+): Promise<boolean> {
+  if (log.topics[0] !== DEPOSITED_TOPIC) {
     return false
   }
-
-  let routing: utils.Result
-  try {
-    const call = poolVaultInterface.decodeFunctionData(
-      'transact',
-      transaction.data,
-    )
-    routing = utils.defaultAbiCoder.decode(
-      [PAYOUT_ROUTING],
-      call._transactParams.data,
-    )[0]
-  } catch {
-    return false
-  }
-
-  return (
-    EthereumAddress(routing.recipient) ===
-      EthereumAddress(routing.feeRecipient) && routing.feeAmount.isZero()
+  const vault = EthereumAddress(log.address)
+  const receiptLogs = await context.receipts.get(log.transactionHash)
+  return receiptLogs.some(
+    (receiptLog) =>
+      receiptLog.topics[0] === TRANSACTED_TOPIC &&
+      EthereumAddress(receiptLog.address) === vault,
   )
 }

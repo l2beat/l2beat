@@ -19,7 +19,8 @@ import type {
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { PrivacyFlowIndexerConfig } from '../types'
-import { extractPrivacyFlowWithContext } from '../utils/extractPrivacyFlow'
+import { extractPrivacyFlow } from '../utils/extractPrivacyFlow'
+import { isPrivacyPoolsV2RelayedTransfer } from '../utils/extractPrivacyPoolsV2Event'
 import {
   extractPrivacyLogMatches,
   fetchPrivacyLogMatches,
@@ -149,12 +150,12 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       matches,
       this.$.rpcClient,
       async ({ log, timestamp, configuration }, context) => {
-        const result = await extractPrivacyFlowWithContext(
-          configuration.properties,
-          log,
-          context,
-        )
-        if (!result || (result.count === 0 && result.amount === 0n)) {
+        const result = extractPrivacyFlow(configuration.properties, log)
+        if (
+          !result ||
+          (result.count === 0 && result.amount === 0n) ||
+          (await isPrivacyPoolsV2RelayedTransfer(log, context))
+        ) {
           return undefined
         }
         return { configuration, log, timestamp, ...result }

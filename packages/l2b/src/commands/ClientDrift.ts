@@ -21,6 +21,8 @@ const NOISE =
 
 const MAX_LISTED = 20
 
+const HEADERS = { accept: 'application/vnd.github+json' }
+
 const Repository = v.object({ default_branch: v.string() })
 
 const Comparison = v.object({
@@ -45,14 +47,8 @@ export const ClientDrift = command({
   },
   handler: async (args) => {
     const clients = await getProjectClients(args.project)
-    const headers: Record<string, string> = {
-      accept: 'application/vnd.github+json',
-    }
-    if (process.env.GITHUB_TOKEN) {
-      headers.authorization = `Bearer ${process.env.GITHUB_TOKEN}`
-    }
     for (const projectClient of clients) {
-      await printDrift(projectClient, headers)
+      await printDrift(projectClient)
     }
   },
 })
@@ -88,18 +84,15 @@ async function getProjectClients(
   return [{ id: project.id, client }]
 }
 
-async function printDrift(
-  { id, client }: ProjectClient,
-  headers: Record<string, string>,
-): Promise<void> {
+async function printDrift({ id, client }: ProjectClient): Promise<void> {
   const api = `https://api.github.com/repos/${getGithubRepository(client.repository)}`
   const { default_branch } = Repository.validate(
-    await fetchGithub(api, headers).then((response) => response.json()),
+    await fetchGithub(api, HEADERS).then((response) => response.json()),
   )
   const comparison = Comparison.validate(
     await fetchGithub(
       `${api}/compare/${client.commit}...${default_branch}`,
-      headers,
+      HEADERS,
     ).then((response) => response.json()),
   )
 

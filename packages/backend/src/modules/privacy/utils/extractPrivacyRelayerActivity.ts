@@ -11,26 +11,14 @@ import type {
 } from '../types'
 import { WITHDRAWAL_TOPIC } from '../zkmoney/abi'
 import { extractZkMoneyWithdrawalRelayer } from '../zkmoney/relayers'
+import {
+  privacyPoolsV2RelayInterface,
+  privacyPoolsV2RouterInterface,
+  privacyPoolsV2SwapsInterface,
+} from './extractPrivacyPoolsV2Event'
 
 const privacyPoolsInterface = new utils.Interface([
   'event WithdrawalRelayed(address indexed _relayer, address indexed _recipient, address indexed _asset, uint256 _amount, uint256 _feeAmount)',
-])
-
-// Privacy Pools v2 pays the relayer through the fee recipient of each
-// processor: the plain relay, a yield router and the swap processor. A
-// self-relay leaves the fee recipient empty, so the processor names the caller
-// with a zero fee, and only paid relays count.
-const privacyPoolsV2RelayInterface = new utils.Interface([
-  'event Relayed(address indexed _asset, address indexed _recipient, uint256 _recipientAmount, address indexed _feeRecipient, uint256 _fee, uint256 _gasFunding)',
-  'event RelayedBatch(address indexed _asset, address indexed _recipient, uint256 _recipientAmount, address indexed _feeRecipient, uint256 _fee, uint256 _gasFunding, uint256 _count)',
-])
-
-const privacyPoolsV2RouterInterface = new utils.Interface([
-  'event WithdrawnToUnderlying(address indexed _asset, address indexed _underlying, address indexed _recipient, uint256 _sharesOut, uint256 _underlyingToRecipient, address _feeRecipient, uint256 _feeShares, uint256 _underlyingFee, uint256 _gasFunding)',
-])
-
-const privacyPoolsV2SwapsInterface = new utils.Interface([
-  'event Executed(address indexed inputToken, address indexed outputToken, uint256 inputAmount, address feeRecipient, uint256 feeAmount)',
 ])
 
 const tornadoCashInterface = new utils.Interface([
@@ -56,6 +44,9 @@ const privacyPoolsWithdrawalRelayed: RelayerExtractorDefinition = {
   },
 }
 
+// Privacy Pools v2 pays the relayer through the fee recipient of each
+// processor. A self-relay leaves the fee recipient empty, so the processor
+// names the caller with a zero fee, and only paid relays count.
 const extractPrivacyPoolsV2Relay: RelayerExtractorDefinition['extract'] = (
   log,
 ) => {

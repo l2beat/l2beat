@@ -1,24 +1,16 @@
 import type { PrivacyFlowExtractorConfig } from '@l2beat/config'
-import {
-  assertUnreachable,
-  EthereumAddress,
-  type Log,
-} from '@l2beat/shared-pure'
+import { assertUnreachable, EthereumAddress } from '@l2beat/shared-pure'
 import { type BigNumber, utils } from 'ethers'
 import type {
   EvmPrivacyFlowExtractorConfig,
   PrivacyFlowExtractResult,
-  PrivacyRpcContext,
   PrivacyRpcLog,
 } from '../types'
 import { zkApiInterface } from '../zkapi/abi'
 import { zkMoneyInterface } from '../zkmoney/abi'
 import { erc20Interface } from './erc20'
 import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
-import {
-  extractPrivacyPoolsV2Event,
-  isPrivacyPoolsV2RelayedTransfer,
-} from './extractPrivacyPoolsV2Event'
+import { extractPrivacyPoolsV2Event } from './extractPrivacyPoolsV2Event'
 
 const ERC20_TOKEN_TYPE = 0
 
@@ -92,26 +84,6 @@ export function extractPrivacyFlow<T extends EvmPrivacyFlowExtractorConfig>(
     default:
       return assertUnreachable(source)
   }
-}
-
-/**
- * `extractPrivacyFlow`, minus logs that only their transaction shows are no
- * flow: a Privacy Pools v2 relayed transfer looks like a withdrawal.
- */
-export async function extractPrivacyFlowWithContext(
-  source: EvmPrivacyFlowExtractorConfig,
-  log: Log,
-  context: PrivacyRpcContext,
-): Promise<PrivacyFlowExtractResult | undefined> {
-  const result = extractPrivacyFlow(source, log)
-  if (
-    result === undefined ||
-    (source.extractor === 'privacyPoolsV2Value' &&
-      (await isPrivacyPoolsV2RelayedTransfer(log, context)))
-  ) {
-    return undefined
-  }
-  return result
 }
 
 // The vault serves every asset, so a bucket keeps only its own asset's logs.

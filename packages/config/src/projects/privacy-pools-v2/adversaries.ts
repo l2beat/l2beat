@@ -2,13 +2,20 @@ import {
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
+import type { ProjectPrivacyReferenceClient } from '../../types'
 
 // v1.0.0 of the web app, the build privacypools.com serves.
-const WEBSITE =
-  'https://github.com/0xbow-io/privacy-pools-website-v2/blob/bfb752cdf7c0659bb4fd25e97933e04fce844c4a/'
+export const REFERENCE_CLIENT: ProjectPrivacyReferenceClient = {
+  name: 'privacypools.com',
+  repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
+  commit: 'bfb752cdf7c0659bb4fd25e97933e04fce844c4a',
+}
+const WEBSITE = `${REFERENCE_CLIENT.repository}/blob/${REFERENCE_CLIENT.commit}/`
 // v1.0.2 of the monorepo: the circuits behind the live verifiers and the SDK the app vendors.
-const MONOREPO =
-  'https://github.com/0xbow-io/privacy-pools-v2-monorepo/blob/61fac03acd1fc306164ddc234f7fac4147d04493/'
+export const MONOREPO_REPOSITORY =
+  'https://github.com/0xbow-io/privacy-pools-v2-monorepo'
+export const MONOREPO_COMMIT = '61fac03acd1fc306164ddc234f7fac4147d04493'
+const MONOREPO = `${MONOREPO_REPOSITORY}/blob/${MONOREPO_COMMIT}/`
 const DOCS = 'https://privacy-pools-v2-docs.vercel.app/'
 
 export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
@@ -131,7 +138,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       exposureShort:
         'The ASP postman can publish a new approved list at any time with no delay, and every private spend must prove against the latest one.',
       exposureContinued:
-        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's relayer sees the IP and recipient of every private exit and its ASP feeds see the IP of every session, so one operator can pair a deposit session with its withdrawal. The request logs of its Alchemy key show it the account each sign-in looks up, which it can time against the withdrawals its relayer submits. One key holds every admin role and can upgrade the four core contracts without delay.",
+        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's relayer sees the IP and recipient of every private exit and its ASP feeds see the IP of every session, so one operator can pair a deposit session with its withdrawal. The request logs of its Alchemy key show it the account each sign-in looks up, which it can time against the withdrawals its relayer submits. One key holds every admin role and can upgrade the four core contracts without delay, and it can sign delegations that let other addresses use those roles.",
       advice:
         'Before withdrawing, check the size of the approved list behind the latest root, which the ASPRegistry links on IPFS. Exit as the network observer advice says, so 0xbow sees no IP it saw at the deposit and no account lookup.',
       interior: {

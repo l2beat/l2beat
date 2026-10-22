@@ -10,12 +10,14 @@ export function getGithubRepository(url: string): string {
   return segments.join('/')
 }
 
+/** Authenticates with GITHUB_TOKEN when set, which lifts the anonymous rate limit. */
 export async function fetchGithub(
   url: string,
   headers: Record<string, string>,
 ): Promise<Response> {
+  const token = process.env.GITHUB_TOKEN
   const response = await fetch(url, {
-    headers,
+    headers: token ? { ...headers, authorization: `Bearer ${token}` } : headers,
     signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   })
   if (!response.ok) {

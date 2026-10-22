@@ -4,7 +4,7 @@ Users trust 0xbow, which runs the ASP, the only relayer and the website, and one
 
 ### Architecture
 
-A note is a private record of value in one asset, owned by an Ethereum address. Each deposit creates a note with a label, which the ASP approves or revokes. The label travels inside every note descending from it, so each recipient learns it. Notes from different deposits never merge. The PoolVault holds all assets and a state tree of note commitments and spent nullifiers. The Keystore holds each account's registration: a hash of its nullifying key, its auth policy and an X25519 viewing public key. The ASPRegistry holds the latest root of the approved labels. USDC, USDT and ETH enter as yield shares, ppUSDC, ppUSDT and ppETH, which wrap Aave v3 deposits.
+A note is a private record of value in one asset, owned by an Ethereum address. Each deposit creates a note with a label, which the ASP approves or revokes. The label travels inside every note descending from it, so each recipient learns it. Notes from different deposits never merge. The PoolVault holds all assets and a state tree of note commitments and spent nullifiers. The Keystore holds each account's registration: a hash of its nullifying key, its auth policy and an X25519 viewing public key. The ASPRegistry holds the latest root of the approved labels. The app deposits USDC, USDT and ETH as yield shares, ppUSDC, ppUSDT and ppETH, which wrap Aave v3 deposits. The Entrypoint also accepts plain ETH, which the beta took before ppETH existed.
 
 ### Flow
 
@@ -36,8 +36,11 @@ The ASP screens each depositor before approving the deposit, under 0xbow's own d
 
 ### Fees
 
-Deposits pay no vetting fee. The relayer quotes its fee per request and takes it from the sent or withdrawn asset, within a cap per asset set by the entrypoint manager. A private transfer pays that fee as a public payout from the vault. The yield shares keep {{yieldFee}} of the Aave yield for 0xbow.
+Deposits pay no vetting fee. The relayer quotes its fee per request and takes it from the sent or withdrawn asset. The relay, yield routers and swap processor cap the fee of a withdrawal per asset, as set by the entrypoint manager:
+{{feeSummary}}
+
+A private transfer pays its fee as a public payout from the vault, with no onchain cap. The yield shares keep {{yieldFee}} of the Aave yield for 0xbow.
 
 ### Anonymity set
 
-One vault holds every asset, but a withdrawal names its asset. The set is therefore the ASP-approved deposits of that asset whose notes still hold at least the withdrawn amount, including the notes that transfers and reshields created from them. We count every depositor of the asset, approved or not.
+One vault holds every asset, but a withdrawal names its asset. The set is therefore the ASP-approved deposits of that asset whose notes still hold at least the withdrawn amount, including the notes that transfers and reshields created from them. We count every depositor of the asset, approved or not, but not reshields, whose transactions 0xbow's relayer sends.

@@ -2,9 +2,8 @@ import {
   type PrivacyAnonymitySetDepositSource,
   ProjectService,
 } from '@l2beat/config'
-import type { IRpcClient } from '@l2beat/shared'
-import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 import { utils } from 'ethers'
 import type {
   EvmPrivacyAnonymitySetSource,
@@ -14,11 +13,7 @@ import type {
 import { FUNDING_PARAMS } from '../zkmoney/test/fixtures'
 import { erc20Interface } from './erc20'
 import { extractPrivacyAnonymitySetMember } from './extractPrivacyAnonymitySetMember'
-import {
-  extractPrivacyFlow,
-  extractPrivacyFlowWithContext,
-} from './extractPrivacyFlow'
-import { ReceiptLogCache } from './ReceiptLogCache'
+import { extractPrivacyFlow } from './extractPrivacyFlow'
 
 const privacyPoolsInterface = new utils.Interface([
   'event Deposited(address indexed depositor, uint256 commitment, uint256 label, uint256 value, uint256 precommitmentHash)',
@@ -661,147 +656,6 @@ describe(extractPrivacyFlow.name, () => {
       ).toEqual({ count: 1, amount: 7n })
     })
   })
-})
-
-describe(extractPrivacyFlowWithContext.name, () => {
-  const vaultInterface = new utils.Interface([
-    'event Deposited(uint256 outputCommitment, address indexed asset, uint256 depositedValue, address indexed caller)',
-    'event Transacted(uint256[] outputCommitments, uint256[] nullifierHashes, address indexed asset, uint256 withdrawnValue, address indexed caller)',
-    'function transact((uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, (address processor, bytes data) _transactParams, (bytes32 hint, bytes data)[] _noteData)',
-  ])
-  const RELAYER = EthereumAddress('0x2222222222222222222222222222222222222222')
-  const RECIPIENT = EthereumAddress(
-    '0x3333333333333333333333333333333333333333',
-  )
-  const PROCESSOR = EthereumAddress(
-    '0x4444444444444444444444444444444444444444',
-  )
-
-  it('drops a relayed transfer, which pays only the fee to its relayer', async () => {
-    const log = transactedLog(10n)
-    const result = await extractPrivacyFlowWithContext(
-      source(log),
-      log,
-      contextWith(ADDRESS, transactCalldata(payout(RELAYER, RELAYER, 0n))),
-    )
-    expect(result).toEqual(undefined)
-  })
-
-  it('keeps a withdrawal routed through a processor contract', async () => {
-    const log = transactedLog(700n)
-    const result = await extractPrivacyFlowWithContext(
-      source(log),
-      log,
-      contextWith(PROCESSOR, transactCalldata(payout(RELAYER, RELAYER, 0n))),
-    )
-    expect(result).toEqual({ count: 1, amount: 700n })
-  })
-
-  it('keeps a direct withdrawal that binds no payout routing', async () => {
-    const log = transactedLog(700n)
-    const result = await extractPrivacyFlowWithContext(
-      source(log),
-      log,
-      contextWith(ADDRESS, transactCalldata('0x')),
-    )
-    expect(result).toEqual({ count: 1, amount: 700n })
-  })
-
-  it('keeps a direct withdrawal whose payout pays a fee', async () => {
-    const log = transactedLog(700n)
-    const result = await extractPrivacyFlowWithContext(
-      source(log),
-      log,
-      contextWith(ADDRESS, transactCalldata(payout(RECIPIENT, RELAYER, 5n))),
-    )
-    expect(result).toEqual({ count: 1, amount: 700n })
-  })
-
-  it('reads no transaction for a deposit', async () => {
-    const log = toLog(
-      encodeLog(vaultInterface, 'Deposited', [1, TOKEN_ADDRESS, 500n, ADDRESS]),
-    )
-    const rpc = mockObject<IRpcClient>({})
-    const result = await extractPrivacyFlowWithContext(source(log), log, {
-      rpc,
-      receipts: new ReceiptLogCache(rpc),
-    })
-    expect(result).toEqual({ count: 1, amount: 500n })
-  })
-
-  function source(log: Log) {
-    return {
-      event: log.topics[0]!,
-      extractor: 'privacyPoolsV2Value' as const,
-      params: { tokenAddress: TOKEN_ADDRESS },
-    }
-  }
-
-  function transactedLog(withdrawnValue: bigint): Log {
-    return toLog(
-      encodeLog(vaultInterface, 'Transacted', [
-        [1, 2],
-        [3],
-        TOKEN_ADDRESS,
-        withdrawnValue,
-        RELAYER,
-      ]),
-    )
-  }
-
-  function payout(
-    recipient: EthereumAddress,
-    feeRecipient: EthereumAddress,
-    feeAmount: bigint,
-  ): string {
-    return utils.defaultAbiCoder.encode(
-      ['tuple(address, address, uint256, uint256)'],
-      [[recipient, feeRecipient, feeAmount, 0n]],
-    )
-  }
-
-  function transactCalldata(data: string): string {
-    return vaultInterface.encodeFunctionData('transact', [
-      [
-        [1, 2],
-        [
-          [3, 4],
-          [5, 6],
-        ],
-        [7, 8],
-        [[9]],
-      ],
-      [RELAYER, data],
-      [],
-    ])
-  }
-
-  function contextWith(to: EthereumAddress, data: string) {
-    const rpc = mockObject<IRpcClient>({
-      getTransaction: mockFn<IRpcClient['getTransaction']>().resolvesTo({
-        hash: `0x${'bb'.repeat(32)}`,
-        value: undefined,
-        from: RELAYER.toString(),
-        to: to.toString(),
-        data,
-        type: undefined,
-        calls: undefined,
-        blobVersionedHashes: undefined,
-        blockNumber: 100,
-      }),
-    })
-    return { rpc, receipts: new ReceiptLogCache(rpc) }
-  }
-
-  function toLog(log: PrivacyRpcLog): Log {
-    return {
-      ...log,
-      blockNumber: 100,
-      blockHash: `0x${'cc'.repeat(32)}`,
-      transactionHash: `0x${'bb'.repeat(32)}`,
-      logIndex: 0,
-    }
-  }
 })
 
 describe(extractPrivacyAnonymitySetMember.name, () => {

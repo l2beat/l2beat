@@ -6,6 +6,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 import { formatBasisPoints } from '../../common/formatBasisPoints'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
@@ -24,7 +25,12 @@ import type {
   ProjectPrivacyToken,
 } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
-import { privacyPoolsV2Adversaries } from './adversaries'
+import {
+  MONOREPO_COMMIT,
+  MONOREPO_REPOSITORY,
+  privacyPoolsV2Adversaries,
+  REFERENCE_CLIENT,
+} from './adversaries'
 
 const discovery = new ProjectDiscovery('privacy-pools-v2')
 
@@ -44,11 +50,7 @@ const ROUTERS = ['PPRouterUSDC', 'PPRouterUSDT', 'PPRouterETH'].map((name) =>
 )
 const SHARE_TOKENS = ['ppUSDC', 'ppUSDT', 'ppETH']
 
-assert(
-  POOL_VAULT.sinceTimestamp !== undefined,
-  'PoolVault must have a sinceTimestamp',
-)
-const SINCE_TIMESTAMP = UnixTime(POOL_VAULT.sinceTimestamp)
+const SINCE_TIMESTAMP = getSinceTimestamp(POOL_VAULT)
 
 const yieldFeeBps = discovery.getContractValue<number>('ppUSDC', 'feeBps')
 assert(
@@ -73,6 +75,34 @@ const POOL_ASSETS = [
     ChainSpecificAddress.address(discovery.getContract(name).address),
   ),
 ]
+
+// Entrypoint.assetConfigs. The relay fee cap is an amount of the asset, and
+// only processors enforce it, so it binds withdrawals but not transfers.
+type AssetConfig = [
+  enabled: boolean,
+  minimumDeposit: number | string,
+  vettingFeeBPS: number,
+  maxRelayFee: number | string,
+]
+const ASSET_CONFIGS = discovery.getContractValue<Record<string, AssetConfig>>(
+  'Entrypoint',
+  'assetConfigs',
+)
+assert(
+  Object.entries(ASSET_CONFIGS).every(
+    ([asset, [enabled]]) =>
+      !enabled ||
+      POOL_ASSETS.includes(
+        ChainSpecificAddress.address(ChainSpecificAddress(asset)),
+      ),
+  ),
+  'Every asset open for deposits must have a bucket',
+)
+assert(
+  POOL_ASSETS.every((address) => getAssetConfig(address).vettingFeeBPS === 0),
+  'Pool assets must charge no vetting fee',
+)
+const feeSummary = POOL_ASSETS.map(formatRelayFeeCap).join('\n')
 
 // Every verifier the vault routes proofs to, replaced together on 2026-10-20
 // with the ceremony keys (DepositVerifierSet, RagequitVerifierSet and 25
@@ -106,15 +136,12 @@ export const privacyPoolsV2: BaseProject = {
     detailedDescription: readProjectMarkdown(
       'privacy-pools-v2',
       'detailedDescription',
-      { yieldFee, rootLiveness },
+      { yieldFee, rootLiveness, feeSummary },
     ),
     links: {
       websites: ['https://privacypools.com'],
       documentation: ['https://privacy-pools-v2-docs.vercel.app'],
-      repositories: [
-        'https://github.com/0xbow-io/privacy-pools-v2-monorepo',
-        'https://github.com/0xbow-io/privacy-pools-website-v2',
-      ],
+      repositories: [MONOREPO_REPOSITORY, REFERENCE_CLIENT.repository],
     },
     badges: [],
   },
@@ -137,7 +164,7 @@ export const privacyPoolsV2: BaseProject = {
       // 2026-09-01) were those. Whoever generated those keys could forge
       // proofs against the beta deposits until this rotation.
       title: 'Beta verifiers used single-contributor keys',
-      url: 'https://github.com/0xbow-io/privacy-pools-v2-monorepo/blob/61fac03acd1fc306164ddc234f7fac4147d04493/CHANGELOG.md',
+      url: `${MONOREPO_REPOSITORY}/blob/${MONOREPO_COMMIT}/CHANGELOG.md`,
       date: '2026-10-20T00:00:00Z',
       description:
         'From 2026-09-01 until this rotation, every verifier held a developer key, not the ceremony key.',
@@ -160,12 +187,19 @@ export const privacyPoolsV2: BaseProject = {
       address: ChainSpecificAddress.address(POOL_VAULT.address),
       chain: ChainSpecificAddress.longChain(POOL_VAULT.address),
       sinceTimestamp: SINCE_TIMESTAMP,
+      // USDC deposits are closed, but the vault still holds those of the beta.
       tokens: ['ETH', 'USDC', 'ppUSDC', 'ppUSDT', 'ppETH'],
     },
   ],
   tvsInfo: {
     associatedTokens: [],
-    warnings: [],
+    warnings: [
+      {
+        sentiment: 'warning',
+        value:
+          'The yield shares ppUSDC, ppUSDT and ppETH are valued at par with their underlying, so the TVS leaves out the Aave yield they have accrued.',
+      },
+    ],
   },
   zkCatalogInfo: {
     creator: '0xbow',
@@ -189,8 +223,7 @@ export const privacyPoolsV2: BaseProject = {
       {
         hash: 'Privacy Pools v2 verifiers 20.10.2026',
         name: 'Privacy Pools v2 verifiers v1.0.1',
-        sourceLink:
-          'https://github.com/0xbow-io/privacy-pools-v2-monorepo/tree/61fac03acd1fc306164ddc234f7fac4147d04493/packages/circuits',
+        sourceLink: `${MONOREPO_REPOSITORY}/tree/${MONOREPO_COMMIT}/packages/circuits`,
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: VERIFIERS.map((address) => ({ address })),
         verificationStatus: 'successful',
@@ -204,13 +237,11 @@ export const privacyPoolsV2: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
-    referenceClient: {
-      name: 'privacypools.com',
-      repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
-      commit: 'bfb752cdf7c0659bb4fd25e97933e04fce844c4a',
-    },
+    referenceClient: REFERENCE_CLIENT,
     trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),
+    // Relayer activity counts who relays withdrawals. It leaves out relayed
+    // private transfers, whose fee the vault pays out directly.
     relayerTracking: {
       type: 'onchainEvents',
       sources: [
@@ -266,22 +297,51 @@ export const privacyPoolsV2: BaseProject = {
   },
 }
 
+interface DiscoveredContract {
+  address: ChainSpecificAddress
+  sinceTimestamp?: number
+}
+
+function getSinceTimestamp(contract: DiscoveredContract): UnixTime {
+  assert(
+    contract.sinceTimestamp !== undefined,
+    'Contract must have a sinceTimestamp',
+    { address: contract.address },
+  )
+  return UnixTime(contract.sinceTimestamp)
+}
+
 function relayerSource(
-  contract: { address: ChainSpecificAddress; sinceTimestamp?: number },
+  contract: DiscoveredContract,
   extractor: Exclude<
     PrivacyRelayerExtractorConfig,
     { params: unknown }
   >['extractor'],
 ): ProjectPrivacyOnchainRelayerSource {
-  assert(
-    contract.sinceTimestamp !== undefined,
-    'Relayer source contract must have a sinceTimestamp',
-  )
   return {
     address: contract.address,
-    sinceTimestamp: UnixTime(contract.sinceTimestamp),
+    sinceTimestamp: getSinceTimestamp(contract),
     extractor,
   }
+}
+
+function getAssetConfig(address: EthereumAddress) {
+  const config = ASSET_CONFIGS[ChainSpecificAddress.from('eth', address)]
+  assert(config, 'Missing asset config', { address })
+  const [, , vettingFeeBPS, maxRelayFee] = config
+  return { vettingFeeBPS, maxRelayFee: BigInt(maxRelayFee) }
+}
+
+function formatRelayFeeCap(address: EthereumAddress): string {
+  const token = getTokenByAddress(address.toString())
+  const { maxRelayFee } = getAssetConfig(address)
+  if (maxRelayFee === 0n) {
+    return `- ${token.symbol}: no cap.`
+  }
+  const amount = Number(
+    utils.formatUnits(maxRelayFee, token.decimals),
+  ).toLocaleString('en-US', { maximumFractionDigits: token.decimals })
+  return `- ${token.symbol}: ${amount} ${token.symbol}.`
 }
 
 // One vault holds every asset, so each asset is a bucket on the same address.
@@ -290,10 +350,9 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
     const resolved = getTokenByAddress(tokenAddress.toString())
     const minimumAmounts =
       PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[resolved.symbol]
-    assert(
-      minimumAmounts,
-      `Missing anonymity set thresholds for ${resolved.symbol}`,
-    )
+    assert(minimumAmounts, 'Missing anonymity set thresholds', {
+      symbol: resolved.symbol,
+    })
     const flow = {
       extractor: 'privacyPoolsV2Value' as const,
       params: { tokenAddress },
