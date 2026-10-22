@@ -1,9 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { ActivityRecord } from '@l2beat/database'
-import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
-import { aggregatePerDay } from '../../utils/aggregatePerDay'
-import type { ActivityBlockProvider } from './types'
+import type { ActivityBlock, ActivityBlockProvider } from './types'
 
 interface Dependencies {
   provider: ActivityBlockProvider
@@ -19,13 +17,7 @@ export class BlockTxsCountService {
     this.logger = logger.for(this)
   }
 
-  async getTxsCount(
-    from: number,
-    to: number,
-  ): Promise<{
-    records: ActivityRecord[]
-    latestTimestamp: number
-  }> {
+  async getBlocks(from: number, to: number): Promise<ActivityBlock[]> {
     return await withCoreFeatureRpcMetricsContext(
       'activity.count',
       {
@@ -35,7 +27,7 @@ export class BlockTxsCountService {
       async () => {
         const blocks = await this.$.provider.getBlocks(from, to)
 
-        const countedBlocks = blocks.map((block) => {
+        return blocks.map((block) => {
           let txsCount = this.$.assessCount(block.txsCount, block.number)
 
           if (txsCount < 0) {
@@ -63,18 +55,10 @@ export class BlockTxsCountService {
           return {
             txsCount,
             uopsCount,
-            timestamp: UnixTime(block.timestamp),
+            timestamp: block.timestamp,
             number: block.number,
           }
         })
-
-        const latestTimestamp = countedBlocks.at(-1)?.timestamp
-        assert(latestTimestamp, 'Latest timestamp is undefined')
-
-        return {
-          records: aggregatePerDay(this.$.projectId, countedBlocks),
-          latestTimestamp,
-        }
       },
     )
   }

@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DayProvider } from '../../../../providers/day/DayProviders'
-import { activityRecord } from '../../utils/aggregatePerDay.test'
 import { DayTxsCountService } from './DayTxsCountService'
 
 describe(DayTxsCountService.prototype.getTxsCount.name, () => {
@@ -172,4 +171,22 @@ function mockProvider(data: {
     getDailyTxsCount: mockFn().resolvesTo(data.txs),
     getDailyUopsCount: mockFn().resolvesTo(data.uops),
   })
+}
+
+function activityRecord(
+  projectId: string,
+  timestamp: UnixTime,
+  count: number,
+  uopsCount: number | null,
+  start = 0,
+  end = 10,
+) {
+  return {
+    projectId: ProjectId(projectId),
+    timestamp,
+    count,
+    uopsCount,
+    start,
+    end,
+  }
 }
