@@ -2,6 +2,7 @@ import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   BaseASTNode,
   EnumDefinition,
+  Expression,
   FunctionCall,
   FunctionDefinition,
   Identifier,
@@ -123,6 +124,33 @@ export function resolveDefinition(
     default:
       return NOTHING
   }
+}
+
+export interface AddressResult {
+  symbol: string
+  address: ChainSpecificAddress | undefined
+}
+
+// A called name stands for its call: `bridge` in `rollup.bridge()` is what
+// the getter returns.
+export function resolveAddress(
+  workspace: FlatWorkspace,
+  path: string,
+  offset: number,
+): AddressResult {
+  const index = workspace.source(path)
+  const entry = workspace.entryOfPath(path)
+  assert(entry !== undefined, 'Flat file is not part of the discovery')
+  const ancestors = index.pathAt(offset)
+  const node = ancestors[ancestors.length - 1]
+  assert(node !== undefined)
+  if (node.type !== 'Identifier' && node.type !== 'MemberAccess') {
+    return { symbol: '', address: undefined }
+  }
+  const scope = scopeAt(index, ancestors, offset)
+  const expression = callOf(ancestors) ?? node
+  const value = evaluate({ workspace, scope, entry }, expression as Expression)
+  return { symbol: sourceText(index, expression), address: value.address }
 }
 
 // The cursor on a declaration's own name.

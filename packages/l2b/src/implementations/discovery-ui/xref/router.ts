@@ -7,7 +7,7 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
 import { FlatWorkspace } from '../../xref/FlatWorkspace'
-import { definitionAt, referencesAt } from './navigation'
+import { contractAt, definitionAt, referencesAt } from './navigation'
 
 const PROJECT_CHARACTERS =
   'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-'
@@ -57,6 +57,7 @@ export function attachXrefRouter(app: Express, configReader: ConfigReader) {
   const lookups = [
     { path: 'definition', lookup: definitionAt },
     { path: 'references', lookup: referencesAt },
+    { path: 'contract-at', lookup: contractAt },
   ]
   for (const { path, lookup } of lookups) {
     app.get(`/api/projects/:project/${path}`, (req, res) => {

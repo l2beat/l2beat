@@ -353,6 +353,12 @@ export interface ApiDefinitionResponse {
   definitions: ApiDefinition[]
 }
 
+export interface ApiContractAtResponse {
+  symbol: string
+  address: string | undefined
+  name: string | undefined
+}
+
 export interface ApiReference {
   address: string
   name: string
