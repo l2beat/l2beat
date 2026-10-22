@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1791966035,
+  "timestamp": 1792587967,
   "configHash": "0xb2550ece7d466304c41ff06447f18562d9815848865222dd780382a305f12b57",
   "entries": [
     {
@@ -26,7 +26,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620537",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620539",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -337,7 +337,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621606",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621626",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1058,11 +1058,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x812f7C111476D45998e6D0C615B41c180C362263",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1088,7 +1083,7 @@
           "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
           "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5",
-          "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
+          "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
           "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
@@ -1100,7 +1095,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 73,
+        "nonce": 74,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1289,13 +1284,13 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x02F0eE00643Cab4656C40D9Ac53395b260f957d4",
+        "anchorGame": "eth:0x871523350b060088557dB625ADB8633582F10Ca1",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "disputeGameFinalityDelaySeconds_fmt": "3d 12h",
         "getAnchorRoot": [
-          "0xcc4c7b7e032e68e0e5d3906e2cb4f0bdeb8e57cc6814a79f34c9af461440177c",
-          79457906
+          "0x7460474a3eedc10e1dc42cd6609711141e2fce38837c01aec526d654f93a1df2",
+          80080707
         ],
         "initVersion": 1,
         "paused": false,
@@ -1565,6 +1560,11 @@
     },
     {
       "address": "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1874,7 +1874,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 463628,
-          "prevBlockNum": 26187491
+          "prevBlockNum": 26237732
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2148,7 +2148,7 @@
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
         "FALLBACK_TIMEOUT_fmt": "14d",
-        "getLastProposalTimestamp": 1791965015,
+        "getLastProposalTimestamp": 1792587431,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d",
         "proposers": [
@@ -2227,7 +2227,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF",
-        "gameCount": 40867,
+        "gameCount": 41213,
         "gameImpls": [
           "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F",
           "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9",
@@ -3805,8 +3805,8 @@
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225",
     "tokens/CELO": "0x84d206c43cf8dcc115f08a2a0487ec907ecbc3908440fbfb8e57ee0601bb3c82"
   },
-  "usedBlockNumbers": { "celo": 80065277, "ethereum": 26189504 },
-  "permissionsConfigHash": "0xb36afb4d91ae5f7ddf81d32802eece4b18fb2cac142336a4b988e07f643c0eb7",
+  "usedBlockNumbers": { "celo": 80687145, "ethereum": 26241162 },
+  "permissionsConfigHash": "0xbbc5282f5973f6a1e9a7f7b1eeacc77325d6ef19c0968466223ae8b91806b865",
   "modelledAgainst": {
     "shared-eigenda": "0x1666d662d36428e6c9cc77823b016e58fd3728a21fdf0cf004e089ccb7c5f8f3",
     "shared-eigenlayer": "0x7d4dc86bbe2849d7de33af96e2466d994b8f5133949b99100967a503dd0d98a7",

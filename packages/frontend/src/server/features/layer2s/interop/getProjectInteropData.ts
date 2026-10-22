@@ -4,6 +4,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
+import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getInteropFlows } from './getInteropFlows'
 import { getInteropChains } from './utils/getInteropChains'
@@ -48,6 +49,7 @@ export interface ProjectInteropData {
 export async function getProjectInteropData(
   projectId: ProjectId,
   interopProjects: Project<'interopConfig'>[],
+  helpers: SsrHelpers,
 ): Promise<ProjectInteropData | undefined> {
   const interopChains = mapInteropChainsToWithIcons(
     manifest,
@@ -78,11 +80,22 @@ export async function getProjectInteropData(
   const protocolSlugs = new Map<string, string>(
     protocols.map((p) => [p.id, p.slug]),
   )
-  const summaryInteropFlows = await getInteropFlows({
-    chains: allSelectedChains,
-    protocolIds,
-    anchorChain: currentInteropChain.id,
-  })
+  const [summaryInteropFlows] = await Promise.all([
+    getInteropFlows({
+      chains: allSelectedChains,
+      protocolIds,
+      anchorChain: currentInteropChain.id,
+    }),
+    // The flows section's default query. Without it the server renders the
+    // section empty, and it grows once the data loads, moving every fragment
+    // target below it.
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.interop.flows.queryOptions({
+        chains: defaultSelectedChains,
+        protocolIds,
+      }),
+    ),
+  ])
   const currentChainData = summaryInteropFlows.chainData.find(
     (chain) => chain.chainId === currentInteropChain.id,
   )

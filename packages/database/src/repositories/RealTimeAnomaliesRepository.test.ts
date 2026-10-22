@@ -155,6 +155,28 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     },
   )
 
+  describe(RealTimeAnomaliesRepository.prototype.findByStart.name, () => {
+    it('returns the anomaly with matching projectId, subtype and start', async () => {
+      const result = await repository.findByStart(
+        PROJECT_B,
+        'proofSubmissions',
+        START - 3 * UnixTime.HOUR,
+      )
+
+      expect(result).toEqual(DATA[3])
+    })
+
+    it('returns undefined when the start differs', async () => {
+      const result = await repository.findByStart(
+        PROJECT_B,
+        'proofSubmissions',
+        START - 4 * UnixTime.HOUR,
+      )
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
   describe(RealTimeAnomaliesRepository.prototype.getProjectIds.name, () => {
     it('should return all projectIds', async () => {
       const results = await repository.getProjectIds()

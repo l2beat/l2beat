@@ -1,6 +1,6 @@
 {
   "name": "robinhood",
-  "timestamp": 1790671700,
+  "timestamp": 1792661570,
   "configHash": "0xdc61ac84c783683984f612570000ec29f7781947faca60499b14c2797070668d",
   "entries": [
     {
@@ -217,7 +217,7 @@
         ],
         "inbox": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
         "isPostBoLD": true,
-        "latestConfirmed": "0x49ffad5df95b6c30e34aea084c2783e9934455d703284ed2bae7b309c705eb3f",
+        "latestConfirmed": "0x384adb2a9635b7ea00a8d7783117bb9449b7b1f085fb33118348edaddca63684",
         "loserStakeEscrow": "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
@@ -761,7 +761,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 289210,
+        "batchCount": 345276,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xDaa526086787d9DEbE1D7F3FFdb1fE50cf8687F4"],
         "bridge": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
@@ -800,7 +800,7 @@
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 332062,
+        "totalDelayedMessagesRead": 394689,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -879,7 +879,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2056213109158101210345235"
+        "totalSupply": "2218309106157417478680363"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -986,7 +986,7 @@
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
         ],
         "allowedOutboxList": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
-        "delayedMessageCount": 332081,
+        "delayedMessageCount": 394703,
         "inboxHistory": [
           "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
@@ -994,8 +994,8 @@
         "outboxHistory": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerInbox": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
-        "sequencerMessageCount": 289210,
-        "sequencerReportedSubMessageCount": 75524663
+        "sequencerMessageCount": 345276,
+        "sequencerReportedSubMessageCount": 95009821
       },
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
@@ -1238,7 +1238,7 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "filteredTransactionsAdded": 6096,
+        "filteredTransactionsAdded": 6150,
         "filteredTransactionsDeleted": 0,
         "transactionFilterers": [
           "robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7"
@@ -1373,7 +1373,7 @@
         "getChainId": 4663,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1534,7 +1534,7 @@
         "getChainId": 4663,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1642,7 +1642,7 @@
         "getChainId": 4663,
         "GnosisSafe_modules": [],
         "multisigThreshold": "7 of 8 (88%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2835,7 +2835,7 @@
     "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "ethereum": 26082026, "robinhood": 75525166 },
+  "usedBlockNumbers": { "ethereum": 26247274, "robinhood": 95010545 },
   "permissionsConfigHash": "0x57ef33540bdccbdd0bab5dcf910bed7152e261aff7d19f42a98fa3ca278a43c7",
   "permissions": {
     "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": {
