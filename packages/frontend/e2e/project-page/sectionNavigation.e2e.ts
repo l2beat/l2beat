@@ -6,6 +6,8 @@ import { expect, test } from 'playwright/test'
  * checks that a hash on load and a section-navigation click still land on
  * the section, at a desktop and a tablet width.
  */
+test.describe.configure({ mode: 'parallel' })
+
 const PAGE = '/scaling/projects/base'
 const INTEROP_TOKEN_PAGE = '/interop/tokens/usdc01'
 const DESKTOP = { width: 1400, height: 900 }
@@ -42,7 +44,7 @@ const PROBE = `(() => {
   requestAnimationFrame(tick)
 })()`
 
-for (let copy = 0; copy < 10; copy++)
+for (let copy = 0; copy < Number(process.env.COPIES ?? 100); copy++)
 for (const viewport of viewports) {
   test(`hash on load lands on the section at ${viewport.width}px #${copy}`, async ({
     browser,
