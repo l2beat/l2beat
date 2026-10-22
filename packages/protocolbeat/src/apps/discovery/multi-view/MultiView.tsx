@@ -10,6 +10,21 @@ export interface MultiViewProps {
 }
 
 export function MultiView(props: MultiViewProps) {
+  return (
+    <div className="flex h-full w-full flex-col">
+      <MobileSinglePane />
+      <TopBar project={props.project} />
+      <div className="min-h-0 flex-1">
+        <Docking useStore={useDockingStore} />
+      </div>
+      <BottomBar />
+    </div>
+  )
+}
+
+// Follows the active leaf, which changes on every click into another panel, so
+// it stays out of MultiView and leaves the bars and docking unrendered.
+function MobileSinglePane() {
   const isMobileOrTablet = useIsMobile()
   const fullScreenLeaf = useDockingStore((state) => state.fullScreenLeaf)
   const activeLeaf = useDockingStore((state) => state.activeLeaf)
@@ -35,13 +50,5 @@ export function MultiView(props: MultiViewProps) {
     toggleFullScreen,
   ])
 
-  return (
-    <div className="flex h-full w-full flex-col">
-      <TopBar project={props.project} />
-      <div className="min-h-0 flex-1">
-        <Docking useStore={useDockingStore} />
-      </div>
-      <BottomBar />
-    </div>
-  )
+  return null
 }

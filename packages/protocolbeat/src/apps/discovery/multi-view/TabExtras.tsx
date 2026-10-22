@@ -12,8 +12,6 @@ const COPYABLE_PANELS: PanelId[] = ['code', 'values', 'list', 'nodes']
 
 export function TabExtras(props: { id: PanelId }) {
   const { project } = useParams()
-  const selectedAddress = usePanelStore((state) => state.selected[0])
-  const highlighted = usePanelStore((state) => state.highlighted)
 
   if (!COPYABLE_PANELS.includes(props.id)) {
     return null
@@ -23,9 +21,10 @@ export function TabExtras(props: { id: PanelId }) {
     <button
       type="button"
       className="w-4 text-coffee-200 hover:text-coffee-100"
-      onClick={() =>
-        toClipboard(props.id, project, selectedAddress, highlighted)
-      }
+      onClick={() => {
+        const { selected, highlighted } = usePanelStore.getState()
+        void toClipboard(props.id, project, selected[0], highlighted)
+      }}
       aria-label="Copy panel context"
     >
       <IconChatbot />

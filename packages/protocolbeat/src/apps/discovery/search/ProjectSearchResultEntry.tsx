@@ -4,7 +4,9 @@ import { HighlightedText } from './HighlightedText'
 import { useSearchStore } from './store'
 
 export function ProjectSearchResultEntry({ entries }: { entries: string[] }) {
-  const { setOpen, searchTerm, selectedIndex } = useSearchStore()
+  const setOpen = useSearchStore((state) => state.setOpen)
+  const searchTerm = useSearchStore((state) => state.searchTerm)
+  const selectedIndex = useSearchStore((state) => state.selectedIndex)
   const navigate = useNavigate()
 
   const projectSearchTerm = getProjectSearchTerm(searchTerm)

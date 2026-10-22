@@ -104,6 +104,33 @@ function PanelLabel(props: { id: PanelId }) {
   )
 }
 
+// A closed Select still renders every option. Built once, the options keep
+// their identity, so React skips them when a header rerenders on focus change.
+const PANEL_OPTIONS = (
+  <RadixSelect.Portal>
+    <RadixSelect.Content
+      position="popper"
+      sideOffset={4}
+      className="z-1000 cursor-default select-none border border-coffee-500 bg-coffee-800 font-bold text-coffee-200 text-xs uppercase shadow-lg"
+    >
+      <RadixSelect.Viewport>
+        {PANEL_IDS.filter(isAllowedPanel).map((panelId) => (
+          <RadixSelect.Item
+            key={panelId}
+            value={panelId}
+            className="relative flex cursor-pointer items-center gap-2.5 py-2 pr-9 pl-2.5 outline-hidden focus-visible:outline-hidden data-highlighted:bg-coffee-600 data-[highlighted]:text-coffee-100"
+          >
+            <PanelLabel id={panelId} />
+            <RadixSelect.ItemIndicator className="absolute right-2.5">
+              <IconChecked className="size-3" />
+            </RadixSelect.ItemIndicator>
+          </RadixSelect.Item>
+        ))}
+      </RadixSelect.Viewport>
+    </RadixSelect.Content>
+  </RadixSelect.Portal>
+)
+
 // The header content discovery plugs into docking's generic frame: a panel-type
 // switcher plus the per-panel extras. It reaches the layout store through the
 // generic context hook, so config.tsx never imports the concrete store.
@@ -130,28 +157,7 @@ function PanelHeader(props: { api: LeafApi }) {
           <PanelLabel id={id} />
           <IconChevronDown className="ml-auto size-3 opacity-60 transition-transform group-data-[state=open]/sel:rotate-180" />
         </RadixSelect.Trigger>
-        <RadixSelect.Portal>
-          <RadixSelect.Content
-            position="popper"
-            sideOffset={4}
-            className="z-1000 cursor-default select-none border border-coffee-500 bg-coffee-800 font-bold text-coffee-200 text-xs uppercase shadow-lg"
-          >
-            <RadixSelect.Viewport>
-              {PANEL_IDS.filter(isAllowedPanel).map((panelId) => (
-                <RadixSelect.Item
-                  key={panelId}
-                  value={panelId}
-                  className="relative flex cursor-pointer items-center gap-2.5 py-2 pr-9 pl-2.5 outline-hidden focus-visible:outline-hidden data-highlighted:bg-coffee-600 data-[highlighted]:text-coffee-100"
-                >
-                  <PanelLabel id={panelId} />
-                  <RadixSelect.ItemIndicator className="absolute right-2.5">
-                    <IconChecked className="size-3" />
-                  </RadixSelect.ItemIndicator>
-                </RadixSelect.Item>
-              ))}
-            </RadixSelect.Viewport>
-          </RadixSelect.Content>
-        </RadixSelect.Portal>
+        {PANEL_OPTIONS}
       </RadixSelect.Root>
       <div className="flex-1" />
       <TabExtras id={id} />
