@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x967527dc5790af79b8cb82978e634de315017827
+
+# Diff at Thu, 22 Oct 2026 09:31:57 GMT:
+
+- id: 66bab08b
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bec160b11359d152c893eb245856d63bc5076062 block: 1792495058
+- current timestamp: 1792661570
+
+## Description
+
+ArbFilteredTransactionsManager: filter list 6144 → 6150.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6144
++        6150
+    }
+```
+
 Generated with discovered.json: 0xc12309498d9428ae476a29867d0c7c981f66056a
 
 # Diff at Wed, 21 Oct 2026 12:46:56 GMT:
