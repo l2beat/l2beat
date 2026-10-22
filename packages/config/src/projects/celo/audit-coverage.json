@@ -5,7 +5,7 @@
     "repository": "sergeyshemyakov/audit-dataset",
     "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
-  "discoveredAt": 1791383565,
+  "discoveredAt": 1792587967,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
     "_libs/safe": { "name": "Safe", "kind": "library" },
@@ -879,6 +879,12 @@
       "path": "contracts/utils/structs/EnumerableSet.sol",
       "blob": "272851b2f81b2c71dcf5115a063892668f38275f"
     },
+    "28f3d78bb906": {
+      "repository": "mantlenetworkio/mantle",
+      "commit": "c4a8fd856aab7fd6eedb0c8bc2a8129d252de24b",
+      "path": "packages/contracts/contracts/libraries/eigenda/BN254.sol",
+      "blob": "28f3d78bb906c01a856ef7fe443ed88a9cf0fd85"
+    },
     "2a22f831f011": {
       "repository": "ethereum-optimism/optimism",
       "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
@@ -1041,6 +1047,12 @@
       "path": "packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
       "blob": "5470681ebbfb26f20a43fcb64b3ec646104c5277"
     },
+    "56477c92a27d": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+      "path": "contracts/proxy/beacon/IBeacon.sol",
+      "blob": "56477c92a27d451ba5e72983b3b502d95a35a3a7"
+    },
     "587b6a908ff5": {
       "repository": "ethereum-optimism/optimism",
       "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
@@ -1070,6 +1082,12 @@
       "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
       "path": "contracts/utils/cryptography/ECDSA.sol",
       "blob": "5bbd73283f02dfd4a88829b4fb87138698bbb237"
+    },
+    "5edb6b74cd90": {
+      "repository": "mantlenetworkio/mantle",
+      "commit": "c4a8fd856aab7fd6eedb0c8bc2a8129d252de24b",
+      "path": "packages/contracts/contracts/libraries/eigenda/interfaces/IRegistry.sol",
+      "blob": "5edb6b74cd90b05fd7a96774361adb62f3fa8959"
     },
     "60d75c0c84e7": {
       "repository": "ethereum-optimism/optimism",
@@ -1311,6 +1329,12 @@
       "path": "packages/contracts-bedrock/contracts/legacy/AddressManager.sol",
       "blob": "9ec9f07fc0ecdef52acdd9339e18c00ae6c3a736"
     },
+    "9f02979f1ee6": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/proxy/Proxy.sol",
+      "blob": "9f02979f1ee66d455e547298479d143f0f7f91c7"
+    },
     "9fafeba8c058": {
       "repository": "safe-fndn/safe-smart-account",
       "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
@@ -1521,6 +1545,12 @@
       "path": "packages/contracts-bedrock/src/libraries/rlp/RLPReader.sol",
       "blob": "ccb74b186331cba6adb6df4698ef564698007a02"
     },
+    "cd24ad3134a0": {
+      "repository": "mantlenetworkio/mantle",
+      "commit": "c4a8fd856aab7fd6eedb0c8bc2a8129d252de24b",
+      "path": "packages/contracts/contracts/libraries/eigenda/Merkle.sol",
+      "blob": "cd24ad3134a058b7f986e015f1804094ec7b1a97"
+    },
     "cd36168f725d": {
       "repository": "mantle-xyz/mantle-v2",
       "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
@@ -1544,6 +1574,12 @@
       "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
       "path": "contracts/base/GuardManager.sol",
       "blob": "d0d036bf8dba824e74d2fdc1e97ae7d9bee8ff13"
+    },
+    "d2a927d58c33": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "121be5dd09caa2f7ce731f0806b0e14761023bd6",
+      "path": "contracts/proxy/ERC1967/ERC1967Proxy.sol",
+      "blob": "d2a927d58c3302e723c766b904f909d73a920b05"
     },
     "d2cd2e5fed06": {
       "repository": "safe-fndn/safe-smart-account",
@@ -1635,6 +1671,12 @@
       "path": "contracts/token/ERC20/extensions/ERC20Permit.sol",
       "blob": "e77c193bdf4ec8c79ffe054952c4f732c103d076"
     },
+    "e7ae54c6e765": {
+      "repository": "mantlenetworkio/mantle",
+      "commit": "c4a8fd856aab7fd6eedb0c8bc2a8129d252de24b",
+      "path": "packages/contracts/contracts/chugsplash/TransparentUpgradeableProxy.sol",
+      "blob": "e7ae54c6e765ae6500b430faeff0f50fa7d53419"
+    },
     "ec004a31130c": {
       "repository": "celo-org/optimism",
       "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
@@ -1658,6 +1700,12 @@
       "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
       "path": "contracts/external/SafeMath.sol",
       "blob": "f3b8944f25b1f8efcf9bf3451dc023602f223206"
+    },
+    "f452b5e34b74": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/interfaces/draft-IERC1822.sol",
+      "blob": "f452b5e34b744cf925b808e42e338e7146b14a8c"
     },
     "f595cab71425": {
       "repository": "ethereum-optimism/optimism",
@@ -3596,6 +3644,117 @@
       "audited": { "object": "20cfdbc92607", "lines": [77, 1376] },
       "reports": ["cantina-u17-2025-10"]
     },
+    "85cff3d52895": {
+      "name": "Proxy",
+      "kind": "abstract",
+      "lines": 71,
+      "status": "differs",
+      "audited": { "object": "9f02979f1ee6", "lines": [16, 74] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[54, 61]],
+      "removed": [],
+      "covered": 68
+    },
+    "2e1a05d27f95": {
+      "name": "StorageSlot",
+      "kind": "library",
+      "lines": 57,
+      "status": "differs",
+      "audited": { "object": "b0e9189675cc", "lines": [34, 138] },
+      "reports": [
+        "contracts__audits__2023-05-v4.9",
+        "contracts__audits__2023-10-v5.0"
+      ],
+      "added": [],
+      "removed": [[16, 16, 23], [56, 64, 103]],
+      "covered": 57
+    },
+    "d60656a5ad24": {
+      "name": "IERC1822Proxiable",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "f452b5e34b74", "lines": [10, 20] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "170545296a7e": {
+      "name": "IBeacon",
+      "kind": "interface",
+      "lines": 8,
+      "status": "identical",
+      "audited": { "object": "56477c92a27d", "lines": [9, 16] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "a9f53b5b08f3": {
+      "name": "ERC1967Upgrade",
+      "kind": "abstract",
+      "lines": 167,
+      "status": "none"
+    },
+    "2757cbfcdaa8": {
+      "name": "ERC1967Proxy",
+      "kind": "contract",
+      "lines": 18,
+      "status": "differs",
+      "audited": { "object": "d2a927d58c33", "lines": [15, 40] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 0], [8, 8], [15, 15]],
+      "removed": [[0, 0, 0], [8, 12, 12], [15, 23, 23]],
+      "covered": 15
+    },
+    "e06633f993a0": {
+      "name": "TransparentUpgradeableProxy",
+      "kind": "contract",
+      "lines": 96,
+      "status": "differs",
+      "audited": { "object": "e7ae54c6e765", "lines": [28, 120] },
+      "reports": [
+        "secure3-mantle-v1-contest-2023-07",
+        "sigmaprime-mantle-l2-rollup-2023-07"
+      ],
+      "added": [],
+      "removed": [[10, 6, 6]],
+      "covered": 96
+    },
+    "ed8f7be30600": {
+      "name": "IEigenDACertVerifierBase",
+      "kind": "interface",
+      "lines": 9,
+      "status": "none"
+    },
+    "438e6195a4bc": {
+      "name": "IEigenDACertVerifierRouter",
+      "kind": "interface",
+      "lines": 5,
+      "status": "none"
+    },
+    "a5d693e781e6": {
+      "name": "OwnableUpgradeable",
+      "kind": "abstract",
+      "lines": 75,
+      "status": "differs",
+      "audited": {
+        "object": "ca09e0350541",
+        "lines": [20, 97],
+        "name": "Ownable"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 0], [4, 14], [35, 35], [54, 54], [67, 73]],
+      "removed": [
+        [0, 0, 0],
+        [2, 2, 11],
+        [4, 14, 20],
+        [35, 41, 43],
+        [54, 62, 64]
+      ],
+      "covered": 65
+    },
+    "10d7420723b7": {
+      "name": "EigenDACertVerifierRouter",
+      "kind": "contract",
+      "lines": 111,
+      "status": "none"
+    },
     "39694e72167f": {
       "name": "ICrossDomainMessenger",
       "kind": "interface",
@@ -4075,27 +4234,6 @@
       "removed": [[14, 14, 14]],
       "covered": 408
     },
-    "a5d693e781e6": {
-      "name": "OwnableUpgradeable",
-      "kind": "abstract",
-      "lines": 75,
-      "status": "differs",
-      "audited": {
-        "object": "ca09e0350541",
-        "lines": [20, 97],
-        "name": "Ownable"
-      },
-      "reports": ["contracts__audits__2023-10-v5.0"],
-      "added": [[0, 0], [4, 14], [35, 35], [54, 54], [67, 73]],
-      "removed": [
-        [0, 0, 0],
-        [2, 2, 11],
-        [4, 14, 20],
-        [35, 41, 43],
-        [54, 62, 64]
-      ],
-      "covered": 65
-    },
     "5a099a33d617": {
       "name": "IGasToken",
       "kind": "interface",
@@ -4464,6 +4602,186 @@
       "status": "identical",
       "audited": { "object": "92b89811bf4f", "lines": [44, 830] },
       "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "56cba849746e": {
+      "name": "BN254",
+      "kind": "library",
+      "lines": 315,
+      "status": "differs",
+      "audited": { "object": "28f3d78bb906", "lines": [29, 291] },
+      "reports": ["secure3-mantle-v1-contest-2023-07"],
+      "added": [
+        [2, 3],
+        [5, 6],
+        [18, 21],
+        [25, 32],
+        [45, 52],
+        [94, 136],
+        [241, 246],
+        [248, 253],
+        [258, 258],
+        [269, 269],
+        [274, 274],
+        [311, 311]
+      ],
+      "removed": [
+        [2, 2, 2],
+        [5, 4, 7],
+        [25, 22, 25],
+        [45, 38, 41],
+        [57, 46, 56],
+        [241, 198, 199],
+        [258, 205, 205],
+        [269, 217, 217],
+        [274, 222, 222],
+        [311, 259, 259]
+      ],
+      "covered": 258
+    },
+    "f0e7701faf7c": {
+      "name": "EigenDATypesV1",
+      "kind": "library",
+      "lines": 74,
+      "status": "none"
+    },
+    "3fd7da4f8a92": {
+      "name": "IEigenDAThresholdRegistry",
+      "kind": "interface",
+      "lines": 47,
+      "status": "none"
+    },
+    "7b4a1717dc0b": {
+      "name": "IEigenDASignatureVerifier",
+      "kind": "interface",
+      "lines": 8,
+      "status": "none"
+    },
+    "247738c90bca": {
+      "name": "IEigenDACertVerifier",
+      "kind": "interface",
+      "lines": 13,
+      "status": "none"
+    },
+    "7cb9d0e88fe3": {
+      "name": "IVersionedEigenDACertVerifier",
+      "kind": "interface",
+      "lines": 5,
+      "status": "none"
+    },
+    "83aa7d9e4e2e": {
+      "name": "IEigenDASemVer",
+      "kind": "interface",
+      "lines": 4,
+      "status": "none"
+    },
+    "9b75f3ab4132": {
+      "name": "EigenDATypesV2",
+      "kind": "library",
+      "lines": 54,
+      "status": "none"
+    },
+    "4894b3fadae4": {
+      "name": "EigenDACertTypes",
+      "kind": "library",
+      "lines": 8,
+      "status": "none"
+    },
+    "058259ff2e1f": {
+      "name": "Merkle",
+      "kind": "library",
+      "lines": 147,
+      "status": "differs",
+      "audited": { "object": "cd24ad3134a0", "lines": [20, 158] },
+      "reports": ["secure3-mantle-v1-contest-2023-07"],
+      "added": [[34, 34], [90, 93]],
+      "removed": [],
+      "covered": 142
+    },
+    "89fd99bd8c95": {
+      "name": "BitmapUtils",
+      "kind": "library",
+      "lines": 197,
+      "status": "none"
+    },
+    "d4f7e134bf2a": {
+      "name": "IRegistry",
+      "kind": "interface",
+      "lines": 3,
+      "status": "differs",
+      "audited": { "object": "5edb6b74cd90", "lines": [10, 13] },
+      "reports": [
+        "secure3-mantle-v1-contest-2023-07",
+        "sigmaprime-mantle-l2-rollup-2023-07"
+      ],
+      "added": [[1, 1]],
+      "removed": [[1, 1, 2]],
+      "covered": 2
+    },
+    "8a575ef0b44c": {
+      "name": "IStrategy",
+      "kind": "interface",
+      "lines": 99,
+      "status": "none"
+    },
+    "3be9d5ee9afb": {
+      "name": "ISignatureUtils",
+      "kind": "interface",
+      "lines": 19,
+      "status": "none"
+    },
+    "f65548963385": {
+      "name": "IDelegationManager",
+      "kind": "interface",
+      "lines": 455,
+      "status": "none"
+    },
+    "0df95281f51e": {
+      "name": "IStakeRegistry",
+      "kind": "interface",
+      "lines": 228,
+      "status": "none"
+    },
+    "0bba09110642": {
+      "name": "IBLSApkRegistry",
+      "kind": "interface",
+      "lines": 129,
+      "status": "none"
+    },
+    "3fb42865fc45": {
+      "name": "IIndexRegistry",
+      "kind": "interface",
+      "lines": 89,
+      "status": "none"
+    },
+    "cdf5f976f572": {
+      "name": "ISocketRegistry",
+      "kind": "interface",
+      "lines": 7,
+      "status": "none"
+    },
+    "241c7dbf0cc6": {
+      "name": "IRegistryCoordinator",
+      "kind": "interface",
+      "lines": 156,
+      "status": "none"
+    },
+    "d1cbe44f8553": {
+      "name": "OperatorStateRetriever",
+      "kind": "interface",
+      "lines": 10,
+      "status": "none"
+    },
+    "53403f6db836": {
+      "name": "EigenDACertVerificationLib",
+      "kind": "library",
+      "lines": 327,
+      "status": "none"
+    },
+    "b02b894e835b": {
+      "name": "EigenDACertVerifier",
+      "kind": "contract",
+      "lines": 164,
+      "status": "none"
     },
     "f04119ddc474": {
       "name": "Context",
@@ -4908,6 +5226,25 @@
       ["32bb1b6efb27", 4453],
       ["7ab877a02905", 4473]
     ],
+    "987ba89af2d82cfa52472cca71fe63f0ee22eb20f4bff646a28521b696963bf6": [
+      ["85cff3d52895", 11],
+      ["2e1a05d27f95", 109],
+      ["ecedf963bc64", 170],
+      ["d60656a5ad24", 389],
+      ["170545296a7e", 404],
+      ["a9f53b5b08f3", 421],
+      ["2757cbfcdaa8", 595],
+      ["e06633f993a0", 635]
+    ],
+    "9ee4f84ba88a24b797d59514d56d2eee74f87435a7ebf3e419dce9b2bd0a86dc": [
+      ["ed8f7be30600", 1],
+      ["438e6195a4bc", 11],
+      ["21c9e76387ed", 20],
+      ["8d8dc0a58b96", 257],
+      ["9c557c702fdd", 350],
+      ["a5d693e781e6", 384],
+      ["10d7420723b7", 460]
+    ],
     "0e2e9a7a985125c85630bb3bcaf43424c39bb5b7090f6c946806b7d7a6428e6b": [
       ["ecedf963bc64", 4],
       ["b0006e2cedea", 268],
@@ -5330,6 +5667,33 @@
       ["4fffde95a01d", 5337],
       ["59ca4a296d85", 5350]
     ],
+    "3da5722c109dd784a09bcb0d52b6a5937d0c5c290120af709c72aae15d7346b2": [
+      ["56cba849746e", 7],
+      ["f0e7701faf7c", 323],
+      ["3fd7da4f8a92", 398],
+      ["7b4a1717dc0b", 446],
+      ["247738c90bca", 458],
+      ["ed8f7be30600", 472],
+      ["7cb9d0e88fe3", 482],
+      ["83aa7d9e4e2e", 488],
+      ["9b75f3ab4132", 493],
+      ["4894b3fadae4", 551],
+      ["058259ff2e1f", 574],
+      ["89fd99bd8c95", 726],
+      ["d4f7e134bf2a", 931],
+      ["809d3ad2bcb8", 938],
+      ["8a575ef0b44c", 1019],
+      ["3be9d5ee9afb", 1124],
+      ["f65548963385", 1154],
+      ["0df95281f51e", 1614],
+      ["0bba09110642", 1847],
+      ["3fb42865fc45", 1981],
+      ["cdf5f976f572", 2071],
+      ["241c7dbf0cc6", 2083],
+      ["d1cbe44f8553", 2241],
+      ["53403f6db836", 2254],
+      ["b02b894e835b", 2584]
+    ],
     "2373c9b7fd0716116db3320ff38ef8b22c7aa6eab97c6e244b758971310718f2": [
       ["f04119ddc474", 11],
       ["64b6456f336a", 34],
@@ -5475,7 +5839,7 @@
     "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3": {
       "name": "PreimageOracle",
       "source": "b042e9806d4b33a5513459740fe1884c0cb7cc8f959e610d2556e2054d447387",
-      "critical": true
+      "critical": { "untilTimestamp": 1765362251 }
     },
     "eth:0x24424336F04440b1c28685a38303aC33C9D14a25": {
       "name": "LivenessGuard",
@@ -5493,7 +5857,14 @@
     "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F": {
       "name": "FaultDisputeGame",
       "source": "034129726fcb91e8bca43d3fc9c6f5c29674de29d0c61a5ae04fd035763154f5",
-      "critical": true
+      "critical": { "untilTimestamp": 1765362251 }
+    },
+    "eth:0x2ea418AE1852bfC79e18B37E55F278F9c598AA08": {
+      "name": "EigenDACertVerifierRouter",
+      "source": "987ba89af2d82cfa52472cca71fe63f0ee22eb20f4bff646a28521b696963bf6",
+      "implementations": {
+        "eth:0x5c9944372C4cD2895f6305b64aCC07763CcC142E": "9ee4f84ba88a24b797d59514d56d2eee74f87435a7ebf3e419dce9b2bd0a86dc"
+      }
     },
     "eth:0x3C519816C5BdC0a0199147594F83feD4F5847f13": {
       "name": "L1ERC721Bridge",
@@ -5529,7 +5900,7 @@
     "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908": {
       "name": "MIPS",
       "source": "0c70c0fc28285080b84f841f586c3aef3dde0f949aad3465894ae707ab5a0d44",
-      "critical": true
+      "critical": { "untilTimestamp": 1765362251 }
     },
     "eth:0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906": {
       "name": "OptimismMintableERC20Factory",
@@ -5574,7 +5945,7 @@
     "eth:0x91FA5B653aFe81A79890A93ad83768A04cc011b4": {
       "name": "DelayedWETH",
       "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
-      "critical": true,
+      "critical": { "untilTimestamp": 1765362251 },
       "implementations": {
         "eth:0xb86a464CC743440FddAa43900e05318ef4818b29": "86a82dbbec0546abe9c8c49dc84a9d82f6e9fc438f05e48a56c7557e036a5ff0"
       }
@@ -5605,7 +5976,7 @@
     "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9": {
       "name": "PermissionedDisputeGame",
       "source": "63ace3445adb07bfdae82f29e864e255a020ed0701f036e86dda85ce37f44d86",
-      "critical": true
+      "critical": { "untilTimestamp": 1765362251 }
     },
     "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
       "name": "SaferSafes",
@@ -5637,7 +6008,7 @@
     "eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552": {
       "name": "DelayedWETH",
       "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
-      "critical": true,
+      "critical": { "untilTimestamp": 1765362251 },
       "implementations": {
         "eth:0xb86a464CC743440FddAa43900e05318ef4818b29": "86a82dbbec0546abe9c8c49dc84a9d82f6e9fc438f05e48a56c7557e036a5ff0"
       }
@@ -5648,6 +6019,10 @@
       "implementations": {
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "e99656f3f5e1d8106e268a1448430f4014f13897bbdf77c9845c0eefc99a03fe"
       }
+    },
+    "eth:0xd9C4dA492c60e92e2B53abB5Bea7Aa4b8aA5b181": {
+      "name": "EigenDACertVerifier",
+      "source": "3da5722c109dd784a09bcb0d52b6a5937d0c5c290120af709c72aae15d7346b2"
     },
     "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {
       "name": "AddressManager",
@@ -5932,43 +6307,62 @@
         ]
       },
       {
-        "timestamp": 1768176000,
-        "contracts": 21,
+        "timestamp": 1765362251,
+        "contracts": 19,
         "withoutSource": 0,
-        "units": { "identical": 226, "differs": 88, "none": 20 },
-        "lines": { "total": 42435, "covered": 33557 },
+        "units": { "identical": 213, "differs": 88, "none": 18 },
+        "lines": { "total": 37974, "covered": 29845 },
+        "changes": [
+          {
+            "address": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
+            "name": "MIPS",
+            "kind": "removed"
+          },
+          {
+            "address": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
+            "name": "PreimageOracle",
+            "kind": "removed"
+          }
+        ]
+      },
+      {
+        "timestamp": 1768176000,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 214, "differs": 87, "none": 18 },
+        "lines": { "total": 37974, "covered": 29873 },
         "reports": ["cantina-u18-2026-01"]
       },
       {
         "timestamp": 1771200000,
-        "contracts": 21,
+        "contracts": 19,
         "withoutSource": 0,
-        "units": { "identical": 226, "differs": 88, "none": 20 },
-        "lines": { "total": 42435, "covered": 33557 },
+        "units": { "identical": 214, "differs": 87, "none": 18 },
+        "lines": { "total": 37974, "covered": 29873 },
         "reports": ["certora-safe-allowance-v1-0-0"]
       },
       {
         "timestamp": 1772150400,
-        "contracts": 21,
+        "contracts": 19,
         "withoutSource": 0,
-        "units": { "identical": 226, "differs": 88, "none": 20 },
-        "lines": { "total": 42435, "covered": 33557 },
+        "units": { "identical": 214, "differs": 87, "none": 18 },
+        "lines": { "total": 37974, "covered": 29873 },
         "reports": ["contracts__audits__2026-02-v5.6"]
       },
       {
         "timestamp": 1772236800,
-        "contracts": 21,
+        "contracts": 19,
         "withoutSource": 0,
-        "units": { "identical": 227, "differs": 87, "none": 20 },
-        "lines": { "total": 42435, "covered": 33560 },
+        "units": { "identical": 215, "differs": 86, "none": 18 },
+        "lines": { "total": 37974, "covered": 29876 },
         "reports": ["hashlock-celo-optimism-superchain-2026-02"]
       },
       {
         "timestamp": 1774940723,
-        "contracts": 27,
+        "contracts": 21,
         "withoutSource": 0,
-        "units": { "identical": 346, "differs": 109, "none": 32 },
-        "lines": { "total": 63468, "covered": 49643 },
+        "units": { "identical": 271, "differs": 94, "none": 24 },
+        "lines": { "total": 45526, "covered": 35086 },
         "changes": [
           {
             "address": "eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d",
@@ -5981,24 +6375,9 @@
             "kind": "added"
           },
           {
-            "address": "eth:0x91FA5B653aFe81A79890A93ad83768A04cc011b4",
-            "name": "DelayedWETH",
-            "kind": "added"
-          },
-          {
-            "address": "eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552",
-            "name": "DelayedWETH",
-            "kind": "added"
-          },
-          {
             "address": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
             "name": "DisputeGameFactory",
             "kind": "upgraded"
-          },
-          {
-            "address": "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F",
-            "name": "FaultDisputeGame",
-            "kind": "added"
           },
           {
             "address": "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
@@ -6011,11 +6390,6 @@
             "kind": "upgraded"
           },
           {
-            "address": "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9",
-            "name": "PermissionedDisputeGame",
-            "kind": "added"
-          },
-          {
             "address": "eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861",
             "name": "SystemConfig",
             "kind": "upgraded"
@@ -6024,10 +6398,10 @@
       },
       {
         "timestamp": 1779117911,
-        "contracts": 28,
+        "contracts": 22,
         "withoutSource": 0,
-        "units": { "identical": 357, "differs": 112, "none": 34 },
-        "lines": { "total": 65591, "covered": 50973 },
+        "units": { "identical": 282, "differs": 97, "none": 26 },
+        "lines": { "total": 47649, "covered": 36416 },
         "changes": [
           {
             "address": "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF",
@@ -6038,26 +6412,26 @@
       },
       {
         "timestamp": 1780876800,
-        "contracts": 28,
+        "contracts": 22,
         "withoutSource": 0,
-        "units": { "identical": 357, "differs": 112, "none": 34 },
-        "lines": { "total": 65591, "covered": 50973 },
+        "units": { "identical": 282, "differs": 97, "none": 26 },
+        "lines": { "total": 47649, "covered": 36416 },
         "reports": ["cantina-opcmv2-2026-06"]
       },
       {
         "timestamp": 1781740800,
-        "contracts": 28,
+        "contracts": 22,
         "withoutSource": 0,
-        "units": { "identical": 357, "differs": 112, "none": 34 },
-        "lines": { "total": 65591, "covered": 50973 },
+        "units": { "identical": 282, "differs": 97, "none": 26 },
+        "lines": { "total": 47649, "covered": 36416 },
         "reports": ["cantina-interop-l2-rereview-2026-06"]
       },
       {
         "timestamp": 1782428747,
-        "contracts": 28,
+        "contracts": 22,
         "withoutSource": 0,
-        "units": { "identical": 355, "differs": 114, "none": 34 },
-        "lines": { "total": 65610, "covered": 50990 },
+        "units": { "identical": 280, "differs": 99, "none": 26 },
+        "lines": { "total": 47668, "covered": 36433 },
         "changes": [
           {
             "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -6068,34 +6442,34 @@
       },
       {
         "timestamp": 1785283200,
-        "contracts": 28,
+        "contracts": 22,
         "withoutSource": 0,
-        "units": { "identical": 355, "differs": 114, "none": 34 },
-        "lines": { "total": 65610, "covered": 50990 },
+        "units": { "identical": 280, "differs": 99, "none": 26 },
+        "lines": { "total": 47668, "covered": 36433 },
         "reports": ["certora-safe-1-3-0"]
       },
       {
         "timestamp": 1786924800,
-        "contracts": 28,
+        "contracts": 22,
         "withoutSource": 0,
-        "units": { "identical": 355, "differs": 114, "none": 34 },
-        "lines": { "total": 65610, "covered": 50990 },
+        "units": { "identical": 280, "differs": 99, "none": 26 },
+        "lines": { "total": 47668, "covered": 36433 },
         "reports": ["nethermind-safe-1-3-0", "nethermind-safe-allowance-v1-0-0"]
       },
       {
         "timestamp": 1787184000,
-        "contracts": 28,
+        "contracts": 22,
         "withoutSource": 0,
-        "units": { "identical": 355, "differs": 114, "none": 34 },
-        "lines": { "total": 65610, "covered": 50991 },
+        "units": { "identical": 280, "differs": 99, "none": 26 },
+        "lines": { "total": 47668, "covered": 36434 },
         "reports": ["cantina-upgrade20-2026-08"]
       },
       {
         "timestamp": 1790268683,
-        "contracts": 28,
+        "contracts": 22,
         "withoutSource": 0,
-        "units": { "identical": 357, "differs": 112, "none": 34 },
-        "lines": { "total": 65613, "covered": 50995 },
+        "units": { "identical": 282, "differs": 97, "none": 26 },
+        "lines": { "total": 47671, "covered": 36438 },
         "changes": [
           {
             "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -6105,11 +6479,11 @@
         ]
       },
       {
-        "timestamp": 1791383565,
-        "contracts": 28,
+        "timestamp": 1792587967,
+        "contracts": 22,
         "withoutSource": 0,
-        "units": { "identical": 357, "differs": 112, "none": 34 },
-        "lines": { "total": 65613, "covered": 50995 }
+        "units": { "identical": 282, "differs": 97, "none": 26 },
+        "lines": { "total": 47671, "covered": 36438 }
       }
     ],
     "undatedReports": []

@@ -5,7 +5,7 @@
     "repository": "sergeyshemyakov/audit-dataset",
     "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
-  "discoveredAt": 1790759557,
+  "discoveredAt": 1792144307,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
     "_libs/safe": { "name": "Safe", "kind": "library" },
@@ -4408,16 +4408,10 @@
       "removed": [[14, 14, 14]],
       "covered": 408
     },
-    "092a207aaf39": {
-      "name": "Registry",
-      "kind": "contract",
-      "lines": 197,
-      "status": "none"
-    },
-    "f7e7cba2d0c1": {
+    "67aa18e10ea9": {
       "name": "OxideConstants",
       "kind": "library",
-      "lines": 16,
+      "lines": 17,
       "status": "none"
     },
     "77c7ed94c5d9": {
@@ -4494,6 +4488,18 @@
       "name": "OxidePortal",
       "kind": "contract",
       "lines": 609,
+      "status": "none"
+    },
+    "092a207aaf39": {
+      "name": "Registry",
+      "kind": "contract",
+      "lines": 197,
+      "status": "none"
+    },
+    "f7e7cba2d0c1": {
+      "name": "OxideConstants",
+      "kind": "library",
+      "lines": 16,
       "status": "none"
     },
     "9d4d8dc12026": {
@@ -5634,6 +5640,82 @@
       ["85eb0004d833", 13325],
       ["8ee162f515fd", 13617]
     ],
+    "990bade45d36026b3fd841df60e8311e78917f21fd2138f29ab40f32cb005f6c": [
+      ["a1ed768de02b", 13],
+      ["eb9e54433d2a", 1178],
+      ["e452e90ca218", 1214],
+      ["67aa18e10ea9", 1895],
+      ["77c7ed94c5d9", 1913],
+      ["01bf0cca6c4e", 1982],
+      ["bb24b365b687", 2022],
+      ["31e42eba5b0a", 2048],
+      ["e15fae7e3a24", 2156],
+      ["f1a8d5f28349", 2315],
+      ["f870caca1701", 2373],
+      ["7e1fa856bc5f", 2377],
+      ["13ba900d72e0", 2383],
+      ["eefe898dbc7d", 2387],
+      ["1991df21f4be", 2391],
+      ["7ce5410e6b9b", 2395],
+      ["9ad1495848b6", 2399],
+      ["53bd2864a5a8", 2403],
+      ["ed7f1e682c82", 2420],
+      ["d935d55ad8d5", 2424],
+      ["2110e29aba10", 2437],
+      ["263d383b45ae", 2441],
+      ["d1cd285da94b", 2445],
+      ["c12c1b03d1eb", 2449],
+      ["ca2b9400e554", 2453],
+      ["241c29092124", 2457],
+      ["df4e899bb231", 2463],
+      ["e0b508d99109", 2467],
+      ["64fecd329377", 2484],
+      ["8d11a696cbf8", 2488],
+      ["892246b03e79", 2492],
+      ["5238708147b3", 2496],
+      ["7b188f7e6a79", 2500],
+      ["8cc2a5795b58", 2504],
+      ["eb515a898ac2", 2508],
+      ["1fa3a0900a64", 2512],
+      ["68779d2b7dce", 2586],
+      ["99c720498edf", 2638],
+      ["e730ab060eed", 2716],
+      ["bf1e6b11fc8d", 2793],
+      ["bfa0b41d1854", 2861],
+      ["e6c4061572a5", 2922],
+      ["8c93ac3dc245", 2941],
+      ["e02e162c77e9", 2972],
+      ["77c91093cc8b", 3055],
+      ["a71c051041d9", 3059],
+      ["ca9ed2069da5", 3071],
+      ["598fd7a47f3d", 3164],
+      ["a06a97752192", 3222],
+      ["3331c6c632ca", 3226],
+      ["a9c82fbc73d8", 3240],
+      ["da302801fe67", 3244],
+      ["dc5a287f86ab", 3248],
+      ["9005ac959bda", 3252],
+      ["e996358fa881", 3256],
+      ["951f791a4bc2", 3260],
+      ["974d17ba61c9", 3264],
+      ["f2933da2f16b", 3268],
+      ["f8cb77d09c59", 3295],
+      ["f5953f41b0a8", 3563],
+      ["009e77a9cf32", 3613],
+      ["19baa7e01ff0", 3635],
+      ["77253d45b75e", 3760],
+      ["89458595fdd3", 3766],
+      ["684cb89721da", 3900],
+      ["ba18d750e681", 3919],
+      ["f555a7706b9d", 4000],
+      ["c6cdf6f948c8", 4182],
+      ["dd81e0c03a74", 4208],
+      ["774dca79c899", 4224],
+      ["36fa7b3d28e0", 4247],
+      ["284e6de4631d", 4464],
+      ["f4f354424b7c", 4485],
+      ["dfefe93afc3e", 4655]
+    ],
     "a5998ef7db23ee5b2dd8c9d4142dd189a009a21e10e0464801c7223cf3249b9b": [
       ["bb24b365b687", 11],
       ["31e42eba5b0a", 37],
@@ -6018,6 +6100,11 @@
       "name": "RewardExtLib",
       "source": "1c22a9d8094e5baa10d9ad8fc7776493aa072d71b5d58f5ae66b55f15cf0c889"
     },
+    "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f": {
+      "name": "ZkMoneyPortal_sUSDS",
+      "source": "990bade45d36026b3fd841df60e8311e78917f21fd2138f29ab40f32cb005f6c",
+      "critical": true
+    },
     "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80": {
       "name": "AztecTokenPositionRegistry_ProtocolTreasury",
       "source": "a5998ef7db23ee5b2dd8c9d4142dd189a009a21e10e0464801c7223cf3249b9b"
@@ -6060,11 +6147,25 @@
         ]
       },
       {
-        "timestamp": 1790759557,
-        "contracts": 1,
+        "timestamp": 1791316739,
+        "contracts": 2,
         "withoutSource": 0,
-        "units": { "identical": 42, "differs": 7, "none": 7 },
-        "lines": { "total": 4095, "covered": 2794 }
+        "units": { "identical": 84, "differs": 14, "none": 14 },
+        "lines": { "total": 8191, "covered": 5588 },
+        "changes": [
+          {
+            "address": "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
+            "name": "ZkMoneyPortal_sUSDS",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1792144307,
+        "contracts": 2,
+        "withoutSource": 0,
+        "units": { "identical": 84, "differs": 14, "none": 14 },
+        "lines": { "total": 8191, "covered": 5588 }
       }
     ],
     "undatedReports": []

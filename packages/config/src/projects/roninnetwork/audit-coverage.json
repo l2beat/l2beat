@@ -5,7 +5,7 @@
     "repository": "sergeyshemyakov/audit-dataset",
     "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
-  "discoveredAt": 1790944906,
+  "discoveredAt": 1791965839,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
     "_libs/safe": { "name": "Safe", "kind": "library" },
@@ -3348,6 +3348,18 @@
       "audited": { "object": "d3ce256f556f", "lines": [17, 123] },
       "reports": ["beosin-ronin-bridge-2024-08"]
     },
+    "bb99800ce418": {
+      "name": "MultiSigWallet",
+      "kind": "contract",
+      "lines": 365,
+      "status": "none"
+    },
+    "21b80e2af7fa": {
+      "name": "MultiSigWalletWithDailyLimit",
+      "kind": "contract",
+      "lines": 99,
+      "status": "none"
+    },
     "477fadda0baa": {
       "name": "SafeProxy",
       "kind": "contract",
@@ -5382,6 +5394,10 @@
       ["ac8c7a993f51", 3644],
       ["5fa68bb53100", 3677]
     ],
+    "e3f16c0118c0dad367d78ed6b46f499519d69c17622022a14409ddbe41d63f01": [
+      ["bb99800ce418", 3],
+      ["21b80e2af7fa", 371]
+    ],
     "a8d4738e202314fac92a69019e0677b25cabeacc8c4f74fd5889e6afd25285cb": [
       ["477fadda0baa", 6]
     ],
@@ -5998,9 +6014,14 @@
     "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": {
       "name": "MainchainBridgeManager",
       "source": "dd0af670bdc24cc85011dd99c775e742d66be11421ab4335c8648416e73cc640",
+      "critical": true,
       "implementations": {
         "eth:0x0ac26945032143f6196d4bb5Ae03592BfAf822FD": "f4c9207acc3f9a5c797757f0d327339e28a2b75558de5f7afc25ef05fa5a3e75"
       }
+    },
+    "eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96": {
+      "name": "MultiSigWalletWithDailyLimit",
+      "source": "e3f16c0118c0dad367d78ed6b46f499519d69c17622022a14409ddbe41d63f01"
     },
     "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609": {
       "name": "Safe",
@@ -6066,6 +6087,7 @@
     "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": {
       "name": "MainchainGateway",
       "source": "c446a10d0271d2aa4c30745a1f609f186098a3b82eff334d53510f574094c410",
+      "critical": true,
       "implementations": {
         "eth:0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69": "e6b33cf0b619964da25e503ee5cce12d3620d37d6d282f7a0cc7fb797116f4b0"
       }
@@ -6179,7 +6201,8 @@
     },
     "eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": {
       "name": "PauseEnforcer",
-      "source": "02653dcd46e24017840fe112b1345a546dd9db20a331f3b3573e9a7dc0883a77"
+      "source": "02653dcd46e24017840fe112b1345a546dd9db20a331f3b3573e9a7dc0883a77",
+      "critical": true
     },
     "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C": {
       "name": "RiscZeroGroth16Verifier",
@@ -6199,14 +6222,17 @@
     "points": [
       {
         "timestamp": 1778598960,
-        "contracts": 13,
+        "contracts": 16,
         "withoutSource": 0,
-        "units": { "identical": 179, "differs": 51, "none": 18 },
-        "lines": { "total": 32901, "covered": 25524 },
+        "units": { "identical": 204, "differs": 92, "none": 34 },
+        "lines": { "total": 42395, "covered": 32567 },
         "reports": [
           "ackee-safe-1-4-0",
           "ackee-safe-1-5-0",
           "base-mt64cannon-2025-02",
+          "beosin-ronin-bridge-2023-09",
+          "beosin-ronin-bridge-2024-08",
+          "beosin-ronin-network-2023-03",
           "cantina-custom-gas-token-2025-11",
           "cantina-eip7702-2025-02",
           "cantina-fault-proofs-mips-2024-08",
@@ -6216,6 +6242,8 @@
           "cantina-safe-extensions-2024-06",
           "cantina-u17-2025-10",
           "cantina-u18-2026-01",
+          "certik-axie-infinity-ronin-bridge-2022-06",
+          "certik-ronin-dpos-contracts-2023-03",
           "code4rena-base-2023-08",
           "code4rena-superchain-2024-08",
           "code4rena-taiko-2024-04",
@@ -6224,8 +6252,10 @@
           "code4rena-zksync-era-system-contracts-2023-03",
           "contracts__audits__2022-10-Checkpoints",
           "contracts__audits__2022-10-ERC4626",
+          "contracts__audits__2023-05-v4.9",
           "contracts__audits__2023-10-v5.0",
           "contracts__audits__2026-02-v5.6",
+          "cure53-bob-usdc-bridge-library-2024-04",
           "formal-verification__fv__reports__2022-05",
           "hashlock-celo-optimism-superchain-2026-02",
           "milotruck-deputypausemodule-2025-01",
@@ -6236,13 +6266,16 @@
           "openzeppelin-mantle-v2-solidity-contracts-2024-03",
           "openzeppelin-taiko-protocol-2024-06",
           "openzeppelin-zksync-l1-diff-2023-02",
+          "pashov-bob-usdc-bridge-2024-04",
           "radiantlabs-deputypausemodule-2024-12",
+          "secure3-mantle-v1-contest-2023-07",
           "secure3-mantle-v2-public-contest-2024-04",
           "secure3-mantle-v2-public-contest-final-2024-05",
           "secure3-mantle-v2-tectonic-2024-03",
           "sherlock-bedrock-2023-03",
           "sherlock-fault-proofs-2024-06",
           "sigma-prime-taiko-smart-contracts-2024-02",
+          "sigmaprime-mantle-l2-rollup-2023-07",
           "sigmaprime-mantle-l2-rollup-v2-2024-04",
           "spearbit-cannon-eventfd-syscall-fix-review-2025-06",
           "spearbit-fault-proofs-no-mips-2024-08",
@@ -6250,43 +6283,47 @@
           "spearbit-safersafes-2025-11",
           "spearbit-u16a-2025-09",
           "spearbit-upgrade16-2025-05",
+          "trailofbits-custom-fee-token-2024-08",
+          "trailofbits-governance-token-bridge-2023-06",
           "trailofbits-invariant-testing-2022-11",
           "trailofbits-opnode-fix-review-2022-07",
           "trust-security-zksync-era-contracts-2024-10",
           "trust-superchainconfig-upgrade-2024-01",
+          "verichains-ronin-bridge-smart-contracts-2022-06",
+          "verichains-ronin-bridge-smart-contracts-2024-08",
           "xuwinnie-solady-cbrt-proof"
         ]
       },
       {
         "timestamp": 1779494400,
-        "contracts": 13,
+        "contracts": 16,
         "withoutSource": 0,
-        "units": { "identical": 182, "differs": 48, "none": 18 },
-        "lines": { "total": 32901, "covered": 25589 },
+        "units": { "identical": 207, "differs": 89, "none": 34 },
+        "lines": { "total": 42395, "covered": 32632 },
         "reports": ["cantina-u19-2026-05"]
       },
       {
         "timestamp": 1780876800,
-        "contracts": 13,
+        "contracts": 16,
         "withoutSource": 0,
-        "units": { "identical": 182, "differs": 48, "none": 18 },
-        "lines": { "total": 32901, "covered": 25592 },
+        "units": { "identical": 207, "differs": 89, "none": 34 },
+        "lines": { "total": 42395, "covered": 32635 },
         "reports": ["cantina-opcmv2-2026-06"]
       },
       {
         "timestamp": 1781740800,
-        "contracts": 13,
+        "contracts": 16,
         "withoutSource": 0,
-        "units": { "identical": 184, "differs": 46, "none": 18 },
-        "lines": { "total": 32901, "covered": 25638 },
+        "units": { "identical": 209, "differs": 87, "none": 34 },
+        "lines": { "total": 42395, "covered": 32681 },
         "reports": ["cantina-interop-l2-rereview-2026-06"]
       },
       {
         "timestamp": 1782901175,
-        "contracts": 24,
+        "contracts": 27,
         "withoutSource": 0,
-        "units": { "identical": 234, "differs": 56, "none": 48 },
-        "lines": { "total": 44045, "covered": 33882 },
+        "units": { "identical": 259, "differs": 97, "none": 64 },
+        "lines": { "total": 53539, "covered": 40925 },
         "changes": [
           {
             "address": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
@@ -6347,18 +6384,18 @@
       },
       {
         "timestamp": 1787184000,
-        "contracts": 24,
+        "contracts": 27,
         "withoutSource": 0,
-        "units": { "identical": 234, "differs": 56, "none": 48 },
-        "lines": { "total": 44045, "covered": 33883 },
+        "units": { "identical": 259, "differs": 97, "none": 64 },
+        "lines": { "total": 53539, "covered": 40926 },
         "reports": ["cantina-upgrade20-2026-08"]
       },
       {
         "timestamp": 1788777107,
-        "contracts": 13,
+        "contracts": 16,
         "withoutSource": 0,
-        "units": { "identical": 184, "differs": 46, "none": 18 },
-        "lines": { "total": 32901, "covered": 25639 },
+        "units": { "identical": 209, "differs": 87, "none": 34 },
+        "lines": { "total": 42395, "covered": 32682 },
         "changes": [
           {
             "address": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
@@ -6419,10 +6456,10 @@
       },
       {
         "timestamp": 1789973519,
-        "contracts": 14,
+        "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 174, "differs": 63, "none": 15 },
-        "lines": { "total": 33372, "covered": 27118 },
+        "units": { "identical": 199, "differs": 104, "none": 31 },
+        "lines": { "total": 42866, "covered": 34161 },
         "changes": [
           {
             "address": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
@@ -6462,11 +6499,11 @@
         ]
       },
       {
-        "timestamp": 1790944906,
-        "contracts": 14,
+        "timestamp": 1791965839,
+        "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 174, "differs": 63, "none": 15 },
-        "lines": { "total": 33372, "covered": 27118 }
+        "units": { "identical": 199, "differs": 104, "none": 31 },
+        "lines": { "total": 42866, "covered": 34161 }
       }
     ],
     "undatedReports": []

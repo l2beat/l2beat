@@ -5,7 +5,7 @@
     "repository": "sergeyshemyakov/audit-dataset",
     "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
-  "discoveredAt": 1786959877,
+  "discoveredAt": 1791530581,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
     "arbitrum": { "name": "Arbitrum One", "kind": "project" },
@@ -54,6 +54,13 @@
       "auditor": "OpenZeppelin",
       "date": "2023-10-03",
       "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
+    },
+    "contracts__audits__2026-02-v5.6": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts v5.6 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2026-02-27",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
     },
     "peckshield-starkex-v1-0-2020-02": {
       "collections": ["starknet"],
@@ -112,6 +119,30 @@
       "commit": "6d415c508be94ef8391ed6525df365452466da76",
       "path": "contracts/token/ERC20/SafeERC20.sol",
       "blob": "7c91266c8d06f3f51c9250b57af928fd886a7f3f"
+    },
+    "8d475bd3daf8": {
+      "repository": "code-423n4/2023-03-zksync",
+      "commit": "21d9a364a4a75adfa6f1e038232d8c0f39858a64",
+      "path": "contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+      "blob": "8d475bd3daf8df3bf2d086ef429b5d9f9c05aeb1"
+    },
+    "979554d4061c": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/token/ERC20/extensions/IERC20Permit.sol",
+      "blob": "979554d4061c5a62d62524fbfda1c16307f4a7cb"
+    },
+    "a19535a30046": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/IERC20.sol",
+      "blob": "a19535a30046f312e5208ab5b2ff7eb351a0f72d"
+    },
+    "ca09e0350541": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/access/Ownable.sol",
+      "blob": "ca09e035054133545c505f7d1c4ca829f8b67df9"
     }
   },
   "units": {
@@ -119,6 +150,83 @@
       "name": "StealthKeyRegistry",
       "kind": "contract",
       "lines": 193,
+      "status": "none"
+    },
+    "d768b8759414": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "9b385480472b": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 64,
+      "status": "differs",
+      "audited": { "object": "ca09e0350541", "lines": [20, 97] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 9], [31, 31], [50, 50]],
+      "removed": [[2, 2, 11], [8, 18, 19], [31, 41, 43], [50, 62, 64]],
+      "covered": 60
+    },
+    "1c1076615bc6": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 236,
+      "status": "identical",
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ]
+    },
+    "809d3ad2bcb8": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 74,
+      "status": "identical",
+      "audited": { "object": "a19535a30046", "lines": [9, 78] },
+      "reports": [
+        "code4rena-zksync-era-system-contracts-2023-03",
+        "contracts__audits__2023-10-v5.0"
+      ]
+    },
+    "5c1b98c91663": {
+      "name": "IERC20Permit",
+      "kind": "interface",
+      "lines": 47,
+      "status": "identical",
+      "audited": { "object": "979554d4061c", "lines": [42, 83] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "33c1bc98e249": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 98,
+      "status": "identical",
+      "audited": { "object": "8d475bd3daf8", "lines": [19, 95] },
+      "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
+    },
+    "6fe7eb934fe4": {
+      "name": "IUmbraHookReceiver",
+      "kind": "interface",
+      "lines": 21,
+      "status": "identical",
+      "audited": { "object": "797c622c6b84", "lines": [6, 26] },
+      "reports": ["consensys-diligence-umbra-smart-contracts-2021-03"]
+    },
+    "74c82e496ed5": {
+      "name": "IUmbra",
+      "kind": "interface",
+      "lines": 143,
+      "status": "none"
+    },
+    "18cc8c4efe63": {
+      "name": "UmbraBatchSend",
+      "kind": "contract",
+      "lines": 96,
       "status": "none"
     },
     "f04119ddc474": {
@@ -222,14 +330,6 @@
       ],
       "covered": 42
     },
-    "6fe7eb934fe4": {
-      "name": "IUmbraHookReceiver",
-      "kind": "interface",
-      "lines": 21,
-      "status": "identical",
-      "audited": { "object": "797c622c6b84", "lines": [6, 26] },
-      "reports": ["consensys-diligence-umbra-smart-contracts-2021-03"]
-    },
     "6a709f06e696": {
       "name": "Umbra",
       "kind": "contract",
@@ -245,6 +345,17 @@
   "flats": {
     "1f2257ce319a7708d2928fe57b6ad23c3d9d50c793dcf2d6441a2dadbd3232cf": [
       ["1f2257ce319a", 1]
+    ],
+    "6386b41b25b4f17caa248f0ebb55df11e714a3d74db4754455be5d7c64bce5f5": [
+      ["d768b8759414", 11],
+      ["9b385480472b", 33],
+      ["1c1076615bc6", 101],
+      ["809d3ad2bcb8", 341],
+      ["5c1b98c91663", 424],
+      ["33c1bc98e249", 481],
+      ["6fe7eb934fe4", 581],
+      ["74c82e496ed5", 603],
+      ["18cc8c4efe63", 748]
     ],
     "50c090d3044d292af41f7246ea4724df8a0481d8bd1a1e4c1109053051af6a4c": [
       ["f04119ddc474", 11],
@@ -262,6 +373,10 @@
       "name": "StealthKeyRegistry",
       "source": "1f2257ce319a7708d2928fe57b6ad23c3d9d50c793dcf2d6441a2dadbd3232cf",
       "critical": true
+    },
+    "eth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB": {
+      "name": "UmbraBatchSend",
+      "source": "6386b41b25b4f17caa248f0ebb55df11e714a3d74db4754455be5d7c64bce5f5"
     },
     "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": {
       "name": "Umbra",
@@ -324,7 +439,7 @@
         "reports": ["contracts__audits__2023-10-v5.0"]
       },
       {
-        "timestamp": 1786959877,
+        "timestamp": 1791530581,
         "contracts": 2,
         "withoutSource": 0,
         "units": { "identical": 0, "differs": 5, "none": 2 },
