@@ -9,7 +9,7 @@ Generated with discovered.json: 0x967527dc5790af79b8cb82978e634de315017827
 
 ## Description
 
-ArbFilteredTransactionsManager: filter list 6144 → 6150.
+ArbFilteredTransactionsManager: filter list 6144 → 6150. The new entries are forced L1 transactions trying to move funds out of a frozen wallet holding most of the Green Bull (VLAD) memecoin supply, as are nearly all filtered transactions so far.
 
 ## Watched changes
 
