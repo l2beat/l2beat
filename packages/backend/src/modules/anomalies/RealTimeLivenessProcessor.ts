@@ -29,6 +29,11 @@ import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
 import type { AnomalyNotifier } from './AnomalyNotifier'
 
+// The anomalies indexer writes stats every hour. It can fall behind for a
+// few hours (deploys, reindexing), and that alone shouldn't recover anomalies.
+const NEW_ANOMALY_STATS_MAX_AGE = 2 * UnixTime.HOUR
+const ONGOING_ANOMALY_STATS_MAX_AGE = 1 * UnixTime.DAY
+
 type GroupedConfigurations = Map<
   string,
   {
@@ -194,9 +199,10 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     const configurationIds = [...configGroups.values()].flatMap(
       (group) => group.configurationIds,
     )
+    const currentHour = UnixTime.toStartOf(UnixTime.now(), 'hour')
     const [latestStats, latestRecords, ongoingAnomalies] = await Promise.all([
       this.db.anomalyStats.getLatestStats(
-        UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR,
+        currentHour - ONGOING_ANOMALY_STATS_MAX_AGE,
       ),
       this.db.realTimeLiveness.getLatestRecords(configurationIds),
       this.db.realTimeAnomalies.getOngoingAnomalies(),
@@ -235,6 +241,14 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           await this.notifier?.anomalyAutoRecovered(recoveredAnomaly, block)
           records.push(recoveredAnomaly)
         }
+        continue
+      }
+
+      // stats that lag behind are still good enough to follow an ongoing
+      // anomaly, but a new anomaly is only opened on up-to-date stats
+      const isStatFresh =
+        latestStat.timestamp >= currentHour - NEW_ANOMALY_STATS_MAX_AGE
+      if (!ongoingAnomaly && !isStatFresh) {
         continue
       }
 

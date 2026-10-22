@@ -984,10 +984,83 @@ describe(RealTimeLivenessProcessor.name, () => {
       expect(mockNotifier.anomalyRecovered).not.toHaveBeenCalled()
     })
 
-    it('should auto-recover when latestStat is stale', async () => {
+    it('keeps an ongoing anomaly while stats lag by a few hours', async () => {
+      const projectId = ProjectId('project-id')
+      const lastTxTimestamp = UnixTime.now() - 10 * UnixTime.HOUR
+
+      const ongoingAnomaly: RealTimeAnomalyRecord = {
+        start: lastTxTimestamp,
+        projectId,
+        subtype: 'stateUpdates',
+        status: 'ongoing',
+        isApproved: true,
+      }
+
+      const realTimeAnomaliesRepository = mockObject<
+        Database['realTimeAnomalies']
+      >({
+        getOngoingAnomalies: mockFn().resolvesTo([ongoingAnomaly]),
+        upsertMany: mockFn().resolvesTo(undefined),
+      })
+
+      const mockNotifier = mockObject<AnomalyNotifier>({
+        anomalyOngoing: mockFn().resolvesTo(undefined),
+        anomalyAutoRecovered: mockFn().resolvesTo(undefined),
+      })
+
+      const processor = new RealTimeLivenessProcessor(
+        createMockTrackedTxsConfig(projectId, [
+          {
+            type: 'liveness',
+            id: 'config-1',
+            projectId,
+            subtype: 'stateUpdates',
+            sinceTimestamp: UnixTime.now(),
+            params: {
+              formula: 'transfer',
+              from: EthereumAddress.random(),
+              to: EthereumAddress.random(),
+            },
+          },
+        ]),
+        Logger.SILENT,
+        mockDatabase({
+          anomalyStats: mockObject<Database['anomalyStats']>({
+            getLatestStats: latestStatsFrom([
+              {
+                timestamp:
+                  UnixTime.toStartOf(UnixTime.now(), 'hour') -
+                  6 * UnixTime.HOUR,
+                projectId,
+                subtype: 'stateUpdates',
+                mean: 10,
+                stdDev: 20,
+              },
+            ]),
+          }),
+          realTimeLiveness: mockObject<Database['realTimeLiveness']>({
+            getLatestRecords: mockFn().resolvesTo([
+              { configurationId: 'config-1', timestamp: lastTxTimestamp },
+            ]),
+          }),
+          realTimeAnomalies: realTimeAnomaliesRepository,
+        }),
+        mockNotifier,
+      )
+
+      await processor.checkForAnomalies(
+        mockObject<Block>({ number: 1, timestamp: UnixTime.now() }),
+      )
+
+      expect(realTimeAnomaliesRepository.upsertMany).not.toHaveBeenCalled()
+      expect(mockNotifier.anomalyAutoRecovered).not.toHaveBeenCalled()
+      expect(mockNotifier.anomalyOngoing).toHaveBeenCalled()
+    })
+
+    it('auto-recovers when stats are older than a day', async () => {
       const projectId = ProjectId('project-id')
       const staleStatTimestamp =
-        UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
+        UnixTime.toStartOf(UnixTime.now(), 'hour') - 25 * UnixTime.HOUR
 
       const ongoingAnomaly: RealTimeAnomalyRecord = {
         start: UnixTime.now() - 5 * UnixTime.HOUR,
