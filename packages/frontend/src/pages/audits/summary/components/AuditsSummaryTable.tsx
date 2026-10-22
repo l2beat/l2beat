@@ -87,7 +87,7 @@ const columns = [
       meta: {
         align: 'center',
         tooltip:
-          "Critical changes to the project's critical contracts after its latest audit report, own or of its stack, as tracked by ossification.",
+          "Code changes to the project's critical contracts after its latest audit report, own or of its stack, as tracked by ossification. State changes are not counted.",
       },
     },
   ),

@@ -24,10 +24,11 @@ export interface AuditsTimelineSources {
 }
 
 /**
- * The project's audits, own and stack, next to the critical changes of its
- * ossification perimeter, from its launch to now. Projects outside that
- * perimeter get the audits alone. Other matched reports are carried along
- * for the chart's toggle and take no part in the statistics.
+ * The project's audits, own and stack, next to the critical code changes of
+ * its ossification perimeter, from its launch to now. State changes of the
+ * perimeter alter no deployed code, so they take no part here. Projects
+ * outside the perimeter get the audits alone. Other matched reports are
+ * carried along for the chart's toggle and take no part in the statistics.
  */
 export function getAuditsProjectTimeline(
   sources: AuditsTimelineSources,
@@ -35,7 +36,7 @@ export function getAuditsProjectTimeline(
 ): AuditsProjectTimeline {
   const { audits, ossification, launch } = sources
   const measured = ossification.history
-    ? measureOssification(ossification.history, now)
+    ? measureOssification(codeChangesOnly(ossification.history), now)
     : undefined
   const criticalChanges = measured?.criticalChanges ?? []
   const latestAudit = audits.at(-1) ?? null
@@ -82,6 +83,13 @@ export function getAuditsProjectTimeline(
       criticalChanges[0] ?? Number.POSITIVE_INFINITY,
     ),
     to: now,
+  }
+}
+
+function codeChangesOnly(history: OssificationHistory): OssificationHistory {
+  return {
+    ...history,
+    changes: history.changes.filter((change) => change.type === 'code'),
   }
 }
 

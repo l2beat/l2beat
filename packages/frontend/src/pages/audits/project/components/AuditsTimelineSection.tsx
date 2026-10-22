@@ -15,11 +15,12 @@ export function AuditsTimelineSection({ timeline }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-paragraph-15 md:text-paragraph-16">
-        When the project's audit reports were published, against the critical
-        upgrades of its contracts as tracked by ossification. For a project
-        built on a stack, the stack's audits that matched its deployed code
-        count as its own. Code changed after the latest audit is only covered
-        where it stayed identical to an audited version.
+        When the project's audit reports were published, against the code
+        changes of its critical contracts as tracked by ossification. State
+        changes of those contracts alter no deployed code and are left out. For
+        a project built on a stack, the stack's audits that matched its deployed
+        code count as its own. Code changed after the latest audit is only
+        covered where it stayed identical to an audited version.
       </p>
       <ChartStats className="lg:grid-cols-4">
         <ChartStatsItem
@@ -53,7 +54,7 @@ export function AuditsTimelineSection({ timeline }: Props) {
         </ChartStatsItem>
         <ChartStatsItem
           label="Average upgrade interval"
-          tooltip="The project's life since its launch divided by the number of critical changes to its critical contracts, as measured by ossification."
+          tooltip="The project's life since its launch divided by the number of code changes to its critical contracts, as measured by ossification. State changes are not counted."
         >
           {timeline.averageUpgradeInterval !== null ? (
             <>
@@ -73,7 +74,7 @@ export function AuditsTimelineSection({ timeline }: Props) {
         </ChartStatsItem>
         <ChartStatsItem
           label="Upgrades since latest audit"
-          tooltip="Critical changes to the project's critical contracts after the project's latest audit report, own or of its stack, was published, as measured by ossification. Library audits and matches of unrelated projects are not counted."
+          tooltip="Code changes to the project's critical contracts after the project's latest audit report, own or of its stack, was published, as measured by ossification. State changes, library audits and matches of unrelated projects are not counted."
         >
           {timeline.criticalChangesSinceLatestAudit !== null ? (
             String(timeline.criticalChangesSinceLatestAudit)

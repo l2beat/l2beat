@@ -67,7 +67,7 @@ export interface AuditsOtherReport {
  * AuditsTimelineSparkline. Same scale as AuditsProjectTimeline.
  */
 export interface AuditsSummaryTimeline {
-  /** Launch, first audit or first critical change, whichever came first. */
+  /** Launch, first audit or first critical code change, whichever came first. */
   from: number
   to: number
   /** When the project launched; null when unknown. */
@@ -75,7 +75,7 @@ export interface AuditsSummaryTimeline {
   /** Project audit dates, own and stack, ascending. */
   audits: number[]
   latestAudit: number | null
-  /** Critical changes after the latest audit; null without ossification. */
+  /** Critical code changes after the latest audit; null without ossification. */
   criticalChangesSinceLatestAudit: number | null
 }
 
@@ -190,7 +190,10 @@ export interface AuditsProjectTimeline {
   audits: AuditsProjectReport[]
   /** Dated matched reports that are not project audits, ascending. */
   otherAudits: AuditsOtherReport[]
-  /** 24h-clustered critical changes from the ossification history, ascending. */
+  /**
+   * 24h-clustered critical code changes from the ossification history,
+   * ascending. State changes alter no deployed code and are left out.
+   */
   criticalChanges: number[]
   /** False for projects outside the ossification perimeter. */
   hasOssification: boolean
@@ -207,13 +210,13 @@ export interface AuditsProjectTimeline {
    */
   auditInterval: { start: number; audits: number; average: number } | null
   /**
-   * Seconds per critical upgrade since the launch; null without ossification
-   * or without upgrades.
+   * Seconds per critical code change since the launch; null without
+   * ossification or without code changes.
    */
   averageUpgradeInterval: number | null
-  /** Critical changes after the latest audit; null without ossification. */
+  /** Critical code changes after the latest audit; null without ossification. */
   criticalChangesSinceLatestAudit: number | null
-  /** Launch, first audit or first critical change, at least a year ago. */
+  /** Launch, first audit or first critical code change, at least a year ago. */
   from: number
   to: number
 }

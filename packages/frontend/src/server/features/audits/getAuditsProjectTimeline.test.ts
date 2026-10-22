@@ -106,6 +106,35 @@ describe(getAuditsProjectTimeline.name, () => {
     expect(timeline.criticalChangesSinceLatestAudit).toEqual(3)
   })
 
+  it('tracks the critical code changes and leaves the state changes out', () => {
+    const timeline = getAuditsProjectTimeline(
+      {
+        audits,
+        otherAudits: [],
+        ossification: {
+          history: {
+            ...history,
+            changes: [
+              { timestamp: NOW - 800 * DAY, type: 'state' },
+              { timestamp: NOW - 600 * DAY, type: 'code' },
+              { timestamp: NOW - 300 * DAY, type: 'state' },
+              { timestamp: NOW - 50 * DAY, type: 'code' },
+              { timestamp: NOW - 50 * DAY + 3600, type: 'state' },
+              { timestamp: NOW - 20 * DAY, type: 'state' },
+            ],
+          },
+          href: '/p#ossification',
+        },
+        launch: NOW - 700 * DAY,
+      },
+      NOW,
+    )
+    expect(timeline.criticalChanges).toEqual([NOW - 600 * DAY, NOW - 50 * DAY])
+    expect(timeline.criticalChangesSinceLatestAudit).toEqual(1)
+    expect(timeline.averageUpgradeInterval).toEqual((700 * DAY) / 2)
+    expect(timeline.from).toEqual(NOW - 700 * DAY)
+  })
+
   it('shows audits alone without ossification', () => {
     const timeline = getAuditsProjectTimeline(
       {

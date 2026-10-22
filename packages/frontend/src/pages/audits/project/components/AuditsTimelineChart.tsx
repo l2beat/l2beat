@@ -28,7 +28,7 @@ import { type ChartRange, optionToRange } from '~/utils/range/range'
 
 const HEIGHT = 150
 const PAD_X = 12
-// Audits sit in the lane above the axis, critical upgrades in the lane below.
+// Audits sit in the lane above the axis, critical code changes in the lane below.
 const AXIS_Y = 78
 const AUDIT_Y = 40
 const CHANGE_Y = 116
@@ -50,7 +50,8 @@ interface Props {
 
 /**
  * The project's life on one axis: its launch, its audit reports (own and
- * stack) above the axis and the critical upgrades of its contracts below it.
+ * stack) above the axis and the critical code changes of its contracts below
+ * it; state changes of the critical contracts are not shown.
  * Other matched reports, of libraries and unrelated projects, are shown on
  * demand. MAX reaches back to the launch or the first audit, whichever came
  * first.
@@ -110,7 +111,7 @@ export function AuditsTimelineChart({ timeline }: Props) {
               width={width}
               height={HEIGHT}
               role="img"
-              aria-label="Timeline of the project's audits and critical upgrades"
+              aria-label="Timeline of the project's audits and critical code changes"
             >
               {ticks.map((tick) => (
                 <g key={tick.ordinal}>
@@ -373,7 +374,7 @@ function ChangeTooltip({
 }) {
   return (
     <div className="flex flex-col gap-1 text-left">
-      <span className="font-bold">Critical upgrade</span>
+      <span className="font-bold">Critical code change</span>
       <span className="text-secondary text-xs">
         {formatTimestamp(change, { mode: 'datetime' })}
       </span>
@@ -408,10 +409,10 @@ function Legend({
       {timeline.hasOssification ? (
         <span className="flex items-center gap-1.5">
           <ChangeMarker className="size-2.5" />
-          Critical upgrade
+          Critical code change
         </span>
       ) : (
-        <span>Critical upgrades are not tracked for this project.</span>
+        <span>Critical code changes are not tracked for this project.</span>
       )}
       {timeline.launch !== null && (
         <span className="flex items-center gap-1.5">
