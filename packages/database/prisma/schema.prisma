@@ -34,6 +34,21 @@ model Activity {
   @@id([projectId, timestamp])
 }
 
+/// Activity per hour of block and slot chains. The indexers did not fetch
+/// blocks again for it: hours they indexed before the table was added are
+/// missing, and the hour it was added in can be partial
+model HourlyActivity {
+  projectId     String   @db.VarChar(255)
+  timestamp     DateTime @db.Timestamp(6)
+  count         Int
+  uopsCount     Int?
+  /// Of the busiest UTC minute in the hour
+  peakCount     Int
+  peakUopsCount Int?
+
+  @@id([projectId, timestamp])
+}
+
 model AggregatedL2Cost {
   timestamp      DateTime @db.Timestamp(6)
   projectId      String   @db.VarChar(255)
