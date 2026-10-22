@@ -138,6 +138,6 @@ and a slot would meet more or less of it by chance.
 
 ## DiscoUI
 
-`packages/protocolbeat` works the same way in the `test-e2e-discoui` job: its
+`packages/discoui` works the same way in the `test-e2e-discoui` job: its
 page suite runs as `--shard N/2`, and the second runner also runs the `l2b`
 backend suite, which takes about 20 s.

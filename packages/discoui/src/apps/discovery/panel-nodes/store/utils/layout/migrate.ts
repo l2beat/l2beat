@@ -42,7 +42,7 @@ export function migrateLayout(raw: unknown): MigrateResult {
     return {
       ok: false,
       reason: 'too-new',
-      message: `Layout was created with a newer version (v${version}) of Protocolbeat than this build supports (v${CURRENT_LAYOUT_VERSION}). Update Protocolbeat to load it.`,
+      message: `Layout was created with a newer version (v${version}) of DiscoUI than this build supports (v${CURRENT_LAYOUT_VERSION}). Update DiscoUI to load it.`,
     }
   }
 

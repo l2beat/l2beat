@@ -1,4 +1,4 @@
-// This file is duplicated in protocolbeat and l2b!
+// This file is duplicated in discoui and l2b!
 
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
