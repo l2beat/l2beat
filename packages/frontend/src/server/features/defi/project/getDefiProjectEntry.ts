@@ -66,7 +66,7 @@ export async function getDefiProjectEntry(
       'externalDependencies',
       'discoveryUpdates',
       'ossificationHistory',
-      'crops',
+      'garden',
     ],
   })
 
@@ -129,7 +129,7 @@ export async function getDefiProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  const gardenCropsSection = getGardenCropsSection(project, ossification)
+  const gardenCropsSection = getGardenCropsSection(project.garden, ossification)
   if (gardenCropsSection) {
     sections.push(gardenCropsSection)
   }

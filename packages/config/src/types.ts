@@ -17,7 +17,7 @@ import {
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 import type { ZkCatalogTagType } from './common/zkCatalogTags'
-import type { OsiLicenseId } from './crops/osiLicenses'
+import type { OsiLicense, OsiLicenseId } from './crops/osiLicenses'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -261,6 +261,8 @@ export interface BaseProject {
 
   // crops data
   crops?: ProjectCrops
+  /** Built from `crops` and `ossificationHistory`, see `ProjectGarden`. */
+  garden?: ProjectGarden
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -1615,6 +1617,38 @@ export interface ProjectCrops {
   openSource: ProjectOpenSourceCropEvaluation
   privacy: ProjectCropEvaluation
   security: ProjectCropEvaluation
+}
+
+/** `neutral` is never declared in config: it is what an ungraded crop resolves to. */
+export type CropSentiment = ProjectCropSentiment | 'neutral'
+
+/** An evaluation with every optional field resolved to a concrete value. */
+export interface ResolvedCropEvaluation {
+  sentiment: CropSentiment
+  status: ProjectCropStatus
+  /** Only on the open source crop, once the license is confirmed. */
+  license?: OsiLicense
+  points: string[]
+  missing: string[]
+  additionalConsiderations: string[]
+  notReviewed: string[]
+}
+
+export type ResolvedCrops = Record<keyof ProjectCrops, ResolvedCropEvaluation>
+
+/** Whether a reviewed project is listed in the garden, and if not, why. */
+export type GardenListing = 'listed' | 'ratedBad' | 'noOssificationScore'
+
+/**
+ * `crops` as the site and the CROPS API show them: every default filled in,
+ * Security capped by the ossification score, and whether the garden lists the
+ * project. The score is measured when config builds, and turbo caches that
+ * build, so it can trail the live score by as long as config goes unchanged.
+ * A stale score is only ever lower, so the cap errs strict.
+ */
+export interface ProjectGarden {
+  crops: ResolvedCrops
+  listing: GardenListing
 }
 
 // #endregion

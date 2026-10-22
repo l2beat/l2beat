@@ -3,7 +3,7 @@ import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { ProjectCrops } from '../types'
 import { OSI_LICENSES } from './osiLicenses'
-import { resolveCropEvaluation, resolveProjectCrops } from './resolveCrops'
+import { resolveCropEvaluation, resolveGarden } from './resolveCrops'
 
 describe('resolveCrops', () => {
   describe(resolveCropEvaluation.name, () => {
@@ -54,7 +54,7 @@ describe('resolveCrops', () => {
     })
   })
 
-  describe(resolveProjectCrops.name, () => {
+  describe(resolveGarden.name, () => {
     const now = UnixTime(1_800_000_000)
     const crops = (overrides: Partial<ProjectCrops> = {}): ProjectCrops => ({
       censorshipResistance: { sentiment: 'good' },
@@ -69,7 +69,7 @@ describe('resolveCrops', () => {
       history(now - days * UnixTime.DAY, isVerified)
 
     it('lists a project with no red crop and an ossification score', () => {
-      const resolved = resolveProjectCrops(
+      const resolved = resolveGarden(
         {
           crops: crops({
             privacy: { status: 'fullyTransparent' },
@@ -83,7 +83,7 @@ describe('resolveCrops', () => {
     })
 
     it('keeps a project out when any crop is red, even partially reviewed', () => {
-      const resolved = resolveProjectCrops(
+      const resolved = resolveGarden(
         {
           crops: crops({
             censorshipResistance: {
@@ -99,7 +99,7 @@ describe('resolveCrops', () => {
     })
 
     it('keeps the written Security rating from the top band', () => {
-      const { crops: resolved } = resolveProjectCrops(
+      const { crops: resolved } = resolveGarden(
         { crops: crops(), ossificationHistory: unchangedFor(730) },
         now,
       )
@@ -110,7 +110,7 @@ describe('resolveCrops', () => {
     })
 
     it('caps Security at warning in the middle band and says why first', () => {
-      const { crops: resolved } = resolveProjectCrops(
+      const { crops: resolved } = resolveGarden(
         { crops: crops(), ossificationHistory: unchangedFor(120) },
         now,
       )
@@ -124,7 +124,7 @@ describe('resolveCrops', () => {
     })
 
     it('rates Security bad in the bottom band, which keeps the project out', () => {
-      const resolved = resolveProjectCrops(
+      const resolved = resolveGarden(
         { crops: crops(), ossificationHistory: unchangedFor(7) },
         now,
       )
@@ -133,7 +133,7 @@ describe('resolveCrops', () => {
     })
 
     it('never raises a written rating', () => {
-      const { crops: resolved } = resolveProjectCrops(
+      const { crops: resolved } = resolveGarden(
         {
           crops: crops({ security: { sentiment: 'bad' } }),
           ossificationHistory: unchangedFor(730),
@@ -148,7 +148,7 @@ describe('resolveCrops', () => {
       ['while a critical contract is unverified', unchangedFor(7, false)],
     ] as const) {
       it(`has no score ${name}: Security says so, and the project is unlisted`, () => {
-        const resolved = resolveProjectCrops(
+        const resolved = resolveGarden(
           { crops: crops(), ossificationHistory },
           now,
         )

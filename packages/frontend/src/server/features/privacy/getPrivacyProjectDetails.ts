@@ -5,9 +5,9 @@ import type {
   PrivacyExitWindow,
   PrivacySummaryValue,
   ProjectContracts,
-  ProjectCrops,
   ProjectDiscoveryUpdate,
   ProjectDisplay,
+  ProjectGarden,
   ProjectPermissions,
   ProjectPrivacyAdversaries,
   ProjectStatuses,
@@ -19,7 +19,6 @@ import type {
   PrivacyFlowDailyRecord,
   TokenValueRecord,
 } from '@l2beat/database'
-import type { OssificationHistory } from '@l2beat/shared/frontend'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
@@ -61,9 +60,7 @@ export interface PrivacyProjectDetails {
   ossification?: ProjectOssificationView
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
-  crops?: ProjectCrops
-  /** Caps the Security crop, even while the ossification feature is off. */
-  ossificationHistory?: OssificationHistory
+  garden?: ProjectGarden
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
   category: PrivacyCategory
   exitWindow: PrivacyExitWindow
@@ -285,8 +282,7 @@ export async function getPrivacyProjectDetails(
     ossification,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
-    crops: project.crops,
-    ossificationHistory: project.ossificationHistory,
+    garden: project.garden,
     trustedSetups: project.trustedSetups,
     category: project.privacyInfo.category,
     exitWindow: project.privacyInfo.exitWindow,

@@ -5,8 +5,8 @@ import type {
   ProjectCrops,
 } from '@l2beat/config'
 
-// The site's vocabulary for a crop. @l2beat/config resolves a crop on the
-// server; the shapes below are its types, plus what the site adds.
+// The site's vocabulary for a crop. @l2beat/config resolves a crop when it
+// builds; the shapes below are its types, plus what the site adds.
 // Values live here rather than in @l2beat/config because client components
 // import this file and the browser cannot load a value from the CommonJS
 // config build (it broke hydration once, see the history of this file).

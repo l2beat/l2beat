@@ -8,47 +8,26 @@ import {
   type UnixTime,
 } from '@l2beat/shared-pure'
 import type {
-  ProjectCropSentiment,
-  ProjectCropStatus,
+  GardenListing,
   ProjectCrops,
-  ProjectDefiInfo,
+  ProjectGarden,
   ProjectOpenSourceCropEvaluation,
-  ProjectPrivacyInfo,
-  ProjectScalingInfo,
+  ResolvedCropEvaluation,
+  ResolvedCrops,
 } from '../types'
 import { OSI_LICENSES, type OsiLicense, type OsiLicenseId } from './osiLicenses'
 
 // Config leaves a crop's defaults implicit, and Security also depends on the
-// project's measured ossification. This is the one place both are resolved,
-// so the site and the CROPS API cannot disagree.
+// project's measured ossification. The build resolves both once, into
+// `garden`, so the site and the CROPS API read the same verdict.
 
-/** `neutral` is never declared in config: it is what an ungraded crop resolves to. */
-export type CropSentiment = ProjectCropSentiment | 'neutral'
-
-/** An evaluation with every optional field resolved to a concrete value. */
-export interface ResolvedCropEvaluation {
-  sentiment: CropSentiment
-  status: ProjectCropStatus
-  /** Only on the open source crop, once the license is confirmed. */
-  license?: OsiLicense
-  points: string[]
-  missing: string[]
-  additionalConsiderations: string[]
-  notReviewed: string[]
-}
-
-export type ResolvedCrops = Record<keyof ProjectCrops, ResolvedCropEvaluation>
-
-/** Whether a reviewed project is listed in the garden, and if not, why. */
-export type GardenListing = 'listed' | 'ratedBad' | 'noOssificationScore'
-
-export function resolveProjectCrops(
+export function resolveGarden(
   project: {
     crops: ProjectCrops
     ossificationHistory?: OssificationHistory | undefined
   },
   now: UnixTime,
-): { crops: ResolvedCrops; listing: GardenListing } {
+): ProjectGarden {
   const score = scoreOssification(project.ossificationHistory, now)
   const crops: ResolvedCrops = {
     censorshipResistance: resolveCropEvaluation(
@@ -80,33 +59,6 @@ export function resolveCropEvaluation(
     resolved.license = getOsiLicense(evaluation.license)
   }
   return resolved
-}
-
-/**
- * The page a reviewed project has on l2beat.com, or null when it has none.
- * Links only to pages that exist, so this never falls back to a scaling url
- * the way the frontend's getProjectUrl does. Whether a DeFi project has a
- * page depends on the site's feature flags, so the caller says.
- */
-export function getGardenProjectPath(
-  project: {
-    slug: string
-    privacyInfo?: ProjectPrivacyInfo | undefined
-    scalingInfo?: ProjectScalingInfo | undefined
-    defiInfo?: ProjectDefiInfo | undefined
-  },
-  hasDefiPage: boolean,
-): string | null {
-  if (project.privacyInfo) {
-    return `/privacy/projects/${project.slug}`
-  }
-  if (project.scalingInfo) {
-    return `/layer2s/projects/${project.slug}`
-  }
-  if (project.defiInfo && hasDefiPage) {
-    return `/defi/projects/${project.slug}`
-  }
-  return null
 }
 
 /**

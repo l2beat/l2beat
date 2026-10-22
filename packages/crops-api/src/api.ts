@@ -1,17 +1,12 @@
 import type {
   Project,
-  ProjectCrops,
   ProjectDefiInfo,
+  ProjectGarden,
   ProjectPrivacyInfo,
   ProjectScalingInfo,
   ResolvedCrops,
 } from '@l2beat/config'
-import {
-  CROP_ATTESTATIONS,
-  getGardenProjectPath,
-  resolveProjectCrops,
-} from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { CROP_ATTESTATIONS } from '@l2beat/config'
 import { type Validator, v } from '@l2beat/validate'
 import {
   CropSentimentSchema,
@@ -263,7 +258,7 @@ export interface CropsSourceProject {
   id: string
   slug: string
   name: string
-  crops: ProjectCrops
+  garden: ProjectGarden
   ossificationHistory?:
     | Project<'ossificationHistory'>['ossificationHistory']
     | undefined
@@ -275,17 +270,9 @@ export interface CropsSourceProject {
 export function resolveCropsProject(
   project: CropsSourceProject,
   meta: CropsAttestationsMeta,
-  now: UnixTime,
 ): CropsApiProject {
-  // The API cannot read l2beat.com's feature flags. In production the DeFi
-  // section is off and ossification is on, so a DeFi project has a page
-  // exactly when it has an ossification history (the frontend's
-  // hasDefiProjectPage).
-  const path = getGardenProjectPath(
-    project,
-    project.ossificationHistory !== undefined,
-  )
-  const { crops, listing } = resolveProjectCrops(project, now)
+  const path = getGardenProjectPath(project)
+  const { crops, listing } = project.garden
   const attested = meta.current?.projectIds.includes(project.id)
   return {
     id: project.id,
@@ -304,6 +291,28 @@ export function resolveCropsProject(
           }
         : null,
   }
+}
+
+/**
+ * The page a reviewed project has on l2beat.com, or null when it has none.
+ * The API links only to pages that exist, so this never falls back to a
+ * scaling url the way the frontend's getProjectUrl does.
+ */
+function getGardenProjectPath(project: CropsSourceProject): string | null {
+  if (project.privacyInfo) {
+    return `/privacy/projects/${project.slug}`
+  }
+  if (project.scalingInfo) {
+    return `/layer2s/projects/${project.slug}`
+  }
+  // The API cannot read l2beat.com's feature flags. In production the DeFi
+  // section is off and ossification is on, so a DeFi project has a page
+  // exactly when it has an ossification history (the frontend's
+  // hasDefiProjectPage).
+  if (project.defiInfo && project.ossificationHistory) {
+    return `/defi/projects/${project.slug}`
+  }
+  return null
 }
 
 export function toCropsSummary(crops: ResolvedCrops): CropsApiSummary {

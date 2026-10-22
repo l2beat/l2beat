@@ -1,11 +1,18 @@
-import { resolveCropEvaluation } from '@l2beat/config'
+import type { ResolvedCropEvaluation } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { OssificationStats } from '../projects/ossification/getOssificationStats'
 import { withOssification } from './withOssification'
 
 describe(withOssification.name, () => {
-  const evaluation = resolveCropEvaluation({ sentiment: 'good' })
+  const evaluation: ResolvedCropEvaluation = {
+    sentiment: 'good',
+    status: 'reviewed',
+    points: [],
+    missing: [],
+    additionalConsiderations: [],
+    notReviewed: [],
+  }
   const crops = {
     censorshipResistance: evaluation,
     openSource: evaluation,

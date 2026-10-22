@@ -9,15 +9,6 @@ export {
   type RevokedCropAttestation,
 } from './crops/attestations'
 export { OSI_LICENSES } from './crops/osiLicenses'
-export {
-  type CropSentiment,
-  type GardenListing,
-  getGardenProjectPath,
-  type ResolvedCropEvaluation,
-  type ResolvedCrops,
-  resolveCropEvaluation,
-  resolveProjectCrops,
-} from './crops/resolveCrops'
 export { PROJECT_COUNTDOWNS } from './global/countdowns'
 export {
   INTEROP_CHAINS,

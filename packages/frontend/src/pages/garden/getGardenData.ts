@@ -1,16 +1,12 @@
-import {
-  getGardenProjectPath,
-  type Project,
-  resolveProjectCrops,
-} from '@l2beat/config'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Project } from '@l2beat/config'
+import { ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiSummaryEntries'
-import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
 import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
+import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
 import { withOssification } from '~/server/features/garden/withOssification'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
@@ -49,7 +45,7 @@ export interface GardenEntry {
 }
 
 type GardenProject = Project<
-  'crops',
+  'garden',
   | 'scalingInfo'
   | 'privacyInfo'
   | 'defiInfo'
@@ -63,9 +59,9 @@ export async function getGardenData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const projects = await ps.getProjects({
-    where: ['crops'],
-    select: ['crops'],
+  const reviewed = await ps.getProjects({
+    where: ['garden'],
+    select: ['garden'],
     optional: [
       'scalingInfo',
       'privacyInfo',
@@ -76,6 +72,9 @@ export async function getGardenData(
       'tvsConfig',
     ],
   })
+  const projects = reviewed
+    .filter((project) => project.garden.listing === 'listed')
+    .sort(compareByCuratedOrder)
 
   const [tvsBreakdown, depositCounts, defiTvl] = await Promise.all([
     get7dTvsBreakdown({
@@ -92,19 +91,19 @@ export async function getGardenData(
     ),
   ])
 
-  const now = UnixTime.now()
-  const listed = projects
-    .map((project) => ({ project, ...resolveProjectCrops(project, now) }))
-    .filter(({ listing }) => listing === 'listed')
-    .sort((a, b) => compareByCuratedOrder(a.project, b.project))
   const entries: GardenEntry[] = await Promise.all(
-    listed.map(async ({ project, crops }) => ({
+    projects.map(async (project) => ({
       name: project.name,
       slug: project.slug,
-      href: getGardenProjectPath(project, hasDefiProjectPage(project)),
+      href: getGardenProjectPath(project),
       subtitle: getSubtitle(project),
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      crops: withOssification(crops, await getProjectOssification(project)),
+      // One value-series read per listed project, as on the ossification
+      // page. The garden lists a handful, so it is not worth a batched query.
+      crops: withOssification(
+        project.garden.crops,
+        await getProjectOssification(project),
+      ),
       metric: getMetric(project, tvsBreakdown, depositCounts, defiTvl),
     })),
   )

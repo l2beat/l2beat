@@ -1,4 +1,9 @@
-import type { ProjectCrops, ProjectScalingInfo } from '@l2beat/config'
+import {
+  OSI_LICENSES,
+  type ProjectGarden,
+  type ProjectScalingInfo,
+  type ResolvedCropEvaluation,
+} from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { CropsAttestationsMeta } from '../api'
 import type {
@@ -31,16 +36,31 @@ export function lowerAddress(address: ChainSpecificAddress): string {
   return ChainSpecificAddress.address(address).toLowerCase()
 }
 
-const ALL_GOOD: ProjectCrops = {
-  censorshipResistance: { sentiment: 'good' },
-  openSource: { sentiment: 'good', license: 'MIT' },
-  privacy: { sentiment: 'good' },
-  security: { sentiment: 'good' },
+const GOOD: ResolvedCropEvaluation = {
+  sentiment: 'good',
+  status: 'reviewed',
+  points: [],
+  missing: [],
+  additionalConsiderations: [],
+  notReviewed: [],
 }
 
-const ONE_BAD: ProjectCrops = {
-  ...ALL_GOOD,
-  security: { sentiment: 'bad', missing: ['No audits.'] },
+const ALL_GOOD: ProjectGarden = {
+  crops: {
+    censorshipResistance: GOOD,
+    openSource: { ...GOOD, license: OSI_LICENSES.MIT },
+    privacy: GOOD,
+    security: GOOD,
+  },
+  listing: 'listed',
+}
+
+const ONE_BAD: ProjectGarden = {
+  crops: {
+    ...ALL_GOOD.crops,
+    security: { ...GOOD, sentiment: 'bad', missing: ['No audits.'] },
+  },
+  listing: 'ratedBad',
 }
 
 export const ATTESTATION_UID =
@@ -68,8 +88,8 @@ export const UNISWAP: CropsApiInputProject = {
   id: 'uniswapv3',
   slug: 'uniswap-v3',
   name: 'Uniswap V3',
-  crops: ALL_GOOD,
-  // Unchanged since 2021, so the score clears every band.
+  garden: ALL_GOOD,
+  // Only its presence matters here: it gives the DeFi variant in api.test.ts a page.
   ossificationHistory: {
     contracts: [
       {
@@ -110,7 +130,7 @@ export const OTHER: CropsApiInputProject = {
   id: 'other',
   slug: 'other',
   name: 'Other',
-  crops: ONE_BAD,
+  garden: ONE_BAD,
   contracts: {
     addresses: {
       ethereum: [{ address: FACTORY, name: 'SharedFactory' }],

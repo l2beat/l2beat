@@ -7,7 +7,7 @@ import {
   type TrackedTxSharpSubmissionConfig,
   type TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { badgesCompareFn } from '../common/badges'
@@ -16,6 +16,7 @@ import {
   formatChallengePeriod,
   formatExecutionDelay,
 } from '../common/formatDelays'
+import { resolveGarden } from '../crops/resolveCrops'
 import { loadAuditCoverage } from '../discovery/loadAuditCoverage'
 import { loadDiscoveryUpdates } from '../discovery/loadDiscoveryUpdates'
 import type {
@@ -74,6 +75,7 @@ function buildProjects(): BaseProject[] {
     .concat(ecosystems)
     .map(withDiscoveryUpdates)
     .map(withAuditCoverage)
+    .map(withGarden)
 }
 
 function withDiscoveryUpdates(project: BaseProject): BaseProject {
@@ -84,6 +86,17 @@ function withDiscoveryUpdates(project: BaseProject): BaseProject {
 function withAuditCoverage(project: BaseProject): BaseProject {
   const auditCoverage = loadAuditCoverage(project.id)
   return auditCoverage ? { ...project, auditCoverage } : project
+}
+
+function withGarden(project: BaseProject): BaseProject {
+  if (!project.crops) {
+    return project
+  }
+  const garden = resolveGarden(
+    { crops: project.crops, ossificationHistory: project.ossificationHistory },
+    UnixTime.now(),
+  )
+  return { ...project, garden }
 }
 
 function layer2Or3ToProject(p: ScalingProject): BaseProject {
