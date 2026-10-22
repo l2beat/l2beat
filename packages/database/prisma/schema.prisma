@@ -44,13 +44,10 @@ model Activity {
 /// Activity per hour of block and slot chains, kept for the last two weeks.
 /// The busiest hour and minute of each day stay on Activity
 model HourlyActivity {
-  projectId     String   @db.VarChar(255)
-  timestamp     DateTime @db.Timestamp(6)
-  count         Int
-  uopsCount     Int?
-  /// No longer written, as the busiest minute of each day is on Activity
-  peakCount     Int?
-  peakUopsCount Int?
+  projectId String   @db.VarChar(255)
+  timestamp DateTime @db.Timestamp(6)
+  count     Int
+  uopsCount Int?
 
   @@id([projectId, timestamp])
 }
