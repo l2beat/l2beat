@@ -3,13 +3,14 @@
   "project": "privacy-pools",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
+    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
   "discoveredAt": 1779964040,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
     "_libs/safe": { "name": "Safe", "kind": "library" },
     "_libs/zk-kit": { "name": "ZK-Kit", "kind": "library" },
+    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
     "privacy-pools": { "name": "Privacy Pools", "kind": "project" }
   },
   "reports": {
@@ -88,6 +89,13 @@
       "date": "2024-10-03",
       "document": "_libs/openzeppelin/reports/contracts__audits__2024-10-v5.1.pdf"
     },
+    "contracts__audits__2025-07-v5.4": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.4 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-07-17",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-07-v5.4.pdf"
+    },
     "contracts__audits__2026-02-v5.6": {
       "collections": ["_libs/openzeppelin"],
       "title": "OpenZeppelin Contracts v5.6 Audit",
@@ -163,6 +171,13 @@
       "title": "Semaphore PSE audit",
       "auditor": "PSE (Privacy & Scaling Explorations)",
       "document": "_libs/zk-kit/reports/PSE - Semaphore 4.0.0 Audit.pdf"
+    },
+    "trailofbits-governance-token-bridge-2023-06": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Governance Security Assessment (Trail of Bits, governance and token bridge, 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2023-01-06",
+      "document": "arbitrum/reports/2023_06_23_trail_of_bits_security_audit_governance_report_governance_token_bridge.pdf"
     }
   },
   "auditedFiles": {
@@ -1212,5 +1227,222 @@
       "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
       "critical": true
     }
+  },
+  "history": {
+    "launch": 1743265199,
+    "points": [
+      {
+        "timestamp": 1743265199,
+        "contracts": 4,
+        "withoutSource": 0,
+        "units": { "identical": 18, "differs": 5, "none": 7 },
+        "lines": { "total": 4387, "covered": 2881 },
+        "reports": [
+          "contracts__audits__2018-10",
+          "contracts__audits__2023-05-v4.9",
+          "contracts__audits__2023-10-v5.0",
+          "contracts__audits__2024-10-v5.1",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "oxorio-privacy-pools-core-contracts-2025-03",
+          "pse-semaphore-4-0-0-audit-2024-03",
+          "trailofbits-governance-token-bridge-2023-06"
+        ]
+      },
+      {
+        "timestamp": 1747699200,
+        "contracts": 4,
+        "withoutSource": 0,
+        "units": { "identical": 18, "differs": 5, "none": 7 },
+        "lines": { "total": 4387, "covered": 2886 },
+        "reports": ["oxorio-privacy-pools-precommitment-pr-2025-05"]
+      },
+      {
+        "timestamp": 1747945823,
+        "contracts": 4,
+        "withoutSource": 0,
+        "units": { "identical": 19, "differs": 4, "none": 7 },
+        "lines": { "total": 4395, "covered": 2894 },
+        "changes": [
+          {
+            "address": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+            "name": "PrivacyPoolsEntrypoint",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1748390400,
+        "contracts": 4,
+        "withoutSource": 0,
+        "units": { "identical": 19, "differs": 4, "none": 7 },
+        "lines": { "total": 4395, "covered": 2894 },
+        "reports": ["ackee-safe-1-5-0"]
+      },
+      {
+        "timestamp": 1752503003,
+        "contracts": 5,
+        "withoutSource": 0,
+        "units": { "identical": 26, "differs": 4, "none": 9 },
+        "lines": { "total": 6351, "covered": 3897 },
+        "changes": [
+          {
+            "address": "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0",
+            "name": "PrivacyPoolUSDS",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1752710400,
+        "contracts": 5,
+        "withoutSource": 0,
+        "units": { "identical": 26, "differs": 4, "none": 9 },
+        "lines": { "total": 6351, "covered": 3908 },
+        "reports": ["contracts__audits__2025-07-v5.4"]
+      },
+      {
+        "timestamp": 1752782999,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 40, "differs": 4, "none": 13 },
+        "lines": { "total": 10263, "covered": 5914 },
+        "changes": [
+          {
+            "address": "eth:0x1c31C03B8CB2EE674D0F11De77135536db828257",
+            "name": "PrivacyPoolDAI",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c",
+            "name": "PrivacyPoolSUSDS",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1753352915,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 54, "differs": 4, "none": 17 },
+        "lines": { "total": 14175, "covered": 7920 },
+        "changes": [
+          {
+            "address": "eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86",
+            "name": "PrivacyPoolUSDC",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572",
+            "name": "PrivacyPoolUSDT",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1753975583,
+        "contracts": 11,
+        "withoutSource": 0,
+        "units": { "identical": 68, "differs": 4, "none": 21 },
+        "lines": { "total": 18087, "covered": 9926 },
+        "changes": [
+          {
+            "address": "eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32",
+            "name": "PrivacyPoolWBTC",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633",
+            "name": "PrivacyPoolWstETH",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1754583083,
+        "contracts": 14,
+        "withoutSource": 0,
+        "units": { "identical": 89, "differs": 4, "none": 27 },
+        "lines": { "total": 23955, "covered": 12935 },
+        "changes": [
+          {
+            "address": "eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84",
+            "name": "PrivacyPoolFrxUSD",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98",
+            "name": "PrivacyPoolUSD1",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc",
+            "name": "PrivacyPoolUSDe",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1756377743,
+        "contracts": 15,
+        "withoutSource": 0,
+        "units": { "identical": 96, "differs": 4, "none": 29 },
+        "lines": { "total": 25911, "covered": 13938 },
+        "changes": [
+          {
+            "address": "eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE",
+            "name": "PrivacyPoolWOETH",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1765446455,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 103, "differs": 4, "none": 31 },
+        "lines": { "total": 27867, "covered": 14941 },
+        "changes": [
+          {
+            "address": "eth:0xD14F4B36E1D1D98c218db782c49149876042BC56",
+            "name": "PrivacyPoolFxUSD",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1770806867,
+        "contracts": 17,
+        "withoutSource": 0,
+        "units": { "identical": 110, "differs": 4, "none": 33 },
+        "lines": { "total": 29823, "covered": 15944 },
+        "changes": [
+          {
+            "address": "eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E",
+            "name": "PrivacyPoolBOLD",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1772150400,
+        "contracts": 17,
+        "withoutSource": 0,
+        "units": { "identical": 110, "differs": 4, "none": 33 },
+        "lines": { "total": 29823, "covered": 15944 },
+        "reports": ["contracts__audits__2026-02-v5.6"]
+      },
+      {
+        "timestamp": 1779964040,
+        "contracts": 17,
+        "withoutSource": 0,
+        "units": { "identical": 110, "differs": 4, "none": 33 },
+        "lines": { "total": 29823, "covered": 15944 }
+      }
+    ],
+    "undatedReports": [
+      "auditware-privacy-pools-batch-relayer-2025",
+      "auditware-privacy-pools-core-2025"
+    ]
   }
 }

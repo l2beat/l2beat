@@ -57,3 +57,7 @@ The definitions used by the audit coverage prototype:
 - **Covered lines**: `lines` for identical units, `covered` for differing ones (their lines minus added lines that hold code, not only comments), 0 for unaudited ones. Interfaces contribute nothing to either side.
 - **Reports**: own reports are those whose `collections` include the project id; an own report is matched when some shown unit lists it in `reports`. Shared reports are the other reports listed by shown units. The latest audit and the audits of the past year come from the own reports' `date`.
 - **Findings**: `units[unitId].findings` maps a report to the ids of its major findings still open in the audited code; link them to the report document.
+
+## 7. History
+
+`history`, when present, is the coverage of the perimeter over time, see [README.md](README.md#history). `points` are ascending from `launch` to `discoveredAt`; between two points the value is constant, so draw a step. The last point's numbers equal the dashboard's. A point's `reports` are the reports that began to count there (link them like any report in `reports`), its `changes` the contracts that joined, left or changed code. `undatedReports` are counted only at the last point; say so where the final step would otherwise surprise.

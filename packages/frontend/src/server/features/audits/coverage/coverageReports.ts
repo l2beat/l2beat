@@ -1,5 +1,6 @@
 import type { ProjectAuditCoverage, ProjectScalingStack } from '@l2beat/config'
-import type { AuditReportOrigin } from '../types'
+import { assert } from '@l2beat/shared-pure'
+import type { AuditReportOrigin, AuditsUnitReportRef } from '../types'
 import type { CoverageUnit } from './coverageModel'
 
 // Reports of a project's audit coverage: where they come from relative to the
@@ -163,4 +164,24 @@ export function sortReportIds(
     if (dateA !== dateB) return dateA < dateB ? 1 : -1
     return a.localeCompare(b)
   })
+}
+
+/** A report as the pages link it. */
+export function toReportRef(
+  coverage: ProjectAuditCoverage,
+  id: string,
+  projectId: string,
+  stackCollection: string | undefined,
+): AuditsUnitReportRef {
+  const report = coverage.reports[id]
+  assert(report !== undefined, `Unknown report ${id}`)
+  const collection = reportCollection(id, coverage)
+  return {
+    id,
+    title: report.title,
+    auditor: report.auditor,
+    url: reportUrl(coverage, id),
+    origin: reportOrigin(id, coverage, projectId, stackCollection),
+    collectionName: coverage.collections[collection]?.name ?? collection,
+  }
 }

@@ -3,7 +3,7 @@
   "project": "aztecnetwork",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
+    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
   "discoveredAt": 1790759557,
   "collections": {
@@ -6035,5 +6035,38 @@
       "name": "EscapeHatch",
       "source": "84d9e32d163dda0ad324b548d064bece0b01770c5149dfc98f88da9f3d8ed778"
     }
+  },
+  "history": {
+    "launch": 1790298635,
+    "points": [
+      {
+        "timestamp": 1790298635,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 42, "differs": 7, "none": 7 },
+        "lines": { "total": 4095, "covered": 2794 },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "ackee-safe-1-5-0",
+          "cantina-escape-hatch-2026-02-24",
+          "cantina-nitro-validator-2024-12",
+          "cantina-payload-2026-03-05",
+          "cantina-rollup-contracts-2025-11-12",
+          "contracts__audits__2018-10",
+          "contracts__audits__2023-10-v5.0",
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2026-02-v5.6",
+          "veridise-governance-2025-10-13"
+        ]
+      },
+      {
+        "timestamp": 1790759557,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 42, "differs": 7, "none": 7 },
+        "lines": { "total": 4095, "covered": 2794 }
+      }
+    ],
+    "undatedReports": []
   }
 }

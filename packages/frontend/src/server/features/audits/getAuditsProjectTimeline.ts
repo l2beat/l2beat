@@ -2,6 +2,7 @@ import type { OssificationHistory } from '@l2beat/shared/frontend'
 import { measureOssification } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
 import type {
+  AuditsCoverageHistory,
   AuditsOtherReport,
   AuditsProjectReport,
   AuditsProjectTimeline,
@@ -21,6 +22,8 @@ export interface AuditsTimelineSources {
   }
   /** See getAuditsLaunch. */
   launch: number | null
+  /** See getAuditsCoverageHistory; drawn under the timeline. */
+  coverageHistory?: AuditsCoverageHistory
 }
 
 /**
@@ -83,6 +86,9 @@ export function getAuditsProjectTimeline(
       criticalChanges[0] ?? Number.POSITIVE_INFINITY,
     ),
     to: now,
+    ...(sources.coverageHistory === undefined
+      ? {}
+      : { coverageHistory: sources.coverageHistory }),
   }
 }
 

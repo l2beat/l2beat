@@ -3,7 +3,7 @@
   "project": "scroll",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
+    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
   "discoveredAt": 1791455050,
   "collections": {
@@ -130,6 +130,13 @@
       "auditor": "OpenZeppelin",
       "date": "2025-04-03",
       "document": "_libs/openzeppelin/reports/contracts__audits__2025-04-v5.3.pdf"
+    },
+    "contracts__audits__2025-07-v5.4": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.4 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-07-17",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-07-v5.4.pdf"
     },
     "contracts__audits__2026-02-v5.6": {
       "collections": ["_libs/openzeppelin"],
@@ -6238,5 +6245,578 @@
       "source": "2d2af8671bf342bdd9653819dc1f59f9320e0ea55419b5e75495379ca7ed685e",
       "critical": true
     }
+  },
+  "history": {
+    "launch": 1696917600,
+    "points": [
+      {
+        "timestamp": 1696917600,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 104, "differs": 162, "none": 59 },
+        "lines": { "total": 36021, "covered": 26656 },
+        "reports": [
+          "code4rena-zksync-era-system-contracts-2023-03",
+          "consensys-arbitrum-core-token-bridge-2021-11",
+          "consensys-nitro-contracts-2022-06",
+          "contracts__audits__2018-10",
+          "contracts__audits__2022-10-ERC4626",
+          "contracts__audits__2023-05-v4.9",
+          "contracts__audits__2023-10-v5.0",
+          "formal-verification__fv__reports__2022-05",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "openzeppelin-scroll-diff-audit-2023-09",
+          "openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
+          "openzeppelin-scroll-layer1-audit-2023-07",
+          "openzeppelin-scroll-layer2-audit-2023-07",
+          "openzeppelin-scroll-owner-rate-limiter-audit-2023-09",
+          "openzeppelin-scroll-usdc-gateway-audit-2023-09",
+          "secure3-mantle-v1-contest-2023-07",
+          "sigmaprime-mantle-l2-rollup-2023-07",
+          "trailofbits-governance-actions-2023-08",
+          "trailofbits-governance-token-bridge-2023-06",
+          "trailofbits-nitro-1-of-2-2022-03",
+          "verilog-staked-celo-prs-72-120-2023",
+          "zellic-scroll-bridge-rollup-audit-2023-05",
+          "zellic-scroll-bridge-rollup-audit-2023-09"
+        ]
+      },
+      {
+        "timestamp": 1707177600,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 106, "differs": 160, "none": 59 },
+        "lines": { "total": 36021, "covered": 26690 },
+        "reports": [
+          "openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02"
+        ]
+      },
+      {
+        "timestamp": 1708589325,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 136, "differs": 160, "none": 65 },
+        "lines": { "total": 40250, "covered": 29868 },
+        "changes": [
+          {
+            "address": "eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
+            "name": "L1CustomERC20Gateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
+            "name": "L1ETHGateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+            "name": "L1ScrollMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
+            "name": "L1StandardERC20Gateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
+            "name": "L1USDCGateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
+            "name": "L1WETHGateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
+            "name": "L2CustomERC20Gateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
+            "name": "L2ETHGateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
+            "name": "L2GatewayRouter",
+            "kind": "upgraded"
+          },
+          {
+            "address": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
+            "name": "L2ScrollMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142",
+            "name": "L2USDCGateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9",
+            "name": "L2WETHGateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+            "name": "ScrollChain",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1714341995,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 138, "differs": 160, "none": 65 },
+        "lines": { "total": 40925, "covered": 30543 },
+        "changes": [
+          {
+            "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+            "name": "ScrollChain",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1719915047,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 137, "differs": 161, "none": 65 },
+        "lines": { "total": 40921, "covered": 30534 },
+        "changes": [
+          {
+            "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+            "name": "ScrollChain",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1721260800,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 137, "differs": 161, "none": 65 },
+        "lines": { "total": 40921, "covered": 30563 },
+        "reports": ["trailofbits-morph-l2-2024-07"]
+      },
+      {
+        "timestamp": 1722470400,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 139, "differs": 161, "none": 63 },
+        "lines": { "total": 40921, "covered": 30757 },
+        "reports": ["trailofbits-custom-fee-token-2024-08"]
+      },
+      {
+        "timestamp": 1722833675,
+        "contracts": 29,
+        "withoutSource": 0,
+        "units": { "identical": 140, "differs": 163, "none": 63 },
+        "lines": { "total": 41160, "covered": 30980 },
+        "changes": [
+          {
+            "address": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+            "name": "MultipleVersionRollupVerifier",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1724196995,
+        "contracts": 29,
+        "withoutSource": 0,
+        "units": { "identical": 136, "differs": 167, "none": 64 },
+        "lines": { "total": 41347, "covered": 30750 },
+        "changes": [
+          {
+            "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+            "name": "ScrollChain",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1725336741,
+        "contracts": 35,
+        "withoutSource": 0,
+        "units": { "identical": 157, "differs": 188, "none": 72 },
+        "lines": { "total": 48641, "covered": 37076 },
+        "changes": [
+          {
+            "address": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+            "name": "AgoraGovernor",
+            "kind": "added"
+          },
+          {
+            "address": "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E",
+            "name": "ProposalTypesConfigurator",
+            "kind": "added"
+          },
+          {
+            "address": "scr:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e",
+            "name": "ProxyAdmin",
+            "kind": "added"
+          },
+          {
+            "address": "scr:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81",
+            "name": "ProxyAdmin",
+            "kind": "added"
+          },
+          {
+            "address": "scr:0xd29687c813D741E2F938F4aC377128810E217b1b",
+            "name": "SCRToken",
+            "kind": "added"
+          },
+          {
+            "address": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+            "name": "TimelockSCSlow",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1727049600,
+        "contracts": 35,
+        "withoutSource": 0,
+        "units": { "identical": 157, "differs": 188, "none": 72 },
+        "lines": { "total": 48641, "covered": 37076 },
+        "reports": ["sherlock-morph-l2-contest-2024-09"]
+      },
+      {
+        "timestamp": 1727913600,
+        "contracts": 35,
+        "withoutSource": 0,
+        "units": { "identical": 157, "differs": 188, "none": 72 },
+        "lines": { "total": 48641, "covered": 37178 },
+        "reports": ["contracts__audits__2024-10-v5.1"]
+      },
+      {
+        "timestamp": 1729119781,
+        "contracts": 35,
+        "withoutSource": 0,
+        "units": { "identical": 161, "differs": 198, "none": 79 },
+        "lines": { "total": 53645, "covered": 40783 },
+        "changes": [
+          {
+            "address": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+            "name": "AgoraGovernor",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1729781135,
+        "contracts": 36,
+        "withoutSource": 0,
+        "units": { "identical": 167, "differs": 199, "none": 79 },
+        "lines": { "total": 54699, "covered": 41817 },
+        "changes": [
+          {
+            "address": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+            "name": "TimelockSCSlow",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1730294447,
+        "contracts": 40,
+        "withoutSource": 0,
+        "units": { "identical": 191, "differs": 203, "none": 79 },
+        "lines": { "total": 58915, "covered": 45953 },
+        "changes": [
+          {
+            "address": "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b",
+            "name": "TimelockEmergency",
+            "kind": "added"
+          },
+          {
+            "address": "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+            "name": "TimelockEmergency",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+            "name": "TimelockSCEmergency",
+            "kind": "added"
+          },
+          {
+            "address": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+            "name": "TimelockSCEmergencyScroll",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1742476115,
+        "contracts": 42,
+        "withoutSource": 0,
+        "units": { "identical": 199, "differs": 207, "none": 81 },
+        "lines": { "total": 60329, "covered": 47075 },
+        "changes": [
+          {
+            "address": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
+            "name": "L1MessageQueueV2",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
+            "name": "SystemConfig",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1743638400,
+        "contracts": 42,
+        "withoutSource": 0,
+        "units": { "identical": 199, "differs": 207, "none": 81 },
+        "lines": { "total": 60329, "covered": 47075 },
+        "reports": ["contracts__audits__2025-04-v5.3"]
+      },
+      {
+        "timestamp": 1743724800,
+        "contracts": 42,
+        "withoutSource": 0,
+        "units": { "identical": 199, "differs": 208, "none": 80 },
+        "lines": { "total": 60329, "covered": 47140 },
+        "reports": ["trailofbits-scroll-euclid-phase1-2025-04"]
+      },
+      {
+        "timestamp": 1744728443,
+        "contracts": 42,
+        "withoutSource": 0,
+        "units": { "identical": 201, "differs": 206, "none": 80 },
+        "lines": { "total": 60117, "covered": 47259 },
+        "changes": [
+          {
+            "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+            "name": "ScrollChain",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1745301695,
+        "contracts": 42,
+        "withoutSource": 0,
+        "units": { "identical": 207, "differs": 211, "none": 82 },
+        "lines": { "total": 62158, "covered": 48782 },
+        "changes": [
+          {
+            "address": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+            "name": "EnforcedTxGateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
+            "name": "L1MessageQueueV2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+            "name": "L1ScrollMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+            "name": "ScrollChain",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1745564819,
+        "contracts": 42,
+        "withoutSource": 0,
+        "units": { "identical": 206, "differs": 212, "none": 82 },
+        "lines": { "total": 62159, "covered": 48779 },
+        "changes": [
+          {
+            "address": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+            "name": "L1ScrollMessenger",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1748390400,
+        "contracts": 42,
+        "withoutSource": 0,
+        "units": { "identical": 206, "differs": 212, "none": 82 },
+        "lines": { "total": 62159, "covered": 48779 },
+        "reports": ["ackee-safe-1-5-0"]
+      },
+      {
+        "timestamp": 1752105600,
+        "contracts": 42,
+        "withoutSource": 0,
+        "units": { "identical": 208, "differs": 210, "none": 82 },
+        "lines": { "total": 62159, "covered": 48791 },
+        "reports": ["trailofbits-scroll-feynman-upgrade"]
+      },
+      {
+        "timestamp": 1752710400,
+        "contracts": 42,
+        "withoutSource": 0,
+        "units": { "identical": 208, "differs": 210, "none": 82 },
+        "lines": { "total": 62159, "covered": 48802 },
+        "reports": ["contracts__audits__2025-07-v5.4"]
+      },
+      {
+        "timestamp": 1753067003,
+        "contracts": 44,
+        "withoutSource": 0,
+        "units": { "identical": 227, "differs": 227, "none": 86 },
+        "lines": { "total": 67135, "covered": 52900 },
+        "changes": [
+          {
+            "address": "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd",
+            "name": "L2PauseController",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b",
+            "name": "PauseController",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1754761103,
+        "contracts": 46,
+        "withoutSource": 1,
+        "units": { "identical": 228, "differs": 227, "none": 86 },
+        "lines": { "total": 67227, "covered": 52992 },
+        "changes": [
+          {
+            "address": "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4",
+            "name": "PlonkVerifierPostEuclid-2",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA",
+            "name": "ZkEvmVerifierPostEuclid-2",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1755485183,
+        "contracts": 47,
+        "withoutSource": 1,
+        "units": { "identical": 231, "differs": 223, "none": 86 },
+        "lines": { "total": 66540, "covered": 52325 },
+        "changes": [
+          {
+            "address": "eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
+            "name": "L1CustomERC20Gateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
+            "name": "L1ETHGateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
+            "name": "L1MessageQueueV2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+            "name": "L1ScrollMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
+            "name": "L1StandardERC20Gateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
+            "name": "L1WETHGateway",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+            "name": "ScrollChain",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485",
+            "name": "ZkEvmVerifierPostFeynman",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1765784711,
+        "contracts": 49,
+        "withoutSource": 2,
+        "units": { "identical": 232, "differs": 223, "none": 86 },
+        "lines": { "total": 66637, "covered": 52422 },
+        "changes": [
+          {
+            "address": "eth:0x749fC77A1a131632a8b88e8703E489557660C75e",
+            "name": "PlonkVerifierGalileo",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5",
+            "name": "ZkEvmVerifierPostFeynman",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1772150400,
+        "contracts": 49,
+        "withoutSource": 2,
+        "units": { "identical": 232, "differs": 223, "none": 86 },
+        "lines": { "total": 66637, "covered": 52429 },
+        "reports": ["contracts__audits__2026-02-v5.6"]
+      },
+      {
+        "timestamp": 1790041547,
+        "contracts": 51,
+        "withoutSource": 3,
+        "units": { "identical": 233, "differs": 223, "none": 86 },
+        "lines": { "total": 66736, "covered": 52528 },
+        "changes": [
+          {
+            "address": "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6",
+            "name": "PlonkVerifierOpenVMv2",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x7966FE0De13e3B81533470640Ac489223476B254",
+            "name": "ZkEvmVerifierPostFeynman",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1791455050,
+        "contracts": 51,
+        "withoutSource": 3,
+        "units": { "identical": 233, "differs": 223, "none": 86 },
+        "lines": { "total": 66736, "covered": 52528 }
+      }
+    ],
+    "undatedReports": ["g0-safe-allowance-v0-1-0"]
   }
 }

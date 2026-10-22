@@ -3,7 +3,7 @@
   "project": "tornado-cash",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
+    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
   "discoveredAt": 1791454331,
   "collections": {
@@ -2829,5 +2829,192 @@
       "source": "31d082456b3f4e435bc0d6e737583bc0d1f52f34cb21fe531b678929512c1cf8",
       "critical": true
     }
+  },
+  "history": {
+    "launch": 1576523275,
+    "points": [
+      {
+        "timestamp": 1576523275,
+        "contracts": 5,
+        "withoutSource": 1,
+        "units": { "identical": 0, "differs": 20, "none": 1 },
+        "lines": { "total": 1115, "covered": 1006 },
+        "reports": [
+          "abdk-tornado-smart-contract-audit-2019-11-19",
+          "contracts__audits__2018-10"
+        ]
+      },
+      {
+        "timestamp": 1577296976,
+        "contracts": 12,
+        "withoutSource": 1,
+        "units": { "identical": 0, "differs": 55, "none": 1 },
+        "lines": { "total": 3133, "covered": 2911 },
+        "changes": [
+          {
+            "address": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
+            "name": "Pool_100_ETH",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307",
+            "name": "Pool_100_USDC",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B",
+            "name": "Pool_100_USDT",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
+            "name": "Pool_1000_DAI",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D",
+            "name": "Pool_1000_USDC",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f",
+            "name": "Pool_1000_USDT",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
+            "name": "Pool_5K_cDAI",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1589278208,
+        "contracts": 13,
+        "withoutSource": 1,
+        "units": { "identical": 0, "differs": 55, "none": 3 },
+        "lines": { "total": 3327, "covered": 2911 },
+        "changes": [
+          {
+            "address": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+            "name": "Verifier",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1612483200,
+        "contracts": 13,
+        "withoutSource": 1,
+        "units": { "identical": 11, "differs": 44, "none": 3 },
+        "lines": { "total": 3327, "covered": 2922 },
+        "reports": ["oz-celo-contracts-mainnet-releases-1-3"]
+      },
+      {
+        "timestamp": 1616114822,
+        "contracts": 21,
+        "withoutSource": 1,
+        "units": { "identical": 11, "differs": 68, "none": 38 },
+        "lines": { "total": 9505, "covered": 4162 },
+        "changes": [
+          {
+            "address": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
+            "name": "Pool_0.1_WBTC",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
+            "name": "Pool_1_WBTC",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
+            "name": "Pool_10_WBTC",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x23773E65ed146A459791799d01336DB287f25334",
+            "name": "Pool_100K_DAI",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
+            "name": "Pool_10K_DAI",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701",
+            "name": "Pool_500K_cDAI",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x03893a7c7463AE47D46bc7f091665f1893656003",
+            "name": "Pool_50K_cDAI",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af",
+            "name": "Pool_5M_cDAI",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1636070400,
+        "contracts": 21,
+        "withoutSource": 1,
+        "units": { "identical": 11, "differs": 68, "none": 38 },
+        "lines": { "total": 9505, "covered": 4162 },
+        "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
+      },
+      {
+        "timestamp": 1686700800,
+        "contracts": 21,
+        "withoutSource": 1,
+        "units": { "identical": 11, "differs": 76, "none": 30 },
+        "lines": { "total": 9505, "covered": 5426 },
+        "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
+      },
+      {
+        "timestamp": 1709164800,
+        "contracts": 21,
+        "withoutSource": 1,
+        "units": { "identical": 11, "differs": 76, "none": 30 },
+        "lines": { "total": 9505, "covered": 5426 },
+        "reports": ["code4rena-zksync-era-2023-10"]
+      },
+      {
+        "timestamp": 1716508800,
+        "contracts": 21,
+        "withoutSource": 1,
+        "units": { "identical": 11, "differs": 84, "none": 22 },
+        "lines": { "total": 9505, "covered": 6138 },
+        "reports": ["oxorio-privacy-pools-v1-2024-05"]
+      },
+      {
+        "timestamp": 1762905600,
+        "contracts": 21,
+        "withoutSource": 1,
+        "units": { "identical": 11, "differs": 84, "none": 22 },
+        "lines": { "total": 9505, "covered": 6138 },
+        "reports": ["cantina-rollup-contracts-2025-11-12"]
+      },
+      {
+        "timestamp": 1772668800,
+        "contracts": 21,
+        "withoutSource": 1,
+        "units": { "identical": 11, "differs": 84, "none": 22 },
+        "lines": { "total": 9505, "covered": 6138 },
+        "reports": ["cantina-payload-2026-03-05"]
+      },
+      {
+        "timestamp": 1791454331,
+        "contracts": 21,
+        "withoutSource": 1,
+        "units": { "identical": 11, "differs": 84, "none": 22 },
+        "lines": { "total": 9505, "covered": 6138 }
+      }
+    ],
+    "undatedReports": []
   }
 }

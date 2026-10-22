@@ -1,3 +1,4 @@
+import { parseReportDate } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { manifest } from '~/utils/Manifest'
@@ -9,10 +10,8 @@ import {
   reportUrl,
 } from './coverage/coverageReports'
 import { buildProjectCoverage } from './coverage/projectCoverage'
-import {
-  getAuditsProjectReports,
-  parseReportDate,
-} from './getAuditsProjectReports'
+import { getAuditsCoverageHistory } from './getAuditsCoverageHistory'
+import { getAuditsProjectReports } from './getAuditsProjectReports'
 import { getAuditsProject } from './getAuditsProjects'
 import {
   getAuditsLaunch,
@@ -87,6 +86,11 @@ export async function getAuditsProjectDetails(
         href: projectHref && `${projectHref}#ossification`,
       },
       launch: getAuditsLaunch(project),
+      coverageHistory: getAuditsCoverageHistory(
+        coverage,
+        project.id,
+        stackCollection,
+      ),
     },
     UnixTime.now(),
   )

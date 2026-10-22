@@ -3,7 +3,7 @@
   "project": "celo",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
+    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
   "discoveredAt": 1791383565,
   "collections": {
@@ -11,6 +11,7 @@
     "_libs/safe": { "name": "Safe", "kind": "library" },
     "_libs/solady": { "name": "Solady", "kind": "library" },
     "agglayer": { "name": "Agglayer", "kind": "project" },
+    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
     "celo": { "name": "Celo", "kind": "project" },
     "ethscriptions": { "name": "Ethscriptions", "kind": "project" },
     "facet": { "name": "Facet", "kind": "project" },
@@ -533,6 +534,13 @@
       "date": "2024-08-14",
       "document": "optimism/reports/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf"
     },
+    "spearbit-interop-contracts-2025-03": {
+      "collections": ["optimism"],
+      "title": "Optimism Interop Security Review (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2025-03-19",
+      "document": "optimism/reports/2025_03-Interop-Contracts-Spearbit.pdf"
+    },
     "spearbit-interop-portal-2025-05": {
       "collections": ["optimism"],
       "title": "Optimism Security Review",
@@ -561,6 +569,13 @@
       "date": "2025-10-07",
       "document": "optimism/reports/2025_09-U16a-Spearbit.pdf"
     },
+    "spearbit-upgrade13-2025-02": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Review (Spearbit, Upgrade 13)",
+      "auditor": "Spearbit",
+      "date": "2025-03-05",
+      "document": "optimism/reports/2025_02-Upgrade13-Spearbit.pdf"
+    },
     "spearbit-upgrade16-2025-05": {
       "collections": ["optimism"],
       "title": "Optimism Security Review - Upgrade 16 (Spearbit)",
@@ -581,6 +596,13 @@
       "auditor": "Trail of Bits",
       "date": "2024-12-19",
       "document": "celo/reports/Trail of Bits - Celo L2.pdf"
+    },
+    "trailofbits-governance-token-bridge-2023-06": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Governance Security Assessment (Trail of Bits, governance and token bridge, 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2023-01-06",
+      "document": "arbitrum/reports/2023_06_23_trail_of_bits_security_audit_governance_report_governance_token_bridge.pdf"
     },
     "trailofbits-invariant-testing-2022-11": {
       "collections": ["optimism"],
@@ -5649,5 +5671,447 @@
       "source": "1d47a9ea39d6e1a44c15ad81c9a73b1b76c1f3b7b8428dd1c191aa7fbc414cac",
       "critical": true
     }
+  },
+  "history": {
+    "launch": 1742960663,
+    "points": [
+      {
+        "timestamp": 1742960663,
+        "contracts": 17,
+        "withoutSource": 0,
+        "units": { "identical": 127, "differs": 102, "none": 20 },
+        "lines": { "total": 30840, "covered": 23224 },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "base-mt64cannon-2025-02",
+          "cantina-eip7702-2025-02",
+          "cantina-fault-proofs-mips-2024-08",
+          "cantina-mcp-l1-2024-02",
+          "cantina-safe-extensions-2024-06",
+          "certora-safe-1-5-0",
+          "code4rena-base-2023-08",
+          "code4rena-superchain-2024-08",
+          "code4rena-taiko-2024-04",
+          "code4rena-zksync-era-2023-10",
+          "code4rena-zksync-era-2024-03",
+          "code4rena-zksync-era-system-contracts-2023-03",
+          "contracts__audits__2022-10-Checkpoints",
+          "contracts__audits__2022-10-ERC4626",
+          "contracts__audits__2023-05-v4.9",
+          "contracts__audits__2023-10-v5.0",
+          "formal-verification__fv__reports__2022-05",
+          "g0-safe-1-1-0",
+          "g0-safe-1-1-1",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "milotruck-deputypausemodule-2025-01",
+          "openzeppelin-bedrock-bridge-2022-05",
+          "openzeppelin-bedrock-periphery-2022-09",
+          "openzeppelin-mantle-v2-solidity-contracts-2024-03",
+          "openzeppelin-taiko-protocol-2024-06",
+          "openzeppelin-zksync-l1-diff-2023-02",
+          "radiantlabs-deputypausemodule-2024-12",
+          "secure3-mantle-v2-public-contest-2024-04",
+          "secure3-mantle-v2-public-contest-final-2024-05",
+          "secure3-mantle-v2-tectonic-2024-03",
+          "sherlock-bedrock-2023-03",
+          "sherlock-fault-proofs-2024-06",
+          "sigma-prime-taiko-smart-contracts-2024-02",
+          "sigmaprime-mantle-l2-rollup-v2-2024-04",
+          "spearbit-fault-proofs-no-mips-2024-08",
+          "spearbit-interop-contracts-2025-03",
+          "spearbit-mt-cannon-2025-02",
+          "spearbit-upgrade13-2025-02",
+          "trail-of-bits-celo-l2-2024-12-19",
+          "trailofbits-governance-token-bridge-2023-06",
+          "trailofbits-invariant-testing-2022-11",
+          "trailofbits-opnode-fix-review-2022-07",
+          "trust-security-zksync-era-contracts-2024-10",
+          "trust-superchainconfig-upgrade-2024-01",
+          "verilog-staked-celo-prs-72-120-2023",
+          "zellic-facet-bridge-2024-11-04"
+        ]
+      },
+      {
+        "timestamp": 1743612623,
+        "contracts": 17,
+        "withoutSource": 0,
+        "units": { "identical": 127, "differs": 102, "none": 20 },
+        "lines": { "total": 30840, "covered": 23224 },
+        "changes": [
+          {
+            "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+            "name": "SuperchainConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1747699200,
+        "contracts": 17,
+        "withoutSource": 0,
+        "units": { "identical": 146, "differs": 85, "none": 18 },
+        "lines": { "total": 30840, "covered": 23954 },
+        "reports": ["spearbit-upgrade16-2025-05"]
+      },
+      {
+        "timestamp": 1748390400,
+        "contracts": 17,
+        "withoutSource": 0,
+        "units": { "identical": 146, "differs": 85, "none": 18 },
+        "lines": { "total": 30840, "covered": 23954 },
+        "reports": ["ackee-safe-1-5-0"]
+      },
+      {
+        "timestamp": 1748963099,
+        "contracts": 18,
+        "withoutSource": 0,
+        "units": { "identical": 166, "differs": 89, "none": 18 },
+        "lines": { "total": 33049, "covered": 26134 },
+        "changes": [
+          {
+            "address": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
+            "name": "DeputyPauseModule",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1748995200,
+        "contracts": 18,
+        "withoutSource": 0,
+        "units": { "identical": 166, "differs": 89, "none": 18 },
+        "lines": { "total": 33049, "covered": 26134 },
+        "reports": ["cantina-interop-portal-2025-04"]
+      },
+      {
+        "timestamp": 1751328000,
+        "contracts": 18,
+        "withoutSource": 0,
+        "units": { "identical": 169, "differs": 86, "none": 18 },
+        "lines": { "total": 33049, "covered": 26330 },
+        "reports": ["nethermind-nm-0561-celo-custom-gas-token-2025-07-01"]
+      },
+      {
+        "timestamp": 1751883851,
+        "contracts": 18,
+        "withoutSource": 0,
+        "units": { "identical": 186, "differs": 83, "none": 18 },
+        "lines": { "total": 34059, "covered": 27371 },
+        "changes": [
+          {
+            "address": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+            "name": "DisputeGameFactory",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1752710400,
+        "contracts": 18,
+        "withoutSource": 0,
+        "units": { "identical": 187, "differs": 82, "none": 18 },
+        "lines": { "total": 34059, "covered": 27374 },
+        "reports": ["contracts__audits__2025-07-v5.4"]
+      },
+      {
+        "timestamp": 1753379243,
+        "contracts": 18,
+        "withoutSource": 0,
+        "units": { "identical": 190, "differs": 82, "none": 18 },
+        "lines": { "total": 34305, "covered": 27620 },
+        "changes": [
+          {
+            "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+            "name": "SuperchainConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1759795200,
+        "contracts": 18,
+        "withoutSource": 0,
+        "units": { "identical": 190, "differs": 82, "none": 18 },
+        "lines": { "total": 34305, "covered": 27621 },
+        "reports": ["spearbit-u16a-2025-09"]
+      },
+      {
+        "timestamp": 1761523200,
+        "contracts": 18,
+        "withoutSource": 0,
+        "units": { "identical": 190, "differs": 82, "none": 18 },
+        "lines": { "total": 34305, "covered": 27622 },
+        "reports": ["cantina-u17-2025-10"]
+      },
+      {
+        "timestamp": 1762212215,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 200, "differs": 82, "none": 19 },
+        "lines": { "total": 37394, "covered": 30331 },
+        "changes": [
+          {
+            "address": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
+            "name": "MIPS",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1762992000,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 200, "differs": 82, "none": 19 },
+        "lines": { "total": 37394, "covered": 30331 },
+        "reports": ["spearbit-safersafes-2025-11"]
+      },
+      {
+        "timestamp": 1763424000,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 200, "differs": 83, "none": 18 },
+        "lines": { "total": 37394, "covered": 30489 },
+        "reports": ["cantina-custom-gas-token-2025-11"]
+      },
+      {
+        "timestamp": 1764092795,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 200, "differs": 83, "none": 18 },
+        "lines": { "total": 37372, "covered": 30467 },
+        "changes": [
+          {
+            "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+            "name": "SuperchainConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1764596735,
+        "contracts": 20,
+        "withoutSource": 0,
+        "units": { "identical": 217, "differs": 88, "none": 20 },
+        "lines": { "total": 41942, "covered": 33040 },
+        "changes": [
+          {
+            "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
+            "name": "SaferSafes",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1764689339,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 225, "differs": 89, "none": 20 },
+        "lines": { "total": 42435, "covered": 33529 },
+        "changes": [
+          {
+            "address": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+            "name": "AccessManager",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1768176000,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 226, "differs": 88, "none": 20 },
+        "lines": { "total": 42435, "covered": 33557 },
+        "reports": ["cantina-u18-2026-01"]
+      },
+      {
+        "timestamp": 1771200000,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 226, "differs": 88, "none": 20 },
+        "lines": { "total": 42435, "covered": 33557 },
+        "reports": ["certora-safe-allowance-v1-0-0"]
+      },
+      {
+        "timestamp": 1772150400,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 226, "differs": 88, "none": 20 },
+        "lines": { "total": 42435, "covered": 33557 },
+        "reports": ["contracts__audits__2026-02-v5.6"]
+      },
+      {
+        "timestamp": 1772236800,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 227, "differs": 87, "none": 20 },
+        "lines": { "total": 42435, "covered": 33560 },
+        "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+      },
+      {
+        "timestamp": 1774940723,
+        "contracts": 27,
+        "withoutSource": 0,
+        "units": { "identical": 346, "differs": 109, "none": 32 },
+        "lines": { "total": 63468, "covered": 49643 },
+        "changes": [
+          {
+            "address": "eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d",
+            "name": "AnchorStateRegistry",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x25035d2233d099f0BA710ca1e5a3834842870C66",
+            "name": "CeloSuperchainConfig",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x91FA5B653aFe81A79890A93ad83768A04cc011b4",
+            "name": "DelayedWETH",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552",
+            "name": "DelayedWETH",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+            "name": "DisputeGameFactory",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F",
+            "name": "FaultDisputeGame",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9",
+            "name": "PermissionedDisputeGame",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1779117911,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 357, "differs": 112, "none": 34 },
+        "lines": { "total": 65591, "covered": 50973 },
+        "changes": [
+          {
+            "address": "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF",
+            "name": "OPSuccinctFaultDisputeGame",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1780876800,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 357, "differs": 112, "none": 34 },
+        "lines": { "total": 65591, "covered": 50973 },
+        "reports": ["cantina-opcmv2-2026-06"]
+      },
+      {
+        "timestamp": 1781740800,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 357, "differs": 112, "none": 34 },
+        "lines": { "total": 65591, "covered": 50973 },
+        "reports": ["cantina-interop-l2-rereview-2026-06"]
+      },
+      {
+        "timestamp": 1782428747,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 355, "differs": 114, "none": 34 },
+        "lines": { "total": 65610, "covered": 50990 },
+        "changes": [
+          {
+            "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+            "name": "SuperchainConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1785283200,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 355, "differs": 114, "none": 34 },
+        "lines": { "total": 65610, "covered": 50990 },
+        "reports": ["certora-safe-1-3-0"]
+      },
+      {
+        "timestamp": 1786924800,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 355, "differs": 114, "none": 34 },
+        "lines": { "total": 65610, "covered": 50990 },
+        "reports": ["nethermind-safe-1-3-0", "nethermind-safe-allowance-v1-0-0"]
+      },
+      {
+        "timestamp": 1787184000,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 355, "differs": 114, "none": 34 },
+        "lines": { "total": 65610, "covered": 50991 },
+        "reports": ["cantina-upgrade20-2026-08"]
+      },
+      {
+        "timestamp": 1790268683,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 357, "differs": 112, "none": 34 },
+        "lines": { "total": 65613, "covered": 50995 },
+        "changes": [
+          {
+            "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+            "name": "SuperchainConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1791383565,
+        "contracts": 28,
+        "withoutSource": 0,
+        "units": { "identical": 357, "differs": 112, "none": 34 },
+        "lines": { "total": 65613, "covered": 50995 }
+      }
+    ],
+    "undatedReports": []
   }
 }

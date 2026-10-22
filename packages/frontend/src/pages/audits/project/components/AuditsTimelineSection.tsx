@@ -4,6 +4,7 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import type { AuditsProjectTimeline } from '~/server/features/audits/types'
 import { formatTimestamp } from '~/utils/dates'
+import { AuditsCoverageChart } from './AuditsCoverageChart'
 import { AuditsTimelineChart } from './AuditsTimelineChart'
 
 interface Props {
@@ -21,6 +22,8 @@ export function AuditsTimelineSection({ timeline }: Props) {
         a project built on a stack, the stack's audits that matched its deployed
         code count as its own. Code changed after the latest audit is only
         covered where it stayed identical to an audited version.
+        {timeline.coverageHistory !== undefined &&
+          ' The chart below shows how many lines of the critical contracts no audit covered at each moment, counting only the audits published by then and the code deployed then.'}
       </p>
       <ChartStats className="lg:grid-cols-4">
         <ChartStatsItem
@@ -84,6 +87,9 @@ export function AuditsTimelineSection({ timeline }: Props) {
         </ChartStatsItem>
       </ChartStats>
       <AuditsTimelineChart timeline={timeline} />
+      {timeline.coverageHistory !== undefined && (
+        <AuditsCoverageChart history={timeline.coverageHistory} />
+      )}
     </div>
   )
 }

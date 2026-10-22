@@ -3,7 +3,7 @@
   "project": "roninnetwork",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
+    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
   "discoveredAt": 1790944906,
   "collections": {
@@ -6193,5 +6193,282 @@
         "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0": "63aa25e090c48333e87647fab1d38c9778634a01ec8b42fcc93448f70344163c"
       }
     }
+  },
+  "history": {
+    "launch": 1778598960,
+    "points": [
+      {
+        "timestamp": 1778598960,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 179, "differs": 51, "none": 18 },
+        "lines": { "total": 32901, "covered": 25524 },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "ackee-safe-1-5-0",
+          "base-mt64cannon-2025-02",
+          "cantina-custom-gas-token-2025-11",
+          "cantina-eip7702-2025-02",
+          "cantina-fault-proofs-mips-2024-08",
+          "cantina-interop-portal-2025-04",
+          "cantina-mcp-l1-2024-02",
+          "cantina-policyenginestaking-2026-03",
+          "cantina-safe-extensions-2024-06",
+          "cantina-u17-2025-10",
+          "cantina-u18-2026-01",
+          "code4rena-base-2023-08",
+          "code4rena-superchain-2024-08",
+          "code4rena-taiko-2024-04",
+          "code4rena-zksync-era-2023-10",
+          "code4rena-zksync-era-2024-03",
+          "code4rena-zksync-era-system-contracts-2023-03",
+          "contracts__audits__2022-10-Checkpoints",
+          "contracts__audits__2022-10-ERC4626",
+          "contracts__audits__2023-10-v5.0",
+          "contracts__audits__2026-02-v5.6",
+          "formal-verification__fv__reports__2022-05",
+          "hashlock-celo-optimism-superchain-2026-02",
+          "milotruck-deputypausemodule-2025-01",
+          "nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+          "offbeatlabs-incident-response-updates-2025-01",
+          "openzeppelin-bedrock-bridge-2022-05",
+          "openzeppelin-bedrock-periphery-2022-09",
+          "openzeppelin-mantle-v2-solidity-contracts-2024-03",
+          "openzeppelin-taiko-protocol-2024-06",
+          "openzeppelin-zksync-l1-diff-2023-02",
+          "radiantlabs-deputypausemodule-2024-12",
+          "secure3-mantle-v2-public-contest-2024-04",
+          "secure3-mantle-v2-public-contest-final-2024-05",
+          "secure3-mantle-v2-tectonic-2024-03",
+          "sherlock-bedrock-2023-03",
+          "sherlock-fault-proofs-2024-06",
+          "sigma-prime-taiko-smart-contracts-2024-02",
+          "sigmaprime-mantle-l2-rollup-v2-2024-04",
+          "spearbit-cannon-eventfd-syscall-fix-review-2025-06",
+          "spearbit-fault-proofs-no-mips-2024-08",
+          "spearbit-mt-cannon-2025-02",
+          "spearbit-safersafes-2025-11",
+          "spearbit-u16a-2025-09",
+          "spearbit-upgrade16-2025-05",
+          "trailofbits-invariant-testing-2022-11",
+          "trailofbits-opnode-fix-review-2022-07",
+          "trust-security-zksync-era-contracts-2024-10",
+          "trust-superchainconfig-upgrade-2024-01",
+          "xuwinnie-solady-cbrt-proof"
+        ]
+      },
+      {
+        "timestamp": 1779494400,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 182, "differs": 48, "none": 18 },
+        "lines": { "total": 32901, "covered": 25589 },
+        "reports": ["cantina-u19-2026-05"]
+      },
+      {
+        "timestamp": 1780876800,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 182, "differs": 48, "none": 18 },
+        "lines": { "total": 32901, "covered": 25592 },
+        "reports": ["cantina-opcmv2-2026-06"]
+      },
+      {
+        "timestamp": 1781740800,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 184, "differs": 46, "none": 18 },
+        "lines": { "total": 32901, "covered": 25638 },
+        "reports": ["cantina-interop-l2-rereview-2026-06"]
+      },
+      {
+        "timestamp": 1782901175,
+        "contracts": 24,
+        "withoutSource": 0,
+        "units": { "identical": 234, "differs": 56, "none": 48 },
+        "lines": { "total": 44045, "covered": 33882 },
+        "changes": [
+          {
+            "address": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
+            "name": "KailuaGame",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
+            "name": "KailuaTreasury",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C",
+            "name": "KailuaVerifier",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D",
+            "name": "RiscZeroGroth16Verifier",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9",
+            "name": "RiscZeroGroth16Verifier",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85",
+            "name": "RiscZeroSetVerifier",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
+            "name": "RiscZeroVerifierEmergencyStop",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782",
+            "name": "RiscZeroVerifierEmergencyStop",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696",
+            "name": "RiscZeroVerifierEmergencyStop",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "name": "RiscZeroVerifierRouter",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "name": "TimelockController",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1787184000,
+        "contracts": 24,
+        "withoutSource": 0,
+        "units": { "identical": 234, "differs": 56, "none": 48 },
+        "lines": { "total": 44045, "covered": 33883 },
+        "reports": ["cantina-upgrade20-2026-08"]
+      },
+      {
+        "timestamp": 1788777107,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 184, "differs": 46, "none": 18 },
+        "lines": { "total": 32901, "covered": 25639 },
+        "changes": [
+          {
+            "address": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
+            "name": "KailuaGame",
+            "kind": "removed"
+          },
+          {
+            "address": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
+            "name": "KailuaTreasury",
+            "kind": "removed"
+          },
+          {
+            "address": "eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C",
+            "name": "KailuaVerifier",
+            "kind": "removed"
+          },
+          {
+            "address": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D",
+            "name": "RiscZeroGroth16Verifier",
+            "kind": "removed"
+          },
+          {
+            "address": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9",
+            "name": "RiscZeroGroth16Verifier",
+            "kind": "removed"
+          },
+          {
+            "address": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85",
+            "name": "RiscZeroSetVerifier",
+            "kind": "removed"
+          },
+          {
+            "address": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
+            "name": "RiscZeroVerifierEmergencyStop",
+            "kind": "removed"
+          },
+          {
+            "address": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782",
+            "name": "RiscZeroVerifierEmergencyStop",
+            "kind": "removed"
+          },
+          {
+            "address": "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696",
+            "name": "RiscZeroVerifierEmergencyStop",
+            "kind": "removed"
+          },
+          {
+            "address": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "name": "RiscZeroVerifierRouter",
+            "kind": "removed"
+          },
+          {
+            "address": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "name": "TimelockController",
+            "kind": "removed"
+          }
+        ]
+      },
+      {
+        "timestamp": 1789973519,
+        "contracts": 14,
+        "withoutSource": 0,
+        "units": { "identical": 174, "differs": 63, "none": 15 },
+        "lines": { "total": 33372, "covered": 27118 },
+        "changes": [
+          {
+            "address": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
+            "name": "AnchorStateRegistry",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d",
+            "name": "DelayedWETH",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+            "name": "DisputeGameFactory",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
+            "name": "SuperchainConfig",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1790944906,
+        "contracts": 14,
+        "withoutSource": 0,
+        "units": { "identical": 174, "differs": 63, "none": 15 },
+        "lines": { "total": 33372, "covered": 27118 }
+      }
+    ],
+    "undatedReports": []
   }
 }

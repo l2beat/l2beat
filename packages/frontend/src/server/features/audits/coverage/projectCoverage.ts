@@ -19,11 +19,9 @@ import {
 import {
   auditedFileUrl,
   matchedReportIds,
-  reportCollection,
-  reportOrigin,
-  reportUrl,
   sortReportIds,
   stackCollectionOf,
+  toReportRef,
   unitOrigin,
 } from './coverageReports'
 
@@ -48,19 +46,8 @@ export function buildProjectCoverage(
 ): ProjectCoverage {
   const { selection, addresses } = selectContracts(coverage)
   const stackCollection = stackCollectionOf(stacks, coverage)
-  const toReportRef = (id: string): AuditsUnitReportRef => {
-    const report = coverage.reports[id]
-    assert(report !== undefined, `Unknown report ${id}`)
-    const collection = reportCollection(id, coverage)
-    return {
-      id,
-      title: report.title,
-      auditor: report.auditor,
-      url: reportUrl(coverage, id),
-      origin: reportOrigin(id, coverage, projectId, stackCollection),
-      collectionName: coverage.collections[collection]?.name ?? collection,
-    }
-  }
+  const toRef = (id: string): AuditsUnitReportRef =>
+    toReportRef(coverage, id, projectId, stackCollection)
 
   const toUnitEntry = (
     flat: string,
@@ -101,12 +88,12 @@ export function buildProjectCoverage(
       coverage,
       projectId,
       stackCollection,
-    ).map(toReportRef)
+    ).map(toRef)
     const report = reports[0]
     assert(report !== undefined, `Matched unit ${unit.name} has no report`)
     const findings = Object.entries(unit.findings ?? {})
       .filter(([, ids]) => ids.length > 0)
-      .map(([id, ids]) => ({ report: toReportRef(id), ids }))
+      .map(([id, ids]) => ({ report: toRef(id), ids }))
     return {
       origin: unitOrigin(unit, coverage, projectId, stackCollection),
       collectionName: report.collectionName,

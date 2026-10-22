@@ -3,7 +3,7 @@
   "project": "facet",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
+    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
   "discoveredAt": 1780407005,
   "collections": {
@@ -12,6 +12,7 @@
     "_libs/solady": { "name": "Solady", "kind": "library" },
     "_libs/sp1": { "name": "SP1", "kind": "library" },
     "agglayer": { "name": "Agglayer", "kind": "project" },
+    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
     "bob": { "name": "BOB", "kind": "project" },
     "celo": { "name": "Celo", "kind": "project" },
     "ethscriptions": { "name": "Ethscriptions", "kind": "project" },
@@ -452,6 +453,13 @@
       "auditor": "Spearbit",
       "date": "2025-05-20",
       "document": "optimism/reports/2025_05-Upgrade16-Spearbit.pdf"
+    },
+    "trailofbits-governance-token-bridge-2023-06": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Governance Security Assessment (Trail of Bits, governance and token bridge, 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2023-01-06",
+      "document": "arbitrum/reports/2023_06_23_trail_of_bits_security_audit_governance_report_governance_token_bridge.pdf"
     },
     "trailofbits-invariant-testing-2022-11": {
       "collections": ["optimism"],
@@ -3051,5 +3059,146 @@
         "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "0328a76286bb94c049914d2742369b890987a701951b9b68263dd2c98a2e17e6"
       }
     }
+  },
+  "history": {
+    "launch": 1733855519,
+    "points": [
+      {
+        "timestamp": 1733855519,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 23, "differs": 18, "none": 4 },
+        "lines": { "total": 8689, "covered": 5998 },
+        "reports": [
+          "cantina-fault-proofs-mips-2024-08",
+          "cantina-mcp-l1-2024-02",
+          "cantina-safe-extensions-2024-06",
+          "code4rena-taiko-2024-04",
+          "code4rena-zksync-era-2023-10",
+          "code4rena-zksync-era-2024-03",
+          "code4rena-zksync-era-system-contracts-2023-03",
+          "contracts__audits__2022-10-Checkpoints",
+          "contracts__audits__2022-10-ERC4626",
+          "contracts__audits__2023-10-v5.0",
+          "formal-verification__fv__reports__2022-05",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "openzeppelin-bedrock-bridge-2022-05",
+          "openzeppelin-bedrock-periphery-2022-09",
+          "openzeppelin-mantle-v2-solidity-contracts-2024-03",
+          "openzeppelin-taiko-protocol-2024-06",
+          "openzeppelin-zksync-l1-diff-2023-02",
+          "secure3-mantle-v2-public-contest-2024-04",
+          "secure3-mantle-v2-public-contest-final-2024-05",
+          "secure3-mantle-v2-tectonic-2024-03",
+          "sherlock-bedrock-2023-03",
+          "sherlock-fault-proofs-2024-06",
+          "sigma-prime-taiko-smart-contracts-2024-02",
+          "spearbit-fault-proofs-no-mips-2024-08",
+          "trailofbits-governance-token-bridge-2023-06",
+          "trailofbits-invariant-testing-2022-11",
+          "trailofbits-opnode-fix-review-2022-07",
+          "trust-security-zksync-era-contracts-2024-10",
+          "trust-superchainconfig-upgrade-2024-01",
+          "zellic-facet-bridge-2024-11-04"
+        ]
+      },
+      {
+        "timestamp": 1735344000,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 23, "differs": 18, "none": 4 },
+        "lines": { "total": 8689, "covered": 5998 },
+        "reports": ["radiantlabs-deputypausemodule-2024-12"]
+      },
+      {
+        "timestamp": 1741478400,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 23, "differs": 18, "none": 4 },
+        "lines": { "total": 8689, "covered": 5998 },
+        "reports": ["cantina-eip7702-2025-02"]
+      },
+      {
+        "timestamp": 1747699200,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 24, "differs": 17, "none": 4 },
+        "lines": { "total": 8689, "covered": 6093 },
+        "reports": ["spearbit-upgrade16-2025-05"]
+      },
+      {
+        "timestamp": 1748390400,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 24, "differs": 17, "none": 4 },
+        "lines": { "total": 8689, "covered": 6093 },
+        "reports": ["ackee-safe-1-5-0"]
+      },
+      {
+        "timestamp": 1748995200,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 24, "differs": 17, "none": 4 },
+        "lines": { "total": 8689, "covered": 6093 },
+        "reports": ["cantina-interop-portal-2025-04"]
+      },
+      {
+        "timestamp": 1751328000,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 24, "differs": 17, "none": 4 },
+        "lines": { "total": 8689, "covered": 6134 },
+        "reports": ["nethermind-nm-0561-celo-custom-gas-token-2025-07-01"]
+      },
+      {
+        "timestamp": 1762992000,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 24, "differs": 17, "none": 4 },
+        "lines": { "total": 8689, "covered": 6134 },
+        "reports": ["spearbit-safersafes-2025-11"]
+      },
+      {
+        "timestamp": 1763424000,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 24, "differs": 17, "none": 4 },
+        "lines": { "total": 8689, "covered": 6134 },
+        "reports": ["cantina-custom-gas-token-2025-11"]
+      },
+      {
+        "timestamp": 1768176000,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 24, "differs": 17, "none": 4 },
+        "lines": { "total": 8689, "covered": 6134 },
+        "reports": ["cantina-u18-2026-01"]
+      },
+      {
+        "timestamp": 1772150400,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 24, "differs": 17, "none": 4 },
+        "lines": { "total": 8689, "covered": 6134 },
+        "reports": ["contracts__audits__2026-02-v5.6"]
+      },
+      {
+        "timestamp": 1772236800,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 24, "differs": 17, "none": 4 },
+        "lines": { "total": 8689, "covered": 6134 },
+        "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+      },
+      {
+        "timestamp": 1780407005,
+        "contracts": 1,
+        "withoutSource": 0,
+        "units": { "identical": 24, "differs": 17, "none": 4 },
+        "lines": { "total": 8689, "covered": 6134 }
+      }
+    ],
+    "undatedReports": []
   }
 }

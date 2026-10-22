@@ -1,10 +1,6 @@
 import type { ProjectAuditCoverage } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  getAuditsProjectReports,
-  parseReportDate,
-} from './getAuditsProjectReports'
+import { getAuditsProjectReports } from './getAuditsProjectReports'
 
 describe(getAuditsProjectReports.name, () => {
   const coverage = {
@@ -51,16 +47,6 @@ describe(getAuditsProjectReports.name, () => {
   it('counts no stack audits without a stack collection', () => {
     const audits = getAuditsProjectReports(coverage, 'own', undefined, matched)
     expect(audits.map((a) => a.origin)).toEqual(['own', 'own', 'own'])
-  })
-})
-
-describe(parseReportDate.name, () => {
-  it('parses ISO days and falls back to the id suffix', () => {
-    expect(parseReportDate('2024-03-01')).toEqual(UnixTime(1709251200))
-    expect(parseReportDate(null, 'consensys-umbra-2021-03')).toEqual(
-      UnixTime(1614556800),
-    )
-    expect(parseReportDate(null, 'no-date-here')).toEqual(undefined)
   })
 })
 

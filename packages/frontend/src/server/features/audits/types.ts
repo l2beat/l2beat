@@ -184,6 +184,37 @@ export interface AuditsContractEntry {
   sources: AuditsSourceEntry[]
 }
 
+/** One point of the coverage history, see AuditsCoverageChart. */
+export interface AuditsCoverageHistoryPoint {
+  timestamp: number
+  /** covered / total, 0 when total is 0. */
+  percent: number
+  /** uncovered is what the chart draws: every line is a possible exploit. */
+  lines: { total: number; covered: number; uncovered: number }
+  units: { identical: number; differs: number; unaudited: number }
+  contracts: number
+  withoutSource: number
+  /** Reports that began to count at this point and matched its code. */
+  reports: AuditsUnitReportRef[]
+  changes: {
+    address: string
+    name: string
+    kind: 'added' | 'removed' | 'upgraded'
+  }[]
+}
+
+/**
+ * The share of the perimeter's lines matching audited code over time, from
+ * the launch to the present, as `l2b audit-coverage --history` computed it.
+ */
+export interface AuditsCoverageHistory {
+  launch: number
+  /** Ascending; the last point is the present and equals the dashboard. */
+  points: AuditsCoverageHistoryPoint[]
+  /** Counted only at the present, having no date. */
+  undatedReports: AuditsUnitReportRef[]
+}
+
 /** Markers and stats of the audits and upgrades timeline section. */
 export interface AuditsProjectTimeline {
   /** The project's audits, own and stack, ascending. */
@@ -219,6 +250,8 @@ export interface AuditsProjectTimeline {
   /** Launch, first audit or first critical code change, at least a year ago. */
   from: number
   to: number
+  /** Only for projects whose coverage was generated with a history. */
+  coverageHistory?: AuditsCoverageHistory
 }
 
 export interface AuditsProjectDetails {

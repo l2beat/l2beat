@@ -3,7 +3,7 @@
   "project": "uniswapv3",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
+    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
   "discoveredAt": 1786913047,
   "collections": {
@@ -142,6 +142,20 @@
       "auditor": "Sigma Prime",
       "document": "katana/reports/2025_04-sigmaprime-vault-bridge-yield-exposed-token-security-assessment.pdf"
     },
+    "solidified-aztec-aave-bridge-2022-05-18": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Aave Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-05-18",
+      "document": "aztecnetwork/reports/Solidified - Aztec Aave Bridge.pdf"
+    },
+    "solidified-aztec-element-bridge-2022-05-11": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Element Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-05-11",
+      "document": "aztecnetwork/reports/Solidified - Aztec Element Bridge.pdf"
+    },
     "solidified-aztec-liquity-bridge-2022-06-14": {
       "collections": ["aztecnetwork"],
       "title": "Aztec Liquity Bridge Audit",
@@ -169,6 +183,13 @@
       "auditor": "Trail of Bits",
       "date": "2020-02-28",
       "document": "compound/reports/Trail of Bits - Compound Governance.pdf"
+    },
+    "trailofbits-governance-token-bridge-2023-06": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Governance Security Assessment (Trail of Bits, governance and token bridge, 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2023-01-06",
+      "document": "arbitrum/reports/2023_06_23_trail_of_bits_security_audit_governance_report_governance_token_bridge.pdf"
     },
     "trailofbits-uniswap-v3-core-2021-03": {
       "collections": ["uniswapv3"],
@@ -2992,5 +3013,207 @@
       "name": "TokenJar",
       "source": "7e2ed027537293c1126f44b7f804a1ef2a75cf9f3a10fc01a22bf12434af2390"
     }
+  },
+  "history": {
+    "launch": 1600107086,
+    "points": [
+      {
+        "timestamp": 1600107086,
+        "contracts": 2,
+        "withoutSource": 0,
+        "units": { "identical": 1, "differs": 0, "none": 3 },
+        "lines": { "total": 833, "covered": 107 },
+        "reports": [
+          "openzeppelin-compound-timelock-2019-10",
+          "trailofbits-compound-governance-2020-02"
+        ]
+      },
+      {
+        "timestamp": 1620156420,
+        "contracts": 5,
+        "withoutSource": 0,
+        "units": { "identical": 33, "differs": 12, "none": 25 },
+        "lines": { "total": 8286, "covered": 5073 },
+        "changes": [
+          {
+            "address": "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88",
+            "name": "NonfungiblePositionManager",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+            "name": "UniswapV3Factory",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD",
+            "name": "UniswapV3Pool_WBTC_WETH_03",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1620250931,
+        "contracts": 6,
+        "withoutSource": 0,
+        "units": { "identical": 46, "differs": 17, "none": 25 },
+        "lines": { "total": 10606, "covered": 7146 },
+        "changes": [
+          {
+            "address": "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640",
+            "name": "UniswapV3Pool_USDC_WETH_005",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1629421922,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 20, "none": 25 },
+        "lines": { "total": 11261, "covered": 7772 },
+        "changes": [
+          {
+            "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+            "name": "GovernorBravo",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1636070400,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 20, "none": 25 },
+        "lines": { "total": 11261, "covered": 7772 },
+        "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
+      },
+      {
+        "timestamp": 1652227200,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 20, "none": 25 },
+        "lines": { "total": 11261, "covered": 7772 },
+        "reports": ["solidified-aztec-element-bridge-2022-05-11"]
+      },
+      {
+        "timestamp": 1652832000,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 20, "none": 25 },
+        "lines": { "total": 11261, "covered": 7772 },
+        "reports": ["solidified-aztec-aave-bridge-2022-05-18"]
+      },
+      {
+        "timestamp": 1672963200,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 20, "none": 25 },
+        "lines": { "total": 11261, "covered": 7772 },
+        "reports": ["trailofbits-governance-token-bridge-2023-06"]
+      },
+      {
+        "timestamp": 1679961600,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 20, "none": 25 },
+        "lines": { "total": 11261, "covered": 7772 },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      {
+        "timestamp": 1686700800,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 21, "none": 24 },
+        "lines": { "total": 11261, "covered": 7930 },
+        "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
+      },
+      {
+        "timestamp": 1696291200,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 23, "none": 22 },
+        "lines": { "total": 11261, "covered": 8202 },
+        "reports": ["contracts__audits__2023-10-v5.0"]
+      },
+      {
+        "timestamp": 1732492800,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 26, "none": 19 },
+        "lines": { "total": 11261, "covered": 8272 },
+        "reports": ["code4rena-ronin-katana-v3-2024-10"]
+      },
+      {
+        "timestamp": 1743465600,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 26, "none": 19 },
+        "lines": { "total": 11261, "covered": 8272 },
+        "reports": ["sigmaprime-yield-exposed-token-2025-04"]
+      },
+      {
+        "timestamp": 1746057600,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 26, "none": 19 },
+        "lines": { "total": 11261, "covered": 8272 },
+        "reports": ["certora-vault-bridge-2025-05"]
+      },
+      {
+        "timestamp": 1748390400,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 26, "none": 19 },
+        "lines": { "total": 11261, "covered": 8272 },
+        "reports": ["ackee-safe-1-5-0"]
+      },
+      {
+        "timestamp": 1748736000,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 26, "none": 19 },
+        "lines": { "total": 11261, "covered": 8272 },
+        "reports": ["certora-vault-bridge-fv-2025-06"]
+      },
+      {
+        "timestamp": 1761955200,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 26, "none": 19 },
+        "lines": { "total": 11261, "covered": 8272 },
+        "reports": ["certora-vault-bridge-v1-1-2025-11"]
+      },
+      {
+        "timestamp": 1771859579,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 26, "none": 22 },
+        "lines": { "total": 11595, "covered": 8272 },
+        "changes": [
+          {
+            "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+            "name": "V3OpenFeeAdapter",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1772150400,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 26, "none": 22 },
+        "lines": { "total": 11595, "covered": 8272 },
+        "reports": ["contracts__audits__2026-02-v5.6"]
+      },
+      {
+        "timestamp": 1786913047,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 50, "differs": 26, "none": 22 },
+        "lines": { "total": 11595, "covered": 8272 }
+      }
+    ],
+    "undatedReports": []
   }
 }

@@ -1,5 +1,5 @@
 import type { ProjectAuditCoverage } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { parseReportDate } from '@l2beat/shared/frontend'
 import {
   reportCollection,
   reportOrigin,
@@ -44,19 +44,4 @@ export function getAuditsProjectReports(
       ]
     })
     .sort((a, b) => a.timestamp - b.timestamp || a.id.localeCompare(b.id))
-}
-
-/**
- * Dataset dates are ISO days. An undated report falls back to the year and
- * month its id ends with, e.g. `consensys-umbra-2021-03`; anything else is
- * treated as undated.
- */
-export function parseReportDate(
-  reportDate: string | null,
-  id?: string,
-): UnixTime | undefined {
-  const date = reportDate ?? id?.match(/(\d{4}-\d{2}(?:-\d{2})?)$/)?.[1]
-  if (!date) return undefined
-  const ms = Date.parse(date)
-  return Number.isNaN(ms) ? undefined : UnixTime(Math.floor(ms / 1000))
 }

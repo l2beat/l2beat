@@ -3,7 +3,7 @@
   "project": "optimism",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "b344a639ced9a94a063c7afb1c981e304d9f85e9"
+    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
   },
   "discoveredAt": 1790862344,
   "collections": {
@@ -11,9 +11,14 @@
     "_libs/safe": { "name": "Safe", "kind": "library" },
     "_libs/solady": { "name": "Solady", "kind": "library" },
     "arbitrum": { "name": "Arbitrum One", "kind": "project" },
+    "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
     "celo": { "name": "Celo", "kind": "project" },
+    "ethscriptions": { "name": "Ethscriptions", "kind": "project" },
+    "facet": { "name": "Facet", "kind": "project" },
     "mantle": { "name": "Mantle", "kind": "project" },
+    "morph": { "name": "Morph", "kind": "project" },
     "optimism": { "name": "OP Mainnet", "kind": "project" },
+    "scroll": { "name": "Scroll", "kind": "project" },
     "starknet": { "name": "Starknet", "kind": "project" },
     "taiko": { "name": "Taiko Alethia", "kind": "project" },
     "zksync2": { "name": "ZKsync Era", "kind": "project" }
@@ -263,6 +268,13 @@
       "date": "2021-11-05",
       "document": "arbitrum/reports/2021_11_05_consensys_diligence_security_audit_core_contracts_token_bridge.pdf"
     },
+    "consensys-nitro-contracts-2022-06": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Nitro Smart Contracts (ConsenSys Diligence, June 2022)",
+      "auditor": "ConsenSys Diligence",
+      "date": "2022-06-24",
+      "document": "arbitrum/reports/2022_06_24_consensys_diligence_security_audit_nitro_contracts.pdf"
+    },
     "consensys-safetychecker-2021-03": {
       "collections": ["optimism"],
       "title": "Optimism SafetyChecker (ConsenSys Diligence)",
@@ -454,6 +466,13 @@
       "auditor": "OpenZeppelin",
       "document": "optimism/reports/2021_03-OVM_and_Rollup-OpenZeppelin.pdf"
     },
+    "openzeppelin-scroll-layer1-audit-2023-07": {
+      "collections": ["scroll"],
+      "title": "Scroll Layer 1 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2023-07-18",
+      "document": "scroll/reports/openzeppelin-scroll-layer1-audit-2023-07.pdf"
+    },
     "openzeppelin-taiko-protocol-2024-06": {
       "collections": ["taiko"],
       "title": "Taiko Protocol Audit (OpenZeppelin)",
@@ -541,6 +560,13 @@
       "title": "Mantle L2 Rollup V2 Security Assessment Report",
       "auditor": "Sigma Prime",
       "document": "mantle/reports/2024_04-sigmaprime-mantle-l2-rollup-v2-security-assessment.pdf"
+    },
+    "solidified-aztec-element-bridge-2022-05-11": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Element Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-05-11",
+      "document": "aztecnetwork/reports/Solidified - Aztec Element Bridge.pdf"
     },
     "spearbit-cannon-eventfd-syscall-fix-review-2025-06": {
       "collections": ["optimism"],
@@ -647,6 +673,20 @@
       "date": "2022-11-10",
       "document": "optimism/reports/2022_11-Invariant_Testing-TrailOfBits.pdf"
     },
+    "trailofbits-morph-l2-2024-07": {
+      "collections": ["morph"],
+      "title": "Morph L2 Security Assessment (Comprehensive Report with Fix Review)",
+      "auditor": "Trail of Bits",
+      "date": "2024-07-18",
+      "document": "morph/reports/2024_07-trailofbits-morph-l2-security-assessment-with-fix-review.pdf"
+    },
+    "trailofbits-nitro-1-of-2-2022-03": {
+      "collections": ["arbitrum"],
+      "title": "Offchain Nitro Security Assessment (Trail of Bits, first Nitro review, 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2022-05-25",
+      "document": "arbitrum/reports/2022_03_14_trail_of_bits_security_audit_nitro_1_of_2.pdf"
+    },
     "trailofbits-opnode-fix-review-2022-07": {
       "collections": ["optimism"],
       "title": "Optimism: Rollup Node and Execution Engine - Fix Review",
@@ -694,6 +734,20 @@
       "auditor": "Zach Obront",
       "date": "2023-05-12",
       "document": "optimism/reports/2023_05-Governor-ZachObront.md"
+    },
+    "zellic-facet-bridge-2024-11-04": {
+      "collections": ["ethscriptions", "facet"],
+      "title": "Facet Bridge Smart Contract Security Assessment",
+      "auditor": "Zellic",
+      "date": "2024-11-04",
+      "document": "ethscriptions/reports/Zellic_Facet_Bridge_Audit_Report.pdf"
+    },
+    "zellic-scroll-bridge-rollup-audit-2023-05": {
+      "collections": ["scroll"],
+      "title": "Scroll Tech Smart Contract Security Assessment",
+      "auditor": "Zellic",
+      "date": "2023-05-26",
+      "document": "scroll/reports/zellic-scroll-bridge-rollup-audit-2023-05.pdf"
     }
   },
   "auditedFiles": {
@@ -7090,5 +7144,1094 @@
       "source": "2af33a188c2c8d50900141e0f9f82a88df10e147a6f46ae899b89c6ba3fad8d2",
       "critical": true
     }
+  },
+  "history": {
+    "launch": 1636668000,
+    "points": [
+      {
+        "timestamp": 1636668000,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 2, "differs": 14, "none": 30 },
+        "lines": { "total": 6078, "covered": 2134 },
+        "reports": [
+          "consensys-arbitrum-core-token-bridge-2021-11",
+          "contracts__audits__2018-10",
+          "dapphub-ecdsa-wallet-2020-11",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "openzeppelin-ovm-rollup-2021-03",
+          "trailofbits-ovm-rollup-2020-10"
+        ]
+      },
+      {
+        "timestamp": 1650979836,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 2, "differs": 19, "none": 38 },
+        "lines": { "total": 7481, "covered": 2622 },
+        "changes": [
+          {
+            "address": "oeth:0x4200000000000000000000000000000000000042",
+            "name": "OPToken",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1651363200,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 3, "differs": 19, "none": 37 },
+        "lines": { "total": 7481, "covered": 2704 },
+        "reports": ["formal-verification__fv__reports__2022-05"]
+      },
+      {
+        "timestamp": 1652227200,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 3, "differs": 19, "none": 37 },
+        "lines": { "total": 7481, "covered": 2704 },
+        "reports": ["solidified-aztec-element-bridge-2022-05-11"]
+      },
+      {
+        "timestamp": 1652659200,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 3, "differs": 21, "none": 35 },
+        "lines": { "total": 7481, "covered": 3107 },
+        "reports": ["openzeppelin-bedrock-bridge-2022-05"]
+      },
+      {
+        "timestamp": 1653436800,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 3, "differs": 21, "none": 35 },
+        "lines": { "total": 7481, "covered": 3110 },
+        "reports": ["trailofbits-nitro-1-of-2-2022-03"]
+      },
+      {
+        "timestamp": 1656028800,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 3, "differs": 21, "none": 35 },
+        "lines": { "total": 7481, "covered": 3110 },
+        "reports": ["consensys-nitro-contracts-2022-06"]
+      },
+      {
+        "timestamp": 1662076800,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 9, "differs": 22, "none": 28 },
+        "lines": { "total": 7481, "covered": 4669 },
+        "reports": ["openzeppelin-bedrock-periphery-2022-09"]
+      },
+      {
+        "timestamp": 1665503636,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 9, "differs": 27, "none": 37 },
+        "lines": { "total": 8948, "covered": 5157 },
+        "changes": [
+          {
+            "address": "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
+            "name": "MintManager",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1668038400,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 10, "differs": 26, "none": 37 },
+        "lines": { "total": 8948, "covered": 5160 },
+        "reports": ["trailofbits-invariant-testing-2022-11"]
+      },
+      {
+        "timestamp": 1672963200,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 10, "differs": 26, "none": 37 },
+        "lines": { "total": 8948, "covered": 5160 },
+        "reports": ["trailofbits-governance-token-bridge-2023-06"]
+      },
+      {
+        "timestamp": 1677801600,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 10, "differs": 26, "none": 37 },
+        "lines": { "total": 8948, "covered": 5184 },
+        "reports": ["sherlock-bedrock-2023-03"]
+      },
+      {
+        "timestamp": 1678233600,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 10, "differs": 26, "none": 37 },
+        "lines": { "total": 8948, "covered": 5184 },
+        "reports": ["openzeppelin-zksync-l1-diff-2023-02"]
+      },
+      {
+        "timestamp": 1679961600,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 10, "differs": 26, "none": 37 },
+        "lines": { "total": 8948, "covered": 5184 },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      {
+        "timestamp": 1683590400,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 10, "differs": 28, "none": 35 },
+        "lines": { "total": 8948, "covered": 5338 },
+        "reports": ["contracts__audits__2023-05-v4.9"]
+      },
+      {
+        "timestamp": 1685059200,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 10, "differs": 28, "none": 35 },
+        "lines": { "total": 8948, "covered": 5338 },
+        "reports": ["zellic-scroll-bridge-rollup-audit-2023-05"]
+      },
+      {
+        "timestamp": 1685377355,
+        "contracts": 12,
+        "withoutSource": 0,
+        "units": { "identical": 11, "differs": 32, "none": 36 },
+        "lines": { "total": 9708, "covered": 6052 },
+        "changes": [
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+            "name": "SuperchainProxyAdmin",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1686067127,
+        "contracts": 12,
+        "withoutSource": 0,
+        "units": { "identical": 41, "differs": 44, "none": 53 },
+        "lines": { "total": 18464, "covered": 11182 },
+        "changes": [
+          {
+            "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1686700800,
+        "contracts": 12,
+        "withoutSource": 0,
+        "units": { "identical": 42, "differs": 47, "none": 49 },
+        "lines": { "total": 18464, "covered": 11985 },
+        "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
+      },
+      {
+        "timestamp": 1688169600,
+        "contracts": 12,
+        "withoutSource": 0,
+        "units": { "identical": 44, "differs": 45, "none": 49 },
+        "lines": { "total": 18464, "covered": 12035 },
+        "reports": ["sigmaprime-mantle-l2-rollup-2023-07"]
+      },
+      {
+        "timestamp": 1689552000,
+        "contracts": 12,
+        "withoutSource": 0,
+        "units": { "identical": 44, "differs": 45, "none": 49 },
+        "lines": { "total": 18464, "covered": 12035 },
+        "reports": ["secure3-mantle-v1-contest-2023-07"]
+      },
+      {
+        "timestamp": 1689638400,
+        "contracts": 12,
+        "withoutSource": 0,
+        "units": { "identical": 44, "differs": 45, "none": 49 },
+        "lines": { "total": 18464, "covered": 12035 },
+        "reports": ["openzeppelin-scroll-layer1-audit-2023-07"]
+      },
+      {
+        "timestamp": 1691625600,
+        "contracts": 12,
+        "withoutSource": 0,
+        "units": { "identical": 51, "differs": 38, "none": 49 },
+        "lines": { "total": 18464, "covered": 12382 },
+        "reports": ["code4rena-base-2023-08"]
+      },
+      {
+        "timestamp": 1696291200,
+        "contracts": 12,
+        "withoutSource": 0,
+        "units": { "identical": 56, "differs": 52, "none": 30 },
+        "lines": { "total": 18464, "covered": 13603 },
+        "reports": ["contracts__audits__2023-10-v5.0"]
+      },
+      {
+        "timestamp": 1704931200,
+        "contracts": 12,
+        "withoutSource": 0,
+        "units": { "identical": 58, "differs": 52, "none": 28 },
+        "lines": { "total": 18464, "covered": 13779 },
+        "reports": ["trust-superchainconfig-upgrade-2024-01"]
+      },
+      {
+        "timestamp": 1705954799,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 64, "differs": 58, "none": 31 },
+        "lines": { "total": 20223, "covered": 14852 },
+        "changes": [
+          {
+            "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+            "name": "SuperchainConfig",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1707955200,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 64, "differs": 58, "none": 31 },
+        "lines": { "total": 20223, "covered": 14884 },
+        "reports": ["cantina-mcp-l1-2024-02"]
+      },
+      {
+        "timestamp": 1708983851,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 55, "differs": 63, "none": 34 },
+        "lines": { "total": 19075, "covered": 13383 },
+        "changes": [
+          {
+            "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1709510400,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 57, "differs": 65, "none": 30 },
+        "lines": { "total": 19075, "covered": 13979 },
+        "reports": ["secure3-mantle-v2-tectonic-2024-03"]
+      },
+      {
+        "timestamp": 1710460800,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 57, "differs": 65, "none": 30 },
+        "lines": { "total": 19075, "covered": 13979 },
+        "reports": ["openzeppelin-mantle-v2-solidity-contracts-2024-03"]
+      },
+      {
+        "timestamp": 1712868599,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 61, "differs": 61, "none": 30 },
+        "lines": { "total": 19495, "covered": 14529 },
+        "changes": [
+          {
+            "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1713398400,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 68, "differs": 61, "none": 23 },
+        "lines": { "total": 19495, "covered": 15157 },
+        "reports": ["secure3-mantle-v2-public-contest-2024-04"]
+      },
+      {
+        "timestamp": 1714089600,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 68, "differs": 61, "none": 23 },
+        "lines": { "total": 19495, "covered": 15125 },
+        "reports": ["code4rena-taiko-2024-04"]
+      },
+      {
+        "timestamp": 1715299200,
+        "contracts": 13,
+        "withoutSource": 0,
+        "units": { "identical": 68, "differs": 61, "none": 23 },
+        "lines": { "total": 19495, "covered": 15125 },
+        "reports": ["secure3-mantle-v2-public-contest-final-2024-05"]
+      },
+      {
+        "timestamp": 1715887043,
+        "contracts": 14,
+        "withoutSource": 0,
+        "units": { "identical": 73, "differs": 69, "none": 33 },
+        "lines": { "total": 22436, "covered": 16159 },
+        "changes": [
+          {
+            "address": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+            "name": "DisputeGameFactory",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1717149791,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 103, "differs": 70, "none": 36 },
+        "lines": { "total": 25132, "covered": 18386 },
+        "changes": [
+          {
+            "address": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
+            "name": "LivenessGuard",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+            "name": "LivenessModule",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1717632000,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 105, "differs": 71, "none": 33 },
+        "lines": { "total": 25132, "covered": 18826 },
+        "reports": ["cantina-safe-extensions-2024-06"]
+      },
+      {
+        "timestamp": 1717718400,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 120, "differs": 68, "none": 21 },
+        "lines": { "total": 25132, "covered": 19880 },
+        "reports": ["sherlock-fault-proofs-2024-06"]
+      },
+      {
+        "timestamp": 1718037779,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 115, "differs": 79, "none": 22 },
+        "lines": { "total": 26246, "covered": 20049 },
+        "changes": [
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1718755200,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 115, "differs": 79, "none": 22 },
+        "lines": { "total": 26246, "covered": 20049 },
+        "reports": ["openzeppelin-taiko-protocol-2024-06"]
+      },
+      {
+        "timestamp": 1721260800,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 115, "differs": 79, "none": 22 },
+        "lines": { "total": 26246, "covered": 20049 },
+        "reports": ["trailofbits-morph-l2-2024-07"]
+      },
+      {
+        "timestamp": 1723593600,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 127, "differs": 67, "none": 22 },
+        "lines": { "total": 26246, "covered": 20162 },
+        "reports": [
+          "cantina-fault-proofs-mips-2024-08",
+          "spearbit-fault-proofs-no-mips-2024-08"
+        ]
+      },
+      {
+        "timestamp": 1723766400,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 127, "differs": 67, "none": 22 },
+        "lines": { "total": 26246, "covered": 20162 },
+        "reports": ["code4rena-superchain-2024-08"]
+      },
+      {
+        "timestamp": 1730678400,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 127, "differs": 67, "none": 22 },
+        "lines": { "total": 26246, "covered": 20164 },
+        "reports": ["zellic-facet-bridge-2024-11-04"]
+      },
+      {
+        "timestamp": 1735344000,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 127, "differs": 67, "none": 22 },
+        "lines": { "total": 26246, "covered": 20164 },
+        "reports": ["radiantlabs-deputypausemodule-2024-12"]
+      },
+      {
+        "timestamp": 1736208000,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 127, "differs": 67, "none": 22 },
+        "lines": { "total": 26246, "covered": 20164 },
+        "reports": ["milotruck-deputypausemodule-2025-01"]
+      },
+      {
+        "timestamp": 1736812800,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 127, "differs": 67, "none": 22 },
+        "lines": { "total": 26246, "covered": 20164 },
+        "reports": ["certora-safe-1-5-0"]
+      },
+      {
+        "timestamp": 1737729695,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 125, "differs": 66, "none": 22 },
+        "lines": { "total": 26974, "covered": 19988 },
+        "changes": [
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1738800000,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 125, "differs": 66, "none": 22 },
+        "lines": { "total": 26974, "covered": 19988 },
+        "reports": ["base-mt64cannon-2025-02"]
+      },
+      {
+        "timestamp": 1740009600,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 125, "differs": 66, "none": 22 },
+        "lines": { "total": 26974, "covered": 19988 },
+        "reports": ["spearbit-mt-cannon-2025-02"]
+      },
+      {
+        "timestamp": 1741132800,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 125, "differs": 66, "none": 22 },
+        "lines": { "total": 26974, "covered": 20021 },
+        "reports": ["spearbit-upgrade13-2025-02"]
+      },
+      {
+        "timestamp": 1741478400,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 126, "differs": 66, "none": 21 },
+        "lines": { "total": 26974, "covered": 20041 },
+        "reports": ["cantina-eip7702-2025-02"]
+      },
+      {
+        "timestamp": 1742342400,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 126, "differs": 66, "none": 21 },
+        "lines": { "total": 26974, "covered": 20041 },
+        "reports": ["spearbit-interop-contracts-2025-03"]
+      },
+      {
+        "timestamp": 1743612623,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 111, "differs": 57, "none": 17 },
+        "lines": { "total": 20942, "covered": 16576 },
+        "changes": [
+          {
+            "address": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+            "name": "DisputeGameFactory",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+            "name": "SuperchainConfig",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1745511383,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 109, "differs": 60, "none": 17 },
+        "lines": { "total": 21343, "covered": 16851 },
+        "changes": [
+          {
+            "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1747699200,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 119, "differs": 53, "none": 14 },
+        "lines": { "total": 21343, "covered": 17459 },
+        "reports": [
+          "spearbit-interop-portal-2025-05",
+          "spearbit-upgrade16-2025-05"
+        ]
+      },
+      {
+        "timestamp": 1748390400,
+        "contracts": 16,
+        "withoutSource": 0,
+        "units": { "identical": 119, "differs": 53, "none": 14 },
+        "lines": { "total": 21343, "covered": 17459 },
+        "reports": ["ackee-safe-1-5-0"]
+      },
+      {
+        "timestamp": 1748963099,
+        "contracts": 17,
+        "withoutSource": 0,
+        "units": { "identical": 139, "differs": 57, "none": 14 },
+        "lines": { "total": 23552, "covered": 19639 },
+        "changes": [
+          {
+            "address": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
+            "name": "DeputyPauseModule",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1748995200,
+        "contracts": 17,
+        "withoutSource": 0,
+        "units": { "identical": 139, "differs": 57, "none": 14 },
+        "lines": { "total": 23552, "covered": 19639 },
+        "reports": ["cantina-interop-portal-2025-04"]
+      },
+      {
+        "timestamp": 1751328000,
+        "contracts": 17,
+        "withoutSource": 0,
+        "units": { "identical": 139, "differs": 57, "none": 14 },
+        "lines": { "total": 23552, "covered": 19645 },
+        "reports": ["nethermind-nm-0561-celo-custom-gas-token-2025-07-01"]
+      },
+      {
+        "timestamp": 1752710400,
+        "contracts": 17,
+        "withoutSource": 0,
+        "units": { "identical": 140, "differs": 56, "none": 14 },
+        "lines": { "total": 23552, "covered": 19648 },
+        "reports": ["contracts__audits__2025-07-v5.4"]
+      },
+      {
+        "timestamp": 1753379243,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 222, "differs": 59, "none": 21 },
+        "lines": { "total": 32676, "covered": 26079 },
+        "changes": [
+          {
+            "address": "eth:0x23B2C62946350F4246f9f9D027e071f0264FD113",
+            "name": "AnchorStateRegistry",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+            "name": "DisputeGameFactory",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x322b47Ff1FA8D5611F761e3E275C45B71b294D43",
+            "name": "ETHLockbox",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+            "name": "SuperchainConfig",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1759422923,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 218, "differs": 63, "none": 23 },
+        "lines": { "total": 32583, "covered": 25873 },
+        "changes": [
+          {
+            "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1759795200,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 221, "differs": 60, "none": 23 },
+        "lines": { "total": 32583, "covered": 25964 },
+        "reports": ["spearbit-u16a-2025-09"]
+      },
+      {
+        "timestamp": 1761523200,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 221, "differs": 61, "none": 22 },
+        "lines": { "total": 32583, "covered": 26001 },
+        "reports": ["cantina-u17-2025-10"]
+      },
+      {
+        "timestamp": 1762992000,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 221, "differs": 61, "none": 22 },
+        "lines": { "total": 32583, "covered": 26002 },
+        "reports": ["spearbit-safersafes-2025-11"]
+      },
+      {
+        "timestamp": 1763424000,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 221, "differs": 63, "none": 20 },
+        "lines": { "total": 32583, "covered": 26016 },
+        "reports": ["cantina-custom-gas-token-2025-11"]
+      },
+      {
+        "timestamp": 1764092795,
+        "contracts": 19,
+        "withoutSource": 0,
+        "units": { "identical": 221, "differs": 63, "none": 20 },
+        "lines": { "total": 32696, "covered": 26129 },
+        "changes": [
+          {
+            "address": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+            "name": "DisputeGameFactory",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+            "name": "SuperchainConfig",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1764596735,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 256, "differs": 72, "none": 24 },
+        "lines": { "total": 41831, "covered": 31271 },
+        "changes": [
+          {
+            "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
+            "name": "SaferSafes",
+            "kind": "added"
+          },
+          {
+            "address": "oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
+            "name": "SaferSafes",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1768176000,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 258, "differs": 70, "none": 24 },
+        "lines": { "total": 41831, "covered": 31300 },
+        "reports": ["cantina-u18-2026-01"]
+      },
+      {
+        "timestamp": 1770667859,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 260, "differs": 68, "none": 24 },
+        "lines": { "total": 41937, "covered": 31406 },
+        "changes": [
+          {
+            "address": "eth:0x23B2C62946350F4246f9f9D027e071f0264FD113",
+            "name": "AnchorStateRegistry",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+            "name": "DisputeGameFactory",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1771200000,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 260, "differs": 68, "none": 24 },
+        "lines": { "total": 41937, "covered": 31406 },
+        "reports": ["certora-safe-allowance-v1-0-0"]
+      },
+      {
+        "timestamp": 1772150400,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 260, "differs": 68, "none": 24 },
+        "lines": { "total": 41937, "covered": 31406 },
+        "reports": ["contracts__audits__2026-02-v5.6"]
+      },
+      {
+        "timestamp": 1772236800,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 260, "differs": 68, "none": 24 },
+        "lines": { "total": 41937, "covered": 31406 },
+        "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+      },
+      {
+        "timestamp": 1774569600,
+        "contracts": 21,
+        "withoutSource": 0,
+        "units": { "identical": 260, "differs": 68, "none": 24 },
+        "lines": { "total": 41937, "covered": 31406 },
+        "reports": ["cantina-policyenginestaking-2026-03"]
+      },
+      {
+        "timestamp": 1778190599,
+        "contracts": 23,
+        "withoutSource": 0,
+        "units": { "identical": 271, "differs": 70, "none": 26 },
+        "lines": { "total": 46385, "covered": 35074 },
+        "changes": [
+          {
+            "address": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
+            "name": "MIPS",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0",
+            "name": "PreimageOracle",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1779494400,
+        "contracts": 23,
+        "withoutSource": 0,
+        "units": { "identical": 272, "differs": 69, "none": 26 },
+        "lines": { "total": 46385, "covered": 35077 },
+        "reports": ["cantina-u19-2026-05"]
+      },
+      {
+        "timestamp": 1780876800,
+        "contracts": 23,
+        "withoutSource": 0,
+        "units": { "identical": 272, "differs": 69, "none": 26 },
+        "lines": { "total": 46385, "covered": 35080 },
+        "reports": ["cantina-opcmv2-2026-06"]
+      },
+      {
+        "timestamp": 1781740800,
+        "contracts": 23,
+        "withoutSource": 0,
+        "units": { "identical": 273, "differs": 68, "none": 26 },
+        "lines": { "total": 46385, "covered": 35091 },
+        "reports": ["cantina-interop-l2-rereview-2026-06"]
+      },
+      {
+        "timestamp": 1782428747,
+        "contracts": 24,
+        "withoutSource": 0,
+        "units": { "identical": 256, "differs": 89, "none": 22 },
+        "lines": { "total": 46368, "covered": 36448 },
+        "changes": [
+          {
+            "address": "eth:0x23B2C62946350F4246f9f9D027e071f0264FD113",
+            "name": "AnchorStateRegistry",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x1B6DBF05EaF22d4E70dC993e8a19dd9F3dcb3162",
+            "name": "DelayedWETH",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+            "name": "DisputeGameFactory",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x322b47Ff1FA8D5611F761e3E275C45B71b294D43",
+            "name": "ETHLockbox",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+            "name": "L1CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+            "name": "SuperchainConfig",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1783526401,
+        "contracts": 24,
+        "withoutSource": 0,
+        "units": { "identical": 288, "differs": 107, "none": 26 },
+        "lines": { "total": 53144, "covered": 42536 },
+        "changes": [
+          {
+            "address": "oeth:0x4200000000000000000000000000000000000007",
+            "name": "L2CrossDomainMessenger",
+            "kind": "upgraded"
+          },
+          {
+            "address": "oeth:0x4200000000000000000000000000000000000018",
+            "name": "L2ProxyAdmin",
+            "kind": "upgraded"
+          },
+          {
+            "address": "oeth:0x4200000000000000000000000000000000000010",
+            "name": "L2StandardBridge",
+            "kind": "upgraded"
+          },
+          {
+            "address": "oeth:0x4200000000000000000000000000000000000016",
+            "name": "L2ToL1MessagePasser",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1785283200,
+        "contracts": 24,
+        "withoutSource": 0,
+        "units": { "identical": 288, "differs": 107, "none": 26 },
+        "lines": { "total": 53144, "covered": 42536 },
+        "reports": ["certora-safe-1-3-0"]
+      },
+      {
+        "timestamp": 1786924800,
+        "contracts": 24,
+        "withoutSource": 0,
+        "units": { "identical": 288, "differs": 107, "none": 26 },
+        "lines": { "total": 53144, "covered": 42536 },
+        "reports": ["nethermind-safe-1-3-0", "nethermind-safe-allowance-v1-0-0"]
+      },
+      {
+        "timestamp": 1787184000,
+        "contracts": 24,
+        "withoutSource": 0,
+        "units": { "identical": 290, "differs": 105, "none": 26 },
+        "lines": { "total": 53144, "covered": 42553 },
+        "reports": ["cantina-upgrade20-2026-08"]
+      },
+      {
+        "timestamp": 1788049679,
+        "contracts": 26,
+        "withoutSource": 0,
+        "units": { "identical": 318, "differs": 107, "none": 29 },
+        "lines": { "total": 59122, "covered": 47282 },
+        "changes": [
+          {
+            "address": "eth:0x19AF533Cc2A2A55786DCB8672aA5717e64213208",
+            "name": "SuperFaultDisputeGame",
+            "kind": "added"
+          },
+          {
+            "address": "eth:0x5C3eb47cB0174aea522a2a9Ae79487139A53D691",
+            "name": "SuperPermissionedDisputeGame",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1790268683,
+        "contracts": 26,
+        "withoutSource": 0,
+        "units": { "identical": 323, "differs": 102, "none": 29 },
+        "lines": { "total": 59124, "covered": 47288 },
+        "changes": [
+          {
+            "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+            "name": "OptimismPortal2",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+            "name": "SuperchainConfig",
+            "kind": "upgraded"
+          },
+          {
+            "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+            "name": "SystemConfig",
+            "kind": "upgraded"
+          }
+        ]
+      },
+      {
+        "timestamp": 1790862344,
+        "contracts": 26,
+        "withoutSource": 0,
+        "units": { "identical": 323, "differs": 102, "none": 29 },
+        "lines": { "total": 59124, "covered": 47288 }
+      }
+    ],
+    "undatedReports": []
   }
 }
