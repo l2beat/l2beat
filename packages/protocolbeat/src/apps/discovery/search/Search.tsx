@@ -7,9 +7,10 @@ import { OpenSearch } from './OpenSearch'
 import { useSearchStore } from './store'
 
 export function Search() {
-  const { setOpen, opened } = useSearchStore()
+  const opened = useSearchStore((state) => state.opened)
+  const setOpen = useSearchStore((state) => state.setOpen)
   const { project } = useParams()
-  const { select } = usePanelStore()
+  const select = usePanelStore((state) => state.select)
   const inputRef = useRef<HTMLInputElement>(null)
 
   if (!project) {

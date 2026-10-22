@@ -33,15 +33,14 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const ensureLeaf = useDockingStore((state) => state.ensureLeaf)
-  const { setSourceIndex, showRange } = useCodeStore()
+  const setSourceIndex = useCodeStore((state) => state.setSourceIndex)
+  const showRange = useCodeStore((state) => state.showRange)
   const selectedAddress = usePanelStore((state) => state.selected[0])
-  const {
-    setOpen,
-    searchTerm,
-    setSearchTerm,
-    selectedIndex,
-    setSelectedIndex,
-  } = useSearchStore()
+  const setOpen = useSearchStore((state) => state.setOpen)
+  const searchTerm = useSearchStore((state) => state.searchTerm)
+  const setSearchTerm = useSearchStore((state) => state.setSearchTerm)
+  const selectedIndex = useSearchStore((state) => state.selectedIndex)
+  const setSelectedIndex = useSearchStore((state) => state.setSelectedIndex)
 
   const resultsRef = useRef<HTMLDivElement>(null)
   useEffect(() => {

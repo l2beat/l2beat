@@ -16,8 +16,11 @@ export function CodeSearchResultEntry({
   select,
   entries,
 }: CodeSearchEntryProps) {
-  const { setOpen, searchTerm, selectedIndex } = useSearchStore()
-  const { setSourceIndex, showRange } = useCodeStore()
+  const setOpen = useSearchStore((state) => state.setOpen)
+  const searchTerm = useSearchStore((state) => state.searchTerm)
+  const selectedIndex = useSearchStore((state) => state.selectedIndex)
+  const setSourceIndex = useCodeStore((state) => state.setSourceIndex)
+  const showRange = useCodeStore((state) => state.showRange)
   const ensureLeaf = useDockingStore((state) => state.ensureLeaf)
   const codeSearchTerm = getCodeSearchTerm(searchTerm).content
 

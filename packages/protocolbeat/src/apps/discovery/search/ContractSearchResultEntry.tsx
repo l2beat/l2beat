@@ -13,7 +13,9 @@ export function ContractSearchResultEntry({
   select,
   entries,
 }: ContractSearchEntryProps) {
-  const { setOpen, searchTerm, selectedIndex } = useSearchStore()
+  const setOpen = useSearchStore((state) => state.setOpen)
+  const searchTerm = useSearchStore((state) => state.searchTerm)
+  const selectedIndex = useSearchStore((state) => state.selectedIndex)
 
   return (
     <ul>
