@@ -13,6 +13,7 @@ const upgradeability = {
 
 export const ancient: ScalingProject = opStackL2({
   addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  archivedAt: UnixTime(1792594119), // 2026-10-21T14:48:39Z
   daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
@@ -49,6 +50,7 @@ export const ancient: ScalingProject = opStackL2({
   chainConfig: {
     name: 'ancient',
     chainId: 888888888,
+    untilTimestamp: UnixTime(1789995419), // 2026-09-21T12:56:59Z, last batch posted
     apis: [
       {
         type: 'rpc',
