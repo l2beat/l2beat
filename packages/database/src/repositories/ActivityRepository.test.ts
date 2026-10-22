@@ -2,7 +2,11 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import omit from 'lodash/omit'
 import { describeDatabase } from '../test/database'
-import { type ActivityRecord, ActivityRepository } from './ActivityRepository'
+import {
+  type ActivityPeaks,
+  type ActivityRecord,
+  ActivityRepository,
+} from './ActivityRepository'
 
 describeDatabase(ActivityRepository.name, (db) => {
   const repository = db.activity
@@ -42,10 +46,10 @@ describeDatabase(ActivityRepository.name, (db) => {
 
   describe(ActivityRepository.prototype.addMany.name, () => {
     it('adds the counts to stored days and widens their block range', async () => {
-      await repository.addMany([record('a', START, 10, 12, 1, 5)])
+      await repository.addMany([withPeaks(record('a', START, 10, 12, 1, 5))])
       await repository.addMany([
-        record('a', START, 5, 6, 6, 9),
-        record('a', START + 1 * UnixTime.DAY, 3, 3, 10, 12),
+        withPeaks(record('a', START, 5, 6, 6, 9)),
+        withPeaks(record('a', START + 1 * UnixTime.DAY, 3, 3, 10, 12)),
       ])
 
       const results = await repository.getAll()
@@ -56,12 +60,95 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
 
     it('counts the uops of a chain that started reporting them mid-day', async () => {
-      await repository.addMany([record('a', START, 10, null, 1, 5)])
-      await repository.addMany([record('a', START, 5, 6, 6, 9)])
-      await repository.addMany([record('a', START, 1, null, 10, 10)])
+      await repository.addMany([withPeaks(record('a', START, 10, null, 1, 5))])
+      await repository.addMany([withPeaks(record('a', START, 5, 6, 6, 9))])
+      await repository.addMany([withPeaks(record('a', START, 1, null, 10, 10))])
 
       const results = await repository.getAll()
       expect(results).toEqual([record('a', START, 16, 6, 1, 10)])
+    })
+
+    it('keeps the larger peaks of a day', async () => {
+      await repository.addMany([
+        withPeaks(record('a', START), {
+          hour: 10,
+          hourUops: 4,
+          minute: 3,
+          minuteUops: 9,
+        }),
+      ])
+      await repository.addMany([
+        withPeaks(record('a', START), {
+          hour: 8,
+          hourUops: 6,
+          minute: 5,
+          minuteUops: 7,
+        }),
+      ])
+
+      expect(await repository.getMaxPeaksForProject(ProjectId('a'))).toEqual({
+        since: START,
+        hour: peak(10, START, 6, START),
+        minute: peak(5, START, 9, START),
+      })
+    })
+  })
+
+  describe(ActivityRepository.prototype.getMaxPeaksForProject.name, () => {
+    it("returns the project's busiest hour and minute, and its first day with peaks", async () => {
+      const DAY = UnixTime.DAY
+      await repository.upsertMany([record('a', START - 1 * DAY, 100, 100)])
+      await repository.addMany([
+        withPeaks(record('a', START), {
+          hour: 10,
+          hourUops: 12,
+          minute: 3,
+          minuteUops: 4,
+        }),
+        withPeaks(record('a', START + 1 * DAY), {
+          hour: 8,
+          hourUops: 20,
+          minute: 5,
+          minuteUops: 2,
+        }),
+        withPeaks(record('b', START), {
+          hour: 50,
+          hourUops: 50,
+          minute: 50,
+          minuteUops: 50,
+        }),
+      ])
+
+      expect(await repository.getMaxPeaksForProject(ProjectId('a'))).toEqual({
+        since: START,
+        hour: peak(10, START, 20, START + 1 * DAY),
+        minute: peak(5, START + 1 * DAY, 4, START),
+      })
+    })
+
+    it('counts txs as uops for a chain without uops', async () => {
+      await repository.addMany([
+        withPeaks(record('a', START), {
+          hour: 10,
+          hourUops: null,
+          minute: 3,
+          minuteUops: null,
+        }),
+      ])
+
+      expect(await repository.getMaxPeaksForProject(ProjectId('a'))).toEqual({
+        since: START,
+        hour: peak(10, START, 10, START),
+        minute: peak(3, START, 3, START),
+      })
+    })
+
+    it('returns undefined for a project without peaks', async () => {
+      await repository.upsertMany([record('a', START)])
+
+      expect(await repository.getMaxPeaksForProject(ProjectId('a'))).toEqual(
+        undefined,
+      )
     })
   })
 
@@ -576,4 +663,31 @@ function record(
     start,
     end,
   }
+}
+
+function withPeaks(
+  record: ActivityRecord,
+  peaks: {
+    hour: number
+    hourUops: number | null
+    minute: number
+    minuteUops: number | null
+  } = { hour: 1, hourUops: 1, minute: 1, minuteUops: 1 },
+): ActivityRecord & ActivityPeaks {
+  return {
+    ...record,
+    peakHourCount: peaks.hour,
+    peakHourUopsCount: peaks.hourUops,
+    peakMinuteCount: peaks.minute,
+    peakMinuteUopsCount: peaks.minuteUops,
+  }
+}
+
+function peak(
+  count: number,
+  countTimestamp: UnixTime,
+  uopsCount: number,
+  uopsTimestamp: UnixTime,
+) {
+  return { count, countTimestamp, uopsCount, uopsTimestamp }
 }

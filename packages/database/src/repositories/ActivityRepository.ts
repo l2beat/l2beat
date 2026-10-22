@@ -13,6 +13,24 @@ export interface ActivityRecord {
   end: number
 }
 
+/** Only block and slot chains have them */
+export interface ActivityPeaks {
+  /** Of the busiest hour of the day */
+  peakHourCount: number
+  peakHourUopsCount: number | null
+  /** Of the busiest UTC minute of the day */
+  peakMinuteCount: number
+  peakMinuteUopsCount: number | null
+}
+
+export interface ActivityPeak {
+  count: number
+  countTimestamp: UnixTime
+  /** Txs when the chain has no uops */
+  uopsCount: number
+  uopsTimestamp: UnixTime
+}
+
 export interface ActivityTotals {
   count: number
   uopsCount: number
@@ -71,12 +89,19 @@ export class ActivityRepository extends BaseRepository {
 
   /**
    * Adds each record to the day stored before, as blocks of a day come in
-   * more than one batch. The block range widens to cover both
+   * more than one batch. The block range widens to cover both, and the larger
+   * peaks stay
    */
-  async addMany(records: ActivityRecord[]): Promise<number> {
+  async addMany(records: (ActivityRecord & ActivityPeaks)[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
+    const rows = records.map((record) => ({
+      ...toRow(record),
+      peakHourCount: record.peakHourCount,
+      peakHourUopsCount: record.peakHourUopsCount,
+      peakMinuteCount: record.peakMinuteCount,
+      peakMinuteUopsCount: record.peakMinuteUopsCount,
+    }))
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
         .insertInto('Activity')
@@ -87,6 +112,11 @@ export class ActivityRepository extends BaseRepository {
             uopsCount: addToStored('Activity', 'uopsCount'),
             start: sql`least("Activity"."start", excluded."start")`,
             end: sql`greatest("Activity"."end", excluded."end")`,
+            // greatest skips nulls, so a day's first peaks replace none
+            peakHourCount: sql`greatest("Activity"."peakHourCount", excluded."peakHourCount")`,
+            peakHourUopsCount: sql`greatest("Activity"."peakHourUopsCount", excluded."peakHourUopsCount")`,
+            peakMinuteCount: sql`greatest("Activity"."peakMinuteCount", excluded."peakMinuteCount")`,
+            peakMinuteUopsCount: sql`greatest("Activity"."peakMinuteUopsCount", excluded."peakMinuteUopsCount")`,
           }),
         )
         .execute()
@@ -278,6 +308,37 @@ export class ActivityRepository extends BaseRepository {
     )
   }
 
+  async getMaxPeaksForProject(
+    projectId: ProjectId,
+  ): Promise<
+    { since: UnixTime; hour: ActivityPeak; minute: ActivityPeak } | undefined
+  > {
+    const row = await this.db
+      .selectFrom('Activity')
+      .select((eb) => [
+        eb.fn.min('timestamp').as('since'),
+        maxWithTimestamp(sql.ref('peakHourCount')).as('hour'),
+        maxWithTimestamp(
+          sql`coalesce("peakHourUopsCount", "peakHourCount")`,
+        ).as('hourUops'),
+        maxWithTimestamp(sql.ref('peakMinuteCount')).as('minute'),
+        maxWithTimestamp(
+          sql`coalesce("peakMinuteUopsCount", "peakMinuteCount")`,
+        ).as('minuteUops'),
+      ])
+      .where('projectId', '=', projectId.toString())
+      .where('peakHourCount', 'is not', null)
+      .executeTakeFirst()
+
+    if (!row?.since) return undefined
+
+    return {
+      since: UnixTime.fromDate(row.since),
+      hour: toPeak(row.hour, row.hourUops),
+      minute: toPeak(row.minute, row.minuteUops),
+    }
+  }
+
   async getMaxCountsForProject(projectId: ProjectId): Promise<
     | {
         uopsCount: number
@@ -466,6 +527,18 @@ export class ActivityRepository extends BaseRepository {
       .executeTakeFirst()
 
     return latestRecord?.end
+  }
+}
+
+function toPeak(
+  [count, countTimestamp]: [string, string],
+  [uopsCount, uopsTimestamp]: [string, string],
+): ActivityPeak {
+  return {
+    count: Number(count),
+    countTimestamp: UnixTime(Number(countTimestamp)),
+    uopsCount: Number(uopsCount),
+    uopsTimestamp: UnixTime(Number(uopsTimestamp)),
   }
 }
 
