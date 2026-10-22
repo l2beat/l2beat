@@ -138,7 +138,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       exposureShort:
         'The ASP postman can publish a new approved list at any time with no delay, and every private spend must prove against the latest one.',
       exposureContinued:
-        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's relayer sees the IP and recipient of every private exit and its ASP feeds see the IP of every session, so one operator can pair a deposit session with its withdrawal. The request logs of its Alchemy key show it the account each sign-in looks up, which it can time against the withdrawals its relayer submits. One key holds every admin role and can upgrade the four core contracts without delay, and it can sign delegations that let other addresses use those roles.",
+        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's relayer sees the IP and recipient of every private exit and its ASP feeds see the IP of every session, so one operator can pair a deposit session with its withdrawal. The request logs of its Alchemy key show it the account each sign-in looks up, which it can time against the withdrawals its relayer submits. One key holds every admin role and can upgrade the four core contracts without delay.",
       advice:
         'Before withdrawing, check the size of the approved list behind the latest root, which the ASPRegistry links on IPFS. Exit as the network observer advice says, so 0xbow sees no IP it saw at the deposit and no account lookup.',
       interior: {
