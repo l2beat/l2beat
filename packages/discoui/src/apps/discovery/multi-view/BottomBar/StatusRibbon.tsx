@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Link } from 'react-router'
 import { Loader } from '../../../../components/Loader'
 import {
@@ -71,7 +72,9 @@ export function StatusRibbon() {
   )
 }
 
-function Status(props: {
+// The ribbon rerenders on every config models change, which is every list
+// click, while the three flags rarely change.
+const Status = memo(function Status(props: {
   isInSync: boolean
   isError: boolean
   isPending: boolean
@@ -86,7 +89,7 @@ function Status(props: {
       <TooltipContent>{tooltipContent}</TooltipContent>
     </Tooltip>
   )
-}
+})
 
 function StatusTemplate(props: { children: React.ReactNode }) {
   return (

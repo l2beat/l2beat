@@ -1,6 +1,5 @@
 import clsx from 'clsx'
-import { useState } from 'react'
-import type { Field } from '../../../../api/types'
+import { memo, useState } from 'react'
 import { Button } from '../../../../components/Button'
 import { Checkbox } from '../../../../components/Checkbox'
 import { Code } from '../../../../components/Code'
@@ -13,13 +12,12 @@ import { ConfigRow } from '../contract-config-dialog/ContractConfigDialog'
 import { DescriptionEditor } from '../contract-config-dialog/DescriptionEditor'
 import { FieldHandlerConfigDialog } from './handler-dialog/FieldHandlerConfigDialog'
 
-type Props = {
-  field: Field
-}
-
 // Every field row has one of these, so the closed dialog renders only its
-// trigger and leaves the config lookups to the body.
-export function FieldConfigDialog(props: Props) {
+// trigger and leaves the config lookups to the body. Memoized on the name
+// because the rows rerender whenever the config or template loads.
+export const FieldConfigDialog = memo(function FieldConfigDialog(props: {
+  fieldName: string
+}) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -29,10 +27,10 @@ export function FieldConfigDialog(props: Props) {
           <IconGear className="size-4 text-coffee-200/80" />
         </Button>
       </Dialog.Trigger>
-      {isOpen && <FieldConfigBody fieldName={props.field.name} />}
+      {isOpen && <FieldConfigBody fieldName={props.fieldName} />}
     </Dialog.Root>
   )
-}
+})
 
 function FieldConfigBody({ fieldName }: { fieldName: string }) {
   const models = useConfigModels()
