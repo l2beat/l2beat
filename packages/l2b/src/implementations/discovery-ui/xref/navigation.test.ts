@@ -6,8 +6,11 @@ import { definitionAt, referencesAt } from './navigation'
 
 const IMPLEMENTATION = `contract Box {
     uint256 internal value;
+    /*
+       Hashed; never changes.
+     */
     bytes32 internal constant SEED =
-        keccak256("seed");
+        keccak256("seed;");
 
     /// @notice Keeps next.
     /**
@@ -89,13 +92,13 @@ describe('xref navigation', () => {
     expect(declarationOf('SEED)')).toEqual([
       {
         line: 3 + NOTE_LINES,
-        offset: shown(IMPLEMENTATION.indexOf('    bytes32')),
-        text: '    bytes32 internal constant SEED =\n        keccak256("seed");',
+        offset: shown(IMPLEMENTATION.indexOf('    /*\n')),
+        text: '    /*\n       Hashed; never changes.\n     */\n    bytes32 internal constant SEED =\n        keccak256("seed;");',
       },
     ])
     expect(declarationOf('store(')).toEqual([
       {
-        line: 6 + NOTE_LINES,
+        line: 9 + NOTE_LINES,
         offset: shown(IMPLEMENTATION.indexOf('    /// @notice')),
         text: IMPLEMENTATION.slice(
           IMPLEMENTATION.indexOf('    /// @notice'),
@@ -119,7 +122,7 @@ describe('xref navigation', () => {
     ).toEqual([
       [
         IMPLEMENTATION_SOURCE,
-        11 + NOTE_LINES,
+        14 + NOTE_LINES,
         shown(IMPLEMENTATION.indexOf('value = next')),
         'value = next + uint256(SEED);',
       ],

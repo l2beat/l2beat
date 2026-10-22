@@ -1,8 +1,5 @@
 import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
-import type {
-  BaseASTNode,
-  VariableDeclaration,
-} from '@mradomski/fast-solidity-parser'
+import type { BaseASTNode } from '@mradomski/fast-solidity-parser'
 import { compareFiles } from '../../discovery/getCodePaths'
 import type { FlatWorkspace } from '../../xref/FlatWorkspace'
 import { findReferences, type Reference } from '../../xref/findReferences'
@@ -89,20 +86,8 @@ function declarationLines(
 ): ApiDefinition['declaration'] {
   assert(node.range !== undefined, 'Declaration without a range')
   const text = index.text
-  let start = text.lastIndexOf('\n', node.range[0] - 1) + 1
-  while (start > 0) {
-    const previous = text.lastIndexOf('\n', start - 2) + 1
-    if (!isCommentLine(text.slice(previous, start - 1))) {
-      break
-    }
-    start = previous
-  }
-  // A state variable's range stops before its initializer.
-  const isStateVariable =
-    node.type === 'VariableDeclaration' &&
-    (node as VariableDeclaration).isStateVar
-  const end = isStateVariable ? text.indexOf(';', node.range[1]) : node.range[1]
-  const lineEnd = text.indexOf('\n', end)
+  const start = commentStart(text, lineStartOf(text, node.range[0]))
+  const lineEnd = text.indexOf('\n', node.range[1])
   return {
     line: index.positionOf(start).line + NOTE_LINES,
     offset: start + NOTE_LENGTH,
@@ -110,13 +95,24 @@ function declarationLines(
   }
 }
 
-function isCommentLine(line: string): boolean {
-  const trimmed = line.trimStart()
-  return (
-    trimmed.startsWith('//') ||
-    trimmed.startsWith('/*') ||
-    trimmed.startsWith('*')
-  )
+// Where the comments directly above the line starting at `start` begin.
+function commentStart(text: string, start: number): number {
+  while (start > 0) {
+    const previous = lineStartOf(text, start - 1)
+    const line = text.slice(previous, start - 1).trim()
+    if (line.startsWith('//')) {
+      start = previous
+    } else if (line.endsWith('*/')) {
+      start = lineStartOf(text, text.lastIndexOf('/*', start - 1))
+    } else {
+      break
+    }
+  }
+  return start
+}
+
+function lineStartOf(text: string, offset: number): number {
+  return text.lastIndexOf('\n', offset - 1) + 1
 }
 
 function toApiReference(

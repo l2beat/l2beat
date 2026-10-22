@@ -126,8 +126,11 @@ export function useGoToDefinition(
             if (only === undefined || rest.length > 0) {
               setLookup({ status: 'definitions', response })
             } else if (peekDefinitions) {
-              const content = peekContent(only, () => navigate(only))
-              plugin.peek(request, content)
+              setLookup(undefined)
+              plugin.peek(
+                request,
+                peekContent(only, () => navigate(only)),
+              )
             } else {
               navigate(only)
             }
