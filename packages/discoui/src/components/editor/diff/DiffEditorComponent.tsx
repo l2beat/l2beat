@@ -41,7 +41,7 @@ export function DiffEditorComponent({ editorKey }: DiffEditorComponentProps) {
 
   return (
     <div
-      className="min-h-0 w-full flex-1 bg-coffee-900 [&>.cm-mergeView]:h-full"
+      className="flex min-h-0 w-full flex-1 bg-coffee-900 [&>.cm-mergeView]:h-full [&>.cm-mergeView]:min-w-0 [&>.cm-mergeView]:flex-1 [&>.cm-mergeView]:[scrollbar-width:none]"
       ref={editorElement}
     />
   )

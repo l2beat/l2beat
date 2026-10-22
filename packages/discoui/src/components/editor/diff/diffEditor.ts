@@ -27,6 +27,7 @@ import {
 } from '../plugin'
 import { centeredSearch } from '../search'
 import { theme } from '../theme'
+import { ChangeStrip } from './changeStrip'
 import {
   clearCollapseEffect,
   collapseEffect,
@@ -61,6 +62,7 @@ export class DiffEditor {
   private readonly plugins = new EditorPluginStore<DiffEditor>(this)
   private readonly buildListeners = new Set<() => void>()
   private readonly diffListeners = new Set<(diff: Diff) => void>()
+  private readonly strip = new ChangeStrip()
   private texts: { left: string; right: string } | undefined
   private ignoreComments = false
   private folding = false
@@ -75,7 +77,9 @@ export class DiffEditor {
   private buildScheduled = false
   private disposed = false
 
-  constructor(private readonly element: HTMLElement) {}
+  constructor(private readonly element: HTMLElement) {
+    element.append(this.strip.dom)
+  }
 
   get view(): MergeView | undefined {
     return this.mergeView
@@ -165,6 +169,7 @@ export class DiffEditor {
     this.diffListeners.clear()
     this.buildListeners.clear()
     this.plugins.dispose()
+    this.strip.dispose()
     this.mergeView?.destroy()
     this.mergeView = undefined
   }
@@ -244,6 +249,7 @@ export class DiffEditor {
       this.mergeView.a.state.doc.lines,
       this.mergeView.b.state.doc.lines,
     )
+    this.strip.attach(this.mergeView, computed.lineChanges)
     this.applyFolding()
     this.mergeView.dom.scrollTop = this.scrollTops.get(this.builtTextsKey) ?? 0
 
@@ -276,6 +282,7 @@ export class DiffEditor {
           : clearCollapseEffect(),
       })
     }
+    this.strip.schedule()
   }
 
   private sideExtensions(filtered: Extension): Extension {
@@ -292,6 +299,7 @@ export class DiffEditor {
       diffTheme,
       filtered,
       collapseUnchanged,
+      this.strip.extension,
       this.plugins.extensions(),
     ]
   }
