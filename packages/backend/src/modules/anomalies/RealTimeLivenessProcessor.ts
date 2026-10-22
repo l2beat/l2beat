@@ -270,12 +270,20 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           blockNumber: block.number,
         })
 
+        // if the project still hasn't posted since a recovery, the anomaly
+        // comes back with the same start and should keep its approval
+        const previous = await this.db.realTimeAnomalies.findByStart(
+          group.projectId,
+          group.subtype,
+          latestRecord.timestamp,
+        )
+
         const newAnomaly: RealTimeAnomalyRecord = {
           start: latestRecord.timestamp,
           projectId: group.projectId,
           subtype: group.subtype,
           status: 'ongoing',
-          isApproved: false,
+          isApproved: previous?.isApproved ?? false,
         }
 
         await this.notifier?.anomalyDetected(
