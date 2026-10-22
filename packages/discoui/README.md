@@ -1,4 +1,4 @@
-# @l2beat/protocolbeat
+# @l2beat/discoui
 
 Protocol discovery and visualization tool.
 
