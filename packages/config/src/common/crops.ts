@@ -11,7 +11,5 @@ export const CROP_NOTES = {
     'The core contracts are immutable and cannot be paused, so the exit window is infinite.',
   notReviewed: {
     circuitBreakers: 'Circuit breakers and rate limits.',
-    /** Required for Security: drop it once the project has an ossification history. */
-    ossification: 'Ossification score.',
   },
 }

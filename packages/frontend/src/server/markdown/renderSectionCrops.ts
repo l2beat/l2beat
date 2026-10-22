@@ -1,6 +1,5 @@
 import {
   type CropEntry,
-  getCropOssificationLines,
   getCropStatusText,
   toCropEntries,
 } from '~/components/garden/crops'
@@ -11,14 +10,10 @@ import { bulletList, joinBlocks, link, subsection } from './markdown'
 
 /** The garden verdict and each crop's findings; the plants themselves are only a picture of the same. */
 export function renderGardenCropsSection(
-  {
-    crops,
-    listing,
-    ossification,
-  }: Pick<GardenCropsSectionProps, 'crops' | 'listing' | 'ossification'>,
+  { crops, listing }: Pick<GardenCropsSectionProps, 'crops' | 'listing'>,
   level: number,
 ) {
-  const entries = toCropEntries(crops, ossification)
+  const entries = toCropEntries(crops)
   const goodCount = entries.filter(
     (entry) => entry.evaluation.sentiment === 'good',
   ).length
@@ -29,10 +24,7 @@ export function renderGardenCropsSection(
   ])
 }
 
-function renderCrop(
-  { definition, evaluation, ossification }: CropEntry,
-  level: number,
-) {
+function renderCrop({ definition, evaluation }: CropEntry, level: number) {
   const license = evaluation.license
     ? [`License: ${link(evaluation.license.name, evaluation.license.url)}`]
     : []
@@ -48,10 +40,7 @@ function renderCrop(
         evaluation.additionalConsiderations,
       ),
       renderFindings('Not reviewed yet', evaluation.notReviewed),
-      renderFindings(
-        'Ossification',
-        ossification ? getCropOssificationLines(ossification) : [],
-      ),
+      renderFindings('Ossification', evaluation.ossification ?? []),
       definition.note ?? '',
     ]),
   )

@@ -1,22 +1,23 @@
 import type {
+  Project,
   ProjectCrops,
   ProjectDefiInfo,
   ProjectPrivacyInfo,
   ProjectScalingInfo,
+  ResolvedCrops,
 } from '@l2beat/config'
-import { CROP_ATTESTATIONS } from '@l2beat/config'
-import type { OssificationHistory } from '@l2beat/shared/frontend'
+import {
+  CROP_ATTESTATIONS,
+  getGardenProjectPath,
+  resolveProjectCrops,
+} from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { type Validator, v } from '@l2beat/validate'
 import {
   CropSentimentSchema,
   CropStatusSchema,
-  qualifiesForGarden,
   ResolvedCropEvaluationSchema,
-  type ResolvedCrops,
   ResolvedCropsSchema,
-  resolveProjectCrops,
-  scoreOssification,
 } from './crops'
 
 // The CROPS API contract. The validators are the contract: the OpenAPI
@@ -263,7 +264,9 @@ export interface CropsSourceProject {
   slug: string
   name: string
   crops: ProjectCrops
-  ossificationHistory?: OssificationHistory | undefined
+  ossificationHistory?:
+    | Project<'ossificationHistory'>['ossificationHistory']
+    | undefined
   privacyInfo?: ProjectPrivacyInfo | undefined
   scalingInfo?: ProjectScalingInfo | undefined
   defiInfo?: ProjectDefiInfo | undefined
@@ -274,9 +277,15 @@ export function resolveCropsProject(
   meta: CropsAttestationsMeta,
   now: UnixTime,
 ): CropsApiProject {
-  const path = getGardenProjectPath(project)
-  const ossification = scoreOssification(project.ossificationHistory, now)
-  const crops = resolveProjectCrops(project.crops, ossification)
+  // The API cannot read l2beat.com's feature flags. In production the DeFi
+  // section is off and ossification is on, so a DeFi project has a page
+  // exactly when it has an ossification history (the frontend's
+  // hasDefiProjectPage).
+  const path = getGardenProjectPath(
+    project,
+    project.ossificationHistory !== undefined,
+  )
+  const { crops, listing } = resolveProjectCrops(project, now)
   const attested = meta.current?.projectIds.includes(project.id)
   return {
     id: project.id,
@@ -284,7 +293,7 @@ export function resolveCropsProject(
     name: project.name,
     href: path ? `${L2BEAT_ORIGIN}${path}` : null,
     crops,
-    inGarden: qualifiesForGarden(crops, ossification !== undefined),
+    inGarden: listing === 'listed',
     attestation:
       meta.current && attested
         ? {
@@ -295,27 +304,6 @@ export function resolveCropsProject(
           }
         : null,
   }
-}
-
-/**
- * The page a reviewed project has on l2beat.com, or null when it has none.
- * The API links only to pages that exist, so this never falls back to a
- * scaling url the way the frontend's getProjectUrl does.
- */
-function getGardenProjectPath(project: CropsSourceProject): string | null {
-  if (project.privacyInfo) {
-    return `/privacy/projects/${project.slug}`
-  }
-  if (project.scalingInfo) {
-    return `/layer2s/projects/${project.slug}`
-  }
-  // While the DeFi section is off on l2beat.com, a DeFi project has a page
-  // only when the ossification view shows it, as in the frontend's
-  // hasDefiProjectPage.
-  if (project.defiInfo && project.ossificationHistory) {
-    return `/defi/projects/${project.slug}`
-  }
-  return null
 }
 
 export function toCropsSummary(crops: ResolvedCrops): CropsApiSummary {

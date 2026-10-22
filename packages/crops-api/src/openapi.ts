@@ -1,3 +1,4 @@
+import { OSSIFICATION_SCORE_BANDS } from '@l2beat/shared-pure'
 import { toJsonSchemaDefinitions } from '@l2beat/validate'
 import {
   CROPS_API_ROUTES,
@@ -55,7 +56,7 @@ export function describeApi(ledger: CropsAttestationsMeta): string {
   const where = ledger.isTestnet
     ? `currently lives on the ${ledger.network} testnet (chain id ${ledger.chainId}); \`attestations.isTestnet\` in every response says so`
     : `lives on ${ledger.network} (chain id ${ledger.chainId})`
-  return `CROPS is L2BEAT's review of a protocol along four crops: censorship resistance, open source, privacy and security. Each crop gets a sentiment (good, warning, bad or neutral) and a status saying how far the review went. A protocol is in the garden when no crop is bad and it has an ossification score. Security is capped by that score: below 80 it is at most warning, and below 50, which means a critical change in roughly the last five weeks, it is bad. Separately, the set of reviewed protocols is attested onchain with the Ethereum Attestation Service.
+  return `CROPS is L2BEAT's review of a protocol along four crops: censorship resistance, open source, privacy and security. Each crop gets a sentiment (good, warning, bad or neutral) and a status saying how far the review went. A protocol is in the garden when no crop is bad and it has an ossification score. Security is capped by that score: below ${OSSIFICATION_SCORE_BANDS.good} it is at most warning, and below ${OSSIFICATION_SCORE_BANDS.warning}, which means a critical change in roughly the last five weeks, it is bad. Separately, the set of reviewed protocols is attested onchain with the Ethereum Attestation Service.
 
 Every response is a static file generated from the L2BEAT repository, so it is served from a CDN with no API key and no rate limit.
 

@@ -1,20 +1,20 @@
-import type { Project } from '@l2beat/config'
+import {
+  getGardenProjectPath,
+  type Project,
+  resolveProjectCrops,
+} from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { CropOssification, ResolvedCrops } from '~/components/garden/crops'
+import type { ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiSummaryEntries'
+import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
 import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
-import { getCropOssification } from '~/server/features/garden/getCropOssification'
-import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
-import {
-  qualifiesForGarden,
-  resolveProjectCrops,
-  scoreOssification,
-} from '~/server/features/garden/resolveCrops'
+import { withOssification } from '~/server/features/garden/withOssification'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
+import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -46,8 +46,6 @@ export interface GardenEntry {
   crops: ResolvedCrops
   /** Undefined when we track nothing for the project. */
   metric: GardenMetric | undefined
-  /** Undefined when the project is not opted in to ossification. */
-  ossification: CropOssification | undefined
 }
 
 type GardenProject = Project<
@@ -95,28 +93,20 @@ export async function getGardenData(
   ])
 
   const now = UnixTime.now()
+  const listed = projects
+    .map((project) => ({ project, ...resolveProjectCrops(project, now) }))
+    .filter(({ listing }) => listing === 'listed')
+    .sort((a, b) => compareByCuratedOrder(a.project, b.project))
   const entries: GardenEntry[] = await Promise.all(
-    projects
-      .map((project) => {
-        const score = scoreOssification(project.ossificationHistory, now)
-        return {
-          project,
-          crops: resolveProjectCrops(project.crops, score),
-          hasScore: score !== undefined,
-        }
-      })
-      .filter(({ crops, hasScore }) => qualifiesForGarden(crops, hasScore))
-      .sort((a, b) => compareByCuratedOrder(a.project, b.project))
-      .map(async ({ project, crops }) => ({
-        name: project.name,
-        slug: project.slug,
-        href: getGardenProjectPath(project),
-        subtitle: getSubtitle(project),
-        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-        crops,
-        metric: getMetric(project, tvsBreakdown, depositCounts, defiTvl),
-        ossification: await getCropOssification(project),
-      })),
+    listed.map(async ({ project, crops }) => ({
+      name: project.name,
+      slug: project.slug,
+      href: getGardenProjectPath(project, hasDefiProjectPage(project)),
+      subtitle: getSubtitle(project),
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+      crops: withOssification(crops, await getProjectOssification(project)),
+      metric: getMetric(project, tvsBreakdown, depositCounts, defiTvl),
+    })),
   )
 
   return {

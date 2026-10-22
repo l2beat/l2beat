@@ -19,15 +19,12 @@ import type {
   PrivacyFlowDailyRecord,
   TokenValueRecord,
 } from '@l2beat/database'
+import type { OssificationHistory } from '@l2beat/shared/frontend'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import {
-  type CropsOssificationScore,
-  scoreOssification,
-} from '~/server/features/garden/resolveCrops'
 import {
   getProjectOssification,
   type ProjectOssificationView,
@@ -62,11 +59,11 @@ export interface PrivacyProjectDetails {
   permissions?: Record<string, ProjectPermissions>
   discoveryUpdates?: ProjectDiscoveryUpdate[]
   ossification?: ProjectOssificationView
-  /** From config, so it holds even while the ossification feature is off. */
-  ossificationScore: CropsOssificationScore | undefined
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
   crops?: ProjectCrops
+  /** Caps the Security crop, even while the ossification feature is off. */
+  ossificationHistory?: OssificationHistory
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
   category: PrivacyCategory
   exitWindow: PrivacyExitWindow
@@ -286,10 +283,10 @@ export async function getPrivacyProjectDetails(
     permissions: project.permissions,
     discoveryUpdates: project.discoveryUpdates,
     ossification,
-    ossificationScore: scoreOssification(project.ossificationHistory, now),
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
     crops: project.crops,
+    ossificationHistory: project.ossificationHistory,
     trustedSetups: project.trustedSetups,
     category: project.privacyInfo.category,
     exitWindow: project.privacyInfo.exitWindow,

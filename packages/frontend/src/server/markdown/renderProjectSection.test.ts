@@ -445,13 +445,13 @@ describe(renderProjectSection.name, () => {
             points: ['Code is public.'],
           },
           privacy: { ...crop, status: 'notReviewed', sentiment: 'neutral' },
-          security: crop,
-        },
-        ossification: {
-          score: 99,
-          isUnverified: false,
-          unchangedSince: UnixTime.fromDate(new Date('2020-05-18T12:00:00Z')),
-          exposure: null,
+          security: {
+            ...crop,
+            ossification: [
+              'Score: 99 of 100.',
+              'No critical change since 2020 May 18.',
+            ],
+          },
         },
       },
     })

@@ -6,11 +6,7 @@ import {
   CROP_SWATCH,
   CROP_TINT,
 } from '~/components/garden/cropPalette'
-import type {
-  CropOssification,
-  GardenListing,
-  ResolvedCrops,
-} from '~/components/garden/crops'
+import type { GardenListing, ResolvedCrops } from '~/components/garden/crops'
 import {
   type CropEntry,
   getCropStatusText,
@@ -36,14 +32,12 @@ const STAGGER = 0.05
 export function CropsBed({
   crops,
   listing,
-  ossification,
 }: {
   crops: ResolvedCrops
   listing: GardenListing
-  ossification: CropOssification | undefined
 }) {
   const inGarden = listing === 'listed'
-  const entries = toCropEntries(crops, ossification)
+  const entries = toCropEntries(crops)
   const entranceHold = useEntranceHold()
 
   return (
@@ -175,10 +169,7 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
           '@min-[900px]:text-paragraph-14',
         )}
       >
-        <CropFindings
-          evaluation={evaluation}
-          ossification={entry.ossification}
-        />
+        <CropFindings evaluation={evaluation} />
       </div>
     </div>
   )

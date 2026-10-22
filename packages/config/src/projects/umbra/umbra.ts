@@ -169,7 +169,6 @@ export const umbra: BaseProject = {
       points: [
         'A small, immutable, externally audited contract set with no proof system and no trusted setup.',
       ],
-      notReviewed: [CROP_NOTES.notReviewed.ossification],
     },
   },
   permissions: discovery.getDiscoveredPermissions(),

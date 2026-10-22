@@ -1,5 +1,5 @@
+import { OSSIFICATION_SCORE_BANDS } from '@l2beat/shared-pure'
 import type { CropKey } from '~/components/garden/crops'
-import { OSSIFICATION_SCORE_BANDS } from '~/components/ossification/ossificationScoreBands'
 
 /** Marks where `reference` is linked inside a minimum. */
 export const REFERENCE_SLOT = '{{reference}}'

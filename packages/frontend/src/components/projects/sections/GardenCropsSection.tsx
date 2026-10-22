@@ -1,8 +1,4 @@
-import type {
-  CropOssification,
-  GardenListing,
-  ResolvedCrops,
-} from '~/components/garden/crops'
+import type { GardenListing, ResolvedCrops } from '~/components/garden/crops'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { GARDEN_PATH } from '~/pages/garden/paths'
 import { CropsBed } from './crops/CropsBed'
@@ -12,13 +8,11 @@ import type { ProjectSectionProps } from './types'
 export interface GardenCropsSectionProps extends ProjectSectionProps {
   crops: ResolvedCrops
   listing: GardenListing
-  ossification: CropOssification | undefined
 }
 
 export function GardenCropsSection({
   crops,
   listing,
-  ossification,
   ...sectionProps
 }: GardenCropsSectionProps) {
   return (
@@ -34,7 +28,7 @@ export function GardenCropsSection({
         </a>
       }
     >
-      <CropsBed crops={crops} listing={listing} ossification={ossification} />
+      <CropsBed crops={crops} listing={listing} />
     </ProjectSection>
   )
 }

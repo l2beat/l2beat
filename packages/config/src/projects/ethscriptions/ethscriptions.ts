@@ -363,7 +363,6 @@ export const ethscriptions: ScalingProject = {
         'Trusted setup requirements of the proof system.',
         'Prover decentralization and multiproof.',
         CROP_NOTES.notReviewed.circuitBreakers,
-        CROP_NOTES.notReviewed.ossification,
       ],
     },
   },

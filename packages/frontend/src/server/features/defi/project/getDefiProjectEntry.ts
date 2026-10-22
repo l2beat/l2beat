@@ -1,11 +1,10 @@
 import type { ProjectDefiCategory, ProjectRedWarning } from '@l2beat/config'
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
-import { scoreOssification } from '~/server/features/garden/resolveCrops'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
@@ -130,11 +129,7 @@ export async function getDefiProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  const gardenCropsSection = getGardenCropsSection(
-    project.crops,
-    scoreOssification(project.ossificationHistory, UnixTime.now()),
-    ossification,
-  )
+  const gardenCropsSection = getGardenCropsSection(project, ossification)
   if (gardenCropsSection) {
     sections.push(gardenCropsSection)
   }

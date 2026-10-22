@@ -1,21 +1,19 @@
-import type {
-  ProjectCrops,
-  ProjectPrivacyInfo,
-  ProjectScalingInfo,
+import {
+  getGardenProjectPath,
+  type ProjectCrops,
+  type ProjectDefiInfo,
+  type ProjectPrivacyInfo,
+  type ProjectScalingInfo,
+  type ResolvedCrops,
+  resolveProjectCrops,
 } from '@l2beat/config'
 import type { OssificationHistory } from '@l2beat/shared/frontend'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import type { ResolvedCrops } from '~/components/garden/crops'
+import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
 import {
   type CropsAttestationsMeta,
   getAttestationsMeta,
 } from '~/server/features/garden/getAttestationsMeta'
-import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
-import {
-  qualifiesForGarden,
-  resolveProjectCrops,
-  scoreOssification,
-} from '~/server/features/garden/resolveCrops'
 import { ps } from '~/server/projects'
 import { CROPS_API_URL, type CropsApiEndpointKey } from './content'
 import {
@@ -42,6 +40,7 @@ export interface ExampleProject {
   ossificationHistory?: OssificationHistory | undefined
   privacyInfo?: ProjectPrivacyInfo | undefined
   scalingInfo?: ProjectScalingInfo | undefined
+  defiInfo?: ProjectDefiInfo | undefined
   contracts?:
     | {
         addresses: Record<
@@ -77,6 +76,7 @@ export async function getIntegrateExamples(): Promise<IntegrateExamples> {
     optional: [
       'scalingInfo',
       'privacyInfo',
+      'defiInfo',
       'contracts',
       'ossificationHistory',
     ],
@@ -158,12 +158,8 @@ function toApiProject(
   meta: CropsAttestationsMeta,
   now: number,
 ): ApiProject {
-  const path = getGardenProjectPath(project)
-  const ossification = scoreOssification(
-    project.ossificationHistory,
-    UnixTime(now),
-  )
-  const crops = resolveProjectCrops(project.crops, ossification)
+  const path = getGardenProjectPath(project, hasDefiProjectPage(project))
+  const { crops, listing } = resolveProjectCrops(project, UnixTime(now))
   const attested = meta.current?.projectIds.includes(project.id)
   return {
     id: project.id,
@@ -171,7 +167,7 @@ function toApiProject(
     name: project.name,
     href: path ? `${L2BEAT_ORIGIN}${path}` : null,
     crops,
-    inGarden: qualifiesForGarden(crops, ossification !== undefined),
+    inGarden: listing === 'listed',
     attestation:
       meta.current && attested
         ? {

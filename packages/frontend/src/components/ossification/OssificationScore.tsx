@@ -1,4 +1,4 @@
-import type { Sentiment } from '@l2beat/config'
+import { getOssificationSentiment } from '@l2beat/shared-pure'
 import { Badge } from '~/components/badge/Badge'
 import {
   Tooltip,
@@ -6,7 +6,6 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { sentimentToTextColor } from '~/utils/sentiment'
-import { OSSIFICATION_SCORE_BANDS } from './ossificationScoreBands'
 
 export function OssificationScore({
   score,
@@ -19,16 +18,10 @@ export function OssificationScore({
     return <UnverifiedContractsBadge />
   }
   return (
-    <span className={sentimentToTextColor(getScoreSentiment(score))}>
+    <span className={sentimentToTextColor(getOssificationSentiment(score))}>
       {score}
     </span>
   )
-}
-
-function getScoreSentiment(score: number): Sentiment {
-  if (score >= OSSIFICATION_SCORE_BANDS.good) return 'good'
-  if (score >= OSSIFICATION_SCORE_BANDS.warning) return 'warning'
-  return 'bad'
 }
 
 function UnverifiedContractsBadge() {
