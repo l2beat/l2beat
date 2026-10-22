@@ -6,7 +6,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
 import { formatBasisPoints } from '../../common/formatBasisPoints'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
@@ -76,34 +75,6 @@ const POOL_ASSETS = [
   ),
 ]
 
-// Entrypoint.assetConfigs. The relay fee cap is an amount of the asset, and
-// only processors enforce it, so it binds withdrawals but not transfers.
-type AssetConfig = [
-  enabled: boolean,
-  minimumDeposit: number | string,
-  vettingFeeBPS: number,
-  maxRelayFee: number | string,
-]
-const ASSET_CONFIGS = discovery.getContractValue<Record<string, AssetConfig>>(
-  'Entrypoint',
-  'assetConfigs',
-)
-assert(
-  Object.entries(ASSET_CONFIGS).every(
-    ([asset, [enabled]]) =>
-      !enabled ||
-      POOL_ASSETS.includes(
-        ChainSpecificAddress.address(ChainSpecificAddress(asset)),
-      ),
-  ),
-  'Every asset open for deposits must have a bucket',
-)
-assert(
-  POOL_ASSETS.every((address) => getAssetConfig(address).vettingFeeBPS === 0),
-  'Pool assets must charge no vetting fee',
-)
-const feeSummary = POOL_ASSETS.map(formatRelayFeeCap).join('\n')
-
 // Every verifier the vault routes proofs to, replaced together on 2026-10-20
 // with the ceremony keys (DepositVerifierSet, RagequitVerifierSet and 25
 // VerifierConfigured events in block 26234240).
@@ -136,7 +107,7 @@ export const privacyPoolsV2: BaseProject = {
     detailedDescription: readProjectMarkdown(
       'privacy-pools-v2',
       'detailedDescription',
-      { yieldFee, rootLiveness, feeSummary },
+      { yieldFee, rootLiveness },
     ),
     links: {
       websites: ['https://privacypools.com'],
@@ -187,19 +158,12 @@ export const privacyPoolsV2: BaseProject = {
       address: ChainSpecificAddress.address(POOL_VAULT.address),
       chain: ChainSpecificAddress.longChain(POOL_VAULT.address),
       sinceTimestamp: SINCE_TIMESTAMP,
-      // USDC deposits are closed, but the vault still holds those of the beta.
       tokens: ['ETH', 'USDC', 'ppUSDC', 'ppUSDT', 'ppETH'],
     },
   ],
   tvsInfo: {
     associatedTokens: [],
-    warnings: [
-      {
-        sentiment: 'warning',
-        value:
-          'The yield shares ppUSDC, ppUSDT and ppETH are valued at par with their underlying, so the TVS leaves out the Aave yield they have accrued.',
-      },
-    ],
+    warnings: [],
   },
   zkCatalogInfo: {
     creator: '0xbow',
@@ -240,8 +204,6 @@ export const privacyPoolsV2: BaseProject = {
     referenceClient: REFERENCE_CLIENT,
     trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),
-    // Relayer activity counts who relays withdrawals. It leaves out relayed
-    // private transfers, whose fee the vault pays out directly.
     relayerTracking: {
       type: 'onchainEvents',
       sources: [
@@ -323,25 +285,6 @@ function relayerSource(
     sinceTimestamp: getSinceTimestamp(contract),
     extractor,
   }
-}
-
-function getAssetConfig(address: EthereumAddress) {
-  const config = ASSET_CONFIGS[ChainSpecificAddress.from('eth', address)]
-  assert(config, 'Missing asset config', { address })
-  const [, , vettingFeeBPS, maxRelayFee] = config
-  return { vettingFeeBPS, maxRelayFee: BigInt(maxRelayFee) }
-}
-
-function formatRelayFeeCap(address: EthereumAddress): string {
-  const token = getTokenByAddress(address.toString())
-  const { maxRelayFee } = getAssetConfig(address)
-  if (maxRelayFee === 0n) {
-    return `- ${token.symbol}: no cap.`
-  }
-  const amount = Number(
-    utils.formatUnits(maxRelayFee, token.decimals),
-  ).toLocaleString('en-US', { maximumFractionDigits: token.decimals })
-  return `- ${token.symbol}: ${amount} ${token.symbol}.`
 }
 
 // One vault holds every asset, so each asset is a bucket on the same address.
