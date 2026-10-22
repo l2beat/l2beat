@@ -4,7 +4,7 @@ import { IconClose } from '../../icons/IconClose'
 import { IconFullscreen } from '../../icons/IconFullscreen'
 import { IconFullscreenExit } from '../../icons/IconFullscreenExit'
 import { useDockingHook } from './context'
-import type { LeafNode } from './types'
+import type { LeafKey, LeafNode } from './types'
 
 // The generic frame. Docking owns the header bar (drag handle + fullscreen +
 // close) and the body container; the consumer fills both via renderHeader /
@@ -21,17 +21,9 @@ export const LeafView = memo(
 
 function LeafViewImpl(props: { node: LeafNode }) {
   const useStore = useDockingHook()
-  const config = useStore((state) => state.config)
-  const activeLeaf = useStore((state) => state.activeLeaf)
-  const fullScreenLeaf = useStore((state) => state.fullScreenLeaf)
-  const pickedUpLeaf = useStore((state) => state.pickedUpLeaf)
-  const toggleFullScreen = useStore((state) => state.toggleFullScreen)
-  const removeLeaf = useStore((state) => state.removeLeaf)
-
   const key = props.node.key
-  const isActive = activeLeaf === key
-  const isFullScreen = fullScreenLeaf === key
-  const isPickedUp = pickedUpLeaf === key
+  const config = useStore((state) => state.config)
+  const isPickedUp = useStore((state) => state.pickedUpLeaf === key)
 
   return (
     <div
@@ -41,31 +33,47 @@ function LeafViewImpl(props: { node: LeafNode }) {
         isPickedUp && 'opacity-50',
       )}
     >
-      <div
-        data-leaf-handle={key}
-        className="flex h-[36px] shrink-0 cursor-move select-none items-center gap-2 border-coffee-600 border-y bg-coffee-800 pr-2"
-      >
-        {config.renderHeader({ key, isActive, isFullScreen })}
-        <button
-          type="button"
-          className="w-4 text-coffee-200 hover:text-coffee-100"
-          onClick={() => toggleFullScreen(key)}
-          aria-label={isFullScreen ? 'Exit full screen' : 'Full screen'}
-        >
-          {isFullScreen ? <IconFullscreenExit /> : <IconFullscreen />}
-        </button>
-        <button
-          type="button"
-          className="w-4 text-coffee-200 hover:text-coffee-100"
-          onClick={() => removeLeaf(key)}
-          aria-label="Close panel"
-        >
-          <IconClose />
-        </button>
-      </div>
+      <LeafHeader leafKey={key} />
       <div className="relative min-h-0 flex-1 overflow-auto">
         {config.renderBody(key)}
       </div>
+    </div>
+  )
+}
+
+// Focus and fullscreen change on clicks between panels; reading them here
+// keeps those clicks from rerendering every panel body.
+function LeafHeader(props: { leafKey: LeafKey }) {
+  const useStore = useDockingHook()
+  const key = props.leafKey
+  const config = useStore((state) => state.config)
+  const isActive = useStore((state) => state.activeLeaf === key)
+  const isFullScreen = useStore((state) => state.fullScreenLeaf === key)
+  const toggleFullScreen = useStore((state) => state.toggleFullScreen)
+  const removeLeaf = useStore((state) => state.removeLeaf)
+
+  return (
+    <div
+      data-leaf-handle={key}
+      className="flex h-[36px] shrink-0 cursor-move select-none items-center gap-2 border-coffee-600 border-y bg-coffee-800 pr-2"
+    >
+      {config.renderHeader({ key, isActive, isFullScreen })}
+      <button
+        type="button"
+        className="w-4 text-coffee-200 hover:text-coffee-100"
+        onClick={() => toggleFullScreen(key)}
+        aria-label={isFullScreen ? 'Exit full screen' : 'Full screen'}
+      >
+        {isFullScreen ? <IconFullscreenExit /> : <IconFullscreen />}
+      </button>
+      <button
+        type="button"
+        className="w-4 text-coffee-200 hover:text-coffee-100"
+        onClick={() => removeLeaf(key)}
+        aria-label="Close panel"
+      >
+        <IconClose />
+      </button>
     </div>
   )
 }
