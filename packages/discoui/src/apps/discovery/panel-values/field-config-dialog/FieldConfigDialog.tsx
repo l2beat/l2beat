@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import type { Field } from '../../../../api/types'
 import { Button } from '../../../../components/Button'
 import { Checkbox } from '../../../../components/Checkbox'
@@ -17,19 +17,30 @@ type Props = {
   field: Field
 }
 
+// Every field row has one of these, so the closed dialog renders only its
+// trigger and leaves the config lookups to the body.
 export function FieldConfigDialog(props: Props) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog.Trigger asChild>
+        <Button variant="icon" size="icon">
+          <IconGear className="size-4 text-coffee-200/80" />
+        </Button>
+      </Dialog.Trigger>
+      {isOpen && <FieldConfigBody fieldName={props.field.name} />}
+    </Dialog.Root>
+  )
+}
+
+function FieldConfigBody({ fieldName }: { fieldName: string }) {
   const models = useConfigModels()
 
-  const fieldName = props.field.name
   const hasTemplate = models.templateModel.hasTemplate
-  const defaultTab = useMemo(() => {
-    if (hasTemplate && !models.isPending) {
-      return 'template' as const
-    }
-    return 'config' as const
-  }, [hasTemplate, models.isPending])
-  const [activeTab, setActiveTab] = useState<'config' | 'template'>(defaultTab)
-  const [isOpen, setIsOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState<'config' | 'template'>(
+    hasTemplate && !models.isPending ? 'template' : 'config',
+  )
 
   const configSeverity = models.configModel.getFieldSeverity(fieldName)
   const templateSeverity = models.templateModel.getFieldSeverity(fieldName)
@@ -66,332 +77,304 @@ export function FieldConfigDialog(props: Props) {
     activeTab === 'template' ? models.templateModel : models.configModel
 
   return (
-    <Dialog.Root
-      open={isOpen}
-      onOpenChange={(open) => {
-        setIsOpen(open)
-        if (open) {
-          setActiveTab(defaultTab)
+    <Dialog.Body
+      className="flex flex-col overflow-hidden"
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') {
+          return
+        }
+
+        const key = event.key.toLowerCase()
+
+        if (activeTab === 'template' && !hasTemplate) {
+          return
+        }
+
+        if (key === HOTKEYS.ignoreMethods) {
+          activeModel.toggleIgnoreMethods(fieldName)
+          event.preventDefault()
+          return
+        }
+        if (key === HOTKEYS.ignoreRelatives) {
+          activeModel.toggleIgnoreRelatives(fieldName)
+          event.preventDefault()
+          return
+        }
+        if (key === HOTKEYS.ignoreInWatchMode) {
+          activeModel.toggleIgnoreInWatchMode(fieldName)
+          event.preventDefault()
+          return
+        }
+        if (key === HOTKEYS.configTab) {
+          setActiveTab('config')
+          event.preventDefault()
+          return
+        }
+        if (key === HOTKEYS.templateTab && hasTemplate) {
+          setActiveTab('template')
+          event.preventDefault()
+          return
+        }
+        if (key === HOTKEYS.severity) {
+          const currentSeverity =
+            activeTab === 'template' ? templateSeverity : configSeverity
+          const nextSeverity = getNextSeverity(currentSeverity)
+          activeModel.setFieldSeverity(fieldName, nextSeverity)
+          event.preventDefault()
         }
       }}
     >
-      <Dialog.Trigger asChild>
-        <Button variant="icon" size="icon">
-          <IconGear className="size-4 text-coffee-200/80" />
-        </Button>
-      </Dialog.Trigger>
-      <Dialog.Body
-        className="flex flex-col overflow-hidden"
-        onKeyDown={(event) => {
-          if (event.key === 'Escape') {
-            return
-          }
-
-          const key = event.key.toLowerCase()
-
-          if (activeTab === 'template' && !hasTemplate) {
-            return
-          }
-
-          if (key === HOTKEYS.ignoreMethods) {
-            activeModel.toggleIgnoreMethods(fieldName)
-            event.preventDefault()
-            return
-          }
-          if (key === HOTKEYS.ignoreRelatives) {
-            activeModel.toggleIgnoreRelatives(fieldName)
-            event.preventDefault()
-            return
-          }
-          if (key === HOTKEYS.ignoreInWatchMode) {
-            activeModel.toggleIgnoreInWatchMode(fieldName)
-            event.preventDefault()
-            return
-          }
-          if (key === HOTKEYS.configTab) {
-            setActiveTab('config')
-            event.preventDefault()
-            return
-          }
-          if (key === HOTKEYS.templateTab && hasTemplate) {
-            setActiveTab('template')
-            event.preventDefault()
-            return
-          }
-          if (key === HOTKEYS.severity) {
-            const currentSeverity =
-              activeTab === 'template' ? templateSeverity : configSeverity
-            const nextSeverity = getNextSeverity(currentSeverity)
-            activeModel.setFieldSeverity(fieldName, nextSeverity)
-            event.preventDefault()
-          }
-        }}
+      <Dialog.Title>
+        Field - <span className="font-mono text-coffee-400">{fieldName}</span>
+      </Dialog.Title>
+      <Tabs.Root
+        className="flex min-h-0 flex-1 flex-col"
+        value={activeTab}
+        onValueChange={(value) => setActiveTab(value as 'config' | 'template')}
       >
-        <Dialog.Title>
-          Field - <span className="font-mono text-coffee-400">{fieldName}</span>
-        </Dialog.Title>
-        <Tabs.Root
-          className="flex min-h-0 flex-1 flex-col"
-          value={activeTab}
-          onValueChange={(value) =>
-            setActiveTab(value as 'config' | 'template')
-          }
-        >
-          <Tabs.List>
-            <Tabs.Trigger value="config">
-              <span className="flex items-center gap-1">
-                Config
-                <HotkeyHint label="C" />
-              </span>
-            </Tabs.Trigger>
-            <Tabs.Trigger value="template">
-              <span className="flex items-center gap-1">
-                Template
-                <HotkeyHint label="T" />
-              </span>
-            </Tabs.Trigger>
-          </Tabs.List>
-          <Tabs.Content value="config" className="overflow-y-auto py-2">
-            <div className="space-y-2">
-              <ConfigRow
-                headline={
-                  <span className="flex items-center gap-2">
-                    Severity
-                    <HotkeyHint label="S" />
-                  </span>
-                }
-              >
-                <div className="flex gap-2">
-                  <SeverityButton
-                    onClick={() =>
-                      models.configModel.setFieldSeverity(fieldName, 'HIGH')
-                    }
-                    isActive={configSeverity === 'HIGH'}
-                  >
-                    HIGH
-                  </SeverityButton>
-                  <SeverityButton
-                    onClick={() =>
-                      models.configModel.setFieldSeverity(fieldName, 'MEDIUM')
-                    }
-                    isActive={configSeverity === 'MEDIUM'}
-                  >
-                    MEDIUM
-                  </SeverityButton>
-                  <SeverityButton
-                    onClick={() =>
-                      models.configModel.setFieldSeverity(fieldName, 'LOW')
-                    }
-                    isActive={configSeverity === 'LOW'}
-                  >
-                    LOW
-                  </SeverityButton>
-                  <SeverityButton
-                    isActive={configSeverity === undefined}
-                    onClick={() =>
-                      models.configModel.setFieldSeverity(fieldName, undefined)
-                    }
-                  >
-                    NONE
-                  </SeverityButton>
-                </div>
-              </ConfigRow>
-
-              <ConfigRow headline="Ignore Options">
-                <div className="space-y-2">
-                  <IgnoreOption
-                    checked={configIgnoreMethods ?? false}
-                    onClick={() =>
-                      models.configModel.toggleIgnoreMethods(fieldName)
-                    }
-                    shortcut="M"
-                  >
-                    Ignore Methods
-                  </IgnoreOption>
-                  <IgnoreOption
-                    checked={configIgnoreRelatives ?? false}
-                    onClick={() =>
-                      models.configModel.toggleIgnoreRelatives(fieldName)
-                    }
-                    shortcut="R"
-                  >
-                    Ignore Relatives
-                  </IgnoreOption>
-
-                  <IgnoreOption
-                    checked={configIgnoreInWatchMode ?? false}
-                    onClick={() =>
-                      models.configModel.toggleIgnoreInWatchMode(fieldName)
-                    }
-                    shortcut="W"
-                  >
-                    Ignore In Watch Mode
-                  </IgnoreOption>
-                </div>
-              </ConfigRow>
-
-              <ConfigRow headline="Handler">
-                <div className="group relative">
-                  <Code
-                    className="group-hover:pointer-events-none"
-                    content={configHandlerString ?? 'No handler defined'}
-                  />
-                  <FieldHandlerConfigDialog
-                    context="config"
-                    fieldName={fieldName}
-                  />
-                </div>
-              </ConfigRow>
-
-              <ConfigRow headline="Edit">
-                <Code content={configEditString ?? 'No edit formula defined'} />
-              </ConfigRow>
-
-              <ConfigRow headline="Description">
-                <DescriptionEditor
-                  content={configDescription}
-                  setContent={(value) =>
-                    models.configModel.setFieldDescription(fieldName, value)
+        <Tabs.List>
+          <Tabs.Trigger value="config">
+            <span className="flex items-center gap-1">
+              Config
+              <HotkeyHint label="C" />
+            </span>
+          </Tabs.Trigger>
+          <Tabs.Trigger value="template">
+            <span className="flex items-center gap-1">
+              Template
+              <HotkeyHint label="T" />
+            </span>
+          </Tabs.Trigger>
+        </Tabs.List>
+        <Tabs.Content value="config" className="overflow-y-auto py-2">
+          <div className="space-y-2">
+            <ConfigRow
+              headline={
+                <span className="flex items-center gap-2">
+                  Severity
+                  <HotkeyHint label="S" />
+                </span>
+              }
+            >
+              <div className="flex gap-2">
+                <SeverityButton
+                  onClick={() =>
+                    models.configModel.setFieldSeverity(fieldName, 'HIGH')
                   }
+                  isActive={configSeverity === 'HIGH'}
+                >
+                  HIGH
+                </SeverityButton>
+                <SeverityButton
+                  onClick={() =>
+                    models.configModel.setFieldSeverity(fieldName, 'MEDIUM')
+                  }
+                  isActive={configSeverity === 'MEDIUM'}
+                >
+                  MEDIUM
+                </SeverityButton>
+                <SeverityButton
+                  onClick={() =>
+                    models.configModel.setFieldSeverity(fieldName, 'LOW')
+                  }
+                  isActive={configSeverity === 'LOW'}
+                >
+                  LOW
+                </SeverityButton>
+                <SeverityButton
+                  isActive={configSeverity === undefined}
+                  onClick={() =>
+                    models.configModel.setFieldSeverity(fieldName, undefined)
+                  }
+                >
+                  NONE
+                </SeverityButton>
+              </div>
+            </ConfigRow>
+
+            <ConfigRow headline="Ignore Options">
+              <div className="space-y-2">
+                <IgnoreOption
+                  checked={configIgnoreMethods ?? false}
+                  onClick={() =>
+                    models.configModel.toggleIgnoreMethods(fieldName)
+                  }
+                  shortcut="M"
+                >
+                  Ignore Methods
+                </IgnoreOption>
+                <IgnoreOption
+                  checked={configIgnoreRelatives ?? false}
+                  onClick={() =>
+                    models.configModel.toggleIgnoreRelatives(fieldName)
+                  }
+                  shortcut="R"
+                >
+                  Ignore Relatives
+                </IgnoreOption>
+
+                <IgnoreOption
+                  checked={configIgnoreInWatchMode ?? false}
+                  onClick={() =>
+                    models.configModel.toggleIgnoreInWatchMode(fieldName)
+                  }
+                  shortcut="W"
+                >
+                  Ignore In Watch Mode
+                </IgnoreOption>
+              </div>
+            </ConfigRow>
+
+            <ConfigRow headline="Handler">
+              <div className="group relative">
+                <Code
+                  className="group-hover:pointer-events-none"
+                  content={configHandlerString ?? 'No handler defined'}
                 />
-              </ConfigRow>
-            </div>
-          </Tabs.Content>
-          <Tabs.Content value="template" className="overflow-y-auto py-2">
-            <div className="space-y-2">
-              {models.templateModel.hasTemplate ? (
-                <>
-                  <ConfigRow
-                    headline={
-                      <span className="flex items-center gap-2">
-                        Severity
-                        <HotkeyHint label="S" />
-                      </span>
-                    }
-                  >
-                    <div className="flex gap-2">
-                      <SeverityButton
-                        onClick={() =>
-                          models.templateModel.setFieldSeverity(
-                            fieldName,
-                            'HIGH',
-                          )
-                        }
-                        isActive={templateSeverity === 'HIGH'}
-                      >
-                        HIGH
-                      </SeverityButton>
-                      <SeverityButton
-                        onClick={() =>
-                          models.templateModel.setFieldSeverity(
-                            fieldName,
-                            'MEDIUM',
-                          )
-                        }
-                        isActive={templateSeverity === 'MEDIUM'}
-                      >
-                        MEDIUM
-                      </SeverityButton>
-                      <SeverityButton
-                        onClick={() =>
-                          models.templateModel.setFieldSeverity(
-                            fieldName,
-                            'LOW',
-                          )
-                        }
-                        isActive={templateSeverity === 'LOW'}
-                      >
-                        LOW
-                      </SeverityButton>
-                      <SeverityButton
-                        onClick={() =>
-                          models.templateModel.setFieldSeverity(
-                            fieldName,
-                            undefined,
-                          )
-                        }
-                        isActive={templateSeverity === undefined}
-                      >
-                        NONE
-                      </SeverityButton>
-                    </div>
-                  </ConfigRow>
+                <FieldHandlerConfigDialog
+                  context="config"
+                  fieldName={fieldName}
+                />
+              </div>
+            </ConfigRow>
 
-                  <ConfigRow headline="Ignore Options">
-                    <div className="space-y-2">
-                      <IgnoreOption
-                        checked={templateIgnoreMethods ?? false}
-                        onClick={() =>
-                          models.templateModel.toggleIgnoreMethods(fieldName)
-                        }
-                        shortcut="M"
-                      >
-                        Ignore Methods
-                      </IgnoreOption>
-                      <IgnoreOption
-                        checked={templateIgnoreRelatives ?? false}
-                        onClick={() =>
-                          models.templateModel.toggleIgnoreRelatives(fieldName)
-                        }
-                        shortcut="R"
-                      >
-                        Ignore Relatives
-                      </IgnoreOption>
-                      <IgnoreOption
-                        checked={templateIgnoreInWatchMode ?? false}
-                        onClick={() =>
-                          models.templateModel.toggleIgnoreInWatchMode(
-                            fieldName,
-                          )
-                        }
-                        shortcut="W"
-                      >
-                        Ignore In Watch Mode
-                      </IgnoreOption>
-                    </div>
-                  </ConfigRow>
+            <ConfigRow headline="Edit">
+              <Code content={configEditString ?? 'No edit formula defined'} />
+            </ConfigRow>
 
-                  <ConfigRow headline="Handler">
-                    <div className="group relative">
-                      <Code
-                        className="group-hover:pointer-events-none"
-                        content={templateHandlerString ?? 'No handler defined'}
-                      />
-                      <FieldHandlerConfigDialog
-                        context="template"
-                        fieldName={fieldName}
-                      />
-                    </div>
-                  </ConfigRow>
-
-                  <ConfigRow headline="Edit">
-                    <Code
-                      content={templateEditString ?? 'No edit formula defined'}
-                    />
-                  </ConfigRow>
-
-                  <ConfigRow headline="Description">
-                    <DescriptionEditor
-                      content={templateDescription}
-                      setContent={(value) =>
-                        models.templateModel.setFieldDescription(
+            <ConfigRow headline="Description">
+              <DescriptionEditor
+                content={configDescription}
+                setContent={(value) =>
+                  models.configModel.setFieldDescription(fieldName, value)
+                }
+              />
+            </ConfigRow>
+          </div>
+        </Tabs.Content>
+        <Tabs.Content value="template" className="overflow-y-auto py-2">
+          <div className="space-y-2">
+            {models.templateModel.hasTemplate ? (
+              <>
+                <ConfigRow
+                  headline={
+                    <span className="flex items-center gap-2">
+                      Severity
+                      <HotkeyHint label="S" />
+                    </span>
+                  }
+                >
+                  <div className="flex gap-2">
+                    <SeverityButton
+                      onClick={() =>
+                        models.templateModel.setFieldSeverity(fieldName, 'HIGH')
+                      }
+                      isActive={templateSeverity === 'HIGH'}
+                    >
+                      HIGH
+                    </SeverityButton>
+                    <SeverityButton
+                      onClick={() =>
+                        models.templateModel.setFieldSeverity(
                           fieldName,
-                          value,
+                          'MEDIUM',
                         )
                       }
+                      isActive={templateSeverity === 'MEDIUM'}
+                    >
+                      MEDIUM
+                    </SeverityButton>
+                    <SeverityButton
+                      onClick={() =>
+                        models.templateModel.setFieldSeverity(fieldName, 'LOW')
+                      }
+                      isActive={templateSeverity === 'LOW'}
+                    >
+                      LOW
+                    </SeverityButton>
+                    <SeverityButton
+                      onClick={() =>
+                        models.templateModel.setFieldSeverity(
+                          fieldName,
+                          undefined,
+                        )
+                      }
+                      isActive={templateSeverity === undefined}
+                    >
+                      NONE
+                    </SeverityButton>
+                  </div>
+                </ConfigRow>
+
+                <ConfigRow headline="Ignore Options">
+                  <div className="space-y-2">
+                    <IgnoreOption
+                      checked={templateIgnoreMethods ?? false}
+                      onClick={() =>
+                        models.templateModel.toggleIgnoreMethods(fieldName)
+                      }
+                      shortcut="M"
+                    >
+                      Ignore Methods
+                    </IgnoreOption>
+                    <IgnoreOption
+                      checked={templateIgnoreRelatives ?? false}
+                      onClick={() =>
+                        models.templateModel.toggleIgnoreRelatives(fieldName)
+                      }
+                      shortcut="R"
+                    >
+                      Ignore Relatives
+                    </IgnoreOption>
+                    <IgnoreOption
+                      checked={templateIgnoreInWatchMode ?? false}
+                      onClick={() =>
+                        models.templateModel.toggleIgnoreInWatchMode(fieldName)
+                      }
+                      shortcut="W"
+                    >
+                      Ignore In Watch Mode
+                    </IgnoreOption>
+                  </div>
+                </ConfigRow>
+
+                <ConfigRow headline="Handler">
+                  <div className="group relative">
+                    <Code
+                      className="group-hover:pointer-events-none"
+                      content={templateHandlerString ?? 'No handler defined'}
                     />
-                  </ConfigRow>
-                </>
-              ) : (
-                <div className="text-coffee-300 text-sm italic">
-                  No template available
-                </div>
-              )}
-            </div>
-          </Tabs.Content>
-        </Tabs.Root>
-      </Dialog.Body>
-    </Dialog.Root>
+                    <FieldHandlerConfigDialog
+                      context="template"
+                      fieldName={fieldName}
+                    />
+                  </div>
+                </ConfigRow>
+
+                <ConfigRow headline="Edit">
+                  <Code
+                    content={templateEditString ?? 'No edit formula defined'}
+                  />
+                </ConfigRow>
+
+                <ConfigRow headline="Description">
+                  <DescriptionEditor
+                    content={templateDescription}
+                    setContent={(value) =>
+                      models.templateModel.setFieldDescription(fieldName, value)
+                    }
+                  />
+                </ConfigRow>
+              </>
+            ) : (
+              <div className="text-coffee-300 text-sm italic">
+                No template available
+              </div>
+            )}
+          </div>
+        </Tabs.Content>
+      </Tabs.Root>
+    </Dialog.Body>
   )
 }
 
