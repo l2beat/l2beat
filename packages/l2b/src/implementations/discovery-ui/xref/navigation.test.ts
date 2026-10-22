@@ -6,9 +6,18 @@ import { definitionAt, referencesAt } from './navigation'
 
 const IMPLEMENTATION = `contract Box {
     uint256 internal value;
+    /*
+       Hashed; never changes.
+     */
+    bytes32 internal constant SEED =
+        keccak256("seed;");
 
+    /// @notice Keeps next.
+    /**
+     * @param next The value to keep.
+     */
     function store(uint256 next) external {
-        value = next;
+        value = next + uint256(SEED);
     }
 }
 `
@@ -62,6 +71,39 @@ describe('xref navigation', () => {
         offset: shown(declaration),
         length: 'value'.length,
         alsoIn: 0,
+        declaration: {
+          line: 2 + NOTE_LINES,
+          offset: shown(IMPLEMENTATION.indexOf('    uint256 internal value')),
+          text: '    uint256 internal value;',
+        },
+      },
+    ])
+  })
+
+  it('peeks whole lines, from the comment above to the end', () => {
+    const declarationOf = (use: string) =>
+      definitionAt(
+        workspace,
+        ADDRESS,
+        IMPLEMENTATION_SOURCE,
+        shown(IMPLEMENTATION.indexOf(use)),
+      ).definitions.map((d) => d.declaration)
+
+    expect(declarationOf('SEED)')).toEqual([
+      {
+        line: 3 + NOTE_LINES,
+        offset: shown(IMPLEMENTATION.indexOf('    /*\n')),
+        text: '    /*\n       Hashed; never changes.\n     */\n    bytes32 internal constant SEED =\n        keccak256("seed;");',
+      },
+    ])
+    expect(declarationOf('store(')).toEqual([
+      {
+        line: 9 + NOTE_LINES,
+        offset: shown(IMPLEMENTATION.indexOf('    /// @notice')),
+        text: IMPLEMENTATION.slice(
+          IMPLEMENTATION.indexOf('    /// @notice'),
+          IMPLEMENTATION.lastIndexOf('\n}'),
+        ),
       },
     ])
   })
@@ -80,9 +122,9 @@ describe('xref navigation', () => {
     ).toEqual([
       [
         IMPLEMENTATION_SOURCE,
-        5 + NOTE_LINES,
+        14 + NOTE_LINES,
         shown(IMPLEMENTATION.indexOf('value = next')),
-        'value = next;',
+        'value = next + uint256(SEED);',
       ],
     ])
   })
