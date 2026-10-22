@@ -253,6 +253,26 @@ contract Overloads is Base {
 }
 `
 
+const ROUTER = `interface IPool {
+    function token() external view returns (address);
+    function deposit(bytes32 commitment) external payable;
+    function withdraw() external;
+}
+
+contract Router {
+    function route(IPool pool, bytes32 commitment) external payable {
+        pool.deposit{ value: msg.value }(commitment);
+    }
+}
+`
+
+const POOL = `contract Pool {
+    function deposit(bytes32 commitment) external payable {}
+
+    function withdraw() external {}
+}
+`
+
 const FILES: Record<string, string> = {
   '/p/.flat/Edge.sol': EDGE,
   '/p/.flat/Derived.sol': DERIVED,
@@ -275,6 +295,21 @@ const FILES: Record<string, string> = {
 `,
   '/p/.flat/Half.sol': `contract Half {
     function f(uint256 a) external {}
+}
+`,
+  '/p/.flat/Router.sol': ROUTER,
+  '/p/.flat/Mixer.sol': `contract Mixer {
+    function deposit(bytes32 commitment) external payable {
+        revert();
+    }
+}
+`,
+  '/p/.flat/EthPool.sol': `${POOL}
+contract EthPool is Pool {}
+`,
+  '/p/.flat/TokenPool.sol': `${POOL}
+contract TokenPool is Pool {
+    function token() external view returns (address) {}
 }
 `,
   '/p/.flat/Full.sol': `contract Full {
@@ -315,6 +350,29 @@ describe(`${resolveDefinition.name} edge cases`, () => {
         '7',
         [],
         ['/p/.flat/Mixed/Impl.1.sol', '/p/.flat/Mixed/Proxy.p.sol'],
+      ),
+      entry('Router', '8', [], ['/p/.flat/Router.sol']),
+      entry(
+        'Mixer',
+        '9',
+        ['function deposit(bytes32 commitment) payable'],
+        ['/p/.flat/Mixer.sol'],
+      ),
+      entry(
+        'EthPool',
+        'a',
+        ['function deposit(bytes32 commitment) payable', 'function withdraw()'],
+        ['/p/.flat/EthPool.sol'],
+      ),
+      entry(
+        'TokenPool',
+        'b',
+        [
+          'function deposit(bytes32 commitment) payable',
+          'function withdraw()',
+          'function token() view returns (address)',
+        ],
+        ['/p/.flat/TokenPool.sol'],
       ),
     ],
     (path) => FILES[path] ?? '',
@@ -401,16 +459,39 @@ describe(`${resolveDefinition.name} edge cases`, () => {
     ])
   })
 
-  it('matches by ABI only contracts with every interface overload', () => {
+  it('ranks ABI matches with more interface functions first', () => {
     const result = resolveDefinition(
       workspace,
       '/p/.flat/Edge.sol',
       EDGE.indexOf('other.f(1)') + 'other.'.length,
     )
 
+    expect(lines(result)).toEqual(['Full.f:2', 'Half.f:2'])
+  })
+
+  it('keeps ABI matches that lack some interface functions', () => {
+    const result = resolveDefinition(
+      workspace,
+      '/p/.flat/Router.sol',
+      ROUTER.indexOf('pool.deposit') + 'pool.'.length,
+    )
+
     expect(
-      result.definitions.map((d) => `${d.label}:${d.position.line}`),
-    ).toEqual(['Full.f:2'])
+      result.definitions.map((d) => [
+        d.label,
+        d.path,
+        d.entries.map((e) => e.name),
+        d.copies.map((c) => c.path),
+      ]),
+    ).toEqual([
+      [
+        'Pool.deposit',
+        '/p/.flat/TokenPool.sol',
+        ['TokenPool', 'EthPool'],
+        ['/p/.flat/EthPool.sol'],
+      ],
+      ['Mixer.deposit', '/p/.flat/Mixer.sol', ['Mixer'], []],
+    ])
   })
 
   it('picks the super overload by argument type', () => {
