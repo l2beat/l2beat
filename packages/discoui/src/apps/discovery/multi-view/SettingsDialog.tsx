@@ -11,6 +11,7 @@ export function SettingsDialog() {
     (s) => s.markUnreachableEntries,
   )
   const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
+  const peekDefinitions = useGlobalSettingsStore((s) => s.peekDefinitions)
   const setUserSettings = useGlobalSettingsStore((s) => s.setUserSettings)
 
   return (
@@ -45,6 +46,25 @@ export function SettingsDialog() {
               Entries unreachable from the root discovery will appear grayed
               out. <br />
               By default, all entries are displayed as if they were reachable.
+            </div>
+          </div>
+
+          <h2 className="mt-4 leading-none">Code</h2>
+          <hr className="mt-1 mb-2 border-coffee-400/30" />
+          <div>
+            <div
+              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
+              onClick={() =>
+                setUserSettings({ peekDefinitions: !peekDefinitions })
+              }
+            >
+              <Checkbox checked={peekDefinitions} />
+              Peek definitions inline
+            </div>
+            <div className="flex items-center gap-1 pl-5 font-light text-coffee-400 text-xs">
+              Go to definition (F12, Ctrl/Cmd+click) opens the definition under
+              the line instead of jumping to it. Peeks nest, Escape closes the
+              last one.
             </div>
           </div>
 

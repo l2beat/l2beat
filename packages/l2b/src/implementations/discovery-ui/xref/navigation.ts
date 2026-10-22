@@ -1,4 +1,8 @@
 import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
+import type {
+  BaseASTNode,
+  VariableDeclaration,
+} from '@mradomski/fast-solidity-parser'
 import { compareFiles } from '../../discovery/getCodePaths'
 import type { FlatWorkspace } from '../../xref/FlatWorkspace'
 import { findReferences, type Reference } from '../../xref/findReferences'
@@ -6,8 +10,11 @@ import {
   type Definition,
   resolveDefinition,
 } from '../../xref/resolveDefinition'
+import type { SourceIndex } from '../../xref/SourceIndex'
 import { addFlattenerNote } from '../getCode'
 import type { ApiDefinitionResponse, ApiReferencesResponse } from '../types'
+
+type ApiDefinition = ApiDefinitionResponse['definitions'][number]
 
 // The code panel shows every flat behind this note, so its offsets are shifted.
 const NOTE_LENGTH = addFlattenerNote('').length
@@ -56,7 +63,7 @@ export function referencesAt(
 function toApiDefinition(
   workspace: FlatWorkspace,
   definition: Definition,
-): ApiDefinitionResponse['definitions'][number] {
+): ApiDefinition {
   const owner = workspace.entryOfPath(definition.path)
   assert(owner !== undefined, 'Definition outside the discovery')
   const index = workspace.source(definition.path)
@@ -72,7 +79,44 @@ function toApiDefinition(
     offset: index.offsetOf(definition.position) + NOTE_LENGTH,
     length: label.length - label.lastIndexOf('.') - 1,
     alsoIn: definition.entries.length > 1 ? definition.entries.length - 1 : 0,
+    declaration: declarationLines(index, definition.declaration),
   }
+}
+
+function declarationLines(
+  index: SourceIndex,
+  node: BaseASTNode,
+): ApiDefinition['declaration'] {
+  assert(node.range !== undefined, 'Declaration without a range')
+  const text = index.text
+  let start = text.lastIndexOf('\n', node.range[0] - 1) + 1
+  while (start > 0) {
+    const previous = text.lastIndexOf('\n', start - 2) + 1
+    if (!isCommentLine(text.slice(previous, start - 1))) {
+      break
+    }
+    start = previous
+  }
+  // A state variable's range stops before its initializer.
+  const isStateVariable =
+    node.type === 'VariableDeclaration' &&
+    (node as VariableDeclaration).isStateVar
+  const end = isStateVariable ? text.indexOf(';', node.range[1]) : node.range[1]
+  const lineEnd = text.indexOf('\n', end)
+  return {
+    line: index.positionOf(start).line + NOTE_LINES,
+    offset: start + NOTE_LENGTH,
+    text: text.slice(start, lineEnd === -1 ? undefined : lineEnd),
+  }
+}
+
+function isCommentLine(line: string): boolean {
+  const trimmed = line.trimStart()
+  return (
+    trimmed.startsWith('//') ||
+    trimmed.startsWith('/*') ||
+    trimmed.startsWith('*')
+  )
 }
 
 function toApiReference(

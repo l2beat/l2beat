@@ -4,10 +4,16 @@ import type {
   ApiDefinitionResponse,
   ApiReferencesResponse,
 } from '../../../api/types'
-import { GoToDefinitionPlugin } from '../../../components/editor/code/plugins/goToDefinition'
+import {
+  type DefinitionRequest,
+  GoToDefinitionPlugin,
+} from '../../../components/editor/code/plugins/goToDefinition'
+import type { PeekOrigin } from '../../../components/editor/code/plugins/peek'
 import { useCodeStore } from '../../../components/editor/store'
 import { useDockingStore } from '../multi-view/store'
+import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
+import { peekContent } from './lookupRows'
 
 export interface CodeLocation {
   address: string
@@ -35,6 +41,7 @@ export function useGoToDefinition(
   // A later lookup replaces an earlier one still in flight.
   const latestLookup = useRef(0)
   const [lookup, setLookup] = useState<DefinitionLookup | undefined>()
+  const peekDefinitions = useGlobalSettingsStore((s) => s.peekDefinitions)
 
   const plugin = editor?.getPlugin(GoToDefinitionPlugin)
 
@@ -62,6 +69,20 @@ export function useGoToDefinition(
       setLookup(undefined)
     }
     open(target)
+  }
+
+  // A peek's position is in the file it shows, the panel's in its own file.
+  const positionOf = ({
+    origin,
+    offset,
+  }: DefinitionRequest): PeekOrigin | undefined => {
+    if (origin !== undefined) {
+      return { ...origin, offset: origin.offset + offset }
+    }
+    if (address === undefined || sourceIndex === undefined) {
+      return undefined
+    }
+    return { address, sourceIndex, offset }
   }
 
   // Locations and listed results hold addresses of the previous project.
@@ -93,28 +114,33 @@ export function useGoToDefinition(
       )
     }
     plugin.setHandlers({
-      goToDefinition: (offset) => {
-        if (address === undefined || sourceIndex === undefined) {
+      goToDefinition: (request) => {
+        const at = positionOf(request)
+        if (at === undefined) {
           return
         }
         run(
-          () => getDefinition(project, address, sourceIndex, offset),
+          () => getDefinition(project, at.address, at.sourceIndex, at.offset),
           (response) => {
             const [only, ...rest] = response.definitions
-            if (only !== undefined && rest.length === 0) {
-              navigate(only)
-            } else {
+            if (only === undefined || rest.length > 0) {
               setLookup({ status: 'definitions', response })
+            } else if (peekDefinitions) {
+              const content = peekContent(only, () => navigate(only))
+              plugin.peek(request, content)
+            } else {
+              navigate(only)
             }
           },
         )
       },
-      findReferences: (offset) => {
-        if (address === undefined || sourceIndex === undefined) {
+      findReferences: (request) => {
+        const at = positionOf(request)
+        if (at === undefined) {
           return
         }
         run(
-          () => getReferences(project, address, sourceIndex, offset),
+          () => getReferences(project, at.address, at.sourceIndex, at.offset),
           (response) => setLookup({ status: 'references', response }),
         )
       },
@@ -129,7 +155,7 @@ export function useGoToDefinition(
       plugin.setHandlers(undefined)
       latestLookup.current++
     }
-  }, [plugin, project, address, sourceIndex])
+  }, [plugin, project, address, sourceIndex, peekDefinitions])
 
   return { lookup, navigate, dismiss: () => setLookup(undefined) }
 }
