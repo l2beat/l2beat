@@ -1,5 +1,6 @@
 import { createBrowserRouter, type RouteObject } from 'react-router'
 import { NotFoundPage } from './discovery/NotFoundPage'
+import { AppErrorPage } from './error/AppErrorPage'
 
 export interface AppModule {
   routes: RouteObject[]
@@ -20,5 +21,7 @@ export function createRouter(
     element: <NotFoundPage />,
   })
 
-  return createBrowserRouter(routers)
+  return createBrowserRouter([
+    { errorElement: <AppErrorPage />, children: routers },
+  ])
 }
