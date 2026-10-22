@@ -1,4 +1,5 @@
 import type { RefreshReason } from '@l2beat/discovery'
+import { memo } from 'react'
 import { Loader } from '../../../../components/Loader'
 import {
   Tooltip,
@@ -12,7 +13,9 @@ import { useConfigSyncStatus } from '../../hooks/useConfigSyncStatus'
 type Props = {
   project: string
 }
-export function OutputsSyncBadge(props: Props) {
+
+// Its parent, the status ribbon, rerenders on every list click.
+export const OutputsSyncBadge = memo(function OutputsSyncBadge(props: Props) {
   const { project } = props
   const { reasons, isPending, isError } = useConfigSyncStatus({ project })
 
@@ -30,7 +33,7 @@ export function OutputsSyncBadge(props: Props) {
       <TooltipContent>{tooltipContent}</TooltipContent>
     </Tooltip>
   )
-}
+})
 
 function formatReason(reason: RefreshReason) {
   switch (reason.type) {

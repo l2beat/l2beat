@@ -140,7 +140,7 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
               ))}
           </div>
           <div className="opacity-0 group-hover/field:opacity-100">
-            {canModify && <FieldConfigDialog field={field} />}
+            {canModify && <FieldConfigDialog fieldName={field.name} />}
           </div>
         </div>
         {description && (
