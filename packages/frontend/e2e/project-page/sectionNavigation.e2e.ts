@@ -12,20 +12,64 @@ const DESKTOP = { width: 1400, height: 900 }
 const TABLET = { width: 900, height: 900 }
 const viewports = [DESKTOP, TABLET]
 
+const PROBE = `(() => {
+  const t0 = performance.now()
+  const now = () => Math.round(performance.now() - t0)
+  const d = (window.__diag = { events: [], scroll: [], snaps: {} })
+  const wrappers = () => [...document.querySelectorAll('section[id]')].map((s) => {
+    const w = s.parentElement
+    return [s.id, Math.round(w.getBoundingClientRect().height), w.className.includes('content-visibility') ? 'cv' : '-', Object.keys(s).some((k) => k.startsWith('__react')) ? 'R' : '-']
+  })
+  d.wrappers = wrappers
+  const snap = (name) => { d.snaps[name] = { t: now(), y: Math.round(scrollY), h: document.documentElement.scrollHeight, w: wrappers() } }
+  document.addEventListener('DOMContentLoaded', () => snap('dcl'))
+  addEventListener('load', () => { snap('load'); d.events.push([now(), 'load']) })
+  addEventListener('resize', () => d.events.push([now(), 'resize', innerWidth, innerHeight]))
+  addEventListener('scrollend', () => d.events.push([now(), 'scrollend', Math.round(scrollY)]))
+  addEventListener('hashchange', () => d.events.push([now(), 'hashchange']))
+  document.fonts.addEventListener('loadingdone', (e) => d.events.push([now(), 'fonts', e.fontfaces.map((f) => f.family + ' ' + f.weight).join(',')]))
+  new PerformanceObserver((l) => { for (const e of l.getEntries()) d.events.push([now(), 'shift', Math.round(e.value * 1000), e.sources?.map((s) => (s.node?.id || s.node?.nodeName) + ':' + Math.round(s.previousRect.top) + '>' + Math.round(s.currentRect.top)).join(' ')]) }).observe({ type: 'layout-shift', buffered: true })
+  let scrolled = false
+  const tick = () => {
+    const el = document.getElementById('permissions')
+    const top = el ? Math.round(el.getBoundingClientRect().top) : null
+    const y = Math.round(scrollY)
+    const last = d.scroll.at(-1)
+    if (!last || last[1] !== y || last[2] !== top) d.scroll.push([now(), y, top, document.documentElement.scrollHeight])
+    if (!scrolled && y > 0) { scrolled = true; snap('scrollStart') }
+    requestAnimationFrame(tick)
+  }
+  requestAnimationFrame(tick)
+})()`
+
+for (let copy = 0; copy < 10; copy++)
 for (const viewport of viewports) {
-  test(`hash on load lands on the section at ${viewport.width}px`, async ({
+  test(`hash on load lands on the section at ${viewport.width}px #${copy}`, async ({
     browser,
-  }) => {
+  }, testInfo) => {
     const context = await browser.newContext({ viewport })
     const page = await context.newPage()
+    await page.addInitScript(PROBE)
+    page.on('console', (m) => {
+      if (m.type() === 'error' || m.type() === 'warning')
+        console.log('[console]', m.type(), m.text().slice(0, 300))
+    })
+    page.on('pageerror', (e) => console.log('[pageerror]', e.message.slice(0, 300)))
     await page.goto(`${PAGE}#permissions`, { waitUntil: 'networkidle' })
     await page.waitForTimeout(1500)
-    // The page scrolls smoothly, so on a slow runner the jump to the fragment
-    // can still be on its way.
-    await expect.poll(() => sectionTop(page, 'permissions')).toBeLessThan(100)
-    await waitForScrollToSettle(page)
-    expect(await sectionTop(page, 'permissions')).toBeLessThan(100)
-    expect(await sectionTop(page, 'permissions')).toBeGreaterThanOrEqual(0)
+    const top = await sectionTop(page, 'permissions')
+    const diag = await page.evaluate(`(() => {
+      const d = window.__diag
+      const end = { y: Math.round(scrollY), h: document.documentElement.scrollHeight, w: d.wrappers() }
+      for (const s of document.querySelectorAll('section[id]')) s.parentElement.style.contentVisibility = 'visible'
+      const real = { top: Math.round(document.getElementById('permissions').getBoundingClientRect().top), w: d.wrappers() }
+      return { ua: navigator.userAgent, dpr: devicePixelRatio, events: d.events, scroll: d.scroll.slice(0, 5).concat(['...'], d.scroll.slice(-25)), snaps: d.snaps, end, real }
+    })()`)
+    console.log(
+      `DIAG ${viewport.width} copy=${copy} worker=${testInfo.workerIndex} top=${top} ${top < 100 && top >= 0 ? 'OK' : 'BAD'} ${JSON.stringify(diag)}`,
+    )
+    expect(top).toBeLessThan(100)
+    expect(top).toBeGreaterThanOrEqual(0)
     await context.close()
   })
 }

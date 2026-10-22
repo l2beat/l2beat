@@ -26,6 +26,7 @@ const BLOBS_PERF = '**/blobs-perf/**'
 export default defineConfig({
   testDir: './e2e',
   testMatch: '**/*.e2e.ts',
+  reporter: 'list',
   use: {
     baseURL: process.env.BASE_URL ?? 'http://localhost:7357',
   },
