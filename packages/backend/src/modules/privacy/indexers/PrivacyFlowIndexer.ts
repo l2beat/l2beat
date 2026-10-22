@@ -20,7 +20,7 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { PrivacyFlowIndexerConfig } from '../types'
 import { extractPrivacyFlow } from '../utils/extractPrivacyFlow'
-import { isPrivacyPoolsV2RelayedTransfer } from '../utils/extractPrivacyPoolsV2Event'
+import { adjustPrivacyPoolsV2Flow } from '../utils/extractPrivacyPoolsV2Event'
 import {
   extractPrivacyLogMatches,
   fetchPrivacyLogMatches,
@@ -150,12 +150,12 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       matches,
       this.$.rpcClient,
       async ({ log, timestamp, configuration }, context) => {
-        const result = extractPrivacyFlow(configuration.properties, log)
-        if (
-          !result ||
-          (result.count === 0 && result.amount === 0n) ||
-          (await isPrivacyPoolsV2RelayedTransfer(log, context))
-        ) {
+        const extracted = extractPrivacyFlow(configuration.properties, log)
+        if (!extracted || (extracted.count === 0 && extracted.amount === 0n)) {
+          return undefined
+        }
+        const result = await adjustPrivacyPoolsV2Flow(log, extracted, context)
+        if (!result) {
           return undefined
         }
         return { configuration, log, timestamp, ...result }

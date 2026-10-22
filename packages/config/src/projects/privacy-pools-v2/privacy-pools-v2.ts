@@ -42,11 +42,6 @@ const RAGEQUIT_EVENT =
   '0x507455b25c1a4595720da5b6a8f6b76e4aa36db987a63b47266112d3cbf2e103'
 
 const POOL_VAULT = discovery.getContract('PoolVault')
-const RELAY = discovery.getContract('PrivacyPoolRelay')
-const RELAY_SWAPS = discovery.getContract('RelaySwaps')
-const ROUTERS = ['PPRouterUSDC', 'PPRouterUSDT', 'PPRouterETH'].map((name) =>
-  discovery.getContract(name),
-)
 const SHARE_TOKENS = ['ppUSDC', 'ppUSDT', 'ppETH']
 
 const SINCE_TIMESTAMP = getSinceTimestamp(POOL_VAULT)
@@ -206,14 +201,7 @@ export const privacyPoolsV2: BaseProject = {
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',
-      sources: [
-        relayerSource(RELAY, 'privacyPoolsV2Relayed'),
-        relayerSource(RELAY, 'privacyPoolsV2RelayedBatch'),
-        ...ROUTERS.map((router) =>
-          relayerSource(router, 'privacyPoolsV2RouterWithdrawal'),
-        ),
-        relayerSource(RELAY_SWAPS, 'privacyPoolsV2SwapExecuted'),
-      ],
+      sources: [relayerSource(POOL_VAULT, 'privacyPoolsV2Withdrawal')],
     },
     exitWindow: {
       value: 'None',

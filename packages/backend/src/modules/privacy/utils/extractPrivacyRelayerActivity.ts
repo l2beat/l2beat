@@ -8,13 +8,14 @@ import { type BigNumber, utils } from 'ethers'
 import type {
   PrivacyRelayerActivityExtractResult,
   PrivacyRpcContext,
+  PrivacyRpcLog,
 } from '../types'
 import { WITHDRAWAL_TOPIC } from '../zkmoney/abi'
 import { extractZkMoneyWithdrawalRelayer } from '../zkmoney/relayers'
 import {
-  privacyPoolsV2RelayInterface,
-  privacyPoolsV2RouterInterface,
-  privacyPoolsV2SwapsInterface,
+  getPrivacyPoolsV2Withdrawal,
+  PRIVACY_POOLS_V2_TRANSACTED_TOPIC,
+  privacyPoolsV2ProcessorInterface,
 } from './extractPrivacyPoolsV2Event'
 
 const privacyPoolsInterface = new utils.Interface([
@@ -44,53 +45,53 @@ const privacyPoolsWithdrawalRelayed: RelayerExtractorDefinition = {
   },
 }
 
-// Privacy Pools v2 pays the relayer through the fee recipient of each
-// processor. A self-relay leaves the fee recipient empty, so the processor
-// names the caller with a zero fee, and only paid relays count.
-const extractPrivacyPoolsV2Relay: RelayerExtractorDefinition['extract'] = (
-  log,
-) => {
-  const parsedLog = privacyPoolsV2RelayInterface.parseLog(log)
-  return toPaidRelayerActivity(
-    parsedLog.args._fee,
-    String(parsedLog.args._feeRecipient),
-    String(parsedLog.args._recipient),
-  )
-}
-
-const privacyPoolsV2Relayed: RelayerExtractorDefinition = {
-  event: privacyPoolsV2RelayInterface.getEventTopic('Relayed'),
-  extract: extractPrivacyPoolsV2Relay,
-}
-
-const privacyPoolsV2RelayedBatch: RelayerExtractorDefinition = {
-  event: privacyPoolsV2RelayInterface.getEventTopic('RelayedBatch'),
-  extract: extractPrivacyPoolsV2Relay,
-}
-
-const privacyPoolsV2RouterWithdrawal: RelayerExtractorDefinition = {
-  event: privacyPoolsV2RouterInterface.getEventTopic('WithdrawnToUnderlying'),
-  extract: (log) => {
-    const parsedLog = privacyPoolsV2RouterInterface.parseLog(log)
-    return toPaidRelayerActivity(
-      parsedLog.args._feeShares,
-      String(parsedLog.args._feeRecipient),
-      String(parsedLog.args._recipient),
-    )
+// Privacy Pools v2 reads every withdrawal from the vault, so a new processor
+// counts without a new source. A caller that reports no payout, such as a
+// 4337 sender, names only the transaction's sender, such as a bundler.
+const privacyPoolsV2Withdrawal: RelayerExtractorDefinition = {
+  event: PRIVACY_POOLS_V2_TRANSACTED_TOPIC,
+  extract: async (log, context) => {
+    const withdrawal = await getPrivacyPoolsV2Withdrawal(log, context)
+    if (!withdrawal?.paysOut) {
+      return undefined
+    }
+    if (withdrawal.payout === undefined) {
+      return toRelayerActivity(withdrawal.sender.toString())
+    }
+    return extractPrivacyPoolsV2PayoutRelayer(withdrawal.payout)
   },
 }
 
-// The swap event names no recipient, so a paid fee to a non-zero fee
-// recipient is all that identifies a relayer.
-const privacyPoolsV2SwapExecuted: RelayerExtractorDefinition = {
-  event: privacyPoolsV2SwapsInterface.getEventTopic('Executed'),
-  extract: (log) => {
-    const parsedLog = privacyPoolsV2SwapsInterface.parseLog(log)
-    return toPaidRelayerActivity(
-      parsedLog.args.feeAmount,
-      String(parsedLog.args.feeRecipient),
-    )
-  },
+// A processor pays the relayer through its fee recipient. A self-relay leaves
+// the fee recipient empty, so the processor names the caller with a zero fee,
+// and only paid relays count.
+function extractPrivacyPoolsV2PayoutRelayer(
+  log: PrivacyRpcLog,
+): Promise<PrivacyRelayerActivityExtractResult | undefined> {
+  const { name, args } = privacyPoolsV2ProcessorInterface.parseLog(log)
+  switch (name) {
+    case 'Relayed':
+    case 'RelayedBatch':
+      return toPaidRelayerActivity(
+        args._fee,
+        String(args._feeRecipient),
+        String(args._recipient),
+      )
+    case 'WithdrawnToUnderlying':
+      return toPaidRelayerActivity(
+        args._feeShares,
+        String(args._feeRecipient),
+        String(args._recipient),
+      )
+    // The swap event names no recipient, so a paid fee to a non-zero fee
+    // recipient is all that identifies a relayer.
+    case 'Executed':
+      return toPaidRelayerActivity(args.feeAmount, String(args.feeRecipient))
+    default:
+      throw new Error('Unexpected Privacy Pools v2 payout', {
+        cause: { name },
+      })
+  }
 }
 
 const tornadoCashWithdrawal: RelayerExtractorDefinition = {
@@ -110,14 +111,8 @@ export function getPrivacyRelayerExtractor(
   switch (source.extractor) {
     case 'privacyPoolsWithdrawalRelayed':
       return privacyPoolsWithdrawalRelayed
-    case 'privacyPoolsV2Relayed':
-      return privacyPoolsV2Relayed
-    case 'privacyPoolsV2RelayedBatch':
-      return privacyPoolsV2RelayedBatch
-    case 'privacyPoolsV2RouterWithdrawal':
-      return privacyPoolsV2RouterWithdrawal
-    case 'privacyPoolsV2SwapExecuted':
-      return privacyPoolsV2SwapExecuted
+    case 'privacyPoolsV2Withdrawal':
+      return privacyPoolsV2Withdrawal
     case 'tornadoCashWithdrawal':
       return tornadoCashWithdrawal
     case 'zkMoneyWithdrawalRelayer':

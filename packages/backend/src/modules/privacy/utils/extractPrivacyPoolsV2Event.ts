@@ -1,6 +1,11 @@
+import type { ReceiptLog } from '@l2beat/shared'
 import { EthereumAddress, type Log } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { PrivacyRpcContext, PrivacyRpcLog } from '../types'
+import type {
+  PrivacyFlowExtractResult,
+  PrivacyRpcContext,
+  PrivacyRpcLog,
+} from '../types'
 
 // The PoolVault holds every asset, so each event indexes the asset and the
 // value that crossed the pool boundary.
@@ -10,31 +15,25 @@ const poolVaultInterface = new utils.Interface([
   'event Ragequit(address indexed ragequitter, address indexed asset, uint256 value, uint256 commitment, uint256 nullifierHash, uint256 label)',
 ])
 
-// The processors a withdrawal goes through: the plain relay, a yield router
-// and the swap processor.
-export const privacyPoolsV2RelayInterface = new utils.Interface([
+// The processors a withdrawal goes through report its payout: the plain relay,
+// a yield router and the swap processor. The deployed RelaySwaps matches no
+// published source, but its logs carry Executed, with amounts that add up to
+// the withdrawals they process.
+export const privacyPoolsV2ProcessorInterface = new utils.Interface([
   'event Relayed(address indexed _asset, address indexed _recipient, uint256 _recipientAmount, address indexed _feeRecipient, uint256 _fee, uint256 _gasFunding)',
   'event RelayedBatch(address indexed _asset, address indexed _recipient, uint256 _recipientAmount, address indexed _feeRecipient, uint256 _fee, uint256 _gasFunding, uint256 _count)',
-])
-
-export const privacyPoolsV2RouterInterface = new utils.Interface([
   'event WithdrawnToUnderlying(address indexed _asset, address indexed _underlying, address indexed _recipient, uint256 _sharesOut, uint256 _underlyingToRecipient, address _feeRecipient, uint256 _feeShares, uint256 _underlyingFee, uint256 _gasFunding)',
-])
-
-// The deployed RelaySwaps matches no published source, but its logs carry this
-// event, with amounts that add up to the withdrawals they process.
-export const privacyPoolsV2SwapsInterface = new utils.Interface([
   'event Executed(address indexed inputToken, address indexed outputToken, uint256 inputAmount, address feeRecipient, uint256 feeAmount)',
 ])
 
 const DEPOSITED_TOPIC = poolVaultInterface.getEventTopic('Deposited')
-const TRANSACTED_TOPIC = poolVaultInterface.getEventTopic('Transacted')
-const PROCESSOR_TOPICS = new Set([
-  privacyPoolsV2RelayInterface.getEventTopic('Relayed'),
-  privacyPoolsV2RelayInterface.getEventTopic('RelayedBatch'),
-  privacyPoolsV2RouterInterface.getEventTopic('WithdrawnToUnderlying'),
-  privacyPoolsV2SwapsInterface.getEventTopic('Executed'),
-])
+export const PRIVACY_POOLS_V2_TRANSACTED_TOPIC =
+  poolVaultInterface.getEventTopic('Transacted')
+const PAYOUT_TOPICS = new Set(
+  Object.values(privacyPoolsV2ProcessorInterface.events).map((event) =>
+    privacyPoolsV2ProcessorInterface.getEventTopic(event),
+  ),
+)
 
 interface PrivacyPoolsV2Event {
   asset: EthereumAddress
@@ -60,30 +59,66 @@ export function extractPrivacyPoolsV2Event(
   }
 }
 
+export interface PrivacyPoolsV2Withdrawal {
+  /** The transaction's sender, such as a relayer or a 4337 bundler. */
+  sender: EthereumAddress
+  /** The caller's payout event, undefined when it emits none of the known ones. */
+  payout: ReceiptLog | undefined
+  /**
+   * A processor reports one payout after the transacts it batches, so only the
+   * last transact before it pays out, and a batch is one withdrawal. A caller
+   * that reports no payout pays out once, with its last transact.
+   */
+  paysOut: boolean
+}
+
 /**
- * The vault pays a Transacted's withdrawn value to its caller. A withdrawal's
- * caller is a processor, which reports the payout in the same transaction. A
- * relayed private transfer has the relayer call the vault, directly or through
- * a wrapper, and take its fee as that payout, so it looks like a withdrawal.
- * A user calling the vault directly to withdraw looks the same, so these rare
- * self-withdrawals drop too, as do withdrawals through a processor that emits
- * none of the known events.
+ * The vault pays a Transacted's withdrawn value to its caller. A relayer that
+ * submits a private transfer itself takes its fee that way, so a transact
+ * called by the transaction's own sender is no withdrawal. A user withdrawing
+ * straight from their wallet looks the same and drops too. Any other caller is
+ * a processor, a smart account or a 4337 sender, whatever events it emits.
  */
-export async function isPrivacyPoolsV2RelayedTransfer(
+export async function getPrivacyPoolsV2Withdrawal(
   log: Log,
   context: PrivacyRpcContext,
-): Promise<boolean> {
-  if (log.topics[0] !== TRANSACTED_TOPIC) {
-    return false
+): Promise<PrivacyPoolsV2Withdrawal | undefined> {
+  if (log.topics[0] !== PRIVACY_POOLS_V2_TRANSACTED_TOPIC) {
+    return undefined
   }
   const caller = EthereumAddress(poolVaultInterface.parseLog(log).args.caller)
+  const transaction = await context.receipts.getTransaction(log.transactionHash)
+  const sender = EthereumAddress(transaction.from)
+  if (caller === sender) {
+    return undefined
+  }
+
+  const vault = EthereumAddress(log.address)
   const receiptLogs = await context.receipts.get(log.transactionHash)
-  return !receiptLogs.some(
+  const next = receiptLogs.find(
     (receiptLog) =>
-      receiptLog.topics[0] !== undefined &&
-      PROCESSOR_TOPICS.has(receiptLog.topics[0]) &&
-      EthereumAddress(receiptLog.address) === caller,
+      receiptLog.logIndex > log.logIndex &&
+      (isPayoutOf(receiptLog, caller) ||
+        isTransactedOf(receiptLog, vault, caller)),
   )
+  const payout = next && isPayoutOf(next, caller) ? next : undefined
+  return { sender, payout, paysOut: next === undefined || payout !== undefined }
+}
+
+/** A Transacted's flow, once its transaction shows it is a withdrawal. */
+export async function adjustPrivacyPoolsV2Flow(
+  log: Log,
+  result: PrivacyFlowExtractResult,
+  context: PrivacyRpcContext,
+): Promise<PrivacyFlowExtractResult | undefined> {
+  if (log.topics[0] !== PRIVACY_POOLS_V2_TRANSACTED_TOPIC) {
+    return result
+  }
+  const withdrawal = await getPrivacyPoolsV2Withdrawal(log, context)
+  if (withdrawal === undefined) {
+    return undefined
+  }
+  return { ...result, count: withdrawal.paysOut ? 1 : 0 }
 }
 
 /**
@@ -102,7 +137,27 @@ export async function isPrivacyPoolsV2Reshield(
   const receiptLogs = await context.receipts.get(log.transactionHash)
   return receiptLogs.some(
     (receiptLog) =>
-      receiptLog.topics[0] === TRANSACTED_TOPIC &&
+      receiptLog.topics[0] === PRIVACY_POOLS_V2_TRANSACTED_TOPIC &&
       EthereumAddress(receiptLog.address) === vault,
+  )
+}
+
+function isPayoutOf(log: ReceiptLog, caller: EthereumAddress): boolean {
+  return (
+    log.topics[0] !== undefined &&
+    PAYOUT_TOPICS.has(log.topics[0]) &&
+    EthereumAddress(log.address) === caller
+  )
+}
+
+function isTransactedOf(
+  log: ReceiptLog,
+  vault: EthereumAddress,
+  caller: EthereumAddress,
+): boolean {
+  return (
+    log.topics[0] === PRIVACY_POOLS_V2_TRANSACTED_TOPIC &&
+    EthereumAddress(log.address) === vault &&
+    EthereumAddress(poolVaultInterface.parseLog(log).args.caller) === caller
   )
 }
