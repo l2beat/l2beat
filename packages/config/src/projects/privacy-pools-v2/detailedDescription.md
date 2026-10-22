@@ -40,4 +40,4 @@ Deposits pay no vetting fee. The relayer quotes its fee per request and takes it
 
 ### Anonymity set
 
-One vault holds every asset, but a withdrawal names its asset. The set is therefore the ASP-approved deposits of that asset whose notes still hold at least the withdrawn amount, including the notes that transfers and reshields created from them. We count every depositor of the asset, approved or not, but not reshields, whose transactions 0xbow's relayer sends.
+One vault holds every asset, but a withdrawal names its asset. The set is therefore the ASP-approved deposits of that asset whose notes still hold at least the withdrawn amount, including the notes that transfers and reshields created from them. We count every depositor of the asset, approved or not.
