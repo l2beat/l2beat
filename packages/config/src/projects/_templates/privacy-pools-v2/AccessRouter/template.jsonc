@@ -161,7 +161,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "enable or disable assets, set minimum deposits, vetting fees and relayer fee caps, and sweep fees held by the Entrypoint."
+          "description": "enable or disable assets, set minimum deposits, vetting fees of up to 99.99% and relayer fee caps, and sweep fees held by the Entrypoint."
         }
       ]
     },

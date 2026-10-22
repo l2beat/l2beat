@@ -1,7 +1,7 @@
 {
   "name": "privacy-pools-v2",
   "timestamp": 1792559137,
-  "configHash": "0xf647f1f34542945fee2c1f62d5fe26cb052a5ff3b22294cfb07cf4871d2fa966",
+  "configHash": "0x4a6954c702a0a0c7e872ba5def0f5f4c455bb3ea4bf7605002c00fc40eb3b11d",
   "entries": [
     {
       "name": "PrivacyPoolRelay",
@@ -52,6 +52,18 @@
         "eth:0x01b4954E3b3C1F68785f60D7465c38C31266bfab": "Transact4x5Verifier"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "eth:0x0967755AfA2016866D12EefB820705026842dCe8",
+      "type": "EOA",
+      "sourceHashes": [
+        "0xd9649be084919b1ae25d4d396555667632253f10ddb6a9bddc939db45f797b10"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x5A7FC11397E9a8AD41BF10bf13F22B0a63f96f6d",
+        "nonce": 0
+      }
     },
     {
       "name": "Transact1x2Verifier",
@@ -1336,11 +1348,15 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "description": "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, with the swap calldata bound into the proof. The deployed build does not match the published source.",
+      "description": "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, with the swap calldata bound into the proof.",
       "deployerAddress": "eth:0x0967755AfA2016866D12EefB820705026842dCe8",
       "sinceTimestamp": 1789704851,
       "sinceBlock": 26001921,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x0967755AfA2016866D12EefB820705026842dCe8"
+      },
+      "fieldMeta": { "owner": { "severity": "HIGH", "type": "PERMISSION" } },
       "implementationNames": {
         "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8": ""
       }
@@ -1687,6 +1703,26 @@
     ],
     "eth:0x5a06582115953E2cAbeD8e6A0EeAE35BA430118f": [
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[7] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x5A7FC11397E9a8AD41BF10bf13F22B0a63f96f6d": [
+      "event LogErr(address indexed to, uint256 value, bytes data, bytes returnData)",
+      "event LogPrivilegeChanged(address indexed addr, bytes32 priv)",
+      "function execute(tuple(address to, uint256 value, bytes data)[] calls, bytes signature) payable",
+      "function executeBySelf(tuple(address to, uint256 value, bytes data)[] calls) payable",
+      "function executeBySelfSingle(tuple(address to, uint256 value, bytes data) call) payable",
+      "function executeBySender(tuple(address to, uint256 value, bytes data)[] calls) payable",
+      "function executeMultiple(tuple(tuple(address to, uint256 value, bytes data)[] calls, bytes signature)[] toExec) payable",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4)",
+      "function nonce() view returns (uint256)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) pure returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) pure returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) pure returns (bytes4)",
+      "function privileges(address key) view returns (bytes32)",
+      "function setAddrPrivilege(address addr, bytes32 priv) payable",
+      "function supportsInterface(bytes4 interfaceID) pure returns (bool)",
+      "function tryCatch(address to, uint256 value, bytes data) payable",
+      "function tryCatchLimit(address to, uint256 value, bytes data, uint256 gasLimit) payable",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) op, bytes32 userOpHash, uint256 missingAccountFunds) payable returns (uint256)"
     ],
     "eth:0x5F89cD5c3610c2AD870B1b33126d209fECdb69c7": [
       "constructor(address _accessRouter)",
@@ -2374,14 +2410,24 @@
     "privacy-pools-v2/PrivacyPoolRelay": "0x221ac8c5121c455f70bfa922fe255937c533ef583893255f7918b5f5de546360"
   },
   "usedBlockNumbers": { "ethereum": 26238765 },
-  "permissionsConfigHash": "0x846ed1bdd0682dca918daee986baa6132c514b7b1805ba89105cd5a6fcbf8968",
+  "permissionsConfigHash": "0x78fbb3981139adfc70c18afd1391f8884f25cc76a9794202fe47d1f57527bc9f",
   "permissions": {
+    "eth:0x0967755AfA2016866D12EefB820705026842dCe8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8",
+          "description": "approve the aggregator routers and yield zaps that RelaySwaps sends withdrawn funds through.",
+          "role": ".owner"
+        }
+      ]
+    },
     "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92": {
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
-          "description": "enable or disable assets, set minimum deposits, vetting fees and relayer fee caps, and sweep fees held by the Entrypoint.",
+          "description": "enable or disable assets, set minimum deposits, vetting fees of up to 99.99% and relayer fee caps, and sweep fees held by the Entrypoint.",
           "role": ".entrypointManagers"
         },
         {

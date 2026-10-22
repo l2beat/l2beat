@@ -1,3 +1,4 @@
+import type { ContractValue } from '@l2beat/discovery'
 import {
   assert,
   ChainSpecificAddress,
@@ -57,6 +58,14 @@ assert(
 const yieldFee = formatBasisPoints(yieldFeeBps)
 const maxYieldFee = formatBasisPoints(
   discovery.getContractValue<number>('ppUSDC', 'MAX_FEE_BPS'),
+)
+// Entries are [enabled, minAmount, vettingFeeBPS, maxRelayFee].
+const assetConfigs = discovery.getContractValue<
+  Record<string, ContractValue[]>
+>('Entrypoint', 'assetConfigs')
+assert(
+  Object.values(assetConfigs).every((config) => config[2] === 0),
+  'Deposits must pay no vetting fee',
 )
 const rootLiveness = formatSeconds(
   discovery.getContractValue<number>('Keystore', 'keystoreRootLiveness'),
@@ -216,10 +225,10 @@ export const privacyPoolsV2: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      value: 'Reproducible',
+      sentiment: 'good',
       description:
-        'Contracts, circuits, SDK, relayer and website are public and build locally, the contracts under a Business Source License. The 27 verifiers rebuild from the circuit sources and ceremony keys. The deployed RelaySwaps matches no version of its published source. The ASP service is closed.',
+        'Contracts, circuits, SDK, relayer and website are public and build locally, the contracts under a Business Source License. The 27 verifiers rebuild from the circuit sources and ceremony keys. The ASP service is closed.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

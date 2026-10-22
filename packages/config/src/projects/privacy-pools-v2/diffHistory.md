@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd119262af5edd7f27ac08f914e87766fd17d8e57
+Generated with discovered.json: 0xe957b0db264a854916d1c5a44bbc64e6f1576170
 
-# Diff at Wed, 21 Oct 2026 10:15:09 GMT:
+# Diff at Thu, 22 Oct 2026 10:01:44 GMT:
 
 - id: 75f84d35
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
@@ -22,6 +22,12 @@ Initial discovery of Privacy Pools v2 on Ethereum: Entrypoint, PoolVault, Keysto
 +   Status: CREATED
     contract Transact4x5Verifier (eth:0x01b4954E3b3C1F68785f60D7465c38C31266bfab) [privacy-pools-v2/Groth16Verifier]
     +++ description: Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.
+```
+
+```diff
++   Status: CREATED
+    EOA (eth:0x0967755AfA2016866D12EefB820705026842dCe8)
+    +++ description: None
 ```
 
 ```diff
@@ -231,7 +237,7 @@ Initial discovery of Privacy Pools v2 on Ethereum: Entrypoint, PoolVault, Keysto
 ```diff
 +   Status: CREATED
     contract RelaySwaps (eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8) [N/A]
-    +++ description: Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, with the swap calldata bound into the proof. The deployed build does not match the published source.
+    +++ description: Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, with the swap calldata bound into the proof.
 ```
 
 ```diff

@@ -1,4 +1,4 @@
-Privacy Pools v2 lets you shield ETH, USDC or USDT in one pool, then send, swap, earn Aave yield and withdraw without a visible link to the deposit. Only deposits that 0xbow's association set provider (ASP) approves can be spent privately. Depositors, recipients, amounts and timing at the pool's edges stay public.
+Privacy Pools v2 by 0xbow lets you shield ETH, USDC or USDT in one pool, then send, swap, earn Aave yield and withdraw without a visible link to the deposit. Only deposits that 0xbow's association set provider (ASP) approves can be spent privately. Depositors, recipients, amounts and timing at the pool's edges stay public.
 
 Users trust 0xbow, which runs the ASP, the only relayer and the website, and one key that can upgrade every core contract without delay. The ASP can withhold or revoke approval for any deposit. Exiting is permissionless: a note's owner can always ragequit it from the vault, losing their privacy.
 
@@ -28,15 +28,19 @@ The yield shares keep a fixed share count while their value grows, so the share 
 
 ### Exits
 
-**Ragequit.** The note's current owner can take out its full value at any time, approved or not, directly from the vault, also while it is paused. It publishes the owner, the amount, the label and the commitment, which names the transaction that created the note. A transferred note's label can still point back to someone else's deposit. **Claim link.** A payment to an unregistered address can only be claimed with the link the payer holds. Until then the funds can neither move nor exit. **Relaying.** The contracts accept a proof from any address, and the proof fixes the recipient and the fee. A relayer other than 0xbow's needs the user's own build of the website or another client.
+**Ragequit.** The note's current owner can take out its full value at any time, approved or not, directly from the vault, also while it is paused. It publishes the owner, the amount, the label and the commitment, which names the transaction that created the note. A transferred note's label can still point back to someone else's deposit.
+
+**Claim link.** A payment to an unregistered address can only be claimed with the link the payer holds. Until then the funds can neither move nor exit.
+
+**Relaying.** The contracts accept a proof from any address, and no relayer can change its recipient. A relayer other than 0xbow's needs the user's own build of the website or another client.
 
 ### Compliance
 
-The ASP screens each depositor before approving the deposit, under 0xbow's own due diligence, and may reject it. Every private spend must prove its notes' labels (which privately tie them to a deposit) against the latest list, so a later list can revoke an approval and freezes every note descending from that deposit. A rejected deposit can leave only by ragequit. The user can report an address to the ASP, or ask it whether 0xbow's services refuse their wallet, by signing a message.
+The ASP screens each depositor before approving the deposit, under 0xbow's own due diligence, and may reject it. Every private spend must prove its notes' labels (which privately tie them to a deposit) against the latest list, so a later list can revoke an approval and freezes every note descending from that deposit. A rejected deposit can leave only by ragequit.
 
 ### Fees
 
-Deposits pay no vetting fee. The relayer quotes its fee per request and takes it from the sent or withdrawn asset, within a cap per asset set by the entrypoint manager. A private transfer pays that fee as a public payout from the vault. The yield shares keep {{yieldFee}} of the Aave yield for 0xbow.
+Deposits pay no vetting fee today. The relayer quotes its fee per request and takes it from the sent or withdrawn asset. You accept the fee before sending, and the relayer cannot raise it. A private transfer pays that fee as a public payout from the vault. The yield shares keep {{yieldFee}} of the Aave yield for 0xbow.
 
 ### Anonymity set
 

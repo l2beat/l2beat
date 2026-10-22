@@ -125,7 +125,7 @@ export const TRUSTED_SETUPS = {
   },
   PrivacyPools: {
     id: 'PrivacyPools',
-    name: 'Privacy Pools',
+    name: 'Privacy Pools v1',
     risk: 'yellow',
     participantCount: 80,
     shortDescription:

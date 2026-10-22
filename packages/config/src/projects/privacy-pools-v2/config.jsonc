@@ -23,7 +23,24 @@
   },
   "overrides": {
     "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8": {
-      "description": "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, with the swap calldata bound into the proof. The deployed build does not match the published source."
+      "description": "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, with the swap calldata bound into the proof.",
+      "fields": {
+        "owner": {
+          "severity": "HIGH",
+          "type": "PERMISSION",
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "approve the aggregator routers and yield zaps that RelaySwaps sends withdrawn funds through."
+            }
+          ]
+        }
+      }
     }
   }
 }

@@ -8,6 +8,9 @@
 2. the payer loses a claim link before the recipient claims it.
 3. Aave suffers a loss on the reserve behind a yield share.
 <br>
+## Use can be stopped if
+1. the upgrader key pauses deposits and spends, or raises the vetting fee on deposits up to 99.99% of their value.
+<br>
 ## Privacy can be lost if
 1. the ASP leaves deposits out of its latest list, which freezes every note from them, up to halting all private spends (see privileged insider).
 2. the ASP keeps only a few labels in its latest list, so spends proven against it point to one of them (see privileged insider).
