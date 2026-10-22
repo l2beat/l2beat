@@ -40,6 +40,31 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
+  describe(ActivityRepository.prototype.addMany.name, () => {
+    it('adds the counts to stored days and widens their block range', async () => {
+      await repository.addMany([record('a', START, 10, 12, 1, 5)])
+      await repository.addMany([
+        record('a', START, 5, 6, 6, 9),
+        record('a', START + 1 * UnixTime.DAY, 3, 3, 10, 12),
+      ])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        record('a', START, 15, 18, 1, 9),
+        record('a', START + 1 * UnixTime.DAY, 3, 3, 10, 12),
+      ])
+    })
+
+    it('counts the uops of a chain that started reporting them mid-day', async () => {
+      await repository.addMany([record('a', START, 10, null, 1, 5)])
+      await repository.addMany([record('a', START, 5, 6, 6, 9)])
+      await repository.addMany([record('a', START, 1, null, 10, 10)])
+
+      const results = await repository.getAll()
+      expect(results).toEqual([record('a', START, 16, 6, 1, 10)])
+    })
+  })
+
   describe(ActivityRepository.prototype.checkIfExists.name, () => {
     beforeEach(async () => {
       await repository.deleteAll()

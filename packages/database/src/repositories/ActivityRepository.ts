@@ -2,6 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type RawBuilder, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { Activity } from '../kysely/generated/types'
+import { addToStored } from '../utils/addToStored'
 
 export interface ActivityRecord {
   projectId: ProjectId
@@ -62,6 +63,31 @@ export class ActivityRepository extends BaseRepository {
             start: eb.ref('excluded.start'),
             end: eb.ref('excluded.end'),
           })),
+        )
+        .execute()
+    })
+    return records.length
+  }
+
+  /**
+   * Adds each record to the day stored before, as blocks of a day come in
+   * more than one batch. The block range widens to cover both
+   */
+  async addMany(records: ActivityRecord[]): Promise<number> {
+    if (records.length === 0) return 0
+
+    const rows = records.map(toRow)
+    await this.batch(rows, 5_000, async (batch) => {
+      await this.db
+        .insertInto('Activity')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.columns(['timestamp', 'projectId']).doUpdateSet({
+            count: sql`"Activity"."count" + excluded."count"`,
+            uopsCount: addToStored('Activity', 'uopsCount'),
+            start: sql`least("Activity"."start", excluded."start")`,
+            end: sql`greatest("Activity"."end", excluded."end")`,
+          }),
         )
         .execute()
     })
