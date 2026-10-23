@@ -28,10 +28,14 @@ export async function getInternalTokenBreakdown() {
   ])
 
   const tokenValues = await db.tvsTokenValue.getAtOrBefore(
-    projects.map((p) => ({
-      projectId: p.id,
-      timestamp: getSyncedTvsTimestamp(syncMetadata, p.tvsConfig),
-    })),
+    projects.flatMap((p) => {
+      const timestamp = getSyncedTvsTimestamp(syncMetadata, p.tvsConfig)
+      return p.tvsConfig.map((t) => ({
+        projectId: p.id,
+        tokenId: t.id,
+        timestamp,
+      }))
+    }),
   )
 
   const chains = projectsWithChainConfig.map((x) => x.chainConfig)

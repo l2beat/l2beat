@@ -314,16 +314,28 @@ describeDatabase(TokenValueRepository.name, (db) => {
       ])
     })
 
-    it("returns each token's latest record at or before its project's timestamp", async () => {
+    it("returns each listed token's latest record at or before its timestamp", async () => {
       const result = await repository.getAtOrBefore([
-        { projectId: 'ethereum', timestamp: UnixTime(170) },
-        { projectId: 'arbitrum', timestamp: UnixTime(250) },
+        { projectId: 'ethereum', tokenId: 'a', timestamp: UnixTime(170) },
+        { projectId: 'ethereum', tokenId: 'b', timestamp: UnixTime(170) },
+        { projectId: 'arbitrum', tokenId: 'd', timestamp: UnixTime(250) },
       ])
 
       expect(result).toEqualUnsorted([
         tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
         tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
         tokenValue('d', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000, 10),
+      ])
+    })
+
+    it('skips tokens with nothing at or before their timestamp', async () => {
+      const result = await repository.getAtOrBefore([
+        { projectId: 'ethereum', tokenId: 'a', timestamp: UnixTime(50) },
+        { projectId: 'base', tokenId: 'e', timestamp: UnixTime(100) },
+      ])
+
+      expect(result).toEqual([
+        tokenValue('e', 'base', UnixTime(100), 1, 1, 1, 1, 1),
       ])
     })
 
