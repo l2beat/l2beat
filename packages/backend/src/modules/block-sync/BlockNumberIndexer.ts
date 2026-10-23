@@ -4,25 +4,26 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import { withBlockSyncRpcMetricsContext } from './blockSyncRpcMetrics'
 
-/** Only reached when chain timestamps run ahead of the clock by the delay. */
-const MAX_PENDING_HEADS = 500
-/** When the unobserved blocks after the answer span longer than this many
- *  ticks, a tick reads one of them, so the answer catches up with the delayed
- *  timestamp instead of waiting for the next observed head to get there. */
+/** Heads stop piling up once they are a delay old, so this limit only matters
+ *  when chain timestamps run ahead of the clock. */
+const MAX_KEPT_HEADS = 500
+/** How many ticks of blocks the gap after the delayed tip may span before a
+ *  tick reads a block inside it. */
 const MAX_GAP_TICKS = 3
 
 /**
- * Every tick reads the latest header and answers with the newest observed
- * head that is at least `delayFromTipInSeconds` old. Observed heads are real
- * blocks, so the answer is never newer than the delay allows. The search by
- * timestamp only runs on a start, before any head is old enough.
+ * Reports the delayed tip: the newest block that is at least
+ * `delayFromTipInSeconds` old. Every tick reads the latest header and keeps it
+ * until it is old enough to become the delayed tip. Kept heads are real
+ * blocks, so the delayed tip is never too new. On a start no kept head is old
+ * enough, so the first tick searches by timestamp instead.
  */
 export class BlockNumberIndexer extends RootIndexer {
-  /** Newest block known to be at or before the delayed timestamp. Only moves
-   *  forward. */
-  private answer: BlockHeader | undefined
-  /** Observed heads after the answer, oldest first, numbers increasing. */
-  private readonly pending: BlockHeader[] = []
+  /** Only moves forward. */
+  private delayedTip: BlockHeader | undefined
+  /** Heads seen after the delayed tip that are not old enough yet, oldest
+   *  first. */
+  private readonly keptHeads: BlockHeader[] = []
 
   constructor(
     private readonly blockProvider: BlockProvider,
@@ -37,7 +38,7 @@ export class BlockNumberIndexer extends RootIndexer {
   }
 
   get blockHeight() {
-    return this.answer?.number ?? -1
+    return this.delayedTip?.number ?? -1
   }
 
   override initialize() {
@@ -49,81 +50,85 @@ export class BlockNumberIndexer extends RootIndexer {
   async tick(): Promise<number> {
     return await withBlockSyncRpcMetricsContext(
       'blockSync.tip',
-      {
-        chain: this.blockProvider.chain,
-      },
-      async () => {
-        const previous = this.blockHeight
-        const timestamp = UnixTime.now() - this.delayFromTipInSeconds
-        this.observe(await this.blockProvider.getBlockHeader('latest'))
-        while (this.pending[0] && this.pending[0].timestamp <= timestamp) {
-          this.answer = this.pending.shift()
-        }
-        if (this.answer) {
-          await this.probeGap(this.answer, timestamp)
-        } else {
-          this.answer = await this.search(timestamp)
-        }
-
-        const blockNumber = this.answer.number
-        if (blockNumber > previous) {
-          this.logger.info('Advanced block number', { blockNumber })
-        }
-        return blockNumber
-      },
+      { chain: this.blockProvider.chain },
+      () => this.updateDelayedTip(),
     )
   }
 
-  private observe(head: BlockHeader) {
-    const newest = this.pending.at(-1) ?? this.answer
+  private async updateDelayedTip(): Promise<number> {
+    const oldHeight = this.blockHeight
+    const cutoff = UnixTime.now() - this.delayFromTipInSeconds
+
+    this.keepHead(await this.blockProvider.getBlockHeader('latest'))
+    this.advanceTo(cutoff)
+    if (this.delayedTip) {
+      await this.readBlockInGap(this.delayedTip, cutoff)
+    } else {
+      this.delayedTip = await this.searchByTimestamp(cutoff)
+    }
+
+    const blockNumber = this.delayedTip.number
+    if (blockNumber > oldHeight) {
+      this.logger.info('Advanced block number', { blockNumber })
+    }
+    return blockNumber
+  }
+
+  private keepHead(head: BlockHeader) {
+    const newest = this.keptHeads.at(-1) ?? this.delayedTip
     // Load-balanced RPCs can answer from a node that is behind
     if (newest && head.number <= newest.number) return
-    this.pending.push(head)
-    if (this.pending.length > MAX_PENDING_HEADS) this.pending.shift()
+    this.keptHeads.push(head)
+    if (this.keptHeads.length > MAX_KEPT_HEADS) this.keptHeads.shift()
   }
 
-  private async probeGap(answer: BlockHeader, timestamp: UnixTime) {
-    const next = this.pending[0]
+  /** Moves the delayed tip to the newest kept head at or before the cutoff. */
+  private advanceTo(cutoff: UnixTime) {
+    while (this.keptHeads[0] && this.keptHeads[0].timestamp <= cutoff) {
+      this.delayedTip = this.keptHeads.shift()
+    }
+  }
+
+  /**
+   * After a start or an RPC outage, the next kept head can be minutes after
+   * the delayed tip, and the delayed tip would wait for it to get old enough.
+   * Reading one block inside such a gap per tick lets it catch up sooner.
+   */
+  private async readBlockInGap(delayedTip: BlockHeader, cutoff: UnixTime) {
+    const next = this.keptHeads[0]
+    if (!next || next.number === delayedTip.number + 1) return
     const maxGapSeconds = (MAX_GAP_TICKS * this.checkIntervalMs) / 1000
-    if (
-      !next ||
-      next.number === answer.number + 1 ||
-      next.timestamp - answer.timestamp <= maxGapSeconds
-    ) {
-      return
-    }
+    if (next.timestamp - delayedTip.timestamp <= maxGapSeconds) return
 
-    const probe = await this.blockProvider.getBlockHeader(
-      interpolate(answer, next, timestamp),
+    const block = await this.blockProvider.getBlockHeader(
+      guessBlockAt(cutoff, delayedTip, next),
     )
-    if (probe.timestamp <= timestamp) {
-      this.answer = probe
+    if (block.timestamp <= cutoff) {
+      this.delayedTip = block
     } else {
-      this.pending.unshift(probe)
+      this.keptHeads.unshift(block)
     }
   }
 
-  private async search(timestamp: UnixTime): Promise<BlockHeader> {
-    this.logger.info('Searching tip block by timestamp', { timestamp })
-    const number = await this.blockProvider.getBlockNumberAtOrBefore(timestamp)
-    // The found block is at or before the timestamp and every later block is
-    // past it, so the timestamp can stand in for the block's own
-    return { number, timestamp }
+  private async searchByTimestamp(cutoff: UnixTime): Promise<BlockHeader> {
+    this.logger.info('Searching tip block by timestamp', { timestamp: cutoff })
+    const number = await this.blockProvider.getBlockNumberAtOrBefore(cutoff)
+    // The found block is at or before the cutoff and the next one is past it,
+    // so the cutoff can stand in for the block's own timestamp
+    return { number, timestamp: cutoff }
   }
 }
 
-/** The block between the two at the timestamp, if blocks came evenly. */
-function interpolate(
+/** The block made at `timestamp` if blocks between the two came evenly. Never
+ *  one of the two, since both are already known. */
+function guessBlockAt(
+  timestamp: UnixTime,
   before: BlockHeader,
   after: BlockHeader,
-  timestamp: UnixTime,
 ): number {
   const blocks = after.number - before.number
-  const guess =
-    before.number +
-    Math.floor(
-      ((timestamp - before.timestamp) * blocks) /
-        (after.timestamp - before.timestamp),
-    )
+  const seconds = after.timestamp - before.timestamp
+  const elapsed = timestamp - before.timestamp
+  const guess = before.number + Math.floor((elapsed * blocks) / seconds)
   return Math.min(Math.max(guess, before.number + 1), after.number - 1)
 }

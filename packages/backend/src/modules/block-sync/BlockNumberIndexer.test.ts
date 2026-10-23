@@ -10,7 +10,7 @@ import { BlockNumberIndexer } from './BlockNumberIndexer'
  * its tip is the newest block the clock has reached. The search answers with
  * the exact block at or before a timestamp. Fake timers stand in for the wall
  * clock, and every tick advances it by the tick interval first, then checks
- * that the answer is at least the delay old.
+ * that the reported block is at least the delay old.
  */
 const GENESIS = UnixTime(1_700_000_000)
 const DELAY = 300
@@ -49,8 +49,8 @@ describe(BlockNumberIndexer.name, () => {
         expect(lagOf(await tick())).toBeLessThanOrEqual(MAX_GAP)
       }
 
-      // The first observed head is a delay ahead of the search, ticks stop
-      // reading blocks in between once it is the allowed gap ahead
+      // The first kept head is a delay ahead of the search, ticks stop
+      // reading blocks in the gap once it is the allowed gap ahead
       expect(blockProvider.getBlockHeader).toHaveBeenCalledTimes(
         2 * TICKS_WITHIN_DELAY - MAX_GAP / TICK_SECONDS,
       )
@@ -66,7 +66,7 @@ describe(BlockNumberIndexer.name, () => {
       blockProvider.getBlockNumberAtOrBefore.clear()
 
       for (let i = 0; i < 50; i++) {
-        // Heads are observed a tick apart, the answer lags less than that
+        // Heads are kept a tick apart, the delayed tip lags less than that
         expect(lagOf(await tick())).toBeLessThan(TICK_SECONDS)
       }
 
@@ -77,7 +77,7 @@ describe(BlockNumberIndexer.name, () => {
       expect(blockProvider.getBlockNumberAtOrBefore).not.toHaveBeenCalled()
     })
 
-    it('catches up after a long gap in observations without a search', async () => {
+    it('catches up after an hour without ticks without a search', async () => {
       const { blockProvider, tick, ticks, lagOf } = setup(time, {
         blockTime: 2,
       })
@@ -92,7 +92,7 @@ describe(BlockNumberIndexer.name, () => {
       expect(blockProvider.getBlockNumberAtOrBefore).not.toHaveBeenCalled()
     })
 
-    it('ignores a latest header older than one already observed', async () => {
+    it('ignores a latest header older than one already kept', async () => {
       const { blockProvider, tick, ticks, latestBehindBy } = setup(time, {
         blockTime: 2,
       })
@@ -129,7 +129,7 @@ describe(BlockNumberIndexer.name, () => {
       blockProvider.getBlockNumberAtOrBefore.clear()
 
       for (let i = 0; i < 50; i++) {
-        // Every block is observed, the one after the answer is past the delay
+        // Every block is kept, the one after the delayed tip is past the delay
         expect(await tick()).toEqual(exact())
       }
 
