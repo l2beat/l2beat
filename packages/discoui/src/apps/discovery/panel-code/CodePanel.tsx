@@ -102,7 +102,7 @@ export function CodePanel() {
       {definition.lookup && (
         <LookupPanel
           lookup={definition.lookup}
-          onPick={definition.navigate}
+          onPick={definition.pick}
           onDismiss={definition.dismiss}
         />
       )}

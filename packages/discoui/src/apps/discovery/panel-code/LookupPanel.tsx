@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { IconClose } from '../../../icons/IconClose'
 import { rowsOf, title } from './lookupRows'
-import type { CodeLocation, DefinitionLookup } from './useGoToDefinition'
+import type { DefinitionLookup } from './useGoToDefinition'
 
 const MESSAGE_DURATION_MS = 3000
 
 export function LookupPanel(props: {
   lookup: DefinitionLookup
-  onPick: (location: CodeLocation, keepOpen: boolean) => void
+  onPick: (index: number) => void
   onDismiss: () => void
 }) {
   const { lookup, onPick, onDismiss } = props
@@ -33,16 +33,14 @@ export function LookupPanel(props: {
       </div>
       {rows.length > 0 && (
         <ul className="max-h-80 overflow-y-auto">
-          {rows.map((row) => (
+          {rows.map((row, index) => (
             <li
               key={`${row.location.address}-${row.location.sourceIndex}-${row.location.offset}`}
             >
               <button
                 type="button"
                 className="flex w-full flex-col items-start px-2 py-1 text-left hover:bg-coffee-600"
-                onClick={() =>
-                  onPick(row.location, lookup.status === 'references')
-                }
+                onClick={() => onPick(index)}
               >
                 <span className="w-full truncate font-mono text-autumn-300">
                   {row.headline}

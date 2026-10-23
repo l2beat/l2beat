@@ -1,7 +1,11 @@
+import type { Text } from '@codemirror/state'
+import type { EditorView } from '@codemirror/view'
+import { assert } from '@l2beat/shared-pure'
 import { useEffect, useRef, useState } from 'react'
 import { getContractAt, getDefinition, getReferences } from '../../../api/api'
 import type {
   ApiContractAtResponse,
+  ApiDefinition,
   ApiDefinitionResponse,
   ApiReferencesResponse,
 } from '../../../api/types'
@@ -24,7 +28,12 @@ export interface CodeLocation {
 }
 
 export type DefinitionLookup =
-  | { status: 'definitions'; response: ApiDefinitionResponse }
+  | {
+      status: 'definitions'
+      response: ApiDefinitionResponse
+      request: DefinitionRequest
+      doc: Text
+    }
   | { status: 'references'; response: ApiReferencesResponse }
   | { status: 'contract'; response: ApiContractAtResponse }
   | { status: 'failed' }
@@ -77,6 +86,37 @@ export function useGoToDefinition(
     open(target)
   }
 
+  const show = (request: DefinitionRequest, definition: ApiDefinition) => {
+    if (peekDefinitions && plugin !== undefined) {
+      setLookup(undefined)
+      plugin.peek(
+        request,
+        peekContent(definition, () => navigate(definition)),
+      )
+    } else {
+      navigate(definition)
+    }
+  }
+
+  const pick = (index: number) => {
+    assert(lookup !== undefined, 'Picked without a lookup')
+    assert(lookup.status !== 'failed', 'Picked from a failed lookup')
+    assert(lookup.status !== 'contract', 'Picked from a contract lookup')
+    if (lookup.status === 'references') {
+      const reference = lookup.response.references[index]
+      assert(reference !== undefined, 'Picked a missing reference')
+      navigate(reference, true)
+      return
+    }
+    const definition = lookup.response.definitions[index]
+    assert(definition !== undefined, 'Picked a missing definition')
+    if (stillShows(lookup.request.view, lookup.doc)) {
+      show(lookup.request, definition)
+    } else {
+      navigate(definition)
+    }
+  }
+
   // A peek's position is in the file it shows, the panel's in its own file.
   const positionOf = ({
     origin,
@@ -125,20 +165,15 @@ export function useGoToDefinition(
         if (at === undefined) {
           return
         }
+        const doc = request.view.state.doc
         run(
           () => getDefinition(project, at.address, at.sourceIndex, at.offset),
           (response) => {
             const [only, ...rest] = response.definitions
             if (only === undefined || rest.length > 0) {
-              setLookup({ status: 'definitions', response })
-            } else if (peekDefinitions) {
-              setLookup(undefined)
-              plugin.peek(
-                request,
-                peekContent(only, () => navigate(only)),
-              )
+              setLookup({ status: 'definitions', response, request, doc })
             } else {
-              navigate(only)
+              show(request, only)
             }
           },
         )
@@ -185,5 +220,9 @@ export function useGoToDefinition(
     }
   }, [plugin, project, address, sourceIndex, peekDefinitions])
 
-  return { lookup, navigate, dismiss: () => setLookup(undefined) }
+  return { lookup, pick, dismiss: () => setLookup(undefined) }
+}
+
+function stillShows(view: EditorView, doc: Text): boolean {
+  return view.dom.isConnected && view.state.doc === doc
 }
