@@ -1,9 +1,8 @@
-import type { Database, SyncMetadataRecord } from '@l2beat/database'
+import type { SyncMetadataRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { expect } from 'earl'
 import {
   getSyncedTvsTimestamp,
-  getTvsSyncMetadata,
   withoutExcludedTokens,
 } from './getSyncedTvsTimestamp'
 import { getTvsTargetTimestamp } from './getTvsTargetTimestamp'
@@ -86,34 +85,6 @@ describe(getSyncedTvsTimestamp.name, () => {
     const result = getSyncedTvsTimestamp(records, tokens(records))
 
     expect(result).toEqual(getTvsTargetTimestamp())
-  })
-})
-
-describe(getTvsSyncMetadata.name, () => {
-  it('shares one query between concurrent callers', async () => {
-    const records = [record('arbitrum-ETH', TARGET, TARGET)]
-    const repository = mockObject<Database['syncMetadata']>({
-      getByFeature: mockFn().resolvesTo(records),
-    })
-
-    const results = await Promise.all([
-      getTvsSyncMetadata(repository),
-      getTvsSyncMetadata(repository),
-    ])
-
-    expect(results).toEqual([records, records])
-    expect(repository.getByFeature).toHaveBeenOnlyCalledWith('tvs')
-  })
-
-  it('queries again once the previous query settled', async () => {
-    const repository = mockObject<Database['syncMetadata']>({
-      getByFeature: mockFn().resolvesTo([]),
-    })
-
-    await getTvsSyncMetadata(repository)
-    await getTvsSyncMetadata(repository)
-
-    expect(repository.getByFeature).toHaveBeenCalledTimes(2)
   })
 })
 

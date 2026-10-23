@@ -1,30 +1,26 @@
 import type { TvsToken } from '@l2beat/config'
-import type { Database, SyncMetadataRecord } from '@l2beat/database'
+import type { SyncMetadataRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { getTvsTargetTimestamp } from './getTvsTargetTimestamp'
 import { isTvsSynced } from './isTvsSynced'
 
-let pending: Promise<SyncMetadataRecord[]> | undefined
+const cache = new FrontendInMemoryCache('getTvsSyncMetadata')
 
 /**
- * Every TVS sync metadata row, one per token. Callers awaiting at the same
- * time share one query, so lists and parallel page loaders don't repeat it.
+ * Every TVS sync metadata row, one per token. Cached briefly, so lists and
+ * parallel page loaders that each need it share one query.
  */
-export function getTvsSyncMetadata(
-  repository?: Database['syncMetadata'],
-): Promise<SyncMetadataRecord[]> {
+export function getTvsSyncMetadata(): Promise<SyncMetadataRecord[]> {
   // Mock mode has no database; getSyncedTvsTimestamp falls back to the clock
   if (env.MOCK) {
     return Promise.resolve([])
   }
-  pending ??= (repository ?? getDb().syncMetadata)
-    .getByFeature('tvs')
-    .finally(() => {
-      pending = undefined
-    })
-  return pending
+  return cache.get({ key: ['tvs', 'sync-metadata'], ttl: 60 }, () =>
+    getDb().syncMetadata.getByFeature('tvs'),
+  )
 }
 
 /**
