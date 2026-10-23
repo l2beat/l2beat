@@ -17,6 +17,7 @@ import {
   lineNumbers,
 } from '@codemirror/view'
 import { assert } from '@l2beat/shared-pure'
+import { goToLine } from '../goToLine'
 import { cyrb64 } from '../hashes/cyrb-hash'
 import { indentGuides } from '../indentGuides'
 import { solidity } from '../languages/solidity'
@@ -291,6 +292,7 @@ export class DiffEditor {
       drawSelection(),
       highlightSelectionMatches({ highlightWordAroundCursor: true }),
       centeredSearch,
+      goToLine,
       keymap.of(searchKeymap),
       EditorState.readOnly.of(true),
       solidity,

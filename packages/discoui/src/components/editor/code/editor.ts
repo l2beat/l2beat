@@ -33,6 +33,7 @@ import {
   scrollPastEnd,
 } from '@codemirror/view'
 import { assert } from '@l2beat/shared-pure'
+import { goToLine } from '../goToLine'
 import { indentGuides } from '../indentGuides'
 import type { JsonSchemaConfig, JsonSupport } from '../languages/json'
 import { solidity } from '../languages/solidity'
@@ -262,6 +263,7 @@ export class Editor {
       highlightSelectionMatches({ highlightWordAroundCursor: true }),
       historyCompartment.of(history()),
       centeredSearch,
+      goToLine,
       scrollPastEnd(),
       theme,
       keymap.of([
