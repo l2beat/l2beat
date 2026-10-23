@@ -8,6 +8,10 @@ interface Dependencies {
 export class SlotTimestampProvider {
   constructor(private readonly $: Dependencies) {}
 
+  /**
+   * Returns the last slot with a timestamp at or before `timestamp`. Throws
+   * TargetNotReadyError while the chain has no slot after `timestamp` yet.
+   */
   async getSlotNumberAtOrBefore(
     timestamp: UnixTime,
     chain: string,
@@ -16,6 +20,8 @@ export class SlotTimestampProvider {
     const provider = this.$.svmBlockProviders.find((b) => b.chain === chain)
 
     assert(provider, `Missing SvmBlockProvider for ${chain}`)
-    return await provider.getSlotNumberAtOrBefore(timestamp, startSlot)
+    return await provider.getSlotNumberAtOrBefore(timestamp, startSlot, {
+      requireLaterBlock: true,
+    })
   }
 }

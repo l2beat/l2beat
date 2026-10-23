@@ -13,6 +13,7 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
+import { keepPublishedHours, waitForPrices } from '../../../tools/waitForData'
 import type { PrivacyPriceIndexerConfig } from '../types'
 
 export interface PrivacyPriceIndexerDeps
@@ -59,55 +60,68 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
       configsByPriceId.set(priceId, existing)
     }
 
-    const records = (
-      await Promise.all(
-        Array.from(configsByPriceId.entries()).map(
-          async ([priceId, configs]) => {
-            try {
-              const prices = await withCoreFeatureRpcMetricsContext(
-                'privacy.price',
-                {},
+    const results = await Promise.all(
+      Array.from(configsByPriceId.entries()).map(async ([priceId, configs]) => {
+        try {
+          const prices = await withCoreFeatureRpcMetricsContext(
+            'privacy.price',
+            {},
+            () =>
+              waitForPrices(
                 () =>
                   this.$.priceProvider.getUsdPriceHistoryHourly(
                     CoingeckoId(priceId),
                     from,
                     adjustedTo,
                   ),
-              )
-
-              const configurationRecords: PrivacyPriceRecord[] =
-                configs.flatMap((configuration) =>
-                  prices.map((p) => ({
-                    configurationId: configuration.id,
-                    timestamp: p.timestamp,
-                    priceUsd: p.value,
-                    priceId,
-                  })),
-                )
-
-              return configurationRecords
-            } catch (error) {
-              if (
-                error instanceof Error &&
-                error.message.startsWith('Insufficient data in response')
-              ) {
-                this.logger.warn(`Failed to fetch prices for ${priceId}`, {
+                {
+                  logger: this.logger,
                   priceId,
-                  error,
-                })
-                return []
-              }
+                },
+              ),
+          )
 
-              throw error
-            }
-          },
-        ),
-      )
-    ).flat()
+          const configurationRecords: PrivacyPriceRecord[] = configs.flatMap(
+            (configuration) =>
+              prices.map((p) => ({
+                configurationId: configuration.id,
+                timestamp: p.timestamp,
+                priceUsd: p.value,
+                priceId,
+              })),
+          )
+
+          return {
+            records: configurationRecords,
+            lastHour: prices.at(-1)?.timestamp ?? adjustedTo,
+          }
+        } catch (error) {
+          if (
+            error instanceof Error &&
+            error.message.startsWith('Insufficient data in response')
+          ) {
+            this.logger.warn(`Failed to fetch prices for ${priceId}`, {
+              priceId,
+              error,
+            })
+            return { records: [], lastHour: adjustedTo }
+          }
+
+          throw error
+        }
+      }),
+    )
+
+    const { records, syncedTo } = keepPublishedHours(
+      results,
+      { from, to: adjustedTo },
+      this.logger,
+    )
 
     this.logger.info('Fetched privacy prices', {
       from,
       to: adjustedTo,
+      syncedTo,
       configurations: configurations.length,
       records: records.length,
     })
@@ -117,11 +131,11 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
 
       this.logger.info('Saved privacy prices into DB', {
         from,
-        to: adjustedTo,
+        to: syncedTo,
         records: records.length,
       })
 
-      return adjustedTo
+      return syncedTo
     }
   }
 

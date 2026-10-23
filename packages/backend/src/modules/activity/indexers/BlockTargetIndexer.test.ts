@@ -1,9 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import type { BlockTimestampProvider } from '@l2beat/shared'
+import {
+  type BlockTimestampProvider,
+  TargetNotReadyError,
+} from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { ActivityConfigProject } from '../../../config/Config'
+import { withFakeTimers } from '../../../test/withFakeTimers'
 import type { Clock } from '../../../tools/Clock'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 
@@ -65,6 +69,39 @@ describe(BlockTargetIndexer.name, () => {
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
       ).toHaveBeenNthCalledWith(1, LAST_HOUR, 'chain')
+    })
+
+    it('waits until the chain tip passes the target hour', async () => {
+      const clock = mockObject<Clock>({
+        getLastHour: () => LAST_HOUR,
+      })
+
+      const BLOCK_NUMBER = 123
+      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+        getBlockNumberAtOrBefore: mockFn()
+          .rejectsWithOnce(new TargetNotReadyError(LAST_HOUR, LAST_HOUR - 5))
+          .resolvesToOnce(BLOCK_NUMBER),
+      })
+      const onTick = mockFn().resolvesTo(undefined)
+      const indexer = new BlockTargetIndexer(
+        Logger.SILENT,
+        clock,
+        blockTimestampProvider,
+        getMockDb(),
+        mockObject<ActivityConfigProject>({
+          id: ProjectId('mock'),
+          chainName: 'chain',
+        }),
+        { onTick },
+      )
+
+      const result = await withFakeTimers(() => indexer.tick())
+
+      expect(result).toEqual(BLOCK_NUMBER)
+      expect(
+        blockTimestampProvider.getBlockNumberAtOrBefore,
+      ).toHaveBeenCalledTimes(2)
+      expect(onTick).toHaveBeenOnlyCalledWith(LAST_HOUR, BLOCK_NUMBER)
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {

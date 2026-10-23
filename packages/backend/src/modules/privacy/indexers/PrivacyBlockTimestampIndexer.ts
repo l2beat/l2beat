@@ -13,6 +13,7 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
+import { waitForTarget } from '../../../tools/waitForData'
 import type { PrivacyBlockTimestampConfig } from '../types'
 
 interface PrivacyBlockTimestampIndexerDeps
@@ -73,9 +74,17 @@ export class PrivacyBlockTimestampIndexer extends ManagedMultiIndexer<PrivacyBlo
       'privacy.blockTimestamp',
       { chain: configurations[0].properties.chain },
       () =>
-        this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
-          timestamp,
-          configurations[0].properties.chain,
+        waitForTarget(
+          () =>
+            this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
+              timestamp,
+              configurations[0].properties.chain,
+            ),
+          {
+            logger: this.logger,
+            chain: configurations[0].properties.chain,
+            timestamp,
+          },
         ),
     )
 

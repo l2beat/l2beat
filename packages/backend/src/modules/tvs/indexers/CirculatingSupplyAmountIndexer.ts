@@ -12,6 +12,7 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
+import { keepPublishedHours, waitForPrices } from '../../../tools/waitForData'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 export interface CirculatingSupplyAmountIndexerDeps
@@ -60,74 +61,88 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
       configurations: configurations.length,
     })
 
-    const records = (
-      await Promise.all(
-        configurations.map(async (configuration) => {
-          try {
-            const supplies =
-              await this.$.circulatingSupplyProvider.getCirculatingSupplies(
+    const results = await Promise.all(
+      configurations.map(async (configuration) => {
+        try {
+          const supplies = await waitForPrices(
+            () =>
+              this.$.circulatingSupplyProvider.getCirculatingSupplies(
                 CoingeckoId(configuration.properties.apiId),
                 { from: from, to: adjustedTo },
-              )
+              ),
+            {
+              logger: this.logger,
+              priceId: configuration.properties.apiId,
+            },
+          )
 
-            // defense in depth: a non-finite value would crash the BigInt
-            // conversion below and halt the whole indexer
-            const validSupplies = supplies.filter(
-              (p) => Number.isFinite(p.value) && p.value >= 0,
+          // defense in depth: a non-finite value would crash the BigInt
+          // conversion below and halt the whole indexer
+          const validSupplies = supplies.filter(
+            (p) => Number.isFinite(p.value) && p.value >= 0,
+          )
+          if (validSupplies.length !== supplies.length) {
+            // Use critical level to trigger maintenance alert
+            this.logger.critical(
+              `Dropped invalid circulating supply values for ${configuration.properties.apiId}`,
+              {
+                priceId: configuration.properties.apiId,
+                dropped: supplies.length - validSupplies.length,
+              },
             )
-            if (validSupplies.length !== supplies.length) {
-              // Use critical level to trigger maintenance alert
-              this.logger.critical(
-                `Dropped invalid circulating supply values for ${configuration.properties.apiId}`,
-                {
-                  priceId: configuration.properties.apiId,
-                  dropped: supplies.length - validSupplies.length,
-                },
-              )
-            }
+          }
 
-            const supplyRecords: TvsAmountRecord[] = validSupplies.map((p) => ({
-              configurationId: configuration.id,
-              timestamp: p.timestamp,
-              amount: BigInt(p.value * 10 ** configuration.properties.decimals),
-            }))
+          const supplyRecords: TvsAmountRecord[] = validSupplies.map((p) => ({
+            configurationId: configuration.id,
+            timestamp: p.timestamp,
+            amount: BigInt(p.value * 10 ** configuration.properties.decimals),
+          }))
 
-            const optimizedRecords = supplyRecords.filter((p) =>
-              this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
-            )
+          const optimizedRecords = supplyRecords.filter((p) =>
+            this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
+          )
 
-            return optimizedRecords
-          } catch (error) {
-            if (
-              error instanceof Error &&
-              error.message.startsWith('Insufficient data in response')
-            ) {
-              this.logger.warn(
-                `Failed to fetch for ${configuration.properties.apiId}`,
-                {
-                  priceId: configuration.properties.apiId,
-                  error,
-                },
-              )
-              return []
-            }
-            this.logger.error(
-              `Error fetching circulating supply for ${configuration.properties.apiId}`,
+          return {
+            records: optimizedRecords,
+            lastHour: supplies.at(-1)?.timestamp ?? adjustedTo,
+          }
+        } catch (error) {
+          if (
+            error instanceof Error &&
+            error.message.startsWith('Insufficient data in response')
+          ) {
+            this.logger.warn(
+              `Failed to fetch for ${configuration.properties.apiId}`,
               {
                 priceId: configuration.properties.apiId,
                 error,
               },
             )
-
-            throw error
+            return { records: [], lastHour: adjustedTo }
           }
-        }),
-      )
-    ).flat()
+          this.logger.error(
+            `Error fetching circulating supply for ${configuration.properties.apiId}`,
+            {
+              priceId: configuration.properties.apiId,
+              error,
+            },
+          )
+
+          throw error
+        }
+      }),
+    )
+
+    const { records, syncedTo } = keepPublishedHours(
+      results,
+      { from, to: adjustedTo },
+      this.logger,
+    )
 
     this.logger.info('Fetched circulating supplies', {
       from,
       to: adjustedTo,
+      syncedTo,
       configurations: configurations.length,
       records: records.length,
     })
@@ -137,11 +152,11 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
 
       this.logger.info('Saved amounts into DB', {
         from,
-        to: adjustedTo,
+        to: syncedTo,
         records: records.length,
       })
 
-      return adjustedTo
+      return syncedTo
     }
   }
 

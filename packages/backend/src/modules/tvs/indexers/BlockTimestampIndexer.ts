@@ -11,6 +11,7 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
+import { waitForTarget } from '../../../tools/waitForData'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { BlockTimestampConfig } from '../types'
 
@@ -72,11 +73,18 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
           timestamp: timestamp,
         })
 
-        const blockNumber =
-          await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
+        const blockNumber = await waitForTarget(
+          () =>
+            this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
+              timestamp,
+              configurations[0].properties.chainName,
+            ),
+          {
+            logger: this.logger,
+            chain: configurations[0].properties.chainName,
             timestamp,
-            configurations[0].properties.chainName,
-          )
+          },
+        )
 
         this.logger.info('Fetched block number for timestamp', {
           timestamp: timestamp,

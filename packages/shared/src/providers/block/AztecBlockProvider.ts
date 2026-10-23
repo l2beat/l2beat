@@ -1,10 +1,13 @@
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import {
   AZTEC_MAX_BLOCKS_PER_REQUEST,
   type AztecBlock,
   type AztecBlockClient,
 } from '../../clients'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
+import {
+  type BlockNumberAtOrBeforeOptions,
+  getBlockNumberAtOrBefore,
+} from '../../tools/getBlockNumberAtOrBefore'
 
 export class AztecBlockProvider {
   constructor(
@@ -46,9 +49,17 @@ export class AztecBlockProvider {
     })
   }
 
+  async getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
+    return await this.withClient(async (client) => {
+      const block = await getBlockHeader(client, blockNumber)
+      return UnixTime(block.timestamp)
+    })
+  }
+
   async getBlockNumberAtOrBefore(
     timestamp: UnixTime,
     start = 1,
+    options?: BlockNumberAtOrBeforeOptions,
   ): Promise<number> {
     return await this.withClient(async (client) => {
       const end = await client.getLatestBlockNumber()
@@ -58,15 +69,8 @@ export class AztecBlockProvider {
         timestamp,
         effectiveStart,
         end,
-        async (number) => {
-          const [block] = await client.getBlockHeaders(number, 1)
-          assert(block, `Block ${number} not found`)
-          assert(
-            block.number === number,
-            `Expected block ${number}, got ${block.number}`,
-          )
-          return block
-        },
+        (number) => getBlockHeader(client, number),
+        options,
       )
     })
   }
@@ -84,4 +88,14 @@ export class AztecBlockProvider {
 
     throw new Error(`Missing Aztec RPC client for ${this.chain}`)
   }
+}
+
+async function getBlockHeader(client: AztecBlockClient, number: number) {
+  const [block] = await client.getBlockHeaders(number, 1)
+  assert(block, `Block ${number} not found`)
+  assert(
+    block.number === number,
+    `Expected block ${number}, got ${block.number}`,
+  )
+  return block
 }
