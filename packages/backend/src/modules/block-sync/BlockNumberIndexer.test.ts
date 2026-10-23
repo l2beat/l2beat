@@ -37,7 +37,6 @@ describe(BlockNumberIndexer.name, () => {
       expect(blockProvider.getBlockHeader).toHaveBeenOnlyCalledWith('latest')
       expect(blockProvider.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
         UnixTime.now() - DELAY,
-        1,
       )
     })
 
@@ -181,7 +180,7 @@ function setup(time: InstalledClock, chain: { blockTime: number }) {
     'chain',
     Logger.SILENT,
     DELAY,
-    { checkIntervalMs: TICK_SECONDS * 1000, maxHeadGapSeconds: MAX_GAP },
+    TICK_SECONDS * 1000,
   )
 
   /** The block a search would answer with now. */

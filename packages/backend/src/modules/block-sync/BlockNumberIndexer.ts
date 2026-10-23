@@ -4,52 +4,40 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import { withBlockSyncRpcMetricsContext } from './blockSyncRpcMetrics'
 
-export interface BlockNumberIndexerOptions {
-  checkIntervalMs?: number
-  /** Defaults to twice the number of ticks within the delay from tip. */
-  maxHeads?: number
-  /** When the unobserved blocks after the answer span longer than this, a
-   *  tick reads one of them, so the answer catches up with the delayed
-   *  timestamp instead of waiting for the next observed head to get there.
-   *  Defaults to three ticks. */
-  maxHeadGapSeconds?: number
-}
-
-const MAX_HEADS = 500
+/** Only reached when chain timestamps run ahead of the clock by the delay. */
+const MAX_PENDING_HEADS = 500
+/** When the unobserved blocks after the answer span longer than this many
+ *  ticks, a tick reads one of them, so the answer catches up with the delayed
+ *  timestamp instead of waiting for the next observed head to get there. */
+const MAX_GAP_TICKS = 3
 
 /**
  * Every tick reads the latest header and answers with the newest observed
  * head that is at least `delayFromTipInSeconds` old. Observed heads are real
  * blocks, so the answer is never newer than the delay allows. The search by
- * timestamp, which reads several full blocks, only runs when no observed head
- * is old enough, such as after a start.
+ * timestamp only runs on a start, before any head is old enough.
  */
 export class BlockNumberIndexer extends RootIndexer {
-  blockHeight = -1
-  /** Oldest first, block numbers strictly increasing. */
-  private readonly heads: BlockHeader[] = []
-  private readonly checkIntervalMs: number
-  private readonly maxHeads: number
-  private readonly maxHeadGapSeconds: number
+  /** Newest block known to be at or before the delayed timestamp. Only moves
+   *  forward. */
+  private answer: BlockHeader | undefined
+  /** Observed heads after the answer, oldest first, numbers increasing. */
+  private readonly pending: BlockHeader[] = []
 
   constructor(
     private readonly blockProvider: BlockProvider,
     chain: string,
     logger: Logger,
     private readonly delayFromTipInSeconds: number,
-    options: BlockNumberIndexerOptions = {},
+    private readonly checkIntervalMs = 10_000,
   ) {
     super(logger.tag({ chain, tag: chain }), {
       tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
-    this.checkIntervalMs = options.checkIntervalMs ?? 10_000
-    const ticksWithinDelay = Math.ceil(
-      (delayFromTipInSeconds * 1000) / this.checkIntervalMs,
-    )
-    this.maxHeads =
-      options.maxHeads ?? Math.min(MAX_HEADS, 2 * ticksWithinDelay + 10)
-    this.maxHeadGapSeconds =
-      options.maxHeadGapSeconds ?? (3 * this.checkIntervalMs) / 1000
+  }
+
+  get blockHeight() {
+    return this.answer?.number ?? -1
   }
 
   override initialize() {
@@ -65,77 +53,62 @@ export class BlockNumberIndexer extends RootIndexer {
         chain: this.blockProvider.chain,
       },
       async () => {
+        const previous = this.blockHeight
         const timestamp = UnixTime.now() - this.delayFromTipInSeconds
         this.observe(await this.blockProvider.getBlockHeader('latest'))
-        const blockNumber =
-          (await this.findObserved(timestamp)) ?? (await this.search(timestamp))
+        while (this.pending[0] && this.pending[0].timestamp <= timestamp) {
+          this.answer = this.pending.shift()
+        }
+        if (this.answer) {
+          await this.probeGap(this.answer, timestamp)
+        } else {
+          this.answer = await this.search(timestamp)
+        }
 
-        if (blockNumber > this.blockHeight) {
-          this.blockHeight = blockNumber
+        const blockNumber = this.answer.number
+        if (blockNumber > previous) {
           this.logger.info('Advanced block number', { blockNumber })
         }
-        return this.blockHeight
+        return blockNumber
       },
     )
   }
 
   private observe(head: BlockHeader) {
-    const newest = this.heads.at(-1)
+    const newest = this.pending.at(-1) ?? this.answer
     // Load-balanced RPCs can answer from a node that is behind
     if (newest && head.number <= newest.number) return
-    this.insert(head)
+    this.pending.push(head)
+    if (this.pending.length > MAX_PENDING_HEADS) this.pending.shift()
   }
 
-  private async findObserved(timestamp: UnixTime) {
-    let index = this.heads.length - 1
-    while (index >= 0 && this.heads[index].timestamp > timestamp) index--
-    if (index === -1) return undefined
-
-    // The timestamp only grows, so older heads cannot answer again
-    this.heads.splice(0, index)
-    const [answer, next] = this.heads
+  private async probeGap(answer: BlockHeader, timestamp: UnixTime) {
+    const next = this.pending[0]
+    const maxGapSeconds = (MAX_GAP_TICKS * this.checkIntervalMs) / 1000
     if (
       !next ||
       next.number === answer.number + 1 ||
-      next.timestamp - answer.timestamp <= this.maxHeadGapSeconds
+      next.timestamp - answer.timestamp <= maxGapSeconds
     ) {
-      return answer.number
+      return
     }
 
     const probe = await this.blockProvider.getBlockHeader(
       interpolate(answer, next, timestamp),
     )
-    this.insert(probe)
-    return probe.timestamp <= timestamp ? probe.number : answer.number
+    if (probe.timestamp <= timestamp) {
+      this.answer = probe
+    } else {
+      this.pending.unshift(probe)
+    }
   }
 
-  private async search(timestamp: UnixTime): Promise<number> {
-    this.logger.info('Searching tip block by timestamp', {
-      reason: this.blockHeight === -1 ? 'start' : 'noObservedHeadOldEnough',
-      timestamp,
-      observedHeads: this.heads.length,
-    })
-    const blockNumber = await this.blockProvider.getBlockNumberAtOrBefore(
-      timestamp,
-      Math.max(this.blockHeight, 1),
-    )
+  private async search(timestamp: UnixTime): Promise<BlockHeader> {
+    this.logger.info('Searching tip block by timestamp', { timestamp })
+    const number = await this.blockProvider.getBlockNumberAtOrBefore(timestamp)
     // The found block is at or before the timestamp and every later block is
     // past it, so the timestamp can stand in for the block's own
-    this.insert({ number: blockNumber, timestamp })
-    return blockNumber
-  }
-
-  private insert(head: BlockHeader) {
-    const index = this.heads.findIndex((h) => h.number >= head.number)
-    if (index === -1) {
-      this.heads.push(head)
-    } else {
-      const replaces = this.heads[index].number === head.number
-      this.heads.splice(index, replaces ? 1 : 0, head)
-    }
-    if (this.heads.length > this.maxHeads) {
-      this.heads.splice(0, this.heads.length - this.maxHeads)
-    }
+    return { number, timestamp }
   }
 }
 

@@ -158,7 +158,7 @@ describe(BlockProvider.name, () => {
     it('finds the closest block number to given timestamp', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: async (n: number) => block(n),
+        getBlockHeader: async (n: number) => block(n),
       })
 
       const provider = new BlockProvider('chain', [client])
@@ -174,12 +174,12 @@ describe(BlockProvider.name, () => {
     it('calls other client when there are errors', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: mockFn().rejectsWith(new Error('error')),
+        getBlockHeader: mockFn().rejectsWith(new Error('error')),
       })
 
       const client2 = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: async (n: number) => block(n),
+        getBlockHeader: async (n: number) => block(n),
       })
 
       const provider = new BlockProvider('chain', [client, client2])
@@ -196,7 +196,7 @@ describe(BlockProvider.name, () => {
     it('falls back to 0 when start is above client latest', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 500,
-        getBlockWithTransactions: async (n: number) => block(n),
+        getBlockHeader: async (n: number) => block(n),
       })
 
       const provider = new BlockProvider('chain', [client])

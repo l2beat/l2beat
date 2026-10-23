@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
+  type BlockHeader,
   type CallParameters,
   type EVMBlock,
   type EVMBlockWithTransactions,
@@ -75,13 +76,13 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     throw new ReplayError(key)
   }
 
-  async getBlockHeader(blockNumber: number | 'latest'): Promise<EVMBlock> {
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<BlockHeader> {
     return await this.getBlock(blockNumber, false)
   }
 
   async getBlockTimestamp(blockNumber: number): Promise<number> {
-    const block = await this.getBlock(blockNumber, false)
-    return block.timestamp
+    const header = await this.getBlockHeader(blockNumber)
+    return header.timestamp
   }
 
   getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
