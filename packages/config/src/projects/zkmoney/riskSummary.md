@@ -11,8 +11,9 @@
 <br>
 ## Privacy can be lost if
 1. a user pays a new contact, whose handshake reveals the recipient (see public observer).
-2. the resolver operator links deposits paid through a name to their recipients, or an enclave or AWS Nitro is compromised (see privileged insider).
-3. the unpublished sUSDS enclave image is malicious (see privileged insider).
-4. the default endpoints, Alchemy and Aztec Labs' Aztec node, see deposit addresses and withdrawals in one session (see network observer and privileged insider).
-5. the portal freezes, and refunds publish note or deposit amounts on Ethereum.
-6. elliptic-curve cryptography is broken, which decrypts data published to Ethereum (see future adversary).
+2. a user's payments hide only among zk.money's users on Aztec (see chain analyst).
+3. the resolver operator links deposits paid through a name to their recipients, or an enclave or AWS Nitro is compromised (see privileged insider).
+4. the unpublished sUSDS enclave image is malicious (see privileged insider).
+5. the default endpoints, Alchemy and Aztec Labs' Aztec node, see deposit addresses and withdrawals in one session (see network observer and privileged insider).
+6. the portal freezes, and refunds publish note or deposit amounts on Ethereum.
+7. elliptic-curve cryptography is broken, which decrypts data published to Ethereum (see future adversary).

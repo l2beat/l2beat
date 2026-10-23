@@ -17,7 +17,7 @@ Accounts sign with a passkey. The released wallet requires a registered name to 
 ### App
 The privacy ratings cover DAI payments and sUSDS savings in [zk.money Desktop v0.5.0](https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.5.0).
 
-The Desktop release runs local code. Its endpoint settings accept the user's own Aztec node, Ethereum endpoint and DAI enclave. The sUSDS enclave address is always fetched from Aztec Labs among other addresses in two unsigned contract lists. Replacing them can redirect future deposits and payments while satisfying the wallet's [consistency checks](https://github.com/aztec-labs-eng/zkmoney-public/blob/00e54087526d6d89f1755958eb027e077184cd9a/packages/config-client/src/toContractServiceConfig.ts#L41-L68).
+The Desktop release runs local code. Its endpoint settings accept the user's own Aztec node, Ethereum endpoint and DAI enclave. The sUSDS enclave address is always fetched from Aztec Labs among other addresses in two unsigned contract lists. Replacing them can redirect future deposits and payments.
 
 The hosted wallet reloads code on every visit. Its owner can read viewing keys and request harmful passkey signatures through misleading prompts.
 
