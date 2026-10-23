@@ -393,7 +393,10 @@ export async function getL2ProjectEntry(
 
   const chartProject = toChartProject(project)
 
-  const gardenCropsSection = getGardenCropsSection(project.crops)
+  const gardenCropsSection = await getGardenCropsSection(
+    project.id,
+    project.crops,
+  )
   if (gardenCropsSection) {
     sections.push(gardenCropsSection)
   }
