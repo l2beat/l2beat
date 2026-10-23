@@ -2794,8 +2794,9 @@ export function NodesAndConnectionsWebGL() {
   }
 
   const [failure, setFailure] = useState<string | null>(null)
-  // Bumped when the browser restores a lost context, to build a new renderer.
-  const [contextGeneration, setContextGeneration] = useState(0)
+  // Bumped to build a new renderer: when the browser restores a lost context,
+  // and when the pixel ratio changes, as the atlases are drawn for one ratio.
+  const [rendererGeneration, setRendererGeneration] = useState(0)
 
   // Init.
   useEffect(() => {
@@ -2836,7 +2837,7 @@ export function NodesAndConnectionsWebGL() {
       rendererRef.current?.dispose()
       rendererRef.current = null
     }
-  }, [contextGeneration])
+  }, [rendererGeneration])
 
   // A GPU reset or too many contexts can take the context away. Keeping the
   // default would leave the canvas blank for good; preventing it lets the
@@ -2850,7 +2851,7 @@ export function NodesAndConnectionsWebGL() {
       setFailure('The node view lost its WebGL context and is waiting for it.')
     }
     const onRestored = () =>
-      setContextGeneration((generation) => generation + 1)
+      setRendererGeneration((generation) => generation + 1)
     canvas.addEventListener('webglcontextlost', onLost)
     canvas.addEventListener('webglcontextrestored', onRestored)
     return () => {
@@ -2858,6 +2859,17 @@ export function NodesAndConnectionsWebGL() {
       canvas.removeEventListener('webglcontextrestored', onRestored)
     }
   }, [])
+
+  // Moving the window to a display with another scale changes the ratio. The
+  // query matches only the ratio the current renderer was built for.
+  useEffect(() => {
+    const query = window.matchMedia(
+      `(resolution: ${window.devicePixelRatio}dppx)`,
+    )
+    const onChange = () => setRendererGeneration((generation) => generation + 1)
+    query.addEventListener('change', onChange)
+    return () => query.removeEventListener('change', onChange)
+  }, [rendererGeneration])
 
   // Redraw when derived data changes.
   useEffect(() => {
