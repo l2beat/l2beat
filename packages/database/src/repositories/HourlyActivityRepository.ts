@@ -9,9 +9,6 @@ export interface HourlyActivityRecord {
   timestamp: UnixTime
   count: number
   uopsCount: number | null
-  /** Of the busiest UTC minute in the hour */
-  peakCount: number | null
-  peakUopsCount: number | null
 }
 
 function toRecord(row: Selectable<HourlyActivity>): HourlyActivityRecord {
@@ -20,8 +17,6 @@ function toRecord(row: Selectable<HourlyActivity>): HourlyActivityRecord {
     timestamp: UnixTime.fromDate(row.timestamp),
     count: row.count,
     uopsCount: row.uopsCount,
-    peakCount: row.peakCount,
-    peakUopsCount: row.peakUopsCount,
   }
 }
 
@@ -31,35 +26,33 @@ function toRow(record: HourlyActivityRecord): Insertable<HourlyActivity> {
     timestamp: UnixTime.toDate(record.timestamp),
     count: record.count,
     uopsCount: record.uopsCount,
-    peakCount: record.peakCount,
-    peakUopsCount: record.peakUopsCount,
   }
 }
 
 export class HourlyActivityRepository extends BaseRepository {
   /**
    * Adds each record to the hour stored before, as blocks of an hour can come
-   * in more than one batch. The larger peak stays
+   * in more than one batch, and returns the hours as stored after
    */
-  async addMany(records: HourlyActivityRecord[]): Promise<number> {
-    if (records.length === 0) return 0
-
-    const rows = records.map(toRow)
-    await this.batch(rows, 5_000, async (batch) => {
-      await this.db
+  async addMany(
+    records: HourlyActivityRecord[],
+  ): Promise<HourlyActivityRecord[]> {
+    const stored: HourlyActivityRecord[] = []
+    await this.batch(records.map(toRow), 5_000, async (batch) => {
+      const rows = await this.db
         .insertInto('HourlyActivity')
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['projectId', 'timestamp']).doUpdateSet({
             count: sql`"HourlyActivity"."count" + excluded."count"`,
             uopsCount: addToStored('HourlyActivity', 'uopsCount'),
-            peakCount: sql`greatest("HourlyActivity"."peakCount", excluded."peakCount")`,
-            peakUopsCount: sql`greatest("HourlyActivity"."peakUopsCount", excluded."peakUopsCount")`,
           }),
         )
+        .returningAll()
         .execute()
+      stored.push(...rows.map(toRecord))
     })
-    return records.length
+    return stored
   }
 
   async getByProjectAndTimeRange(
@@ -85,6 +78,18 @@ export class HourlyActivityRepository extends BaseRepository {
       .deleteFrom('HourlyActivity')
       .where('projectId', '=', projectId.toString())
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteByProjectIdUntil(
+    projectId: ProjectId,
+    toExclusive: UnixTime,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('HourlyActivity')
+      .where('projectId', '=', projectId.toString())
+      .where('timestamp', '<', UnixTime.toDate(toExclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
