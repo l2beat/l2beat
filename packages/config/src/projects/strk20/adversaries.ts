@@ -84,34 +84,28 @@ export const strk20Adversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        'Ready and Xverse are closed source, so what they send to third parties is up to their makers and can change at any time.',
+        "Ready's analytics, on by default, report each shield and unshield under the user's id, while no other third party gets the account or viewing key.",
       exposureContinued:
-        'Today both wallets send each action to their own servers for proving and note discovery. The paymaster receives the finished transaction before broadcast.',
-      advice:
-        "Use a client built on the open SDK with the user's own prover and note discovery, and turn on its oblivious relay.",
+        "Both wallets send the account and viewing key only to their makers' servers, which run note discovery and relay pool transactions. Ready works over Tor, while Xverse's privacy endpoints refuse it.",
+      advice: 'In Ready, switch off "Share anonymous data".',
       interior: {
         sender: 'unverifiable',
         recipient: 'unverifiable',
         amount: 'unverifiable',
         asset: 'atRisk',
-        linkage: 'unverifiable',
+        linkage: {
+          verdict: 'atRisk',
+          note: "Private only with Ready's analytics off.",
+        },
       },
       sources: [
         {
-          title: 'Ready extension (proving and discovery on Ready servers)',
+          title: 'Ready extension (discovery and relay on Ready servers)',
           url: 'https://chromewebstore.google.com/detail/dlcobpjiigpikoobohmabehhmhfoodbb',
         },
         {
-          title: 'Xverse extension (proving and discovery on Xverse servers)',
+          title: 'Xverse extension (pool calls on Xverse servers)',
           url: 'https://chromewebstore.google.com/detail/idnnbdplmphpflfnlkomgpfbpcgelopg',
-        },
-        {
-          title: 'The SDK takes prover and discovery endpoints from the client',
-          url: SDK + 'factory.ts#L45-L62',
-        },
-        {
-          title: 'Oblivious relay is an option of the proving client',
-          url: SDK + 'internal/proving-service-provider.ts#L73-L80',
         },
       ],
     },
@@ -120,7 +114,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay.",
       exposureContinued:
-        "The wallet's prover receives the user's viewing key with every action, and for most Ready accounts Ready's servers create that key. Apps that drive a shadow account or a swap through the pool get the user's main address from the wallet connection. The holder of the screener key can block any screened depositor.",
+        "The wallets' servers receive the user's viewing key for note discovery and proving, and Ready's servers create it for every new account. Apps that drive a shadow account or a swap through the pool get the user's main address from the wallet connection. The holder of the screener key can block any screened depositor.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

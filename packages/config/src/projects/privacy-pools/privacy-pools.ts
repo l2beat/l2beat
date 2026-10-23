@@ -188,7 +188,7 @@ export const privacyPools: BaseProject = {
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
     referenceClient: {
-      name: 'privacypools.com',
+      name: 'v1.privacypools.com',
       repository: 'https://github.com/0xbow-io/privacy-pools-website',
       commit: '7df411128f7a18a61a77f7a0371bf0b857969e2a',
     },

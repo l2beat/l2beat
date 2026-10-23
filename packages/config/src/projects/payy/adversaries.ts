@@ -95,9 +95,9 @@ export const payyAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'bad',
       exposureShort:
-        'The Payy app is closed source and no open client works on mainnet, so what it sends to third parties is up to Payy and can change at any time.',
+        "The payment-link website hands each link's redeem secret to PostHog analytics, which records the full page URL.",
       exposureContinued:
-        "The payment-link website loads a third-party analytics script that records the page URL, which holds the link's redeem secret.",
+        'PostHog also records the session with inputs unmasked, and the download page passes the full link to Framer. The mobile app is untraced.',
       interior: {
         sender: 'unverifiable',
         recipient: 'unverifiable',
