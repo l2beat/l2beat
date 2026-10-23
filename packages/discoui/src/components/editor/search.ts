@@ -57,9 +57,9 @@ class FindWidget implements Panel {
   private matches: Matches
   private readonly searchField = textField('Find', true)
   private readonly replaceField = textField('Replace', false)
-  private readonly caseToggle = toggle('Aa', 'Match Case (Alt+C)')
-  private readonly wordToggle = toggle('ab', 'Match Whole Word (Alt+W)')
-  private readonly regexpToggle = toggle('.*', 'Use Regular Expression (Alt+R)')
+  private readonly caseToggle = toggle('Aa', 'Match Case', 'C')
+  private readonly wordToggle = toggle('ab', 'Match Whole Word', 'W')
+  private readonly regexpToggle = toggle('.*', 'Use Regular Expression', 'R')
   private readonly counter = element('div', 'cm-find-counter')
   private readonly expandButton = iconButton(CHEVRON, 'Toggle Replace')
   private readonly replaceRow: HTMLElement
@@ -157,10 +157,17 @@ class FindWidget implements Panel {
     if (event.key !== 'Enter') {
       return
     }
-    event.preventDefault()
     if (event.target === this.replaceField) {
+      event.preventDefault()
       ;(event.metaKey || event.ctrlKey ? replaceAll : replaceNext)(this.view)
-    } else if (event.altKey) {
+    } else if (event.target === this.searchField) {
+      event.preventDefault()
+      this.findFromField(event)
+    }
+  }
+
+  private findFromField(event: KeyboardEvent) {
+    if (event.altKey) {
       selectMatches(this.view)
       this.view.focus()
     } else {
@@ -170,7 +177,7 @@ class FindWidget implements Panel {
 
   // By key code, since Alt turns the letter into another character on macOS.
   private toggleForKey(event: KeyboardEvent): HTMLButtonElement | undefined {
-    if (!event.altKey) {
+    if (!isToggleChord(event)) {
       return undefined
     }
     if (event.code === 'KeyC') {
@@ -279,10 +286,10 @@ function textField(label: string, isMain: boolean): HTMLInputElement {
   return field
 }
 
-function toggle(label: string, title: string): HTMLButtonElement {
+function toggle(label: string, title: string, key: string): HTMLButtonElement {
   const button = keepFocus(element('button', 'cm-find-toggle'))
   button.type = 'button'
-  button.title = title
+  button.title = `${title} (${isMac() ? 'Cmd+Alt' : 'Alt'}+${key})`
   button.textContent = label
   setPressed(button, false)
   return button
@@ -337,6 +344,22 @@ function icon(path: string): SVGSVGElement {
   line.setAttribute('stroke-linejoin', 'round')
   svg.append(line)
   return svg
+}
+
+// Monaco's chords: Option alone types a letter on macOS, and AltGr arrives as
+// Ctrl+Alt on Windows.
+function isToggleChord(event: KeyboardEvent): boolean {
+  if (!event.altKey || event.ctrlKey || event.shiftKey) {
+    return false
+  }
+  if (isMac()) {
+    return event.metaKey
+  }
+  return !event.metaKey && !event.getModifierState('AltGraph')
+}
+
+function isMac(): boolean {
+  return navigator.userAgent.includes('Mac')
 }
 
 function isPressed(button: HTMLButtonElement): boolean {
