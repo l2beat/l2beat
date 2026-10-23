@@ -3,7 +3,8 @@ import {
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 
-// v2.16.2, the build privacypools.com serves.
+// v1.privacypools.com serves v2.17.0 (058dd21), whose diff from this pin touches
+// no network code.
 const WEBSITE =
   'https://github.com/0xbow-io/privacy-pools-website/blob/7df411128f7a18a61a77f7a0371bf0b857969e2a/src/'
 // v1.2.1, the circuits behind the verified verifiers.
@@ -58,9 +59,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The website works in Tor Browser and scans every pool whole, matching notes locally without revealing the user's deposits to third parties.",
       exposureContinued:
-        'The relayer receives amount and asset for a quote and the recipient once the user confirms. The website finds a relayed withdrawal in bulk reads of new blocks, so no request names its hash. A wallet sign-in still shows the RPC the wallet in the session that waits for the withdrawal, which can pair the two by timing on a quiet pool.',
+        "The relayer receives amount and asset for a quote and the recipient once the user confirms. The website confirms a relayed withdrawal from bulk reads of new blocks, so no request names its hash. 0xbow's Google Analytics runs without a consent prompt and records the hash of any explorer link the user opens. A wallet sign-in shows the RPC the wallet in the session that waits for the withdrawal, which can pair the two by timing on a quiet pool.",
       advice:
-        "Withdraw in a new Tor Browser session, signed in with the user's recovery phrase so no wallet address is queried.",
+        "Withdraw in a new Tor Browser session, signed in with the user's recovery phrase so no wallet address is queried. Retry new circuits until Fast Relay answers, and open no explorer links in that session.",
       sources: [
         {
           title: 'Sign-in with a recovery phrase needs no wallet',

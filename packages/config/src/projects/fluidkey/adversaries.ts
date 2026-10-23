@@ -82,17 +82,13 @@ export function fluidkeyAdversaries(accounts: number) {
         ],
       },
       networkObserver: {
-        sentiment: 'bad',
+        sentiment: 'warning',
         exposureShort:
-          'The app is closed source with no open alternative, so what it sends to third parties is up to Fluidkey and can change at any time.',
+          "No third party sees both the user's account and a receiving Safe, except the RPC of a payer who looks up the user's name.",
         exposureContinued:
-          "Today, the web app reads the chain only through Fluidkey's servers and gives outside services just the user's login and username. A payer who looks up the user's name through a third-party RPC shows it that name and the new address.",
+          "The web app's RPC is a proxy to Alchemy under Fluidkey's account, which sees the Safes the app shows and can group those of one session. Plausible, also under Fluidkey's account, gets the username whenever a payment page opens.",
+        advice: 'Share a fresh Safe address instead of the name.',
         sources: [
-          {
-            title:
-              "The app's content security policy lists every endpoint it contacts",
-            url: 'https://app.fluidkey.com',
-          },
           {
             contract: 'OffchainResolver',
             title:

@@ -6,13 +6,14 @@
 <br>
 ## Funds can be lost if
 1. a user loses their passkey.
-2. all registered signers stop serving and users cannot obtain or run the portal's approved enclave image.
+2. all registered signers stop serving and users cannot obtain or run the portal's approved enclave image, which for sUSDS is unpublished.
 3. resolver screening blocks an external payment and the recipient lacks the tooling to re-derive its deposit address.
 <br>
 ## Privacy can be lost if
 1. a user pays a new contact, whose handshake reveals the recipient (see public observer).
 2. a user's payments hide only among zk.money's users on Aztec (see chain analyst).
-3. the resolver operator links L1 deposits to L2 recipients, or an enclave or AWS Nitro is compromised (see privileged insider).
-4. anyone on the user's network path times their Aztec transactions, since Desktop has no Tor or proxy setting (see network observer).
-5. the portal freezes, and refunds publish note or deposit amounts on Ethereum.
-6. elliptic-curve cryptography is broken, which decrypts data published to Ethereum (see future adversary).
+3. the resolver operator links deposits paid through a name to their recipients, or an enclave or AWS Nitro is compromised (see privileged insider).
+4. the unpublished sUSDS enclave image is malicious (see privileged insider).
+5. the default endpoints, Alchemy and Aztec Labs' Aztec node, see deposit addresses and withdrawals in one session (see network observer and privileged insider).
+6. the portal freezes, and refunds publish note or deposit amounts on Ethereum.
+7. elliptic-curve cryptography is broken, which decrypts data published to Ethereum (see future adversary).

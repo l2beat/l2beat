@@ -31,13 +31,23 @@ for (const { field, members } of COMMITTEES) {
   )
 }
 
+// Interfold rejects requests for committees below minCommitteeSize, so the
+// smallest size at or above it is the committee any vote can get.
+const { minCommitteeSize } = discovery.getContractValue<{
+  minCommitteeSize: number
+}>('Interfold', 'getPricingConfig')
+const voteCommittee = COMMITTEES.find((c) => c.members >= minCommitteeSize)
+assert(voteCommittee, 'Unknown Interfold minimum committee size.')
+const minimumCommittee = COMMITTEES[0]
+
 // getE3Settings: [committee size, BFV parameter set, compute provider params].
-const [voteCommitteeSize] = discovery.getContractValue<
+const [daoVoteCommitteeSize] = discovery.getContractValue<
   [number, number, string]
 >('CrispTokenVoting', 'getE3Settings')
-const voteCommittee = COMMITTEES[voteCommitteeSize]
-assert(voteCommittee, 'Unknown CRISP vote committee size.')
-const minimumCommittee = COMMITTEES[0]
+assert(
+  COMMITTEES[daoVoteCommitteeSize] === voteCommittee,
+  'Governance votes no longer request the smallest allowed committee: update the committee texts.',
+)
 
 const ballotVerifier = discovery.getContract('CrispOnchainBallotVerifier')
 assert(

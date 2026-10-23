@@ -11,6 +11,7 @@
 <br>
 ## Privacy can be lost if
 1. Fluidkey, or anyone who obtains its records, uses the viewing keys to link all Safes of every account (see privileged insider).
-2. Fluidkey changes its closed-source app to send account data to outside services, which users cannot check (see network observer).
+2. Fluidkey changes its closed-source app to send account data to outside services (see privileged insider).
+3. a payer looks up the user's name through a public RPC, which then sees the name and the new Safe (see network observer).
 3. a user takes Hide Trail and Houdini or the exchanges link the route from their records (see privileged insider).
 4. Fluidkey's relayer marks every spend as a Fluidkey account's (see chain analyst).
