@@ -3,15 +3,14 @@ import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import type { SevenDayTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
-import { getTvsTargetTimestamp } from '../../layer2s/tvs/utils/getTvsTargetTimestamp'
+import type { TimestampedSevenDayTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 
 export function getZkCatalogProjectTvs(
   project: Project<'zkCatalogInfo'>,
   allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
-  tvs: SevenDayTvsBreakdown,
+  tvs: TimestampedSevenDayTvsBreakdown,
 ) {
-  const target = getTvsTargetTimestamp()
+  const target = tvs.timestamp
   const todayTvsProjects = getLiveProjectsAtTimestamp(
     project.zkCatalogInfo.projectsForTvs,
     target,

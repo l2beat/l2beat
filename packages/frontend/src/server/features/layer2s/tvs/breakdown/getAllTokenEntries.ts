@@ -6,7 +6,10 @@ import { categoryToLabel } from '~/pages/layer2s/project/tvs-breakdown/component
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
+import {
+  getSyncedTvsTimestamp,
+  getTvsSyncMetadata,
+} from '../utils/getSyncedTvsTimestamp'
 import { sourceToLabel } from '../utils/sourceToLabel'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
 import type { ProjectTvsBreakdownTokenEntry } from './getProjectTokensEntries'
@@ -24,13 +27,19 @@ export async function getAllTokensEntries(): Promise<TvsBreakdownTokenEntry[]> {
   if (env.MOCK) {
     return getMockTvsBreakdownForProjectData()
   }
-  const allProjects = await ps.getProjects({
-    select: ['tvsConfig'],
-    optional: ['chainConfig', 'contracts'],
-  })
+  const [allProjects, syncMetadata] = await Promise.all([
+    ps.getProjects({
+      select: ['tvsConfig'],
+      optional: ['chainConfig', 'contracts'],
+    }),
+    getTvsSyncMetadata(),
+  ])
 
   const db = getDb()
-  const targetTimestamp = getTvsTargetTimestamp()
+  const targetTimestamp = getSyncedTvsTimestamp(
+    syncMetadata,
+    allProjects.flatMap((p) => p.tvsConfig),
+  )
 
   const [projects, tokenValues] = await Promise.all([
     ps.getProjects({

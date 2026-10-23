@@ -11,7 +11,10 @@ import {
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
+import {
+  getSyncedTvsTimestamp,
+  getTvsSyncMetadata,
+} from '../utils/getSyncedTvsTimestamp'
 import { sourceToLabel } from '../utils/sourceToLabel'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
 import {
@@ -62,7 +65,10 @@ export async function getProjectTokensEntries(
   }
 
   const db = getDb()
-  const targetTimestamp = getTvsTargetTimestamp()
+  const targetTimestamp = getSyncedTvsTimestamp(
+    await getTvsSyncMetadata(),
+    project.tvsConfig,
+  )
   const sevenDaysAgoTargetTimestamp = targetTimestamp - 7 * UnixTime.DAY
 
   const [projects, tokenValues, sevenDaysAgoTokenValues] = await Promise.all([

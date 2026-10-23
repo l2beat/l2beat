@@ -3,7 +3,10 @@ import { assert, TokenId } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { extractAddressesFromTokenConfig } from '~/server/features/layer2s/tvs/breakdown/extractAddressesFromTokenConfig'
 import { processAddresses } from '~/server/features/layer2s/tvs/breakdown/tokenEntryHelpers'
-import { getTvsTargetTimestamp } from '~/server/features/layer2s/tvs/utils/getTvsTargetTimestamp'
+import {
+  getSyncedTvsTimestamp,
+  getTvsSyncMetadata,
+} from '~/server/features/layer2s/tvs/utils/getSyncedTvsTimestamp'
 
 /**
  * This endpoint is temporary - it serves as a source of data for our internal token spreadsheet.
@@ -13,9 +16,7 @@ export async function getInternalTokenBreakdown() {
   const db = getDb()
   const ps = new ProjectService()
 
-  const targetTimestamp = getTvsTargetTimestamp()
-
-  const [projects, projectsWithChainConfig, tokenValues] = await Promise.all([
+  const [projects, projectsWithChainConfig, syncMetadata] = await Promise.all([
     ps.getProjects({
       select: ['tvsConfig'],
       optional: ['chainConfig', 'contracts'],
@@ -23,8 +24,14 @@ export async function getInternalTokenBreakdown() {
     ps.getProjects({
       select: ['chainConfig'],
     }),
-    db.tvsTokenValue.getAtOrBefore(targetTimestamp),
+    getTvsSyncMetadata(),
   ])
+
+  const targetTimestamp = getSyncedTvsTimestamp(
+    syncMetadata,
+    projects.flatMap((p) => p.tvsConfig),
+  )
+  const tokenValues = await db.tvsTokenValue.getAtOrBefore(targetTimestamp)
 
   const chains = projectsWithChainConfig.map((x) => x.chainConfig)
 
