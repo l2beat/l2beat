@@ -2,23 +2,33 @@ import type { ActivityPeaks } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { addSums, type PeriodSum } from './sumPerPeriod'
 
-interface Counts {
-  timestamp: UnixTime
-  count: number
-  uopsCount: number | null
+type Counts = Pick<PeriodSum, 'timestamp' | 'count' | 'uopsCount'>
+
+/** What a batch counted of its last minute, and the height it ended at */
+export interface MinuteCarry {
+  height: number
+  minute: PeriodSum
 }
 
 /**
  * Blocks are fetched in batches, so the first minute of a batch can start in
- * the previous one: `previousMinute` is that batch's last minute
+ * the previous one. The carry counts only when that batch ended right before
+ * `from`
  */
 export function continueMinute(
   minutes: PeriodSum[],
-  previousMinute: PeriodSum | undefined,
+  carry: MinuteCarry | undefined,
+  from: number,
 ): PeriodSum[] {
   const [first, ...rest] = minutes
-  if (!first || first.timestamp !== previousMinute?.timestamp) return minutes
-  return [addSums(previousMinute, first), ...rest]
+  if (
+    !first ||
+    carry?.height !== from - 1 ||
+    first.timestamp !== carry.minute.timestamp
+  ) {
+    return minutes
+  }
+  return [addSums(carry.minute, first), ...rest]
 }
 
 /**

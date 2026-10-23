@@ -8,7 +8,8 @@ describe(continueMinute.name, () => {
   it('adds the part of the first minute that the previous batch counted', () => {
     const result = continueMinute(
       [sum(START, 2, 3, 3), sum(START + 60, 6, 4, 4)],
-      sum(START, 5, 1, 2),
+      { height: 2, minute: sum(START, 5, 1, 2) },
+      3,
     )
 
     expect(result).toEqual([sum(START, 7, 1, 3), sum(START + 60, 6, 4, 4)])
@@ -17,7 +18,17 @@ describe(continueMinute.name, () => {
   it('ignores a previous minute that the batch does not start in', () => {
     const minutes = [sum(START + 60, 2, 3, 3)]
 
-    expect(continueMinute(minutes, sum(START, 50, 1, 2))).toEqual(minutes)
+    expect(
+      continueMinute(minutes, { height: 2, minute: sum(START, 50, 1, 2) }, 3),
+    ).toEqual(minutes)
+  })
+
+  it('ignores a batch that did not end right before', () => {
+    const minutes = [sum(START, 2, 5, 5)]
+
+    expect(
+      continueMinute(minutes, { height: 2, minute: sum(START, 50, 1, 2) }, 5),
+    ).toEqual(minutes)
   })
 })
 

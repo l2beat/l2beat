@@ -2,13 +2,13 @@ import type { Logger } from '@l2beat/backend-tools'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { continueMinute, getDayPeaks } from '../utils/peaks'
-import { type PeriodSum, sumPerPeriod } from '../utils/sumPerPeriod'
+import { continueMinute, getDayPeaks, type MinuteCarry } from '../utils/peaks'
+import { sumPerPeriod } from '../utils/sumPerPeriod'
 import type { BlockActivityIndexerDeps } from './types'
 
 /**
- * Hourly rows serve charts of up to a week. The busiest hour and minute of
- * each day stay on its daily row
+ * Hourly rows serve charts of up to a week, kept with a week of margin. The
+ * busiest hour and minute of each day stay on its daily row
  */
 const HOURLY_ACTIVITY_DAYS = 14
 
@@ -18,7 +18,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
    * continue. Kept in memory only: after a restart the first minute's peak
    * counts the new batch's part of it alone
    */
-  private lastMinute: { height: number; minute: PeriodSum } | undefined
+  private lastMinute: MinuteCarry | undefined
 
   constructor(
     private readonly $: BlockActivityIndexerDeps,
@@ -48,13 +48,15 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     const latestTimestamp = blocks.at(-1)?.timestamp
     assert(latestTimestamp !== undefined, 'Latest timestamp is undefined')
 
-    const previousMinute =
-      this.lastMinute?.height === from - 1 ? this.lastMinute.minute : undefined
     const minutes = continueMinute(
       sumPerPeriod(blocks, 'minute'),
-      previousMinute,
+      this.lastMinute,
+      from,
     )
     const days = sumPerPeriod(blocks, 'day')
+    const hourlyCutoff =
+      UnixTime.toStartOf(latestTimestamp, 'hour') -
+      HOURLY_ACTIVITY_DAYS * UnixTime.DAY
 
     this.logger.info('Saving records', { count: days.length })
 
@@ -78,8 +80,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
       )
       await this.$.db.hourlyActivity.deleteByProjectIdUntil(
         this.$.projectId,
-        UnixTime.toStartOf(latestTimestamp, 'hour') -
-          HOURLY_ACTIVITY_DAYS * UnixTime.DAY,
+        hourlyCutoff,
       )
       await this.$.db.syncMetadata.updateSyncedUntil(
         'activity',

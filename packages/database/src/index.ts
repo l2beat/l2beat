@@ -11,7 +11,6 @@ export type {
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
 export type {
-  ActivityPeak,
   ActivityPeaks,
   ActivityRecord,
   ActivityTotals,

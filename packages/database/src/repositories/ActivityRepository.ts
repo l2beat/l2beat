@@ -3,6 +3,7 @@ import { type Insertable, type RawBuilder, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { Activity } from '../kysely/generated/types'
 import { addToStored } from '../utils/addToStored'
+import { greaterOfStored } from '../utils/greaterOfStored'
 
 export interface ActivityRecord {
   projectId: ProjectId
@@ -21,14 +22,6 @@ export interface ActivityPeaks {
   /** Of the busiest UTC minute of the day */
   peakMinuteCount: number
   peakMinuteUopsCount: number | null
-}
-
-export interface ActivityPeak {
-  count: number
-  countTimestamp: UnixTime
-  /** Txs when the chain has no uops */
-  uopsCount: number
-  uopsTimestamp: UnixTime
 }
 
 export interface ActivityTotals {
@@ -112,11 +105,13 @@ export class ActivityRepository extends BaseRepository {
             uopsCount: addToStored('Activity', 'uopsCount'),
             start: sql`least("Activity"."start", excluded."start")`,
             end: sql`greatest("Activity"."end", excluded."end")`,
-            // greatest skips nulls, so a day's first peaks replace none
-            peakHourCount: sql`greatest("Activity"."peakHourCount", excluded."peakHourCount")`,
-            peakHourUopsCount: sql`greatest("Activity"."peakHourUopsCount", excluded."peakHourUopsCount")`,
-            peakMinuteCount: sql`greatest("Activity"."peakMinuteCount", excluded."peakMinuteCount")`,
-            peakMinuteUopsCount: sql`greatest("Activity"."peakMinuteUopsCount", excluded."peakMinuteUopsCount")`,
+            peakHourCount: greaterOfStored('Activity', 'peakHourCount'),
+            peakHourUopsCount: greaterOfStored('Activity', 'peakHourUopsCount'),
+            peakMinuteCount: greaterOfStored('Activity', 'peakMinuteCount'),
+            peakMinuteUopsCount: greaterOfStored(
+              'Activity',
+              'peakMinuteUopsCount',
+            ),
           }),
         )
         .execute()
@@ -308,37 +303,6 @@ export class ActivityRepository extends BaseRepository {
     )
   }
 
-  async getMaxPeaksForProject(
-    projectId: ProjectId,
-  ): Promise<
-    { since: UnixTime; hour: ActivityPeak; minute: ActivityPeak } | undefined
-  > {
-    const row = await this.db
-      .selectFrom('Activity')
-      .select((eb) => [
-        eb.fn.min('timestamp').as('since'),
-        maxWithTimestamp(sql.ref('peakHourCount')).as('hour'),
-        maxWithTimestamp(
-          sql`coalesce("peakHourUopsCount", "peakHourCount")`,
-        ).as('hourUops'),
-        maxWithTimestamp(sql.ref('peakMinuteCount')).as('minute'),
-        maxWithTimestamp(
-          sql`coalesce("peakMinuteUopsCount", "peakMinuteCount")`,
-        ).as('minuteUops'),
-      ])
-      .where('projectId', '=', projectId.toString())
-      .where('peakHourCount', 'is not', null)
-      .executeTakeFirst()
-
-    if (!row?.since) return undefined
-
-    return {
-      since: UnixTime.fromDate(row.since),
-      hour: toPeak(row.hour, row.hourUops),
-      minute: toPeak(row.minute, row.minuteUops),
-    }
-  }
-
   async getMaxCountsForProject(projectId: ProjectId): Promise<
     | {
         uopsCount: number
@@ -527,18 +491,6 @@ export class ActivityRepository extends BaseRepository {
       .executeTakeFirst()
 
     return latestRecord?.end
-  }
-}
-
-function toPeak(
-  [count, countTimestamp]: [string, string],
-  [uopsCount, uopsTimestamp]: [string, string],
-): ActivityPeak {
-  return {
-    count: Number(count),
-    countTimestamp: UnixTime(Number(countTimestamp)),
-    uopsCount: Number(uopsCount),
-    uopsTimestamp: UnixTime(Number(uopsTimestamp)),
   }
 }
 
