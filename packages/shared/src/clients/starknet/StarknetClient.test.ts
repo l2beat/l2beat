@@ -55,6 +55,43 @@ describe(StarknetClient.name, () => {
     })
   })
 
+  describe(StarknetClient.prototype.getBlockHeader.name, () => {
+    it('reads a block with transaction hashes only', async () => {
+      const client = mockClient({})
+      const query = mockFn().resolvesTo(mockStarknetGetBlockResponse(100))
+      client.query = query
+
+      const result = await client.getBlockHeader(100)
+
+      expect(query).toHaveBeenOnlyCalledWith('starknet_getBlockWithTxHashes', [
+        { block_number: 100 },
+      ])
+      expect(result).toEqual({ number: 100, timestamp: 1_700_000_000 })
+    })
+
+    it('reads the latest block', async () => {
+      const client = mockClient({})
+      const query = mockFn().resolvesTo(mockStarknetGetBlockResponse(100))
+      client.query = query
+
+      const result = await client.getBlockHeader('latest')
+
+      expect(query).toHaveBeenOnlyCalledWith('starknet_getBlockWithTxHashes', [
+        'latest',
+      ])
+      expect(result).toEqual({ number: 100, timestamp: 1_700_000_000 })
+    })
+
+    it('throws on a malformed response', async () => {
+      const client = mockClient({})
+      client.query = mockFn().resolvesTo({ jsonrpc: '2.0', id: 1 })
+
+      await expect(client.getBlockHeader(100)).toBeRejectedWith(
+        'Block header: Error during parsing',
+      )
+    })
+  })
+
   describe(StarknetClient.prototype.getBlockTimestamps.name, () => {
     it('returns timestamps keyed by block number', async () => {
       const client = mockClient({})
@@ -235,8 +272,8 @@ const mockStarknetGetBlockResponse = (
   id: 1,
   result: {
     block_number: blockNumber,
-    timestamp: UnixTime.now(),
-    transactions: [],
+    timestamp: 1_700_000_000,
+    transactions: ['0x1234'],
   },
 })
 

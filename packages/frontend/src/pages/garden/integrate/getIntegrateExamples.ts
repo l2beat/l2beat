@@ -5,10 +5,7 @@ import type {
 } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { ResolvedCrops } from '~/components/garden/crops'
-import {
-  type CropsAttestationsMeta,
-  getAttestationsMeta,
-} from '~/server/features/garden/getAttestationsMeta'
+import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
 import {
   qualifiesForGarden,
@@ -67,13 +64,14 @@ const PLACEHOLDER_CONTRACT = {
  * shapes are spelled out here rather than imported: crops-api owns the
  * generator, and its OpenAPI document is the contract these mirror.
  */
-export async function getIntegrateExamples(): Promise<IntegrateExamples> {
+export async function getIntegrateExamples(
+  meta: CropsAttestationsMeta,
+): Promise<IntegrateExamples> {
   const projects = await ps.getProjects({
     where: ['crops'],
     select: ['crops'],
     optional: ['scalingInfo', 'privacyInfo', 'contracts'],
   })
-  const meta = getAttestationsMeta()
   return buildIntegrateExamples(
     pickSample(projects, meta),
     meta,
