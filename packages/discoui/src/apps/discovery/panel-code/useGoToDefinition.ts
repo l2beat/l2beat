@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { getDefinition, getReferences } from '../../../api/api'
+import { getContractAt, getDefinition, getReferences } from '../../../api/api'
 import type {
+  ApiContractAtResponse,
   ApiDefinitionResponse,
   ApiReferencesResponse,
 } from '../../../api/types'
@@ -25,6 +26,7 @@ export interface CodeLocation {
 export type DefinitionLookup =
   | { status: 'definitions'; response: ApiDefinitionResponse }
   | { status: 'references'; response: ApiReferencesResponse }
+  | { status: 'contract'; response: ApiContractAtResponse }
   | { status: 'failed' }
 
 export function useGoToDefinition(
@@ -55,8 +57,7 @@ export function useGoToDefinition(
     })
   }
 
-  // References stay listed so several can be visited one after another.
-  const navigate = (target: CodeLocation, keepOpen = false) => {
+  const rememberCursor = () => {
     const offset = plugin?.cursorOffset()
     if (
       address !== undefined &&
@@ -65,6 +66,11 @@ export function useGoToDefinition(
     ) {
       history.current.push({ address, sourceIndex, offset, length: 0 })
     }
+  }
+
+  // References stay listed so several can be visited one after another.
+  const navigate = (target: CodeLocation, keepOpen = false) => {
+    rememberCursor()
     if (!keepOpen) {
       setLookup(undefined)
     }
@@ -134,6 +140,25 @@ export function useGoToDefinition(
             } else {
               navigate(only)
             }
+          },
+        )
+      },
+      goToContract: (request) => {
+        const at = positionOf(request)
+        if (at === undefined) {
+          return
+        }
+        run(
+          () => getContractAt(project, at.address, at.sourceIndex, at.offset),
+          (response) => {
+            if (response.address === undefined || response.name === undefined) {
+              setLookup({ status: 'contract', response })
+              return
+            }
+            rememberCursor()
+            setLookup(undefined)
+            ensureLeaf('code')
+            select([response.address])
           },
         )
       },

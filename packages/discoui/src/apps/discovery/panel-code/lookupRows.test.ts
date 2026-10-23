@@ -116,4 +116,18 @@ describe('lookup rows', () => {
     expect(title(nothing)).toEqual('Nothing to find references for here')
     expect(title({ status: 'failed' })).toEqual('Could not resolve this')
   })
+
+  it('explains why there is no contract to go to', () => {
+    const contract = (address: string | undefined, symbol = 'registry') => ({
+      status: 'contract' as const,
+      response: { symbol, address, name: undefined },
+    })
+
+    expect(title(contract(undefined))).toEqual('No known address for registry')
+    expect(title(contract(DEFINITION.address))).toEqual(
+      'registry holds eth:0x8315…ed3a, not in this project',
+    )
+    expect(title(contract(undefined, ''))).toEqual('Nothing to go to here')
+    expect(rowsOf(contract(undefined))).toEqual([])
+  })
 })

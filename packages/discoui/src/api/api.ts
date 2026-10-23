@@ -10,6 +10,7 @@ import type {
   ApiConfigFileResponse,
   ApiConfigHealthResponse,
   ApiConfigSyncStatusResponse,
+  ApiContractAtResponse,
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
   ApiDefinitionResponse,
@@ -82,6 +83,20 @@ export function getReferences(
     offset: offset.toString(),
   })
   return fetchJson(`/api/projects/${project}/references?${query}`)
+}
+
+export function getContractAt(
+  project: string,
+  address: string,
+  sourceIndex: number,
+  offset: number,
+): Promise<ApiContractAtResponse> {
+  const query = new URLSearchParams({
+    address,
+    source: sourceIndex.toString(),
+    offset: offset.toString(),
+  })
+  return fetchJson(`/api/projects/${project}/contract-at?${query}`)
 }
 
 export function searchCode(

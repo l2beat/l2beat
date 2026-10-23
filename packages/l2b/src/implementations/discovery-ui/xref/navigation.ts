@@ -5,11 +5,16 @@ import type { FlatWorkspace } from '../../xref/FlatWorkspace'
 import { findReferences, type Reference } from '../../xref/findReferences'
 import {
   type Definition,
+  resolveAddress,
   resolveDefinition,
 } from '../../xref/resolveDefinition'
 import type { SourceIndex } from '../../xref/SourceIndex'
 import { addFlattenerNote } from '../getCode'
-import type { ApiDefinitionResponse, ApiReferencesResponse } from '../types'
+import type {
+  ApiContractAtResponse,
+  ApiDefinitionResponse,
+  ApiReferencesResponse,
+} from '../types'
 
 type ApiDefinition = ApiDefinitionResponse['definitions'][number]
 
@@ -54,6 +59,24 @@ export function referencesAt(
     symbol: result.symbol,
     definitions: result.targets.map((d) => toApiDefinition(workspace, d)),
     references: result.references.map((r) => toApiReference(workspace, r)),
+  }
+}
+
+export function contractAt(
+  workspace: FlatWorkspace,
+  address: ChainSpecificAddress,
+  sourceIndex: number,
+  offset: number,
+): ApiContractAtResponse {
+  if (offset < NOTE_LENGTH) {
+    return { symbol: '', address: undefined, name: undefined }
+  }
+  const path = sourcePath(workspace, address, sourceIndex)
+  const result = resolveAddress(workspace, path, offset - NOTE_LENGTH)
+  return {
+    symbol: result.symbol,
+    address: result.address,
+    name: result.address && workspace.entryAt(result.address)?.name,
   }
 }
 

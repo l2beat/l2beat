@@ -2,7 +2,7 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { FlatWorkspace } from '../../xref/FlatWorkspace'
 import { addFlattenerNote } from '../getCode'
-import { definitionAt, referencesAt } from './navigation'
+import { contractAt, definitionAt, referencesAt } from './navigation'
 
 const IMPLEMENTATION = `contract Box {
     uint256 internal value;
@@ -129,8 +129,50 @@ describe('xref navigation', () => {
     ])
   })
 
+  it('names the contract an expression holds, if it is in the project', () => {
+    const outside = ChainSpecificAddress(`eth:0x${'2'.repeat(40)}`)
+    const holder = `contract Holder {
+    address internal self;
+    address internal outside;
+
+    function f() external {
+        self;
+        outside;
+    }
+}
+`
+    const path = '/p/.flat/Holder.sol'
+    const holders = new FlatWorkspace(
+      [
+        {
+          name: 'Holder',
+          address: ADDRESS,
+          type: 'Contract',
+          values: { self: ADDRESS, outside },
+          abi: [],
+          sourcePaths: [path],
+        },
+      ],
+      () => holder,
+    )
+    const at = (use: string) =>
+      contractAt(holders, ADDRESS, 0, shown(holder.indexOf(use)))
+
+    expect(at('self;')).toEqual({
+      symbol: 'self',
+      address: ADDRESS,
+      name: 'Holder',
+    })
+    expect(at('outside;')).toEqual({
+      symbol: 'outside',
+      address: outside,
+      name: undefined,
+    })
+  })
+
   it('finds nothing inside the note itself', () => {
     expect(definitionAt(workspace, ADDRESS, 0, 3).definitions).toEqual([])
     expect(referencesAt(workspace, ADDRESS, 0, 3).references).toEqual([])
+    expect(contractAt(workspace, ADDRESS, 0, 3).address).toEqual(undefined)
   })
 })
