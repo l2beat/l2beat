@@ -15,6 +15,7 @@ import { getAdditionalTrustAssumptionsPercentage } from './utils/getAdditionalTr
 import {
   getSyncedTvsTimestamp,
   getTvsSyncMetadata,
+  withoutExcludedTokens,
 } from './utils/getSyncedTvsTimestamp'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
@@ -97,8 +98,10 @@ export async function get7dTvsBreakdown(
     getTvsSyncMetadata(),
   ])
 
-  const excludeAssociatedTokens = params.excludeAssociatedTokens ?? false
-  const excludeRwaRestrictedTokens = params.excludeRwaRestrictedTokens ?? true
+  const tokenFilters = {
+    excludeAssociatedTokens: params.excludeAssociatedTokens ?? false,
+    excludeRwaRestrictedTokens: params.excludeRwaRestrictedTokens ?? true,
+  }
 
   // optionToRange ends at a wall-clock guess of the synced hour, so only its
   // start is used
@@ -108,14 +111,10 @@ export async function get7dTvsBreakdown(
         optionToRange('3d')[0],
         getSyncedTvsTimestamp(
           syncMetadataRecords,
-          // Tokens the query leaves out must not hold the hour back
-          tvsProjects
-            .flatMap((p) => p.details.tvsConfig)
-            .filter(
-              (t) =>
-                !(excludeAssociatedTokens && t.isAssociated) &&
-                !(excludeRwaRestrictedTokens && t.category === 'rwaRestricted'),
-            ),
+          withoutExcludedTokens(
+            tvsProjects.flatMap((p) => p.details.tvsConfig),
+            tokenFilters,
+          ),
         ),
       ]
 
@@ -125,7 +124,7 @@ export async function get7dTvsBreakdown(
     await db.tvsTokenValue.getSummedByProjectAtLatestAndSevenDaysBefore(
       tvsProjects.map((p) => p.projectId),
       [from, to],
-      { excludeAssociatedTokens, excludeRwaRestrictedTokens },
+      tokenFilters,
     )
 
   // The query returns at most two rows per project, sorted by timestamp:

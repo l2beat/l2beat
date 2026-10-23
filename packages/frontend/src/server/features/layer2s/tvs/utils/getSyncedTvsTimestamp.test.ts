@@ -4,6 +4,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import {
   getSyncedTvsTimestamp,
   getTvsSyncMetadata,
+  withoutExcludedTokens,
 } from './getSyncedTvsTimestamp'
 import { getTvsTargetTimestamp } from './getTvsTargetTimestamp'
 
@@ -113,6 +114,32 @@ describe(getTvsSyncMetadata.name, () => {
     await getTvsSyncMetadata(repository)
 
     expect(repository.getByFeature).toHaveBeenCalledTimes(2)
+  })
+})
+
+describe(withoutExcludedTokens.name, () => {
+  const tokens = [
+    { id: 'eth', isAssociated: false, category: 'ether' },
+    { id: 'op', isAssociated: true, category: 'other' },
+    { id: 'rwa', isAssociated: false, category: 'rwaRestricted' },
+  ] as const
+
+  it('drops the tokens each option excludes', () => {
+    const ids = (opts: Parameters<typeof withoutExcludedTokens>[1]) =>
+      withoutExcludedTokens([...tokens], opts).map((t) => t.id)
+
+    expect(
+      ids({ excludeAssociatedTokens: true, excludeRwaRestrictedTokens: false }),
+    ).toEqual(['eth', 'rwa'])
+    expect(
+      ids({ excludeAssociatedTokens: false, excludeRwaRestrictedTokens: true }),
+    ).toEqual(['eth', 'op'])
+    expect(
+      ids({
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: false,
+      }),
+    ).toEqual(['eth', 'op', 'rwa'])
   })
 })
 

@@ -1,3 +1,4 @@
+import type { TvsToken } from '@l2beat/config'
 import type { Database, SyncMetadataRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
@@ -51,4 +52,25 @@ export function getSyncedTvsTimestamp(
     }
   }
   return synced ?? getTvsTargetTimestamp()
+}
+
+/**
+ * The tokens a summed query keeps under the same options. Pass these to
+ * getSyncedTvsTimestamp, so a lagging token the query leaves out cannot hold
+ * the hour back.
+ */
+export function withoutExcludedTokens<
+  T extends Pick<TvsToken, 'isAssociated' | 'category'>,
+>(
+  tokens: T[],
+  opts: {
+    excludeAssociatedTokens: boolean
+    excludeRwaRestrictedTokens: boolean
+  },
+): T[] {
+  return tokens.filter(
+    (t) =>
+      !(opts.excludeAssociatedTokens && t.isAssociated) &&
+      !(opts.excludeRwaRestrictedTokens && t.category === 'rwaRestricted'),
+  )
 }
