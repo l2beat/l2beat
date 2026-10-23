@@ -307,11 +307,14 @@ layout(location = 5) in float i_z;
 uniform vec2 u_offset;
 uniform float u_scale;
 uniform vec2 u_resolution;
+uniform float u_dpr;
 out vec2 v_uv;
 out vec4 v_color;
 void main() {
-  vec2 world = i_pos + a_corner * i_size;
-  vec2 screen = world * u_scale + u_offset;
+  // Glyphs start on a device pixel so the atlas maps texel to pixel at full
+  // zoom instead of being smeared across two pixels.
+  vec2 origin = round((i_pos * u_scale + u_offset) * u_dpr) / u_dpr;
+  vec2 screen = origin + a_corner * i_size * u_scale;
   vec2 ndc = (screen / u_resolution * 2.0 - 1.0) * vec2(1.0, -1.0);
   gl_Position = vec4(ndc, i_z, 1.0);
   v_uv = mix(i_uv.xy, i_uv.zw, a_corner);
@@ -532,13 +535,25 @@ function buildFontAtlas(
 
   const initCanvas = newFontCanvas(font, dpr, atlasPxW, atlasPxH)
   const initCtx = initCanvas.getContext('2d') as CanvasRenderingContext2D
-  const ascentPx =
-    initCtx.measureText('Mg').actualBoundingBoxAscent || refSize * dpr * 0.8
+  // The font's ascent rather than one glyph's, so taller glyphs like "$" or
+  // "[" stay inside their cell instead of bleeding into the one above.
+  const ascentPx = initCtx.measureText('Mg').fontBoundingBoxAscent
   const baselinePxY = ascentPx + padding
+  if (
+    baselinePxY + initCtx.measureText('Mg').fontBoundingBoxDescent >
+    cellPxH
+  ) {
+    throw new Error('Font does not fit its atlas cell', { cause: font })
+  }
 
   const glyphs = new Map<string, AtlasGlyph>()
   const rasterize = (ch: string, pxX: number, pxY: number): AtlasGlyph => {
+    initCtx.save()
+    initCtx.beginPath()
+    initCtx.rect(pxX, pxY, cellPxW, cellPxH)
+    initCtx.clip()
     initCtx.fillText(ch, pxX + padding, pxY + baselinePxY)
+    initCtx.restore()
     return {
       u0: pxX / atlasPxW,
       v0: pxY / atlasPxH,
@@ -797,6 +812,7 @@ interface Uniforms {
     offset: WebGLUniformLocation
     scale: WebGLUniformLocation
     resolution: WebGLUniformLocation
+    dpr: WebGLUniformLocation
     atlas: WebGLUniformLocation
   }
   line: {
@@ -996,6 +1012,8 @@ class PassLayoutBuilder {
 
 class WebGLRenderer {
   private gl: WebGL2RenderingContext
+  // The atlases are rasterized for this ratio.
+  private readonly dpr: number
   private programs: Programs
   private uniforms: Uniforms
   private buffers: Buffers
@@ -1040,6 +1058,7 @@ class WebGLRenderer {
     iconAtlas: IconAtlas,
   ) {
     this.gl = gl
+    this.dpr = dpr
     this.programs = {
       fade: linkProgram(gl, FADE_VS, FADE_FS),
       grid: linkProgram(gl, GRID_VS, GRID_FS),
@@ -1069,6 +1088,7 @@ class WebGLRenderer {
         offset: requireUniform(gl, this.programs.text, 'u_offset'),
         scale: requireUniform(gl, this.programs.text, 'u_scale'),
         resolution: requireUniform(gl, this.programs.text, 'u_resolution'),
+        dpr: requireUniform(gl, this.programs.text, 'u_dpr'),
         atlas: requireUniform(gl, this.programs.text, 'u_atlas'),
       },
       line: {
@@ -1951,6 +1971,7 @@ class WebGLRenderer {
     )
     gl.uniform1f(this.uniforms.text.scale, transform.scale)
     gl.uniform2f(this.uniforms.text.resolution, res[0], res[1])
+    gl.uniform1f(this.uniforms.text.dpr, this.dpr)
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, texture)
     gl.uniform1i(this.uniforms.text.atlas, 0)
