@@ -9,8 +9,8 @@ const INTERFOLD =
 
 /**
  * @param decryptionThreshold committee members that can rebuild the BFV secret key, asserted against discovery
- * @param committeeMembers members of the committee a governance vote requests, from discovery
- * @param minimumDecryptionThreshold the same for the smallest committee size governance can select
+ * @param committeeMembers members of the smallest committee Interfold allows, from discovery
+ * @param minimumDecryptionThreshold the same for the smallest committee size governance can allow
  * @param minimumCommitteeMembers members of the smallest committee size, from discovery
  */
 export function interfoldAdversaries(
@@ -67,9 +67,9 @@ export function interfoldAdversaries(
       networkObserver: {
         sentiment: 'good',
         exposureShort:
-          'The ballot leaves the browser only as ciphertext with its proof, so traffic shows at most that the user sent a ballot.',
+          'The ballot leaves the browser only as ciphertext with its proof, traffic shows at most that the user sent a ballot.',
         exposureContinued:
-          'The app reads the chain through the CRISP server and sends ballots to it, so these requests reach no third party. WalletConnect runs with analytics off.',
+          "The app sends ballots to the CRISP server and reads the chain through it, falling back to an RPC proxy on Interfold's host.",
         sources: [
           {
             title: 'Chain reads go to the CRISP server first',
@@ -79,16 +79,12 @@ export function interfoldAdversaries(
             title: 'Ballots are sent to the CRISP server',
             url: `${GOV}app/plugins/crispVoting/hooks/useCrispServer.ts#L700-L712`,
           },
-          {
-            title: 'WalletConnect analytics disabled',
-            url: `${GOV}app/context/index.tsx#L32`,
-          },
         ],
       },
       privilegedInsider: {
         sentiment: 'bad',
         exposureShort: `Any ${decryptionThreshold} of the ${committeeMembers} ciphernodes in a vote's committee can combine their key shares and decrypt every ballot of that vote.`,
-        exposureContinued: `Operators are unnamed, and the lottery limits only each bond-owner address to one seat. The Interfold multisigs can instantly shrink future committees to ${minimumCommitteeMembers} members, ${minimumDecryptionThreshold} of whom decrypt, and Interfold's hosted app sees the choice before encrypting it.`,
+        exposureContinued: `Operators are unnamed, and the lottery limits only each bond-owner address to one seat. The Interfold multisigs can instantly lower the minimum committee of future votes to ${minimumCommitteeMembers} members, ${minimumDecryptionThreshold} of whom decrypt.`,
         sources: [
           {
             title:
