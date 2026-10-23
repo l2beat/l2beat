@@ -62,6 +62,62 @@ describe(BlockProvider.name, () => {
     })
   })
 
+  describe(BlockProvider.prototype.getBlockHeader.name, () => {
+    it('reads the header without transaction bodies', async () => {
+      const rpc = mockObject<RpcClient>({
+        getBlockHeader: async () => block(7),
+        getBlockWithTransactions: async () => block(7),
+      })
+      const provider = new BlockProvider('chain', [rpc])
+
+      const result = await provider.getBlockHeader('latest')
+
+      expect(rpc.getBlockHeader).toHaveBeenOnlyCalledWith('latest')
+      expect(rpc.getBlockWithTransactions).not.toHaveBeenCalled()
+      expect(result).toEqual({ number: 7, timestamp: 700 })
+    })
+
+    it('reads the full block from clients without the capability', async () => {
+      const client = mockObject<BlockClient>({
+        getBlockHeader: undefined,
+        getBlockWithTransactions: async () => block(7),
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      const result = await provider.getBlockHeader(7)
+
+      expect(result).toEqual({ number: 7, timestamp: 700 })
+    })
+
+    it('calls other client on errors and wrong block numbers', async () => {
+      const failing = mockObject<RpcClient>({
+        getBlockHeader: mockFn().rejectsWith(new Error()),
+      })
+      const wrong = mockObject<RpcClient>({
+        getBlockHeader: async () => block(6),
+      })
+      const working = mockObject<RpcClient>({
+        getBlockHeader: async () => block(7),
+      })
+      const provider = new BlockProvider('chain', [failing, wrong, working])
+
+      const result = await provider.getBlockHeader(7)
+
+      expect(result).toEqual({ number: 7, timestamp: 700 })
+    })
+
+    it('throws when ran out of fallbacks', async () => {
+      const rpc = mockObject<RpcClient>({
+        getBlockHeader: async () => block(6),
+      })
+      const provider = new BlockProvider('chain', [rpc])
+
+      await expect(() => provider.getBlockHeader(7)).toBeRejectedWith(
+        'Invalid response: unexpected block number',
+      )
+    })
+  })
+
   describe(BlockProvider.prototype.getTransactionReceipt.name, () => {
     const receipt = { blockHash: '0xb', logs: [] }
 

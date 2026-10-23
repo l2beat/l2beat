@@ -94,6 +94,11 @@ export class RpcClient extends ClientCore implements IRpcClient {
   }
 
   /** Calls eth_getBlockByNumber on RPC without transaction bodies. */
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<EVMBlock> {
+    return await this.getBlock(blockNumber, false)
+  }
+
+  /** Calls eth_getBlockByNumber on RPC without transaction bodies. */
   async getBlockTimestamp(blockNumber: number): Promise<number> {
     const block = await this.getBlock(blockNumber, false)
     return block.timestamp

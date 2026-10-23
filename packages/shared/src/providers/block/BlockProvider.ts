@@ -1,5 +1,9 @@
 import { assert, type Block, UnixTime } from '@l2beat/shared-pure'
-import type { BlockClient, TransactionReceipt } from '../../clients'
+import type {
+  BlockClient,
+  BlockHeader,
+  TransactionReceipt,
+} from '../../clients'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
 export class BlockProvider {
@@ -33,6 +37,27 @@ export class BlockProvider {
           )
         }
         return block
+      } catch (error) {
+        if (index === this.clients.length - 1) throw error
+      }
+    }
+
+    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+  }
+
+  /** Reads the block without transaction bodies when the client supports it. */
+  async getBlockHeader(x: number | 'latest'): Promise<BlockHeader> {
+    for (const [index, client] of this.clients.entries()) {
+      try {
+        const block = client.getBlockHeader
+          ? await client.getBlockHeader(x)
+          : await client.getBlockWithTransactions(x)
+        if (typeof x === 'number' && block.number !== x) {
+          throw new Error('Invalid response: unexpected block number', {
+            cause: { expected: x, received: block.number },
+          })
+        }
+        return { number: block.number, timestamp: block.timestamp }
       } catch (error) {
         if (index === this.clients.length - 1) throw error
       }

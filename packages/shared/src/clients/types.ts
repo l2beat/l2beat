@@ -4,6 +4,8 @@ import type { SvmBlock } from './rpc-svm/types'
 export interface BlockClient {
   getLatestBlockNumber(): Promise<number>
   getBlockWithTransactions(blockNumber: number | 'latest'): Promise<Block>
+  /** Optional capability: fetch a block without transaction bodies. */
+  getBlockHeader?(blockNumber: number | 'latest'): Promise<BlockHeader>
   /** Optional capability: batch-fetch block timestamps. Implementations are
    *  expected to chunk requests internally. */
   getBlockTimestamps?(blockNumbers: number[]): Promise<Map<number, number>>
@@ -12,6 +14,11 @@ export interface BlockClient {
    *  logsBloom does not describe the block itself (see Block.settledHeight). */
   getTransactionReceipt?(txHash: string): Promise<TransactionReceipt>
   chain: string
+}
+
+export interface BlockHeader {
+  number: number
+  timestamp: number
 }
 
 export interface TransactionReceipt {
