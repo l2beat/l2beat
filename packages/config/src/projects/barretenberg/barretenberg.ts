@@ -107,7 +107,7 @@ export const barretenberg: BaseProject = {
       // Found by Consensys Diligence and TU Wien, fixed in
       // v5.0.0-nightly.20260324. The post names no affected versions and does
       // not describe the bug.
-      title: '[Disclosed vulnerability] Barretenberg bug critical for Noir',
+      title: 'Barretenberg bug critical for Noir',
       url: 'https://aztec.network/blog/critical-vulnerability-in-alpha-v4',
       date: '2026-03-27T00:00:00Z',
       description:
@@ -119,8 +119,7 @@ export const barretenberg: BaseProject = {
       // point at infinity is dropped, so invalid inner proofs pass. Affects
       // bb.js and barretenberg-rs from 4.0.0-devnet.2 up to 5.2.1. Generated
       // Solidity verifiers are not affected.
-      title:
-        '[Disclosed vulnerability] UltraHonk native verifier accepts invalid recursive proofs',
+      title: 'Native verifier accepts invalid recursive proofs',
       url: 'https://github.com/AztecProtocol/aztec-packages/security/advisories/GHSA-2hc8-mq24-76v2',
       date: '2026-10-08T00:00:00Z',
       description:

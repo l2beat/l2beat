@@ -5,7 +5,7 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getDaMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
-import { getSsrHelpers } from '~/trpc/server'
+import { getSsrHelpers, type SsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { ETHEREUM_PROJECT_PATH } from './paths'
 import { renderEthereumProjectMarkdown } from './renderEthereumProjectMarkdown'
@@ -51,7 +51,7 @@ async function loadEthereumProjectPage(manifest: Manifest) {
   const helpers = getSsrHelpers()
   const [appLayoutProps, entry] = await Promise.all([
     getAppLayoutProps(),
-    getEntry(),
+    getEntry(helpers),
   ])
 
   return {
@@ -79,7 +79,7 @@ async function loadEthereumProjectPage(manifest: Manifest) {
   }
 }
 
-async function getEntry() {
+async function getEntry(helpers: SsrHelpers) {
   const project = await ps.getProject({
     id: ProjectId.ETHEREUM,
     select: ['daLayer', 'daBridge', 'display', 'statuses'],
@@ -88,5 +88,5 @@ async function getEntry() {
   if (!project) {
     throw new Error('Ethereum project not found')
   }
-  return getEthereumProjectEntry(project)
+  return getEthereumProjectEntry(project, helpers)
 }

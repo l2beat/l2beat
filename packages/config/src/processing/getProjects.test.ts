@@ -10,6 +10,7 @@ import {
   EthereumAddress,
   notUndefined,
   type ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { expect } from 'earl'
@@ -24,7 +25,7 @@ import {
   arePermissionsDiscoveryDriven,
 } from '../utils/discoveryDriven'
 import { getProjects } from './getProjects'
-import { layer2s } from './layer2s'
+import { layer2s, milestonesLayer2s } from './layer2s'
 import { layer3s } from './layer3s'
 
 describe('getProjects', () => {
@@ -620,6 +621,67 @@ describe('getProjects', () => {
           .filter((r) => !isRiskCorrectlyFormatted(r))
           .map((r) => `${p.id}: ${r.text}`),
       )
+      expect(invalid).toEqual([])
+    })
+  })
+
+  describe('milestones', () => {
+    const allMilestones = [
+      ...milestonesLayer2s.map((milestone) => ({
+        label: `${milestone.title} (main page)`,
+        milestone,
+      })),
+      ...projects.flatMap((p) =>
+        [...(p.milestones ?? []), ...(p.interopConfig?.milestones ?? [])].map(
+          (milestone) => ({
+            label: `${milestone.title} (${p.id})`,
+            milestone,
+          }),
+        ),
+      ),
+    ]
+
+    it('name is no longer than 50 characters', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => milestone.title.length > 50)
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('description ends with a dot', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => milestone.description !== undefined)
+        .filter(({ milestone }) => !milestone.description?.endsWith('.'))
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('description is no longer than 100 characters', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => (milestone.description?.length ?? 0) > 100)
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('date is full day', () => {
+      const invalid = allMilestones
+        .filter(
+          ({ milestone }) =>
+            !UnixTime.isFull(
+              UnixTime.fromDate(new Date(milestone.date)),
+              'day',
+            ),
+        )
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('date is correct', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) =>
+          Number.isNaN(new Date(milestone.date).getTime()),
+        )
+        .map(({ label }) => label)
       expect(invalid).toEqual([])
     })
   })

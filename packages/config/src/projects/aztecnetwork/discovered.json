@@ -1,6 +1,6 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1791877468,
+  "timestamp": 1792144307,
   "configHash": "0x2a07d5ddfc0f50f4337e29f9f2d0f359bf69927c75f4c00d01d168ad71b692af",
   "entries": [
     {
@@ -66,7 +66,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 126,
+        "getCurrentRound": 129,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getInstance": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
@@ -173,9 +173,9 @@
         },
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
-        "proposalCount": 5,
-        "totalPowerNow": "627762417786582757378213988",
-        "withdrawalCount": 6228
+        "proposalCount": 6,
+        "totalPowerNow": "626201849320099161943536713",
+        "withdrawalCount": 6317
       },
       "fieldMeta": {
         "ASSET": {
@@ -494,13 +494,13 @@
         "$immutable": true,
         "FEE_ASSET_PORTAL": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
         "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
-        "getInProgress": 103699,
+        "getInProgress": 107324,
         "getState": {
-          "rollingHash": "0xdbc2d1f56a352754bfbf51e75b6b7b1c",
-          "totalMessagesInserted": 3099,
-          "inProgress": 103699
+          "rollingHash": "0xc18e689925e604037b04f99216c4d7fd",
+          "totalMessagesInserted": 3199,
+          "inProgress": 107324
         },
-        "getTotalMessagesInserted": 3099,
+        "getTotalMessagesInserted": 3199,
         "LAG": 2,
         "ROLLUP": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "VERSION": 4248422647
@@ -566,7 +566,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 984,
+        "getCurrentRound": 1013,
         "INSTANCE": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -666,7 +666,7 @@
       "sinceBlock": 25428902,
       "values": {
         "$immutable": true,
-        "archive": "0x28796bb2a9d6654d1f0da3f952f3762036b6dc226085b351be46db1a30af051f",
+        "archive": "0x0310103a3369066da5b96d397050b4afa05205de98148857ceeee65c8753680f",
         "checkBlob": true,
         "constructorArgs": {
           "_feeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
@@ -738,21 +738,21 @@
           "extensions": []
         },
         "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 3136,
-        "getAvailableValidatorFlushes": 3,
+        "getActiveAttesterCount": 3129,
+        "getAvailableValidatorFlushes": 4,
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
         "getCheckpointReward": "500000000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x0005c6fffe2c31b9f43cf609db398935b99861f871835f51263147e62d7fdede",
-        "getCurrentEpoch": 3938,
-        "getCurrentSampleSeed": "85546755915333839939799014009538803566695343618986811731920127597138703950059",
-        "getCurrentSlot": 126029,
+        "getCurrentBlobCommitmentsHash": "0x0087c7fa98f850c504dfb7988c8a58fe2220663a7dabb0a0e989af33dfdb524a",
+        "getCurrentEpoch": 4054,
+        "getCurrentSampleSeed": "58708386509565762353871922109019288628388600253950723796274095859671333921211",
+        "getCurrentSlot": 129735,
         "getEjectionThreshold": "100000000000000000000000",
         "getEntryQueueFlushSize": 4,
         "getEntryQueueLength": 0,
         "getEpochDuration": 32,
         "getEpochProofVerifier": "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC",
         "getEscapeHatch": "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A",
-        "getEthPerFeeAsset": 8192807,
+        "getEthPerFeeAsset": 8272383,
         "getExitDelay": 345600,
         "getFeeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
@@ -770,18 +770,18 @@
         "getLocalEjectionThreshold": "190000000000000000000000",
         "getManaLimit": 150000000,
         "getManaTarget": 75000000,
-        "getNextFlushableEpoch": 3939,
+        "getNextFlushableEpoch": 4035,
         "getOutbox": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
-        "getPendingCheckpointNumber": 103696,
+        "getPendingCheckpointNumber": 107321,
         "getPendingSlasher": {
           "slasher": "eth:0x0000000000000000000000000000000000000000",
           "readyAt": 0
         },
         "getProofSubmissionEpochs": 1,
         "getProtocolContractsHash": "0x2c075866eafc88a1f6f9addc7e337c6e64e45d1cb7fd7c0d612ebcec72aab2ca",
-        "getProvenCheckpointNumber": 103682,
+        "getProvenCheckpointNumber": 107313,
         "getProvingCostPerManaInEth": 12500000,
-        "getProvingCostPerManaInFeeAsset": 1525728605593,
+        "getProvingCostPerManaInFeeAsset": 1511051893995,
         "getRewardBooster": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
         "getRewardConfig": {
           "rewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
@@ -795,7 +795,7 @@
         "getSlotDuration": 72,
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 48,
-        "getTips": { "pending": 103696, "proven": 103682 },
+        "getTips": { "pending": 107321, "proven": 107313 },
         "getVersion": 4248422647,
         "getVkTreeRoot": "0x2b3b6ea4412b9c8f6457a37f91a2870306f8641e07e16a49b68bda6f8bc02892",
         "L1_BLOCK_AT_GENESIS": 25428902,
@@ -976,7 +976,7 @@
         "getLatestRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "626060000000000000000000000"
+        "totalSupply": "624656000000000000000000000"
       },
       "fieldMeta": {
         "ASSET": {
@@ -1179,7 +1179,7 @@
       "sinceTimestamp": 1791316739,
       "sinceBlock": 26135579,
       "values": {
-        "_$cachedAvailable": "49997504449688617568427",
+        "_$cachedAvailable": "49976358785365767040682",
         "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "_$freezeCheckpointCount": 0,
         "_$freezeCheckpointNumber": 0,
@@ -1187,7 +1187,7 @@
         "_$frozen": false,
         "_$initialized": true,
         "_$l2Portal": "0x2bb708cb67bbda3ec2c79b842ef5d3b3d55897663d29cac5b5518c2e9af7171b",
-        "_$lastUpdatedTime": 1791874367,
+        "_$lastUpdatedTime": 1792097963,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0xbfdd552587f517a9f18ef6ed588e3bd57a21ac2070fda39ac4612558df3e72c8"
@@ -1329,7 +1329,7 @@
       "sinceTimestamp": 1790298635,
       "sinceBlock": 26051097,
       "values": {
-        "_$cachedAvailable": "49989806083732457108100",
+        "_$cachedAvailable": "35214877777777777777592",
         "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "_$freezeCheckpointCount": 0,
         "_$freezeCheckpointNumber": 0,
@@ -1337,7 +1337,7 @@
         "_$frozen": false,
         "_$initialized": true,
         "_$l2Portal": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
-        "_$lastUpdatedTime": 1791874067,
+        "_$lastUpdatedTime": 1792131395,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0x9c846102f8ac909695f7176cec0f60380ac770286bb9eec459d6152f6e676988"
@@ -1346,7 +1346,7 @@
         "FPC_FUNDING_CUT": "100000000000000000",
         "FROZEN_DEPOSIT_REFUND_VERIFIER": "eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe",
         "FROZEN_NOTES_REFUND_VERIFIER": "eth:0x0694fF404DDA586C73EfCe21f34fe084541BB877",
-        "getCurrentAvailable": "50000000000000000000000",
+        "getCurrentAvailable": "42687099999999999990728",
         "GLOBAL_LIMIT": "50000000000000000000000",
         "INBOX": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
         "L2_PORTAL": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
@@ -1448,7 +1448,7 @@
         "getBondSizeFmt": "332,000,000",
         "getBondToken": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getCandidateCount": 0,
-        "getCurrentHatch": 35,
+        "getCurrentHatch": 36,
         "getFailedHatchPunishment": "9600000000000000000000000",
         "getFailedHatchPunishmentFmt": "9,600,000",
         "getFrequency": 112,
@@ -2803,7 +2803,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zkmoney/ZkMoneyPortal": "0x4849cf15f068d591a1aa63a22d45dab667cc83726b39e596ca465b8c122c6383"
   },
-  "usedBlockNumbers": { "ethereum": 26182154 },
+  "usedBlockNumbers": { "ethereum": 26204314 },
   "permissionsConfigHash": "0xd2a08da403b7cf1787a33d3c94dd38ecd0b4699e23785464dc5890d3b1bf67b1",
   "permissions": {
     "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6": {

@@ -1252,6 +1252,7 @@ Only a single argument is allowed, it has to be a string.
 ### `if`
 
 Takes three filters, the first is the condition, the second is the value if the condition is true, and the third is the value if the condition is false.
+The third filter can be left out, then the value stays as it is when the condition is false.
 The condition has to be a boolean.
 Filters producing the true and false values are lazily evaluated.
 If the true condition value is only a valid program when the condition is true it won't be evaluated if the condition doesn't pass.
@@ -1259,6 +1260,10 @@ If the true condition value is only a valid program when the condition is true i
 - Input: `{ hasA: true, a: 1 }`
 - Program: `["if", ["get", "hasA"], ["pick", "a"], ["pick", "b"]]`
 - Output: `{ a: 1 }`
+
+- Input: `["a", "b"]`
+- Program: `["map", ["if", ["=", "a"], "first"]]`
+- Output: `["first", "b"]`
 
 ### `delete`
 

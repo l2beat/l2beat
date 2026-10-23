@@ -1519,11 +1519,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "linea:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "linea:0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1727,7 +1722,7 @@
           "7": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
           "8": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"
         },
-        "remoteSender": "linea:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+        "remoteSender": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
         "REMOVE_RESERVED_TOKEN_ROLE": "0x19bf281d118073c159a713666aba52e0d403520cd01e03f42e0f62a0b3bd4a35",
         "reserveTokenRemovers": [
           "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD",
@@ -1797,9 +1792,7 @@
         "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9": "TransparentUpgradeableProxy",
         "linea:0x4a496167F187A97379e763f693A499cE1182848b": "TokenBridge"
       },
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "linea" } }
-      ]
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "linea:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
@@ -3653,7 +3646,7 @@
     "linea/AddressFilter": "0xec9a225923e1c6aa429df4fbf59b48079681596a537aae543d198c80870c7c00",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "linea/L1TokenBridge_v1_1": "0xeb6e72632fca929585b317376b4c43b31d1ef5401aa191db68b6c4dd7c4439f2",
+    "linea/L1TokenBridge_v1_1": "0x34097133d4e4a12bcb6aef676f15f342e7b87c9801efd87174e9aaed1511465a",
     "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
     "linea/L2MessageService_v1_0": "0x0e2eeb7b7c7211e0b4692848d14b6a883d545b1308f665eb0a96d00aec80257b",
     "linea/LidoStakingVaultYieldProvider": "0xc3f19fa44794b28bab13fe7e59ad3e8982927823f5cea3abf7c1cde603f2da71",
@@ -3663,7 +3656,7 @@
     "linea/YieldManager": "0x81618822c5f6142492897bb40b0042b6b278e7a79970835861b25e4ff087d3c0"
   },
   "usedBlockNumbers": { "ethereum": 26183799, "linea": 32312277 },
-  "permissionsConfigHash": "0xf49cfea4e29aeafa5d92e463f33237818af544e2270838009fb197034328d471",
+  "permissionsConfigHash": "0x61cc88eb073cbac8ae4b81319c8130e6ee7697427403f2417d885c80adb4a2d1",
   "permissions": {
     "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0": {
       "receivedPermissions": [

@@ -34,11 +34,6 @@ const umbraRegistryInterface = new utils.Interface([
   'event StealthKeyChanged(address indexed registrant, uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)',
 ])
 
-const zamaInterface = new utils.Interface([
-  'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
-  'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
-])
-
 const zkMoneyInterface = new utils.Interface([
   'event Deposit(bytes32 indexed recipientCommitment, uint256 amount, bytes32 key, uint256 index)',
   'event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)',
@@ -571,48 +566,6 @@ describe(extractPrivacyFlow.name, () => {
       expect(
         extractPrivacyFlow({ ...ethConfig, direction: 'withdrawal' }, log),
       ).toEqual({ count: 1, amount: 7n })
-    })
-  })
-
-  describe('zamaWrap', () => {
-    it('extracts roundedAmount from Wrap event', () => {
-      const config: PrivacyFlowIndexerConfig = {
-        ...baseFlowConfig,
-        event: 'Wrap',
-        extractor: 'zamaWrap',
-        params: {},
-      }
-      const log = encodeLog(zamaInterface, 'Wrap', [
-        EthereumAddress.random().toString(),
-        123_456n,
-        '0x' + '11'.repeat(32),
-      ])
-
-      const result = extractPrivacyFlow(config, log)
-
-      expect(result).toEqual({ count: 1, amount: 123_456n })
-    })
-  })
-
-  describe('zamaUnwrap', () => {
-    it('extracts cleartextAmount multiplied by wrapper rate', () => {
-      const config: PrivacyFlowIndexerConfig = {
-        ...baseFlowConfig,
-        direction: 'withdrawal',
-        event: 'UnwrapFinalized',
-        extractor: 'zamaUnwrap',
-        params: { rate: '10' },
-      }
-      const log = encodeLog(zamaInterface, 'UnwrapFinalized', [
-        EthereumAddress.random().toString(),
-        '0x' + '22'.repeat(32),
-        '0x' + '33'.repeat(32),
-        987n,
-      ])
-
-      const result = extractPrivacyFlow(config, log)
-
-      expect(result).toEqual({ count: 1, amount: 9_870n })
     })
   })
 })

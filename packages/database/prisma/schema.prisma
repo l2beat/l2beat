@@ -24,12 +24,30 @@ model DaBeatStats {
 }
 
 model Activity {
+  projectId           String   @db.VarChar(255)
+  timestamp           DateTime @db.Timestamp(6)
+  count               Int
+  uopsCount           Int?
+  start               Int      @default(0)
+  end                 Int      @default(0)
+  /// Of the busiest hour of the day. Only block and slot chains have peaks,
+  /// and only since HourlyActivity was added
+  peakHourCount       Int?
+  peakHourUopsCount   Int?
+  /// Of the busiest UTC minute of the day
+  peakMinuteCount     Int?
+  peakMinuteUopsCount Int?
+
+  @@id([projectId, timestamp])
+}
+
+/// Activity per hour of block and slot chains, kept for the last two weeks.
+/// The busiest hour and minute of each day stay on Activity
+model HourlyActivity {
   projectId String   @db.VarChar(255)
   timestamp DateTime @db.Timestamp(6)
   count     Int
   uopsCount Int?
-  start     Int      @default(0)
-  end       Int      @default(0)
 
   @@id([projectId, timestamp])
 }
@@ -754,28 +772,32 @@ model InteropPluginSyncedRange {
 }
 
 model AggregatedInteropTransfer {
-  timestamp                  DateTime @db.Timestamp(6)
-  id                         String   @db.VarChar(255)
-  bridgeType                 String   @default("unknown") @db.VarChar(255)
-  srcChain                   String   @db.VarChar(255)
-  dstChain                   String   @db.VarChar(255)
+  timestamp                  DateTime  @db.Timestamp(6)
+  id                         String    @db.VarChar(255)
+  bridgeType                 String    @default("unknown") @db.VarChar(255)
+  srcChain                   String    @db.VarChar(255)
+  dstChain                   String    @db.VarChar(255)
   transferTypeStats          Json?
   transferCount              Int
-  transfersWithDurationCount Int      @default(0)
-  identifiedCount            Int      @default(0)
+  transfersWithDurationCount Int       @default(0)
+  identifiedCount            Int       @default(0)
   totalDurationSum           Int
-  srcValueUsd                Float?   @db.Real
-  dstValueUsd                Float?   @db.Real
-  minTransferValueUsd        Float?   @db.Real
-  maxTransferValueUsd        Float?   @db.Real
-  avgValueInFlight           Float?   @db.Real
-  mintedValueUsd             Float?   @db.Real
-  burnedValueUsd             Float?   @db.Real
-  countUnder100              Int      @default(0)
-  count100To1K               Int      @default(0)
-  count1KTo10K               Int      @default(0)
-  count10KTo100K             Int      @default(0)
-  countOver100K              Int      @default(0)
+  srcValueUsd                Float?    @db.Real
+  dstValueUsd                Float?    @db.Real
+  minTransferValueUsd        Float?    @db.Real
+  maxTransferValueUsd        Float?    @db.Real
+  avgValueInFlight           Float?    @db.Real
+  mintedValueUsd             Float?    @db.Real
+  burnedValueUsd             Float?    @db.Real
+  countUnder100              Int       @default(0)
+  count100To1K               Int       @default(0)
+  count1KTo10K               Int       @default(0)
+  count10KTo100K             Int       @default(0)
+  countOver100K              Int       @default(0)
+  // Set when the lane was copied from an older snapshot because its syncers lagged
+  carriedFrom                DateTime? @db.Timestamp(6)
+  // Computed while the lane's syncers lagged, so it undercounts and must not be carried forward
+  isPartial                  Boolean   @default(false)
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])

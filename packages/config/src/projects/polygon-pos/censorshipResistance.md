@@ -4,4 +4,4 @@ As long as the Polygon PoS blockchain is producing blocks, users can expect to i
 ### Blanket censorship
 Validators holding more than 1/3 of Polygon PoS stake among them can censor users if they actively refuse to attest to blocks with their transactions. Polygon Multisig controls the core smart contracts on Ethereum and can administer the validator set (including malicious changes) as a consequence.
 ### Walkaway
-If validators holding more than 1/3 of the stake on Polygon PoS stop block production, the chain stops and there is no way for users to include any transactions. As the validator set is currently closed by a permissioned smart contract setting on ethereum, walkaway of the permissioned actor would require social coordination and a hard fork to progress the chain.
+If validators holding more than 1/3 of the stake on Polygon PoS stop block production, the chain stops and there is no way for users to include any transactions. As joining the validator set is gated by permissioned actors on Ethereum, walkaway of the permissioned actor would require social coordination and a hard fork to progress the chain.

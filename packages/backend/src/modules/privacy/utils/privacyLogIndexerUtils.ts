@@ -44,21 +44,19 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
     deps.to,
   )
 
-  // eth_getLogs ANDs the topic positions of a single filter, so
-  // configurations with different indexed-arg filters cannot share a query.
+  // eth_getLogs ORs the values at a topic position, so configurations that
+  // filter the same positions share a query and logs are matched by topics.
   const groups = await Promise.all(
-    groupByTopics(configurations).map(
-      async ({ topics, configurations: group }) => {
-        const { addresses, events } = buildPrivacyLogFilter(group)
-        const logs = await deps.logsProvider.getLogs(
-          blockFrom,
-          blockTo,
-          addresses,
-          [events, ...topics],
-        )
-        return { configurations: group, logs }
-      },
-    ),
+    groupByTopicPositions(configurations).map(async (group) => {
+      const { addresses, events } = buildPrivacyLogFilter(group)
+      const logs = await deps.logsProvider.getLogs(
+        blockFrom,
+        blockTo,
+        addresses,
+        [events, ...mergeTopics(group)],
+      )
+      return { configurations: group, logs }
+    }),
   )
 
   const blockTimestampLookup = await buildPrivacyBlockTimestampLookup(
@@ -72,7 +70,9 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
     const configMap = buildPrivacyLogConfigMap(group.configurations)
     for (const log of group.logs) {
       const key = getPrivacyLogKey(log)
-      const matching = configMap.get(key) ?? []
+      const matching = (configMap.get(key) ?? []).filter((configuration) =>
+        hasTopics(log, configuration.properties.topics),
+      )
       if (matching.length === 0) continue
 
       const timestamp = blockTimestampLookup.get(log.blockNumber)
@@ -87,21 +87,37 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
   return matches
 }
 
-function groupByTopics<T extends PrivacyLogIndexerConfig>(
+function groupByTopicPositions<T extends PrivacyLogIndexerConfig>(
   configurations: Configuration<T>[],
-): { topics: PrivacyLogTopicFilter; configurations: Configuration<T>[] }[] {
-  const groups = new Map<
-    string,
-    { topics: PrivacyLogTopicFilter; configurations: Configuration<T>[] }
-  >()
+): Configuration<T>[][] {
+  const groups = new Map<string, Configuration<T>[]>()
   for (const configuration of configurations) {
-    const topics = configuration.properties.topics ?? []
-    const key = JSON.stringify(topics)
-    const group = groups.get(key) ?? { topics, configurations: [] }
-    group.configurations.push(configuration)
+    const key = (configuration.properties.topics ?? [])
+      .map((topic) => (topic === null ? '_' : 'x'))
+      .join('')
+    const group = groups.get(key) ?? []
+    group.push(configuration)
     groups.set(key, group)
   }
   return Array.from(groups.values())
+}
+
+function mergeTopics<T extends PrivacyLogIndexerConfig>(
+  group: Configuration<T>[],
+): (string[] | null)[] {
+  const positions = group[0]?.properties.topics ?? []
+  return positions.map((_, i) => {
+    const values = group.flatMap((c) => c.properties.topics?.[i] ?? [])
+    return values.length > 0 ? unique(values) : null
+  })
+}
+
+function hasTopics(log: Log, topics: PrivacyLogTopicFilter = []): boolean {
+  return topics.every(
+    (topic, i) =>
+      topic === null ||
+      log.topics[i + 1]?.toLowerCase() === topic.toLowerCase(),
+  )
 }
 
 async function resolvePrivacyBlockRange(

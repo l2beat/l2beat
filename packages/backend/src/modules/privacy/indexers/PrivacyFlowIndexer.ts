@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared'
 import { assert, type Log, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -65,10 +66,10 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       configurations: configurations.length,
     })
 
-    const records = await this.fetchRecordsForGroup(
-      configurations,
-      from,
-      adjustedTo,
+    const records = await withCoreFeatureRpcMetricsContext(
+      'privacy.flow',
+      { chain: this.$.chain },
+      () => this.fetchRecordsForGroup(configurations, from, adjustedTo),
     )
 
     this.logger.info('Fetched privacy flow logs', {

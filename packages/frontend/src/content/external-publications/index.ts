@@ -16,7 +16,6 @@ const externalPublication = v.object({
     if (v.startsWith('/')) return true
     return !!new URL(v)
   }),
-  ctaText: v.union([v.literal('Read now'), v.literal('Watch now')]).optional(),
   tag: tags,
   // Attribution line shown on topic pages, e.g. "Luca Donno · L2BEAT"
   source: v.string().optional(),

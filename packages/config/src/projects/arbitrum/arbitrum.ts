@@ -690,6 +690,14 @@ export const arbitrum: ScalingProject = orbitStackL2({
   },
   milestones: [
     {
+      title: 'Stylus activations paused',
+      url: 'https://arbiscan.io/tx/0x9eb3a4be3ba777f9fc82250eddc10f8356731cc97c09a70801d30ce33322c652',
+      date: '2026-10-02T00:00:00Z',
+      description:
+        'Security Council halts new Stylus program activations; existing programs keep running.',
+      type: 'incident',
+    },
+    {
       title: 'Timeboost replaced by Priority Gas Auctions',
       url: 'https://forum.arbitrum.foundation/t/constitutional-aip-transition-arbitrum-one-ordering-policy-to-priority-gas-auctions-pga/30942',
       date: '2026-09-23T00:00:00Z',

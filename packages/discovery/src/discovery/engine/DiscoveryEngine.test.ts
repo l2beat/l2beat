@@ -98,6 +98,33 @@ describe(DiscoveryEngine.name, () => {
     ])
   })
 
+  it('lists the addresses it did not analyze because they are beyond maxDepth', async () => {
+    const config = new ConfigRegistry({
+      name: 'test',
+      initialAddresses: [A],
+      maxDepth: 0,
+    })
+    const addressAnalyzer = mockObject<AddressAnalyzer>({
+      analyze: mockFn().resolvesToOnce({
+        ...base,
+        address: A,
+        type: 'Contract',
+        name: 'A',
+        relatives: { [strB]: new Set(), [strC]: new Set() },
+      }),
+    })
+
+    const engine = new DiscoveryEngine(addressAnalyzer, Logger.SILENT)
+    const { analyses, stats } = await engine.discover(
+      provider,
+      config.structure,
+      1234,
+    )
+
+    expect(analyses.map((analysis) => analysis.address)).toEqual([A])
+    expect(stats).toEqual({ discovered: 1, skipped: 0, beyondMaxDepth: [B, C] })
+  })
+
   describe('with a hook between levels', () => {
     it('follows the relatives of the analysis a template written between levels makes, not of the one made without it', async () => {
       const chain = new FakeChain({

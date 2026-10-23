@@ -22,10 +22,7 @@
     "zksync:0x76705327e682F2d96943280D99464Ab61219e34f": "ZkProtocolGovernor",
     "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714": "ProtocolTimelockController",
     "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": "ZkGovOpsGovernor",
-    "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a": "GovOpsTimelockController",
-    "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4": "ProtocolUpgradeHandler_l2Alias",
-    "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9": "Guardians_l2Alias",
-    "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D": "ZKFoundationMultisig_l2Alias"
+    "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a": "GovOpsTimelockController"
   },
   "overrides": {
     // sub-ms spam
@@ -71,11 +68,46 @@
     "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": {
       // ZK token: its voting power controls the protocol governor, and its minter administration is controlled by token governance.
       // Critical since token voting became binding for the shared L1 contracts: the first ProtocolUpgradeHandler (L2_PROTOCOL_GOVERNOR = timelock of the ZkProtocolGovernor) accepted ownership of BridgeHub/CTM/L1SharedBridge in tx 0x04252ef77e208a233dfe0e7a3c70a04c8c8e95364c6ec67e5dd4ca7299bad8cb. The 2024-06-10 token upgrade predates this and is not a change of the perimeter.
-      "critical": { "sinceTimestamp": 1726123295 }
+      "critical": { "sinceTimestamp": 1726123295 },
+      "fields": {
+        "accessControl": {
+          "edit": [
+            "set",
+            ["DEFAULT_ADMIN_ROLE", "members"],
+            [
+              "map",
+              [
+                "if",
+                ["=", "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"],
+                ["format", "UndoL2Alias"]
+              ]
+            ]
+          ]
+        },
+        "DefaultAdmin": {
+          "edit": [
+            "map",
+            [
+              "if",
+              ["=", "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"],
+              ["format", "UndoL2Alias"]
+            ]
+          ]
+        }
+      }
     },
     "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": {
       // Upgrade admin of the ZK token proxy.
-      "critical": true
+      "critical": true,
+      "fields": {
+        "owner": {
+          "edit": [
+            "if",
+            ["=", "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
     },
     "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746": {
       "critical": true,
@@ -88,6 +120,11 @@
               "type": "interact",
               "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to {{isProposeGuarded}}."
             }
+          ],
+          "edit": [
+            "if",
+            ["=", "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D"],
+            ["format", "UndoL2Alias"]
           ]
         },
         "VETO_GUARDIAN": {
@@ -96,6 +133,11 @@
               "type": "interact",
               "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
             }
+          ],
+          "edit": [
+            "if",
+            ["=", "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9"],
+            ["format", "UndoL2Alias"]
           ]
         }
       }
@@ -113,6 +155,11 @@
               "type": "interact",
               "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
             }
+          ],
+          "edit": [
+            "if",
+            ["=", "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9"],
+            ["format", "UndoL2Alias"]
           ]
         }
       }

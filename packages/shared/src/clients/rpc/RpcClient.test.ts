@@ -405,6 +405,22 @@ describe(RpcClient.name, () => {
         },
       ])
     })
+
+    it('does not split a single block when limit exceeded', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: mockFn()
+          .resolvesToOnce({
+            error: { code: -32602, message: 'Log response size exceeded' },
+          })
+          .resolvesTo({ result: [] }),
+      })
+      const rpc = mockClient({ http })
+
+      await expect(rpc.getLogs(100, 100)).toBeRejectedWith(
+        'Error during parsing',
+      )
+      expect(http.fetch).toHaveBeenCalledTimes(1)
+    })
   })
 
   describe(RpcClient.prototype.call.name, () => {

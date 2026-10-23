@@ -14,10 +14,8 @@ import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
-import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
+import { getInteropTransferTypeData } from './getInteropTransferTypeData'
 import { getInteropIntentBridgesData } from './intent-bridges/getInteropIntentBridgesData'
-import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
-import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import {
   getInteropProtocolMarkdown,
   getInteropProtocolPageData,
@@ -73,7 +71,12 @@ export function createInteropRouter(
       query: InteropQuery,
     }),
     async (req, res) => {
-      const data = await getInteropNonMintingData(req, manifest, cache)
+      const data = await getInteropTransferTypeData(
+        'nonMinting',
+        req,
+        manifest,
+        cache,
+      )
       const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
@@ -85,7 +88,12 @@ export function createInteropRouter(
       query: InteropQuery,
     }),
     async (req, res) => {
-      const data = await getInteropLockAndMintData(req, manifest, cache)
+      const data = await getInteropTransferTypeData(
+        'lockAndMint',
+        req,
+        manifest,
+        cache,
+      )
       const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
@@ -97,7 +105,12 @@ export function createInteropRouter(
       query: InteropQuery,
     }),
     async (req, res) => {
-      const data = await getInteropBurnAndMintData(req, manifest, cache)
+      const data = await getInteropTransferTypeData(
+        'burnAndMint',
+        req,
+        manifest,
+        cache,
+      )
       const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },

@@ -176,9 +176,10 @@ export class BlipRuntime {
       }
       case 'if': {
         const [_, condition, ifTrue, ifFalse] = blip
-        return this.executeBlip(v, condition)
-          ? this.executeBlip(v, ifTrue)
-          : this.executeBlip(v, ifFalse)
+        if (this.executeBlip(v, condition)) {
+          return this.executeBlip(v, ifTrue)
+        }
+        return ifFalse === undefined ? v : this.executeBlip(v, ifFalse)
       }
       case 'delete': {
         const keys = blip.slice(1)

@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x9e7ea0a61c410c82430c3e84659fc36f9085c680
+
+# Diff at Tue, 20 Oct 2026 07:52:41 GMT:
+
+- id: fcd4e195
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1791455050
+- current timestamp: 1791455050
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791455050 (main branch discovery), not current.
+
+```diff
+    contract L2LidoGateway (scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9) [N/A] {
+    +++ description: None
+      values.counterpart:
+-        "scr:0x6625C6332c9F91F2D27c304E729B86db87A3f504"
++        "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
 Generated with discovered.json: 0xa887d640070a725229a67a4d7c7c674c5ec60287
 
 # Diff at Fri, 16 Oct 2026 05:36:53 GMT:

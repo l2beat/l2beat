@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "timestamp": 1753687799,
-  "configHash": "0xa7f83b12104b311018d438a539a7112a9e7154148b7056b14d198622f8e75e79",
+  "configHash": "0xe8468c909306e65d07d49278e1b993944640bf8ffcac28b5520f497949fd5f2b",
   "entries": [
     {
       "address": "arb1:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -80,14 +80,15 @@
         ],
         "$upgradeCount": 2,
         "ARB_SYS": "arb1:0x0000000000000000000000000000000000000064",
-        "getRemoteGateway": "arb1:0x273D59aed2d793167c162E64b9162154B07583C0",
+        "getRemoteGateway": "eth:0x273D59aed2d793167c162E64b9162154B07583C0",
         "owner": "arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "ZKLINK": "arb1:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
       },
       "implementationNames": {
         "arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a": "ERC1967Proxy",
         "arb1:0x413552461b0b2c13f117d885b52AaA2f23374B1D": "ArbitrumL2Gateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "ArbitrumOwner",
@@ -288,7 +289,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "getRemoteGateway": "base:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E",
+        "getRemoteGateway": "eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E",
         "MESSAGE_SERVICE": "base:0x4200000000000000000000000000000000000007",
         "owner": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
         "ZKLINK": "base:0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"
@@ -296,7 +297,8 @@
       "implementationNames": {
         "base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011": "ERC1967Proxy",
         "base:0x7f00134427437b2883F59EF3880597FDc836E356": "OptimismL2Gateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "base:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -627,7 +629,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "getRemoteGateway": "blastmainnet:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158",
+        "getRemoteGateway": "eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158",
         "MESSAGE_SERVICE": "blastmainnet:0x4200000000000000000000000000000000000007",
         "owner": "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
         "ZKLINK": "blastmainnet:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD"
@@ -635,7 +637,8 @@
       "implementationNames": {
         "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1": "ERC1967Proxy",
         "blastmainnet:0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD": "OptimismL2Gateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "blastmainnet:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -853,14 +856,17 @@
         ],
         "$upgradeCount": 2,
         "ARBITRATOR": "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
-        "getRemoteGateway": "eth:0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
+        "getRemoteGateway": "arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
         "INBOX": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "owner": "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
       },
       "implementationNames": {
         "eth:0x273D59aed2d793167c162E64b9162154B07583C0": "ERC1967Proxy",
         "eth:0xF69302b6fF21116F9266bFA2fbE4ee23f6292875": "ArbitrumL1Gateway"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "arb1" } }
+      ]
     },
     {
       "name": "EthereumProxyAdmin",
@@ -919,14 +925,17 @@
         ],
         "$upgradeCount": 2,
         "ARBITRATOR": "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
-        "getRemoteGateway": "eth:0x3f64e2e09732969813904a8473074CFADeE66AF1",
+        "getRemoteGateway": "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1",
         "MESSAGE_SERVICE": "eth:0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0",
         "owner": "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
       },
       "implementationNames": {
         "eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158": "ERC1967Proxy",
         "eth:0x01334Df58feE28db184ae9D11467F38F7437FD80": "OptimismL1Gateway"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "blastmainnet" } }
+      ]
     },
     {
       "address": "eth:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -958,14 +967,17 @@
         ],
         "$upgradeCount": 1,
         "ARBITRATOR": "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
-        "getRemoteGateway": "eth:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011",
+        "getRemoteGateway": "base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011",
         "MESSAGE_SERVICE": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "owner": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
       },
       "implementationNames": {
         "eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E": "ERC1967Proxy",
         "eth:0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518": "OptimismL1Gateway"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "base" } }
+      ]
     },
     {
       "name": "EthereumzkLink",
@@ -1070,14 +1082,17 @@
         ],
         "$upgradeCount": 2,
         "ARBITRATOR": "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
-        "getRemoteGateway": "eth:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+        "getRemoteGateway": "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "MESSAGE_SERVICE": "eth:0x635ba609680c55C3bDd0B3627b4c5dB21b13c310",
         "owner": "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
       },
       "implementationNames": {
         "eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D": "ERC1967Proxy",
         "eth:0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962": "OptimismL1Gateway"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "manta" } }
+      ]
     },
     {
       "name": "OptimismL1Gateway",
@@ -1104,14 +1119,17 @@
         ],
         "$upgradeCount": 1,
         "ARBITRATOR": "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
-        "getRemoteGateway": "eth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
+        "getRemoteGateway": "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
         "MESSAGE_SERVICE": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "owner": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
       },
       "implementationNames": {
         "eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026": "ERC1967Proxy",
         "eth:0x2e8AD1434663b209EE59eF1a6612114239F4a190": "OptimismL1Gateway"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "oeth" } }
+      ]
     },
     {
       "address": "eth:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
@@ -1148,14 +1166,17 @@
         ],
         "$upgradeCount": 2,
         "ARBITRATOR": "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
-        "getRemoteGateway": "eth:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
+        "getRemoteGateway": "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
         "MESSAGE_SERVICE": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
       },
       "implementationNames": {
         "eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b": "ERC1967Proxy",
         "eth:0xD2ED3FA35be899fe850075946Fc7320bB4c18C29": "LineaL1Gateway"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "linea" } }
+      ]
     },
     {
       "name": "EthereumL1Gateway",
@@ -1199,7 +1220,8 @@
       "implementationNames": {
         "eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c": "ERC1967Proxy",
         "eth:0x65c7B3E1B877131986247B49474834b0347eF332": "EthereumGateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "ScrollL1Gateway",
@@ -1226,14 +1248,15 @@
         ],
         "$upgradeCount": 1,
         "ARBITRATOR": "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
-        "getRemoteGateway": "eth:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
+        "getRemoteGateway": "scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
         "MESSAGE_SERVICE": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
       },
       "implementationNames": {
         "eth:0x986c905087a663db3C81ad319b94c1E9dd388e92": "ERC1967Proxy",
         "eth:0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB": "ScrollL1Gateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }]
     },
     {
       "name": "EthereumL1ERC20Bridge",
@@ -1362,14 +1385,17 @@
         ],
         "$upgradeCount": 2,
         "ARBITRATOR": "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
-        "getRemoteGateway": "eth:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+        "getRemoteGateway": "mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "MESSAGE_SERVICE": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "owner": "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
       },
       "implementationNames": {
         "eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269": "ERC1967Proxy",
         "eth:0xe98EDDAd1f49abc7586eE516d019D834FBDc2951": "OptimismL1Gateway"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "mantle" } }
+      ]
     },
     {
       "name": "EraL1Gateway",
@@ -1411,14 +1437,17 @@
         ],
         "$upgradeCount": 4,
         "ARBITRATOR": "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
-        "getRemoteGateway": "eth:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535",
+        "getRemoteGateway": "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535",
         "MESSAGE_SERVICE": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
         "owner": "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
       },
       "implementationNames": {
         "eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab": "ERC1967Proxy",
         "eth:0x59Ad3580c9e0992D474954327f5879AF5B3e4a22": "ZkSyncL1Gateway"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "zksync" } }
+      ]
     },
     {
       "address": "eth:0xF801886AE2e127A269B0F11892edb54F692d02dF",
@@ -1530,7 +1559,10 @@
       "name": "LineazkLink",
       "address": "linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
+        "0xfc65b0963e8af57358265f3b7746471ab4fdb1e0fc721734f734e445e47b427a"
+      ],
       "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
@@ -1760,7 +1792,7 @@
         "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05": "AdminFacet",
         "linea:0xF3d053C29666D653Fa8629190579844BffE9FB92": "GettersFacet",
         "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e": "MailboxFacet",
-        "linea:0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488": ""
+        "linea:0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488": "ExecutorFacet"
       }
     },
     {
@@ -1834,7 +1866,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "getRemoteGateway": "linea:0x803460416C2682Ac54FccF03eF77b10A12f2809b",
+        "getRemoteGateway": "eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b",
         "MESSAGE_SERVICE": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
         "owner": "linea:0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
         "ZKLINK": "linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
@@ -1842,7 +1874,8 @@
       "implementationNames": {
         "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": "ERC1967Proxy",
         "linea:0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518": "LineaL2Gateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "Verifier",
@@ -2166,7 +2199,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "getRemoteGateway": "manta:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D",
+        "getRemoteGateway": "eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D",
         "MESSAGE_SERVICE": "manta:0x4200000000000000000000000000000000000007",
         "owner": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "ZKLINK": "manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
@@ -2174,7 +2207,8 @@
       "implementationNames": {
         "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": "ERC1967Proxy",
         "manta:0x50efC7f1290479cb879473512D89fDC80B726211": "OptimismL2Gateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "manta:0xF801886AE2e127A269B0F11892edb54F692d02dF",
@@ -2415,7 +2449,7 @@
         ],
         "$upgradeCount": 3,
         "ethToken": "mantle:0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
-        "getRemoteGateway": "mantle:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269",
+        "getRemoteGateway": "eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269",
         "isEthGasToken": false,
         "MESSAGE_SERVICE": "mantle:0x4200000000000000000000000000000000000007",
         "owner": "mantle:0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
@@ -2424,7 +2458,8 @@
       "implementationNames": {
         "mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": "ERC1967Proxy",
         "mantle:0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D": "MantleL2Gateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "MantleProxyAdmin",
@@ -2674,7 +2709,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "getRemoteGateway": "oeth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026",
+        "getRemoteGateway": "eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026",
         "MESSAGE_SERVICE": "oeth:0x4200000000000000000000000000000000000007",
         "owner": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
         "ZKLINK": "oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
@@ -2682,7 +2717,8 @@
       "implementationNames": {
         "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c": "ERC1967Proxy",
         "oeth:0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e": "OptimismL2Gateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "oeth:0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d",
@@ -2890,7 +2926,7 @@
         ],
         "$upgradeCount": 1,
         "ethToken": "scr:0x0000000000000000000000000000000000000000",
-        "getRemoteGateway": "scr:0x986c905087a663db3C81ad319b94c1E9dd388e92",
+        "getRemoteGateway": "eth:0x986c905087a663db3C81ad319b94c1E9dd388e92",
         "isEthGasToken": true,
         "MESSAGE_SERVICE": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "owner": "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
@@ -2899,7 +2935,8 @@
       "implementationNames": {
         "scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7": "ERC1967Proxy",
         "scr:0xe469c1330cEEcC375fE17E7D649eA270186D344F": "ScrollL2Gateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "scr:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
@@ -3164,7 +3201,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "getRemoteGateway": "zksync:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab",
+        "getRemoteGateway": "eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab",
         "L2_ETH_ADDRESS": "zksync:0x000000000000000000000000000000000000800A",
         "owner": "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca",
         "ZKLINK": "zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
@@ -3172,7 +3209,8 @@
       "implementationNames": {
         "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535": "ERC1967Proxy",
         "zksync:0x8463989308De8eA3D80DC26FA650600D391b899F": "ZkSyncL2Gateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "zksync:0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
@@ -4640,6 +4678,18 @@
       "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
       "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
     ],
+    "linea:0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488": [
+      "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
+      "event BlocksVerification(uint256 indexed previousLastVerifiedBatch, uint256 indexed currentLastVerifiedBatch)",
+      "function commitBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBatchData, tuple(uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes32 providedL2ToL1PubdataHash)[] _newBatchesData)",
+      "function executeBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData)",
+      "function getName() view returns (string)",
+      "function isBatchesSynced(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData) view returns (bool)",
+      "function proveBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBatch, tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBatches, tuple(uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)",
+      "function revertBatches(uint256 _newLastBatch)"
+    ],
     "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
@@ -5677,7 +5727,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "zklinknova/secondaryGateway": "0x7c6cdb315edbc57a3856f61b3448217c343a401013f0f46fcc72d9a900b7ec6b",
+    "zklinknova/secondaryGateway": "0xdff892d353756c5918ff4e31c9c98b20bbe315b0a6e419a7d34b24bb636ce776",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
   "usedBlockNumbers": {

@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x4ea4897eee41346e3c69a0d5808c05091400fb50
+
+# Diff at Fri, 16 Oct 2026 09:53:08 GMT:
+
+- id: 7b640c9b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791877468
+- current timestamp: 1792144307
+
+## Description
+
+New governance proposal 5 (payload `V6UpgradePayload` eth:0xE8D663a8B355415f331A54d694F36685346b5433), pending. It adds a new Rollup (eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f) to the Registry and the GSE, which makes it the canonical rollup, and sets an EscapeHatch (eth:0x613ff7d166c834816384feaea2b48568363a4d57) on it. It also changes the reward config of the old rollup and moves reward funds. If the vote passes, it is executable from 2026-10-26.
+- new rollup: https://disco.l2beat.com/diff/eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34/eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.proposalCount:
+-        5
++        6
+    }
+```
+
 Generated with discovered.json: 0xb290b82ff4a9adf3b12fa7ff0d06b2c7dbaae909
 
 # Diff at Wed, 14 Oct 2026 08:25:21 GMT:

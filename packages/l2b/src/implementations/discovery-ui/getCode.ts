@@ -2,7 +2,6 @@ import { type ConfigReader, get$Implementations } from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { compareFiles, getCodePaths } from '../discovery/getCodePaths'
-import { getProjectDiscoveries } from '../discovery/getProjectDiscoveries'
 import type { FlatSourceClient } from './diffovery/FlatSourceClient'
 import { splitSolidityDeclarations } from './solidityDeclarations'
 import type { ApiCodeDeclarationsResponse, ApiCodeResponse } from './types'
@@ -139,7 +138,7 @@ export function getAllCode(
   project: string,
 ): Record<string, ApiCodeResponse> {
   const result: Record<string, ApiCodeResponse> = {}
-  const discoveries = getProjectDiscoveries(configReader, project)
+  const discoveries = configReader.readDiscoveryWithReferences(project)
 
   // Get all unique addresses across all chains
   const allAddresses = discoveries.flatMap((discovery) =>
@@ -185,7 +184,8 @@ function getEntryLinks(
   entryName: string | undefined
   links: { address: ChainSpecificAddress; name: string }[]
 } {
-  const entry = getProjectDiscoveries(configReader, project)
+  const entry = configReader
+    .readDiscoveryWithReferences(project)
     .map((d) => d.entries.find((x) => x.address === address))
     .find((e) => e && e.type !== 'Reference')
 

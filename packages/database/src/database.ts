@@ -20,6 +20,7 @@ import { DefiTvlRepository } from './repositories/DefiTvlRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
+import { HourlyActivityRepository } from './repositories/HourlyActivityRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
 import { InteropAggregateStatusRepository } from './repositories/InteropAggregateStatusRepository'
@@ -70,6 +71,7 @@ export function createDatabase(
 
     // #region Activity
     activity: new ActivityRepository(db),
+    hourlyActivity: new HourlyActivityRepository(db),
     // #endregion
 
     // #region Interop

@@ -2,6 +2,7 @@ import { expect } from 'earl'
 import { getCollectionEntry } from '~/content/getCollection'
 import { getFaqData } from '~/pages/faq/getFaqData'
 import { getGlossaryData } from '~/pages/glossary/getGlossaryData'
+import { getPrivacyMethodologyData } from '~/pages/privacy/methodology/getPrivacyMethodologyData'
 import { getGovernancePublicationData } from '~/pages/publications/governance/getGovernancePublicationData'
 import { identityManifest as manifest } from '~/test/identityManifest'
 
@@ -22,6 +23,26 @@ describe('page structured data', () => {
       'BreadcrumbList',
       'DefinedTermSet',
     ])
+  })
+
+  it('privacy methodology publication emits an Article', async () => {
+    const post = getCollectionEntry('other-publications', 'privacy-methodology')
+    if (!post) throw new Error('privacy-methodology is missing')
+
+    const data = await getPrivacyMethodologyData(
+      manifest,
+      post,
+      '/publications/privacy-methodology',
+    )
+
+    expect(data.ssr.page).toEqual('PrivacyMethodologyPage')
+    expect(getTypes(data.head.metadata)).toEqual(['BreadcrumbList', 'Article'])
+    expect(data.head.metadata.structuredData[1]).toEqual(
+      expect.subset({
+        url: 'https://l2beat.com/publications/privacy-methodology',
+        headline: 'How we assess privacy protocols',
+      }),
+    )
   })
 
   it('governance publication page emits an Article of the real post', async () => {

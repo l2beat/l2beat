@@ -15,6 +15,7 @@
  * take the name and drop the probe.
  */
 import type { utils } from 'ethers'
+import { show } from '../../config/schemaProblems'
 import { isArrayFragment } from '../../handlers/user/ArrayHandler'
 import { getFunctionFragment } from '../../handlers/utils/getFunctionFragment'
 import { rewriteSolidityIdentifier } from '../../handlers/utils/rewriteSolidityIdentifier'
@@ -22,7 +23,6 @@ import { sighash } from '../abi/AbiIndex'
 import { type BaselineField, type ContractFacts, PROBE_RANGE } from '../facts'
 import { KEYS_ADDED_TO_EXISTING_FIELDS } from '../write/mergeTemplate'
 import { type Findings, fieldPath } from './Finding'
-import { show } from './schemaProblems'
 
 export function checkNames(
   entries: [name: string, entry: Record<string, unknown>][],

@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "timestamp": 1791455050,
-  "configHash": "0x249e0d19a24a8989d8dce776958d439488a611fc1a714a5261485d5f98f4e0d7",
+  "configHash": "0x1225a960840a9c2071ba8b70ebbb38104cadc4f0ca6420e7e6a416116ed20031",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -3610,11 +3610,6 @@
       "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
-      "address": "scr:0x6625C6332c9F91F2D27c304E729B86db87A3f504",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "scr:0x6626593C237f530D15aE9980A95ef938Ac15c35c",
       "type": "EOA",
       "proxyType": "EOA"
@@ -4046,7 +4041,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpart": "scr:0x6625C6332c9F91F2D27c304E729B86db87A3f504",
+        "counterpart": "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504",
         "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
         "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
         "isDepositsEnabled": true,
@@ -4062,7 +4057,8 @@
       "implementationNames": {
         "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9": "TransparentUpgradeableProxy",
         "scr:0x2B9beB2890DBeFC7cA25Af3164100d139B623C24": "L2LidoGateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "ProxyAdmin",
@@ -7303,7 +7299,7 @@
     "tokens/circle/MasterMinter": "0x4ecc241fb1c41dc92b97207ddd89fc61a51d7a6fc2dc5b29fe727faadea66a2a"
   },
   "usedBlockNumbers": { "ethereum": 26147062, "scroll": 35310392 },
-  "permissionsConfigHash": "0x80a1e0dce3c61a25ceb9b4b4f02d8dbd6afcbd366064e00f1d7427273037360e",
+  "permissionsConfigHash": "0x1fdcf5985cec267259dde3933c194f02f0cbf35d9450d14f2cc909758efe4e25",
   "permissions": {
     "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": {
       "directlyReceivedPermissions": [

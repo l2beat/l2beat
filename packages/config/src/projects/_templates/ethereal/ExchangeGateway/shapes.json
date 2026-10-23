@@ -8,5 +8,11 @@
     "hash": "0xb5045a4ff694fdc0973c7f5b6a61bc6178a601b89c90fc21faff429e9867bbfd",
     "address": "ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db",
     "blockNumber": 4259455
+  },
+  "ExchangeGateway_v3.sol": {
+    "hash": "0x257d096bf5ac9fdaf12878201a59495ffd6d23ef22ef189af700f8ce0e6606d0",
+    "address": "ethereal:0x4cd414a3C1d17d8D9ecea6B7628Da790Dc733966",
+    "chain": "ethereal",
+    "blockNumber": 5638625
   }
 }

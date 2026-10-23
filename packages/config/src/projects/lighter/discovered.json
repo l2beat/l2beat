@@ -1,6 +1,6 @@
 {
   "name": "lighter",
-  "timestamp": 1791897358,
+  "timestamp": 1792492958,
   "configHash": "0x5efcc823cd489dbac97355d6777ada06a44ffa1b5683f304cfe34ad893a6b3a9",
   "entries": [
     {
@@ -43,7 +43,17 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x26Bb4084573e27CF57394593A0c95FF0cd14dd16",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x2994d343b6b17EC23E9E4a08082184Fd43F763a3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x3896449AFb8a6D07a7Dd3E7e1cDF4810112EA47a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -103,8 +113,8 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 247273,
-        "committedPriorityRequestCount": 1962080,
+        "committedBatchesCount": 251041,
+        "committedPriorityRequestCount": 1966909,
         "createdMarketsPostSpot": [
           "ETH/USDC",
           "STABLE",
@@ -295,17 +305,17 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0x866418061d4C1168e1c8E8f6facE79675395E008",
-        "executedBatchesCount": 247264,
-        "executedOnChainBatchesCount": 148270,
-        "executedPriorityRequestCount": 1962064,
+        "executedBatchesCount": 250950,
+        "executedOnChainBatchesCount": 149410,
+        "executedPriorityRequestCount": 1966781,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0xE16c893252616dD49913969f145e733b96a3E5A7",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
-        "lastAccountIndex": 760668,
-        "lastVerifiedEndBlockNumber": 354746503,
-        "lastVerifiedStateRoot": "0xbf9f96f6e63b6724f3681cbbbe45f1b0a210acb79cb5fe038c4779ba03ab9f2e",
-        "lastVerifiedValidiumRoot": "0x2fad778a860c53adb3e4238c270fb56f1e6cc8be970429b5c3e7d02a8ca59516",
+        "lastAccountIndex": 762371,
+        "lastVerifiedEndBlockNumber": 360638212,
+        "lastVerifiedStateRoot": "0xf4930aa2037684ed9c04c11a6dc548de059bb5771db583b1dd2dc4691b449666",
+        "lastVerifiedValidiumRoot": "0x22aee6f3f1ded617654411e49d03febfcc88f95719c6d59165128f6a84d846e8",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -329,8 +339,8 @@
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_PUBLIC_MARKET_INDEX": 255,
-        "openPriorityRequestCount": 18,
-        "pendingOnChainBatchesCount": 4,
+        "openPriorityRequestCount": 128,
+        "pendingOnChainBatchesCount": 18,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
           {
@@ -382,13 +392,13 @@
             "tokenAddress": "eth:0x227fF9D1a9931db2585a45c41fC84e3b3f48B37b"
           }
         ],
-        "stateRoot": "0x84680df4c29ae62cef54968c5cd05ce6f6be6c84e67709e3c195c4f48ed0ab9f",
+        "stateRoot": "0xf4930aa2037684ed9c04c11a6dc548de059bb5771db583b1dd2dc4691b449666",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0x1231e5258396c6d82d7804bf4b758e468a53fb604ad763a71bb5610d7b46f896",
-        "verifiedBatchesCount": 247267,
-        "verifiedPriorityRequestCount": 1962069,
+        "validiumRoot": "0x22aee6f3f1ded617654411e49d03febfcc88f95719c6d59165128f6a84d846e8",
+        "verifiedBatchesCount": 250950,
+        "verifiedPriorityRequestCount": 1966781,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -536,7 +546,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 87,
+        "nonce": 88,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -573,7 +583,7 @@
         "securityCouncilAddress": "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045",
         "upgradeStartTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 75,
+        "versionId": 76,
         "zkLighterProxy": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"
       },
       "fieldMeta": {
@@ -625,7 +635,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 223,
+        "nonce": 227,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -698,7 +708,7 @@
         "EMERGENCY_GUARDIAN_COOLDOWN": 604800,
         "EMERGENCY_GUARDIAN_MAX_DURATION": 259200,
         "EMERGENCY_GUARDIAN_MIN_DURATION": 86400,
-        "emergencyGuardian": "eth:0x0000000000000000000000000000000000000000",
+        "emergencyGuardian": "eth:0x26Bb4084573e27CF57394593A0c95FF0cd14dd16",
         "emergencyGuardianPaused": false,
         "emergencyGuardianState": {
           "startedAt": 0,
@@ -734,12 +744,12 @@
         "PAUSE_GUARDIAN_COOLDOWN": 86400,
         "PAUSE_GUARDIAN_MAX_DURATION": 86400,
         "PAUSE_GUARDIAN_MIN_DURATION": 7200,
-        "pauseGuardian": "eth:0x0000000000000000000000000000000000000000",
+        "pauseGuardian": "eth:0x3896449AFb8a6D07a7Dd3E7e1cDF4810112EA47a",
         "pauseGuardianPaused": false,
         "pauseGuardianState": {
-          "startedAt": 0,
-          "expiresAt": 0,
-          "cooldownEndsAt": 0
+          "startedAt": 1792223063,
+          "expiresAt": 1792230263,
+          "cooldownEndsAt": 1792316663
         },
         "PRIORITY_EXPIRATION": 1209600,
         "usdc": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -781,7 +791,7 @@
       "template": "lighter/ZkLighterVerifier",
       "sourceHashes": [
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
-        "0xb90e379e327aaf48e4d92789e2d24b41ab6c89ed69c958ddbab73b0fb6f47290"
+        "0x75beb39791d703e365a12e1aba1268f8971a636d6962a8a88960872f239102b2"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
@@ -791,15 +801,15 @@
       "sinceBlock": 21642011,
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "$implementation": "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463",
+        "$implementation": "eth:0x9dF23Dd94d71228EFec935EdC2B5be4A861227ca",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463"
+        "getTarget": "eth:0x9dF23Dd94d71228EFec935EdC2B5be4A861227ca"
       },
       "implementationNames": {
         "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": "Proxy",
-        "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463": "ZkLighterVerifier"
+        "eth:0x9dF23Dd94d71228EFec935EdC2B5be4A861227ca": "ZkLighterVerifier"
       }
     },
     {
@@ -1000,6 +1010,11 @@
     ],
     "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310": [
       "constructor(address _singleton)"
+    ],
+    "eth:0x9dF23Dd94d71228EFec935EdC2B5be4A861227ca": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
     ],
     "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1": [
       "constructor(address target, bytes targetInitializationParameters)",
@@ -1253,11 +1268,6 @@
       "function verifiedPriorityRequestCount() view returns (uint64)",
       "function withdraw(uint48 _accountIndex, uint16 _assetIndex, uint8 _routeType, uint64 _baseAmount)"
     ],
-    "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
-    ],
     "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43": [
       "constructor()",
       "error AlreadyPaused()",
@@ -1347,8 +1357,8 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithSpot": "0x557fce146526c6fd859e5d8ec58a0d624c2c2d1d2372e1d433f3d132136f6ba7"
   },
-  "usedBlockNumbers": { "ethereum": 26183806 },
-  "permissionsConfigHash": "0xa3f6f14b2e6e9c3a968cc8f4f094f5face07c413b7a3efa12c56b1a05c5ec446",
+  "usedBlockNumbers": { "ethereum": 26233269 },
+  "permissionsConfigHash": "0x4cae4c8a9d367f54241075f76e8db10fe0563ace256218b71703b0a5b7083b29",
   "permissions": {
     "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f": {
       "receivedPermissions": [
@@ -1357,6 +1367,26 @@
           "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
           "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
           "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x26Bb4084573e27CF57394593A0c95FF0cd14dd16": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "pause batch commitment, verification, execution and withdrawals for 24h to 72h (extendable up to 72h in total), followed by a 7d cooldown. Does not affect desert mode.",
+          "role": ".emergencyGuardian"
+        }
+      ]
+    },
+    "eth:0x3896449AFb8a6D07a7Dd3E7e1cDF4810112EA47a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "pause batch commitment, verification, execution and withdrawals for 2h to 24h (extendable up to 24h in total), followed by a 24h cooldown. Does not affect desert mode.",
+          "role": ".pauseGuardian"
         }
       ]
     },

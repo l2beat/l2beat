@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x83a93eed67f12eaa9146c26c4d146ee88cf7855e
+
+# Diff at Mon, 19 Oct 2026 13:02:56 GMT:
+
+- id: 973a5756
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@63980edf2f672b670bf785d95749e721fa156171 block: 1791789284
+- current timestamp: 1792414872
+
+## Description
+
+Safe 0x97E1…4e54 upgraded from Safe 1.4.1 to 1.5.0. The Aragon Multisig template now models its members, which changes no resolved permission here.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x97E18544e156724E4076945F10c288ecBBC94e54) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
++        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      values.$implementation:
+-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b"
+      values.getChainId:
+-        1
+      values.VERSION:
+-        "1.4.1"
++        "1.5.0"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       | 1537 ++++++++++++++------
+ 1 file changed, 1059 insertions(+), 478 deletions(-)
+```
+
 Generated with discovered.json: 0x748382de93acc207319b560b0be642e56dcb6acf
 
 # Diff at Mon, 12 Oct 2026 07:17:01 GMT:

@@ -3,14 +3,14 @@ import {
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 
-// main at the v2.1 pool code, deployed 2026-09-23 without a release tag.
+// PRIVACY-0.14.3-RC.8. The deployed pool and shadow account anonymizer rebuild from it.
 const SNP =
-  'https://github.com/starkware-libs/starknet-privacy/blob/f9256c5e37682d37437e69a795ddd51d924c9b97/'
+  'https://github.com/starkware-libs/starknet-privacy/blob/fcc7c90f544ceb08621c32616bde29f1fdcbeb54/'
 // SDK release PRIVACY-0.14.3-RC.8.
 const SDK =
   'https://github.com/starkware-libs/starknet-privacy/blob/fcc7c90f544ceb08621c32616bde29f1fdcbeb54/sdk/src/'
-const STWO =
-  'https://github.com/starkware-libs/stwo-cairo/blob/2b1fb4ded5496fb2db4e8261cd5ee5ef6b710839/README.md#security-model'
+const WALLET_API =
+  'https://github.com/starknet-io/types-js/blob/0b483f51f4bc33c7253b209a25136d9d6ec1bc41/src/wallet-api/methods.ts'
 const POOL =
   'https://voyager.online/contract/0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a'
 
@@ -24,7 +24,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       exposureShort:
         "Transfers inside the pool are encrypted, but the first payment to each new contact writes the recipient's address in cleartext.",
-      exposureContinued: `${S.entryExitPublic()} The fee payment names the token the user pays it in, and DeFi actions name their target contract. A new account must be funded publicly before it can receive privately.`,
+      exposureContinued: `${S.entryExitPublic()} The fee payment names the token the user pays it in. DeFi actions name their target contract, and a shadow account shows its funding, calls and positions. A new account must be funded publicly before it can receive privately.`,
       advice:
         'Submit every pool action through a paymaster and pay its fee in the most common token. Treat the first payment to a new contact, and any DeFi action, as public.',
       interior: {
@@ -86,7 +86,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         'Ready and Xverse are closed source, so what they send to third parties is up to their makers and can change at any time.',
       exposureContinued:
-        'Today both wallets send each action to their own servers for proving and note discovery. The paymaster receives the finished transaction with its proof before broadcast, and how much of the private execution the proof reveals is not established.',
+        'Today both wallets send each action to their own servers for proving and note discovery. The paymaster receives the finished transaction before broadcast.',
       advice:
         "Use a client built on the open SDK with the user's own prover and note discovery, and turn on its oblivious relay.",
       interior: {
@@ -120,7 +120,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay.",
       exposureContinued:
-        "The wallet's prover receives the user's viewing key with every action, and for most Ready accounts Ready's servers create that key. Ready's servers also learn every recipient the wallet checks for registration. StarkWare's sequencer alone checks the client proofs, which are not zero-knowledge by default. Every deposit needs a fresh signature from the holder of the screener key, who can block any depositor.",
+        "The wallet's prover receives the user's viewing key with every action, and for most Ready accounts Ready's servers create that key. Apps that drive a shadow account or a swap through the pool get the user's main address from the wallet connection. The holder of the screener key can block any screened depositor.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -141,7 +141,10 @@ export const strk20Adversaries = definePrivacyAdversaries({
           title: 'Deposits require a screening attestation',
           url: SNP + 'packages/privacy/src/interface.cairo#L530-L545',
         },
-        { title: 'Stwo Cairo is not zero-knowledge by default', url: STWO },
+        {
+          title: 'The wallet API hands the connected account to the app',
+          url: WALLET_API + '#L42-L51',
+        },
       ],
     },
     futureAdversary: {

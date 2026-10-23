@@ -28,14 +28,6 @@ const stakeDistribution = readStakeDistribution(stakeDistributionJson)
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
-const upgrades = {
-  upgradableBy: [{ name: 'PolygonMultisig', delay: 'no' }],
-}
-
-const delayString = formatSeconds(
-  discovery.getContractValue('Timelock', 'getMinDelay'),
-)
-
 const upgradeDelay = discovery.getContractValue<number>(
   'Timelock',
   'getMinDelay',
@@ -56,13 +48,13 @@ const minDeposit = discovery.getContractValue<string>(
   'minDeposit',
 )
 
-const replacementCoolDown = discovery.getContractValue<number>(
+const validatorPass = discovery.getContractValue<string>(
   'StakeManager',
-  'replacementCoolDown',
+  'validatorPass',
 )
 assert(
-  replacementCoolDown === 2018083,
-  'The far-future replacement cooldown which effectively closed the vali set whenever it was at the cap has changed and the sequencer section and risk rosette should be adjusted if the set is now open+capped with a working replacement auction.',
+  validatorPass === 'eth:0x938529C189525e9a03c66C417D337BE9B5762bA4',
+  'The validator entry gate changed. If it is unset, joining below the cap is permissionless and the sequencer section and risk rosette should be adjusted.',
 )
 
 const polygonSpanBlocks = HARDCODED.POLYGON_POS.SPAN_BLOCKS
@@ -141,7 +133,6 @@ export const polygonpos: ScalingProject = {
           'eth:0x401F6c983eA34274ec46f84D70b31C151321188b',
         ),
         tokens: '*',
-        ...upgrades,
       }),
       discovery.getEscrowDetails({
         // ERC20Predicate
@@ -150,7 +141,6 @@ export const polygonpos: ScalingProject = {
         ),
         premintedTokens: ['TRADE'],
         tokens: '*',
-        ...upgrades,
       }),
       discovery.getEscrowDetails({
         // MintableERC20Predicate
@@ -158,7 +148,6 @@ export const polygonpos: ScalingProject = {
           'eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4',
         ),
         tokens: '*',
-        ...upgrades,
       }),
       discovery.getEscrowDetails({
         // EtherPredicate
@@ -166,7 +155,6 @@ export const polygonpos: ScalingProject = {
           'eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
         ),
         tokens: ['ETH'],
-        ...upgrades,
       }),
       discovery.getEscrowDetails({
         // ERC20EscrowPredicate for TOWER token
@@ -174,7 +162,6 @@ export const polygonpos: ScalingProject = {
           'eth:0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4',
         ),
         tokens: '*',
-        ...upgrades,
       }),
       // ...other predicates up until PolygonERC20MintBurnPredicate do not hold funds
       discovery.getEscrowDetails({
@@ -251,7 +238,7 @@ export const polygonpos: ScalingProject = {
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
       sentiment: 'warning',
-      description: `Although there is a sequencer set of ${currentValidatorSetSize} (called validators), if the cap of ${currentValidatorSetCap} is reached, no new stakers can join. A minimum of ${minDeposit} POL stake is required to obtain block production rights. There is no specific censorship resistance mechanism against selective censorship by parts of the active validator set nor a way to force transactions from Ethereum L1. The canonical bridge between Polygon PoS and Ethereum allows for queuing transactions from the Ethereum and Polygon PoS sides, which cannot be skipped, except for halting the queue entirely.`,
+      description: `There is a sequencer set of ${currentValidatorSetSize} (called validators), capped at ${currentValidatorSetCap}. Validator entry is permissioned. A minimum of ${minDeposit} POL stake is required to obtain block production rights. There is no specific censorship resistance mechanism against selective censorship by parts of the active validator set nor a way to force transactions from Ethereum L1. The canonical bridge between Polygon PoS and Ethereum allows for queuing transactions from the Ethereum and Polygon PoS sides, which cannot be skipped, except for halting the queue entirely.`,
     },
     proposerFailure: RISK_VIEW.PROPOSER_POS(
       currentValidatorSetSize,
@@ -306,7 +293,7 @@ export const polygonpos: ScalingProject = {
         blockProductionAccess: {
           value: 'Closed and capped',
           sentiment: 'bad',
-          description: `The current validator cap is ${currentValidatorSetCap}. Joining the set is permissioned (Multisig).`,
+          description: `The current validator cap is ${currentValidatorSetCap}. Validator entry is permissioned (Polygon Multisig or an EOA).`,
         },
         stakePerValidator: {
           value: minDeposit + ' POL minimum, variable',
@@ -361,84 +348,20 @@ export const polygonpos: ScalingProject = {
     ],
   },
   contracts: {
-    addresses: {
-      ethereum: [
-        discovery.getContractDetails('RootChain', {
-          description:
-            'Contract storing Polygon PoS chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
-          ...upgrades,
-        }),
-        discovery.getContractDetails(
-          'StateSender',
-          'Smart contract allowing whitelisted addresses to send messages to contracts on Polygon PoS chain.',
-        ),
-        discovery.getContractDetails('RootChainManager', {
-          description:
-            'Main configuration contract to manage tokens, token types, escrows (predicates) for given token types.\
-          It also serves as an entry point for deposits and withdrawals effectively acting as a token router.',
-          ...upgrades,
-        }),
-        discovery.getContractDetails('StakeManager', {
-          description:
-            'Main configuration contract to manage stakers and their voting power and validate checkpoint signatures.',
-          ...upgrades,
-        }),
-        discovery.getContractDetails(
-          'StakingInfo',
-          'Contains logging and getter functions about staking on Polygon.',
-        ),
-        discovery.getContractDetails('Registry', {
-          description:
-            'Maintains the addresses of the contracts used in the system.',
-        }),
-        discovery.getContractDetails('DepositManager', {
-          description:
-            'Contract to deposit and escrow ETH, ERC20 or ERC721 tokens. Currently only used for POL.',
-          ...upgrades,
-        }),
-        discovery.getContractDetails('WithdrawManager', {
-          description:
-            "Contract handling users' withdrawal finalization for tokens escrowed in DepositManager.",
-          ...upgrades,
-        }),
-        discovery.getContractDetails('ERC20PredicateBurnOnly', {
-          description:
-            'Contract used to initiate ERC20 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
-        }),
-        discovery.getContractDetails('ERC721PredicateBurnOnly', {
-          description:
-            'Contract used to initiate ERC721 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
-        }),
-
-        discovery.getContractDetails('EventsHub', {
-          description: 'Contains events used by other contracts in the system.',
-          ...upgrades,
-        }),
-
-        discovery.getContractDetails(
-          'ExitNFT',
-          'NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).',
-        ),
-        discovery.getContractDetails(
-          'Timelock',
-          `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,
-        ),
-      ],
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: {
-    ethereum: {
-      actors: [
-        discovery.getMultisigPermission(
-          'PolygonMultisig',
-          'Can propose and execute code upgrades. Can arbitrarily moves tokens out of the ERC20 escrow without a contract upgrade.',
-        ),
-      ],
-    },
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
+    {
+      title: 'Permissioned validator entry',
+      url: 'https://forum.polygon.technology/t/permissioned-validator-entry-via-validatorpass/22108',
+      date: '2026-10-13T00:00:00Z',
+      description:
+        'Each new validator needs approval from governance or a permissioned EOA.',
+      type: 'general',
+    },
     {
       title: 'Rio upgrade',
       url: 'https://polygon.technology/blog/polygon-launches-major-payments-upgrade-with-rio-faster-lighter-and-easier-to-build',

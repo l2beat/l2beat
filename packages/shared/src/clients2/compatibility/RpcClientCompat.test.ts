@@ -162,6 +162,22 @@ describe(RpcClientCompat.name, () => {
         topics,
       })
     })
+
+    it('does not split a single block when limit exceeded', async () => {
+      const error = new Error(
+        'RPC call failed. RPC code: -32602, message: Log response size exceeded',
+      )
+      const getLogs = mockFn<EthRpcClient['getLogs']>()
+        .rejectsWithOnce(error)
+        .resolvesTo([])
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({ getLogs }),
+        'ethereum',
+      )
+
+      await expect(client.getLogs(100, 100)).toBeRejectedWith(error.message)
+      expect(getLogs).toHaveBeenCalledTimes(1)
+    })
   })
 
   describe(RpcClientCompat.prototype.getBlockTimestamps.name, () => {

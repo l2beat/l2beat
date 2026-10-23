@@ -77,6 +77,12 @@
         "0xecdbb340ded82ca2e5baf5e40c90a3b0c1227c27f9be2962df93d2e061e9a5d4": "Katana OP Succinct v3.10.0 rollup config (Kona v1.6.0)",
         "0x720a7d9b12c0a7fbbd1b2634eb9d17b5cc7720575c48736b1c40e9399f31de09": "Katana OP Succinct v3.12.0 rollup config (Kona v1.6.0)"
       }
+    },
+    "KatanaAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": {
+        "prefix": "katana"
+      }
     }
   },
   "initialAddresses": [
@@ -218,13 +224,26 @@
       "category": "spam"
     },
     "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC": {
-      "category": "spam"
+      "category": "spam",
+      "fields": {
+        "l2TokenBridge": { "edit": ["format", "KatanaAddress"] },
+        "OTHER_BRIDGE": { "edit": ["format", "KatanaAddress"] },
+        "otherBridge": { "edit": ["format", "KatanaAddress"] }
+      }
     },
     "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F": {
-      "category": "spam"
+      "category": "spam",
+      "fields": {
+        "OTHER_BRIDGE": { "edit": ["format", "KatanaAddress"] },
+        "otherBridge": { "edit": ["format", "KatanaAddress"] }
+      }
     },
     "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E": {
-      "category": "spam"
+      "category": "spam",
+      "fields": {
+        "OTHER_MESSENGER": { "edit": ["format", "KatanaAddress"] },
+        "otherMessenger": { "edit": ["format", "KatanaAddress"] }
+      }
     },
     "eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C": {
       "category": "spam"

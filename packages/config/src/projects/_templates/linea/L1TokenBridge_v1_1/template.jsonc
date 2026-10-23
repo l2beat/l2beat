@@ -279,7 +279,12 @@
     },
     "remoteSender": {
       "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here.",
-      "edit": ["format", "LineaAddress"]
+      "edit": [
+        "if",
+        ["=", ["env", "chainName"], "ethereum"],
+        ["format", "LineaAddress"],
+        ["format", "EthereumAddress"]
+      ]
     },
     "messageService": {
       "severity": "HIGH",

@@ -52,7 +52,6 @@
     "arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a": "UpgradeExecRouteBuilder",
     "arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a": "SecurityCouncilMemberSyncAction",
     "arb1:0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B": "KeyValueStore",
-    "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock_l2alias",
     // same six signers and 4/6 threshold as eth "Arbitrum Multisig 1"
     "arb1:0xe128a8100d1b543dE82d04450B3406d57aBF553b": "Arbitrum L2 Multisig 1",
     "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "Bridge",
@@ -135,6 +134,30 @@
             "args": [],
             "address": "0x000000000000000000000000000000000000006b"
           }
+        },
+        "executors": {
+          "edit": [
+            "map",
+            [
+              "if",
+              ["=", "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a"],
+              ["format", "UndoL2Alias"]
+            ]
+          ]
+        },
+        "accessControl": {
+          "edit": [
+            "set",
+            ["EXECUTOR_ROLE", "members"],
+            [
+              "map",
+              [
+                "if",
+                ["=", "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a"],
+                ["format", "UndoL2Alias"]
+              ]
+            ]
+          ]
         }
       }
     },
@@ -246,7 +269,11 @@
         "l2Counterpart",
         "l2Dai"
       ],
-      "category": "bridge-external"
+      "category": "bridge-external",
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "ArbitrumAddress"] },
+        "l2Counterpart": { "edit": ["format", "ArbitrumAddress"] }
+      }
     },
     "eth:0x9E40625F52829Cf04bC4839F186D621ee33b0E67": {
       "fields": {
@@ -369,7 +396,8 @@
           "severity": "HIGH"
         },
         "counterpartGateway": {
-          "severity": "HIGH"
+          "severity": "HIGH",
+          "edit": ["format", "ArbitrumAddress"]
         },
         "$admin": {
           "severity": "MEDIUM"
@@ -395,7 +423,8 @@
           "severity": "HIGH"
         },
         "counterpartGateway": {
-          "severity": "HIGH"
+          "severity": "HIGH",
+          "edit": ["format", "ArbitrumAddress"]
         },
         "$admin": {
           "severity": "MEDIUM"
@@ -487,6 +516,21 @@
         "arbOneGateway": { "severity": "HIGH" },
         "novaGateway": { "severity": "HIGH" },
         "$admin": { "severity": "MEDIUM" }
+      }
+    },
+    "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "ArbitrumAddress"] }
+      }
+    },
+    "eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "ArbitrumAddress"] }
+      }
+    },
+    "eth:0xcEe284F754E854890e311e3280b767F80797180d": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "ArbitrumAddress"] }
       }
     }
   }

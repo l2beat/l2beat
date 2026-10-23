@@ -22,6 +22,7 @@ import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createHomeRouter } from './home/HomeRouter'
 import { createInteropRouter } from './interop/InteropRouter'
 import { createL2Router } from './layer2s/L2Router'
+import { createMandateRouter } from './mandate/MandateRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
 import { NotFoundHandler } from './not-found/NotFoundHandler'
@@ -72,6 +73,7 @@ export function createServerPageRouter(
     createChangelogRouter,
     createDonateRouter,
     createGlossaryRouter,
+    createMandateRouter,
     createMultisigReportRouter,
     createPrivacyRouter,
     createDefiRouter,

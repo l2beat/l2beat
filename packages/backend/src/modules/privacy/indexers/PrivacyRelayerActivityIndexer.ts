@@ -8,6 +8,7 @@ import {
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import chunk from 'lodash/chunk'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -70,7 +71,11 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
       configurations: configurations.length,
     })
 
-    const records = await this.fetchRecords(configurations, from, adjustedTo)
+    const records = await withCoreFeatureRpcMetricsContext(
+      'privacy.relayerActivity',
+      { chain: this.$.chain },
+      () => this.fetchRecords(configurations, from, adjustedTo),
+    )
 
     this.logger.info('Fetched privacy relayer activity logs', {
       from,

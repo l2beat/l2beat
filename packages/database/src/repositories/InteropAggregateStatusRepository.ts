@@ -150,6 +150,20 @@ export class InteropAggregateStatusRepository extends BaseRepository {
       : undefined
   }
 
+  async getLatestPromotedTimestampAtOrBefore(
+    timestamp: UnixTime,
+  ): Promise<UnixTime | undefined> {
+    const result = await this.db
+      .selectFrom('InteropAggregateStatus')
+      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
+      .where('status', '=', 'promoted')
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .executeTakeFirst()
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
+  }
+
   async getEarliestPromotedTimestampForDay(
     timestamp: UnixTime,
   ): Promise<UnixTime | undefined> {
