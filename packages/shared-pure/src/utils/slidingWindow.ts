@@ -3,8 +3,13 @@ export function slidingWindow<T>(
   size: number,
   advance: number,
 ): T[][] {
-  if (size === 0 || advance === 0) {
-    throw new Error('size and advance must not be zero')
+  if (
+    !Number.isSafeInteger(size) ||
+    size <= 0 ||
+    !Number.isSafeInteger(advance) ||
+    advance <= 0
+  ) {
+    throw new Error('size and advance must be positive safe integers')
   }
 
   const result: T[][] = []

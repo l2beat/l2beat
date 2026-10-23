@@ -2,6 +2,15 @@ import { expect } from 'earl'
 import { slidingWindow } from './slidingWindow.js'
 
 describe(slidingWindow.name, () => {
+  for (const value of [0, -1, 1.5, NaN, Infinity]) {
+    it(`rejects invalid window size ${value}`, () => {
+      expect(() => slidingWindow([1, 2, 3], value, 1)).toThrow()
+    })
+    it(`rejects invalid advance ${value}`, () => {
+      expect(() => slidingWindow([1, 2, 3], 1, value)).toThrow()
+    })
+  }
+
   describe('Moving average size 3', () => {
     it('should return correct slices with advance 1', () => {
       const result = slidingWindow('abcdefg'.split(''), 3, 1)
