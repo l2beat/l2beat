@@ -108,7 +108,7 @@ function leavesOfSameGraph(
       leaves.push(after)
       continue
     }
-    for (let i = after.subnodes.length - 1; i >= 0; i--) {
+    for (let i = 0; i < after.subnodes.length; i++) {
       stack.push([before.subnodes[i] as Node, after.subnodes[i] as Node])
     }
   }

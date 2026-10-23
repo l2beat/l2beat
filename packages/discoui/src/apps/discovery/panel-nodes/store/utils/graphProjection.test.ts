@@ -127,7 +127,10 @@ describe(`${getGraphProjection.name} cache`, () => {
   it('reuses the projection when nodes only move', () => {
     const nodes = [
       makeNode('root', [['large[0]', 'target']], ['large[0]']),
-      makeGroup('group', [makeNode('member', [['owner', 'root']])]),
+      makeGroup('group', [
+        makeNode('first', [['owner', 'root']]),
+        makeNode('second', [['owner', 'root']]),
+      ]),
       makeNode('target'),
     ]
     const before = getGraphProjection(nodes)
@@ -141,7 +144,7 @@ describe(`${getGraphProjection.name} cache`, () => {
 
     expect(after.hiddenNodeIds === before.hiddenNodeIds).toEqual(true)
     expect(after.visibleEdges === before.visibleEdges).toEqual(true)
-    expect(after.leafNodes.map((node) => node.box.x)).toEqual([10, 10, 10])
+    expect(after.leafNodes.map((node) => node.box.x)).toEqual([10, 10, 10, 10])
     expect(after.leafNodes.map((node) => node.id)).toEqual(
       before.leafNodes.map((node) => node.id),
     )
