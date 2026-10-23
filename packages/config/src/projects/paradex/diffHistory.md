@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xbc148b1801172a93a4a15f7941cd40ec23caf12e
+
+# Diff at Fri, 23 Oct 2026 10:30:56 GMT:
+
+- id: 2a5d3af3
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e5da6875dac4af99f827db5faa99b87f99ca760f block: 1792492705
+- current timestamp: 1792751394
+
+## Description
+
+Removed one ms member.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x94d5dc7c96Eb6176783787669571970C7ba43e01"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x272be52c7f69b43d5b0b3c919832fdad7ff04669
 
 # Diff at Tue, 20 Oct 2026 10:39:28 GMT:
