@@ -11,5 +11,6 @@
 2. an auditor appointed by the admin multisig fetches the user's history through the Audit API (see privileged insider).
 3. a user exits through a forced withdrawal (see public observer).
 4. a user relies on today's anonymity set, which is too small to hide in (see chain analyst).
-5. the operator changes the SDK's closed-source core to send user data elsewhere, which users cannot check (see network observer).
-6. elliptic-curve cryptography is broken, which decrypts every note through the enclave's long-lived public key (see future adversary).
+5. the operator changes the SDK's closed-source core to send user data elsewhere (see privileged insider).
+6. Alchemy pairs the signed-in wallet with the withdrawal by timing (see network observer).
+7. elliptic-curve cryptography is broken, which decrypts every note through the enclave's long-lived public key (see future adversary).
