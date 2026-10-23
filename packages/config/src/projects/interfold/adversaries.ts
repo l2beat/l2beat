@@ -9,7 +9,7 @@ const INTERFOLD =
 
 /**
  * @param decryptionThreshold committee members that can rebuild the BFV secret key, asserted against discovery
- * @param committeeMembers members of the committee a DAO vote requests, from discovery
+ * @param committeeMembers members of the committee a governance vote requests, from discovery
  * @param minimumDecryptionThreshold the same for the smallest committee size governance can select
  * @param minimumCommitteeMembers members of the smallest committee size, from discovery
  */

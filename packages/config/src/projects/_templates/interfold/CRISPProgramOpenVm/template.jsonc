@@ -70,7 +70,7 @@
       "edit": ["get", "_honkVerifier"]
     },
     "onchainBallotVerifier": {
-      "description": "Immutable verifier of ballot proofs for rounds that read voting power from the token at the snapshot, as DAO votes do.",
+      "description": "Immutable verifier of ballot proofs for rounds that read voting power from the token at the snapshot, as Interfold governance votes do.",
       "type": "CODE_CHANGE",
       "copy": "constructorArgs",
       "edit": ["get", "_onchainHonkVerifier"]
