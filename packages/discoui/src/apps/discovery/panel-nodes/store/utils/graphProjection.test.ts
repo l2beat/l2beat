@@ -123,6 +123,66 @@ describe(getGraphProjection.name, () => {
   })
 })
 
+describe(`${getGraphProjection.name} cache`, () => {
+  it('reuses the projection when nodes only move', () => {
+    const nodes = [
+      makeNode('root', [['large[0]', 'target']], ['large[0]']),
+      makeGroup('group', [makeNode('member', [['owner', 'root']])]),
+      makeNode('target'),
+    ]
+    const before = getGraphProjection(nodes)
+
+    const moved = mapGraphItems(nodes, (node) => ({
+      ...node,
+      box: { ...node.box, x: node.box.x + 10 },
+      fields: node.fields.map((field) => ({ ...field })),
+    }))
+    const after = getGraphProjection(moved)
+
+    expect(after.hiddenNodeIds === before.hiddenNodeIds).toEqual(true)
+    expect(after.visibleEdges === before.visibleEdges).toEqual(true)
+    expect(after.leafNodes.map((node) => node.box.x)).toEqual([10, 10, 10])
+    expect(after.leafNodes.map((node) => node.id)).toEqual(
+      before.leafNodes.map((node) => node.id),
+    )
+  })
+
+  it('recomputes when a field points somewhere else', () => {
+    const nodes = [
+      makeNode('root', [['owner', 'first']]),
+      makeNode('first', [], [], true),
+      makeNode('second', [], [], true),
+    ]
+    const before = getGraphProjection(nodes)
+
+    const retargeted = nodes.map((node) =>
+      node.id === 'root'
+        ? {
+            ...node,
+            fields: node.fields.map((field) => ({
+              ...field,
+              target: 'second',
+            })),
+          }
+        : node,
+    )
+    const after = getGraphProjection(retargeted)
+
+    expect(after.visibleEdges === before.visibleEdges).toEqual(false)
+    expect(after.visibleEdges.map((edge) => edge.target)).toEqual(['second'])
+  })
+
+  it('recomputes when hidden fields change', () => {
+    const nodes = [makeNode('root', [['owner', 'target']]), makeNode('target')]
+    expect(hidden(nodes)).toEqual([])
+
+    const hiddenOwner = nodes.map((node) =>
+      node.id === 'root' ? { ...node, hiddenFields: ['owner'] } : node,
+    )
+    expect(hidden(hiddenOwner)).toEqual(['target'])
+  })
+})
+
 describe(hideItems.name, () => {
   it('hides every inbound field instead of storing a hidden node', () => {
     const nodes = [
