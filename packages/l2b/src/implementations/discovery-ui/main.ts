@@ -126,7 +126,7 @@ export function createDiscoveryUiApp({
 }): Express {
   const app = express()
 
-  const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
+  const STATIC_ROOT = join(__dirname, '../../../../discoui/build')
 
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)

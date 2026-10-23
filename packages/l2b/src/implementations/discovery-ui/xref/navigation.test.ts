@@ -2,13 +2,22 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { FlatWorkspace } from '../../xref/FlatWorkspace'
 import { addFlattenerNote } from '../getCode'
-import { definitionAt, referencesAt } from './navigation'
+import { contractAt, definitionAt, referencesAt } from './navigation'
 
 const IMPLEMENTATION = `contract Box {
     uint256 internal value;
+    /*
+       Hashed; never changes.
+     */
+    bytes32 internal constant SEED =
+        keccak256("seed;");
 
+    /// @notice Keeps next.
+    /**
+     * @param next The value to keep.
+     */
     function store(uint256 next) external {
-        value = next;
+        value = next + uint256(SEED);
     }
 }
 `
@@ -62,6 +71,39 @@ describe('xref navigation', () => {
         offset: shown(declaration),
         length: 'value'.length,
         alsoIn: 0,
+        declaration: {
+          line: 2 + NOTE_LINES,
+          offset: shown(IMPLEMENTATION.indexOf('    uint256 internal value')),
+          text: '    uint256 internal value;',
+        },
+      },
+    ])
+  })
+
+  it('peeks whole lines, from the comment above to the end', () => {
+    const declarationOf = (use: string) =>
+      definitionAt(
+        workspace,
+        ADDRESS,
+        IMPLEMENTATION_SOURCE,
+        shown(IMPLEMENTATION.indexOf(use)),
+      ).definitions.map((d) => d.declaration)
+
+    expect(declarationOf('SEED)')).toEqual([
+      {
+        line: 3 + NOTE_LINES,
+        offset: shown(IMPLEMENTATION.indexOf('    /*\n')),
+        text: '    /*\n       Hashed; never changes.\n     */\n    bytes32 internal constant SEED =\n        keccak256("seed;");',
+      },
+    ])
+    expect(declarationOf('store(')).toEqual([
+      {
+        line: 9 + NOTE_LINES,
+        offset: shown(IMPLEMENTATION.indexOf('    /// @notice')),
+        text: IMPLEMENTATION.slice(
+          IMPLEMENTATION.indexOf('    /// @notice'),
+          IMPLEMENTATION.lastIndexOf('\n}'),
+        ),
       },
     ])
   })
@@ -80,15 +122,57 @@ describe('xref navigation', () => {
     ).toEqual([
       [
         IMPLEMENTATION_SOURCE,
-        5 + NOTE_LINES,
+        14 + NOTE_LINES,
         shown(IMPLEMENTATION.indexOf('value = next')),
-        'value = next;',
+        'value = next + uint256(SEED);',
       ],
     ])
+  })
+
+  it('names the contract an expression holds, if it is in the project', () => {
+    const outside = ChainSpecificAddress(`eth:0x${'2'.repeat(40)}`)
+    const holder = `contract Holder {
+    address internal self;
+    address internal outside;
+
+    function f() external {
+        self;
+        outside;
+    }
+}
+`
+    const path = '/p/.flat/Holder.sol'
+    const holders = new FlatWorkspace(
+      [
+        {
+          name: 'Holder',
+          address: ADDRESS,
+          type: 'Contract',
+          values: { self: ADDRESS, outside },
+          abi: [],
+          sourcePaths: [path],
+        },
+      ],
+      () => holder,
+    )
+    const at = (use: string) =>
+      contractAt(holders, ADDRESS, 0, shown(holder.indexOf(use)))
+
+    expect(at('self;')).toEqual({
+      symbol: 'self',
+      address: ADDRESS,
+      name: 'Holder',
+    })
+    expect(at('outside;')).toEqual({
+      symbol: 'outside',
+      address: outside,
+      name: undefined,
+    })
   })
 
   it('finds nothing inside the note itself', () => {
     expect(definitionAt(workspace, ADDRESS, 0, 3).definitions).toEqual([])
     expect(referencesAt(workspace, ADDRESS, 0, 3).references).toEqual([])
+    expect(contractAt(workspace, ADDRESS, 0, 3).address).toEqual(undefined)
   })
 })

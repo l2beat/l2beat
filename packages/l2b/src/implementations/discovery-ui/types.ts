@@ -1,4 +1,4 @@
-// This file is duplicated in protocolbeat and l2b!
+// This file is duplicated in discoui and l2b!
 
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
@@ -234,7 +234,15 @@ export interface ApiDefinitionResponse {
     offset: number
     length: number
     alsoIn: number
+    // Whole lines, from the comment above the declaration to its end.
+    declaration: { line: number; offset: number; text: string }
   }[]
+}
+
+export interface ApiContractAtResponse {
+  symbol: string
+  address: string | undefined
+  name: string | undefined
 }
 
 export interface ApiReferencesResponse {

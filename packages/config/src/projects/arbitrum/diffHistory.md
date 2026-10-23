@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x9fc0b258ba5c19a0bd2a2cfd74ac251eea91761b
+
+# Diff at Thu, 22 Oct 2026 08:32:33 GMT:
+
+- id: 394fc511
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bec160b11359d152c893eb245856d63bc5076062 block: 1790601621
+- current timestamp: 1792657864
+
+## Description
+
+UpgradeExecutor: PauseExecutor granted EXECUTOR_ROLE on 2026-10-02 by the Security Council. It can only forward `pause()`; its sole pauser is the permissionless OspSoundnessGuard.
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) [orbitstack/layer2/L2SecurityCouncilPropose] {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9","description":"manage the pausers.","role":".pauserAdmins","via":[{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+    }
+```
+
+```diff
+    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) [orbitstack/layer2/CoreGovernor] {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9","description":"manage the pausers.","role":".pauserAdmins","via":[{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.2:
++        "eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9"
++++ severity: MEDIUM
+      values.executors.2:
++        "eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9"
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9","description":"manage the pausers.","role":".pauserAdmins"}
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9","description":"manage the pausers.","role":".pauserAdmins","via":[{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PauseExecutor (eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9) [orbitstack/PauseExecutor]
+    +++ description: Executor-role holder that can only forward `pause()` calls: PAUSER_ROLE holders can pause any contract the UpgradeExecutor is authorized on. Not upgradeable.
+```
+
+```diff
++   Status: CREATED
+    contract OspSoundnessGuard (eth:0x6DEf0F0Ffb4d77347785036ea4Cd2320a3f3A17c) [orbitstack/OspSoundnessGuard]
+    +++ description: Permissionless circuit breaker: anyone proving that two rival edges both pass the one-step proof can pause the rollup through the PauseExecutor.
+```
+
+## Source code changes
+
+```diff
+.../projects/arbitrum/.flat/OspSoundnessGuard.sol  | 5304 ++++++++++++++++++++
+ .../src/projects/arbitrum/.flat/PauseExecutor.sol  |  955 ++++
+ 2 files changed, 6259 insertions(+)
+```
+
 Generated with discovered.json: 0x3e30300039ddee2cc4dab26adc20faae4890a6e4
 
 # Diff at Tue, 20 Oct 2026 12:39:53 GMT:

@@ -2,6 +2,7 @@ import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   BaseASTNode,
   EnumDefinition,
+  Expression,
   FunctionCall,
   FunctionDefinition,
   Identifier,
@@ -123,6 +124,33 @@ export function resolveDefinition(
     default:
       return NOTHING
   }
+}
+
+export interface AddressResult {
+  symbol: string
+  address: ChainSpecificAddress | undefined
+}
+
+// A called name stands for its call: `bridge` in `rollup.bridge()` is what
+// the getter returns.
+export function resolveAddress(
+  workspace: FlatWorkspace,
+  path: string,
+  offset: number,
+): AddressResult {
+  const index = workspace.source(path)
+  const entry = workspace.entryOfPath(path)
+  assert(entry !== undefined, 'Flat file is not part of the discovery')
+  const ancestors = index.pathAt(offset)
+  const node = ancestors[ancestors.length - 1]
+  assert(node !== undefined)
+  if (node.type !== 'Identifier' && node.type !== 'MemberAccess') {
+    return { symbol: '', address: undefined }
+  }
+  const scope = scopeAt(index, ancestors, offset)
+  const expression = callOf(ancestors) ?? node
+  const value = evaluate({ workspace, scope, entry }, expression as Expression)
+  return { symbol: sourceText(index, expression), address: value.address }
 }
 
 // The cursor on a declaration's own name.
@@ -463,9 +491,8 @@ function mergeIdentical(
   return [...byCode.values()]
 }
 
-// The candidates are the contracts on the caller's chain that declare the
-// interface or, as the flattener prunes interfaces to used members, expose
-// all of its functions. Declaring it outranks exposing more of them.
+// Any contract on the caller's chain with the called function can be the
+// target. Declaring the interface ranks first, then exposing more of it.
 function abiMatchDefinitions(
   context: EvaluationContext,
   typeName: string,
@@ -487,8 +514,7 @@ function abiMatchDefinitions(
     })
     .map((fn) => ({ name: fn.name ?? '', arity: fn.parameters.length }))
   const chain = ChainSpecificAddress.chain(context.entry.address)
-  let scoreMax = 0
-  let candidates: FlatEntry[] = []
+  const ranked: { entry: FlatEntry; score: number }[] = []
   for (const entry of workspace.entries) {
     if (entry.type !== 'Contract' || entry.sourcePaths.length === 0) {
       continue
@@ -504,19 +530,11 @@ function abiMatchDefinitions(
     const nominal = entry.sourcePaths.some((path) =>
       workspace.source(path).mainContract?.linearization.includes(typeName),
     )
-    if (!nominal && shared.length < required.length) {
-      continue
-    }
     const score = (nominal ? NOMINAL_SCORE : 0) + shared.length
-    if (score > scoreMax) {
-      scoreMax = score
-      candidates = []
-    }
-    if (score === scoreMax) {
-      candidates.push(entry)
-    }
+    ranked.push({ entry, score })
   }
-  const definitions = candidates.flatMap((entry) =>
+  ranked.sort((a, b) => b.score - a.score)
+  const definitions = ranked.flatMap(({ entry }) =>
     definitionsInEntry(workspace, entry, member, 'abi-match', 'external', args),
   )
   return mergeIdentical(workspace, definitions)

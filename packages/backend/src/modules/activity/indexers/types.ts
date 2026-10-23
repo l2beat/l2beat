@@ -1,6 +1,7 @@
 import type { ActivityRecord, Database } from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
+import type { ActivityBlock } from '../services/txs/types'
 import type { BlockActivityIndexer } from './BlockActivityIndexer'
 import type { BlockTargetIndexer } from './BlockTargetIndexer'
 import type { DayActivityIndexer } from './DayActivityIndexer'
@@ -10,10 +11,18 @@ import type { SlotTargetIndexer } from './SlotTargetIndexer'
 export interface ActivityIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   projectId: ProjectId
-  txsCountService: TxsCountService
   db: Database
   /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
   batchSize: number
+}
+
+export interface BlockActivityIndexerDeps extends ActivityIndexerDeps {
+  blockSource: ActivityBlockSource
+}
+
+export interface ActivityBlockSource {
+  /** With their tx and uops counts, in ascending block order */
+  getBlocks(from: number, to: number): Promise<ActivityBlock[]>
 }
 
 export interface TxsCountService {
@@ -27,6 +36,7 @@ export interface TxsCountService {
 }
 
 export interface DayActivityIndexerDeps extends ActivityIndexerDeps {
+  txsCountService: TxsCountService
   // TODO: confirm if this logic is still needed
   // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
   uncertaintyBuffer: number

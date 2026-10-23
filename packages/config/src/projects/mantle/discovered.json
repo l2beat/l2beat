@@ -1,7 +1,7 @@
 {
   "name": "mantle",
-  "timestamp": 1789917555,
-  "configHash": "0x8a5560ce36649ffc02213187f54d9281c4f03c9c315548f990feaa125ae7f944",
+  "timestamp": 1792586696,
+  "configHash": "0x6ca9993b54f955fe6182607825e85ce48c83c40d51bba523ac1c6329bc733630",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -133,10 +133,10 @@
         "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 100892546,
-        "latestOutputIndex": 22066,
-        "nextBlockNumber": 100894346,
-        "nextOutputIndex": 22067,
+        "latestBlockNumber": 102226346,
+        "latestOutputIndex": 22807,
+        "nextBlockNumber": 102228146,
+        "nextOutputIndex": 22808,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
@@ -520,7 +520,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704465",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704609",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -673,8 +673,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 591926,
-          "prevBlockNum": 26018579
+          "prevBoughtGas": 593654,
+          "prevBlockNum": 26239921
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -838,6 +838,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "critical": true,
+      "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "mantle:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1688314886,
       "sinceBlock": 0,
@@ -851,7 +852,7 @@
         "L1_MNT_ADDRESS": "mantle:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "l1CrossDomainMessenger": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629671",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629809",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -909,6 +910,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "critical": true,
+      "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "mantle:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1688314886,
       "sinceBlock": 0,
@@ -919,7 +921,7 @@
         "$upgradeCount": 0,
         "L1_MNT_ADDRESS": "mantle:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629675",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629813",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -1646,7 +1648,7 @@
     "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x9a1f78fb3786e973f0204ba0c2838e0a89a5abeba36441b67f62257a9fe0d58c"
   },
-  "usedBlockNumbers": { "ethereum": 26019578, "mantle": 100893621 },
+  "usedBlockNumbers": { "ethereum": 26241056, "mantle": 102228192 },
   "permissionsConfigHash": "0xd2a275f13393a14154a6c99f6e2b9f162872e129287327fd49cc40f880b08108",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"

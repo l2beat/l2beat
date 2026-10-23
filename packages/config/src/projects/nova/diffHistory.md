@@ -1,3 +1,72 @@
+Generated with discovered.json: 0xd0eb1c33fbc44f936598509f21b55af476f48b38
+
+# Diff at Thu, 22 Oct 2026 08:32:47 GMT:
+
+- id: 34aac326
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bec160b11359d152c893eb245856d63bc5076062 block: 1788792011
+- current timestamp: 1792657894
+
+## Description
+
+UpgradeExecutor: PauseExecutor granted EXECUTOR_ROLE on 2026-10-02 by the Security Council. It can only forward `pause()`; its sole pauser is the permissionless OspSoundnessGuard.
+L1Timelock: two scheduled Arbitrum One calls recorded (TipCollectionToggler added as chain owner and activated).
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.2:
++        "eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9"
++++ severity: MEDIUM
+      values.executors.2:
++        "eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9"
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9","description":"manage the pausers.","role":".pauserAdmins"}
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.144:
++        {"id":"0x59470daae279ebdcaae1733764314be84996e57ad3d3fb40a2dab57aec6e7178","decoded":{"chain":"arbitrum","contractName":"","function":"0x481f8dbf","inputs":[{"name":"calldata","value":"0x481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a63"}],"address":"arb1:0x0000000000000000000000000000000000000070","calldata":"0x481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a63","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000a4bca8c7b5000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000024481f8dbf0000000000000000000000004323dab775cc15e386fdac591a39420db6226a630000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.145:
++        {"id":"0x59470daae279ebdcaae1733764314be84996e57ad3d3fb40a2dab57aec6e7178","decoded":{"chain":"arbitrum","contractName":"TipCollectionToggler","function":"activate","inputs":[],"address":"arb1:0x4323dAb775cc15e386FDAC591a39420db6226a63","calldata":"0x0f15f4c0","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000084bca8c7b50000000000000000000000004323dab775cc15e386fdac591a39420db6226a63000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000040f15f4c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9","description":"manage the pausers.","role":".pauserAdmins","via":[{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+    }
+```
+
+```diff
+    contract SecurityCouncil (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9","description":"manage the pausers.","role":".pauserAdmins","via":[{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PauseExecutor (eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9) [orbitstack/PauseExecutor]
+    +++ description: Executor-role holder that can only forward `pause()` calls: PAUSER_ROLE holders can pause any contract the UpgradeExecutor is authorized on. Not upgradeable.
+```
+
+```diff
++   Status: CREATED
+    contract OspSoundnessGuard (eth:0x6DEf0F0Ffb4d77347785036ea4Cd2320a3f3A17c) [orbitstack/OspSoundnessGuard]
+    +++ description: Permissionless circuit breaker: anyone proving that two rival edges both pass the one-step proof can pause the rollup through the PauseExecutor.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/nova/.flat/OspSoundnessGuard.sol  | 5304 ++++++++++++++++++++
+ .../src/projects/nova/.flat/PauseExecutor.sol      |  955 ++++
+ 2 files changed, 6259 insertions(+)
+```
+
 Generated with discovered.json: 0x4413d16306c002be027788dcb946d314d157ee13
 
 # Diff at Tue, 20 Oct 2026 12:40:01 GMT:
