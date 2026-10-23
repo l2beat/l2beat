@@ -46,6 +46,17 @@ const reportWaitDelay = formatSeconds(
   { fullUnit: true },
 )
 
+// weETH minted on L1 against L2 deposits whose ETH has not arrived yet
+const unbackedWeeth = `${(
+  Number(
+    discovery.getContractValueBigInt(
+      'EtherfiL1SyncPoolETH',
+      'getTotalUnbackedTokens',
+    ) /
+      10n ** 15n,
+  ) / 1000
+).toFixed(1)} weETH`
+
 // stETH held by EtherFiRestaker as a share of the ETH backing eETH
 const stethSharePct = `${
   Number(
@@ -111,7 +122,7 @@ export const etherfi: BaseProject = {
       name: 'EigenLayer',
       icon: 'eigenlayer',
       description:
-        "Holds the native stake of EigenPod-backed nodes: their validators' withdrawal credentials point at an EigenLayer EigenPod, so that ETH sits inside EigenLayer contracts. The pods and EigenLayer's DelegationManager, EigenPodManager and StrategyManager are upgradeable by EigenLayer governance, through its timelock or at once by its community multisig, and since the slashing release an AVS can slash delegated stake, but only stake an operator has allocated to it. Exits from these pods also wait out EigenLayer's roughly 14-day withdrawal delay. A node created without a pod is itself its validators' withdrawal address and requests exits directly through the EIP-7002 system contract, outside EigenLayer.",
+        "Holds the native stake of EigenPod-backed nodes: their validators' withdrawal credentials point at an EigenLayer EigenPod, so that ETH sits inside EigenLayer contracts. The pods and EigenLayer's DelegationManager, EigenPodManager and StrategyManager are upgradeable by EigenLayer governance, through its timelock or at once by its community multisig, and since the slashing release an AVS can slash delegated stake, but only stake an operator has allocated to it. Exits from these pods also wait out EigenLayer's withdrawal delay. A node created without a pod is itself its validators' withdrawal address and requests exits directly through the EIP-7002 system contract, outside EigenLayer.",
     },
     {
       type: 'tracked',
@@ -122,8 +133,7 @@ export const etherfi: BaseProject = {
       type: 'not-tracked',
       name: 'LayerZero',
       icon: 'layerzero',
-      description:
-        "weETH crosses chains as a LayerZero OFT. The mainnet lock-box holds ~110k weETH, and an L1 sync pool anticipatorily mints weETH against a dummy placeholder when a LayerZero message reports an L2 deposit, before the bridged ETH arrives (live unbacked ~45 weETH). A compromise of the LayerZero endpoint or its verifiers could forge inbound messages to unlock real weETH from the lock-box or mint against shared backing, and a messaging halt would strand cross-chain holders. Cross-chain integrity depends on LayerZero, bounded by the lock-box balance and the dummy token's Liquifier cap.",
+      description: `weETH crosses chains as a LayerZero OFT. The mainnet lock-box holds the weETH that backs every bridged token, and an L1 sync pool anticipatorily mints weETH against a dummy placeholder when a LayerZero message reports an L2 deposit, before the bridged ETH arrives (currently ${unbackedWeeth}). A compromise of the LayerZero endpoint or its verifiers could forge inbound messages to unlock real weETH from the lock-box or mint against shared backing, and a messaging halt would strand cross-chain holders. Cross-chain integrity depends on LayerZero, bounded by the lock-box balance and the dummy token's Liquifier cap.`,
     },
   ],
   permissions: discovery.getDiscoveredPermissions(),
