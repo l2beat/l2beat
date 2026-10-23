@@ -1,4 +1,4 @@
-import { type ComponentType, useEffect, useMemo, useRef } from 'react'
+import { type ComponentType, useEffect, useMemo, useRef, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { ApiAddressType } from '../../../../api/types'
 import { ADDRESS_ICON_COMPONENTS } from '../../../../components/AddressIcon'
@@ -2793,6 +2793,10 @@ export function NodesAndConnectionsWebGL() {
     })
   }
 
+  const [failure, setFailure] = useState<string | null>(null)
+  // Bumped when the browser restores a lost context, to build a new renderer.
+  const [contextGeneration, setContextGeneration] = useState(0)
+
   // Init.
   useEffect(() => {
     let cancelled = false
@@ -2805,7 +2809,9 @@ export function NodesAndConnectionsWebGL() {
       premultipliedAlpha: true,
     })
     if (!gl) {
-      console.error('WebGL2 not supported in this browser')
+      setFailure(
+        'The node view needs WebGL2, which this browser did not provide.',
+      )
       return
     }
     const dpr = window.devicePixelRatio || 1
@@ -2816,15 +2822,40 @@ export function NodesAndConnectionsWebGL() {
           return
         }
         rendererRef.current = renderer
+        setFailure(null)
         scheduleDraw.current()
       })
-      .catch((e) => {
-        console.error('WebGL renderer init failed', e)
+      .catch((error) => {
+        console.error('WebGL renderer init failed', error)
+        setFailure(
+          'The node view could not start WebGL. Reload the page to try again.',
+        )
       })
     return () => {
       cancelled = true
       rendererRef.current?.dispose()
       rendererRef.current = null
+    }
+  }, [contextGeneration])
+
+  // A GPU reset or too many contexts can take the context away. Keeping the
+  // default would leave the canvas blank for good; preventing it lets the
+  // browser restore the context, and a new renderer rebuilds everything.
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const onLost = (event: Event) => {
+      event.preventDefault()
+      rendererRef.current = null
+      setFailure('The node view lost its WebGL context and is waiting for it.')
+    }
+    const onRestored = () =>
+      setContextGeneration((generation) => generation + 1)
+    canvas.addEventListener('webglcontextlost', onLost)
+    canvas.addEventListener('webglcontextrestored', onRestored)
+    return () => {
+      canvas.removeEventListener('webglcontextlost', onLost)
+      canvas.removeEventListener('webglcontextrestored', onRestored)
     }
   }, [])
 
@@ -2854,9 +2885,16 @@ export function NodesAndConnectionsWebGL() {
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="pointer-events-none absolute inset-0 h-full w-full"
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 h-full w-full"
+      />
+      {failure !== null && (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-8 text-center text-coffee-200 text-sm">
+          {failure}
+        </div>
+      )}
+    </>
   )
 }
