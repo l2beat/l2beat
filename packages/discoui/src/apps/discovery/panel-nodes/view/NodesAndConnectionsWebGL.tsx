@@ -19,7 +19,6 @@ import {
 import { getRowLayout, type NodeRow } from '../store/utils/rows'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
-import { getGridCellSize } from './ScalableView'
 
 // ============================================================================
 // Constants
@@ -246,8 +245,8 @@ void main() {
     alpha = 1.0 - smoothstep(-aa, aa, d);
   }
   if (alpha <= 0.0) discard;
-  // repeating-radial-gradient(circle, ring 0, color RING_WIDTH) from the
-  // center, as initial contracts draw their header in the DOM renderer.
+  // Rings repeating every RING_WIDTH from the center, fading from the ring
+  // color into the fill, mark initial contracts' headers.
   vec3 color = v_ring.a > 0.0
     ? mix(v_ring.rgb, v_color.rgb, mod(length(v_local), RING_WIDTH) / RING_WIDTH)
     : v_color.rgb;
@@ -1666,8 +1665,7 @@ class WebGLRenderer {
       if (node.isInitial) rightX -= HEADER_ICON_SIZE
       const maxX = rightX - HEADER_ITEM_GAP
       const baselineY = node.box.y + headerH / 2 + atlas.refSize / 2 - 2
-      // The DOM header is justify-between, so a short name sits centered
-      // between the address icon and the badges.
+      // A short name sits centered between the address icon and the badges.
       const slack = maxX - startX - measureString(node.name, atlas)
       n += writeStringInstances(
         buf,
@@ -2720,6 +2718,12 @@ function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
     active.push(node)
   }
   return overlapping
+}
+
+function getGridCellSize(scale: number): number {
+  if (scale < 0.25) return 180
+  if (scale < 0.8) return 60
+  return 20
 }
 
 // ============================================================================

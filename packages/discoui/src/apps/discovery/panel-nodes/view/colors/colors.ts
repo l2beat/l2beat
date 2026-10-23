@@ -37,7 +37,7 @@ export function getColor({
   return cached
 }
 
-// The renderers ask for every node's color on every frame they rebuild, and
+// The renderer asks for every node's color on every frame they rebuild, and
 // a project has only a few distinct ones.
 const colorCache = new Map<string, NodeColor>()
 
