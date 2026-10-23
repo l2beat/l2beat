@@ -4,6 +4,7 @@ import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { Clock } from '../../../tools/Clock'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
+import { waitForTarget } from '../../../tools/waitForData'
 
 /**
  * This indexer is almost an exact copy of the Activity's BlockTargetIndexer.
@@ -21,12 +22,14 @@ export class BlockTargetIndexer extends RootIndexer {
     readonly daLayer: string,
     private readonly options?: {
       onTick?: (targetTimestamp: UnixTime, blockNumber: number) => Promise<void>
+      notReadyPollIntervalMs?: number
     },
   ) {
     super(
       logger.tag({
         tag: daLayer,
         project: daLayer,
+        chain: daLayer,
       }),
       {
         tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
@@ -49,11 +52,19 @@ export class BlockTargetIndexer extends RootIndexer {
       async () => {
         const timestamp = this.clock.getLastHour()
         this.logger.info('Getting block number for timestamp', { timestamp })
-        const blockNumber =
-          await this.blockTimestampProvider.getBlockNumberAtOrBefore(
+        const blockNumber = await waitForTarget(
+          () =>
+            this.blockTimestampProvider.getBlockNumberAtOrBefore(
+              timestamp,
+              this.daLayer,
+            ),
+          {
+            logger: this.logger,
+            chain: this.daLayer,
             timestamp,
-            this.daLayer,
-          )
+            pollIntervalMs: this.options?.notReadyPollIntervalMs,
+          },
+        )
 
         assert(
           blockNumber >= this.blockHeight,

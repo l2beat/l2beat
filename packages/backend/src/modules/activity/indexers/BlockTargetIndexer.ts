@@ -6,6 +6,7 @@ import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
+import { waitForTarget } from '../../../tools/waitForData'
 
 export class BlockTargetIndexer extends RootIndexer {
   // used only for runtime invalidation protection
@@ -19,12 +20,14 @@ export class BlockTargetIndexer extends RootIndexer {
     private readonly config: ActivityConfigProject,
     private readonly options?: {
       onTick?: (targetTimestamp: number, blockNumber: number) => Promise<void>
+      notReadyPollIntervalMs?: number
     },
   ) {
     super(
       logger.tag({
         tag: config.id,
         project: config.id,
+        chain: config.chainName,
       }),
       {
         tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
@@ -49,11 +52,19 @@ export class BlockTargetIndexer extends RootIndexer {
         const timestamp = this.clock.getLastHour()
         this.logger.info('Getting block number for timestamp', { timestamp })
 
-        const blockNumber =
-          await this.blockTimestampProvider.getBlockNumberAtOrBefore(
+        const blockNumber = await waitForTarget(
+          () =>
+            this.blockTimestampProvider.getBlockNumberAtOrBefore(
+              timestamp,
+              this.config.chainName,
+            ),
+          {
+            logger: this.logger,
+            chain: this.config.chainName,
             timestamp,
-            this.config.chainName,
-          )
+            pollIntervalMs: this.options?.notReadyPollIntervalMs,
+          },
+        )
 
         await this.checkBlockNumber(blockNumber)
 

@@ -46,7 +46,13 @@ export async function makeConfig(
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
 
-  const clockOffsetSeconds = UnixTime.HOUR
+  // How long after an hour ends the clock moves to it. Block targets and
+  // CoinGecko prices check that their data exists and wait if it does not, so
+  // this only has to cover Ethereum finality (~13 minutes).
+  const clockOffsetSeconds = env.integer(
+    'CLOCK_SAFE_TIME_OFFSET_SECONDS',
+    15 * UnixTime.MINUTE,
+  )
 
   return {
     name,

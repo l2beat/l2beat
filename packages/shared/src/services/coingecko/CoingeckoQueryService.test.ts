@@ -1,10 +1,14 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { CoingeckoId, getHourlyTimestamps, UnixTime } from '@l2beat/shared-pure'
+import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../clients'
+import { DataNotReadyError } from '../../tools/DataNotReadyError'
 import {
   approximateCirculatingSupply,
   CoingeckoQueryService,
   generateRangesToCallHourly,
+  getPublishedTimestamps,
   MAX_DAYS_FOR_HOURLY_PRECISION,
   MAX_REPAIRED_SUPPLY_GAP_HOURS,
   pickClosestValues,
@@ -250,6 +254,77 @@ describe(CoingeckoQueryService.name, () => {
       })
     },
   )
+
+  describe('hours CoinGecko has not published yet', () => {
+    const HOUR = UnixTime.fromDate(new Date('2026-10-23T12:00:00Z'))
+    let time: InstalledClock
+
+    beforeEach(() => {
+      time = install({ now: UnixTime.toDate(HOUR + 15 * UnixTime.MINUTE) })
+    })
+
+    afterEach(() => {
+      time.uninstall()
+    })
+
+    function client(lastPoint: UnixTime) {
+      const points = [lastPoint - UnixTime.HOUR, lastPoint].map((t) =>
+        mock(UnixTime.toDate(t), t),
+      )
+      return mockObject<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn().resolvesTo({
+          prices: points,
+          marketCaps: points,
+        }),
+      })
+    }
+
+    it('ends the result at the last published hour', async () => {
+      const lastPoint = HOUR - UnixTime.HOUR + 3 * UnixTime.MINUTE
+      const warn = mockFn().returns(undefined)
+      const logger: Logger = mockObject<Logger>({ warn, for: () => logger })
+      const service = new CoingeckoQueryService(client(lastPoint), logger)
+
+      const prices = await service.getUsdPriceHistoryHourly(
+        CoingeckoId('weth'),
+        HOUR - 2 * UnixTime.HOUR,
+        HOUR,
+      )
+
+      expect(prices.map((p) => p.timestamp)).toEqual([
+        HOUR - 2 * UnixTime.HOUR,
+        HOUR - UnixTime.HOUR,
+      ])
+      expect(warn).toHaveBeenOnlyCalledWith('Stale price point rejected', {
+        coingeckoId: CoingeckoId('weth'),
+        timestamp: HOUR,
+        closestTimestamp: lastPoint,
+        distanceSeconds: 57 * UnixTime.MINUTE,
+      })
+    })
+
+    it('throws DataNotReadyError when the first hour is not published', async () => {
+      const lastPoint = HOUR - UnixTime.HOUR + 3 * UnixTime.MINUTE
+      const service = new CoingeckoQueryService(client(lastPoint))
+
+      await expect(
+        service.getUsdPriceHistoryHourly(CoingeckoId('weth'), HOUR, HOUR),
+      ).toBeRejectedWith(DataNotReadyError)
+    })
+
+    it('returns the hour once its point is published', async () => {
+      const lastPoint = HOUR + 4 * UnixTime.MINUTE
+      const service = new CoingeckoQueryService(client(lastPoint))
+
+      const prices = await service.getUsdPriceHistoryHourly(
+        CoingeckoId('weth'),
+        HOUR,
+        HOUR,
+      )
+
+      expect(prices).toEqual([{ timestamp: HOUR, value: lastPoint }])
+    })
+  })
 
   describe(CoingeckoQueryService.prototype.getCirculatingSupplies.name, () => {
     it('returns circulating supplies', async () => {
@@ -603,6 +678,48 @@ describe(pickClosestValues.name, () => {
         timestamp: START + 2 * UnixTime.HOUR,
       },
     ])
+  })
+})
+
+describe(getPublishedTimestamps.name, () => {
+  const HOUR = UnixTime.fromDate(new Date('2026-10-23T12:00:00Z'))
+  const NOW = HOUR + 15 * UnixTime.MINUTE
+  const hours = (from: UnixTime, to: UnixTime) => getHourlyTimestamps(from, to)
+
+  it('keeps an hour whose point is on the hour', () => {
+    expect(getPublishedTimestamps([HOUR], HOUR, NOW)).toEqual([HOUR])
+  })
+
+  it('drops an hour whose closest point is an hour before it', () => {
+    expect(
+      getPublishedTimestamps(
+        hours(HOUR - UnixTime.HOUR, HOUR),
+        HOUR - UnixTime.HOUR + 2 * UnixTime.MINUTE,
+        NOW,
+      ),
+    ).toEqual([HOUR - UnixTime.HOUR])
+  })
+
+  it('keeps a back-fill whose points are a few minutes off the hour', () => {
+    const from = HOUR - 48 * UnixTime.HOUR
+    expect(
+      getPublishedTimestamps(
+        hours(from, HOUR),
+        HOUR - 4 * UnixTime.MINUTE,
+        NOW,
+      ),
+    ).toEqual(hours(from, HOUR))
+  })
+
+  it('keeps every hour of a coin that stopped being updated', () => {
+    const lastPoint = HOUR - 3 * UnixTime.HOUR
+    expect(
+      getPublishedTimestamps(hours(lastPoint, HOUR), lastPoint, NOW),
+    ).toEqual(hours(lastPoint, HOUR))
+  })
+
+  it('keeps every hour when there are no points', () => {
+    expect(getPublishedTimestamps([HOUR], undefined, NOW)).toEqual([HOUR])
   })
 })
 

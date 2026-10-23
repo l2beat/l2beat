@@ -1,7 +1,8 @@
 import { CoingeckoQueryService, DuneQueryService } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
+import { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -18,7 +19,7 @@ import { createTrackedTxsTrpcRouter } from './trpc/router'
 export function createTrackedTxsModule(
   deps: ModuleDependencies,
 ): ApplicationModule | undefined {
-  let { config, logger, db, providers, clock } = deps
+  let { config, logger, db, providers } = deps
 
   if (!config.trackedTxsConfig) {
     logger.info('TrackedTxsModule disabled')
@@ -45,6 +46,13 @@ export function createTrackedTxsModule(
     (project) => project.configurations,
   )
 
+  // Tracked txs read each hour from Dune once and never again, and nothing
+  // checks that Dune has ingested the hour. They keep the one-hour margin the
+  // shared clock had before block targets and prices started verifying data.
+  const clock = new Clock(
+    config.clock.minBlockTimestamp,
+    Math.max(config.clock.safeTimeOffsetSeconds, UnixTime.HOUR),
+  )
   const hourlyIndexer = new HourlyIndexer(logger, clock, {
     onTick: async (targetTimestamp) => {
       const [l2CostsConfigs, livenessConfigs] = partition(

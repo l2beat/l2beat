@@ -6,6 +6,7 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
+import { waitForPrices } from '../../../../../tools/waitForData'
 
 export interface L2CostsPricesIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -36,7 +37,10 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
       shiftedTo,
     })
 
-    const prices = await this.fetchPrices(unixFrom, shiftedTo)
+    const prices = await waitForPrices(
+      () => this.fetchPrices(unixFrom, shiftedTo),
+      { logger: this.logger, priceId: ETHEREUM_COINGECKO_ID },
+    )
 
     if (prices.length === 0) {
       this.logger.info('Nothing to save in DB')
@@ -49,7 +53,9 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
       prices: prices.length,
     })
 
-    return shiftedTo
+    // CoinGecko may not have published the last hours yet, they are fetched
+    // again on the next update
+    return prices[prices.length - 1].timestamp
   }
 
   async fetchPrices(

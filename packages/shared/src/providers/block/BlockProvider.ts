@@ -1,6 +1,9 @@
 import { assert, type Block, UnixTime } from '@l2beat/shared-pure'
 import type { BlockClient, TransactionReceipt } from '../../clients'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
+import {
+  type BlockNumberAtOrBeforeOptions,
+  getBlockNumberAtOrBefore,
+} from '../../tools/getBlockNumberAtOrBefore'
 
 export class BlockProvider {
   constructor(
@@ -39,6 +42,11 @@ export class BlockProvider {
     }
 
     throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+  }
+
+  async getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
+    const block = await this.getBlockWithTransactions(blockNumber)
+    return UnixTime(block.timestamp)
   }
 
   async getBlockTimestamps(
@@ -84,6 +92,7 @@ export class BlockProvider {
   async getBlockNumberAtOrBefore(
     timestamp: UnixTime,
     start = 1,
+    options?: BlockNumberAtOrBeforeOptions,
   ): Promise<number> {
     for (const [index, client] of this.clients.entries()) {
       try {
@@ -95,6 +104,7 @@ export class BlockProvider {
           effectiveStart,
           end,
           (number: number) => client.getBlockWithTransactions(number),
+          options,
         )
       } catch (error) {
         if (index === this.clients.length - 1) throw error

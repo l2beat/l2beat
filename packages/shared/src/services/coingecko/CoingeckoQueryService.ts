@@ -11,10 +11,19 @@ import type {
   CoinMarketChartRangeData,
   CoinsMarketResultData,
 } from '../../clients/coingecko/types'
+import { DataNotReadyError } from '../../tools/DataNotReadyError'
 
 export const MAX_DAYS_FOR_HOURLY_PRECISION = 80
 export const COINGECKO_INTERPOLATION_WINDOW_DAYS = 14
 export const MAX_REPAIRED_SUPPLY_GAP_HOURS = 24
+// CoinGecko publishes the point for an hour a few minutes after the hour.
+// Until then the closest point to it is the previous hour's, which must not be
+// stored as this hour's. An hour this far past the last point counts as not
+// published yet. Historical points a few minutes off the hour are well within.
+export const MAX_POINT_DISTANCE = 30 * UnixTime.MINUTE
+// A coin whose last point is older than this has stopped being updated, so its
+// last point keeps being used for later hours instead of waiting forever.
+export const MAX_PUBLICATION_DELAY = 2 * UnixTime.HOUR
 
 export interface QueryResultPoint {
   value: number
@@ -146,6 +155,10 @@ export class CoingeckoQueryService {
     return repaired
   }
 
+  /**
+   * The result ends before `range.to` if CoinGecko has not published the last
+   * hours yet. Throws DataNotReadyError if it has not published `range.from`.
+   */
   async queryHourlyPricesAndMarketCaps(
     coingeckoId: CoingeckoId,
     range: { from: UnixTime; to: UnixTime },
@@ -156,7 +169,29 @@ export class CoingeckoQueryService {
       range.to,
     )
 
-    const timestamps = getHourlyTimestamps(range.from, range.to)
+    const lastPoint = getLastPointTimestamp(queryResult)
+    const requested = getHourlyTimestamps(range.from, range.to)
+    const timestamps = getPublishedTimestamps(
+      requested,
+      lastPoint,
+      UnixTime.now(),
+    )
+    // only trailing hours are dropped, so their closest point is the last one
+    if (lastPoint !== undefined) {
+      for (const timestamp of requested.slice(timestamps.length)) {
+        this.logger.warn('Stale price point rejected', {
+          coingeckoId,
+          timestamp,
+          closestTimestamp: lastPoint,
+          distanceSeconds: timestamp - lastPoint,
+        })
+      }
+    }
+    if (timestamps.length === 0) {
+      throw new DataNotReadyError('CoinGecko has not published the hour yet', {
+        cause: { coingeckoId, timestamp: range.from, lastPoint },
+      })
+    }
 
     const prices = pickClosestValues(queryResult.prices, timestamps)
     const marketCaps = pickClosestValues(queryResult.marketCaps, timestamps)
@@ -316,6 +351,32 @@ export function pickClosestValues(
     })
   }
   return result
+}
+
+/**
+ * Drops the trailing timestamps CoinGecko has not published a point for yet.
+ * Gaps in the middle of the data are left to `pickClosestValues`.
+ */
+export function getPublishedTimestamps(
+  timestamps: UnixTime[],
+  lastPoint: UnixTime | undefined,
+  now: UnixTime,
+): UnixTime[] {
+  if (lastPoint === undefined || now - lastPoint > MAX_PUBLICATION_DELAY) {
+    return timestamps
+  }
+  return timestamps.filter((t) => t <= lastPoint + MAX_POINT_DISTANCE)
+}
+
+function getLastPointTimestamp(
+  data: CoinMarketChartRangeData,
+): UnixTime | undefined {
+  const lastPrice = data.prices.at(-1)
+  const lastMarketCap = data.marketCaps.at(-1)
+  if (!lastPrice || !lastMarketCap) return undefined
+  return UnixTime.fromDate(
+    lastPrice.date < lastMarketCap.date ? lastPrice.date : lastMarketCap.date,
+  )
 }
 
 function adjust(from: UnixTime, to: UnixTime): [UnixTime, UnixTime] {
