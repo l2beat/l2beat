@@ -20,6 +20,8 @@ export function getClockOffset(env: Env): {
 
   const offsetSeconds = Number(value)
   if (
+    // Number() also reads '0x384', '9e2' and ' 900' as 900
+    String(offsetSeconds) !== value ||
     !Number.isInteger(offsetSeconds) ||
     offsetSeconds < MIN_OFFSET_SECONDS ||
     offsetSeconds > MAX_OFFSET_SECONDS
