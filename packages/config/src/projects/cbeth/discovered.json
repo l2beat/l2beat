@@ -1,0 +1,526 @@
+{
+  "name": "cbeth",
+  "timestamp": 1792491622,
+  "configHash": "0x38e81b7d9a89105a51af2c7545226fa760a39e040a14264c23dd0e99e751b037",
+  "entries": [
+    {
+      "address": "eth:0x1812156465601d025A82e2eDC55175bd8D16Bbe6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x4b8741C89ABFf2562e854899E24d67A36406eA03",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x4CD6AC4bdd291488e9f26967722A7C5bF6ABbBe5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "MintForwarder",
+      "address": "eth:0x6D44bfB8432d17882bB6e84652f5C3B36fcC8280",
+      "type": "Contract",
+      "template": "cbeth/MintForwarder",
+      "sourceHashes": [
+        "0xef444c27c40188877fd3ac53431814621d6fbfb5bed0566d4a13b1b582a26718"
+      ],
+      "proxyType": "immutable",
+      "description": "Rate-limited minting relay registered as a minter of the token. Whitelisted callers mint tokens to any address through it, each within an allowance that caps the amount per refill interval; the allowance refills linearly. No ETH is attached to a mint, so minted tokens are backed only by the issuer's off-chain records.",
+      "deployerAddress": "eth:0xbf6877B0Cc4136Bc4BB0fCDb689e78720b2428A7",
+      "sinceTimestamp": 1643909067,
+      "sinceBlock": 14134349,
+      "values": {
+        "$immutable": true,
+        "callerLimits": [
+          {
+            "caller": "eth:0xfae23c30d383DF59D3E031C325a73d454e8721a6",
+            "amount": "8000000000000000000000",
+            "interval": 14400
+          },
+          {
+            "caller": "eth:0xaF24CbC4C76f7926A5c6D2fe5792e258f6B27a77",
+            "amount": 1000000000,
+            "interval": 31536000
+          },
+          {
+            "caller": "eth:0x1812156465601d025A82e2eDC55175bd8D16Bbe6",
+            "amount": "1121627365709077879733936",
+            "interval": 31536000
+          }
+        ],
+        "callers": [
+          "eth:0xfae23c30d383DF59D3E031C325a73d454e8721a6",
+          "eth:0xaF24CbC4C76f7926A5c6D2fe5792e258f6B27a77",
+          "eth:0x1812156465601d025A82e2eDC55175bd8D16Bbe6"
+        ],
+        "owner": "eth:0x4CD6AC4bdd291488e9f26967722A7C5bF6ABbBe5",
+        "tokenContract": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "callers": {
+          "severity": "HIGH",
+          "description": "Addresses allowed to mint tokens through this contract."
+        },
+        "callerLimits": {
+          "description": "Per-caller cap on the amount minted (token units) and the number of seconds over which that allowance refills, as last configured."
+        },
+        "tokenContract": { "description": "The token this contract mints." }
+      },
+      "implementationNames": {
+        "eth:0x6D44bfB8432d17882bB6e84652f5C3B36fcC8280": "MintForwarder"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x7Dd4aa646b2e2850f9D809F9299E8E87AC97b77a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x9596EAE1744997161ac094252e5020E9314BDCc2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ExchangeRateUpdater",
+      "address": "eth:0x9b37180d847B27ADC13C2277299045C1237Ae281",
+      "type": "Contract",
+      "template": "shared-wrapped-tokens/ExchangeRateUpdater",
+      "sourceHashes": [
+        "0x9da1385c5bc89e1e0c1b0f00884026599427a7ffcd22ab976f0f74da6da35170"
+      ],
+      "proxyType": "immutable",
+      "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.",
+      "deployerAddress": "eth:0xbf6877B0Cc4136Bc4BB0fCDb689e78720b2428A7",
+      "sinceTimestamp": 1643910274,
+      "sinceBlock": 14134435,
+      "values": {
+        "$immutable": true,
+        "callerLimits": [
+          {
+            "caller": "eth:0xA74D6B26e308B140423928F7e71b50E02819Cb5c",
+            "amount": "10000000000000000000",
+            "interval": 31536000
+          }
+        ],
+        "callers": ["eth:0xA74D6B26e308B140423928F7e71b50E02819Cb5c"],
+        "owner": "eth:0xA57aFe0Ba93f6854ed1DCd58dCE301E10B15D1D6",
+        "tokenContract": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "callers": {
+          "severity": "HIGH",
+          "description": "Addresses allowed to push a new exchange rate through this contract."
+        },
+        "callerLimits": {
+          "description": "Per-caller cap on the cumulative absolute rate change (1e18 scale) and the number of seconds over which that allowance refills, as last configured."
+        },
+        "tokenContract": {
+          "description": "The token whose exchange rate this contract writes."
+        }
+      },
+      "implementationNames": {
+        "eth:0x9b37180d847B27ADC13C2277299045C1237Ae281": "ExchangeRateUpdater"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x9bf90191444f7E0C52da9A4D31C419B4c96BA372",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xA57aFe0Ba93f6854ed1DCd58dCE301E10B15D1D6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xA74D6B26e308B140423928F7e71b50E02819Cb5c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xaF24CbC4C76f7926A5c6D2fe5792e258f6B27a77",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xBE3c68821D585Cf1552214897a1c091014B1EB0a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "cbETH",
+      "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+      "type": "Contract",
+      "template": "cbeth/StakedTokenV1",
+      "sourceHashes": [
+        "0x3e6aa5a9e907eadff9fe4df338a8f629966b60307fbbe5956fb9886d74822fd1",
+        "0x8f559627b75eea9a4a7c2661bb070e964c8b2d95974d90bcc0710570108d1af4"
+      ],
+      "proxyType": "ZeppelinOS proxy",
+      "description": "Value-accruing staked-ETH token (cbETH) built on Circle's FiatToken code with an exchange-rate layer on top. The contract has no deposit or redemption function and holds no ETH: supply changes only through mint() and burn() by configured minters, and the ETH-per-token exchange rate is a single storage value written by the oracle address, bounded only to be non-zero. Transfers, approvals, mints and burns revert while the token is paused or when either party is blacklisted.",
+      "ignoreInWatchMode": ["totalSupply", "exchangeRate"],
+      "deployerAddress": "eth:0xdf95DC8971217ce0b345B31D8A4B9Cc13D6825c9",
+      "sinceTimestamp": 1643901537,
+      "sinceBlock": 14133762,
+      "values": {
+        "$admin": "eth:0xEeE4Ac8A22a6b310c53d59a7d59b3E0336C19577",
+        "$immutable": false,
+        "$implementation": "eth:0x31724cA0C982A31fbb5C57f4217AB585271fc9a5",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "blacklister": "eth:0xBE3c68821D585Cf1552214897a1c091014B1EB0a",
+        "decimals": 18,
+        "exchangeRate": "1.141993806808257548",
+        "masterMinter": "eth:0x7Dd4aa646b2e2850f9D809F9299E8E87AC97b77a",
+        "minterAllowances": [
+          {
+            "minter": "eth:0x6D44bfB8432d17882bB6e84652f5C3B36fcC8280",
+            "minterAllowedAmount": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+          },
+          {
+            "minter": "eth:0x9bf90191444f7E0C52da9A4D31C419B4c96BA372",
+            "minterAllowedAmount": 0
+          }
+        ],
+        "minters": [
+          "eth:0x6D44bfB8432d17882bB6e84652f5C3B36fcC8280",
+          "eth:0x9bf90191444f7E0C52da9A4D31C419B4c96BA372"
+        ],
+        "name": "Coinbase Wrapped Staked ETH",
+        "oracle": "eth:0x9b37180d847B27ADC13C2277299045C1237Ae281",
+        "owner": "eth:0x4b8741C89ABFf2562e854899E24d67A36406eA03",
+        "paused": false,
+        "pauser": "eth:0x9596EAE1744997161ac094252e5020E9314BDCc2",
+        "rescuer": "eth:0x0000000000000000000000000000000000000000",
+        "symbol": "cbETH",
+        "totalSupply": "393750601365061869784889",
+        "version": "2"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "masterMinter": { "severity": "HIGH" },
+        "minters": {
+          "severity": "HIGH",
+          "description": "Addresses allowed to mint tokens within the allowance the masterMinter set, and to burn their own balance."
+        },
+        "minterAllowances": {
+          "description": "Mint allowance per minter as last configured by the masterMinter; the live remaining allowance decreases with every mint. A minter with a zero allowance can still burn."
+        },
+        "pauser": { "severity": "HIGH" },
+        "blacklister": { "severity": "HIGH" },
+        "oracle": {
+          "severity": "HIGH",
+          "description": "The only address that can write the exchange rate."
+        },
+        "exchangeRate": {
+          "description": "ETH per token, scaled by 1e18. Written by the oracle. The contract does not use it in any function, so it is informational on-chain."
+        },
+        "paused": {
+          "description": "Whether transfers, approvals, mints and burns are currently halted."
+        }
+      },
+      "implementationNames": {
+        "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704": "FiatTokenProxy",
+        "eth:0x31724cA0C982A31fbb5C57f4217AB585271fc9a5": "StakedTokenV1"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xEeE4Ac8A22a6b310c53d59a7d59b3E0336C19577",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xfae23c30d383DF59D3E031C325a73d454e8721a6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "eth:0x31724cA0C982A31fbb5C57f4217AB585271fc9a5": [
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event AuthorizationCanceled(address indexed authorizer, bytes32 indexed nonce)",
+      "event AuthorizationUsed(address indexed authorizer, bytes32 indexed nonce)",
+      "event Blacklisted(address indexed _account)",
+      "event BlacklisterChanged(address indexed newBlacklister)",
+      "event Burn(address indexed burner, uint256 amount)",
+      "event ExchangeRateUpdated(address indexed oracle, uint256 newExchangeRate)",
+      "event MasterMinterChanged(address indexed newMasterMinter)",
+      "event Mint(address indexed minter, address indexed to, uint256 amount)",
+      "event MinterConfigured(address indexed minter, uint256 minterAllowedAmount)",
+      "event MinterRemoved(address indexed oldMinter)",
+      "event OracleUpdated(address indexed newOracle)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)",
+      "event Pause()",
+      "event PauserChanged(address indexed newAddress)",
+      "event RescuerChanged(address indexed newRescuer)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event UnBlacklisted(address indexed _account)",
+      "event Unpause()",
+      "function CANCEL_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function RECEIVE_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function TRANSFER_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function authorizationState(address authorizer, bytes32 nonce) view returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function blacklist(address _account)",
+      "function blacklister() view returns (address)",
+      "function burn(uint256 _amount)",
+      "function cancelAuthorization(address authorizer, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function configureMinter(address minter, uint256 minterAllowedAmount) returns (bool)",
+      "function currency() view returns (string)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 decrement) returns (bool)",
+      "function exchangeRate() view returns (uint256 _exchangeRate)",
+      "function increaseAllowance(address spender, uint256 increment) returns (bool)",
+      "function initialize(string tokenName, string tokenSymbol, string tokenCurrency, uint8 tokenDecimals, address newMasterMinter, address newPauser, address newBlacklister, address newOwner)",
+      "function initializeV2(string newName)",
+      "function initializeV2_1(address lostAndFound)",
+      "function isBlacklisted(address _account) view returns (bool)",
+      "function isMinter(address account) view returns (bool)",
+      "function masterMinter() view returns (address)",
+      "function mint(address _to, uint256 _amount) returns (bool)",
+      "function minterAllowance(address minter) view returns (uint256)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function oracle() view returns (address _oracle)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function receiveWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function removeMinter(address minter) returns (bool)",
+      "function rescueERC20(address tokenContract, address to, uint256 amount)",
+      "function rescuer() view returns (address)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function unBlacklist(address _account)",
+      "function unpause()",
+      "function updateBlacklister(address _newBlacklister)",
+      "function updateExchangeRate(uint256 newExchangeRate)",
+      "function updateMasterMinter(address _newMasterMinter)",
+      "function updateOracle(address newOracle)",
+      "function updatePauser(address _newPauser)",
+      "function updateRescuer(address newRescuer)",
+      "function version() view returns (string)"
+    ],
+    "eth:0x6D44bfB8432d17882bB6e84652f5C3B36fcC8280": [
+      "event AllowanceReplenished(address indexed caller, uint256 allowance, uint256 amountReplenished)",
+      "event CallerConfigured(address indexed caller, uint256 amount, uint256 interval)",
+      "event CallerRemoved(address indexed caller)",
+      "event Mint(address indexed minter, address indexed to, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function allowances(address) view returns (uint256)",
+      "function allowancesLastSet(address) view returns (uint256)",
+      "function callers(address) view returns (bool)",
+      "function configureCaller(address caller, uint256 amount, uint256 interval)",
+      "function currentAllowance(address caller) returns (uint256)",
+      "function estimatedAllowance(address caller) view returns (uint256)",
+      "function initialize(address newOwner, address newTokenContract)",
+      "function intervals(address) view returns (uint256)",
+      "function maxAllowances(address) view returns (uint256)",
+      "function mint(address _to, uint256 _amount)",
+      "function owner() view returns (address)",
+      "function removeCaller(address caller)",
+      "function renounceOwnership()",
+      "function tokenContract() view returns (address)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x9b37180d847B27ADC13C2277299045C1237Ae281": [
+      "event AllowanceReplenished(address indexed caller, uint256 allowance, uint256 amountReplenished)",
+      "event CallerConfigured(address indexed caller, uint256 amount, uint256 interval)",
+      "event CallerRemoved(address indexed caller)",
+      "event ExchangeRateUpdated(address indexed caller, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function allowances(address) view returns (uint256)",
+      "function allowancesLastSet(address) view returns (uint256)",
+      "function callers(address) view returns (bool)",
+      "function configureCaller(address caller, uint256 amount, uint256 interval)",
+      "function currentAllowance(address caller) returns (uint256)",
+      "function estimatedAllowance(address caller) view returns (uint256)",
+      "function initialize(address newOwner, address newTokenContract)",
+      "function intervals(address) view returns (uint256)",
+      "function maxAllowances(address) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function removeCaller(address caller)",
+      "function renounceOwnership()",
+      "function tokenContract() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateExchangeRate(uint256 _newExchangeRate)"
+    ],
+    "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704": [
+      "constructor(address implementationContract)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address implementation)",
+      "function admin() view returns (address)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() view returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ]
+  },
+  "usedTemplates": {
+    "cbeth/MintForwarder": "0x6c0385a2cde573ea7fa7d39dfb64644d8a553877f5abdaf55c2e0671bb5ac020",
+    "cbeth/StakedTokenV1": "0x976beb4d91f6784c4e96e5ea400027a58e8f47a23ab5be68bd6089218339ed56",
+    "shared-wrapped-tokens/ExchangeRateUpdater": "0x6c0385a2cde573ea7fa7d39dfb64644d8a553877f5abdaf55c2e0671bb5ac020"
+  },
+  "usedBlockNumbers": { "ethereum": 26233157 },
+  "permissionsConfigHash": "0xff7556a69cf37afe58719af532d2e16b0b526b814bfe9255f02231a4d288f27d",
+  "permissions": {
+    "eth:0x1812156465601d025A82e2eDC55175bd8D16Bbe6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6D44bfB8432d17882bB6e84652f5C3B36fcC8280",
+          "description": "mint tokens to any address with no on-chain backing, up to its allowance per refill interval.",
+          "role": ".callers"
+        }
+      ]
+    },
+    "eth:0x4CD6AC4bdd291488e9f26967722A7C5bF6ABbBe5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6D44bfB8432d17882bB6e84652f5C3B36fcC8280",
+          "description": "whitelist or remove callers and set each caller's mint allowance and refill interval, with no delay.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x4b8741C89ABFf2562e854899E24d67A36406eA03": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+          "description": "replace the oracle, masterMinter, pauser, blacklister and rescuer addresses at any time, with no delay. Replacing the oracle removes any rate limit the current oracle contract enforces.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x6D44bfB8432d17882bB6e84652f5C3B36fcC8280": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+          "description": "mint tokens to any address with no on-chain backing, up to its minter allowance, and burn its own balance.",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x7Dd4aa646b2e2850f9D809F9299E8E87AC97b77a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+          "description": "configure minters and their allowances. A minter can mint tokens to any address with no on-chain backing, up to its allowance.",
+          "role": ".masterMinter"
+        }
+      ]
+    },
+    "eth:0x9596EAE1744997161ac094252e5020E9314BDCc2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+          "description": "pause and unpause the token. While paused, transfers, approvals, mints and burns all revert.",
+          "role": ".pauser"
+        }
+      ]
+    },
+    "eth:0x9b37180d847B27ADC13C2277299045C1237Ae281": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+          "description": "set the ETH-per-token exchange rate. The token itself only requires the new rate to be non-zero; any tighter bound comes from the oracle contract.",
+          "role": ".oracle"
+        }
+      ]
+    },
+    "eth:0x9bf90191444f7E0C52da9A4D31C419B4c96BA372": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+          "description": "mint tokens to any address with no on-chain backing, up to its minter allowance, and burn its own balance.",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0xA57aFe0Ba93f6854ed1DCd58dCE301E10B15D1D6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x9b37180d847B27ADC13C2277299045C1237Ae281",
+          "description": "whitelist or remove callers and set each caller's allowance and refill interval, with no delay.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xA74D6B26e308B140423928F7e71b50E02819Cb5c": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x9b37180d847B27ADC13C2277299045C1237Ae281",
+          "description": "set the exchange rate, up or down, by at most its allowance per refill interval.",
+          "role": ".callers"
+        }
+      ]
+    },
+    "eth:0xBE3c68821D585Cf1552214897a1c091014B1EB0a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+          "description": "blacklist any address, blocking it from sending, receiving, approving, minting or burning tokens, and lift the blacklist again.",
+          "role": ".blacklister"
+        }
+      ]
+    },
+    "eth:0xEeE4Ac8A22a6b310c53d59a7d59b3E0336C19577": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+          "role": "admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xaF24CbC4C76f7926A5c6D2fe5792e258f6B27a77": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6D44bfB8432d17882bB6e84652f5C3B36fcC8280",
+          "description": "mint tokens to any address with no on-chain backing, up to its allowance per refill interval.",
+          "role": ".callers"
+        }
+      ]
+    },
+    "eth:0xfae23c30d383DF59D3E031C325a73d454e8721a6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6D44bfB8432d17882bB6e84652f5C3B36fcC8280",
+          "description": "mint tokens to any address with no on-chain backing, up to its allowance per refill interval.",
+          "role": ".callers"
+        }
+      ]
+    }
+  }
+}

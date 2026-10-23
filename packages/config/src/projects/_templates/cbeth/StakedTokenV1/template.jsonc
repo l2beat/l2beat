@@ -1,0 +1,105 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Value-accruing staked-ETH token ({{ symbol }}) built on Circle's FiatToken code with an exchange-rate layer on top. The contract has no deposit or redemption function and holds no ETH: supply changes only through mint() and burn() by configured minters, and the ETH-per-token exchange rate is a single storage value written by the oracle address, bounded only to be non-zero. Transfers, approvals, mints and burns revert while the token is paused or when either party is blacklisted.",
+  "ignoreInWatchMode": ["totalSupply", "exchangeRate"],
+  "ignoreMethods": [
+    "admin",
+    "implementation",
+    "currency",
+    "DOMAIN_SEPARATOR",
+    "PERMIT_TYPEHASH",
+    "TRANSFER_WITH_AUTHORIZATION_TYPEHASH",
+    "RECEIVE_WITH_AUTHORIZATION_TYPEHASH",
+    "CANCEL_AUTHORIZATION_TYPEHASH"
+  ],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the oracle, masterMinter, pauser, blacklister and rescuer addresses at any time, with no delay. Replacing the oracle removes any rate limit the current oracle contract enforces."
+        }
+      ]
+    },
+    "masterMinter": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure minters and their allowances. A minter can mint tokens to any address with no on-chain backing, up to its allowance."
+        }
+      ]
+    },
+    "minters": {
+      "handler": {
+        "type": "event",
+        "select": "minter",
+        "add": { "event": "MinterConfigured" },
+        "remove": { "event": "event MinterRemoved(address indexed minter)" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to mint tokens within the allowance the masterMinter set, and to burn their own balance.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint tokens to any address with no on-chain backing, up to its minter allowance, and burn its own balance."
+        }
+      ]
+    },
+    "minterAllowances": {
+      "handler": {
+        "type": "event",
+        "select": ["minter", "minterAllowedAmount"],
+        "dedupBy": "minter",
+        "add": { "event": "MinterConfigured" },
+        "remove": { "event": "event MinterRemoved(address indexed minter)" }
+      },
+      "description": "Mint allowance per minter as last configured by the masterMinter; the live remaining allowance decreases with every mint. A minter with a zero allowance can still burn."
+    },
+    "pauser": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause the token. While paused, transfers, approvals, mints and burns all revert."
+        }
+      ]
+    },
+    "blacklister": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "blacklist any address, blocking it from sending, receiving, approving, minting or burning tokens, and lift the blacklist again."
+        }
+      ]
+    },
+    "rescuer": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer any ERC20 held by this contract to any address."
+        }
+      ]
+    },
+    "oracle": {
+      "severity": "HIGH",
+      "description": "The only address that can write the exchange rate.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the ETH-per-token exchange rate. The token itself only requires the new rate to be non-zero; any tighter bound comes from the oracle contract."
+        }
+      ]
+    },
+    "exchangeRate": {
+      "description": "ETH per token, scaled by 1e18. Written by the oracle. The contract does not use it in any function, so it is informational on-chain.",
+      "edit": ["format", "Undecimal18"]
+    },
+    "paused": {
+      "description": "Whether transfers, approvals, mints and burns are currently halted."
+    }
+  }
+}

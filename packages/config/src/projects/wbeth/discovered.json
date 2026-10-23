@@ -1,6 +1,6 @@
 {
   "name": "wbeth",
-  "timestamp": 1791381204,
+  "timestamp": 1792513199,
   "configHash": "0x7ad15a182713907fda47d613cde8413976b7732c26150ca7043569a7950fe6bb",
   "entries": [
     {
@@ -56,7 +56,7 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "admin": "eth:0xA3eE6926edcce93BacF05F4222c243c4d9F6d853",
-        "availableAllocateAmount": "89818794001183212172",
+        "availableAllocateAmount": "89806860937065033563",
         "blacklister": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "ethBackAddress": "eth:0x26ad6395DABF271fD9bFDC82d7377261930E6B86",
         "ethStaked": 0,
@@ -67,13 +67,13 @@
         "MAX_LOOP_NUM": 1000,
         "MIN_LOCK_TIME": 172800,
         "needEthAmount": 0,
-        "nextIndex": 138,
+        "nextIndex": 139,
         "operatorAddress": "eth:0x2B59215778e99035CF38663454eF1240a7AE70F5",
         "owner": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "paused": false,
         "pauser": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "rechargeAddress": "eth:0x3E4BD5FB2fCeF981BAFd1D164f838DFC31370Fb1",
-        "startAllocatedEthIndex": 138,
+        "startAllocatedEthIndex": 139,
         "WBETH_TOKEN_ADDRESS": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
@@ -110,12 +110,12 @@
       "name": "ExchangeRateUpdater",
       "address": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
       "type": "Contract",
-      "template": "wbeth/ExchangeRateUpdater",
+      "template": "shared-wrapped-tokens/ExchangeRateUpdater",
       "sourceHashes": [
         "0x9da1385c5bc89e1e0c1b0f00884026599427a7ffcd22ab976f0f74da6da35170"
       ],
       "proxyType": "immutable",
-      "description": "Rate-limited relay that is the token's registered oracle. Whitelisted callers write the wBETH exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. This is the only bound on the exchange rate anywhere in the system, and it can be bypassed by the token owner repointing the oracle.",
+      "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.",
       "deployerAddress": "eth:0x86Fd4673527F9d5999C5e490Ab98766c0CFA8801",
       "sinceTimestamp": 1681902335,
       "sinceBlock": 17080242,
@@ -139,7 +139,7 @@
           "description": "Addresses allowed to push a new exchange rate through this contract."
         },
         "callerLimits": {
-          "description": "Per-caller cap on the cumulative absolute rate change (1e18 scale) and the number of seconds over which that allowance refills."
+          "description": "Per-caller cap on the cumulative absolute rate change (1e18 scale) and the number of seconds over which that allowance refills, as last configured."
         },
         "tokenContract": {
           "description": "The token whose exchange rate this contract writes."
@@ -189,7 +189,7 @@
         "currency": "ETH",
         "decimals": 18,
         "ethReceiver": "eth:0x26ad6395DABF271fD9bFDC82d7377261930E6B86",
-        "exchangeRate": "1.107959969613",
+        "exchangeRate": "1.10884183066",
         "implementation": "eth:0x9E021c9607bD3ADB7424D3b25a2D35763ff180BB",
         "masterMinter": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "minters": ["eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6"],
@@ -201,7 +201,7 @@
         "pauser": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "wBETH",
-        "totalSupply": "3175326484242918733473370",
+        "totalSupply": "3175326476826790248608476",
         "version": "2"
       },
       "fieldMeta": {
@@ -534,13 +534,13 @@
     ]
   },
   "usedTemplates": {
-    "wbeth/ExchangeRateUpdater": "0xbfbd030d884ce9ac422c7ef67e7455ea43d8aa62d4810c99c45cb1451ff25889",
+    "shared-wrapped-tokens/ExchangeRateUpdater": "0x6c0385a2cde573ea7fa7d39dfb64644d8a553877f5abdaf55c2e0671bb5ac020",
     "wbeth/OperatorWallet": "0x0c6b9f20258611324bcf795580f37503ed040774ad12a08edec9df73605139e6",
     "wbeth/UnwrapTokenV1ETH": "0x89f75c83a04007813f7a6e064a17bc2bef63b03fe5ab3ec6bdd7372578154b14",
     "wbeth/WrapTokenV3ETH": "0x49732aee04baa0e994a33265af990039b9b2e38aeff872b635d167a9a49c1b68"
   },
-  "usedBlockNumbers": { "ethereum": 26140932 },
-  "permissionsConfigHash": "0xa13b5e2922a6add00c3c6e25ad86124368a50a1543c6b75e13716c59e6a7f897",
+  "usedBlockNumbers": { "ethereum": 26234951 },
+  "permissionsConfigHash": "0x4d6a4316ed6e3de3f6f04524c793416970bd092fa74e8590b67c407245bd9232",
   "permissions": {
     "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7": {
       "receivedPermissions": [
@@ -605,7 +605,7 @@
         {
           "permission": "interact",
           "from": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
-          "description": "set the wBETH exchange rate, up or down, by at most its allowance per refill interval.",
+          "description": "set the exchange rate, up or down, by at most its allowance per refill interval.",
           "role": ".callers"
         },
         {

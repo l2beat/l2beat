@@ -9,6 +9,7 @@ import { basesolbridge } from '../projects/basesolbridge/basesolbridge'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
 import { butternetwork } from '../projects/butternetwork/butternetwork'
+import { cbeth } from '../projects/cbeth/cbeth'
 import { cbridge } from '../projects/cbridge/cbridge'
 import { ccip } from '../projects/ccip/ccip'
 import { cctpv1 } from '../projects/cctpv1/cctpv1'
@@ -139,6 +140,7 @@ export const refactored: BaseProject[] = [
   etherfi,
   uniswapv4,
   wbeth,
+  cbeth,
   polymarket,
   rocketpool,
   // privacy
