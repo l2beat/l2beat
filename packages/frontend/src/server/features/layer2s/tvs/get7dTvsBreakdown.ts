@@ -18,16 +18,10 @@ import {
   withoutExcludedTokens,
 } from './utils/getSyncedTvsTimestamp'
 import { getTvsProjects } from './utils/getTvsProjects'
-import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 
 export interface SevenDayTvsBreakdown {
   total: number
   projects: Record<string, ProjectSevenDayTvsBreakdown>
-}
-
-export interface TimestampedSevenDayTvsBreakdown extends SevenDayTvsBreakdown {
-  /** Hour the latest values are from */
-  timestamp: UnixTime
 }
 
 export const EMPTY_TVS_BREAKDOWN: SevenDayTvsBreakdown = {
@@ -87,13 +81,13 @@ export type TvsBreakdownProjectFilter = v.infer<
 
 export async function get7dTvsBreakdown(
   params: TvsBreakdownProjectFilter,
-): Promise<TimestampedSevenDayTvsBreakdown> {
+): Promise<SevenDayTvsBreakdown> {
   if (env.MOCK) {
     return getMockTvsBreakdownData(params)
   }
 
   const db = getDb()
-  const [tvsProjects, syncMetadataRecords] = await Promise.all([
+  const [tvsProjects, syncMetadata] = await Promise.all([
     getTvsProjects(createTvsBreakdownProjectFilter(params)),
     getTvsSyncMetadata(),
   ])
@@ -103,27 +97,31 @@ export async function get7dTvsBreakdown(
     excludeRwaRestrictedTokens: params.excludeRwaRestrictedTokens ?? true,
   }
 
-  // optionToRange ends at a wall-clock guess of the synced hour, so only its
-  // start is used
-  const [from, to] = params.customTarget
-    ? [params.customTarget - 3 * UnixTime.DAY, params.customTarget]
-    : [
-        optionToRange('3d')[0],
-        getSyncedTvsTimestamp(
-          syncMetadataRecords,
-          withoutExcludedTokens(
-            tvsProjects.flatMap((p) => p.details.tvsConfig),
-            tokenFilters,
-          ),
-        ),
-      ]
-
+  // Each project ends at its own synced hour, so one that lags does not hold
+  // the others back. Only the start of optionToRange is used: its end is a
+  // wall-clock guess of the synced hour.
+  const from = params.customTarget
+    ? params.customTarget - 3 * UnixTime.DAY
+    : optionToRange('3d')[0]
   assert(from !== null, 'from is null')
+  const ends = tvsProjects.map((p) => ({
+    projectId: p.projectId,
+    to:
+      params.customTarget ??
+      getSyncedTvsTimestamp(
+        syncMetadata,
+        withoutExcludedTokens(p.details.tvsConfig, tokenFilters),
+      ),
+  }))
+  const endByProject = new Map<string, UnixTime>(
+    ends.map((e) => [e.projectId, e.to]),
+  )
+  const syncMetadataRecords = [...syncMetadata.values()]
 
   const values =
     await db.tvsTokenValue.getSummedByProjectAtLatestAndSevenDaysBefore(
-      tvsProjects.map((p) => p.projectId),
-      [from, to],
+      ends,
+      from,
       tokenFilters,
     )
 
@@ -134,6 +132,8 @@ export async function get7dTvsBreakdown(
   let total = 0
   const projects: Record<string, ProjectSevenDayTvsBreakdown> = {}
   for (const [projectId, rows] of Object.entries(rowsByProject)) {
+    const to = endByProject.get(projectId)
+    assert(to !== undefined, 'Project end not found')
     const syncState = getTvsSyncState({ projectId, syncMetadataRecords, to })
     if (!syncState) {
       continue
@@ -290,7 +290,6 @@ export async function get7dTvsBreakdown(
   }
 
   return {
-    timestamp: to,
     total,
     projects,
   }
@@ -357,10 +356,9 @@ function getTvsSyncState({
 
 async function getMockTvsBreakdownData(
   props: TvsBreakdownProjectFilter,
-): Promise<TimestampedSevenDayTvsBreakdown> {
+): Promise<SevenDayTvsBreakdown> {
   const projects = await getTvsProjects(createTvsBreakdownProjectFilter(props))
   return {
-    timestamp: getTvsTargetTimestamp(),
     total: 1000,
     projects: Object.fromEntries(
       projects.map((project) => [

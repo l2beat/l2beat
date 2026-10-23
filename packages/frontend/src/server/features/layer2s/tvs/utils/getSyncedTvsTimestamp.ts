@@ -9,23 +9,28 @@ import { isTvsSynced } from './isTvsSynced'
 
 const cache = new FrontendInMemoryCache('getTvsSyncMetadata')
 
+/** TVS sync metadata rows by token id */
+export type TvsSyncMetadata = Map<string, SyncMetadataRecord>
+
 /**
  * Every TVS sync metadata row, one per token. Cached briefly, so lists and
  * parallel page loaders that each need it share one query.
  */
-export function getTvsSyncMetadata(): Promise<SyncMetadataRecord[]> {
+export function getTvsSyncMetadata(): Promise<TvsSyncMetadata> {
   // Mock mode has no database; getSyncedTvsTimestamp falls back to the clock
   if (env.MOCK) {
-    return Promise.resolve([])
+    return Promise.resolve(new Map())
   }
-  return cache.get({ key: ['tvs', 'sync-metadata'], ttl: 60 }, () =>
-    getDb().syncMetadata.getByFeature('tvs'),
-  )
+  return cache.get({ key: ['tvs', 'sync-metadata'], ttl: 60 }, async () => {
+    const records = await getDb().syncMetadata.getByFeature('tvs')
+    return new Map(records.map((r) => [r.id, r]))
+  })
 }
 
 /**
- * The latest hour for which every listed token has a value, so that
- * "value at or before" lookups at it never mix two hours in one total.
+ * The latest hour for which every token of a project has a value, so that
+ * "value at or before" lookups at it never mix two hours in its total.
+ * Each project gets its own hour: one that lags does not hold others back.
  *
  * Skipped rows:
  * - older target: the token left the config (or its untilTimestamp passed)
@@ -36,11 +41,12 @@ export function getTvsSyncMetadata(): Promise<SyncMetadataRecord[]> {
  * Falls back to the wall-clock estimate when no row qualifies.
  */
 export function getSyncedTvsTimestamp(
-  syncMetadata: SyncMetadataRecord[],
+  syncMetadata: TvsSyncMetadata,
   tokens: { id: string }[],
 ): UnixTime {
-  const tokenIds = new Set(tokens.map((t) => t.id))
-  const records = syncMetadata.filter((r) => tokenIds.has(r.id))
+  const records = tokens
+    .map((t) => syncMetadata.get(t.id))
+    .filter((r) => r !== undefined)
   const latestTarget = records.reduce((max, r) => Math.max(max, r.target), 0)
 
   let synced: UnixTime | undefined

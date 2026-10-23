@@ -4,7 +4,7 @@ import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAtt
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import {
   get7dTvsBreakdown,
-  type TimestampedSevenDayTvsBreakdown,
+  type SevenDayTvsBreakdown,
 } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { ps } from '~/server/projects'
@@ -65,7 +65,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
 function getZkCatalogEntry(
   project: Project<'zkCatalogInfo' | 'display' | 'statuses'>,
   allProjects: ProjectWithPageMetadata[],
-  tvs: TimestampedSevenDayTvsBreakdown,
+  tvs: SevenDayTvsBreakdown,
   contractUtils: ContractUtils,
 ): ZkCatalogEntry {
   const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(

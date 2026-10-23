@@ -18,31 +18,33 @@ describe(getSyncedTvsTimestamp.name, () => {
       record('arbitrum-USDC', TARGET, TARGET - HOUR),
     ]
 
-    const result = getSyncedTvsTimestamp(records, tokens(records))
+    const result = getSyncedTvsTimestamp(byId(records), tokens(records))
 
     expect(result).toEqual(TARGET - HOUR)
   })
 
-  it('reads only the listed tokens', () => {
+  it("is not held back by another project's tokens", () => {
     const records = [
       record('arbitrum-ETH', TARGET, TARGET),
       record('base-ETH', TARGET, TARGET - 2 * HOUR),
     ]
 
-    const result = getSyncedTvsTimestamp(records, [{ id: 'arbitrum-ETH' }])
+    const result = getSyncedTvsTimestamp(byId(records), [
+      { id: 'arbitrum-ETH' },
+    ])
 
     expect(result).toEqual(TARGET)
   })
 
-  it('shares one hour across projects, skipping stale ones', () => {
+  it('skips stale tokens', () => {
     const records = [
       record('arbitrum-ETH', TARGET, TARGET),
-      record('base-ETH', TARGET, TARGET - HOUR),
+      record('arbitrum-USDC', TARGET, TARGET - HOUR),
       // Behind past the isTvsSynced cutoff, flagged as unsynced elsewhere
-      record('stuck-ETH', TARGET, NOW_HOUR - 7 * HOUR),
+      record('arbitrum-NEW', TARGET, NOW_HOUR - 7 * HOUR),
     ]
 
-    const result = getSyncedTvsTimestamp(records, tokens(records))
+    const result = getSyncedTvsTimestamp(byId(records), tokens(records))
 
     expect(result).toEqual(TARGET - HOUR)
   })
@@ -54,7 +56,7 @@ describe(getSyncedTvsTimestamp.name, () => {
       record('arbitrum-OLD', TARGET - 2 * HOUR, TARGET - 2 * HOUR),
     ]
 
-    const result = getSyncedTvsTimestamp(records, tokens(records))
+    const result = getSyncedTvsTimestamp(byId(records), tokens(records))
 
     expect(result).toEqual(TARGET)
   })
@@ -65,13 +67,13 @@ describe(getSyncedTvsTimestamp.name, () => {
       record('arbitrum-NEW', TARGET, null),
     ]
 
-    const result = getSyncedTvsTimestamp(records, tokens(records))
+    const result = getSyncedTvsTimestamp(byId(records), tokens(records))
 
     expect(result).toEqual(TARGET)
   })
 
   it('falls back to the wall clock without rows', () => {
-    const result = getSyncedTvsTimestamp([], [{ id: 'arbitrum-ETH' }])
+    const result = getSyncedTvsTimestamp(new Map(), [{ id: 'arbitrum-ETH' }])
 
     expect(result).toEqual(getTvsTargetTimestamp())
   })
@@ -82,7 +84,7 @@ describe(getSyncedTvsTimestamp.name, () => {
       record('arbitrum-NEW', TARGET, null),
     ]
 
-    const result = getSyncedTvsTimestamp(records, tokens(records))
+    const result = getSyncedTvsTimestamp(byId(records), tokens(records))
 
     expect(result).toEqual(getTvsTargetTimestamp())
   })
@@ -127,6 +129,10 @@ function record(
     blockTarget: null,
     blockSyncedUntil: null,
   }
+}
+
+function byId(records: SyncMetadataRecord[]) {
+  return new Map(records.map((r) => [r.id, r]))
 }
 
 function tokens(records: SyncMetadataRecord[]) {

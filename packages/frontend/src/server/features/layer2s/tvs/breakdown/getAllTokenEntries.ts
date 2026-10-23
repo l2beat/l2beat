@@ -9,6 +9,7 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import {
   getSyncedTvsTimestamp,
   getTvsSyncMetadata,
+  type TvsSyncMetadata,
 } from '../utils/getSyncedTvsTimestamp'
 import { sourceToLabel } from '../utils/sourceToLabel'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
@@ -36,16 +37,16 @@ export async function getAllTokensEntries(): Promise<TvsBreakdownTokenEntry[]> {
   ])
 
   const db = getDb()
-  const targetTimestamp = getSyncedTvsTimestamp(
-    syncMetadata,
-    allProjects.flatMap((p) => p.tvsConfig),
-  )
-
   const [projects, tokenValues] = await Promise.all([
     ps.getProjects({
       select: ['chainConfig'],
     }),
-    db.tvsTokenValue.getAtOrBefore(targetTimestamp),
+    db.tvsTokenValue.getAtOrBefore(
+      allProjects.map((p) => ({
+        projectId: p.id,
+        timestamp: getSyncedTvsTimestamp(syncMetadata, p.tvsConfig),
+      })),
+    ),
   ])
 
   const chains = projects.map((x) => x.chainConfig)
@@ -53,12 +54,7 @@ export async function getAllTokensEntries(): Promise<TvsBreakdownTokenEntry[]> {
     tokenValues.map((x) => [TokenId(x.tokenId), x]),
   )
 
-  const entries = getEntries(
-    allProjects,
-    tokenValuesMap,
-    chains,
-    targetTimestamp,
-  )
+  const entries = getEntries(allProjects, tokenValuesMap, chains, syncMetadata)
 
   return entries
 }
@@ -67,13 +63,17 @@ function getEntries(
   projects: Project<'tvsConfig', 'chainConfig' | 'contracts'>[],
   tokenValuesMap: Map<TokenId, TokenValueRecord>,
   chains: ChainConfig[],
-  targetTimestamp: UnixTime,
+  syncMetadata: TvsSyncMetadata,
 ) {
   const entries: TvsBreakdownTokenEntry[] = []
 
   for (const project of projects) {
     const projectTokens = project.tvsConfig
     const gasTokens = project.chainConfig?.gasTokens
+    const targetTimestamp = getSyncedTvsTimestamp(
+      syncMetadata,
+      project.tvsConfig,
+    )
 
     for (const token of projectTokens) {
       const tokenValue = tokenValuesMap.get(token.id)
@@ -175,7 +175,7 @@ async function getMockTvsBreakdownForProjectData(): Promise<
     ),
   )
 
-  const entries = getEntries(projects, tokenValuesMap, chains, UnixTime.now())
+  const entries = getEntries(projects, tokenValuesMap, chains, new Map())
 
   return entries
 }

@@ -107,13 +107,23 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getAtOrBefore(timestamp: UnixTime): Promise<TokenValueRecord[]> {
+  /** Each token's latest record at or before its project's timestamp */
+  async getAtOrBefore(
+    targets: { projectId: string; timestamp: UnixTime }[],
+  ): Promise<TokenValueRecord[]> {
+    if (targets.length === 0) {
+      return []
+    }
     const latestPerToken = this.db
       .selectFrom('TokenValue')
-      .select(['tokenId'])
-      .select(this.db.fn.max('timestamp').as('maxTimestamp'))
-      .where('timestamp', '<=', UnixTime.toDate(timestamp))
-      .groupBy(['tokenId'])
+      .innerJoin(projectTimestamps(targets), (join) =>
+        join
+          .onRef('TokenValue.projectId', '=', 'p.projectId')
+          .onRef('TokenValue.timestamp', '<=', 'p.timestamp'),
+      )
+      .select(['TokenValue.tokenId'])
+      .select(this.db.fn.max('TokenValue.timestamp').as('maxTimestamp'))
+      .groupBy(['TokenValue.tokenId'])
       .as('latest')
 
     const rows = await this.db
@@ -621,22 +631,22 @@ export class TokenValueRepository extends BaseRepository {
    */
   /**
    * Same sums as getSummedByProjectForRanges, but only at each project's
-   * latest timestamp within the range and at the timestamp exactly seven
-   * days before it. The 7-day breakdown reads nothing else, and aggregating
-   * every hour of the range first made it the slowest query on project pages.
+   * latest timestamp between `from` and its own `to`, and at the timestamp
+   * exactly seven days before it. The 7-day breakdown reads nothing else,
+   * and aggregating every hour of the range first made it the slowest query
+   * on project pages.
    */
   async getSummedByProjectAtLatestAndSevenDaysBefore(
-    projectIds: string[],
-    range: [UnixTime, UnixTime],
+    projects: { projectId: string; to: UnixTime }[],
+    from: UnixTime,
     opts: {
       excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
     },
   ): Promise<SummedByProjectRow[]> {
-    if (projectIds.length === 0) {
+    if (projects.length === 0) {
       return []
     }
-    const [from, to] = range
 
     const withTokenFilters = <Q extends TokenFilterable>(query: Q): Q => {
       let filtered = query
@@ -662,9 +672,12 @@ export class TokenValueRepository extends BaseRepository {
       .with('latest', (eb) =>
         eb
           .selectFrom(
-            sql<{
-              projectId: string
-            }>`(select unnest(${projectIds}::text[]) as "projectId")`.as('p'),
+            projectTimestamps(
+              projects.map((p) => ({
+                projectId: p.projectId,
+                timestamp: p.to,
+              })),
+            ),
           )
           .innerJoinLateral(
             (eb) =>
@@ -679,7 +692,7 @@ export class TokenValueRepository extends BaseRepository {
                   .select('TokenValue.timestamp')
                   .whereRef('TokenValue.projectId', '=', 'p.projectId')
                   .where('TokenValue.timestamp', '>=', UnixTime.toDate(from))
-                  .where('TokenValue.timestamp', '<=', UnixTime.toDate(to)),
+                  .whereRef('TokenValue.timestamp', '<=', 'p.timestamp'),
               )
                 .orderBy('TokenValue.timestamp', 'desc')
                 .limit(1)
@@ -792,6 +805,19 @@ export class TokenValueRepository extends BaseRepository {
     const result = await query.executeTakeFirst()
     return result !== undefined
   }
+}
+
+/**
+ * A table "p" of (projectId, timestamp) pairs. Each column binds as one array
+ * parameter, so any number of projects stays within the parameter limit.
+ */
+function projectTimestamps(
+  targets: { projectId: string; timestamp: UnixTime }[],
+) {
+  return sql<{ projectId: string; timestamp: Date }>`unnest(
+    ${targets.map((t) => t.projectId)}::text[],
+    ${targets.map((t) => UnixTime.toDate(t.timestamp))}::timestamp[]
+  )`.as<'p'>(sql`p("projectId", "timestamp")`)
 }
 
 interface TokenFilterable {
