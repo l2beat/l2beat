@@ -16,7 +16,6 @@ export class SlotTargetIndexer extends RootIndexer {
     private readonly config: ActivityConfigProject,
     private readonly options?: {
       onTick?: (targetTimestamp: number, slotTarget: number) => Promise<void>
-      notReadyPollIntervalMs?: number
     },
   ) {
     super(
@@ -64,7 +63,6 @@ export class SlotTargetIndexer extends RootIndexer {
             logger: this.logger,
             chain: this.config.chainName,
             timestamp,
-            pollIntervalMs: this.options?.notReadyPollIntervalMs,
           },
         )
 

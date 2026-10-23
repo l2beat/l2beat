@@ -20,7 +20,6 @@ export class BlockTargetIndexer extends RootIndexer {
     private readonly config: ActivityConfigProject,
     private readonly options?: {
       onTick?: (targetTimestamp: number, blockNumber: number) => Promise<void>
-      notReadyPollIntervalMs?: number
     },
   ) {
     super(
@@ -62,7 +61,6 @@ export class BlockTargetIndexer extends RootIndexer {
             logger: this.logger,
             chain: this.config.chainName,
             timestamp,
-            pollIntervalMs: this.options?.notReadyPollIntervalMs,
           },
         )
 

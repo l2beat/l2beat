@@ -22,7 +22,6 @@ export class BlockTargetIndexer extends RootIndexer {
     readonly daLayer: string,
     private readonly options?: {
       onTick?: (targetTimestamp: UnixTime, blockNumber: number) => Promise<void>
-      notReadyPollIntervalMs?: number
     },
   ) {
     super(
@@ -62,7 +61,6 @@ export class BlockTargetIndexer extends RootIndexer {
             logger: this.logger,
             chain: this.daLayer,
             timestamp,
-            pollIntervalMs: this.options?.notReadyPollIntervalMs,
           },
         )
 

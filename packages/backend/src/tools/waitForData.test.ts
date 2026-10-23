@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import { DataNotReadyError, TargetNotReadyError } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { withFakeTimers } from '../test/withFakeTimers'
 import { waitForPrices, waitForTarget } from './waitForData'
 
 const TIMESTAMP = UnixTime.fromDate(new Date('2026-10-23T12:00:00Z'))
@@ -14,7 +15,6 @@ describe(waitForTarget.name, () => {
       logger,
       chain: 'ethereum',
       timestamp: TIMESTAMP,
-      pollIntervalMs: 0,
     })
 
     expect(result).toEqual(123)
@@ -28,12 +28,13 @@ describe(waitForTarget.name, () => {
       .rejectsWithOnce(new TargetNotReadyError(TIMESTAMP, TIMESTAMP - 10))
       .resolvesToOnce(123)
 
-    const result = await waitForTarget(resolve, {
-      logger,
-      chain: 'ethereum',
-      timestamp: TIMESTAMP,
-      pollIntervalMs: 0,
-    })
+    const result = await withFakeTimers(() =>
+      waitForTarget(resolve, {
+        logger,
+        chain: 'ethereum',
+        timestamp: TIMESTAMP,
+      }),
+    )
 
     expect(result).toEqual(123)
     expect(resolve).toHaveBeenCalledTimes(3)
@@ -75,7 +76,6 @@ describe(waitForTarget.name, () => {
         logger,
         chain: 'ethereum',
         timestamp: TIMESTAMP,
-        pollIntervalMs: 0,
       }),
     ).toBeRejectedWith('RPC error')
   })
@@ -88,11 +88,9 @@ describe(waitForPrices.name, () => {
       .rejectsWithOnce(new DataNotReadyError('Not published'))
       .resolvesToOnce([1])
 
-    const result = await waitForPrices(fetch, {
-      logger,
-      priceId: 'ethereum',
-      pollIntervalMs: 0,
-    })
+    const result = await withFakeTimers(() =>
+      waitForPrices(fetch, { logger, priceId: 'ethereum' }),
+    )
 
     expect(result).toEqual([1])
     expect(logger.info).toHaveBeenOnlyCalledWith(

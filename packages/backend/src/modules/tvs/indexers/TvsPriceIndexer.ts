@@ -19,7 +19,6 @@ export interface TvsPriceIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<PriceConfig>, 'name'> {
   syncOptimizer: SyncOptimizer
   priceProvider: PriceProvider
-  notReadyPollIntervalMs?: number
 }
 
 export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
@@ -72,7 +71,6 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
             {
               logger: this.logger,
               priceId: configuration.properties.priceId,
-              pollIntervalMs: this.$.notReadyPollIntervalMs,
             },
           )
           const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({

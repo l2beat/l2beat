@@ -22,7 +22,6 @@ interface BlockTimestampIndexerDeps
   > {
   syncOptimizer: SyncOptimizer
   blockTimestampProvider: BlockTimestampProvider
-  notReadyPollIntervalMs?: number
 }
 
 export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampConfig> {
@@ -84,7 +83,6 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
             logger: this.logger,
             chain: configurations[0].properties.chainName,
             timestamp,
-            pollIntervalMs: this.$.notReadyPollIntervalMs,
           },
         )
 

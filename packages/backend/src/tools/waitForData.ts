@@ -1,9 +1,8 @@
-import { setTimeout as sleep } from 'node:timers/promises'
 import type { Logger } from '@l2beat/backend-tools'
 import { DataNotReadyError, TargetNotReadyError } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 
-export const DEFAULT_NOT_READY_POLL_INTERVAL_MS = 60_000
+const POLL_INTERVAL_MS = 60_000
 
 // Data that is minutes away must not go through the indexer retry strategy,
 // whose exponential back-off grows to an hour and would add the lag back. Each
@@ -21,7 +20,6 @@ export async function waitForTarget<T>(
     logger: Logger
     chain: string
     timestamp: UnixTime
-    pollIntervalMs?: number
   },
 ): Promise<T> {
   const { logger, chain, timestamp } = options
@@ -50,7 +48,7 @@ export async function waitForTarget<T>(
         lagSeconds: timestamp - error.tipTimestamp,
         attempt: attempts,
       })
-      await sleep(options.pollIntervalMs ?? DEFAULT_NOT_READY_POLL_INTERVAL_MS)
+      await sleep(POLL_INTERVAL_MS)
     }
   }
 }
@@ -58,7 +56,7 @@ export async function waitForTarget<T>(
 /** Fetches prices, waiting while CoinGecko has not published the hour yet. */
 export async function waitForPrices<T>(
   fetch: () => Promise<T>,
-  options: { logger: Logger; priceId: string; pollIntervalMs?: number },
+  options: { logger: Logger; priceId: string },
 ): Promise<T> {
   let attempts = 0
   while (true) {
@@ -71,7 +69,7 @@ export async function waitForPrices<T>(
         priceId: options.priceId,
         attempt: attempts,
       })
-      await sleep(options.pollIntervalMs ?? DEFAULT_NOT_READY_POLL_INTERVAL_MS)
+      await sleep(POLL_INTERVAL_MS)
     }
   }
 }
@@ -99,4 +97,10 @@ export function keepPublishedHours<T extends { timestamp: number }>(
     .flatMap((r) => r.records)
     .filter((r) => r.timestamp <= syncedTo)
   return { records, syncedTo }
+}
+
+// The global setTimeout, unlike node:timers/promises, is replaced by fake
+// timers, so tests skip the wait.
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }

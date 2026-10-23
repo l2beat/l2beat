@@ -19,7 +19,6 @@ import type { PrivacyPriceIndexerConfig } from '../types'
 export interface PrivacyPriceIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<PrivacyPriceIndexerConfig>, 'name'> {
   priceProvider: PriceProvider
-  notReadyPollIntervalMs?: number
 }
 
 export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexerConfig> {
@@ -78,7 +77,6 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
                 {
                   logger: this.logger,
                   priceId,
-                  pollIntervalMs: this.$.notReadyPollIntervalMs,
                 },
               ),
           )

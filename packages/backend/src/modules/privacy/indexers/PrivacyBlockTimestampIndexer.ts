@@ -23,7 +23,6 @@ interface PrivacyBlockTimestampIndexerDeps
   > {
   blockTimestampProvider: BlockTimestampProvider
   db: Database
-  notReadyPollIntervalMs?: number
 }
 
 export class PrivacyBlockTimestampIndexer extends ManagedMultiIndexer<PrivacyBlockTimestampConfig> {
@@ -85,7 +84,6 @@ export class PrivacyBlockTimestampIndexer extends ManagedMultiIndexer<PrivacyBlo
             logger: this.logger,
             chain: configurations[0].properties.chain,
             timestamp,
-            pollIntervalMs: this.$.notReadyPollIntervalMs,
           },
         ),
     )

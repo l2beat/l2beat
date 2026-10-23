@@ -22,7 +22,6 @@ export interface CirculatingSupplyAmountIndexerDeps
   > {
   syncOptimizer: SyncOptimizer
   circulatingSupplyProvider: CirculatingSupplyProvider
-  notReadyPollIntervalMs?: number
 }
 
 export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<CirculatingSupplyAmountFormula> {
@@ -74,7 +73,6 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
             {
               logger: this.logger,
               priceId: configuration.properties.apiId,
-              pollIntervalMs: this.$.notReadyPollIntervalMs,
             },
           )
 

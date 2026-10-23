@@ -7,6 +7,7 @@ import {
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { ActivityConfigProject } from '../../../config/Config'
+import { withFakeTimers } from '../../../test/withFakeTimers'
 import type { Clock } from '../../../tools/Clock'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 
@@ -91,10 +92,10 @@ describe(BlockTargetIndexer.name, () => {
           id: ProjectId('mock'),
           chainName: 'chain',
         }),
-        { onTick, notReadyPollIntervalMs: 0 },
+        { onTick },
       )
 
-      const result = await indexer.tick()
+      const result = await withFakeTimers(() => indexer.tick())
 
       expect(result).toEqual(BLOCK_NUMBER)
       expect(
