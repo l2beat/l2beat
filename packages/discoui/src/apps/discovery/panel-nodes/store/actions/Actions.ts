@@ -2,7 +2,7 @@ import type { Node, State, Tool } from '../State'
 import type { NodeLocations, StoredNodeLayout } from '../utils/storage'
 import type { AlignDirection, DistributeAxis } from './align'
 import type { ApplyLayoutMode } from './applyStoredLayout'
-import type { AutoGroup } from './loadNodes'
+import type { ArrangeNodes, AutoGroup } from './loadNodes'
 
 export interface Actions {
   /**
@@ -21,7 +21,12 @@ export interface Actions {
   onDoubleClick: (event: MouseEvent, container: HTMLElement) => void
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
-  loadNodes: (projectId: string, nodes: Node[], autoGroups: AutoGroup[]) => void
+  loadNodes: (
+    projectId: string,
+    nodes: Node[],
+    autoGroups: AutoGroup[],
+    arrange?: ArrangeNodes,
+  ) => void
   setNodes: (nodes: Node[]) => void
   colorSelected: (color: number) => void
   alignSelected: (direction: AlignDirection) => void

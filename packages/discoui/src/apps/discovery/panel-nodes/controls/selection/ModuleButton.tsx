@@ -29,7 +29,7 @@ import {
 import { ConfigModel } from '../../../models/ConfigModel'
 import { useTerminalStore } from '../../../panel-terminal/store'
 import { useAddressUsage } from '../../../usage/useAddressUsage'
-import { selectedLeafIds } from '../../NodesPanel'
+import { selectedLeafAddresses } from '../../NodesPanel'
 import { useStore } from '../../store/store'
 import { IconControlFolder } from '../icons/IconControlFolder'
 import { ToolbarButton } from '../ToolbarButton'
@@ -60,7 +60,10 @@ export function ModuleButton() {
   const run = useModuleChange(project)
 
   const owned = response.data
-    ? groupByOwner(response.data, selectedLeafIds(nodes, new Set(selected)))
+    ? groupByOwner(
+        response.data,
+        selectedLeafAddresses(nodes, new Set(selected)),
+      )
     : []
   const moduleConsumers = usage.data?.moduleConsumers ?? {}
   const apply = (change: ModuleChange) => {

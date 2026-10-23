@@ -1,5 +1,6 @@
 import { expect, mockObject } from 'earl'
 import type { Field, Node } from '../State'
+import { HEADER_HEIGHT } from './constants'
 import {
   fieldPathPrefixes,
   getRowLayout,
@@ -7,6 +8,7 @@ import {
   reconcileCompressedRows,
   resolveRowKey,
 } from './rows'
+import { processConnection } from './updateNodePositions'
 
 describe(fieldPathPrefixes.name, () => {
   it('yields every enclosing group, shortest first', () => {
@@ -114,6 +116,33 @@ describe(getRowLayout.name, () => {
   })
 })
 
+describe(`${getRowLayout.name} with permission edges`, () => {
+  it('draws no row and leaves from the middle of the header', () => {
+    const node = mockObject<Node>({
+      fields: [
+        mockObject<Field>({
+          name: 'upgrade.admin.eth:0x1',
+          target: 'eth:0x1',
+          permission: { role: 'admin', kind: 'upgrade', color: 'red' },
+        }),
+      ],
+      hiddenFields: [],
+      compressedRows: [],
+    })
+
+    const layout = getRowLayout(node)
+    const box = { x: 0, y: 100, width: 200 }
+    const connection = processConnection(
+      layout.anchorByField[0] as number,
+      box,
+      { x: 400, y: 0, width: 200 },
+    )
+
+    expect(layout.rows).toEqual([])
+    expect(connection.from.y).toEqual(box.y + HEADER_HEIGHT / 2)
+  })
+})
+
 describe(reconcileCompressedRows.name, () => {
   it('drops paths that no longer group any value', () => {
     const fields = [{ name: '$members[0]' }, { name: 'owner' }]
@@ -131,7 +160,12 @@ function makeNode(
 ): Node {
   return mockObject<Node>({
     fields: names.map((name) =>
-      mockObject<Field>({ name, target: '0x0', label: undefined }),
+      mockObject<Field>({
+        name,
+        target: '0x0',
+        label: undefined,
+        permission: undefined,
+      }),
     ),
     hiddenFields,
     compressedRows,

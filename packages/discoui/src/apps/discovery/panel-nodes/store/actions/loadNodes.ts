@@ -9,7 +9,6 @@ import { reconcileCompressedRows } from '../utils/rows'
 import { stackAutoLayout } from '../utils/stackLayout'
 import {
   type NodeLocations,
-  recallNodeLayout,
   reconcileNodeHiddenFields,
   type StoredGroup,
   type StoredNodeLayout,
@@ -28,13 +27,21 @@ export interface AutoGroup {
   readonly id: string
   readonly name: string
   readonly memberIds: readonly string[]
+  readonly color?: number
+  readonly opened?: boolean
 }
+
+// Places the nodes of a graph loaded without a saved layout, after its auto
+// groups exist, for graphs whose shape the generic stack layout misses.
+export type ArrangeNodes = (nodes: readonly Node[]) => Node[]
 
 export function loadNodes(
   state: State,
   projectId: string,
   nodes: Node[],
   autoGroups: AutoGroup[],
+  saved: StoredNodeLayout | undefined,
+  arrange: ArrangeNodes | undefined,
 ): Partial<State> {
   const toAddRaw: Node[] = nodes.filter(
     (x) => !state.nodes.some((y) => x.id === y.id),
@@ -72,7 +79,6 @@ export function loadNodes(
   const toAdd = toAddRaw.map(dropDanglingFields)
   const existing = existingRaw.map(dropDanglingFields)
 
-  const saved = recallNodeLayout(projectId)
   const nodesWithoutSavedLayout = new Set<string>()
   const added = toAdd.map((node) => {
     const hiddenFields = combinedHiddenFields(node, saved)
@@ -137,7 +143,10 @@ export function loadNodes(
         stackAutoLayout(visibleNodes, true, projection.visibleEdges),
       ),
     }
-    return collapseAutoGroups(laidOut, autoGroups)
+    const grouped = collapseAutoGroups(laidOut, autoGroups)
+    return arrange === undefined
+      ? grouped
+      : updateNodePositions(grouped, { nodes: arrange(grouped.nodes) })
   }
 
   const fallbackLocations =
@@ -220,8 +229,8 @@ function toStoredGroup(
   return {
     id: group.id,
     name: group.name,
-    color: 0,
-    opened: false,
+    color: group.color ?? 0,
+    opened: group.opened ?? false,
     box: { x: anchor.x, y: anchor.y, width: NODE_WIDTH, height: NODE_WIDTH },
     members: [...group.memberIds],
   }

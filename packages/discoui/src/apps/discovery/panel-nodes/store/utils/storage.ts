@@ -40,8 +40,8 @@ export function reconcileNodeHiddenFields(
   )
 }
 
-function getLayoutStorageKey(projectId: string): string {
-  return `layout/${projectId}`
+function getLayoutStorageKey(prefix: string, projectId: string): string {
+  return `${prefix}/${projectId}`
 }
 
 export function buildStoredNodeLayout(
@@ -90,20 +90,21 @@ export function buildStoredNodeLayout(
   }
 }
 
-export function persistNodeLayout(state: State): void {
+export function persistNodeLayout(prefix: string, state: State): void {
   if (state.nodes.length <= 0 || !state.projectId) {
     return
   }
   localStorage.setItem(
-    getLayoutStorageKey(state.projectId),
+    getLayoutStorageKey(prefix, state.projectId),
     JSON.stringify(buildStoredNodeLayout(state)),
   )
 }
 
 export function recallNodeLayout(
+  prefix: string,
   projectId: string,
 ): StoredNodeLayout | undefined {
-  const key = getLayoutStorageKey(projectId)
+  const key = getLayoutStorageKey(prefix, projectId)
   const storage = localStorage.getItem(key)
   if (storage === null) {
     return undefined

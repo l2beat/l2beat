@@ -1,11 +1,20 @@
-import { create } from 'zustand'
+import { createContext, useContext } from 'react'
+import {
+  createStore,
+  type StoreApi,
+  useStore as useZustandStore,
+} from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { Actions } from './actions/Actions'
 import { alignSelected, distributeSelected } from './actions/align'
 import { applyStoredLayout } from './actions/applyStoredLayout'
 import { groupSelected, renameGroup, ungroupSelected } from './actions/group'
 import { redo, undo } from './actions/history'
-import { loadNodes } from './actions/loadNodes'
+import {
+  type ArrangeNodes,
+  type AutoGroup,
+  loadNodes,
+} from './actions/loadNodes'
 import { onDoubleClick } from './actions/onDoubleClick'
 import { onKeyDown } from './actions/onKeyDown'
 import { onKeyUp } from './actions/onKeyUp'
@@ -35,16 +44,17 @@ import {
   type PersistedNodeStoreState,
   partializeNodeStore,
 } from './persistence'
-import type { State } from './State'
+import type { Node, State } from './State'
 import {
   captureHistorySnapshot,
   emptyHistoryState,
   pushHistorySnapshot,
   snapshotsEqual,
 } from './utils/history'
-import { persistNodeLayout } from './utils/storage'
+import { persistNodeLayout, recallNodeLayout } from './utils/storage'
 
 type StoreState = State & Actions
+export type NodeStore = StoreApi<StoreState>
 type StoreSetter = (cb: (state: StoreState) => Partial<State>) => void
 
 const INITIAL_STATE: State = {
@@ -78,56 +88,105 @@ if (typeof localStorage !== 'undefined') {
   clearLegacyNodeStoreVersions(localStorage)
 }
 
-export const useStore = create<StoreState>()(
-  persist<StoreState, [], [], PersistedNodeStoreState>(
-    (set) => ({
-      ...INITIAL_STATE,
-      loadNodes: wrapHistoryResetAction(set, loadNodes),
-      setNodes: wrapUndoableAction(set, setNodes),
-      colorSelected: wrapUndoableAction(set, colorSelected),
-      alignSelected: wrapUndoableAction(set, alignSelected),
-      distributeSelected: wrapUndoableAction(set, distributeSelected),
-      groupSelected: wrapUndoableAction(set, groupSelected),
-      ungroupSelected: wrapUndoableAction(set, ungroupSelected),
-      renameGroup: wrapUndoableAction(set, renameGroup),
-      undo: wrapAction(set, undo),
-      redo: wrapAction(set, redo),
-      hideSelected: wrapUndoableAction(set, hideSelected),
-      hideUnreachable: wrapUndoableAction(set, hideUnreachable),
-      showHidden: wrapUndoableAction(set, showHidden),
-      clear: wrapHistoryResetAction(set, clear),
-      layout: wrapUndoableAction(set, layout),
-      applyStoredLayout: wrapAction(set, applyStoredLayout),
-      selectAndFocus: wrapAction(set, selectAndFocus),
-      registerViewportContainer: wrapAction(set, registerViewportContainer),
-      setPreferences: wrapAction(set, setPreferences),
-      setTool: wrapAction(set, setTool),
-
-      onKeyDown: wrapUndoableAction(set, onKeyDown),
-      onKeyUp: wrapAction(set, onKeyUp),
-      onMouseDown: wrapHistoryStartAction(set, onMouseDown),
-      onMouseUp: wrapHistoryEndAction(set, onMouseUp),
-      onMouseMove: wrapAction(set, onMouseMove),
-      onDoubleClick: wrapAction(set, onDoubleClick),
-      onWheel: wrapAction(set, onWheel),
-    }),
-    {
-      name: 'store-v6',
-      version: NODE_STORE_VERSION,
-      partialize: partializeNodeStore,
-      migrate: migrateNodeStoreState,
-      merge: mergeNodeStoreState,
-    },
-  ),
+// The nodes and permissions panels draw the same kind of graph from different
+// edges, so each gets its own instance with its own preferences and layouts.
+export const nodesStore = createNodeStore('store-v6', 'layout')
+export const permissionsStore = createNodeStore(
+  'permissions-store-v1',
+  'permissions-layout',
 )
 
-let timeout: ReturnType<typeof setTimeout>
-useStore.subscribe((state) => {
-  clearTimeout(timeout)
-  timeout = setTimeout(() => {
-    persistNodeLayout(state)
-  }, 50)
-})
+const NodeStoreContext = createContext<NodeStore>(nodesStore)
+export const NodeStoreProvider = NodeStoreContext.Provider
+
+export function useStore<T>(selector: (state: StoreState) => T): T {
+  return useZustandStore(useContext(NodeStoreContext), selector)
+}
+
+export function useStoreApi(): NodeStore {
+  return useContext(NodeStoreContext)
+}
+
+function createNodeStore(
+  persistName: string,
+  layoutStorageKeyPrefix: string,
+): NodeStore {
+  const store = createStore<StoreState>()(
+    persist<StoreState, [], [], PersistedNodeStoreState>(
+      (set) => createActions(set, layoutStorageKeyPrefix),
+      {
+        name: persistName,
+        version: NODE_STORE_VERSION,
+        partialize: partializeNodeStore,
+        migrate: migrateNodeStoreState,
+        merge: mergeNodeStoreState,
+      },
+    ),
+  )
+
+  let timeout: ReturnType<typeof setTimeout>
+  store.subscribe((state) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      persistNodeLayout(layoutStorageKeyPrefix, state)
+    }, 50)
+  })
+  return store
+}
+
+function createActions(
+  set: StoreSetter,
+  layoutStorageKeyPrefix: string,
+): StoreState {
+  return {
+    ...INITIAL_STATE,
+    loadNodes: wrapHistoryResetAction(
+      set,
+      (
+        state,
+        projectId: string,
+        nodes: Node[],
+        autoGroups: AutoGroup[],
+        arrange?: ArrangeNodes,
+      ) =>
+        loadNodes(
+          state,
+          projectId,
+          nodes,
+          autoGroups,
+          recallNodeLayout(layoutStorageKeyPrefix, projectId),
+          arrange,
+        ),
+    ),
+    setNodes: wrapUndoableAction(set, setNodes),
+    colorSelected: wrapUndoableAction(set, colorSelected),
+    alignSelected: wrapUndoableAction(set, alignSelected),
+    distributeSelected: wrapUndoableAction(set, distributeSelected),
+    groupSelected: wrapUndoableAction(set, groupSelected),
+    ungroupSelected: wrapUndoableAction(set, ungroupSelected),
+    renameGroup: wrapUndoableAction(set, renameGroup),
+    undo: wrapAction(set, undo),
+    redo: wrapAction(set, redo),
+    hideSelected: wrapUndoableAction(set, hideSelected),
+    hideUnreachable: wrapUndoableAction(set, hideUnreachable),
+    showHidden: wrapUndoableAction(set, showHidden),
+    clear: wrapHistoryResetAction(set, clear),
+    layout: wrapUndoableAction(set, layout),
+    applyStoredLayout: wrapAction(set, applyStoredLayout),
+    selectAndFocus: wrapAction(set, selectAndFocus),
+    registerViewportContainer: wrapAction(set, registerViewportContainer),
+    setPreferences: wrapAction(set, setPreferences),
+    setTool: wrapAction(set, setTool),
+
+    onKeyDown: wrapUndoableAction(set, onKeyDown),
+    onKeyUp: wrapAction(set, onKeyUp),
+    onMouseDown: wrapHistoryStartAction(set, onMouseDown),
+    onMouseUp: wrapHistoryEndAction(set, onMouseUp),
+    onMouseMove: wrapAction(set, onMouseMove),
+    onDoubleClick: wrapAction(set, onDoubleClick),
+    onWheel: wrapAction(set, onWheel),
+  }
+}
 
 function wrapAction<A extends unknown[]>(
   set: StoreSetter,

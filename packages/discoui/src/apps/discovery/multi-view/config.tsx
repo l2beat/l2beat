@@ -15,6 +15,7 @@ import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconCode } from '../../../icons/IconCode'
 import { IconFileDiff } from '../../../icons/IconFileDiff'
 import { IconGear } from '../../../icons/IconGear'
+import { IconKey } from '../../../icons/IconKey'
 import { IconList } from '../../../icons/IconList'
 import { IconNodes } from '../../../icons/IconNodes'
 import { IconShare } from '../../../icons/IconShare'
@@ -30,6 +31,7 @@ import { ConfigPanel } from '../panel-config/ConfigPanel'
 import { DiffHistoryPanel } from '../panel-diff-history/DiffHistoryPanel'
 import { ListPanel } from '../panel-list/ListPanel'
 import { NodesPanel } from '../panel-nodes/NodesPanel'
+import { PermissionsPanel } from '../panel-permissions/PermissionsPanel'
 import { PreviewPanel } from '../panel-preview/PreviewPanel'
 import { TemplatePanel } from '../panel-template/TemplatePanel'
 import { TerminalPanel } from '../panel-terminal/TerminalPanel'
@@ -43,6 +45,7 @@ export const PANEL_IDS = [
   'list',
   'values',
   'nodes',
+  'permissions',
   'code',
   'preview',
   'analyze',
@@ -66,6 +69,7 @@ const PANELS: Record<PanelId, Panel> = {
   list: { icon: IconList, body: ListPanel },
   values: { icon: IconSigma, body: ValuesPanel },
   nodes: { icon: IconNodes, body: NodesPanel },
+  permissions: { icon: IconKey, body: PermissionsPanel },
   code: { icon: IconCode, body: CodePanel },
   preview: { icon: IconWebApp, body: PreviewPanel },
   analyze: { icon: IconChatbot, body: AnalyzePanel },

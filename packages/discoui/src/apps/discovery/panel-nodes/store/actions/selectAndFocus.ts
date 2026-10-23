@@ -1,16 +1,21 @@
 import type { State } from '../State'
+import { containerBoxes, expandedNodes } from '../utils/renderGraph'
 
+// Members of opened groups are drawn on their own, so they can be focused too.
 export function selectAndFocus(state: State, selected: string): Partial<State> {
-  const node = state.nodes.find((x) => x.id === selected)
+  const node =
+    state.nodes.find((x) => x.id === selected) ??
+    expandedNodes(state.nodes).find((x) => x.id === selected)
 
   if (!node) {
     return state
   }
 
-  const minX = node.box.x
-  const minY = node.box.y
-  const maxX = node.box.x + node.box.width
-  const maxY = node.box.y + node.box.height
+  const box = containerBoxes(state.nodes).get(selected) ?? node.box
+  const minX = box.x
+  const minY = box.y
+  const maxX = box.x + box.width
+  const maxY = box.y + box.height
 
   const nodesCenterX = (minX + maxX) / 2
   const nodesCenterY = (minY + maxY) / 2

@@ -88,6 +88,15 @@ export interface Field {
   readonly target: string
   readonly box: Box
   readonly connection: Connection
+  // Set on the edges of the permissions graph, which leave from the node
+  // itself rather than from a row and are drawn in the color of their role.
+  readonly permission?: FieldPermission
+}
+
+export interface FieldPermission {
+  readonly role: string
+  readonly kind: string
+  readonly color: string
 }
 
 export interface Connection {

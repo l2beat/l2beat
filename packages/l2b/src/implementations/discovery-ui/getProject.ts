@@ -30,6 +30,7 @@ import type {
   ApiProjectChain,
   ApiProjectContract,
   ApiProjectResponse,
+  ApiReceivedPermission,
   Field,
   FieldValue,
 } from './types'
@@ -192,6 +193,7 @@ function eoaFromDiscovery(
     roles: roles,
     description: entry.description,
     referencedBy: [],
+    receivedPermissions: getReceivedPermissions(entry),
     address: entry.address,
     chain: ChainSpecificAddress.longChain(entry.address),
     isReachable: withinDepthAddresses.has(entry.address),
@@ -213,6 +215,15 @@ function getRoles(entry: EntryParameters): string[] {
   const notRoles = ['member', 'act', 'interact']
 
   return [...new Set(roles ?? [])].filter((role) => !notRoles.includes(role))
+}
+
+function getReceivedPermissions(
+  entry: EntryParameters,
+): ApiReceivedPermission[] {
+  return (entry.receivedPermissions ?? []).map((permission) => ({
+    ...permission,
+    via: permission.via ?? [],
+  }))
 }
 
 function getTemplate(
@@ -299,6 +310,7 @@ function contractFromDiscovery(
     proxyType: contract.proxyType,
     description: contract.description,
     referencedBy: [],
+    receivedPermissions: getReceivedPermissions(contract),
     address: contract.address,
     chain: ChainSpecificAddress.longChain(contract.address),
     fields,

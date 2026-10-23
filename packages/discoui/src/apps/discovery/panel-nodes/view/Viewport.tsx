@@ -18,9 +18,15 @@ export interface ViewportProps {
   // userPreferences.useExperimentalRenderer. Passed explicitly only by the
   // bench page so it can A/B test independently of the user setting.
   renderer?: ViewportRenderer
+  // The docking panel this viewport lives in; keys reach it only while that
+  // panel is the active one.
+  panelId?: string
 }
 
-export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
+export function Viewport({
+  renderer: rendererOverride,
+  panelId = 'nodes',
+}: ViewportProps = {}) {
   const useExperimentalRenderer = useStore(
     (state) => state.userPreferences.useExperimentalRenderer === true,
   )
@@ -37,6 +43,7 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
   const desktopControls = useDesktopControls({
     containerRef,
     viewRef,
+    panelId,
   })
 
   const touchControls = useTouchControls({
@@ -47,9 +54,9 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
 
   const currentPanel = useDockingStore((state) => state.activeLeaf)
   const searchOpened = useSearchStore((state) => state.opened)
-  // Always capture if we're not in panel mode, or if we're in nodes panel
+  // Always capture if we're not in panel mode, or if we're in this panel
   const shouldCapture =
-    (currentPanel === undefined || currentPanel === 'nodes') && !searchOpened
+    (currentPanel === undefined || currentPanel === panelId) && !searchOpened
 
   useEffect(() => {
     registerViewportContainer(containerRef.current)

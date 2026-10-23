@@ -4,12 +4,15 @@ import { AddressIcon } from '../../../../components/AddressIcon'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
+import { nodeAddress } from '../store/utils/nodeAddress'
 import {
   buildRenderGraph,
+  type GroupContainer,
   isFieldConnectionLive,
 } from '../store/utils/renderGraph'
 import { getRowLayout } from '../store/utils/rows'
 import { Connection, type ConnectionProps } from './Connection'
+import { getColor } from './colors/colors'
 import { NodeView, type RowDots } from './NodeView'
 
 interface ConnectionView extends ConnectionProps {
@@ -90,6 +93,15 @@ export function NodesAndConnections() {
     <>
       {graph.containers.map((container) => {
         const isSelected = selected.includes(container.id)
+        if (container.color !== 0) {
+          return (
+            <ColoredContainer
+              key={container.id}
+              container={container}
+              isSelected={isSelected}
+            />
+          )
+        }
         return (
           <div
             key={container.id}
@@ -131,6 +143,43 @@ export function NodesAndConnections() {
         )
       })}
     </>
+  )
+}
+
+// A group given a color reads as a labelled region of the graph, the way a
+// chain or a permission role does, rather than as a box around a few nodes.
+function ColoredContainer(props: {
+  container: GroupContainer
+  isSelected: boolean
+}) {
+  const { container } = props
+  const { color } = getColor({
+    id: container.id,
+    color: container.color,
+    hueShift: 0,
+  })
+  return (
+    <div
+      className={clsx(
+        'pointer-events-none absolute rounded-xl border-2',
+        props.isSelected && 'outline-4 outline-autumn-300 outline-solid',
+      )}
+      style={{
+        left: container.box.x,
+        top: container.box.y,
+        width: container.box.width,
+        height: container.box.height,
+        borderColor: `color-mix(in oklch, ${color} 55%, transparent)`,
+        background: `color-mix(in oklch, ${color} 7%, transparent)`,
+      }}
+    >
+      <div
+        className="absolute inset-x-0 top-0 flex items-center truncate px-6 font-bold text-4xl"
+        style={{ color, height: container.headerBox.height }}
+      >
+        {container.name}
+      </div>
+    </div>
   )
 }
 
@@ -190,7 +239,14 @@ function buildView(
   markUnreachableEntries: boolean,
 ): DerivedView {
   const hiddenSet = hidden
+  // Selecting one copy of an address selects every copy drawn.
+  const selectedAddresses = new Set(selected.map(nodeAddress))
   const selectedSet = new Set(selected)
+  for (const node of nodes) {
+    if (selectedAddresses.has(nodeAddress(node.id))) {
+      selectedSet.add(node.id)
+    }
+  }
   const visible: Node[] = []
   const visibleById = new Map<string, Node>()
 
@@ -273,8 +329,10 @@ function buildView(
 
       const targetNode = visibleById.get(field.target)
       const isDashed =
-        targetNode?.addressType === 'EOA' ||
-        targetNode?.addressType === 'EOAPermissioned'
+        field.permission === undefined
+          ? targetNode?.addressType === 'EOA' ||
+            targetNode?.addressType === 'EOAPermissioned'
+          : field.permission.kind === 'upgrade'
       const isHighlighted = isSelected || targetSelected
       const isConnDimmed =
         enableDimming && selected.length > 0 && !isHighlighted
@@ -295,6 +353,7 @@ function buildView(
         isDashed,
         isDimmed: isConnDimmed,
         isGrayedOut: isConnGrayedOut,
+        color: field.permission?.color,
       })
 
       if (from.x < minX) minX = from.x

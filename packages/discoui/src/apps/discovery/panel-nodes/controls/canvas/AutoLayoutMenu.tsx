@@ -1,5 +1,5 @@
 import type { Node } from '../../store/State'
-import { useStore } from '../../store/store'
+import { type NodeStore, useStoreApi } from '../../store/store'
 import { centerLocationsInViewport } from '../../store/utils/centerLocationsInViewport'
 import { clusterLayout } from '../../store/utils/clusterLayout'
 import {
@@ -20,6 +20,7 @@ type AutoLayout = (
 ) => NodeLocations
 
 export function AutoLayoutMenu() {
+  const store = useStoreApi()
   return (
     <ToolbarMenu
       label="Layout"
@@ -29,12 +30,12 @@ export function AutoLayoutMenu() {
           {
             label: 'Stack',
             icon: <IconControlStack />,
-            onSelect: () => applyAutoLayout(stackAutoLayout),
+            onSelect: () => applyAutoLayout(store, stackAutoLayout),
           },
           {
             label: 'Cluster',
             icon: <IconControlCluster />,
-            onSelect: () => applyAutoLayout(clusterLayout),
+            onSelect: () => applyAutoLayout(store, clusterLayout),
           },
         ],
       ]}
@@ -42,8 +43,8 @@ export function AutoLayoutMenu() {
   )
 }
 
-function applyAutoLayout(autoLayout: AutoLayout) {
-  const state = useStore.getState()
+function applyAutoLayout(store: NodeStore, autoLayout: AutoLayout) {
+  const state = store.getState()
   const freshLayout = state.selected.length === 0
   const selected = new Set(state.selected)
   const projection = getGraphProjection(state.nodes)

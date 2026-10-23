@@ -223,6 +223,7 @@ function chain(project: string, addresses: string[]): ApiProjectChain {
       roles: [],
       type: 'EOA',
       referencedBy: [],
+      receivedPermissions: [],
       chain: 'ethereum',
       isReachable: true,
     })) satisfies ApiAddressEntry[],
