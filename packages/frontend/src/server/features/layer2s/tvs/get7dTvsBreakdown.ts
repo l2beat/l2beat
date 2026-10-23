@@ -97,6 +97,9 @@ export async function get7dTvsBreakdown(
     getTvsSyncMetadata(),
   ])
 
+  const excludeAssociatedTokens = params.excludeAssociatedTokens ?? false
+  const excludeRwaRestrictedTokens = params.excludeRwaRestrictedTokens ?? true
+
   // optionToRange ends at a wall-clock guess of the synced hour, so only its
   // start is used
   const [from, to] = params.customTarget
@@ -105,7 +108,14 @@ export async function get7dTvsBreakdown(
         optionToRange('3d')[0],
         getSyncedTvsTimestamp(
           syncMetadataRecords,
-          tvsProjects.flatMap((p) => p.details.tvsConfig),
+          // Tokens the query leaves out must not hold the hour back
+          tvsProjects
+            .flatMap((p) => p.details.tvsConfig)
+            .filter(
+              (t) =>
+                !(excludeAssociatedTokens && t.isAssociated) &&
+                !(excludeRwaRestrictedTokens && t.category === 'rwaRestricted'),
+            ),
         ),
       ]
 
@@ -115,10 +125,7 @@ export async function get7dTvsBreakdown(
     await db.tvsTokenValue.getSummedByProjectAtLatestAndSevenDaysBefore(
       tvsProjects.map((p) => p.projectId),
       [from, to],
-      {
-        excludeAssociatedTokens: params.excludeAssociatedTokens ?? false,
-        excludeRwaRestrictedTokens: params.excludeRwaRestrictedTokens ?? true,
-      },
+      { excludeAssociatedTokens, excludeRwaRestrictedTokens },
     )
 
   // The query returns at most two rows per project, sorted by timestamp:
