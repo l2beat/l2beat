@@ -4888,6 +4888,7 @@
       "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
       "category": "btc",
       "source": "external",
+      "coingeckoId": "wrapped-bitcoin",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -5879,6 +5880,7 @@
       "symbol": "wBTC",
       "category": "btc",
       "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
+      "coingeckoId": "wrapped-bitcoin",
       "source": "canonical",
       "supply": "zero"
     },
@@ -6088,6 +6090,7 @@
     {
       "symbol": "USDT",
       "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
+      "coingeckoId": "tether",
       "category": "stablecoin",
       "source": "canonical",
       "supply": "zero"
@@ -9568,6 +9571,7 @@
     {
       "symbol": "USDC.e",
       "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
+      "coingeckoId": "usd-coin",
       "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",

@@ -4227,7 +4227,7 @@
     {
       "mode": "auto",
       "id": "base-WBTC-1",
-      "priceId": "layerzero-bridged-wbtc-base",
+      "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/66849/large/btc.png?1750793694",

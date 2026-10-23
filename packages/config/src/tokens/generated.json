@@ -1817,6 +1817,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1624230467,
       "coingeckoListingTimestamp": 1624579200,
+      "untilTimestamp": 1776211200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/16652/large/DPX_%281%29.png?1696516213",
       "chainId": 1,
@@ -8807,7 +8808,7 @@
     },
     {
       "name": "Wrapped BTC",
-      "coingeckoId": "bridged-wrapped-bitcoin-manta-pacific",
+      "coingeckoId": "wrapped-bitcoin",
       "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
       "symbol": "wBTC",
       "decimals": 8,
@@ -12692,7 +12693,7 @@
     },
     {
       "name": "Tether USD",
-      "coingeckoId": "mantle-bridged-usdt-mantle",
+      "coingeckoId": "tether",
       "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
       "symbol": "USDT",
       "decimals": 6,
@@ -14606,7 +14607,7 @@
     },
     {
       "name": "Wrapped BTC",
-      "coingeckoId": "layerzero-bridged-wbtc-base",
+      "coingeckoId": "wrapped-bitcoin",
       "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
       "symbol": "WBTC",
       "decimals": 8,
@@ -18422,7 +18423,7 @@
     },
     {
       "name": "Bridged USDC (Stargate)",
-      "coingeckoId": "stargate-bridged-usdc-plume",
+      "coingeckoId": "usd-coin",
       "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
       "symbol": "USDC.e",
       "decimals": 6,
