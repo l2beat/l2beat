@@ -237,6 +237,19 @@ export function collapseEffect(
   return setCollapsed.of(Decoration.set(decorations))
 }
 
+export function collapsedRegionAt(
+  state: EditorState,
+  position: number,
+): number | undefined {
+  let regionIndex: number | undefined
+  state
+    .field(collapsedField)
+    .between(position, position, (_from, _to, value) => {
+      regionIndex = value.spec.regionIndex
+    })
+  return regionIndex
+}
+
 export function expandEffect(regionIndex: number): StateEffect<number> {
   return expandRegion.of(regionIndex)
 }

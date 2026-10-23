@@ -1,5 +1,6 @@
 import {
   EditorSelection,
+  Facet,
   Prec,
   StateEffect,
   StateField,
@@ -55,13 +56,26 @@ const goToLineField = StateField.define<GoToLineState | null>({
   ],
 })
 
-// Ctrl-g on every platform, like VS Code, where it also wins over findNext.
+// Ctrl-g on every platform, like VS Code, where it also wins over findNext,
+// in the find widget too.
 export const goToLine = [
   goToLineField,
   Prec.high(
-    keymap.of([{ key: 'Ctrl-g', run: openGoToLine, preventDefault: true }]),
+    keymap.of([
+      {
+        key: 'Ctrl-g',
+        run: openGoToLine,
+        scope: 'editor search-panel',
+        preventDefault: true,
+      },
+    ]),
   ),
 ]
+
+// Shows a target that the editor hides before the cursor moves there, like a
+// fold that the cursor alone does not open.
+export const goToLineReveal =
+  Facet.define<(view: EditorView, position: number) => void>()
 
 // One constructor for the panel's lifetime, a new one would recreate it.
 function createGoToLineWidget(view: EditorView): Panel {
@@ -84,11 +98,13 @@ class GoToLineWidget implements Panel {
   readonly dom: HTMLElement
   readonly top = true
   private readonly originScroll: StateEffect<unknown>
+  private readonly originOuterScroll: ScrollOffset[]
   private readonly field = document.createElement('input')
   private readonly message = document.createElement('div')
 
   constructor(private readonly view: EditorView) {
     this.originScroll = view.scrollSnapshot()
+    this.originOuterScroll = readOuterScroll(view)
     this.field.className = 'cm-find-field cm-goto-field'
     this.field.ariaLabel = 'Go to line'
     this.field.placeholder = 'line:character'
@@ -102,7 +118,7 @@ class GoToLineWidget implements Panel {
     this.dom.append(box, this.message)
     this.field.addEventListener('input', () => this.preview())
     this.field.addEventListener('keydown', (event) => this.keydown(event))
-    this.field.addEventListener('blur', () => this.close([]))
+    this.field.addEventListener('blur', () => this.close())
     this.showMessage(undefined)
   }
 
@@ -113,7 +129,7 @@ class GoToLineWidget implements Panel {
   private keydown(event: KeyboardEvent) {
     if (event.key === 'Escape') {
       event.preventDefault()
-      this.close([this.originScroll])
+      this.returnToOrigin([closeEffect.of(null)])
       this.view.focus()
     } else if (event.key === 'Enter') {
       event.preventDefault()
@@ -124,12 +140,14 @@ class GoToLineWidget implements Panel {
   private preview() {
     const target = parsePosition(this.view.state.doc, this.field.value)
     this.showMessage(target)
+    if (target === undefined) {
+      this.returnToOrigin([previewEffect.of(undefined)])
+      return
+    }
     this.view.dispatch({
       effects: [
         previewEffect.of(target),
-        target === undefined
-          ? this.originScroll
-          : EditorView.scrollIntoView(target, { y: 'center' }),
+        EditorView.scrollIntoView(target, { y: 'center' }),
       ],
     })
   }
@@ -138,6 +156,9 @@ class GoToLineWidget implements Panel {
     const target = parsePosition(this.view.state.doc, this.field.value)
     if (target === undefined) {
       return
+    }
+    for (const reveal of this.view.state.facet(goToLineReveal)) {
+      reveal(this.view, target)
     }
     this.view.dispatch({
       selection: EditorSelection.cursor(target),
@@ -149,11 +170,21 @@ class GoToLineWidget implements Panel {
     this.view.focus()
   }
 
-  private close(effects: StateEffect<unknown>[]) {
+  private close() {
     if (this.view.state.field(goToLineField) === null) {
       return
     }
-    this.view.dispatch({ effects: [closeEffect.of(null), ...effects] })
+    this.view.dispatch({ effects: closeEffect.of(null) })
+  }
+
+  // The snapshot replaces a pending scroll to the preview, but only restores
+  // the editor's own scroller, and a merge view scrolls an outer element.
+  private returnToOrigin(effects: StateEffect<unknown>[]) {
+    this.view.dispatch({ effects: [...effects, this.originScroll] })
+    for (const offset of this.originOuterScroll) {
+      offset.element.scrollTop = offset.top
+      offset.element.scrollLeft = offset.left
+    }
   }
 
   private showMessage(target: number | undefined) {
@@ -171,6 +202,31 @@ class GoToLineWidget implements Panel {
         ? `Go to line ${line.number}.`
         : `Go to line ${line.number}, character ${character}.`
   }
+}
+
+interface ScrollOffset {
+  element: HTMLElement
+  top: number
+  left: number
+}
+
+function readOuterScroll(view: EditorView): ScrollOffset[] {
+  const offsets: ScrollOffset[] = []
+  let element = parentOf(view.scrollDOM)
+  while (element !== null) {
+    offsets.push({
+      element,
+      top: element.scrollTop,
+      left: element.scrollLeft,
+    })
+    element = parentOf(element)
+  }
+  return offsets
+}
+
+// Biome's type inference runs out on parentElement read in a loop.
+function parentOf(element: HTMLElement): HTMLElement | null {
+  return element.parentElement
 }
 
 export function parsePosition(doc: Text, value: string): number | undefined {
