@@ -39,6 +39,8 @@ const AUX_ORANGE: RGBA = [0xfe / 255, 0x80 / 255, 0x19 / 255, 1]
 const DIMMED_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.3)
 const GRAYED_CONNECTION_COLOR = withAlpha(COFFEE_200, 0.1)
 const BLACK: RGBA = [0, 0, 0, 1]
+// Transparent ring color: a plain fill.
+const NO_RING: RGBA = [0, 0, 0, 0]
 
 const HEADER_ICON_SIZE = 16
 const ICON_VIEW_BOX = 16
@@ -75,13 +77,14 @@ const FOOTER_FONT: FontSpec = {
 
 const CONNECTION_SEGMENTS = 32
 const GRID_DOT_RADIUS_PER_CELL = 0.05
+const INITIAL_RING_WIDTH = 15
 const CONNECTION_CONTROL_OFFSET = 50
 const DASH_ON_WORLD = 5
 const DASH_OFF_WORLD = 5
 const PERIMETER_SAMPLES_PER_CORNER = 8
 
 // Floats per instance for each pipeline.
-const QUAD_STRIDE_F = 14 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z
+const QUAD_STRIDE_F = 18 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z, ring.rgba
 const TEXT_STRIDE_F = 13 // pos.xy, size.xy, uv.xyzw, color.rgba, z
 const LINE_STRIDE_F = 6 // pos.xy, color.rgba
 const CONNECTION_STRIDE_F = 12 // from.xy, to.xy, controlX.xy, color.rgba, width, dashed
@@ -179,6 +182,7 @@ layout(location = 3) in vec4 i_color;
 layout(location = 4) in vec4 i_radii; // TL, TR, BR, BL
 layout(location = 5) in float i_border;
 layout(location = 6) in float i_z;
+layout(location = 7) in vec4 i_ring;
 uniform vec2 u_offset;
 uniform float u_scale;
 uniform vec2 u_resolution;
@@ -187,6 +191,7 @@ out vec2 v_local;
 out vec2 v_halfSize;
 out vec4 v_radii;
 out float v_border;
+out vec4 v_ring;
 void main() {
   float pad = (i_border * 0.5) + 1.0;
   vec2 quadSize = i_size + vec2(pad * 2.0);
@@ -201,6 +206,7 @@ void main() {
   v_halfSize = i_size * 0.5;
   v_radii = i_radii;
   v_border = i_border;
+  v_ring = i_ring;
 }`
 
 const ROUND_FS = `#version 300 es
@@ -210,7 +216,9 @@ in vec2 v_local;
 in vec2 v_halfSize;
 in vec4 v_radii;
 in float v_border;
+in vec4 v_ring;
 out vec4 fragColor;
+const float RING_WIDTH = ${INITIAL_RING_WIDTH}.0;
 float pickRadius(vec2 p, vec4 r) {
   float top    = (p.x > 0.0) ? r.y : r.x;
   float bottom = (p.x > 0.0) ? r.z : r.w;
@@ -233,7 +241,12 @@ void main() {
     alpha = 1.0 - smoothstep(-aa, aa, d);
   }
   if (alpha <= 0.0) discard;
-  fragColor = vec4(v_color.rgb, v_color.a * alpha);
+  // repeating-radial-gradient(circle, ring 0, color RING_WIDTH) from the
+  // center, as initial contracts draw their header in the DOM renderer.
+  vec3 color = v_ring.a > 0.0
+    ? mix(v_ring.rgb, v_color.rgb, mod(length(v_local), RING_WIDTH) / RING_WIDTH)
+    : v_color.rgb;
+  fragColor = vec4(color, v_color.a * alpha);
 }`
 
 // Fullscreen triangle with a dot at the center of every grid cell, so panning
@@ -816,10 +829,10 @@ interface InstancedPassBuffer extends PassBuffer {
   attributes: InstanceAttributes
 }
 
-// pos.xy, size.xy, color.rgba, radii.xyzw, border, z
+// pos.xy, size.xy, color.rgba, radii.xyzw, border, z, ring.rgba
 const ROUND_ATTRIBUTES: InstanceAttributes = {
   strideF: QUAD_STRIDE_F,
-  sizes: [2, 2, 4, 4, 1, 1],
+  sizes: [2, 2, 4, 4, 1, 1, 4],
 }
 // pos.xy, size.xy, uv.xyzw, color.rgba, z
 const TEXT_ATTRIBUTES: InstanceAttributes = {
@@ -1301,6 +1314,7 @@ class WebGLRenderer {
         r,
         w,
         CONTAINER_Z,
+        NO_RING,
       )
       writeRound(
         buf,
@@ -1316,6 +1330,7 @@ class WebGLRenderer {
         0,
         0,
         CONTAINER_Z,
+        NO_RING,
       )
     }
     for (const rn of renderNodes) {
@@ -1339,6 +1354,7 @@ class WebGLRenderer {
           corner + inset,
           SELECTION_OUTLINE_WIDTH,
           z,
+          NO_RING,
         )
       }
 
@@ -1356,11 +1372,18 @@ class WebGLRenderer {
         corner,
         0,
         z,
+        NO_RING,
       )
 
-      const { color: headerCssColor } = getColor(node)
+      const { color: headerCssColor, ringColor } = getColor(node)
       const headerRgb = cssRgbToRgba(headerCssColor)
       const headerColor = flags.isGrayedOut ? desaturate(headerRgb) : headerRgb
+      const ringRgb = cssRgbToRgba(ringColor)
+      const headerRing = !node.isInitial
+        ? NO_RING
+        : flags.isGrayedOut
+          ? desaturate(ringRgb)
+          : ringRgb
       const headerBR = rn.fullHeight ? corner : 0
       const headerBL = rn.fullHeight ? corner : 0
       writeRound(
@@ -1377,6 +1400,7 @@ class WebGLRenderer {
         headerBL,
         0,
         z,
+        headerRing,
       )
 
       if (rn.isGroup) {
@@ -1395,6 +1419,7 @@ class WebGLRenderer {
           corner + inset,
           GROUP_OUTLINE_WIDTH,
           z,
+          NO_RING,
         )
       }
 
@@ -1416,6 +1441,7 @@ class WebGLRenderer {
             pillRadius,
             0,
             z,
+            NO_RING,
           )
         }
       }
@@ -2197,6 +2223,7 @@ function writeRound(
   rBL: number,
   border: number,
   z: number,
+  ring: RGBA,
 ) {
   const base = i * QUAD_STRIDE_F
   out[base] = x
@@ -2213,6 +2240,10 @@ function writeRound(
   out[base + 11] = rBL
   out[base + 12] = border
   out[base + 13] = z
+  out[base + 14] = ring[0]
+  out[base + 15] = ring[1]
+  out[base + 16] = ring[2]
+  out[base + 17] = ring[3]
 }
 
 function writeTextQuad(
