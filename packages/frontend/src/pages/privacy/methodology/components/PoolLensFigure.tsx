@@ -307,9 +307,8 @@ function DesignControl({
   }
   return (
     <div
-      key={lens}
       // As tall for a slider as for a choice, so the scene below never moves.
-      className="motion-safe:fade-in mt-3 flex min-h-[50px] flex-wrap items-center gap-x-3 gap-y-2 rounded-md bg-surface-primary px-3 py-2 motion-safe:animate-in"
+      className="mt-3 flex min-h-[50px] flex-wrap items-center gap-x-3 gap-y-2 rounded-md bg-surface-primary px-3 py-2"
     >
       {control}
     </div>
