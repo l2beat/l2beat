@@ -2,6 +2,8 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
 import { getCollectionEntry } from '~/content/getCollection'
+import { getPrivacyMethodologyData } from '~/pages/privacy/methodology/getPrivacyMethodologyData'
+import { PRIVACY_METHODOLOGY_ID } from '~/pages/privacy/methodology/paths'
 import type { RenderData, RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
@@ -54,7 +56,13 @@ export function createPublicationsRouter(
           req.originalUrl,
         )
       }
-      if (otherPublication) {
+      if (otherPublication?.id === PRIVACY_METHODOLOGY_ID) {
+        data = await getPrivacyMethodologyData(
+          manifest,
+          otherPublication,
+          req.originalUrl,
+        )
+      } else if (otherPublication) {
         data = await getOtherPublicationData(
           manifest,
           otherPublication,

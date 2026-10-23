@@ -19,10 +19,12 @@ import {
 } from '~/components/table/utils/commonPinningStyles'
 import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
 import { useInterval } from '~/hooks/useInterval'
+import { useThemeTokens } from '~/hooks/useThemeTokens'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { BUCKET_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
+import { readableColor } from '~/utils/color'
 import { Activity } from './Activity'
 import {
   BLOB_KIB,
@@ -31,8 +33,6 @@ import {
   formatWhole,
 } from './blocks/format'
 import { useChainClock } from './chainClock'
-import { readableColor } from './color'
-import { useThemeTokens } from './hooks'
 import { anyLanding, type Landing, useLandedTotal } from './landings'
 import {
   FLASH_CLASS_NAME,

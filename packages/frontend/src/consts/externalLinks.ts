@@ -18,6 +18,8 @@ export const externalLinks = {
       'https://forum.l2beat.com/t/new-stage-1-requirements-for-l2-proving-systems/413',
     trustedSetupFramework:
       'https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381',
+    privacyAdversariesFramework:
+      'https://forum.l2beat.com/t/privacy-adversaries-framework/455',
   },
   askForZkCatalogVerification:
     'https://l2beat.notion.site/ZK-Catalog-Verification-94e940aa2bff4287bb15a19f66e3cead?pvs=25',
