@@ -9,5 +9,6 @@
 ## Privacy can be lost if
 1. Cloaked, or anyone who obtains its records now or later, uses the viewing keys to link every account's addresses (see privileged insider).
 2. Cloaked's relayers and fee Safe mark every spend as a Cloaked user's (see chain analyst).
-3. Cloaked changes its closed-source app to send account data to third parties, which users cannot check (see network observer).
-4. a user relies on the Incognito balance, whose relay keeps the link between deposit and withdrawal (see privileged insider).
+3. Cloaked changes its closed-source app to send account data to third parties (see privileged insider).
+4. a payer looks up the user's name through a public RPC, which then sees the name and the new address (see network observer).
+5. a user relies on the Incognito balance, whose relay keeps the link between deposit and withdrawal (see privileged insider).
