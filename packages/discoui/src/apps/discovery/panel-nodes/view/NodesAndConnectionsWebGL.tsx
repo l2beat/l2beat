@@ -2827,6 +2827,7 @@ export function NodesAndConnectionsWebGL() {
         scheduleDraw.current()
       })
       .catch((error) => {
+        if (cancelled) return
         console.error('WebGL renderer init failed', error)
         setFailure(
           'The node view could not start WebGL. Reload the page to try again.',
