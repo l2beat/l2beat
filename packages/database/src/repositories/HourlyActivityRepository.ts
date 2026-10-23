@@ -10,7 +10,7 @@ export interface HourlyActivityRecord {
   count: number
   uopsCount: number | null
   /** Of the busiest UTC minute in the hour */
-  peakCount: number
+  peakCount: number | null
   peakUopsCount: number | null
 }
 

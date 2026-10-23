@@ -24,12 +24,19 @@ model DaBeatStats {
 }
 
 model Activity {
-  projectId String   @db.VarChar(255)
-  timestamp DateTime @db.Timestamp(6)
-  count     Int
-  uopsCount Int?
-  start     Int      @default(0)
-  end       Int      @default(0)
+  projectId           String   @db.VarChar(255)
+  timestamp           DateTime @db.Timestamp(6)
+  count               Int
+  uopsCount           Int?
+  start               Int      @default(0)
+  end                 Int      @default(0)
+  /// Of the busiest hour of the day. Only block and slot chains have peaks,
+  /// and only since HourlyActivity was added
+  peakHourCount       Int?
+  peakHourUopsCount   Int?
+  /// Of the busiest UTC minute of the day
+  peakMinuteCount     Int?
+  peakMinuteUopsCount Int?
 
   @@id([projectId, timestamp])
 }
@@ -43,7 +50,7 @@ model HourlyActivity {
   count         Int
   uopsCount     Int?
   /// Of the busiest UTC minute in the hour
-  peakCount     Int
+  peakCount     Int?
   peakUopsCount Int?
 
   @@id([projectId, timestamp])
