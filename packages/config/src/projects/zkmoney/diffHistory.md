@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x2520a5cf47f7053887d9726005bc8110bf5c02f9
+
+# Diff at Fri, 23 Oct 2026 09:46:47 GMT:
+
+- id: 4f297957
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ec8ba7d26cf94eabb922b46e6e4752a4e401124 block: 1791882651
+- current timestamp: 1792748009
+
+## Description
+
+Add SwapEscrowFactoryV2 and its SwapEscrowV2 implementation, which zk.money Desktop v0.5.0 uses for swap and fresh-address withdrawals.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791882651 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract SwapEscrowFactoryV2 (eth:0x3B5D8c731364902eAFa46Be327AFB044C10c5952) [zkmoney/SwapEscrowFactoryV2]
+    +++ description: Swap-on-withdraw: a withdrawal can pay DAI to a SwapEscrowV2 clone whose route, recipient, gas share and tip are fixed in its address. Anyone can deploy and execute a funded clone to pay USDC, USDT, ETH or DAI to the recipient.
+```
+
+```diff
++   Status: CREATED
+    contract SwapEscrowV2 (eth:0xcfAf1DFc22CE92cf3F2b534b3b5C1F116028FB95) [zkmoney/SwapEscrowV2]
+    +++ description: SwapEscrowV2 implementation. A clone swaps via the Curve 3pool (and Uniswap for ETH) with a slippage bound of 100 bps for stablecoins and 200 bps against the Chainlink ETH/USD price for ETH. It can first swap a capped share of the DAI to ETH for the recipient's gas. If the swap cannot execute, only the recovery key committed in the clone's address can move the funds.
+```
+
 Generated with discovered.json: 0xa5e9caca8cfba61c584e8443cc7108a4ceb25bfa
 
 # Diff at Fri, 16 Oct 2026 05:36:55 GMT:
