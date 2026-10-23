@@ -1,3 +1,187 @@
+Generated with discovered.json: 0xcab767d963e99f021a00f7a489b06b9309d561ec
+
+# Diff at Fri, 23 Oct 2026 04:16:29 GMT:
+
+- id: c7ccf9ff
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7bc17c6364778d4d42a4b0746762389851692cc6 block: 1792414952
+- current timestamp: 1792414952
+
+## Description
+
+The ZamaDAO template now derives daoExecutors, daoRootHolders and daoUpgraders for every DAO, replacing the InterfoldDAO overrides. VotingEscrowDAO gains these fields, so its executors now resolve as permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792414952 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x455e3DEFBC6b48D9127CF6acC609F5cEa87cA759) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+    }
+```
+
+```diff
+    contract InterfoldSafeA (eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.31:
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.47:
++        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.46.description:
++        "upgrade the DAO implementation."
+      receivedPermissions.46.via.0:
++        {"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}
+      receivedPermissions.46.from:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++        "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"
+    }
+```
+
+```diff
+    contract InterfoldDAO (eth:0x652a31c669f9AB37f6040f279139a75D04F2679e) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+      fieldMeta.daoExecutors.description:
+-        "Current grantees of Aragon's EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events."
++        "Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events."
+      fieldMeta.daoExecutors.severity:
++        "HIGH"
+      fieldMeta.daoRootHolders.description:
+-        "Current grantees of Aragon's ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events."
++        "Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events."
+      fieldMeta.daoRootHolders.severity:
++        "HIGH"
+      fieldMeta.daoUpgraders.description:
+-        "Current grantees of Aragon's UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events."
++        "Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events."
+      fieldMeta.daoUpgraders.severity:
++        "HIGH"
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"execute arbitrary calls from the DAO.","role":".daoExecutors"}
+      directlyReceivedPermissions.32.description:
++        "upgrade the DAO implementation."
+    }
+```
+
+```diff
+    contract InterfoldSafeB (eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.31:
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.45:
++        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.44.description:
++        "upgrade the DAO implementation."
+      receivedPermissions.44.via.0:
++        {"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}
+      receivedPermissions.44.from:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++        "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"
+    }
+```
+
+```diff
+    contract PublicStagedProposalProcessor (eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb) [interfold/StagedProposalProcessor] {
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      receivedPermissions.33:
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.47:
++        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.46.description:
++        "upgrade the DAO implementation."
+      receivedPermissions.46.via.0:
++        {"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}
+      receivedPermissions.46.from:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++        "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"
+      directlyReceivedPermissions.0.description:
+-        "execute arbitrary calls from the DAO, including calls to protocol owners and ProxyAdmins."
++        "execute arbitrary calls from the DAO."
+    }
+```
+
+```diff
+    contract VotingEscrowDAO (eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
++++ description: Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.
++++ severity: HIGH
+      values.daoExecutors:
++        ["eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C","eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"]
++++ description: Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.
++++ severity: HIGH
+      values.daoRootHolders:
++        ["eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"]
++++ description: Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.
++++ severity: HIGH
+      values.daoUpgraders:
++        ["eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"]
+      fieldMeta.daoExecutors:
++        {"severity":"HIGH","description":"Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.","type":"PERMISSION"}
+      fieldMeta.daoRootHolders:
++        {"severity":"HIGH","description":"Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.","type":"PERMISSION"}
+      fieldMeta.daoUpgraders:
++        {"severity":"HIGH","description":"Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.","type":"PERMISSION"}
+      directlyReceivedPermissions.7:
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders"}
+      directlyReceivedPermissions.15:
++        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"upgrade the DAO implementation.","role":".daoUpgraders"}
+    }
+```
+
+```diff
+    contract ProtocolProposalProcessor (eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3) [interfold/StagedProposalProcessor] {
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      receivedPermissions.33:
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.47:
++        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.46.description:
++        "upgrade the DAO implementation."
+      receivedPermissions.46.via.0:
++        {"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}
+      receivedPermissions.46.from:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++        "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"
+      directlyReceivedPermissions.0.description:
+-        "execute arbitrary calls from the DAO, including calls to protocol owners and ProxyAdmins."
++        "execute arbitrary calls from the DAO."
+    }
+```
+
+```diff
+    contract VotingEscrowMultisig (eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"execute arbitrary calls from the DAO.","role":".daoExecutors"}
+    }
+```
+
+```diff
+    contract AdminPlugin (eth:0xF21e25455988887EE797050080141eba67B33920) [interfold/AdminPlugin] {
+    +++ description: Non-upgradeable Aragon Admin plugin. Holders of its DAO-granted EXECUTE_PROPOSAL permission can submit actions that the plugin forwards immediately, without a vote or onchain delay.
+      receivedPermissions.32:
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.46:
++        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.45.description:
++        "upgrade the DAO implementation."
+      receivedPermissions.45.via.0:
++        {"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}
+      receivedPermissions.45.from:
+-        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
++        "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"
+      directlyReceivedPermissions.0.description:
+-        "execute arbitrary calls from the DAO, including calls to protocol owners and ProxyAdmins."
++        "execute arbitrary calls from the DAO."
+    }
+```
+
 Generated with discovered.json: 0xcd92a4a8c5734f485cb99171fb24b9e34eed37df
 
 # Diff at Mon, 19 Oct 2026 13:04:16 GMT:

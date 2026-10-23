@@ -28,6 +28,87 @@
         }
       }
     },
+    "daoExecutors": {
+      "description": "Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "copy": "$activePermissions",
+      "edit": [
+        "pipe",
+        [
+          "filter",
+          [
+            "and",
+            [
+              "=",
+              "0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d",
+              ["get", "permissionId"]
+            ],
+            ["=", ["env", "address"], ["get", "where"]]
+          ]
+        ],
+        ["map", ["get", "who"]]
+      ],
+      "permissions": [
+        {
+          "type": "act",
+          "description": "execute arbitrary calls from the DAO."
+        }
+      ]
+    },
+    "daoRootHolders": {
+      "description": "Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "copy": "$activePermissions",
+      "edit": [
+        "pipe",
+        [
+          "filter",
+          [
+            "and",
+            [
+              "=",
+              "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
+              ["get", "permissionId"]
+            ],
+            ["=", ["env", "address"], ["get", "where"]]
+          ]
+        ],
+        ["map", ["get", "who"]]
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke permissions in the DAO."
+        }
+      ]
+    },
+    "daoUpgraders": {
+      "description": "Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "copy": "$activePermissions",
+      "edit": [
+        "pipe",
+        [
+          "filter",
+          [
+            "and",
+            [
+              "=",
+              "0x1f53edd44352e5d15bad2b29233baa93bcd595e09457780bc7c5445bbbe751cc",
+              ["get", "permissionId"]
+            ],
+            ["=", ["env", "address"], ["get", "where"]]
+          ]
+        ],
+        ["map", ["get", "who"]]
+      ],
+      "permissions": [
+        { "type": "upgrade", "description": "upgrade the DAO implementation." }
+      ]
+    },
     "multisigSettingsAdmins": {
       "description": "Current multisig-settings grantees derived from Aragon grant/revoke events.",
       "severity": "HIGH",

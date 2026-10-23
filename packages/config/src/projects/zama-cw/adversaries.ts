@@ -10,8 +10,9 @@ const WRAPPER =
   'https://github.com/zama-ai/protocol-apps/blob/85eef95c797da20875fe7eeae7f8d212d760486f/contracts/confidential-wrapper/contracts/ConfidentialWrapper.sol'
 const KMS =
   'https://github.com/zama-ai/kms/blob/b5cd5cf465dc488ff04ac8c19f3ef12877abffa0/'
-const RELAYER_SDK =
-  'https://github.com/zama-ai/relayer-sdk/blob/d06f1e585a78181135cb602109e5fa3da523b48d/src/'
+// @zama-fhe/sdk v3.6.0, the release line the app bundles.
+const SDK =
+  'https://github.com/zama-ai/sdk/blob/464764577777367e869c47ae53e6ba0de35e3f93/packages/sdk/src/'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: 'exposed',
@@ -46,9 +47,9 @@ export function zamaCwAdversaries(
       publicObserver: {
         sentiment: 'warning',
         exposureShort:
-          'Wraps and unwraps publish their amounts, while confidential transfers keep theirs encrypted.',
+          'Wraps, unwraps and vault batch totals publish their amounts, while confidential transfers keep theirs encrypted.',
         exposureContinued:
-          'Either party to a transfer can disclose its amount onchain at any time.',
+          "Either party to a transfer can disclose its amount onchain at any time. A vault batch with a single depositor publishes that depositor's amount.",
         advice:
           'Pay and get paid inside the confidential token, and unwrap only what the user needs.',
         interior: INTERIOR,
@@ -65,6 +66,11 @@ export function zamaCwAdversaries(
             title: 'Either party can disclose a transfer amount',
             url: `${OZ}ERC7984.sol#L202-L209`,
           },
+          {
+            contract: 'SteakcUSDCDepositBatcher',
+            title:
+              'Batchers log every depositor and unwrap each batch total publicly',
+          },
         ],
       },
       chainAnalyst: {
@@ -72,7 +78,7 @@ export function zamaCwAdversaries(
         exposureShort:
           "An account's balance is bounded by its public wraps and unwraps, and exact if it never took part in a confidential transfer.",
         exposureContinued:
-          'Transfer partners and timing are public, so a wrap, a transfer and an unwrap in a row pair up by amount. In October 2026, 95% of unwraps could be linked to a single wrap.',
+          'Transfer partners and timing are public, so a wrap, a transfer and an unwrap in a row pair up by amount. Swap market makers decrypt the amounts of each order and its decoys, and the winner learns which one is real.',
         advice: `Transfer often, even zero amounts, and unwrap only after a while. ${S.commonAmounts}`,
         interior: {
           ...INTERIOR,
@@ -89,37 +95,36 @@ export function zamaCwAdversaries(
           },
           {
             title:
-              'Explorer linking unwraps to their wraps, searchable by address, handle and transaction',
+              'Explorer linking unwraps to their wraps: 95% link to a single wrap (October 2026)',
             url: 'https://sekuba.github.io/zama-graph/',
+          },
+          {
+            contract: 'ConfidentialSwap',
+            title:
+              'Market makers decrypt each order and its decoys through a shared delegation',
           },
         ],
       },
       networkObserver: {
         sentiment: 'warning',
         exposureShort:
-          "Zama's app is closed source, so what it sends to third parties is up to Zama and can change at any time.",
+          "Zama's closed-source app sends no amount to third parties today, but our trace of closed code cannot cannot guarantee it.",
         exposureContinued:
-          "Through Zama's open SDK, amounts leave the user's device only as FHE ciphertext and return encrypted to a key held only by that device. Today the app sends the user's address, chain reads and decryption requests to Zama's own servers, which forward chain reads to an RPC provider Zama does not name. Analytics wait for the user's consent.",
-        advice: "Use a client built on Zama's open SDK.",
-        interior: INTERIOR,
+          "The app encrypts amounts on the device with Zama's open SDK and reads balances under a key only the device holds. The user's address and decryption requests go to Zama's own servers. Other services see no address or amount.",
+        advice:
+          'Reject the analytics prompt, so Google Analytics and Sentry receive nothing.',
+        interior: {
+          ...INTERIOR,
+          amount: 'unverifiable',
+        },
         sources: [
           {
             title: 'Inputs are encrypted on the device',
-            url: `${RELAYER_SDK}relayer/sendEncryption.ts#L133-L146`,
+            url: `${SDK}worker/encrypt.worker.ts#L112-L128`,
           },
           {
             title: 'Balance reads use a device ML-KEM key pair',
-            url: `${RELAYER_SDK}relayer/userDecrypt.ts#L85-L89`,
-          },
-          {
-            title:
-              "The app's content security policy lists every endpoint it contacts",
-            url: 'https://app.zama.org',
-          },
-          {
-            title:
-              'The SDK the app bundles (@zama-fhe/sdk 3.6.0) is open source',
-            url: 'https://github.com/zama-ai/sdk',
+            url: `${SDK}credentials/keypair-vault.ts#L118-L133`,
           },
         ],
       },
@@ -127,7 +132,7 @@ export function zamaCwAdversaries(
         sentiment: 'bad',
         exposureShort: `Any ${kmsKeyThreshold} of the ${kmsOperatorCount} KMS operators can combine their key shares and decrypt every balance and transfer ever made.`,
         exposureContinued:
-          'The token owner can instantly appoint an observer that sees all amounts forever, or upgrade the token and the ACL. Zama serves its closed-source app, so it can read amounts before they are encrypted.',
+          "The token owner can instantly appoint an observer that sees all amounts. Zama's closed-source app can read amounts before encryption, and today sends every swap amount to Zama in cleartext. The swap's compliance address decrypts every swap, and the vault feature shares balances with Merkl by default.",
         interior: ALL_EXPOSED,
         sources: [
           {
@@ -139,8 +144,13 @@ export function zamaCwAdversaries(
             url: `${WRAPPER}#L395-L403`,
           },
           {
-            title: "Zama's official app",
-            url: 'https://docs.zama.org/protocol/protocol-apps/apps',
+            contract: 'ConfidentialSwap',
+            title:
+              'The compliance address decrypts every intent, quote and settlement',
+          },
+          {
+            title: 'Sharing vault balances with Merkl is on by default',
+            url: 'https://www.zama.org/post/confidential-rewards-with-merkl-are-now-available-to-claim',
           },
         ],
       },
@@ -149,7 +159,7 @@ export function zamaCwAdversaries(
         exposureShort:
           "Whoever breaks elliptic-curve cryptography recovers a user's wallet key from any past transaction and can have the KMS decrypt that user's history.",
         exposureContinued:
-          'A wallet signature alone authorizes decryption, permissions on past balances and transfers never expire, and the KMS encrypts its replies to whatever key the request names. The ciphertexts themselves rest on lattice assumptions with no known quantum attack, and anyone can download them today.',
+          'A wallet signature alone authorizes decryption of past balances and transfers, and the KMS encrypts its reply to any key the request names. The ciphertexts themselves rest on lattice assumptions with no known quantum attack.',
         interior: ALL_EXPOSED,
         sources: [
           {
