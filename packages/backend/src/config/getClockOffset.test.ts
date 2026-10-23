@@ -25,7 +25,9 @@ describe(getClockOffset.name, () => {
   for (const value of ['59', '86401', '900.5', 'abc', '', '-900']) {
     it(`throws for ${JSON.stringify(value)}`, () => {
       const env = new Env({ CLOCK_SAFE_TIME_OFFSET_SECONDS: value })
-      expect(() => getClockOffset(env)).toThrow('Invalid clock offset')
+      expect(() => getClockOffset(env)).toThrow(
+        'Invalid CLOCK_SAFE_TIME_OFFSET_SECONDS',
+      )
     })
   }
 })

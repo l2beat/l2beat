@@ -312,6 +312,19 @@ describe(CoingeckoQueryService.name, () => {
       ).toBeRejectedWith(DataNotReadyError)
     })
 
+    it('returns nothing for a range without a whole hour', async () => {
+      const lastPoint = HOUR - UnixTime.HOUR + 3 * UnixTime.MINUTE
+      const service = new CoingeckoQueryService(client(lastPoint))
+
+      const prices = await service.getUsdPriceHistoryHourly(
+        CoingeckoId('weth'),
+        HOUR - 50 * UnixTime.MINUTE,
+        HOUR - 10 * UnixTime.MINUTE,
+      )
+
+      expect(prices).toEqual([])
+    })
+
     it('returns the hour once its point is published', async () => {
       const lastPoint = HOUR + 4 * UnixTime.MINUTE
       const service = new CoingeckoQueryService(client(lastPoint))

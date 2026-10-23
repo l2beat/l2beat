@@ -24,7 +24,7 @@ export function getClockOffset(env: Env): {
     offsetSeconds < MIN_OFFSET_SECONDS ||
     offsetSeconds > MAX_OFFSET_SECONDS
   ) {
-    throw new Error('Invalid clock offset', {
+    throw new Error('Invalid CLOCK_SAFE_TIME_OFFSET_SECONDS', {
       cause: { value, min: MIN_OFFSET_SECONDS, max: MAX_OFFSET_SECONDS },
     })
   }

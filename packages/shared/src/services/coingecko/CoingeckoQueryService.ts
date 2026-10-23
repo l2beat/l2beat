@@ -157,7 +157,8 @@ export class CoingeckoQueryService {
 
   /**
    * The result ends before `range.to` if CoinGecko has not published the last
-   * hours yet. Throws DataNotReadyError if it has not published `range.from`.
+   * hours yet. Throws DataNotReadyError if it has not published the first
+   * whole hour of the range.
    */
   async queryHourlyPricesAndMarketCaps(
     coingeckoId: CoingeckoId,
@@ -187,7 +188,7 @@ export class CoingeckoQueryService {
         })
       }
     }
-    if (timestamps.length === 0) {
+    if (requested.length > 0 && timestamps.length === 0) {
       throw new DataNotReadyError('CoinGecko has not published the hour yet', {
         cause: { coingeckoId, timestamp: range.from, lastPoint },
       })
