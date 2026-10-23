@@ -45,13 +45,10 @@ export class BlockProvider {
     throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
   }
 
-  /** Reads the block without transaction bodies when the client supports it. */
   async getBlockHeader(x: number | 'latest'): Promise<BlockHeader> {
     for (const [index, client] of this.clients.entries()) {
       try {
-        const block = client.getBlockHeader
-          ? await client.getBlockHeader(x)
-          : await client.getBlockWithTransactions(x)
+        const block = await client.getBlockHeader(x)
         if (typeof x === 'number' && block.number !== x) {
           throw new Error('Invalid response: unexpected block number', {
             cause: { expected: x, received: block.number },

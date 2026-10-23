@@ -4,8 +4,8 @@ import type { SvmBlock } from './rpc-svm/types'
 export interface BlockClient {
   getLatestBlockNumber(): Promise<number>
   getBlockWithTransactions(blockNumber: number | 'latest'): Promise<Block>
-  /** Optional capability: fetch a block without transaction bodies. */
-  getBlockHeader?(blockNumber: number | 'latest'): Promise<BlockHeader>
+  /** Reads the block without transactions. */
+  getBlockHeader(blockNumber: number | 'latest'): Promise<BlockHeader>
   /** Optional capability: batch-fetch block timestamps. Implementations are
    *  expected to chunk requests internally. */
   getBlockTimestamps?(blockNumbers: number[]): Promise<Map<number, number>>

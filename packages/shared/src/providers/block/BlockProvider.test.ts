@@ -77,18 +77,6 @@ describe(BlockProvider.name, () => {
       expect(result).toEqual({ number: 7, timestamp: 700 })
     })
 
-    it('reads the full block from clients without the capability', async () => {
-      const client = mockObject<BlockClient>({
-        getBlockHeader: undefined,
-        getBlockWithTransactions: async () => block(7),
-      })
-      const provider = new BlockProvider('chain', [client])
-
-      const result = await provider.getBlockHeader(7)
-
-      expect(result).toEqual({ number: 7, timestamp: 700 })
-    })
-
     it('calls other client on errors and wrong block numbers', async () => {
       const failing = mockObject<RpcClient>({
         getBlockHeader: mockFn().rejectsWith(new Error()),
