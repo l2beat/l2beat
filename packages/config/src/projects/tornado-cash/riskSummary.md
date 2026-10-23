@@ -1,6 +1,6 @@
 ## Funds can be stolen if
 1. the zk proof system is broken, allowing invalid withdrawals.
-2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid withdrawals.
+2. all [trusted setup](#trusted-setups) participants collude or leak their secrets, allowing forged proofs.
 3. governance pins a malicious app on tornadocash.eth, which can steal the notes, and with them the funds, of users who load it (see privileged insider).
 <br>
 ## Funds can be lost if

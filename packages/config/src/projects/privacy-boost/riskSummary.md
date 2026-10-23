@@ -12,3 +12,4 @@
 3. a user exits through a forced withdrawal (see public observer).
 4. a user relies on today's anonymity set, which is too small to hide in (see chain analyst).
 5. the operator changes the SDK's closed-source core to send user data elsewhere, which users cannot check (see network observer).
+6. elliptic-curve cryptography is broken, which decrypts every note through the enclave's long-lived public key (see future adversary).

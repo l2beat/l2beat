@@ -109,9 +109,9 @@ export function interfoldAdversaries(
       futureAdversary: {
         sentiment: 'warning',
         exposureShort:
-          'Archived ballots rest on lattice assumptions with no known quantum attack, so a break adds nothing to what the totals show.',
+          'The ballot verifiers are unverified, so whether archived ballot proofs hide the vote from a future break cannot be checked.',
         exposureContinued:
-          "A recovered wallet key can replace a voter's ballot in an open vote but opens no past one. The contracts that verify ballot proofs are unverified, so whether the proofs hide the vote cannot be checked.",
+          "The ballot ciphertexts rest on lattice assumptions with no known quantum attack. A recovered wallet key can replace a voter's ballot in an open vote but opens no past one.",
         sources: [
           {
             title: 'Key shares are BFV-encrypted and never published',

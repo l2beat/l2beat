@@ -339,6 +339,11 @@ export const zkmoney: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceClient: {
+      name: 'zk.money',
+      repository: 'https://github.com/aztec-labs-eng/zkmoney-public',
+      commit: 'f04743f5d57d1b89f9190cad0f6affd28b0793f2',
+    },
     anonymitySet: { type: 'partially-attributed' },
     relayerTracking: {
       type: 'onchainEvents',

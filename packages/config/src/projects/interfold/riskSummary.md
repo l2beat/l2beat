@@ -7,3 +7,4 @@
 2. the Interfold multisigs shrink the committee of future votes (see privileged insider).
 3. Interfold's hosted app reads the choice before encrypting it (see privileged insider).
 4. one voter's power exceeds the totals of all but one option (see chain analyst).
+5. the ballot proofs, whose verifiers are unverified, do not hide the vote, so archived ballots reveal choices to a future break (see future adversary).

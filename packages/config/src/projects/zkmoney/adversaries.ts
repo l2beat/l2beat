@@ -71,7 +71,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       exposureShort:
         "In practice the anonymity set is zk.money's users on Aztec, although the L2 contract is permissionless.",
       exposureContinued:
-        'The first payment to a name from outside zk.money is publicly tied to that name.',
+        'The first payment to a name from outside zk.money is publicly tied to that name. A payee can tell which payments come from the same payer, since each pair shares one secret for tagging notes.',
       advice: `Give outside payers a deposit address the user's wallet created. ${S.commonAmounts} ${S.freshExit}`,
       interior: {
         ...INTERIOR,
