@@ -19,6 +19,7 @@ import {
 import { getRowLayout, type NodeRow } from '../store/utils/rows'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
+import { getGridCellSize } from './ScalableView'
 
 // ============================================================================
 // Constants
@@ -29,18 +30,14 @@ type RGBA = [number, number, number, number]
 const COFFEE_600: RGBA = [0x59 / 255, 0x4c / 255, 0x43 / 255, 1]
 const COFFEE_400: RGBA = [0xa9 / 255, 0x87 / 255, 0x63 / 255, 1]
 const COFFEE_200: RGBA = [0xf0 / 255, 0xd8 / 255, 0xbd / 255, 1]
+const GRID_DOT: RGBA = [0x3c / 255, 0x33 / 255, 0x2d / 255, 1]
 const AUTUMN_300: RGBA = [0xba / 255, 0xd8 / 255, 0x0a / 255, 1]
 const AUX_RED: RGBA = [0xfb / 255, 0x4a / 255, 0x35 / 255, 1]
 const AUX_GREEN: RGBA = [0x9d / 255, 0xde / 255, 0x6c / 255, 1]
 const AUX_ORANGE: RGBA = [0xfe / 255, 0x80 / 255, 0x19 / 255, 1]
 
-if (new Uint8Array(new Uint32Array([1]).buffer)[0] !== 1) {
-  throw new Error('Packed connection colors assume a little-endian CPU')
-}
-const TRANSPARENT_PACKED = 0
-const CONNECTION_PACKED = packColor(COFFEE_400)
-const DIMMED_CONNECTION_PACKED = packColor(withAlpha(COFFEE_400, 0.3))
-const GRAYED_CONNECTION_PACKED = packColor(withAlpha(COFFEE_200, 0.1))
+const DIMMED_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.3)
+const GRAYED_CONNECTION_COLOR = withAlpha(COFFEE_200, 0.1)
 const BLACK: RGBA = [0, 0, 0, 1]
 
 const HEADER_ICON_SIZE = 16
@@ -76,8 +73,9 @@ const FOOTER_FONT: FontSpec = {
   family: 'ui-sans-serif, system-ui, sans-serif',
 }
 
-const BEZIER_SEGMENTS_SOLID = 16
-const BEZIER_SEGMENTS_DASHED = 32
+const CONNECTION_SEGMENTS = 32
+const GRID_DOT_RADIUS_PER_CELL = 0.05
+const CONNECTION_CONTROL_OFFSET = 50
 const DASH_ON_WORLD = 5
 const DASH_OFF_WORLD = 5
 const PERIMETER_SAMPLES_PER_CORNER = 8
@@ -86,6 +84,7 @@ const PERIMETER_SAMPLES_PER_CORNER = 8
 const QUAD_STRIDE_F = 14 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z
 const TEXT_STRIDE_F = 13 // pos.xy, size.xy, uv.xyzw, color.rgba, z
 const LINE_STRIDE_F = 6 // pos.xy, color.rgba
+const CONNECTION_STRIDE_F = 12 // from.xy, to.xy, controlX.xy, color.rgba, width, dashed
 const CONNECTION_WIDTH = 2
 const HIGHLIGHTED_CONNECTION_WIDTH = 3
 
@@ -110,9 +109,6 @@ interface NodeFlags {
 }
 
 interface DrawData {
-  // Connection geometry depends only on the render graph, so it is rebuilt
-  // when this changes and only recolored when just the selection does.
-  graphNodes: readonly Node[]
   visible: Node[]
   visibleById: Map<string, Node>
   flags: Map<string, NodeFlags>
@@ -240,6 +236,35 @@ void main() {
   fragColor = vec4(v_color.rgb, v_color.a * alpha);
 }`
 
+// Fullscreen triangle with a dot at the center of every grid cell, so panning
+// repaints nothing in the DOM.
+const GRID_VS = `#version 300 es
+uniform vec2 u_offset;
+uniform float u_scale;
+uniform vec2 u_resolution;
+out vec2 v_world;
+void main() {
+  vec2 ndc = vec2(gl_VertexID == 1 ? 3.0 : -1.0, gl_VertexID == 2 ? 3.0 : -1.0);
+  vec2 screen = (ndc * vec2(1.0, -1.0) + 1.0) * 0.5 * u_resolution;
+  v_world = (screen - u_offset) / u_scale;
+  gl_Position = vec4(ndc, 0.0, 1.0);
+}`
+
+const GRID_FS = `#version 300 es
+precision highp float;
+in vec2 v_world;
+uniform float u_cellSize;
+uniform vec4 u_color;
+out vec4 fragColor;
+void main() {
+  vec2 local = mod(v_world, u_cellSize) - u_cellSize * 0.5;
+  float d = length(local) - u_cellSize * ${GRID_DOT_RADIUS_PER_CELL};
+  float aa = max(fwidth(d), 1e-4);
+  float alpha = 1.0 - smoothstep(-aa, aa, d);
+  if (alpha <= 0.0) discard;
+  fragColor = vec4(u_color.rgb, u_color.a * alpha);
+}`
+
 // Tinted alpha-mask quads. Shared by all text passes and the icon pass; the
 // only thing that changes between draws is the bound texture.
 const TEXT_VS = `#version 300 es
@@ -274,8 +299,78 @@ void main() {
   fragColor = vec4(v_color.rgb, v_color.a * a);
 }`
 
-// Connections + dashed perimeters. CPU-tessellated to short segments,
-// expanded to triangle ribbons. Per-vertex color so we don't need to bucket.
+// One instance per connection. The strip's vertices carry only (t, side), the
+// curve is evaluated here, so moving a node rewrites a few floats per
+// connection instead of re-tessellating every curve on the CPU.
+const CONNECTION_VS = `#version 300 es
+layout(location = 0) in vec2 a_vertex; // t, side
+layout(location = 1) in vec2 i_from;
+layout(location = 2) in vec2 i_to;
+layout(location = 3) in vec2 i_controlX;
+layout(location = 4) in vec4 i_color;
+layout(location = 5) in vec2 i_stroke; // width, dashed
+uniform vec2 u_offset;
+uniform float u_scale;
+uniform vec2 u_resolution;
+out vec4 v_color;
+out float v_arc;
+flat out float v_dashed;
+const float SEGMENTS = ${CONNECTION_SEGMENTS}.0;
+vec2 bezier(float t) {
+  float mt = 1.0 - t;
+  vec2 p1 = vec2(i_controlX.x, i_from.y);
+  vec2 p2 = vec2(i_controlX.y, i_to.y);
+  return mt * mt * mt * i_from + 3.0 * mt * mt * t * p1 +
+    3.0 * mt * t * t * p2 + t * t * t * i_to;
+}
+vec2 bezierTangent(float t) {
+  float mt = 1.0 - t;
+  vec2 p1 = vec2(i_controlX.x, i_from.y);
+  vec2 p2 = vec2(i_controlX.y, i_to.y);
+  return 3.0 * mt * mt * (p1 - i_from) + 6.0 * mt * t * (p2 - p1) +
+    3.0 * t * t * (i_to - p2);
+}
+void main() {
+  float t = a_vertex.x;
+  vec2 tangent = bezierTangent(t);
+  float tangentLength = length(tangent);
+  vec2 normal = tangentLength > 1e-6
+    ? vec2(-tangent.y, tangent.x) / tangentLength
+    : vec2(0.0, 1.0);
+  vec2 world = bezier(t) + normal * (i_stroke.x * 0.5 * a_vertex.y);
+  vec2 screen = world * u_scale + u_offset;
+  vec2 ndc = (screen / u_resolution * 2.0 - 1.0) * vec2(1.0, -1.0);
+  gl_Position = vec4(ndc, 0.0, 1.0);
+  v_color = i_color;
+  v_dashed = i_stroke.y;
+  v_arc = 0.0;
+  if (i_stroke.y > 0.5) {
+    int steps = int(t * SEGMENTS + 0.5);
+    vec2 previous = i_from;
+    for (int k = 1; k <= steps; k++) {
+      vec2 next = bezier(float(k) / SEGMENTS);
+      v_arc += distance(previous, next);
+      previous = next;
+    }
+  }
+}`
+
+const CONNECTION_FS = `#version 300 es
+precision highp float;
+in vec4 v_color;
+in float v_arc;
+flat in float v_dashed;
+out vec4 fragColor;
+void main() {
+  if (v_dashed > 0.5 &&
+      mod(v_arc, ${DASH_ON_WORLD + DASH_OFF_WORLD}.0) >= ${DASH_ON_WORLD}.0) {
+    discard;
+  }
+  fragColor = v_color;
+}`
+
+// Dashed overlap perimeters. CPU-tessellated to short segments, expanded to
+// triangle ribbons. Per-vertex color so we don't need to bucket.
 const LINE_VS = `#version 300 es
 layout(location = 0) in vec2 a_pos;
 layout(location = 1) in vec4 a_color;
@@ -627,12 +722,21 @@ function uploadCanvasTexture(
 // ============================================================================
 
 interface Programs {
+  grid: WebGLProgram
   round: WebGLProgram
   text: WebGLProgram
   line: WebGLProgram
+  connection: WebGLProgram
 }
 
 interface Uniforms {
+  grid: {
+    offset: WebGLUniformLocation
+    scale: WebGLUniformLocation
+    resolution: WebGLUniformLocation
+    cellSize: WebGLUniformLocation
+    color: WebGLUniformLocation
+  }
   round: {
     offset: WebGLUniformLocation
     scale: WebGLUniformLocation
@@ -649,6 +753,11 @@ interface Uniforms {
     scale: WebGLUniformLocation
     resolution: WebGLUniformLocation
   }
+  connection: {
+    offset: WebGLUniformLocation
+    scale: WebGLUniformLocation
+    resolution: WebGLUniformLocation
+  }
 }
 
 // Each pass keeps its own GPU instance/vertex buffer so they don't trample
@@ -660,22 +769,14 @@ interface PassBuffer {
 
 interface Buffers {
   cornerQuad: WebGLBuffer
+  connectionStrip: WebGLBuffer
   round: PassBuffer
   headerText: PassBuffer
   fieldText: PassBuffer
   footerText: PassBuffer
   icon: PassBuffer
-  connectionBase: ConnectionBaseBuffer
   connections: PassBuffer
   overlap: PassBuffer
-}
-
-// Positions and colors live in separate buffers so a selection change uploads
-// only the colors.
-interface ConnectionBaseBuffer {
-  positions: WebGLBuffer
-  colors: WebGLBuffer
-  vao: WebGLVertexArrayObject
 }
 
 interface ConnectionSpan {
@@ -684,21 +785,12 @@ interface ConnectionSpan {
   field: Field
   fieldIndex: number
   isDashed: boolean
-  firstVertex: number
-  vertexCount: number
-}
-
-interface ConnectionGeometry {
-  graphNodes: readonly Node[]
-  spans: ConnectionSpan[]
-  vertexCount: number
 }
 
 // Cached counts: how many instances / vertices each pass should draw. Zero
 // means "skip the draw call". These are filled by `rebuildAll(data)` and
 // stay valid until the data ref changes.
 interface PassCounts {
-  connectionBase: number
   round: number
   headerText: number
   fieldText: number
@@ -724,7 +816,6 @@ class WebGLRenderer {
   // and re-issue the same draw calls.
   private cachedData: DrawData | null = null
   private counts: PassCounts = {
-    connectionBase: 0,
     round: 0,
     headerText: 0,
     fieldText: 0,
@@ -738,8 +829,7 @@ class WebGLRenderer {
   private roundData = new Float32Array(0)
   private textData = new Float32Array(0)
   private lineData = new Float32Array(0)
-  private connectionColors = new Uint32Array(0)
-  private connectionGeometry: ConnectionGeometry | null = null
+  private connectionData = new Float32Array(0)
 
   static async create(
     gl: WebGL2RenderingContext,
@@ -756,11 +846,20 @@ class WebGLRenderer {
   ) {
     this.gl = gl
     this.programs = {
+      grid: linkProgram(gl, GRID_VS, GRID_FS),
       round: linkProgram(gl, ROUND_VS, ROUND_FS),
       text: linkProgram(gl, TEXT_VS, TEXT_FS),
       line: linkProgram(gl, LINE_VS, LINE_FS),
+      connection: linkProgram(gl, CONNECTION_VS, CONNECTION_FS),
     }
     this.uniforms = {
+      grid: {
+        offset: requireUniform(gl, this.programs.grid, 'u_offset'),
+        scale: requireUniform(gl, this.programs.grid, 'u_scale'),
+        resolution: requireUniform(gl, this.programs.grid, 'u_resolution'),
+        cellSize: requireUniform(gl, this.programs.grid, 'u_cellSize'),
+        color: requireUniform(gl, this.programs.grid, 'u_color'),
+      },
       round: {
         offset: requireUniform(gl, this.programs.round, 'u_offset'),
         scale: requireUniform(gl, this.programs.round, 'u_scale'),
@@ -776,6 +875,15 @@ class WebGLRenderer {
         offset: requireUniform(gl, this.programs.line, 'u_offset'),
         scale: requireUniform(gl, this.programs.line, 'u_scale'),
         resolution: requireUniform(gl, this.programs.line, 'u_resolution'),
+      },
+      connection: {
+        offset: requireUniform(gl, this.programs.connection, 'u_offset'),
+        scale: requireUniform(gl, this.programs.connection, 'u_scale'),
+        resolution: requireUniform(
+          gl,
+          this.programs.connection,
+          'u_resolution',
+        ),
       },
     }
     this.headerAtlas = buildFontAtlas(gl, HEADER_FONT, dpr)
@@ -805,38 +913,51 @@ class WebGLRenderer {
     const fieldText = this.createTextPassBuffer(cornerQuad)
     const footerText = this.createTextPassBuffer(cornerQuad)
     const icon = this.createTextPassBuffer(cornerQuad)
-    const connectionBase = this.createConnectionBaseBuffer()
-    const connections = this.createLinePassBuffer()
+    const connectionStrip = createConnectionStrip(gl)
+    const connections = this.createConnectionPassBuffer(connectionStrip)
     const overlap = this.createLinePassBuffer()
 
     gl.bindVertexArray(null)
 
     return {
       cornerQuad,
+      connectionStrip,
       round,
       headerText,
       fieldText,
       footerText,
       icon,
-      connectionBase,
       connections,
       overlap,
     }
   }
 
-  private createConnectionBaseBuffer(): ConnectionBaseBuffer {
+  private createConnectionPassBuffer(strip: WebGLBuffer): PassBuffer {
     const gl = this.gl
-    const positions = mustCreateBuffer(gl)
-    const colors = mustCreateBuffer(gl)
+    const data = mustCreateBuffer(gl)
     const vao = mustCreateVAO(gl)
     gl.bindVertexArray(vao)
-    gl.bindBuffer(gl.ARRAY_BUFFER, positions)
+    gl.bindBuffer(gl.ARRAY_BUFFER, strip)
     gl.enableVertexAttribArray(0)
-    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 8, 0)
-    gl.bindBuffer(gl.ARRAY_BUFFER, colors)
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0)
+    gl.bindBuffer(gl.ARRAY_BUFFER, data)
+    const stride = CONNECTION_STRIDE_F * 4
     gl.enableVertexAttribArray(1)
-    gl.vertexAttribPointer(1, 4, gl.UNSIGNED_BYTE, true, 4, 0)
-    return { positions, colors, vao }
+    gl.vertexAttribPointer(1, 2, gl.FLOAT, false, stride, 0)
+    gl.vertexAttribDivisor(1, 1)
+    gl.enableVertexAttribArray(2)
+    gl.vertexAttribPointer(2, 2, gl.FLOAT, false, stride, 8)
+    gl.vertexAttribDivisor(2, 1)
+    gl.enableVertexAttribArray(3)
+    gl.vertexAttribPointer(3, 2, gl.FLOAT, false, stride, 16)
+    gl.vertexAttribDivisor(3, 1)
+    gl.enableVertexAttribArray(4)
+    gl.vertexAttribPointer(4, 4, gl.FLOAT, false, stride, 24)
+    gl.vertexAttribDivisor(4, 1)
+    gl.enableVertexAttribArray(5)
+    gl.vertexAttribPointer(5, 2, gl.FLOAT, false, stride, 40)
+    gl.vertexAttribDivisor(5, 1)
+    return { data, vao }
   }
 
   private createRoundPassBuffer(cornerQuad: WebGLBuffer): PassBuffer {
@@ -938,18 +1059,8 @@ class WebGLRenderer {
     // by how the round-pass instance buffer is filled (dimmed → normal →
     // selected). Overlap borders draw last.
     gl.disable(gl.DEPTH_TEST)
-    this.drawLinePass(
-      this.buffers.connectionBase,
-      this.counts.connectionBase,
-      transform,
-      res,
-    )
-    this.drawLinePass(
-      this.buffers.connections,
-      this.counts.connections,
-      transform,
-      res,
-    )
+    this.drawGridPass(transform, res)
+    this.drawConnectionPass(transform, res)
     gl.enable(gl.DEPTH_TEST)
     this.drawRoundPass(transform, res)
     this.drawIconPass(transform, res)
@@ -1002,7 +1113,7 @@ class WebGLRenderer {
     )
     this.counts.fieldText = this.buildFieldText(renderNodes)
     this.counts.footerText = this.buildFooterText(renderNodes)
-    this.buildConnections(data)
+    this.counts.connections = this.buildConnections(data)
     this.counts.overlap = this.buildOverlap(renderNodes)
   }
 
@@ -1440,123 +1551,41 @@ class WebGLRenderer {
     return n
   }
 
-  private buildConnections(data: DrawData) {
-    let geometry = this.connectionGeometry
-    if (geometry?.graphNodes !== data.graphNodes) {
-      geometry = this.tessellateConnections(data)
-      this.connectionGeometry = geometry
-    }
-    const highlighted = this.colorConnections(geometry, data)
-    this.counts.connectionBase = geometry.vertexCount
-    this.counts.connections = this.emitConnections(
-      this.buffers.connections.data,
-      highlighted,
-      HIGHLIGHTED_CONNECTION_WIDTH,
-      AUTUMN_300,
-    )
-  }
-
-  private tessellateConnections(data: DrawData): ConnectionGeometry {
+  // Highlighted connections go last so they draw on top.
+  private buildConnections(data: DrawData): number {
     const spans = liveConnections(data)
-    const vertexCount = this.emitConnections(
-      null,
-      spans,
-      CONNECTION_WIDTH,
-      COFFEE_400,
-    )
-    const positions = new Float32Array(vertexCount * 2)
-    const lines = this.lineData
-    for (let i = 0; i < vertexCount; i++) {
-      positions[i * 2] = lines[i * LINE_STRIDE_F] as number
-      positions[i * 2 + 1] = lines[i * LINE_STRIDE_F + 1] as number
-    }
-    const gl = this.gl
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.buffers.connectionBase.positions)
-    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW)
-    return { graphNodes: data.graphNodes, spans, vertexCount }
-  }
-
-  // Tessellates the spans into the line scratch buffer, recording where each
-  // one landed, and uploads them unless `target` is null.
-  private emitConnections(
-    target: WebGLBuffer | null,
-    spans: ConnectionSpan[],
-    width: number,
-    color: RGBA,
-  ): number {
-    let maxVertices = 0
-    for (const { field, isDashed } of spans) {
-      const { from, to } = field.connection
-      const c1x = from.x + (from.direction === 'left' ? -50 : 50)
-      const c2x = to.x + (to.direction === 'left' ? -50 : 50)
-      maxVertices += estimateBezierStrokeVertices(from, to, c1x, c2x, isDashed)
-    }
-    if (maxVertices === 0) return 0
-    const buf = this.ensureLine(maxVertices)
-    let v = 0
-    for (const span of spans) {
-      const { from, to } = span.field.connection
-      const c1x = from.x + (from.direction === 'left' ? -50 : 50)
-      const c2x = to.x + (to.direction === 'left' ? -50 : 50)
-      span.firstVertex = v
-      span.vertexCount = emitBezierStroke(
-        buf,
-        v,
-        from,
-        to,
-        c1x,
-        c2x,
-        width,
-        color,
-        span.isDashed,
-      )
-      v += span.vertexCount
-    }
-    if (target === null) return v
-    return this.upload(target, buf, v, LINE_STRIDE_F)
-  }
-
-  // Highlighted connections turn transparent here and are drawn again, wider,
-  // on top. Returns them.
-  private colorConnections(
-    geometry: ConnectionGeometry,
-    data: DrawData,
-  ): ConnectionSpan[] {
-    if (this.connectionColors.length < geometry.vertexCount) {
-      this.connectionColors = new Uint32Array(geometry.vertexCount * 2)
-    }
-    const colors = this.connectionColors
+    if (spans.length === 0) return 0
+    const buffer = this.ensureConnections(spans.length)
     const highlighted: ConnectionSpan[] = []
-    for (const span of geometry.spans) {
-      const flags = data.flags.get(span.node.id)
-      if (flags === undefined) {
-        throw new Error('Connection from a node without flags')
+    let n = 0
+    for (const span of spans) {
+      if (isConnectionHighlighted(span, data)) {
+        highlighted.push(span)
+        continue
       }
-      const isHighlighted =
-        flags.isSelected || flags.fieldHighlighted[span.fieldIndex] === 1
-      let color = TRANSPARENT_PACKED
-      if (isHighlighted) {
-        highlighted.push({ ...span })
-      } else if (
-        data.markUnreachableEntries &&
-        !(span.node.isReachable && span.target.isReachable)
-      ) {
-        color = GRAYED_CONNECTION_PACKED
-      } else if (data.enableDimming && data.anyNodeSelected) {
-        color = DIMMED_CONNECTION_PACKED
-      } else {
-        color = CONNECTION_PACKED
-      }
-      colors.fill(color, span.firstVertex, span.firstVertex + span.vertexCount)
+      writeConnection(
+        buffer,
+        n++,
+        span,
+        CONNECTION_WIDTH,
+        connectionColor(span, data),
+      )
     }
-    const gl = this.gl
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.buffers.connectionBase.colors)
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      colors.subarray(0, geometry.vertexCount),
-      gl.DYNAMIC_DRAW,
+    for (const span of highlighted) {
+      writeConnection(
+        buffer,
+        n++,
+        span,
+        HIGHLIGHTED_CONNECTION_WIDTH,
+        AUTUMN_300,
+      )
+    }
+    return this.upload(
+      this.buffers.connections.data,
+      buffer,
+      n,
+      CONNECTION_STRIDE_F,
     )
-    return highlighted
   }
 
   private buildOverlap(renderNodes: readonly RenderNode[]): number {
@@ -1595,6 +1624,25 @@ class WebGLRenderer {
   // binds the pre-built VAO/texture, issues a single draw call. No CPU work
   // proportional to node count.
   // ==========================================================================
+
+  private drawGridPass(
+    transform: { offsetX: number; offsetY: number; scale: number },
+    res: [number, number],
+  ) {
+    const gl = this.gl
+    gl.useProgram(this.programs.grid)
+    gl.uniform2f(
+      this.uniforms.grid.offset,
+      transform.offsetX,
+      transform.offsetY,
+    )
+    gl.uniform1f(this.uniforms.grid.scale, transform.scale)
+    gl.uniform2f(this.uniforms.grid.resolution, res[0], res[1])
+    gl.uniform1f(this.uniforms.grid.cellSize, getGridCellSize(transform.scale))
+    gl.uniform4fv(this.uniforms.grid.color, GRID_DOT)
+    gl.bindVertexArray(null)
+    gl.drawArrays(gl.TRIANGLES, 0, 3)
+  }
 
   private drawRoundPass(
     transform: { offsetX: number; offsetY: number; scale: number },
@@ -1673,6 +1721,30 @@ class WebGLRenderer {
     gl.drawArrays(gl.TRIANGLES, 0, v)
   }
 
+  private drawConnectionPass(
+    transform: { offsetX: number; offsetY: number; scale: number },
+    res: [number, number],
+  ) {
+    const n = this.counts.connections
+    if (n === 0) return
+    const gl = this.gl
+    gl.useProgram(this.programs.connection)
+    gl.uniform2f(
+      this.uniforms.connection.offset,
+      transform.offsetX,
+      transform.offsetY,
+    )
+    gl.uniform1f(this.uniforms.connection.scale, transform.scale)
+    gl.uniform2f(this.uniforms.connection.resolution, res[0], res[1])
+    gl.bindVertexArray(this.buffers.connections.vao)
+    gl.drawArraysInstanced(
+      gl.TRIANGLE_STRIP,
+      0,
+      (CONNECTION_SEGMENTS + 1) * 2,
+      n,
+    )
+  }
+
   // --------------------------------------------------------------------------
 
   private ensureRound(count: number): Float32Array {
@@ -1687,6 +1759,13 @@ class WebGLRenderer {
     this.textData = new Float32Array(newCap * TEXT_STRIDE_F)
     return this.textData
   }
+  private ensureConnections(count: number): Float32Array {
+    if (count * CONNECTION_STRIDE_F <= this.connectionData.length)
+      return this.connectionData
+    const newCap = Math.max(256, count * 2)
+    this.connectionData = new Float32Array(newCap * CONNECTION_STRIDE_F)
+    return this.connectionData
+  }
   private ensureLine(vertexCount: number): Float32Array {
     if (vertexCount * LINE_STRIDE_F <= this.lineData.length)
       return this.lineData
@@ -1699,11 +1778,11 @@ class WebGLRenderer {
     const gl = this.gl
     gl.deleteProgram(this.programs.round)
     gl.deleteProgram(this.programs.text)
+    gl.deleteProgram(this.programs.grid)
     gl.deleteProgram(this.programs.line)
+    gl.deleteProgram(this.programs.connection)
     gl.deleteBuffer(this.buffers.cornerQuad)
-    gl.deleteBuffer(this.buffers.connectionBase.positions)
-    gl.deleteBuffer(this.buffers.connectionBase.colors)
-    gl.deleteVertexArray(this.buffers.connectionBase.vao)
+    gl.deleteBuffer(this.buffers.connectionStrip)
     for (const pass of [
       this.buffers.round,
       this.buffers.headerText,
@@ -1784,24 +1863,85 @@ function liveConnections(data: DrawData): ConnectionSpan[] {
         isDashed:
           target.addressType === 'EOA' ||
           target.addressType === 'EOAPermissioned',
-        firstVertex: 0,
-        vertexCount: 0,
       })
     }
   }
   return spans
 }
 
-// Packs a color for a normalized RGBA8 attribute, which reads bytes in memory
-// order: little-endian puts red in the lowest byte.
-function packColor(c: RGBA): number {
-  const [r, g, b, a] = c.map((channel) => Math.round(channel * 255)) as RGBA
-  return (r | (g << 8) | (b << 16) | (a << 24)) >>> 0
+function isConnectionHighlighted(
+  span: ConnectionSpan,
+  data: DrawData,
+): boolean {
+  const flags = data.flags.get(span.node.id)
+  if (flags === undefined) {
+    throw new Error('Connection from a node without flags')
+  }
+  return flags.isSelected || flags.fieldHighlighted[span.fieldIndex] === 1
+}
+
+function connectionColor(span: ConnectionSpan, data: DrawData): RGBA {
+  if (
+    data.markUnreachableEntries &&
+    !(span.node.isReachable && span.target.isReachable)
+  ) {
+    return GRAYED_CONNECTION_COLOR
+  }
+  if (data.enableDimming && data.anyNodeSelected) {
+    return DIMMED_CONNECTION_COLOR
+  }
+  return COFFEE_400
 }
 
 // ============================================================================
 // Per-instance writers
 // ============================================================================
+
+function writeConnection(
+  out: Float32Array,
+  i: number,
+  span: ConnectionSpan,
+  width: number,
+  color: RGBA,
+): number {
+  const { from, to } = span.field.connection
+  const b = i * CONNECTION_STRIDE_F
+  out[b] = from.x
+  out[b + 1] = from.y
+  out[b + 2] = to.x
+  out[b + 3] = to.y
+  out[b + 4] = from.x + controlOffset(from.direction)
+  out[b + 5] = to.x + controlOffset(to.direction)
+  out[b + 6] = color[0]
+  out[b + 7] = color[1]
+  out[b + 8] = color[2]
+  out[b + 9] = color[3]
+  out[b + 10] = width
+  out[b + 11] = span.isDashed ? 1 : 0
+  return i + 1
+}
+
+function controlOffset(direction: 'left' | 'right'): number {
+  return direction === 'left'
+    ? -CONNECTION_CONTROL_OFFSET
+    : CONNECTION_CONTROL_OFFSET
+}
+
+// (t, side) pairs along the curve, two per sample, for a triangle strip.
+function createConnectionStrip(gl: WebGL2RenderingContext): WebGLBuffer {
+  const vertices = new Float32Array((CONNECTION_SEGMENTS + 1) * 4)
+  for (let i = 0; i <= CONNECTION_SEGMENTS; i++) {
+    const t = i / CONNECTION_SEGMENTS
+    vertices[i * 4] = t
+    vertices[i * 4 + 1] = 1
+    vertices[i * 4 + 2] = t
+    vertices[i * 4 + 3] = -1
+  }
+  const strip = mustCreateBuffer(gl)
+  gl.bindBuffer(gl.ARRAY_BUFFER, strip)
+  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
+  return strip
+}
 
 function writeRound(
   out: Float32Array,
@@ -1942,223 +2082,7 @@ function measureString(text: string, atlas: FontAtlas): number {
 // Curves and perimeters
 // ============================================================================
 
-function emitBezierStroke(
-  out: Float32Array,
-  startVertex: number,
-  from: { x: number; y: number; direction: 'left' | 'right' },
-  to: { x: number; y: number; direction: 'left' | 'right' },
-  c1x: number,
-  c2x: number,
-  width: number,
-  color: RGBA,
-  dashed: boolean,
-): number {
-  if (!dashed) {
-    return emitSolidBezierStroke(
-      out,
-      startVertex,
-      from.x,
-      from.y,
-      c1x,
-      from.y,
-      c2x,
-      to.y,
-      to.x,
-      to.y,
-      width,
-      color,
-    )
-  }
-  const points = sampleBezier(
-    from.x,
-    from.y,
-    c1x,
-    from.y,
-    c2x,
-    to.y,
-    to.x,
-    to.y,
-    BEZIER_SEGMENTS_DASHED,
-  )
-  return emitDashedRibbon(
-    out,
-    startVertex,
-    points,
-    width,
-    color,
-    DASH_ON_WORLD,
-    DASH_OFF_WORLD,
-  )
-}
-
-function estimateBezierStrokeVertices(
-  from: { x: number; y: number },
-  to: { x: number; y: number },
-  c1x: number,
-  c2x: number,
-  dashed: boolean,
-): number {
-  if (!dashed) return BEZIER_SEGMENTS_SOLID * 6
-
-  const controlPolygonLength =
-    Math.hypot(c1x - from.x, 0) +
-    Math.hypot(c2x - c1x, to.y - from.y) +
-    Math.hypot(to.x - c2x, 0)
-
-  const dashQuads =
-    Math.ceil(controlPolygonLength / (DASH_ON_WORLD + DASH_OFF_WORLD)) +
-    BEZIER_SEGMENTS_DASHED +
-    2
-  return dashQuads * 6
-}
-
-// Hot path. Inlined to skip ~100 function calls per connection
-// (16 ribbon quads + 96 writeLineVertex calls) and the intermediate
-// Array<{x,y}> from sampleBezier. Writes straight into the line buffer.
-function emitSolidBezierStroke(
-  out: Float32Array,
-  startVertex: number,
-  p0x: number,
-  p0y: number,
-  p1x: number,
-  p1y: number,
-  p2x: number,
-  p2y: number,
-  p3x: number,
-  p3y: number,
-  width: number,
-  color: RGBA,
-): number {
-  const segments = BEZIER_SEGMENTS_SOLID
-  const halfW = width * 0.5
-  const cr = color[0]
-  const cg = color[1]
-  const cb = color[2]
-  const ca = color[3]
-  const invSeg = 1 / segments
-
-  let prevX = p0x
-  let prevY = p0y
-  let writeIdx = startVertex * LINE_STRIDE_F
-  let written = 0
-
-  for (let i = 1; i <= segments; i++) {
-    const t = i * invSeg
-    const mt = 1 - t
-    const mt2 = mt * mt
-    const t2 = t * t
-    const w0 = mt2 * mt
-    const w1 = 3 * mt2 * t
-    const w2 = 3 * mt * t2
-    const w3 = t2 * t
-    const x = w0 * p0x + w1 * p1x + w2 * p2x + w3 * p3x
-    const y = w0 * p0y + w1 * p1y + w2 * p2y + w3 * p3y
-
-    const ddx = x - prevX
-    const ddy = y - prevY
-    const lenSq = ddx * ddx + ddy * ddy
-    if (lenSq < 1e-12) {
-      prevX = x
-      prevY = y
-      continue
-    }
-    const invLen = 1 / Math.sqrt(lenSq)
-    // Perpendicular direction × halfWidth.
-    const px = -ddy * invLen * halfW
-    const py = ddx * invLen * halfW
-
-    const ax1 = prevX + px
-    const ay1 = prevY + py
-    const ax2 = prevX - px
-    const ay2 = prevY - py
-    const bx1 = x + px
-    const by1 = y + py
-    const bx2 = x - px
-    const by2 = y - py
-
-    // 2 triangles, 6 vertices, written sequentially.
-    out[writeIdx] = ax1
-    out[writeIdx + 1] = ay1
-    out[writeIdx + 2] = cr
-    out[writeIdx + 3] = cg
-    out[writeIdx + 4] = cb
-    out[writeIdx + 5] = ca
-
-    out[writeIdx + 6] = ax2
-    out[writeIdx + 7] = ay2
-    out[writeIdx + 8] = cr
-    out[writeIdx + 9] = cg
-    out[writeIdx + 10] = cb
-    out[writeIdx + 11] = ca
-
-    out[writeIdx + 12] = bx1
-    out[writeIdx + 13] = by1
-    out[writeIdx + 14] = cr
-    out[writeIdx + 15] = cg
-    out[writeIdx + 16] = cb
-    out[writeIdx + 17] = ca
-
-    out[writeIdx + 18] = ax2
-    out[writeIdx + 19] = ay2
-    out[writeIdx + 20] = cr
-    out[writeIdx + 21] = cg
-    out[writeIdx + 22] = cb
-    out[writeIdx + 23] = ca
-
-    out[writeIdx + 24] = bx2
-    out[writeIdx + 25] = by2
-    out[writeIdx + 26] = cr
-    out[writeIdx + 27] = cg
-    out[writeIdx + 28] = cb
-    out[writeIdx + 29] = ca
-
-    out[writeIdx + 30] = bx1
-    out[writeIdx + 31] = by1
-    out[writeIdx + 32] = cr
-    out[writeIdx + 33] = cg
-    out[writeIdx + 34] = cb
-    out[writeIdx + 35] = ca
-
-    writeIdx += 36
-    written += 6
-    prevX = x
-    prevY = y
-  }
-  return written
-}
-
-function sampleBezier(
-  ax: number,
-  ay: number,
-  bx: number,
-  by: number,
-  cx: number,
-  cy: number,
-  dx: number,
-  dy: number,
-  segments: number,
-): { x: number; y: number }[] {
-  const out: { x: number; y: number }[] = new Array(segments + 1)
-  for (let i = 0; i <= segments; i++) {
-    const t = i / segments
-    const mt = 1 - t
-    const x =
-      mt * mt * mt * ax +
-      3 * mt * mt * t * bx +
-      3 * mt * t * t * cx +
-      t * t * t * dx
-    const y =
-      mt * mt * mt * ay +
-      3 * mt * mt * t * by +
-      3 * mt * t * t * cy +
-      t * t * t * dy
-    out[i] = { x, y }
-  }
-  return out
-}
-
-// Fallback ribbon writer for the dashed walker and perimeter routines.
-// The hot solid-bezier path inlines this entirely.
+// Ribbon writer for the dashed perimeter walker.
 function emitRibbonQuad(
   out: Float32Array,
   startVertex: number,
@@ -2443,7 +2367,6 @@ function buildDrawData(
   }
 
   return {
-    graphNodes: nodes,
     visible,
     visibleById,
     flags,

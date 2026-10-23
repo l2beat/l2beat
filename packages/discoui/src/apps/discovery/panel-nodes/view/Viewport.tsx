@@ -27,21 +27,16 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
   const renderer: ViewportRenderer =
     rendererOverride ?? (useExperimentalRenderer ? 'webgl' : 'dom')
   const containerRef = useRef<HTMLDivElement>(null)
-  const viewRef = useRef<HTMLDivElement>(null)
   const registerViewportContainer = useStore(
     (state) => state.registerViewportContainer,
   )
   const isPanning = useStore((state) => state.mouseMoveAction === 'pan')
   const isHandCursor = useStore((state) => effectiveTool(state) === 'hand')
 
-  const desktopControls = useDesktopControls({
-    containerRef,
-    viewRef,
-  })
+  const desktopControls = useDesktopControls({ containerRef })
 
   const touchControls = useTouchControls({
     containerRef,
-    viewRef,
     desktopControls,
   })
 
@@ -113,14 +108,11 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
       )}
     >
       {renderer === 'dom' ? (
-        <ScalableView ref={viewRef}>
+        <ScalableView>
           <NodesAndConnections />
         </ScalableView>
       ) : (
-        <>
-          <ScalableView ref={viewRef} />
-          <NodesAndConnectionsWebGL />
-        </>
+        <NodesAndConnectionsWebGL />
       )}
       <MouseSelection />
     </div>
