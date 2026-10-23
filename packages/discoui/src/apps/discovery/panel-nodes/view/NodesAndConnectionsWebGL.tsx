@@ -69,9 +69,11 @@ const FIELD_FONT: FontSpec = {
   size: 12,
   family: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
 }
+// Tailwind's text-xs line height.
+const FOOTER_LINE_HEIGHT = 16
 const FOOTER_FONT: FontSpec = {
   italic: true,
-  size: 10,
+  size: 12,
   family: 'ui-sans-serif, system-ui, sans-serif',
 }
 
@@ -159,6 +161,9 @@ interface FontAtlas {
   cellW: number
   cellH: number
   baselineOffset: number
+  // Font ascent and descent in world units, for placing text in a CSS line box.
+  ascent: number
+  descent: number
   getGlyph: (ch: string) => AtlasGlyph
 }
 
@@ -538,11 +543,9 @@ function buildFontAtlas(
   // The font's ascent rather than one glyph's, so taller glyphs like "$" or
   // "[" stay inside their cell instead of bleeding into the one above.
   const ascentPx = initCtx.measureText('Mg').fontBoundingBoxAscent
+  const descentPx = initCtx.measureText('Mg').fontBoundingBoxDescent
   const baselinePxY = ascentPx + padding
-  if (
-    baselinePxY + initCtx.measureText('Mg').fontBoundingBoxDescent >
-    cellPxH
-  ) {
+  if (baselinePxY + descentPx > cellPxH) {
     throw new Error('Font does not fit its atlas cell', { cause: font })
   }
 
@@ -644,8 +647,22 @@ function buildFontAtlas(
     cellW: cellPxW / dpr,
     cellH: cellPxH / dpr,
     baselineOffset: baselinePxY / dpr,
+    ascent: ascentPx / dpr,
+    descent: descentPx / dpr,
     getGlyph,
   }
+}
+
+// Where CSS puts the baseline of a line box: half the leading above the
+// font's ascent.
+function lineBoxBaseline(
+  atlas: FontAtlas,
+  lineTop: number,
+  lineHeight: number,
+): number {
+  return (
+    lineTop + (lineHeight - atlas.ascent - atlas.descent) / 2 + atlas.ascent
+  )
 }
 
 function newFontCanvas(
@@ -1649,11 +1666,14 @@ class WebGLRenderer {
       if (node.isInitial) rightX -= HEADER_ICON_SIZE
       const maxX = rightX - HEADER_ITEM_GAP
       const baselineY = node.box.y + headerH / 2 + atlas.refSize / 2 - 2
+      // The DOM header is justify-between, so a short name sits centered
+      // between the address icon and the badges.
+      const slack = maxX - startX - measureString(node.name, atlas)
       n += writeStringInstances(
         buf,
         n,
         node.name,
-        startX,
+        startX + Math.max(0, slack / 2),
         baselineY,
         atlas,
         color,
@@ -1716,15 +1736,22 @@ class WebGLRenderer {
     const atlas = this.footerAtlas
     const layout = new PassLayoutBuilder()
     let n = 0
-    for (const { node, flags, z, range } of renderNodes) {
+    for (const { node, flags, z, range, rows } of renderNodes) {
       layout.enter(range, n)
       if (node.hiddenFields.length === 0) continue
       const label = `+${node.hiddenFields.length} hidden field${
         node.hiddenFields.length > 1 ? 's' : ''
       }`
-      const footerY = node.box.y + node.box.height - HIDDEN_FIELDS_FOOTER_HEIGHT
-      const baselineY =
-        footerY + HIDDEN_FIELDS_FOOTER_HEIGHT / 2 + atlas.refSize / 2 - 2
+      const footerBottom =
+        node.box.y +
+        HEADER_HEIGHT +
+        rows.length * FIELD_HEIGHT +
+        HIDDEN_FIELDS_FOOTER_HEIGHT
+      const baselineY = lineBoxBaseline(
+        atlas,
+        footerBottom - FOOTER_LINE_HEIGHT,
+        FOOTER_LINE_HEIGHT,
+      )
       const baseColor = withAlpha(COFFEE_200, 0.4)
       const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
       const labelWidth = measureString(label, atlas)
