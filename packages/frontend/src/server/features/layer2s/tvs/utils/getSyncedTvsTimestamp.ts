@@ -1,6 +1,7 @@
 import type { TvsToken } from '@l2beat/config'
 import type { Database, SyncMetadataRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTvsTargetTimestamp } from './getTvsTargetTimestamp'
 import { isTvsSynced } from './isTvsSynced'
@@ -12,11 +13,17 @@ let pending: Promise<SyncMetadataRecord[]> | undefined
  * time share one query, so lists and parallel page loaders don't repeat it.
  */
 export function getTvsSyncMetadata(
-  repository: Database['syncMetadata'] = getDb().syncMetadata,
+  repository?: Database['syncMetadata'],
 ): Promise<SyncMetadataRecord[]> {
-  pending ??= repository.getByFeature('tvs').finally(() => {
-    pending = undefined
-  })
+  // Mock mode has no database; getSyncedTvsTimestamp falls back to the clock
+  if (env.MOCK) {
+    return Promise.resolve([])
+  }
+  pending ??= (repository ?? getDb().syncMetadata)
+    .getByFeature('tvs')
+    .finally(() => {
+      pending = undefined
+    })
   return pending
 }
 
