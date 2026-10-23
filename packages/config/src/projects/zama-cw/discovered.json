@@ -482,16 +482,16 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ZamaDeFiDAO",
+      "name": "ZamaDeFiGovCore",
       "address": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C",
       "type": "Contract",
-      "template": "zama/ZamaDAO",
+      "template": "zama/GovCore",
       "sourceHashes": [
         "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
         "0xd54ad871bfd08607d81e0a9bad74aa0f9fa3dc9e2331986a47281d6ca0ae07a7"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Aragon DAO that stores governance state and executes proposal action batches.",
+      "description": "Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.",
       "deployerAddress": "eth:0x44E087f1c040788732C0B4e8ba474de05d751129",
       "sinceTimestamp": 1763470967,
       "sinceBlock": 23826177,
@@ -620,17 +620,17 @@
         },
         "daoExecutors": {
           "severity": "HIGH",
-          "description": "Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "daoRootHolders": {
           "severity": "HIGH",
-          "description": "Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "daoUpgraders": {
           "severity": "HIGH",
-          "description": "Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "multisigSettingsAdmins": {
@@ -4137,16 +4137,16 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ZamaDAO",
+      "name": "ZamaGovCore",
       "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
       "type": "Contract",
-      "template": "zama/ZamaDAO",
+      "template": "zama/GovCore",
       "sourceHashes": [
         "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
         "0xd54ad871bfd08607d81e0a9bad74aa0f9fa3dc9e2331986a47281d6ca0ae07a7"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Aragon DAO that stores governance state and executes proposal action batches.",
+      "description": "Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.",
       "deployerAddress": "eth:0xC11f43f0785da3bDd1464C9E5A389B9585A05FAD",
       "sinceTimestamp": 1763037479,
       "sinceBlock": 23790334,
@@ -4324,17 +4324,17 @@
         },
         "daoExecutors": {
           "severity": "HIGH",
-          "description": "Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "daoRootHolders": {
           "severity": "HIGH",
-          "description": "Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "daoUpgraders": {
           "severity": "HIGH",
-          "description": "Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "multisigSettingsAdmins": {
@@ -13484,6 +13484,7 @@
     "zama/Decryption_v0_5_0": "0xf7de11ef6782ebf68e102501316d7179c6213af2476f361584c01ea2773ffddb",
     "zama/GatewayConfig_v0_7_0": "0x3c61aa33628dd3cd0287948cb6eec202c32f1ccf1612122339873114483a1a1c",
     "zama/GatewayPauserSet": "0x6e3bdded022ec01666a6e04d5f08b9f51c449213ba48bee15c272d39a5e512c8",
+    "zama/GovCore": "0xd23019ed0b17920b8f219de9ded254b4bf3befa1fdb55f092019d6c1c15ad739",
     "zama/InputVerification_v0_5_0": "0x0987e07950e5839b00d5402a6ede79d69814c3baac9533d3754bd53bb694d097",
     "zama/KMSGeneration_v0_5_0": "0x25ad31975763e222ff68726d3e7ecd47ff0d78296d0367b9628840fbd4da6c3f",
     "zama/MultichainACL": "0xde7a4e3a2b30064cebf3267c3b75bc1619f2e078f3c6fc05c4ead1aa87a3d5bd",
@@ -13493,7 +13494,6 @@
     "zama/VaultBatcherConfidential": "0xbaf910376a3c560914d6ad28d301f82d51a10233770603a3189f10589bde72d6",
     "zama/VaultBatcherConfidentialRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "zama/ZamaACL_v0_4_0": "0x8a956c01dcc8a5c5a46fe942d15f429d57249be27d6d6f56f385973b9cdb6898",
-    "zama/ZamaDAO": "0xd23019ed0b17920b8f219de9ded254b4bf3befa1fdb55f092019d6c1c15ad739",
     "zama/ZamaFHEVMExecutor_v0_5_0": "0x19e0e0c6abc98a3d3155c52e9fe91114df722bb21026ae0222ca38c1262f48b1",
     "zama/ZamaHCULimit_v0_3_0": "0xaf9fb25b71688a89a9bac6e685b77d0d448f5cd7825023970671ddda37ff1c83",
     "zama/ZamaInputVerifier": "0x43b46c0d8e79fddc961f34a1100e3586d9bd9d8ed3f8f0a482edd52f5cd3ca8f",
@@ -13503,7 +13503,7 @@
     "zama/ZamaProtocolConfig": "0xfb7d7b44691fe08077e0599f81136c1579f4123d76ccfb12fc11e8dffa8949c8"
   },
   "usedBlockNumbers": { "ethereum": 26249414, "zama": 3697123 },
-  "permissionsConfigHash": "0xc60a0c6f171d36c7d50f1c0fbc8c96947035b01b3af052034d4bf8bc6023ae4e",
+  "permissionsConfigHash": "0x2c29d92856d18e338969cc7fbca9e1de3ee901087a95eb47d681a762808cbdf2",
   "permissions": {
     "eth:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D": {
       "receivedPermissions": [
@@ -13572,7 +13572,7 @@
         {
           "permission": "interact",
           "from": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders"
         },
         {
@@ -13776,7 +13776,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders"
         },
         {
@@ -13877,7 +13877,7 @@
         {
           "permission": "interact",
           "from": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C" }
@@ -14183,7 +14183,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C" }
@@ -14203,7 +14203,7 @@
         {
           "permission": "act",
           "from": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C",
-          "description": "execute arbitrary calls from the DAO.",
+          "description": "execute arbitrary calls from this contract.",
           "role": ".daoExecutors"
         }
       ]
@@ -14604,7 +14604,7 @@
         {
           "permission": "interact",
           "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders"
         },
         {
@@ -14813,7 +14813,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders"
         },
         {
@@ -15131,7 +15131,7 @@
         {
           "permission": "interact",
           "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -15454,7 +15454,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -15589,7 +15589,7 @@
         {
           "permission": "act",
           "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "execute arbitrary calls from the DAO.",
+          "description": "execute arbitrary calls from this contract.",
           "role": ".daoExecutors"
         }
       ]
@@ -15871,7 +15871,7 @@
         {
           "permission": "interact",
           "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -16194,7 +16194,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -16329,7 +16329,7 @@
         {
           "permission": "act",
           "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "execute arbitrary calls from the DAO.",
+          "description": "execute arbitrary calls from this contract.",
           "role": ".daoExecutors"
         }
       ]

@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "DAO",
-  "description": "Aragon DAO that stores governance state and executes proposal action batches.",
+  "displayName": "GovCore",
+  "description": "Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.",
   "category": "gov",
   "ignoreMethods": ["proxiableUUID"],
   "ignoreRelatives": [
@@ -29,7 +29,7 @@
       }
     },
     "daoExecutors": {
-      "description": "Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+      "description": "Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.",
       "severity": "HIGH",
       "type": "PERMISSION",
       "copy": "$activePermissions",
@@ -52,12 +52,12 @@
       "permissions": [
         {
           "type": "act",
-          "description": "execute arbitrary calls from the DAO."
+          "description": "execute arbitrary calls from this contract."
         }
       ]
     },
     "daoRootHolders": {
-      "description": "Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+      "description": "Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events.",
       "severity": "HIGH",
       "type": "PERMISSION",
       "copy": "$activePermissions",
@@ -80,12 +80,12 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "grant and revoke permissions in the DAO."
+          "description": "grant and revoke permissions in this contract."
         }
       ]
     },
     "daoUpgraders": {
-      "description": "Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+      "description": "Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events.",
       "severity": "HIGH",
       "type": "PERMISSION",
       "copy": "$activePermissions",
@@ -106,7 +106,10 @@
         ["map", ["get", "who"]]
       ],
       "permissions": [
-        { "type": "upgrade", "description": "upgrade the DAO implementation." }
+        {
+          "type": "upgrade",
+          "description": "upgrade this contract's implementation."
+        }
       ]
     },
     "multisigSettingsAdmins": {

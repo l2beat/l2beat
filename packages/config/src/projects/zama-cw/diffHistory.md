@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc6145be9028ca0c34deb37f2e9c63aa91cb8ca85
+Generated with discovered.json: 0x05dc3e97c24bb85006220864b1255c20bd66beee
 
-# Diff at Fri, 23 Oct 2026 05:13:36 GMT:
+# Diff at Fri, 23 Oct 2026 12:07:37 GMT:
 
 - id: c10482a4
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@7bc17c6364778d4d42a4b0746762389851692cc6 block: 1792414872
+- comparing to: main@09eddc4e6fa1ed6ed27d777108a2aa65a2432bee block: 1792414872
 - current timestamp: 1792687253
 
 ## Description
@@ -117,33 +117,39 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1792414872 (main branch discovery), not current.
 
 ```diff
-    contract ZamaDeFiDAO (eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C) [zama/ZamaDAO] {
-    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+    contract ZamaDeFiGovCore (eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C) [zama/GovCore] {
+    +++ description: Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.
       name:
 -        "ZamaGovMemberDAO"
-+        "ZamaDeFiDAO"
-+++ description: Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.
++        "ZamaDeFiGovCore"
+      template:
+-        "zama/ZamaDAO"
++        "zama/GovCore"
+      description:
+-        "Aragon DAO that stores governance state and executes proposal action batches."
++        "Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission."
++++ description: Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.
 +++ severity: HIGH
       values.daoExecutors:
 +        ["eth:0x37c8bfa303f173350eefCB6D4a995E68FFbdF3FD"]
-+++ description: Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.
++++ description: Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events.
 +++ severity: HIGH
       values.daoRootHolders:
 +        ["eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"]
-+++ description: Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.
++++ description: Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events.
 +++ severity: HIGH
       values.daoUpgraders:
 +        ["eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"]
       fieldMeta.daoExecutors:
-+        {"severity":"HIGH","description":"Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.","type":"PERMISSION"}
++        {"severity":"HIGH","description":"Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.","type":"PERMISSION"}
       fieldMeta.daoRootHolders:
-+        {"severity":"HIGH","description":"Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.","type":"PERMISSION"}
++        {"severity":"HIGH","description":"Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events.","type":"PERMISSION"}
       fieldMeta.daoUpgraders:
-+        {"severity":"HIGH","description":"Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.","type":"PERMISSION"}
++        {"severity":"HIGH","description":"Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events.","type":"PERMISSION"}
       receivedPermissions:
 -        [{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"change multisig plugin settings.","role":".multisigSettingsAdmins"},{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins"}]
       directlyReceivedPermissions:
-+        [{"permission":"interact","from":"eth:0x084fd3a517D6DaE1f8E3E5481b65107fd7e5eEc1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x1B731EC615165094Ec4d695b0a1c8eE31366Cf84","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x2B5eB25dA24dcd00A825487c60401F9736091006","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x2dEAFB36F3B118d434CDE4708e8350eae918724d","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x2FB51a8fe20D9cc830b9CA5251f8d845eb5BAAa7","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"change multisig plugin settings.","role":".multisigSettingsAdmins"},{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins"},{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders"},{"permission":"interact","from":"eth:0x321C9AaB1390100f6e7fE1735a928ec0F16252f0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x324EA89FD3784036673BfE6Ffee2334A088F40Cc","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x3a906d6509EB4171Ee9fC71D083fb1638BaF083D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x43e8f7B280B19637d2A7e3008657282AaF2C0E4b","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x4Ad6368aD783644F1BB780F0A0F00cD77ca06400","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x4f555b54842E609bA62843E0Ab4Ff184A436772e","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x52FfC3Aa2372D42d1cB413C0E36659ffF1e58EC1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x6e05F3bE50c7890Ba10B30e9492b20683d5cC707","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x7320830992a924e6D2f3D3E9A74fbd103E9A20AE","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x737F4558c0cC7C29b56dd13c34B68e967C91E399","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x79e621c35B93329bbB6F06D9635981B9a5f4a255","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x7Afb2CD6D41C379e3d8B46f206346b63A67F4d43","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x807C367dA7B9228643b06390e199E33ccA7Cc533","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x83540Af3adFc4d3133139D57D4BAB17828902F05","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x87356ade88315aed3aC61B42caCC3a263730B1BD","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"grant and revoke market makers and pausers, curate asset pairs and fees, set the maker gateway, reveal per-asset swap volume and unpause.","role":".defaultAdminAC"},{"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"pause intent creation, quoting, settlement and reclaims.","role":".pauserAC"},{"permission":"interact","from":"eth:0x96Cd3Faa7483783Ac2Eb715f6333361500F1eec9","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x99384d982399a9D890873E402EC04DEE7dad8737","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xA07c00A3b955B805B3Ea76b086f95a3e793715D5","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xAC82e75FBA31122c1FEb575ebc371aA2EF78604D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xae09d50C6B6E91D9FBE50D168eA6567759e930f8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xbEbee65445dAD2F31628ADd14535fd0B3fC915b4","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xd26F1546e7aFD5881F132967637957416802865A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xd2f3f554F995c12e2BfE5E155397cB6272643744","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xD671b562fdecE574da12295D1680F6a7a0af2963","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xe1Bc291CF6fD71173dB73D58f1b25fC371B9Aa6D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xe396FD82a7Aa2F89C16505c1AD46e91F3bc7d3b0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xE7761e3864b077728cafE4E18e9c8C23B6F896D0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xf18Ad9F94a7EA994FdCbC5fD5C5Da326a341d8a8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xFb21951F291E742f24aB4F5c0c11e7BC8864142A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xFc659Fa98AC62970cAe2C594Be32fe4F8b844Ea3","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xfD899e481C7349d107005feFb1d19F33923b481A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"upgrade","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"upgrade the DAO implementation.","role":".daoUpgraders"},{"permission":"upgrade","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"upgrade the implementation.","role":".defaultAdminAC"}]
++        [{"permission":"interact","from":"eth:0x084fd3a517D6DaE1f8E3E5481b65107fd7e5eEc1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x1B731EC615165094Ec4d695b0a1c8eE31366Cf84","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x2B5eB25dA24dcd00A825487c60401F9736091006","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x2dEAFB36F3B118d434CDE4708e8350eae918724d","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x2FB51a8fe20D9cc830b9CA5251f8d845eb5BAAa7","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"change multisig plugin settings.","role":".multisigSettingsAdmins"},{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins"},{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"grant and revoke permissions in this contract.","role":".daoRootHolders"},{"permission":"interact","from":"eth:0x321C9AaB1390100f6e7fE1735a928ec0F16252f0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x324EA89FD3784036673BfE6Ffee2334A088F40Cc","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x3a906d6509EB4171Ee9fC71D083fb1638BaF083D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x43e8f7B280B19637d2A7e3008657282AaF2C0E4b","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x4Ad6368aD783644F1BB780F0A0F00cD77ca06400","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x4f555b54842E609bA62843E0Ab4Ff184A436772e","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x52FfC3Aa2372D42d1cB413C0E36659ffF1e58EC1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x6e05F3bE50c7890Ba10B30e9492b20683d5cC707","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x7320830992a924e6D2f3D3E9A74fbd103E9A20AE","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x737F4558c0cC7C29b56dd13c34B68e967C91E399","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x79e621c35B93329bbB6F06D9635981B9a5f4a255","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x7Afb2CD6D41C379e3d8B46f206346b63A67F4d43","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x807C367dA7B9228643b06390e199E33ccA7Cc533","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x83540Af3adFc4d3133139D57D4BAB17828902F05","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x87356ade88315aed3aC61B42caCC3a263730B1BD","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"grant and revoke market makers and pausers, curate asset pairs and fees, set the maker gateway, reveal per-asset swap volume and unpause.","role":".defaultAdminAC"},{"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"pause intent creation, quoting, settlement and reclaims.","role":".pauserAC"},{"permission":"interact","from":"eth:0x96Cd3Faa7483783Ac2Eb715f6333361500F1eec9","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x99384d982399a9D890873E402EC04DEE7dad8737","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xA07c00A3b955B805B3Ea76b086f95a3e793715D5","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xAC82e75FBA31122c1FEb575ebc371aA2EF78604D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xae09d50C6B6E91D9FBE50D168eA6567759e930f8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xbEbee65445dAD2F31628ADd14535fd0B3fC915b4","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xd26F1546e7aFD5881F132967637957416802865A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xd2f3f554F995c12e2BfE5E155397cB6272643744","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xD671b562fdecE574da12295D1680F6a7a0af2963","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xe1Bc291CF6fD71173dB73D58f1b25fC371B9Aa6D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xe396FD82a7Aa2F89C16505c1AD46e91F3bc7d3b0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xE7761e3864b077728cafE4E18e9c8C23B6F896D0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xf18Ad9F94a7EA994FdCbC5fD5C5Da326a341d8a8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xFb21951F291E742f24aB4F5c0c11e7BC8864142A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xFc659Fa98AC62970cAe2C594Be32fe4F8b844Ea3","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xfD899e481C7349d107005feFb1d19F33923b481A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"upgrade","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"upgrade this contract's implementation.","role":".daoUpgraders"},{"permission":"upgrade","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"upgrade the implementation.","role":".defaultAdminAC"}]
     }
 ```
 
@@ -182,23 +188,32 @@ discovery. Values are for block 1792414872 (main branch discovery), not current.
 ```
 
 ```diff
-    contract ZamaDAO (eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3) [zama/ZamaDAO] {
-    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+    contract ZamaGovCore (eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3) [zama/GovCore] {
+    +++ description: Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.
       name:
 -        "DAO"
-+        "ZamaDAO"
++        "ZamaGovCore"
+      template:
+-        "zama/ZamaDAO"
++        "zama/GovCore"
+      description:
+-        "Aragon DAO that stores governance state and executes proposal action batches."
++        "Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission."
       fieldMeta.daoExecutors.description:
 -        "Current DAO executor grantees derived from Aragon grant/revoke events."
-+        "Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events."
++        "Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events."
       fieldMeta.daoRootHolders.description:
 -        "Current DAO root grantees derived from Aragon grant/revoke events."
-+        "Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events."
++        "Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events."
       fieldMeta.daoUpgraders.description:
 -        "Current DAO implementation-upgrade grantees derived from Aragon grant/revoke events."
-+        "Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events."
++        "Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events."
       directlyReceivedPermissions.23.description:
 -        "grant and revoke DAO permissions."
-+        "grant and revoke permissions in the DAO."
++        "grant and revoke permissions in this contract."
+      directlyReceivedPermissions.61.description:
+-        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
     }
 ```
 
@@ -207,10 +222,13 @@ discovery. Values are for block 1792414872 (main branch discovery), not current.
     +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
       receivedPermissions.25.description:
 -        "grant and revoke DAO permissions."
-+        "grant and revoke permissions in the DAO."
++        "grant and revoke permissions in this contract."
+      receivedPermissions.63.description:
+-        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
       directlyReceivedPermissions.0.description:
 -        "execute arbitrary DAO actions, including calls as wrapper owner and UUPS upgrades."
-+        "execute arbitrary calls from the DAO."
++        "execute arbitrary calls from this contract."
     }
 ```
 
@@ -219,10 +237,13 @@ discovery. Values are for block 1792414872 (main branch discovery), not current.
     +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
       receivedPermissions.25.description:
 -        "grant and revoke DAO permissions."
-+        "grant and revoke permissions in the DAO."
++        "grant and revoke permissions in this contract."
+      receivedPermissions.63.description:
+-        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
       directlyReceivedPermissions.0.description:
 -        "execute arbitrary DAO actions, including calls as wrapper owner and UUPS upgrades."
-+        "execute arbitrary calls from the DAO."
++        "execute arbitrary calls from this contract."
     }
 ```
 

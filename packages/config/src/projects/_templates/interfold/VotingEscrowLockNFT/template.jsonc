@@ -13,7 +13,7 @@
   "ignoreInWatchMode": ["totalSupply"],
   "fields": {
     "dao": {
-      "description": "Aragon DAO whose Lock admin role controls whitelist configuration and upgrades."
+      "description": "Aragon governance contract whose Lock admin role controls whitelist configuration and upgrades."
     },
     "escrow": {
       "description": "VotingEscrow exclusively responsible for minting and burning lock positions."

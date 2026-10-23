@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xcab767d963e99f021a00f7a489b06b9309d561ec
+Generated with discovered.json: 0xf7b41bc9006c656fa5ae912a9a0ae738c4256bbf
 
-# Diff at Fri, 23 Oct 2026 04:16:29 GMT:
+# Diff at Fri, 23 Oct 2026 12:07:43 GMT:
 
 - id: c7ccf9ff
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@7bc17c6364778d4d42a4b0746762389851692cc6 block: 1792414952
+- comparing to: main@09eddc4e6fa1ed6ed27d777108a2aa65a2432bee block: 1792414952
 - current timestamp: 1792414952
 
 ## Description
@@ -18,83 +18,197 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1792414952 (main branch discovery), not current.
 
 ```diff
+    contract VotingEscrowGaugeVoter (eth:0x0A32454FC578e3CAFeE86F6E03f267b25ad0bAf0) [interfold/VotingEscrowGaugeVoter] {
+    +++ description: Upgradeable, currently paused gauge-voting plugin connected to VotingEscrow. It can update voting state used by escrow lock operations but is not the Interfold governance proposal-voting plugin.
+      description:
+-        "Upgradeable, currently paused gauge-voting plugin connected to VotingEscrow. It can update voting state used by escrow lock operations but is not the Interfold DAO proposal-voting plugin."
++        "Upgradeable, currently paused gauge-voting plugin connected to VotingEscrow. It can update voting state used by escrow lock operations but is not the Interfold governance proposal-voting plugin."
+      fieldMeta.dao.description:
+-        "Aragon DAO whose permissions control gauge administration and upgrades."
++        "Aragon governance contract whose permissions control gauge administration and upgrades."
+    }
+```
+
+```diff
+    contract CRISPProgram (eth:0x1EA4dBdec0F2F1E9235915847fc59EF4045EEe28) [interfold/CRISPProgramOpenVm] {
+    +++ description: CRISP encrypted-ballot E3 application. It verifies ballot eligibility and encryption proofs, commits ciphertext inputs, checks that an OpenVM tally proof is bound to its input root and parameters, and decodes the threshold-decrypted tally.
+      fieldMeta.onchainBallotVerifier.description:
+-        "Immutable verifier of ballot proofs for rounds that read voting power from the token at the snapshot, as DAO votes do."
++        "Immutable verifier of ballot proofs for rounds that read voting power from the token at the snapshot, as Interfold governance votes do."
+    }
+```
+
+```diff
     EOA (eth:0x455e3DEFBC6b48D9127CF6acC609F5cEa87cA759) {
     +++ description: None
       receivedPermissions.9:
-+        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in this contract.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.9.description:
+-        "grant and revoke permissions in the voting-escrow DAO."
++        "grant and revoke permissions in this contract."
       receivedPermissions.17:
-+        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
++        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"upgrade this contract's implementation.","role":".daoUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+    }
+```
+
+```diff
+    contract ProtocolProposalCondition (eth:0x4c9D0A2B8E5917c480bdF3E42F1b1c9365EF2115) [interfold/SPPRuleCondition] {
+    +++ description: Aragon condition attached to the public CREATE_PROPOSAL permission. Its mutable rule program determines which callers and proposal calls qualify for the otherwise-public grant.
+      fieldMeta.dao.description:
+-        "Aragon DAO whose permission manager controls updates to the condition's rule program."
++        "Aragon governance contract whose permission manager controls updates to the condition's rule program."
     }
 ```
 
 ```diff
     contract InterfoldSafeA (eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018) [GnosisSafe] {
     +++ description: None
+      receivedPermissions.8.description:
+-        "grant and revoke permissions in the DAO."
++        "grant and revoke permissions in this contract."
       receivedPermissions.31:
-+        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in this contract.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.31.description:
+-        "grant and revoke permissions in the voting-escrow DAO."
++        "grant and revoke permissions in this contract."
       receivedPermissions.47:
-+        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
++        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade this contract's implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
       receivedPermissions.46.description:
-+        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
       receivedPermissions.46.via.0:
 +        {"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}
       receivedPermissions.46.from:
 -        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
 +        "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"
+      directlyReceivedPermissions.0.description:
+-        "execute arbitrary DAO actions through the armed Admin plugin without a vote or an onchain delay."
++        "execute arbitrary governance actions through the armed Admin plugin without a vote or an onchain delay."
     }
 ```
 
 ```diff
-    contract InterfoldDAO (eth:0x652a31c669f9AB37f6040f279139a75D04F2679e) [zama/ZamaDAO] {
-    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+    contract InterfoldGovCore (eth:0x652a31c669f9AB37f6040f279139a75D04F2679e) [zama/GovCore] {
+    +++ description: Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.
+      name:
+-        "InterfoldDAO"
++        "InterfoldGovCore"
+      template:
+-        "zama/ZamaDAO"
++        "zama/GovCore"
+      description:
+-        "Aragon DAO that stores governance state and executes proposal action batches."
++        "Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission."
       fieldMeta.daoExecutors.description:
 -        "Current grantees of Aragon's EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events."
-+        "Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events."
++        "Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events."
       fieldMeta.daoExecutors.severity:
 +        "HIGH"
       fieldMeta.daoRootHolders.description:
 -        "Current grantees of Aragon's ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events."
-+        "Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events."
++        "Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events."
       fieldMeta.daoRootHolders.severity:
 +        "HIGH"
       fieldMeta.daoUpgraders.description:
 -        "Current grantees of Aragon's UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events."
-+        "Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events."
++        "Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events."
       fieldMeta.daoUpgraders.severity:
 +        "HIGH"
+      fieldMeta.adminPluginExecutors.description:
+-        "Addresses that can drive the armed Admin plugin without a DAO vote, reconstructed from Aragon grant and revoke events."
++        "Addresses that can drive the armed Admin plugin without a governance vote, reconstructed from Aragon grant and revoke events."
       directlyReceivedPermissions.2:
-+        {"permission":"act","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"execute arbitrary calls from the DAO.","role":".daoExecutors"}
++        {"permission":"act","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"execute arbitrary calls from this contract, including administration and upgrades of the voting-power stack.","role":".veDaoExecutors"}
+      directlyReceivedPermissions.2.role:
+-        ".veDaoExecutors"
++        ".daoExecutors"
+      directlyReceivedPermissions.2.description:
+-        "execute arbitrary calls from the voting-escrow DAO, including administration and upgrades of the voting-power stack."
++        "execute arbitrary calls from this contract."
+      directlyReceivedPermissions.13.description:
+-        "grant and revoke permissions in the DAO."
++        "grant and revoke permissions in this contract."
       directlyReceivedPermissions.32.description:
-+        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
+    }
+```
+
+```diff
+    contract VotingEscrow (eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12) [interfold/VotingEscrow] {
+    +++ description: veFOLD escrow that custodies locked FOLD, issues lock NFTs and calculates the voting power consumed by BondedVotes through EscrowVotesAdapter.
+      fieldMeta.dao.description:
+-        "Aragon DAO whose permission manager grants the escrow's admin, pause, sweep and upgrade roles."
++        "Aragon governance contract whose permission manager grants the escrow's admin, pause, sweep and upgrade roles."
+    }
+```
+
+```diff
+    contract VotingEscrowExitQueue (eth:0x8095C0B90Be4abCBF5CA7371f588fe1637E02b7f) [interfold/VotingEscrowExitQueue] {
+    +++ description: Queue applying cooldowns and optional fees to withdrawals from VotingEscrow.
+      fieldMeta.dao.description:
+-        "Aragon DAO whose queue roles control fees, cooldowns, withdrawals and upgrades."
++        "Aragon governance contract whose queue roles control fees, cooldowns, withdrawals and upgrades."
     }
 ```
 
 ```diff
     contract InterfoldSafeB (eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593) [GnosisSafe] {
     +++ description: None
+      receivedPermissions.8.description:
+-        "grant and revoke permissions in the DAO."
++        "grant and revoke permissions in this contract."
       receivedPermissions.31:
-+        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in this contract.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.31.description:
+-        "grant and revoke permissions in the voting-escrow DAO."
++        "grant and revoke permissions in this contract."
       receivedPermissions.45:
-+        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
++        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade this contract's implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
       receivedPermissions.44.description:
-+        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
       receivedPermissions.44.via.0:
 +        {"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}
       receivedPermissions.44.from:
 -        "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
 +        "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"
+      directlyReceivedPermissions.0.description:
+-        "execute arbitrary DAO actions through the armed Admin plugin without a vote or an onchain delay."
++        "execute arbitrary governance actions through the armed Admin plugin without a vote or an onchain delay."
+    }
+```
+
+```diff
+    contract EscrowVotesAdapter (eth:0x8f141B4D294d39e7D1530916A3eD65B3970C6FEc) [interfold/EscrowVotesAdapter] {
+    +++ description: Upgradeable IVotes adapter that exposes voting power from veFOLD locks. BondedVotes uses it as its primary voting-power source.
+      fieldMeta.dao.description:
+-        "Aragon DAO whose permission manager grants delegation administration and upgrade roles."
++        "Aragon governance contract whose permission manager grants delegation administration and upgrade roles."
     }
 ```
 
 ```diff
     contract PublicStagedProposalProcessor (eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb) [interfold/StagedProposalProcessor] {
-    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes governance actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      description:
+-        "Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows."
++        "Upgradeable Aragon staged-proposal plugin that executes governance actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows."
+      fieldMeta.dao.description:
+-        "Aragon DAO whose permission manager controls proposal creation, configuration, advancement and upgrades."
++        "Aragon governance contract whose permission manager controls proposal creation, configuration, advancement and upgrades."
+      fieldMeta.getCurrentTargetConfig.description:
+-        "Stored target and call operation for passed proposal actions. A zero target resolves to the DAO; delegatecall changes the security context."
++        "Stored target and call operation for passed proposal actions. A zero target resolves to the governance contract; delegatecall changes the security context."
+      receivedPermissions.9.description:
+-        "grant and revoke permissions in the DAO."
++        "grant and revoke permissions in this contract."
       receivedPermissions.33:
-+        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in this contract.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.33.description:
+-        "grant and revoke permissions in the voting-escrow DAO."
++        "grant and revoke permissions in this contract."
       receivedPermissions.47:
-+        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
++        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade this contract's implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
       receivedPermissions.46.description:
-+        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
       receivedPermissions.46.via.0:
 +        {"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}
       receivedPermissions.46.from:
@@ -102,47 +216,83 @@ discovery. Values are for block 1792414952 (main branch discovery), not current.
 +        "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"
       directlyReceivedPermissions.0.description:
 -        "execute arbitrary calls from the DAO, including calls to protocol owners and ProxyAdmins."
-+        "execute arbitrary calls from the DAO."
++        "execute arbitrary calls from this contract."
     }
 ```
 
 ```diff
-    contract VotingEscrowDAO (eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B) [zama/ZamaDAO] {
-    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
-+++ description: Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.
+    contract VotingEscrowGovCore (eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B) [zama/GovCore] {
+    +++ description: Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.
+      name:
+-        "VotingEscrowDAO"
++        "VotingEscrowGovCore"
+      template:
+-        "zama/ZamaDAO"
++        "zama/GovCore"
+      description:
+-        "Aragon DAO that stores governance state and executes proposal action batches."
++        "Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission."
++++ description: Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.
 +++ severity: HIGH
       values.daoExecutors:
 +        ["eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C","eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"]
-+++ description: Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.
++++ description: Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events.
 +++ severity: HIGH
       values.daoRootHolders:
 +        ["eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"]
-+++ description: Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.
++++ description: Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events.
 +++ severity: HIGH
       values.daoUpgraders:
 +        ["eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"]
+      fieldMeta.veDaoExecutors.description:
+-        "Current grantees of EXECUTE_PERMISSION on the voting-escrow DAO."
++        "Current grantees of EXECUTE_PERMISSION on this contract."
+      fieldMeta.veDaoRootHolders.description:
+-        "Current grantees of ROOT_PERMISSION on the voting-escrow DAO."
++        "Current grantees of ROOT_PERMISSION on this contract."
+      fieldMeta.veDaoUpgraders.description:
+-        "Current grantees of UPGRADE_DAO_PERMISSION on the voting-escrow DAO."
++        "Current grantees of UPGRADE_DAO_PERMISSION on this contract."
       fieldMeta.daoExecutors:
-+        {"severity":"HIGH","description":"Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.","type":"PERMISSION"}
++        {"severity":"HIGH","description":"Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.","type":"PERMISSION"}
       fieldMeta.daoRootHolders:
-+        {"severity":"HIGH","description":"Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.","type":"PERMISSION"}
++        {"severity":"HIGH","description":"Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events.","type":"PERMISSION"}
       fieldMeta.daoUpgraders:
-+        {"severity":"HIGH","description":"Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.","type":"PERMISSION"}
++        {"severity":"HIGH","description":"Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events.","type":"PERMISSION"}
       directlyReceivedPermissions.7:
-+        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders"}
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in this contract.","role":".daoRootHolders"}
+      directlyReceivedPermissions.7.description:
+-        "grant and revoke permissions in the voting-escrow DAO."
++        "grant and revoke permissions in this contract."
       directlyReceivedPermissions.15:
-+        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"upgrade the DAO implementation.","role":".daoUpgraders"}
++        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"upgrade this contract's implementation.","role":".daoUpgraders"}
     }
 ```
 
 ```diff
     contract ProtocolProposalProcessor (eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3) [interfold/StagedProposalProcessor] {
-    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes governance actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      description:
+-        "Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows."
++        "Upgradeable Aragon staged-proposal plugin that executes governance actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows."
+      fieldMeta.dao.description:
+-        "Aragon DAO whose permission manager controls proposal creation, configuration, advancement and upgrades."
++        "Aragon governance contract whose permission manager controls proposal creation, configuration, advancement and upgrades."
+      fieldMeta.getCurrentTargetConfig.description:
+-        "Stored target and call operation for passed proposal actions. A zero target resolves to the DAO; delegatecall changes the security context."
++        "Stored target and call operation for passed proposal actions. A zero target resolves to the governance contract; delegatecall changes the security context."
+      receivedPermissions.9.description:
+-        "grant and revoke permissions in the DAO."
++        "grant and revoke permissions in this contract."
       receivedPermissions.33:
-+        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in this contract.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.33.description:
+-        "grant and revoke permissions in the voting-escrow DAO."
++        "grant and revoke permissions in this contract."
       receivedPermissions.47:
-+        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
++        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade this contract's implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
       receivedPermissions.46.description:
-+        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
       receivedPermissions.46.via.0:
 +        {"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}
       receivedPermissions.46.from:
@@ -150,7 +300,34 @@ discovery. Values are for block 1792414952 (main branch discovery), not current.
 +        "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"
       directlyReceivedPermissions.0.description:
 -        "execute arbitrary calls from the DAO, including calls to protocol owners and ProxyAdmins."
-+        "execute arbitrary calls from the DAO."
++        "execute arbitrary calls from this contract."
+    }
+```
+
+```diff
+    contract CrispOnchainBallotVerifier (eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8) [N/A] {
+    +++ description: Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every governance vote.
+      description:
+-        "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every DAO vote."
++        "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every governance vote."
+    }
+```
+
+```diff
+    contract VotingEscrowClock (eth:0xc9707d36C07c3E0C4215a4574DB760b4e0E79166) [interfold/VotingEscrowClock] {
+    +++ description: Timestamp clock defining veFOLD epochs, checkpoint cadence and gauge-voting windows.
+      fieldMeta.dao.description:
+-        "Aragon DAO whose Clock admin role can change timing and upgrade the implementation."
++        "Aragon governance contract whose Clock admin role can change timing and upgrade the implementation."
+    }
+```
+
+```diff
+    contract PublicProposalCondition (eth:0xD0C2A1f94f7c584f0BF5588a519E82AD71dC1EC2) [interfold/SPPRuleCondition] {
+    +++ description: Aragon condition attached to the public CREATE_PROPOSAL permission. Its mutable rule program determines which callers and proposal calls qualify for the otherwise-public grant.
+      fieldMeta.dao.description:
+-        "Aragon DAO whose permission manager controls updates to the condition's rule program."
++        "Aragon governance contract whose permission manager controls updates to the condition's rule program."
     }
 ```
 
@@ -158,19 +335,58 @@ discovery. Values are for block 1792414952 (main branch discovery), not current.
     contract VotingEscrowMultisig (eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C) [zama/Multisig] {
     +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
       directlyReceivedPermissions.0:
-+        {"permission":"act","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"execute arbitrary calls from the DAO.","role":".daoExecutors"}
++        {"permission":"act","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"execute arbitrary calls from this contract, including administration and upgrades of the voting-power stack.","role":".veDaoExecutors"}
+      directlyReceivedPermissions.0.role:
+-        ".veDaoExecutors"
++        ".daoExecutors"
+      directlyReceivedPermissions.0.description:
+-        "execute arbitrary calls from the voting-escrow DAO, including administration and upgrades of the voting-power stack."
++        "execute arbitrary calls from this contract."
+    }
+```
+
+```diff
+    contract VotingPowerCurve (eth:0xf023390C78CF95a77A8910187d5B09BBC05F37e9) [interfold/VotingPowerCurve] {
+    +++ description: Curve that converts veFOLD lock amount and duration into voting power.
+      fieldMeta.dao.description:
+-        "Aragon DAO whose Curve admin role controls configuration and upgrades."
++        "Aragon governance contract whose Curve admin role controls configuration and upgrades."
+    }
+```
+
+```diff
+    contract CrispTokenVoting (eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c) [interfold/CrispVoting] {
+    +++ description: Upgradeable Aragon voting plugin from the interfold-crisp plugin repo. Votes are cast as encrypted CRISP ballots and tallied through an Interfold E3, so individual votes stay confidential to the ciphernode committee threshold. Used as the token-holder voting stage of the Interfold Protocol Proposal path.
+      fieldMeta.dao.description:
+-        "Aragon DAO whose permission manager controls the plugin's settings, target and upgrades."
++        "Aragon governance contract whose permission manager controls the plugin's settings, target and upgrades."
     }
 ```
 
 ```diff
     contract AdminPlugin (eth:0xF21e25455988887EE797050080141eba67B33920) [interfold/AdminPlugin] {
-    +++ description: Non-upgradeable Aragon Admin plugin. Holders of its DAO-granted EXECUTE_PROPOSAL permission can submit actions that the plugin forwards immediately, without a vote or onchain delay.
+    +++ description: Non-upgradeable Aragon Admin plugin. Holders of the EXECUTE_PROPOSAL permission its governance contract grants can submit actions that the plugin forwards immediately, without a vote or onchain delay.
+      description:
+-        "Non-upgradeable Aragon Admin plugin. Holders of its DAO-granted EXECUTE_PROPOSAL permission can submit actions that the plugin forwards immediately, without a vote or onchain delay."
++        "Non-upgradeable Aragon Admin plugin. Holders of the EXECUTE_PROPOSAL permission its governance contract grants can submit actions that the plugin forwards immediately, without a vote or onchain delay."
+      fieldMeta.dao.description:
+-        "Aragon DAO whose permission manager authorizes the plugin and its callers."
++        "Aragon governance contract whose permission manager authorizes the plugin and its callers."
+      fieldMeta.getCurrentTargetConfig.description:
+-        "Stored execution target and operation. A zero target resolves to the DAO; delegatecall changes the security context."
++        "Stored execution target and operation. A zero target resolves to the governance contract; delegatecall changes the security context."
+      receivedPermissions.9.description:
+-        "grant and revoke permissions in the DAO."
++        "grant and revoke permissions in this contract."
       receivedPermissions.32:
-+        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in the DAO.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
++        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in this contract.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.32.description:
+-        "grant and revoke permissions in the voting-escrow DAO."
++        "grant and revoke permissions in this contract."
       receivedPermissions.46:
-+        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade the DAO implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
++        {"permission":"upgrade","from":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e","description":"upgrade this contract's implementation.","role":".daoUpgraders","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
       receivedPermissions.45.description:
-+        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
       receivedPermissions.45.via.0:
 +        {"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"}
       receivedPermissions.45.from:
@@ -178,7 +394,25 @@ discovery. Values are for block 1792414952 (main branch discovery), not current.
 +        "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"
       directlyReceivedPermissions.0.description:
 -        "execute arbitrary calls from the DAO, including calls to protocol owners and ProxyAdmins."
-+        "execute arbitrary calls from the DAO."
++        "execute arbitrary calls from this contract."
+    }
+```
+
+```diff
+    contract VotingEscrowLockNFT (eth:0xF3eeE0f5E721b8c0073C8d85bf26A3d6EC293A0E) [interfold/VotingEscrowLockNFT] {
+    +++ description: ERC-721 whose tokens represent individual veFOLD lock positions.
+      fieldMeta.dao.description:
+-        "Aragon DAO whose Lock admin role controls whitelist configuration and upgrades."
++        "Aragon governance contract whose Lock admin role controls whitelist configuration and upgrades."
+    }
+```
+
+```diff
+    contract PublicTokenVoting (eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC) [interfold/TokenVoting] {
+    +++ description: Upgradeable Aragon majority-voting plugin used as the voting body in Interfold's public staged proposal path. Voting power comes from the immutable BondedVotes adapter.
+      fieldMeta.dao.description:
+-        "Aragon DAO whose permission manager controls voting settings, targets and upgrades."
++        "Aragon governance contract whose permission manager controls voting settings, targets and upgrades."
     }
 ```
 

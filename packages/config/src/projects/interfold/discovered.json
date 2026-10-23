@@ -66,7 +66,7 @@
         "0xef1d8d75954efe33dde419c37a4cda54027a054626f2ce95eeaba5785a79b6e1"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable, currently paused gauge-voting plugin connected to VotingEscrow. It can update voting state used by escrow lock operations but is not the Interfold DAO proposal-voting plugin.",
+      "description": "Upgradeable, currently paused gauge-voting plugin connected to VotingEscrow. It can update voting state used by escrow lock operations but is not the Interfold governance proposal-voting plugin.",
       "ignoreInWatchMode": [
         "currentEpochStart",
         "epochId",
@@ -124,7 +124,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose permissions control gauge administration and upgrades."
+          "description": "Aragon governance contract whose permissions control gauge administration and upgrades."
         },
         "escrow": {
           "description": "VotingEscrow whose lock voting state this plugin updates."
@@ -987,7 +987,7 @@
           "type": "CODE_CHANGE"
         },
         "onchainBallotVerifier": {
-          "description": "Immutable verifier of ballot proofs for rounds that read voting power from the token at the snapshot, as DAO votes do.",
+          "description": "Immutable verifier of ballot proofs for rounds that read voting power from the token at the snapshot, as Interfold governance votes do.",
           "type": "CODE_CHANGE"
         }
       },
@@ -1498,7 +1498,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose permission manager controls updates to the condition's rule program."
+          "description": "Aragon governance contract whose permission manager controls updates to the condition's rule program."
         },
         "getRules": {
           "description": "Current ordered rule program evaluated for public proposal creation.",
@@ -1768,16 +1768,16 @@
       "proxyType": "EOA"
     },
     {
-      "name": "InterfoldDAO",
+      "name": "InterfoldGovCore",
       "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
       "type": "Contract",
-      "template": "zama/ZamaDAO",
+      "template": "zama/GovCore",
       "sourceHashes": [
         "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
         "0xd54ad871bfd08607d81e0a9bad74aa0f9fa3dc9e2331986a47281d6ca0ae07a7"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Aragon DAO that stores governance state and executes proposal action batches.",
+      "description": "Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.",
       "deployerAddress": "eth:0x0B84D82d10915Da42812e86A9ba33e80ac08c8CB",
       "sinceTimestamp": 1786931579,
       "sinceBlock": 25771635,
@@ -2195,17 +2195,17 @@
         },
         "daoExecutors": {
           "severity": "HIGH",
-          "description": "Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "daoRootHolders": {
           "severity": "HIGH",
-          "description": "Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "daoUpgraders": {
           "severity": "HIGH",
-          "description": "Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "multisigSettingsAdmins": {
@@ -2229,7 +2229,7 @@
           "type": "PERMISSION"
         },
         "adminPluginExecutors": {
-          "description": "Addresses that can drive the armed Admin plugin without a DAO vote, reconstructed from Aragon grant and revoke events.",
+          "description": "Addresses that can drive the armed Admin plugin without a governance vote, reconstructed from Aragon grant and revoke events.",
           "type": "PERMISSION"
         },
         "adminTargetManagers": {
@@ -2512,7 +2512,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose permission manager grants the escrow's admin, pause, sweep and upgrade roles."
+          "description": "Aragon governance contract whose permission manager grants the escrow's admin, pause, sweep and upgrade roles."
         },
         "token": { "description": "FOLD token custodied by the escrow." },
         "ivotesAdapter": {
@@ -2779,7 +2779,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose queue roles control fees, cooldowns, withdrawals and upgrades."
+          "description": "Aragon governance contract whose queue roles control fees, cooldowns, withdrawals and upgrades."
         },
         "escrow": {
           "description": "VotingEscrow that creates and completes withdrawal requests."
@@ -3027,7 +3027,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose permission manager grants delegation administration and upgrade roles."
+          "description": "Aragon governance contract whose permission manager grants delegation administration and upgrade roles."
         },
         "escrow": {
           "description": "VotingEscrow from which lock balances and ownership are read."
@@ -3128,7 +3128,7 @@
         "0x001b18ae4604ab644ca37dc856974c6b97fb66cfbff5f17ade7109694d1ee295"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.",
+      "description": "Upgradeable Aragon staged-proposal plugin that executes governance actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.",
       "deployerAddress": "eth:0x732D5F9155A524C29fe7b17a45C794C4F48abb9e",
       "sinceTimestamp": 1787251955,
       "sinceBlock": 25798247,
@@ -3189,7 +3189,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose permission manager controls proposal creation, configuration, advancement and upgrades."
+          "description": "Aragon governance contract whose permission manager controls proposal creation, configuration, advancement and upgrades."
         },
         "currentStages": {
           "description": "Latest proposal-stage configuration reconstructed from events, including voting bodies, approval and veto thresholds, timing windows, and edit/cancel flags.",
@@ -3199,7 +3199,7 @@
           "description": "Index of the stage configuration used by newly created proposals. Existing proposals retain their earlier snapshot."
         },
         "getCurrentTargetConfig": {
-          "description": "Stored target and call operation for passed proposal actions. A zero target resolves to the DAO; delegatecall changes the security context.",
+          "description": "Stored target and call operation for passed proposal actions. A zero target resolves to the governance contract; delegatecall changes the security context.",
           "type": "CODE_CHANGE"
         },
         "getTrustedForwarder": {
@@ -3264,16 +3264,16 @@
       "proxyType": "EOA"
     },
     {
-      "name": "VotingEscrowDAO",
+      "name": "VotingEscrowGovCore",
       "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
       "type": "Contract",
-      "template": "zama/ZamaDAO",
+      "template": "zama/GovCore",
       "sourceHashes": [
         "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
         "0xd54ad871bfd08607d81e0a9bad74aa0f9fa3dc9e2331986a47281d6ca0ae07a7"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Aragon DAO that stores governance state and executes proposal action batches.",
+      "description": "Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.",
       "deployerAddress": "eth:0xe78baC4Ca761A57DD876cf6e24b52275F4cA7A41",
       "sinceTimestamp": 1787028983,
       "sinceBlock": 25779726,
@@ -3508,17 +3508,17 @@
         },
         "daoExecutors": {
           "severity": "HIGH",
-          "description": "Current grantees of EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "daoRootHolders": {
           "severity": "HIGH",
-          "description": "Current grantees of ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "daoUpgraders": {
           "severity": "HIGH",
-          "description": "Current grantees of UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "description": "Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events.",
           "type": "PERMISSION"
         },
         "multisigSettingsAdmins": {
@@ -3542,15 +3542,15 @@
           "type": "PERMISSION"
         },
         "veDaoExecutors": {
-          "description": "Current grantees of EXECUTE_PERMISSION on the voting-escrow DAO.",
+          "description": "Current grantees of EXECUTE_PERMISSION on this contract.",
           "type": "PERMISSION"
         },
         "veDaoRootHolders": {
-          "description": "Current grantees of ROOT_PERMISSION on the voting-escrow DAO.",
+          "description": "Current grantees of ROOT_PERMISSION on this contract.",
           "type": "PERMISSION"
         },
         "veDaoUpgraders": {
-          "description": "Current grantees of UPGRADE_DAO_PERMISSION on the voting-escrow DAO.",
+          "description": "Current grantees of UPGRADE_DAO_PERMISSION on this contract.",
           "type": "PERMISSION"
         },
         "votingEscrowAdmins": {
@@ -3911,7 +3911,7 @@
         "0x001b18ae4604ab644ca37dc856974c6b97fb66cfbff5f17ade7109694d1ee295"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.",
+      "description": "Upgradeable Aragon staged-proposal plugin that executes governance actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.",
       "deployerAddress": "eth:0x34655732dB9BBfA627021D18d786EfF7Bde211F7",
       "sinceTimestamp": 1791615359,
       "sinceBlock": 26160375,
@@ -3974,7 +3974,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose permission manager controls proposal creation, configuration, advancement and upgrades."
+          "description": "Aragon governance contract whose permission manager controls proposal creation, configuration, advancement and upgrades."
         },
         "currentStages": {
           "description": "Latest proposal-stage configuration reconstructed from events, including voting bodies, approval and veto thresholds, timing windows, and edit/cancel flags.",
@@ -3984,7 +3984,7 @@
           "description": "Index of the stage configuration used by newly created proposals. Existing proposals retain their earlier snapshot."
         },
         "getCurrentTargetConfig": {
-          "description": "Stored target and call operation for passed proposal actions. A zero target resolves to the DAO; delegatecall changes the security context.",
+          "description": "Stored target and call operation for passed proposal actions. A zero target resolves to the governance contract; delegatecall changes the security context.",
           "type": "CODE_CHANGE"
         },
         "getTrustedForwarder": {
@@ -4008,7 +4008,7 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "description": "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every DAO vote.",
+      "description": "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every governance vote.",
       "deployerAddress": "eth:0x34655732dB9BBfA627021D18d786EfF7Bde211F7",
       "sinceTimestamp": 1791565535,
       "sinceBlock": 26156234,
@@ -4350,7 +4350,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose Clock admin role can change timing and upgrade the implementation."
+          "description": "Aragon governance contract whose Clock admin role can change timing and upgrade the implementation."
         },
         "epochDuration": {
           "description": "Duration of a veFOLD epoch.",
@@ -4461,7 +4461,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose permission manager controls updates to the condition's rule program."
+          "description": "Aragon governance contract whose permission manager controls updates to the condition's rule program."
         },
         "getRules": {
           "description": "Current ordered rule program evaluated for public proposal creation.",
@@ -4830,7 +4830,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose Curve admin role controls configuration and upgrades."
+          "description": "Aragon governance contract whose Curve admin role controls configuration and upgrades."
         },
         "escrow": {
           "description": "VotingEscrow whose lock history is transformed into voting power."
@@ -4912,7 +4912,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose permission manager controls the plugin's settings, target and upgrades."
+          "description": "Aragon governance contract whose permission manager controls the plugin's settings, target and upgrades."
         },
         "interfold": {
           "description": "E3 coordinator that runs the encrypted tally."
@@ -4994,7 +4994,7 @@
         "0x7204d3a9ce1568e5894d5e7b486018ae887e15c72dfa66f72b9192ce39e2b528"
       ],
       "proxyType": "EIP1167 proxy",
-      "description": "Non-upgradeable Aragon Admin plugin. Holders of its DAO-granted EXECUTE_PROPOSAL permission can submit actions that the plugin forwards immediately, without a vote or onchain delay.",
+      "description": "Non-upgradeable Aragon Admin plugin. Holders of the EXECUTE_PROPOSAL permission its governance contract grants can submit actions that the plugin forwards immediately, without a vote or onchain delay.",
       "deployerAddress": "eth:0x0B84D82d10915Da42812e86A9ba33e80ac08c8CB",
       "sinceTimestamp": 1786931579,
       "sinceBlock": 25771635,
@@ -5017,10 +5017,10 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose permission manager authorizes the plugin and its callers."
+          "description": "Aragon governance contract whose permission manager authorizes the plugin and its callers."
         },
         "getCurrentTargetConfig": {
-          "description": "Stored execution target and operation. A zero target resolves to the DAO; delegatecall changes the security context.",
+          "description": "Stored execution target and operation. A zero target resolves to the governance contract; delegatecall changes the security context.",
           "type": "CODE_CHANGE"
         }
       },
@@ -5067,7 +5067,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose Lock admin role controls whitelist configuration and upgrades."
+          "description": "Aragon governance contract whose Lock admin role controls whitelist configuration and upgrades."
         },
         "escrow": {
           "description": "VotingEscrow exclusively responsible for minting and burning lock positions."
@@ -5138,7 +5138,7 @@
       },
       "fieldMeta": {
         "dao": {
-          "description": "Aragon DAO whose permission manager controls voting settings, targets and upgrades."
+          "description": "Aragon governance contract whose permission manager controls voting settings, targets and upgrades."
         },
         "getVotingToken": {
           "description": "Immutable IVotes source used for proposal snapshots and vote weights."
@@ -8373,11 +8373,11 @@
     "interfold/VotingEscrowGaugeVoter": "0x138207b49fad1549c035ccf3c3a3bd88ae6612bfbf0d97017cfac6bd36186705",
     "interfold/VotingEscrowLockNFT": "0x8ccc68e1358a507858b1ebb37bce7d67d1577128bc34db2cbfbc5de1e79f893c",
     "interfold/VotingPowerCurve": "0x70bdcb75529eae783d822b5d4b22cc188405c27fad11508f98df8fbb60440696",
-    "zama/Multisig": "0xfacece6ea884ad4d49a3d294d69053b6102e847852204f7f3a65f9980facf297",
-    "zama/ZamaDAO": "0xd23019ed0b17920b8f219de9ded254b4bf3befa1fdb55f092019d6c1c15ad739"
+    "zama/GovCore": "0xd23019ed0b17920b8f219de9ded254b4bf3befa1fdb55f092019d6c1c15ad739",
+    "zama/Multisig": "0xfacece6ea884ad4d49a3d294d69053b6102e847852204f7f3a65f9980facf297"
   },
   "usedBlockNumbers": { "ethereum": 26226790 },
-  "permissionsConfigHash": "0xd72400dfaf120c0d2f104425163b065aeb6a9e484a062d7d73fb8af295afd55c",
+  "permissionsConfigHash": "0xcbfd6e8e58a6916bbf22d189c984cad5e90f97250273681f5b2c361fe053dc30",
   "permissions": {
     "eth:0x0a3E22cb9778A10b188eC2BF149D628ab91A76a9": {
       "receivedPermissions": [
@@ -8691,7 +8691,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -8701,7 +8701,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the voting-escrow DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".veDaoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -8771,7 +8771,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -8940,7 +8940,7 @@
         {
           "permission": "interact",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -9154,7 +9154,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -9164,7 +9164,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the voting-escrow DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".veDaoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -9300,7 +9300,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -9309,7 +9309,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -9402,7 +9402,7 @@
         {
           "permission": "act",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "execute arbitrary DAO actions through the armed Admin plugin without a vote or an onchain delay.",
+          "description": "execute arbitrary governance actions through the armed Admin plugin without a vote or an onchain delay.",
           "role": ".adminPluginExecutors"
         }
       ]
@@ -9462,14 +9462,14 @@
         {
           "permission": "act",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "execute arbitrary calls from the DAO.",
-          "role": ".daoExecutors"
+          "description": "execute arbitrary calls from this contract, including administration and upgrades of the voting-power stack.",
+          "role": ".veDaoExecutors"
         },
         {
           "permission": "act",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "execute arbitrary calls from the voting-escrow DAO, including administration and upgrades of the voting-power stack.",
-          "role": ".veDaoExecutors"
+          "description": "execute arbitrary calls from this contract.",
+          "role": ".daoExecutors"
         },
         {
           "permission": "act",
@@ -9532,7 +9532,7 @@
         {
           "permission": "interact",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders"
         },
         {
@@ -9646,7 +9646,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders"
         }
       ]
@@ -9784,7 +9784,7 @@
         {
           "permission": "interact",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -9998,7 +9998,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -10008,7 +10008,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the voting-escrow DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".veDaoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -10132,7 +10132,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -10141,7 +10141,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -10234,7 +10234,7 @@
         {
           "permission": "act",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "execute arbitrary DAO actions through the armed Admin plugin without a vote or an onchain delay.",
+          "description": "execute arbitrary governance actions through the armed Admin plugin without a vote or an onchain delay.",
           "role": ".adminPluginExecutors"
         }
       ]
@@ -10361,7 +10361,7 @@
         {
           "permission": "interact",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -10581,7 +10581,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -10591,7 +10591,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the voting-escrow DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".veDaoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -10715,7 +10715,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -10724,7 +10724,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -10817,7 +10817,7 @@
         {
           "permission": "act",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "execute arbitrary calls from the DAO.",
+          "description": "execute arbitrary calls from this contract.",
           "role": ".daoExecutors"
         }
       ]
@@ -10869,13 +10869,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders"
         },
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the voting-escrow DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".veDaoRootHolders"
         },
         {
@@ -10917,7 +10917,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders"
         },
         {
@@ -11056,14 +11056,14 @@
         {
           "permission": "act",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "execute arbitrary calls from the DAO.",
-          "role": ".daoExecutors"
+          "description": "execute arbitrary calls from this contract, including administration and upgrades of the voting-power stack.",
+          "role": ".veDaoExecutors"
         },
         {
           "permission": "act",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "execute arbitrary calls from the voting-escrow DAO, including administration and upgrades of the voting-power stack.",
-          "role": ".veDaoExecutors"
+          "description": "execute arbitrary calls from this contract.",
+          "role": ".daoExecutors"
         },
         {
           "permission": "interact",
@@ -11172,7 +11172,7 @@
         {
           "permission": "interact",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -11386,7 +11386,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -11396,7 +11396,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the voting-escrow DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".veDaoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -11520,7 +11520,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -11529,7 +11529,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -11622,7 +11622,7 @@
         {
           "permission": "act",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "execute arbitrary calls from the DAO.",
+          "description": "execute arbitrary calls from this contract.",
           "role": ".daoExecutors"
         }
       ]
@@ -11730,7 +11730,7 @@
         {
           "permission": "interact",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -11950,7 +11950,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".daoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -11960,7 +11960,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in the voting-escrow DAO.",
+          "description": "grant and revoke permissions in this contract.",
           "role": ".veDaoRootHolders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -12084,7 +12084,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e" }
@@ -12093,7 +12093,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "upgrade the DAO implementation.",
+          "description": "upgrade this contract's implementation.",
           "role": ".daoUpgraders",
           "via": [
             { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
@@ -12186,7 +12186,7 @@
         {
           "permission": "act",
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-          "description": "execute arbitrary calls from the DAO.",
+          "description": "execute arbitrary calls from this contract.",
           "role": ".daoExecutors"
         }
       ]

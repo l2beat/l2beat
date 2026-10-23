@@ -15,7 +15,7 @@
     "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa", // KMS generation (host)
     "eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f", // Aragon multisig plugin
     "eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F", // Aragon multisig plugin
-    "eth:0x37c8bfa303f173350eefCB6D4a995E68FFbdF3FD", // Aragon multisig plugin of the member DAO
+    "eth:0x37c8bfa303f173350eefCB6D4a995E68FFbdF3FD", // Aragon multisig plugin of ZamaDeFiGovCore
     "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3", // Gateway KMS generation
     "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4", // ACL pauser Safe, pausers are not followed
     "eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01", // ConfidentialSwap
@@ -86,8 +86,8 @@
     "eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c": "ConfidentialPAPYWrapper",
     "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8": "Staking (Coprocessor)",
     "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab": "Staking (KMS)",
-    "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3": "ZamaDAO",
-    "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C": "ZamaDeFiDAO",
+    "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3": "ZamaGovCore",
+    "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C": "ZamaDeFiGovCore",
     "eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f": "ZamaGovMultisigA",
     "eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F": "ZamaGovMultisigB",
     "eth:0x37c8bfa303f173350eefCB6D4a995E68FFbdF3FD": "ZamaDeFiMultisig",
