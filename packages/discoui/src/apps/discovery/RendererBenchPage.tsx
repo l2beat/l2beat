@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { Node } from './panel-nodes/store/State'
-import { useStore } from './panel-nodes/store/store'
+import { nodesStore, useStore } from './panel-nodes/store/store'
 import {
   BOTTOM_PADDING,
   FIELD_HEIGHT,
@@ -29,7 +29,7 @@ export function RendererBenchPage() {
   const [layoutMs, setLayoutMs] = useState<number | null>(null)
 
   const runLayout = () => {
-    const state = useStore.getState()
+    const state = nodesStore.getState()
     const projection = getGraphProjection(state.nodes)
     const visible = state.nodes.filter(
       (node) => !projection.hiddenNodeIds.has(node.id),
@@ -42,7 +42,7 @@ export function RendererBenchPage() {
   }
 
   useEffect(() => {
-    useStore.setState({
+    nodesStore.setState({
       projectId: 'bench',
       nodes,
       selected: [],

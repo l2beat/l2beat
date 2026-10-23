@@ -5,7 +5,7 @@ import { ADDRESS_ICON_COMPONENTS } from '../../../../components/AddressIcon'
 import { IconInitial } from '../../../../icons/IconInitial'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Field, Node } from '../store/State'
-import { useStore } from '../store/store'
+import { useStore, useStoreApi } from '../store/store'
 import {
   FIELD_HEIGHT,
   HEADER_HEIGHT,
@@ -2499,6 +2499,7 @@ export function NodesAndConnectionsWebGL() {
   const rendererRef = useRef<WebGLRenderer | null>(null)
   const rafRef = useRef<number | null>(null)
   const dataRef = useRef<DrawData | null>(null)
+  const store = useStoreApi()
 
   const nodes = useStore((s) => s.nodes)
   const selected = useStore((s) => s.selected)
@@ -2546,7 +2547,7 @@ export function NodesAndConnectionsWebGL() {
       const d = dataRef.current
       if (!renderer || !canvas || !d) return
       const rect = canvas.getBoundingClientRect()
-      const transform = useStore.getState().transform
+      const transform = store.getState().transform
       renderer.render(
         d,
         transform,
@@ -2599,7 +2600,7 @@ export function NodesAndConnectionsWebGL() {
 
   // Redraw on any store change (covers pan/zoom without going through React).
   useEffect(() => {
-    const unsub = useStore.subscribe(() => scheduleDraw.current())
+    const unsub = store.subscribe(() => scheduleDraw.current())
     return () => {
       unsub()
       if (rafRef.current !== null) {
@@ -2607,7 +2608,7 @@ export function NodesAndConnectionsWebGL() {
         rafRef.current = null
       }
     }
-  }, [])
+  }, [store])
 
   useEffect(() => {
     const canvas = canvasRef.current

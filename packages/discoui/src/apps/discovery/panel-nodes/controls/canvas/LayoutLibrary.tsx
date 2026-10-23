@@ -18,7 +18,7 @@ import { IconDownload } from '../../../../../icons/IconDownload'
 import { IconFileUp } from '../../../../../icons/IconFileUp'
 import { cn } from '../../../../../utils/cn'
 import type { ApplyLayoutMode } from '../../store/actions/applyStoredLayout'
-import { useStore } from '../../store/store'
+import { useStore, useStoreApi } from '../../store/store'
 import { type LayoutMetadata, migrateLayout } from '../../store/utils/layout'
 import {
   buildStoredNodeLayout,
@@ -57,6 +57,7 @@ export function LayoutLibrary() {
   const [open, setOpen] = useState(false)
   const [pending, setPending] = useState<PendingLayout | null>(null)
   const [error, setError] = useState<LoadError | null>(null)
+  const store = useStoreApi()
   const projectId = useStore((state) => state.projectId)
   const nodeCount = useStore((state) => state.nodes.length)
   const [layoutName, setLayoutName] = useState('')
@@ -102,7 +103,7 @@ export function LayoutLibrary() {
           'Saving layouts to the repo is disabled in read-only mode.',
         )
       }
-      const state = useStore.getState()
+      const state = store.getState()
       if (state.nodes.length === 0 || !state.projectId) {
         throw new Error('Load a project before saving a layout.')
       }
@@ -186,7 +187,7 @@ export function LayoutLibrary() {
   }
 
   const onDownloadCurrent = () => {
-    const state = useStore.getState()
+    const state = store.getState()
     if (state.nodes.length === 0 || !state.projectId) {
       return
     }

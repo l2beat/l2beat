@@ -1,8 +1,12 @@
 import type { Field, Node } from '../State'
+import { FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
 
 // How much of a row's height the links leaving a compressed row spread over,
 // so a 1:N row reads as a fan while every link still touches its dot.
 export const ROW_FAN_SPREAD = 0.5
+
+// The anchor processConnection resolves to the middle of the header.
+const HEADER_ANCHOR = -HEADER_HEIGHT / (2 * FIELD_HEIGHT) - 0.5
 
 export interface NodeRow {
   // The field path that owns the row: a field's own name for a 1:1 row, or the
@@ -112,6 +116,11 @@ function buildRowLayout(node: Node): RowLayout {
     if (hidden?.has(field.name)) {
       rowByField[i] = rows.length
       anchorByField[i] = rows.length
+      continue
+    }
+    if (field.permission !== undefined) {
+      rowByField[i] = rows.length
+      anchorByField[i] = HEADER_ANCHOR
       continue
     }
     const key =

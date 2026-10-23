@@ -16,7 +16,7 @@ import { SelectionName } from './selection/SelectionName'
 import { ValuesButton } from './selection/ValuesButton'
 import { Toolbar, ToolbarSection } from './Toolbar'
 
-export function Controls() {
+export function Controls(props: { showLayoutLibrary: boolean }) {
   const hasSelection = useStore((state) => state.selected.length > 0)
 
   return (
@@ -51,7 +51,7 @@ export function Controls() {
             <VisibilityMenu />
           </ToolbarSection>
           <ToolbarSection label="Panel">
-            <LayoutLibrary />
+            {props.showLayoutLibrary && <LayoutLibrary />}
             <Settings />
           </ToolbarSection>
         </Toolbar>

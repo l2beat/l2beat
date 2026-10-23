@@ -5,6 +5,7 @@ import { useStore } from '../../store/store'
 type Props = {
   viewRef: React.RefObject<HTMLElement | null>
   containerRef: React.RefObject<HTMLElement | null>
+  panelId: string
 }
 
 export type DesktopControls = {
@@ -24,6 +25,7 @@ export type DesktopControls = {
 export function useDesktopControls({
   viewRef,
   containerRef,
+  panelId,
 }: Props): DesktopControls {
   const currentPanel = useDockingStore((state) => state.activeLeaf)
   const searchOpened = useSearchStore((state) => state.opened)
@@ -39,9 +41,9 @@ export function useDesktopControls({
   const redo = useStore((state) => state.redo)
   const isResizing = useStore((state) => state.resizingNode !== undefined)
 
-  // Always capture if we're not in panel mode, or if we're in nodes panel
+  // Always capture if we're not in panel mode, or if we're in this panel
   const shouldCapture =
-    (currentPanel === undefined || currentPanel === 'nodes') && !searchOpened
+    (currentPanel === undefined || currentPanel === panelId) && !searchOpened
 
   function handleWheel(event: WheelEvent) {
     if (!viewRef.current) return

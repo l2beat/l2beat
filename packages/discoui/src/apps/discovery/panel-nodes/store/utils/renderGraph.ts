@@ -8,10 +8,13 @@ import { processConnection } from './updateNodePositions'
 
 const CONTAINER_PADDING = 24
 const GROUP_HEADER_HEIGHT = 26
+// Colored groups label a whole region, so their title is set large.
+const COLORED_GROUP_HEADER_HEIGHT = 64
 
 export interface GroupContainer {
   readonly id: string
   readonly name: string
+  readonly color: number
   readonly box: Box
   readonly headerBox: Box
 }
@@ -170,15 +173,18 @@ function boundary(group: Node, members: Node[]): GroupContainer {
     maxX = Math.max(maxX, member.box.x + member.box.width)
     maxY = Math.max(maxY, member.box.y + member.box.height)
   }
+  const headerHeight =
+    group.color === 0 ? GROUP_HEADER_HEIGHT : COLORED_GROUP_HEADER_HEIGHT
   const x = minX - CONTAINER_PADDING
-  const y = minY - CONTAINER_PADDING - GROUP_HEADER_HEIGHT
+  const y = minY - CONTAINER_PADDING - headerHeight
   const width = maxX - minX + CONTAINER_PADDING * 2
-  const height = maxY - minY + CONTAINER_PADDING * 2 + GROUP_HEADER_HEIGHT
+  const height = maxY - minY + CONTAINER_PADDING * 2 + headerHeight
   return {
     id: group.id,
     name: group.name,
+    color: group.color,
     box: { x, y, width, height },
-    headerBox: { x, y, width, height: GROUP_HEADER_HEIGHT },
+    headerBox: { x, y, width, height: headerHeight },
   }
 }
 

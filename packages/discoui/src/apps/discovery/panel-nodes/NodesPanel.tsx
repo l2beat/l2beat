@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router'
 import type {
   Field as ApiField,
@@ -11,36 +11,95 @@ import { LoadingState } from '../../../components/LoadingState'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
-import type { AutoGroup } from './store/actions/loadNodes'
-import type { Field, Node } from './store/State'
-import { useStore as useNodeStore, useStore } from './store/store'
-import { NODE_WIDTH } from './store/utils/constants'
+import type { ArrangeNodes, AutoGroup } from './store/actions/loadNodes'
+import type { Field, Node, State } from './store/State'
+import {
+  type NodeStore,
+  NodeStoreProvider,
+  nodesStore,
+  useStore,
+} from './store/store'
 import { getGraphProjection } from './store/utils/graphProjection'
+import { makeNode } from './store/utils/makeNode'
+import { nodeAddress } from './store/utils/nodeAddress'
+import { expandedNodes } from './store/utils/renderGraph'
 import { topLevelByDescendant } from './store/utils/subnodes'
-import { Viewport } from './view/Viewport'
+import { Viewport, type ViewportRenderer } from './view/Viewport'
 
-// Leaf ids of every node that is selected or sits inside a selected one, so a
-// member selected inside an opened group still resolves to its address.
-export function selectedLeafIds(
+// Addresses of every leaf that is selected or sits inside a selected one, so
+// a member selected inside an opened group still resolves to its address.
+export function selectedLeafAddresses(
   nodes: readonly Node[],
   selected: ReadonlySet<string>,
 ): string[] {
-  const ids: string[] = []
+  const addresses = new Set<string>()
   const walk = (list: readonly Node[], underSelected: boolean) => {
     for (const node of list) {
       const on = underSelected || selected.has(node.id)
       if (node.subnodes.length > 0) {
         walk(node.subnodes, on)
       } else if (on) {
-        ids.push(node.id)
+        addresses.add(nodeAddress(node.id))
       }
     }
   }
   walk(nodes, false)
-  return ids
+  return [...addresses]
 }
 
+// The node to select for an address: its first copy where it is drawn on its
+// own, otherwise the collapsed group holding it.
+function focusTargetFor(
+  nodes: readonly Node[],
+  address: string,
+): string | undefined {
+  const drawn = expandedNodes(nodes).find(
+    (node) => nodeAddress(node.id) === address,
+  )
+  if (drawn !== undefined) {
+    return drawn.id
+  }
+  for (const [id, top] of topLevelByDescendant(nodes)) {
+    if (nodeAddress(id) === address) {
+      return top.id
+    }
+  }
+  return undefined
+}
+
+export interface BuiltNodes {
+  readonly nodes: Node[]
+  readonly autoGroups: AutoGroup[]
+  readonly arrange?: ArrangeNodes
+}
+
+export type BuildNodes = (
+  data: ApiProjectResponse,
+  project: string,
+  preferences: State['userPreferences'],
+) => BuiltNodes
+
 export function NodesPanel() {
+  return (
+    <NodeGraphPanel
+      panelId="nodes"
+      store={nodesStore}
+      buildNodes={buildValueNodes}
+      showLayoutLibrary={true}
+    />
+  )
+}
+
+// The graph every node-like panel draws; what differs is the store it keeps
+// its layout in and how the project turns into nodes and edges.
+export function NodeGraphPanel(props: {
+  panelId: string
+  store: NodeStore
+  buildNodes: BuildNodes
+  showLayoutLibrary: boolean
+  renderer?: ViewportRenderer
+  overlay?: ReactNode
+}) {
   const { project } = useParams()
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
@@ -55,13 +114,20 @@ export function NodesPanel() {
   }
 
   return (
-    <div className="h-full w-full overflow-x-hidden">
-      <div className="relative h-full w-full flex-1">
-        <NodesSync data={response.data} project={project} />
-        <Viewport />
-        <Controls />
+    <NodeStoreProvider value={props.store}>
+      <div className="h-full w-full overflow-x-hidden">
+        <div className="relative h-full w-full flex-1">
+          <NodesSync
+            data={response.data}
+            project={project}
+            buildNodes={props.buildNodes}
+          />
+          <Viewport renderer={props.renderer} panelId={props.panelId} />
+          {props.overlay}
+          <Controls showLayoutLibrary={props.showLayoutLibrary} />
+        </div>
       </div>
-    </div>
+    </NodeStoreProvider>
   )
 }
 
@@ -70,99 +136,86 @@ export function NodesPanel() {
 function NodesSync(props: {
   data: ApiProjectResponse | undefined
   project: string
+  buildNodes: BuildNodes
 }) {
-  useLoadNodes(props.data, props.project)
+  useLoadNodes(props.data, props.project, props.buildNodes)
   useSynchronizeSelection()
   return null
 }
 
-function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
-  const clear = useNodeStore((state) => state.clear)
-  const loadNodes = useNodeStore((state) => state.loadNodes)
-  const preferences = useNodeStore((state) => state.userPreferences)
+function useLoadNodes(
+  data: ApiProjectResponse | undefined,
+  project: string,
+  buildNodes: BuildNodes,
+) {
+  const clear = useStore((state) => state.clear)
+  const loadNodes = useStore((state) => state.loadNodes)
+  const preferences = useStore((state) => state.userPreferences)
 
   useEffect(() => {
     clear()
     if (!data) {
       return
     }
-    const nodes: Node[] = []
-    const autoGroups: AutoGroup[] = []
-    for (const chain of data.entries) {
-      const isSharedModule =
-        chain.project !== project && chain.project.startsWith('shared-')
-      const hueShift = isSharedModule ? 90 : 0
-      const chainNodesStartIndex = nodes.length
+    const { nodes, autoGroups, arrange } = buildNodes(
+      data,
+      project,
+      preferences,
+    )
+    loadNodes(project, nodes, autoGroups, arrange)
+  }, [project, data, clear, loadNodes, buildNodes])
+}
 
-      const initialAddresses = chain.initialContracts.map((x) => x.address)
-      for (const contract of [
-        ...chain.initialContracts,
-        ...chain.discoveredContracts,
-      ]) {
-        const [prefix, address] = contract.address.split(':') as [
-          string,
-          string,
-        ]
-        const fallback = `${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
-        const keysToHideOnLoad = preferences.hideLargeArrays
-          ? getKeysToHideOnLoad(contract.fields)
-          : []
+export function buildValueNodes(
+  data: ApiProjectResponse,
+  project: string,
+  preferences: State['userPreferences'],
+): BuiltNodes {
+  const nodes: Node[] = []
+  const autoGroups: AutoGroup[] = []
+  for (const chain of data.entries) {
+    const isSharedModule =
+      chain.project !== project && chain.project.startsWith('shared-')
+    const hueShift = isSharedModule ? 90 : 0
+    const chainNodesStartIndex = nodes.length
 
-        const node: Node = {
-          id: contract.address,
+    const initialAddresses = chain.initialContracts.map((x) => x.address)
+    for (const contract of [
+      ...chain.initialContracts,
+      ...chain.discoveredContracts,
+    ]) {
+      nodes.push(
+        makeNode(contract, {
           isInitial: initialAddresses.includes(contract.address),
-          isReachable: contract.isReachable,
-          hasTemplate: contract.template !== undefined,
-          name: contract.name ?? fallback,
-          addressType: contract.type,
-          address,
-          box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
-          color: 0,
           hueShift,
-          data: null,
           fields: toNodeFields(contract.fields),
-          hiddenFields: keysToHideOnLoad,
-          compressedRows: [],
-          opened: false,
-          subnodes: [],
-        }
-        nodes.push(node)
-      }
-      for (const eoa of chain.eoas) {
-        const [prefix, address] = eoa.address.split(':') as [string, string]
-        const fallback = `EOA ${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
-        const node: Node = {
-          id: eoa.address,
+          hiddenFields: preferences.hideLargeArrays
+            ? getKeysToHideOnLoad(contract.fields)
+            : [],
+        }),
+      )
+    }
+    for (const eoa of chain.eoas) {
+      nodes.push(
+        makeNode(eoa, {
           isInitial: false,
-          isReachable: eoa.isReachable,
-          hasTemplate: false,
-          name: eoa.name ?? fallback,
-          addressType: eoa.type,
-          address,
-          box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
-          color: 0,
           hueShift,
-          data: null,
           fields: [],
           hiddenFields: [],
-          compressedRows: [],
-          opened: false,
-          subnodes: [],
-        }
-        nodes.push(node)
-      }
-
-      const memberIds = nodes.slice(chainNodesStartIndex).map((node) => node.id)
-      if (isSharedModule && memberIds.length > 0) {
-        autoGroups.push({
-          id: `group:shared:${chain.project}`,
-          name: chain.project,
-          memberIds,
-        })
-      }
+        }),
+      )
     }
-    loadNodes(project, nodes, autoGroups)
-  }, [project, data, clear, loadNodes])
+
+    const memberIds = nodes.slice(chainNodesStartIndex).map((node) => node.id)
+    if (isSharedModule && memberIds.length > 0) {
+      autoGroups.push({
+        id: `group:shared:${chain.project}`,
+        name: chain.project,
+        memberIds,
+      })
+    }
+  }
+  return { nodes, autoGroups }
 }
 
 function eq(a: readonly string[], b: readonly string[]) {
@@ -187,12 +240,15 @@ function useSynchronizeSelection() {
     const visibleSelectedNodes = selectedNodes.filter(
       (id) => !hiddenNodes.has(id),
     )
-    highlightGlobal(visibleSelectedNodes)
+    highlightGlobal([...new Set(visibleSelectedNodes.map(nodeAddress))])
   }, [selectedNodes, hiddenNodes, highlightGlobal])
 
   useEffect(() => {
     const firstGlobal = selectedGlobal[0]
-    const selectedAddresses = selectedLeafIds(nodes, new Set(selectedNodes))
+    const selectedAddresses = selectedLeafAddresses(
+      nodes,
+      new Set(selectedNodes),
+    )
 
     if (selectedAddresses.length > 0 && !eq(lastSelection, selectedAddresses)) {
       rememberSelection(selectedAddresses)
@@ -202,10 +258,10 @@ function useSynchronizeSelection() {
       !lastSelection.includes(firstGlobal) &&
       loaded
     ) {
-      const containing = topLevelByDescendant(nodes).get(firstGlobal)
+      const target = focusTargetFor(nodes, firstGlobal)
       rememberSelection(selectedGlobal)
-      if (containing) {
-        selectAndFocus(containing.id)
+      if (target !== undefined) {
+        selectAndFocus(target)
       }
     }
   }, [

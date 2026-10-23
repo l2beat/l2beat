@@ -217,9 +217,28 @@ export interface ApiAddressEntry {
   roles: string[]
   type: ApiAddressType
   referencedBy: ApiAddressReference[]
+  receivedPermissions: ApiReceivedPermission[]
   address: string
   chain: string
   isReachable: boolean
+}
+
+// A permission as its holder ultimately receives it: `from` grants it to
+// via[0], each step acts through the next, and the holder acts through the last.
+export interface ApiReceivedPermission {
+  permission: string
+  from: string
+  role?: string
+  delay?: number
+  description?: string
+  condition?: string
+  via: ApiPermissionStep[]
+}
+
+export interface ApiPermissionStep {
+  address: string
+  delay?: number
+  condition?: string
 }
 
 export interface ApiAddressReference extends AddressFieldValue {
