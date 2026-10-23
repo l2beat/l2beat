@@ -34,12 +34,13 @@ export function railgunAdversaries(upgradeDelay: string) {
         sentiment: 'good',
         exposureShort:
           'Everything inside the pool is hidden, including which shield funds which unshield.',
-        exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to the adapter in cleartext.`,
+        exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to an adapter in cleartext.`,
         advice: S.exitViaRelayer('broadcaster'),
         interior: INTERIOR,
         sources: [
           { contract: 'RailgunSmartWallet', title: 'Shield and unshield' },
           { contract: 'RelayAdapt', title: 'DeFi bundles' },
+          { contract: 'RelayAdapt7702_05ae', title: 'Swap accounts' },
         ],
       },
       chainAnalyst: {
@@ -70,7 +71,7 @@ export function railgunAdversaries(upgradeDelay: string) {
         exposureShort:
           "RailOxide sends everything over built-in Tor, but keeping the public RPCs out needs the user's own node published as an onion service.",
         exposureContinued:
-          "All traffic shares one Tor session, so the public RPCs it picks at random see the user's public addresses, shields and the gas estimate of each private transaction from one exit. Built-in Tor cannot reach a node on localhost or the local network. A new Tor session keeps the Waku peer id, so only an app restart separates broadcaster sessions.",
+          "All traffic shares one Tor session, so the public RPCs it picks at random see the user's public addresses, shields, swap accounts and the gas estimate of each private transaction from one exit. Built-in Tor cannot reach a node on localhost or the local network. A new Tor session keeps the Waku peer id, so only an app restart separates broadcaster sessions.",
         advice:
           "Publish the user's own Ethereum node as an onion service and set it as RailOxide's RPC on the startup screen, before unlocking.",
         interior: {
