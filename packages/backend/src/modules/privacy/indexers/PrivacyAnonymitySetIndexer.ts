@@ -29,7 +29,9 @@ import {
   extractPrivacyAnonymitySetMember,
   type PrivacyAnonymitySetMember,
 } from '../utils/extractPrivacyAnonymitySetMember'
+import { isPrivacyPoolsV2Reshield } from '../utils/extractPrivacyPoolsV2Event'
 import {
+  extractPrivacyLogMatches,
   fetchPrivacyLogMatches,
   type PrivacyLogMatch,
 } from '../utils/privacyLogIndexerUtils'
@@ -158,7 +160,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       blockProvider: this.$.blockProvider,
       logger: this.logger,
     })
-    const rawRecords = extractRawRecords(matches)
+    const rawRecords = await extractRawRecords(matches, this.$.rpcClient)
     if (rawRecords.length === 0) return []
 
     const transactionSenders = await this.getTransactionSenders(
@@ -326,24 +328,26 @@ function withoutUntracedFunders(
 
 function extractRawRecords(
   matches: PrivacyLogMatch<PrivacyAnonymitySetIndexerConfig>[],
-): RawRecord[] {
-  const records: RawRecord[] = []
-
-  for (const { log, timestamp, configuration } of matches) {
-    const result = extractPrivacyAnonymitySetMember(
-      configuration.properties,
-      log,
-    )
-    if (!result) continue
-
-    records.push({
-      configuration,
-      log,
-      timestamp,
-      amount: result.amount,
-      origin: result.origin,
-    })
-  }
-
-  return records
+  rpc: IRpcClient,
+): Promise<RawRecord[]> {
+  return extractPrivacyLogMatches(
+    matches,
+    rpc,
+    async ({ log, timestamp, configuration }, context) => {
+      const result = extractPrivacyAnonymitySetMember(
+        configuration.properties,
+        log,
+      )
+      if (!result || (await isPrivacyPoolsV2Reshield(log, context))) {
+        return undefined
+      }
+      return {
+        configuration,
+        log,
+        timestamp,
+        amount: result.amount,
+        origin: result.origin,
+      }
+    },
+  )
 }

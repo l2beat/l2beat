@@ -66,7 +66,7 @@ const feeSummary = formatPrivacyPoolsFeeSummary()
 export const privacyPools: BaseProject = {
   id: ProjectId('privacy-pools'),
   slug: 'privacy-pools',
-  name: 'Privacy Pools',
+  name: 'Privacy Pools v1',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-05-12')),
   discoveryInfo: getDiscoveryInfo([discovery]),
