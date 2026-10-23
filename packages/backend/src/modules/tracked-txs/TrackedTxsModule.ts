@@ -47,8 +47,8 @@ export function createTrackedTxsModule(
   )
 
   // Tracked txs read each hour from Dune once and never again, and nothing
-  // checks that Dune has ingested the hour. They keep the one-hour margin the
-  // shared clock had before block targets and prices started verifying data.
+  // checks that Dune has ingested the hour, so they keep at least a one-hour
+  // margin even when the shared clock offset is lowered.
   const clock = new Clock(
     config.clock.minBlockTimestamp,
     Math.max(config.clock.safeTimeOffsetSeconds, UnixTime.HOUR),
