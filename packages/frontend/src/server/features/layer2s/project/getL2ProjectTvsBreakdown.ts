@@ -8,7 +8,10 @@ import {
 } from '../tvs/breakdown/getProjectTokensEntries'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
-import { getTvsTargetTimestamp } from '../tvs/utils/getTvsTargetTimestamp'
+import {
+  getSyncedTvsTimestamp,
+  getTvsSyncMetadata,
+} from '../tvs/utils/getSyncedTvsTimestamp'
 import { MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN } from './const'
 
 export interface L2ProjectTvsBreakdown {
@@ -38,12 +41,13 @@ export async function getL2ProjectTvsBreakdown(
     return undefined
   }
 
-  const [projects7dData, entries] = await Promise.all([
+  const [projects7dData, entries, syncMetadata] = await Promise.all([
     get7dTvsBreakdown({
       type: 'projects',
       projectIds: [project.id.toString()],
     }),
     getProjectTokensEntries(project),
+    getTvsSyncMetadata(),
   ])
 
   const project7dData = projects7dData.projects[project.id.toString()]
@@ -53,7 +57,8 @@ export async function getL2ProjectTvsBreakdown(
 
   return {
     project: withProjectIcon(project),
-    dataTimestamp: getTvsTargetTimestamp(),
+    // The hour of the entries, which list every token, unlike the 7d data
+    dataTimestamp: getSyncedTvsTimestamp(syncMetadata, project.tvsConfig),
     entries: entries.filter(
       (entry) =>
         entry.valueForProject.value >= MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN,
