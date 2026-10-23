@@ -17,6 +17,11 @@ import type {
 import type { AuditedCode } from './AuditedCode'
 import type { AuditIndex } from './AuditIndex'
 import { type AuditObjects, sha1BlobId } from './AuditObjects'
+import {
+  type CoverageHistoryLog,
+  type CoverageHistoryStats,
+  coverageHistoryOfProject,
+} from './coverageHistory'
 import { type CoveredUnit, coverFlat } from './coverFlat'
 import type { GetDeployedSource } from './deployedSource'
 
@@ -25,6 +30,13 @@ export interface AuditCoverageInputs {
   objects: AuditObjects
   code: AuditedCode
   dataset: { repository: string; commit: string }
+}
+
+/** Also cover the perimeter's history, see coverageHistory.ts. */
+export interface AuditCoverageHistoryOptions {
+  /** Where the series starts; undefined starts it at the earliest member. */
+  launch: number | undefined
+  log: CoverageHistoryLog & { done(stats: CoverageHistoryStats): void }
 }
 
 export async function auditCoverageOfProject(
@@ -36,6 +48,7 @@ export async function auditCoverageOfProject(
     index: number,
     count: number,
   ) => void,
+  history?: AuditCoverageHistoryOptions,
 ): Promise<AuditCoverage> {
   const discovery = new ConfigReader(getDiscoveryPaths().discovery)
   const discovered = discovery.readDiscovery(project)
@@ -77,7 +90,29 @@ export async function auditCoverageOfProject(
     }
     contracts[entry.address] = toContract(entry, addresses, sources)
   }
-  const reports = reportsOf(project, units, inputs.index)
+  const covered = await (history === undefined
+    ? undefined
+    : coverageHistoryOfProject(
+        {
+          project,
+          index: inputs.index,
+          code: inputs.code,
+          discovery: discovered,
+          launch: history.launch,
+          coverage: {
+            contracts,
+            flats,
+            units,
+            discoveredAt: discovered.timestamp,
+          },
+        },
+        getDeployedSource,
+        history.log,
+      ))
+  if (covered !== undefined) {
+    history?.log.done(covered.stats)
+  }
+  const reports = reportsOf(project, units, inputs.index, covered?.reports)
   return {
     schema_version: '1.0.0',
     project,
@@ -97,6 +132,7 @@ export async function auditCoverageOfProject(
     units,
     flats,
     contracts,
+    ...(covered === undefined ? {} : { history: covered.history }),
   }
 }
 
@@ -152,10 +188,12 @@ function reportsOf(
   project: string,
   units: Record<string, Unit>,
   index: AuditIndex,
+  historic: Iterable<string> = [],
 ): Record<string, CoverageReport> {
-  const ids = new Set(
-    Object.values(units).flatMap((unit) => unit.reports ?? []),
-  )
+  const ids = new Set([
+    ...Object.values(units).flatMap((unit) => unit.reports ?? []),
+    ...historic,
+  ])
   for (const [id, report] of Object.entries(index.reports)) {
     if (report.collections.includes(project)) {
       ids.add(id)

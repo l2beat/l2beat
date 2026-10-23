@@ -2331,6 +2331,32 @@ const AuditCoverageContract = v.object({
   implementations: v.record(v.string(), v.string()).optional(),
 })
 
+const AuditCoverageHistoryPoint = v.object({
+  timestamp: v.number(),
+  /** Members of the perimeter at this point. */
+  contracts: v.number(),
+  /** Members whose every code address lacks verified Solidity. */
+  withoutSource: v.number(),
+  /** Deployed unit instances per status, interfaces excluded. */
+  units: v.object({
+    identical: v.number(),
+    differs: v.number(),
+    none: v.number(),
+  }),
+  lines: v.object({ total: v.number(), covered: v.number() }),
+  /** Reports first counted here that a unit of this state references. */
+  reports: v.array(v.string()).optional(),
+  changes: v
+    .array(
+      v.object({
+        address: v.string(),
+        name: v.string(),
+        kind: v.enum(['added', 'removed', 'upgraded']),
+      }),
+    )
+    .optional(),
+})
+
 export const ProjectAuditCoverageSchema = v.object({
   schema_version: v.literal('1.0.0'),
   project: v.string(),
@@ -2362,6 +2388,16 @@ export const ProjectAuditCoverageSchema = v.object({
   units: v.record(v.string(), AuditCoverageUnit),
   flats: v.record(v.string(), v.array(v.tuple([v.string(), v.number()]))),
   contracts: v.record(v.string(), AuditCoverageContract),
+  /** Coverage of the perimeter over time, see the l2b README. */
+  history: v
+    .object({
+      launch: v.number(),
+      /** Ascending, first at launch, last at discoveredAt. */
+      points: v.array(AuditCoverageHistoryPoint),
+      /** Reports counted only at the present, having no date. */
+      undatedReports: v.array(v.string()),
+    })
+    .optional(),
 })
 export type ProjectAuditCoverage = v.infer<typeof ProjectAuditCoverageSchema>
 

@@ -44,6 +44,35 @@ The audited file shown is the newest commit containing the winning body. Every r
 
 The dataset locates major findings in files, not units, so a unit gets a report's findings that are open in every file containing its body that the report scoped by file path. A finding the report saw fixed in another copy of the same body was fixed elsewhere in the file. Findings scoped to a directory are not attributed, since they cannot be placed in a file, and a finding located in a file is attributed to every unit of that file.
 
+## History
+
+`l2b audit-coverage <project> --history` also covers the perimeter at every point of its history and writes the series as `history`. It needs `packages/config` built: the series starts at the launch the audits timeline shows (the ossification history's `observedSince`, else the chain's start), or at the earliest member when the config knows neither.
+
+The perimeter over time is rebuilt from `discovered.json` alone: the contracts with a `critical` flag (every contract when none has one), each one bounded by its critical window, running its own code plus the implementations `$pastUpgrades` recorded at each moment. When the recorded upgrades do not end at the current implementations, those are assumed current since the last recorded upgrade, with a warning. Contracts that left discovery are not reconstructed. Historic implementations are read like current ones, through discovery's provider; an unverified one counts no lines while it ran, like an unverified contract today.
+
+Points are the launch, every report date in the dataset (its `date`, else the year and month its id ends with; undated reports count only at the present), every change of the perimeter's code clustered by 24h like ossification's critical changes, and the present. At a point the code deployed at the cluster's last change is matched against the reports dated by then, with the audited code index restricted to those reports. A flat keeps its previous result until a newly counted report adds a declaration with one of its unit names, or, when it has an unmatched unit of at least 10 lines, a file of the project's own or a library collection. Points that change no number, report or member are dropped; the present is taken from the main output, so the last point is the dashboard's number.
+
+```ts
+type AuditCoverage = {
+  // ...
+  history?: {
+    launch: number
+    points: {
+      timestamp: number
+      contracts: number // members of the perimeter
+      withoutSource: number // members whose every code address lacks verified Solidity
+      units: { identical: number; differs: number; none: number } // interfaces excluded
+      lines: { total: number; covered: number } // as the dashboard counts them
+      reports?: ReportId[] // first counted here and referenced by a unit of this state
+      changes?: { address: ChainSpecificAddress; name: string; kind: 'added' | 'removed' | 'upgraded' }[]
+    }[]
+    undatedReports: ReportId[] // referenced at the present, counted nowhere else
+  }
+}
+```
+
+The command ends with the points of the history that have no critical code change of ossification within a day, and vice versa: the two come from different sources (ossification also reads diffHistory.md and ossification.json) and are not reconciled.
+
 ## Output
 
 ```ts
