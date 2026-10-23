@@ -172,7 +172,6 @@ function makeState(nodes: Node[]): State {
       enableDimming: true,
       hideLargeArrays: true,
       highlightOverlapping: true,
-      useExperimentalRenderer: false,
     },
     transform: { offsetX: 0, offsetY: 0, scale: 1 },
     input: {

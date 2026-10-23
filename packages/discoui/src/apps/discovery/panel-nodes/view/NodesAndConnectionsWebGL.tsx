@@ -1,4 +1,4 @@
-import { type ComponentType, useEffect, useMemo, useRef } from 'react'
+import { type ComponentType, useEffect, useMemo, useRef, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { ApiAddressType } from '../../../../api/types'
 import { ADDRESS_ICON_COMPONENTS } from '../../../../components/AddressIcon'
@@ -19,7 +19,6 @@ import {
 import { getRowLayout, type NodeRow } from '../store/utils/rows'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
-import { getGridCellSize } from './ScalableView'
 
 // ============================================================================
 // Constants
@@ -39,6 +38,8 @@ const AUX_ORANGE: RGBA = [0xfe / 255, 0x80 / 255, 0x19 / 255, 1]
 const DIMMED_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.3)
 const GRAYED_CONNECTION_COLOR = withAlpha(COFFEE_200, 0.1)
 const BLACK: RGBA = [0, 0, 0, 1]
+// Transparent ring color: a plain fill.
+const NO_RING: RGBA = [0, 0, 0, 0]
 
 const HEADER_ICON_SIZE = 16
 const ICON_VIEW_BOX = 16
@@ -67,21 +68,24 @@ const FIELD_FONT: FontSpec = {
   size: 12,
   family: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
 }
+// Tailwind's text-xs line height.
+const FOOTER_LINE_HEIGHT = 16
 const FOOTER_FONT: FontSpec = {
   italic: true,
-  size: 10,
+  size: 12,
   family: 'ui-sans-serif, system-ui, sans-serif',
 }
 
 const CONNECTION_SEGMENTS = 32
 const GRID_DOT_RADIUS_PER_CELL = 0.05
+const INITIAL_RING_WIDTH = 15
 const CONNECTION_CONTROL_OFFSET = 50
 const DASH_ON_WORLD = 5
 const DASH_OFF_WORLD = 5
 const PERIMETER_SAMPLES_PER_CORNER = 8
 
 // Floats per instance for each pipeline.
-const QUAD_STRIDE_F = 14 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z
+const QUAD_STRIDE_F = 18 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z, ring.rgba
 const TEXT_STRIDE_F = 13 // pos.xy, size.xy, uv.xyzw, color.rgba, z
 const LINE_STRIDE_F = 6 // pos.xy, color.rgba
 const CONNECTION_STRIDE_F = 12 // from.xy, to.xy, controlX.xy, color.rgba, width, dashed
@@ -130,7 +134,7 @@ interface RenderNode {
   node: Node
   flags: NodeFlags
   z: number
-  alpha: number
+  range: NodeRange
   visibleFields: VisibleField[]
   rows: readonly NodeRow[]
   fullHeight: boolean
@@ -156,6 +160,9 @@ interface FontAtlas {
   cellW: number
   cellH: number
   baselineOffset: number
+  // Font ascent and descent in world units, for placing text in a CSS line box.
+  ascent: number
+  descent: number
   getGlyph: (ch: string) => AtlasGlyph
 }
 
@@ -179,6 +186,7 @@ layout(location = 3) in vec4 i_color;
 layout(location = 4) in vec4 i_radii; // TL, TR, BR, BL
 layout(location = 5) in float i_border;
 layout(location = 6) in float i_z;
+layout(location = 7) in vec4 i_ring;
 uniform vec2 u_offset;
 uniform float u_scale;
 uniform vec2 u_resolution;
@@ -187,6 +195,7 @@ out vec2 v_local;
 out vec2 v_halfSize;
 out vec4 v_radii;
 out float v_border;
+out vec4 v_ring;
 void main() {
   float pad = (i_border * 0.5) + 1.0;
   vec2 quadSize = i_size + vec2(pad * 2.0);
@@ -201,6 +210,7 @@ void main() {
   v_halfSize = i_size * 0.5;
   v_radii = i_radii;
   v_border = i_border;
+  v_ring = i_ring;
 }`
 
 const ROUND_FS = `#version 300 es
@@ -210,7 +220,9 @@ in vec2 v_local;
 in vec2 v_halfSize;
 in vec4 v_radii;
 in float v_border;
+in vec4 v_ring;
 out vec4 fragColor;
+const float RING_WIDTH = ${INITIAL_RING_WIDTH}.0;
 float pickRadius(vec2 p, vec4 r) {
   float top    = (p.x > 0.0) ? r.y : r.x;
   float bottom = (p.x > 0.0) ? r.z : r.w;
@@ -233,7 +245,12 @@ void main() {
     alpha = 1.0 - smoothstep(-aa, aa, d);
   }
   if (alpha <= 0.0) discard;
-  fragColor = vec4(v_color.rgb, v_color.a * alpha);
+  // Rings repeating every RING_WIDTH from the center, fading from the ring
+  // color into the fill, mark initial contracts' headers.
+  vec3 color = v_ring.a > 0.0
+    ? mix(v_ring.rgb, v_color.rgb, mod(length(v_local), RING_WIDTH) / RING_WIDTH)
+    : v_color.rgb;
+  fragColor = vec4(color, v_color.a * alpha);
 }`
 
 // Fullscreen triangle with a dot at the center of every grid cell, so panning
@@ -265,6 +282,23 @@ void main() {
   fragColor = vec4(u_color.rgb, u_color.a * alpha);
 }`
 
+// Composites an offscreen layer of faded nodes. The layer holds
+// premultiplied color, so scaling it by alpha fades it as a whole.
+const FADE_VS = `#version 300 es
+void main() {
+  vec2 ndc = vec2(gl_VertexID == 1 ? 3.0 : -1.0, gl_VertexID == 2 ? 3.0 : -1.0);
+  gl_Position = vec4(ndc, 0.0, 1.0);
+}`
+
+const FADE_FS = `#version 300 es
+precision mediump float;
+uniform sampler2D u_layer;
+uniform float u_alpha;
+out vec4 fragColor;
+void main() {
+  fragColor = texelFetch(u_layer, ivec2(gl_FragCoord.xy), 0) * u_alpha;
+}`
+
 // Tinted alpha-mask quads. Shared by all text passes and the icon pass; the
 // only thing that changes between draws is the bound texture.
 const TEXT_VS = `#version 300 es
@@ -277,11 +311,14 @@ layout(location = 5) in float i_z;
 uniform vec2 u_offset;
 uniform float u_scale;
 uniform vec2 u_resolution;
+uniform float u_dpr;
 out vec2 v_uv;
 out vec4 v_color;
 void main() {
-  vec2 world = i_pos + a_corner * i_size;
-  vec2 screen = world * u_scale + u_offset;
+  // Glyphs start on a device pixel so the atlas maps texel to pixel at full
+  // zoom instead of being smeared across two pixels.
+  vec2 origin = round((i_pos * u_scale + u_offset) * u_dpr) / u_dpr;
+  vec2 screen = origin + a_corner * i_size * u_scale;
   vec2 ndc = (screen / u_resolution * 2.0 - 1.0) * vec2(1.0, -1.0);
   gl_Position = vec4(ndc, i_z, 1.0);
   v_uv = mix(i_uv.xy, i_uv.zw, a_corner);
@@ -314,6 +351,8 @@ uniform float u_scale;
 uniform vec2 u_resolution;
 out vec4 v_color;
 out float v_arc;
+out float v_across;
+flat out float v_halfWidth;
 flat out float v_dashed;
 const float SEGMENTS = ${CONNECTION_SEGMENTS}.0;
 vec2 bezier(float t) {
@@ -342,6 +381,8 @@ void main() {
   vec2 ndc = (screen / u_resolution * 2.0 - 1.0) * vec2(1.0, -1.0);
   gl_Position = vec4(ndc, 0.0, 1.0);
   v_color = i_color;
+  v_halfWidth = i_stroke.x * 0.5;
+  v_across = v_halfWidth * a_vertex.y;
   v_dashed = i_stroke.y;
   v_arc = 0.0;
   if (i_stroke.y > 0.5) {
@@ -355,18 +396,30 @@ void main() {
   }
 }`
 
+// Dashes get round caps that reach into the gaps, like SVG's round linecap.
 const CONNECTION_FS = `#version 300 es
 precision highp float;
 in vec4 v_color;
 in float v_arc;
+in float v_across;
+flat in float v_halfWidth;
 flat in float v_dashed;
 out vec4 fragColor;
+const float DASH_ON = ${DASH_ON_WORLD}.0;
+const float DASH_PERIOD = ${DASH_ON_WORLD + DASH_OFF_WORLD}.0;
 void main() {
-  if (v_dashed > 0.5 &&
-      mod(v_arc, ${DASH_ON_WORLD + DASH_OFF_WORLD}.0) >= ${DASH_ON_WORLD}.0) {
-    discard;
+  float coverage = 1.0;
+  if (v_dashed > 0.5) {
+    float phase = mod(v_arc, DASH_PERIOD);
+    if (phase > DASH_ON) {
+      float along = min(phase - DASH_ON, DASH_PERIOD - phase);
+      float d = length(vec2(along, v_across)) - v_halfWidth;
+      float aa = max(fwidth(d), 1e-4);
+      coverage = 1.0 - smoothstep(-aa, aa, d);
+      if (coverage <= 0.0) discard;
+    }
   }
-  fragColor = v_color;
+  fragColor = vec4(v_color.rgb, v_color.a * coverage);
 }`
 
 // Dashed overlap perimeters. CPU-tessellated to short segments, expanded to
@@ -486,13 +539,23 @@ function buildFontAtlas(
 
   const initCanvas = newFontCanvas(font, dpr, atlasPxW, atlasPxH)
   const initCtx = initCanvas.getContext('2d') as CanvasRenderingContext2D
-  const ascentPx =
-    initCtx.measureText('Mg').actualBoundingBoxAscent || refSize * dpr * 0.8
+  // The font's ascent rather than one glyph's, so taller glyphs like "$" or
+  // "[" stay inside their cell instead of bleeding into the one above.
+  const ascentPx = initCtx.measureText('Mg').fontBoundingBoxAscent
+  const descentPx = initCtx.measureText('Mg').fontBoundingBoxDescent
   const baselinePxY = ascentPx + padding
+  if (baselinePxY + descentPx > cellPxH) {
+    throw new Error('Font does not fit its atlas cell', { cause: font })
+  }
 
   const glyphs = new Map<string, AtlasGlyph>()
   const rasterize = (ch: string, pxX: number, pxY: number): AtlasGlyph => {
+    initCtx.save()
+    initCtx.beginPath()
+    initCtx.rect(pxX, pxY, cellPxW, cellPxH)
+    initCtx.clip()
     initCtx.fillText(ch, pxX + padding, pxY + baselinePxY)
+    initCtx.restore()
     return {
       u0: pxX / atlasPxW,
       v0: pxY / atlasPxH,
@@ -583,8 +646,22 @@ function buildFontAtlas(
     cellW: cellPxW / dpr,
     cellH: cellPxH / dpr,
     baselineOffset: baselinePxY / dpr,
+    ascent: ascentPx / dpr,
+    descent: descentPx / dpr,
     getGlyph,
   }
+}
+
+// Where CSS puts the baseline of a line box: half the leading above the
+// font's ascent.
+function lineBoxBaseline(
+  atlas: FontAtlas,
+  lineTop: number,
+  lineHeight: number,
+): number {
+  return (
+    lineTop + (lineHeight - atlas.ascent - atlas.descent) / 2 + atlas.ascent
+  )
 }
 
 function newFontCanvas(
@@ -722,6 +799,7 @@ function uploadCanvasTexture(
 // ============================================================================
 
 interface Programs {
+  fade: WebGLProgram
   grid: WebGLProgram
   round: WebGLProgram
   text: WebGLProgram
@@ -730,6 +808,10 @@ interface Programs {
 }
 
 interface Uniforms {
+  fade: {
+    layer: WebGLUniformLocation
+    alpha: WebGLUniformLocation
+  }
   grid: {
     offset: WebGLUniformLocation
     scale: WebGLUniformLocation
@@ -746,6 +828,7 @@ interface Uniforms {
     offset: WebGLUniformLocation
     scale: WebGLUniformLocation
     resolution: WebGLUniformLocation
+    dpr: WebGLUniformLocation
     atlas: WebGLUniformLocation
   }
   line: {
@@ -767,14 +850,52 @@ interface PassBuffer {
   vao: WebGLVertexArrayObject
 }
 
+// WebGL2 has no base instance, so drawing a range of instances points the
+// per-instance attributes at the range's first instance.
+interface InstanceAttributes {
+  strideF: number
+  sizes: readonly number[]
+}
+
+interface InstancedPassBuffer extends PassBuffer {
+  attributes: InstanceAttributes
+}
+
+// pos.xy, size.xy, color.rgba, radii.xyzw, border, z, ring.rgba
+const ROUND_ATTRIBUTES: InstanceAttributes = {
+  strideF: QUAD_STRIDE_F,
+  sizes: [2, 2, 4, 4, 1, 1, 4],
+}
+// pos.xy, size.xy, uv.xyzw, color.rgba, z
+const TEXT_ATTRIBUTES: InstanceAttributes = {
+  strideF: TEXT_STRIDE_F,
+  sizes: [2, 2, 4, 4, 1],
+}
+
+function pointInstances(
+  gl: WebGL2RenderingContext,
+  pass: InstancedPassBuffer,
+  firstInstance: number,
+) {
+  const stride = pass.attributes.strideF * 4
+  let offset = firstInstance * stride
+  gl.bindVertexArray(pass.vao)
+  gl.bindBuffer(gl.ARRAY_BUFFER, pass.data)
+  for (let i = 0; i < pass.attributes.sizes.length; i++) {
+    const size = pass.attributes.sizes[i] as number
+    gl.vertexAttribPointer(i + 1, size, gl.FLOAT, false, stride, offset)
+    offset += size * 4
+  }
+}
+
 interface Buffers {
   cornerQuad: WebGLBuffer
   connectionStrip: WebGLBuffer
-  round: PassBuffer
-  headerText: PassBuffer
-  fieldText: PassBuffer
-  footerText: PassBuffer
-  icon: PassBuffer
+  round: InstancedPassBuffer
+  headerText: InstancedPassBuffer
+  fieldText: InstancedPassBuffer
+  footerText: InstancedPassBuffer
+  icon: InstancedPassBuffer
   connections: PassBuffer
   overlap: PassBuffer
 }
@@ -791,17 +912,124 @@ interface ConnectionSpan {
 // means "skip the draw call". These are filled by `rebuildAll(data)` and
 // stay valid until the data ref changes.
 interface PassCounts {
-  round: number
-  headerText: number
-  fieldText: number
-  footerText: number
-  icon: number
+  round: PassLayout
+  headerText: PassLayout
+  fieldText: PassLayout
+  footerText: PassLayout
+  icon: PassLayout
   connections: number
   overlap: number
 }
 
+// Node passes draw in four ranges: open-group containers, grayed-out nodes,
+// dimmed nodes, and everything at full opacity. The faded ranges are drawn
+// opaque offscreen and composited with one alpha each, which is how CSS
+// opacity fades a node as a whole instead of each of its layers.
+const CONTAINER_RANGE = 0
+const GRAYED_RANGE = 1
+const DIMMED_RANGE = 2
+const OPAQUE_RANGE = 3
+type NodeRange = typeof GRAYED_RANGE | typeof DIMMED_RANGE | typeof OPAQUE_RANGE
+type DrawRange = typeof CONTAINER_RANGE | NodeRange
+const GRAYED_ALPHA = 0.2
+const DIMMED_ALPHA = 0.3
+
+// Instance index where each range ends, in draw order.
+type PassLayout = readonly [number, number, number, number]
+const EMPTY_LAYOUT: PassLayout = [0, 0, 0, 0]
+
+function rangeStart(layout: PassLayout, range: DrawRange): number {
+  if (range === CONTAINER_RANGE) return 0
+  return layout[range - 1] as number
+}
+
+function rangeCount(layout: PassLayout, range: DrawRange): number {
+  return layout[range] - rangeStart(layout, range)
+}
+
+interface FadeLayer {
+  framebuffer: WebGLFramebuffer
+  texture: WebGLTexture
+  depth: WebGLRenderbuffer
+  width: number
+  height: number
+}
+
+function createFadeLayer(
+  gl: WebGL2RenderingContext,
+  width: number,
+  height: number,
+): FadeLayer {
+  const texture = gl.createTexture()
+  const depth = gl.createRenderbuffer()
+  const framebuffer = gl.createFramebuffer()
+  if (!texture || !depth || !framebuffer) {
+    throw new Error('Failed to create the fade layer')
+  }
+  gl.bindTexture(gl.TEXTURE_2D, texture)
+  gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RGBA8, width, height)
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
+  gl.bindRenderbuffer(gl.RENDERBUFFER, depth)
+  gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT24, width, height)
+  gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer)
+  gl.framebufferTexture2D(
+    gl.FRAMEBUFFER,
+    gl.COLOR_ATTACHMENT0,
+    gl.TEXTURE_2D,
+    texture,
+    0,
+  )
+  gl.framebufferRenderbuffer(
+    gl.FRAMEBUFFER,
+    gl.DEPTH_ATTACHMENT,
+    gl.RENDERBUFFER,
+    depth,
+  )
+  const status = gl.checkFramebufferStatus(gl.FRAMEBUFFER)
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null)
+  if (status !== gl.FRAMEBUFFER_COMPLETE) {
+    throw new Error('Incomplete fade layer', { cause: { status } })
+  }
+  return { framebuffer, texture, depth, width, height }
+}
+
+function deleteFadeLayer(gl: WebGL2RenderingContext, layer: FadeLayer) {
+  gl.deleteFramebuffer(layer.framebuffer)
+  gl.deleteTexture(layer.texture)
+  gl.deleteRenderbuffer(layer.depth)
+}
+
+// Builds walk containers, then nodes ordered by range, and enter each range
+// as they reach it.
+class PassLayoutBuilder {
+  private readonly ends = [0, 0, 0, 0]
+  private range: DrawRange = CONTAINER_RANGE
+
+  enter(range: DrawRange, instance: number) {
+    if (range < this.range) throw new Error('Node ranges out of order')
+    while (this.range < range) {
+      this.ends[this.range] = instance
+      this.range++
+    }
+  }
+
+  finish(instance: number): PassLayout {
+    this.enter(OPAQUE_RANGE, instance)
+    this.ends[OPAQUE_RANGE] = instance
+    return [
+      this.ends[0],
+      this.ends[1],
+      this.ends[2],
+      this.ends[3],
+    ] as PassLayout
+  }
+}
+
 class WebGLRenderer {
   private gl: WebGL2RenderingContext
+  // The atlases are rasterized for this ratio.
+  private readonly dpr: number
   private programs: Programs
   private uniforms: Uniforms
   private buffers: Buffers
@@ -816,11 +1044,11 @@ class WebGLRenderer {
   // and re-issue the same draw calls.
   private cachedData: DrawData | null = null
   private counts: PassCounts = {
-    round: 0,
-    headerText: 0,
-    fieldText: 0,
-    footerText: 0,
-    icon: 0,
+    round: EMPTY_LAYOUT,
+    headerText: EMPTY_LAYOUT,
+    fieldText: EMPTY_LAYOUT,
+    footerText: EMPTY_LAYOUT,
+    icon: EMPTY_LAYOUT,
     connections: 0,
     overlap: 0,
   }
@@ -830,6 +1058,7 @@ class WebGLRenderer {
   private textData = new Float32Array(0)
   private lineData = new Float32Array(0)
   private connectionData = new Float32Array(0)
+  private fadeLayer: FadeLayer | null = null
 
   static async create(
     gl: WebGL2RenderingContext,
@@ -845,7 +1074,9 @@ class WebGLRenderer {
     iconAtlas: IconAtlas,
   ) {
     this.gl = gl
+    this.dpr = dpr
     this.programs = {
+      fade: linkProgram(gl, FADE_VS, FADE_FS),
       grid: linkProgram(gl, GRID_VS, GRID_FS),
       round: linkProgram(gl, ROUND_VS, ROUND_FS),
       text: linkProgram(gl, TEXT_VS, TEXT_FS),
@@ -853,6 +1084,10 @@ class WebGLRenderer {
       connection: linkProgram(gl, CONNECTION_VS, CONNECTION_FS),
     }
     this.uniforms = {
+      fade: {
+        layer: requireUniform(gl, this.programs.fade, 'u_layer'),
+        alpha: requireUniform(gl, this.programs.fade, 'u_alpha'),
+      },
       grid: {
         offset: requireUniform(gl, this.programs.grid, 'u_offset'),
         scale: requireUniform(gl, this.programs.grid, 'u_scale'),
@@ -869,6 +1104,7 @@ class WebGLRenderer {
         offset: requireUniform(gl, this.programs.text, 'u_offset'),
         scale: requireUniform(gl, this.programs.text, 'u_scale'),
         resolution: requireUniform(gl, this.programs.text, 'u_resolution'),
+        dpr: requireUniform(gl, this.programs.text, 'u_dpr'),
         atlas: requireUniform(gl, this.programs.text, 'u_atlas'),
       },
       line: {
@@ -893,7 +1129,7 @@ class WebGLRenderer {
     this.buffers = this.createBuffers()
 
     gl.enable(gl.BLEND)
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+    this.useCoverageBlending()
     gl.depthFunc(gl.LEQUAL)
     gl.clearColor(0, 0, 0, 0)
   }
@@ -960,38 +1196,18 @@ class WebGLRenderer {
     return { data, vao }
   }
 
-  private createRoundPassBuffer(cornerQuad: WebGLBuffer): PassBuffer {
-    const gl = this.gl
-    const data = mustCreateBuffer(gl)
-    const vao = mustCreateVAO(gl)
-    gl.bindVertexArray(vao)
-    gl.bindBuffer(gl.ARRAY_BUFFER, cornerQuad)
-    gl.enableVertexAttribArray(0)
-    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0)
-    gl.bindBuffer(gl.ARRAY_BUFFER, data)
-    const stride = QUAD_STRIDE_F * 4
-    gl.enableVertexAttribArray(1)
-    gl.vertexAttribPointer(1, 2, gl.FLOAT, false, stride, 0)
-    gl.vertexAttribDivisor(1, 1)
-    gl.enableVertexAttribArray(2)
-    gl.vertexAttribPointer(2, 2, gl.FLOAT, false, stride, 8)
-    gl.vertexAttribDivisor(2, 1)
-    gl.enableVertexAttribArray(3)
-    gl.vertexAttribPointer(3, 4, gl.FLOAT, false, stride, 16)
-    gl.vertexAttribDivisor(3, 1)
-    gl.enableVertexAttribArray(4)
-    gl.vertexAttribPointer(4, 4, gl.FLOAT, false, stride, 32)
-    gl.vertexAttribDivisor(4, 1)
-    gl.enableVertexAttribArray(5)
-    gl.vertexAttribPointer(5, 1, gl.FLOAT, false, stride, 48)
-    gl.vertexAttribDivisor(5, 1)
-    gl.enableVertexAttribArray(6)
-    gl.vertexAttribPointer(6, 1, gl.FLOAT, false, stride, 52)
-    gl.vertexAttribDivisor(6, 1)
-    return { data, vao }
+  private createRoundPassBuffer(cornerQuad: WebGLBuffer): InstancedPassBuffer {
+    return this.createInstancedPassBuffer(cornerQuad, ROUND_ATTRIBUTES)
   }
 
-  private createTextPassBuffer(cornerQuad: WebGLBuffer): PassBuffer {
+  private createTextPassBuffer(cornerQuad: WebGLBuffer): InstancedPassBuffer {
+    return this.createInstancedPassBuffer(cornerQuad, TEXT_ATTRIBUTES)
+  }
+
+  private createInstancedPassBuffer(
+    cornerQuad: WebGLBuffer,
+    attributes: InstanceAttributes,
+  ): InstancedPassBuffer {
     const gl = this.gl
     const data = mustCreateBuffer(gl)
     const vao = mustCreateVAO(gl)
@@ -999,24 +1215,13 @@ class WebGLRenderer {
     gl.bindBuffer(gl.ARRAY_BUFFER, cornerQuad)
     gl.enableVertexAttribArray(0)
     gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0)
-    gl.bindBuffer(gl.ARRAY_BUFFER, data)
-    const stride = TEXT_STRIDE_F * 4
-    gl.enableVertexAttribArray(1)
-    gl.vertexAttribPointer(1, 2, gl.FLOAT, false, stride, 0)
-    gl.vertexAttribDivisor(1, 1)
-    gl.enableVertexAttribArray(2)
-    gl.vertexAttribPointer(2, 2, gl.FLOAT, false, stride, 8)
-    gl.vertexAttribDivisor(2, 1)
-    gl.enableVertexAttribArray(3)
-    gl.vertexAttribPointer(3, 4, gl.FLOAT, false, stride, 16)
-    gl.vertexAttribDivisor(3, 1)
-    gl.enableVertexAttribArray(4)
-    gl.vertexAttribPointer(4, 4, gl.FLOAT, false, stride, 32)
-    gl.vertexAttribDivisor(4, 1)
-    gl.enableVertexAttribArray(5)
-    gl.vertexAttribPointer(5, 1, gl.FLOAT, false, stride, 48)
-    gl.vertexAttribDivisor(5, 1)
-    return { data, vao }
+    for (let i = 0; i < attributes.sizes.length; i++) {
+      gl.enableVertexAttribArray(i + 1)
+      gl.vertexAttribDivisor(i + 1, 1)
+    }
+    const pass = { data, vao, attributes }
+    pointInstances(gl, pass, 0)
+    return pass
   }
 
   private createLinePassBuffer(): PassBuffer {
@@ -1055,38 +1260,32 @@ class WebGLRenderer {
 
     const res: [number, number] = [cssWidth, cssHeight]
 
-    // Connections draw first (under nodes). Order within node-drawing is set
-    // by how the round-pass instance buffer is filled (dimmed → normal →
-    // selected). Overlap borders draw last.
+    // Connections draw first (under nodes). Within a range, node order is set
+    // by how the instance buffers are filled (selected last). Overlap borders
+    // draw last.
     gl.disable(gl.DEPTH_TEST)
     this.drawGridPass(transform, res)
     this.drawConnectionPass(transform, res)
     gl.enable(gl.DEPTH_TEST)
-    this.drawRoundPass(transform, res)
-    this.drawIconPass(transform, res)
-    this.drawTextDrawCall(
-      this.buffers.headerText,
-      this.headerAtlas,
-      this.counts.headerText,
-      transform,
-      res,
-    )
-    this.drawTextDrawCall(
-      this.buffers.fieldText,
-      this.fieldAtlas,
-      this.counts.fieldText,
-      transform,
-      res,
-    )
-    this.drawTextDrawCall(
-      this.buffers.footerText,
-      this.footerAtlas,
-      this.counts.footerText,
-      transform,
-      res,
-    )
+    this.drawNodeRange(CONTAINER_RANGE, transform, res)
+    this.drawFadedRange(GRAYED_RANGE, GRAYED_ALPHA, transform, res)
+    this.drawFadedRange(DIMMED_RANGE, DIMMED_ALPHA, transform, res)
+    this.drawNodeRange(OPAQUE_RANGE, transform, res)
     gl.disable(gl.DEPTH_TEST)
     this.drawLinePass(this.buffers.overlap, this.counts.overlap, transform, res)
+  }
+
+  // The canvas is premultiplied, so alpha has to accumulate as coverage
+  // rather than as alpha squared, or the page shows through translucent
+  // primitives.
+  private useCoverageBlending() {
+    const gl = this.gl
+    gl.blendFuncSeparate(
+      gl.SRC_ALPHA,
+      gl.ONE_MINUS_SRC_ALPHA,
+      gl.ONE,
+      gl.ONE_MINUS_SRC_ALPHA,
+    )
   }
 
   // ==========================================================================
@@ -1121,14 +1320,15 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
-  ): number {
+  ): PassLayout {
     // Upper bound: 4 quads (body, header, selection, group outline) per node,
     // plus one pill per visible field, plus two quads (outline, header bar)
     // per open-group container.
     let maxInstances = renderNodes.length * 4 + containers.length * 2
     for (const rn of renderNodes) maxInstances += rn.visibleFields.length
-    if (maxInstances === 0) return 0
+    if (maxInstances === 0) return EMPTY_LAYOUT
     const buf = this.ensureRound(maxInstances)
+    const layout = new PassLayoutBuilder()
 
     const r = CONTAINER_CORNER_RADIUS
     const w = CONTAINER_OUTLINE_WIDTH
@@ -1150,6 +1350,7 @@ class WebGLRenderer {
         r,
         w,
         CONTAINER_Z,
+        NO_RING,
       )
       writeRound(
         buf,
@@ -1165,10 +1366,12 @@ class WebGLRenderer {
         0,
         0,
         CONTAINER_Z,
+        NO_RING,
       )
     }
     for (const rn of renderNodes) {
-      const { node, flags, z, alpha, corner, headerH } = rn
+      const { node, flags, z, corner, headerH } = rn
+      layout.enter(rn.range, n)
       const { x, y, width, height } = node.box
 
       if (flags.isSelected) {
@@ -1180,13 +1383,14 @@ class WebGLRenderer {
           y - inset,
           width + inset * 2,
           height + inset * 2,
-          withAlpha(AUTUMN_300, alpha),
+          AUTUMN_300,
           corner + inset,
           corner + inset,
           corner + inset,
           corner + inset,
           SELECTION_OUTLINE_WIDTH,
           z,
+          NO_RING,
         )
       }
 
@@ -1197,19 +1401,25 @@ class WebGLRenderer {
         y,
         width,
         height,
-        withAlpha(BLACK, alpha),
+        BLACK,
         corner,
         corner,
         corner,
         corner,
         0,
         z,
+        NO_RING,
       )
 
-      const { color: headerCssColor } = getColor(node)
+      const { color: headerCssColor, ringColor } = getColor(node)
       const headerRgb = cssRgbToRgba(headerCssColor)
       const headerColor = flags.isGrayedOut ? desaturate(headerRgb) : headerRgb
-      headerColor[3] = alpha
+      const ringRgb = cssRgbToRgba(ringColor)
+      const headerRing = !node.isInitial
+        ? NO_RING
+        : flags.isGrayedOut
+          ? desaturate(ringRgb)
+          : ringRgb
       const headerBR = rn.fullHeight ? corner : 0
       const headerBL = rn.fullHeight ? corner : 0
       writeRound(
@@ -1226,6 +1436,7 @@ class WebGLRenderer {
         headerBL,
         0,
         z,
+        headerRing,
       )
 
       if (rn.isGroup) {
@@ -1237,13 +1448,14 @@ class WebGLRenderer {
           y - inset,
           width + inset * 2,
           height + inset * 2,
-          withAlpha(COFFEE_200, alpha),
+          COFFEE_200,
           corner + inset,
           corner + inset,
           corner + inset,
           corner + inset,
           GROUP_OUTLINE_WIDTH,
           z,
+          NO_RING,
         )
       }
 
@@ -1258,30 +1470,33 @@ class WebGLRenderer {
             rowY,
             width,
             FIELD_HEIGHT,
-            withAlpha(AUTUMN_300, alpha),
+            AUTUMN_300,
             pillRadius,
             pillRadius,
             pillRadius,
             pillRadius,
             0,
             z,
+            NO_RING,
           )
         }
       }
     }
 
-    return this.upload(this.buffers.round.data, buf, n, QUAD_STRIDE_F)
+    this.upload(this.buffers.round.data, buf, n, QUAD_STRIDE_F)
+    return layout.finish(n)
   }
 
   private buildIcons(
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
-  ): number {
+  ): PassLayout {
     let max = renderNodes.length * 3 + containers.length
     for (const rn of renderNodes) max += rn.visibleFields.length
-    if (max === 0) return 0
+    if (max === 0) return EMPTY_LAYOUT
     const buf = this.ensureText(max)
+    const layout = new PassLayoutBuilder()
 
     let n = 0
     for (const { headerBox: h, id } of containers) {
@@ -1299,7 +1514,8 @@ class WebGLRenderer {
       )
     }
     for (const rn of renderNodes) {
-      const { node, flags, z, alpha, headerH } = rn
+      const { node, flags, z, headerH } = rn
+      layout.enter(rn.range, n)
       const { x, y, width } = node.box
       const iconY = y + (headerH - HEADER_ICON_SIZE) / 2
 
@@ -1314,9 +1530,7 @@ class WebGLRenderer {
         x + HEADER_PADDING,
         iconY,
         HEADER_ICON_SIZE,
-        flags.isGrayedOut
-          ? desaturate(withAlpha(addrColor, alpha))
-          : withAlpha(addrColor, alpha),
+        flags.isGrayedOut ? desaturate(addrColor) : addrColor,
         z,
       )
 
@@ -1330,7 +1544,7 @@ class WebGLRenderer {
           rightX,
           iconY,
           HEADER_ICON_SIZE,
-          withAlpha(AUX_ORANGE, alpha),
+          AUX_ORANGE,
           z,
         )
       }
@@ -1343,7 +1557,7 @@ class WebGLRenderer {
           rightX,
           iconY,
           HEADER_ICON_SIZE,
-          withAlpha(AUX_GREEN, alpha),
+          AUX_GREEN,
           z,
         )
       }
@@ -1361,8 +1575,10 @@ class WebGLRenderer {
           const useAutumn =
             flags.isSelected || flags.fieldHighlighted[index] === 1
           const dotColor = flags.isGrayedOut
-            ? desaturate(withAlpha(COFFEE_400, alpha))
-            : withAlpha(useAutumn ? AUTUMN_300 : COFFEE_400, alpha)
+            ? desaturate(COFFEE_400)
+            : useAutumn
+              ? AUTUMN_300
+              : COFFEE_400
           n += this.emitIcon(
             buf,
             n,
@@ -1377,7 +1593,8 @@ class WebGLRenderer {
       }
     }
 
-    return this.upload(this.buffers.icon.data, buf, n, TEXT_STRIDE_F)
+    this.upload(this.buffers.icon.data, buf, n, TEXT_STRIDE_F)
+    return layout.finish(n)
   }
 
   private emitIcon(
@@ -1413,12 +1630,13 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
-  ): number {
+  ): PassLayout {
     let maxChars = 0
     for (const { node } of renderNodes) maxChars += node.name.length
     for (const group of containers) maxChars += group.name.length
-    if (maxChars === 0) return 0
+    if (maxChars === 0) return EMPTY_LAYOUT
     const buf = this.ensureText(maxChars)
+    const layout = new PassLayoutBuilder()
     const atlas = this.headerAtlas
     let n = 0
     for (const { name, headerBox: h, id } of containers) {
@@ -1435,12 +1653,11 @@ class WebGLRenderer {
         CONTAINER_Z,
       )
     }
-    for (const { node, flags, z, alpha, headerH } of renderNodes) {
+    for (const { node, flags, z, range, headerH } of renderNodes) {
+      layout.enter(range, n)
       const { isDark } = getColor(node)
       const baseColor = isDark ? COFFEE_200 : BLACK
-      const color = flags.isGrayedOut
-        ? desaturate(withAlpha(baseColor, alpha))
-        : withAlpha(baseColor, alpha)
+      const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
       const startX =
         node.box.x + HEADER_PADDING + HEADER_ICON_SIZE + HEADER_ITEM_GAP
       let rightX = node.box.x + node.box.width - HEADER_PADDING
@@ -1448,11 +1665,13 @@ class WebGLRenderer {
       if (node.isInitial) rightX -= HEADER_ICON_SIZE
       const maxX = rightX - HEADER_ITEM_GAP
       const baselineY = node.box.y + headerH / 2 + atlas.refSize / 2 - 2
+      // A short name sits centered between the address icon and the badges.
+      const slack = maxX - startX - measureString(node.name, atlas)
       n += writeStringInstances(
         buf,
         n,
         node.name,
-        startX,
+        startX + Math.max(0, slack / 2),
         baselineY,
         atlas,
         color,
@@ -1460,29 +1679,30 @@ class WebGLRenderer {
         z,
       )
     }
-    return this.upload(this.buffers.headerText.data, buf, n, TEXT_STRIDE_F)
+    this.upload(this.buffers.headerText.data, buf, n, TEXT_STRIDE_F)
+    return layout.finish(n)
   }
 
-  private buildFieldText(renderNodes: readonly RenderNode[]): number {
+  private buildFieldText(renderNodes: readonly RenderNode[]): PassLayout {
     let maxChars = 0
     for (const rn of renderNodes) {
       for (const row of rn.rows) {
         maxChars += row.label.length
       }
     }
-    if (maxChars === 0) return 0
+    if (maxChars === 0) return EMPTY_LAYOUT
     const buf = this.ensureText(maxChars)
     const atlas = this.fieldAtlas
+    const layout = new PassLayoutBuilder()
     let n = 0
     for (const rn of renderNodes) {
-      const { node, flags, z, alpha } = rn
+      const { node, flags, z } = rn
+      layout.enter(rn.range, n)
       for (let row = 0; row < rn.rows.length; row++) {
         const rowY = node.box.y + HEADER_HEIGHT + row * FIELD_HEIGHT
         const baselineY = rowY + FIELD_HEIGHT / 2 + atlas.refSize / 2 - 2
         const baseColor = isRowHighlighted(rn, row) ? BLACK : COFFEE_200
-        const color = flags.isGrayedOut
-          ? desaturate(withAlpha(baseColor, alpha))
-          : withAlpha(baseColor, alpha)
+        const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
         n += writeStringInstances(
           buf,
           n,
@@ -1496,10 +1716,11 @@ class WebGLRenderer {
         )
       }
     }
-    return this.upload(this.buffers.fieldText.data, buf, n, TEXT_STRIDE_F)
+    this.upload(this.buffers.fieldText.data, buf, n, TEXT_STRIDE_F)
+    return layout.finish(n)
   }
 
-  private buildFooterText(renderNodes: readonly RenderNode[]): number {
+  private buildFooterText(renderNodes: readonly RenderNode[]): PassLayout {
     let any = false
     let maxChars = 0
     for (const { node } of renderNodes) {
@@ -1508,19 +1729,29 @@ class WebGLRenderer {
         maxChars += 30
       }
     }
-    if (!any) return 0
+    if (!any) return EMPTY_LAYOUT
     const buf = this.ensureText(maxChars)
     const atlas = this.footerAtlas
+    const layout = new PassLayoutBuilder()
     let n = 0
-    for (const { node, z, alpha } of renderNodes) {
+    for (const { node, flags, z, range, rows } of renderNodes) {
+      layout.enter(range, n)
       if (node.hiddenFields.length === 0) continue
       const label = `+${node.hiddenFields.length} hidden field${
         node.hiddenFields.length > 1 ? 's' : ''
       }`
-      const footerY = node.box.y + node.box.height - HIDDEN_FIELDS_FOOTER_HEIGHT
-      const baselineY =
-        footerY + HIDDEN_FIELDS_FOOTER_HEIGHT / 2 + atlas.refSize / 2 - 2
-      const color = withAlpha(COFFEE_200, alpha * 0.4)
+      const footerBottom =
+        node.box.y +
+        HEADER_HEIGHT +
+        rows.length * FIELD_HEIGHT +
+        HIDDEN_FIELDS_FOOTER_HEIGHT
+      const baselineY = lineBoxBaseline(
+        atlas,
+        footerBottom - FOOTER_LINE_HEIGHT,
+        FOOTER_LINE_HEIGHT,
+      )
+      const baseColor = withAlpha(COFFEE_200, 0.4)
+      const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
       const labelWidth = measureString(label, atlas)
       const startX = node.box.x + (node.box.width - labelWidth) / 2
       n += writeStringInstances(
@@ -1535,7 +1766,8 @@ class WebGLRenderer {
         z,
       )
     }
-    return this.upload(this.buffers.footerText.data, buf, n, TEXT_STRIDE_F)
+    this.upload(this.buffers.footerText.data, buf, n, TEXT_STRIDE_F)
+    return layout.finish(n)
   }
 
   private upload(
@@ -1644,12 +1876,94 @@ class WebGLRenderer {
     gl.drawArrays(gl.TRIANGLES, 0, 3)
   }
 
-  private drawRoundPass(
+  private drawNodeRange(
+    range: DrawRange,
     transform: { offsetX: number; offsetY: number; scale: number },
     res: [number, number],
   ) {
-    const n = this.counts.round
-    if (n === 0) return
+    this.drawRoundPass(range, transform, res)
+    this.drawTextPass(
+      this.buffers.icon,
+      this.iconAtlas.texture,
+      this.counts.icon,
+      range,
+      transform,
+      res,
+    )
+    this.drawTextPass(
+      this.buffers.headerText,
+      this.headerAtlas.texture,
+      this.counts.headerText,
+      range,
+      transform,
+      res,
+    )
+    this.drawTextPass(
+      this.buffers.fieldText,
+      this.fieldAtlas.texture,
+      this.counts.fieldText,
+      range,
+      transform,
+      res,
+    )
+    this.drawTextPass(
+      this.buffers.footerText,
+      this.footerAtlas.texture,
+      this.counts.footerText,
+      range,
+      transform,
+      res,
+    )
+  }
+
+  private drawFadedRange(
+    range: NodeRange,
+    alpha: number,
+    transform: { offsetX: number; offsetY: number; scale: number },
+    res: [number, number],
+  ) {
+    if (rangeCount(this.counts.round, range) === 0) return
+    const gl = this.gl
+    const layer = this.ensureFadeLayer(
+      gl.drawingBufferWidth,
+      gl.drawingBufferHeight,
+    )
+    gl.bindFramebuffer(gl.FRAMEBUFFER, layer.framebuffer)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    this.drawNodeRange(range, transform, res)
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null)
+
+    gl.disable(gl.DEPTH_TEST)
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+    gl.useProgram(this.programs.fade)
+    gl.activeTexture(gl.TEXTURE0)
+    gl.bindTexture(gl.TEXTURE_2D, layer.texture)
+    gl.uniform1i(this.uniforms.fade.layer, 0)
+    gl.uniform1f(this.uniforms.fade.alpha, alpha)
+    gl.bindVertexArray(null)
+    gl.drawArrays(gl.TRIANGLES, 0, 3)
+    this.useCoverageBlending()
+    gl.enable(gl.DEPTH_TEST)
+  }
+
+  private ensureFadeLayer(width: number, height: number): FadeLayer {
+    const existing = this.fadeLayer
+    if (existing?.width === width && existing.height === height) {
+      return existing
+    }
+    if (existing) deleteFadeLayer(this.gl, existing)
+    const layer = createFadeLayer(this.gl, width, height)
+    this.fadeLayer = layer
+    return layer
+  }
+
+  private drawRoundPass(
+    range: DrawRange,
+    transform: { offsetX: number; offsetY: number; scale: number },
+    res: [number, number],
+  ) {
+    const count = rangeCount(this.counts.round, range)
+    if (count === 0) return
     const gl = this.gl
     gl.useProgram(this.programs.round)
     gl.uniform2f(
@@ -1659,32 +1973,20 @@ class WebGLRenderer {
     )
     gl.uniform1f(this.uniforms.round.scale, transform.scale)
     gl.uniform2f(this.uniforms.round.resolution, res[0], res[1])
-    gl.bindVertexArray(this.buffers.round.vao)
-    gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, n)
+    pointInstances(gl, this.buffers.round, rangeStart(this.counts.round, range))
+    gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, count)
   }
 
-  private drawIconPass(
+  private drawTextPass(
+    pass: InstancedPassBuffer,
+    texture: WebGLTexture,
+    layout: PassLayout,
+    range: DrawRange,
     transform: { offsetX: number; offsetY: number; scale: number },
     res: [number, number],
   ) {
-    this.drawTextDrawCall(
-      this.buffers.icon,
-      // iconAtlas isn't a FontAtlas; only `.texture` is read.
-      { texture: this.iconAtlas.texture } as FontAtlas,
-      this.counts.icon,
-      transform,
-      res,
-    )
-  }
-
-  private drawTextDrawCall(
-    pass: PassBuffer,
-    atlas: { texture: WebGLTexture },
-    n: number,
-    transform: { offsetX: number; offsetY: number; scale: number },
-    res: [number, number],
-  ) {
-    if (n === 0) return
+    const count = rangeCount(layout, range)
+    if (count === 0) return
     const gl = this.gl
     gl.useProgram(this.programs.text)
     gl.uniform2f(
@@ -1694,11 +1996,12 @@ class WebGLRenderer {
     )
     gl.uniform1f(this.uniforms.text.scale, transform.scale)
     gl.uniform2f(this.uniforms.text.resolution, res[0], res[1])
+    gl.uniform1f(this.uniforms.text.dpr, this.dpr)
     gl.activeTexture(gl.TEXTURE0)
-    gl.bindTexture(gl.TEXTURE_2D, atlas.texture)
+    gl.bindTexture(gl.TEXTURE_2D, texture)
     gl.uniform1i(this.uniforms.text.atlas, 0)
-    gl.bindVertexArray(pass.vao)
-    gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, n)
+    pointInstances(gl, pass, rangeStart(layout, range))
+    gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, count)
   }
 
   private drawLinePass(
@@ -1778,7 +2081,9 @@ class WebGLRenderer {
     const gl = this.gl
     gl.deleteProgram(this.programs.round)
     gl.deleteProgram(this.programs.text)
+    gl.deleteProgram(this.programs.fade)
     gl.deleteProgram(this.programs.grid)
+    if (this.fadeLayer) deleteFadeLayer(gl, this.fadeLayer)
     gl.deleteProgram(this.programs.line)
     gl.deleteProgram(this.programs.connection)
     gl.deleteBuffer(this.buffers.cornerQuad)
@@ -1802,9 +2107,9 @@ class WebGLRenderer {
   }
 }
 
+// Ordered by range, and selection last so it draws on top within its range.
 function buildRenderNodes(data: DrawData): RenderNode[] {
-  // Group nodes into `[dimmed, normal, selected]` so selection draws on top
-  // when filled into a single shared instance buffer.
+  const grayed: RenderNode[] = []
   const dimmed: RenderNode[] = []
   const normal: RenderNode[] = []
   const selected: RenderNode[] = []
@@ -1818,7 +2123,7 @@ function buildRenderNodes(data: DrawData): RenderNode[] {
       node,
       flags,
       z: 0,
-      alpha: nodeAlpha(flags),
+      range: nodeRange(flags),
       visibleFields: getVisibleFields(node),
       rows: getRowLayout(node).rows,
       fullHeight,
@@ -1831,18 +2136,25 @@ function buildRenderNodes(data: DrawData): RenderNode[] {
       isGroup,
     }
 
-    if (flags.isSelected) selected.push(renderNode)
-    else if (flags.isDimmed || flags.isGrayedOut) dimmed.push(renderNode)
+    if (renderNode.range === GRAYED_RANGE) grayed.push(renderNode)
+    else if (renderNode.range === DIMMED_RANGE) dimmed.push(renderNode)
+    else if (flags.isSelected) selected.push(renderNode)
     else normal.push(renderNode)
   }
 
-  const ordered = [...dimmed, ...normal, ...selected]
+  const ordered = [...grayed, ...dimmed, ...normal, ...selected]
   const maxIndex = Math.max(1, ordered.length - 1)
   for (let i = 0; i < ordered.length; i++) {
     const rn = ordered[i]
     if (rn) rn.z = 0.9 - (i / maxIndex) * 1.8
   }
   return ordered
+}
+
+function nodeRange(flags: NodeFlags): NodeRange {
+  if (flags.isGrayedOut) return GRAYED_RANGE
+  if (flags.isDimmed) return DIMMED_RANGE
+  return OPAQUE_RANGE
 }
 
 function liveConnections(data: DrawData): ConnectionSpan[] {
@@ -1957,6 +2269,7 @@ function writeRound(
   rBL: number,
   border: number,
   z: number,
+  ring: RGBA,
 ) {
   const base = i * QUAD_STRIDE_F
   out[base] = x
@@ -1973,6 +2286,10 @@ function writeRound(
   out[base + 11] = rBL
   out[base + 12] = border
   out[base + 13] = z
+  out[base + 14] = ring[0]
+  out[base + 15] = ring[1]
+  out[base + 16] = ring[2]
+  out[base + 17] = ring[3]
 }
 
 function writeTextQuad(
@@ -2016,13 +2333,13 @@ function writeStringInstances(
   maxX: number,
   z: number,
 ): number {
-  // Truncates with "..." when the string doesn't fit in [cursorX, maxX].
-  const dot = atlas.getGlyph('.')
+  // Truncates with "…" when the string doesn't fit in [cursorX, maxX], like
+  // CSS text-overflow: ellipsis.
+  const ellipsis = atlas.getGlyph('…')
   let totalWidth = 0
   for (const ch of text) totalWidth += atlas.getGlyph(ch).advance
   const fits = cursorX + totalWidth <= maxX
-  const ellipsisWidth = dot.advance * 3
-  const prefixLimit = fits ? maxX : maxX - ellipsisWidth
+  const prefixLimit = fits ? maxX : maxX - ellipsis.advance
 
   let x = cursorX
   let written = 0
@@ -2048,26 +2365,22 @@ function writeStringInstances(
     x += g.advance
   }
 
-  if (!fits) {
-    for (let i = 0; i < 3; i++) {
-      if (x + dot.advance > maxX) break
-      writeTextQuad(
-        out,
-        startInstance + written,
-        x,
-        quadY,
-        atlas.cellW,
-        atlas.cellH,
-        dot.u0,
-        dot.v0,
-        dot.u1,
-        dot.v1,
-        color,
-        z,
-      )
-      written++
-      x += dot.advance
-    }
+  if (!fits && x + ellipsis.advance <= maxX) {
+    writeTextQuad(
+      out,
+      startInstance + written,
+      x,
+      quadY,
+      atlas.cellW,
+      atlas.cellH,
+      ellipsis.u0,
+      ellipsis.v0,
+      ellipsis.u1,
+      ellipsis.v1,
+      color,
+      z,
+    )
+    written++
   }
   return written
 }
@@ -2242,12 +2555,6 @@ function pushArc(
 // Color & flag helpers
 // ============================================================================
 
-function nodeAlpha(flags: NodeFlags): number {
-  if (flags.isGrayedOut) return 0.2
-  if (flags.isDimmed) return 0.3
-  return 1
-}
-
 function withAlpha(c: RGBA, a: number): RGBA {
   return [c[0], c[1], c[2], a]
 }
@@ -2413,6 +2720,12 @@ function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
   return overlapping
 }
 
+function getGridCellSize(scale: number): number {
+  if (scale < 0.25) return 180
+  if (scale < 0.8) return 60
+  return 20
+}
+
 // ============================================================================
 // React component
 // ============================================================================
@@ -2480,6 +2793,11 @@ export function NodesAndConnectionsWebGL() {
     })
   }
 
+  const [failure, setFailure] = useState<string | null>(null)
+  // Bumped to build a new renderer: when the browser restores a lost context,
+  // and when the pixel ratio changes, as the atlases are drawn for one ratio.
+  const [rendererGeneration, setRendererGeneration] = useState(0)
+
   // Init.
   useEffect(() => {
     let cancelled = false
@@ -2492,7 +2810,9 @@ export function NodesAndConnectionsWebGL() {
       premultipliedAlpha: true,
     })
     if (!gl) {
-      console.error('WebGL2 not supported in this browser')
+      setFailure(
+        'The node view needs WebGL2, which this browser did not provide.',
+      )
       return
     }
     const dpr = window.devicePixelRatio || 1
@@ -2503,17 +2823,54 @@ export function NodesAndConnectionsWebGL() {
           return
         }
         rendererRef.current = renderer
+        setFailure(null)
         scheduleDraw.current()
       })
-      .catch((e) => {
-        console.error('WebGL renderer init failed', e)
+      .catch((error) => {
+        if (cancelled) return
+        console.error('WebGL renderer init failed', error)
+        setFailure(
+          'The node view could not start WebGL. Reload the page to try again.',
+        )
       })
     return () => {
       cancelled = true
       rendererRef.current?.dispose()
       rendererRef.current = null
     }
+  }, [rendererGeneration])
+
+  // A GPU reset or too many contexts can take the context away. Keeping the
+  // default would leave the canvas blank for good; preventing it lets the
+  // browser restore the context, and a new renderer rebuilds everything.
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const onLost = (event: Event) => {
+      event.preventDefault()
+      rendererRef.current = null
+      setFailure('The node view lost its WebGL context and is waiting for it.')
+    }
+    const onRestored = () =>
+      setRendererGeneration((generation) => generation + 1)
+    canvas.addEventListener('webglcontextlost', onLost)
+    canvas.addEventListener('webglcontextrestored', onRestored)
+    return () => {
+      canvas.removeEventListener('webglcontextlost', onLost)
+      canvas.removeEventListener('webglcontextrestored', onRestored)
+    }
   }, [])
+
+  // Moving the window to a display with another scale changes the ratio. The
+  // query matches only the ratio the current renderer was built for.
+  useEffect(() => {
+    const query = window.matchMedia(
+      `(resolution: ${window.devicePixelRatio}dppx)`,
+    )
+    const onChange = () => setRendererGeneration((generation) => generation + 1)
+    query.addEventListener('change', onChange)
+    return () => query.removeEventListener('change', onChange)
+  }, [rendererGeneration])
 
   // Redraw when derived data changes.
   useEffect(() => {
@@ -2541,9 +2898,16 @@ export function NodesAndConnectionsWebGL() {
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="pointer-events-none absolute inset-0 h-full w-full"
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 h-full w-full"
+      />
+      {failure !== null && (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-8 text-center text-coffee-200 text-sm">
+          {failure}
+        </div>
+      )}
+    </>
   )
 }
