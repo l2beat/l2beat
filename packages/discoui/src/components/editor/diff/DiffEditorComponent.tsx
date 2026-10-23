@@ -39,9 +39,10 @@ export function DiffEditorComponent({ editorKey }: DiffEditorComponentProps) {
     }
   }, [editorKey, setDiffEditor, getDiffEditor, removeDiffEditor])
 
+  // Hidden would stop the find widget sticking while the merge view scrolls.
   return (
     <div
-      className="flex min-h-0 w-full flex-1 bg-coffee-900 [&>.cm-mergeView]:h-full [&>.cm-mergeView]:min-w-0 [&>.cm-mergeView]:flex-1 [&>.cm-mergeView]:[scrollbar-width:none]"
+      className="[&_.cm-mergeViewEditor]:overflow-clip! flex min-h-0 w-full flex-1 bg-coffee-900 [&>.cm-mergeView]:h-full [&>.cm-mergeView]:min-w-0 [&>.cm-mergeView]:flex-1 [&>.cm-mergeView]:[scrollbar-width:none] [&_.cm-mergeViewEditor]:min-w-0"
       ref={editorElement}
     />
   )

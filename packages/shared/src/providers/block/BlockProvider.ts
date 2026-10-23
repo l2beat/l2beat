@@ -1,5 +1,9 @@
 import { assert, type Block, UnixTime } from '@l2beat/shared-pure'
-import type { BlockClient, TransactionReceipt } from '../../clients'
+import type {
+  BlockClient,
+  BlockHeader,
+  TransactionReceipt,
+} from '../../clients'
 import {
   type BlockNumberAtOrBeforeOptions,
   getBlockNumberAtOrBefore,
@@ -14,79 +18,65 @@ export class BlockProvider {
   }
 
   async getLatestBlockNumber(): Promise<number> {
-    for (const [index, client] of this.clients.entries()) {
-      try {
-        return await client.getLatestBlockNumber()
-      } catch (error) {
-        if (index === this.clients.length - 1) throw error
-      }
-    }
-
-    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+    return await this.withClient((client) => client.getLatestBlockNumber())
   }
 
   async getBlockWithTransactions(x: number | 'latest'): Promise<Block> {
-    for (const [index, client] of this.clients.entries()) {
-      try {
-        const block = await client.getBlockWithTransactions(x)
-        if (typeof x === 'number') {
-          assert(
-            block.number === x,
-            `Invalid response: expected block number ${x}, got ${block.number}`,
-          )
-        }
-        return block
-      } catch (error) {
-        if (index === this.clients.length - 1) throw error
+    return await this.withClient(async (client) => {
+      const block = await client.getBlockWithTransactions(x)
+      if (typeof x === 'number') {
+        assert(
+          block.number === x,
+          `Invalid response: expected block number ${x}, got ${block.number}`,
+        )
       }
-    }
+      return block
+    })
+  }
 
-    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+  async getBlockHeader(x: number | 'latest'): Promise<BlockHeader> {
+    return await this.withClient(async (client) => {
+      const block = await client.getBlockHeader(x)
+      if (typeof x === 'number' && block.number !== x) {
+        throw new Error('Invalid response: unexpected block number', {
+          cause: { expected: x, received: block.number },
+        })
+      }
+      return { number: block.number, timestamp: block.timestamp }
+    })
   }
 
   async getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
-    const block = await this.getBlockWithTransactions(blockNumber)
+    const block = await this.getBlockHeader(blockNumber)
     return UnixTime(block.timestamp)
   }
 
   async getBlockTimestamps(
     blockNumbers: number[],
   ): Promise<Map<number, UnixTime>> {
-    for (const [index, client] of this.clients.entries()) {
-      try {
-        assert(
-          client.getBlockTimestamps,
-          'Client does not support batch fetching of block timestamps',
-        )
-        const out = new Map<number, UnixTime>()
-        const timestamps = await client.getBlockTimestamps(blockNumbers)
-        for (const [n, ts] of timestamps) {
-          out.set(n, UnixTime(ts))
-        }
-        assert(out.size === blockNumbers.length, 'Missing block timestamps')
-        return out
-      } catch (error) {
-        if (index === this.clients.length - 1) throw error
+    return await this.withClient(async (client) => {
+      assert(
+        client.getBlockTimestamps,
+        'Client does not support batch fetching of block timestamps',
+      )
+      const out = new Map<number, UnixTime>()
+      const timestamps = await client.getBlockTimestamps(blockNumbers)
+      for (const [n, ts] of timestamps) {
+        out.set(n, UnixTime(ts))
       }
-    }
-
-    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+      assert(out.size === blockNumbers.length, 'Missing block timestamps')
+      return out
+    })
   }
 
   async getTransactionReceipt(txHash: string): Promise<TransactionReceipt> {
-    for (const [index, client] of this.clients.entries()) {
-      try {
-        assert(
-          client.getTransactionReceipt,
-          'Client does not support fetching transaction receipts',
-        )
-        return await client.getTransactionReceipt(txHash)
-      } catch (error) {
-        if (index === this.clients.length - 1) throw error
-      }
-    }
-
-    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+    return await this.withClient(async (client) => {
+      assert(
+        client.getTransactionReceipt,
+        'Client does not support fetching transaction receipts',
+      )
+      return await client.getTransactionReceipt(txHash)
+    })
   }
 
   async getBlockNumberAtOrBefore(
@@ -94,18 +84,26 @@ export class BlockProvider {
     start = 1,
     options?: BlockNumberAtOrBeforeOptions,
   ): Promise<number> {
+    return await this.withClient(async (client) => {
+      const end = await client.getLatestBlockNumber()
+      const effectiveStart = start >= end ? 1 : start
+
+      return await getBlockNumberAtOrBefore(
+        timestamp,
+        effectiveStart,
+        end,
+        (number: number) => client.getBlockHeader(number),
+        options,
+      )
+    })
+  }
+
+  private async withClient<T>(
+    callback: (client: BlockClient) => Promise<T>,
+  ): Promise<T> {
     for (const [index, client] of this.clients.entries()) {
       try {
-        const end = await client.getLatestBlockNumber()
-        const effectiveStart = start >= end ? 1 : start
-
-        return await getBlockNumberAtOrBefore(
-          timestamp,
-          effectiveStart,
-          end,
-          (number: number) => client.getBlockWithTransactions(number),
-          options,
-        )
+        return await callback(client)
       } catch (error) {
         if (index === this.clients.length - 1) throw error
       }

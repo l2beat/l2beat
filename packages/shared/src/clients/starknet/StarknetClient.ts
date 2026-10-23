@@ -1,7 +1,7 @@
 import type { Block, json } from '@l2beat/shared-pure'
 import { generateIntId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import type { BlockClient } from '../types'
+import type { BlockClient, BlockHeader } from '../types'
 import {
   type StarknetCallParameters,
   StarknetCallResponse,
@@ -26,18 +26,30 @@ export class StarknetClient extends ClientCore implements BlockClient {
   }
 
   async getLatestBlockNumber() {
-    const params = ['latest']
+    const header = await this.getBlockHeader('latest')
+    return header.number
+  }
+
+  /** Calls starknet_getBlockWithTxHashes, transactions come as hashes only. */
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<BlockHeader> {
+    const params = [
+      blockNumber === 'latest' ? 'latest' : { block_number: blockNumber },
+    ]
 
     const response = await this.query('starknet_getBlockWithTxHashes', params)
 
-    const latestBlockNumberResponse =
-      StarknetGetBlockResponse.safeParse(response)
+    const blockResponse = StarknetGetBlockResponse.safeParse(response)
 
-    if (!latestBlockNumberResponse.success) {
-      throw new Error('Latest block number: Error during parsing')
+    if (!blockResponse.success) {
+      throw new Error('Block header: Error during parsing', {
+        cause: { blockNumber },
+      })
     }
 
-    return Number(latestBlockNumberResponse.data.result.block_number)
+    return {
+      number: blockResponse.data.result.block_number,
+      timestamp: blockResponse.data.result.timestamp,
+    }
   }
 
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {
