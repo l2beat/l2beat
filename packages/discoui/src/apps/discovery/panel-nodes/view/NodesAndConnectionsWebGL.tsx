@@ -893,7 +893,15 @@ class WebGLRenderer {
     this.buffers = this.createBuffers()
 
     gl.enable(gl.BLEND)
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+    // The canvas is premultiplied, so alpha has to accumulate as coverage
+    // rather than as alpha squared, or the page shows through translucent
+    // primitives.
+    gl.blendFuncSeparate(
+      gl.SRC_ALPHA,
+      gl.ONE_MINUS_SRC_ALPHA,
+      gl.ONE,
+      gl.ONE_MINUS_SRC_ALPHA,
+    )
     gl.depthFunc(gl.LEQUAL)
     gl.clearColor(0, 0, 0, 0)
   }
