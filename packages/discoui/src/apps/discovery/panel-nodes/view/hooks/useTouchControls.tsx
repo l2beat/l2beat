@@ -5,7 +5,6 @@ import type { DesktopControls } from './useDesktopControls'
 type TouchMode = 'none' | 'select' | 'pinch' | 'pan' | 'tap'
 
 type Props = {
-  viewRef: React.RefObject<HTMLElement | null>
   containerRef: React.RefObject<HTMLElement | null>
   // We need it since we remap touch events to mouse events
   desktopControls: DesktopControls
@@ -25,11 +24,7 @@ const TAP_THRESHOLD = 10
 // We could use store, but at the end of the day
 // we still treat mouse events as primary ones.
 // Touch controls are just wrappers around mouse events.
-export function useTouchControls({
-  viewRef,
-  containerRef,
-  desktopControls,
-}: Props) {
+export function useTouchControls({ containerRef, desktopControls }: Props) {
   const [touchMode, setTouchMode] = useState<TouchMode>('none')
   // Check if any nodes are selected - this is lightweight and doesn't require node detection
   const hasSelectedNodes = useStore((state) => state.selected.length > 0)
@@ -311,9 +306,7 @@ export function useTouchControls({
           bubbles: true,
         })
 
-        if (viewRef.current) {
-          desktopControls.onWheel(wheelEvent)
-        }
+        desktopControls.onWheel(wheelEvent)
       }
 
       // Handle panning - calculate position change from center movement

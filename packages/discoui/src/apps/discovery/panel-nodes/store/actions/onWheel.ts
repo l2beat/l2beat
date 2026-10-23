@@ -50,8 +50,8 @@ export function onWheel(
 
     return {
       transform: {
-        offsetX: offsetX + (rect.left - event.clientX) * change,
-        offsetY: offsetY + (rect.top - event.clientY) * change,
+        offsetX: offsetX + (rect.left + offsetX - event.clientX) * change,
+        offsetY: offsetY + (rect.top + offsetY - event.clientY) * change,
         scale: scale * (1 + change),
       },
     }

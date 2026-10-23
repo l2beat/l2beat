@@ -19,6 +19,7 @@ import {
 import { getRowLayout, type NodeRow } from '../store/utils/rows'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
+import { getGridCellSize } from './ScalableView'
 
 // ============================================================================
 // Constants
@@ -29,6 +30,7 @@ type RGBA = [number, number, number, number]
 const COFFEE_600: RGBA = [0x59 / 255, 0x4c / 255, 0x43 / 255, 1]
 const COFFEE_400: RGBA = [0xa9 / 255, 0x87 / 255, 0x63 / 255, 1]
 const COFFEE_200: RGBA = [0xf0 / 255, 0xd8 / 255, 0xbd / 255, 1]
+const GRID_DOT: RGBA = [0x3c / 255, 0x33 / 255, 0x2d / 255, 1]
 const AUTUMN_300: RGBA = [0xba / 255, 0xd8 / 255, 0x0a / 255, 1]
 const AUX_RED: RGBA = [0xfb / 255, 0x4a / 255, 0x35 / 255, 1]
 const AUX_GREEN: RGBA = [0x9d / 255, 0xde / 255, 0x6c / 255, 1]
@@ -72,6 +74,7 @@ const FOOTER_FONT: FontSpec = {
 }
 
 const CONNECTION_SEGMENTS = 32
+const GRID_DOT_RADIUS_PER_CELL = 0.05
 const CONNECTION_CONTROL_OFFSET = 50
 const DASH_ON_WORLD = 5
 const DASH_OFF_WORLD = 5
@@ -231,6 +234,35 @@ void main() {
   }
   if (alpha <= 0.0) discard;
   fragColor = vec4(v_color.rgb, v_color.a * alpha);
+}`
+
+// Fullscreen triangle with a dot at the center of every grid cell, so panning
+// repaints nothing in the DOM.
+const GRID_VS = `#version 300 es
+uniform vec2 u_offset;
+uniform float u_scale;
+uniform vec2 u_resolution;
+out vec2 v_world;
+void main() {
+  vec2 ndc = vec2(gl_VertexID == 1 ? 3.0 : -1.0, gl_VertexID == 2 ? 3.0 : -1.0);
+  vec2 screen = (ndc * vec2(1.0, -1.0) + 1.0) * 0.5 * u_resolution;
+  v_world = (screen - u_offset) / u_scale;
+  gl_Position = vec4(ndc, 0.0, 1.0);
+}`
+
+const GRID_FS = `#version 300 es
+precision highp float;
+in vec2 v_world;
+uniform float u_cellSize;
+uniform vec4 u_color;
+out vec4 fragColor;
+void main() {
+  vec2 local = mod(v_world, u_cellSize) - u_cellSize * 0.5;
+  float d = length(local) - u_cellSize * ${GRID_DOT_RADIUS_PER_CELL};
+  float aa = max(fwidth(d), 1e-4);
+  float alpha = 1.0 - smoothstep(-aa, aa, d);
+  if (alpha <= 0.0) discard;
+  fragColor = vec4(u_color.rgb, u_color.a * alpha);
 }`
 
 // Tinted alpha-mask quads. Shared by all text passes and the icon pass; the
@@ -690,6 +722,7 @@ function uploadCanvasTexture(
 // ============================================================================
 
 interface Programs {
+  grid: WebGLProgram
   round: WebGLProgram
   text: WebGLProgram
   line: WebGLProgram
@@ -697,6 +730,13 @@ interface Programs {
 }
 
 interface Uniforms {
+  grid: {
+    offset: WebGLUniformLocation
+    scale: WebGLUniformLocation
+    resolution: WebGLUniformLocation
+    cellSize: WebGLUniformLocation
+    color: WebGLUniformLocation
+  }
   round: {
     offset: WebGLUniformLocation
     scale: WebGLUniformLocation
@@ -806,12 +846,20 @@ class WebGLRenderer {
   ) {
     this.gl = gl
     this.programs = {
+      grid: linkProgram(gl, GRID_VS, GRID_FS),
       round: linkProgram(gl, ROUND_VS, ROUND_FS),
       text: linkProgram(gl, TEXT_VS, TEXT_FS),
       line: linkProgram(gl, LINE_VS, LINE_FS),
       connection: linkProgram(gl, CONNECTION_VS, CONNECTION_FS),
     }
     this.uniforms = {
+      grid: {
+        offset: requireUniform(gl, this.programs.grid, 'u_offset'),
+        scale: requireUniform(gl, this.programs.grid, 'u_scale'),
+        resolution: requireUniform(gl, this.programs.grid, 'u_resolution'),
+        cellSize: requireUniform(gl, this.programs.grid, 'u_cellSize'),
+        color: requireUniform(gl, this.programs.grid, 'u_color'),
+      },
       round: {
         offset: requireUniform(gl, this.programs.round, 'u_offset'),
         scale: requireUniform(gl, this.programs.round, 'u_scale'),
@@ -1011,6 +1059,7 @@ class WebGLRenderer {
     // by how the round-pass instance buffer is filled (dimmed → normal →
     // selected). Overlap borders draw last.
     gl.disable(gl.DEPTH_TEST)
+    this.drawGridPass(transform, res)
     this.drawConnectionPass(transform, res)
     gl.enable(gl.DEPTH_TEST)
     this.drawRoundPass(transform, res)
@@ -1576,6 +1625,25 @@ class WebGLRenderer {
   // proportional to node count.
   // ==========================================================================
 
+  private drawGridPass(
+    transform: { offsetX: number; offsetY: number; scale: number },
+    res: [number, number],
+  ) {
+    const gl = this.gl
+    gl.useProgram(this.programs.grid)
+    gl.uniform2f(
+      this.uniforms.grid.offset,
+      transform.offsetX,
+      transform.offsetY,
+    )
+    gl.uniform1f(this.uniforms.grid.scale, transform.scale)
+    gl.uniform2f(this.uniforms.grid.resolution, res[0], res[1])
+    gl.uniform1f(this.uniforms.grid.cellSize, getGridCellSize(transform.scale))
+    gl.uniform4fv(this.uniforms.grid.color, GRID_DOT)
+    gl.bindVertexArray(null)
+    gl.drawArrays(gl.TRIANGLES, 0, 3)
+  }
+
   private drawRoundPass(
     transform: { offsetX: number; offsetY: number; scale: number },
     res: [number, number],
@@ -1710,6 +1778,7 @@ class WebGLRenderer {
     const gl = this.gl
     gl.deleteProgram(this.programs.round)
     gl.deleteProgram(this.programs.text)
+    gl.deleteProgram(this.programs.grid)
     gl.deleteProgram(this.programs.line)
     gl.deleteProgram(this.programs.connection)
     gl.deleteBuffer(this.buffers.cornerQuad)
