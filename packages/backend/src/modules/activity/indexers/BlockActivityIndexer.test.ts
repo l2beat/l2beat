@@ -30,65 +30,99 @@ describe(BlockActivityIndexer.name, () => {
       expect(newSafeHeight).toEqual(50)
     })
 
-    it('adds the days of the batch and updates sync metadata', async () => {
+    it('adds the hours, then the days with the peaks of the hours as stored', async () => {
+      const hourlyActivityRepository = mockHourlyActivityRepository()
+      hourlyActivityRepository.addMany.resolvesToOnce([
+        hourlyRecord(START, 20),
+        hourlyRecord(START + 1 * UnixTime.DAY, 2),
+      ])
       const activityRepository = mockObject<Database['activity']>({
-        addMany: mockFn().resolvesTo(3),
+        addMany: mockFn().resolvesTo(2),
       })
       const syncMetadataRepository = mockObject<Database['syncMetadata']>({
         updateSyncedUntil: mockFn().resolvesTo(undefined),
       })
       const indexer = createIndexer({
         blockSource: mockBlockSource([
-          block(START, 5, 5, 9),
-          block(START, 0, 0, 10),
-          block(START + 1 * UnixTime.DAY, 4, 5, 13),
-          block(START + 2 * UnixTime.DAY, 2, 2, 16),
+          block(START + 10, 3, 3, 1),
+          block(START + 70, 4, 4, 2),
+          block(START + 1 * UnixTime.DAY, 2, 2, 3),
         ]),
         db: mockDatabaseWith({
           activity: activityRepository,
+          hourlyActivity: hourlyActivityRepository,
           syncMetadata: syncMetadataRepository,
         }),
         batchSize: 100,
       })
 
-      const newSafeHeight = await indexer.update(9, 16)
+      const newSafeHeight = await indexer.update(1, 3)
 
+      expect(hourlyActivityRepository.addMany).toHaveBeenOnlyCalledWith([
+        hourlyRecord(START, 7),
+        hourlyRecord(START + 1 * UnixTime.DAY, 2),
+      ])
       expect(activityRepository.addMany).toHaveBeenOnlyCalledWith([
-        activityRecord('a', START, 5, 5, 9, 10),
-        activityRecord('a', START + 1 * UnixTime.DAY, 4, 5, 13, 13),
-        activityRecord('a', START + 2 * UnixTime.DAY, 2, 2, 16, 16),
+        dayRecord(START, {
+          count: 7,
+          start: 1,
+          end: 2,
+          peakHour: 20,
+          peakMinute: 4,
+        }),
+        dayRecord(START + 1 * UnixTime.DAY, {
+          count: 2,
+          start: 3,
+          end: 3,
+          peakHour: 2,
+          peakMinute: 2,
+        }),
       ])
       expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenCalledWith(
         'activity',
         ['a'],
-        START + 2 * UnixTime.DAY,
-        16,
+        START + 1 * UnixTime.DAY,
+        3,
       )
-      expect(newSafeHeight).toEqual(16)
+      expect(newSafeHeight).toEqual(3)
+    })
+
+    it('keeps two weeks of hours back from the newest block', async () => {
+      const hourlyActivityRepository = mockHourlyActivityRepository()
+      const indexer = createIndexer({
+        blockSource: mockBlockSource([
+          block(START + 30 * UnixTime.DAY + 90, 1, 1, 1),
+        ]),
+        db: mockDatabaseWith({ hourlyActivity: hourlyActivityRepository }),
+      })
+
+      await indexer.update(1, 1)
+
+      expect(
+        hourlyActivityRepository.deleteByProjectIdUntil,
+      ).toHaveBeenOnlyCalledWith(ProjectId('a'), START + 16 * UnixTime.DAY)
     })
 
     it('continues the peak of a minute split between consecutive batches', async () => {
-      const hourlyActivityRepository = mockHourlyActivityRepository()
+      const activityRepository = mockActivityRepository()
       const indexer = createIndexer({
         blockSource: mockBlockSourceOnce(
           [block(START + 50, 3, 3, 1), block(START + 55, 2, 2, 2)],
           [block(START + 58, 4, 4, 3), block(START + 70, 1, 1, 4)],
         ),
-        db: mockDatabaseWith({ hourlyActivity: hourlyActivityRepository }),
+        db: mockDatabaseWith({ activity: activityRepository }),
         batchSize: 1,
       })
 
       await indexer.update(1, 2)
       await indexer.update(3, 4)
 
-      expect(hourlyActivityRepository.addMany).toHaveBeenNthCalledWith(2, [
-        hourlyRecord(START, { count: 5, peakCount: 9 }),
-      ])
+      expect(peakMinuteOf(activityRepository, 2)).toEqual(9)
     })
 
     it('continues a minute once when a batch is retried after its save failed', async () => {
-      const hourlyActivityRepository = mockHourlyActivityRepository()
-      hourlyActivityRepository.addMany
+      const activityRepository = mockActivityRepository()
+      activityRepository.addMany
         .resolvesToOnce(1)
         .rejectsWithOnce(new Error('Connection lost'))
       const secondBatch = [
@@ -101,7 +135,7 @@ describe(BlockActivityIndexer.name, () => {
           secondBatch,
           secondBatch,
         ),
-        db: mockDatabaseWith({ hourlyActivity: hourlyActivityRepository }),
+        db: mockDatabaseWith({ activity: activityRepository }),
         batchSize: 1,
       })
 
@@ -109,28 +143,24 @@ describe(BlockActivityIndexer.name, () => {
       await expect(indexer.update(3, 4)).toBeRejected()
       await indexer.update(3, 4)
 
-      expect(hourlyActivityRepository.addMany).toHaveBeenNthCalledWith(3, [
-        hourlyRecord(START, { count: 5, peakCount: 9 }),
-      ])
+      expect(peakMinuteOf(activityRepository, 3)).toEqual(9)
     })
 
     it('does not continue a minute from a batch that did not end right before', async () => {
-      const hourlyActivityRepository = mockHourlyActivityRepository()
+      const activityRepository = mockActivityRepository()
       const indexer = createIndexer({
         blockSource: mockBlockSourceOnce(
           [block(START + 50, 3, 3, 1), block(START + 55, 2, 2, 2)],
           [block(START + 58, 4, 4, 5)],
         ),
-        db: mockDatabaseWith({ hourlyActivity: hourlyActivityRepository }),
+        db: mockDatabaseWith({ activity: activityRepository }),
         batchSize: 1,
       })
 
       await indexer.update(1, 2)
       await indexer.update(5, 5)
 
-      expect(hourlyActivityRepository.addMany).toHaveBeenNthCalledWith(2, [
-        hourlyRecord(START, { count: 4, peakCount: 4 }),
-      ])
+      expect(peakMinuteOf(activityRepository, 2)).toEqual(4)
     })
   })
 
@@ -262,16 +292,44 @@ function block(
 /** Uops follow txs, so that only the values a test is about need setting */
 function hourlyRecord(
   timestamp: UnixTime,
-  { count, peakCount }: { count: number; peakCount: number },
+  count: number,
 ): HourlyActivityRecord {
+  return { projectId: ProjectId('a'), timestamp, count, uopsCount: count }
+}
+
+/** Uops follow txs */
+function dayRecord(
+  timestamp: UnixTime,
+  values: {
+    count: number
+    start: number
+    end: number
+    peakHour: number
+    peakMinute: number
+  },
+) {
   return {
-    projectId: ProjectId('a'),
-    timestamp,
-    count,
-    uopsCount: count,
-    peakCount,
-    peakUopsCount: peakCount,
+    ...activityRecord(
+      'a',
+      timestamp,
+      values.count,
+      values.count,
+      values.start,
+      values.end,
+    ),
+    peakHourCount: values.peakHour,
+    peakHourUopsCount: values.peakHour,
+    peakMinuteCount: values.peakMinute,
+    peakMinuteUopsCount: values.peakMinute,
   }
+}
+
+/** The peak minute of the only day in the `nth` call */
+function peakMinuteOf(
+  activityRepository: ReturnType<typeof mockActivityRepository>,
+  nth: number,
+) {
+  return activityRepository.addMany.calls[nth - 1]?.args[0][0]?.peakMinuteCount
 }
 
 function mockBlockSource(blocks: ReturnType<typeof block>[]) {
@@ -289,18 +347,24 @@ function mockBlockSourceOnce(...batches: ReturnType<typeof block>[][]) {
   return mockObject<ActivityBlockSource>({ getBlocks })
 }
 
+function mockActivityRepository() {
+  return mockObject<Database['activity']>({
+    addMany: mockFn().resolvesTo(1),
+  })
+}
+
+/** Stores nothing before, so the totals are the hours as added */
 function mockHourlyActivityRepository() {
   return mockObject<Database['hourlyActivity']>({
-    addMany: mockFn().resolvesTo(1),
+    addMany: mockFn(async (records: HourlyActivityRecord[]) => records),
+    deleteByProjectIdUntil: mockFn().resolvesTo(0),
     deleteByProjectIdFrom: mockFn().resolvesTo(0),
   })
 }
 
 function mockDatabaseWith(overrides: Partial<Database>) {
   return mockDatabase({
-    activity: mockObject<Database['activity']>({
-      addMany: mockFn().resolvesTo(1),
-    }),
+    activity: mockActivityRepository(),
     hourlyActivity: mockHourlyActivityRepository(),
     syncMetadata: mockObject<Database['syncMetadata']>({
       updateSyncedUntil: mockFn().resolvesTo(undefined),
