@@ -2256,13 +2256,13 @@ function writeStringInstances(
   maxX: number,
   z: number,
 ): number {
-  // Truncates with "..." when the string doesn't fit in [cursorX, maxX].
-  const dot = atlas.getGlyph('.')
+  // Truncates with "…" when the string doesn't fit in [cursorX, maxX], like
+  // CSS text-overflow: ellipsis.
+  const ellipsis = atlas.getGlyph('…')
   let totalWidth = 0
   for (const ch of text) totalWidth += atlas.getGlyph(ch).advance
   const fits = cursorX + totalWidth <= maxX
-  const ellipsisWidth = dot.advance * 3
-  const prefixLimit = fits ? maxX : maxX - ellipsisWidth
+  const prefixLimit = fits ? maxX : maxX - ellipsis.advance
 
   let x = cursorX
   let written = 0
@@ -2288,26 +2288,22 @@ function writeStringInstances(
     x += g.advance
   }
 
-  if (!fits) {
-    for (let i = 0; i < 3; i++) {
-      if (x + dot.advance > maxX) break
-      writeTextQuad(
-        out,
-        startInstance + written,
-        x,
-        quadY,
-        atlas.cellW,
-        atlas.cellH,
-        dot.u0,
-        dot.v0,
-        dot.u1,
-        dot.v1,
-        color,
-        z,
-      )
-      written++
-      x += dot.advance
-    }
+  if (!fits && x + ellipsis.advance <= maxX) {
+    writeTextQuad(
+      out,
+      startInstance + written,
+      x,
+      quadY,
+      atlas.cellW,
+      atlas.cellH,
+      ellipsis.u0,
+      ellipsis.v0,
+      ellipsis.u1,
+      ellipsis.v1,
+      color,
+      z,
+    )
+    written++
   }
   return written
 }
