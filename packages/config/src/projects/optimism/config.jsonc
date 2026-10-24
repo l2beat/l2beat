@@ -105,13 +105,14 @@
       "ignoreRelatives": ["owner"]
     },
     "eth:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": {
-      // retired DelayedWETH of the permissioned dispute games: critical until it left discovery
-      "critical": { "untilTimestamp": 1753427192 },
+      // retired DelayedWETH of the permissioned dispute games: detached when Upgrade 16
+      // (tx 0x46acdce1) replaced games 0 and 1
+      "critical": { "untilTimestamp": 1753379243 },
       "ignoreInWatchMode": ["totalSupply"]
     },
     "eth:0x323dFC63c9B83CB83f40325AaB74b245937cbdF0": {
-      // retired DelayedWETH of the permissionless dispute games: critical until it left discovery (same bound as the permissioned one)
-      "critical": { "untilTimestamp": 1753427192 },
+      // retired DelayedWETH of the permissionless dispute games, same detach
+      "critical": { "untilTimestamp": 1753379243 },
       "ignoreInWatchMode": ["totalSupply"]
     },
     "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1": {
@@ -317,20 +318,11 @@
         }
       }
     },
-    // SaferSafes (L2 instance, untemplated): Safe module installed on the SafeL2,
-    // the sole owner of the MintManagerOwner Safe since 2026-04-07, so it is on the OP minting path.
-    "oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
-      "critical": true
-    },
     "oeth:0x4200000000000000000000000000000000000002": {
       "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
     },
     "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": {
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
-      // sole minter of OP, which is counted (natively minted) in the TVS. Its owner
-      // can also hand the OP token to a new minter via upgrade(), so changes to the
-      // owner Safe structure are reviewed events on this contract.
-      "critical": { "sinceTimestamp": 1665503636 },
       "fields": {
         "owner": {
           "severity": "MEDIUM",
@@ -345,17 +337,13 @@
     },
     "oeth:0x4200000000000000000000000000000000000042": {
       "description": "The OP token contract. The minting policy is controlled by the {{ owner }}.",
-      // OP is natively minted and counted in the TVS, and the project governs its
-      // supply through the MintManager (decision: tokens stay critical only in this
-      // case). The token itself is an immutable predeploy, so it only adds its age.
-      "critical": true,
+      // Not critical: OP is neither the gas token nor the voting power of a
+      // binding upgrade path.
       "ignoreMethods": ["getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply"],
       "fields": {
-        // the MintManager contract, sole minter: MintManager.upgrade() hands the
-        // token to new minting code without a proxy upgrade.
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "permissions": [
             {
               "type": "interact",

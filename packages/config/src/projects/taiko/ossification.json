@@ -1213,6 +1213,46 @@
       "transaction": "0xb826a86b502d702872ea69472f2b62108271fa7f1b27a0052eee494ae83ff7bc",
       "updateId": "659e0548",
       "reason": "Mechanism change: the Safe proposing, cancelling and executing shared RISC Zero verifier route changes lowered its threshold from 3/5 to 2/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1792373279,
+      "type": "state",
+      "contract": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
+      "updateId": "977668bc",
+      "transaction": "0x3f8f55e6651184d5794e4362661ebe709ae3a33df2424f664dc2bf235465859f",
+      "reason": "DAO proposal 0024 untrusted 2 and trusted 2 RISC Zero images (ImageTrusted)."
+    },
+    {
+      "timestamp": 1792373279,
+      "type": "state",
+      "contract": "eth:0x73A0Db393ef87ce781ac7957bE10D6628432100F",
+      "updateId": "977668bc",
+      "transaction": "0x3f8f55e6651184d5794e4362661ebe709ae3a33df2424f664dc2bf235465859f",
+      "reason": "DAO proposal 0024 untrusted 4 and trusted 4 SP1 programs (ProgramTrusted)."
+    },
+    {
+      "timestamp": 1792373279,
+      "type": "state",
+      "contract": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+      "updateId": "977668bc",
+      "transaction": "0x3f8f55e6651184d5794e4362661ebe709ae3a33df2424f664dc2bf235465859f",
+      "reason": "DAO proposal 0024 replaced the trusted SGX enclave measurement (MrEnclaveUpdated)."
+    },
+    {
+      "timestamp": 1792373279,
+      "type": "state",
+      "contract": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+      "updateId": "977668bc",
+      "transaction": "0x3f8f55e6651184d5794e4362661ebe709ae3a33df2424f664dc2bf235465859f",
+      "reason": "DAO proposal 0024 replaced the trusted SGX enclave measurements (MrEnclaveUpdated)."
+    },
+    {
+      "timestamp": 1792538927,
+      "type": "state",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "updateId": "977668bc",
+      "transaction": "0x8f6a04836fdadfb319517fd0b4a2da93247205562d3fb63d15ecccec7531db05",
+      "reason": "The timelock granted proposer, executor and canceller to the EOA 0xF616…d412, so one signer can again add and remove RISC Zero verifier routes. The 2/5 Safe renounced its roles on 2026-10-22."
     }
   ]
 }

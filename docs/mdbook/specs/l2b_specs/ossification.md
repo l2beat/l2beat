@@ -50,8 +50,9 @@ a HIGH state change already. New contracts that escrow funds have to be decided
 individually, based on the projected impact they will have on the TVS and their
 code diff to the old contracts.
 
-**Removing code does not reset the clock.** Freezing a verifier route or
-detaching a contract makes nothing younger. Adding a verifier does reset it.
+**Removing does not reset the clock.** Freezing a verifier route, unsetting a
+verifier, detaching a contract or renouncing a role makes nothing younger.
+Adding a verifier or an authority path does reset it.
 
 ## Choosing the critical perimeter
 
@@ -107,7 +108,8 @@ changes.
   rules. A change resets the clock.
 - **MEDIUM:** needs review but does not reset the clock. For example the pause
   state, holders of pause roles (`guardian`, `pauser`), withdrawal rate
-  limits, the set of active verifiers, or watched state of excluded escrows.
+  limits, the set of active verifiers, kill switches and one-way locks, or
+  watched state of excluded escrows.
   A change reaches the update monitor and puts the project
   under review on the frontend.
 - **LOW or unset:** who fills an unchanged role, like multisig members,
@@ -132,7 +134,7 @@ Record such a change in `ossification.json` on the critical contract the role
 controls. On a Safe, the mechanism changes with: one signer to a multisig or
 back, a new threshold, crossing the Security Council bar (at least 8 members
 and a 75% threshold), replacing or nesting the authority, or a module or guard
-that adds or removes a path that can do more than pause. Owner swaps,
+that adds a path that can do more than pause. Owner swaps, renounced roles,
 standard singleton upgrades and pause-only modules do not change it.
 
 Put the severity in the template when it follows from the contract type. Use
@@ -188,8 +190,10 @@ discovery come in with the next rediscovery, not as reviewed events.
   An event with an `updateId` replaces the automatic changes of that update
   for its contract.
 - `ignoredTransactions`: `$pastUpgrades` transactions that changed nothing,
-  for every critical contract they touched.
-- `ignoredUpdates`: `diffHistory.md` entries caused by a discovery bug.
+  for every critical contract they touched. A new implementation whose
+  bytecode differs only in its version string changed nothing.
+- `ignoredUpdates`: `diffHistory.md` entries caused by a discovery bug, or
+  whose only critical change is a removal.
 - `acceptedIntervals`: `diffHistory.md` entries that may stay the newest
   change although only their interval is known.
 

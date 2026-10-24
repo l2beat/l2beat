@@ -2,9 +2,8 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token ({{name}}) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the {{symbol}}-IOU but is sent to {{yieldRecipient}}.",
   "category": "bridge-external",
-  // custody of the backing behind the vb* assets, upgradeable by the project's
-  // vaultBridge multisigs: critical by the escrow rule.
-  "critical": true,
+  // not critical: vaultBridge multisigs outside the core governance can upgrade
+  // it and it invests the backing, so the escrow rule excludes it.
   "ignoreRelatives": ["asset", "underlyingToken", "yieldVault"],
   "ignoreInWatchMode": [
     "backingDifference",
@@ -29,17 +28,17 @@
       }
     },
     "yieldVault": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "external vault where the underlying backing assets are deposited to generate yield."
     },
     "yieldRecipient": {
       "severity": "MEDIUM"
     },
     "migrationManager": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "minimumReservePercentage": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
     },
     "paused": {
