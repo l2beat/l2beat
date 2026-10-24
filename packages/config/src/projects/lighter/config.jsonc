@@ -7,6 +7,14 @@
     "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": {
       "proxyType": "zkLighter proxy"
     },
+    // Governance and ZkLighterVerifier: the gatekeeper's UpgradeComplete events
+    // are their only upgrade record
+    "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1": {
+      "proxyType": "zkLighter managed proxy"
+    },
+    "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": {
+      "proxyType": "zkLighter managed proxy"
+    },
     "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67": {
       // Ossification: approvedUpgradeNoticePeriod is reset to the hardcoded 3 weeks after every finished or
       // canceled upgrade and can only be cut to zero by the immutable security council while an upgrade is
