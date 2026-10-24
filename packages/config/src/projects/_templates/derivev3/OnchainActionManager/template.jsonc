@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Entry point for L1 deposits and withdrawal requests. Every action is appended to an accumulator that batches consume in order.",
+  "ignoreMethods": [
+    "publicAccHistory",
+    "adminAccHistory",
+    "publicActionTimes",
+    "adminActionTimes"
+  ],
+  "ignoreInWatchMode": [
+    "publicActionsAcc",
+    "adminActionsAcc",
+    "publicHeadIndex",
+    "adminHeadIndex"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw the collected withdrawal fees."
+        }
+      ]
+    }
+  }
+}
