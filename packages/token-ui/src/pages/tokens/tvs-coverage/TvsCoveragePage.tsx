@@ -34,6 +34,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { useTRPC } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import { WithTooltip } from './cells'
+import type { DismissalActions } from './DismissalCell'
 import {
   defaultDirection,
   type Filters,
@@ -99,6 +100,22 @@ export function TvsCoveragePage() {
   )
   const isBuilding = refresh.isPending || (data?.building ?? false)
 
+  const onDecisionError = (error: { message: string }) => {
+    toast.error(error.message || 'Failed to save the decision')
+  }
+  const dismiss = useMutation(
+    trpc.tvsCoverage.dismiss.mutationOptions({
+      onSuccess: invalidate,
+      onError: onDecisionError,
+    }),
+  )
+  const restore = useMutation(
+    trpc.tvsCoverage.restore.mutationOptions({
+      onSuccess: invalidate,
+      onError: onDecisionError,
+    }),
+  )
+
   return (
     <AppLayout className="min-w-0">
       <Card className="flex h-[calc(100vh-16px)] flex-col">
@@ -120,6 +137,26 @@ export function TvsCoveragePage() {
             failedAt={data.failedAt}
             isBuilding={isBuilding}
             onRefresh={() => refresh.mutate()}
+            dismissalActions={{
+              dismiss: (row, reason, comment, onDismissed) =>
+                dismiss.mutate(
+                  {
+                    projectId: row.projectId,
+                    chain: row.chain,
+                    address: row.address,
+                    reason,
+                    comment: comment || undefined,
+                  },
+                  { onSuccess: onDismissed },
+                ),
+              restore: (row) =>
+                restore.mutate({
+                  projectId: row.projectId,
+                  chain: row.chain,
+                  address: row.address,
+                }),
+              isPending: dismiss.isPending || restore.isPending,
+            }}
           />
         ) : null}
       </Card>
@@ -170,11 +207,13 @@ function TvsGaps({
   failedAt,
   isRefreshing,
   onRefresh,
+  dismissalActions,
 }: {
   snapshot: Snapshot
   failedAt: number | undefined
   isRefreshing: boolean
   onRefresh: () => void
+  dismissalActions: DismissalActions
 }) {
   const [filters, setFilters] = useState(INITIAL_FILTERS)
   const [sort, setSort] = useState<Sort>({ key: 'value', direction: 'desc' })
@@ -352,6 +391,7 @@ function TvsGaps({
           sort={sort}
           onSort={onSort}
           onShowMore={showMore}
+          dismissalActions={dismissalActions}
         />
       </CardContent>
     </>
