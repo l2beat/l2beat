@@ -1013,6 +1013,74 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropTransferRepository.prototype.getDeploymentStatsByRange.name,
+    () => {
+      it('aggregates both token sides within the requested window', async () => {
+        const srcAddress = EthereumAddress.random()
+        const dstAddress = EthereumAddress.random()
+        const first = transfer(
+          'plugin',
+          'first',
+          'transfer',
+          UnixTime(200),
+          'ethereum',
+          'base',
+        )
+        const second = transfer(
+          'plugin',
+          'second',
+          'transfer',
+          UnixTime(300),
+          'ethereum',
+          'base',
+        )
+        first.srcTokenAddress = second.srcTokenAddress = srcAddress
+        first.dstTokenAddress = second.dstTokenAddress = dstAddress
+        first.srcValueUsd = 100
+        second.srcValueUsd = 50
+        first.dstValueUsd = 90
+        second.dstValueUsd = undefined
+        first.bridgeType = second.bridgeType = 'lockAndMint'
+
+        await repository.insertMany([
+          transfer('plugin', 'outside', 'transfer', UnixTime(100)),
+          first,
+          second,
+        ])
+
+        const result = await repository.getDeploymentStatsByRange(
+          UnixTime(100),
+          UnixTime(300),
+        )
+        const src = result.find((row) => row.chain === 'ethereum')
+        const dst = result.find((row) => row.chain === 'base')
+
+        expect(result).toHaveLength(2)
+        expect(src).toEqual({
+          chain: 'ethereum',
+          address: srcAddress,
+          abstractTokenId: 'ethereum',
+          symbol: 'ETH',
+          plugin: 'plugin',
+          volumeUsd: 150,
+          transferCount: 2,
+          valuedTransferCount: 2,
+        })
+        expect(dst).toEqual({
+          chain: 'base',
+          address: dstAddress,
+          abstractTokenId: 'ethereum',
+          symbol: 'ETH',
+          plugin: 'plugin',
+          volumeUsd: 90,
+          transferCount: 2,
+          valuedTransferCount: 1,
+        })
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.getProjectTransfers.name, () => {
     const snapshotTimestamp = UnixTime(2_000_000)
 

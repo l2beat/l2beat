@@ -76,6 +76,16 @@ export interface InteropTransferRecord {
   isProcessed: boolean
 }
 
+export interface InteropDeploymentStatsRecord {
+  chain: string
+  address: string
+  abstractTokenId: string | undefined
+  symbol: string | undefined
+  plugin: string
+  volumeUsd: number
+  transferCount: number
+  valuedTransferCount: number
+}
 export interface InteropTransferUpdate {
   srcAbstractTokenId: string | null
   srcSymbol: string | null
@@ -502,6 +512,97 @@ export class InteropTransferRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getDeploymentStatsByRange(
+    fromExclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<InteropDeploymentStatsRecord[]> {
+    interface Row {
+      chain: string
+      address: string
+      abstractTokenId: string | null
+      symbol: string | null
+      plugin: string
+      volumeUsd: number
+      transferCount: number
+      valuedTransferCount: number
+    }
+
+    // Keep the aggregation close to the data. A seven-day raw transfer window
+    // can contain hundreds of thousands of rows, while the coverage view needs
+    // one row per deployment/plugin combination.
+    const query = sql<Row>`
+      WITH window_transfers AS MATERIALIZED (
+        SELECT
+          plugin,
+          timestamp,
+          "srcChain",
+          "srcTokenAddress",
+          "srcAbstractTokenId",
+          "srcSymbol",
+          "srcValueUsd",
+          "dstChain",
+          "dstTokenAddress",
+          "dstAbstractTokenId",
+          "dstSymbol",
+          "dstValueUsd"
+        FROM "InteropTransfer"
+        WHERE timestamp > ${UnixTime.toDate(fromExclusive)}
+          AND timestamp <= ${UnixTime.toDate(toInclusive)}
+      ),
+      sides AS (
+        SELECT
+          "srcChain" AS chain,
+          "srcTokenAddress" AS address,
+          "srcAbstractTokenId" AS "abstractTokenId",
+          "srcSymbol" AS symbol,
+          "srcValueUsd" AS "valueUsd",
+          plugin
+        FROM window_transfers
+        WHERE "srcTokenAddress" IS NOT NULL
+
+        UNION ALL
+
+        SELECT
+          "dstChain" AS chain,
+          "dstTokenAddress" AS address,
+          "dstAbstractTokenId" AS "abstractTokenId",
+          "dstSymbol" AS symbol,
+          "dstValueUsd" AS "valueUsd",
+          plugin
+        FROM window_transfers
+        WHERE "dstTokenAddress" IS NOT NULL
+          AND (
+            "srcTokenAddress" IS NULL
+            OR "srcChain" <> "dstChain"
+            OR "srcTokenAddress" <> "dstTokenAddress"
+          )
+      )
+      SELECT
+        chain,
+        address,
+        max("abstractTokenId") AS "abstractTokenId",
+        max(symbol) AS symbol,
+        plugin,
+        sum(coalesce("valueUsd", 0))::double precision AS "volumeUsd",
+        count(*)::integer AS "transferCount",
+        count("valueUsd")::integer AS "valuedTransferCount"
+      FROM sides
+      GROUP BY chain, address, plugin
+    `.compile(this.db)
+
+    const result = await this.db.executeQuery(query)
+    return result.rows.map((row) => ({
+      chain: row.chain,
+      address: row.address,
+      abstractTokenId: row.abstractTokenId ?? undefined,
+      symbol: row.symbol ?? undefined,
+      plugin: row.plugin,
+      volumeUsd: Number(row.volumeUsd),
+      transferCount: Number(row.transferCount),
+      valuedTransferCount: Number(row.valuedTransferCount),
+    }))
   }
 
   async getByType(

@@ -90,6 +90,7 @@ export type {
 export {
   hasAnyInteropTransferFinancialsFilter,
   INTEROP_TRANSFER_RETENTION,
+  type InteropDeploymentStatsRecord,
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
   type InteropTransferDeployedTokenPairStats,
