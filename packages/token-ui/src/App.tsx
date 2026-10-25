@@ -17,7 +17,7 @@ import { TokenHistoryPage } from './pages/tokens/TokenHistoryPage'
 import { TokenIngestionQueuePage } from './pages/tokens/TokenIngestionQueuePage'
 import { TokenSuggestionsPage } from './pages/tokens/TokenSuggestionsPage'
 import { TokensSummaryPage } from './pages/tokens/TokensSummaryPage'
-import { TokenTvsCoveragePage } from './pages/tokens/TokenTvsCoveragePage'
+import { TvsCoveragePage } from './pages/tokens/tvs-coverage/TvsCoveragePage'
 import { TRPCReactProvider } from './react-query/trpc'
 
 const TokenRelationsGraphPage = lazy(() =>
@@ -60,10 +60,7 @@ export function App() {
                 </Suspense>
               }
             />
-            <Route
-              path="/tokens/tvs-coverage"
-              element={<TokenTvsCoveragePage />}
-            />
+            <Route path="/tokens/tvs-coverage" element={<TvsCoveragePage />} />
             <Route path="/search/:search" element={<SearchPage />} />
             <Route path="/tokens/new" element={<AddTokensPage />} />
             <Route path="/tokens/:id" element={<AbstractTokenPage />} />

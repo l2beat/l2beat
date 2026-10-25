@@ -1,3 +1,4 @@
+import { ProjectService } from '@l2beat/config'
 import { config as dotenv } from 'dotenv'
 import express from 'express'
 import { CoingeckoClient } from './chains/clients/coingecko/CoingeckoClient'
@@ -8,6 +9,10 @@ import { TokenIngestionProcessor } from './ingestion/TokenIngestionProcessor'
 import { TokenRelationIngestion } from './ingestion/TokenRelationIngestion'
 import { getLogger } from './logger'
 import { createTrpcRouter } from './server/routers/TrpcRouter'
+import { buildSnapshot } from './tvsCoverage/buildSnapshot'
+import { MarketDataSource } from './tvsCoverage/MarketDataSource'
+import { TvsCoverageService } from './tvsCoverage/TvsCoverageService'
+import { ViemChainReader } from './tvsCoverage/ViemChainReader'
 
 dotenv()
 
@@ -35,6 +40,33 @@ function main() {
     newQueueState,
   })
 
+  const projectService = new ProjectService()
+  const tvsCoverageService = new TvsCoverageService(
+    (days) =>
+      buildSnapshot(
+        {
+          db,
+          tokenDb,
+          projectService,
+          createChainReader: (rpcUrls) => new ViemChainReader(rpcUrls),
+          prices: new MarketDataSource(
+            db,
+            (ids) => coingeckoClient.getCoinsMarketData(ids),
+            logger,
+          ),
+        },
+        days,
+      ),
+    {
+      intervalMs: config.tvsCoverage.intervalMs,
+      windowDays: config.tvsCoverage.windowDays,
+    },
+    logger,
+  )
+  if (config.tvsCoverage.enabled) {
+    tvsCoverageService.start()
+  }
+
   app.get('/health', (_, res) => {
     res.status(200).send('OK')
   })
@@ -48,6 +80,7 @@ function main() {
       coingeckoClient,
       etherscanApiKey: config.etherscanApiKey,
       tokenIngestionProcessor,
+      tvsCoverageService,
     }),
   )
 
@@ -75,6 +108,7 @@ function main() {
   function shutdown(signal: NodeJS.Signals) {
     console.log(`Received ${signal}, shutting down...`)
     tokenIngestionLoop?.stop()
+    tvsCoverageService.stop()
     server.close(() => {
       Promise.all([tokenDb.close(), db.close()])
         .then(() => {

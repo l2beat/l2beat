@@ -33,6 +33,11 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
         1_000,
       ),
     },
+    tvsCoverage: {
+      enabled: env.boolean('TVS_COVERAGE_ENABLED', true),
+      intervalMs: env.integer('TVS_COVERAGE_INTERVAL_MS', 60 * 60_000),
+      windowDays: positiveInteger(env, 'TVS_COVERAGE_WINDOW_DAYS', 90),
+    },
   }
 }
 

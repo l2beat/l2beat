@@ -6,7 +6,7 @@ import type {
   TokenRelationRoute,
 } from '@l2beat/database'
 import type { InteropBridgeType } from '@l2beat/shared-pure'
-import { normalizeInteropTokenAddress } from '../../../ingestion/tokenIngestionUtils'
+import { normalizeInteropTokenAddress } from '../ingestion/tokenIngestionUtils'
 
 export interface TvsProjectInput {
   id: string
@@ -50,11 +50,13 @@ export interface CoverageRow extends TokenRef {
   projectId: string
   side: CoverageSide
   symbol: string | undefined
+  decimals: number | undefined
   abstractTokenId: string | undefined
   abstractSymbol: string | undefined
   issuer: string | undefined
   iconUrl: string | undefined
   coingeckoId: string | undefined
+  pricing: Pricing | undefined
   ignored: boolean
   status: CoverageStatus
   countedVia: TokenRef | undefined
@@ -65,8 +67,20 @@ export interface CoverageRow extends TokenRef {
   lastSeen: number
 }
 
+export interface Pricing {
+  coingeckoId: string
+  via: TokenRef | undefined
+}
+
+export interface CoverageResult {
+  rows: CoverageRow[]
+  isCounted: (projectId: string, token: TokenRef) => boolean
+  escrowAddresses: (projectId: string, chain: string) => string[]
+}
+
 interface FormulaLeaf extends TokenRef {
   escrow: boolean
+  escrowAddresses: string[]
 }
 
 interface ProjectIndex {
@@ -155,13 +169,18 @@ function collectScheduledLeaves(
 function toLeaf(
   formula: Exclude<Formula, { type: 'calculation' | 'value' | 'const' }>,
 ): FormulaLeaf {
+  const escrowAddresses =
+    formula.type === 'balanceOfEscrows'
+      ? formula.escrowAddresses
+      : formula.type === 'balanceOfEscrow' ||
+          formula.type === 'starknetBalanceOf'
+        ? [formula.escrowAddress]
+        : []
   return {
     chain: formula.chain,
     address: formula.address,
-    escrow:
-      formula.type === 'balanceOfEscrow' ||
-      formula.type === 'balanceOfEscrows' ||
-      formula.type === 'starknetBalanceOf',
+    escrow: escrowAddresses.length > 0,
+    escrowAddresses,
   }
 }
 
@@ -182,7 +201,7 @@ export function buildCoverage(input: {
   abstractTokens: AbstractTokenRecord[]
   relations: TokenRelationRoute[]
   timestamp: number
-}): CoverageRow[] {
+}): CoverageResult {
   const tokens = buildTokenInfo(input.deployedTokens, input.abstractTokens)
   const relations = buildRelationIndex(input.relations)
   const indices = input.projects.map((project) =>
@@ -217,15 +236,32 @@ export function buildCoverage(input: {
     }
   }
 
-  return Array.from(rows.values(), (row) =>
-    finalizeRow(row, tokens, relations),
-  ).sort(
-    (a, b) =>
-      b.volumeUsd - a.volumeUsd ||
-      b.transferCount - a.transferCount ||
-      a.projectId.localeCompare(b.projectId) ||
-      tokenKey(a.chain, a.address).localeCompare(tokenKey(b.chain, b.address)),
-  )
+  return {
+    rows: Array.from(rows.values(), (row) =>
+      finalizeRow(row, tokens, relations),
+    ).sort(
+      (a, b) =>
+        b.volumeUsd - a.volumeUsd ||
+        b.transferCount - a.transferCount ||
+        a.projectId.localeCompare(b.projectId) ||
+        tokenKey(a.chain, a.address).localeCompare(
+          tokenKey(b.chain, b.address),
+        ),
+    ),
+    isCounted: (projectId, token) =>
+      byId.get(projectId)?.active.has(tokenKey(token.chain, token.address)) ??
+      false,
+    escrowAddresses: (projectId, chain) => {
+      const addresses = new Set<string>()
+      for (const leaf of byId.get(projectId)?.active.values() ?? []) {
+        if (leaf.chain !== chain) continue
+        for (const address of leaf.escrowAddresses) {
+          addresses.add(normalizeTokenAddress(address))
+        }
+      }
+      return Array.from(addresses).sort()
+    },
+  }
 }
 
 // The other side of a project's own lock-and-mint bridge is where the project
@@ -310,11 +346,13 @@ function finalizeRow(
     chain: row.token.chain,
     address: row.token.address,
     symbol: deployedToken?.symbol ?? abstractToken?.symbol,
+    decimals: deployedToken?.decimals,
     abstractTokenId: abstractToken?.id,
     abstractSymbol: abstractToken?.symbol,
     issuer: abstractToken?.issuer ?? undefined,
     iconUrl: abstractToken?.iconUrl ?? undefined,
     coingeckoId: abstractToken?.coingeckoId ?? undefined,
+    pricing: getPricing(abstractToken, edges, tokens),
     ignored: deployedToken?.ignored ?? false,
     status,
     countedVia,
@@ -380,8 +418,41 @@ function classify(
   return { status: 'missing', countedVia: undefined }
 }
 
+// A lock-and-mint copy is worth what its locked counterpart is worth, which
+// prices copies CoinGecko does not list on their chain.
+function getPricing(
+  abstractToken: AbstractTokenRecord | undefined,
+  edges: RelationEdge[],
+  tokens: Map<string, TokenInfo>,
+): Pricing | undefined {
+  if (abstractToken?.coingeckoId) {
+    return abstractToken.isPriceUnreliable
+      ? undefined
+      : { coingeckoId: abstractToken.coingeckoId, via: undefined }
+  }
+  for (const edge of edges) {
+    if (edge.bridgeType !== 'lockAndMint' || edge.role !== 'minted') continue
+    const counterpart = tokens.get(edge.counterpart)
+    const coingeckoId = counterpart?.abstractToken?.coingeckoId
+    if (
+      counterpart?.deployedToken &&
+      coingeckoId &&
+      !counterpart.abstractToken?.isPriceUnreliable
+    ) {
+      return {
+        coingeckoId,
+        via: {
+          chain: counterpart.deployedToken.chain,
+          address: normalizeTokenAddress(counterpart.deployedToken.address),
+        },
+      }
+    }
+  }
+  return undefined
+}
+
 function toRef(leaf: FormulaLeaf): TokenRef {
-  return { chain: leaf.chain, address: leaf.address }
+  return { chain: leaf.chain, address: normalizeTokenAddress(leaf.address) }
 }
 
 function buildProjectIndex(

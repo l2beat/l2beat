@@ -57,9 +57,24 @@ describe(collectActiveLeaves.name, () => {
     )
 
     expect(leaves).toEqual([
-      { chain: 'ethereum', address: EthereumAddress(L1_USDC), escrow: true },
-      { chain: 'ethereum', address: 'native', escrow: true },
-      { chain: 'arbitrum', address: EthereumAddress(ARB_USDC), escrow: false },
+      {
+        chain: 'ethereum',
+        address: EthereumAddress(L1_USDC),
+        escrow: true,
+        escrowAddresses: [EthereumAddress(ESCROW)],
+      },
+      {
+        chain: 'ethereum',
+        address: 'native',
+        escrow: true,
+        escrowAddresses: [EthereumAddress(ESCROW)],
+      },
+      {
+        chain: 'arbitrum',
+        address: EthereumAddress(ARB_USDC),
+        escrow: false,
+        escrowAddresses: [],
+      },
     ])
   })
 
@@ -139,10 +154,7 @@ describe(buildCoverage.name, () => {
     })
 
     expect(rows[0]?.status).toEqual('countedViaCounterpart')
-    expect(rows[0]?.countedVia).toEqual({
-      chain: 'ethereum',
-      address: EthereumAddress(L1_USDC),
-    })
+    expect(rows[0]?.countedVia).toEqual({ chain: 'ethereum', address: L1_USDC })
   })
 
   it('does not count a third-party copy backed by an escrow token of the project', () => {
@@ -345,11 +357,13 @@ describe(buildCoverage.name, () => {
       chain: 'arbitrum',
       address: ARB_USDC,
       symbol: 'USDC',
+      decimals: 6,
       abstractTokenId: usdc.id,
       abstractSymbol: 'USDC',
       issuer: 'circle',
       iconUrl: undefined,
       coingeckoId: 'usd-coin',
+      pricing: { coingeckoId: 'usd-coin', via: undefined },
       ignored: true,
       status: 'missing',
       countedVia: undefined,
@@ -375,6 +389,99 @@ describe(buildCoverage.name, () => {
   })
 })
 
+describe('buildCoverage helpers', () => {
+  const project: TvsProjectInput = {
+    id: 'arbitrum',
+    name: 'Arbitrum One',
+    chain: 'arbitrum',
+    plugins: ['orbitstack-standardgateway'],
+    tokens: [
+      token(escrow('ethereum', L1_USDC)),
+      token({
+        type: 'balanceOfEscrows',
+        chain: 'ethereum',
+        address: 'native',
+        escrowAddresses: [
+          EthereumAddress('0x2222222222222222222222222222222222222222'),
+          EthereumAddress(ESCROW),
+        ],
+        decimals: 18,
+        sinceTimestamp: UnixTime(1),
+      }),
+    ],
+  }
+
+  it('answers which deployments a project counts and where its escrows are', () => {
+    const result = buildCoverage({
+      stats: [],
+      projects: [project],
+      deployedTokens: [],
+      abstractTokens: [],
+      relations: [],
+      timestamp: NOW,
+    })
+
+    expect(
+      result.isCounted('arbitrum', {
+        chain: 'ethereum',
+        address: L1_USDC.toUpperCase().replace('0X', '0x'),
+      }),
+    ).toEqual(true)
+    expect(
+      result.isCounted('arbitrum', { chain: 'arbitrum', address: ARB_USDC }),
+    ).toEqual(false)
+    expect(result.escrowAddresses('arbitrum', 'ethereum')).toEqual([
+      ESCROW,
+      '0x2222222222222222222222222222222222222222',
+    ])
+    expect(result.escrowAddresses('arbitrum', 'arbitrum')).toEqual([])
+  })
+
+  it('prices an unlisted minted copy with its locked counterpart', () => {
+    const usdc = abstractToken('circle.USDC', 'usd-coin')
+    const unreliable = {
+      ...abstractToken('other.TKN', 'tkn'),
+      isPriceUnreliable: true,
+    }
+    const mintedCopy = '0x3333333333333333333333333333333333333333'
+    const rows = buildCoverage({
+      stats: [
+        stat({ id: 'arbitrum', tokenChain: 'arbitrum', address: mintedCopy }),
+        stat({ id: 'arbitrum', tokenChain: 'arbitrum', address: ARB_USDC }),
+      ],
+      projects: [{ ...project, tokens: [] }],
+      deployedTokens: [
+        deployedToken('ethereum', L1_USDC, usdc.id),
+        {
+          ...deployedToken('arbitrum', mintedCopy, usdc.id),
+          abstractTokenId: null,
+        },
+        deployedToken('arbitrum', ARB_USDC, unreliable.id),
+      ],
+      abstractTokens: [usdc, unreliable],
+      relations: [
+        relation(
+          ['ethereum', L1_USDC],
+          ['arbitrum', mintedCopy],
+          'orbitstack-standardgateway',
+        ),
+      ],
+      timestamp: NOW,
+    }).rows
+
+    expect(rows.map((row) => [row.address, row.pricing])).toEqual([
+      [
+        mintedCopy,
+        {
+          coingeckoId: 'usd-coin',
+          via: { chain: 'ethereum', address: L1_USDC },
+        },
+      ],
+      [ARB_USDC, undefined],
+    ])
+  })
+})
+
 function coverage(input: {
   projects: TvsProjectInput[]
   stats: AggregatedInteropDeployedTokenStats[]
@@ -388,7 +495,7 @@ function coverage(input: {
     relations: [],
     ...input,
     timestamp: NOW,
-  })
+  }).rows
 }
 
 function summary(rows: CoverageRow[]) {

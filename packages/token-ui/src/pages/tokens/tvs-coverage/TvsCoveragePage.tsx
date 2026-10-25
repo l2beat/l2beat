@@ -1,0 +1,319 @@
+import { formatCurrency } from '@l2beat/shared-pure'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { RotateCwIcon, TriangleAlertIcon } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '~/components/core/Button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '~/components/core/Card'
+import { Checkbox } from '~/components/core/Checkbox'
+import { Input } from '~/components/core/Input'
+import { Label } from '~/components/core/Label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/core/Select'
+import { LoadingState } from '~/components/LoadingState'
+import { AppLayout } from '~/layouts/AppLayout'
+import { useTRPC } from '~/react-query/trpc'
+import { cn } from '~/utils/cn'
+import { WithTooltip } from './cells'
+import {
+  defaultDirection,
+  type Filters,
+  filterRows,
+  formatAge,
+  type Names,
+  type SideFilter,
+  type Snapshot,
+  type Sort,
+  type StatusFilter,
+  sortRows,
+} from './rows'
+import { TvsCoverageTable } from './TvsCoverageTable'
+
+const PAGE_SIZE = 50
+
+const INITIAL_FILTERS: Filters = {
+  status: 'missing',
+  project: 'all',
+  side: 'all',
+  seenWithinDays: undefined,
+  minValueUsd: 0,
+  search: '',
+  showIgnored: false,
+}
+
+export function TvsCoveragePage() {
+  const trpc = useTRPC()
+  const queryClient = useQueryClient()
+  const { data, error, isError, isLoading } = useQuery(
+    trpc.tvsCoverage.get.queryOptions(undefined, {
+      staleTime: 5 * 60 * 1000,
+      refetchOnWindowFocus: false,
+    }),
+  )
+  const refresh = useMutation(
+    trpc.tvsCoverage.refresh.mutationOptions({
+      onSuccess: (snapshot) => {
+        queryClient.setQueryData(trpc.tvsCoverage.get.queryKey(), snapshot)
+        toast.success('Snapshot rebuilt')
+      },
+      onError: (error: { message?: string }) => {
+        toast.error(error.message || 'Failed to rebuild the snapshot')
+      },
+    }),
+  )
+
+  return (
+    <AppLayout>
+      <Card className="flex h-[calc(100vh-16px)] flex-col">
+        {isLoading ? (
+          <LoadingState className="h-full" />
+        ) : isError ? (
+          <div className="grid h-full place-items-center p-4 text-center text-destructive text-sm">
+            {error.message}
+          </div>
+        ) : data ? (
+          <Coverage
+            snapshot={data}
+            isRefreshing={refresh.isPending}
+            onRefresh={() => refresh.mutate()}
+          />
+        ) : null}
+      </Card>
+    </AppLayout>
+  )
+}
+
+function Coverage({
+  snapshot,
+  isRefreshing,
+  onRefresh,
+}: {
+  snapshot: Snapshot
+  isRefreshing: boolean
+  onRefresh: () => void
+}) {
+  const [filters, setFilters] = useState(INITIAL_FILTERS)
+  const [sort, setSort] = useState<Sort>({ key: 'value', direction: 'desc' })
+  const [visibleRows, setVisibleRows] = useState(PAGE_SIZE)
+
+  const names = useMemo<Names>(() => {
+    const projects = new Map(snapshot.projects.map((p) => [p.id, p.name]))
+    const bridges = new Map(snapshot.bridges.map((b) => [b.id, b.name]))
+    return {
+      project: (id) => projects.get(id) ?? id,
+      bridge: (id) => bridges.get(id) ?? id,
+    }
+  }, [snapshot])
+  const projectOptions = useMemo(() => {
+    const ids = new Set(snapshot.rows.map((row) => row.projectId))
+    return snapshot.projects
+      .filter((project) => ids.has(project.id))
+      .sort((a, b) => a.name.localeCompare(b.name))
+  }, [snapshot])
+  const rows = useMemo(
+    () =>
+      sortRows(
+        filterRows(snapshot.rows, filters, names, snapshot.generatedAt),
+        sort,
+        names,
+      ),
+    [filters, names, snapshot, sort],
+  )
+
+  const update = (change: Partial<Filters>) => {
+    setFilters((current) => ({ ...current, ...change }))
+    setVisibleRows(PAGE_SIZE)
+  }
+  const onSort = (key: Sort['key']) =>
+    setSort((current) => ({
+      key,
+      direction:
+        current.key === key
+          ? current.direction === 'asc'
+            ? 'desc'
+            : 'asc'
+          : defaultDirection(key),
+    }))
+
+  const totalValue = rows.reduce(
+    (sum, row) => sum + (row.value?.valueUsd ?? 0),
+    0,
+  )
+  const now = Math.floor(Date.now() / 1000)
+
+  return (
+    <>
+      <CardHeader className="gap-3 border-b">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <CardTitle>TVS gaps</CardTitle>
+          <CardDescription>
+            {rows.length.toLocaleString()} rows ·{' '}
+            {formatCurrency(totalValue, 'usd')} est. value · interop over{' '}
+            {snapshot.window.days} days · snapshot{' '}
+            {formatAge(snapshot.generatedAt, now)}
+          </CardDescription>
+          {snapshot.warnings.length > 0 && (
+            <WithTooltip
+              content={snapshot.warnings.map((warning) => (
+                <div key={warning}>{warning}</div>
+              ))}
+            >
+              <span className="flex items-center gap-1 text-amber-700 text-xs dark:text-amber-300">
+                <TriangleAlertIcon className="size-3.5" />
+                {snapshot.warnings.length} warnings
+              </span>
+            </WithTooltip>
+          )}
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <FilterSelect
+            label="TVS status"
+            className="w-36"
+            value={filters.status}
+            onChange={(status) => update({ status: status as StatusFilter })}
+            options={[
+              ['missing', 'Missing'],
+              ['review', 'Needs review'],
+              ['unpriced', 'Needs pricing'],
+              ['scheduled', 'Scheduled'],
+              ['counted', 'Counted'],
+              ['all', 'All'],
+            ]}
+          />
+          <FilterSelect
+            label="Project"
+            className="w-44"
+            value={filters.project}
+            onChange={(project) => update({ project })}
+            options={[
+              ['all', 'All projects'],
+              ...projectOptions.map((p) => [p.id, p.name] as [string, string]),
+            ]}
+          />
+          <FilterSelect
+            label="Side"
+            className="w-32"
+            value={filters.side}
+            onChange={(side) => update({ side: side as SideFilter })}
+            options={[
+              ['all', 'Chain + escrow'],
+              ['chain', 'On chain'],
+              ['escrow', 'In escrow'],
+            ]}
+          />
+          <FilterSelect
+            label="Last seen"
+            className="w-32"
+            value={String(filters.seenWithinDays ?? 'any')}
+            onChange={(days) =>
+              update({
+                seenWithinDays: days === 'any' ? undefined : Number(days),
+              })
+            }
+            options={[
+              ['any', 'Seen any time'],
+              ['7', 'Seen in 7 days'],
+              ['30', 'Seen in 30 days'],
+            ]}
+          />
+          <Input
+            type="number"
+            min="0"
+            step="10000"
+            inputMode="numeric"
+            value={filters.minValueUsd || ''}
+            onChange={(event) =>
+              update({ minValueUsd: Number(event.target.value) || 0 })
+            }
+            className="h-8 w-32"
+            placeholder="Min value $"
+            aria-label="Minimum value"
+          />
+          <Input
+            type="search"
+            value={filters.search}
+            onChange={(event) => update({ search: event.target.value })}
+            className="h-8 w-40 min-w-40 flex-1"
+            placeholder="Search"
+            aria-label="Search"
+            autoComplete="off"
+          />
+          <div className="flex items-center gap-1.5">
+            <Checkbox
+              id="tvs-coverage-ignored"
+              checked={filters.showIgnored}
+              onCheckedChange={(checked) =>
+                update({ showIgnored: checked === true })
+              }
+            />
+            <Label htmlFor="tvs-coverage-ignored" className="text-xs">
+              Ignored
+            </Label>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            className="size-8"
+            disabled={isRefreshing}
+            aria-label="Rebuild snapshot"
+            title="Rebuild snapshot"
+            onClick={onRefresh}
+          >
+            <RotateCwIcon className={cn(isRefreshing && 'animate-spin')} />
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent className="min-h-0 flex-1 overflow-y-auto">
+        <TvsCoverageTable
+          rows={rows.slice(0, visibleRows)}
+          totalRows={rows.length}
+          snapshot={snapshot}
+          sort={sort}
+          onSort={onSort}
+          onShowMore={() => setVisibleRows((current) => current + PAGE_SIZE)}
+        />
+      </CardContent>
+    </>
+  )
+}
+
+function FilterSelect({
+  label,
+  className,
+  value,
+  onChange,
+  options,
+}: {
+  label: string
+  className: string
+  value: string
+  onChange: (value: string) => void
+  options: [string, string][]
+}) {
+  return (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger size="sm" className={className} aria-label={label}>
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {options.map(([option, name]) => (
+          <SelectItem key={option} value={option}>
+            {name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
+}
