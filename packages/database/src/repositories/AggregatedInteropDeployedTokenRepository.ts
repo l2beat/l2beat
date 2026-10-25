@@ -23,6 +23,18 @@ export interface AggregatedInteropDeployedTokenRecord {
   burnedValueUsd: number | undefined
 }
 
+export interface AggregatedInteropDeployedTokenStats {
+  id: string
+  bridgeType: InteropBridgeType
+  srcChain: string
+  dstChain: string
+  tokenChain: string
+  tokenAddress: string
+  volume: number
+  transferCount: number
+  lastSeen: UnixTime
+}
+
 export function toRecord(
   row: Selectable<AggregatedInteropDeployedToken>,
 ): AggregatedInteropDeployedTokenRecord {
@@ -106,6 +118,61 @@ export class AggregatedInteropDeployedTokenRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  /**
+   * Sums the earliest snapshot of each UTC day after `fromExclusive`. Each
+   * snapshot covers the 24 hours before it, so these snapshots tile the range
+   * without double counting, and the hourly snapshots that are deleted after
+   * the retention period are never needed.
+   */
+  async getDailyStatsSince(
+    fromExclusive: UnixTime,
+  ): Promise<AggregatedInteropDeployedTokenStats[]> {
+    const rows = await this.db
+      .with('daily_snapshots', (qb) =>
+        qb
+          .selectFrom('AggregatedInteropTransfer')
+          .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+          .where('timestamp', '>', UnixTime.toDate(fromExclusive))
+          .groupBy(sql`date_trunc('day', timestamp)`),
+      )
+      .selectFrom('AggregatedInteropDeployedToken')
+      .select((eb) => [
+        'id',
+        'bridgeType',
+        'srcChain',
+        'dstChain',
+        'tokenChain',
+        'tokenAddress',
+        sql<number>`sum(volume)::double precision`.as('volume'),
+        sql<number>`sum("transferCount")::integer`.as('transferCount'),
+        eb.fn.max('timestamp').as('lastSeen'),
+      ])
+      .where('timestamp', 'in', (eb) =>
+        eb.selectFrom('daily_snapshots').select('timestamp'),
+      )
+      .groupBy([
+        'id',
+        'bridgeType',
+        'srcChain',
+        'dstChain',
+        'tokenChain',
+        'tokenAddress',
+      ])
+      .execute()
+
+    return rows.map((row) => ({
+      id: row.id,
+      bridgeType: row.bridgeType as InteropBridgeType,
+      srcChain: row.srcChain,
+      dstChain: row.dstChain,
+      tokenChain: row.tokenChain,
+      tokenAddress: row.tokenAddress,
+      volume: Number(row.volume),
+      transferCount: Number(row.transferCount),
+      lastSeen: UnixTime.fromDate(row.lastSeen),
+    }))
   }
 
   async deleteAllButEarliestPerDayBefore(timestamp: UnixTime): Promise<number> {

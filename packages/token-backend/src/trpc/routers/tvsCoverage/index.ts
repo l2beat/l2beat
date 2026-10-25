@@ -5,7 +5,7 @@ import { router } from '../../trpc'
 import { getSupplyEstimates, SUPPLY_ESTIMATE_LIMIT } from './getSupplyEstimates'
 import { getTvsCoverageData } from './getTvsCoverageData'
 
-const WindowHours = v.union([v.literal(24), v.literal(72), v.literal(168)])
+const WindowDays = v.union([v.literal(7), v.literal(30), v.literal(90)])
 const SupplyEstimateRequests = v
   .array(v.object({ chain: v.string(), address: v.string() }))
   .check(
@@ -20,9 +20,9 @@ export function tvsCoverageRouter({
 }) {
   return router({
     get: readOnlyProcedure
-      .input(v.object({ hours: WindowHours }))
+      .input(v.object({ days: WindowDays }))
       .query(({ ctx, input }) =>
-        getTvsCoverageData(ctx.db, ctx.tokenDb, input.hours),
+        getTvsCoverageData(ctx.db, ctx.tokenDb, input.days),
       ),
     getSupplyEstimates: readOnlyProcedure
       .input(SupplyEstimateRequests)

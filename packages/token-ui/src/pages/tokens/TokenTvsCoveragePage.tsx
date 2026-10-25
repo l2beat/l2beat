@@ -46,21 +46,22 @@ import { cn } from '~/utils/cn'
 
 type CoverageData = RouterOutputs['tvsCoverage']['get']
 type CoverageRow = CoverageData['rows'][number]
-type PluginDetails = CoverageData['plugins'][number]
+type BridgeDetails = CoverageData['bridges'][number]
+type ProjectDetails = CoverageData['projects'][number]
 type SupplyEstimate = RouterOutputs['tvsCoverage']['getSupplyEstimates'][number]
 type VaultAsset = NonNullable<SupplyEstimate['vaultAsset']>
-type CoverageFilter = 'missing' | 'included' | 'all'
-type WindowHours = 24 | 72 | 168
+type CoverageFilter = 'missing' | 'review' | 'counted' | 'scheduled' | 'all'
+type WindowDays = 7 | 30 | 90
 type SortDirection = 'asc' | 'desc'
 type SortKey =
-  | 'chain'
+  | 'project'
   | 'token'
   | 'totalSupply'
   | 'estimatedValueUsd'
   | 'volumeUsd'
-  | 'included'
+  | 'status'
   | 'role'
-  | 'plugins'
+  | 'bridges'
 
 interface SortState {
   key: SortKey
@@ -69,14 +70,14 @@ interface SortState {
 
 const PAGE_SIZE = 25
 const MAX_SORTABLE_ROWS = 100
-const MAX_VISIBLE_PLUGINS = 4
+const MAX_VISIBLE_BRIDGES = 4
 const SUPPLY_REQUEST_DEBOUNCE_MS = 300
 const CASE_SENSITIVE_TOKEN_ADDRESS_CHAINS = new Set(['solana', 'tron'])
 
 export function TokenTvsCoveragePage() {
   const trpc = useTRPC()
-  const [hours, setHours] = useState<WindowHours>(168)
-  const [chain, setChain] = useState('all')
+  const [days, setDays] = useState<WindowDays>(30)
+  const [project, setProject] = useState('all')
   const [coverage, setCoverage] = useState<CoverageFilter>('missing')
   const [minimumVolume, setMinimumVolume] = useState('0')
   const [search, setSearch] = useState('')
@@ -94,7 +95,7 @@ export function TokenTvsCoveragePage() {
     refetch: refetchCoverage,
   } = useQuery(
     trpc.tvsCoverage.get.queryOptions(
-      { hours },
+      { days },
       {
         staleTime: 2 * 60 * 1000,
         refetchOnWindowFocus: false,
@@ -102,35 +103,26 @@ export function TokenTvsCoveragePage() {
     ),
   )
 
-  useEffect(() => {
-    if (
-      chain !== 'all' &&
-      data !== undefined &&
-      !data.chains.some((candidate) => candidate.chain === chain)
-    ) {
-      setChain('all')
-    }
-  }, [chain, data])
-
-  const chainsById = useMemo(
-    () => new Map(data?.chains.map((chain) => [chain.chain, chain])),
-    [data],
-  )
-  const pluginsById = useMemo(
-    () => new Map((data?.plugins ?? []).map((plugin) => [plugin.id, plugin])),
-    [data],
-  )
-  const tvsDeploymentKeys = useMemo(
+  const projectsById = useMemo(
     () =>
-      new Set(
-        (data?.tvsDeployments ?? []).map((deployment) =>
-          projectTvsDeploymentKey(
-            deployment.projectChain,
-            deployment.tokenChain,
-            deployment.address,
-          ),
-        ),
+      new Map((data?.projects ?? []).map((project) => [project.id, project])),
+    [data],
+  )
+  const projectsWithRows = useMemo(() => {
+    const ids = new Set((data?.rows ?? []).map((row) => row.projectId))
+    return (data?.projects ?? [])
+      .filter((project) => ids.has(project.id))
+      .sort((a, b) => a.name.localeCompare(b.name))
+  }, [data])
+  const explorerUrls = useMemo(
+    () =>
+      new Map(
+        (data?.chains ?? []).map((chain) => [chain.name, chain.explorerUrl]),
       ),
+    [data],
+  )
+  const bridgesById = useMemo(
+    () => new Map((data?.bridges ?? []).map((bridge) => [bridge.id, bridge])),
     [data],
   )
   const filteredRows = useMemo(() => {
@@ -138,30 +130,37 @@ export function TokenTvsCoveragePage() {
     const threshold = Number(minimumVolume) || 0
 
     return (data?.rows ?? []).filter((row) => {
-      const chainInfo = chainsById.get(row.chain)
-      if (chain !== 'all' && row.chain !== chain) return false
-      if (coverage !== 'all' && (coverage === 'included') !== row.included) {
-        return false
-      }
+      if (project !== 'all' && row.projectId !== project) return false
+      if (!matchesCoverage(row.status, coverage)) return false
       if (row.volumeUsd < threshold) return false
       if (!needle) return true
 
       return [
+        row.projectId,
+        projectsById.get(row.projectId)?.name,
         row.chain,
-        chainInfo?.chainName,
-        chainInfo?.projectName,
         row.address,
         row.symbol,
         row.abstractSymbol,
         row.issuer,
         row.role,
-        ...row.plugins,
+        ...row.bridges.map(
+          (bridge) => bridgesById.get(bridge.id)?.name ?? bridge.id,
+        ),
       ]
         .join(' ')
         .toLowerCase()
         .includes(needle)
     })
-  }, [chain, chainsById, coverage, data, minimumVolume, search])
+  }, [
+    bridgesById,
+    coverage,
+    data,
+    minimumVolume,
+    project,
+    projectsById,
+    search,
+  ])
 
   const rankedRows = useMemo(
     () => filteredRows.slice(0, MAX_SORTABLE_ROWS),
@@ -169,10 +168,9 @@ export function TokenTvsCoveragePage() {
   )
   const supplyRequests = useMemo(
     () =>
-      rankedRows.map((row) => ({
-        chain: row.chain,
-        address: row.address,
-      })),
+      rankedRows
+        .filter((row) => row.side === 'chain')
+        .map((row) => ({ chain: row.chain, address: row.address })),
     [rankedRows],
   )
   const [debouncedSupplyRequests, setDebouncedSupplyRequests] =
@@ -209,8 +207,8 @@ export function TokenTvsCoveragePage() {
   )
   const sortedRows = useMemo(
     () =>
-      sortRows(rankedRows, sort, supplyByDeployment, chainsById, pluginsById),
-    [chainsById, pluginsById, rankedRows, sort, supplyByDeployment],
+      sortRows(rankedRows, sort, supplyByDeployment, projectsById, bridgesById),
+    [bridgesById, projectsById, rankedRows, sort, supplyByDeployment],
   )
   const shownRows = useMemo(
     () => sortedRows.slice(0, visibleRows),
@@ -254,9 +252,9 @@ export function TokenTvsCoveragePage() {
           </div>
           <div className="flex flex-wrap gap-2">
             <Select
-              value={String(hours)}
+              value={String(days)}
               onValueChange={(value) => {
-                setHours(Number(value) as WindowHours)
+                setDays(Number(value) as WindowDays)
                 setVisibleRows(PAGE_SIZE)
               }}
             >
@@ -264,27 +262,27 @@ export function TokenTvsCoveragePage() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="24">24 hours</SelectItem>
-                <SelectItem value="72">3 days</SelectItem>
-                <SelectItem value="168">7 days</SelectItem>
+                <SelectItem value="7">7 days</SelectItem>
+                <SelectItem value="30">30 days</SelectItem>
+                <SelectItem value="90">90 days</SelectItem>
               </SelectContent>
             </Select>
 
             <Select
-              value={chain}
+              value={project}
               onValueChange={(value) => {
-                setChain(value)
+                setProject(value)
                 setVisibleRows(PAGE_SIZE)
               }}
             >
-              <SelectTrigger size="sm" className="w-40" aria-label="Chain">
+              <SelectTrigger size="sm" className="w-40" aria-label="Project">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All chains</SelectItem>
-                {data?.chains.map((chain) => (
-                  <SelectItem key={chain.chain} value={chain.chain}>
-                    {chain.chainName}
+                <SelectItem value="all">All projects</SelectItem>
+                {projectsWithRows.map((project) => (
+                  <SelectItem key={project.id} value={project.id}>
+                    {project.name}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -299,14 +297,16 @@ export function TokenTvsCoveragePage() {
             >
               <SelectTrigger
                 size="sm"
-                className="w-28"
+                className="w-36"
                 aria-label="TVS coverage"
               >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="missing">Missing</SelectItem>
-                <SelectItem value="included">Included</SelectItem>
+                <SelectItem value="review">Needs review</SelectItem>
+                <SelectItem value="counted">Counted</SelectItem>
+                <SelectItem value="scheduled">Scheduled</SelectItem>
                 <SelectItem value="all">All</SelectItem>
               </SelectContent>
             </Select>
@@ -374,8 +374,8 @@ export function TokenTvsCoveragePage() {
                   <TableHead className="w-12 text-right">#</TableHead>
                   <SortableTableHead
                     className="w-40"
-                    label="Chain"
-                    sortKey="chain"
+                    label="Project"
+                    sortKey="project"
                     sort={sort}
                     onSort={sortBy}
                   />
@@ -411,9 +411,9 @@ export function TokenTvsCoveragePage() {
                     align="right"
                   />
                   <SortableTableHead
-                    className="w-20"
+                    className="w-28"
                     label="TVS"
-                    sortKey="included"
+                    sortKey="status"
                     sort={sort}
                     onSort={sortBy}
                   />
@@ -427,7 +427,7 @@ export function TokenTvsCoveragePage() {
                   <SortableTableHead
                     className="w-24"
                     label="Via"
-                    sortKey="plugins"
+                    sortKey="bridges"
                     sort={sort}
                     onSort={sortBy}
                   />
@@ -445,37 +445,28 @@ export function TokenTvsCoveragePage() {
                   </TableRow>
                 ) : (
                   shownRows.map((row, index) => {
-                    const chainInfo = chainsById.get(row.chain)
+                    const projectInfo = projectsById.get(row.projectId)
+                    const explorerUrl = explorerUrls.get(row.chain)
                     const symbol = row.abstractSymbol ?? row.symbol ?? 'Unknown'
-                    const supply = supplyByDeployment.get(
-                      deploymentKey(row.chain, row.address),
-                    )
-                    const vaultAssetIncluded = supply?.vaultAsset
-                      ? tvsDeploymentKeys.has(
-                          projectTvsDeploymentKey(
-                            row.chain,
-                            row.chain,
-                            supply.vaultAsset.address,
-                          ),
-                        )
-                      : false
-                    const rolesByPlugin = new Map(
-                      (row.pluginRoles ?? []).map(({ plugin, roles }) => [
-                        plugin,
-                        roles,
-                      ]),
-                    )
+                    const supply =
+                      row.side === 'chain'
+                        ? supplyByDeployment.get(
+                            deploymentKey(row.chain, row.address),
+                          )
+                        : undefined
 
                     return (
-                      <TableRow key={`${row.chain}:${row.address}`}>
+                      <TableRow
+                        key={`${row.projectId}:${row.chain}:${row.address}`}
+                      >
                         <TableCell className="text-right text-muted-foreground tabular-nums">
                           {index + 1}
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-2 font-medium">
-                            {chainInfo?.projectIconUrl && (
+                            {projectInfo?.iconUrl && (
                               <img
-                                src={chainInfo.projectIconUrl}
+                                src={projectInfo.iconUrl}
                                 alt=""
                                 width={20}
                                 height={20}
@@ -486,7 +477,12 @@ export function TokenTvsCoveragePage() {
                                 }}
                               />
                             )}
-                            {chainInfo?.chainName ?? row.chain}
+                            {projectInfo?.name ?? row.projectId}
+                          </div>
+                          <div className="text-muted-foreground text-xs">
+                            {row.side === 'escrow'
+                              ? `escrow on ${row.chain}`
+                              : row.chain}
                           </div>
                         </TableCell>
                         <TableCell>
@@ -520,19 +516,10 @@ export function TokenTvsCoveragePage() {
                                   </span>
                                 )}
                                 {supply?.vaultAsset && (
-                                  <VaultAssetBadges
-                                    asset={supply.vaultAsset}
-                                    included={vaultAssetIncluded}
-                                    chainName={
-                                      chainInfo?.chainName ?? row.chain
-                                    }
-                                  />
+                                  <VaultAssetBadges asset={supply.vaultAsset} />
                                 )}
                               </div>
-                              <Address
-                                row={row}
-                                explorerUrl={chainInfo?.explorerUrl}
-                              />
+                              <Address row={row} explorerUrl={explorerUrl} />
                             </div>
                           </div>
                         </TableCell>
@@ -570,30 +557,21 @@ export function TokenTvsCoveragePage() {
                           </div>
                           <div className="text-muted-foreground text-xs">
                             {row.transferCount.toLocaleString()} txs
-                            {row.unvaluedTransferCount > 0 && (
-                              <>
-                                {' · '}
-                                {row.unvaluedTransferCount.toLocaleString()}{' '}
-                                unvalued
-                              </>
-                            )}
                           </div>
                         </TableCell>
                         <TableCell>
-                          <CoverageBadge included={row.included} />
+                          <CoverageBadge row={row} />
                         </TableCell>
                         <TableCell className="text-muted-foreground text-xs">
                           {formatInteropRole(row.role)}
                         </TableCell>
                         <TableCell>
-                          <PluginIconStack
-                            plugins={row.plugins.map((id) => ({
-                              ...(pluginsById.get(id) ?? {
-                                id,
-                                name: id,
-                                iconUrl: undefined,
-                              }),
-                              roles: rolesByPlugin.get(id),
+                          <BridgeIconStack
+                            bridges={row.bridges.map((bridge) => ({
+                              ...bridge,
+                              name:
+                                bridgesById.get(bridge.id)?.name ?? bridge.id,
+                              iconUrl: bridgesById.get(bridge.id)?.iconUrl,
                             }))}
                           />
                         </TableCell>
@@ -662,19 +640,86 @@ function Address({
   )
 }
 
-function CoverageBadge({ included }: { included: boolean }) {
-  return (
-    <Badge
-      variant="outline"
-      className={
-        included
-          ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-300'
-          : 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300'
-      }
-    >
-      {included ? 'Included' : 'Missing'}
+const STATUS_STYLES: Record<CoverageRow['status'], string> = {
+  counted:
+    'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-300',
+  countedViaCounterpart:
+    'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-300',
+  scheduled:
+    'border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-900 dark:bg-sky-950 dark:text-sky-300',
+  sameAssetOnly:
+    'border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200',
+  missing:
+    'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300',
+}
+
+function CoverageBadge({ row }: { row: CoverageRow }) {
+  const badge = (
+    <Badge variant="outline" className={STATUS_STYLES[row.status]}>
+      {formatStatus(row.status)}
     </Badge>
   )
+  const description = describeStatus(row)
+  if (!description) return badge
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span className="inline-flex" tabIndex={0}>
+          {badge}
+        </span>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-72">{description}</TooltipContent>
+    </Tooltip>
+  )
+}
+
+function formatStatus(status: CoverageRow['status']) {
+  switch (status) {
+    case 'counted':
+      return 'Counted'
+    case 'countedViaCounterpart':
+      return 'Counted via'
+    case 'scheduled':
+      return 'Scheduled'
+    case 'sameAssetOnly':
+      return 'Review'
+    case 'missing':
+      return 'Missing'
+  }
+}
+
+function describeStatus(row: CoverageRow) {
+  switch (row.status) {
+    case 'countedViaCounterpart':
+      return row.countedVia
+        ? `Backed by ${row.countedVia.address} on ${row.countedVia.chain}, which the project counts.`
+        : undefined
+    case 'scheduled':
+      return 'The project has a formula for this token that starts in the future.'
+    case 'sameAssetOnly':
+      return 'The project counts another deployment of this asset, but not this one.'
+    default:
+      return undefined
+  }
+}
+
+function matchesCoverage(
+  status: CoverageRow['status'],
+  filter: CoverageFilter,
+) {
+  switch (filter) {
+    case 'missing':
+      return status === 'missing'
+    case 'review':
+      return status === 'sameAssetOnly'
+    case 'counted':
+      return status === 'counted' || status === 'countedViaCounterpart'
+    case 'scheduled':
+      return status === 'scheduled'
+    case 'all':
+      return true
+  }
 }
 
 function tokenIconUrl(iconUrl: string | undefined) {
@@ -694,69 +739,30 @@ function deploymentKey(chain: string, address: string) {
   return `${chain}:${normalized}`
 }
 
-function projectTvsDeploymentKey(
-  projectChain: string,
-  tokenChain: string,
-  address: string,
-) {
-  return `${projectChain}:${deploymentKey(tokenChain, address)}`
-}
-
-function VaultAssetBadges({
-  asset,
-  included,
-  chainName,
-}: {
-  asset: VaultAsset
-  included: boolean
-  chainName: string
-}) {
+function VaultAssetBadges({ asset }: { asset: VaultAsset }) {
   const label = asset.symbol ?? shortAddress(asset.address)
 
   return (
-    <>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <span
-            className="inline-flex"
-            tabIndex={0}
-            aria-label={`Backed by: ${label}`}
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span
+          className="inline-flex"
+          tabIndex={0}
+          aria-label={`Backed by: ${label}`}
+        >
+          <Badge
+            variant="outline"
+            className="h-5 max-w-32 px-1.5 font-normal text-[10px]"
           >
-            <Badge
-              variant="outline"
-              className="h-5 max-w-32 px-1.5 font-normal text-[10px]"
-            >
-              Backed by: {label}
-            </Badge>
-          </span>
-        </TooltipTrigger>
-        <TooltipContent className="space-y-0.5">
-          <div>ERC-4626 asset(): {label}</div>
-          <div className="font-mono opacity-75">{asset.address}</div>
-        </TooltipContent>
-      </Tooltip>
-      {included && (
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <span
-              className="inline-flex"
-              tabIndex={0}
-              aria-label={`${label} is already included in ${chainName} TVS`}
-            >
-              <Badge
-                variant="outline"
-                className="h-5 border-amber-300 bg-amber-50 px-1.5 font-normal text-[10px] text-amber-800 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200"
-              >
-                In TVS
-              </Badge>
-            </span>
-          </TooltipTrigger>
-          <TooltipContent>
-            {label} is already used by {chainName} TVS. Value can overlap.
-          </TooltipContent>
-        </Tooltip>
-      )}
-    </>
+            Backed by: {label}
+          </Badge>
+        </span>
+      </TooltipTrigger>
+      <TooltipContent className="space-y-0.5">
+        <div>ERC-4626 asset(): {label}</div>
+        <div className="font-mono opacity-75">{asset.address}</div>
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
@@ -890,7 +896,7 @@ function SortableTableHead({
 }
 
 function defaultSortDirection(key: SortKey): SortDirection {
-  return ['chain', 'token', 'included', 'role', 'plugins'].includes(key)
+  return ['project', 'token', 'status', 'role', 'bridges'].includes(key)
     ? 'asc'
     : 'desc'
 }
@@ -902,14 +908,14 @@ function sortRows(
     string,
     RouterOutputs['tvsCoverage']['getSupplyEstimates'][number]
   >,
-  chains: Map<string, CoverageData['chains'][number]>,
-  plugins: Map<string, PluginDetails>,
+  projects: Map<string, ProjectDetails>,
+  bridges: Map<string, BridgeDetails>,
 ) {
   return rows
     .map((row, index) => ({ row, index }))
     .sort((a, b) => {
-      const left = sortValue(a.row, sort.key, supplies, chains, plugins)
-      const right = sortValue(b.row, sort.key, supplies, chains, plugins)
+      const left = sortValue(a.row, sort.key, supplies, projects, bridges)
+      const right = sortValue(b.row, sort.key, supplies, projects, bridges)
       if (left === undefined && right === undefined) return a.index - b.index
       if (left === undefined) return 1
       if (right === undefined) return -1
@@ -936,14 +942,14 @@ function sortValue(
     string,
     RouterOutputs['tvsCoverage']['getSupplyEstimates'][number]
   >,
-  chains: Map<string, CoverageData['chains'][number]>,
-  plugins: Map<string, PluginDetails>,
+  projects: Map<string, ProjectDetails>,
+  bridges: Map<string, BridgeDetails>,
 ): string | number | undefined {
   const supply = supplies.get(deploymentKey(row.chain, row.address))
 
   switch (key) {
-    case 'chain':
-      return chains.get(row.chain)?.chainName ?? row.chain
+    case 'project':
+      return projects.get(row.projectId)?.name ?? row.projectId
     case 'token':
       return row.abstractSymbol ?? row.symbol
     case 'totalSupply': {
@@ -954,12 +960,14 @@ function sortValue(
       return supply?.estimatedValueUsd
     case 'volumeUsd':
       return row.volumeUsd
-    case 'included':
-      return row.included ? 'Included' : 'Missing'
+    case 'status':
+      return formatStatus(row.status)
     case 'role':
       return row.role ? formatInteropRole(row.role) : undefined
-    case 'plugins':
-      return row.plugins.map((id) => plugins.get(id)?.name ?? id).join(', ')
+    case 'bridges':
+      return row.bridges
+        .map((bridge) => bridges.get(bridge.id)?.name ?? bridge.id)
+        .join(', ')
   }
 }
 
@@ -980,22 +988,20 @@ function formatInteropRole(role: CoverageRow['role']) {
   }
 }
 
-function PluginIconStack({
-  plugins,
+function BridgeIconStack({
+  bridges,
 }: {
-  plugins: (PluginDetails & {
-    roles?: CoverageRow['pluginRoles'][number]['roles']
+  bridges: (CoverageRow['bridges'][number] & {
+    name: string
+    iconUrl: string | undefined
   })[]
 }) {
-  const visible = plugins.slice(0, MAX_VISIBLE_PLUGINS)
-  const hidden = plugins.slice(MAX_VISIBLE_PLUGINS)
-  const names = plugins
-    .map((plugin) =>
-      plugin.roles && plugin.roles.length > 0
-        ? `${plugin.name}: ${plugin.roles
-            .map((role) => formatInteropRole(role))
-            .join(' + ')}`
-        : plugin.name,
+  const visible = bridges.slice(0, MAX_VISIBLE_BRIDGES)
+  const hidden = bridges.slice(MAX_VISIBLE_BRIDGES)
+  const names = bridges
+    .map(
+      (bridge) =>
+        `${bridge.name} (${formatBridgeType(bridge.bridgeType)}): ${formatCurrency(bridge.volumeUsd, 'usd')}`,
     )
     .join(', ')
 
@@ -1009,16 +1015,16 @@ function PluginIconStack({
           tabIndex={0}
           title={names}
         >
-          {visible.map((plugin, index) => (
+          {visible.map((bridge, index) => (
             <span
-              key={plugin.id}
+              key={`${bridge.id}:${bridge.bridgeType}`}
               aria-hidden="true"
               className="relative block size-5 shrink-0 rounded-full bg-white shadow"
               style={{ zIndex: visible.length - index }}
             >
-              {plugin.iconUrl ? (
+              {bridge.iconUrl ? (
                 <img
-                  src={plugin.iconUrl}
+                  src={bridge.iconUrl}
                   alt=""
                   width={20}
                   height={20}
@@ -1029,7 +1035,7 @@ function PluginIconStack({
                 />
               ) : (
                 <span className="grid size-5 place-items-center rounded-full bg-muted font-medium text-[9px] text-muted-foreground uppercase">
-                  {plugin.name.slice(0, 1)}
+                  {bridge.name.slice(0, 1)}
                 </span>
               )}
             </span>
@@ -1047,4 +1053,19 @@ function PluginIconStack({
       <TooltipContent>{names}</TooltipContent>
     </Tooltip>
   )
+}
+
+function formatBridgeType(
+  bridgeType: CoverageRow['bridges'][number]['bridgeType'],
+) {
+  switch (bridgeType) {
+    case 'lockAndMint':
+      return 'lock/mint'
+    case 'burnAndMint':
+      return 'burn/mint'
+    case 'nonMinting':
+      return 'non-minting'
+    default:
+      return 'unknown'
+  }
 }

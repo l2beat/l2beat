@@ -65,7 +65,7 @@ export async function getSupplyEstimates(
       requests.slice(0, SUPPLY_ESTIMATE_LIMIT).map((request) => {
         const normalized = {
           chain: request.chain,
-          address: normalizeTokenAddress(request.chain, request.address),
+          address: normalizeTokenAddress(request.address),
         }
         return [requestKey(normalized), normalized]
       }),
@@ -320,7 +320,7 @@ async function readVaultAsset(request: {
     }
 
     return {
-      address: normalizeTokenAddress(request.chain, asset),
+      address: normalizeTokenAddress(asset),
       symbol: symbol || undefined,
     }
   } catch {
@@ -349,5 +349,5 @@ async function mapConcurrent<T, R>(
 }
 
 function requestKey(request: SupplyEstimateRequest): string {
-  return `${request.chain}:${normalizeTokenAddress(request.chain, request.address)}`
+  return `${request.chain}:${normalizeTokenAddress(request.address)}`
 }

@@ -1,46 +1,34 @@
 import type { Formula, TvsToken } from '@l2beat/config'
 import type {
   AbstractTokenRecord,
+  AggregatedInteropDeployedTokenStats,
   DeployedTokenRecord,
-  InteropDeploymentStatsRecord,
   TokenRelationRoute,
 } from '@l2beat/database'
-import { Address32 } from '@l2beat/shared-pure'
+import type { InteropBridgeType } from '@l2beat/shared-pure'
+import { normalizeInteropTokenAddress } from '../../../ingestion/tokenIngestionUtils'
 
 export interface TvsProjectInput {
-  projectName: string
-  projectIconUrl?: string
-  chain: string
-  explorerUrl?: string
-  tokens?: TvsToken[]
-}
-
-export interface ProjectTvsDeployment {
-  projectChain: string
-  tokenChain: string
-  address: string
-}
-
-export interface InteropDeployment {
-  chain: string
-  address: string
-  symbol?: string
-  abstractTokenId?: string
-  abstractSymbol?: string
-  issuer?: string
-  iconUrl?: string
-  ignored: boolean
-  volumeUsd: number
-  transferCount: number
-  unvaluedTransferCount: number
+  id: string
+  name: string
+  chain: string | undefined
   plugins: string[]
+  tokens: TvsToken[]
 }
 
-export interface CoverageRow extends InteropDeployment {
-  included: boolean
-  role?: InteropTokenRole
-  pluginRoles: PluginRole[]
+export interface TokenRef {
+  chain: string
+  address: string
 }
+
+export type CoverageStatus =
+  | 'counted'
+  | 'countedViaCounterpart'
+  | 'scheduled'
+  | 'sameAssetOnly'
+  | 'missing'
+
+export type CoverageSide = 'chain' | 'escrow'
 
 export type InteropTokenRole =
   | 'locked'
@@ -49,258 +37,441 @@ export type InteropTokenRole =
   | 'both'
   | 'unknown'
 
-export type InteropRelationRole = Exclude<InteropTokenRole, 'both'>
+type RelationRole = Exclude<InteropTokenRole, 'both'>
 
-export interface PluginRole {
-  plugin: string
-  roles: InteropRelationRole[]
-}
-
-interface MutableInteropDeployment {
-  chain: string
-  address: string
-  observedSymbols: Set<string>
-  observedAbstractTokenIds: Set<string>
+export interface CoverageBridge {
+  id: string
+  bridgeType: InteropBridgeType
   volumeUsd: number
   transferCount: number
-  unvaluedTransferCount: number
-  plugins: Set<string>
 }
 
-interface IndexedTvsToken {
-  exactDeploymentKeys: Set<string>
-  abstractTokenIds: Set<string>
+export interface CoverageRow extends TokenRef {
+  projectId: string
+  side: CoverageSide
+  symbol: string | undefined
+  abstractTokenId: string | undefined
+  abstractSymbol: string | undefined
+  issuer: string | undefined
+  iconUrl: string | undefined
+  coingeckoId: string | undefined
+  ignored: boolean
+  status: CoverageStatus
+  countedVia: TokenRef | undefined
+  role: InteropTokenRole | undefined
+  bridges: CoverageBridge[]
+  volumeUsd: number
+  transferCount: number
+  lastSeen: number
 }
 
-interface TvsProjectIndex {
+interface FormulaLeaf extends TokenRef {
+  escrow: boolean
+}
+
+interface ProjectIndex {
   project: TvsProjectInput
-  tokens: IndexedTvsToken[]
+  plugins: Set<string>
+  active: Map<string, FormulaLeaf>
+  scheduled: Set<string>
+  activeByAbstractToken: Map<string, FormulaLeaf[]>
 }
 
-const NON_EVM_TOKEN_ADDRESS_CHAINS = new Set(['solana', 'starknet', 'tron'])
-
-export function normalizeTokenAddress(chain: string, address: string): string {
-  const normalized = address.toLowerCase()
-  if (normalized === 'native') return normalized
-  if (NON_EVM_TOKEN_ADDRESS_CHAINS.has(chain)) {
-    return normalized.startsWith('0x') ? normalized : address
-  }
-  if (!normalized.startsWith('0x')) return address
-
-  try {
-    return Address32.cropToEthereumAddress(
-      Address32.from(normalized),
-    ).toLowerCase()
-  } catch {
-    return normalized
-  }
+interface RelationEdge {
+  plugin: string
+  bridgeType: InteropBridgeType
+  role: RelationRole
+  counterpart: string
 }
 
-export function collectAmountDeployments(
+interface TokenInfo {
+  deployedToken: DeployedTokenRecord | undefined
+  abstractToken: AbstractTokenRecord | undefined
+}
+
+export function normalizeTokenAddress(address: string): string {
+  return normalizeInteropTokenAddress(address) ?? address.toLowerCase()
+}
+
+export function tokenKey(chain: string, address: string): string {
+  return `${chain}:${normalizeTokenAddress(address)}`
+}
+
+export function collectActiveLeaves(
   formula: Formula,
-  timestamp?: number,
-): { chain: string; address: string }[] {
-  const result = collectFormulaDeployments(formula, timestamp)
-  return result.active ? result.deployments : []
+  timestamp: number,
+): FormulaLeaf[] {
+  return collect(formula, timestamp).leaves
 }
 
-function collectFormulaDeployments(
+function collect(
   formula: Formula,
-  timestamp: number | undefined,
-): {
-  active: boolean
-  deployments: { chain: string; address: string }[]
-} {
+  timestamp: number,
+): { active: boolean; leaves: FormulaLeaf[] } {
   switch (formula.type) {
     case 'calculation': {
-      const activeArguments = formula.arguments
-        .map((argument) => collectFormulaDeployments(argument, timestamp))
+      const active = formula.arguments
+        .map((argument) => collect(argument, timestamp))
         .filter((argument) => argument.active)
-      const active =
-        formula.operator === 'diff'
-          ? activeArguments.length >= 2
-          : activeArguments.length >= 1
-
+      const isActive =
+        formula.operator === 'diff' ? active.length >= 2 : active.length >= 1
       return {
-        active,
-        deployments: active
-          ? uniqueDeployments(
-              activeArguments.flatMap((argument) => argument.deployments),
-            )
-          : [],
+        active: isActive,
+        leaves: isActive ? active.flatMap((argument) => argument.leaves) : [],
       }
     }
     case 'value':
-      return collectFormulaDeployments(formula.amount, timestamp)
-    case 'balanceOfEscrow':
-    case 'balanceOfEscrows':
-    case 'starknetBalanceOf':
-    case 'totalSupply':
-    case 'starknetTotalSupply':
-    case 'circulatingSupply':
-      return {
-        active: isFormulaActive(formula, timestamp),
-        deployments: [{ chain: formula.chain, address: formula.address }],
-      }
+      return collect(formula.amount, timestamp)
     case 'const':
+      return { active: isActiveAt(formula, timestamp), leaves: [] }
+    default: {
+      const active = isActiveAt(formula, timestamp)
       return {
-        active: isFormulaActive(formula, timestamp),
-        deployments: [],
+        active,
+        leaves: active ? [toLeaf(formula)] : [],
       }
+    }
   }
 }
 
-function isFormulaActive(
-  formula: Extract<Formula, { sinceTimestamp: number }>,
-  timestamp: number | undefined,
+function collectScheduledLeaves(
+  formula: Formula,
+  timestamp: number,
+): FormulaLeaf[] {
+  switch (formula.type) {
+    case 'calculation':
+      return formula.arguments.flatMap((argument) =>
+        collectScheduledLeaves(argument, timestamp),
+      )
+    case 'value':
+      return collectScheduledLeaves(formula.amount, timestamp)
+    case 'const':
+      return []
+    default:
+      return formula.sinceTimestamp >= timestamp ? [toLeaf(formula)] : []
+  }
+}
+
+function toLeaf(
+  formula: Exclude<Formula, { type: 'calculation' | 'value' | 'const' }>,
+): FormulaLeaf {
+  return {
+    chain: formula.chain,
+    address: formula.address,
+    escrow:
+      formula.type === 'balanceOfEscrow' ||
+      formula.type === 'balanceOfEscrows' ||
+      formula.type === 'starknetBalanceOf',
+  }
+}
+
+function isActiveAt(
+  formula: { sinceTimestamp: number; untilTimestamp?: number },
+  timestamp: number,
 ) {
-  if (timestamp === undefined) return true
   return (
     formula.sinceTimestamp < timestamp &&
     (formula.untilTimestamp === undefined || formula.untilTimestamp > timestamp)
   )
 }
 
-export function collectProjectTvsDeployments(
-  projects: TvsProjectInput[],
-  timestamp?: number,
-): ProjectTvsDeployment[] {
-  const deployments = projects.flatMap((project) =>
-    (project.tokens ?? []).flatMap((token) =>
-      collectAmountDeployments(token.amount, timestamp).map((deployment) => ({
-        projectChain: project.chain,
-        tokenChain: deployment.chain,
-        address: normalizeTokenAddress(deployment.chain, deployment.address),
-      })),
+export function buildCoverage(input: {
+  stats: AggregatedInteropDeployedTokenStats[]
+  projects: TvsProjectInput[]
+  deployedTokens: DeployedTokenRecord[]
+  abstractTokens: AbstractTokenRecord[]
+  relations: TokenRelationRoute[]
+  timestamp: number
+}): CoverageRow[] {
+  const tokens = buildTokenInfo(input.deployedTokens, input.abstractTokens)
+  const relations = buildRelationIndex(input.relations)
+  const indices = input.projects.map((project) =>
+    buildProjectIndex(project, tokens, input.timestamp),
+  )
+  const byChain = new Map(
+    indices.flatMap((index) =>
+      index.project.chain ? [[index.project.chain, index] as const] : [],
     ),
   )
+  const byId = new Map(indices.map((index) => [index.project.id, index]))
 
-  return Array.from(
-    new Map(
-      deployments.map((deployment) => [
-        `${deployment.projectChain}:${deployment.tokenChain}:${deployment.address}`,
-        deployment,
-      ]),
-    ).values(),
+  const rows = new Map<string, MutableRow>()
+  for (const stat of input.stats) {
+    const address = normalizeInteropTokenAddress(stat.tokenAddress)
+    if (!address) continue
+    const token = { chain: stat.tokenChain, address }
+
+    const chainProject = byChain.get(stat.tokenChain)
+    if (chainProject) {
+      addStat(rows, chainProject, 'chain', token, stat)
+    }
+
+    const bridgeProject = byId.get(stat.id)
+    if (
+      bridgeProject &&
+      bridgeProject !== chainProject &&
+      stat.bridgeType === 'lockAndMint' &&
+      isLockedByProject(bridgeProject, token, relations)
+    ) {
+      addStat(rows, bridgeProject, 'escrow', token, stat)
+    }
+  }
+
+  return Array.from(rows.values(), (row) =>
+    finalizeRow(row, tokens, relations),
+  ).sort(
+    (a, b) =>
+      b.volumeUsd - a.volumeUsd ||
+      b.transferCount - a.transferCount ||
+      a.projectId.localeCompare(b.projectId) ||
+      tokenKey(a.chain, a.address).localeCompare(tokenKey(b.chain, b.address)),
   )
 }
 
-export function aggregateInteropDeploymentStats(
-  stats: InteropDeploymentStatsRecord[],
+// The other side of a project's own lock-and-mint bridge is where the project
+// escrow sits: Ethereum for an L2, the parent chain for an L3. Relations decide
+// when they say which side is locked, e.g. for tokens native to the L2 and
+// minted on Ethereum, or for bridges that are not a chain.
+function isLockedByProject(
+  index: ProjectIndex,
+  token: TokenRef,
+  relations: Map<string, RelationEdge[]>,
+): boolean {
+  const roles = (relations.get(tokenKey(token.chain, token.address)) ?? [])
+    .filter((edge) => index.plugins.has(edge.plugin))
+    .map((edge) => edge.role)
+  if (roles.includes('locked')) return true
+  if (roles.includes('minted')) return false
+  return index.project.chain !== undefined
+}
+
+interface MutableRow {
+  index: ProjectIndex
+  side: CoverageSide
+  token: TokenRef
+  bridges: Map<string, CoverageBridge>
+  lastSeen: number
+}
+
+function addStat(
+  rows: Map<string, MutableRow>,
+  index: ProjectIndex,
+  side: CoverageSide,
+  token: TokenRef,
+  stat: AggregatedInteropDeployedTokenStats,
+) {
+  const key = `${index.project.id}:${tokenKey(token.chain, token.address)}`
+  const row = rows.get(key) ?? {
+    index,
+    side,
+    token,
+    bridges: new Map<string, CoverageBridge>(),
+    lastSeen: 0,
+  }
+  const bridgeKey = `${stat.id}:${stat.bridgeType}`
+  const bridge = row.bridges.get(bridgeKey) ?? {
+    id: stat.id,
+    bridgeType: stat.bridgeType,
+    volumeUsd: 0,
+    transferCount: 0,
+  }
+  bridge.volumeUsd += stat.volume
+  bridge.transferCount += stat.transferCount
+  row.bridges.set(bridgeKey, bridge)
+  row.lastSeen = Math.max(row.lastSeen, stat.lastSeen)
+  rows.set(key, row)
+}
+
+function finalizeRow(
+  row: MutableRow,
+  tokens: Map<string, TokenInfo>,
+  relations: Map<string, RelationEdge[]>,
+): CoverageRow {
+  const key = tokenKey(row.token.chain, row.token.address)
+  const { deployedToken, abstractToken } = tokens.get(key) ?? {
+    deployedToken: undefined,
+    abstractToken: undefined,
+  }
+  const edges = relations.get(key) ?? []
+  const bridges = Array.from(row.bridges.values()).sort(
+    (a, b) => b.volumeUsd - a.volumeUsd || a.id.localeCompare(b.id),
+  )
+  const { status, countedVia } = classify(
+    row,
+    key,
+    abstractToken?.id,
+    edges,
+    bridges,
+  )
+
+  return {
+    projectId: row.index.project.id,
+    side: row.side,
+    chain: row.token.chain,
+    address: row.token.address,
+    symbol: deployedToken?.symbol ?? abstractToken?.symbol,
+    abstractTokenId: abstractToken?.id,
+    abstractSymbol: abstractToken?.symbol,
+    issuer: abstractToken?.issuer ?? undefined,
+    iconUrl: abstractToken?.iconUrl ?? undefined,
+    coingeckoId: abstractToken?.coingeckoId ?? undefined,
+    ignored: deployedToken?.ignored ?? false,
+    status,
+    countedVia,
+    role: collapseRoles(edges.map((edge) => edge.role)),
+    bridges,
+    volumeUsd: bridges.reduce((sum, bridge) => sum + bridge.volumeUsd, 0),
+    transferCount: bridges.reduce(
+      (sum, bridge) => sum + bridge.transferCount,
+      0,
+    ),
+    lastSeen: row.lastSeen,
+  }
+}
+
+function classify(
+  row: MutableRow,
+  key: string,
+  abstractTokenId: string | undefined,
+  edges: RelationEdge[],
+  bridges: CoverageBridge[],
+): { status: CoverageStatus; countedVia: TokenRef | undefined } {
+  const { index } = row
+  if (index.active.has(key)) {
+    return { status: 'counted', countedVia: undefined }
+  }
+
+  // A lock-and-mint copy is backed by its locked counterpart (and the other
+  // way round), but only when the project's own bridge moved it: the project
+  // escrow does not hold what a third-party bridge locked.
+  for (const edge of edges) {
+    if (edge.bridgeType !== 'lockAndMint' || edge.role === 'unknown') continue
+    if (!index.plugins.has(edge.plugin)) continue
+    const counterpart = index.active.get(edge.counterpart)
+    if (counterpart) {
+      return { status: 'countedViaCounterpart', countedVia: toRef(counterpart) }
+    }
+  }
+
+  const sameAsset = abstractTokenId
+    ? (index.activeByAbstractToken.get(abstractTokenId) ?? [])
+    : []
+  const movedByOwnBridge = bridges.some(
+    (bridge) =>
+      bridge.id === index.project.id && bridge.bridgeType === 'lockAndMint',
+  )
+  if (movedByOwnBridge) {
+    const counterpart = sameAsset.find((leaf) =>
+      row.side === 'chain'
+        ? leaf.chain !== index.project.chain
+        : leaf.chain === index.project.chain,
+    )
+    if (counterpart) {
+      return { status: 'countedViaCounterpart', countedVia: toRef(counterpart) }
+    }
+  }
+
+  if (index.scheduled.has(key)) {
+    return { status: 'scheduled', countedVia: undefined }
+  }
+  if (sameAsset.length > 0) {
+    return { status: 'sameAssetOnly', countedVia: undefined }
+  }
+  return { status: 'missing', countedVia: undefined }
+}
+
+function toRef(leaf: FormulaLeaf): TokenRef {
+  return { chain: leaf.chain, address: leaf.address }
+}
+
+function buildProjectIndex(
+  project: TvsProjectInput,
+  tokens: Map<string, TokenInfo>,
+  timestamp: number,
+): ProjectIndex {
+  const active = new Map<string, FormulaLeaf>()
+  const scheduled = new Set<string>()
+  for (const token of project.tokens) {
+    for (const leaf of collectActiveLeaves(token.amount, timestamp)) {
+      active.set(tokenKey(leaf.chain, leaf.address), leaf)
+    }
+    for (const leaf of collectScheduledLeaves(token.amount, timestamp)) {
+      scheduled.add(tokenKey(leaf.chain, leaf.address))
+    }
+  }
+
+  const activeByAbstractToken = new Map<string, FormulaLeaf[]>()
+  for (const [key, leaf] of active) {
+    const abstractTokenId = tokens.get(key)?.abstractToken?.id
+    if (!abstractTokenId) continue
+    const leaves = activeByAbstractToken.get(abstractTokenId) ?? []
+    leaves.push(leaf)
+    activeByAbstractToken.set(abstractTokenId, leaves)
+  }
+
+  return {
+    project,
+    plugins: new Set(project.plugins),
+    active,
+    scheduled,
+    activeByAbstractToken,
+  }
+}
+
+function buildTokenInfo(
   deployedTokens: DeployedTokenRecord[],
   abstractTokens: AbstractTokenRecord[],
-): InteropDeployment[] {
-  const mutable = new Map<string, MutableInteropDeployment>()
-
-  for (const stat of stats) {
-    const address = normalizeTokenAddress(stat.chain, stat.address)
-    const key = deploymentKey(stat.chain, address)
-    const current = mutable.get(key) ?? {
-      chain: stat.chain,
-      address,
-      observedSymbols: new Set<string>(),
-      observedAbstractTokenIds: new Set<string>(),
-      volumeUsd: 0,
-      transferCount: 0,
-      unvaluedTransferCount: 0,
-      plugins: new Set<string>(),
-    }
-
-    if (stat.symbol) current.observedSymbols.add(stat.symbol)
-    if (stat.abstractTokenId) {
-      current.observedAbstractTokenIds.add(stat.abstractTokenId)
-    }
-    current.volumeUsd += stat.volumeUsd
-    current.transferCount += stat.transferCount
-    current.unvaluedTransferCount +=
-      stat.transferCount - stat.valuedTransferCount
-    current.plugins.add(stat.plugin)
-    mutable.set(key, current)
-  }
-
-  return finalizeInteropDeployments(mutable, deployedTokens, abstractTokens)
-}
-
-export function buildCoverage(
-  deployments: InteropDeployment[],
-  projects: TvsProjectInput[],
-  deployedTokens: DeployedTokenRecord[],
-  timestamp?: number,
-): CoverageRow[] {
-  const projectIndices = buildTvsProjectIndices(
-    projects,
-    deployedTokens,
-    timestamp,
-  )
-
-  return deployments.flatMap((deployment) => {
-    const projectIndex = projectIndices.get(deployment.chain)
-    if (!projectIndex || projectIndex.project.tokens === undefined) return []
-
-    return [
+): Map<string, TokenInfo> {
+  const abstractById = new Map(abstractTokens.map((token) => [token.id, token]))
+  return new Map(
+    deployedTokens.map((token) => [
+      tokenKey(token.chain, token.address),
       {
-        ...deployment,
-        included: isIncluded(deployment, projectIndex),
-        pluginRoles: [],
+        deployedToken: token,
+        abstractToken: token.abstractTokenId
+          ? abstractById.get(token.abstractTokenId)
+          : undefined,
       },
-    ]
-  })
+    ]),
+  )
 }
 
-export function attachInteropRoles(
-  rows: CoverageRow[],
+function buildRelationIndex(
   relations: TokenRelationRoute[],
-): CoverageRow[] {
-  const rolesByDeployment = new Map<
-    string,
-    Map<string, Set<InteropRelationRole>>
-  >()
-
+): Map<string, RelationEdge[]> {
+  const result = new Map<string, RelationEdge[]>()
   for (const relation of relations) {
-    addRelationRole(rolesByDeployment, relation, 'A')
-    addRelationRole(rolesByDeployment, relation, 'B')
+    const a = tokenKey(relation.tokenAChain, relation.tokenAAddress)
+    const b = tokenKey(relation.tokenBChain, relation.tokenBAddress)
+    addEdge(result, a, b, relation, 'A')
+    addEdge(result, b, a, relation, 'B')
   }
-
-  return rows.map((row) => {
-    const byPlugin = rolesByDeployment.get(
-      deploymentKey(row.chain, row.address),
-    )
-    const pluginRoles = row.plugins.flatMap((plugin) => {
-      const roles = sortRoles(byPlugin?.get(plugin))
-      return roles.length > 0 ? [{ plugin, roles }] : []
-    })
-
-    return {
-      ...row,
-      role: collapseRoles(new Set(pluginRoles.flatMap(({ roles }) => roles))),
-      pluginRoles,
-    }
-  })
+  return result
 }
 
-function addRelationRole(
-  rolesByDeployment: Map<string, Map<string, Set<InteropRelationRole>>>,
+function addEdge(
+  index: Map<string, RelationEdge[]>,
+  key: string,
+  counterpart: string,
   relation: TokenRelationRoute,
   endpoint: 'A' | 'B',
 ) {
   const role = getRelationRole(relation, endpoint)
   if (!role) return
-
-  const chain = endpoint === 'A' ? relation.tokenAChain : relation.tokenBChain
-  const address =
-    endpoint === 'A' ? relation.tokenAAddress : relation.tokenBAddress
-  const key = deploymentKey(chain, address)
-  const byPlugin = rolesByDeployment.get(key) ?? new Map()
-  const roles = byPlugin.get(relation.plugin) ?? new Set()
-  roles.add(role)
-  byPlugin.set(relation.plugin, roles)
-  rolesByDeployment.set(key, byPlugin)
+  const edges = index.get(key) ?? []
+  edges.push({
+    plugin: relation.plugin,
+    bridgeType: relation.bridgeType,
+    role,
+    counterpart,
+  })
+  index.set(key, edges)
 }
 
 function getRelationRole(
   relation: TokenRelationRoute,
   endpoint: 'A' | 'B',
-): InteropRelationRole | undefined {
+): RelationRole | undefined {
   switch (relation.bridgeType) {
     case 'burnAndMint':
       return 'burnAndMint'
@@ -314,147 +485,12 @@ function getRelationRole(
   }
 }
 
-function collapseRoles(
-  roles: Set<InteropRelationRole> | undefined,
-): InteropTokenRole | undefined {
-  if (!roles || roles.size === 0) return undefined
-
-  if (roles.has('locked') && roles.has('minted')) return 'both'
-  if (roles.has('locked')) return 'locked'
-  if (roles.has('minted')) return 'minted'
-  if (roles.has('burnAndMint')) return 'burnAndMint'
+function collapseRoles(roles: RelationRole[]): InteropTokenRole | undefined {
+  if (roles.length === 0) return undefined
+  const set = new Set(roles)
+  if (set.has('locked') && set.has('minted')) return 'both'
+  if (set.has('locked')) return 'locked'
+  if (set.has('minted')) return 'minted'
+  if (set.has('burnAndMint')) return 'burnAndMint'
   return 'unknown'
-}
-
-function sortRoles(
-  roles: Set<InteropRelationRole> | undefined,
-): InteropRelationRole[] {
-  if (!roles) return []
-  const order: InteropRelationRole[] = [
-    'locked',
-    'minted',
-    'burnAndMint',
-    'unknown',
-  ]
-  return order.filter((role) => roles.has(role))
-}
-
-function finalizeInteropDeployments(
-  deployments: Map<string, MutableInteropDeployment>,
-  deployedTokens: DeployedTokenRecord[],
-  abstractTokens: AbstractTokenRecord[],
-): InteropDeployment[] {
-  const deployedByKey = new Map(
-    deployedTokens.map((token) => [
-      deploymentKey(token.chain, token.address),
-      token,
-    ]),
-  )
-  const abstractById = new Map(abstractTokens.map((token) => [token.id, token]))
-
-  return Array.from(deployments.entries(), ([key, deployment]) => {
-    const deployedToken = deployedByKey.get(key)
-    const abstractTokenId =
-      deployedToken?.abstractTokenId ??
-      Array.from(deployment.observedAbstractTokenIds)[0]
-    const abstractToken = abstractTokenId
-      ? abstractById.get(abstractTokenId)
-      : undefined
-
-    return {
-      chain: deployment.chain,
-      address: deployment.address,
-      symbol:
-        deployedToken?.symbol ??
-        Array.from(deployment.observedSymbols)[0] ??
-        abstractToken?.symbol,
-      abstractTokenId: abstractTokenId ?? undefined,
-      abstractSymbol: abstractToken?.symbol,
-      issuer: abstractToken?.issuer ?? undefined,
-      iconUrl: abstractToken?.iconUrl ?? undefined,
-      ignored: deployedToken?.ignored ?? false,
-      volumeUsd: deployment.volumeUsd,
-      transferCount: deployment.transferCount,
-      unvaluedTransferCount: deployment.unvaluedTransferCount,
-      plugins: Array.from(deployment.plugins).sort(),
-    }
-  }).sort(
-    (a, b) =>
-      b.volumeUsd - a.volumeUsd ||
-      b.transferCount - a.transferCount ||
-      a.chain.localeCompare(b.chain) ||
-      a.address.localeCompare(b.address),
-  )
-}
-
-function buildTvsProjectIndices(
-  projects: TvsProjectInput[],
-  deployedTokens: DeployedTokenRecord[],
-  timestamp: number | undefined,
-) {
-  const deployedByKey = new Map(
-    deployedTokens.map((token) => [
-      deploymentKey(token.chain, token.address),
-      token,
-    ]),
-  )
-  const result = new Map<string, TvsProjectIndex>()
-
-  for (const project of projects) {
-    const tokens = (project.tokens ?? []).map((token) => {
-      const exactDeploymentKeys = new Set(
-        collectAmountDeployments(token.amount, timestamp).map((deployment) =>
-          deploymentKey(deployment.chain, deployment.address),
-        ),
-      )
-      const abstractTokenIds = new Set<string>()
-
-      for (const key of exactDeploymentKeys) {
-        const abstractTokenId = deployedByKey.get(key)?.abstractTokenId
-        if (abstractTokenId) abstractTokenIds.add(abstractTokenId)
-      }
-
-      return { exactDeploymentKeys, abstractTokenIds }
-    })
-
-    result.set(project.chain, { project, tokens })
-  }
-
-  return result
-}
-
-function isIncluded(
-  deployment: InteropDeployment,
-  projectIndex: TvsProjectIndex | undefined,
-): boolean {
-  if (!projectIndex || projectIndex.project.tokens === undefined) return false
-
-  const key = deploymentKey(deployment.chain, deployment.address)
-  if (projectIndex.tokens.some((token) => token.exactDeploymentKeys.has(key))) {
-    return true
-  }
-
-  return Boolean(
-    deployment.abstractTokenId &&
-      projectIndex.tokens.some((token) =>
-        token.abstractTokenIds.has(deployment.abstractTokenId as string),
-      ),
-  )
-}
-
-function deploymentKey(chain: string, address: string): string {
-  return `${chain}:${normalizeTokenAddress(chain, address)}`
-}
-
-function uniqueDeployments(
-  deployments: { chain: string; address: string }[],
-): { chain: string; address: string }[] {
-  return Array.from(
-    new Map(
-      deployments.map((deployment) => [
-        deploymentKey(deployment.chain, deployment.address),
-        deployment,
-      ]),
-    ).values(),
-  )
 }
