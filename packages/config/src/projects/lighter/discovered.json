@@ -1,7 +1,7 @@
 {
   "name": "lighter",
   "timestamp": 1792751506,
-  "configHash": "0x153743d68d2b58835ed6658eb6f92275fc2cfef7903d7f23197a28110cca5355",
+  "configHash": "0xd45800419870344b657f6a2c7431a34674f60102ccdf49ecbc7ae7179b938878",
   "entries": [
     {
       "address": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
@@ -818,7 +818,7 @@
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
         "0x87a6efe7d369db405cf65a6d33bb772aae12a632406fb4533c845a4b4a2e8869"
       ],
-      "proxyType": "zkLighter managed proxy",
+      "proxyType": "UpgradeGatekeeper proxy",
       "description": "Manages the list of validators, the network governor and the emergency pause guardians.",
       "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
@@ -928,7 +928,7 @@
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
         "0x98cdd7bd388e4b7e4ed3c0c1d15f0c8dfdb6233164923805cec57cd0156f36fc"
       ],
-      "proxyType": "zkLighter managed proxy",
+      "proxyType": "UpgradeGatekeeper proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
       "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",

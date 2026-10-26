@@ -1,15 +1,15 @@
-Generated with discovered.json: 0x9891983834f51a111695714d548e32015aa3d370
+Generated with discovered.json: 0x72ecc6af8c8b861f00582ba7dd3c61c76412056f
 
-# Diff at Sat, 24 Oct 2026 17:10:14 GMT:
+# Diff at Mon, 26 Oct 2026 08:54:44 GMT:
 
 - id: c052cf43
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792751506
+- comparing to: main@1492cd63d867e9138efeb5e6a04dedf3b7590b2e block: 1792751506
 - current timestamp: 1792751506
 
 ## Description
 
-Governance and ZkLighterVerifier use the zkLighter managed proxy type: `$pastUpgrades` now comes from the UpgradeGatekeeper's `UpgradeComplete` events, the only record of zkLighter upgrades.
+Governance and ZkLighterVerifier use the UpgradeGatekeeper proxy type: `$pastUpgrades` now comes from the UpgradeGatekeeper's `UpgradeComplete` events, the only record of zkLighter upgrades.
 
 ## Config/verification related changes
 
@@ -32,7 +32,7 @@ discovery. Values are for block 1792751506 (main branch discovery), not current.
     +++ description: Manages the list of validators, the network governor and the emergency pause guardians.
       proxyType:
 -        "EIP1967 proxy"
-+        "zkLighter managed proxy"
++        "UpgradeGatekeeper proxy"
       values.$pastUpgrades.0:
 +        ["2025-01-17T05:05:35.000Z","0x228496195e6c4a6cdbf9fc3c153cce0fb652e5aeee5a4f0a966b16257ebb34b9",["eth:0x46D3C0c01D5DAae4FE8e3f54f32901d9Fbde1f08"]]
       values.$pastUpgrades.1:
@@ -48,7 +48,7 @@ discovery. Values are for block 1792751506 (main branch discovery), not current.
     +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
       proxyType:
 -        "EIP1967 proxy"
-+        "zkLighter managed proxy"
++        "UpgradeGatekeeper proxy"
       values.$pastUpgrades.0:
 +        ["2025-01-17T05:05:35.000Z","0x228496195e6c4a6cdbf9fc3c153cce0fb652e5aeee5a4f0a966b16257ebb34b9",["eth:0x0F656194d3B8c2Aa076932CB8FA375eb8cc56113"]]
       values.$pastUpgrades.1:

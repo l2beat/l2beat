@@ -4,13 +4,13 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { expect, type MockObject, mockFn, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 import type { IProvider } from '../../provider/IProvider'
 import { ADMIN_SLOT, IMPLEMENTATION_SLOT } from '../auto/Eip1967Proxy'
-import { getZkLighterManagedProxy } from './ZkLighterProxy'
+import { getUpgradeGatekeeperProxy } from './UpgradeGatekeeperProxy'
 
-describe(getZkLighterManagedProxy.name, () => {
+describe(getUpgradeGatekeeperProxy.name, () => {
   const ADDRESS = ChainSpecificAddress.random()
   const OTHER = ChainSpecificAddress.random()
   const MASTER = ChainSpecificAddress.random()
@@ -41,7 +41,7 @@ describe(getZkLighterManagedProxy.name, () => {
     UnixTime.toDate(UnixTime(TIMESTAMP + blockNumber)).toISOString()
   const ZERO = ChainSpecificAddress.ZERO('ethereum')
 
-  function mockProvider(logs: providers.Log[]): IProvider {
+  function mockProvider(logs: providers.Log[]): MockObject<IProvider> {
     const storage = (implementation: ChainSpecificAddress) =>
       mockFn((address: ChainSpecificAddress, slot: Bytes) => {
         if (address !== ADDRESS) return Promise.resolve(ZERO)
@@ -92,13 +92,16 @@ describe(getZkLighterManagedProxy.name, () => {
       upgradeComplete(30, 2, [ZERO, CURRENT]),
     ])
 
-    const result = await getZkLighterManagedProxy(provider, ADDRESS)
+    const result = await getUpgradeGatekeeperProxy(provider, ADDRESS)
 
+    expect(provider.getLogs).toHaveBeenOnlyCalledWith(MASTER, [
+      abi.getEventTopic('UpgradeComplete'),
+    ])
     expect(result).toEqual({
-      type: 'zkLighter managed proxy',
+      type: 'UpgradeGatekeeper proxy',
       values: {
         $admin: MASTER.toString(),
-        $implementation: [CURRENT.toString()],
+        $implementation: CURRENT.toString(),
         $pastUpgrades: [
           [date(DEPLOYMENT_BLOCK), DEPLOYMENT_TX, [INITIAL]],
           [
@@ -114,20 +117,22 @@ describe(getZkLighterManagedProxy.name, () => {
 
   it('keeps only the deployment when the master does not manage it', async () => {
     const provider = mockProvider([upgradeComplete(20, 1, [OTHER_TARGET])])
-    provider.callMethod = mockFn().resolvesTo(undefined)
+    provider.callMethod.resolvesTo(undefined)
 
-    const result = await getZkLighterManagedProxy(provider, ADDRESS)
+    const result = await getUpgradeGatekeeperProxy(provider, ADDRESS)
 
     expect(result?.values.$pastUpgrades).toEqual([
       [date(DEPLOYMENT_BLOCK), DEPLOYMENT_TX, [INITIAL]],
     ])
   })
 
-  it('is not a zkLighter proxy without an implementation', async () => {
+  it('is not a proxy without an implementation', async () => {
     const provider = mockProvider([])
-    provider.getStorageAsAddress = mockFn().resolvesTo(ZERO)
+    provider.getStorageAsAddress.resolvesTo(ZERO)
 
-    expect(await getZkLighterManagedProxy(provider, ADDRESS)).toEqual(undefined)
+    expect(await getUpgradeGatekeeperProxy(provider, ADDRESS)).toEqual(
+      undefined,
+    )
   })
 
   it('ignores a target list shorter than the index', async () => {
@@ -136,7 +141,7 @@ describe(getZkLighterManagedProxy.name, () => {
       upgradeComplete(30, 2, [OTHER_TARGET, CURRENT]),
     ])
 
-    const result = await getZkLighterManagedProxy(provider, ADDRESS)
+    const result = await getUpgradeGatekeeperProxy(provider, ADDRESS)
 
     expect(result?.values.$upgradeCount).toEqual(2)
   })
