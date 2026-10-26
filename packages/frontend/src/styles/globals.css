@@ -339,8 +339,9 @@
   /* The page's one block of colour, and text on it. */
   --accent: #ff3776;
   --on-accent: #ffffff;
-  /* Axis labels. */
-  --muted: #878d99;
+  /* Axis labels: a step lighter than secondary text, still 4.5:1 on the
+     white cards. */
+  --muted: #707581;
   --chart-grid: rgb(13 12 12 / 0.09);
   --chart-baseline: rgb(13 12 12 / 0.4);
 }
