@@ -187,9 +187,9 @@
   --warning: #ab8000;
   --negative: #d70000;
   --brand: #ff3776;
-  /* Text in the brand colour: #FF3776 is too light to read as small text on
-     the cards, so a shade deeper. */
-  --brand-deep: #e0195a;
+  /* Text in the brand colour: #FF3776 is too light to read as small text, so
+     a shade that keeps 4.5:1 on every surface, the grey ones included. */
+  --brand-deep: #c2104a;
   --selection-brand-share: 30%;
   --background: #e6e7ec;
   --surface-primary: #fafafa;
@@ -262,7 +262,7 @@
   --positive: #12d660;
   --warning: #ffc107;
   --negative: #ff3d3d;
-  --brand-deep: #ff3776;
+  --brand-deep: #ff7aa5;
   --selection-brand-share: 50%;
   --background: #07080c;
   --surface-primary: #1b1e2a;
