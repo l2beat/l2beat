@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "timestamp": 1792587967,
-  "configHash": "0x153f4acb69ff316b4077d2035cef697e20f14603331f5fc056691f7f3db0f98f",
+  "configHash": "0x04cf4a0a82d00a49884cce302693e9d7342124297f148f2788f7a873f8d7c396",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -605,7 +605,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "22d 19h",
+        "timeSinceLastL2beatInteraction": "25d 22h",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -3045,7 +3045,6 @@
       ],
       "proxyType": "immutable",
       "description": "The OP token contract. The minting policy is controlled by the oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.",
-      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "oeth:0xcDE47C1a5e2d60b9ff262b0a3b6d486048575Ad9",
       "sinceTimestamp": 1650979836,
@@ -3059,7 +3058,7 @@
         "symbol": "OP",
         "totalSupply": "4294963292247571203495787843"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "oeth:0x4200000000000000000000000000000000000042": "GovernanceToken"
       }
@@ -3078,7 +3077,6 @@
       ],
       "proxyType": "immutable",
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
-      "critical": { "sinceTimestamp": 1665503636 },
       "deployerAddress": "oeth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
       "sinceTimestamp": 1665174739,
       "sinceBlock": 28103702,
@@ -3119,7 +3117,6 @@
         "0xd366f745f0b211567995cba05bc2f3ec23d5b5816955b2151befbd1be367438f"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "oeth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1764596903,
       "sinceBlock": 144499063,

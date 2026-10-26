@@ -33,6 +33,14 @@
       "reason": "Replaced the game type 0 (FaultDisputeGame) and 1 (PermissionedDisputeGame) implementations in Base's April 9, 2025 governance execution."
     },
     {
+      "timestamp": 1744214879,
+      "type": "code",
+      "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+      "transaction": "0x0351fede2eca409c36da1996944ef02aabaa989637ca1bfacd2f3f07547d1134",
+      "updateId": "f8cdcaf7",
+      "reason": "Upgraded the DisputeGameFactory (0xc641 to 0x4bbA) in the same transaction that replaced its game implementations."
+    },
+    {
       "timestamp": 1745512871,
       "type": "code",
       "contract": "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
@@ -65,6 +73,14 @@
       "reason": "Replaced the game type 0 (FaultDisputeGame) and 1 (PermissionedDisputeGame) implementations."
     },
     {
+      "timestamp": 1753379243,
+      "type": "code",
+      "contract": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+      "transaction": "0x46acdce174c8d83ebe2f208d8c76c867e75617483d64c3e407f69ae2f9868716",
+      "updateId": "36e9aea4",
+      "reason": "Upgrade 16 moved the shared SuperchainConfig from 1.2.0 to 2.3.0 (Upgraded event)."
+    },
+    {
       "timestamp": 1753380539,
       "type": "state",
       "contract": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -87,6 +103,14 @@
       "transaction": "0x98ef4f3ecc10996b184385bd4ca5b877dce0a3b527d88f4ee0cfe296cf004a38",
       "updateId": "be870638",
       "reason": "Replaced the game type 0 (FaultDisputeGame) and 1 (PermissionedDisputeGame) implementations in Base's OP Contracts Upgrade 16/16a execution."
+    },
+    {
+      "timestamp": 1759862579,
+      "type": "code",
+      "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+      "transaction": "0x98ef4f3ecc10996b184385bd4ca5b877dce0a3b527d88f4ee0cfe296cf004a38",
+      "updateId": "be870638",
+      "reason": "Upgraded the DisputeGameFactory (0x4bbA to 0x33D1) in the same transaction that replaced its game implementations."
     },
     {
       "timestamp": 1764604703,
@@ -135,6 +159,14 @@
       "transaction": "0xa2dc938704977d2f3d0765832e79e1239d97aa6912efadc21a9705ef7dca42eb",
       "updateId": "91b4eeeb",
       "reason": "SystemConfig re-initialization repointed superchainConfig from Optimism's shared SuperchainConfig 0x95703e to Base's own SuperchainConfig 0xb535 (guardian: Base Governance Multisig). OptimismPortal2, L1StandardBridge, L1CrossDomainMessenger, AnchorStateRegistry and the DelayedWETHs read the pause authority through SystemConfig."
+    },
+    {
+      "timestamp": 1772559059,
+      "type": "code",
+      "contract": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
+      "transaction": "0xa2dc938704977d2f3d0765832e79e1239d97aa6912efadc21a9705ef7dca42eb",
+      "updateId": "91b4eeeb",
+      "reason": "Upgraded SystemConfig 3.13.1 to 3.13.2 in the same transaction that re-initialized it."
     },
     {
       "timestamp": 1772559431,

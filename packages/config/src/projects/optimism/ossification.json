@@ -1,13 +1,6 @@
 {
   "events": [
     {
-      "timestamp": 1665503636,
-      "type": "state",
-      "contract": "oeth:0x4200000000000000000000000000000000000042",
-      "transaction": "0x9c74926c5a7a7ccfb36b87f2f983ca754a0cb4c96fdee4b3d498d1dc5b81c45f",
-      "reason": "Transferred OP minting authority to the MintManager."
-    },
-    {
       "timestamp": 1686067127,
       "type": "state",
       "contract": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
@@ -211,14 +204,6 @@
       "transaction": "0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
       "updateId": "5871bec8",
       "reason": "The OP Foundation Upgrade Safe, one of the two members of the SuperchainProxyAdminOwner, enabled the SaferSafes module: after an unanswered liveness challenge (30-day response period) its fallback owner, the Security Council, can take over the Foundation's half of the upgrade authority."
-    },
-    {
-      "timestamp": 1775575311,
-      "type": "state",
-      "contract": "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
-      "transaction": "0xcab1687f5c496d1f2447a4dd9205cd5c9965c74444a8f9be9d5d5345ce6ed647",
-      "updateId": "4bd2123b",
-      "reason": "The MintManagerOwner Safe, owner of the MintManager, replaced its 3-of-5 signer set with the nested SafeL2 (6-of-9, with a SaferSafes module) as its only owner, threshold 1."
     },
     {
       "timestamp": 1782428747,

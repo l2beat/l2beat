@@ -54,6 +54,9 @@ function referenceRow(reference: ApiReference): Row {
 }
 
 export function title(lookup: DefinitionLookup): string {
+  if (lookup.status === 'pending') {
+    return 'Loading project sources…'
+  }
   if (lookup.status === 'failed') {
     return 'Could not resolve this'
   }
