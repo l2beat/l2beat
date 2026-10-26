@@ -62,10 +62,20 @@ function splitFlatSolidity(flat: string): Record<string, string> {
     const childName = getASTTopLevelChildName(child)
     assert(childName !== undefined)
 
-    result[childName] = getNodeContent(flat, child)
+    result[uniqueKey(result, childName)] = getNodeContent(flat, child)
   }
 
   return result
+}
+
+// Overloaded free functions share a name, and a later one would replace
+// the earlier one.
+function uniqueKey(result: Record<string, string>, name: string): string {
+  let key = name
+  for (let occurrence = 2; key in result; occurrence++) {
+    key = `${name} (${occurrence})`
+  }
+  return key
 }
 
 function getNodeContent(flat: string, node: ASTNode): string {
