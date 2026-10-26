@@ -1,14 +1,28 @@
 import { EtherscanLink } from '~/components/EtherscanLink'
-import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
-import type { VerifiersSectionProps } from './VerifiersSection'
+import {
+  ProjectsUsedIn,
+  type UsedInProjectWithIcon,
+} from '~/components/ProjectsUsedIn'
 
-type Deployment =
-  VerifiersSectionProps['proofSystemVerifiers'][number]['verifierHashes'][number]['knownDeployments'][number]
+export interface KnownDeployment {
+  projectsUsedIn: UsedInProjectWithIcon[]
+  url?: string
+  address: string
+  /** Display name; the address alone does not say which chain it is on. */
+  chain: string
+}
+
+interface DeploymentGroup {
+  key: string
+  chain: string
+  projectsUsedIn: UsedInProjectWithIcon[]
+  deployments: KnownDeployment[]
+}
 
 export function KnownDeployments({
   deployments,
 }: {
-  deployments: Deployment[]
+  deployments: KnownDeployment[]
 }) {
   return (
     <div className="space-y-3 px-3 md:px-4">
@@ -51,31 +65,19 @@ export function KnownDeployments({
  * Deployments on the same chain used by the same projects share one "Used in"
  * line, so a verifier deployed many times for one project doesn't repeat it.
  */
-export function groupDeployments(deployments: Deployment[]) {
-  const groups = new Map<
-    string,
-    Pick<Deployment, 'chain' | 'projectsUsedIn'> & {
-      key: string
-      deployments: Deployment[]
-    }
-  >()
+export function groupDeployments(deployments: KnownDeployment[]) {
+  const groups = new Map<string, DeploymentGroup>()
   for (const deployment of deployments) {
-    const usedInKey = deployment.projectsUsedIn
-      .map((project) => project.id)
-      .sort()
-      .join(',')
-    const key = `${deployment.chain}|${usedInKey}`
-    const group = groups.get(key)
-    if (group) {
-      group.deployments.push(deployment)
-    } else {
-      groups.set(key, {
-        key,
-        chain: deployment.chain,
-        projectsUsedIn: deployment.projectsUsedIn,
-        deployments: [deployment],
-      })
+    const { chain, projectsUsedIn } = deployment
+    const key = [chain, ...projectsUsedIn.map((p) => p.id).sort()].join(',')
+    const group = groups.get(key) ?? {
+      key,
+      chain,
+      projectsUsedIn,
+      deployments: [],
     }
+    group.deployments.push(deployment)
+    groups.set(key, group)
   }
   return [...groups.values()]
 }

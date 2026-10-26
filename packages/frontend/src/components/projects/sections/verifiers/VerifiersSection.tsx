@@ -11,7 +11,7 @@ import {
 } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
-import { KnownDeployments } from './KnownDeployments'
+import { type KnownDeployment, KnownDeployments } from './KnownDeployments'
 import { VerifiersTable } from './table/VerifiersTable'
 
 export interface VerifiersSectionProps extends ProjectSectionProps {
@@ -26,13 +26,7 @@ export interface VerifiersSectionProps extends ProjectSectionProps {
       sourceLink?: string
       hash: string
       description?: string
-      knownDeployments: {
-        projectsUsedIn: UsedInProjectWithIcon[]
-        url?: string
-        address: string
-        /** Display name; the address alone does not say which chain it is on. */
-        chain: string
-      }[]
+      knownDeployments: KnownDeployment[]
       projectsUsedIn: UsedInProjectWithIcon[]
       verificationSteps?: string
       verificationStatus: ProjectZkCatalogInfo['verifierHashes'][number]['verificationStatus']
