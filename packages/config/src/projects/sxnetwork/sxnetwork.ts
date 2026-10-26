@@ -66,7 +66,8 @@ export const sxnetwork: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc-rollup.sx.technology',
-        callsPerMinute: 100,
+        // Cloudflare allows ~370 requests per 15 min, then blocks for 15 min
+        callsPerMinute: 24,
       },
       { type: 'blockscout', url: 'https://explorerl2.sx.technology/api' },
     ],
