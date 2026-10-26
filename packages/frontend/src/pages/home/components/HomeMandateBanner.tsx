@@ -39,14 +39,20 @@ export function HomeMandateBanner({ className }: { className?: string }) {
         {/* Lifts toward the reader on hover, as if picked up. Smaller below
             lg, where the card is one line of text tall, so its top shows. */}
         <MandateCharter className="-right-2 -bottom-5 group-hover:-translate-y-1.5 pointer-events-none absolute w-(--charter-w) rotate-[-7deg] transition-[rotate,translate] duration-300 ease-out group-hover:rotate-0" />
-        {/* The title runs above the drawing; the line under it keeps clear
-            of it, on the left. */}
+        {/* White on the pink, the title and the line under it alike; the
+            line keeps clear of the drawing, on the left. */}
         <div className="relative flex flex-col gap-1.5">
           <h2 className={cn(HOME_TEXT.title, HOME_BANNER_TITLE_CLASS)}>
             Read our mandate
           </h2>
-          {/* Ink, not white: white small text is too faint on the pink. */}
-          <p className={cn('max-w-[62%]', HOME_TEXT.body, 'text-[#0d0c0c]')}>
+          {/* Medium weight: regular white reads thin on the pink. */}
+          <p
+            className={cn(
+              'max-w-[62%]',
+              HOME_TEXT.body,
+              'font-medium text-on-accent',
+            )}
+          >
             What L2BEAT stands for and how we work.
           </p>
         </div>
