@@ -371,6 +371,17 @@
       }
     }
   ],
+  "gwei-blogposts": [
+    {
+      "id": "1ec920a86fd0",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x73849f6f2785ba7fd2f41b5b4573b75554417981",
+        "sinceBlock": 26268082
+      }
+    }
+  ],
   "hashkey": [
     {
       "id": "11c7a388565a",
