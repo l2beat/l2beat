@@ -35,11 +35,10 @@ export function KnownDeployments({
       {groupDeployments(deployments).map((group) => (
         <div key={group.key} className="space-y-2">
           <div className="flex flex-wrap items-center gap-1 font-medium text-label-value-14">
-            <span className="text-secondary">Used in</span>
-            <ProjectsUsedIn
-              noL2ClassName="text-secondary"
-              usedIn={group.projectsUsedIn}
-            />
+            {group.projectsUsedIn.length > 0 && (
+              <span className="text-secondary">Used in</span>
+            )}
+            <ProjectsUsedIn usedIn={group.projectsUsedIn} />
             {group.projectsUsedIn.length === 1 && (
               <span>{group.projectsUsedIn[0]?.name}</span>
             )}

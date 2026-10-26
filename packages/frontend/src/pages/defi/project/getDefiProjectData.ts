@@ -2,6 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDefiProjectEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { getDefiProjectTotalValueLocked } from '~/server/features/defi/project/getDefiProjectTotalValueLocked'
+import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
@@ -77,9 +78,10 @@ function getCachedTotalValueLocked(slug: string, cache: InMemoryCache) {
 
 async function loadDefiProjectPage(manifest: Manifest, slug: string) {
   const helpers = getSsrHelpers()
-  const [appLayoutProps, entry] = await Promise.all([
+  const [appLayoutProps, entry, sectionLinks] = await Promise.all([
     getAppLayoutProps(),
     getDefiProjectEntry(slug, helpers),
+    getProjectSectionLinks(slug),
   ])
 
   if (!entry) {
@@ -104,6 +106,7 @@ async function loadDefiProjectPage(manifest: Manifest, slug: string) {
     props: {
       ...appLayoutProps,
       entry,
+      sectionLinks,
       queryState: helpers.dehydrate(),
     },
   }
