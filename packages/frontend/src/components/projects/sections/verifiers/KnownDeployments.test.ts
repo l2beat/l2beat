@@ -24,6 +24,22 @@ describe(groupDeployments.name, () => {
     ])
   })
 
+  it('keeps chains that share a display name apart', () => {
+    const a = project('a')
+    const groups = groupDeployments([
+      { ...deployment('0x1', 'Pepe Unchained', [a]), chainId: 'pepeunchained' },
+      {
+        ...deployment('0x2', 'Pepe Unchained', [a]),
+        chainId: 'pepeunchained2',
+      },
+    ])
+
+    expect(groups.map((g) => g.chainId)).toEqual([
+      'pepeunchained',
+      'pepeunchained2',
+    ])
+  })
+
   it('puts deployments no project uses last, Ethereum first, then by chain', () => {
     const a = project('a')
     const groups = groupDeployments([
