@@ -77,7 +77,7 @@ export function ProjectHeader({
               href="#updates"
               className="flex h-8 items-center justify-center gap-2 rounded border border-brand p-2"
             >
-              <span className="font-medium text-brand text-xs uppercase leading-none">
+              <span className="font-medium text-brand-deep text-xs uppercase leading-none">
                 {recentUpdatesCount === 1
                   ? '1 recent update'
                   : `${recentUpdatesCount} recent updates`}

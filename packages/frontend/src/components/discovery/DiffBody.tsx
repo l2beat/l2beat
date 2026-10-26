@@ -103,7 +103,7 @@ function DiffFence({ lines }: { lines: DiffLine[] }) {
                   line.marker === '+' && 'text-positive',
                   line.marker === '-' && 'text-negative',
                   line.marker === 'meta' && 'text-secondary',
-                  line.marker === 'hunk' && 'text-brand',
+                  line.marker === 'hunk' && 'text-brand-deep',
                 )}
               >
                 {line.marker === '+' || line.marker === '-' ? line.marker : ''}
@@ -114,7 +114,7 @@ function DiffFence({ lines }: { lines: DiffLine[] }) {
                   line.marker === '+' && 'text-positive',
                   line.marker === '-' && 'text-negative',
                   line.marker === 'meta' && 'text-secondary',
-                  line.marker === 'hunk' && 'text-brand',
+                  line.marker === 'hunk' && 'text-brand-deep',
                 )}
               >
                 {line.text || ' '}

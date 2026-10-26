@@ -68,7 +68,7 @@ export function ChainMultiSelect({ label, chains, selected, onChange }: Props) {
       <button
         type="button"
         className={cn(
-          'cursor-pointer font-medium text-brand text-label-value-14 underline',
+          'cursor-pointer font-medium text-brand-deep text-label-value-14 underline',
           allSelected && 'text-secondary',
         )}
         onClick={selectAll}
@@ -79,7 +79,7 @@ export function ChainMultiSelect({ label, chains, selected, onChange }: Props) {
       <button
         type="button"
         className={cn(
-          'cursor-pointer font-medium text-brand text-label-value-14 underline',
+          'cursor-pointer font-medium text-brand-deep text-label-value-14 underline',
           noneSelected && 'text-secondary',
         )}
         onClick={deselectAll}

@@ -186,7 +186,10 @@
   --positive: #007408;
   --warning: #ab8000;
   --negative: #d70000;
-  --brand: #9621bf;
+  --brand: #ff3776;
+  /* Text in the brand colour: #FF3776 is too light to read as small text on
+     the cards, so a shade deeper. */
+  --brand-deep: #e0195a;
   --selection-brand-share: 30%;
   --background: #e6e7ec;
   --surface-primary: #fafafa;
@@ -206,14 +209,13 @@
   --scrollbar: #8a909d;
   --popover-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.55);
 
-  --row-highlight: #ce66f4;
+  --row-highlight: #ff8fb0;
 
   /* Chart colors */
   --chart-ethereum: #2a5bd8;
   --chart-ethereum-secondary: #53a3ff;
-  --chart-pink: #ef43b3;
-  /* The nav's selected item: the chart pink, deep enough to read as text. */
-  --nav-active: #bc1080;
+  --chart-pink: #ff3776;
+  --nav-active: var(--brand-deep);
   --chart-cyan: #36a3a3;
   --chart-yellow: #ab8000;
   --chart-emerald: #0ce97e;
@@ -224,7 +226,7 @@
   --chart-orange: #f98a24;
   --chart-yellow-lime: #d6db5b;
 
-  --chart-stacked-pink: #ff45b5;
+  --chart-stacked-pink: #ff3776;
   --chart-stacked-yellow: #ffc300;
   --chart-stacked-purple: #9576d1;
   --chart-stacked-blue: #3385ff;
@@ -235,9 +237,9 @@
   --chart-ethereum-stroke-gradient-1: #66b2ff;
   --chart-ethereum-stroke-gradient-2: #5d82cf;
 
-  --chart-pink-fill-gradient: #f464e8;
-  --chart-pink-stroke-gradient-1: #9576d1;
-  --chart-pink-stroke-gradient-2: #ef43b3;
+  --chart-pink-fill-gradient: #ff3776;
+  --chart-pink-stroke-gradient-1: #ff8fb0;
+  --chart-pink-stroke-gradient-2: #ff3776;
 
   --chart-cyan-fill-gradient: #40cbe3;
   --chart-cyan-stroke-gradient-1: #36a3a3;
@@ -260,7 +262,7 @@
   --positive: #12d660;
   --warning: #ffc107;
   --negative: #ff3d3d;
-  --brand: #db8bf7;
+  --brand-deep: #ff3776;
   --selection-brand-share: 50%;
   --background: #07080c;
   --surface-primary: #1b1e2a;
@@ -282,13 +284,12 @@
   --popover-shadow:
     0 0 0 1px var(--divider), 0px 8px 24px 0px rgba(0, 0, 0, 0.7);
 
-  --row-highlight: #9521bf;
+  --row-highlight: #a3204f;
 
   /* Chart colors */
   --chart-ethereum: #3387ff;
   --chart-ethereum-secondary: #5d82cf;
-  --chart-pink: #ecb0fb;
-  --nav-active: var(--chart-pink);
+  --chart-pink: #ff3776;
   --chart-cyan: #40cbe3;
   --chart-yellow: #e7c34e;
   --chart-emerald: #0ce97e;
@@ -296,7 +297,7 @@
   --chart-lime: #61ff12;
   --chart-sky: #66ccff;
 
-  --chart-stacked-pink: #ff45b5;
+  --chart-stacked-pink: #ff3776;
   --chart-stacked-yellow: #ffc300;
   --chart-stacked-purple: #9576d1;
   --chart-stacked-blue: #3385ff;
@@ -306,9 +307,9 @@
   --chart-ethereum-stroke-gradient-1: #66b2ff;
   --chart-ethereum-stroke-gradient-2: #3482f6;
 
-  --chart-pink-fill-gradient: #b13fb5;
-  --chart-pink-stroke-gradient-1: #ecb0fb;
-  --chart-pink-stroke-gradient-2: #ef43b3;
+  --chart-pink-fill-gradient: #e0195a;
+  --chart-pink-stroke-gradient-1: #ffa3c0;
+  --chart-pink-stroke-gradient-2: #ff3776;
 
   --chart-cyan-fill-gradient: #2497b3;
   --chart-cyan-stroke-gradient-1: #36a3a3;
@@ -324,16 +325,13 @@
   --chart-sky-fill-gradient: #66ccff;
 }
 
-/* The home page's theme: the site's neutrals, with pink for the charts, one
-   block of colour and the odd highlight.
+/* The home page's theme: pink links and its one block of colour.
    The page sets it on its wrapper for the first paint, and on <html> once
    mounted, so popovers portalled to <body> get it too. */
 .home-theme {
-  --brand: #ff3776;
   --link: #d4114f;
   --link-stroke: #f7c3d3;
-  --nav-active: #d4114f;
-  /* The charts, and the page's one block of colour, with text on it. */
+  /* The page's one block of colour, and text on it. */
   --accent: #ff3776;
   --on-accent: #ffffff;
 }
@@ -342,7 +340,6 @@
 .dark.home-theme {
   --link: #ff6b9a;
   --link-stroke: #5a1f33;
-  --nav-active: #ff3776;
 }
 
 /* A block in the other theme's colours. */
@@ -637,6 +634,7 @@
   --color-warning: var(--warning);
   --color-negative: var(--negative);
   --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
   --color-background: var(--background);
   --color-surface-primary: var(--surface-primary);
   --color-surface-primary-hover: var(--surface-primary-hover);

@@ -69,7 +69,7 @@ export function TokenGraphDialog({
             <a
               href={tile.href}
               title={`Open the full ${tile.symbol} page`}
-              className="group flex items-center gap-1 rounded-full bg-brand/10 py-1 pr-2 pl-2.5 font-medium text-brand text-label-value-12 transition-colors hover:bg-brand hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+              className="group flex items-center gap-1 rounded-full bg-brand/10 py-1 pr-2 pl-2.5 font-medium text-brand-deep text-label-value-12 transition-colors hover:bg-brand hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
             >
               Token page
               <ArrowRightIcon className="size-3 fill-current transition-transform group-hover:translate-x-0.5" />

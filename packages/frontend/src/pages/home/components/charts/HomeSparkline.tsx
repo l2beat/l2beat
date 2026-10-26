@@ -46,7 +46,7 @@ interface Props {
 }
 
 /** Every home sparkline shares one colour, so the cards read as a set. */
-const STROKE = 'var(--accent)'
+const STROKE = 'var(--chart-pink)'
 
 /**
  * ChartContainer has fixed heights (114px at its smallest), both on its
