@@ -9,7 +9,6 @@ import {
 } from '@l2beat/config'
 import type { OssificationHistory } from '@l2beat/shared/frontend'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
 import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { ps } from '~/server/projects'
 import { CROPS_API_URL, type CropsApiEndpointKey } from './content'
@@ -156,8 +155,10 @@ function toApiProject(
   meta: CropsAttestationsMeta,
   generatedAt: number,
 ): ApiProject {
+  // The API's rule, not the site's flags: crops-api cannot read them, and
+  // these examples show what it serves.
   const path = getGardenProjectPath(project, {
-    hasDefiPage: hasDefiProjectPage(project),
+    hasDefiPage: project.ossificationHistory !== undefined,
   })
   const { crops, listing } = resolveGarden(project, UnixTime(generatedAt))
   const attested = meta.current?.projectIds.includes(project.id)
