@@ -1,11 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { EtherscanLink } from '~/components/EtherscanLink'
 import { linkVariants } from '~/components/link/CustomLink'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { ChevronIcon } from '~/icons/Chevron'
 import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import { cn } from '~/utils/cn'
-import { DeploymentChainIcon } from '../KnownDeployments'
+import { DeploymentAddress, DeploymentChainIcon } from '../KnownDeployments'
 import type { VerifierRow } from './VerifiersTable'
 
 const columnHelper = createColumnHelper<VerifierRow>()
@@ -71,9 +70,8 @@ const baseVerifiersColumns = [
                 deployment={deployment}
                 className="mr-1 inline-block align-[-2px]"
               />
-              <EtherscanLink
-                address={deployment.address}
-                href={deployment.url}
+              <DeploymentAddress
+                deployment={deployment}
                 className="text-label-value-14"
               />
               {(i < shown.length - 1 || extraCount > 0) && ', '}

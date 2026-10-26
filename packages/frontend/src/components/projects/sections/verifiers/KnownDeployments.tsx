@@ -57,10 +57,9 @@ export function KnownDeployments({
           </div>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(112px,1fr))] justify-items-start gap-x-4 gap-y-2">
             {group.deployments.map((deployment) => (
-              <EtherscanLink
+              <DeploymentAddress
                 key={deployment.address}
-                address={deployment.address}
-                href={deployment.url}
+                deployment={deployment}
                 className="whitespace-nowrap text-label-value-14"
               />
             ))}
@@ -68,6 +67,30 @@ export function KnownDeployments({
         </div>
       ))}
     </div>
+  )
+}
+
+// EtherscanLink falls back to etherscan.io, which is wrong for other chains.
+export function DeploymentAddress({
+  deployment,
+  className,
+}: {
+  deployment: Pick<KnownDeployment, 'address' | 'url'>
+  className?: string
+}) {
+  if (deployment.url) {
+    return (
+      <EtherscanLink
+        address={deployment.address}
+        href={deployment.url}
+        className={className}
+      />
+    )
+  }
+  return (
+    <span className={className}>
+      {deployment.address.slice(0, 6)}…{deployment.address.slice(38, 42)}
+    </span>
   )
 }
 
