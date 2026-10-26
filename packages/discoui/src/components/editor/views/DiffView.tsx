@@ -23,6 +23,9 @@ export interface DiffViewProps {
   leftCode: Record<string, string>
   rightAddress: string
   rightCode: Record<string, string>
+  // EOAs and unverified contracts come as placeholder text, which can't
+  // tell whether two contracts are the same.
+  bothSidesHaveSource: boolean
   editorKey: string
 }
 
@@ -212,7 +215,7 @@ export function DiffView(props: DiffViewProps) {
           </span>
         </div>
       </div>
-      {diff && diff.verdict !== 'different' && (
+      {props.bothSidesHaveSource && diff && diff.verdict !== 'different' && (
         <SameCodeBanner
           verdict={diff.verdict}
           unchangedHidden={removeUnchanged}

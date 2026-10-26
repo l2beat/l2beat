@@ -41,6 +41,9 @@ export function DiffPage() {
         leftCode={leftCode.sources}
         rightAddress={address2}
         rightCode={rightCode.sources}
+        bothSidesHaveSource={
+          leftCode.kind === 'flat' && rightCode.kind === 'flat'
+        }
         editorKey="diff-app"
       />
     </>

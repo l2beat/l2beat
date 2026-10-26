@@ -6,9 +6,10 @@ import {
 } from '@l2beat/shared-pure'
 import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
 import { getASTTopLevelChildName } from '../solidityDeclarations'
-import type { FlatSourceClient } from './FlatSourceClient'
+import type { FlatSource, FlatSourceClient } from './FlatSourceClient'
 
 type DiffoveryResult = {
+  kind: FlatSource['kind']
   name: string
   sources: Record<string, string>
 }
@@ -20,19 +21,26 @@ export class DiffoveryController {
     const result = await this.flatSourceClient.getFlat(address)
     switch (result.kind) {
       case 'eoa':
-        return { name: result.name, sources: { 'L2BEAT-EOA': result.flat } }
+        return {
+          kind: result.kind,
+          name: result.name,
+          sources: { 'L2BEAT-EOA': result.flat },
+        }
       case 'unverified':
         return {
+          kind: result.kind,
           name: result.name,
           sources: { 'L2BEAT-UNVERIFIED': result.flat },
         }
       case 'non-solidity':
         return {
+          kind: result.kind,
           name: result.name,
           sources: { 'L2BEAT-NON-SOLIDITY': result.flat },
         }
       case 'flat':
         return {
+          kind: result.kind,
           name: result.name,
           sources: {
             '#ConstructorArguments': result.constructorArguments,
