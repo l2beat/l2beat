@@ -16,6 +16,7 @@ import { Title } from '../../components/Title'
 import { IS_READONLY } from '../../config/readonly'
 import { IconStarEmpty } from '../../icons/IconStarEmpty'
 import { IconStarFull } from '../../icons/IconStarFull'
+import { getVisibleDisplayName } from './getVisibleDisplayName'
 
 export function HomePage() {
   const [search, setSearch] = useState('')
@@ -318,6 +319,7 @@ function ProjectList(props: {
     <ol className="mb-8 grid grid-cols-2 gap-x-1 gap-y-2 md:grid-cols-4">
       {props.entries.map((entry, i) => {
         const isSelected = i === props.selectedIndex
+        const displayName = getVisibleDisplayName(entry)
 
         return (
           <li
@@ -337,9 +339,9 @@ function ProjectList(props: {
             </button>
             <Link to={`/ui/p/${entry.name}`}>
               <span className="block">{entry.name}</span>
-              {entry.displayName !== undefined && (
+              {displayName !== undefined && (
                 <span className="block text-coffee-400 text-xs">
-                  {entry.displayName}
+                  {displayName}
                 </span>
               )}
             </Link>

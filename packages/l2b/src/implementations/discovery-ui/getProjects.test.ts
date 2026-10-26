@@ -5,8 +5,9 @@ import { getProjects } from './getProjects'
 
 describe(getProjects.name, () => {
   it('pairs each id with its config name', () => {
-    const configReader = mockConfigReader(['lyra', 'zksync2'])
+    const configReader = mockConfigReader(['etherfi', 'lyra', 'zksync2'])
     const configNames = new Map([
+      ['etherfi', 'ether.fi'],
       ['lyra', 'Derive'],
       ['zksync2', 'ZKsync Era'],
     ])
@@ -14,6 +15,7 @@ describe(getProjects.name, () => {
     const response = getProjects(configReader, configNames)
 
     expect(namesOf(response)).toEqual([
+      { name: 'etherfi', displayName: 'ether.fi' },
       { name: 'lyra', displayName: 'Derive' },
       { name: 'zksync2', displayName: 'ZKsync Era' },
     ])
@@ -28,27 +30,6 @@ describe(getProjects.name, () => {
     expect(namesOf(response)).toEqual([
       { name: 'lyra', displayName: 'Derive' },
       { name: 'shared-sp1', displayName: undefined },
-    ])
-  })
-
-  it('drops a config name that only differs from the id in case or punctuation', () => {
-    const configReader = mockConfigReader([
-      'aevo',
-      'rocketpool',
-      'tornado-cash',
-    ])
-    const configNames = new Map([
-      ['aevo', 'Aevo'],
-      ['rocketpool', 'Rocket Pool'],
-      ['tornado-cash', 'Tornado Cash'],
-    ])
-
-    const response = getProjects(configReader, configNames)
-
-    expect(namesOf(response)).toEqual([
-      { name: 'aevo', displayName: undefined },
-      { name: 'rocketpool', displayName: undefined },
-      { name: 'tornado-cash', displayName: undefined },
     ])
   })
 })
