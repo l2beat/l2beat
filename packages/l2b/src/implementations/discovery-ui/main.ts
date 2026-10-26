@@ -34,6 +34,7 @@ import { getTvl } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
 import { attachModulesRouter } from './modules'
 import { ProviderCache } from './ProviderCache'
+import { renderProjectPage } from './renderProjectPage'
 import { searchCode } from './searchCode'
 import { TvlCache } from './TvlCache'
 import {
@@ -449,6 +450,13 @@ export function createDiscoveryUiApp({
       }
     })
   }
+
+  app.get('/ui/p/:project', (req, res) => {
+    const indexHtml = readFileSync(join(STATIC_ROOT, 'index.html'), 'utf-8')
+    res
+      .type('html')
+      .send(renderProjectPage(configReader, indexHtml, req.params))
+  })
 
   app.get('/{*splat}', (_req, res) => {
     res.sendFile('index.html', { root: STATIC_ROOT })
