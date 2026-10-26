@@ -1,11 +1,9 @@
-import { findLeadingCommentStart } from '@l2beat/discovery'
 import {
   assert,
   type ChainSpecificAddress,
   partition,
 } from '@l2beat/shared-pure'
-import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
-import { getASTTopLevelChildName } from '../solidityDeclarations'
+import { splitSolidityDeclarations } from '../solidityDeclarations'
 import type { FlatSource, FlatSourceClient } from './FlatSourceClient'
 
 type DiffoveryResult = {
@@ -51,26 +49,26 @@ export class DiffoveryController {
   }
 }
 
+// Text between declarations, like a comment after the last one, goes to
+// #Directives, so that a difference there is not lost.
 function splitFlatSolidity(flat: string): Record<string, string> {
   const result: Record<string, string> = {}
 
-  const AST = parse(flat, { range: true })
-  const [named, nameless] = partition(
-    AST.children,
-    (child) => getASTTopLevelChildName(child) !== undefined,
+  const [named, unnamed] = partition(
+    splitSolidityDeclarations(flat),
+    (segment) => segment.name !== null,
   )
 
-  if (nameless.length > 0) {
-    result['#Directives'] = nameless
-      .map((n) => getNodeContent(flat, n))
-      .join('\n\n')
+  const directives = unnamed
+    .map((segment) => segment.content.trim())
+    .filter((content) => content !== '')
+  if (directives.length > 0) {
+    result['#Directives'] = directives.join('\n\n')
   }
 
-  for (const child of named) {
-    const childName = getASTTopLevelChildName(child)
-    assert(childName !== undefined)
-
-    result[uniqueKey(result, childName)] = getNodeContent(flat, child)
+  for (const segment of named) {
+    assert(segment.name !== null)
+    result[uniqueKey(result, segment.name)] = segment.content
   }
 
   return result
@@ -84,11 +82,4 @@ function uniqueKey(result: Record<string, string>, name: string): string {
     key = `${name} (${occurrence})`
   }
   return key
-}
-
-function getNodeContent(flat: string, node: ASTNode): string {
-  assert(node.range !== undefined)
-
-  const left = findLeadingCommentStart(flat, node.range[0])
-  return flat.substring(left, node.range[1] + 1)
 }
