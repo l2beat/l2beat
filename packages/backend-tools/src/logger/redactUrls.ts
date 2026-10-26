@@ -3,7 +3,7 @@ const SENSITIVE_PARAM_PARTS = ['key', 'token', 'secret', 'auth', 'password']
 // Stops at characters that end a URL embedded in prose, JSON or quoted
 // attributes, e.g. ethers' `url="https://..."` or a JSON-escaped `\"`.
 const URL_IN_TEXT = /\b(?:https?|wss?):\/\/[^\s"'`<>\\]+/gi
-const TRAILING_PUNCTUATION = /[.,;:!?)\]}]+$/
+const TRAILING_PUNCTUATION = '.,;:!?)]}'
 
 /**
  * Masks the secrets of every URL found in a free-form text, such as an error
@@ -14,10 +14,25 @@ export function redactUrls(text: string): string {
     return text
   }
   return text.replace(URL_IN_TEXT, (match) => {
-    const trailing = TRAILING_PUNCTUATION.exec(match)?.[0] ?? ''
-    const url = match.slice(0, match.length - trailing.length)
-    return redactUrl(url) + trailing
+    let end = match.length
+    while (end > 0 && TRAILING_PUNCTUATION.includes(match[end - 1] ?? '')) {
+      end--
+    }
+    // An IPv6 host ends with `]`, and without it the URL does not parse
+    if (match[end] === ']' && !canParse(match.slice(0, end))) {
+      end++
+    }
+    return redactUrl(match.slice(0, end)) + match.slice(end)
   })
+}
+
+function canParse(url: string): boolean {
+  try {
+    new URL(url)
+    return true
+  } catch {
+    return false
+  }
 }
 
 /**

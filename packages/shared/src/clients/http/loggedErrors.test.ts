@@ -67,11 +67,13 @@ describe('logged errors', () => {
     )
   })
 
-  it('redact a key passed in parameters and the message', () => {
+  it('redact a key passed in the message, parameters and their keys', () => {
     const url = `https://rpc.l2beat.com/ethereum/um_prod:${PROXY_KEY}`
 
     expectRedacted(
-      log((logger) => logger.error(`Failed to call ${url}`, { url })),
+      log((logger) =>
+        logger.error(`Failed to call ${url}`, { url, calls: { [url]: 1 } }),
+      ),
       PROXY_KEY,
       'rpc.l2beat.com/ethereum/um_prod:REDACTED',
     )

@@ -30,6 +30,18 @@ describe(redactUrls.name, () => {
     ).toEqual('Tried https://api.example.com/v1/REDACTED.')
   })
 
+  it('keeps the closing bracket of an IPv6 host', () => {
+    expect(redactUrls('Failed: https://user:pass@[2001:db8::1].')).toEqual(
+      'Failed: https://REDACTED:REDACTED@[2001:db8::1]/.',
+    )
+  })
+
+  it('handles a url wrapped in brackets', () => {
+    expect(redactUrls('[https://user:pass@rpc.example.com]')).toEqual(
+      '[https://REDACTED:REDACTED@rpc.example.com/]',
+    )
+  })
+
   it('returns text without urls unchanged', () => {
     const text = 'Connect Timeout Error (attempted address: rpc.l2beat.com:443)'
     expect(redactUrls(text)).toEqual(text)
