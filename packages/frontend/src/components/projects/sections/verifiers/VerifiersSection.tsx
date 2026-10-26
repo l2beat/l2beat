@@ -1,13 +1,9 @@
 import type { ProjectZkCatalogInfo, ZkCatalogTag } from '@l2beat/config'
 import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAttesters'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { EtherscanLink } from '~/components/EtherscanLink'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
-import {
-  ProjectsUsedIn,
-  type UsedInProjectWithIcon,
-} from '~/components/ProjectsUsedIn'
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
 import {
   VERIFIER_ID_DEFAULT_DESCRIPTION,
@@ -15,6 +11,7 @@ import {
 } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
+import { KnownDeployments } from './KnownDeployments'
 import { VerifiersTable } from './table/VerifiersTable'
 
 export interface VerifiersSectionProps extends ProjectSectionProps {
@@ -134,35 +131,7 @@ export function VerifierRowDetails({
         <HorizontalSeparator className="my-4" />
       )}
       {verifierHash.knownDeployments.length > 0 && (
-        <div className="space-y-3 px-3 md:px-4">
-          <div className="font-bold text-label-value-16">Known deployments</div>
-          <div className="space-y-3">
-            {verifierHash.knownDeployments.map((deployment, index) => (
-              <div key={deployment.url} className="space-y-2">
-                <h3 className="font-bold text-label-value-14">{`Deployment #${index + 1}`}</h3>
-                <div className="flex items-center gap-1">
-                  <span className="font-medium text-label-value-14 text-secondary">
-                    Address:
-                  </span>
-                  <EtherscanLink
-                    address={deployment.address}
-                    href={deployment.url}
-                    className="text-label-value-14"
-                  />
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="font-medium text-label-value-14 text-secondary">
-                    Used in:
-                  </span>
-                  <ProjectsUsedIn
-                    noL2ClassName="text-label-value-14 font-medium text-secondary"
-                    usedIn={deployment.projectsUsedIn}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <KnownDeployments deployments={verifierHash.knownDeployments} />
       )}
       {verifierHash.knownDeployments.length > 0 &&
         verifierHash.verificationSteps && (
