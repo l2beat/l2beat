@@ -295,6 +295,7 @@ function filterAndSortEntries(
   const result = fuzzysort.go(search, entries, {
     keys: [
       (e) => e.name,
+      (e) => e.displayName ?? '',
       (e) => e._addressesString,
       (e) => e._contractNamesString,
     ],
@@ -336,6 +337,11 @@ function ProjectList(props: {
             </button>
             <Link to={`/ui/p/${entry.name}`}>
               <span className="block">{entry.name}</span>
+              {entry.displayName !== undefined && (
+                <span className="block text-coffee-400 text-xs">
+                  {entry.displayName}
+                </span>
+              )}
             </Link>
           </li>
         )

@@ -12,6 +12,7 @@ export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {
   name: string
+  displayName?: string
   addresses: string[]
   contractNames: string[]
 }

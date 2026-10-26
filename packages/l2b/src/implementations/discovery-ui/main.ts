@@ -29,7 +29,7 @@ import {
 import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
-import { getProjects } from './getProjects'
+import { getProjects, readConfigNames } from './getProjects'
 import { getTvl } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
 import { attachModulesRouter } from './modules'
@@ -136,6 +136,7 @@ export function createDiscoveryUiApp({
   const configWriter = new ConfigWriter(configReader, paths.discovery)
   const templateService = new TemplateService(paths.discovery)
   const configHealthService = new ConfigHealthService()
+  const configNames = readConfigNames()
 
   const providerCache = new ProviderCache()
   const tvlCache = new TvlCache()
@@ -150,8 +151,8 @@ export function createDiscoveryUiApp({
     res.status(200).send('OK')
   })
 
-  app.get('/api/projects', (_req, res) => {
-    const response = getProjects(configReader)
+  app.get('/api/projects', async (_req, res) => {
+    const response = getProjects(configReader, await configNames)
     res.json(response)
   })
 
