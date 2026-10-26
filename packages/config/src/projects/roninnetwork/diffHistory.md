@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xd957feedcac068499444d24d200c699144179ce4
+
+# Diff at Sat, 24 Oct 2026 16:41:08 GMT:
+
+- id: 44509599
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1791965839
+- current timestamp: 1791965839
+
+## Description
+
+The legacy Ronin bridge leaves the ossification perimeter: an external escrow released by BridgeOperator signatures.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791965839 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) [N/A] {
+    +++ description: Governance and proxy-admin contract for the legacy MainchainGateway bridge. Holds the operator/governor set, tallies stake-weighted votes for bridge proposals (operator rotations, threshold changes, withdrawals).
+      critical:
+-        true
+      fieldMeta.getThreshold.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract MainchainGateway (eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) [N/A] {
+    +++ description: Legacy multi-sig-secured Ronin bridge contract holding the L1 side of deposits made before the April 2025 Chainlink CCIP migration. Still custodies residual user balances (ETH backing legacy WETH on Ronin, the deprecated WBTC contract, and dust). Withdrawals authorised by the Ronin BridgeOperator stake-weighted threshold via MainchainBridgeManager.
+      critical:
+-        true
+      fieldMeta.getThreshold.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.getHighTierVoteWeightThreshold.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.bridgeManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PauseEnforcer (eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062) [N/A] {
+    +++ description: Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency.
+      critical:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x7e3078ce6b43065ca97722907309ec0c24c6650c
 
 # Diff at Fri, 16 Oct 2026 09:37:50 GMT:

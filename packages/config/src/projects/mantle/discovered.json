@@ -236,7 +236,7 @@
       "fieldMeta": {
         "owner": { "severity": "MEDIUM" },
         "mintCapNumerator": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "MNT inflation policy: yearly mint cap as a fraction of total supply (numerator over 10000, hard-capped at 200 = 2%)."
         }
       },

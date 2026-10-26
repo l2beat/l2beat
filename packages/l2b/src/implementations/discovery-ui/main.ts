@@ -40,7 +40,8 @@ import {
   attachTemplateRouter,
   listTemplateFilesSchema,
 } from './templates/router'
-import { attachXrefRouter } from './xref/router'
+import { RemoteWorkspaces } from './xref/RemoteWorkspaces'
+import { attachXrefRouter, diskWorkspace } from './xref/router'
 
 const safeStringSchema = z
   .string()
@@ -107,6 +108,8 @@ const diffHistoryQuerySchema = z.object({
   offset: nonNegativeIntFromString.optional(),
   limit: positiveIntFromString.optional(),
 })
+
+const REMOTE_WORKSPACE_CAPACITY = 4
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const port = process.env.PORT ?? 2021
@@ -304,12 +307,24 @@ export function createDiscoveryUiApp({
   attachDiffoveryRouter(app, diffoveryController)
   attachLayoutRouter(app, configReader, readonly)
 
+  if (readonly) {
+    const remoteWorkspaces = new RemoteWorkspaces(
+      configReader,
+      flatSourceClient,
+      REMOTE_WORKSPACE_CAPACITY,
+    )
+    attachXrefRouter(app, (project) => remoteWorkspaces.get(project))
+  } else {
+    attachXrefRouter(app, async (project) =>
+      diskWorkspace(configReader, project),
+    )
+  }
+
   if (!readonly) {
     attachAnalyzeRouter(app, configReader)
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
     attachModulesRouter(app, configReader, templateService, paths.discovery)
-    attachXrefRouter(app, configReader)
 
     app.get('/api/config/health', (_, res) => {
       const response = getConfigHealth(

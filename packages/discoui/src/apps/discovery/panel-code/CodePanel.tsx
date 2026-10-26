@@ -116,7 +116,7 @@ export function CodePanel() {
         features={{
           lineSelection: false,
           rangeHighlight: true,
-          goToDefinition: !IS_READONLY,
+          goToDefinition: true,
         }}
         onActiveFileChange={setActiveFile}
         tabActions={

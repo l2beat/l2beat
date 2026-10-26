@@ -196,7 +196,7 @@
           "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
         },
         "state": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING."
         }
       },
@@ -369,7 +369,7 @@
           "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
         },
         "state": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING."
         }
       },

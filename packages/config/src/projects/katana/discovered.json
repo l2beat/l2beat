@@ -1,7 +1,7 @@
 {
   "name": "katana",
   "timestamp": 1792144034,
-  "configHash": "0x8ec0069625521603dcc9417c79737aab3730b7b0430d5f556abc95a584421c3b",
+  "configHash": "0x885f978781bdd02b57d74dc791e9b2704321d8c631e128c4eb9c6dfd0e7a4549",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -151,7 +151,7 @@
         "pendingAggchainManager": { "severity": "MEDIUM" },
         "pendingAdmin": { "severity": "MEDIUM" },
         "rollupConfigHash": { "severity": "LOW" },
-        "submissionInterval": { "severity": "HIGH" },
+        "submissionInterval": { "severity": "MEDIUM" },
         "getThreshold": { "severity": "HIGH" },
         "$admin": { "severity": "MEDIUM" },
         "CONSENSUS_TYPE": {
@@ -212,7 +212,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -786,7 +785,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
-      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -870,13 +868,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "HIGH" },
+        "migrationManager": { "severity": "MEDIUM" },
         "minimumReservePercentage": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -898,7 +896,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
-      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -985,13 +982,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "HIGH" },
+        "migrationManager": { "severity": "MEDIUM" },
         "minimumReservePercentage": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1131,7 +1128,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -1156,7 +1152,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
-      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1240,13 +1235,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "HIGH" },
+        "migrationManager": { "severity": "MEDIUM" },
         "minimumReservePercentage": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1355,7 +1350,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -1507,7 +1501,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
-      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1591,13 +1584,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "HIGH" },
+        "migrationManager": { "severity": "MEDIUM" },
         "minimumReservePercentage": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1733,7 +1726,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
-      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1817,13 +1809,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "HIGH" },
+        "migrationManager": { "severity": "MEDIUM" },
         "minimumReservePercentage": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1909,7 +1901,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -2550,7 +2541,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
