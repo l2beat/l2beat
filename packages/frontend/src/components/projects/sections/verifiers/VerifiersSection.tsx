@@ -151,11 +151,13 @@ export function VerifierRowDetails({
                   />
                 </div>
                 <div className="flex items-center gap-1">
-                  <span className="font-medium text-label-value-14 text-secondary">
-                    Used in:
-                  </span>
+                  {deployment.projectsUsedIn.length > 0 && (
+                    <span className="font-medium text-label-value-14 text-secondary">
+                      Used in:
+                    </span>
+                  )}
                   <ProjectsUsedIn
-                    noL2ClassName="text-label-value-14 font-medium text-secondary"
+                    emptyClassName="text-label-value-14 font-medium"
                     usedIn={deployment.projectsUsedIn}
                   />
                 </div>
