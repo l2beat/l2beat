@@ -1,0 +1,82 @@
+import { EtherscanLink } from '~/components/EtherscanLink'
+import {
+  ProjectsUsedIn,
+  type UsedInProjectWithIcon,
+} from '~/components/ProjectsUsedIn'
+
+export interface KnownDeployment {
+  projectsUsedIn: UsedInProjectWithIcon[]
+  url?: string
+  address: string
+  /** Display name; the address alone does not say which chain it is on. */
+  chain: string
+}
+
+interface DeploymentGroup {
+  key: string
+  chain: string
+  projectsUsedIn: UsedInProjectWithIcon[]
+  deployments: KnownDeployment[]
+}
+
+export function KnownDeployments({
+  deployments,
+}: {
+  deployments: KnownDeployment[]
+}) {
+  return (
+    <div className="space-y-3 px-3 md:px-4">
+      <div className="flex items-center gap-1.5 font-bold text-label-value-16">
+        Known deployments
+        <span className="rounded bg-surface-secondary px-1.5 py-0.5 font-medium text-label-value-12 text-secondary tabular-nums">
+          {deployments.length}
+        </span>
+      </div>
+      {groupDeployments(deployments).map((group) => (
+        <div key={group.key} className="space-y-2">
+          <div className="flex flex-wrap items-center gap-1 font-medium text-label-value-14">
+            {group.projectsUsedIn.length > 0 && (
+              <span className="text-secondary">Used in</span>
+            )}
+            <ProjectsUsedIn usedIn={group.projectsUsedIn} />
+            {group.projectsUsedIn.length === 1 && (
+              <span>{group.projectsUsedIn[0]?.name}</span>
+            )}
+            <span className="text-secondary">· {group.chain}</span>
+          </div>
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(112px,1fr))] justify-items-start gap-x-4 gap-y-2">
+            {group.deployments.map((deployment) => (
+              <EtherscanLink
+                key={deployment.address}
+                address={deployment.address}
+                href={deployment.url}
+                className="whitespace-nowrap text-label-value-14"
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/**
+ * Deployments on the same chain used by the same projects share one "Used in"
+ * line, so a verifier deployed many times for one project doesn't repeat it.
+ */
+export function groupDeployments(deployments: KnownDeployment[]) {
+  const groups = new Map<string, DeploymentGroup>()
+  for (const deployment of deployments) {
+    const { chain, projectsUsedIn } = deployment
+    const key = [chain, ...projectsUsedIn.map((p) => p.id).sort()].join(',')
+    const group = groups.get(key) ?? {
+      key,
+      chain,
+      projectsUsedIn,
+      deployments: [],
+    }
+    group.deployments.push(deployment)
+    groups.set(key, group)
+  }
+  return [...groups.values()]
+}
