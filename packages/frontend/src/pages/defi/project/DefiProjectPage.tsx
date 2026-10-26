@@ -18,14 +18,18 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 
+import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+
 interface Props extends AppLayoutProps {
   entry: ProjectDefiEntry
+  sectionLinks: ProjectSectionLink[]
   queryState: DehydratedState
   selectedUpdateId?: string
 }
 
 export function DefiProjectPage({
   entry,
+  sectionLinks,
   queryState,
   selectedUpdateId,
   ...props
@@ -53,7 +57,11 @@ export function DefiProjectPage({
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
                 <div className="pt-6 max-md:px-4 lg:pt-4">
-                  <ProjectHeader project={entry} />
+                  <ProjectHeader
+                    project={entry}
+                    section="defi"
+                    sectionLinks={sectionLinks}
+                  />
                   <ProjectSummaryBars
                     project={{
                       underReviewStatus: entry.isUnderReview
