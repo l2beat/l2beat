@@ -69,7 +69,7 @@ export async function fetchAztecProviders(): Promise<StakingDataset> {
   }))
 
   return {
-    project: 'aztecnetwork',
+    project: 'aztecnetworkv6',
     displayName: 'Aztec staking',
     stakeToken: 'AZTEC',
     stakeDecimals: 18,

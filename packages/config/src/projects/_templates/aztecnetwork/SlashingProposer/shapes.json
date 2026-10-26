@@ -3,5 +3,11 @@
     "hash": "0x26871597dcda5a57814fdb184bd837f661973ceff7819b4b5653cb75c12a18ff",
     "address": "eth:0x8A36b8F2Ca71D8d8Bd98e03Ebf8B4D0939Daf0bA",
     "blockNumber": 25428902
+  },
+  "SlashingProposer_v6.sol": {
+    "hash": "0x59b714f737d1eff0ad20e0d0b53b00758f627e381b56bfe59c5452a8d15b4aa4",
+    "address": "eth:0xa2Ff1BF784D6B1D7Ba1BfD67c3538B85F9f85295",
+    "chain": "ethereum",
+    "blockNumber": 26160102
   }
 }

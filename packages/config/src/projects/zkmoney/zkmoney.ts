@@ -76,8 +76,13 @@ for (const name of ['ZkMoneyPortal', 'ZkMoneyPortal_sUSDS']) {
     { portal: name },
   )
   assert(
-    !discovery.getContractValue<boolean>(name, '_$frozen'),
-    'zk.money portal is frozen, review the exit and recovery descriptions',
+    discovery.getContractValue<boolean>(name, '_$frozen') &&
+      discovery.getContractValue<number>(name, '_$freezeCheckpointNumber') ===
+        discovery.getContractValue<number>(
+          'ZkMoneyPortal',
+          '_$freezeCheckpointNumber',
+        ),
+    'zk.money portals no longer share one freeze checkpoint, review the exit texts',
     { portal: name },
   )
 }
@@ -286,7 +291,8 @@ export const zkmoney: BaseProject = {
   // deployed 37 days earlier.
   ossificationHistory: discovery.getOssificationHistory(PORTAL_SINCE),
   statuses: {
-    yellowWarning: undefined,
+    yellowWarning:
+      'Both portals are frozen since Aztec made its v6 rollup canonical, and deposits revert. Balances leave only through refunds. The released wallet refunds into a zk.money deployment on Aztec v6.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
