@@ -67,6 +67,9 @@
     "LAG_IN_EPOCHS_FOR_RANDAO": {
       "description": "The number of epochs to look back from the start of the hatch for a stable RANDAO seed."
     },
+    "getRollupLagInEpochsForRandao": {
+      "description": "The Rollup's RANDAO lag in epochs. The hatch adds it when reading the Rollup's sample seed, so the seed reflects RANDAO at the hatch's seed epoch."
+    },
     "LAG_IN_EPOCHS_FOR_SET_SIZE": {
       "description": "The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."
     },

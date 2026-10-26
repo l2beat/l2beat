@@ -15,7 +15,8 @@ const ZK_MONEY_CIRCUITS =
   'https://github.com/aztec-labs-eng/zkmoney-public/tree/68425f9cf408ac803eade04d10318fcf345444a0/vendor/oxide/noir-projects/'
 
 const zkMoneyDiscovery = new ProjectDiscovery('zkmoney')
-const aztecDiscovery = new ProjectDiscovery('aztecnetwork')
+const aztecV5Discovery = new ProjectDiscovery('aztecnetwork')
+const aztecDiscovery = new ProjectDiscovery('aztecnetworkv6')
 const ZK_MONEY_RELATIONS_LIB_HASH =
   '0x017e9069df063e1170d13ae9d49ca3f3ad737d4ca9db5ec30562e21faed3d334'
 const ZK_MONEY_TRANSCRIPT_LIB_HASH =
@@ -149,6 +150,11 @@ export const barretenberg: BaseProject = {
       {
         projectId: ProjectId('aztecnetwork'),
         sinceTimestamp: UnixTime(1774821600), //  Monday, 30. March 2026 at 04:52, aztec launch according to Basti
+        untilTimestamp: UnixTime(1793001623), // v6 becomes canonical
+      },
+      {
+        projectId: ProjectId('aztecnetworkv6'),
+        sinceTimestamp: UnixTime(1793001623), // v6 becomes canonical
       },
       {
         projectId: ProjectId('payy'),
@@ -206,7 +212,7 @@ export const barretenberg: BaseProject = {
       },
       {
         hash: getVerifierKeyHash(
-          aztecDiscovery,
+          aztecV5Discovery,
           ['HonkVerifier'],
           '0x2f0ca3e610369fc41f7fb8a69995a96428fbf69d7dffd2b576e63ba4d9511ee1',
           '0x571cb1ad009254f2861d4e9f714fd96b9650ac98914a54037baa51a782d166b3',
@@ -217,7 +223,7 @@ export const barretenberg: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
         knownDeployments: [
           {
-            address: aztecDiscovery.getContract('HonkVerifier').address,
+            address: aztecV5Discovery.getContract('HonkVerifier').address,
           },
         ],
         verificationStatus: 'successful',
@@ -226,6 +232,24 @@ export const barretenberg: BaseProject = {
           'barretenberg',
           'verificationSteps-0x2f0ca3e6',
         ),
+      },
+      {
+        hash: getVerifierKeyHash(
+          aztecDiscovery,
+          ['HonkVerifier'],
+          '0x1fd4eb1d14be45e05dc78c448eb4f29d7f63e4de95129c4a5e1058cd9837f8a6',
+          '0x458c5f940b838d19c83bc7146d24a5a51542f5160bcbae396fb923efa4736cf7',
+        ),
+        name: 'Barretenberg Aztec verifier v6',
+        sourceLink:
+          'https://github.com/AztecProtocol/aztec-packages/tree/v6.0.0/noir-projects/noir-protocol-circuits',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+        knownDeployments: [
+          {
+            address: aztecDiscovery.getContract('HonkVerifier').address,
+          },
+        ],
+        verificationStatus: 'notVerified',
       },
       {
         hash: getVerifierKeyHash(

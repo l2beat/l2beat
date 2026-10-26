@@ -20,7 +20,7 @@ import type { Manifest } from '~/utils/Manifest'
 /** Editorial order of the garden table. Reviewed projects not named here follow alphabetically. */
 const GARDEN_ORDER: ProjectId[] = [
   ProjectId('tornado-cash'),
-  ProjectId('aztecnetwork'),
+  ProjectId('aztecnetworkv6'),
   ProjectId('umbra'),
   ProjectId('uniswapv3'),
 ]

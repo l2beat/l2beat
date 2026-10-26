@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HonkVerifier",
+  "category": "core",
+  "description": "UltraHonk verifier for Aztec v6 epoch proofs with an immutable verification key.",
+  "fields": {
+    "verificationKeyHash": {
+      "description": "Root-rollup circuit verification key hash embedded in the verified Solidity source.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      // Internal constant without a getter. The template shape and catalog
+      // source-hash assertion bind this value to the verified source.
+      "handler": {
+        "type": "hardcoded",
+        "value": "0x1fd4eb1d14be45e05dc78c448eb4f29d7f63e4de95129c4a5e1058cd9837f8a6"
+      }
+    }
+  }
+}

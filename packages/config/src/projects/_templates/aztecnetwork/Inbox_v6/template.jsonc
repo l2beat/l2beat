@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Facilitates canonical L1 to L2 communication. It accepts messages (including fee asset deposits) from L1 and appends them to a rolling hash, snapshotted per L1 block in a fixed ring of buckets. Each checkpoint must consume every message that reached L1 at least one L1 slot before the previous L2 slot started, up to a per-checkpoint cap. This forces message inclusion. New messages revert while every ring bucket holds messages that the proven chain has not consumed.",
+  "ignoreMethods": ["getBucket"],
+  "ignoreRelatives": ["getFeeAssetPortal"],
+  "ignoreInWatchMode": [
+    "getCurrentBucketSeq",
+    "getProvenConsumedBucketSeq",
+    "getRingHeadroom",
+    "getState",
+    "getTotalMessagesInserted"
+  ],
+  "fields": {
+    "FEE_ASSET_PORTAL": {
+      "description": "The FeeJuicePortal contract used for bridging fee assets to the L2. Messages from this portal are inserted with the canonical fee-asset L2 sender.",
+      "template": "aztecnetwork/FeeJuicePortal"
+    },
+    "BUCKET_RING_SIZE": {
+      "description": "Number of message buckets retained. A bucket can only be overwritten once the proven chain consumed it."
+    },
+    "ROLLUP": {
+      "description": "The address of the core Rollup contract that records which message buckets the proven chain consumed.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mark message buckets as consumed by the proven chain, which frees their ring slots for new messages."
+        }
+      ]
+    },
+    "VERSION": {
+      "description": "The identifier of the Aztec instance/version to prevent cross-instance message replay."
+    }
+  },
+  "category": "bridge-canonical"
+}

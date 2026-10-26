@@ -1,3 +1,154 @@
+Generated with discovered.json: 0xf3b31e60ddb0d617de2fc099e431e17f4dbcfa63
+
+# Diff at Mon, 26 Oct 2026 10:28:35 GMT:
+
+- id: e84ec614
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f91809fa18847e002f873358413930734c4cfa33 block: 1792144307
+- current timestamp: 1793006682
+
+## Description
+
+v6 upgrade! v5 keeps running as a non-canonical rollup with 50 team-run validators.
+- v5 lost access to the implicit reward pool. Its checkpoint reward drops 500 -> 50 AZTEC, paid from a 1.8M AZTEC earmark in the RewardDistributor. Once that is spent, v5 sequencers and provers earn only fees.
+- Both zk.money portals froze at v5 checkpoint 118925: no deposits, refunds and withdrawals within the frozen bounds only.
+- GSE proof-of-possession gas limit 250k -> 300k.
+- The ATP Registry revoker moved from an EOA to a one-time RevocationPayload, which revoked 2 milestone token positions.
+- v6 code changes are summarized in the aztecnetworkv6 diffHistory: https://disco.l2beat.com/diff/eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34/eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f
+
+## Watched changes
+
+```diff
+    contract GovernanceProposer (eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef) [aztecnetwork/GovernanceProposer] {
+    +++ description: Intermediary contract through which the designated proposer for each L2 slot can signal support for an L1 payload. A signalling round comprises 1000 slots. A payload that receives at least 600 signals can be submitted to the L1 Governance contract within the configured lifetime.
++++ description: Rollup instance whose checkpoint proposers can signal proposals.
+      values.getInstance:
+-        "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34"
++        "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f"
+    }
+```
+
+```diff
+    contract Registry (eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298) [aztecnetwork/Registry] {
+    +++ description: Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor.
++++ description: The latest registered rollup instance, treated as canonical by the Aztec contracts.
+      values.getCanonicalRollup:
+-        "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34"
++        "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f"
++++ description: Registered rollup version identifiers in insertion order.
+      values.getVersion.3:
++        2070860440
++++ description: Number of rollup versions registered in the registry.
+      values.numberOfVersions:
+-        3
++        4
+    }
+```
+
+```diff
+    contract RewardDistributor (eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3) [aztecnetwork/RewardDistributor] {
+    +++ description: Holds tokens allocated for protocol rewards. The canonical Rollup contract, as defined by the Registry, can draw from the implicit reward pool while any address can claim only funds explicitly earmarked to it.
++++ description: Current canonical rollup, which can claim from both the implicit reward pool and funds earmarked to it.
+      values.canonicalRollup:
+-        "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34"
++        "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34) [aztecnetwork/Rollup] {
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
++++ description: The amount of reward tokens distributed per proven checkpoint.
+      values.getCheckpointReward:
+-        "500000000000000000000"
++        "50000000000000000000"
+      values.getRewardConfig.checkpointReward:
+-        "500000000000000000000"
++        "50000000000000000000"
+      directlyReceivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3","description":"claim protocol reward funds and direct them to sequencers and provers.","role":".canonicalRollup"}
+      directlyReceivedPermissions.4:
+-        {"permission":"interact","from":"eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f","description":"deposit and withdraw validator stake for its own GSE instance and, while it is the latest Rollup, for the bonus instance; cast all available own-instance and applicable bonus-instance power as yea on qualifying sequencer-signalled proposals.","role":".getLatestRollup"}
+    }
+```
+
+```diff
+    contract GSE (eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f) [aztecnetwork/GSE] {
+    +++ description: Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transferred to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.
++++ description: Latest rollup registered in the GSE. Validators assigned to the bonus instance follow this address.
+      values.getLatestRollup:
+-        "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34"
++        "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f"
+      values.proofOfPossessionGasLimit:
+-        250000
++        300000
+    }
+```
+
+```diff
+    contract ZkMoneyPortal_sUSDS (eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      values._$freezeArchive:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7"
+      values._$freezeCheckpointNumber:
+-        0
++        118925
+      values._$freezeEpochNumber:
+-        0
++        4426
++++ description: Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership.
++++ severity: MEDIUM
+      values._$frozen:
+-        false
++        true
+    }
+```
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry] {
+    +++ description: AZTEC token-position Registry referenced by the ProtocolTreasury for its activation cutoff and by other ecosystem vesting contracts.
++++ description: Address used by ATP positions as the revocation authority.
+      values.getRevoker:
+-        "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350"
++        "eth:0x30F17c3360Dc00B9315b0E8e1253Bc408644a725"
+    }
+```
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      values._$freezeArchive:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7"
+      values._$freezeCheckpointNumber:
+-        0
++        118925
+      values._$freezeEpochNumber:
+-        0
++        4426
++++ description: Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership.
++++ severity: MEDIUM
+      values._$frozen:
+-        false
++        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144307 (main branch discovery), not current.
+
+```diff
+    contract EscapeHatch (eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A) [aztecnetwork/EscapeHatch] {
+    +++ description: Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. Candidates post a bond of 332,000,000 AZTEC and enter the candidate set. For each hatch, the contract snapshots the eligible set and uses RANDAO to select one designated proposer; posting a bond does not grant immediate proposal rights. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any eligible bonded candidates.
+      fieldMeta.getRollupLagInEpochsForRandao:
++        {"description":"The Rollup's RANDAO lag in epochs. The hatch adds it when reading the Rollup's sample seed, so the seed reflects RANDAO at the hatch's seed epoch."}
+    }
+```
+
 Generated with discovered.json: 0x4ea4897eee41346e3c69a0d5808c05091400fb50
 
 # Diff at Fri, 16 Oct 2026 09:53:08 GMT:
