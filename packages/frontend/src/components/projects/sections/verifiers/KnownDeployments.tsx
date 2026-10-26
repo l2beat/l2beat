@@ -103,7 +103,7 @@ export function groupDeployments(deployments: KnownDeployment[]) {
   const groups = new Map<string, DeploymentGroup>()
   for (const deployment of deployments) {
     const { chainId, chain, chainIcon, projectsUsedIn } = deployment
-    const key = [chain, ...projectsUsedIn.map((p) => p.id).sort()].join(',')
+    const key = [chainId, ...projectsUsedIn.map((p) => p.id).sort()].join(',')
     const group = groups.get(key) ?? {
       key,
       chainId,
