@@ -89,7 +89,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       'daTrackingConfig',
       'costsInfo',
       'activityConfig',
-      'crops',
+      'garden',
       'ossificationHistory',
     ],
   })

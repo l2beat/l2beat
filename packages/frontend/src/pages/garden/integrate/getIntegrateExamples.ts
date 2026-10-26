@@ -1,16 +1,10 @@
-import type {
-  ProjectCrops,
-  ProjectPrivacyInfo,
-  ProjectScalingInfo,
-} from '@l2beat/config'
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { ResolvedCrops } from '~/components/garden/crops'
-import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
-import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
+import type { ProjectGarden, ResolvedCrops } from '@l2beat/config'
 import {
-  qualifiesForGarden,
-  resolveProjectCrops,
-} from '~/server/features/garden/resolveCrops'
+  measureOssificationBand,
+  type OssificationHistory,
+} from '@l2beat/shared/frontend'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { ps } from '~/server/projects'
 import { CROPS_API_URL, type CropsApiEndpointKey } from './content'
 import {
@@ -33,9 +27,8 @@ export interface ExampleProject {
   id: string
   slug: string
   name: string
-  crops: ProjectCrops
-  privacyInfo?: ProjectPrivacyInfo | undefined
-  scalingInfo?: ProjectScalingInfo | undefined
+  garden: ProjectGarden
+  ossificationHistory?: OssificationHistory | undefined
   contracts?:
     | {
         addresses: Record<
@@ -68,14 +61,15 @@ export async function getIntegrateExamples(
   meta: CropsAttestationsMeta,
 ): Promise<IntegrateExamples> {
   const projects = await ps.getProjects({
-    where: ['crops'],
-    select: ['crops'],
-    optional: ['scalingInfo', 'privacyInfo', 'contracts'],
+    where: ['garden'],
+    select: ['garden'],
+    optional: ['contracts', 'ossificationHistory'],
   })
+  const generatedAt = Math.floor(Date.now() / 1000)
   return buildIntegrateExamples(
-    pickSample(projects, meta),
+    pickSample(projects, meta, generatedAt),
     meta,
-    Math.floor(Date.now() / 1000),
+    generatedAt,
   )
 }
 
@@ -85,7 +79,7 @@ export function buildIntegrateExamples(
   generatedAt: number,
 ): IntegrateExamples {
   const stamp = { attestations: meta, generatedAt, commit: '' }
-  const project = toApiProject(sample, meta)
+  const project = toApiProject(sample, meta, generatedAt)
   const contract =
     sample.contracts?.addresses.ethereum?.[0] ?? PLACEHOLDER_CONTRACT
   const address = ChainSpecificAddress.address(contract.address).toLowerCase()
@@ -145,9 +139,11 @@ interface ApiProject {
 function toApiProject(
   project: ExampleProject,
   meta: CropsAttestationsMeta,
+  generatedAt: number,
 ): ApiProject {
-  const path = getGardenProjectPath(project)
-  const crops = resolveProjectCrops(project.crops)
+  const { path, verdicts } = project.garden
+  const { crops, listing } =
+    verdicts[measureOssificationBand(project.ossificationHistory, generatedAt)]
   const attested = meta.current?.projectIds.includes(project.id)
   return {
     id: project.id,
@@ -155,7 +151,7 @@ function toApiProject(
     name: project.name,
     href: path ? `${L2BEAT_ORIGIN}${path}` : null,
     crops,
-    inGarden: qualifiesForGarden(crops),
+    inGarden: listing === 'listed',
     attestation:
       meta.current && attested
         ? {
@@ -182,9 +178,13 @@ function toCropsSummary(crops: ResolvedCrops) {
 function pickSample(
   projects: ExampleProject[],
   meta: CropsAttestationsMeta,
+  generatedAt: number,
 ): ExampleProject {
   const ranked = projects
-    .map((source) => ({ source, api: toApiProject(source, meta) }))
+    .map((source) => ({
+      source,
+      api: toApiProject(source, meta, generatedAt),
+    }))
     .sort(
       (a, b) =>
         Number(!a.api.attestation) * 2 +

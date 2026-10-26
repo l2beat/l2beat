@@ -9,6 +9,7 @@ import {
   EthereumAddress,
   isDateOnly,
   type KnownInteropBridgeType,
+  type OssificationBand,
   type ProjectId,
   TokenId,
   type TrackedTxsConfigSubtype,
@@ -17,7 +18,7 @@ import {
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 import type { ZkCatalogTagType } from './common/zkCatalogTags'
-import type { OsiLicenseId } from './crops/osiLicenses'
+import type { OsiLicense, OsiLicenseId } from './crops/osiLicenses'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -261,6 +262,8 @@ export interface BaseProject {
 
   // crops data
   crops?: ProjectCrops
+  /** Built from `crops` when config builds, see `ProjectGarden`. */
+  garden?: ProjectGarden
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -1652,6 +1655,44 @@ export interface ProjectCrops {
   openSource: ProjectOpenSourceCropEvaluation
   privacy: ProjectCropEvaluation
   security: ProjectCropEvaluation
+}
+
+/** `neutral` is never declared in config: it is what an ungraded crop resolves to. */
+export type CropSentiment = ProjectCropSentiment | 'neutral'
+
+/** An evaluation with every optional field resolved to a concrete value. */
+export interface ResolvedCropEvaluation {
+  sentiment: CropSentiment
+  status: ProjectCropStatus
+  /** Only on the open source crop, once the license is confirmed. */
+  license?: OsiLicense
+  points: string[]
+  missing: string[]
+  additionalConsiderations: string[]
+  notReviewed: string[]
+}
+
+export type ResolvedCrops = Record<keyof ProjectCrops, ResolvedCropEvaluation>
+
+/** Whether a reviewed project is listed in the garden, and if not, why. */
+export type GardenListing = 'listed' | 'ratedBad' | 'noOssificationScore'
+
+/** `crops` as shown: every default filled in, Security capped, and whether the garden lists the project. */
+export interface GardenVerdict {
+  crops: ResolvedCrops
+  listing: GardenListing
+}
+
+/**
+ * What the site and the CROPS API show for a reviewed project. Security is
+ * capped by the ossification score, which moves with time while the config
+ * build is cached, so there is a verdict per band: read the one for the band
+ * measured now (`measureOssificationBand`).
+ */
+export interface ProjectGarden {
+  /** The l2beat.com page to link, or null when the project has none. */
+  path: string | null
+  verdicts: Record<OssificationBand, GardenVerdict>
 }
 
 // #endregion
