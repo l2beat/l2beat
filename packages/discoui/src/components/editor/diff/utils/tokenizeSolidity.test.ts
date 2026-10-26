@@ -23,6 +23,22 @@ describe('tokenizeSolidity', () => {
     ])
   })
 
+  it('keeps increments and decrements whole', () => {
+    expect(stripPositions(tokenizeSolidity('a+++b--'))).toEqual([
+      structural('a', 1, 1),
+      structural('++', 1, 1),
+      structural('+', 1, 1),
+      structural('b', 1, 1),
+      structural('--', 1, 1),
+    ])
+  })
+
+  it('tells apart operators that differ only in spacing around ++', () => {
+    const left = stripPositions(tokenizeSolidity('a++ + b'))
+    const right = stripPositions(tokenizeSolidity('a + ++b'))
+    expect(left).not.toEqual(right)
+  })
+
   it('whitespace between tokens does not change the token stream', () => {
     const tight = tokenizeSolidity('a&&b')
     const loose = tokenizeSolidity('a  &&\t b')

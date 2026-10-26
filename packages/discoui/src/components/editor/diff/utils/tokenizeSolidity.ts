@@ -95,6 +95,13 @@ export function tokenizeSolidity(source: string): Token[] {
       continue
     }
 
+    // Spaces decide how solc splits these, so a++ + b and a + ++b differ.
+    if ((c === '+' || c === '-') && next === c) {
+      tokens.push(structural(c + next, line, line))
+      i += 2
+      continue
+    }
+
     tokens.push(structural(c, line, line))
     i++
   }

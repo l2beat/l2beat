@@ -17,6 +17,10 @@ describe('getDiffVerdict', () => {
     )
   })
 
+  it('calls moving an increment across an operator different', () => {
+    expect(verdict('c = a++ + b;', 'c = a + ++b;', false)).toEqual('different')
+  })
+
   it('calls a comment only change different while comments count', () => {
     expect(verdict('a = 1;', '// x\na = 1;', false)).toEqual('different')
   })
