@@ -136,7 +136,10 @@ export function createDiscoveryUiApp({
   const configWriter = new ConfigWriter(configReader, paths.discovery)
   const templateService = new TemplateService(paths.discovery)
   const configHealthService = new ConfigHealthService()
-  const configNames = readConfigNames()
+  const configNames = readConfigNames().catch((error) => {
+    console.error(new Error('Failed to load config names', { cause: error }))
+    return new Map<string, string>()
+  })
 
   const providerCache = new ProviderCache()
   const tvlCache = new TvlCache()
