@@ -50,38 +50,9 @@ export class FlatWorkspace {
     configReader: ConfigReader,
     project: string,
   ): FlatWorkspace {
-    const entries: FlatEntry[] = []
-    const seen = new Set<ChainSpecificAddress>()
-    const discoveries = configReader.readDiscoveryWithReferences(project)
-    const aliases = new Map<ChainSpecificAddress, string[]>()
-    for (const entry of discoveries[0]?.entries ?? []) {
-      if (entry.type === 'Reference' && entry.name !== undefined) {
-        aliases.set(entry.address, [
-          ...(aliases.get(entry.address) ?? []),
-          entry.name,
-        ])
-      }
-    }
-    for (const discovery of discoveries) {
-      for (const entry of discovery.entries) {
-        if (entry.type === 'Reference' || seen.has(entry.address)) {
-          continue
-        }
-        seen.add(entry.address)
-        const values = entry.values ?? {}
-        const abiAddresses = [entry.address, ...get$Implementations(values)]
-        const paths = readSourcePaths(configReader, discovery, entry)
-        entries.push({
-          address: entry.address,
-          name: entry.name ?? entry.address,
-          type: entry.type,
-          values,
-          abi: abiAddresses.flatMap((a) => discovery.abis[a] ?? []),
-          sourcePaths: orderImplementationsFirst(paths),
-          aliases: aliases.get(entry.address) ?? [],
-        })
-      }
-    }
+    const entries = projectEntries(configReader, project, (discovery, entry) =>
+      readSourcePaths(configReader, discovery, entry),
+    )
     return new FlatWorkspace(entries, (path) => readFileSync(path, 'utf-8'))
   }
 
@@ -126,6 +97,48 @@ export class FlatWorkspace {
     }
     return id
   }
+}
+
+export function projectEntries(
+  configReader: ConfigReader,
+  project: string,
+  sourcePathsOf: (
+    discovery: DiscoveryOutput,
+    entry: EntryParameters,
+  ) => string[],
+): FlatEntry[] {
+  const entries: FlatEntry[] = []
+  const seen = new Set<ChainSpecificAddress>()
+  const discoveries = configReader.readDiscoveryWithReferences(project)
+  const aliases = new Map<ChainSpecificAddress, string[]>()
+  for (const entry of discoveries[0]?.entries ?? []) {
+    if (entry.type === 'Reference' && entry.name !== undefined) {
+      aliases.set(entry.address, [
+        ...(aliases.get(entry.address) ?? []),
+        entry.name,
+      ])
+    }
+  }
+  for (const discovery of discoveries) {
+    for (const entry of discovery.entries) {
+      if (entry.type === 'Reference' || seen.has(entry.address)) {
+        continue
+      }
+      seen.add(entry.address)
+      const values = entry.values ?? {}
+      const abiAddresses = [entry.address, ...get$Implementations(values)]
+      entries.push({
+        address: entry.address,
+        name: entry.name ?? entry.address,
+        type: entry.type,
+        values,
+        abi: abiAddresses.flatMap((a) => discovery.abis[a] ?? []),
+        sourcePaths: orderImplementationsFirst(sourcePathsOf(discovery, entry)),
+        aliases: aliases.get(entry.address) ?? [],
+      })
+    }
+  }
+  return entries
 }
 
 export interface FlatLocation {

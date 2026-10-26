@@ -149,7 +149,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -224,7 +224,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade and migration authority has been permanently renounced."
         },
         "verifier": {
@@ -232,7 +232,7 @@
           "description": "zkSNARK verifier used to authorize withdrawals from the pool."
         },
         "isMigrated": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the one-time legacy state migration path has already been used. If true, this pool behaves like the ones without this function."
         }
       },
@@ -281,7 +281,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -386,7 +386,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -617,7 +617,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -672,7 +672,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "verifier": {
@@ -1926,7 +1926,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "verifier": {
@@ -1994,7 +1994,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "verifier": {
@@ -2509,7 +2509,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -2619,7 +2619,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
@@ -2712,7 +2712,7 @@
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {

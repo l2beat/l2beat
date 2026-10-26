@@ -85,7 +85,27 @@
     // TaikoRisc0Verifier -> RiscZeroVerifierRouter exists since the Shasta TaikoRisc0Verifier deployment (2026-03-04).
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
       // TimelockController (global template): owner of the RiscZeroVerifierRouter, can add/remove verifier routes
-      "critical": { "sinceTimestamp": 1772638115 }
+      "critical": { "sinceTimestamp": 1772638115 },
+      "fields": {
+        // The router emits no event on verifier changes, so its owner's calls
+        // are watched. Route additions are reviewed events on the router.
+        "callsScheduled": {
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "CallScheduled"
+            }
+          }
+        },
+        "callsExecuted": {
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "CallExecuted"
+            }
+          }
+        }
+      }
     },
     // active RISC0 verifier fleet registered in the RiscZeroVerifierRouter (shared risc0/taiko groth16 templates, flagged per-project);
     // permanently estopped entries (0x44c2..., 0x68dC..., 0xDa8f...) and their wrapped verifiers are deliberately not flagged

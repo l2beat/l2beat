@@ -22,7 +22,7 @@
     },
     "operatorRenounced": {
       "description": "Whether verifier-upgrade authority has been permanently renounced.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "copy": "operator",
       "edit": ["=", "eth:0x0000000000000000000000000000000000000000"]
     },

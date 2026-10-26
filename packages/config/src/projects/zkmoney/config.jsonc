@@ -18,8 +18,8 @@
     "eth:0x2E0C30821b9fcCf1CDB47F4e3a3A993593344522": "FrozenDepositRefundVerifier_sUSDS",
     "eth:0x8ACcBa3958cEF8E30b255c70A4C16CD2D14fb787": "UnprocessedDepositRefundVerifier_sUSDS"
   },
-  // Custody criticality is set by templates. DAI setup finished before the first deposit.
-  // The sUSDS portal's ownership was renounced on 2026-10-08, after four deposits.
+  // Custody criticality is set by templates. The owner renounces of both portals
+  // (2026-09-25, 2026-10-08) remove paths and do not reset the ossification clock.
   // SkyEscrow, SwapEscrow and OxideAccount stay out, like routers: immutable
   // app-path helpers that hold funds only in transit or gate deposit recovery.
   "overrides": {

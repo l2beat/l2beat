@@ -80,6 +80,10 @@ RUN apt update && \
   groupadd -r appgroup && useradd -r -g appgroup -m appuser
 WORKDIR /app
 COPY --from=builder --chown=appuser:appgroup /src .
+# Mount point of the persistent volume holding the explorer source cache. A
+# new volume copies this directory's owner, so appuser can write to it.
+RUN mkdir -p packages/config/cache && \
+  chown appuser:appgroup packages/config/cache
 
 USER appuser
 

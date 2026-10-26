@@ -1874,7 +1874,7 @@
         "owner": { "severity": "MEDIUM" },
         "$admin": { "severity": "MEDIUM" },
         "tokenMapping": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "L1-to-L2 token mapping used to validate custom-token deposits and withdrawals."
         }
       },
@@ -2081,7 +2081,7 @@
         "owner": { "severity": "MEDIUM" },
         "$admin": { "severity": "MEDIUM" },
         "tokenMapping": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "L1-to-L2 token mapping used to validate custom-token deposits and withdrawals."
         }
       },
@@ -2758,13 +2758,13 @@
         "rescuer": { "severity": "MEDIUM" },
         "pauser": { "severity": "MEDIUM" },
         "blacklister": { "severity": "MEDIUM" },
-        "masterMinter": { "severity": "HIGH" },
+        "masterMinter": { "severity": "MEDIUM" },
         "minterAllowances": {
           "severity": "HIGH",
           "description": "Current USDC minters and their maximum mint allowances."
         },
         "removedMinters": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "USDC minter removals."
         }
       },
