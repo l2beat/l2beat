@@ -797,6 +797,7 @@ export const aztecnetworkv6: ScalingProject = {
     }),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossificationHistory: discovery.getOssificationHistory(v6ActivationTimestamp),
   milestones: [
     {
       title: 'Aztec v6 Upgrade',

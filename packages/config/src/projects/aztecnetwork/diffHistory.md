@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf3b31e60ddb0d617de2fc099e431e17f4dbcfa63
+Generated with discovered.json: 0xae53b505b049b6d4a68d34331c7975f406638de9
 
-# Diff at Mon, 26 Oct 2026 10:28:35 GMT:
+# Diff at Mon, 26 Oct 2026 13:58:20 GMT:
 
 - id: e84ec614
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f91809fa18847e002f873358413930734c4cfa33 block: 1792144307
+- comparing to: main@7fa771f06caf2420dbd86a8327f3cb3348fb05f0 block: 1792144307
 - current timestamp: 1793006682
 
 ## Description
@@ -79,6 +79,8 @@ v6 upgrade! v5 keeps running as a non-canonical rollup with 50 team-run validato
       values.getLatestRollup:
 -        "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34"
 +        "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f"
++++ description: Gas cap for verifying a new validator's BLS proof of possession. The owner can set it too low for valid keys, which blocks new validator deposits.
++++ severity: MEDIUM
       values.proofOfPossessionGasLimit:
 -        250000
 +        300000
@@ -142,10 +144,70 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1792144307 (main branch discovery), not current.
 
 ```diff
+    contract Outbox (eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7) [aztecnetwork/Outbox] {
+    +++ description: Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SlashingProposer (eth:0x8A36b8F2Ca71D8d8Bd98e03Ebf8B4D0939Daf0bA) [aztecnetwork/SlashingProposer] {
+    +++ description: Collects one signed slashing ballot from the designated proposer in each slot. After the execution delay, anyone can tally the ballots per validator and penalty level, deploy the resulting payload, and ask the Slasher to execute it before the round expires.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract GSE (eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f) [aztecnetwork/GSE] {
+    +++ description: Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transferred to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.
+      fieldMeta.proofOfPossessionGasLimit:
++        {"severity":"MEDIUM","description":"Gas cap for verifying a new validator's BLS proof of possession. The owner can set it too low for valid keys, which blocks new validator deposits."}
+    }
+```
+
+```diff
+    contract FeeJuicePortal (eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c) [aztecnetwork/FeeJuicePortal] {
+    +++ description: One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Slasher (eth:0xCD6855470A01aBcd989126A1183Fb50673952548) [aztecnetwork/Slasher] {
+    +++ description: Executes payload actions submitted by the authorized slashing proposer or Governance. Execution is blocked while slashing is disabled or when the vetoer has vetoed the payload; voting and execution-delay rules are enforced by the proposer, while Governance can bypass the proposer.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RewardExtLib (eth:0xD6E890c615d6f99681a00771C20ed04516288898) [aztecnetwork/RewardExtLib] {
+    +++ description: Library immutably linked into the Rollup for sequencer and prover reward accounting. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ValidatorOperationsExtLib (eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411) [aztecnetwork/ValidatorOperationsExtLib] {
+    +++ description: Library immutably linked into the Rollup for validator entry, exits, slashing, and Slasher rotation. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.
+      critical:
++        true
+    }
+```
+
+```diff
     contract EscapeHatch (eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A) [aztecnetwork/EscapeHatch] {
     +++ description: Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. Candidates post a bond of 332,000,000 AZTEC and enter the candidate set. For each hatch, the contract snapshots the eligible set and uses RANDAO to select one designated proposer; posting a bond does not grant immediate proposal rights. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any eligible bonded candidates.
+      fieldMeta.getCandidateCount.severity:
+-        "HIGH"
       fieldMeta.getRollupLagInEpochsForRandao:
 +        {"description":"The Rollup's RANDAO lag in epochs. The hatch adds it when reading the Rollup's sample seed, so the seed reflects RANDAO at the hatch's seed epoch."}
+      critical:
++        true
     }
 ```
 

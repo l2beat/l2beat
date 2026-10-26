@@ -112,6 +112,7 @@
       ],
       "proxyType": "immutable",
       "description": "Executes payload actions submitted by the authorized slashing proposer or Governance. Execution is blocked while slashing is disabled or when the vetoer has vetoed the payload; voting and execution-delay rules are enforced by the proposer, while Governance can bypass the proposer.",
+      "critical": true,
       "deployerAddress": "eth:0x060c0BEB977BAEe8E57B62741A152d72e57Cde27",
       "sinceTimestamp": 1791612059,
       "sinceBlock": 26160102,
@@ -157,6 +158,7 @@
       ],
       "proxyType": "immutable",
       "description": "UltraHonk verifier for Aztec v6 epoch proofs with an immutable verification key.",
+      "critical": true,
       "deployerAddress": "eth:0x060c0BEB977BAEe8E57B62741A152d72e57Cde27",
       "sinceTimestamp": 1791612035,
       "sinceBlock": 26160100,
@@ -166,7 +168,6 @@
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "severity": "HIGH",
           "description": "Root-rollup circuit verification key hash embedded in the verified Solidity source.",
           "type": "CODE_CHANGE"
         }
@@ -277,6 +278,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library immutably linked into the Rollup for validator exits started by the attester key instead of the withdrawer. The stake still goes to the withdrawer. Such exits are limited to about 5% of the validator set per Governance withdrawal delay, and only the canonical Rollup accepts them. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "critical": true,
       "deployerAddress": "eth:0x060c0BEB977BAEe8E57B62741A152d72e57Cde27",
       "sinceTimestamp": 1791611939,
       "sinceBlock": 26160092,
@@ -306,6 +308,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library immutably linked into the Rollup for checkpoint proposal, header, Inbox and blob validation, and pruning. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "critical": true,
       "deployerAddress": "eth:0x060c0BEB977BAEe8E57B62741A152d72e57Cde27",
       "sinceTimestamp": 1791611975,
       "sinceBlock": 26160095,
@@ -370,6 +373,7 @@
       ],
       "proxyType": "immutable",
       "description": "One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.",
+      "critical": true,
       "deployerAddress": "eth:0x060c0BEB977BAEe8E57B62741A152d72e57Cde27",
       "sinceTimestamp": 1791612059,
       "sinceBlock": 26160102,
@@ -457,6 +461,7 @@
       ],
       "proxyType": "immutable",
       "description": "Facilitates canonical L1 to L2 communication. It accepts messages (including fee asset deposits) from L1 and appends them to a rolling hash, snapshotted per L1 block in a fixed ring of buckets. Each checkpoint must consume every message that reached L1 at least one L1 slot before the previous L2 slot started, up to a per-checkpoint cap. This forces message inclusion. New messages revert while every ring bucket holds messages that the proven chain has not consumed.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getCurrentBucketSeq",
         "getProvenConsumedBucketSeq",
@@ -513,6 +518,7 @@
       ],
       "proxyType": "immutable",
       "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. Candidates post a bond of 332,000,000 AZTEC and enter the candidate set. For each hatch, the contract snapshots the eligible set and uses RANDAO to select one designated proposer; posting a bond does not grant immediate proposal rights. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any eligible bonded candidates.",
+      "critical": true,
       "ignoreInWatchMode": ["getCurrentHatch"],
       "deployerAddress": "eth:0x060c0BEB977BAEe8E57B62741A152d72e57Cde27",
       "sinceTimestamp": 1791612071,
@@ -545,7 +551,6 @@
           "description": "The amount deducted from the bond when a candidate exits the candidate set. This is the minimum that a candidate loses of their bond by becoming a candidate and cannot be circumvented."
         },
         "getCandidateCount": {
-          "severity": "HIGH",
           "description": "Hatch proposer candidates who posted the bond."
         },
         "getBondToken": {
@@ -637,6 +642,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library immutably linked into the Rollup for sequencer and prover reward accounting. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "critical": true,
       "deployerAddress": "eth:0x060c0BEB977BAEe8E57B62741A152d72e57Cde27",
       "sinceTimestamp": 1791611987,
       "sinceBlock": 26160096,
@@ -696,6 +702,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library immutably linked into the Rollup for validator entry, exits, slashing, and Slasher rotation. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "critical": true,
       "deployerAddress": "eth:0x060c0BEB977BAEe8E57B62741A152d72e57Cde27",
       "sinceTimestamp": 1791611951,
       "sinceBlock": 26160093,
@@ -764,6 +771,7 @@
       ],
       "proxyType": "immutable",
       "description": "Collects one signed slashing ballot from the designated proposer in each slot. After the execution delay, anyone can tally the ballots per validator and penalty level, deploy the resulting payload, and ask the Slasher to execute it before the round expires.",
+      "critical": true,
       "ignoreInWatchMode": ["getCurrentRound"],
       "deployerAddress": "eth:0x060c0BEB977BAEe8E57B62741A152d72e57Cde27",
       "sinceTimestamp": 1791612059,
@@ -877,6 +885,10 @@
         "totalSupply": "646964000000000000000000000"
       },
       "fieldMeta": {
+        "proofOfPossessionGasLimit": {
+          "severity": "MEDIUM",
+          "description": "Gas cap for verifying a new validator's BLS proof of possession. The owner can set it too low for valid keys, which blocks new validator deposits."
+        },
         "ASSET": {
           "description": "ERC20 token staked by validators and used for governance voting power."
         },
@@ -960,6 +972,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library immutably linked into the Rollup for epoch proof verification, proven chain-tip advancement and Outbox root insertion. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "critical": true,
       "deployerAddress": "eth:0x060c0BEB977BAEe8E57B62741A152d72e57Cde27",
       "sinceTimestamp": 1791612023,
       "sinceBlock": 26160099,
@@ -1058,6 +1071,7 @@
       ],
       "proxyType": "immutable",
       "description": "Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
+      "critical": true,
       "ignoreInWatchMode": [
         "archive",
         "getActiveAttesterCount",
@@ -1244,12 +1258,15 @@
           "description": "Libraries linked into this Rollup deployment. SlasherDeploymentExtLib only runs in the constructor."
         },
         "getProtocolFeeMargin": {
-          "description": "Margin in basis points on top of operator cost in the mana base fee. The owner can lower it at any time. It can raise the fee multiplier (1 + margin) by at most 1.5x, 30 days after the last change."
+          "severity": "MEDIUM",
+          "description": "Margin in basis points on top of operator cost in the mana base fee, at most 65,535 (a 7.55x fee multiplier). The owner can lower it at any time. It can raise the fee multiplier (1 + margin) by at most 1.5x, 30 days after the last change. The first raise needs no wait."
         },
         "getProtocolFeeRecipient": {
+          "severity": "MEDIUM",
           "description": "Recipient of the protocol fee, which is the congestion premium plus the margin on top of operator cost. The deployment default is an address derived from a string, without a known key."
         },
         "getSequencerRewardCalculator": {
+          "severity": "MEDIUM",
           "description": "Owner-set contract that returns the sequencer reward of each proven checkpoint. Zero means the default split. A failing or malformed response falls back to the default split and cannot block a proof."
         },
         "getManaLimit": {
@@ -1351,6 +1368,7 @@
       ],
       "proxyType": "immutable",
       "description": "Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.",
+      "critical": true,
       "deployerAddress": "eth:0x060c0BEB977BAEe8E57B62741A152d72e57Cde27",
       "sinceTimestamp": 1791612059,
       "sinceBlock": 26160102,
@@ -2467,7 +2485,7 @@
     "aztecnetwork/FeeJuicePortal": "0xe9ea6b0106f9528d083d0d76ffc797cce5258fa6cf3671ee16737a2aeeafcb8d",
     "aztecnetwork/Governance": "0x11a37c83761ef56358402fbc3702bdf6337b5338eec472c4121e4231e7add5c8",
     "aztecnetwork/GovernanceProposer": "0x6e8c1a085e1fd1a85a3b2670ef57d2e0a22a7cfdfde4a43d951674f78e74a0bb",
-    "aztecnetwork/GSE": "0x0e4f7a451f9ed261f93dd5d51762a435b0a673d3d45a45b08911307ef4b4cb16",
+    "aztecnetwork/GSE": "0x169aaece0e2547b54f717d122a7c4559464bb9b34b0e7b2137e2cb9897fcab89",
     "aztecnetwork/HonkVerifier_v6": "0x4957127718f1b06060cbc5f62186c10c187f8ca73c52d16c39f9409daee5e7e1",
     "aztecnetwork/Inbox_v6": "0x4e7cdc8f60507888ac6d4ec2101d05bdcd962de84f66918e8d564ec9dfcea183",
     "aztecnetwork/Outbox": "0x7580184922415986aca787f016313f146eece507d34e8a9a40486d19dc1e7b6a",

@@ -379,6 +379,7 @@
       ],
       "proxyType": "immutable",
       "description": "Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -549,6 +550,7 @@
       ],
       "proxyType": "immutable",
       "description": "Collects one signed slashing ballot from the designated proposer in each slot. After the execution delay, anyone can tally the ballots per validator and penalty level, deploy the resulting payload, and ask the Slasher to execute it before the round expires.",
+      "critical": true,
       "ignoreInWatchMode": ["getCurrentRound"],
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
@@ -979,6 +981,10 @@
         "totalSupply": "646964000000000000000000000"
       },
       "fieldMeta": {
+        "proofOfPossessionGasLimit": {
+          "severity": "MEDIUM",
+          "description": "Gas cap for verifying a new validator's BLS proof of possession. The owner can set it too low for valid keys, which blocks new validator deposits."
+        },
         "ASSET": {
           "description": "ERC20 token staked by validators and used for governance voting power."
         },
@@ -1005,6 +1011,7 @@
       ],
       "proxyType": "immutable",
       "description": "One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -1105,6 +1112,7 @@
       ],
       "proxyType": "immutable",
       "description": "Executes payload actions submitted by the authorized slashing proposer or Governance. Execution is blocked while slashing is disabled or when the vetoer has vetoed the payload; voting and execution-delay rules are enforced by the proposer, while Governance can bypass the proposer.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -1150,6 +1158,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library immutably linked into the Rollup for sequencer and prover reward accounting. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -1413,6 +1422,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library immutably linked into the Rollup for validator entry, exits, slashing, and Slasher rotation. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -1437,6 +1447,7 @@
       ],
       "proxyType": "immutable",
       "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. Candidates post a bond of 332,000,000 AZTEC and enter the candidate set. For each hatch, the contract snapshots the eligible set and uses RANDAO to select one designated proposer; posting a bond does not grant immediate proposal rights. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any eligible bonded candidates.",
+      "critical": true,
       "ignoreInWatchMode": ["getCurrentHatch"],
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
@@ -1468,7 +1479,6 @@
           "description": "The amount deducted from the bond when a candidate exits the candidate set. This is the minimum that a candidate loses of their bond by becoming a candidate and cannot be circumvented."
         },
         "getCandidateCount": {
-          "severity": "HIGH",
           "description": "Hatch proposer candidates who posted the bond."
         },
         "getBondToken": {
@@ -2788,7 +2798,7 @@
     "aztecnetwork/FeeJuicePortal": "0xe9ea6b0106f9528d083d0d76ffc797cce5258fa6cf3671ee16737a2aeeafcb8d",
     "aztecnetwork/Governance": "0x11a37c83761ef56358402fbc3702bdf6337b5338eec472c4121e4231e7add5c8",
     "aztecnetwork/GovernanceProposer": "0x6e8c1a085e1fd1a85a3b2670ef57d2e0a22a7cfdfde4a43d951674f78e74a0bb",
-    "aztecnetwork/GSE": "0x0e4f7a451f9ed261f93dd5d51762a435b0a673d3d45a45b08911307ef4b4cb16",
+    "aztecnetwork/GSE": "0x169aaece0e2547b54f717d122a7c4559464bb9b34b0e7b2137e2cb9897fcab89",
     "aztecnetwork/HonkVerifier_v5": "0xd9e0ec181ed3619401ce092458a17fc7fafd9032bfaedd6fe44017def9f3a77c",
     "aztecnetwork/Inbox": "0x26ded5aebf0bbb78b6882b2137d3ed9f4bf66d3b5f2e9aa69e2caae9f6e55af3",
     "aztecnetwork/Outbox": "0x7580184922415986aca787f016313f146eece507d34e8a9a40486d19dc1e7b6a",

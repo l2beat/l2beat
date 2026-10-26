@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
   "canActIndependently": false,
   "discoverLibraries": true,
@@ -62,12 +63,15 @@
       "description": "Libraries linked into this Rollup deployment. SlasherDeploymentExtLib only runs in the constructor."
     },
     "getProtocolFeeMargin": {
-      "description": "Margin in basis points on top of operator cost in the mana base fee. The owner can lower it at any time. It can raise the fee multiplier (1 + margin) by at most 1.5x, 30 days after the last change."
+      "severity": "MEDIUM",
+      "description": "Margin in basis points on top of operator cost in the mana base fee, at most 65,535 (a 7.55x fee multiplier). The owner can lower it at any time. It can raise the fee multiplier (1 + margin) by at most 1.5x, 30 days after the last change. The first raise needs no wait."
     },
     "getProtocolFeeRecipient": {
+      "severity": "MEDIUM",
       "description": "Recipient of the protocol fee, which is the congestion premium plus the margin on top of operator cost. The deployment default is an address derived from a string, without a known key."
     },
     "getSequencerRewardCalculator": {
+      "severity": "MEDIUM",
       "description": "Owner-set contract that returns the sequencer reward of each proven checkpoint. Zero means the default split. A failing or malformed response falls back to the default split and cannot block a proof."
     },
     "getManaLimit": {
