@@ -24,18 +24,20 @@ describe(groupDeployments.name, () => {
     ])
   })
 
-  it('puts deployments no project uses last', () => {
+  it('puts deployments no project uses last, Ethereum first, then by chain', () => {
     const a = project('a')
     const groups = groupDeployments([
-      deployment('0x1', 'Ethereum', []),
+      deployment('0x1', 'Optimism', []),
       deployment('0x2', 'Arbitrum', []),
-      deployment('0x3', 'Ethereum', [a]),
+      deployment('0x3', 'Ethereum', []),
+      deployment('0x4', 'Base', [a]),
     ])
 
-    expect(groups.map((g) => g.deployments.map((d) => d.address))).toEqual([
-      ['0x3'],
-      ['0x1'],
-      ['0x2'],
+    expect(groups.map((g) => g.chain)).toEqual([
+      'Base',
+      'Ethereum',
+      'Arbitrum',
+      'Optimism',
     ])
   })
 })

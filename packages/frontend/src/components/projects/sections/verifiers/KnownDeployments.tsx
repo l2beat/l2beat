@@ -103,7 +103,7 @@ function isOnEthereum(deployment: Pick<KnownDeployment, 'chainId'>) {
 /**
  * Deployments on the same chain used by the same projects share one "Used in"
  * line, so a verifier deployed many times for one project doesn't repeat it.
- * Groups no project uses go last.
+ * Groups no project uses go last, Ethereum first and then by chain name.
  */
 export function groupDeployments(deployments: KnownDeployment[]) {
   const groups = new Map<string, DeploymentGroup>()
@@ -122,7 +122,16 @@ export function groupDeployments(deployments: KnownDeployment[]) {
     groups.set(key, group)
   }
   return [...groups.values()].sort(
-    (a, b) => Number(isUnused(a)) - Number(isUnused(b)),
+    (a, b) =>
+      Number(isUnused(a)) - Number(isUnused(b)) ||
+      (isUnused(a) ? compareChains(a, b) : 0),
+  )
+}
+
+function compareChains(a: DeploymentGroup, b: DeploymentGroup) {
+  return (
+    Number(!isOnEthereum(a)) - Number(!isOnEthereum(b)) ||
+    a.chain.localeCompare(b.chain)
   )
 }
 
