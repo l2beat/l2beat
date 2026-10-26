@@ -1,24 +1,24 @@
 {
   "stakeToken": "AZTEC",
   "dateType": "fetched",
-  "date": "2026-10-16T13:04:29.822Z",
-  "totalStake": 486228000,
+  "date": "2026-10-26T10:53:01.050Z",
+  "totalStake": 486760000,
   "entities": [
     {
       "name": "Nethermind",
-      "stake": 101400000
+      "stake": 98600000
     },
     {
       "name": "Nansen | Stake to Stack Points",
-      "stake": 73000000
+      "stake": 68600000
     },
     {
       "name": "Sigma Prime",
-      "stake": 67400000
+      "stake": 65800000
     },
     {
       "name": "P2P.org",
-      "stake": 32058000
+      "stake": 31260000
     },
     {
       "name": "DCG",
@@ -26,23 +26,23 @@
     },
     {
       "name": "Nightwolf Labs",
-      "stake": 22800000
+      "stake": 23200000
     },
     {
       "name": "Wonderland",
       "stake": 19558000
     },
     {
+      "name": "Piconbello",
+      "stake": 17800000
+    },
+    {
       "name": "nodemeister",
-      "stake": 17394000
+      "stake": 17340000
     },
     {
       "name": "Olla",
       "stake": 14398000
-    },
-    {
-      "name": "snoopfear|PON",
-      "stake": 11600000
     }
   ]
 }

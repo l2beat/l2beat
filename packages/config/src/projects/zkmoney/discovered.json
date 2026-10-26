@@ -1,6 +1,6 @@
 {
   "name": "zkmoney",
-  "timestamp": 1792748009,
+  "timestamp": 1793012002,
   "configHash": "0x937336ad351c040950b6a5a816ae0f9656fc379ec2c307837f984db7f7619403",
   "entries": [
     {
@@ -303,7 +303,7 @@
         "inputToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "L2_BENEFICIARY": "0x29a05add03279509317161fc25a0621159cdbaab95b042a53e098da664cb8ff1",
         "quoteBalanceAndBounty": {
-          "balance": "2600000000000000000",
+          "balance": "1600000000000000000",
           "bounty": 0
         }
       },
@@ -917,11 +917,11 @@
       "sinceBlock": 26135579,
       "values": {
         "_$cachedAvailable": "49994162449153286490395",
-        "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "_$freezeArchive": "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7",
         "_$freezeCheckpointCount": 0,
-        "_$freezeCheckpointNumber": 0,
-        "_$freezeEpochNumber": 0,
-        "_$frozen": false,
+        "_$freezeCheckpointNumber": 118925,
+        "_$freezeEpochNumber": 4426,
+        "_$frozen": true,
         "_$initialized": true,
         "_$l2Portal": "0x2bb708cb67bbda3ec2c79b842ef5d3b3d55897663d29cac5b5518c2e9af7171b",
         "_$lastUpdatedTime": 1792512479,
@@ -1079,15 +1079,15 @@
       "sinceTimestamp": 1790298635,
       "sinceBlock": 26051097,
       "values": {
-        "_$cachedAvailable": "48000803097087360010901",
-        "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "_$cachedAvailable": "49920097558524361119397",
+        "_$freezeArchive": "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7",
         "_$freezeCheckpointCount": 0,
-        "_$freezeCheckpointNumber": 0,
-        "_$freezeEpochNumber": 0,
-        "_$frozen": false,
+        "_$freezeCheckpointNumber": 118925,
+        "_$freezeEpochNumber": 4426,
+        "_$frozen": true,
         "_$initialized": true,
         "_$l2Portal": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
-        "_$lastUpdatedTime": 1792740635,
+        "_$lastUpdatedTime": 1792937099,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0x9c846102f8ac909695f7176cec0f60380ac770286bb9eec459d6152f6e676988"
@@ -2258,7 +2258,7 @@
     "zkmoney/UnprocessedDepositRefundVerifier": "0x973590db53f201980888f82d4c8ccc44430edb76a016489d94d133c448daaf8d",
     "zkmoney/ZkMoneyPortal": "0x4849cf15f068d591a1aa63a22d45dab667cc83726b39e596ca465b8c122c6383"
   },
-  "usedBlockNumbers": { "ethereum": 26254454 },
+  "usedBlockNumbers": { "ethereum": 26276386 },
   "permissionsConfigHash": "0x60d7677d3e8ec52df80ea33848cb8348b3af7871c21ffa59f693ad708cb59bfb",
   "permissions": {
     "eth:0x05406F53174EC1bFE5C94aF253CdD62A4adF2F29": {

@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x0aac9bcb51fe859820c16898eabfa572cc05fc0d
+
+# Diff at Mon, 26 Oct 2026 10:54:45 GMT:
+
+- id: fd9d3a8d
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd4121bcb1cad41e4416bc6b1306ac08500a8342 block: 1792748009
+- current timestamp: 1793012002
+
+## Description
+
+Both portals were frozen right after Aztec made its v6 rollup canonical, at proven v5 checkpoint 118925. Deposits revert, and only withdrawals proven by then still pay out. Funds leave through refunds that prove notes or deposits against the frozen state, need a registered enclave signature and publish their total. Payments on Aztec v5 after the freeze do not change who can refund a note. No zk.money deployment on Aztec v6 exists yet.
+
+## Watched changes
+
+```diff
+    contract ZkMoneyPortal_sUSDS (eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      values._$freezeArchive:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7"
+      values._$freezeCheckpointNumber:
+-        0
++        118925
+      values._$freezeEpochNumber:
+-        0
++        4426
++++ description: Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership.
++++ severity: MEDIUM
+      values._$frozen:
+-        false
++        true
+    }
+```
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      values._$freezeArchive:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7"
+      values._$freezeCheckpointNumber:
+-        0
++        118925
+      values._$freezeEpochNumber:
+-        0
++        4426
++++ description: Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership.
++++ severity: MEDIUM
+      values._$frozen:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x2520a5cf47f7053887d9726005bc8110bf5c02f9
 
 # Diff at Fri, 23 Oct 2026 09:46:47 GMT:

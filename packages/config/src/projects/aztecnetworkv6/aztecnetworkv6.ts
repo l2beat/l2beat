@@ -365,7 +365,9 @@ export const aztecnetworkv6: ScalingProject = {
         daLayer: ProjectId('ethereum'),
         sinceBlock: v6ActivationBlock,
         // Proposers batch through Multicall3, so blobs match on the event
-        // topic. The inbox only catches direct calls to the v6 Rollup.
+        // topic. The inbox only catches direct calls to the v6 Rollup. While v5
+        // runs, its blobs carry the same topic and count here.
+        // TODO: match on the emitting contract once the backend supports it.
         inbox: rollupAddress,
         topics: [
           '0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0', // CheckpointProposed
