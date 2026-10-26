@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RelaySwaps",
+  "category": "core",
+  "description": "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, unwrapping yield shares through an approved zap first where needed, with the swap calldata bound into the proof.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "approve the aggregator routers and yield zaps that RelaySwaps sends withdrawn funds through, and rescue any token it holds, such as bridge refunds."
+        }
+      ]
+    }
+  }
+}

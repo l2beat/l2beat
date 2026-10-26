@@ -29,7 +29,7 @@
     },
     "maxStateTreeSize": {
       "description": "Capacity of the state tree in leaves. A full tree stops deposits, transacts and ragequits.",
-      "severity": "LOW"
+      "severity": "HIGH"
     },
     "rootHistorySize": {
       "description": "Number of recent state roots a transact proof may be built against."

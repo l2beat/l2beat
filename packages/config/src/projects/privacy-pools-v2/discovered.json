@@ -1,7 +1,7 @@
 {
   "name": "privacy-pools-v2",
-  "timestamp": 1792559137,
-  "configHash": "0x4a6954c702a0a0c7e872ba5def0f5f4c455bb3ea4bf7605002c00fc40eb3b11d",
+  "timestamp": 1793024667,
+  "configHash": "0x5cf4b56f4ae34bfe7a1ea2726606f4a2684ef9488fb031b0342a64f236e01a82",
   "entries": [
     {
       "name": "PrivacyPoolRelay",
@@ -114,7 +114,7 @@
         "$upgradeCount": 1,
         "ACCESS_ROUTER": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
         "aspRegistry": "eth:0x259C0BEa1d783c202509BD3b2688d23b8AEf58B0",
-        "currentRootIndex": 15,
+        "currentRootIndex": 7,
         "depositVerifier": "eth:0xEe96Ca04d2Ab2eC9A8803eb78F39b2875dFF6fdf",
         "keystore": "eth:0x6E463391c79b7e1A88eF26E0B023f9A6C9938a71",
         "maxStateTreeSize": 4194304,
@@ -235,7 +235,7 @@
         "depositVerifier": { "severity": "HIGH" },
         "ragequitVerifier": { "severity": "HIGH" },
         "maxStateTreeSize": {
-          "severity": "LOW",
+          "severity": "HIGH",
           "description": "Capacity of the state tree in leaves. A full tree stops deposits, transacts and ragequits."
         },
         "rootHistorySize": {
@@ -486,8 +486,8 @@
         ],
         "$upgradeCount": 1,
         "ACCESS_ROUTER": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
-        "latestASPRoot": "16086732631330803285393241283410959465578446079588764650303694345872680708117",
-        "latestIPFSCID": "0x6261666b72656964676833646c336d736435783373707172353232783774637437646735767075616c757278347a3763346d71776e6164686c7079",
+        "latestASPRoot": "11697443881624367501098353301284204542845708015832266611483629194696628075857",
+        "latestIPFSCID": "0x62616679626569623732786871666c32733369616274666d63796b3261357273697a616e376c7a6a7168617a6c6f766b6573707972647569627975",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
@@ -580,15 +580,15 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+            "members": ["eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"]
           },
           "PAUSER_ROLE": {
             "adminRole": "OPS_ADMIN_ROLE",
-            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+            "members": ["eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"]
           },
           "ENTRYPOINT_MANAGER_ROLE": {
             "adminRole": "OPS_ADMIN_ROLE",
-            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+            "members": ["eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"]
           },
           "POSTMAN_ROLE": {
             "adminRole": "OPS_ADMIN_ROLE",
@@ -596,15 +596,15 @@
           },
           "OPS_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+            "members": ["eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"]
           },
           "UPGRADER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+            "members": ["eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"]
           },
           "UNPAUSER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+            "members": ["eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"]
           },
           "DEPOSITOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -612,16 +612,16 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultAdmins": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"],
+        "defaultAdmins": ["eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"],
         "depositors": ["eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3"],
         "entrypointManagers": [
-          "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
+          "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
         ],
-        "opsAdmins": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"],
-        "pausers": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"],
+        "opsAdmins": ["eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"],
+        "pausers": ["eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"],
         "postmen": ["eth:0xa05B43E1dcdCe0c6A40471a602038BC346900758"],
-        "unpausers": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"],
-        "upgraders": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+        "unpausers": ["eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"],
+        "upgraders": ["eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"]
       },
       "fieldMeta": {
         "accessControl": { "severity": "HIGH" },
@@ -760,6 +760,11 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "eth:0x652E36f8EA937c19417380dCDb48D6e4375d13dA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ppETH",
       "address": "eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7",
       "type": "Contract",
@@ -782,24 +787,24 @@
       "sinceBlock": 25985056,
       "values": {
         "$immutable": true,
-        "accumulatedFees": 43691062687341,
-        "admin": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "accumulatedFees": 3000407470345048,
+        "admin": "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6",
         "asset": "eth:0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8",
-        "claimableFees": 43902347781447,
+        "claimableFees": 3134559617542310,
         "decimals": 18,
-        "exchangeRate": "1001084772068871520",
+        "exchangeRate": "1001237998254314330",
         "feeBps": 2000,
-        "lastCheckpointBalance": "670531725602841143",
+        "lastCheckpointBalance": "134281761588753195746",
         "MAX_BPS": 10000,
         "MAX_FEE_BPS": 2000,
         "name": "Privacy Pool ETH",
-        "owner": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "owner": "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rewardsController": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "ppETH",
-        "totalAssets": "670488879680530226",
-        "totalSupply": "669762340201098050"
+        "totalAssets": "134279297789871639747",
+        "totalSupply": "134113265800929694983"
       },
       "fieldMeta": {
         "feeBps": {
@@ -845,7 +850,7 @@
         ],
         "$upgradeCount": 1,
         "ACCESS_ROUTER": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
-        "currentRoot": "15675003796490042866189185782679939822238633777298329760637074252008448306422",
+        "currentRoot": "19216221374431017703183932516379927970580058811714485111467878980918022865233",
         "eip712Domain": {
           "fields": "0x0f",
           "name": "PrivacyPoolsKeystore",
@@ -1035,6 +1040,35 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "eth:0x98AdDcc75931795eB66c52cA954541c18535E3c0",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x98AdDcc75931795eB66c52cA954541c18535E3c0",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0xea6bb230ec0a3e7a41ac4a023c231e2ccba4e69f5850f4d921a75a2d33146268",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "PPYieldTokenZapUSDC",
       "address": "eth:0x9Ea986BcDF6784D85B518b15bEEE1E65b585817B",
       "type": "Contract",
@@ -1087,24 +1121,24 @@
       "sinceBlock": 25904161,
       "values": {
         "$immutable": true,
-        "accumulatedFees": 135307,
-        "admin": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "accumulatedFees": 1966856,
+        "admin": "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6",
         "asset": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
-        "claimableFees": 147664,
+        "claimableFees": 2001430,
         "decimals": 18,
-        "exchangeRate": 1003785,
+        "exchangeRate": 1004182,
         "feeBps": 2000,
-        "lastCheckpointBalance": 125002993,
+        "lastCheckpointBalance": 24826005444,
         "MAX_BPS": 10000,
         "MAX_FEE_BPS": 2000,
         "name": "Privacy Pool USDT",
-        "owner": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "owner": "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rewardsController": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "ppUSDT",
-        "totalAssets": 124917117,
-        "totalSupply": "124446018645133392460"
+        "totalAssets": 24824176886,
+        "totalSupply": "24720785753078576093628"
       },
       "fieldMeta": {
         "feeBps": {
@@ -1205,24 +1239,24 @@
       "sinceBlock": 25902811,
       "values": {
         "$immutable": true,
-        "accumulatedFees": 539932,
-        "admin": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "accumulatedFees": 4336439,
+        "admin": "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6",
         "asset": "eth:0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c",
-        "claimableFees": 567965,
+        "claimableFees": 4343228,
         "decimals": 18,
-        "exchangeRate": 1004120,
+        "exchangeRate": 1004598,
         "feeBps": 2000,
-        "lastCheckpointBalance": 16964839191,
+        "lastCheckpointBalance": 46072647594,
         "MAX_BPS": 10000,
         "MAX_FEE_BPS": 2000,
         "name": "Privacy Pool USDC",
-        "owner": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "owner": "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rewardsController": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "ppUSDC",
-        "totalAssets": 16964411393,
-        "totalSupply": "16894796773549280817288"
+        "totalAssets": 46068338312,
+        "totalSupply": "45857447066984883616464"
       },
       "fieldMeta": {
         "feeBps": {
@@ -1346,19 +1380,68 @@
       "name": "RelaySwaps",
       "address": "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8",
       "type": "Contract",
-      "unverified": true,
+      "template": "privacy-pools-v2/RelaySwaps",
+      "sourceHashes": [
+        "0xd7dea0ccf32266bccfea5f538324c1c915194aaf691347720a0f2f5a26e91459"
+      ],
       "proxyType": "immutable",
-      "description": "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, with the swap calldata bound into the proof.",
+      "description": "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, unwrapping yield shares through an approved zap first where needed, with the swap calldata bound into the proof.",
       "deployerAddress": "eth:0x0967755AfA2016866D12EefB820705026842dCe8",
       "sinceTimestamp": 1789704851,
       "sinceBlock": 26001921,
       "values": {
         "$immutable": true,
-        "owner": "eth:0x0967755AfA2016866D12EefB820705026842dCe8"
+        "approvedZapList": [
+          "eth:0x9Ea986BcDF6784D85B518b15bEEE1E65b585817B",
+          "eth:0xDC3D922df81FC7B7f58229431ED91acB0482f3A5",
+          "eth:0x33c1eEf370bBb447414156CFc4fDABD434776EAf"
+        ],
+        "ENTRYPOINT": "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3",
+        "NATIVE_ASSET": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "eth:0x0967755AfA2016866D12EefB820705026842dCe8",
+        "POOL": "eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+        "ROUTING_TYPEHASH": "0xe11f9c010588c4c3c1b43d85f2825f9bb06ba076295d1e7b89d5e0a8b3ad1f7e"
       },
       "fieldMeta": { "owner": { "severity": "HIGH", "type": "PERMISSION" } },
       "implementationNames": {
-        "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8": ""
+        "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8": "RelaySwaps"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "SafeL2",
+      "address": "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792676699,
+      "sinceBlock": 26248537,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+          "eth:0x652E36f8EA937c19417380dCDb48D6e4375d13dA",
+          "eth:0x98AdDcc75931795eB66c52cA954541c18535E3c0",
+          "eth:0xE8A2cC5c2349615D947b9d9fE5D7F144730cAf77"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xe88791ccee4daa74fd5907029c6164fc8c303f37da76e8bde697e6c4166deb95",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6": "SafeProxy",
+        "eth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
       }
     },
     {
@@ -1444,6 +1527,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "eth:0xE8A2cC5c2349615D947b9d9fE5D7F144730cAf77",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DepositVerifier",
       "address": "eth:0xEe96Ca04d2Ab2eC9A8803eb78F39b2875dFF6fdf",
       "type": "Contract",
@@ -1462,6 +1550,11 @@
         "eth:0xEe96Ca04d2Ab2eC9A8803eb78F39b2875dFF6fdf": "DepositVerifier"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Transact2x4Verifier",
@@ -1650,6 +1743,55 @@
       "error ERC1967NonPayable()",
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "eth:0x338625F2199675D2aC4Fbf7A89567864ac990710": [
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[9] _pubSignals) view returns (bool)"
@@ -2325,6 +2467,71 @@
       "function sweep(address _asset, address _recipient)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8": [
+      "constructor(address _pool, address _entrypoint, address _intendedOwner, address _allowedRouter)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ProofLib_TokenIdNotCanonical(uint256 _raw)",
+      "error Reentrancy()",
+      "error RelaySwaps_FeeExceedsMax()",
+      "error RelaySwaps_FeeExceedsWithdrawal()",
+      "error RelaySwaps_GasSwapInsufficient()",
+      "error RelaySwaps_GasSwapMaxInputExceedsWithdrawal()",
+      "error RelaySwaps_GasSwapNativeInput()",
+      "error RelaySwaps_InputBalanceDeficit()",
+      "error RelaySwaps_InsufficientOutput()",
+      "error RelaySwaps_InvalidApprovalAddress()",
+      "error RelaySwaps_InvalidSwapTarget()",
+      "error RelaySwaps_InvalidZap()",
+      "error RelaySwaps_MinOutputWithoutRecipient()",
+      "error RelaySwaps_NativeGasMismatch()",
+      "error RelaySwaps_NativeGasWithoutRecipient()",
+      "error RelaySwaps_RenounceDisabled()",
+      "error RelaySwaps_SwapFailed()",
+      "error RelaySwaps_UnwrapZeroOutput()",
+      "error RelaySwaps_ZapATokenMismatch()",
+      "error RelaySwaps_ZapInvalidUnderlying()",
+      "error RelaySwaps_ZapShareMismatch()",
+      "error RelaySwaps_ZapShareNotPoolAsset()",
+      "error RelaySwaps_ZapUnderlyingMismatch()",
+      "error RelaySwaps_ZeroApprovalAddress()",
+      "error RelaySwaps_ZeroDustRecipient()",
+      "error RelaySwaps_ZeroEntrypoint()",
+      "error RelaySwaps_ZeroFeeRecipient()",
+      "error RelaySwaps_ZeroMinOutputWithRecipient()",
+      "error RelaySwaps_ZeroPool()",
+      "error RelaySwaps_ZeroSwapTarget()",
+      "error RelaySwaps_ZeroWithdrawal()",
+      "event Executed(address indexed inputToken, address indexed outputToken, uint256 inputAmount, address feeRecipient, uint256 feeAmount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Rescued(address indexed token, address indexed to, uint256 amount)",
+      "event RouterAdded(address indexed _routerAddress)",
+      "event RouterRemoved(address indexed _routerAddress)",
+      "event Unwrapped(address indexed share, address indexed underlying, uint256 shares, uint256 underlyingOut, uint256 feeUnderlying)",
+      "event ZapApproved(address indexed zap, address indexed share, address indexed underlying)",
+      "event ZapRemoved(address indexed zap)",
+      "function ENTRYPOINT() view returns (address)",
+      "function NATIVE_ASSET() view returns (address)",
+      "function POOL() view returns (address)",
+      "function ROUTING_TYPEHASH() pure returns (bytes32)",
+      "function approveRouter(address routerAddress)",
+      "function approveZap(address _zap)",
+      "function approvedRouters(address) view returns (bool)",
+      "function approvedZapList() view returns (address[])",
+      "function approvedZaps(address _zap) view returns (bool)",
+      "function changeOwnership(address newOwner)",
+      "function execute(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, tuple(address processor, bytes data) _transactParams, tuple(bytes32 hint, bytes data)[] _noteData) payable",
+      "function executeUnwrapped(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, tuple(address processor, bytes data) _transactParams, tuple(bytes32 hint, bytes data)[] _noteData, address _zap) payable",
+      "function owner() view returns (address)",
+      "function removeRouter(address routerAddress)",
+      "function removeZap(address _zap)",
+      "function renounceOwnership() view",
+      "function rescue(address _token, address _to, uint256 _amount)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6": [
+      "constructor(address _singleton)"
+    ],
     "eth:0xDC3D922df81FC7B7f58229431ED91acB0482f3A5": [
       "constructor(address _vault, address _pool, address _underlying)",
       "error PPYieldTokenZap_InsufficientWrap(uint256 _received, uint256 _needed)",
@@ -2398,6 +2605,7 @@
     ]
   },
   "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "privacy-pools-v2/AccessRouter": "0xbbc8e616c9e254b03691ccff0c79aa7631d66a6eb6a5143b3cb8750c163d6b40",
     "privacy-pools-v2/ASPRegistry": "0x2cd410a27781b87502e29d76c2cd6c359c2980762e59a1af146ef4e3b779ee23",
     "privacy-pools-v2/Entrypoint": "0x2b1b18656ab882737ae02892542c034ef4c9a0232d84e90dab17a36b48697ed7",
@@ -2407,22 +2615,43 @@
     "privacy-pools-v2/PPRouter": "0xecc15d7996363881067c8df1ac30232b2476c5ca1bcd9f3433705e87046fe5b6",
     "privacy-pools-v2/PPYieldToken": "0x2288bee46e2141a6f874ddff0f93c93405a5448fcee10edc4bd028938a6b28fd",
     "privacy-pools-v2/PPYieldTokenZap": "0xc99b241b2299aecb27ac8219a82de42b8d858f2bcce1bacb06ad267078501f24",
-    "privacy-pools-v2/PrivacyPoolRelay": "0x221ac8c5121c455f70bfa922fe255937c533ef583893255f7918b5f5de546360"
+    "privacy-pools-v2/PrivacyPoolRelay": "0x221ac8c5121c455f70bfa922fe255937c533ef583893255f7918b5f5de546360",
+    "privacy-pools-v2/RelaySwaps": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 26238765 },
-  "permissionsConfigHash": "0x78fbb3981139adfc70c18afd1391f8884f25cc76a9794202fe47d1f57527bc9f",
+  "usedBlockNumbers": { "ethereum": 26277439 },
+  "permissionsConfigHash": "0x7135a731c1d9f2c3a7e59d82088e73a72c9809917f5033ae4b7bad5c9340d6b0",
   "permissions": {
     "eth:0x0967755AfA2016866D12EefB820705026842dCe8": {
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8",
-          "description": "approve the aggregator routers and yield zaps that RelaySwaps sends withdrawn funds through.",
+          "description": "approve the aggregator routers and yield zaps that RelaySwaps sends withdrawn funds through, and rescue any token it holds, such as bridge refunds.",
           "role": ".owner"
         }
       ]
     },
-    "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92": {
+    "eth:0xa05B43E1dcdCe0c6A40471a602038BC346900758": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+          "description": "publish the approved-label root every private spend must match.",
+          "role": ".postmen"
+        }
+      ]
+    },
+    "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+          "description": "deposit into the PoolVault on behalf of users.",
+          "role": ".depositors"
+        }
+      ]
+    },
+    "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6": {
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2463,40 +2692,20 @@
         {
           "permission": "interact",
           "from": "eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7",
-          "description": "set the yield fee up to 20%, claim fees, pause minting, set the Aave rewards controller and rescue tokens other than the backing aToken.",
+          "description": "set the yield fee up to 20%, claim fees, pause minting, set a rewards controller and rescue tokens other than the backing aToken.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xA4cF419558Ef36CC6FfB666195684dC963910426",
-          "description": "set the yield fee up to 20%, claim fees, pause minting, set the Aave rewards controller and rescue tokens other than the backing aToken.",
+          "description": "set the yield fee up to 20%, claim fees, pause minting, set a rewards controller and rescue tokens other than the backing aToken.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6",
-          "description": "set the yield fee up to 20%, claim fees, pause minting, set the Aave rewards controller and rescue tokens other than the backing aToken.",
+          "description": "set the yield fee up to 20%, claim fees, pause minting, set a rewards controller and rescue tokens other than the backing aToken.",
           "role": ".owner"
-        }
-      ]
-    },
-    "eth:0xa05B43E1dcdCe0c6A40471a602038BC346900758": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
-          "description": "publish the approved-label root every private spend must match.",
-          "role": ".postmen"
-        }
-      ]
-    },
-    "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
-          "description": "deposit into the PoolVault on behalf of users.",
-          "role": ".depositors"
         }
       ]
     }

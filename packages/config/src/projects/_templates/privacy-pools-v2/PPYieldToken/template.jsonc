@@ -34,7 +34,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "set the yield fee up to 20%, claim fees, pause minting, set the Aave rewards controller and rescue tokens other than the backing aToken."
+          "description": "set the yield fee up to 20%, claim fees, pause minting, set a rewards controller and rescue tokens other than the backing aToken."
         }
       ]
     }
