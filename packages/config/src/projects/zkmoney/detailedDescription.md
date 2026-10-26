@@ -1,6 +1,6 @@
 zk.money lets users send DAI privately on Aztec and move it into sUSDS savings. Funds are escrowed on Ethereum. Names, deposits and withdrawals are public.
 
-Every withdrawal and refund needs a zk proof and a signature from a live AWS Nitro enclave (TEE). The DAI enclave decrypts and reads the operations it handles. Aztec Labs controls names and the contract lists the released wallets use.
+Every withdrawal and refund needs a zk proof and a signature from a live AWS Nitro enclave (TEE). Each pool's enclave decrypts and reads the operations it handles. Aztec Labs controls names and the contract lists the released wallets use.
 
 The portal releases funds only after Aztec proves the withdrawal message and one registered enclave signer co-signs it. Stealing escrowed funds requires both layers to fail, while a failure of either breaks privacy.
 
@@ -8,35 +8,33 @@ The portal releases funds only after Aztec proves the withdrawal message and one
 
 1. **Deposit.** You fund an L1 deposit address called a SIPA, and anyone can sweep it into the portal. USDC and USDT are swapped to DAI through Curve. After fees, an Inbox message credits private notes on Aztec. Reusing a SIPA links its deposits.
 2. **Pay.** You add a name as a contact, and the wallet reads its Aztec address from the onchain registry and sends a private transfer.
-3. **Withdraw.** Aztec proves the withdrawal message, an enclave co-signs it and the portal pays out DAI on Ethereum.
+3. **Withdraw.** Aztec proves the withdrawal message, an enclave co-signs it and the portal pays out DAI on Ethereum. A swap escrow can instead pay out USDC, USDT or ETH, and give a fresh recipient ETH for gas.
 
 ### Keys
 
 Accounts sign with a passkey. The released wallet requires a registered name to access an account on a new device.
 
-### Wallets
-The privacy ratings cover DAI in [zk.money Desktop v0.1.0](https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.1.0). sUSDS remains unassessed.
+### App
+The privacy ratings cover DAI payments and sUSDS savings in [zk.money Desktop v0.5.0](https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.5.0).
 
-The Desktop release runs local code but fetches two unsigned Aztec Labs contract lists. Replacing both lists can redirect future deposits and payments while satisfying the wallet's [consistency checks](https://github.com/aztec-labs-eng/zkmoney-public/blob/f04743f5d57d1b89f9190cad0f6affd28b0793f2/packages/config-client/src/toContractServiceConfig.ts#L41-L68).
+The Desktop release runs local code. Its endpoint settings accept the user's own Aztec node, Ethereum endpoint and DAI enclave. The sUSDS enclave address is always fetched from Aztec Labs among other addresses in two unsigned contract lists. Replacing them can redirect future deposits and payments.
 
 The hosted wallet reloads code on every visit. Its owner can read viewing keys and request harmful passkey signatures through misleading prompts.
 
-Independent operation remains untested. It requires a modified desktop build with pinned contract addresses and disabled screening. Users would submit Ethereum transactions themselves and register an approved enclave on AWS. New names still require Aztec Labs' signature. The [enclave guide](https://docs.zk.money/docs/run-an-enclave) describes image downloads and registration.
+Independent operation remains untested. It requires a modified Desktop build without screening, pointed at self-hosted contract lists. Users would submit Ethereum transactions themselves and register an approved enclave on AWS. New names still require Aztec Labs' signature. The [enclave guide](https://docs.zk.money/docs/run-an-enclave) describes image downloads and registration.
 
-### Deposits
-Users fund L1 deposit addresses called SIPAs, and anyone can sweep them into the DAI portal. USDC and USDT are swapped to DAI through Curve. After fees, DAI stays in escrow and an Inbox message credits private notes on Aztec L2. Reusing a SIPA links its deposits.
-
-Users move DAI into **savings** through a withdrawal to a deterministic SkyEscrow. The escrow converts DAI to USDS and deposits it into Sky's savings contract. The resulting sUSDS shares enter the savings contract. Returning to DAI reverses the conversion and deposits DAI into the original portal. Both conversion legs are public on Ethereum.
+### Savings
+Savings hold sUSDS in a second portal with its own L2 token and enclave. A move in withdraws DAI to a deterministic SkyEscrow, which converts it through USDS into sUSDS shares and deposits them into the sUSDS portal. A move out reverses both legs into the DAI portal. Each move publishes its DAI and share amounts, tied by the escrow. The wallet moves sUSDS only to and from the user's own DAI balance.
 
 ### Names
 Tags such as l2beat.zk.money publish Aztec addresses and keys on Ethereum.
 - **L1 deposits:** ENS-compatible wallets resolve a tag to a deposit address through the recipient's chosen resolver operator. The default is a centralized resolver who can link deposits to their tag.
 - **L2 transfers:** wallets read the registered Aztec address when a tag is added as a contact.
 
-Name claims need the domain owner's signature. The assessed wallet needs a registered name to access an account on a new device. XMTP, an encrypted offchain messaging network, powers QR-code or link contacts and carries payment requests.
+Name claims need the domain owner's signature. XMTP, an encrypted offchain messaging network, powers QR-code or link contacts and carries payment requests.
 
 ### Resolver
-For ENS lookups, the resolver operator derives each deposit address from a secret shared with the recipient and announces it to them on L2. The assessed wallet derives its own deposit addresses from the same shared secret, so the operator can link them. The onchain Resolver checks a zk proof on every lookup, which stops the operator from redirecting payments. Users can choose a custom operator for name payments.
+For ENS lookups, the resolver operator derives each deposit address from a secret shared with the recipient and announces it to them on L2. The assessed wallet can derive its own deposit addresses privately. The onchain Resolver checks a zk proof on every lookup, which stops the operator from redirecting payments. Users can choose a custom operator for name payments.
 
 ### Exits
 
@@ -59,4 +57,4 @@ DAI deposits share {{depositLimit}} of capacity, refilling over {{depositRefillT
 DAI deposits, payments and withdrawals are capped at {{transactionAmountCap}} each. sUSDS deposits and withdrawals are capped at {{susdsTransactionAmountCap}} each.
 
 ### Source verification
-The [token verification steps](https://github.com/l2beat/l2beat/blob/main/packages/config/src/projects/zkmoney/verificationSteps-token.md) compare a fresh source build with the DAI L2 contract pinned by its Ethereum portal. The [verifier steps](/zk-catalog/barretenberg#verifiers) regenerate the keys and Solidity verifiers of the refund and resolver circuits.
+The [token verification steps](https://github.com/l2beat/l2beat/blob/main/packages/config/src/projects/zkmoney/verificationSteps-token.md) compare a fresh source build with the DAI and sUSDS L2 contracts pinned by their Ethereum portals. The [verifier steps](/zk-catalog/barretenberg#verifiers) regenerate the keys and Solidity verifiers of the refund and resolver circuits.

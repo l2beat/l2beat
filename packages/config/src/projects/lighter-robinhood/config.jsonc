@@ -42,8 +42,14 @@
         }
       }
     },
+    // Governance and ZkLighterVerifier: the gatekeeper's UpgradeComplete events
+    // are their only upgrade record
     "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7": {
+      "proxyType": "UpgradeGatekeeper proxy",
       "ignoreRelatives": ["quoteAsset"]
+    },
+    "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31": {
+      "proxyType": "UpgradeGatekeeper proxy"
     },
     "robinhood:0x93c83bdA3A45241729Ce150C1e3677bA7389c0D0": {
       "description": "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).",

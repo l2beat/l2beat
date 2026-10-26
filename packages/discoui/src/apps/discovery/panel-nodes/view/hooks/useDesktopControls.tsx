@@ -3,7 +3,6 @@ import { useSearchStore } from '../../../search/store'
 import { useStore } from '../../store/store'
 
 type Props = {
-  viewRef: React.RefObject<HTMLElement | null>
   containerRef: React.RefObject<HTMLElement | null>
 }
 
@@ -21,10 +20,7 @@ export type DesktopControls = {
   isResizing: boolean
 }
 
-export function useDesktopControls({
-  viewRef,
-  containerRef,
-}: Props): DesktopControls {
+export function useDesktopControls({ containerRef }: Props): DesktopControls {
   const currentPanel = useDockingStore((state) => state.activeLeaf)
   const searchOpened = useSearchStore((state) => state.opened)
 
@@ -44,8 +40,8 @@ export function useDesktopControls({
     (currentPanel === undefined || currentPanel === 'nodes') && !searchOpened
 
   function handleWheel(event: WheelEvent) {
-    if (!viewRef.current) return
-    onWheel(event, viewRef.current)
+    if (!containerRef.current) return
+    onWheel(event, containerRef.current)
   }
 
   function handleMouseDown(event: MouseEvent) {

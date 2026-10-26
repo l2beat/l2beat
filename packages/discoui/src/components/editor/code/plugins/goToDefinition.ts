@@ -25,6 +25,7 @@ export interface DefinitionRequest {
 
 export interface DefinitionHandlers {
   goToDefinition(request: DefinitionRequest): void
+  goToContract(request: DefinitionRequest): void
   findReferences(request: DefinitionRequest): void
   goBack(): void
 }
@@ -97,7 +98,12 @@ export class GoToDefinitionPlugin implements EditorPlugin {
         underline(view, null)
         view.focus()
         view.dispatch({ selection: { anchor: word.offset } })
-        this.handlers?.goToDefinition(requestAt(view, word.offset))
+        const request = requestAt(view, word.offset)
+        if (event.shiftKey) {
+          this.handlers?.goToContract(request)
+        } else {
+          this.handlers?.goToDefinition(request)
+        }
         return true
       },
       mousemove: (event, view) => {

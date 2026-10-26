@@ -3,6 +3,7 @@ import { type Insertable, type RawBuilder, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { Activity } from '../kysely/generated/types'
 import { addToStored } from '../utils/addToStored'
+import { greaterOfStored } from '../utils/greaterOfStored'
 
 export interface ActivityRecord {
   projectId: ProjectId
@@ -11,6 +12,16 @@ export interface ActivityRecord {
   uopsCount: number | null
   start: number
   end: number
+}
+
+/** Only block and slot chains have them */
+export interface ActivityPeaks {
+  /** Of the busiest hour of the day */
+  peakHourCount: number
+  peakHourUopsCount: number | null
+  /** Of the busiest UTC minute of the day */
+  peakMinuteCount: number
+  peakMinuteUopsCount: number | null
 }
 
 export interface ActivityTotals {
@@ -71,12 +82,19 @@ export class ActivityRepository extends BaseRepository {
 
   /**
    * Adds each record to the day stored before, as blocks of a day come in
-   * more than one batch. The block range widens to cover both
+   * more than one batch. The block range widens to cover both, and the larger
+   * peaks stay
    */
-  async addMany(records: ActivityRecord[]): Promise<number> {
+  async addMany(records: (ActivityRecord & ActivityPeaks)[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
+    const rows = records.map((record) => ({
+      ...toRow(record),
+      peakHourCount: record.peakHourCount,
+      peakHourUopsCount: record.peakHourUopsCount,
+      peakMinuteCount: record.peakMinuteCount,
+      peakMinuteUopsCount: record.peakMinuteUopsCount,
+    }))
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
         .insertInto('Activity')
@@ -87,6 +105,13 @@ export class ActivityRepository extends BaseRepository {
             uopsCount: addToStored('Activity', 'uopsCount'),
             start: sql`least("Activity"."start", excluded."start")`,
             end: sql`greatest("Activity"."end", excluded."end")`,
+            peakHourCount: greaterOfStored('Activity', 'peakHourCount'),
+            peakHourUopsCount: greaterOfStored('Activity', 'peakHourUopsCount'),
+            peakMinuteCount: greaterOfStored('Activity', 'peakMinuteCount'),
+            peakMinuteUopsCount: greaterOfStored(
+              'Activity',
+              'peakMinuteUopsCount',
+            ),
           }),
         )
         .execute()

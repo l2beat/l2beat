@@ -30,10 +30,10 @@ export interface RenderGraph {
   readonly containers: GroupContainer[]
 }
 
-// Expand opened groups into their members so the renderers can draw what is
+// Expand opened groups into their members so the renderer can draw what is
 // inside them, while closed groups remain a single collapsed box. Connection
 // geometry is recomputed against the expanded layout. When nothing is opened
-// the original node refs are returned untouched so React.memo keeps working.
+// the original node refs are returned untouched so memoization keeps working.
 export function buildRenderGraph(nodes: readonly Node[]): RenderGraph {
   const projection = getGraphProjection(nodes)
   const effectiveHidden = projection.hiddenNodeIds
@@ -63,7 +63,7 @@ export function buildRenderGraph(nodes: readonly Node[]): RenderGraph {
 
 // Whether a field's connection should be drawn and counted for dimming. For
 // regular nodes this is just the hidden-fields check — target visibility is
-// handled separately by the renderers. For collapsed groups, whose rows
+// handled separately by the renderer. For collapsed groups, whose rows
 // aggregate member fields, a row is live only while some member still has a
 // visible edge to the row's target.
 export function isFieldConnectionLive(

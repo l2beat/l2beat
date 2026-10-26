@@ -1,14 +1,17 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Block } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { FuelClient } from './FuelClient'
 import { tai64ToUnix } from './tai64ToUnix'
 import type {
+  FuelBlockHeaderResponse,
   FuelBlockResponse,
   FuelError,
-  FuelLatestBlockNumberResponse,
+  FuelLatestBlockHeaderResponse,
 } from './types'
+
+const TAI64_TIME = '4611686020155261080'
 
 describe(FuelClient.name, () => {
   describe(FuelClient.prototype.getBlockWithTransactions.name, () => {
@@ -42,13 +45,67 @@ describe(FuelClient.name, () => {
   describe(FuelClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
       const http = mockObject<HttpClient>({
-        fetch: async () => mockFuelLatestBlockNumberResponse(100),
+        fetch: async () => mockFuelLatestBlockHeaderResponse([100]),
       })
       const client = mockClient({ http })
 
       const result = await client.getLatestBlockNumber()
 
       expect(result).toEqual(100)
+    })
+  })
+
+  describe(FuelClient.prototype.getBlockHeader.name, () => {
+    it('reads only the height and time of a block', async () => {
+      const client = mockClient({})
+      const query = mockFn().resolvesTo(mockFuelBlockHeaderResponse(100))
+      client.query = query
+
+      const result = await client.getBlockHeader(100)
+
+      expect(query).toHaveBeenOnlyCalledWith(
+        expect.includes('block(height: $height)'),
+        { height: '100' },
+      )
+      expect(query.calls[0]?.args[0]).not.toInclude('transactionIds')
+      expect(result).toEqual({
+        number: 100,
+        timestamp: tai64ToUnix(TAI64_TIME),
+      })
+    })
+
+    it('reads the latest block', async () => {
+      const client = mockClient({})
+      const query = mockFn().resolvesTo(
+        mockFuelLatestBlockHeaderResponse([100]),
+      )
+      client.query = query
+
+      const result = await client.getBlockHeader('latest')
+
+      expect(query).toHaveBeenOnlyCalledWith(expect.includes('blocks(last: 1)'))
+      expect(result).toEqual({
+        number: 100,
+        timestamp: tai64ToUnix(TAI64_TIME),
+      })
+    })
+
+    it('throws when there is no latest block', async () => {
+      const client = mockClient({})
+      client.query = mockFn().resolvesTo(mockFuelLatestBlockHeaderResponse([]))
+
+      await expect(client.getBlockHeader('latest')).toBeRejectedWith(
+        'Latest block header: Error during parsing',
+      )
+    })
+
+    it('throws on a malformed response', async () => {
+      const client = mockClient({})
+      client.query = mockFn().resolvesTo({ data: { block: null } })
+
+      await expect(client.getBlockHeader(100)).toBeRejectedWith(
+        'Block header: Error during parsing',
+      )
     })
   })
 
@@ -138,16 +195,23 @@ const mockFuelBlockResponse = (
   },
 })
 
-const mockFuelLatestBlockNumberResponse = (
+const mockFuelBlockHeaderResponse = (
   height: number,
-): FuelLatestBlockNumberResponse => ({
+): FuelBlockHeaderResponse => ({
+  data: {
+    block: { height: height.toString(), header: { time: TAI64_TIME } },
+  },
+})
+
+const mockFuelLatestBlockHeaderResponse = (
+  heights: number[],
+): FuelLatestBlockHeaderResponse => ({
   data: {
     blocks: {
-      nodes: [
-        {
-          height: height.toString(),
-        },
-      ],
+      nodes: heights.map((height) => ({
+        height: height.toString(),
+        header: { time: TAI64_TIME },
+      })),
     },
   },
 })

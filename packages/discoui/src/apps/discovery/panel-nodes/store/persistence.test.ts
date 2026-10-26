@@ -12,7 +12,6 @@ const USER_PREFERENCES: State['userPreferences'] = {
   enableDimming: false,
   hideLargeArrays: false,
   highlightOverlapping: false,
-  useExperimentalRenderer: true,
 }
 
 describe(partializeNodeStore.name, () => {

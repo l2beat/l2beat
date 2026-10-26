@@ -102,7 +102,7 @@ export function CodePanel() {
       {definition.lookup && (
         <LookupPanel
           lookup={definition.lookup}
-          onPick={definition.navigate}
+          onPick={definition.pick}
           onDismiss={definition.dismiss}
         />
       )}
@@ -116,7 +116,7 @@ export function CodePanel() {
         features={{
           lineSelection: false,
           rangeHighlight: true,
-          goToDefinition: !IS_READONLY,
+          goToDefinition: true,
         }}
         onActiveFileChange={setActiveFile}
         tabActions={

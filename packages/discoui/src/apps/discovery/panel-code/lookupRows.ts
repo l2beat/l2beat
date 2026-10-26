@@ -1,4 +1,8 @@
-import type { ApiDefinition, ApiReference } from '../../../api/types'
+import type {
+  ApiContractAtResponse,
+  ApiDefinition,
+  ApiReference,
+} from '../../../api/types'
 import type { PeekContent } from '../../../components/editor/code/plugins/peek'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import type { CodeLocation, DefinitionLookup } from './useGoToDefinition'
@@ -53,6 +57,9 @@ export function title(lookup: DefinitionLookup): string {
   if (lookup.status === 'failed') {
     return 'Could not resolve this'
   }
+  if (lookup.status === 'contract') {
+    return contractTitle(lookup.response)
+  }
   if (lookup.status === 'references') {
     const { symbol, references } = lookup.response
     if (symbol === '') {
@@ -71,6 +78,16 @@ export function title(lookup: DefinitionLookup): string {
       : 'Nothing to go to here'
   }
   return `${symbol}: ${definitions.length} candidates`
+}
+
+function contractTitle({ symbol, address }: ApiContractAtResponse): string {
+  if (symbol === '') {
+    return 'Nothing to go to here'
+  }
+  if (address === undefined) {
+    return `No known address for ${symbol}`
+  }
+  return `${symbol} holds ${toShortenedAddress(address)}, not in this project`
 }
 
 export function peekContent(

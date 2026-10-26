@@ -1,4 +1,6 @@
-import { expect } from 'earl'
+import { Text } from '@codemirror/state'
+import type { EditorView } from '@codemirror/view'
+import { expect, mockObject } from 'earl'
 import type { ApiDefinition, ApiReference } from '../../../api/types'
 import { peekContent, rowsOf, title } from './lookupRows'
 
@@ -20,6 +22,11 @@ const DEFINITION: ApiDefinition = {
   },
 }
 
+const ASKED_AT = {
+  request: { view: mockObject<EditorView>({}), offset: 0, origin: undefined },
+  doc: Text.empty,
+}
+
 const REFERENCE: ApiReference = {
   address: 'eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
   name: 'SequencerInbox',
@@ -39,6 +46,7 @@ describe('lookup rows', () => {
   it('describes where each definition is and how it was found', () => {
     const lookup = {
       status: 'definitions' as const,
+      ...ASKED_AT,
       response: {
         symbol: 'bridge.sequencerMessageCount',
         receiver: undefined,
@@ -99,6 +107,7 @@ describe('lookup rows', () => {
   it('explains empty answers', () => {
     const none = {
       status: 'definitions' as const,
+      ...ASKED_AT,
       response: {
         symbol: 'target.ping',
         receiver: { address: DEFINITION.address, name: undefined },
@@ -115,5 +124,19 @@ describe('lookup rows', () => {
     )
     expect(title(nothing)).toEqual('Nothing to find references for here')
     expect(title({ status: 'failed' })).toEqual('Could not resolve this')
+  })
+
+  it('explains why there is no contract to go to', () => {
+    const contract = (address: string | undefined, symbol = 'registry') => ({
+      status: 'contract' as const,
+      response: { symbol, address, name: undefined },
+    })
+
+    expect(title(contract(undefined))).toEqual('No known address for registry')
+    expect(title(contract(DEFINITION.address))).toEqual(
+      'registry holds eth:0x8315…ed3a, not in this project',
+    )
+    expect(title(contract(undefined, ''))).toEqual('Nothing to go to here')
+    expect(rowsOf(contract(undefined))).toEqual([])
   })
 })

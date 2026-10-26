@@ -1,7 +1,7 @@
 import { ProjectService } from '@l2beat/config'
 import { execSync } from 'child_process'
-import { getAttestationsMeta } from './api'
 import type { ChainIdByName, CropsApiInput } from './generateCropsApiFiles'
+import { readAttestationsMeta } from './readAttestationsMeta'
 
 export async function loadGeneratorInput(): Promise<CropsApiInput> {
   const projectService = new ProjectService()
@@ -16,7 +16,9 @@ export async function loadGeneratorInput(): Promise<CropsApiInput> {
   return {
     projects,
     chains,
-    ledger: getAttestationsMeta(),
+    attestations: await readAttestationsMeta(
+      process.env.CROPS_ATTESTATIONS_RPC_URL,
+    ),
     commit: getCommit(),
     generatedAt: Math.floor(Date.now() / 1000),
   }

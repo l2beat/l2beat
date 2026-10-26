@@ -1,16 +1,26 @@
 import { v } from '@l2beat/validate'
 
-export type FuelLatestBlockNumberResponse = v.infer<
-  typeof FuelLatestBlockNumberResponse
+const FuelBlockHeader = v.object({
+  height: v.string(),
+  header: v.object({
+    time: v.string(),
+  }),
+})
+
+export type FuelBlockHeaderResponse = v.infer<typeof FuelBlockHeaderResponse>
+export const FuelBlockHeaderResponse = v.object({
+  data: v.object({
+    block: FuelBlockHeader,
+  }),
+})
+
+export type FuelLatestBlockHeaderResponse = v.infer<
+  typeof FuelLatestBlockHeaderResponse
 >
-export const FuelLatestBlockNumberResponse = v.object({
+export const FuelLatestBlockHeaderResponse = v.object({
   data: v.object({
     blocks: v.object({
-      nodes: v.array(
-        v.object({
-          height: v.string(),
-        }),
-      ),
+      nodes: v.array(FuelBlockHeader),
     }),
   }),
 })

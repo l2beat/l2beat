@@ -8,4 +8,5 @@
 <br>
 ## Privacy can be lost if
 1. a user sends transactions from their own public address (see public observer).
-2. elliptic-curve cryptography is broken, which decrypts every note sent to a 0zk address that was ever shared (see future adversary).
+2. a user keeps RailOxide's public RPCs, which see their public addresses and private transactions in one Tor session (see network observer).
+3. elliptic-curve cryptography is broken, which decrypts every note sent to a 0zk address that was ever shared (see future adversary).

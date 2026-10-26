@@ -17,6 +17,7 @@ import {
   lineNumbers,
 } from '@codemirror/view'
 import { assert } from '@l2beat/shared-pure'
+import { goToLine, goToLineReveal } from '../goToLine'
 import { cyrb64 } from '../hashes/cyrb-hash'
 import { indentGuides } from '../indentGuides'
 import { solidity } from '../languages/solidity'
@@ -30,6 +31,7 @@ import { theme } from '../theme'
 import { ChangeStrip } from './changeStrip'
 import {
   clearCollapseEffect,
+  collapsedRegionAt,
   collapseEffect,
   collapseUnchanged,
   collapsibleRegions,
@@ -267,10 +269,7 @@ export class DiffEditor {
     if (mergeView === undefined) {
       return
     }
-    const expand = (regionIndex: number) => {
-      mergeView.a.dispatch({ effects: expandEffect(regionIndex) })
-      mergeView.b.dispatch({ effects: expandEffect(regionIndex) })
-    }
+    const expand = (regionIndex: number) => this.expandRegion(regionIndex)
     const sides = [
       [mergeView.a, 'original'],
       [mergeView.b, 'modified'],
@@ -285,12 +284,26 @@ export class DiffEditor {
     this.strip.schedule()
   }
 
+  private expandRegion(regionIndex: number) {
+    const mergeView = this.mergeView
+    assert(mergeView !== undefined, 'Expanding without a merge view')
+    mergeView.a.dispatch({ effects: expandEffect(regionIndex) })
+    mergeView.b.dispatch({ effects: expandEffect(regionIndex) })
+  }
+
   private sideExtensions(filtered: Extension): Extension {
     return [
       lineNumbers(),
       drawSelection(),
       highlightSelectionMatches({ highlightWordAroundCursor: true }),
       centeredSearch,
+      goToLine,
+      goToLineReveal.of((view, position) => {
+        const regionIndex = collapsedRegionAt(view.state, position)
+        if (regionIndex !== undefined) {
+          this.expandRegion(regionIndex)
+        }
+      }),
       keymap.of(searchKeymap),
       EditorState.readOnly.of(true),
       solidity,

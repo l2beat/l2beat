@@ -239,6 +239,12 @@ export interface ApiDefinitionResponse {
   }[]
 }
 
+export interface ApiContractAtResponse {
+  symbol: string
+  address: string | undefined
+  name: string | undefined
+}
+
 export interface ApiReferencesResponse {
   symbol: string
   definitions: ApiDefinitionResponse['definitions']

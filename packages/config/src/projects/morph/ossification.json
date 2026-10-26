@@ -15,20 +15,6 @@
       "reason": "Lowered the deposit required to challenge a state root from 1 ETH to 1 wei (before discovery coverage)."
     },
     {
-      "timestamp": 1729607387,
-      "type": "state",
-      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
-      "transaction": "0x5165de3cedc00eea6753eb8be4c09f97e394d180023e251462a03db2ea916a7b",
-      "reason": "Mapped token 0x72AC...03A5 to its same-address L2 representation in the custom ERC20 gateway, changing which token pair the escrow accepts (before discovery coverage)."
-    },
-    {
-      "timestamp": 1729607471,
-      "type": "state",
-      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
-      "transaction": "0xdc4621e7579579856ce482ac9d7101f44060a8825b0fc783d6563f939746b30e",
-      "reason": "Mapped token 0xC7c5...2504 to L2 token 0xf574...85A7 in the custom ERC20 gateway, changing which token pair the escrow accepts (before discovery coverage)."
-    },
-    {
       "timestamp": 1729764539,
       "type": "state",
       "contract": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
@@ -90,13 +76,6 @@
       "contract": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
       "transaction": "0xd2b7e9ea76123204053dda100ca2c5aab6487e8b9ea1c1f1f38723cf46ab9aa6",
       "reason": "Handed control of the live enforced transaction gateway from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
-    },
-    {
-      "timestamp": 1730260763,
-      "type": "state",
-      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
-      "transaction": "0xf0582f6aa3645048d5d14f70b548e4c5ddc57d76ab2cdf0e7cf2046b82590627",
-      "reason": "Mapped L1 DAI to L2 token 0xef8A...bed4 in the custom ERC20 gateway, changing which token pair the escrow accepts (before discovery coverage)."
     },
     {
       "timestamp": 1730280155,

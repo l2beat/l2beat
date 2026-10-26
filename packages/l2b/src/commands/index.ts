@@ -3,10 +3,9 @@ import { Analyze } from './Analyze'
 import { AuditCoverage } from './AuditCoverage'
 import { BlobSenders } from './BlobSenders'
 import { CheckRpc } from './CheckRpc'
+import { ClientDrift } from './ClientDrift'
 import { Colorize } from './Colorize'
 import { CountUserOperations } from './CountUserOperations'
-import { CropsAttest } from './CropsAttest'
-import { CropsVerify } from './CropsVerify'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
 import { DownloadAllShapes, DownloadShapes } from './DownloadShapes'
@@ -51,10 +50,9 @@ export function getSubcommands() {
     AuditCoverage,
     BlobSenders,
     CheckRpc,
+    ClientDrift,
     Colorize,
     CountUserOperations,
-    CropsAttest,
-    CropsVerify,
     DeploymentTimestamp,
     DetectProxy,
     Discover,
