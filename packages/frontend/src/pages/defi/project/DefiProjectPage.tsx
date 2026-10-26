@@ -13,11 +13,11 @@ import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
+import { env } from '~/env'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
-
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 
 interface Props extends AppLayoutProps {
@@ -59,7 +59,9 @@ export function DefiProjectPage({
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader
                     project={entry}
-                    section="defi"
+                    // Ossification keeps DeFi project pages up without the
+                    // DeFi section, so there is no index to link to
+                    section={env.CLIENT_SIDE_DEFI_ENABLED ? 'defi' : undefined}
                     sectionLinks={sectionLinks}
                   />
                   <ProjectSummaryBars
