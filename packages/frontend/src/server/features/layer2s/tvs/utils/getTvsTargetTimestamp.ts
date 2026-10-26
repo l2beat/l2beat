@@ -5,7 +5,8 @@ import { UnixTime } from '@l2beat/shared-pure'
  * fallback when sync metadata has nothing fresh, and enough wherever an hour
  * either way does not matter. The backend targets the previous full hour;
  * the extra 15 minutes give it time to sync that hour, since nothing here
- * says whether it has.
+ * says whether it has. A project whose synced hour is still earlier is
+ * late, and gets a sync warning.
  */
 export function getTvsTargetTimestamp() {
   return UnixTime.toStartOf(

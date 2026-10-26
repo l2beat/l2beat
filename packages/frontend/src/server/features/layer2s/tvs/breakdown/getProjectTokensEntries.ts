@@ -12,6 +12,7 @@ import {
 } from '~/utils/calculatePercentageChange'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import {
+  getLateTvsTokenIds,
   getSyncedTvsTimestamp,
   getTvsSyncMetadata,
 } from '../utils/getSyncedTvsTimestamp'
@@ -65,10 +66,9 @@ export async function getProjectTokensEntries(
   }
 
   const db = getDb()
-  const targetTimestamp = getSyncedTvsTimestamp(
-    await getTvsSyncMetadata(),
-    project.tvsConfig,
-  )
+  const syncMetadata = await getTvsSyncMetadata()
+  const targetTimestamp = getSyncedTvsTimestamp(syncMetadata, project.tvsConfig)
+  const lateTokenIds = getLateTvsTokenIds(syncMetadata, project.tvsConfig)
   const sevenDaysAgoTargetTimestamp = targetTimestamp - 7 * UnixTime.DAY
 
   const [projects, tokenValues, sevenDaysAgoTokenValues] = await Promise.all([
@@ -96,6 +96,7 @@ export async function getProjectTokensEntries(
     sevenDaysAgoTokenValuesMap,
     chains,
     targetTimestamp,
+    lateTokenIds,
   )
 
   return entries
@@ -107,6 +108,7 @@ function getEntries(
   sevenDaysAgoTokenValuesMap: Map<TokenId, TokenValueRecord>,
   chains: ChainConfig[],
   targetTimestamp: UnixTime,
+  lateTokenIds: Set<string>,
 ) {
   const breakdown: ProjectTvsBreakdownTokenEntry[] = []
 
@@ -170,7 +172,11 @@ function getEntries(
       value: tokenValue.value,
       amount: tokenValue.amount,
       isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
-      syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
+      syncStatus: getSyncStatus(
+        tokenValue.timestamp,
+        targetTimestamp,
+        lateTokenIds.has(token.id),
+      ),
       bridgedUsing: token.bridgedUsing,
       filterable: [
         {
@@ -233,6 +239,7 @@ async function getMockTvsBreakdownForProjectData(
     new Map(),
     chains,
     UnixTime.now(),
+    new Set(),
   )
 
   return entries

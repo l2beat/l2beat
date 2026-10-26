@@ -2,6 +2,7 @@ import type { SyncMetadataRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
+  getLateTvsTokenIds,
   getSyncedTvsTimestamp,
   withoutExcludedTokens,
 } from './getSyncedTvsTimestamp'
@@ -87,6 +88,22 @@ describe(getSyncedTvsTimestamp.name, () => {
     const result = getSyncedTvsTimestamp(byId(records), tokens(records))
 
     expect(result).toEqual(getTvsTargetTimestamp())
+  })
+})
+
+describe(getLateTvsTokenIds.name, () => {
+  it('returns the tokens synced before the expected hour', () => {
+    const expected = getTvsTargetTimestamp()
+    const records = [
+      record('arbitrum-ETH', TARGET, expected),
+      record('arbitrum-USDC', TARGET, expected - HOUR),
+      // Stale tokens get the "no data since" status instead
+      record('arbitrum-NEW', TARGET, NOW_HOUR - 7 * HOUR),
+    ]
+
+    const result = getLateTvsTokenIds(byId(records), tokens(records))
+
+    expect([...result]).toEqual(['arbitrum-USDC'])
   })
 })
 

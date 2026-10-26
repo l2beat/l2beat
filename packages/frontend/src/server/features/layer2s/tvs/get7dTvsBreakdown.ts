@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import type { SyncMetadataRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
@@ -10,7 +9,7 @@ import {
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
 import { optionToRange } from '~/utils/range/range'
-import { getSyncState, type SyncState } from '../../utils/syncState'
+import type { SyncState } from '../../utils/syncState'
 import { getAdditionalTrustAssumptionsPercentage } from './utils/getAdditionalTrustAssumptionsPercentage'
 import {
   getSyncedTvsTimestamp,
@@ -18,6 +17,7 @@ import {
   withoutExcludedTokens,
 } from './utils/getSyncedTvsTimestamp'
 import { getTvsProjects } from './utils/getTvsProjects'
+import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 
 export interface SevenDayTvsBreakdown {
   total: number
@@ -113,9 +113,8 @@ export async function get7dTvsBreakdown(
         withoutExcludedTokens(p.details.tvsConfig, tokenFilters),
       ),
   }))
-  const endByProject = new Map<string, UnixTime>(
-    ends.map((e) => [e.projectId, e.to]),
-  )
+  // A project whose newest values are older is late
+  const expected = params.customTarget ?? getTvsTargetTimestamp()
   const syncMetadataRecords = [...syncMetadata.values()]
 
   const values =
@@ -132,16 +131,22 @@ export async function get7dTvsBreakdown(
   let total = 0
   const projects: Record<string, ProjectSevenDayTvsBreakdown> = {}
   for (const [projectId, rows] of Object.entries(rowsByProject)) {
-    const to = endByProject.get(projectId)
-    assert(to !== undefined, 'Project end not found')
-    const syncState = getTvsSyncState({ projectId, syncMetadataRecords, to })
-    if (!syncState) {
+    const hasSyncMetadata = syncMetadataRecords.some((r) =>
+      // Sync metadata records are stored per token in the database in format of <projectId>-<tokenId> (i.e. "arbitrum-USDC")
+      r.id.startsWith(`${projectId}-`),
+    )
+    if (!hasSyncMetadata) {
       continue
     }
 
     const lastValue = rows.at(-1)
     if (!lastValue) {
       continue
+    }
+    const syncState: SyncState = {
+      isSynced: lastValue.timestamp >= expected,
+      syncedUntil: lastValue.timestamp,
+      target: expected,
     }
     const sevenDaysAgoValue = rows.length === 2 ? rows[0] : undefined
 
@@ -320,38 +325,6 @@ export function createTvsBreakdownProjectFilter(
       return (project) =>
         !!project.scalingInfo && project.scalingInfo.type === 'Other'
   }
-}
-
-function getTvsSyncState({
-  projectId,
-  syncMetadataRecords,
-  to,
-}: {
-  projectId: string
-  syncMetadataRecords: SyncMetadataRecord[]
-  to: UnixTime
-}): SyncState | undefined {
-  const projectSyncMetadataRecords = syncMetadataRecords.filter((r) =>
-    // Sync metadata records are stored per token in the database in format of <projectId>-<tokenId> (i.e. "arbitrum-USDC")
-    r.id.startsWith(`${projectId}-`),
-  )
-  if (projectSyncMetadataRecords.length === 0) {
-    return
-  }
-
-  const syncedUntils = projectSyncMetadataRecords
-    .map((r) => r.syncedUntil)
-    .filter((r) => r !== null)
-  // Records for TVS are stored per token in the database, so we need to get the max target and syncedUntil for the project
-  const record = {
-    feature: 'tvs' as const,
-    id: projectId,
-    target: Math.max(...projectSyncMetadataRecords.map((r) => r.target)),
-    syncedUntil: syncedUntils.length > 0 ? Math.max(...syncedUntils) : null,
-    blockTarget: null,
-    blockSyncedUntil: null,
-  }
-  return getSyncState(record, to)
 }
 
 async function getMockTvsBreakdownData(

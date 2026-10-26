@@ -44,23 +44,44 @@ export function getSyncedTvsTimestamp(
   syncMetadata: TvsSyncMetadata,
   tokens: { id: string }[],
 ): UnixTime {
+  const hours = getCurrentRecords(syncMetadata, tokens).map(
+    (r) => r.syncedUntil,
+  )
+  return hours.length > 0 ? Math.min(...hours) : getTvsTargetTimestamp()
+}
+
+/**
+ * The tokens holding a project's hour before getTvsTargetTimestamp, the hour
+ * it should have reached by now. Tables flag them: every value they show is
+ * from the project's hour, so none looks out of date by itself.
+ */
+export function getLateTvsTokenIds(
+  syncMetadata: TvsSyncMetadata,
+  tokens: { id: string }[],
+): Set<string> {
+  const expected = getTvsTargetTimestamp()
+  return new Set(
+    getCurrentRecords(syncMetadata, tokens)
+      .filter((r) => r.syncedUntil < expected)
+      .map((r) => r.id),
+  )
+}
+
+/** The rows getSyncedTvsTimestamp takes the hour from, see its skip list */
+function getCurrentRecords(
+  syncMetadata: TvsSyncMetadata,
+  tokens: { id: string }[],
+): (SyncMetadataRecord & { syncedUntil: UnixTime })[] {
   const records = tokens
     .map((t) => syncMetadata.get(t.id))
     .filter((r) => r !== undefined)
   const latestTarget = records.reduce((max, r) => Math.max(max, r.target), 0)
-
-  let synced: UnixTime | undefined
-  for (const { target, syncedUntil } of records) {
-    if (
-      target === latestTarget &&
-      syncedUntil !== null &&
-      isTvsSynced(syncedUntil)
-    ) {
-      synced =
-        synced === undefined ? syncedUntil : Math.min(synced, syncedUntil)
-    }
-  }
-  return synced ?? getTvsTargetTimestamp()
+  return records.filter(
+    (r): r is SyncMetadataRecord & { syncedUntil: UnixTime } =>
+      r.target === latestTarget &&
+      r.syncedUntil !== null &&
+      isTvsSynced(r.syncedUntil),
+  )
 }
 
 /**

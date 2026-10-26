@@ -7,6 +7,7 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import {
+  getLateTvsTokenIds,
   getSyncedTvsTimestamp,
   getTvsSyncMetadata,
   type TvsSyncMetadata,
@@ -78,6 +79,7 @@ function getEntries(
       syncMetadata,
       project.tvsConfig,
     )
+    const lateTokenIds = getLateTvsTokenIds(syncMetadata, project.tvsConfig)
 
     for (const token of projectTokens) {
       const tokenValue = tokenValuesMap.get(token.id)
@@ -112,7 +114,11 @@ function getEntries(
         value: tokenValue.value,
         amount: tokenValue.amount,
         isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
-        syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
+        syncStatus: getSyncStatus(
+          tokenValue.timestamp,
+          targetTimestamp,
+          lateTokenIds.has(token.id),
+        ),
         bridgedUsing: token.bridgedUsing,
         filterable: [
           {
