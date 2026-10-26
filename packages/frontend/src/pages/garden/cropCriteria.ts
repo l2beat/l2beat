@@ -1,4 +1,7 @@
-import { OSSIFICATION_SCORE_BANDS } from '@l2beat/shared-pure'
+import {
+  OSSIFICATION_BAND_MEANING,
+  OSSIFICATION_SCORE_BANDS,
+} from '@l2beat/shared-pure'
 import type { CropKey } from '~/components/garden/crops'
 
 /** Marks where `reference` is linked inside a minimum. */
@@ -78,13 +81,13 @@ export const CROP_CRITERIA: Record<CropKey, CropCriteria> = {
       'Contracts holding user funds cannot be upgraded, or upgrades wait at least 30 days, so users can exit first.',
       'Where the system posts state to L1, that state is validated by proofs, not by an external oracle or a committee.',
       'No dependency on permissioned actors that can mint, move or misprice user funds, such as a price oracle or a bridge run by a fixed set of operators.',
-      `An ${REFERENCE_SLOT} of at least ${OSSIFICATION_SCORE_BANDS.good}, which takes about a year without a critical change.`,
+      `An ${REFERENCE_SLOT} of at least ${OSSIFICATION_SCORE_BANDS.good}, which takes ${OSSIFICATION_BAND_MEANING.good}.`,
       'Protection against a single failure, such as a second proof system or circuit breakers, or a clear statement of the maximum possible loss.',
     ],
     pullsDown: [
       'A single proof system with known vulnerabilities, or no limit on what a prover bug could cost.',
       'A multisig that can upgrade contracts or replace state roots without delay.',
-      `An ossification score below ${OSSIFICATION_SCORE_BANDS.good} limits Security to medium. Below ${OSSIFICATION_SCORE_BANDS.warning}, which means a critical change in roughly the last five weeks, Security is bad and the project is not listed.`,
+      `An ossification score below ${OSSIFICATION_SCORE_BANDS.good} limits Security to medium. Below ${OSSIFICATION_SCORE_BANDS.warning}, which means ${OSSIFICATION_BAND_MEANING.warning}, Security is bad and the project is not listed.`,
     ],
     reference: {
       label: 'ossification score',

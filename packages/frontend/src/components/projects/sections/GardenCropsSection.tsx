@@ -8,11 +8,14 @@ import type { ProjectSectionProps } from './types'
 export interface GardenCropsSectionProps extends ProjectSectionProps {
   crops: ResolvedCrops
   listing: GardenListing
+  /** The measured ossification, listed under Security. */
+  ossification: string[]
 }
 
 export function GardenCropsSection({
   crops,
   listing,
+  ossification,
   ...sectionProps
 }: GardenCropsSectionProps) {
   return (
@@ -28,7 +31,7 @@ export function GardenCropsSection({
         </a>
       }
     >
-      <CropsBed crops={crops} listing={listing} />
+      <CropsBed crops={crops} listing={listing} ossification={ossification} />
     </ProjectSection>
   )
 }

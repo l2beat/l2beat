@@ -1,4 +1,4 @@
-import type { ProjectScalingInfo, ResolvedCropEvaluation } from '@l2beat/config'
+import type { ProjectScalingInfo } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
@@ -31,36 +31,32 @@ const META: CropsAttestationsMeta = {
 
 const FACTORY = '0x1F98431c8aD98523631AE4a59f267346ea31F984'
 
-const GOOD: ResolvedCropEvaluation = {
-  sentiment: 'good',
-  status: 'reviewed',
-  points: [],
-  missing: [],
-  additionalConsiderations: [],
-  notReviewed: [],
-}
-
 const SAMPLE: ExampleProject = {
   id: 'uniswapv3',
   slug: 'uniswap-v3',
   name: 'Uniswap V3',
   scalingInfo: {} as ProjectScalingInfo,
-  garden: {
-    crops: {
-      censorshipResistance: { ...GOOD, points: ['One', 'Two'] },
-      openSource: {
-        ...GOOD,
-        license: {
-          spdxId: 'MIT',
-          name: 'MIT License',
-          url: 'https://opensource.org/license/mit',
-          categories: [],
-        },
+  crops: {
+    censorshipResistance: { sentiment: 'good', points: ['One', 'Two'] },
+    openSource: { sentiment: 'good', license: 'MIT' },
+    privacy: { sentiment: 'good' },
+    security: { sentiment: 'good' },
+  },
+  // Unchanged for years by `generatedAt`, so the score leaves Security as written.
+  ossificationHistory: {
+    contracts: [
+      {
+        name: 'UniswapV3Factory',
+        address: ChainSpecificAddress(`eth:${FACTORY}`),
+        isVerified: true,
+        ossifyingSince: 1620000000,
+        codeChangeCount: 0,
+        stateChangeCount: 0,
       },
-      privacy: GOOD,
-      security: GOOD,
-    },
-    listing: 'listed',
+    ],
+    changes: [],
+    deployments: [1620000000],
+    observedSince: 1620000000,
   },
   contracts: {
     addresses: {

@@ -32,12 +32,14 @@ const STAGGER = 0.05
 export function CropsBed({
   crops,
   listing,
+  ossification,
 }: {
   crops: ResolvedCrops
   listing: GardenListing
+  ossification: string[]
 }) {
   const inGarden = listing === 'listed'
-  const entries = toCropEntries(crops)
+  const entries = toCropEntries(crops, ossification)
   const entranceHold = useEntranceHold()
 
   return (
@@ -138,7 +140,7 @@ function LetterChip({
 }
 
 function Findings({ entry, index }: { entry: CropEntry; index: number }) {
-  const { definition, evaluation } = entry
+  const { definition, evaluation, ossification } = entry
   return (
     <div
       className={cn(
@@ -169,7 +171,7 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
           '@min-[900px]:text-paragraph-14',
         )}
       >
-        <CropFindings evaluation={evaluation} />
+        <CropFindings evaluation={evaluation} ossification={ossification} />
       </div>
     </div>
   )

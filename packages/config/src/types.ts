@@ -261,8 +261,6 @@ export interface BaseProject {
 
   // crops data
   crops?: ProjectCrops
-  /** Built from `crops` and `ossificationHistory`, see `ProjectGarden`. */
-  garden?: ProjectGarden
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -1679,9 +1677,7 @@ export type GardenListing = 'listed' | 'ratedBad' | 'noOssificationScore'
 /**
  * `crops` as the site and the CROPS API show them: every default filled in,
  * Security capped by the ossification score, and whether the garden lists the
- * project. The score is measured when config builds, and turbo caches that
- * build, so it can trail the live score by as long as config goes unchanged.
- * A stale score is only ever lower, so the cap errs strict.
+ * project. Readers resolve it when they serve it, see `resolveGarden`.
  */
 export interface ProjectGarden {
   crops: ResolvedCrops

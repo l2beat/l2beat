@@ -24,13 +24,15 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
             </TableCell>
             <TableCell className="py-3">
               <div className="flex gap-3.5">
-                {toCropEntries(entry.crops).map((crop, columnIndex) => (
-                  <EvaluatedCrop
-                    key={crop.definition.key}
-                    crop={crop}
-                    delay={entranceDelay(rowIndex, columnIndex)}
-                  />
-                ))}
+                {toCropEntries(entry.crops, entry.ossification).map(
+                  (crop, columnIndex) => (
+                    <EvaluatedCrop
+                      key={crop.definition.key}
+                      crop={crop}
+                      delay={entranceDelay(rowIndex, columnIndex)}
+                    />
+                  ),
+                )}
               </div>
             </TableCell>
             <TableCell align="right">
@@ -59,11 +61,7 @@ function EvaluatedCrop({ crop, delay }: { crop: CropEntry; delay: number }) {
       delay={delay}
       label={`${definition.label}: ${statusText}`}
     >
-      <CropEvaluationDetails
-        label={definition.label}
-        note={definition.note}
-        evaluation={evaluation}
-      />
+      <CropEvaluationDetails entry={crop} />
     </CropBadge>
   )
 }

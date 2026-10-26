@@ -11,7 +11,7 @@ const OPTIONAL = [
   'permissions',
   'discoveryInfo',
   'discoveryUpdates',
-  'garden',
+  'crops',
   'zkCatalogInfo',
   'ossificationHistory',
   'milestones',

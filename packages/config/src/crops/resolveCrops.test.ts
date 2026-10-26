@@ -117,7 +117,7 @@ describe('resolveCrops', () => {
       expect(resolved.security).toHaveSubset({
         sentiment: 'warning',
         missing: [
-          'Ossification score below 80: critical contracts changed within about the last year.',
+          'Ossification score below 80, which takes about a year without a critical change.',
           'Written.',
         ],
       })

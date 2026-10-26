@@ -2,19 +2,12 @@ import type { OsiLicense } from '@l2beat/config'
 import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 import { CROP_TITLE } from './cropPalette'
-import type { ResolvedCropEvaluation } from './crops'
+import type { CropEntry, ResolvedCropEvaluation } from './crops'
 import { getCropStatusText } from './crops'
 
 /** The verdict in the crop's colour, the standing caveat, then the findings. */
-export function CropEvaluationDetails({
-  label,
-  note,
-  evaluation,
-}: {
-  label: string
-  note: string | undefined
-  evaluation: ResolvedCropEvaluation
-}) {
+export function CropEvaluationDetails({ entry }: { entry: CropEntry }) {
+  const { definition, evaluation, ossification } = entry
   return (
     <>
       <p
@@ -23,10 +16,11 @@ export function CropEvaluationDetails({
           CROP_TITLE[evaluation.sentiment],
         )}
       >
-        {label}: {getCropStatusText(evaluation.status, evaluation.sentiment)}
+        {definition.label}:{' '}
+        {getCropStatusText(evaluation.status, evaluation.sentiment)}
       </p>
-      <CropNote note={note} />
-      <CropFindings evaluation={evaluation} />
+      <CropNote note={definition.note} />
+      <CropFindings evaluation={evaluation} ossification={ossification} />
     </>
   )
 }
@@ -34,8 +28,10 @@ export function CropEvaluationDetails({
 /** Shared by the garden tooltip and the project page, so the two cannot drift. */
 export function CropFindings({
   evaluation,
+  ossification,
 }: {
   evaluation: ResolvedCropEvaluation
+  ossification: string[]
 }) {
   return (
     <>
@@ -50,7 +46,7 @@ export function CropFindings({
         items={evaluation.additionalConsiderations}
       />
       <CropSection title="Not reviewed yet" items={evaluation.notReviewed} />
-      <CropSection title="Ossification" items={evaluation.ossification ?? []} />
+      <CropSection title="Ossification" items={ossification} />
     </>
   )
 }

@@ -1,21 +1,19 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import type { ResolvedCrops } from '~/components/garden/crops'
 import { formatTimestamp } from '~/utils/dates'
 import type { OssificationStats } from '../projects/ossification/getOssificationStats'
 
 /**
- * Lists the measured ossification under Security, which it caps. While the
- * ossification feature is off there is none, and the crops stay as they are.
+ * The measured ossification, as the lines listed under Security, which it
+ * caps. None while the ossification feature is off.
  */
-export function withOssification(
-  crops: ResolvedCrops,
+export function describeOssification(
   ossification: OssificationStats | undefined,
-): ResolvedCrops {
+): string[] {
   if (!ossification) {
-    return crops
+    return []
   }
   const { score, isUnverified, timeline, exposure } = ossification
-  const lines = [
+  return [
     isUnverified
       ? 'No score: some critical contracts are unverified.'
       : `Score: ${score} of 100.`,
@@ -24,5 +22,4 @@ export function withOssification(
       ? [`Battle-tested exposure: ${formatCurrency(exposure, 'usd')}·years.`]
       : []),
   ]
-  return { ...crops, security: { ...crops.security, ossification: lines } }
 }

@@ -4,6 +4,7 @@ import {
 } from '@l2beat/shared/frontend'
 import {
   getOssificationSentiment,
+  OSSIFICATION_BAND_MEANING,
   OSSIFICATION_SCORE_BANDS,
   type UnixTime,
 } from '@l2beat/shared-pure'
@@ -18,8 +19,9 @@ import type {
 import { OSI_LICENSES, type OsiLicense, type OsiLicenseId } from './osiLicenses'
 
 // Config leaves a crop's defaults implicit, and Security also depends on the
-// project's measured ossification. The build resolves both once, into
-// `garden`, so the site and the CROPS API read the same verdict.
+// project's ossification score, which grows every day without a critical
+// change. So the site and the CROPS API resolve the verdict when they serve
+// it: stored with the cached config build, it would go stale.
 
 export function resolveGarden(
   project: {
@@ -104,8 +106,8 @@ function capByOssification(
   }
   const reason =
     cap === 'warning'
-      ? `Ossification score below ${OSSIFICATION_SCORE_BANDS.good}: critical contracts changed within about the last year.`
-      : `Ossification score below ${OSSIFICATION_SCORE_BANDS.warning}: critical contracts changed within roughly the last five weeks.`
+      ? `Ossification score below ${OSSIFICATION_SCORE_BANDS.good}, which takes ${OSSIFICATION_BAND_MEANING.good}.`
+      : `Ossification score below ${OSSIFICATION_SCORE_BANDS.warning}, which means ${OSSIFICATION_BAND_MEANING.warning}.`
   return { ...security, sentiment: cap, missing: [reason, ...security.missing] }
 }
 

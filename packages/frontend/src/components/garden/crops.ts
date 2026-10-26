@@ -1,26 +1,25 @@
 import type {
-  ResolvedCropEvaluation as ConfigCropEvaluation,
   CropSentiment,
   ProjectCropStatus,
   ProjectCrops,
+  ResolvedCropEvaluation,
+  ResolvedCrops,
 } from '@l2beat/config'
 
-// The site's vocabulary for a crop. @l2beat/config resolves a crop when it
-// builds; the shapes below are its types, plus what the site adds.
+// The site's vocabulary for a crop. The types are config's, which resolves
+// a crop on the server.
 // Values live here rather than in @l2beat/config because client components
 // import this file and the browser cannot load a value from the CommonJS
 // config build (it broke hydration once, see the history of this file).
 
-export type { CropSentiment, GardenListing } from '@l2beat/config'
+export type {
+  CropSentiment,
+  GardenListing,
+  ResolvedCropEvaluation,
+  ResolvedCrops,
+} from '@l2beat/config'
 
 export type CropKey = keyof ProjectCrops
-
-export interface ResolvedCropEvaluation extends ConfigCropEvaluation {
-  /** On Security only: the measured ossification, while that feature is on. */
-  ossification?: string[]
-}
-
-export type ResolvedCrops = Record<CropKey, ResolvedCropEvaluation>
 
 export interface CropDefinition {
   key: CropKey
@@ -89,11 +88,17 @@ export function getCropStatusText(
 export interface CropEntry {
   definition: CropDefinition
   evaluation: ResolvedCropEvaluation
+  /** The measured ossification, under Security, which it caps. Empty elsewhere. */
+  ossification: string[]
 }
 
-export function toCropEntries(crops: ResolvedCrops): CropEntry[] {
+export function toCropEntries(
+  crops: ResolvedCrops,
+  ossification: string[],
+): CropEntry[] {
   return CROP_COLUMNS.map((definition) => ({
     definition,
     evaluation: crops[definition.key],
+    ossification: definition.key === 'security' ? ossification : [],
   }))
 }

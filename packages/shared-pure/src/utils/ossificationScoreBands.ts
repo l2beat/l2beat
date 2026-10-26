@@ -1,9 +1,15 @@
-/**
- * What an ossification score allows. From `good` up the code counts as
- * ossified, about a year without a critical change; below `warning`, a
- * critical change landed within roughly the last five weeks.
- */
+/** What an ossification score allows, see `OSSIFICATION_BAND_MEANING`. */
 export const OSSIFICATION_SCORE_BANDS = { good: 80, warning: 50 } as const
+
+/**
+ * What each band edge means in time, worded to follow "which takes" (`good`)
+ * and "which means" (`warning`), so every sentence about the bands reads the
+ * same and changes with them.
+ */
+export const OSSIFICATION_BAND_MEANING = {
+  good: 'about a year without a critical change',
+  warning: 'a critical change within roughly the last five weeks',
+} as const
 
 export type OssificationSentiment = 'good' | 'warning' | 'bad'
 

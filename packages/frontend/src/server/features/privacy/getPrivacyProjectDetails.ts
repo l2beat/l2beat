@@ -5,9 +5,9 @@ import type {
   PrivacyExitWindow,
   PrivacySummaryValue,
   ProjectContracts,
+  ProjectCrops,
   ProjectDiscoveryUpdate,
   ProjectDisplay,
-  ProjectGarden,
   ProjectPermissions,
   ProjectPrivacyAdversaries,
   ProjectStatuses,
@@ -19,6 +19,7 @@ import type {
   PrivacyFlowDailyRecord,
   TokenValueRecord,
 } from '@l2beat/database'
+import type { OssificationHistory } from '@l2beat/shared/frontend'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
@@ -63,7 +64,9 @@ export interface PrivacyProjectDetails {
   ossification?: ProjectOssificationView
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
-  garden?: ProjectGarden
+  crops?: ProjectCrops
+  /** Security's ossification cap needs it. */
+  ossificationHistory?: OssificationHistory
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
   category: PrivacyCategory
   exitWindow: PrivacyExitWindow
@@ -285,7 +288,8 @@ export async function getPrivacyProjectDetails(
     ossification,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
-    garden: project.garden,
+    crops: project.crops,
+    ossificationHistory: project.ossificationHistory,
     trustedSetups: project.trustedSetups,
     category: project.privacyInfo.category,
     exitWindow: project.privacyInfo.exitWindow,

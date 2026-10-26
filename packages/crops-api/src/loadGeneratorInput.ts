@@ -7,8 +7,8 @@ export async function loadGeneratorInput(): Promise<CropsApiInput> {
   const projectService = new ProjectService()
   const [projects, chains] = await Promise.all([
     projectService.getProjects({
-      where: ['garden'],
-      select: ['garden'],
+      where: ['crops'],
+      select: ['crops'],
       optional: [
         'contracts',
         'permissions',

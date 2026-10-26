@@ -1,13 +1,17 @@
-import type { Project } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import {
+  getGardenProjectPath,
+  type Project,
+  resolveGarden,
+} from '@l2beat/config'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiSummaryEntries'
+import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
+import { describeOssification } from '~/server/features/garden/describeOssification'
 import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
-import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
-import { withOssification } from '~/server/features/garden/withOssification'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
@@ -40,12 +44,14 @@ export interface GardenEntry {
   subtitle: string
   iconUrl: string
   crops: ResolvedCrops
+  /** The measured ossification, listed under Security. */
+  ossification: string[]
   /** Undefined when we track nothing for the project. */
   metric: GardenMetric | undefined
 }
 
 type GardenProject = Project<
-  'garden',
+  'crops',
   | 'scalingInfo'
   | 'privacyInfo'
   | 'defiInfo'
@@ -61,8 +67,8 @@ export async function getGardenData(
 ): Promise<RenderData> {
   const [reviewed, attestation] = await Promise.all([
     ps.getProjects({
-      where: ['garden'],
-      select: ['garden'],
+      where: ['crops'],
+      select: ['crops'],
       optional: [
         'scalingInfo',
         'privacyInfo',
@@ -77,9 +83,13 @@ export async function getGardenData(
   ])
   // An evaluation shows only once the attester has attested it.
   const attested = new Set(attestation.current?.projectIds)
-  const projects = reviewed
-    .filter((p) => attested.has(p.id) && p.garden.listing === 'listed')
-    .sort(compareByCuratedOrder)
+  const now = UnixTime.now()
+  const listed = reviewed
+    .filter((project) => attested.has(project.id))
+    .map((project) => ({ project, garden: resolveGarden(project, now) }))
+    .filter(({ garden }) => garden.listing === 'listed')
+    .sort((a, b) => compareByCuratedOrder(a.project, b.project))
+  const projects = listed.map(({ project }) => project)
 
   const [tvsBreakdown, depositCounts, defiTvl] = await Promise.all([
     get7dTvsBreakdown({
@@ -97,18 +107,18 @@ export async function getGardenData(
   ])
 
   const entries: GardenEntry[] = await Promise.all(
-    projects.map(async (project) => ({
+    listed.map(async ({ project, garden }) => ({
       name: project.name,
       slug: project.slug,
-      href: getGardenProjectPath(project),
+      href: getGardenProjectPath(project, {
+        hasDefiPage: hasDefiProjectPage(project),
+      }),
       subtitle: getSubtitle(project),
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+      crops: garden.crops,
       // One value-series read per listed project, as on the ossification
       // page. The garden lists a handful, so it is not worth a batched query.
-      crops: withOssification(
-        project.garden.crops,
-        await getProjectOssification(project),
-      ),
+      ossification: describeOssification(await getProjectOssification(project)),
       metric: getMetric(project, tvsBreakdown, depositCounts, defiTvl),
     })),
   )

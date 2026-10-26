@@ -13,7 +13,7 @@ export type PrivacyProject = Project<
   | 'permissions'
   | 'discoveryInfo'
   | 'discoveryUpdates'
-  | 'garden'
+  | 'crops'
   | 'zkCatalogInfo'
   | 'ossificationHistory'
   | 'milestones'
