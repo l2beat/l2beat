@@ -37,6 +37,10 @@ export type DefinitionLookup =
   | { status: 'references'; response: ApiReferencesResponse }
   | { status: 'contract'; response: ApiContractAtResponse }
   | { status: 'failed' }
+  | { status: 'pending' }
+
+// A project's first lookup on the readonly server fetches all its sources.
+const PENDING_DELAY_MS = 300
 
 export function useGoToDefinition(
   editorId: string,
@@ -102,6 +106,7 @@ export function useGoToDefinition(
     assert(lookup !== undefined, 'Picked without a lookup')
     assert(lookup.status !== 'failed', 'Picked from a failed lookup')
     assert(lookup.status !== 'contract', 'Picked from a contract lookup')
+    assert(lookup.status !== 'pending', 'Picked from a pending lookup')
     if (lookup.status === 'references') {
       const reference = lookup.response.references[index]
       assert(reference !== undefined, 'Picked a missing reference')
@@ -146,13 +151,20 @@ export function useGoToDefinition(
       onResponse: (response: T) => void,
     ) => {
       const lookupId = ++latestLookup.current
+      const pending = setTimeout(() => {
+        if (lookupId === latestLookup.current) {
+          setLookup({ status: 'pending' })
+        }
+      }, PENDING_DELAY_MS)
       request().then(
         (response) => {
+          clearTimeout(pending)
           if (lookupId === latestLookup.current) {
             onResponse(response)
           }
         },
         () => {
+          clearTimeout(pending)
           if (lookupId === latestLookup.current) {
             setLookup({ status: 'failed' })
           }
