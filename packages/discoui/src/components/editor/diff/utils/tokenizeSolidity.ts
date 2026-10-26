@@ -31,7 +31,7 @@ export function tokenizeSolidity(source: string): Token[] {
       const startLine = line
       const start = i
       i += 2
-      while (i < len && source[i] !== '\n') {
+      while (i < len && !isLineTerminator(source[i] as string)) {
         i++
       }
       tokens.push(comment(source.slice(start, i), startLine, line))
@@ -115,6 +115,11 @@ function comment(content: string, start: number, end: number): Token {
 
 function structural(content: string, start: number, end: number): Token {
   return { type: 'structural', content, startLine: start, endLine: end }
+}
+
+// The ones solc ends a line comment at: \n, \v, \f and \r.
+function isLineTerminator(c: string): boolean {
+  return c >= '\n' && c <= '\r'
 }
 
 function isIdentChar(c: string): boolean {

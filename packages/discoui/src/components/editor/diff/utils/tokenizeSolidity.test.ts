@@ -50,6 +50,11 @@ describe('tokenizeSolidity', () => {
     expect(tokens).toEqual([comment('// hello', 1, 1), structural('x', 2, 2)])
   })
 
+  it('line comment ends at a lone carriage return, as in solc', () => {
+    const tokens = tokenizeSolidity('// hello\rx')
+    expect(tokens).toEqual([comment('// hello', 1, 1), structural('x', 1, 1)])
+  })
+
   it('block comment can span multiple lines', () => {
     const tokens = tokenizeSolidity('/* a\nb\nc */ x')
     expect(tokens).toEqual([
