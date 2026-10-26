@@ -98,8 +98,12 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
               />
             ))}
         </div>
-        <NavWhatsNew onNavigate={closeMobileSidebar} />
+        {/* In the mobile menu, the end of the list. */}
+        <NavWhatsNew onNavigate={closeMobileSidebar} className="lg:hidden" />
       </SidebarContent>
+      {/* From lg, pinned under the list, so it is always in full view and
+          only the list scrolls. */}
+      <NavWhatsNew onNavigate={closeMobileSidebar} className="max-lg:hidden" />
       <SidebarFooter>
         <div className="flex items-center gap-3.5 pl-1.5">
           <SocialLinks variant="gray" />

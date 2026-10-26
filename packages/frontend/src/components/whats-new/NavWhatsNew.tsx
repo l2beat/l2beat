@@ -1,11 +1,18 @@
 import { useDevice } from '~/hooks/useDevice'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { useTracking } from '~/hooks/useTracking'
+import { cn } from '~/utils/cn'
 import { SidebarGroup, SidebarGroupLabel } from '../core/Sidebar'
 import { useWhatsNewItem } from './WhatsNewItemContext'
 
 /** The latest announcement at the bottom of the nav, on every page. */
-export function NavWhatsNew({ onNavigate }: { onNavigate: () => void }) {
+export function NavWhatsNew({
+  onNavigate,
+  className,
+}: {
+  onNavigate: () => void
+  className?: string
+}) {
   const item = useWhatsNewItem()
   const { track } = useTracking()
   const { isDesktop } = useDevice()
@@ -19,9 +26,9 @@ export function NavWhatsNew({ onNavigate }: { onNavigate: () => void }) {
     return null
   }
   return (
-    // Pushed to the end of the nav, just above its footer; at least 20px
-    // under the lists above when the nav is full.
-    <SidebarGroup className="mt-auto pt-5">
+    // At the end of the nav, just above its footer; at least 20px under the
+    // lists above when the nav is full.
+    <SidebarGroup className={cn('mt-auto pt-5', className)}>
       <SidebarGroupLabel>What&apos;s new</SidebarGroupLabel>
       <a
         href={item.href}
