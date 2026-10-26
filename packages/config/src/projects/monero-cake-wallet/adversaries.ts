@@ -74,11 +74,11 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        'Built-in Tor sends every call over one shared circuit for up to ten minutes, so only separate app sessions keep the legs apart.',
+        'Moralis, Etherscan and PublicNode look up every Ethereum wallet the app opens, so built-in Tor keeps the legs apart only in separate app sessions.',
       exposureContinued:
-        'Moralis receives every Ethereum wallet the app opens, so deposit and exit wallets kept in the app pair up whenever both open close together.',
+        "Token logos load outside Tor, so a token with a remote logo shows Moralis the user's IP beside the wallet.",
       advice:
-        'Turn on built-in Tor and restart the app, since the Ethereum client keeps the connection it started with. After the entry, delete the deposit wallet from Cake and restart, so later sessions only see the exit wallet.',
+        'Turn on built-in Tor, restart the app and add no tokens with remote logos. After the entry, delete the deposit wallet from Cake and restart before the exit.',
       interior: {
         sender: 'private',
         recipient: 'private',

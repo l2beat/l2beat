@@ -180,28 +180,6 @@ export const risc0: BaseProject = {
           'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
       },
       {
-        // Is a dummy to show soon as using risc0 proof system. Verifier
-        // contract sources are unknown, so the actual hash cannot be computed.
-        // Fix once the sources are on etherscan.
-        hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
-        name: 'RiscZero Soon verifier',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        knownDeployments: [
-          {
-            // Based on standard Risc0 verifier architecture, this contract should be
-            // a verifier router that points to an actual verifier. But it's unverified, so idk
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6',
-            ),
-          },
-        ],
-        verificationStatus: 'unsuccessful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        description:
-          'Verifier smart contract sources are not available on Etherscan, hash value is set to 0x0 to indicate that it is not known.',
-      },
-      {
         hash: '0x79325d9dc09af1afcea4dbf04db9fada7a71846045ad56daa1996bbebf9468d8',
         name: 'RiscZero v1.0.0',
         sourceLink: 'https://github.com/risc0/risc0/tree/v1.0.0/risc0',

@@ -8,9 +8,8 @@ export const CROP_NOTES = {
       ? `Passes the walkaway test: ${detail}`
       : 'Passes the walkaway test.',
   infiniteExitWindow:
-    'The core contracts are immutable, cannot be paused, and have no upgrade path, so the exit window is infinite.',
+    'The core contracts are immutable and cannot be paused, so the exit window is infinite.',
   notReviewed: {
     circuitBreakers: 'Circuit breakers and rate limits.',
-    quantumSafety: 'Quantum safety.',
   },
 }

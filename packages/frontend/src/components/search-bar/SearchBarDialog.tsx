@@ -20,6 +20,7 @@ import { useTracking } from '~/hooks/useTracking'
 import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { useTRPC } from '~/trpc/React'
 import { Skeleton } from '../core/Skeleton'
+import { linkVariants } from '../link/CustomLink'
 import { useSearchBarContext } from './SearchBarContext'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
@@ -42,11 +43,29 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
-  const { data: searchResults, isFetching } = useQuery(
+  const {
+    data: searchResults,
+    isFetching,
+    isError,
+    fetchStatus,
+    refetch,
+  } = useQuery(
     trpc.searchBar.search.queryOptions(debouncedValue, {
       enabled: debouncedValue !== '',
     }),
   )
+  // Both leave the list empty, which would otherwise read as "No results
+  // found". A paused query runs by itself on the browser's `online` event.
+  const isOffline = fetchStatus === 'paused'
+  const isFailed = isError && fetchStatus === 'idle'
+  const showsResults = value === debouncedValue && value !== ''
+  const searchProblem = !showsResults
+    ? undefined
+    : isOffline
+      ? 'offline'
+      : isFailed
+        ? 'failed'
+        : undefined
 
   useEffect(() => {
     if (debouncedValue === '') return
@@ -59,10 +78,12 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   )
 
   const grouped = useMemo(() => {
-    if (!searchResults) return []
+    // Pages are searched locally, so they can still be listed when the server
+    // can't be reached.
+    if (!searchResults && !isOffline && !isFailed) return []
 
-    return groupSearchResults([...searchResults, ...filteredPages])
-  }, [searchResults, filteredPages])
+    return groupSearchResults([...(searchResults ?? []), ...filteredPages])
+  }, [searchResults, filteredPages, isOffline, isFailed])
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
     e?.preventDefault()
@@ -123,7 +144,23 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
               </CommandGroup>
             </CommandPrimitive.Loading>
           )}
-          <CommandEmpty>No results found.</CommandEmpty>
+          <SearchBarNotice>
+            {searchProblem === 'offline' ? (
+              "You're offline. Results will appear once you're back online."
+            ) : searchProblem === 'failed' ? (
+              <>
+                Couldn't search projects and tokens.{' '}
+                <button
+                  type="button"
+                  className={linkVariants()}
+                  onClick={() => void refetch()}
+                >
+                  Try again
+                </button>
+              </>
+            ) : null}
+          </SearchBarNotice>
+          {!searchProblem && <CommandEmpty>No results found.</CommandEmpty>}
 
           {value === '' && (
             <CommandGroup heading="Recently added projects">
@@ -156,8 +193,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
               })}
             </CommandGroup>
           )}
-          {value === debouncedValue &&
-            value !== '' &&
+          {showsResults &&
             grouped.length > 0 &&
             grouped.map(([group, items], groupIndex) => (
               <CommandGroup
@@ -247,6 +283,19 @@ function SearchBarItem({
   )
 }
 
+// Rendered even when empty: screen readers announce changes only to a live
+// region that is already in the page.
+function SearchBarNotice({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      role="status"
+      className="border-divider border-b px-4 py-3 text-center text-sm last:border-none empty:border-none empty:p-0"
+    >
+      {children}
+    </div>
+  )
+}
+
 function SearchBarItemSkeleton() {
   return (
     <div className="flex h-11 items-center justify-between px-2 py-3">
@@ -278,6 +327,8 @@ function entryToLabel(entry: AnySearchBarEntry) {
   switch (entry.kind) {
     case 'ethereum':
       return 'Base layer'
+    case 'chain':
+      return 'Chain'
     case 'layer2':
       return 'Layer 2'
     case 'layer3':

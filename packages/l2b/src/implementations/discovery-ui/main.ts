@@ -40,6 +40,8 @@ import {
   attachTemplateRouter,
   listTemplateFilesSchema,
 } from './templates/router'
+import { RemoteWorkspaces } from './xref/RemoteWorkspaces'
+import { attachXrefRouter, diskWorkspace } from './xref/router'
 
 const safeStringSchema = z
   .string()
@@ -107,6 +109,8 @@ const diffHistoryQuerySchema = z.object({
   limit: positiveIntFromString.optional(),
 })
 
+const REMOTE_WORKSPACE_CAPACITY = 4
+
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const port = process.env.PORT ?? 2021
   const app = createDiscoveryUiApp({ readonly })
@@ -125,7 +129,7 @@ export function createDiscoveryUiApp({
 }): Express {
   const app = express()
 
-  const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
+  const STATIC_ROOT = join(__dirname, '../../../../discoui/build')
 
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
@@ -302,6 +306,19 @@ export function createDiscoveryUiApp({
 
   attachDiffoveryRouter(app, diffoveryController)
   attachLayoutRouter(app, configReader, readonly)
+
+  if (readonly) {
+    const remoteWorkspaces = new RemoteWorkspaces(
+      configReader,
+      flatSourceClient,
+      REMOTE_WORKSPACE_CAPACITY,
+    )
+    attachXrefRouter(app, (project) => remoteWorkspaces.get(project))
+  } else {
+    attachXrefRouter(app, async (project) =>
+      diskWorkspace(configReader, project),
+    )
+  }
 
   if (!readonly) {
     attachAnalyzeRouter(app, configReader)

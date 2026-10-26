@@ -20,7 +20,7 @@
   ],
   "fields": {
     "dao": {
-      "description": "Aragon DAO whose permission manager controls the plugin's settings, target and upgrades."
+      "description": "Aragon governance contract whose permission manager controls the plugin's settings, target and upgrades."
     },
     "interfold": {
       "description": "E3 coordinator that runs the encrypted tally."

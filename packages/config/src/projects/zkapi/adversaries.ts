@@ -74,7 +74,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       exposureShort:
         'The app works in Tor Browser, the daemon has a Tor setting with a kill switch, and no third party sees both a deposit and a request.',
       exposureContinued:
-        "The RPC serving the user's wallet sees the deposit, while requests go to the operator and the provider. The app sends inference through a relay at refraction.network by default, which sees its timing. The hosted app reports feature use to Fathom, a cookieless analytics service.",
+        "The deposit reaches the wallet's RPC, or the app's public RPC when the user funds an address the app shows. The relay at refraction.network carries the app's inference and chain reads by default and sees their timing. Requests go to the operator and the provider, and the hosted app reports feature use to Fathom.",
       advice:
         'Use the app in Tor Browser, or the daemon with its Tor setting, and send the deposit through a public RPC over Tor.',
       interior: {
@@ -94,7 +94,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
           url: `${OA_CHAT}chat/services/networkProxy.js#L7-L10`,
         },
         {
-          title: 'Hosted app loads Fathom Analytics (checked 2026-10-10)',
+          title: 'Hosted app loads Fathom Analytics (checked 2026-10-22)',
           url: 'https://chat.openanonymity.ai',
         },
       ],

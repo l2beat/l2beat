@@ -1,6 +1,7 @@
-# Submit your protocol — The Infinite Garden
+# Submit your protocol for a CROPS review
 
-Answer what applies and publish as a forum post.
+Answer what applies and publish as a forum post. The criteria for each
+property are listed on https://l2beat.com/garden.
 
 ---
 
@@ -23,47 +24,59 @@ Answer what applies and publish as a forum post.
    withdraw?
 9. Do users depend on relayers or operators? How many are active, can users
    bypass them, and are there independent alternatives?
+10. Does any admin keep power over users, such as setting fees or limits? What
+    can it change, and does it apply to every user equally?
 
 ## 3. Open source
 
 *Can we read it, rebuild it, and run it ourselves?*
 
-10. Which license? `[choose one]`
-    MIT / Apache 2.0 / GPL / source-available with restrictions / no license /
-    closed source
-11. Are all deployed contracts verified against published source?
+11. Which license? `[choose one]`
+    MIT / Apache 2.0 / GPL / another OSI-approved license (name it) /
+    source-available with restrictions / no license / closed source
+12. Are all deployed contracts verified against published source?
     `[choose one]` yes / partly / no
-12. Which components are published? `[choose all]`
+13. Which components are published? `[choose all]`
     contracts / node / prover / interface / indexer / relayer
-13. If there is a ZK, TEE or wasm program hash, can it be reproduced from
+14. If there is a ZK, TEE or wasm program hash, can it be reproduced from
     source? Please share links to sources.
-14. Can someone build and run the interface locally?
+15. Can someone build and run the interface locally?
     `[choose one]` yes / no
 
 ## 4. Privacy
 
-*Does using it cost you your privacy?* Skip this section if the protocol makes
-no privacy claim — say so and move on.
+*Does using it cost you your privacy?* If the protocol makes no privacy claim,
+say so and skip this section.
 
-15. What is hidden, and what stays public?
-16. What enforces it? `[choose all]`
-    zk proofs / encrypted state / stealth addresses / trusted hardware / other
-17. Can anyone deanonymize a user — a view key, an admin power, a compliance
-    provider? `[choose one]` no / yes — and say who.
-18. Is there address screening, KYC, or blacklisting anywhere in the stack?
-    `[choose one]` no / yes — and say where.
-19. Is privacy the default, or opt-in? `[choose one]` default / opt-in
+16. What is hidden, and what stays public?
+    Does anyone have to approve a user or a deposit before it gets privacy?
+17. What enforces it? `[choose all]`
+    ZK proofs / encrypted state / stealth addresses / trusted hardware / other
+18. Can anyone deanonymize a user, for example through a viewing key, an admin
+    power or a compliance provider? `[choose one]` no / yes (say who)
+19. Is there address screening, KYC, or blacklisting anywhere in the stack?
+    `[choose one]` no / yes (say where)
+20. Is privacy the default, or opt-in? `[choose one]` default / opt-in
+21. How large is the anonymity set, and where is it published?
 
 ## 5. Security
 
-*What has to go right for your funds to stay yours?*
+*Can users lose their funds?*
 
-20. Which audits have been done — by whom, when, and where can we read them?
-21. Is there a trusted setup? `[choose one]` no / yes — and say which ceremony.
-22. Are there circuit breakers or rate limits? What do they bound?
-23. What are the known caveats, including any that cannot be patched?
-24. Who monitors for incidents, and what happens when one is detected?
+22. Can the contracts holding user funds be upgraded? If so, by whom, and how
+    long does an upgrade wait before it takes effect?
+23. Which multisigs or admin keys exist, and what can each of them do?
+24. If the system posts state to L1, how is that state validated?
+25. Which external dependencies does it rely on, such as oracles, bridges or
+    offchain services? Who operates them, and can they mint, move or misprice
+    user funds?
+26. When were the critical contracts last upgraded, or last changed hands?
+27. Which audits have been done: by whom, when, and where can we read them?
+28. Is there a trusted setup? `[choose one]` no / yes (say which ceremony)
+29. Are there circuit breakers or rate limits? What do they bound?
+30. What are the known caveats, including any that cannot be patched?
+31. Who monitors for incidents, and what happens when one is detected?
 
 ## 6. Anything else
 
-25. Any other comments you'd like to leave?
+32. Any other comments you'd like to leave?

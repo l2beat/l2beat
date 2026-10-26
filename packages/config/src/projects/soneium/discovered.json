@@ -1,6 +1,6 @@
 {
   "name": "soneium",
-  "timestamp": 1791965773,
+  "timestamp": 1792587967,
   "configHash": "0x9b0152f8e8fc46c0f5fa2f39d17d89f77a5b1d11bcf4cb2532bdc94d0e505c0c",
   "entries": [
     {
@@ -353,13 +353,13 @@
           ]
         ],
         "$upgradeCount": 9,
-        "anchorGame": "eth:0xe60726cAD200f208CC525a4D646cbC7E32a814B5",
+        "anchorGame": "eth:0x69F4B4A02686F48c2D5dE0135BC85BBC4b0b7a59",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x0e17299836e2ab0837844b1bd579486305b51af884c6de9e783ca5451b936b94",
-          1791658747
+          "0x7ae25bf947e32386c986e1d7ac677c26073ee12cb9e630237b5cb43e62819769",
+          1792278461
         ],
         "getStartingAnchorRoot": {
           "root": "0x08a53686fd0b1671ff7b89c3a994582503f15f7be00f0f2e7c9f0d3b187ab124",
@@ -440,7 +440,7 @@
         "domainSeparator": "0xfec9c20e9a1f1dc2de8e49ee266be73bafbca115021f1de122ef95419b35297d",
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 23,
+        "nonce": 24,
         "VERSION": "1.5.0"
       },
       "implementationNames": {
@@ -556,7 +556,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 8191,
+        "gameCount": 8277,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -1088,7 +1088,7 @@
         "lastUsedOPCM": "eth:0x1951828Ce913DC4383a8A1695695D537a11D896a",
         "lastUsedOPCMVersion": "8.0.1",
         "maximumGasLimit": 500000000,
-        "minBaseFee": 13000000,
+        "minBaseFee": 2200000,
         "minimumGasLimit": 21000000,
         "OPCM_SLOT": "0x99f45962df4bc30de8d4c3c6d1ffc0f100edce16e80c7a5768b6d55ca463ff42",
         "operatorFeeConstant": 0,
@@ -1159,11 +1159,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OpFoundationUpgradeSafe",
       "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "type": "Contract",
@@ -1184,7 +1179,7 @@
           "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
           "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5",
-          "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
+          "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
           "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
@@ -1196,7 +1191,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 73,
+        "nonce": 74,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1301,7 +1296,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 26189476
+          "prevBlockNum": 26241063
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1567,7 +1562,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292696961",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292697290",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1598,6 +1593,11 @@
     },
     {
       "address": "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3081,8 +3081,8 @@
     "opstack/SuperPermissionedDisputeGame": "0xa146247ae93d5a2d8d731791462cda682c3558bd36eceef57df055c8d7cfdfd9",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 26189482 },
-  "permissionsConfigHash": "0x624357ba47a201b5fedeae9c6e610d30d61d9f4122e322bc3bd9e3f4252ea331",
+  "usedBlockNumbers": { "ethereum": 26241162 },
+  "permissionsConfigHash": "0x108ddd5dc747b51601f5645ffcaf6168a614c02cbabc08c23eac4a136c76b987",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [

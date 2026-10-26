@@ -1,3 +1,73 @@
+Generated with discovered.json: 0x796cee8234cd01e14a8d80c24e14e6a1626eb8aa
+
+# Diff at Sat, 24 Oct 2026 16:41:07 GMT:
+
+- id: 4d0bfa7a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792587967
+- current timestamp: 1792587967
+
+## Description
+
+OPToken, MintManager and SaferSafes leave the ossification perimeter: OP is neither the gas token nor the voting power of a binding upgrade path.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792587967 (main branch discovery), not current.
+
+```diff
+    contract OPToken (oeth:0x4200000000000000000000000000000000000042) [N/A] {
+    +++ description: The OP token contract. The minting policy is controlled by the oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.
+      critical:
+-        true
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract MintManager (oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005) [N/A] {
+    +++ description: Controls the OP inflation rate, which is currently hardcoded to 2% annually.
+      critical:
+-        {"sinceTimestamp":1665503636}
+    }
+```
+
+```diff
+    contract SaferSafes (oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [N/A] {
+    +++ description: None
+      critical:
+-        true
+    }
+```
+
+Generated with discovered.json: 0x2cfa18c0842cf566c4df06960ab236ae5336a839
+
+# Diff at Wed, 21 Oct 2026 13:48:32 GMT:
+
+- id: cc5a025f
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@39da84c441e4ad2ce4105a231c0bc2276f1ddd51 block: 1790862344
+- current timestamp: 1792587967
+
+## Description
+
+OpFoundationUpgradeSafe: Member rotated.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
++        "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104"
+    }
+```
+
 Generated with discovered.json: 0xc5d97414118a7a423c4b3c0dabcdc7f7e6783bf0
 
 # Diff at Tue, 20 Oct 2026 12:40:01 GMT:

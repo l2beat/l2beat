@@ -11,7 +11,7 @@ Users trust ScopeLift, which hosts the app, runs its indexer and relays token wi
 
 ### App
 
-The app at [app.umbra.cash](https://app.umbra.cash) is built from public source, while its indexer and relayer API are closed. It finds payments through the indexer, relays token withdrawals through the API and checks every address it handles with its mainnet RPC, Alchemy. The app warns before withdrawals to registered, named or otherwise known addresses. A local build can leave the indexer out and read the chain from the user's own node. It still asks Cloudflare for the ENS name of the user's wallet and POAP about each withdrawal address. The [privacy policy](https://app.umbra.cash/privacy) keeps IP logs for up to 90 days.
+The app at [app.umbra.cash](https://app.umbra.cash) is built from public source, while its indexer and relayer API are closed. It finds payments through the indexer, relays token withdrawals through the API and checks every address it handles with its mainnet RPC, Alchemy. The app warns before withdrawals to registered, named or otherwise known addresses. A local build can leave the indexer out and read the chain from the user's own node. It still asks Cloudflare for the ENS name of the user's wallet, and building it needs a WalletConnect project id and L2 subgraph URLs. The [privacy policy](https://app.umbra.cash/privacy) keeps IP logs for up to 90 days.
 
 ### Compliance
 

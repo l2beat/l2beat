@@ -93,7 +93,7 @@ async function getCachedData(manifest: Manifest) {
     .map((chain) => ({
       ...chain,
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-      href: getInteropChainHref(chain.id, l2ProjectSlugById),
+      href: getInteropChainHref(chain, l2ProjectSlugById),
     }))
   const interopProtocols = await ps.getProjects({ select: ['interopConfig'] })
   const flowProtocols: InteropFlowsProtocol[] = interopProtocols.map(
@@ -148,7 +148,7 @@ async function getCachedData(manifest: Manifest) {
       deposits: { chart: [], totalValueUsd: 0, change: undefined },
       topProtocols: [],
     }),
-    getHomeCropsProjects(manifest),
+    orEmpty('cropsProjects', getHomeCropsProjects(manifest), []),
   ])
 
   return {

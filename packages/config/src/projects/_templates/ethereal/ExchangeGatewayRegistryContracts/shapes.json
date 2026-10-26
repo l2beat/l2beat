@@ -44,5 +44,23 @@
     "hash": "0xf4bcc9541f9421e3bbdd03a5a256bf9f7ab28d0e6998a3485d9e6166620a6f6c",
     "address": "ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8",
     "blockNumber": 5130844
+  },
+  "ExchangeConfig_v2.sol": {
+    "hash": "0x1151744b67c95f9a5bafd0f166d09a6a5c374390970662b32174dbe1b21fefba",
+    "address": "ethereal:0x0f17d8468c49d6C80E4ee10Cc87a767085A4B9A8",
+    "chain": "ethereal",
+    "blockNumber": 5638628
+  },
+  "ActionHandler_v3.sol": {
+    "hash": "0xedc63bc2d79bc70134bc12ecda1f5c2c881f01c8fdaea2969e0c8207adc0fcea",
+    "address": "ethereal:0xfC25F9d15cbfEe81d8238Eb2fD7D3f16a6b2f469",
+    "chain": "ethereal",
+    "blockNumber": 5638628
+  },
+  "PerpEngine_v3.sol": {
+    "hash": "0x6dd397561021a2e9859466c0cbfc2ab39a4dca414fe03db0fd31feb88f573041",
+    "address": "ethereal:0xD540F47F214dC7D6D244E62A6aE7e06B586Ef44A",
+    "chain": "ethereal",
+    "blockNumber": 5638628
   }
 }

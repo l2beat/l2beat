@@ -35,7 +35,7 @@ export async function getInteropSummaryData(
     interopChains,
   ).map((chain) => ({
     ...chain,
-    href: getInteropChainHref(chain.id, l2ProjectSlugById),
+    href: getInteropChainHref(chain, l2ProjectSlugById),
   }))
 
   const activeInteropChains = interopChainsWithIcons.filter(

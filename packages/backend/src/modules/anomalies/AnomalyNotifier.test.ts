@@ -85,6 +85,48 @@ describe(AnomalyNotifier.name, () => {
       ])
     })
 
+    it('does not ask to approve an anomaly that is already approved', async () => {
+      const notifier = new AnomalyNotifier(
+        Logger.SILENT,
+        mockObject<Clock>(),
+        mockObject<DiscordClient>(),
+        mockDatabase({
+          notifications: mockObject<Database['notifications']>({
+            insertMany: mockFn().resolvesTo(undefined),
+          }),
+          updateDiff: mockObject<Database['updateDiff']>({
+            getAll: mockFn().resolvesTo([]),
+          }),
+        }),
+        0,
+        mockTrackedTxsConfig([]),
+      )
+      const mockSendDiscordNotification = mockFn().resolvesTo('1234567890')
+      notifier.sendDiscordNotification = mockSendDiscordNotification
+
+      await notifier.anomalyDetected(
+        {
+          start: 5678,
+          projectId: 'project-1',
+          subtype: 'batchSubmissions',
+          status: 'ongoing',
+          isApproved: true,
+        },
+        60,
+        15,
+        mockObject<Block>({ number: 123456, timestamp: 1234 }),
+        mockObject<RealTimeLivenessRecord>({
+          txHash: '0x1234567890abcdef',
+          timestamp: 5678,
+        }),
+        mockObject<AnomalyStatsRecord>({ mean: 60, stdDev: 15 }),
+      )
+
+      const [message] = mockSendDiscordNotification.calls[0]!.args
+      expect(message).not.toInclude('--approve')
+      expect(message).toInclude('Already approved')
+    })
+
     it('does not notify if duration less than configured', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
         insertMany: mockFn().resolvesTo(undefined),

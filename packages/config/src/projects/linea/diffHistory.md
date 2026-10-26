@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x03028ae157c0f853c392ec7d274e2874be849669
+
+# Diff at Fri, 23 Oct 2026 10:31:32 GMT:
+
+- id: 39ccf741
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e5da6875dac4af99f827db5faa99b87f99ca760f block: 1791897274
+- current timestamp: 1792751428
+
+## Description
+
+Rotated two members on two msigs.
+
+## Watched changes
+
+```diff
+    contract Linea Multisig 2 (eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x3acC729EdE75355EDab57aB82bEb32011cB1B079"
++        "eth:0x741aAf7dB0f4960Be696CF1727b970F2FA39028c"
+      values.$members.3:
+-        "eth:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451"
++        "eth:0xb275d362C8c1A226eb538FC2349ed9FA00C83AF8"
+    }
+```
+
+```diff
+    contract Linea Multisig 4 (linea:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "linea:0x3acC729EdE75355EDab57aB82bEb32011cB1B079"
++        "linea:0x741aAf7dB0f4960Be696CF1727b970F2FA39028c"
+      values.$members.3:
+-        "linea:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451"
++        "linea:0xb275d362C8c1A226eb538FC2349ed9FA00C83AF8"
+    }
+```
+
 Generated with discovered.json: 0x9c20ccd98a04432cfa2c29d0664d6b9aa1306648
 
 # Diff at Tue, 20 Oct 2026 10:25:38 GMT:

@@ -8,17 +8,15 @@ import {
   useRef,
   useState,
 } from 'react'
+import { useElementSize } from '~/hooks/useElementSize'
+import { useIsOnScreen } from '~/hooks/useIsOnScreen'
+import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
+import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { cn } from '~/utils/cn'
 import { useChainClock } from '../chainClock'
-import {
-  useElementSize,
-  useImages,
-  useIsOnScreen,
-  usePrefersReducedMotion,
-  useThemeTokens,
-} from '../hooks'
+import { useImages } from '../hooks'
 import { LivePulse } from '../LivePulse'
 import { LandingsContext } from '../landings'
 import { clampView, earliestView } from '../lookBack'

@@ -106,20 +106,6 @@ export const boojum: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0x34e7f769253b128e4ac6fbf71b3f8471d507c4f93bc50dcf26509ed1bae25122',
-        name: 'Boojum Fflonk v29.5 verifier',
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x9f5C39a2790f38542065E7854b90407371923375',
-            ),
-          },
-        ],
-        verificationStatus: 'notVerified',
-      },
-      {
         hash: '0xbaaa46d644f7034d609eea327e818bd9a93a3c0fdd60e887d233da8a35c4f8ae',
         name: 'Boojum Plonk v30.1 verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
@@ -142,20 +128,6 @@ export const boojum: BaseProject = {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
               '0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9',
-            ),
-          },
-        ],
-        verificationStatus: 'notVerified',
-      },
-      {
-        hash: '0x18bdc7272350532ca7c3d4d613f0f22aa4100bcddd06722b2f8c6896ca5f5ad3',
-        name: 'Boojum Plonk v29.5 verifier',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xd22cA89e8991FCE568456914c616d303e3142395',
             ),
           },
         ],

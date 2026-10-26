@@ -24,12 +24,30 @@ model DaBeatStats {
 }
 
 model Activity {
+  projectId           String   @db.VarChar(255)
+  timestamp           DateTime @db.Timestamp(6)
+  count               Int
+  uopsCount           Int?
+  start               Int      @default(0)
+  end                 Int      @default(0)
+  /// Of the busiest hour of the day. Only block and slot chains have peaks,
+  /// and only since HourlyActivity was added
+  peakHourCount       Int?
+  peakHourUopsCount   Int?
+  /// Of the busiest UTC minute of the day
+  peakMinuteCount     Int?
+  peakMinuteUopsCount Int?
+
+  @@id([projectId, timestamp])
+}
+
+/// Activity per hour of block and slot chains, kept for the last two weeks.
+/// The busiest hour and minute of each day stay on Activity
+model HourlyActivity {
   projectId String   @db.VarChar(255)
   timestamp DateTime @db.Timestamp(6)
   count     Int
   uopsCount Int?
-  start     Int      @default(0)
-  end       Int      @default(0)
 
   @@id([projectId, timestamp])
 }
@@ -559,6 +577,28 @@ model InteropTransfer {
   @@index([plugin, srcChain, dstChain, timestamp(sort: Desc), transferId(sort: Desc)])
   @@index([srcAbstractTokenId, timestamp(sort: Desc)])
   @@index([dstAbstractTokenId, timestamp(sort: Desc)])
+}
+
+/// The current CROPS attestation, as the backend last read it from EAS, with the
+/// source it was read from. Holds at most one row, which the backend replaces.
+model CropAttestation {
+  network     String   @db.VarChar(255)
+  chainId     Int
+  eas         String   @db.VarChar(42)
+  explorer    String   @db.VarChar(255)
+  schemaUid   String   @db.VarChar(66)
+  schema      String   @db.VarChar(255)
+  attester    String   @db.VarChar(42)
+  uid         String   @db.VarChar(66)
+  revision    Int
+  reviewedAt  DateTime @db.Timestamp(6)
+  projectIds  String[] @db.VarChar(255)
+  txHash      String   @db.VarChar(66)
+  blockNumber Int
+  /// When the backend last read it, so a stalled read is visible
+  updatedAt   DateTime @db.Timestamp(6)
+
+  @@id([uid])
 }
 
 model EcosystemToken {

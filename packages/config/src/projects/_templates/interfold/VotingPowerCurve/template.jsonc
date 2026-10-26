@@ -17,7 +17,7 @@
   "ignoreInWatchMode": ["globalPointLatestIndex"],
   "fields": {
     "dao": {
-      "description": "Aragon DAO whose Curve admin role controls configuration and upgrades."
+      "description": "Aragon governance contract whose Curve admin role controls configuration and upgrades."
     },
     "escrow": {
       "description": "VotingEscrow whose lock history is transformed into voting power."

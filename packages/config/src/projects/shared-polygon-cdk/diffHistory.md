@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xd15850f28fe9931b5c385d6bb8b9040486cceadc
+
+# Diff at Sat, 24 Oct 2026 16:41:08 GMT:
+
+- id: b258af71
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792144133
+- current timestamp: 1792144133
+
+## Description
+
+AgglayerBridge `proxiedTokensManager` is MEDIUM: a role holder.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144133 (main branch discovery), not current.
+
+```diff
+    contract AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [polygon-cdk/AgglayerBridge] {
+    +++ description: The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.
+      fieldMeta.proxiedTokensManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x42313e03c1b2d2d6a5997c0e92e3d7e60b8227b1
 
 # Diff at Fri, 16 Oct 2026 10:36:21 GMT:

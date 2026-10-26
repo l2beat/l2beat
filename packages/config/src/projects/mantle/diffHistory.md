@@ -1,4 +1,32 @@
-Generated with discovered.json: 0xe460a7ef1f0297c7c8ad77dec48ae18e9430f8ee
+Generated with discovered.json: 0xb976585f7f3e2190c736e05b1172702fbf3c77b7
+
+# Diff at Sat, 24 Oct 2026 16:41:06 GMT:
+
+- id: 8aea879b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792586696
+- current timestamp: 1792586696
+
+## Description
+
+`mintCapNumerator` is MEDIUM: an issuance rate limit.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792586696 (main branch discovery), not current.
+
+```diff
+    contract L1MantleToken (eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354) [N/A] {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      fieldMeta.mintCapNumerator.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x727f247f9acd4bbe7b05d8bc9389caa87c7c0b20
 
 # Diff at Tue, 20 Oct 2026 07:51:35 GMT:
 

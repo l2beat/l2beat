@@ -1,0 +1,293 @@
+import { useQuery } from '@tanstack/react-query'
+import clsx from 'clsx'
+import {
+  type KeyboardEvent,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
+import { Link, useParams } from 'react-router'
+import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
+import { AddressIcon } from '../../../components/AddressIcon'
+import { ErrorState } from '../../../components/ErrorState'
+import { LoadingState } from '../../../components/LoadingState'
+import { IS_READONLY } from '../../../config/readonly'
+import { IconChevronDown } from '../../../icons/IconChevronDown'
+import { IconChevronRight } from '../../../icons/IconChevronRight'
+import { IconEyeClosed } from '../../../icons/IconEyeClosed'
+import { IconFolder } from '../../../icons/IconFolder'
+import { IconFolderOpened } from '../../../icons/IconFolderOpened'
+import { IconUnlinked } from '../../../icons/IconUnliked'
+import { toShortenedAddress } from '../../../utils/toShortenedAddress'
+import { useProjectQueryOptions } from '../hooks/projectQuery'
+import { useStore as useNodesStore } from '../panel-nodes/store/store'
+import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
+import { useGlobalSettingsStore } from '../store/global-settings-store'
+import { usePanelStore } from '../store/panel-store'
+import { UsageBadge } from '../usage/UsageBadge'
+import { getAdjacentAddress, type ListDirection } from './getAdjacentAddress'
+
+export function ListPanel() {
+  const { project } = useParams()
+  if (!project) {
+    throw new Error('Cannot use component outside of project page!')
+  }
+  const response = useQuery(useProjectQueryOptions(project))
+  if (response.isPending) {
+    return <LoadingState />
+  }
+  if (response.isError) {
+    return <ErrorState />
+  }
+  return (
+    <div className="relative h-full w-full">
+      <div
+        tabIndex={0}
+        onKeyDown={selectWithArrows}
+        className="peer h-full w-full overflow-x-hidden outline-hidden"
+      >
+        <ol>
+          {response.data.entries.map((chain, i) => (
+            <ListItemChain
+              key={`${chain.project}-${i}`}
+              entry={chain}
+              first={i === 0}
+              openedProject={project}
+            />
+          ))}
+        </ol>
+      </div>
+      <div className="pointer-events-none absolute inset-0 z-10 hidden ring-1 ring-autumn-300 ring-inset peer-focus-visible:block" />
+    </div>
+  )
+}
+
+function selectWithArrows(event: KeyboardEvent<HTMLElement>) {
+  const direction = toListDirection(event)
+  if (direction === undefined) {
+    return
+  }
+  event.preventDefault()
+  const elements = [
+    ...event.currentTarget.querySelectorAll<HTMLElement>('[data-address]'),
+  ]
+  const addresses = elements.map((element) => element.dataset.address ?? '')
+  const { selected, select } = usePanelStore.getState()
+  const target = getAdjacentAddress(addresses, selected, direction)
+  if (target === undefined) {
+    return
+  }
+  select([target])
+  elements[addresses.indexOf(target)]?.scrollIntoView({ block: 'nearest' })
+}
+
+function toListDirection(event: KeyboardEvent): ListDirection | undefined {
+  if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) {
+    return undefined
+  }
+  if (event.key === 'ArrowDown') {
+    return 'next'
+  }
+  if (event.key === 'ArrowUp') {
+    return 'previous'
+  }
+  return undefined
+}
+
+function ListItemChain(props: {
+  entry: ApiProjectChain
+  first: boolean
+  openedProject: string
+}) {
+  const [open, setOpen] = useState(true)
+  const onFocus = useCallback(() => setOpen(true), [])
+
+  return Object.entries(props.entry.blockNumbers).map(
+    ([chain, blockNumber]) => (
+      <li
+        key={chain}
+        className={clsx(!props.first && 'border-t border-t-coffee-600')}
+      >
+        <div className="group flex min-h-[22px] items-center justify-between pr-1 hover:bg-aux-brown">
+          <button
+            onClick={() => setOpen((open) => !open)}
+            className="flex w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
+          >
+            {open && <IconChevronDown />}
+            {!open && <IconChevronRight />}
+            {`${props.entry.project} on ${chain}`}
+          </button>
+          {props.entry.project !== props.openedProject && (
+            <Link
+              to={`/ui/p/${props.entry.project}`}
+              className="mr-2 whitespace-nowrap text-coffee-400 text-xs underline hover:text-coffee-100"
+            >
+              open
+            </Link>
+          )}
+          <span className="whitespace-nowrap text-coffee-400 text-xs italic group-hover:text-coffee-200">
+            @ {blockNumber}
+          </span>
+        </div>
+        {open && (
+          <>
+            <ListItemContracts
+              title="Initial"
+              onFocus={onFocus}
+              entries={props.entry.initialContracts}
+              chain={chain}
+              openedProject={props.openedProject}
+              sourceProject={props.entry.project}
+            />
+            <ListItemContracts
+              title="Discovered"
+              onFocus={onFocus}
+              entries={props.entry.discoveredContracts}
+              chain={chain}
+              openedProject={props.openedProject}
+              sourceProject={props.entry.project}
+            />
+            <ListItemContracts
+              startClosed
+              title="EOAs"
+              onFocus={onFocus}
+              entries={props.entry.eoas}
+              chain={chain}
+              openedProject={props.openedProject}
+              sourceProject={props.entry.project}
+            />
+          </>
+        )}
+      </li>
+    ),
+  )
+}
+
+function ListItemContracts(props: {
+  title: string
+  entries: ApiAddressEntry[]
+  onFocus?: () => void
+  startClosed?: boolean
+  chain: string
+  openedProject: string
+  sourceProject: string
+}) {
+  const [open, setOpen] = useState(!props.startClosed)
+  const sortedEntries = useMemo(
+    () =>
+      props.entries
+        .filter((entry) => entry.chain === props.chain)
+        .sort((a, b) => b.type.localeCompare(a.type)),
+    [props.entries, props.chain],
+  )
+  const addresses = useMemo(
+    () => new Set(sortedEntries.map((entry) => entry.address)),
+    [sortedEntries],
+  )
+  const selectedHere = usePanelStore((state) =>
+    state.selected.find((address) => addresses.has(address)),
+  )
+  const { onFocus } = props
+  useEffect(() => {
+    if (selectedHere !== undefined) {
+      setOpen(true)
+      onFocus?.()
+    }
+  }, [selectedHere, onFocus])
+
+  if (sortedEntries.length === 0) {
+    return null
+  }
+  return (
+    <>
+      <button
+        onClick={() => setOpen((open) => !open)}
+        className="flex min-h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-medium text-coffee-400 text-sm hover:bg-aux-brown hover:text-coffee-200"
+      >
+        {open && (
+          <>
+            <IconChevronDown />
+            <IconFolderOpened />
+          </>
+        )}
+        {!open && (
+          <>
+            <IconChevronRight />
+            <IconFolder />
+          </>
+        )}
+        {props.title}
+      </button>
+      {open && (
+        <ol>
+          {sortedEntries.map((entry) => (
+            <AddressEntry
+              key={entry.address}
+              entry={entry}
+              openedProject={props.openedProject}
+              sourceProject={props.sourceProject}
+            />
+          ))}
+        </ol>
+      )}
+    </>
+  )
+}
+
+const AddressEntry = memo(function AddressEntry({
+  entry,
+  openedProject,
+  sourceProject,
+}: {
+  entry: ApiAddressEntry
+  openedProject: string
+  sourceProject: string
+}) {
+  const isSelected = usePanelStore((state) =>
+    state.selected.includes(entry.address),
+  )
+  const select = usePanelStore((state) => state.select)
+  const markUnreachableEntries = useGlobalSettingsStore(
+    (s) => s.markUnreachableEntries,
+  )
+  const isHidden = useNodesStore((state) =>
+    getGraphProjection(state.nodes).hiddenNodeIds.has(entry.address),
+  )
+  const isGrayedOut = isHidden || (markUnreachableEntries && !entry.isReachable)
+
+  return (
+    <li
+      data-address={entry.address}
+      className={clsx(
+        'flex min-h-[22px] cursor-pointer select-none items-center gap-1 whitespace-pre pl-4 text-sm',
+        isSelected && 'bg-autumn-300 text-black',
+        !isSelected && 'bg-coffee-800 hover:bg-aux-brown',
+      )}
+      onClick={() => select([entry.address])}
+      style={{
+        opacity: isGrayedOut ? 0.2 : 1,
+        filter: isGrayedOut ? 'grayscale(100%)' : 'none',
+      }}
+    >
+      <div className="mr-[7px] min-h-[22px] border-coffee-600 border-l" />
+      <AddressIcon type={entry.type} />
+      <span className="overflow-hidden text-ellipsis tabular-nums">
+        {entry.name ?? toShortenedAddress(entry.address)}
+      </span>
+      <div className="mr-1 ml-auto flex items-center gap-1 text-coffee-400">
+        {!IS_READONLY && (
+          <UsageBadge
+            address={entry.address}
+            openedProject={openedProject}
+            sourceProject={sourceProject}
+            isSelected={isSelected}
+          />
+        )}
+        {isHidden && <IconEyeClosed />}
+        {!entry.isReachable && <IconUnlinked />}
+      </div>
+    </li>
+  )
+})

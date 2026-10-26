@@ -12,6 +12,7 @@ import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
 import { AppStateRepository } from './repositories/AppStateRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
+import { CropAttestationRepository } from './repositories/CropAttestationRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
@@ -19,6 +20,7 @@ import { DefiTvlRepository } from './repositories/DefiTvlRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
+import { HourlyActivityRepository } from './repositories/HourlyActivityRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
 import { InteropAggregateStatusRepository } from './repositories/InteropAggregateStatusRepository'
@@ -69,6 +71,7 @@ export function createDatabase(
 
     // #region Activity
     activity: new ActivityRepository(db),
+    hourlyActivity: new HourlyActivityRepository(db),
     // #endregion
 
     // #region Interop
@@ -107,6 +110,10 @@ export function createDatabase(
 
     // #region Ecosystems
     ecosystemToken: new EcosystemTokenRepository(db),
+    // #endregion
+
+    // #region CROPS
+    cropAttestation: new CropAttestationRepository(db),
     // #endregion
 
     // #region DeFi

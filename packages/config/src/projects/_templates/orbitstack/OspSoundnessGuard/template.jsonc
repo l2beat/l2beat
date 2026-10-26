@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OspSoundnessGuard",
+  "category": "gov",
+  "description": "Permissionless circuit breaker: anyone proving that two rival edges both pass the one-step proof can pause the rollup through the PauseExecutor.",
+  // the guarded rollup and the PauseExecutor are tracked by the projects that own them
+  "ignoreRelatives": ["rollup", "pe", "shadowImpl"]
+}

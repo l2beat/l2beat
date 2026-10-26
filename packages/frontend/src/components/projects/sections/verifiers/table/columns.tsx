@@ -1,9 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { EtherscanLink } from '~/components/EtherscanLink'
+import { linkVariants } from '~/components/link/CustomLink'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { ChevronIcon } from '~/icons/Chevron'
 import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import { cn } from '~/utils/cn'
+import { DeploymentAddress, DeploymentChainIcon } from '../KnownDeployments'
 import type { VerifierRow } from './VerifiersTable'
 
 const columnHelper = createColumnHelper<VerifierRow>()
@@ -55,37 +56,43 @@ const baseVerifiersColumns = [
       headClassName: 'max-md:hidden',
       cellClassName: 'max-md:hidden',
     },
-    cell: (ctx) => (
-      <div>
-        {(() => {
-          const addresses = ctx.row.original.knownDeployments.map(
-            (deployment) => deployment.address,
-          )
-          const showCount = 2
-          const showAddresses = addresses.slice(0, showCount)
-          const extraCount = addresses.length - showCount
+    cell: ({ row }) => {
+      const deployments = row.original.knownDeployments
+      const shown = deployments.slice(0, 2)
+      const extraCount = deployments.length - shown.length
 
-          return (
-            <>
-              {showAddresses.map((address, i) => (
-                <span key={address}>
-                  <EtherscanLink
-                    address={address}
-                    className="text-label-value-14"
-                  />
-                  {i < showAddresses.length - 1 && ', '}
-                </span>
-              ))}
-              {extraCount > 0 && (
-                <span className="ml-1 text-label-muted-12">
-                  +{extraCount} more
-                </span>
-              )}
-            </>
-          )
-        })()}
-      </div>
-    ),
+      return (
+        <div>
+          {shown.map((deployment, i) => (
+            // The same address can be deployed on several chains.
+            <span key={`${deployment.chainId}:${deployment.address}`}>
+              <DeploymentChainIcon
+                deployment={deployment}
+                className="mr-1 inline-block align-[-2px]"
+              />
+              <DeploymentAddress
+                deployment={deployment}
+                className="text-label-value-14"
+              />
+              {(i < shown.length - 1 || extraCount > 0) && ', '}
+            </span>
+          ))}
+          {extraCount > 0 &&
+            // Once the row is open, the full list is right below.
+            (row.getIsExpanded() ? (
+              <span className="text-label-muted-12">+{extraCount} more</span>
+            ) : (
+              <button
+                type="button"
+                onClick={() => row.toggleExpanded(true)}
+                className={cn(linkVariants(), 'text-label-value-14')}
+              >
+                +{extraCount} more
+              </button>
+            ))}
+        </div>
+      )
+    },
   }),
 ]
 

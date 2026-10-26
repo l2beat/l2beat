@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x197bac77fe2c57f4e0ea78c43c552c00d4cc1c08
+
+# Diff at Sat, 24 Oct 2026 16:41:05 GMT:
+
+- id: 53df949a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1770639543
+- current timestamp: 1770639543
+
+## Description
+
+Diamond `validators` is MEDIUM: it names the ValidatorTimelock, a role holder.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770639543 (main branch discovery), not current.
+
+```diff
+    contract Gateway (eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.validators:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x060cd130531861dfd9ca1ccfe33a6faaecdb8a2d
 
 # Diff at Tue, 20 Oct 2026 12:40:06 GMT:

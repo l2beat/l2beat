@@ -37,6 +37,7 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_TOKENS_PAGE: featureFlag,
   CLIENT_SIDE_BLOBS_PAGE: featureFlag,
   CLIENT_SIDE_OSSIFICATION_ENABLED: featureFlag,
+  CLIENT_SIDE_MANDATE_PAGE: featureFlag,
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 export const CLIENT_ENV_KEYS = Object.keys(CLIENT_CONFIG)
@@ -157,5 +158,6 @@ function getRawEnv(): Record<
     CLIENT_SIDE_BLOBS_PAGE: process.env.CLIENT_SIDE_BLOBS_PAGE,
     CLIENT_SIDE_OSSIFICATION_ENABLED:
       process.env.CLIENT_SIDE_OSSIFICATION_ENABLED,
+    CLIENT_SIDE_MANDATE_PAGE: process.env.CLIENT_SIDE_MANDATE_PAGE,
   }
 }

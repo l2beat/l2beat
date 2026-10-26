@@ -1,9 +1,8 @@
+import { measureOssificationBand } from '@l2beat/shared/frontend'
+import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { compareByCuratedOrder } from '~/pages/garden/getGardenData'
-import {
-  qualifiesForGarden,
-  resolveProjectCrops,
-} from '~/server/features/garden/resolveCrops'
+import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { ps } from '~/server/projects'
 import type { Manifest } from '~/utils/Manifest'
 
@@ -13,7 +12,7 @@ export interface HomeCropsProject {
 }
 
 /**
- * The projects growing in the garden, in its editorial order. Empty while the
+ * The projects the garden lists, in its editorial order. Empty while the
  * garden is off, so the banner never links to a page that does not exist.
  */
 export async function getHomeCropsProjects(
@@ -23,13 +22,25 @@ export async function getHomeCropsProjects(
     return []
   }
 
-  const projects = await ps.getProjects({
-    where: ['crops'],
-    select: ['crops'],
-  })
+  const [reviewed, attestation] = await Promise.all([
+    ps.getProjects({
+      where: ['garden'],
+      select: ['garden'],
+      optional: ['ossificationHistory'],
+    }),
+    getAttestationsMeta(),
+  ])
+  const attested = new Set(attestation.current?.projectIds)
+  const now = UnixTime.now()
 
-  return projects
-    .filter((project) => qualifiesForGarden(resolveProjectCrops(project.crops)))
+  return reviewed
+    .filter(
+      (project) =>
+        attested.has(project.id) &&
+        project.garden.verdicts[
+          measureOssificationBand(project.ossificationHistory, now)
+        ].listing === 'listed',
+    )
     .sort(compareByCuratedOrder)
     .map((project) => ({
       name: project.name,

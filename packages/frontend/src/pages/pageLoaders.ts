@@ -67,6 +67,8 @@ export const pageLoaders = {
       .InteropIntentBridgesPage,
   EthereumProjectPage: async () =>
     (await import('./ethereum/EthereumProjectPage')).EthereumProjectPage,
+  ChainProjectPage: async () =>
+    (await import('./chain/ChainProjectPage')).ChainProjectPage,
   BlobsPage: async () => (await import('./blobs/BlobsPage')).BlobsPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
@@ -112,10 +114,14 @@ export const pageLoaders = {
   DonatePage: async () => (await import('./donate/DonatePage')).DonatePage,
   MultisigReportPage: async () =>
     (await import('./multisig-report/MultisigReportPage')).MultisigReportPage,
+  MandatePage: async () => (await import('./mandate/MandatePage')).MandatePage,
   TermsOfServicePage: async () =>
     (await import('./terms-of-service/TermsOfServicePage')).TermsOfServicePage,
   NotFoundPage: async () =>
     (await import('./not-found/NotFoundPage')).NotFoundPage,
+  PrivacyMethodologyPage: async () =>
+    (await import('./privacy/methodology/PrivacyMethodologyPage'))
+      .PrivacyMethodologyPage,
   StagesPage: async () => (await import('./stages/StagesPage')).StagesPage,
   MonthlyUpdatePage: async () =>
     (await import('./publications/monthly-updates/MonthlyUpdatePage'))

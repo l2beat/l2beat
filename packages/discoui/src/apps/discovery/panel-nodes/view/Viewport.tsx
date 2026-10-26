@@ -1,0 +1,109 @@
+import clsx from 'clsx'
+import { useEffect, useRef } from 'react'
+import { useDockingStore } from '../../multi-view/store'
+import { useSearchStore } from '../../search/store'
+import { useStore } from '../store/store'
+import { effectiveTool } from '../store/utils/tool'
+import { useDesktopControls } from './hooks/useDesktopControls'
+import { useTouchControls } from './hooks/useTouchControls'
+import { MouseSelection } from './MouseSelection'
+import { NodesAndConnectionsWebGL } from './NodesAndConnectionsWebGL'
+
+export function Viewport() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const registerViewportContainer = useStore(
+    (state) => state.registerViewportContainer,
+  )
+  const isPanning = useStore((state) => state.mouseMoveAction === 'pan')
+  const isHandCursor = useStore((state) => effectiveTool(state) === 'hand')
+
+  const desktopControls = useDesktopControls({ containerRef })
+
+  const touchControls = useTouchControls({
+    containerRef,
+    desktopControls,
+  })
+
+  const currentPanel = useDockingStore((state) => state.activeLeaf)
+  const searchOpened = useSearchStore((state) => state.opened)
+  // Always capture if we're not in panel mode, or if we're in nodes panel
+  const shouldCapture =
+    (currentPanel === undefined || currentPanel === 'nodes') && !searchOpened
+
+  useEffect(() => {
+    registerViewportContainer(containerRef.current)
+    return () => {
+      registerViewportContainer(null)
+    }
+  }, [registerViewportContainer])
+
+  useEffect(() => {
+    const target = containerRef.current
+    target?.addEventListener('wheel', desktopControls.onWheel, {
+      passive: false,
+    })
+    target?.addEventListener('mousedown', desktopControls.onMouseDown)
+    target?.addEventListener('dblclick', desktopControls.onDoubleClick)
+    target?.addEventListener('touchstart', touchControls.onTouchStart, {
+      passive: false,
+    })
+    target?.addEventListener('touchmove', touchControls.onTouchMove, {
+      passive: false,
+    })
+    target?.addEventListener('touchend', touchControls.onTouchEnd, {
+      passive: false,
+    })
+
+    window.addEventListener('mousemove', desktopControls.onMouseMove)
+    window.addEventListener('mouseup', desktopControls.onMouseUp)
+    window.addEventListener('touchmove', touchControls.onTouchMove, {
+      passive: false,
+    })
+    window.addEventListener('touchend', touchControls.onTouchEnd, {
+      passive: false,
+    })
+    window.addEventListener('keydown', desktopControls.onKeyDown)
+    window.addEventListener('keyup', desktopControls.onKeyUp)
+
+    return () => {
+      target?.removeEventListener('wheel', desktopControls.onWheel)
+      target?.removeEventListener('mousedown', desktopControls.onMouseDown)
+      target?.removeEventListener('dblclick', desktopControls.onDoubleClick)
+      target?.removeEventListener('touchstart', touchControls.onTouchStart)
+      target?.removeEventListener('touchmove', touchControls.onTouchMove)
+      target?.removeEventListener('touchend', touchControls.onTouchEnd)
+
+      window.removeEventListener('mousemove', desktopControls.onMouseMove)
+      window.removeEventListener('mouseup', desktopControls.onMouseUp)
+      window.removeEventListener('touchmove', touchControls.onTouchMove)
+      window.removeEventListener('touchend', touchControls.onTouchEnd)
+      window.removeEventListener('keydown', desktopControls.onKeyDown)
+      window.removeEventListener('keyup', desktopControls.onKeyUp)
+    }
+  }, [desktopControls, touchControls, shouldCapture])
+
+  return (
+    <div
+      ref={containerRef}
+      className={clsx(
+        'relative h-full w-full overflow-hidden bg-coffee-800',
+        'touch-none', // Prevent browser handling of touch events
+        cursorClass(isPanning, isHandCursor, desktopControls.isResizing),
+      )}
+    >
+      <NodesAndConnectionsWebGL />
+      <MouseSelection />
+    </div>
+  )
+}
+
+function cursorClass(
+  isPanning: boolean,
+  isHandCursor: boolean,
+  isResizing: boolean,
+): string | undefined {
+  if (isPanning) return 'cursor-grabbing'
+  if (isHandCursor) return 'cursor-grab'
+  if (isResizing) return 'cursor-col-resize'
+  return undefined
+}

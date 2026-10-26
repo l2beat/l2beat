@@ -92,6 +92,22 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async findByStart(
+    projectId: string,
+    subtype: TrackedTxsConfigSubtype,
+    start: UnixTime,
+  ): Promise<RealTimeAnomalyRecord | undefined> {
+    const row = await this.db
+      .selectFrom('RealTimeAnomaly')
+      .selectAll()
+      .where('projectId', '=', projectId)
+      .where('subtype', '=', subtype)
+      .where('start', '=', UnixTime.toDate(start))
+      .executeTakeFirst()
+
+    return row && toRecord(row)
+  }
+
   async getApprovedAnomaliesByProjectIds(
     projectIds: string[],
   ): Promise<RealTimeAnomalyRecord[]> {

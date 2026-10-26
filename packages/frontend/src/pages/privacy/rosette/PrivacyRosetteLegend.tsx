@@ -1,10 +1,12 @@
 import type { PrivacyAdversarySentiment } from '@l2beat/config'
+import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
 import type { RosetteValue } from '~/components/rosette/types'
 import { cn } from '~/utils/cn'
 import { sentimentToOpaqueBgColor } from '~/utils/sentiment'
 import { PRIVACY_ADVERSARY_VERDICT } from '../adversaries/privacyAdversaryUi'
+import { PRIVACY_METHODOLOGY_PATH } from '../methodology/paths'
 
 const LEGEND: {
   sentiment: PrivacyAdversarySentiment
@@ -51,7 +53,10 @@ export function PrivacyRosetteLegend({ className }: { className?: string }) {
             How to read the privacy rosette
           </h2>
           <p className="mt-1 text-pretty font-medium text-label-value-12 text-secondary">
-            Each slice is one adversary testing the protocol's privacy promise.
+            Each slice is one adversary testing the protocol's privacy promise.{' '}
+            <CustomLink href={PRIVACY_METHODOLOGY_PATH}>
+              Read the methodology
+            </CustomLink>
           </p>
         </div>
         <ul className="grid min-w-0 flex-1 gap-x-6 gap-y-2 md:grid-cols-3">

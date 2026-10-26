@@ -39,8 +39,9 @@
             }
           ]
         },
+        // MEDIUM: an issuance rate limit of the issuer.
         "mintCapNumerator": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "MNT inflation policy: yearly mint cap as a fraction of total supply (numerator over 10000, hard-capped at 200 = 2%)."
         }
       }
@@ -91,6 +92,7 @@
     "mantle:0x4200000000000000000000000000000000000007": {
       "critical": true,
       "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"],
       "fields": {
         "l1CrossDomainMessenger": { "edit": ["format", "EthereumAddress"] },
         "OTHER_MESSENGER": { "edit": ["format", "EthereumAddress"] }
@@ -104,7 +106,8 @@
       }
     },
     "mantle:0x4200000000000000000000000000000000000016": {
-      "critical": true
+      "critical": true,
+      "ignoreInWatchMode": ["messageNonce"]
     },
     // L2ProxyAdmin: upgrades the L2 predeploys. Its implementation is unverified on
     // Mantle but byte-identical to the verified Base L2 ProxyAdmin implementation

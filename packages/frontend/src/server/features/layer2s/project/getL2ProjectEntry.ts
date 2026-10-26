@@ -175,7 +175,7 @@ export async function getL2ProjectEntry(
     | 'discoveryInfo'
     | 'discoveryUpdates'
     | 'daTrackingConfig'
-    | 'crops'
+    | 'garden'
     | 'ossificationHistory'
   >,
   helpers: SsrHelpers,
@@ -218,7 +218,7 @@ export async function getL2ProjectEntry(
       select: ['display'],
       optional: [...PROJECT_PAGE_METADATA_FIELDS],
     }),
-    getL2ProjectInteropData(project.id),
+    getL2ProjectInteropData(project.id, helpers),
     getProjectOssification(project),
   ])
 
@@ -393,7 +393,7 @@ export async function getL2ProjectEntry(
 
   const chartProject = toChartProject(project)
 
-  const gardenCropsSection = getGardenCropsSection(project.crops)
+  const gardenCropsSection = await getGardenCropsSection(project, ossification)
   if (gardenCropsSection) {
     sections.push(gardenCropsSection)
   }
@@ -812,7 +812,10 @@ function getProjectCompareUrl(
 
 // Interop flows are the slowest independent loader after the ecosystem-wide
 // TVS query, so they must run inside the parallel block rather than after it.
-async function getL2ProjectInteropData(projectId: ProjectId) {
+async function getL2ProjectInteropData(
+  projectId: ProjectId,
+  helpers: SsrHelpers,
+) {
   const interopProjects = await ps.getProjects({ select: ['interopConfig'] })
-  return getProjectInteropData(projectId, interopProjects)
+  return getProjectInteropData(projectId, interopProjects, helpers)
 }

@@ -18,10 +18,6 @@ export interface PublicationEntry extends FilterableEntry {
   tag: 'governance' | 'monthly-update' | ExternalPublicationTag
 }
 
-export function getPublicationTagLabel(tag: PublicationEntry['tag']) {
-  return tag === 'monthly-update' ? 'Monthly Update' : tag
-}
-
 export function getPublicationEntryFromGovernance(
   governanceArticle: CollectionEntry<'governance-publications'>,
 ): PublicationEntry {
