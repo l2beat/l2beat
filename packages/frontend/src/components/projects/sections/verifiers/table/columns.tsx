@@ -76,20 +76,18 @@ const baseVerifiersColumns = [
                 href={deployment.url}
                 className="text-label-value-14"
               />
-              {i < shown.length - 1 && ', '}
+              {(i < shown.length - 1 || extraCount > 0) && ', '}
             </span>
           ))}
           {extraCount > 0 &&
             // Once the row is open, the full list is right below.
             (row.getIsExpanded() ? (
-              <span className="ml-1 text-label-muted-12">
-                +{extraCount} more
-              </span>
+              <span className="text-label-muted-12">+{extraCount} more</span>
             ) : (
               <button
                 type="button"
                 onClick={() => row.toggleExpanded(true)}
-                className={cn(linkVariants(), 'ml-1 text-label-value-14')}
+                className={cn(linkVariants(), 'text-label-value-14')}
               >
                 +{extraCount} more
               </button>
