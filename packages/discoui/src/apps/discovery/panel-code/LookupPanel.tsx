@@ -33,7 +33,7 @@ export function LookupPanel(props: {
         <span
           className={clsx(
             'truncate font-mono text-coffee-200',
-            lookup.status === 'pending' && 'animate-pulse',
+            lookup.status === 'pending' && 'motion-safe:animate-pulse',
           )}
         >
           {title(lookup)}
