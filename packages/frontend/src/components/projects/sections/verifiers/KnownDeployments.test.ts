@@ -23,6 +23,39 @@ describe(groupDeployments.name, () => {
       ['Ethereum', ['0x4']],
     ])
   })
+
+  it('keeps chains that share a display name apart', () => {
+    const a = project('a')
+    const groups = groupDeployments([
+      { ...deployment('0x1', 'Pepe Unchained', [a]), chainId: 'pepeunchained' },
+      {
+        ...deployment('0x2', 'Pepe Unchained', [a]),
+        chainId: 'pepeunchained2',
+      },
+    ])
+
+    expect(groups.map((g) => g.chainId)).toEqual([
+      'pepeunchained',
+      'pepeunchained2',
+    ])
+  })
+
+  it('puts deployments no project uses last, Ethereum first, then by chain', () => {
+    const a = project('a')
+    const groups = groupDeployments([
+      deployment('0x1', 'Optimism', []),
+      deployment('0x2', 'Arbitrum', []),
+      deployment('0x3', 'Ethereum', []),
+      deployment('0x4', 'Base', [a]),
+    ])
+
+    expect(groups.map((g) => g.chain)).toEqual([
+      'Base',
+      'Ethereum',
+      'Arbitrum',
+      'Optimism',
+    ])
+  })
 })
 
 function project(id: string) {
@@ -40,5 +73,11 @@ function deployment(
   chain: string,
   projectsUsedIn: ReturnType<typeof project>[],
 ) {
-  return { address, chain, projectsUsedIn }
+  return {
+    address,
+    chainId: chain.toLowerCase(),
+    chain,
+    chainIcon: '',
+    projectsUsedIn,
+  }
 }
