@@ -62,8 +62,21 @@ export function redactUrl(url: string): string {
 
     return parsed.toString()
   } catch {
+    return redactUnparsableUrl(url)
+  }
+}
+
+// Without a parser we cannot tell secrets from the rest, so only the scheme
+// and host survive
+function redactUnparsableUrl(url: string): string {
+  const match = /^([a-z][a-z0-9+.-]*:\/\/)([^/?#]*)(.*)$/is.exec(url)
+  if (!match) {
     return url
   }
+  const [, scheme = '', authority = '', rest = ''] = match
+  const at = authority.lastIndexOf('@')
+  const host = at === -1 ? authority : `REDACTED@${authority.slice(at + 1)}`
+  return `${scheme}${host}${rest ? '/REDACTED' : ''}`
 }
 
 function sanitizeSegment(segment: string): string {

@@ -105,6 +105,12 @@ describe(redactUrl.name, () => {
     expect(redactUrl(url)).toEqual(url)
   })
 
+  it('keeps only the scheme and host of an unparsable url', () => {
+    expect(
+      redactUrl('https://user:pass@rpc.example.com:notaport/v2/secret'),
+    ).toEqual('https://REDACTED@rpc.example.com:notaport/REDACTED')
+  })
+
   it('returns the input unchanged when it is not a valid url', () => {
     expect(redactUrl('not a url')).toEqual('not a url')
   })
