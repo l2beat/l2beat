@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import type { ApiAddressType } from '../api/types'
 import { IconContract } from '../icons/IconContract'
 import { IconContractUnverified } from '../icons/IconContractUnverified'
@@ -10,6 +9,7 @@ import { IconMultisig } from '../icons/IconMultisig'
 import { IconTimelock } from '../icons/IconTimelock'
 import { IconToken } from '../icons/IconToken'
 import { IconUntemplatized } from '../icons/IconUntemplatized'
+import { cn } from '../utils/cn'
 
 export const ADDRESS_ICON_COMPONENTS = {
   EOA: IconEoa,
@@ -33,7 +33,7 @@ export function AddressIcon(props: {
 
   return (
     <Icon
-      className={clsx(
+      className={cn(
         props.className,
         props.type === 'Unverified' && 'text-aux-red',
       )}

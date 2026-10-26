@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useEffect } from 'react'
 import { Link } from 'react-router'
 import { useCopy } from '../../../hooks/useCopy'
@@ -11,6 +10,7 @@ import { IconShare } from '../../../icons/IconShare'
 import { IconSplit } from '../../../icons/IconSplit'
 import { IconSwap } from '../../../icons/IconSwap'
 import { IconTick } from '../../../icons/IconTick'
+import { cn } from '../../../utils/cn'
 import { DiffEditorComponent } from '../diff/DiffEditorComponent'
 import { useDiffEditorSettings } from '../diff/hooks/useDiffEditorSettings'
 import { LineSelector } from '../diff/plugins/lineSelector'
@@ -109,7 +109,7 @@ export function DiffView(props: DiffViewProps) {
         {/* Center Controls */}
         <div className="flex gap-1 rounded-lg border border-coffee-700 bg-coffee-800/90 p-1 backdrop-blur-xs">
           <button
-            className={clsx(
+            className={cn(
               'rounded-sm p-1.5 transition-colors',
               removeUnchanged
                 ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
@@ -121,7 +121,7 @@ export function DiffView(props: DiffViewProps) {
             <IconSplit className="size-4" />
           </button>
           <button
-            className={clsx(
+            className={cn(
               'rounded-sm p-1.5 transition-colors',
               ignoreComments
                 ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
@@ -133,7 +133,7 @@ export function DiffView(props: DiffViewProps) {
             <IconComment className="size-4" />
           </button>
           <button
-            className={clsx(
+            className={cn(
               'rounded-sm p-1.5 transition-colors',
               fold
                 ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
@@ -145,7 +145,7 @@ export function DiffView(props: DiffViewProps) {
             <IconFoldVertical className="size-4" />
           </button>
           <button
-            className={clsx(
+            className={cn(
               'rounded-sm p-1.5 transition-colors',
               'hover:bg-coffee-700',
             )}

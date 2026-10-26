@@ -1,6 +1,6 @@
-import clsx from 'clsx'
 import { memo, type ReactNode } from 'react'
 import type { FieldValue } from '../../../api/types'
+import { cn } from '../../../utils/cn'
 import { AddressDisplay } from './AddressDisplay'
 
 const EM_DASH = '—'
@@ -52,7 +52,7 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
     inlineDisplay = (
       <p className="wrap-break-word font-serif">
         <strong
-          className={clsx(
+          className={cn(
             'select-none text-coffee-600',
             topLevel && 'ml-[-6px] inline-block',
           )}

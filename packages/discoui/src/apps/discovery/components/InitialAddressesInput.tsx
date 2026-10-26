@@ -1,7 +1,7 @@
-import clsx from 'clsx'
 import { useState } from 'react'
 import { Button } from '../../../components/Button'
 import { Input, InputDescription } from '../../../components/Input'
+import { cn } from '../../../utils/cn'
 
 type Props = {
   value: string[]
@@ -62,7 +62,7 @@ export function InitialAddressesInput(props: Props) {
         <div className="flex flex-col">
           <Input
             disabled={props.disabled}
-            className={clsx('w-full bg-coffee-800 px-4 py-2 font-mono')}
+            className={cn('w-full bg-coffee-800 px-4 py-2 font-mono')}
             placeholder="eth:0x0000000000000000000000000000000000000000"
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
