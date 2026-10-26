@@ -286,7 +286,11 @@ function getEvents(
       updateId: event.updateId,
     }
   })
-  const upgrades = getUpgradeEvents(members, reviewedUpgrades(sources.patch))
+  const upgrades = getUpgradeEvents(
+    members,
+    reviewedUpgrades(sources.patch),
+    getAppendingUpdates(sources),
+  )
   const withHistory = [...members.values()].filter(
     (m) => m.initialization !== undefined || m.upgrades.length > 0,
   )
@@ -319,23 +323,59 @@ const reviewedUpgrades = (patch: OssificationPatch) =>
       .filter(notUndefined),
   )
 
+// The diffHistory entry that first recorded an upgrade, so the update can be
+// tagged. A diff that reshapes $pastUpgrades shows old upgrades as appended,
+// so an upgrade only belongs to an entry whose known interval contains it.
+function getAppendingUpdates(
+  sources: OssificationSources,
+): ReadonlyMap<string, string> {
+  const ignoredUpdates = new Set(sources.patch.ignoredUpdates)
+  const updates = new Map<string, string>()
+  const recorded = sources.changes
+    .filter(
+      (change) =>
+        change.section === 'watched-changes' &&
+        !ignoredUpdates.has(change.entryId),
+    )
+    .sort((a, b) => a.timestamp - b.timestamp)
+  for (const change of recorded) {
+    const upgrade = change.upgrade
+    if (
+      upgrade === undefined ||
+      change.previous === undefined ||
+      upgrade.timestamp > change.timestamp ||
+      upgrade.timestamp < change.previous
+    ) {
+      continue
+    }
+    const upgradeId = upgradeKey(change.address.toString(), upgrade.transaction)
+    if (upgradeId !== undefined && !updates.has(upgradeId)) {
+      updates.set(upgradeId, change.entryId)
+    }
+  }
+  return updates
+}
+
 function getUpgradeEvents(
   members: Map<string, Member>,
   reviewedUpgrades: ReadonlySet<string>,
+  appendingUpdates: ReadonlyMap<string, string>,
 ): MemberEvent[] {
   return [...members.values()].flatMap((member) =>
-    member.upgrades
-      .filter(
-        (u) =>
-          !has(reviewedUpgrades, upgradeKey(member.address, u.transaction)),
-      )
-      .map((upgrade) => ({
-        type: 'code' as const,
-        timestamp: upgrade.timestamp,
-        earliest: upgrade.timestamp,
-        contract: key(member.address),
-        transaction: upgrade.transaction,
-      })),
+    member.upgrades.flatMap((upgrade) => {
+      const id = upgradeKey(member.address, upgrade.transaction)
+      if (has(reviewedUpgrades, id)) return []
+      return [
+        {
+          type: 'code' as const,
+          timestamp: upgrade.timestamp,
+          earliest: upgrade.timestamp,
+          contract: key(member.address),
+          transaction: upgrade.transaction,
+          updateId: id === undefined ? undefined : appendingUpdates.get(id),
+        },
+      ]
+    }),
   )
 }
 
