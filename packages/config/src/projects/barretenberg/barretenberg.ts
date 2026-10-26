@@ -249,7 +249,12 @@ export const barretenberg: BaseProject = {
             address: aztecDiscovery.getContract('HonkVerifier').address,
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'barretenberg',
+          'verificationSteps-0x1fd4eb1d',
+        ),
       },
       {
         hash: getVerifierKeyHash(
