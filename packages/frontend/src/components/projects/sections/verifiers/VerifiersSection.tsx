@@ -155,7 +155,7 @@ export function VerifierRowDetails({
                     Used in:
                   </span>
                   <ProjectsUsedIn
-                    noL2ClassName="text-label-value-14 font-medium text-secondary"
+                    emptyClassName="text-label-value-14 font-medium"
                     usedIn={deployment.projectsUsedIn}
                   />
                 </div>
