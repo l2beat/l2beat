@@ -16,6 +16,7 @@ import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
 import { getGraphProjection } from './store/utils/graphProjection'
+import { expandedNodes } from './store/utils/renderGraph'
 import { topLevelByDescendant } from './store/utils/subnodes'
 import { Viewport } from './view/Viewport'
 
@@ -202,7 +203,11 @@ function useSynchronizeSelection() {
       !lastSelection.includes(firstGlobal) &&
       loaded
     ) {
-      const containing = topLevelByDescendant(nodes).get(firstGlobal)
+      // A contract in an open group is drawn on its own, so it is selected
+      // on its own; only a closed group stands in for its members.
+      const containing = topLevelByDescendant(expandedNodes(nodes)).get(
+        firstGlobal,
+      )
       rememberSelection(selectedGlobal)
       if (containing) {
         selectAndFocus(containing.id)
