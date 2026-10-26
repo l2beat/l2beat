@@ -3,19 +3,24 @@ import {
   ProjectsUsedIn,
   type UsedInProjectWithIcon,
 } from '~/components/ProjectsUsedIn'
+import { cn } from '~/utils/cn'
 
 export interface KnownDeployment {
   projectsUsedIn: UsedInProjectWithIcon[]
   url?: string
   address: string
+  chainId: string
   /** Display name; the address alone does not say which chain it is on. */
   chain: string
+  chainIcon: string
 }
 
-interface DeploymentGroup {
+interface DeploymentGroup
+  extends Pick<
+    KnownDeployment,
+    'chainId' | 'chain' | 'chainIcon' | 'projectsUsedIn'
+  > {
   key: string
-  chain: string
-  projectsUsedIn: UsedInProjectWithIcon[]
   deployments: KnownDeployment[]
 }
 
@@ -43,7 +48,13 @@ export function KnownDeployments({
             {group.projectsUsedIn.length === 1 && (
               <span>{group.projectsUsedIn[0]?.name}</span>
             )}
-            <span className="text-secondary">· {group.chain}</span>
+            {!isOnEthereum(group) && (
+              <span className="inline-flex items-center gap-1 text-secondary">
+                ·
+                <DeploymentChainIcon deployment={group} />
+                {group.chain}
+              </span>
+            )}
           </div>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(112px,1fr))] justify-items-start gap-x-4 gap-y-2">
             {group.deployments.map((deployment) => (
@@ -61,6 +72,29 @@ export function KnownDeployments({
   )
 }
 
+// Nearly every verifier lives on Ethereum, so only the exceptions get a mark.
+export function DeploymentChainIcon({
+  deployment,
+  className,
+}: {
+  deployment: Pick<KnownDeployment, 'chainId' | 'chain' | 'chainIcon'>
+  className?: string
+}) {
+  if (isOnEthereum(deployment)) return null
+  return (
+    <img
+      src={deployment.chainIcon}
+      alt={deployment.chain}
+      title={deployment.chain}
+      className={cn('size-3.5 shrink-0 rounded-full', className)}
+    />
+  )
+}
+
+function isOnEthereum(deployment: Pick<KnownDeployment, 'chainId'>) {
+  return deployment.chainId === 'ethereum'
+}
+
 /**
  * Deployments on the same chain used by the same projects share one "Used in"
  * line, so a verifier deployed many times for one project doesn't repeat it.
@@ -68,11 +102,13 @@ export function KnownDeployments({
 export function groupDeployments(deployments: KnownDeployment[]) {
   const groups = new Map<string, DeploymentGroup>()
   for (const deployment of deployments) {
-    const { chain, projectsUsedIn } = deployment
+    const { chainId, chain, chainIcon, projectsUsedIn } = deployment
     const key = [chain, ...projectsUsedIn.map((p) => p.id).sort()].join(',')
     const group = groups.get(key) ?? {
       key,
+      chainId,
       chain,
+      chainIcon,
       projectsUsedIn,
       deployments: [],
     }

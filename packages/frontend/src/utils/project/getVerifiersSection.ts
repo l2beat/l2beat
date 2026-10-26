@@ -7,6 +7,7 @@ import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTv
 import { getZkCatalogLogo } from '~/server/features/zk-catalog/getZkCatalogLogo'
 import { getProjectsUsedIn } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 import type { ContractUtils } from './contracts-and-permissions/getContractUtils'
 import type { ProjectWithPageMetadata } from './getProjectUrl'
@@ -56,7 +57,9 @@ export async function getVerifiersSection(
           ? `${explorerUrl}/address/${addressKey}#code`
           : undefined,
         address: addressKey,
+        chainId: chain,
         chain: chainProject?.name ?? chain,
+        chainIcon: manifest.getUrl(`/icons/${chainProject?.slug ?? chain}.png`),
         projectsUsedIn: (d.overrideUsedIn
           ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
           : contractUtils.getUsedIn(

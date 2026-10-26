@@ -40,5 +40,11 @@ function deployment(
   chain: string,
   projectsUsedIn: ReturnType<typeof project>[],
 ) {
-  return { address, chain, projectsUsedIn }
+  return {
+    address,
+    chainId: chain.toLowerCase(),
+    chain,
+    chainIcon: '',
+    projectsUsedIn,
+  }
 }
