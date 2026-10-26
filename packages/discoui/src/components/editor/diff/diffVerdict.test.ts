@@ -31,6 +31,12 @@ describe('getDiffVerdict', () => {
     )
   })
 
+  it('ignores a comment that a form feed ends', () => {
+    expect(verdict('uint x;', '// note\fuint x;', true)).toEqual(
+      'sameIgnoringComments',
+    )
+  })
+
   it('calls a code change different when comments are ignored', () => {
     expect(verdict('a = 1;', 'a = 2;', true)).toEqual('different')
   })

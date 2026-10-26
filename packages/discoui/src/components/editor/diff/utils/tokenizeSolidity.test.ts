@@ -55,6 +55,13 @@ describe('tokenizeSolidity', () => {
     expect(tokens).toEqual([comment('// hello', 1, 1), structural('x', 1, 1)])
   })
 
+  it('skips a vertical tab or form feed that ends a line comment', () => {
+    for (const terminator of ['\v', '\f']) {
+      const tokens = tokenizeSolidity(`// hello${terminator}x`)
+      expect(tokens).toEqual([comment('// hello', 1, 1), structural('x', 1, 1)])
+    }
+  })
+
   it('block comment can span multiple lines', () => {
     const tokens = tokenizeSolidity('/* a\nb\nc */ x')
     expect(tokens).toEqual([

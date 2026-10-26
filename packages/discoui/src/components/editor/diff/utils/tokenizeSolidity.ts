@@ -22,7 +22,7 @@ export function tokenizeSolidity(source: string): Token[] {
       i++
       continue
     }
-    if (c === ' ' || c === '\t' || c === '\r') {
+    if (c === ' ' || c === '\t' || c === '\r' || c === '\v' || c === '\f') {
       i++
       continue
     }
