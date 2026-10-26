@@ -131,6 +131,10 @@ Transports can decide how the logs should be formatted and how they should be ou
 
 If you want to output logs to ElasticSearch use the `formatEcsLog` helper.
 
+### URL redaction
+
+The logger masks secrets in every URL it outputs (userinfo, key-like query params and path segments, see `redactUrl`), including URLs inside third-party error messages. The message is redacted before transports receive it, and everything else when serialized with `safeToJSON`, so a custom transport must serialize parameters with `safeToJSON` too.
+
 ### Error reporting
 
 It might be useful to connect the logger into an error reporting system. To do this just create a new transport that only reacts on error logs.
