@@ -40,13 +40,18 @@ export function KnownDeployments({
       {groupDeployments(deployments).map((group) => (
         <div key={group.key} className="space-y-2">
           <div className="flex flex-wrap items-center gap-1 font-medium text-label-value-14">
-            <span className="text-secondary">Used in</span>
-            <ProjectsUsedIn
-              noL2ClassName="text-secondary"
-              usedIn={group.projectsUsedIn}
-            />
-            {group.projectsUsedIn.length === 1 && (
-              <span>{group.projectsUsedIn[0]?.name}</span>
+            {group.projectsUsedIn.length === 0 ? (
+              <span className="text-secondary">
+                Not used by any listed project
+              </span>
+            ) : (
+              <>
+                <span className="text-secondary">Used in</span>
+                <ProjectsUsedIn usedIn={group.projectsUsedIn} />
+                {group.projectsUsedIn.length === 1 && (
+                  <span>{group.projectsUsedIn[0]?.name}</span>
+                )}
+              </>
             )}
             {!isOnEthereum(group) && (
               <span className="inline-flex items-center gap-1 text-secondary">
@@ -98,6 +103,7 @@ function isOnEthereum(deployment: Pick<KnownDeployment, 'chainId'>) {
 /**
  * Deployments on the same chain used by the same projects share one "Used in"
  * line, so a verifier deployed many times for one project doesn't repeat it.
+ * Groups no project uses go last.
  */
 export function groupDeployments(deployments: KnownDeployment[]) {
   const groups = new Map<string, DeploymentGroup>()
@@ -115,5 +121,11 @@ export function groupDeployments(deployments: KnownDeployment[]) {
     group.deployments.push(deployment)
     groups.set(key, group)
   }
-  return [...groups.values()]
+  return [...groups.values()].sort(
+    (a, b) => Number(isUnused(a)) - Number(isUnused(b)),
+  )
+}
+
+function isUnused(group: DeploymentGroup) {
+  return group.projectsUsedIn.length === 0
 }

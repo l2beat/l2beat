@@ -23,6 +23,21 @@ describe(groupDeployments.name, () => {
       ['Ethereum', ['0x4']],
     ])
   })
+
+  it('puts deployments no project uses last', () => {
+    const a = project('a')
+    const groups = groupDeployments([
+      deployment('0x1', 'Ethereum', []),
+      deployment('0x2', 'Arbitrum', []),
+      deployment('0x3', 'Ethereum', [a]),
+    ])
+
+    expect(groups.map((g) => g.deployments.map((d) => d.address))).toEqual([
+      ['0x3'],
+      ['0x1'],
+      ['0x2'],
+    ])
+  })
 })
 
 function project(id: string) {
