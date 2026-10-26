@@ -190,6 +190,8 @@
   /* Text in the brand colour: #FF3776 is too light to read as small text, so
      a shade that keeps 4.5:1 on every surface, the grey ones included. */
   --brand-deep: #c2104a;
+  /* A lighter brand pink, e.g. for the chart loader's second ball. */
+  --brand-light: #ff8fb0;
   --selection-brand-share: 30%;
   --background: #e6e7ec;
   --surface-primary: #fafafa;
@@ -214,7 +216,7 @@
   /* Chart colors */
   --chart-ethereum: #2a5bd8;
   --chart-ethereum-secondary: #53a3ff;
-  --chart-pink: #ff3776;
+  --chart-pink: #ef43b3;
   --nav-active: var(--brand-deep);
   --chart-cyan: #36a3a3;
   --chart-yellow: #ab8000;
@@ -226,7 +228,7 @@
   --chart-orange: #f98a24;
   --chart-yellow-lime: #d6db5b;
 
-  --chart-stacked-pink: #ff3776;
+  --chart-stacked-pink: #ff45b5;
   --chart-stacked-yellow: #ffc300;
   --chart-stacked-purple: #9576d1;
   --chart-stacked-blue: #3385ff;
@@ -237,9 +239,9 @@
   --chart-ethereum-stroke-gradient-1: #66b2ff;
   --chart-ethereum-stroke-gradient-2: #5d82cf;
 
-  --chart-pink-fill-gradient: #ff3776;
-  --chart-pink-stroke-gradient-1: #ff8fb0;
-  --chart-pink-stroke-gradient-2: #ff3776;
+  --chart-pink-fill-gradient: #f464e8;
+  --chart-pink-stroke-gradient-1: #9576d1;
+  --chart-pink-stroke-gradient-2: #ef43b3;
 
   --chart-cyan-fill-gradient: #40cbe3;
   --chart-cyan-stroke-gradient-1: #36a3a3;
@@ -263,6 +265,7 @@
   --warning: #ffc107;
   --negative: #ff3d3d;
   --brand-deep: #ff7aa5;
+  --brand-light: #ffa3c0;
   --selection-brand-share: 50%;
   --background: #07080c;
   --surface-primary: #1b1e2a;
@@ -289,7 +292,7 @@
   /* Chart colors */
   --chart-ethereum: #3387ff;
   --chart-ethereum-secondary: #5d82cf;
-  --chart-pink: #ff3776;
+  --chart-pink: #ecb0fb;
   --chart-cyan: #40cbe3;
   --chart-yellow: #e7c34e;
   --chart-emerald: #0ce97e;
@@ -297,7 +300,7 @@
   --chart-lime: #61ff12;
   --chart-sky: #66ccff;
 
-  --chart-stacked-pink: #ff3776;
+  --chart-stacked-pink: #ff45b5;
   --chart-stacked-yellow: #ffc300;
   --chart-stacked-purple: #9576d1;
   --chart-stacked-blue: #3385ff;
@@ -307,9 +310,9 @@
   --chart-ethereum-stroke-gradient-1: #66b2ff;
   --chart-ethereum-stroke-gradient-2: #3482f6;
 
-  --chart-pink-fill-gradient: #e0195a;
-  --chart-pink-stroke-gradient-1: #ffa3c0;
-  --chart-pink-stroke-gradient-2: #ff3776;
+  --chart-pink-fill-gradient: #b13fb5;
+  --chart-pink-stroke-gradient-1: #ecb0fb;
+  --chart-pink-stroke-gradient-2: #ef43b3;
 
   --chart-cyan-fill-gradient: #2497b3;
   --chart-cyan-stroke-gradient-1: #36a3a3;
@@ -336,6 +339,11 @@
   --divider: rgb(13 12 12 / 0.14);
   --link: #d4114f;
   --link-stroke: #f7c3d3;
+  /* The charts in the brand pink, on this page only. */
+  --chart-pink: #ff3776;
+  --chart-pink-fill-gradient: #ff3776;
+  --chart-pink-stroke-gradient-1: #ff8fb0;
+  --chart-pink-stroke-gradient-2: #ff3776;
   /* The page's one block of colour, and text on it. */
   --accent: #ff3776;
   --on-accent: #ffffff;
@@ -350,6 +358,10 @@
 .dark.home-theme {
   --link: #ff6b9a;
   --link-stroke: #5a1f33;
+  --chart-pink: #ff3776;
+  --chart-pink-fill-gradient: #e0195a;
+  --chart-pink-stroke-gradient-1: #ffa3c0;
+  --chart-pink-stroke-gradient-2: #ff3776;
   --primary: #fafafa;
   --surface-primary: #1b1e2a;
   --divider: #3d4358;

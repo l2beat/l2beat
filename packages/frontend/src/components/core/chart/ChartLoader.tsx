@@ -1,10 +1,7 @@
 import { cn } from '~/utils/cn'
 
-/**
- * The ball the brand-coloured one swaps places with: a lighter pink, since
- * the chart pink is the brand colour itself.
- */
-const LIGHT = 'var(--chart-pink-stroke-gradient-1)'
+/** The ball the brand-coloured one swaps places with: a lighter pink. */
+const LIGHT = 'var(--brand-light)'
 
 // SMIL keeps the main thread recalculating style every frame, even for a
 // loader far below the fold, so a loader nobody is waiting on stands still.
