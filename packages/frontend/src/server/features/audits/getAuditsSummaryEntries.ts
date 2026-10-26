@@ -7,6 +7,7 @@ import {
 } from './countFullyCoveredContracts'
 import { reportOrigin } from './coverage/coverageReports'
 import { buildProjectCoverage } from './coverage/projectCoverage'
+import { getAuditsCoverageHistory } from './getAuditsCoverageHistory'
 import { getAuditsProjectReports } from './getAuditsProjectReports'
 import { getAuditsProjects } from './getAuditsProjects'
 import {
@@ -14,7 +15,11 @@ import {
   getAuditsProjectTimeline,
   toAuditsSummaryTimeline,
 } from './getAuditsProjectTimeline'
-import type { AuditsSummaryEntry } from './types'
+import type {
+  AuditsCoverageHistory,
+  AuditsSummaryCoverageHistory,
+  AuditsSummaryEntry,
+} from './types'
 
 export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
   const projects = await getAuditsProjects()
@@ -64,6 +69,13 @@ export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
       sharedReportsCount: model.matched.size - matchedOwn,
       discoveryTimestamp: model.coverage.discoveredAt,
       timeline: toAuditsSummaryTimeline(timeline),
+      coverageHistory: toSummaryCoverageHistory(
+        getAuditsCoverageHistory(
+          model.coverage,
+          project.id,
+          model.stackCollection,
+        ),
+      ),
     }
   })
   // The table's default order, so the index column matches it.
@@ -73,4 +85,17 @@ export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
       linesCoveredShare(b) - linesCoveredShare(a) ||
       a.name.localeCompare(b.name),
   )
+}
+
+function toSummaryCoverageHistory(
+  history: AuditsCoverageHistory | undefined,
+): AuditsSummaryCoverageHistory | null {
+  if (history === undefined) return null
+  return {
+    launch: history.launch,
+    points: history.points.map((point) => ({
+      timestamp: point.timestamp,
+      uncovered: point.lines.uncovered,
+    })),
+  }
 }

@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import { LineCoverageTooltipContent } from '~/components/audits/AuditCoverageBar'
-import { AuditsTimelineSparkline } from '~/components/audits/AuditsTimelineSparkline'
+import { AuditsCoverageSparkline } from '~/components/audits/AuditsCoverageSparkline'
 import {
   formatShare,
   INTERFACES_NOT_COUNTED,
@@ -52,18 +52,22 @@ const columns = [
   }),
   columnHelper.display({
     id: 'timeline',
-    header: 'Audit timeline',
-    cell: (ctx) => (
-      <AuditsTimelineSparkline
-        timeline={ctx.row.original.timeline}
-        href={`${ctx.row.original.href}#audit-timeline`}
-        className="mx-auto"
-      />
-    ),
+    header: 'Unaudited lines\nover time',
+    cell: (ctx) =>
+      ctx.row.original.coverageHistory === null ? (
+        <NotApplicableBadge />
+      ) : (
+        <AuditsCoverageSparkline
+          history={ctx.row.original.coverageHistory}
+          to={ctx.row.original.timeline.to}
+          href={`${ctx.row.original.href}#audit-timeline`}
+          className="mx-auto"
+        />
+      ),
     meta: {
       align: 'center',
       tooltip:
-        "The project's life from its launch (the circle) to today, with its audit reports, own and of its stack, as green ticks. Click one to open the project's full timeline.",
+        "Lines of the critical contracts not covered by the audits published by then, from the launch to today. Fully audited is at the top, so the line rises as audits cover code. Green when there are fewer unaudited lines now than at the launch, red when there are more. Click one to open the project's full timeline.",
     },
   }),
   columnHelper.accessor(

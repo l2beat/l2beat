@@ -64,7 +64,7 @@ export interface AuditsOtherReport {
 
 /**
  * The project's whole life with its own audits on it, see
- * AuditsTimelineSparkline. Same scale as AuditsProjectTimeline.
+ * the summary table. Same scale as AuditsProjectTimeline.
  */
 export interface AuditsSummaryTimeline {
   /** Launch, first audit or first critical code change, whichever came first. */
@@ -98,6 +98,18 @@ export interface AuditsSummaryEntry {
   sharedReportsCount: number
   discoveryTimestamp: number
   timeline: AuditsSummaryTimeline
+  /** Null when the coverage has no history. */
+  coverageHistory: AuditsSummaryCoverageHistory | null
+}
+
+/**
+ * The uncovered lines of AuditsCoverageHistory alone, from the launch to the
+ * present, see AuditsCoverageSparkline.
+ */
+export interface AuditsSummaryCoverageHistory {
+  launch: number
+  /** Ascending; the last point is the present. */
+  points: { timestamp: number; uncovered: number }[]
 }
 
 export interface AuditsReportEntry {
