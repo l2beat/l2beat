@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { cn } from '../../../utils/cn'
 import { summarizeAddressUsage } from './addressUsage'
 import { useAddressUsage } from './useAddressUsage'
 
@@ -26,7 +26,7 @@ export function UsageBadge(props: {
   return (
     <span
       title={`Also discovered in ${summary.places.map((x) => x.project).join(', ')}`}
-      className={clsx(
+      className={cn(
         'rounded-sm px-1 font-mono text-2xs leading-4',
         props.isSelected
           ? 'bg-black/20 text-black'

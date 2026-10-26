@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { memo, useState } from 'react'
 import { Button } from '../../../../components/Button'
 import { Checkbox } from '../../../../components/Checkbox'
@@ -7,6 +6,7 @@ import { Dialog } from '../../../../components/Dialog'
 import { Kbd } from '../../../../components/Kbd'
 import { Tabs } from '../../../../components/Tabs'
 import { IconGear } from '../../../../icons/IconGear'
+import { cn } from '../../../../utils/cn'
 import { useConfigModels } from '../../hooks/useConfigModels'
 import { ConfigRow } from '../contract-config-dialog/ContractConfigDialog'
 import { DescriptionEditor } from '../contract-config-dialog/DescriptionEditor'
@@ -388,7 +388,7 @@ function SeverityButton({
   return (
     <Button
       onClick={onClick}
-      className={clsx(isActive && 'bg-coffee-400/50')}
+      className={cn(isActive && 'bg-coffee-400/50')}
       size="small"
     >
       {children}

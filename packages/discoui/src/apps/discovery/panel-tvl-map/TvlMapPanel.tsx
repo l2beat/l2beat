@@ -1,6 +1,5 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQueries } from '@tanstack/react-query'
-import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 import { getTvl } from '../../../api/api'
 import type {
@@ -11,6 +10,7 @@ import type {
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { LoadingState } from '../../../components/LoadingState'
+import { cn } from '../../../utils/cn'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useProjectData } from '../hooks/useProjectData'
 import { usePanelStore } from '../store/panel-store'
@@ -190,7 +190,7 @@ function TreeMapTile(props: { tile: Tile<Holding> }) {
       type="button"
       onClick={() => select([holder.address])}
       title={toTooltip(props.tile.item)}
-      className={clsx(
+      className={cn(
         'absolute flex cursor-pointer flex-col items-start overflow-hidden border-2 text-left',
         chainStyle,
         isSelected

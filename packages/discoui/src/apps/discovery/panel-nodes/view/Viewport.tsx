@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
+import { cn } from '../../../../utils/cn'
 import { useDockingStore } from '../../multi-view/store'
 import { useSearchStore } from '../../search/store'
 import { useStore } from '../store/store'
@@ -85,7 +85,7 @@ export function Viewport() {
   return (
     <div
       ref={containerRef}
-      className={clsx(
+      className={cn(
         'relative h-full w-full overflow-hidden bg-coffee-800',
         'touch-none', // Prevent browser handling of touch events
         cursorClass(isPanning, isHandCursor, desktopControls.isResizing),

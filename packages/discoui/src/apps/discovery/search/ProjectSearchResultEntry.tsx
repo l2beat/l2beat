@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import { useNavigate } from 'react-router'
+import { cn } from '../../../utils/cn'
 import { HighlightedText } from './HighlightedText'
 import { useSearchStore } from './store'
 
@@ -16,7 +16,7 @@ export function ProjectSearchResultEntry({ entries }: { entries: string[] }) {
         <li
           key={index}
           data-index={index}
-          className={clsx(
+          className={cn(
             'flex cursor-pointer items-center gap-2 border-coffee-700 border-b p-1 px-2 text-sm',
             index === selectedIndex
               ? 'bg-coffee-700 text-autumn-300'

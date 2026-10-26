@@ -1,7 +1,7 @@
-import clsx from 'clsx'
 import type { ApiCodeSearchResponse } from '../../../api/types'
 import { useCodeStore } from '../../../components/editor/store'
 import { IS_READONLY } from '../../../config/readonly'
+import { cn } from '../../../utils/cn'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useDockingStore } from '../multi-view/store'
 import { HighlightedText } from './HighlightedText'
@@ -48,7 +48,7 @@ export function CodeSearchResultEntry({
                 <div
                   key={`${result.address}-${locIndex}`}
                   data-index={itemIndex}
-                  className={clsx(
+                  className={cn(
                     'cursor-pointer rounded-sm px-1.5 py-0.5 font-mono text-xs',
                     itemIndex === selectedIndex
                       ? 'bg-coffee-600 text-autumn-300'

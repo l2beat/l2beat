@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
 import { type ReactNode, useMemo, useState } from 'react'
 import { useParams } from 'react-router'
 import type { ApiProjectChain } from '../../../api/types'
@@ -7,6 +6,7 @@ import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
+import { cn } from '../../../utils/cn'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
@@ -116,7 +116,7 @@ function Totals(props: { summary: ProjectUsageSummary }) {
 function Total(props: { label: string; value: number; className?: string }) {
   return (
     <div className="flex flex-col">
-      <span className={clsx('font-bold font-mono text-base', props.className)}>
+      <span className={cn('font-bold font-mono text-base', props.className)}>
         {props.value}
       </span>
       <span className="text-coffee-400">{props.label}</span>
@@ -249,7 +249,7 @@ function AddressList(props: { addresses: OverlapAddress[] }) {
         <li
           key={entry.address}
           onClick={() => select([entry.address])}
-          className={clsx(
+          className={cn(
             'flex cursor-pointer justify-between gap-2 py-0.5 pr-2 pl-9',
             selected.includes(entry.address)
               ? 'bg-autumn-300 text-black'
