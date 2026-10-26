@@ -15,8 +15,9 @@ export function safeToJSON(parameters: object): string {
 }
 
 export function tagService(service: unknown, tag: unknown): string | undefined {
-  const serviceStr = service !== undefined ? `${service}` : ''
-  const tagStr = tag !== undefined ? `:${tag}` : ''
-  // Plain and pretty formats print this as is, outside safeToJSON
-  return redactUrls(serviceStr + tagStr) || undefined
+  // Plain and pretty formats print this as is, outside safeToJSON. Each part
+  // is redacted alone, as `:tag` after a URL would read as part of its path.
+  const serviceStr = service !== undefined ? redactUrls(`${service}`) : ''
+  const tagStr = tag !== undefined ? `:${redactUrls(`${tag}`)}` : ''
+  return serviceStr + tagStr || undefined
 }
