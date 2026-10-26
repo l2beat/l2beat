@@ -261,7 +261,7 @@ function SidebarGroupSubButton({
       data-active={isActive}
       className={cn(
         '-translate-x-px flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded px-2.5 py-1.5 text-primary outline-none ring-brand hover:bg-surface-tertiary hover:text-primary focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0 [&>svg]:text-primary',
-        'data-[active=true]:bg-nav-active data-[active=true]:text-primary-invert',
+        'data-[active=true]:bg-brand data-[active=true]:text-primary-invert',
         className,
       )}
       {...props}

@@ -99,7 +99,7 @@ export function NodeButton({
       type="button"
       onClick={() => onSelectNode(node.id)}
       className={cn(
-        'truncate text-left hover:text-brand hover:underline',
+        'truncate text-left hover:text-brand-deep hover:underline',
         className,
       )}
     >

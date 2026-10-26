@@ -217,7 +217,7 @@ function BlobPulse({
           <button
             type="button"
             onClick={() => brush.onView(undefined)}
-            className="shrink-0 whitespace-nowrap font-bold text-brand"
+            className="shrink-0 whitespace-nowrap font-bold text-brand-deep"
           >
             Back to live
           </button>
