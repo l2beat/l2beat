@@ -163,10 +163,6 @@ function formatToken(
 }
 
 const descriptionValues = {
-  freezeCheckpoint: discovery.getContractValue<number>(
-    'ZkMoneyPortal',
-    '_$freezeCheckpointNumber',
-  ),
   transactionAmountCap: formatToken(transactionAmountCap),
   fpcFundingCut: formatToken(fpcFundingCut),
   depositLimit: formatToken(depositLimit),
