@@ -549,6 +549,19 @@ export const ethereum: BaseProject = {
           },
         ],
       },
+      {
+        // Blogposts on .gwei names (gwei.limo), published as blobs. Anyone may publish one, so the
+        // inbox alone identifies them: GnsPosts only takes blobs through publish().
+        projectId: ProjectId('gwei-blogposts'),
+        name: '.gwei blogposts',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x73849f6f2785ba7fd2f41b5b4573b75554417981',
+            sinceBlock: 26268082,
+          },
+        ],
+      },
     ],
   },
   daBridge: {
