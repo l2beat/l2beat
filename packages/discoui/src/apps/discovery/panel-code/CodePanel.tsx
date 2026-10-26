@@ -104,6 +104,7 @@ export function CodePanel() {
           lookup={definition.lookup}
           onPick={definition.pick}
           onDismiss={definition.dismiss}
+          onClose={definition.cancel}
         />
       )}
       <EditorView
