@@ -1,5 +1,6 @@
 import ErrorStackParser from 'error-stack-parser'
 import { ConsoleTransport } from './ConsoleTransport'
+import { redactUrls } from './redactUrls'
 import type { LogEntry, LoggerTransport, LogLevel } from './types'
 
 const RANK = {
@@ -80,7 +81,8 @@ export class Logger {
     const entry: LogEntry = {
       time,
       level,
-      message,
+      // Transports print the message as is, the parameters go through safeToJSON
+      message: redactUrls(message),
       parameters: { ...this.tags, ...parameters },
     }
     if (!this.options.filter(entry)) return

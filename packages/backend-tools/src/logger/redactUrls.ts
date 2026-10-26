@@ -1,11 +1,31 @@
 const SENSITIVE_PARAM_PARTS = ['key', 'token', 'secret', 'auth', 'password']
 
+// Stops at characters that end a URL embedded in prose, JSON or quoted
+// attributes, e.g. ethers' `url="https://..."` or a JSON-escaped `\"`.
+const URL_IN_TEXT = /\b(?:https?|wss?):\/\/[^\s"'`<>\\]+/gi
+const TRAILING_PUNCTUATION = /[.,;:!?)\]}]+$/
+
 /**
- * Keeps the URL readable while masking secrets: values of sensitive query
- * params and high-entropy path segments (e.g. RPC provider keys baked into the
- * path like `.../v2/<API_KEY>`).
+ * Masks the secrets of every URL found in a free-form text, such as an error
+ * message from a third-party library that embeds the request URL.
  */
-export function sanitizeUrl(url: string): string {
+export function redactUrls(text: string): string {
+  if (!text.includes('://')) {
+    return text
+  }
+  return text.replace(URL_IN_TEXT, (match) => {
+    const trailing = TRAILING_PUNCTUATION.exec(match)?.[0] ?? ''
+    const url = match.slice(0, match.length - trailing.length)
+    return redactUrl(url) + trailing
+  })
+}
+
+/**
+ * Keeps the URL readable while masking secrets: userinfo, values of sensitive
+ * query params and high-entropy path segments (e.g. RPC provider keys baked
+ * into the path like `.../v2/<API_KEY>`).
+ */
+export function redactUrl(url: string): string {
   try {
     const parsed = new URL(url)
 
@@ -50,7 +70,7 @@ function isSecretLikeSegment(segment: string): boolean {
     return false
   }
   return (
-    segment.length >= 24 &&
+    segment.length >= 16 &&
     /^[A-Za-z0-9_-]+$/.test(segment) &&
     /[A-Za-z]/.test(segment) &&
     /[0-9]/.test(segment)
