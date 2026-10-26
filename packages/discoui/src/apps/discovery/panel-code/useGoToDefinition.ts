@@ -229,10 +229,18 @@ export function useGoToDefinition(
     return () => {
       plugin.setHandlers(undefined)
       latestLookup.current++
+      setLookup((current) =>
+        current?.status === 'pending' ? undefined : current,
+      )
     }
   }, [plugin, project, address, sourceIndex, peekDefinitions])
 
-  return { lookup, pick, dismiss: () => setLookup(undefined) }
+  const cancel = () => {
+    latestLookup.current++
+    setLookup(undefined)
+  }
+
+  return { lookup, pick, cancel, dismiss: () => setLookup(undefined) }
 }
 
 function stillShows(view: EditorView, doc: Text): boolean {

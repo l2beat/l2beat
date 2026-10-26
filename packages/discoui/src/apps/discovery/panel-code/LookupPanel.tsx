@@ -10,8 +10,9 @@ export function LookupPanel(props: {
   lookup: DefinitionLookup
   onPick: (index: number) => void
   onDismiss: () => void
+  onClose: () => void
 }) {
-  const { lookup, onPick, onDismiss } = props
+  const { lookup, onPick, onDismiss, onClose } = props
   const rows = rowsOf(lookup)
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export function LookupPanel(props: {
         >
           {title(lookup)}
         </span>
-        <button type="button" onClick={onDismiss} aria-label="Close">
+        <button type="button" onClick={onClose} aria-label="Close">
           <IconClose className="text-coffee-400 hover:text-coffee-200" />
         </button>
       </div>
