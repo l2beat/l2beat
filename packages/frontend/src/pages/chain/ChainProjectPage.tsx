@@ -11,13 +11,20 @@ import { StickyMobileSectionNavigation } from '~/components/section-navigation/S
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ChainProjectPageEntry } from '~/server/features/chains/getChainProjectEntry'
+import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 
 interface Props extends AppLayoutProps {
   entry: ChainProjectPageEntry
+  sectionLinks: ProjectSectionLink[]
   queryState: DehydratedState
 }
 
-export function ChainProjectPage({ entry, queryState, ...props }: Props) {
+export function ChainProjectPage({
+  entry,
+  sectionLinks,
+  queryState,
+  ...props
+}: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
 
   return (
@@ -40,7 +47,11 @@ export function ChainProjectPage({ entry, queryState, ...props }: Props) {
 
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
                 <div className="pt-6 max-md:px-4 lg:pt-4">
-                  <ProjectHeader project={entry} />
+                  <ProjectHeader
+                    project={entry}
+                    section="interop"
+                    sectionLinks={sectionLinks}
+                  />
                 </div>
                 <div className="row-start-2 w-full">
                   <section

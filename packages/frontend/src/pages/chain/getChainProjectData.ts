@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getChainProjectEntry } from '~/server/features/chains/getChainProjectEntry'
+import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -32,9 +33,10 @@ export async function getChainProjectData(
 
 async function loadChainProjectPage(manifest: Manifest, slug: string) {
   const helpers = getSsrHelpers()
-  const [appLayoutProps, entry] = await Promise.all([
+  const [appLayoutProps, entry, sectionLinks] = await Promise.all([
     getAppLayoutProps(),
     getChainProjectEntry(slug, helpers),
+    getProjectSectionLinks(slug),
   ])
   if (!entry) return undefined
 
@@ -53,6 +55,7 @@ async function loadChainProjectPage(manifest: Manifest, slug: string) {
     props: {
       ...appLayoutProps,
       entry,
+      sectionLinks,
       queryState: helpers.dehydrate(),
     },
   }

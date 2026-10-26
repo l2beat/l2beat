@@ -10,6 +10,7 @@ export type SearchBarProjectEntry = SearchBarEntry & {
   iconUrl: string
   kind:
     | 'ethereum'
+    | 'chain'
     | 'layer2'
     | 'layer3'
     | 'interop'
