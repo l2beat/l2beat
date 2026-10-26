@@ -324,6 +324,47 @@
   --chart-sky-fill-gradient: #66ccff;
 }
 
+/* The home page's theme: the site's neutrals, with pink for the charts, one
+   block of colour and the odd highlight.
+   The page sets it on its wrapper for the first paint, and on <html> once
+   mounted, so popovers portalled to <body> get it too. */
+.home-theme {
+  --brand: #ff3776;
+  --link: #d4114f;
+  --link-stroke: #f7c3d3;
+  --nav-active: #d4114f;
+  /* The charts, and the page's one block of colour, with text on it. */
+  --accent: #ff3776;
+  --on-accent: #ffffff;
+
+  font-family: var(--font-inter);
+}
+
+.dark .home-theme,
+.dark.home-theme {
+  --link: #ff6b9a;
+  --link-stroke: #5a1f33;
+  --nav-active: #ff3776;
+}
+
+/* A block in the other theme's colours. */
+.home-theme .inverted {
+  --primary: #fafafa;
+  --secondary: #abb1c1;
+  --surface-primary: #131215;
+  --surface-secondary: #33384b;
+  --divider: #3d4358;
+}
+
+.dark .home-theme .inverted,
+.dark.home-theme .inverted {
+  --primary: #131215;
+  --secondary: #5f6470;
+  --surface-primary: #fafafa;
+  --surface-secondary: #e6e7ec;
+  --divider: #ccd0da;
+}
+
 @theme inline {
   --breakpoint-\*: initial;
   --breakpoint-xs: 400px;
@@ -616,6 +657,8 @@
   --color-chart-ethereum: var(--chart-ethereum);
   --color-chart-pink: var(--chart-pink);
   --color-nav-active: var(--nav-active);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
   --color-chart-fuchsia: var(--chart-fuchsia);
   --color-chart-lime: var(--chart-lime);
   --color-chart-sky: var(--chart-sky);
