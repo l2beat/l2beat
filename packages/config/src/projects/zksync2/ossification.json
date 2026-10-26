@@ -1,6 +1,13 @@
 {
   "events": [
     {
+      "timestamp": 1681572599,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x59aa901cc4f365ed5f1a801288f143a4bf5d79eb42e9e669200135ec1eb13a22",
+      "reason": "Matter Labs Multisig, then the Era Diamond governor, went from 3 of 7 to 4 of 7 signers (ChangedThreshold)."
+    },
+    {
       "timestamp": 1695403367,
       "type": "code",
       "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -120,14 +127,6 @@
       "reason": "Matter Labs Multisig, via the EraChainAdminProxy, replaced the Era Diamond's TransactionFilterer 0xC8Cc…7C78 with 0x62F3…FA4f (NewTransactionFilterer event, bisected to block 22296155)."
     },
     {
-      "timestamp": 1745497499,
-      "type": "state",
-      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
-      "transaction": "0x1ea454b64ef579e7377d66bb8784c0c0554ef93fe903e425c0a8b6b3233e40aa",
-      "updateId": "bff2a528",
-      "reason": "Matter Labs Multisig, via the EraChainAdminProxy, removed the Era Diamond's TransactionFilterer (0x62F3…FA4f -> zero address) (NewTransactionFilterer event, bisected to block 22338850)."
-    },
-    {
       "timestamp": 1746446579,
       "type": "code",
       "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -182,5 +181,6 @@
       "updateId": "11f5e2d6",
       "reason": "Matter Labs Multisig, via the EraChainAdminProxy, raised Era's execution delay on the ValidatorTimelock from 3h to 1d (ZIP-17), dating diffHistory entry 11f5e2d6 at block 26141812."
     }
-  ]
+  ],
+  "ignoredUpdates": ["bff2a528"]
 }

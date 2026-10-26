@@ -81,11 +81,11 @@
         "withdrawalLockBlocks": 3
       },
       "fieldMeta": {
-        "rewardPercentage": { "severity": "HIGH" },
+        "rewardPercentage": { "severity": "MEDIUM" },
         "messenger": { "severity": "HIGH" },
         "$admin": { "severity": "MEDIUM" },
         "rollupContract": { "severity": "HIGH" },
-        "stakingValue": { "severity": "HIGH" },
+        "stakingValue": { "severity": "MEDIUM" },
         "challengeDeposit": { "severity": "HIGH" },
         "withdrawalLockBlocks": { "severity": "HIGH" },
         "owner": { "severity": "MEDIUM" }
@@ -971,7 +971,7 @@
         "owner": { "severity": "MEDIUM" },
         "$admin": { "severity": "MEDIUM" },
         "tokenMapping": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "L1-to-L2 token mapping used to validate custom-token deposits and withdrawals."
         }
       },
@@ -1396,9 +1396,9 @@
         "submitters": {
           "description": "Submitters currently registered by the owner, reconstructed from add, remove, withdrawal and slash events. A submitter is active only while its stake is at or above minimumStake."
         },
-        "minimumStake": { "severity": "HIGH" },
+        "minimumStake": { "severity": "MEDIUM" },
         "challengeDeposit": { "severity": "HIGH" },
-        "rewardPercentage": { "severity": "HIGH" },
+        "rewardPercentage": { "severity": "MEDIUM" },
         "rollupContract": { "severity": "HIGH" },
         "$admin": { "severity": "MEDIUM" },
         "owner": { "severity": "MEDIUM" }

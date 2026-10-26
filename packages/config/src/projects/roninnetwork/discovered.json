@@ -813,7 +813,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Governance and proxy-admin contract for the legacy MainchainGateway bridge. Holds the operator/governor set, tallies stake-weighted votes for bridge proposals (operator rotations, threshold changes, withdrawals).",
-      "critical": true,
       "deployerAddress": "eth:0xA62DddCC58E769bCFd2f9A7A61CDF331f18c2650",
       "sinceTimestamp": 1722414335,
       "sinceBlock": 20425326,
@@ -952,7 +951,7 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "MEDIUM" },
-        "getThreshold": { "severity": "HIGH" },
+        "getThreshold": { "severity": "MEDIUM" },
         "getBridgeOperators": { "severity": "MEDIUM" },
         "getGovernors": { "severity": "MEDIUM" },
         "getFullBridgeOperatorInfos": { "severity": "MEDIUM" }
@@ -1551,7 +1550,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Legacy multi-sig-secured Ronin bridge contract holding the L1 side of deposits made before the April 2025 Chainlink CCIP migration. Still custodies residual user balances (ETH backing legacy WETH on Ronin, the deprecated WBTC contract, and dust). Withdrawals authorised by the Ronin BridgeOperator stake-weighted threshold via MainchainBridgeManager.",
-      "critical": true,
       "deployerAddress": "eth:0xAA1d342354d755EC515F40e7d5E83CB4184bB9ee",
       "sinceTimestamp": 1655883630,
       "sinceBlock": 15006576,
@@ -1639,9 +1637,9 @@
         "$admin": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "emergencyPauser": { "severity": "MEDIUM" },
-        "getThreshold": { "severity": "HIGH" },
-        "getHighTierVoteWeightThreshold": { "severity": "HIGH" },
-        "bridgeManager": { "severity": "HIGH" },
+        "getThreshold": { "severity": "MEDIUM" },
+        "getHighTierVoteWeightThreshold": { "severity": "MEDIUM" },
+        "bridgeManager": { "severity": "MEDIUM" },
         "accessControl": { "severity": "MEDIUM" }
       },
       "implementationNames": {
@@ -2806,7 +2804,6 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency.",
-      "critical": true,
       "deployerAddress": "eth:0xeC42Db8Ad8a9a601bF329708C3372e676bd34042",
       "sinceTimestamp": 1743765359,
       "sinceBlock": 22195196,
