@@ -66,7 +66,7 @@ export async function getDefiProjectEntry(
       'externalDependencies',
       'discoveryUpdates',
       'ossificationHistory',
-      'crops',
+      'garden',
     ],
   })
 

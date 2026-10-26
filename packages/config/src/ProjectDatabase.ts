@@ -57,6 +57,7 @@ const schema = {
   externalDependencies: 'TEXT',
 
   crops: 'TEXT',
+  garden: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',

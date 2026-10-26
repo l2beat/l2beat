@@ -8,9 +8,7 @@ export {
   type CropsAttestationsMeta,
   getCropsAttestationsMeta,
 } from './crops/attestations'
-export { getGardenProjectPath } from './crops/getGardenProjectPath'
 export { OSI_LICENSES } from './crops/osiLicenses'
-export { resolveGarden } from './crops/resolveCrops'
 export { PROJECT_COUNTDOWNS } from './global/countdowns'
 export {
   INTEROP_CHAINS,

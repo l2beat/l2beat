@@ -1,15 +1,11 @@
-import {
-  getGardenProjectPath,
-  type Project,
-  resolveGarden,
-} from '@l2beat/config'
+import type { Project } from '@l2beat/config'
+import { measureOssificationBand } from '@l2beat/shared/frontend'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiSummaryEntries'
-import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
 import { describeOssification } from '~/server/features/garden/describeOssification'
 import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
@@ -51,7 +47,7 @@ export interface GardenEntry {
 }
 
 type GardenProject = Project<
-  'crops',
+  'garden',
   | 'scalingInfo'
   | 'privacyInfo'
   | 'defiInfo'
@@ -67,8 +63,8 @@ export async function getGardenData(
 ): Promise<RenderData> {
   const [reviewed, attestation] = await Promise.all([
     ps.getProjects({
-      where: ['crops'],
-      select: ['crops'],
+      where: ['garden'],
+      select: ['garden'],
       optional: [
         'scalingInfo',
         'privacyInfo',
@@ -86,8 +82,14 @@ export async function getGardenData(
   const now = UnixTime.now()
   const listed = reviewed
     .filter((project) => attested.has(project.id))
-    .map((project) => ({ project, garden: resolveGarden(project, now) }))
-    .filter(({ garden }) => garden.listing === 'listed')
+    .map((project) => ({
+      project,
+      verdict:
+        project.garden.verdicts[
+          measureOssificationBand(project.ossificationHistory, now)
+        ],
+    }))
+    .filter(({ verdict }) => verdict.listing === 'listed')
     .sort((a, b) => compareByCuratedOrder(a.project, b.project))
   const projects = listed.map(({ project }) => project)
 
@@ -107,15 +109,13 @@ export async function getGardenData(
   ])
 
   const entries: GardenEntry[] = await Promise.all(
-    listed.map(async ({ project, garden }) => ({
+    listed.map(async ({ project, verdict }) => ({
       name: project.name,
       slug: project.slug,
-      href: getGardenProjectPath(project, {
-        hasDefiPage: hasDefiProjectPage(project),
-      }),
+      href: project.garden.path,
       subtitle: getSubtitle(project),
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      crops: garden.crops,
+      crops: verdict.crops,
       // One value-series read per listed project, as on the ossification
       // page. The garden lists a handful, so it is not worth a batched query.
       ossification: describeOssification(await getProjectOssification(project)),

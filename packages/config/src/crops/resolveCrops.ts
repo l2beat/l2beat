@@ -1,18 +1,18 @@
+import type { OssificationHistory } from '@l2beat/shared/frontend'
 import {
-  measureOssification,
-  type OssificationHistory,
-} from '@l2beat/shared/frontend'
-import {
-  getOssificationSentiment,
   OSSIFICATION_BAND_MEANING,
   OSSIFICATION_SCORE_BANDS,
-  type UnixTime,
+  type OssificationBand,
 } from '@l2beat/shared-pure'
 import type {
   GardenListing,
+  GardenVerdict,
   ProjectCrops,
+  ProjectDefiInfo,
   ProjectGarden,
   ProjectOpenSourceCropEvaluation,
+  ProjectPrivacyInfo,
+  ProjectScalingInfo,
   ResolvedCropEvaluation,
   ResolvedCrops,
 } from '../types'
@@ -20,29 +20,35 @@ import { OSI_LICENSES, type OsiLicense, type OsiLicenseId } from './osiLicenses'
 
 // Config leaves a crop's defaults implicit, and Security also depends on the
 // project's ossification score, which grows every day without a critical
-// change. So the site and the CROPS API resolve the verdict when they serve
-// it: stored with the cached config build, it would go stale.
+// change. The build cannot know the score a reader will see, so it resolves a
+// verdict for every band, and the site and the CROPS API read the one their
+// own `now` falls in.
 
-export function resolveGarden(
-  project: {
-    crops: ProjectCrops
-    ossificationHistory?: OssificationHistory | undefined
-  },
-  now: UnixTime,
-): ProjectGarden {
-  const score = scoreOssification(project.ossificationHistory, now)
+export function resolveGarden(project: {
+  slug: string
+  crops: ProjectCrops
+  privacyInfo?: ProjectPrivacyInfo | undefined
+  scalingInfo?: ProjectScalingInfo | undefined
+  defiInfo?: ProjectDefiInfo | undefined
+  ossificationHistory?: OssificationHistory | undefined
+}): ProjectGarden {
   const crops: ResolvedCrops = {
     censorshipResistance: resolveCropEvaluation(
       project.crops.censorshipResistance,
     ),
     openSource: resolveCropEvaluation(project.crops.openSource),
     privacy: resolveCropEvaluation(project.crops.privacy),
-    security: capByOssification(
-      resolveCropEvaluation(project.crops.security),
-      score,
-    ),
+    security: resolveCropEvaluation(project.crops.security),
   }
-  return { crops, listing: getGardenListing(crops, score) }
+  return {
+    path: getGardenProjectPath(project),
+    verdicts: {
+      good: resolveVerdict(crops, 'good'),
+      warning: resolveVerdict(crops, 'warning'),
+      bad: resolveVerdict(crops, 'bad'),
+      unscored: resolveVerdict(crops, 'unscored'),
+    },
+  }
 }
 
 export function resolveCropEvaluation(
@@ -63,19 +69,12 @@ export function resolveCropEvaluation(
   return resolved
 }
 
-/**
- * Undefined without an ossification history, and while a critical contract is
- * unverified: unverified code cannot be scored, as the ossification table says.
- */
-function scoreOssification(
-  history: OssificationHistory | undefined,
-  now: UnixTime,
-): number | undefined {
-  if (!history) {
-    return undefined
-  }
-  const { score, contracts } = measureOssification(history, now)
-  return contracts.every((c) => c.isVerified) ? score : undefined
+function resolveVerdict(
+  crops: ResolvedCrops,
+  band: OssificationBand,
+): GardenVerdict {
+  const capped = { ...crops, security: capByOssification(crops.security, band) }
+  return { crops: capped, listing: getGardenListing(capped, band) }
 }
 
 const SENTIMENT_RANK = { bad: 0, warning: 1, good: 2 } as const
@@ -91,29 +90,28 @@ const SENTIMENT_RANK = { bad: 0, warning: 1, good: 2 } as const
  */
 function capByOssification(
   security: ResolvedCropEvaluation,
-  score: number | undefined,
+  band: OssificationBand,
 ): ResolvedCropEvaluation {
-  if (score === undefined) {
+  if (band === 'unscored') {
     return {
       ...security,
       notReviewed: [...security.notReviewed, 'Ossification score.'],
     }
   }
-  const cap = getOssificationSentiment(score)
   const reason =
-    cap === 'warning'
+    band === 'warning'
       ? `Ossification score below ${OSSIFICATION_SCORE_BANDS.good}, which takes ${OSSIFICATION_BAND_MEANING.good}.`
       : `Ossification score below ${OSSIFICATION_SCORE_BANDS.warning}, which means ${OSSIFICATION_BAND_MEANING.warning}.`
   const capped = { ...security, missing: [reason, ...security.missing] }
   if (security.sentiment === 'neutral') {
-    return cap === 'bad'
+    return band === 'bad'
       ? { ...capped, sentiment: 'bad', status: 'partiallyReviewed' }
       : security
   }
-  if (SENTIMENT_RANK[security.sentiment] <= SENTIMENT_RANK[cap]) {
+  if (SENTIMENT_RANK[security.sentiment] <= SENTIMENT_RANK[band]) {
     return security
   }
-  return { ...capped, sentiment: cap }
+  return { ...capped, sentiment: band }
 }
 
 /**
@@ -123,12 +121,12 @@ function capByOssification(
  */
 function getGardenListing(
   crops: ResolvedCrops,
-  score: number | undefined,
+  band: OssificationBand,
 ): GardenListing {
   if (Object.values(crops).some((crop) => crop.sentiment === 'bad')) {
     return 'ratedBad'
   }
-  return score === undefined ? 'noOssificationScore' : 'listed'
+  return band === 'unscored' ? 'noOssificationScore' : 'listed'
 }
 
 /** Throws rather than serve a green Open source crop nothing backs. */
@@ -141,4 +139,29 @@ function getOsiLicense(id: OsiLicenseId): OsiLicense {
     )
   }
   return license
+}
+
+/**
+ * The l2beat.com page a reviewed project has, or null when it has none, so a
+ * link never leads to a missing page. DeFi pages are off in production, but a
+ * project the ossification table measures gets one, so a DeFi project has a
+ * page exactly when it has an ossification history.
+ */
+function getGardenProjectPath(project: {
+  slug: string
+  privacyInfo?: ProjectPrivacyInfo | undefined
+  scalingInfo?: ProjectScalingInfo | undefined
+  defiInfo?: ProjectDefiInfo | undefined
+  ossificationHistory?: OssificationHistory | undefined
+}): string | null {
+  if (project.privacyInfo) {
+    return `/privacy/projects/${project.slug}`
+  }
+  if (project.scalingInfo) {
+    return `/layer2s/projects/${project.slug}`
+  }
+  if (project.defiInfo && project.ossificationHistory !== undefined) {
+    return `/defi/projects/${project.slug}`
+  }
+  return null
 }

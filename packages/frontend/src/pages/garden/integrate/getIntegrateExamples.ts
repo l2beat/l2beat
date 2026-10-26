@@ -1,14 +1,9 @@
+import type { ProjectGarden, ResolvedCrops } from '@l2beat/config'
 import {
-  getGardenProjectPath,
-  type ProjectCrops,
-  type ProjectDefiInfo,
-  type ProjectPrivacyInfo,
-  type ProjectScalingInfo,
-  type ResolvedCrops,
-  resolveGarden,
-} from '@l2beat/config'
-import type { OssificationHistory } from '@l2beat/shared/frontend'
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+  measureOssificationBand,
+  type OssificationHistory,
+} from '@l2beat/shared/frontend'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { ps } from '~/server/projects'
 import { CROPS_API_URL, type CropsApiEndpointKey } from './content'
@@ -32,11 +27,8 @@ export interface ExampleProject {
   id: string
   slug: string
   name: string
-  crops: ProjectCrops
+  garden: ProjectGarden
   ossificationHistory?: OssificationHistory | undefined
-  privacyInfo?: ProjectPrivacyInfo | undefined
-  scalingInfo?: ProjectScalingInfo | undefined
-  defiInfo?: ProjectDefiInfo | undefined
   contracts?:
     | {
         addresses: Record<
@@ -69,15 +61,9 @@ export async function getIntegrateExamples(
   meta: CropsAttestationsMeta,
 ): Promise<IntegrateExamples> {
   const projects = await ps.getProjects({
-    where: ['crops'],
-    select: ['crops'],
-    optional: [
-      'scalingInfo',
-      'privacyInfo',
-      'defiInfo',
-      'contracts',
-      'ossificationHistory',
-    ],
+    where: ['garden'],
+    select: ['garden'],
+    optional: ['contracts', 'ossificationHistory'],
   })
   const generatedAt = Math.floor(Date.now() / 1000)
   return buildIntegrateExamples(
@@ -155,12 +141,9 @@ function toApiProject(
   meta: CropsAttestationsMeta,
   generatedAt: number,
 ): ApiProject {
-  // The API's rule, not the site's flags: crops-api cannot read them, and
-  // these examples show what it serves.
-  const path = getGardenProjectPath(project, {
-    hasDefiPage: project.ossificationHistory !== undefined,
-  })
-  const { crops, listing } = resolveGarden(project, UnixTime(generatedAt))
+  const { path, verdicts } = project.garden
+  const { crops, listing } =
+    verdicts[measureOssificationBand(project.ossificationHistory, generatedAt)]
   const attested = meta.current?.projectIds.includes(project.id)
   return {
     id: project.id,

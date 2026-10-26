@@ -1,14 +1,5 @@
-import {
-  getGardenProjectPath,
-  type Project,
-  type ProjectCrops,
-  type ProjectDefiInfo,
-  type ProjectPrivacyInfo,
-  type ProjectScalingInfo,
-  type ResolvedCrops,
-  resolveGarden,
-} from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { Project, ProjectGarden, ResolvedCrops } from '@l2beat/config'
+import { measureOssificationBand } from '@l2beat/shared'
 import { type Validator, v } from '@l2beat/validate'
 import {
   CropSentimentSchema,
@@ -232,13 +223,10 @@ export interface CropsSourceProject {
   id: string
   slug: string
   name: string
-  crops: ProjectCrops
+  garden: ProjectGarden
   ossificationHistory?:
     | Project<'ossificationHistory'>['ossificationHistory']
     | undefined
-  privacyInfo?: ProjectPrivacyInfo | undefined
-  scalingInfo?: ProjectScalingInfo | undefined
-  defiInfo?: ProjectDefiInfo | undefined
 }
 
 /** Resolved as of `generatedAt`, so a file and its timestamp agree. */
@@ -247,13 +235,9 @@ export function resolveCropsProject(
   meta: CropsAttestationsMeta,
   generatedAt: number,
 ): CropsApiProject {
-  // The API cannot read l2beat.com's feature flags. In production DeFi pages
-  // are off and ossification is on, so a DeFi project has a page exactly when
-  // it has an ossification history (the frontend's hasDefiProjectPage).
-  const path = getGardenProjectPath(project, {
-    hasDefiPage: project.ossificationHistory !== undefined,
-  })
-  const { crops, listing } = resolveGarden(project, UnixTime(generatedAt))
+  const { path, verdicts } = project.garden
+  const { crops, listing } =
+    verdicts[measureOssificationBand(project.ossificationHistory, generatedAt)]
   const attested = meta.current?.projectIds.includes(project.id)
   return {
     id: project.id,

@@ -13,6 +13,9 @@ export const OSSIFICATION_BAND_MEANING = {
 
 export type OssificationSentiment = 'good' | 'warning' | 'bad'
 
+/** A score's sentiment, or `unscored` when there is no score to read. */
+export type OssificationBand = OssificationSentiment | 'unscored'
+
 export function getOssificationSentiment(score: number): OssificationSentiment {
   if (score >= OSSIFICATION_SCORE_BANDS.good) return 'good'
   if (score >= OSSIFICATION_SCORE_BANDS.warning) return 'warning'

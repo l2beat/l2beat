@@ -9,6 +9,7 @@ import {
   EthereumAddress,
   isDateOnly,
   type KnownInteropBridgeType,
+  type OssificationBand,
   type ProjectId,
   TokenId,
   type TrackedTxsConfigSubtype,
@@ -261,6 +262,8 @@ export interface BaseProject {
 
   // crops data
   crops?: ProjectCrops
+  /** Built from `crops` when config builds, see `ProjectGarden`. */
+  garden?: ProjectGarden
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -1674,14 +1677,22 @@ export type ResolvedCrops = Record<keyof ProjectCrops, ResolvedCropEvaluation>
 /** Whether a reviewed project is listed in the garden, and if not, why. */
 export type GardenListing = 'listed' | 'ratedBad' | 'noOssificationScore'
 
-/**
- * `crops` as the site and the CROPS API show them: every default filled in,
- * Security capped by the ossification score, and whether the garden lists the
- * project. Readers resolve it when they serve it, see `resolveGarden`.
- */
-export interface ProjectGarden {
+/** `crops` as shown: every default filled in, Security capped, and whether the garden lists the project. */
+export interface GardenVerdict {
   crops: ResolvedCrops
   listing: GardenListing
+}
+
+/**
+ * What the site and the CROPS API show for a reviewed project. Security is
+ * capped by the ossification score, which moves with time while the config
+ * build is cached, so there is a verdict per band: read the one for the band
+ * measured now (`measureOssificationBand`).
+ */
+export interface ProjectGarden {
+  /** The l2beat.com page to link, or null when the project has none. */
+  path: string | null
+  verdicts: Record<OssificationBand, GardenVerdict>
 }
 
 // #endregion

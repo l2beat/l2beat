@@ -175,7 +175,7 @@ export async function getL2ProjectEntry(
     | 'discoveryInfo'
     | 'discoveryUpdates'
     | 'daTrackingConfig'
-    | 'crops'
+    | 'garden'
     | 'ossificationHistory'
   >,
   helpers: SsrHelpers,

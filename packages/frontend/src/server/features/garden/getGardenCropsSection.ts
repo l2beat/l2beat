@@ -1,5 +1,8 @@
-import { type ProjectCrops, resolveGarden } from '@l2beat/config'
-import type { OssificationHistory } from '@l2beat/shared/frontend'
+import type { ProjectGarden } from '@l2beat/config'
+import {
+  measureOssificationBand,
+  type OssificationHistory,
+} from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
@@ -14,27 +17,29 @@ import { isCropsAttested } from './getAttestationsMeta'
 export async function getGardenCropsSection(
   project: {
     id: string
-    crops?: ProjectCrops | undefined
+    garden?: ProjectGarden | undefined
     ossificationHistory?: OssificationHistory | undefined
   },
   ossification: OssificationStats | undefined,
 ): Promise<ProjectDetailsSection | undefined> {
-  const { crops } = project
   if (
     !env.CLIENT_SIDE_GARDEN_ENABLED ||
-    !crops ||
+    !project.garden ||
     !(await isCropsAttested(project.id))
   ) {
     return undefined
   }
-  const garden = resolveGarden({ ...project, crops }, UnixTime.now())
+  const { crops, listing } =
+    project.garden.verdicts[
+      measureOssificationBand(project.ossificationHistory, UnixTime.now())
+    ]
   return {
     type: 'GardenCropsSection',
     props: {
       id: 'crops',
       title: 'CROPS',
-      crops: garden.crops,
-      listing: garden.listing,
+      crops,
+      listing,
       ossification: describeOssification(ossification),
     },
   }

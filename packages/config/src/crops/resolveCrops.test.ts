@@ -1,7 +1,10 @@
 import type { OssificationHistory } from '@l2beat/shared'
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { ProjectCrops } from '../types'
+import type {
+  ProjectCrops,
+  ProjectDefiInfo,
+  ProjectPrivacyInfo,
+} from '../types'
 import { OSI_LICENSES } from './osiLicenses'
 import { resolveCropEvaluation, resolveGarden } from './resolveCrops'
 
@@ -55,7 +58,6 @@ describe('resolveCrops', () => {
   })
 
   describe(resolveGarden.name, () => {
-    const now = UnixTime(1_800_000_000)
     const crops = (overrides: Partial<ProjectCrops> = {}): ProjectCrops => ({
       censorshipResistance: { sentiment: 'good' },
       openSource: { sentiment: 'good' },
@@ -63,58 +65,33 @@ describe('resolveCrops', () => {
       security: { sentiment: 'good', missing: ['Written.'] },
       ...overrides,
     })
-    // Scores 86 two years after the last change, 66 after four months and 30
-    // after a week: one per band.
-    const unchangedFor = (days: number, isVerified = true) =>
-      history(now - days * UnixTime.DAY, isVerified)
+    const verdicts = (overrides: Partial<ProjectCrops> = {}) =>
+      resolveGarden({ slug: 'p', crops: crops(overrides) }).verdicts
 
     it('lists a project with no red crop and an ossification score', () => {
-      const resolved = resolveGarden(
-        {
-          crops: crops({
-            privacy: { status: 'fullyTransparent' },
-            security: { sentiment: 'warning', status: 'partiallyReviewed' },
-          }),
-          ossificationHistory: unchangedFor(730),
-        },
-        now,
-      )
-      expect(resolved.listing).toEqual('listed')
+      const { good } = verdicts({
+        privacy: { status: 'fullyTransparent' },
+        security: { sentiment: 'warning', status: 'partiallyReviewed' },
+      })
+      expect(good.listing).toEqual('listed')
     })
 
     it('keeps a project out when any crop is red, even partially reviewed', () => {
-      const resolved = resolveGarden(
-        {
-          crops: crops({
-            censorshipResistance: {
-              sentiment: 'bad',
-              status: 'partiallyReviewed',
-            },
-          }),
-          ossificationHistory: unchangedFor(730),
-        },
-        now,
-      )
-      expect(resolved.listing).toEqual('ratedBad')
+      const { good } = verdicts({
+        censorshipResistance: { sentiment: 'bad', status: 'partiallyReviewed' },
+      })
+      expect(good.listing).toEqual('ratedBad')
     })
 
-    it('keeps the written Security rating from the top band', () => {
-      const { crops: resolved } = resolveGarden(
-        { crops: crops(), ossificationHistory: unchangedFor(730) },
-        now,
-      )
-      expect(resolved.security).toHaveSubset({
+    it('keeps the written Security rating in the top band', () => {
+      expect(verdicts().good.crops.security).toHaveSubset({
         sentiment: 'good',
         missing: ['Written.'],
       })
     })
 
     it('caps Security at warning in the middle band and says why first', () => {
-      const { crops: resolved } = resolveGarden(
-        { crops: crops(), ossificationHistory: unchangedFor(120) },
-        now,
-      )
-      expect(resolved.security).toHaveSubset({
+      expect(verdicts().warning.crops.security).toHaveSubset({
         sentiment: 'warning',
         missing: [
           'Ossification score below 80, which takes about a year without a critical change.',
@@ -124,41 +101,28 @@ describe('resolveCrops', () => {
     })
 
     it('rates Security bad in the bottom band, which keeps the project out', () => {
-      const resolved = resolveGarden(
-        { crops: crops(), ossificationHistory: unchangedFor(7) },
-        now,
-      )
-      expect(resolved.crops.security.sentiment).toEqual('bad')
-      expect(resolved.listing).toEqual('ratedBad')
+      const { bad } = verdicts()
+      expect(bad.crops.security.sentiment).toEqual('bad')
+      expect(bad.listing).toEqual('ratedBad')
     })
 
     it('grades an ungraded Security bad in the bottom band, which keeps the project out', () => {
-      const resolved = resolveGarden(
-        {
-          crops: crops({ security: { status: 'notReviewed' } }),
-          ossificationHistory: unchangedFor(7),
-        },
-        now,
-      )
-      expect(resolved.crops.security).toHaveSubset({
+      const { bad } = verdicts({ security: { status: 'notReviewed' } })
+      expect(bad.crops.security).toHaveSubset({
         sentiment: 'bad',
         status: 'partiallyReviewed',
         missing: [
           'Ossification score below 50, which means a critical change within roughly the last five weeks.',
         ],
       })
-      expect(resolved.listing).toEqual('ratedBad')
+      expect(bad.listing).toEqual('ratedBad')
     })
 
     it('leaves an ungraded Security ungraded above the bottom band', () => {
-      const { crops: resolved } = resolveGarden(
-        {
-          crops: crops({ security: { status: 'notReviewed' } }),
-          ossificationHistory: unchangedFor(120),
-        },
-        now,
-      )
-      expect(resolved.security).toHaveSubset({
+      expect(
+        verdicts({ security: { status: 'notReviewed' } }).warning.crops
+          .security,
+      ).toHaveSubset({
         sentiment: 'neutral',
         status: 'notReviewed',
         missing: [],
@@ -166,51 +130,34 @@ describe('resolveCrops', () => {
     })
 
     it('never raises a written rating', () => {
-      const { crops: resolved } = resolveGarden(
-        {
-          crops: crops({ security: { sentiment: 'bad' } }),
-          ossificationHistory: unchangedFor(730),
-        },
-        now,
-      )
-      expect(resolved.security.sentiment).toEqual('bad')
+      expect(
+        verdicts({ security: { sentiment: 'bad' } }).good.crops.security
+          .sentiment,
+      ).toEqual('bad')
     })
 
-    for (const [name, ossificationHistory] of [
-      ['without an ossification history', undefined],
-      ['while a critical contract is unverified', unchangedFor(7, false)],
-    ] as const) {
-      it(`has no score ${name}: Security says so, and the project is unlisted`, () => {
-        const resolved = resolveGarden(
-          { crops: crops(), ossificationHistory },
-          now,
-        )
-        expect(resolved.crops.security).toHaveSubset({
-          sentiment: 'good',
-          notReviewed: ['Ossification score.'],
-        })
-        expect(resolved.listing).toEqual('noOssificationScore')
+    it('says when there is no score, and keeps the project out', () => {
+      const { unscored } = verdicts()
+      expect(unscored.crops.security).toHaveSubset({
+        sentiment: 'good',
+        notReviewed: ['Ossification score.'],
       })
-    }
+      expect(unscored.listing).toEqual('noOssificationScore')
+    })
+
+    it('links the page the project has', () => {
+      const path = (project: Partial<Parameters<typeof resolveGarden>[0]>) =>
+        resolveGarden({ slug: 'p', crops: crops(), ...project }).path
+      expect(path({ privacyInfo: {} as ProjectPrivacyInfo })).toEqual(
+        '/privacy/projects/p',
+      )
+      expect(path({ defiInfo: {} as ProjectDefiInfo })).toEqual(null)
+      expect(
+        path({
+          defiInfo: {} as ProjectDefiInfo,
+          ossificationHistory: {} as OssificationHistory,
+        }),
+      ).toEqual('/defi/projects/p')
+    })
   })
 })
-
-function history(since: number, isVerified: boolean): OssificationHistory {
-  return {
-    contracts: [
-      {
-        name: 'Core',
-        address: ChainSpecificAddress(
-          'eth:0x1F98431c8aD98523631AE4a59f267346ea31F984',
-        ),
-        isVerified,
-        ossifyingSince: since,
-        codeChangeCount: 0,
-        stateChangeCount: 0,
-      },
-    ],
-    changes: [],
-    deployments: [since],
-    observedSince: since,
-  }
-}

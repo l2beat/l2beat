@@ -5,9 +5,9 @@ import type {
   PrivacyExitWindow,
   PrivacySummaryValue,
   ProjectContracts,
-  ProjectCrops,
   ProjectDiscoveryUpdate,
   ProjectDisplay,
+  ProjectGarden,
   ProjectPermissions,
   ProjectPrivacyAdversaries,
   ProjectStatuses,
@@ -64,8 +64,8 @@ export interface PrivacyProjectDetails {
   ossification?: ProjectOssificationView
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
-  crops?: ProjectCrops
-  /** Security's ossification cap needs it. */
+  garden?: ProjectGarden
+  /** Picks which `garden` verdict applies, see `ProjectGarden`. */
   ossificationHistory?: OssificationHistory
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
   category: PrivacyCategory
@@ -288,7 +288,7 @@ export async function getPrivacyProjectDetails(
     ossification,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
-    crops: project.crops,
+    garden: project.garden,
     ossificationHistory: project.ossificationHistory,
     trustedSetups: project.trustedSetups,
     category: project.privacyInfo.category,
