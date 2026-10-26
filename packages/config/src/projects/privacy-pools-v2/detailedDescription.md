@@ -1,6 +1,6 @@
 Privacy Pools v2 by 0xbow lets you shield ETH, USDC or USDT in one pool, then send, swap, earn Aave yield and withdraw without a visible link to the deposit. Only deposits that 0xbow's association set provider (ASP) approves can be spent privately. Depositors, recipients, amounts and timing at the pool's edges stay public.
 
-Users trust 0xbow, which runs the ASP, the only relayer and the website, and one key that can upgrade every core contract without delay. The ASP can withhold or revoke approval for any deposit. Exiting is permissionless: a note's owner can always ragequit it from the vault, losing their privacy.
+Users trust 0xbow, which runs the ASP, the only relayer and the website, and a multisig that can upgrade every core contract without delay. The ASP can withhold or revoke approval for any deposit. Exiting is permissionless: a note's owner can ragequit it from the vault, losing their privacy, unless that multisig blocks it.
 
 ### Architecture
 
@@ -32,7 +32,7 @@ The yield shares keep a fixed share count while their value grows, so the share 
 
 ### Exits
 
-**Ragequit.** The note's current owner can take out its full value at any time, approved or not, directly from the vault, also while it is paused. It publishes the owner, the amount, the label and the commitment, which names the transaction that created the note.
+**Ragequit.** The note's current owner can take out its full value, approved or not, directly from the vault, also while it is paused. It publishes the owner, the amount, the label and the commitment, which names the transaction that created the note.
 
 **Claim link.** A payment to an unregistered address can only be claimed with the link the payer holds. Until then the funds can neither move nor exit.
 

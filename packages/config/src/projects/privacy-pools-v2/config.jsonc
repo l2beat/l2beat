@@ -10,7 +10,6 @@
     "eth:0x77613D670BB9fD48A9898D0eac8ebf21B566F960"
   ],
   "names": {
-    "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8": "RelaySwaps",
     "eth:0xe76E793d776c1e207aD7a7fa7C57d27420d85110": "PPRouterUSDC",
     "eth:0x13a0b86bac3e0C29bd64fED7BCD2EE84f371f41C": "PPRouterUSDT",
     "eth:0x77613D670BB9fD48A9898D0eac8ebf21B566F960": "PPRouterETH",
@@ -20,27 +19,5 @@
     "eth:0x9Ea986BcDF6784D85B518b15bEEE1E65b585817B": "PPYieldTokenZapUSDC",
     "eth:0xDC3D922df81FC7B7f58229431ED91acB0482f3A5": "PPYieldTokenZapUSDT",
     "eth:0x33c1eEf370bBb447414156CFc4fDABD434776EAf": "PPYieldTokenZapETH"
-  },
-  "overrides": {
-    "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8": {
-      "description": "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, with the swap calldata bound into the proof.",
-      "fields": {
-        "owner": {
-          "severity": "HIGH",
-          "type": "PERMISSION",
-          "handler": {
-            "type": "call",
-            "method": "function owner() view returns (address)",
-            "args": []
-          },
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "approve the aggregator routers and yield zaps that RelaySwaps sends withdrawn funds through."
-            }
-          ]
-        }
-      }
-    }
   }
 }
