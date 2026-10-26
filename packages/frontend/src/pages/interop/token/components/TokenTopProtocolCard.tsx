@@ -11,8 +11,13 @@ import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/Info'
 import type { InteropTokenDashboardData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { cn } from '~/utils/cn'
+import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { buildInteropUrl } from '../../utils/buildInteropUrl'
 import type { InteropSelection } from '../../utils/types'
+import {
+  getTopProtocolBasis,
+  UNRELIABLE_PRICE_NOTICE,
+} from '../getInteropTokenNotices'
 
 type TopProtocol = NonNullable<InteropTokenDashboardData['topProtocol']>
 
@@ -21,8 +26,15 @@ const TOP_PROTOCOL_STATS = [
     label: 'Volume',
     tooltip:
       "The total USD value of this token's transfers handled by the protocol in the past 24 hours.",
-    format: (topProtocol: TopProtocol) =>
-      formatCurrency(topProtocol.volume.value, 'usd'),
+    format: ({ volume }: TopProtocol) =>
+      volume ? (
+        formatCurrency(volume.value, 'usd')
+      ) : (
+        <InteropNoDataBadge
+          size="extraSmall"
+          tooltip={UNRELIABLE_PRICE_NOTICE}
+        />
+      ),
   },
   {
     label: 'Transaction count',
@@ -37,6 +49,7 @@ interface Props {
   data: InteropTokenDashboardData | undefined
   isLoading: boolean
   apiSelection: InteropSelection
+  isPriceUnreliable: boolean
   className?: string
 }
 
@@ -44,6 +57,7 @@ export function TokenTopProtocolCard({
   data,
   isLoading,
   apiSelection,
+  isPriceUnreliable,
   className,
 }: Props) {
   const topProtocol = data?.topProtocol
@@ -57,7 +71,7 @@ export function TokenTopProtocolCard({
     >
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between xl:flex-row xl:items-center xl:justify-start xl:gap-10">
-          <TopProtocolHeading />
+          <TopProtocolHeading isPriceUnreliable={isPriceUnreliable} />
           <TopProtocolIdentity
             topProtocol={topProtocol}
             apiSelection={apiSelection}
@@ -92,14 +106,18 @@ export function TokenTopProtocolCard({
   )
 }
 
-function TopProtocolHeading() {
+function TopProtocolHeading({
+  isPriceUnreliable,
+}: {
+  isPriceUnreliable: boolean
+}) {
   return (
     <div className="min-w-0">
       <h2 className="font-bold text-heading-16 md:text-heading-20">
         Top protocol
       </h2>
       <p className="mt-1 font-medium text-paragraph-12 text-secondary">
-        Based on 24h volume
+        Based on {getTopProtocolBasis(isPriceUnreliable)}
       </p>
     </div>
   )

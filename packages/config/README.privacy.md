@@ -19,7 +19,7 @@ Review at least the default setup and the best setup supported by the released c
 | Privileged operators | View keys, decryption committees, enclaves, hosted provers and upgrade or registry owners. Can they read history, substitute keys, change disclosure rules or target a user? Can an approval-list operator narrow the user's anonymity set? |
 | Proofs and encryption | Check the actual circuit, proof flavor, public inputs, witness handling and encryption recipients. A validity proof may lack zero knowledge. For TEEs, check client attestation validation and the approved binary's correspondence to source. |
 | Recovery and exceptional routes | Refunds, forced exits, ragequits, account restoration, swaps and payment-link claims. Do these publish notes, ownership, keys or links hidden on the ordinary path? Can censorship leave only a public recovery route? |
-| Retained data and future compromise | Which ciphertexts, proofs, identifiers and service logs remain available? Which later key leak or cryptographic break would expose them? Distinguish data permanently public from data whose exposure requires operator retention. |
+| Public archives and future compromise | Which ciphertexts, proofs and keys can anyone download today? What does a known quantum attack recover from them, and what can a recovered key request from a live service? Which assumption still has to hold? Data whose exposure requires operator retention belongs to the privileged insider. |
 
 ## Evidence and reporting
 

@@ -1,4 +1,5 @@
 import express from 'express'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 
 export function createLegacyPathsRouter() {
   const router = express.Router()
@@ -6,6 +7,12 @@ export function createLegacyPathsRouter() {
   router.get('/project/:name', (req, res) => {
     res.redirect(301, `/layer2s/projects/${req.params.name}`)
   })
+
+  // A live page, not a legacy path: skip the rest of this router.
+  router.get(
+    [ETHEREUM_PROJECT_PATH, `${ETHEREUM_PROJECT_PATH}.md`],
+    (_req, _res, next) => next('router'),
+  )
 
   router.get('/projects/:name', (req, res) => {
     res.redirect(301, `/layer2s/projects/${req.params.name}`)
@@ -30,6 +37,25 @@ export function createLegacyPathsRouter() {
   router.get('/data-availability/projects/:name/dac', (req, res) => {
     res.redirect(301, `/layer2s/projects/${req.params.name}`)
   })
+
+  // Before the catch-all below: Ethereum's page outlived the other DA pages.
+  router.get('/data-availability/projects/ethereum/ethereum', (_req, res) => {
+    res.redirect(301, ETHEREUM_PROJECT_PATH)
+  })
+  router.get(
+    '/data-availability/projects/ethereum/ethereum.md',
+    (_req, res) => {
+      res.redirect(301, `${ETHEREUM_PROJECT_PATH}.md`)
+    },
+  )
+
+  // Blobs replaced the data availability pages.
+  router.get(
+    ['/data-availability', '/data-availability/*splat', '/da-risk-framework'],
+    (_req, res) => {
+      res.redirect(301, '/blobs')
+    },
+  )
 
   router.get('/governance/publications/:id', (req, res) => {
     res.redirect(301, `/publications/${req.params.id}`)

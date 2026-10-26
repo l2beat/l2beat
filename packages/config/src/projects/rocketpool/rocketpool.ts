@@ -144,6 +144,7 @@ export const rocketpool: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
+    tvl: { source: 'l2beat' },
   },
   // Declared empty on purpose: the protocol has no bridge, no third-party price
   // feed, and no external contract it depends on. Its only outside contract is

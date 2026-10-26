@@ -75,6 +75,17 @@ describeDatabase(LiveBlockRepository.name, (db) => {
     })
   })
 
+  describe(LiveBlockRepository.prototype.getBucketsSince.name, () => {
+    it('counts blocks and sums their blobs per bucket counted from genesis', async () => {
+      // Buckets of three slots: 99-101 is bucket 33, 102-104 is 34, whose
+      // slot 103 was missed. Slot 100 is before the start
+      expect(await repository.getBucketsSince(101, 3)).toEqualUnsorted([
+        { bucket: 33, blocks: 1, blobs: 3 },
+        { bucket: 34, blocks: 2, blobs: 10 },
+      ])
+    })
+  })
+
   describe(LiveBlockRepository.prototype.findByBlockNumber.name, () => {
     it('returns the block of the number', async () => {
       expect(await repository.findByBlockNumber(1001)).toEqual(BLOCKS[1])

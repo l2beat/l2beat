@@ -40,6 +40,7 @@ export type BlipSexp =
   | ['find', BlipSexp]
   | ['env', string]
   | ['format', string]
+  | ['if', BlipSexp, BlipSexp]
   | ['if', BlipSexp, BlipSexp, BlipSexp]
   | ['delete', ...(string | number)[]]
   | ['shape', ...ShapeArg[]]

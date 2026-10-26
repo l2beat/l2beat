@@ -20,12 +20,7 @@ type Stats<T extends number | null> = {
   usd: T
 }
 
-type DaDataPoint = [
-  ethereumPosted: number | null,
-  celestiaPosted: number | null,
-  availPosted: number | null,
-  eigendaPosted: number | null,
-]
+type DaDataPoint = [ethereumPosted: number | null]
 
 export type ProjectCostsChartResponse = {
   chart: [...CostsChartDataPoint, ...DaDataPoint][]
@@ -80,7 +75,7 @@ export async function getProjectCostsChart(
       const posted =
         dailyTimestamp <= costsChart.syncedUntil && daData
           ? daData
-          : ([null, null, null, null] as const)
+          : ([null] as const)
       return [...cost, ...posted]
     },
   )

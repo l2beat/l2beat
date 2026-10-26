@@ -3821,8 +3821,10 @@
       },
       "fieldMeta": {
         "$admin": {
+          "severity": "MEDIUM",
           "description": "Can upgrade the proxy logic and replace the default SHARP fact registry after the configured delay. A malicious target can make arbitrary facts valid for callers routed to it."
         },
+        "governanceAdminAC": { "severity": "MEDIUM" },
         "callProxyImplementation": {
           "description": "Default SHARP fact registry called by the proxy and the only registry queried directly by its explicit `isValid` entry point. Replacing it changes the complete proof-verification trust chain: outer bootloader, bootloader commitments, recursive verifier allowlist, Solidity CPU verifiers, and temporary reference registries.",
           "type": "CODE_CHANGE"

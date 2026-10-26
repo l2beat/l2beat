@@ -76,36 +76,6 @@ describe(createDaTrackingId.name, () => {
     ).toEqual('7b0e365a57ff')
   })
 
-  it('matches the pinned id for a celestia config', () => {
-    expect(
-      createDaTrackingId({
-        type: 'celestia',
-        daLayer: 'celestia',
-        namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAY7JibkyLYAA=',
-      }),
-    ).toEqual('c2b71ff96450')
-  })
-
-  it('matches the pinned id for an avail config (sophon appIds)', () => {
-    expect(
-      createDaTrackingId({
-        type: 'avail',
-        daLayer: 'avail',
-        appIds: ['17', '36', '37', '38'],
-      }),
-    ).toEqual('9186999c5d28')
-  })
-
-  it('matches the pinned id for an eigen-da config', () => {
-    expect(
-      createDaTrackingId({
-        type: 'eigen-da',
-        daLayer: 'eigen-da',
-        customerId: '0xcustomer',
-      }),
-    ).toEqual('60feca2a7ba9')
-  })
-
   it('is order-insensitive for sequencers and does not mutate the input', () => {
     const sequencers = [
       '0xef854E09fa6e281268e1051D4d5465d8c92862ee',

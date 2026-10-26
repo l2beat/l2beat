@@ -187,6 +187,27 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     )
   })
 
+  it('explains key registrations for stealth-address projects', () => {
+    const markdown = renderPrivacyProjectMarkdown({
+      ...ENTRY,
+      sections: SECTIONS.map((section) =>
+        section.type === 'PrivacyAnonymitySetSection'
+          ? {
+              ...section,
+              props: {
+                ...section.props,
+                anonymitySetType: 'key-registrations',
+              },
+            }
+          : section,
+      ),
+    })
+
+    expect(getSection(markdown, 'Anonymity sets')).toInclude(
+      '### Estimated anonymity set by waiting time',
+    )
+  })
+
   describe('privacy section', () => {
     const privacy = () =>
       getSection(renderPrivacyProjectMarkdown(ENTRY), 'Privacy')
@@ -409,8 +430,9 @@ function chartSection(
     | 'PrivacyFlowsSection',
   id: 'privacy-tvl' | 'privacy-anonymity-set' | 'privacy-flows',
   title: string,
+  props: object = {},
 ) {
-  return { type, props: { id, title } } as ProjectDetailsSection
+  return { type, props: { id, title, ...props } } as ProjectDetailsSection
 }
 
 function deposits(last7d: number, last30d: number, total: number) {
@@ -469,6 +491,7 @@ const SECTIONS: ProjectDetailsSection[] = [
     'PrivacyAnonymitySetSection',
     'privacy-anonymity-set',
     'Anonymity sets',
+    { anonymitySetType: 'deposits' },
   ),
   chartSection('PrivacyFlowsSection', 'privacy-flows', 'Flows'),
   {

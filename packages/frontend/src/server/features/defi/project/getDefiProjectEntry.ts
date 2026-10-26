@@ -129,7 +129,11 @@ export async function getDefiProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  const gardenCropsSection = getGardenCropsSection(project.garden, ossification)
+  const gardenCropsSection = await getGardenCropsSection(
+    project.id,
+    project.garden,
+    ossification,
+  )
   if (gardenCropsSection) {
     sections.push(gardenCropsSection)
   }

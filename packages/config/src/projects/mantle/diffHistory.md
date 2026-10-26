@@ -1,3 +1,206 @@
+Generated with discovered.json: 0x727f247f9acd4bbe7b05d8bc9389caa87c7c0b20
+
+# Diff at Tue, 20 Oct 2026 07:51:35 GMT:
+
+- id: f0655def
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1789917555
+- current timestamp: 1789917555
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917555 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x676A795fe6E43C17c668de16730c3F690FEB7120) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.OTHER_MESSENGER:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "mantle:0x4200000000000000000000000000000000000007"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"mantle"}}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.l2TokenBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "mantle:0x4200000000000000000000000000000000000010"
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "mantle:0x4200000000000000000000000000000000000010"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"mantle"}}]
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (mantle:0x4200000000000000000000000000000000000007) [N/A] {
+    +++ description: None
+      values.l1CrossDomainMessenger:
+-        "mantle:0x676A795fe6E43C17c668de16730c3F690FEB7120"
++        "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120"
+      values.OTHER_MESSENGER:
+-        "mantle:0x676A795fe6E43C17c668de16730c3F690FEB7120"
++        "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (mantle:0x4200000000000000000000000000000000000010) [N/A] {
+    +++ description: None
+      values.l1TokenBridge:
+-        "mantle:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
++        "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      values.OTHER_BRIDGE:
+-        "mantle:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
++        "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+Generated with discovered.json: 0x948fc0f75a607d08aa74573c2d6d1c9aff4aa177
+
+# Diff at Fri, 16 Oct 2026 09:37:48 GMT:
+
+- id: 2a6a4291
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1789917555
+- current timestamp: 1789917555
+
+## Description
+
+Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917555 (main branch discovery), not current.
+
+```diff
+    contract MantleTokenProxyAdmin (eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L1MantleToken (eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354) [N/A] {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) [opstack/SystemConfig_v1_4_0_mantle] {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      fieldMeta.guardian:
++        {"severity":"MEDIUM"}
+      fieldMeta.GUARDIAN:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xca35F8338054739D138884685e08b39EE2217794) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager.severity:
+-        "HIGH"
+      fieldMeta.l1CrossDomainMessengerProxyType.severity:
+-        "HIGH"
+      fieldMeta.l1CrossDomainMessengerImplementationName.severity:
+-        "HIGH"
+      fieldMeta.l1StandardBridgeProxyType.severity:
+-        "HIGH"
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (mantle:0x09734bB3980906Bb217305EA6Bd34256feEAB105) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2CrossDomainMessenger (mantle:0x4200000000000000000000000000000000000007) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2StandardBridge (mantle:0x4200000000000000000000000000000000000010) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ToL1MessagePasser (mantle:0x4200000000000000000000000000000000000016) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ProxyAdmin (mantle:0x4200000000000000000000000000000000000018) [N/A]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x893fb7ea182b13dfed409f0c0cf6c31fc4a6deeb
 
 # Diff at Sun, 04 Oct 2026 05:55:33 GMT:

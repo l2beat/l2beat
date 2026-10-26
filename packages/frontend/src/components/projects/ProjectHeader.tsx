@@ -37,7 +37,7 @@ export function ProjectHeader({
           (!!ongoingAnomaly || !!recentUpdatesCount) && 'max-md:mb-4',
         )}
       >
-        <h1 className="flex items-center justify-start gap-3">
+        <h1 className="project-title-timeline flex items-center justify-start gap-3">
           {project.slug && (
             <img
               width={32}

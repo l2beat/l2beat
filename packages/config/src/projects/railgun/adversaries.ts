@@ -10,6 +10,9 @@ const ENGINE =
 // most private released open-source client we found.
 const RAILOXIDE =
   'https://github.com/triamazikamno/railoxide/blob/8773f4ecb00c6ac7cf164ba1f989eb77dd4b0ec5/'
+// The wallet library RailOxide pins in its Cargo.toml.
+const RAILGUN_RUST =
+  'https://github.com/triamazikamno/railgun-rust/blob/b602c7d516a3f58bd83911a0a704a53fa0dc0c47/'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: 'private',
@@ -31,12 +34,13 @@ export function railgunAdversaries(upgradeDelay: string) {
         sentiment: 'good',
         exposureShort:
           'Everything inside the pool is hidden, including which shield funds which unshield.',
-        exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to the adapter in cleartext.`,
+        exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to an adapter in cleartext.`,
         advice: S.exitViaRelayer('broadcaster'),
         interior: INTERIOR,
         sources: [
           { contract: 'RailgunSmartWallet', title: 'Shield and unshield' },
           { contract: 'RelayAdapt', title: 'DeFi bundles' },
+          { contract: 'RelayAdapt7702_05ae', title: 'Swap accounts' },
         ],
       },
       chainAnalyst: {
@@ -44,10 +48,14 @@ export function railgunAdversaries(upgradeDelay: string) {
         exposureShort:
           'The candidates for an unshield are the shields of the same token.',
         exposureContinued:
-          'In-pool transfers break a one-to-one match, while timing and exact amounts narrow it.',
+          "In-pool transfers break a one-to-one match, while timing and exact amounts narrow it. RailOxide shows the payer's 0zk address to every payee.",
         advice: `${S.commonAmounts} ${S.freshExit}`,
         interior: INTERIOR,
         sources: [
+          {
+            title: 'RailOxide marks every note sender as visible',
+            url: `${RAILGUN_RUST}crates/railgun-wallet/src/notes.rs#L26-L48`,
+          },
           {
             title: 'A Tattered Cloak of Invisibility (arXiv:2606.25926)',
             url: 'https://arxiv.org/abs/2606.25926',
@@ -59,26 +67,32 @@ export function railgunAdversaries(upgradeDelay: string) {
         ],
       },
       networkObserver: {
-        sentiment: 'good',
+        sentiment: 'warning',
         exposureShort:
-          'RailOxide sends all traffic over built-in Tor, broadcaster messages included, and finds your notes by decrypting every note locally.',
+          "RailOxide sends everything over built-in Tor, but keeping the public RPCs out needs the user's own node published as an onion service.",
+        exposureContinued:
+          "All traffic shares one Tor session, so the public RPCs it picks at random see the user's public addresses, shields, swap accounts and the gas estimate of each private transaction from one exit. Built-in Tor cannot reach a node on localhost or the local network. A new Tor session keeps the Waku peer id, so only an app restart separates broadcaster sessions.",
         advice:
-          'Use RailOxide, the wallet these ratings assume, and read the chain from your own node.',
+          "Publish the user's own Ethereum node as an onion service and set it as RailOxide's RPC on the startup screen, before unlocking.",
         interior: {
           ...INTERIOR,
           linkage: {
             verdict: 'atRisk',
-            note: 'Private only over Tor, which RailOxide uses by default.',
+            note: "Private only with the user's own node, published as an onion service, as RPC.",
           },
         },
         sources: [
           {
-            title: 'RailOxide privacy model',
-            url: `${RAILOXIDE}docs/privacy-model.md`,
-          },
-          {
             title: 'Built-in Tor is the default',
             url: `${RAILOXIDE}crates/wallet-ops/src/settings/network_chains.rs#L10-L15`,
+          },
+          {
+            title: 'Every stream uses one Tor session',
+            url: `${RAILOXIDE}crates/wallet-ops/src/http.rs#L1549-L1559`,
+          },
+          {
+            title: 'A custom RPC list replaces the public pool',
+            url: `${RAILOXIDE}crates/wallet-ops/src/settings/effective.rs#L263-L277`,
           },
         ],
       },
@@ -86,9 +100,9 @@ export function railgunAdversaries(upgradeDelay: string) {
         sentiment: 'good',
         exposureShort: `Only the user holds viewing keys, and DAO upgrades wait ${upgradeDelay}.`,
         exposureContinued:
-          'PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists, so the notes you spend stay on your device.',
+          "PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists. After each transaction it sends the PPoI node only that transaction's new notes with their proofs.",
         advice:
-          'Watch governance proposals and unshield before an upgrade you reject executes.',
+          'Watch governance proposals and unshield before an upgrade the user rejects executes.',
         interior: {
           ...INTERIOR,
           linkage: {
@@ -110,7 +124,7 @@ export function railgunAdversaries(upgradeDelay: string) {
         exposureContinued:
           'Whoever breaks elliptic-curve cryptography decrypts every note sent to a 0zk address that was ever shared, broadcaster fee notes included.',
         advice:
-          'Share your 0zk address privately, with a fresh one per counterparty where you can.',
+          "Share the user's 0zk address privately, with a fresh one per counterparty where possible.",
         interior: {
           sender: 'atRisk',
           recipient: 'atRisk',
@@ -118,7 +132,7 @@ export function railgunAdversaries(upgradeDelay: string) {
           asset: 'atRisk',
           linkage: {
             verdict: 'atRisk',
-            note: 'Private only while your 0zk address stays unshared.',
+            note: "Private only while the user's 0zk address stays unshared.",
           },
         },
         sources: [

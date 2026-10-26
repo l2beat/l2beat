@@ -12,14 +12,8 @@
     "messenger": {
       "severity": "HIGH"
     },
-    "OTHER_STAKING": {
-      "severity": "HIGH"
-    },
-    "MESSENGER": {
-      "severity": "HIGH"
-    },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     // Identity churn inside the unchanged staker role is not HIGH.
     "getActiveStakers": {

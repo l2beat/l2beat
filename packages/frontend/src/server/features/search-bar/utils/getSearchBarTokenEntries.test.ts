@@ -48,6 +48,7 @@ function token(overrides: Partial<InteropAbstractToken>): InteropAbstractToken {
     issuer: null,
     iconUrl: 'https://example.com/icon.png',
     category: 'stablecoin',
+    isPriceUnreliable: false,
     ...overrides,
   }
 }

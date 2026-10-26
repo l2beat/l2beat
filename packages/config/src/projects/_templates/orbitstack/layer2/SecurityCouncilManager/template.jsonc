@@ -31,14 +31,14 @@
       "severity": "HIGH"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "getBothCohorts": {
       "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)",
       "severity": "LOW"
     },
     "defaultAdminAC": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
@@ -51,7 +51,7 @@
       ]
     },
     "cohortReplacerAC": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -67,7 +67,7 @@
       ]
     },
     "memberAdderAC": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -83,7 +83,7 @@
       ]
     },
     "memberReplacerAC": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -99,7 +99,7 @@
       ]
     },
     "memberRotatorAC": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -115,7 +115,7 @@
       ]
     },
     "memberRemoverAC": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -131,7 +131,7 @@
       ]
     },
     "minRotationPeriodSetterAC": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {

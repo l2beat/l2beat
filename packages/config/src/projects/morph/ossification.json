@@ -143,6 +143,118 @@
       "reason": "Registered a new zk verifier (0x4006...f953, version 2) in the MultipleVersionRollupVerifier from batch 20230, changing which proofs are accepted (UpdateVerifier)."
     },
     {
+      "timestamp": 1756352015,
+      "type": "state",
+      "contract": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+      "transaction": "0xc95a2eba8a8977d9671f0421d49ce3d54da88f238cb561c759fae68a7fb8e8a4",
+      "updateId": "4a92d411",
+      "reason": "Morph Multisig 1, owner of the core ProxyAdmin, lowered its threshold from 5 to 3 while shrinking from 8 to 6 signers (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758532307,
+      "type": "state",
+      "contract": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+      "transaction": "0xb19b27429faee9e10dc19ec5f1214813cd0050501e5ee4c90d3fa6785bdaaf77",
+      "updateId": "83f3649a",
+      "reason": "Morph Multisig 1, owner of the core ProxyAdmin, raised its threshold from 3/5 to 4/6 while adding a signer (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the Rollup, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the MultipleVersionRollupVerifier, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the L1GatewayRouter, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the L1CrossDomainMessenger, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the L1MessageQueueWithGasPriceOracle, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the L1Staking, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the L1ETHGateway, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the L1StandardERC20Gateway, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the L1CustomERC20Gateway, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the L1USDCGateway, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the L1USDCGatewayLegacy, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1758698315,
+      "type": "state",
+      "contract": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+      "transaction": "0x5e71e3a8f1518a414f521e9ca27f87dd1c14a01c788bdd8217a11c733907b037",
+      "updateId": "e898e91e",
+      "reason": "Morph Multisig 2, owner of the EnforcedTxGateway, lowered its threshold from 5/8 to 3/5 (ChangedThreshold)."
+    },
+    {
       "timestamp": 1763737343,
       "type": "state",
       "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
@@ -210,6 +322,52 @@
       "transaction": "0x367dca9b8ba14204b0ad6af4fb20ff52000049c352565b4052e8493558912a08",
       "updateId": "171a57ae",
       "reason": "Registered the current SP1 ZkEvmVerifierV1 0xD9F2...d692 (version 2) in the MultipleVersionRollupVerifier from batch 54332 (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1785410831,
+      "type": "state",
+      "contract": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+      "transaction": "0x01f81161ff81afa9220f0195ff0a973c34ba0af6a04ee404fc096181dd1900ab",
+      "updateId": "98f2ec73",
+      "reason": "Moved ownership of the L1CrossDomainMessenger from Morph Multisig 2 (3/5) to Morph Multisig 1 (4/6) (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1785410867,
+      "type": "state",
+      "contract": "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
+      "transaction": "0x7144c29f4f226ff875abf2e54fb966fb834ece5c21e3973211b83269acc86332",
+      "reason": "Moved ownership of the L1USDCGateway from Morph Multisig 2 (3/5) to Morph Multisig 1 (4/6) (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1786500551,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0x487ad1bbd0505568bc91758244f18ee42e57b539f42f5ee951628b3c173302ea",
+      "updateId": "17fdba45",
+      "reason": "Moved ownership of the MultipleVersionRollupVerifier from Morph Multisig 2 (3/5) to Morph Multisig 1 (4/6) (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1786502411,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0x3cfc208107f3242a55686b3ecbe27eba208f2af3b5fd993feec6c2e09a0a3df4",
+      "updateId": "17fdba45",
+      "reason": "Moved ownership of the L1GatewayRouter from Morph Multisig 2 (3/5) to Morph Multisig 1 (4/6) (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1786502579,
+      "type": "state",
+      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+      "transaction": "0x95bb3f471f468778dacc292b4f177008e2dc7c4df501f94a78ce4a56bcb225cb",
+      "reason": "Moved ownership of the L1CustomERC20Gateway from Morph Multisig 2 (3/5) to Morph Multisig 1 (4/6) (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1786503011,
+      "type": "state",
+      "contract": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+      "transaction": "0x338db42d231e1ae442daddaade174b2a20b31f2455586fbcb56862238ab34082",
+      "updateId": "17fdba45",
+      "reason": "Moved ownership of the Rollup from Morph Multisig 2 (3/5) to Morph Multisig 1 (4/6) (OwnershipTransferred)."
     },
     {
       "timestamp": 1790063627,

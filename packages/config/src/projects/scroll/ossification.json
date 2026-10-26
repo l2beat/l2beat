@@ -9,6 +9,14 @@
       "updateId": "54877ab0"
     },
     {
+      "timestamp": 1716892271,
+      "type": "state",
+      "contract": "eth:0x1Ea29d57dAC237152d878758bAe4BeB2668998f6",
+      "transaction": "0x82c92e0fab361bcb2130a96eb2537f7d841a2c6215c7417df3e8ec7a03d23f48",
+      "updateId": "5e37408c",
+      "reason": "Moved ownership of the live MultipleVersionRollupVerifier from Scroll Multisig 3 to ScrollOwner, putting verifier updates behind the ScrollOwner timelock roles (OwnershipTransferred)."
+    },
+    {
       "timestamp": 1721018087,
       "type": "state",
       "contract": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
@@ -188,6 +196,22 @@
       "transaction": "0x74e5de74ff014b78b3bfcde9e3bf3c83f60ce10345ec10148ea918abeb2a9799",
       "updateId": "3d076cfd",
       "reason": "Replaced proof verifier version 10 after a guest prover bug."
+    },
+    {
+      "timestamp": 1779270407,
+      "type": "state",
+      "contract": "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+      "transaction": "0xe2e005c681f783fbd6d4c9c5bb5b40a554826434546377ce253e5dcd6f557461",
+      "reason": "Scroll Multisig 3, sole proposer, canceller and admin of TimelockFast (ops-fast role on ScrollOwner), lowered its threshold from 3/5 to 2/4 while removing a signer (ChangedThreshold).",
+      "updateId": "82e0b905"
+    },
+    {
+      "timestamp": 1779270521,
+      "type": "state",
+      "contract": "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+      "transaction": "0x88316f5cba9e68d6bcb54f52470e58c5a2270675c62ed4f0ca05f2b1dde173f7",
+      "reason": "The L2 Scroll Multisig 3, sole proposer, canceller and admin of the L2 TimelockFast (ops-fast role on the L2 ScrollOwner), lowered its threshold from 3/5 to 2/4 while removing a signer (ChangedThreshold).",
+      "updateId": "82e0b905"
     },
     {
       "timestamp": 1780317383,

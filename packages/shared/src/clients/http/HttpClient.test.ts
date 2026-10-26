@@ -73,6 +73,28 @@ describe(HttpClient.name, () => {
       ).toEqual('https://eth-mainnet.g.alchemy.com/v2/REDACTED')
     })
 
+    it('redacts params whose name contains a sensitive word', () => {
+      expect(
+        sanitizeUrl(
+          'https://pro-api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1&to=2&x_cg_pro_api_key=CG-abc',
+        ),
+      ).toEqual(
+        'https://pro-api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1&to=2&x_cg_pro_api_key=REDACTED',
+      )
+    })
+
+    it('redacts the part after a colon in path segments', () => {
+      expect(
+        sanitizeUrl('https://rpc.example.com/ethereum/service:abc123/extra'),
+      ).toEqual('https://rpc.example.com/ethereum/service:REDACTED/extra')
+    })
+
+    it('redacts userinfo credentials', () => {
+      expect(sanitizeUrl('https://user:secret@rpc.example.com/')).toEqual(
+        'https://REDACTED:REDACTED@rpc.example.com/',
+      )
+    })
+
     it('preserves 0x-prefixed identifiers and normal path segments', () => {
       const url =
         'https://api/api/v2/transactions/0x1234567890abcdef1234567890abcdef'

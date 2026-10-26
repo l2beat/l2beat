@@ -4,6 +4,8 @@
   "critical": true,
   "category": "core",
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
     "paused": {
       "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.",
       "severity": "MEDIUM"

@@ -16,7 +16,7 @@ export function AttestationsSection({
     <section className="mt-8 md:mt-12">
       <SectionHeading
         title="Verifying the set onchain"
-        description={describeAttestation(attestations)}
+        description={ATTESTATION_DESCRIPTION}
       />
       <PrimaryCard className="max-md:mx-4 md:p-8">
         <dl className="grid gap-x-8 gap-y-3 md:grid-cols-[auto_1fr]">
@@ -25,7 +25,9 @@ export function AttestationsSection({
           </Constant>
           <Constant label="EAS contract">{attestations.eas}</Constant>
           <Constant label="Schema uid">{attestations.schemaUid}</Constant>
-          <Constant label="Attester">{attestations.attester}</Constant>
+          <Constant label="Attester">
+            {attestations.attester ?? 'not set yet'}
+          </Constant>
           <Constant label="Attestation">
             {current ? (
               <a
@@ -72,12 +74,8 @@ export function AttestationsSection({
 }
 
 // Says the same thing as the OpenAPI description: the set is attested, the ratings are not.
-function describeAttestation(attestations: CropsAttestationsMeta): string {
-  const where = attestations.isTestnet
-    ? `It currently lives on the ${attestations.network} testnet.`
-    : `It lives on ${attestations.network}.`
-  return `One attestation on Ethereum Attestation Service names every protocol we have reviewed. ${where} It proves the set we named, not the ratings: ratings change as protocols change and are served by the API without a transaction.`
-}
+const ATTESTATION_DESCRIPTION =
+  'One attestation on Ethereum Attestation Service, on Ethereum, names every protocol we have reviewed. It proves the set we named, not the ratings: ratings change as protocols change and are served by the API without a transaction.'
 
 function Constant({ label, children }: { label: string; children: ReactNode }) {
   return (

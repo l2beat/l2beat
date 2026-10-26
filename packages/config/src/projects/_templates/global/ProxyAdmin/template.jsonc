@@ -3,6 +3,7 @@
   "displayName": "ProxyAdmin",
   "fields": {
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [{ "type": "act" }]
     }
   }

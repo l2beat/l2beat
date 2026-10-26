@@ -43,8 +43,7 @@
     "oeth:0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": "MintManagerOwner",
     "oeth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge",
     "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": "MintManager",
-    "oeth:0x4200000000000000000000000000000000000002": "DeployerWhitelist",
-    "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner - L2 Alias"
+    "oeth:0x4200000000000000000000000000000000000002": "DeployerWhitelist"
   },
   "overrides": {
     // Safes (SuperchainProxyAdminOwner, OpFoundationUpgradeSafe, Security
@@ -295,6 +294,29 @@
         }
       }
     },
+    // SaferSafes is enabled on the OpFoundationUpgradeSafe. Its response window sets when the Security Council can take over.
+    "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
+      "fields": {
+        "upgradeSafeLivenessResponsePeriod": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function livenessSafeConfiguration(address) view returns (uint256 livenessResponsePeriod, address fallbackOwner)",
+            "args": ["0x847B5c174615B1B7fDF770882256e2D3E95b9D92"]
+          },
+          "edit": ["get", "livenessResponsePeriod"]
+        },
+        "upgradeSafeFallbackOwner": {
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "function livenessSafeConfiguration(address) view returns (uint256 livenessResponsePeriod, address fallbackOwner)",
+            "args": ["0x847B5c174615B1B7fDF770882256e2D3E95b9D92"]
+          },
+          "edit": ["get", "fallbackOwner"]
+        }
+      }
+    },
     // SaferSafes (L2 instance, untemplated): Safe module installed on the SafeL2,
     // the sole owner of the MintManagerOwner Safe since 2026-04-07, so it is on the OP minting path.
     "oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
@@ -311,6 +333,7 @@
       "critical": { "sinceTimestamp": 1665503636 },
       "fields": {
         "owner": {
+          "severity": "MEDIUM",
           "permissions": [
             {
               "type": "interact",
@@ -329,12 +352,136 @@
       "ignoreMethods": ["getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply"],
       "fields": {
+        // the MintManager contract, sole minter: MintManager.upgrade() hands the
+        // token to new minting code without a proxy upgrade.
         "owner": {
+          "severity": "HIGH",
           "permissions": [
             {
               "type": "interact",
               "description": "can mint OP tokens."
             }
+          ]
+        }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000007": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000010": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000011": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000012": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000014": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000015": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000017": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000019": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "oeth:0x420000000000000000000000000000000000001A": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "oeth:0x420000000000000000000000000000000000001b": {
+      "fields": {
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000018": {
+      "fields": {
+        "owner": {
+          "edit": [
+            "if",
+            ["=", "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
           ]
         }
       }

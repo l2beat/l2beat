@@ -1,4 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
@@ -104,7 +105,7 @@ export const strk20: BaseProject = {
   },
   display: {
     description:
-      'A privacy pool on Starknet for arbitrary-amount private transfers and DeFi actions, using Cairo execution proofs and auditor-accessible compliance data.',
+      "A shielded ledger on Starknet for any ERC-20 token, with private transfers and DeFi, where one auditor key can decrypt every user's history.",
     detailedDescription: readProjectMarkdown('strk20', 'detailedDescription'),
     links: {
       documentation: [
@@ -122,6 +123,24 @@ export const strk20: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      title: 'Privacy live on Starknet',
+      url: 'https://www.starknet.io/blog/privacy-live-on-starknet/',
+      date: '2026-06-09T00:00:00Z',
+      description:
+        'StarkWare opens the pool to users through the Ready and Xverse wallets.',
+      type: 'general',
+    },
+    {
+      title: 'Shadow accounts launch',
+      url: 'https://x.com/StarkWareLtd/status/2110007213331026343',
+      date: '2026-10-13T00:00:00Z',
+      description:
+        'StarkWare opens per-app shadow accounts, which let apps act for pool users without naming them.',
+      type: 'general',
+    },
+  ],
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     trackedOn: ['starknet'],
@@ -132,7 +151,7 @@ export const strk20: BaseProject = {
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The pool implementation is immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
+        'The pool and the anonymizer that owns every shadow account are immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
       walkawayTest: {
         passed: false,
         reason:
@@ -140,10 +159,10 @@ export const strk20: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Reproducible',
-      sentiment: 'good',
+      value: 'Partially reproducible',
+      sentiment: 'warning',
       description:
-        'The pool contract, TypeScript SDK, discovery service, and proving stack are publicly available and can be run locally, so users can audit what is actually proven and generate the required ZK proofs without revealing private data to a third-party prover.',
+        'The pool contract, SDK, discovery service and prover are open source. The deployed pool, anonymizer and bridge helpers rebuild from their published source. Source for the AVNU, Endur and escrow helpers is not published, and the wallets are closed.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
@@ -160,26 +179,32 @@ export const strk20: BaseProject = {
 }
 
 function getPrivacyTokens(): ProjectPrivacyToken[] {
-  return STRK20_TOKENS.map((token) => ({
-    token,
-    buckets: [
-      {
-        id: `strk20-${token.symbol}`,
-        type: 'pool',
-        label: `${token.symbol} pool`,
-        address: STRK20_POOL,
-        sinceTimestamp: token.sinceTimestamp,
-        deposit: {
-          event: STRK20_DEPOSIT_EVENT,
-          extractor: 'strk20Deposit',
-          params: { tokenAddress: token.address },
+  return STRK20_TOKENS.map((token) => {
+    const minimumAmounts = PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[token.symbol]
+
+    return {
+      token,
+      buckets: [
+        {
+          id: `strk20-${token.symbol}`,
+          type: 'pool',
+          label: `${token.symbol} pool`,
+          address: STRK20_POOL,
+          sinceTimestamp: token.sinceTimestamp,
+          anonymitySet:
+            minimumAmounts === undefined ? undefined : { minimumAmounts },
+          deposit: {
+            event: STRK20_DEPOSIT_EVENT,
+            extractor: 'strk20Deposit',
+            params: { tokenAddress: token.address },
+          },
+          withdrawal: {
+            event: STRK20_WITHDRAWAL_EVENT,
+            extractor: 'strk20Withdrawal',
+            params: { tokenAddress: token.address },
+          },
         },
-        withdrawal: {
-          event: STRK20_WITHDRAWAL_EVENT,
-          extractor: 'strk20Withdrawal',
-          params: { tokenAddress: token.address },
-        },
-      },
-    ],
-  }))
+      ],
+    }
+  })
 }

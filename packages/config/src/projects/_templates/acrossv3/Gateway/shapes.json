@@ -4,5 +4,11 @@
     "address": "eth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e",
     "chain": "ethereum",
     "blockNumber": 25773732
+  },
+  "Gateway_msgValue": {
+    "hash": "0x758d7b789b8c7d62dd988d0b7d796f9811d75afa480252b92492fe28259d538f",
+    "address": "eth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0",
+    "chain": "ethereum",
+    "blockNumber": 26174840
   }
 }

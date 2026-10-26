@@ -1,0 +1,101 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "privacy-pools-v2",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "privacy-pools-v2-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+        "decimals": 18,
+        "sinceTimestamp": 1788287903
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-pools-v2-ppETH",
+      "priceId": "ethereum",
+      "symbol": "ppETH",
+      "name": "Privacy Pool ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x66051920D25af4E3596A8a46309F4D045F9D83B7",
+        "chain": "ethereum",
+        "escrowAddress": "0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+        "decimals": 18,
+        "sinceTimestamp": 1789501751
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-pools-v2-ppUSDC",
+      "priceId": "usd-coin",
+      "symbol": "ppUSDC",
+      "name": "Privacy Pool USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6",
+        "chain": "ethereum",
+        "escrowAddress": "0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+        "decimals": 18,
+        "sinceTimestamp": 1788511139
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-pools-v2-ppUSDT",
+      "priceId": "tether",
+      "symbol": "ppUSDT",
+      "name": "Privacy Pool USDT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA4cF419558Ef36CC6FfB666195684dC963910426",
+        "chain": "ethereum",
+        "escrowAddress": "0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+        "decimals": 18,
+        "sinceTimestamp": 1788527363
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-pools-v2-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+        "decimals": 6,
+        "sinceTimestamp": 1788287903
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -118,20 +118,9 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
           to,
         )
 
-      // NOTE(maciekzygmunt): normally this steps should be done in the database, but because liveness table is huge, sorting and distinction
-      // takes a lot of memory, so for this case it is better to do it here
-      records.sort((a, b) => b.timestamp - a.timestamp)
-      const livenessRecords: LivenessRecordWithConfig[] = []
-      const present = new Set<string>()
-
-      for (const r of records) {
-        const key = r.timestamp + '-' + r.configurationId
-
-        if (!present.has(key)) {
-          present.add(key)
-          livenessRecords.push(mapToRecordWithConfig(r, activeConfigs))
-        }
-      }
+      const livenessRecords = records.map((r) =>
+        mapToRecordWithConfig(r, activeConfigs),
+      )
 
       if (livenessRecords.length === 0) {
         this.logger.debug('No records found for project', {

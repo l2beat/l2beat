@@ -25,8 +25,6 @@ export const lens: ScalingProject = zkStackL2({
   daVerifierSecureOnL1: true,
   daVerifier7DayExitWindow: true,
   daCommitteeDecentralized: true,
-  daVerifier30DayExitWindow: false,
-  daMechanismEconomicSecurity: false,
   daVerifierLink:
     'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
   display: {
@@ -99,14 +97,6 @@ export const lens: ScalingProject = zkStackL2({
     },
     bridge: DA_BRIDGES.VECTOR,
   },
-  daTracking: [
-    {
-      type: 'avail',
-      daLayer: ProjectId('avail'),
-      sinceBlock: 1180000, // avail block number, roughly 04/03 right before mainnet launch (chain was active before)
-      appIds: ['26'],
-    },
-  ],
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],

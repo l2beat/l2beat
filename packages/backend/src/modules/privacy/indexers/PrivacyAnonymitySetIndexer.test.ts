@@ -1,12 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { PrivacyAnonymitySetDepositSource } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
-import type {
-  BlockProvider,
-  BlockTimestampProvider,
-  IRpcClient,
-  LogsProvider,
-} from '@l2beat/shared'
+import type { BlockProvider, IRpcClient, LogsProvider } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
@@ -14,7 +8,10 @@ import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
-import type { PrivacyAnonymitySetIndexerConfig } from '../types'
+import type {
+  EvmPrivacyAnonymitySetSource,
+  PrivacyAnonymitySetIndexerConfig,
+} from '../types'
 import { DEPOSIT_TOPIC } from '../zkmoney/abi'
 import {
   FUNDED,
@@ -36,6 +33,9 @@ const TRANSACTION_HASH = `0x${'bb'.repeat(32)}`
 const privacyPoolsInterface = new utils.Interface([
   'event Deposited(address indexed depositor, uint256 commitment, uint256 label, uint256 value, uint256 precommitmentHash)',
 ])
+const umbraRegistryInterface = new utils.Interface([
+  'event StealthKeyChanged(address indexed registrant, uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)',
+])
 
 describe(PrivacyAnonymitySetIndexer.name, () => {
   beforeEach(() => {
@@ -56,7 +56,6 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     const indexer = makeIndexer({
       configuration,
       logs: [log],
-      timestamps: new Map([[log.blockNumber, timestamp]]),
       getTransaction: mockFn<IRpcClient['getTransaction']>().resolvesTo({
         hash: TRANSACTION_HASH,
         value: undefined,
@@ -116,7 +115,6 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     const indexer = makeIndexer({
       configuration,
       logs: [log],
-      timestamps: new Map([[log.blockNumber, timestamp]]),
       getTransaction,
       repository: mockObject<Database['privacyAnonymitySetEvent']>({
         upsertMany,
@@ -143,6 +141,59 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     ])
   })
 
+  it('stores a key registration under its registrant with amount 0', async () => {
+    const from = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
+    const to = from + UnixTime.DAY
+    const timestamp = from + UnixTime.HOUR
+    const encoded = umbraRegistryInterface.encodeEventLog('StealthKeyChanged', [
+      DEPOSITOR.toString(),
+      2n,
+      3n,
+      2n,
+      5n,
+    ])
+    const configuration = baseConfiguration({
+      event: encoded.topics[0]!,
+      extractor: 'umbraStealthKeyChanged',
+      params: {},
+    })
+    const log = makeLog({
+      topics: encoded.topics,
+      data: encoded.data,
+      timestamp,
+    })
+    const getTransaction = mockFn<IRpcClient['getTransaction']>()
+    const upsertMany =
+      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(1)
+    const indexer = makeIndexer({
+      configuration,
+      logs: [log],
+      getTransaction,
+      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+        upsertMany,
+      }),
+    })
+
+    const save = await indexer.multiUpdate(from, to, [configuration])
+    await save()
+
+    expect(getTransaction).not.toHaveBeenCalled()
+    expect(upsertMany).toHaveBeenOnlyCalledWith([
+      {
+        configurationId: 'config-1',
+        projectId: 'project-1',
+        bucketId: 'bucket-1',
+        chain: 'ethereum',
+        timestamp,
+        blockNumber: 100,
+        txHash: TRANSACTION_HASH,
+        logIndex: 7,
+        sender: DEPOSITOR.toString(),
+        amount: 0n,
+      },
+    ])
+  })
+
   it('clamps one update to the next UTC day', async () => {
     const from = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
     const configuration = fixedConfiguration('1')
@@ -151,7 +202,6 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     const indexer = makeIndexer({
       configuration,
       logs: [],
-      timestamps: new Map(),
       getTransaction: mockFn(),
       repository: mockObject<Database['privacyAnonymitySetEvent']>({
         upsertMany,
@@ -165,20 +215,69 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     expect(await save()).toEqual(from + UnixTime.DAY)
   })
 
-  it('does not fetch transaction senders for boundary logs outside the range', async () => {
+  it('fetches logs between the blocks the block timestamp table maps the range to', async () => {
+    const day = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
+    const from = day + 1
+    const to = day + 90 * UnixTime.MINUTE
+    const configuration = fixedConfiguration('1')
+    const findBlockNumberByChainAndTimestamp = mockFn<
+      Database['privacyBlockTimestamp']['findBlockNumberByChainAndTimestamp']
+    >()
+      .resolvesToOnce(50)
+      .resolvesToOnce(150)
+    const getLogs = mockFn<LogsProvider['getLogs']>().resolvesTo([])
+    const indexer = new PrivacyAnonymitySetIndexer(
+      {
+        chain: 'ethereum',
+        configurations: [configuration],
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+        blockProvider: mockObject<BlockProvider>({}),
+        logsProvider: mockObject<LogsProvider>({ getLogs }),
+        rpcClient: mockObject<IRpcClient>({}),
+        db: mockDatabase({
+          privacyBlockTimestamp: mockObject<Database['privacyBlockTimestamp']>({
+            findBlockNumberByChainAndTimestamp,
+          }),
+        }),
+      },
+      Logger.SILENT,
+    )
+
+    await indexer.multiUpdate(from, to, [configuration])
+
+    expect(findBlockNumberByChainAndTimestamp).toHaveBeenNthCalledWith(
+      1,
+      'ethereum',
+      day,
+    )
+    expect(findBlockNumberByChainAndTimestamp).toHaveBeenNthCalledWith(
+      2,
+      'ethereum',
+      day + 2 * UnixTime.HOUR,
+    )
+    expect(getLogs).toHaveBeenOnlyCalledWith(
+      50,
+      150,
+      [POOL.toString()],
+      [[FIXED_TOPIC]],
+    )
+  })
+
+  it('keeps logs of the first block even if it predates the range', async () => {
     const from = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
     const to = from + UnixTime.DAY
     const timestamp = from - 1
     const configuration = fixedConfiguration('1')
     const log = makeLog({ topics: [FIXED_TOPIC], timestamp })
-    const getTransaction = mockFn<IRpcClient['getTransaction']>()
     const upsertMany =
-      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(0)
+      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(1)
     const indexer = makeIndexer({
       configuration,
       logs: [log],
-      timestamps: new Map([[log.blockNumber, timestamp]]),
-      getTransaction,
+      getTransaction: mockFn<IRpcClient['getTransaction']>().resolvesTo(
+        makeTransaction(TRANSACTION_HASH),
+      ),
       repository: mockObject<Database['privacyAnonymitySetEvent']>({
         upsertMany,
       }),
@@ -187,8 +286,9 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     const save = await indexer.multiUpdate(from, to, [configuration])
     await save()
 
-    expect(getTransaction).not.toHaveBeenCalled()
-    expect(upsertMany).toHaveBeenOnlyCalledWith([])
+    expect(upsertMany.calls[0]?.args[0]).toEqual([
+      expect.subset({ timestamp, txHash: TRANSACTION_HASH }),
+    ])
   })
 
   it('fetches transaction senders in batches of 25', async () => {
@@ -225,7 +325,6 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     const indexer = makeIndexer({
       configuration,
       logs,
-      timestamps: new Map([[100, timestamp]]),
       getTransaction,
       repository: mockObject<Database['privacyAnonymitySetEvent']>({
         upsertMany,
@@ -272,9 +371,6 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
         configurations: [configuration],
         parents: [],
         indexerService: mockObject<IndexerService>({}),
-        blockTimestampProvider: mockObject<BlockTimestampProvider>({
-          getBlockNumberAtOrBefore: mockFn().returnsOnce(10).returnsOnce(30),
-        }),
         blockProvider: mockObject<BlockProvider>({
           getBlockTimestamps: mockFn().returnsOnce(
             new Map([[traced.blockNumber, timestamp]]),
@@ -295,6 +391,7 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
           privacyAnonymitySetEvent: mockObject<
             Database['privacyAnonymitySetEvent']
           >({ upsertMany }),
+          privacyBlockTimestamp: blockTable(),
         }),
       },
       Logger.SILENT,
@@ -397,7 +494,6 @@ function makeIdleIndexer(
   return makeIndexer({
     configuration: fixedConfiguration('1'),
     logs: [],
-    timestamps: new Map(),
     getTransaction: mockFn(),
     repository,
   })
@@ -406,13 +502,11 @@ function makeIdleIndexer(
 function makeIndexer({
   configuration,
   logs,
-  timestamps,
   getTransaction,
   repository,
 }: {
   configuration: Configuration<PrivacyAnonymitySetIndexerConfig>
   logs: Log[]
-  timestamps: Map<number, UnixTime>
   getTransaction: IRpcClient['getTransaction']
   repository: Database['privacyAnonymitySetEvent']
 }) {
@@ -422,22 +516,24 @@ function makeIndexer({
       configurations: [configuration],
       parents: [],
       indexerService: mockObject<IndexerService>({}),
-      blockTimestampProvider: mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn().returnsOnce(50).returnsOnce(150),
-      }),
-      blockProvider: mockObject<BlockProvider>({
-        getBlockTimestamps: mockFn().returnsOnce(timestamps),
-      }),
+      blockProvider: mockObject<BlockProvider>({}),
       logsProvider: mockObject<LogsProvider>({
         getLogs: mockFn().returnsOnce(logs),
       }),
       rpcClient: mockObject<IRpcClient>({ getTransaction }),
       db: mockDatabase({
         privacyAnonymitySetEvent: repository,
+        privacyBlockTimestamp: blockTable(),
       }),
     },
     Logger.SILENT,
   )
+}
+
+function blockTable(): Database['privacyBlockTimestamp'] {
+  return mockObject<Database['privacyBlockTimestamp']>({
+    findBlockNumberByChainAndTimestamp: mockFn().resolvesTo(100),
+  })
 }
 
 function fixedConfiguration(
@@ -461,7 +557,7 @@ function privacyPoolsConfiguration(
 }
 
 function baseConfiguration(
-  source: PrivacyAnonymitySetDepositSource,
+  source: EvmPrivacyAnonymitySetSource,
   address = POOL,
 ): Configuration<PrivacyAnonymitySetIndexerConfig> {
   const properties = {

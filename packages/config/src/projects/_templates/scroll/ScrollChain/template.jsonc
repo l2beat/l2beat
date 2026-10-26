@@ -12,6 +12,8 @@
   "ignoreInWatchMode": ["miscData", "lastFinalizedBatchIndex"],
   "ignoreRelatives": ["messageQueueV1"], // deprecated
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
     "paused": {
       "severity": "MEDIUM"
     },

@@ -194,6 +194,24 @@ export const privacyBoost: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      // Pool proxy deployed on OP Mainnet 2026-04-14 (tx 0xdcf02ee3…).
+      title: 'Privacy Boost live on OP Mainnet',
+      url: 'https://optimism.io/blog/privacy-comes-to-the-op-stack',
+      date: '2026-04-20T00:00:00Z',
+      description:
+        'Sunnyside Labs opens Privacy Boost to its customers on OP Mainnet.',
+      type: 'general',
+    },
+    {
+      title: 'Pool deployed on Base',
+      url: 'https://basescan.org/tx/0xb57d5d9d8b938eb5567222a01bbddfba9b327ffe0b5219fdb7a410f1f4c006fd',
+      date: '2026-09-03T00:00:00Z',
+      description: 'The pool tracked here goes live on Base.',
+      type: 'general',
+    },
+  ],
   escrows: [
     {
       address: poolAddress,
@@ -347,7 +365,7 @@ export const privacyBoost: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The circuits are published. The epoch, forced withdrawal and gift claim verification keys deployed in September 2026 remain unreproduced, and the TEE source code is unpublished.',
+        "The circuits are published. The epoch, forced withdrawal and gift claim verification keys deployed in September 2026 remain unreproduced, and the source code of the TEE and of the SDK's compiled core is unpublished.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

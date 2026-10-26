@@ -4,6 +4,7 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import type { PrivacyRelayerStat } from '~/server/features/privacy/types'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import {
   PRIVACY_PROJECT_STATS_COPY as COPY,
@@ -77,11 +78,15 @@ export function PrivacyProjectStats({
     )
   }
 
+  // Columns never get narrower than their title or value, so neither wraps
+  // nor spills past the separator.
   return (
     <div
       className={cn(
         'grid gap-4',
-        hasRelayerTracking ? 'md:grid-cols-5' : 'md:grid-cols-4',
+        hasRelayerTracking
+          ? 'md:grid-cols-[repeat(5,minmax(max-content,1fr))]'
+          : 'md:grid-cols-[repeat(4,minmax(max-content,1fr))]',
       )}
     >
       <ProjectSummaryStat
@@ -98,7 +103,8 @@ export function PrivacyProjectStats({
                 totalValueLockedUsd={totalValueLockedUsd}
                 change7d={totalValueLockedChange7d}
               />
-              <span className="font-medium text-paragraph-12 text-secondary leading-normal">
+              {/* contain-inline-size: wrap this line instead of widening the column */}
+              <span className="font-medium text-paragraph-12 text-secondary leading-normal contain-inline-size">
                 across {formatInteger(assetsCount ?? 0)} assets and{' '}
                 {formatInteger(bucketsCount ?? 0)} buckets
               </span>
@@ -133,12 +139,11 @@ export function PrivacyProjectStats({
       <ProjectSummaryStat
         title={COPY.deposits7d}
         value={
-          <div className="flex items-center gap-2">
-            {formatInteger(deposits.last7d ?? 0)}
-            {deposits.change7d !== undefined && (
-              <PercentChange value={deposits.change7d} period="last7d" />
-            )}
-          </div>
+          <SummaryValueWithChange
+            value={formatInteger(deposits.last7d ?? 0)}
+            change={deposits.change7d}
+            period="last7d"
+          />
         }
       />
       <ProjectSummaryStat
@@ -165,9 +170,35 @@ function TvlValue({
     return <NoDataBadge />
   }
   return (
-    <div className="flex items-center gap-2">
-      {formatCurrency(totalValueLockedUsd, 'usd')}
-      {change7d !== undefined && <PercentChange value={change7d} period="7D" />}
+    <SummaryValueWithChange
+      value={formatCurrency(totalValueLockedUsd, 'usd')}
+      change={change7d}
+      period="7D"
+    />
+  )
+}
+
+// formatNumber joins "25.48" and "K" with a breakable hair space, hence nowrap.
+// leading-none keeps the row as tall as a plain value, so values line up.
+function SummaryValueWithChange({
+  value,
+  change,
+  period,
+}: {
+  value: string
+  change: number | undefined
+  period: PercentageChangePeriod
+}) {
+  return (
+    <div className="flex items-center gap-2 whitespace-nowrap">
+      {value}
+      {change !== undefined && (
+        <PercentChange
+          value={change}
+          period={period}
+          textClassName="leading-none"
+        />
+      )}
     </div>
   )
 }

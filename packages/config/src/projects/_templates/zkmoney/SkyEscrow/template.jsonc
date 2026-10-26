@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SkyEscrow",
+  "category": "core",
+  "description": "Implementation for savings conversion escrows. Each clone fixes the route, deposit commitment, relayer tip and recovery commitment in its address. It converts DAI into sUSDS or redeposits DAI after a savings withdrawal. The recovery account can reclaim stranded tokens, including shares taken without redemption.",
+  "ignoreMethods": [
+    "nonce",
+    "recipientCommitment",
+    "recoveryCommitment",
+    "relayerTip",
+    "route"
+  ],
+  "ignoreRelatives": ["DAI", "DAI_USDS", "SUSDS", "USDS"],
+  "fields": {
+    "FACTORY": {
+      "handler": {
+        "type": "call",
+        "method": "function FACTORY() view returns (address)",
+        "args": []
+      }
+    },
+    "DAI": {
+      "handler": {
+        "type": "call",
+        "method": "function DAI() view returns (address)",
+        "args": []
+      }
+    },
+    "USDS": {
+      "handler": {
+        "type": "call",
+        "method": "function USDS() view returns (address)",
+        "args": []
+      }
+    },
+    "SUSDS": {
+      "handler": {
+        "type": "call",
+        "method": "function SUSDS() view returns (address)",
+        "args": []
+      }
+    },
+    "DAI_USDS": {
+      "handler": {
+        "type": "call",
+        "method": "function DAI_USDS() view returns (address)",
+        "args": []
+      }
+    },
+    "DAI_PORTAL": {
+      "handler": {
+        "type": "call",
+        "method": "function DAI_PORTAL() view returns (address)",
+        "args": []
+      }
+    },
+    "SUSDS_PORTAL": {
+      "handler": {
+        "type": "call",
+        "method": "function SUSDS_PORTAL() view returns (address)",
+        "args": []
+      }
+    },
+    "SKY_EXECUTOR": {
+      "handler": {
+        "type": "call",
+        "method": "function SKY_EXECUTOR() view returns (address)",
+        "args": []
+      },
+      "template": "zkmoney/SkyWithdrawalExecutor"
+    }
+  }
+}

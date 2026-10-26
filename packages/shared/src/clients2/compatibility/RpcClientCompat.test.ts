@@ -1,5 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { NotFoundOnRpcError } from '../../clients/rpc/RpcClient'
 import type { EthRpcClient, RpcBlock } from '../EthRpcClient'
 import { RpcClientCompat } from './RpcClientCompat'
 
@@ -42,6 +43,40 @@ describe(RpcClientCompat.name, () => {
 
       expect(settled.settledHeight).toEqual(98)
       expect(legacy.settledHeight).toEqual(undefined)
+    })
+
+    it('tells a block the RPC has not got from a broken response', async () => {
+      // As RpcClient does, so a caller following the head waits for it
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({
+          getBlockByNumber: mockFn().resolvesTo(null),
+        }),
+        'ethereum',
+      )
+
+      await expect(client.getBlock(100, true)).toBeRejectedWith(
+        NotFoundOnRpcError,
+        'Block not found',
+      )
+    })
+  })
+
+  describe(RpcClientCompat.prototype.getTransactionReceipts.name, () => {
+    it('names the receipts the RPC has not got', async () => {
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({
+          getTransactionReceipts: mockFn().resolvesTo([{ logs: [] }, null]),
+        }),
+        'ethereum',
+      )
+
+      const error = await client.getTransactionReceipts(['0x1', '0x2']).then(
+        () => undefined,
+        (e: Error) => e,
+      )
+
+      expect(error).toBeA(NotFoundOnRpcError)
+      expect(error?.cause).toEqual({ txHashes: ['0x2'] })
     })
   })
 
@@ -126,6 +161,22 @@ describe(RpcClientCompat.name, () => {
         address: addresses,
         topics,
       })
+    })
+
+    it('does not split a single block when limit exceeded', async () => {
+      const error = new Error(
+        'RPC call failed. RPC code: -32602, message: Log response size exceeded',
+      )
+      const getLogs = mockFn<EthRpcClient['getLogs']>()
+        .rejectsWithOnce(error)
+        .resolvesTo([])
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({ getLogs }),
+        'ethereum',
+      )
+
+      await expect(client.getLogs(100, 100)).toBeRejectedWith(error.message)
+      expect(getLogs).toHaveBeenCalledTimes(1)
     })
   })
 

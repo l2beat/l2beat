@@ -4,6 +4,8 @@
   // critical is set per address in config.jsonc: external escrows (e.g. pufETH) share this shape
   "category": "bridge-canonical",
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
     "tokenMapping": {
       "severity": "HIGH",
       "description": "L1-to-L2 token mapping used to validate custom-token deposits and withdrawals.",

@@ -117,13 +117,6 @@ export const myria: ScalingProject = {
         verifierContractsReproducible: 'UnderReview',
         programHashesReproducible: 'UnderReview',
       },
-      stage2: {
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        daVerifier30DayExitWindow: 'UnderReview',
-        daMechanismEconomicSecurity: false,
-      },
     },
     {
       nodeSourceLink: 'https://github.com/starkware-libs/starkex-contracts',

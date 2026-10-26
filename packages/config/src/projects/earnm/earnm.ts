@@ -39,12 +39,25 @@ export const earnm: ScalingProject = orbitStackL3({
   chainConfig: {
     name: 'earnm',
     chainId: 32766,
+    explorerUrl: 'https://earnm-mainnet.explorer.alchemy.com',
     gasTokens: ['ETH'],
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 10461,
+        version: '3',
+      },
+    ],
     apis: [
       {
         type: 'rpc',
         url: 'https://earnm-mainnet.g.alchemy.com/public',
         callsPerMinute: 300,
+      },
+      {
+        type: 'blockscout',
+        url: 'https://earnm-mainnet.explorer.alchemy.com/api',
       },
     ],
   },

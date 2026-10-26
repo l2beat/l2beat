@@ -1,3 +1,105 @@
+Generated with discovered.json: 0xa4a6eb38274583001c3cceffefccf34ba8e9479d
+
+# Diff at Fri, 16 Oct 2026 09:37:48 GMT:
+
+- id: 614088d0
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791469973
+- current timestamp: 1791469973
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791469973 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x35d5D43271548c984662d4879FBc8e041Bc1Ff93) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0x5490b25fa103fd64b33f9e5019324808b9bf1522
+
+# Diff at Thu, 08 Oct 2026 14:33:58 GMT:
+
+- id: 53644418
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@66bd7fd1bea653502521aeddf38d5b0a0b3ca755 block: 1787834220
+- current timestamp: 1791469973
+
+## Description
+
+Proposer and challenger permissions are now read from the DisputeGameFactory `gameArgs`, since the clones-with-immutable-args `PermissionedDisputeGame` implementation returns zero addresses.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787834220 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x03e820562ffd2e0390787caD706EaF1FF98C2608) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21","description":"Allowed to post new state roots of the current layer to the host chain.","role":".proposerFromDGF"}]
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengerFromDGF"}
+    }
+```
+
 Generated with discovered.json: 0x572cee81718cabc5cb5d127757f2a5a46e157250
 
 # Diff at Sun, 04 Oct 2026 05:55:33 GMT:

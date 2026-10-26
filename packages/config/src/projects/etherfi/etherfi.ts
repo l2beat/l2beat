@@ -91,6 +91,7 @@ export const etherfi: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
+    tvl: { source: 'l2beat' },
   },
   externalDependencies: [
     {

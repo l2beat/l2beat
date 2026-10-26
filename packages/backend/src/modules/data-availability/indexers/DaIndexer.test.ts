@@ -27,48 +27,6 @@ const HOUR = UnixTime.HOUR
 
 describe(DaIndexer.name, () => {
   describe(DaIndexer.prototype.multiUpdate.name, () => {
-    it('fetches blobs, generates records, saves metrics to DB', async () => {
-      const mockInbox = EthereumAddress.random()
-      const configurations = [
-        config('project-a', { inbox: mockInbox }),
-        config('project-b'),
-      ]
-      const blobs = [blob(100, 100_000), blob(200, 200_000)]
-      const previousRecords = [record('project', 100, 100_000)]
-      const generatedRecords = [record('project', 100, 400_000)]
-
-      const { indexer, repository, daService, daProvider } = mockIndexer({
-        configurations,
-        blobs,
-        previousRecords,
-        generatedRecords,
-        batchSize: 50,
-      })
-
-      const updateCallback = await indexer.multiUpdate(
-        100,
-        200,
-        toIndexerConfigurations(configurations),
-      )
-      const safeHeight = await updateCallback()
-
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
-      expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
-        DA_LAYER,
-        UnixTime.toStartOf(100, 'hour'),
-        UnixTime.toEndOf(200, 'hour'),
-      )
-      expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
-        blobs,
-        previousRecords,
-        configurations,
-      )
-
-      expect(repository.upsertMany).toHaveBeenOnlyCalledWith(generatedRecords)
-
-      expect(safeHeight).toEqual(150)
-    })
-
     it('fetches blobs from cache, generates records, saves metrics to DB', async () => {
       const mockInbox = EthereumAddress.random()
       const configurations = [
@@ -83,7 +41,6 @@ describe(DaIndexer.name, () => {
         indexer,
         repository,
         daService,
-        daProvider,
         blobService,
         syncMetadataRepository,
       } = mockIndexer({
@@ -92,7 +49,6 @@ describe(DaIndexer.name, () => {
         previousRecords,
         generatedRecords,
         batchSize: 50,
-        useBlobService: true,
       })
 
       const updateCallback = await indexer.multiUpdate(
@@ -102,8 +58,7 @@ describe(DaIndexer.name, () => {
       )
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).not.toHaveBeenCalled()
-      expect(blobService!.get).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
+      expect(blobService.get).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
       expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
         DA_LAYER,
         UnixTime.toStartOf(100, 'hour'),
@@ -132,32 +87,32 @@ describe(DaIndexer.name, () => {
 
     describe('handles batch size', () => {
       it('from + batchSize > to', async () => {
-        const { indexer, daProvider } = mockIndexer({
+        const { indexer, blobService } = mockIndexer({
           batchSize: 50,
         })
 
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
+        expect(blobService.get).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
         expect(safeHeight).toEqual(150)
       })
 
       it('from + batchSize < to', async () => {
-        const { indexer, daProvider } = mockIndexer({
+        const { indexer, blobService } = mockIndexer({
           batchSize: 150,
         })
 
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
+        expect(blobService.get).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
         expect(safeHeight).toEqual(200)
       })
     })
 
     it('handles empty blobs response', async () => {
-      const { indexer, repository, daService, daProvider } = mockIndexer({
+      const { indexer, repository, daService, blobService } = mockIndexer({
         blobs: [],
         batchSize: 100,
       })
@@ -165,7 +120,7 @@ describe(DaIndexer.name, () => {
       const updateCallback = await indexer.multiUpdate(100, 200, [])
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
+      expect(blobService.get).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
       expect(safeHeight).toEqual(200)
 
       expect(repository.getForDaLayerInTimeRange).not.toHaveBeenCalled()
@@ -295,7 +250,6 @@ function mockIndexer($: {
   blobs?: DaBlob[]
   previousRecords?: DataAvailabilityRecord[]
   generatedRecords?: DataAvailabilityRecord[]
-  useBlobService?: boolean
   blockTimestamps?: Record<number, number>
 }) {
   const repository = mockObject<Database['dataAvailability']>({
@@ -326,7 +280,6 @@ function mockIndexer($: {
   })
 
   const daProvider = mockObject<DaProvider>({
-    getBlobs: async () => $.blobs ?? [], // Empty response
     getBlockTimestamp: mockFn(async (_: string, blockNumber: number) => {
       const timestamp = $.blockTimestamps?.[blockNumber]
       if (timestamp === undefined) {
@@ -336,11 +289,9 @@ function mockIndexer($: {
     }),
   })
 
-  const blobService = $.useBlobService
-    ? mockObject<BlobService>({
-        get: mockFn().resolvesTo($.blobs ?? []), // Empty response
-      })
-    : undefined
+  const blobService = mockObject<BlobService>({
+    get: mockFn().resolvesTo($.blobs ?? []),
+  })
 
   const indexer = new DaIndexer(
     {

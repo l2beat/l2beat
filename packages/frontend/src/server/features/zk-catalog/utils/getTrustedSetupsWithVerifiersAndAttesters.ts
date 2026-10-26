@@ -304,7 +304,6 @@ export function getProjectsUsedIn(
   projectIds: ProjectId[],
   allProjects: ProjectWithPageMetadata[],
 ): UsedInProjectWithIcon[] {
-  const daLayers = allProjects.filter((x) => x.daLayer)
   return projectIds
     .map((projectId) => {
       const project = allProjects.find((p) => p.id === projectId)
@@ -315,7 +314,7 @@ export function getProjectsUsedIn(
         name: project.name,
         slug: project.slug,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
-        url: getProjectUrl(project, daLayers),
+        url: getProjectUrl(project),
       }
     })
     .filter(notUndefined)

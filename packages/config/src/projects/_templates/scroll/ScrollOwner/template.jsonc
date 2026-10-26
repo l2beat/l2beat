@@ -6,6 +6,7 @@
   "canActIndependently": false,
   "fields": {
     "accessControl": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "scrollAccessControl",
         "roleNames": {
@@ -28,6 +29,7 @@
     //   "permissions": [{ "type": "act" }]
     // },
     "scNoDelay": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "roles", "SECURITY_COUNCIL_NO_DELAY_ROLE", "members"],
       "permissions": [
@@ -58,6 +60,7 @@
       ]
     },
     "opsFast": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "roles", "ops-fast", "members"],
       "permissions": [
@@ -72,6 +75,7 @@
       ]
     },
     "opsNoDelay": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "roles", "emergency-nodelay", "members"],
       "permissions": [
@@ -90,6 +94,7 @@
       ]
     },
     "scMinorityNoDelay": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": [
         "get",

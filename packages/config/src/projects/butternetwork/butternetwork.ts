@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -9,12 +9,27 @@ import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('butternetwork')
 
+// Discovery watches only the Base bridge, paused with all other chains for the
+// routing upgrade. Once it is unpaused, drop the yellowWarning and this assert.
+assert(
+  discovery.getContractValue<boolean>('Butter Bridge', 'paused'),
+  'Butter Bridge on Base is unpaused: remove the routing upgrade yellowWarning and review the new code',
+)
+
 export const butternetwork: BaseProject = {
   id: ProjectId('butternetwork'),
   slug: 'butternetwork',
   name: 'Butter Network',
   shortName: 'Butter',
   addedAt: UnixTime(1785915246),
+  statuses: {
+    yellowWarning:
+      'The bridge is paused during a [routing infrastructure upgrade](https://x.com/ButterNetworkio/status/2110682522564825340).',
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  },
   interopConfig: {
     description:
       'Liquidity bridge and messaging protocol using the MAP relay chain (an alt-L1) and its light-client network to verify cross-chain messages.',

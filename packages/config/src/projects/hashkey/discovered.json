@@ -1,6 +1,6 @@
 {
   "name": "hashkey",
-  "timestamp": 1788816891,
+  "timestamp": 1791965742,
   "configHash": "0xe1d2cbcff7382821a6b6becaa9678339ac420d416a97d59a6e010631d82862a3",
   "entries": [
     {
@@ -87,7 +87,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 850,
+        "gameCount": 1722,
         "gameImpls": [
           "eth:0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA",
           "eth:0xE38135e20BA018a5542C83De258d80d6883Da8A3",
@@ -101,14 +101,14 @@
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x441F31C4cdf772558D4EA31f3114de59aE145E7c",
         "permissionedGameArgs": "EXPECT_REVERT",
-        "permissionedGamesTotal": 850,
+        "permissionedGamesTotal": 1722,
         "proposerFromDGF": "UNRESOLVED",
         "version": "1.0.1-beta.1",
         "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
@@ -308,6 +308,7 @@
         "disputeGameFactory": "eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
+        "enabledFeatures": [],
         "gasLimit": 30000000,
         "gasPayingToken": {
           "addr_": "eth:0xE7C6BF469e97eEB0bFB74C8dbFF5BD47D4C1C98a",
@@ -363,10 +364,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x43F8DeFe3E9286D152E91BB16a248808E7247198": "Proxy",
@@ -510,6 +517,7 @@
         "$immutable": true,
         "owner": "eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x679A65aD62972Ea3561F40A12e93CcA6f79F35E6": "AddressManager"
       },
@@ -600,6 +608,7 @@
         "isUpgrading": false,
         "owner": "eth:0x3228F00FbFD0e1F4c282601c489664B10932C40f"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C": "ProxyAdmin"
       }
@@ -633,7 +642,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621464",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621476",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1040,10 +1049,20 @@
             "2024-12-16T11:05:11.000Z",
             "0xa75dfc34e3c0c1cc441a5b6de207082bc8f639d7fc3d65558344b0f92785ac32",
             ["eth:0x18A7868ECe35A45aC9138108E5b6e021aD1038d1"]
+          ],
+          [
+            "2026-10-13T16:34:11.000Z",
+            "0x4951a71ae7f0a5dfe038b4b32ffd0ee7344fdc7ae9c5c22665817c1593615919",
+            ["eth:0xcF9bEC9f2769Ecc09107C58fA5eB0199D989A606"]
+          ],
+          [
+            "2026-10-13T16:40:23.000Z",
+            "0x03fe54707b57aa5852cd9facce2f313553582bfe09b60654a23de34ce6798caa",
+            ["eth:0x18A7868ECe35A45aC9138108E5b6e021aD1038d1"]
           ]
         ],
-        "$upgradeCount": 1,
-        "balance": "75819983758138247444378760",
+        "$upgradeCount": 3,
+        "balance": "75824829935749654817874724",
         "disputeGameFactory": "eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50",
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "eth:0x6F2b20996ADAf3ae64Da901A67f659C2c48f66C9",
@@ -1051,7 +1070,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 25916321
+          "prevBlockNum": 26181982
         },
         "paused": false,
         "proofMaturityDelaySeconds": 302400,
@@ -1940,9 +1959,9 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 25928196 },
+  "usedBlockNumbers": { "ethereum": 26189479 },
   "permissionsConfigHash": "0x344d354018772615fb21d605d0dfaad23256e8db9c1cb50cbde59de16a29ab64",
   "permissions": {
     "eth:0x3228F00FbFD0e1F4c282601c489664B10932C40f": {

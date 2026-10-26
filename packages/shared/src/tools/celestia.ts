@@ -1,9 +1,5 @@
-import { assert } from '@l2beat/shared-pure'
-import type { CelestiaEvent } from '../clients/api-celestia/types'
-
 export const celestiaTools = {
   decodeCommitment,
-  extractNamespacesFromEvents,
   isOpStackCelestiaCommitment,
 }
 
@@ -51,19 +47,6 @@ function decodeCommitment(commitment: string): CelestiaCommitmentData {
   throw new Error(`Unknown byteDerivationVersion: ${hexBody.slice(0, 8)}`)
 }
 
-function extractNamespacesFromEvents(events: CelestiaEvent[]) {
-  const extractedNamespaces = events.map((event) => {
-    if (event.type === 'celestia.blob.v1.EventPayForBlobs') {
-      return getEventAttributeValue<string[]>(event, 'namespaces')
-    }
-
-    return []
-  })
-
-  // Might contain many submissions to the same namespace
-  return Array.from(new Set(extractedNamespaces.flat()))
-}
-
 /**
  * OP
  * @see https://github.com/celestiaorg/optimism/blob/9931de7ebf78564062383d5d680458e750a0cb52/op-celestia/da.go#L10
@@ -109,10 +92,4 @@ function decodeArbCommitment(hex: string): CelestiaCommitmentData {
     blockHeight,
     blobCommitment,
   }
-}
-
-function getEventAttributeValue<T>(event: CelestiaEvent, key: string): T {
-  const attribute = event.attributes.find((a) => a.key === key)
-  assert(attribute && attribute.value, `${key} should be defined`)
-  return JSON.parse(attribute.value) as T
 }

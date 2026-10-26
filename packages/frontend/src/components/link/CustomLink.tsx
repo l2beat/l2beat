@@ -1,6 +1,7 @@
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import type React from 'react'
+import { isExternalUrl } from '~/utils/isExternalUrl'
 
 export type CustomLinkProps = Omit<React.ComponentProps<'a'>, 'href'> &
   VariantProps<typeof linkVariants> & {
@@ -37,9 +38,7 @@ export function CustomLink({
   className,
   ...rest
 }: CustomLinkProps) {
-  const isOutLink = rest.href.startsWith('http')
-
-  if (isOutLink) {
+  if (isExternalUrl(rest.href)) {
     return (
       <a
         target="_blank"

@@ -5,11 +5,13 @@
   "description": "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits. It checkpoints bond ownership so that committee sortition admits at most one operator key per bond owner, and applies an owner-set admission policy (cooldown and pause) to future committees.",
   "ignoreMethods": ["admissionPolicyAt"],
   "ignoreInWatchMode": [
+    "activeOperators",
     "bondOwners",
     "bondingAssetConfigurationVersion",
     "ciphernodeBonds",
     "committeeOwnerCapacity",
     "eligibilityConfigurationVersion",
+    "numActiveOperators",
     "numRegisteredOperators",
     "reservedSlashedTicketBalance",
     "slashedCiphernodeBond",
@@ -30,8 +32,7 @@
       ]
     },
     "activeOperators": {
-      "description": "Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.",
-      "type": "PERMISSION",
+      "description": "Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation. The committee role itself is on CiphernodeRegistry.registeredCiphernodes.",
       "handler": {
         "type": "event",
         "select": "operator",
@@ -43,13 +44,7 @@
           "event": "OperatorActivationChanged",
           "where": ["=", "#active", false]
         }
-      },
-      "permissions": [
-        {
-          "type": "member",
-          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties."
-        }
-      ]
+      }
     },
     "bondOwners": {
       "description": "Latest collateral owner for each operator key, reconstructed from ownership events. The owner controls that operator's collateral and exits (operators self-administer this via propose/accept); one address can own several operator positions, but only one of them can be selected into any committee requested after the bond-owner cap was introduced.",

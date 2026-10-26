@@ -11,6 +11,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
   beforeEach(async () => {
     await repository.deleteAll()
+    await db.interopAggregateStatus.deleteAll()
   })
 
   describe(AggregatedInteropTokenRepository.prototype.getAll.name, () => {
@@ -896,6 +897,115 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         expect(result).toEqualUnsorted([crossChain, sameChain])
       })
+    },
+  )
+  describe(
+    AggregatedInteropTokenRepository.prototype
+      .getLatestPromotedTimestampForToken.name,
+    () => {
+      // Snapshots 100-300 are promoted unless a case says otherwise. Each case
+      // seeds the expected snapshot plus a newer distractor that would win if
+      // the filter named in the case were missing.
+      const cases: {
+        name: string
+        records: Partial<Parameters<typeof record>[0]>[]
+        blocked?: UnixTime[]
+        upTo?: UnixTime
+        expected: UnixTime | undefined
+      }[] = [
+        {
+          name: 'returns the newest promoted snapshot with the token',
+          records: [
+            { timestamp: UnixTime(100) },
+            { timestamp: UnixTime(200) },
+            { timestamp: UnixTime(300), abstractTokenId: 'other' },
+          ],
+          expected: UnixTime(200),
+        },
+        {
+          name: 'skips snapshots that are not promoted',
+          records: [{ timestamp: UnixTime(100) }, { timestamp: UnixTime(200) }],
+          blocked: [UnixTime(200)],
+          expected: UnixTime(100),
+        },
+        {
+          name: 'ignores snapshots after upTo',
+          records: [{ timestamp: UnixTime(100) }, { timestamp: UnixTime(200) }],
+          upTo: UnixTime(100),
+          expected: UnixTime(100),
+        },
+        {
+          name: 'ignores rows outside the chains',
+          records: [
+            { timestamp: UnixTime(100) },
+            { timestamp: UnixTime(200), dstChain: 'base' },
+          ],
+          expected: UnixTime(100),
+        },
+        {
+          name: 'ignores same-chain rows',
+          records: [
+            { timestamp: UnixTime(100) },
+            { timestamp: UnixTime(200), dstChain: 'ethereum' },
+          ],
+          expected: UnixTime(100),
+        },
+        {
+          name: 'ignores rows without transfers',
+          records: [
+            { timestamp: UnixTime(100) },
+            { timestamp: UnixTime(200), transferCount: 0 },
+          ],
+          expected: UnixTime(100),
+        },
+        {
+          name: 'returns undefined when the token was never aggregated',
+          records: [{ timestamp: UnixTime(100), abstractTokenId: 'other' }],
+          expected: undefined,
+        },
+      ]
+
+      for (const testCase of cases) {
+        it(testCase.name, async () => {
+          for (const timestamp of [
+            UnixTime(100),
+            UnixTime(200),
+            UnixTime(300),
+          ]) {
+            await db.interopAggregateStatus.upsertAuto({
+              timestamp,
+              status: testCase.blocked?.includes(timestamp)
+                ? 'blocked'
+                : 'promoted',
+            })
+          }
+          await repository.insertMany(testCase.records.map(tokenRecord))
+
+          const result = await repository.getLatestPromotedTimestampForToken(
+            'token',
+            {
+              upTo: testCase.upTo ?? UnixTime(300),
+              sourceChains: ['ethereum', 'arbitrum'],
+              destinationChains: ['ethereum', 'arbitrum'],
+            },
+          )
+
+          expect(result).toEqual(testCase.expected)
+        })
+      }
+
+      function tokenRecord(
+        overrides: Partial<Parameters<typeof record>[0]>,
+      ): AggregatedInteropTokenRecord {
+        return record({
+          id: 'protocol',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'token',
+          ...overrides,
+        })
+      }
     },
   )
 })

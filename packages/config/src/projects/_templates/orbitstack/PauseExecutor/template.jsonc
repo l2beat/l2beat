@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PauseExecutor",
+  "category": "gov",
+  "description": "Executor-role holder that can only forward `pause()` calls: PAUSER_ROLE holders can pause any contract the UpgradeExecutor is authorized on. Not upgradeable.",
+  // pause-only executor: must not inherit the UpgradeExecutor's powers
+  "canActIndependently": false,
+  "fields": {
+    "pausers": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PAUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause contracts through the UpgradeExecutor."
+        }
+      ]
+    },
+    "pauserAdmins": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the pausers."
+        }
+      ]
+    }
+  }
+}

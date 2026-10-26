@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1791546083,
+      "type": "state",
+      "contract": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+      "transaction": "0x015a9a1f6c439001977582504da12f979f60c51e155a50a2f2d6f707f29fb1da",
+      "updateId": "4fc53816",
+      "reason": "ValidatorTimelock: Abstract chain execution delay raised from 3h to 1d (NewChainExecutionDelay for the Abstract diamond, governance proposal ZIP-17)."
+    }
+  ]
+}

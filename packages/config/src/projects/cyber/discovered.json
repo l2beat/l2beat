@@ -1,6 +1,6 @@
 {
   "name": "cyber",
-  "timestamp": 1790808262,
+  "timestamp": 1792587967,
   "configHash": "0xb301009ea55ba6e4bab420254c67ab3e0fdf108b4df5d2865c38b4419ec7d843",
   "entries": [
     {
@@ -227,6 +227,7 @@
         "$immutable": true,
         "owner": "eth:0x7E54107731EC43e78DA678DFa5fB6222Ad036e03"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x19b5804B88F10262A55ac731f28A3BbC4209853a": "AddressManager"
       },
@@ -292,7 +293,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 26016052
+          "prevBlockNum": 26230381
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -555,6 +556,7 @@
         "isUpgrading": false,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "ProxyAdmin"
       }
@@ -644,6 +646,7 @@
         "disputeGameFactory": "eth:0xaCc66304d26a01A9bd60d0584dCEdbaCeC8e10e0",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
+        "enabledFeatures": [],
         "gasLimit": 30000000,
         "gasPayingToken": {
           "addr_": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
@@ -694,10 +697,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055": "Proxy",
@@ -881,17 +890,13 @@
         "isUpgrading": false,
         "owner": "eth:0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x7E54107731EC43e78DA678DFa5fB6222Ad036e03": "ProxyAdmin"
       }
     },
     {
       "address": "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -916,7 +921,7 @@
           "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
           "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5",
-          "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
+          "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
           "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
@@ -928,7 +933,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 73,
+        "nonce": 74,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1176,6 +1181,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SaferSafes",
       "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
       "type": "Contract",
@@ -1246,7 +1256,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 7328,
+        "gameCount": 7820,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x924B10d37392414b0813190F01DbaF6c3322E906",
@@ -1260,14 +1270,14 @@
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398",
         "permissionedGameArgs": "EXPECT_REVERT",
-        "permissionedGamesTotal": 7328,
+        "permissionedGamesTotal": 7820,
         "proposerFromDGF": "UNRESOLVED",
         "version": "1.0.0",
         "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
@@ -1421,6 +1431,7 @@
         "$immutable": true,
         "owner": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },
@@ -2351,10 +2362,10 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 26093360 },
-  "permissionsConfigHash": "0xa4978144850b3269d66f09f2b1a671e7e4046e051d5ffbcdb107727a9eb2d46b",
+  "usedBlockNumbers": { "ethereum": 26241156 },
+  "permissionsConfigHash": "0x826babdcda879db46d82a2a6cd6951789a83c793d762997c0fd3b7d9a680cfe0",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [

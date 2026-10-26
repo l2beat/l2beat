@@ -106,6 +106,20 @@
       "reason": "Upgraded the L2 ERC20Vault predeploy away from its genesis implementation (0x0167...0002); the first $pastUpgrades entry is a real upgrade, not an initialization."
     },
     {
+      "timestamp": 1716802403,
+      "type": "code",
+      "contract": "taiko:0x1670000000000000000000000000000000000003",
+      "transaction": "0x8705703a93cb4cfc1ae69d1277f4464f807c7615237f2b04ff010c6e45708d34",
+      "reason": "Upgraded the L2 ERC721Vault predeploy away from its genesis implementation (0x0167...0003); the first $pastUpgrades entry is a real upgrade, not an initialization."
+    },
+    {
+      "timestamp": 1716802439,
+      "type": "code",
+      "contract": "taiko:0x1670000000000000000000000000000000000004",
+      "transaction": "0x264a2a553672a5480141638c3ca00a7bdf2c54e48c53f41867ca4f64703e16d7",
+      "reason": "Upgraded the L2 ERC1155Vault predeploy away from its genesis implementation (0x0167...0004); the first $pastUpgrades entry is a real upgrade, not an initialization."
+    },
+    {
       "timestamp": 1716827831,
       "type": "code",
       "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
@@ -519,6 +533,41 @@
       "reason": "Pacaya upgrade of the L2 SignalService predeploy away from its genesis implementation (0x0167...0005); the first $pastUpgrades entry is a real upgrade, not an initialization."
     },
     {
+      "timestamp": 1748252555,
+      "type": "state",
+      "contract": "taiko:0x1670000000000000000000000000000000000002",
+      "transaction": "0xb907d1d03f6b26eb6f090b8aa5cd9fbf507beedc2f2cfac257f4201624b4d3ea",
+      "reason": "The Taiko L2 Multisig (Safe taiko:0xCa5b76Cc...), then owner of the L2 ERC20Vault, raised its threshold from 3 to 4 while removing a signer (ChangedThreshold, before L2 discovery coverage)."
+    },
+    {
+      "timestamp": 1748252555,
+      "type": "state",
+      "contract": "taiko:0x1670000000000000000000000000000000000001",
+      "transaction": "0xb907d1d03f6b26eb6f090b8aa5cd9fbf507beedc2f2cfac257f4201624b4d3ea",
+      "reason": "The Taiko L2 Multisig (Safe taiko:0xCa5b76Cc...), then owner of the L2 Bridge, raised its threshold from 3 to 4 while removing a signer (ChangedThreshold, before L2 discovery coverage)."
+    },
+    {
+      "timestamp": 1748252555,
+      "type": "state",
+      "contract": "taiko:0x1670000000000000000000000000000000000005",
+      "transaction": "0xb907d1d03f6b26eb6f090b8aa5cd9fbf507beedc2f2cfac257f4201624b4d3ea",
+      "reason": "The Taiko L2 Multisig (Safe taiko:0xCa5b76Cc...), then owner of the L2 SignalService, raised its threshold from 3 to 4 while removing a signer (ChangedThreshold, before L2 discovery coverage)."
+    },
+    {
+      "timestamp": 1748252555,
+      "type": "state",
+      "contract": "taiko:0x1670000000000000000000000000000000000006",
+      "transaction": "0xb907d1d03f6b26eb6f090b8aa5cd9fbf507beedc2f2cfac257f4201624b4d3ea",
+      "reason": "The Taiko L2 Multisig (Safe taiko:0xCa5b76Cc...), then owner of the L2AddressManager, raised its threshold from 3 to 4 while removing a signer (ChangedThreshold, before L2 discovery coverage)."
+    },
+    {
+      "timestamp": 1748252555,
+      "type": "state",
+      "contract": "taiko:0x1670000000000000000000000000000000010001",
+      "transaction": "0xb907d1d03f6b26eb6f090b8aa5cd9fbf507beedc2f2cfac257f4201624b4d3ea",
+      "reason": "The Taiko L2 Multisig (Safe taiko:0xCa5b76Cc...), then owner of the L2 Anchor, raised its threshold from 3 to 4 while removing a signer (ChangedThreshold, before L2 discovery coverage)."
+    },
+    {
       "timestamp": 1748997623,
       "type": "code",
       "contract": "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
@@ -808,6 +857,22 @@
       "reason": "Upgrade authority moved from the Taiko Multisig (Safe) to the TaikoDAOController (Aragon DAO: Security Council multisig plugins with TAIKO holder veto): ownership of the (since retired, Pacaya) PreconfRouter."
     },
     {
+      "timestamp": 1756972533,
+      "type": "state",
+      "contract": "taiko:0x1670000000000000000000000000000000010001",
+      "transaction": "0xc2f122bbc16ac9911e3b94ee39e1965cbc11426fff1b04731a17e098b208c60b",
+      "updateId": "f16112a0",
+      "reason": "The Taiko L2 Multisig (Safe taiko:0xCa5b76Cc...), then owner of the L2 Anchor, raised its threshold from 4/6 to 5/7 while adding a signer (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1756972533,
+      "type": "state",
+      "contract": "taiko:0x1670000000000000000000000000000000000006",
+      "transaction": "0xc2f122bbc16ac9911e3b94ee39e1965cbc11426fff1b04731a17e098b208c60b",
+      "updateId": "f16112a0",
+      "reason": "The Taiko L2 Multisig (Safe taiko:0xCa5b76Cc...), then owner of the L2AddressManager, raised its threshold from 4/6 to 5/7 while adding a signer (ChangedThreshold)."
+    },
+    {
       "timestamp": 1757138365,
       "type": "state",
       "contract": "taiko:0x1670000000000000000000000000000000000006",
@@ -974,6 +1039,14 @@
       "reason": "Upgrade authority of the Shasta MainnetInbox moved from a 2/4 Safe (0xF14Dc4...), which owned it since deployment and through the Shasta activation on 2026-04-02, to the TaikoDAOController (Aragon DAO: Security Council multisig plugins with TAIKO holder veto)."
     },
     {
+      "timestamp": 1779395783,
+      "type": "state",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "transaction": "0x47727aec55e03cce2663a7a5cdfeb2dc02fc34bd2a5ec27e7850300c4d23fdec",
+      "updateId": "ef7a775e",
+      "reason": "Mechanism change: the EOA that proposed, cancelled and executed shared RISC Zero verifier route changes alone gave up its roles, leaving them to the Safe 0x2E5b... (RoleRevoked)."
+    },
+    {
       "timestamp": 1780627823,
       "type": "state",
       "contract": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
@@ -1100,6 +1173,46 @@
       "updateId": "1c35c2f8",
       "transaction": "0x4a761524f4fe9377a63233971eb3ce7b2101832371f19e1f5e0cf126bae0bf7d",
       "reason": "DAO proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract backing the SGX Reth verifier (Raiko2 v0.8.0-rc1)."
+    },
+    {
+      "timestamp": 1791444527,
+      "type": "state",
+      "contract": "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
+      "transaction": "0x17c27b257bb1445a512d4426c962de5c5f4b282f459c7e851c413702ad11d10c",
+      "updateId": "659e0548",
+      "reason": "Changed default bridged token implementation registrations in DefaultResolver (AddressRegistered). Registrations affect newly deployed token proxies."
+    },
+    {
+      "timestamp": 1791767075,
+      "type": "state",
+      "contract": "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
+      "transaction": "0x935e4a93cf26e7bef2ac3c445815e253496d82d51e4205e7073a3d511a9111f4",
+      "updateId": "659e0548",
+      "reason": "Changed default bridged token implementation registrations in DefaultResolver (AddressRegistered). Registrations affect newly deployed token proxies."
+    },
+    {
+      "timestamp": 1791444621,
+      "type": "state",
+      "contract": "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984",
+      "transaction": "0xc61c925bbc9b815715c6bc009cfcb50c16e93904dc07e799c913953a2b6be095",
+      "updateId": "659e0548",
+      "reason": "Registered trusted bridge/vault counterparties and default bridged token implementations in the live L2 DefaultResolver (AddressRegistered)."
+    },
+    {
+      "timestamp": 1791767237,
+      "type": "state",
+      "contract": "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984",
+      "transaction": "0xe8c9d02693ed235dce16a36685a7d07f2929b6927054e07be41293cec00d194d",
+      "updateId": "659e0548",
+      "reason": "Registered trusted bridge/vault counterparties and default bridged token implementations in the live L2 DefaultResolver (AddressRegistered)."
+    },
+    {
+      "timestamp": 1791395339,
+      "type": "state",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "transaction": "0xb826a86b502d702872ea69472f2b62108271fa7f1b27a0052eee494ae83ff7bc",
+      "updateId": "659e0548",
+      "reason": "Mechanism change: the Safe proposing, cancelling and executing shared RISC Zero verifier route changes lowered its threshold from 3/5 to 2/5 (ChangedThreshold)."
     }
   ]
 }

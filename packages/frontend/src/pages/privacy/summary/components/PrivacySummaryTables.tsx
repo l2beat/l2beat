@@ -51,6 +51,7 @@ function PrivacySummaryGroupCard({
         <PrivacySummaryTable
           entries={group.entries}
           hiddenColumns={group.hiddenColumns}
+          anonymitySetTooltip={group.anonymitySetTooltip}
         />
       </div>
     </PrimaryCard>

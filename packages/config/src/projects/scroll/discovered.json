@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "timestamp": 1791455050,
-  "configHash": "0xae8e37d1db659a2ee7e6b44d49157b96d435a21c8a5af8c9b13962ba5264df44",
+  "configHash": "0x1225a960840a9c2071ba8b70ebbb38104cadc4f0ca6420e7e6a416116ed20031",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -121,8 +121,13 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "timelockAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -212,8 +217,13 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "timelockAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -499,8 +509,13 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "timelockAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -710,6 +725,7 @@
         "verifierVersions": [0, 1, 2, 3, 4, 6, 7, 8, 9, 10]
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "verifierVersions": {
           "description": "Each element of the array says which version of verifier is registered under this index in latestVerifier array."
         },
@@ -775,6 +791,10 @@
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
       },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a": "TransparentUpgradeableProxy",
         "eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa": "L1MessageQueueV2"
@@ -818,6 +838,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC721 tokens from L1 to L2.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
@@ -846,6 +867,10 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": "TransparentUpgradeableProxy",
@@ -958,6 +983,10 @@
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "TransparentUpgradeableProxy",
         "eth:0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb": "L1CustomERC20Gateway"
@@ -1023,7 +1052,11 @@
         "rollup": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "xDomainMessageSender": "scr:0x0000000000000000000000000000000000000001"
       },
-      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "TransparentUpgradeableProxy",
         "eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69": "L1ScrollMessenger"
@@ -1147,6 +1180,8 @@
         "paused": false
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "paused": {
           "severity": "MEDIUM",
           "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."
@@ -1365,6 +1400,13 @@
         "scMinorityNoDelay": ["eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"],
         "scNoDelay": ["eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"]
       },
+      "fieldMeta": {
+        "accessControl": { "severity": "MEDIUM" },
+        "scNoDelay": { "severity": "MEDIUM" },
+        "opsFast": { "severity": "MEDIUM" },
+        "opsNoDelay": { "severity": "MEDIUM" },
+        "scMinorityNoDelay": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner"
       },
@@ -1411,6 +1453,10 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "TransparentUpgradeableProxy",
@@ -1461,6 +1507,10 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905": "TransparentUpgradeableProxy",
@@ -1529,8 +1579,13 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "timelockAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -1588,6 +1643,8 @@
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
       "fieldMeta": {
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "enforcedBatchParameters": { "severity": "HIGH" },
         "messageQueueParameters": { "severity": "MEDIUM" }
       },
@@ -1814,6 +1871,8 @@
         }
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "tokenMapping": {
           "severity": "HIGH",
           "description": "L1-to-L2 token mapping used to validate custom-token deposits and withdrawals."
@@ -1932,6 +1991,8 @@
         "verifier": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "isEnforcedModeEnabled": { "severity": "MEDIUM" }
       },
@@ -2017,6 +2078,8 @@
         "tokenMapping": {}
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "tokenMapping": {
           "severity": "HIGH",
           "description": "L1-to-L2 token mapping used to validate custom-token deposits and withdrawals."
@@ -2066,7 +2129,11 @@
         "pauseCooldownPeriod": 2592000,
         "SCROLL_OWNER": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
-      "fieldMeta": { "pauseCooldownPeriod": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
+        "pauseCooldownPeriod": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b": "TransparentUpgradeableProxy",
         "eth:0x57e26d997852e7e94915e250446C3bf43F41d98D": "PauseController"
@@ -2083,6 +2150,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC1155 tokens from L1 to L2.",
+      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
@@ -2111,6 +2179,10 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6": "TransparentUpgradeableProxy",
@@ -2399,6 +2471,10 @@
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9": "TransparentUpgradeableProxy",
         "eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9": "L1StandardERC20Gateway"
@@ -2451,6 +2527,7 @@
         "$immutable": true,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072": "ProxyAdmin"
       }
@@ -2539,6 +2616,8 @@
         "withdrawPaused": false
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "withdrawPaused": { "severity": "MEDIUM" },
         "depositPaused": { "severity": "MEDIUM" },
         "circleCaller": { "severity": "HIGH" }
@@ -2592,6 +2671,8 @@
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "ethGateway": { "severity": "HIGH" },
         "defaultERC20Gateway": { "severity": "HIGH" },
         "gateways": { "severity": "MEDIUM" }
@@ -2670,6 +2751,9 @@
         "version": "2"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "admin": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "rescuer": { "severity": "MEDIUM" },
         "pauser": { "severity": "MEDIUM" },
@@ -2888,6 +2972,10 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "scNoDelay": ["scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"]
       },
+      "fieldMeta": {
+        "accessControl": { "severity": "MEDIUM" },
+        "scNoDelay": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B": "ScrollOwner"
       },
@@ -3006,8 +3094,13 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "timelockAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -3115,8 +3208,13 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "timelockAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -3207,10 +3305,13 @@
         "votingPeriod": 302400
       },
       "fieldMeta": {
+        "$admin": { "severity": "MEDIUM" },
         "votingPeriod": { "severity": "HIGH" },
         "votingDelay": { "severity": "HIGH" },
         "proposalThreshold": { "severity": "HIGH" },
-        "timelock": { "severity": "HIGH" }
+        "admin": { "severity": "MEDIUM" },
+        "timelock": { "severity": "HIGH" },
+        "manager": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0": "TransparentUpgradeableProxy",
@@ -3269,6 +3370,8 @@
         "withdrawPaused": false
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "withdrawPaused": { "severity": "MEDIUM" },
         "depositPaused": { "severity": "MEDIUM" },
         "circleCaller": { "severity": "HIGH" }
@@ -3364,6 +3467,8 @@
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "ethGateway": { "severity": "HIGH" },
         "defaultERC20Gateway": { "severity": "HIGH" }
       },
@@ -3393,6 +3498,7 @@
         "nextMessageIndex": 323829,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "scr:0x5300000000000000000000000000000000000000": "L2MessageQueue"
       }
@@ -3418,6 +3524,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1ERC1155Gateway contract.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
@@ -3441,6 +3548,10 @@
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "router": "scr:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": "TransparentUpgradeableProxy",
@@ -3485,6 +3596,8 @@
         "tokenMapping": {}
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "tokenMapping": {
           "severity": "HIGH",
           "description": "L2-to-L1 token mapping used to validate custom-token deposits and withdrawals."
@@ -3495,11 +3608,6 @@
         "scr:0x1D40306EEfCF6EBd496d6048F6edf8892346e558": "L2CustomERC20Gateway"
       },
       "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
-    },
-    {
-      "address": "scr:0x6625C6332c9F91F2D27c304E729B86db87A3f504",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "scr:0x6626593C237f530D15aE9980A95ef938Ac15c35c",
@@ -3524,6 +3632,7 @@
         "implementation": "scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69",
         "owner": "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484": "ScrollStandardERC20Factory"
       }
@@ -3609,6 +3718,10 @@
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "router": "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79"
       },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0": "TransparentUpgradeableProxy",
         "scr:0x191770c52309dff2c52FfEcf059ECC3862f5D721": "L2ETHGateway"
@@ -3655,6 +3768,10 @@
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "router": "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79",
         "WETH": "scr:0x5300000000000000000000000000000000000004"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": "TransparentUpgradeableProxy",
@@ -3715,7 +3832,11 @@
         "paused": false,
         "xDomainMessageSender": "scr:0x0000000000000000000000000000000000000001"
       },
-      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": "TransparentUpgradeableProxy",
         "scr:0x6fa66EeD8e8086f4c77204B5484D26F4e9AB7772": "L2ScrollMessenger"
@@ -3800,8 +3921,13 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "timelockAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -3820,6 +3946,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1ERC721Gateway contract.",
+      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
@@ -3843,6 +3970,10 @@
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "router": "scr:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582": "TransparentUpgradeableProxy",
@@ -3872,6 +4003,7 @@
         "$immutable": true,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "scr:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81": "ProxyAdmin"
       }
@@ -3909,7 +4041,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpart": "scr:0x6625C6332c9F91F2D27c304E729B86db87A3f504",
+        "counterpart": "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504",
         "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
         "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
         "isDepositsEnabled": true,
@@ -3925,7 +4057,8 @@
       "implementationNames": {
         "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9": "TransparentUpgradeableProxy",
         "scr:0x2B9beB2890DBeFC7cA25Af3164100d139B623C24": "L2LidoGateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "ProxyAdmin",
@@ -3943,6 +4076,7 @@
         "$immutable": true,
         "owner": "scr:0x0c67D8D067E349669dfEAB132A7c03A90594eE09"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45": "ProxyAdmin"
       }
@@ -4066,6 +4200,7 @@
         "$immutable": true,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026": "ProxyAdmin"
       }
@@ -4128,8 +4263,13 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "timelockAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -4137,6 +4277,45 @@
         "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f": "TimelockController"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "L2DaiGateway",
+      "address": "scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x3376fe2e2b450babbd62d47381ca02563bcbfccfb707ec64974558733b5016d3"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "critical": true,
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
+      "sinceTimestamp": 1696920008,
+      "sinceBlock": 112,
+      "values": {
+        "$admin": "scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026",
+        "$implementation": "scr:0xc568B5dcCeBE52073Fa783EAdacDE0a30fA4c2c9",
+        "$pastUpgrades": [
+          [
+            "2023-10-10T06:40:08.000Z",
+            "0x35b95e2d3cc97d6524659c6c4f7616c13a216d226c63a06ced7d80401307e3a2",
+            ["scr:0xc568B5dcCeBE52073Fa783EAdacDE0a30fA4c2c9"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "counterpart": "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
+        "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
+        "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
+        "router": "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
+      },
+      "implementationNames": {
+        "scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62": "TransparentUpgradeableProxy",
+        "scr:0xc568B5dcCeBE52073Fa783EAdacDE0a30fA4c2c9": "L2CustomERC20Gateway"
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "L2PauseController",
@@ -4168,7 +4347,11 @@
         "pauseCooldownPeriod": 2592000,
         "SCROLL_OWNER": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
-      "fieldMeta": { "pauseCooldownPeriod": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
+        "pauseCooldownPeriod": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd": "TransparentUpgradeableProxy",
         "scr:0x105B9baaF75dA556c0206159481243163fAea1c9": "PauseController"
@@ -4208,7 +4391,10 @@
         "getMinterManager": "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
-      "fieldMeta": { "getMinterManager": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "getMinterManager": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "scr:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE": "MasterMinter"
       }
@@ -4423,6 +4609,7 @@
         "symbol": "SCR",
         "totalSupply": "1000000000000000000000000000"
       },
+      "fieldMeta": { "$admin": { "severity": "MEDIUM" } },
       "implementationNames": {
         "scr:0xd29687c813D741E2F938F4aC377128810E217b1b": "TransparentUpgradeableProxy",
         "scr:0x7600174E2a730a05da046fFA8Fc32DEC27FfdDC8": "L2GovToken"
@@ -4451,6 +4638,7 @@
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "scr:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e": "ProxyAdmin"
       }
@@ -4495,6 +4683,10 @@
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "router": "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79",
         "tokenFactory": "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": "TransparentUpgradeableProxy",
@@ -6781,6 +6973,12 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
+    "scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "scr:0xAc92E88bAc1848A5FeEA5cf5A60e0abc3bD5Df94": [
       "constructor(address _counterpart, address _messenger)",
       "error ErrorCallerIsNotCounterpartGateway()",
@@ -6846,6 +7044,29 @@
     ],
     "scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896": [
       "constructor(address _singleton)"
+    ],
+    "scr:0xc568B5dcCeBE52073Fa783EAdacDE0a30fA4c2c9": [
+      "constructor()",
+      "event FinalizeDepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event UpdateTokenMapping(address indexed l2Token, address indexed oldL1Token, address indexed newL1Token)",
+      "event WithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "function counterpart() view returns (address)",
+      "function finalizeDepositERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL1ERC20Address(address _l2Token) view returns (address)",
+      "function getL2ERC20Address(address) pure returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
+      "function messenger() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function tokenMapping(address) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateTokenMapping(address _l2Token, address _l1Token)",
+      "function withdrawERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function withdrawERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function withdrawERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable"
     ],
     "scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": [
       "constructor()",
@@ -7057,28 +7278,28 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "scroll/EnforcedTxGateway": "0x135f3f175975582aabfd47f5af1c6b1c153fe6813d69cfb72d631ba725379300",
-    "scroll/L1CustomERC20Gateway": "0x8a7af5ca214d5c8bcf677e8df4ac3b7ba895c34df35e85567a05965fcbb4a4c3",
-    "scroll/L1ERC1155Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
-    "scroll/L1ERC721Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
-    "scroll/L1ETHGateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
-    "scroll/L1GatewayRouter": "0x4d4af18fc43d5509ca8893d88bedac9c83aa6a03e52355258e3aa74cc083a1d2",
-    "scroll/L1MessageQueue": "0x5cec50d36f5c888cc9815ba4ee94ec48f3df987dc9b5ee78fbd46bd166e014b2",
-    "scroll/L1ScrollMessenger": "0x14d6c8bf252620f2ac8600eb79bfe7337b60906814faa8bad9ab640744cce96c",
-    "scroll/L1StandardERC20Gateway": "0xa33e3df7e4fe83cb3d6299d79361bfa1ee10e2a4c4085ae4dc4d8557f2c264c3",
+    "scroll/EnforcedTxGateway": "0x39b04b4da5982cf565863e6467a115ccd1a7369753fa6450d48443fa35801689",
+    "scroll/L1CustomERC20Gateway": "0x50855d02694bdce9abcfc723ac8eef3ddb58e4ba1cbfe07d96929f8346c2a5d3",
+    "scroll/L1ERC1155Gateway": "0x3784208f53f1338772877c84a8dd2ad2ca301321a2a988b289c115ee6e9709cd",
+    "scroll/L1ERC721Gateway": "0x3784208f53f1338772877c84a8dd2ad2ca301321a2a988b289c115ee6e9709cd",
+    "scroll/L1ETHGateway": "0x3784208f53f1338772877c84a8dd2ad2ca301321a2a988b289c115ee6e9709cd",
+    "scroll/L1GatewayRouter": "0x10da9cdb1bad5989a352b652f1d29f8ed3c732ea5d73a23e902961ebcde16b89",
+    "scroll/L1MessageQueue": "0x671b8fc2bef35fbd3e56893e94b1c0f49fa63a47592850d81322f88c2ead0b37",
+    "scroll/L1ScrollMessenger": "0xe5dbd70d282ccff888c422c67aa2f358bc2548b0a8e8a0f4081d0e0a35250b94",
+    "scroll/L1StandardERC20Gateway": "0xd3e9fbfb2473967fd2ac4ec64e5e82e59033e0f70d4adc6a9b77bd0e2e9639df",
     "scroll/L1Timelock": "0xcf9c044d422b5c1956fd203a134ddfccd2f18a0bd8c9044b35729ce1d91ed5b0",
-    "scroll/L1USDCGateway": "0x7dfc24b4fa8477d38e2faa9e075920e9c8934a75e91c105172d869b5ccc4f934",
-    "scroll/L1WETHGateway": "0x2c64a4c320f500b832923b84ecefc7492ad8cb1a8cbf178924c774b75fd7ffe8",
-    "scroll/MultipleVersionRollupVerifier": "0x12467348254718ddb1d7be2b7f101262147f9dc3ba171fa3d37fe21409f6d797",
-    "scroll/PauseController": "0x100b47e7871f9df11d45f55235cdc935938d00809bb6353e6788e8b71f809dbe",
-    "scroll/ScrollChain": "0x5f71491ec07bafea576afb94f1629d2779fde1cf759492db004b4b2c02f2af9c",
+    "scroll/L1USDCGateway": "0xead89542ba97ff36fb1f1d7736f88e8c1445a26465e5c501aba83e4b3679abaa",
+    "scroll/L1WETHGateway": "0x3595980aa9c1bffaebca1932aef09cd2b650c2b8eba0c353537cee4f243ff707",
+    "scroll/MultipleVersionRollupVerifier": "0xff9cd5aa3e6c2458e93060c9733349c1374dc2779ab34385fb33d11e65d328e2",
+    "scroll/PauseController": "0x22273bf385b1dfae48730cb9a521c1da630621c409d2101f90bd0b607727d8a6",
+    "scroll/ScrollChain": "0x5fb3652d856db5419963c8f2aeb1f105376c6f21b752c204691eea62c15300fe",
     "scroll/ScrollOwner": "0x14d7a582f7d39f4ed732aa56a3c9031c8fc613fa58dfaf42f4f572f19fae54b3",
     "scroll/ScrollOwnerL2": "0x77eb1863ff595be1f6d216e4eb34cc75c37aae99c08c2cd56f8adaa13c218141",
-    "scroll/SystemConfig": "0x4445e6ed56e720f7012a666fd191c15d7509665193dbd3a87a2df9eb740cb4c9",
+    "scroll/SystemConfig": "0x9b33b6c888c1460d4702e2f5ef9eb200122d6c94a2f8db964ba3d798d8e23fd8",
     "tokens/circle/MasterMinter": "0x4ecc241fb1c41dc92b97207ddd89fc61a51d7a6fc2dc5b29fe727faadea66a2a"
   },
   "usedBlockNumbers": { "ethereum": 26147062, "scroll": 35310392 },
-  "permissionsConfigHash": "0xb3a78d73709a995be82f4c6283061dc10100cf94b7d8cfcb83e107de4f642f87",
+  "permissionsConfigHash": "0x1fdcf5985cec267259dde3933c194f02f0cbf35d9450d14f2cc909758efe4e25",
   "permissions": {
     "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": {
       "directlyReceivedPermissions": [
@@ -8098,6 +8319,11 @@
         {
           "permission": "upgrade",
           "from": "scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62",
           "role": "admin"
         },
         {

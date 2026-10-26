@@ -34,16 +34,7 @@ export function ProjectDataPostedChart({
   )
 
   const chartData = useMemo(
-    () =>
-      data?.chart.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
-        return {
-          timestamp,
-          ethereum,
-          celestia,
-          avail,
-          eigenda,
-        }
-      }),
+    () => data?.chart.map(([timestamp, ethereum]) => ({ timestamp, ethereum })),
     [data],
   )
 

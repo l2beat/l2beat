@@ -137,6 +137,14 @@
       "reason": "v29 upgrade execution allowed the rollup DA pair (RollupL1DAValidator, L2 0x177a…326a) in the RollupDAManager (DAPairUpdated event)."
     },
     {
+      "timestamp": 1761131425,
+      "type": "state",
+      "contract": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+      "transaction": "0x659ab34ba4c5eb8b3eda29d19c9980210ea0af4ec4752a780e002bed0563ce77",
+      "updateId": "66793ca4",
+      "reason": "Moved the ZkTokenProxyAdmin owner from the deprecated ProtocolUpgradeHandler alias 0xA08b…29A8 to the current ProtocolUpgradeHandler alias 0xF41E…6bc4, replacing the upgrade authority of the ZK token."
+    },
+    {
       "timestamp": 1764607787,
       "type": "state",
       "contract": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",

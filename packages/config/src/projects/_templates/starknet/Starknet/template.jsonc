@@ -15,6 +15,7 @@
       "severity": "HIGH"
     },
     "$admin": {
+      "severity": "MEDIUM",
       "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks.",
       "permissions": [
         {
@@ -84,6 +85,11 @@
     },
     "feeCollector": {
       "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
+      "type": "RISK_PARAMETER"
+    },
+    "getMinL1MsgFee": {
+      "description": "Minimum fee in wei for an L1 -> L2 message. Governance can raise it up to the 1 ETH maximum fee, also after the application configuration is finalized.",
+      "severity": "MEDIUM",
       "type": "RISK_PARAMETER"
     },
     "programHash": {

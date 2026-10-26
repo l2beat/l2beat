@@ -139,7 +139,8 @@ export async function getPrivacyProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  const gardenCropsSection = getGardenCropsSection(
+  const gardenCropsSection = await getGardenCropsSection(
+    details.id,
     details.garden,
     details.ossification,
   )
@@ -184,7 +185,7 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (details.hasAnonymitySet) {
+  if (details.anonymitySetType !== undefined) {
     sections.push({
       type: 'PrivacyAnonymitySetSection',
       props: {
@@ -193,6 +194,7 @@ export async function getPrivacyProjectEntry(
         defaultRange: defaultChartRange,
         project: chartProject,
         milestones: details.milestones,
+        anonymitySetType: details.anonymitySetType,
       },
     })
   }

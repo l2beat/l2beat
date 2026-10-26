@@ -13,19 +13,19 @@ import type { BaseProject, ProjectScalingInfo } from './types'
 describe(ProjectDatabase.name, () => {
   let db: ProjectDatabase
   const TEMP_PATH = '/tmp/projectdb.sqlite'
-  before(async () => {
+  before(() => {
     try {
       unlinkSync(TEMP_PATH)
     } catch {}
 
     db = new ProjectDatabase(TEMP_PATH)
-    await db.init()
+    db.init()
   })
   after(() => {
     unlinkSync(TEMP_PATH)
   })
 
-  it('can add and query a project', async () => {
+  it('can add and query a project', () => {
     const project: BaseProject = {
       id: ProjectId('example'),
       slug: 'xmpl',
@@ -34,9 +34,9 @@ describe(ProjectDatabase.name, () => {
       addedAt: 0,
     }
 
-    await db.saveProject(project)
+    db.saveProject(project)
 
-    const result = await db.getProject({
+    const result = db.getProject({
       id: 'example',
       select: [],
       whereNotNull: [],
@@ -46,7 +46,7 @@ describe(ProjectDatabase.name, () => {
     expect(result).toEqual(project)
   })
 
-  it('complex query', async () => {
+  it('complex query', () => {
     const projectA: BaseProject = {
       id: ProjectId('a'),
       slug: 'a',
@@ -70,11 +70,11 @@ describe(ProjectDatabase.name, () => {
       addedAt: 0,
     }
 
-    await db.saveProject(projectA)
-    await db.saveProject(projectB)
-    await db.saveProject(projectC)
+    db.saveProject(projectA)
+    db.saveProject(projectB)
+    db.saveProject(projectC)
 
-    const result = await db.getProjects({
+    const result = db.getProjects({
       select: ['scalingInfo'],
       whereNotNull: ['scalingInfo'],
       whereNull: [],
@@ -83,7 +83,7 @@ describe(ProjectDatabase.name, () => {
     expect(result).toEqual([projectB])
   })
 
-  it('can add and retrieve a token', async () => {
+  it('can add and retrieve a token', () => {
     const token: LegacyToken = {
       id: AssetId('foo'),
       name: 'Foo',
@@ -98,12 +98,12 @@ describe(ProjectDatabase.name, () => {
       supply: 'totalSupply',
     }
 
-    await db.saveToken(token)
-    expect(await db.getToken(token.id)).toEqual(token)
-    expect(await db.getTokens()).toEqual([token])
+    db.saveToken(token)
+    expect(db.getToken(token.id)).toEqual(token)
+    expect(db.getTokens()).toEqual([token])
   })
 
-  it('rolls back a failed transaction', async () => {
+  it('rolls back a failed transaction', () => {
     const project: BaseProject = {
       id: ProjectId('rolled-back'),
       slug: 'rolled-back',
@@ -112,14 +112,14 @@ describe(ProjectDatabase.name, () => {
       addedAt: 0,
     }
 
-    await expect(
-      db.transaction(async () => {
-        await db.saveProject(project)
+    expect(() =>
+      db.transaction(() => {
+        db.saveProject(project)
         throw new Error('test error')
       }),
-    ).toBeRejectedWith('test error')
+    ).toThrow('test error')
 
-    const result = await db.getProject({
+    const result = db.getProject({
       id: project.id,
       select: [],
       whereNotNull: [],

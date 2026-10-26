@@ -1,3 +1,1 @@
-Umbra has no governance process or contract upgrade mechanism. The Umbra and StealthKeyRegistry contracts are immutable.
-
-The Umbra contract has a permissioned owner that can immediately set the ETH toll charged on every contract-routed payment and change the addresses that collect and receive those tolls. Because the toll has no upper bound, the owner can effectively stop new payments through the Umbra contract at any time. The owner cannot change the payment or withdrawal logic and cannot prevent recipients from accessing payments already sent to them, so the exit window is infinite and the protocol passes the walkaway test.
+The Umbra and StealthKeyRegistry contracts are immutable. The Umbra owner sets the ETH toll on every payment through the contract and the addresses that collect it, instantly and without a cap. A high toll stops new payments. ScopeLift changes the hosted app, its indexer and its relayer at will.

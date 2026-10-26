@@ -4,9 +4,9 @@ import {
   PRIVACY_SUMMARY_DESCRIPTION,
   ZK_CATALOG_DESCRIPTION,
 } from '~/consts/summaryPageDescriptions'
-import { getDaListSections } from '~/server/markdown/list-pages/getDaListSections'
 import { getDefiListSections } from '~/server/markdown/list-pages/getDefiListSections'
 import { getInteropListSections } from '~/server/markdown/list-pages/getInteropListSections'
+import { getOssificationListSections } from '~/server/markdown/list-pages/getOssificationListSections'
 import { getPrivacyListSections } from '~/server/markdown/list-pages/getPrivacyListSections'
 import { getScalingListSections } from '~/server/markdown/list-pages/getScalingListSections'
 import { getZkListSections } from '~/server/markdown/list-pages/getZkListSections'
@@ -78,12 +78,6 @@ const LIST_PAGE_DOCUMENTS: Record<
       'Every layer 2 and layer 3 tracked by L2BEAT, with category, stage, stack and host chain. Each link is the project page; its last path segment is the {slug} for the public API.',
     getSections: getScalingListSections,
   },
-  '/data-availability/summary': {
-    title: 'L2BEAT data availability layers',
-    summary:
-      'Every data availability layer tracked by L2BEAT with its type and risks: public layers one entry per bridge to Ethereum plus one for use without a bridge, and custom solutions built for a single project.',
-    getSections: getDaListSections,
-  },
   '/zk-catalog': {
     title: 'L2BEAT ZK catalog',
     summary:
@@ -115,6 +109,17 @@ const LIST_PAGE_DOCUMENTS: Record<
     summary: 'DeFi protocols tracked by L2BEAT, with their category.',
     notes: DEFI_SUMMARY_DESCRIPTION,
     getSections: getDefiListSections,
+  },
+  '/ossification': {
+    title: 'L2BEAT ossification',
+    summary:
+      'How long the critical contracts of each tracked project have gone unchanged, and how much value they secured meanwhile, with the exit window where the project has one.',
+    notes: [
+      "Ossification measures how battle-tested the code securing a project is: the share of recorded code-bug exploits ([published, onchain-verified dataset](https://github.com/l2beat/ossification-dataset)) whose exploited code was younger than the project's critical contracts are today. The clock starts at the ossification genesis, and every critical change resets it. Battle-tested exposure is the value they secured over the unchanged period, in USD-years.",
+      '',
+      'Ossification is not calculated while any critical contract lacks verified source code. Critical changes per year count the trailing 36 months, or the time since the ossification genesis if shorter. The exit window is how long users have to leave before a permitted critical change takes effect; it does not affect ossification.',
+    ].join('\n'),
+    getSections: getOssificationListSections,
   },
 }
 

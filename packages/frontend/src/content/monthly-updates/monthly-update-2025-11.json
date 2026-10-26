@@ -120,22 +120,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "DIN AVS Launches on EigenLayer, Bringing Cryptoeconomic Security to RPC",
-          "content": "Consensys-backed Decentralized Infrastructure Network (DIN) has [launched](https://blog.eigencloud.xyz/din-avs-launches-on-eigenlayer-bringing-economic-security-to-web3s-rpc-infrastructure/) its Autonomous Verifiable Service (AVS) on EigenLayer mainnet, positioning itself as the first large-scale RPC/API marketplace secured by Ethereum restaking and slashing. The model introduces on-chain accountability for node operators via watcher-based performance checks and penalties for poor service, aiming to reduce systemic risk from today’s concentrated RPC providers.\n\nDIN already routes production traffic at scale, serving ~13B monthly requests across 30+ networks and integrations like MetaMask, Linea, and Infura, suggesting decentralized, economically secured RPC can match centralized performance. Developers can explore DIN at din.build and EigenLayer AVS docs for implementation details."
-        },
-        {
-          "title": "EigenZero Launches: Stake-Backed Verification Comes to LayerZero",
-          "content": "LayerZero and EigenCloud [unveiled](https://blog.eigencloud.xyz/eigenzero-layerzero-eigencloud/) **EigenZero**, the first implementation of the CryptoEconomic DVN Framework, a decentralized verifier network that adds slashable economic stake on top of technical verification. Powered by EigenCloud’s slashing infrastructure and backed by $5M in ZRO at launch, EigenZero introduces optimistic verification with a defined challenge period and on-chain accountability, letting apps choose verifiers based on both performance and real economic guarantees rather than reputation alone."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

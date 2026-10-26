@@ -77,6 +77,7 @@ export const wbeth: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
+    tvl: { source: 'l2beat' },
   },
   // The contracts call no bridge, price feed or other protocol; they only call
   // each other. Binance's off-chain custody and validator operation are trust

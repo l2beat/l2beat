@@ -24,7 +24,7 @@ export class ProjectService {
     this.db = new ProjectDatabase(location)
   }
 
-  async getProject<K extends Key = never, O extends Key = never>(query: {
+  getProject<K extends Key = never, O extends Key = never>(query: {
     id?: ProjectId
     slug?: string
     select?: K[]
@@ -32,17 +32,19 @@ export class ProjectService {
     where?: Key[]
     whereNot?: Key[]
   }): Promise<Project<K, O> | undefined> {
-    const result = await this.db.getProject({
-      id: query.id,
-      slug: query.slug,
-      select: [...(query.select ?? []), ...(query.optional ?? [])],
-      whereNotNull: [...(query.select ?? []), ...(query.where ?? [])],
-      whereNull: query.whereNot ?? [],
+    return new Promise((resolve) => {
+      const result = this.db.getProject({
+        id: query.id,
+        slug: query.slug,
+        select: [...(query.select ?? []), ...(query.optional ?? [])],
+        whereNotNull: [...(query.select ?? []), ...(query.where ?? [])],
+        whereNull: query.whereNot ?? [],
+      })
+      resolve(result as Project<K, O> | undefined)
     })
-    return result as Project<K, O> | undefined
   }
 
-  async getProjects<K extends Key = never, O extends Key = never>(query: {
+  getProjects<K extends Key = never, O extends Key = never>(query: {
     ids?: ProjectId[]
     slugs?: string[]
     select?: K[]
@@ -50,21 +52,23 @@ export class ProjectService {
     where?: Key[]
     whereNot?: Key[]
   }): Promise<Project<K, O>[]> {
-    const result = await this.db.getProjects({
-      ids: query.ids,
-      slugs: query.slugs,
-      select: [...(query.select ?? []), ...(query.optional ?? [])],
-      whereNotNull: [...(query.select ?? []), ...(query.where ?? [])],
-      whereNull: query.whereNot ?? [],
+    return new Promise((resolve) => {
+      const result = this.db.getProjects({
+        ids: query.ids,
+        slugs: query.slugs,
+        select: [...(query.select ?? []), ...(query.optional ?? [])],
+        whereNotNull: [...(query.select ?? []), ...(query.where ?? [])],
+        whereNull: query.whereNot ?? [],
+      })
+      resolve(result as Project<K, O>[])
     })
-    return result as Project<K, O>[]
   }
 
-  async getToken(id: AssetId): Promise<LegacyToken | undefined> {
-    return await this.db.getToken(id)
+  getToken(id: AssetId): Promise<LegacyToken | undefined> {
+    return new Promise((resolve) => resolve(this.db.getToken(id)))
   }
 
-  async getTokens(): Promise<LegacyToken[]> {
-    return await this.db.getTokens()
+  getTokens(): Promise<LegacyToken[]> {
+    return new Promise((resolve) => resolve(this.db.getTokens()))
   }
 }

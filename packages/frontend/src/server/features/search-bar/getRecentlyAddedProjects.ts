@@ -7,8 +7,6 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
   const projects = await ps.getProjects({
     optional: [
       'scalingInfo',
-      'daLayer',
-      'daBridge',
       'ecosystemConfig',
       'interopConfig',
       'zkCatalogInfo',
@@ -22,7 +20,7 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
 
   return projects
     .sort((a, b) => b.addedAt - a.addedAt)
-    .flatMap((p) => getSearchBarProjectEntries(p, projects))
+    .flatMap((p) => getSearchBarProjectEntries(p))
     .slice(0, 15)
     .map(toSearchBarProject)
 }

@@ -4820,6 +4820,48 @@
       "supply": "zero"
     },
     {
+      "name": "Privacy Pool ETH",
+      "coingeckoId": "ethereum",
+      "address": "0x66051920D25af4E3596A8a46309F4D045F9D83B7",
+      "symbol": "ppETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1789501751,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Privacy Pool USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6",
+      "symbol": "ppUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1788511139,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Privacy Pool USDT",
+      "coingeckoId": "tether",
+      "address": "0xA4cF419558Ef36CC6FfB666195684dC963910426",
+      "symbol": "ppUSDT",
+      "decimals": 18,
+      "deploymentTimestamp": 1788527363,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "pSTAKE Finance",
       "coingeckoId": "pstake-finance",
       "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006",
@@ -14328,20 +14370,6 @@
       }
     },
     {
-      "name": "Tether USD",
-      "coingeckoId": "l2-standard-bridged-usdt-base",
-      "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
-      "symbol": "USDT",
-      "decimals": 6,
-      "deploymentTimestamp": 1710879181,
-      "coingeckoListingTimestamp": 1724889600,
-      "category": "stablecoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/39963/large/usdt.png?1724952731",
-      "chainId": 8453,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "name": "Tesla Inc.",
       "coingeckoId": "tesla-coinbase-tokenized-stocks",
       "address": "0xb2000000000000000000001e800a7f5189430cD0",
@@ -14354,6 +14382,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Tether USD",
+      "coingeckoId": "l2-standard-bridged-usdt-base",
+      "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1710879181,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39963/large/usdt.png?1724952731",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "name": "The Innovation Game",

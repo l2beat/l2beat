@@ -29,7 +29,7 @@ import {
   HANDLER_AND_COPY_EXCLUSIVE_MESSAGE,
   handlerAndCopyAreExclusive,
 } from './StructureConfig'
-import { assertHandlerOrCopy, structureFieldPolicy } from './structureUtils'
+import { mergeFieldWithPolicy, structureFieldPolicy } from './structureUtils'
 
 export type FieldLayer = v.infer<typeof FieldLayer>
 export const FieldLayer = v
@@ -65,9 +65,7 @@ export function mergeConfigLayer(
 }
 
 function mergeFieldLayer(base: FieldLayer, override: FieldLayer): FieldLayer {
-  const merged = mergeWithPolicy(fieldLayerPolicy, base, override)
-  assertHandlerOrCopy(merged)
-  return merged
+  return mergeFieldWithPolicy(fieldLayerPolicy, base, override)
 }
 
 function mergeContractLayer(

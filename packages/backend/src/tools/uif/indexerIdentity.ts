@@ -21,6 +21,7 @@ export const INDEXER_NAMES = {
   PRIVACY_FLOW: 'privacy_flow_indexer',
   PRIVACY_ANONYMITY_SET: 'privacy_anonymity_set_indexer',
   PRIVACY_STARKNET_FLOW: 'privacy_starknet_flow_indexer',
+  PRIVACY_STARKNET_ANONYMITY_SET: 'privacy_starknet_anonymity_set_indexer',
   PRIVACY_PRICE: 'privacy_price_indexer',
   PRIVACY_RELAYER_ACTIVITY: 'privacy_relayer_activity_indexer',
   PRIVACY_BUCKET_VALUE: 'privacy_bucket_value_indexer',

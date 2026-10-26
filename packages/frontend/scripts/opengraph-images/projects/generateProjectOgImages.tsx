@@ -16,7 +16,6 @@ export async function generateProjectOgImages(
   const projects = await ps.getProjects({
     optional: [
       'scalingInfo',
-      'daLayer',
       'zkCatalogInfo',
       'interopConfig',
       'privacyInfo',
@@ -55,13 +54,7 @@ export async function generateProjectOgImages(
 
 async function generateProjectOgImage(
   project: Project<never, 'interopConfig'>,
-  type:
-    | 'layer2s'
-    | 'zk-catalog'
-    | 'data-availability'
-    | 'interop'
-    | 'privacy'
-    | 'defi',
+  type: 'layer2s' | 'zk-catalog' | 'interop' | 'privacy' | 'defi',
   size: { width: number; height: number },
   fonts: {
     robotoMedium: Buffer
@@ -107,29 +100,19 @@ export function getOpengraphProjectTypes(
   project: Project<
     never,
     | 'scalingInfo'
-    | 'daLayer'
     | 'zkCatalogInfo'
     | 'interopConfig'
     | 'privacyInfo'
     | 'defiInfo'
   >,
 ) {
-  const types: (
-    | 'layer2s'
-    | 'zk-catalog'
-    | 'data-availability'
-    | 'interop'
-    | 'privacy'
-    | 'defi'
-  )[] = []
+  const types: ('layer2s' | 'zk-catalog' | 'interop' | 'privacy' | 'defi')[] =
+    []
   if (project.scalingInfo) {
     types.push('layer2s')
   }
   if (project.zkCatalogInfo) {
     types.push('zk-catalog')
-  }
-  if (project.daLayer) {
-    types.push('data-availability')
   }
   if (project.interopConfig) {
     types.push('interop')

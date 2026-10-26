@@ -5,7 +5,11 @@
   "description": "Voting-power adapter used by PublicTokenVoting. It counts voting-escrow power, FOLD bonded to ciphernode operators, and eligible vesting-locked wallet FOLD while using FOLD total supply as the quorum denominator.",
   "ignoreMethods": ["getPastTotalSupply"],
   "ignoreInWatchMode": ["clock"],
+  "ignoreRelatives": ["excludedAccounts"],
   "fields": {
+    "excludedAccounts": {
+      "description": "Immutable accounts, such as treasury Safes, whose FOLD counts for no voting power."
+    },
     "token": {
       "description": "Immutable FOLD token supplying metadata and the total-supply denominator."
     },

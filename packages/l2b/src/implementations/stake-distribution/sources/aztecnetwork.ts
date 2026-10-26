@@ -15,7 +15,9 @@ const AztecProviderSchema = v.object({
   identifier: v.string(),
   name: v.string(),
   totalStaked: StakeAmountSchema,
-  metadata: v.object({ name: v.string().optional() }).optional(),
+  metadata: v
+    .object({ name: v.union([v.string(), v.null()]).optional() })
+    .optional(),
 })
 type AztecProvider = v.infer<typeof AztecProviderSchema>
 

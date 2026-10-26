@@ -36,7 +36,7 @@
   "ignoreRelatives": ["getBaseToken", "getSettlementLayer", "validators"],
   "fields": {
     "getAdmin": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -94,7 +94,7 @@
       "severity": "HIGH"
     },
     "getPendingAdmin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "getPubdataPricingMode": {
       "description": "0 - Rollup, 1 - Validium",

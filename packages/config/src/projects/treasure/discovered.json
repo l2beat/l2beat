@@ -1,7 +1,7 @@
 {
   "name": "treasure",
   "timestamp": 1753944354,
-  "configHash": "0xc0d28a472498007753d1cac3bbaa87c7c14075030f5276b2951cfa13996d8873",
+  "configHash": "0x0d9b7c6b97e460c537c6fb7dc36caa96dd37ce81b4261c0b771b39fe199b4514",
   "entries": [
     {
       "address": "eth:0x18c16E72CAa10D2Ce13E4b61bfC51AB93B7e92f0",
@@ -351,7 +351,7 @@
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
         },
-        "getAdmin": { "severity": "HIGH" },
+        "getAdmin": { "severity": "MEDIUM" },
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
@@ -478,7 +478,7 @@
         ]
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -935,7 +935,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
-    "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
+    "shared-zk-stack/Diamond": "0xf8ceb7cc4613a5afb74ab717732cca35ae7826aaa6ba9643d656020bdb3cec08",
     "shared-zk-stack/old/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
@@ -943,7 +943,7 @@
   "usedBlockNumbers": { "ethereum": 23037387 },
   "permissionsConfigHash": "0x3921e2a113a2873ab41f2d5b7a689a6e2e44f48753589388930a12e912d16d6c",
   "modelledAgainst": {
-    "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"
+    "shared-zk-stack": "0x5c5ff23838fc7b5156f4cf75b1dd2efc5d47beb9f0b3f7434d20690afdbf2fd0"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
@@ -1114,6 +1114,18 @@
           "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
           "description": "one of its 3/3 signers.",
           "role": ".GUARDIANS"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+          "role": ".VETO_GUARDIAN"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+          "role": ".VETO_GUARDIAN"
         }
       ]
     },
@@ -1194,6 +1206,11 @@
           "role": ".owner"
         },
         {
+          "permission": "act",
+          "from": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+          "role": ".owner"
+        },
+        {
           "permission": "interact",
           "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
@@ -1228,6 +1245,12 @@
           "from": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
           "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "control all roles in the ZkToken access control, including the minter roles.",
+          "role": ".DefaultAdmin"
         }
       ]
     },
@@ -1283,6 +1306,15 @@
           "from": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
           "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "control all roles in the ZkToken access control, including the minter roles.",
+          "role": ".DefaultAdmin",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
@@ -1367,6 +1399,15 @@
             { "address": "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" },
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "role": "admin",
+          "via": [
+            { "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -1384,6 +1425,12 @@
           "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
           "description": "one of its 3/3 signers.",
           "role": ".ZK_FOUNDATION_SAFE"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
+          "role": ".PROPOSE_GUARDIAN"
         }
       ]
     },
@@ -1410,22 +1457,6 @@
           "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
-        }
-      ]
-    },
-    "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
-          "role": ".VETO_GUARDIAN"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
-          "role": ".VETO_GUARDIAN"
         }
       ]
     },
@@ -1473,31 +1504,6 @@
           "permission": "act",
           "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "role": ".Executor"
-        }
-      ]
-    },
-    "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "description": "control all roles in the ZkToken access control, including the minter roles.",
-          "role": ".DefaultAdmin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "role": "admin",
-          "via": [
-            { "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
-          "role": ".owner"
         }
       ]
     },
@@ -1553,16 +1559,6 @@
           "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "delay": 259200,
           "role": ".Executor"
-        }
-      ]
-    },
-    "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
-          "role": ".PROPOSE_GUARDIAN"
         }
       ]
     },

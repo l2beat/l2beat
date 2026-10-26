@@ -215,6 +215,12 @@ export const zkCatalogTags = [
   },
   // Groth16
   {
+    id: 'Arkworks',
+    type: ZkCatalogTagType.Groth16,
+    name: 'Arkworks',
+    description: 'Arkworks implementation of Groth16 written in Rust.',
+  },
+  {
     id: 'Gnark',
     type: ZkCatalogTagType.Groth16,
     name: 'Gnark',

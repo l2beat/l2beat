@@ -47,20 +47,21 @@
       "ignoreDiscovery": true
     },
     // Effective controller of both ProxyAdmins, the DGF and SystemConfig since
-    // 2026-05-20 (took over from the 4-of-11 Conduit Multisig 1). Safes are actor
-    // containers, not critical. The handover was a Safe-to-Safe owner swap
-    // without modules or guards and below the Security Council bar, so it is an
-    // identity change, not a reviewed mechanism change.
+    // 2026-05-20, and guardian since 2026-06-09 (both took over from the
+    // 4-of-12 Conduit Multisig 1). Safes are actor containers, not critical.
+    // Both handovers set a new threshold and replaced the authority, so they
+    // are reviewed mechanism changes in ossification.json.
     "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607": {
       "description": "5-of-6 joint Ronin/Conduit Safe."
     },
     // Legacy MainchainGateway uses overloaded view methods that the default
     // handler can't probe (need explicit indices/length). Ignore them — the
     // ones we care about (admin, impl, paused, depositCount) come through.
-    // Out of the ossification perimeter (externally-bridged TVS, not the
-    // canonical bridge); its important state is watched at MEDIUM so changes
-    // still surface without touching the clock.
+    // Critical: it holds the funded escrow, and Ronin governs both sides
+    // (MainchainBridgeManager here, RoninBridgeManager as admin of
+    // RoninGatewayV3, same operator set).
     "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": {
+      "critical": true,
       "description": "Legacy multi-sig-secured Ronin bridge contract holding the L1 side of deposits made before the April 2025 Chainlink CCIP migration. Still custodies residual user balances (ETH backing legacy WETH on Ronin, the deprecated WBTC contract, and dust). Withdrawals authorised by the Ronin BridgeOperator stake-weighted threshold via MainchainBridgeManager.",
       "ignoreMethods": [
         "checkHighTierVoteWeightThreshold",
@@ -71,21 +72,60 @@
       "fields": {
         "$admin": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
-        "getThreshold": { "severity": "MEDIUM" },
-        "getHighTierVoteWeightThreshold": { "severity": "MEDIUM" }
+        "emergencyPauser": { "severity": "MEDIUM" },
+        "getThreshold": { "severity": "HIGH" },
+        "getHighTierVoteWeightThreshold": { "severity": "HIGH" },
+        // operator weights that validate withdrawal signatures (setContract)
+        "bridgeManager": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getContract",
+            "args": [11]
+          }
+        },
+        // DEFAULT_ADMIN, WITHDRAWAL_UNLOCKER and MIGRATOR role holders
+        "accessControl": {
+          "severity": "MEDIUM",
+          "handler": { "type": "accessControl" }
+        }
       }
     },
     "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": {
       "description": "Governance and proxy-admin contract for the legacy MainchainGateway bridge. Holds the operator/governor set, tallies stake-weighted votes for bridge proposals (operator rotations, threshold changes, withdrawals).",
       "ignoreMethods": ["checkThreshold", "globalProposalRelayed", "round"],
+      // Validates the operator signatures of MainchainGateway withdrawals. Not
+      // HIGH: minimumVoteWeight and getTotalWeight move with the operator set.
+      "critical": true,
       "fields": {
         "$admin": { "severity": "MEDIUM" },
-        "getThreshold": { "severity": "MEDIUM" },
-        "getBridgeOperators": { "severity": "MEDIUM" }
+        "getThreshold": { "severity": "HIGH" },
+        "getBridgeOperators": { "severity": "MEDIUM" },
+        "getGovernors": { "severity": "MEDIUM" },
+        "getFullBridgeOperatorInfos": { "severity": "MEDIUM" }
       }
     },
     "eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": {
-      "description": "Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency."
+      "description": "Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency.",
+      "critical": true,
+      "fields": {
+        "emergency": { "severity": "MEDIUM" },
+        // pause-only roles (SENTRY) and their admin
+        "accessControl": {
+          "severity": "MEDIUM",
+          "handler": { "type": "accessControl" }
+        }
+      }
+    },
+    // 2-of-3 legacy multisig, DEFAULT_ADMIN of MainchainGateway and
+    // PauseEnforcer. Do not follow its past transaction targets.
+    "eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96": {
+      "ignoreMethods": [
+        "getConfirmationCount",
+        "getConfirmations",
+        "isConfirmed",
+        "transactions"
+      ]
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "ignoreInWatchMode": ["totalSupply"]

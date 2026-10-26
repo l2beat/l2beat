@@ -1,6 +1,7 @@
 import { getDiscoveryPaths } from '@l2beat/discovery'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import { command, flag, number, option } from 'cmd-ts'
+import { loadEthereumDaTracking } from '../implementations/blob-senders/daTracking'
 import { getBlobSenders } from '../implementations/blob-senders/getBlobSenders'
 import {
   getContractInfo,
@@ -38,7 +39,8 @@ export const BlobSenders = command({
     unknownOnly: flag({
       long: 'unknown-only',
       short: 'u',
-      description: 'Only show addresses not found in discovery',
+      description:
+        'Only show senders with blobs the DA tracking does not attribute',
       defaultValue: () => false,
       defaultValueIsSerializable: true,
     }),
@@ -57,12 +59,15 @@ export const BlobSenders = command({
     )
 
     const sequencerMapping = getSequencerMapping()
+    const daTracking = loadEthereumDaTracking(paths.discovery)
+    console.log(`Loaded ${daTracking.length} ethereum DA tracking configs\n`)
 
     const cli = createCliLogger({ output: process.stdout, quiet: false })
     const scan = cli.status()
-    const senders = await getBlobSenders(
+    const { senders, topicsChecked } = await getBlobSenders(
       args.rpcUrl,
       args.blockCount,
+      daTracking,
       (current, total, count) => {
         const pct = current / total
         const width = 30
@@ -82,93 +87,86 @@ export const BlobSenders = command({
       return
     }
 
-    // Enrich with project names (check sender first, then receiver)
+    // A sender is known when the DA tracking (what the Ethereum DA page uses)
+    // attributes its blobs. Discovery is only a hint for the unattributed ones.
     const enriched = senders.map((s) => {
       const mainReceiver = [...s.receivers.entries()].sort(
         (a, b) => b[1] - a[1],
       )[0]?.[0]
-
-      const senderInfo = sequencerMapping.get(s.address)
-      const isKnownInbox = mainReceiver
-        ? getProjectByReceiver(mainReceiver)
-        : undefined
       const receiverName = mainReceiver
         ? getReceiverName(mainReceiver)
         : undefined
       const contractInfo = mainReceiver
         ? getContractInfo(mainReceiver)
         : undefined
+      const receiver = contractInfo?.name ?? receiverName ?? mainReceiver ?? ''
 
-      // Determine receiver display: inbox > contract name > Multicall3 > address
-      const getReceiverDisplay = (showInbox: boolean) => {
-        if (showInbox && isKnownInbox) return 'inbox'
-        if (contractInfo) return contractInfo.name
-        if (receiverName) return receiverName
-        return mainReceiver ?? ''
-      }
-
-      if (senderInfo) {
-        return {
-          ...s,
-          project: senderInfo.project,
-          role: senderInfo.role ?? '',
-          receiver: getReceiverDisplay(true),
-          source: 'sender',
-        }
-      }
-
-      // Try to identify by receiver address
-      if (isKnownInbox) {
-        return {
-          ...s,
-          project: isKnownInbox,
-          role: '(by inbox)',
-          receiver: 'inbox',
-          source: 'receiver',
-        }
-      }
+      const topProject = [...s.attributedBlobs.entries()].sort(
+        (a, b) => b[1] - a[1],
+      )[0]?.[0]
+      const hint =
+        sequencerMapping.get(s.address)?.project ??
+        (mainReceiver ? getProjectByReceiver(mainReceiver) : undefined) ??
+        contractInfo?.project ??
+        ''
 
       return {
         ...s,
-        project: '???',
-        role: '',
-        receiver: getReceiverDisplay(false),
-        source: 'unknown',
+        project: topProject ?? '???',
+        hint: s.unattributedBlobs > 0 ? hint : '',
+        receiver,
       }
     })
 
     // Filter if unknownOnly flag is set
     const filtered = args.unknownOnly
-      ? enriched.filter((s) => s.project === '???')
+      ? enriched.filter((s) => s.unattributedBlobs > 0)
       : enriched
 
     if (filtered.length === 0) {
-      console.log('All blob senders are known projects (no unknown addresses).')
+      console.log('All blobs are attributed by the DA tracking.')
       return
     }
 
-    const headers = ['Project', 'Address', 'Blobs', 'Txs', 'Receiver']
+    const headers = [
+      'Project',
+      'Address',
+      'Blobs',
+      'Unattributed',
+      'Txs',
+      'Receiver',
+      'Discovery hint',
+    ]
     const rows = filtered.map((s) => [
       s.project.slice(0, 15),
       s.address,
       s.blobCount.toString(),
+      s.unattributedBlobs.toString(),
       s.txCount.toString(),
       s.receiver,
+      s.hint,
     ])
 
     console.log(formatAsAsciiTable(headers, rows))
+    if (!topicsChecked) {
+      console.log(
+        '\nWARNING: the RPC refused eth_getLogs, so topic-tracked projects (e.g. Aztec) show as unattributed. Use an RPC that serves logs.',
+      )
+    }
 
-    const knownCount = enriched.filter((s) => s.project !== '???').length
-    const unknownCount = enriched.filter((s) => s.project === '???').length
-
+    const knownCount = enriched.filter((s) => s.unattributedBlobs === 0).length
+    const unknownCount = enriched.length - knownCount
     console.log(`\nTotal unique senders: ${enriched.length}`)
-    console.log(`  Known projects: ${knownCount}`)
-    console.log(`  Unknown: ${unknownCount}`)
+    console.log(`  Fully attributed: ${knownCount}`)
+    console.log(`  With unattributed blobs: ${unknownCount}`)
     console.log(
       `Total blob transactions: ${enriched.reduce((sum, s) => sum + s.txCount, 0)}`,
     )
     console.log(
       `Total blobs: ${enriched.reduce((sum, s) => sum + s.blobCount, 0)}`,
+    )
+    console.log(
+      `Unattributed blobs: ${enriched.reduce((sum, s) => sum + s.unattributedBlobs, 0)}`,
     )
   },
 })

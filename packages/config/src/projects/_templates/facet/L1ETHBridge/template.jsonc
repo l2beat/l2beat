@@ -4,5 +4,8 @@
   "description": "An immutable ETH bridge built on top of a Rollup contract. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
   "ignoreMethods": ["depositHashes"],
   "ignoreInWatchMode": ["depositNonce"],
-  "category": "bridge-canonical"
+  "category": "bridge-canonical",
+  "fields": {
+    "l2Bridge": { "edit": ["format", "FacetAddress"] }
+  }
 }

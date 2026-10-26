@@ -63,7 +63,7 @@ export function decodeHandlerResults(
   for (const fieldName in fieldOverrides) {
     const edit = (fieldOverrides ?? {})[fieldName]?.edit
     if (edit !== undefined && values[fieldName] !== undefined) {
-      const edited = runtime.executeBlip(values[fieldName], edit)
+      const edited = executeEdit(runtime, fieldName, values[fieldName], edit)
       values[fieldName] = prefixAddresses(longChain, edited)
     }
   }
@@ -72,6 +72,23 @@ export function decodeHandlerResults(
     values,
     errors,
     usedTypes: runtime.usedTypes,
+  }
+}
+
+/** An edit that throws fails the whole entry; the error at least names the field. */
+function executeEdit(
+  runtime: BlipRuntime,
+  fieldName: string,
+  value: Parameters<BlipRuntime['executeBlip']>[0],
+  edit: Parameters<BlipRuntime['executeBlip']>[1],
+) {
+  try {
+    return runtime.executeBlip(value, edit)
+  } catch (error) {
+    throw new Error(
+      `The edit of field ${fieldName} failed: ${getErrorMessage(error)}`,
+      { cause: error },
+    )
   }
 }
 

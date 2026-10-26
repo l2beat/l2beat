@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -107,6 +112,20 @@ export const jovay: ScalingProject = {
             'function verifyBatch(uint8 _prove_type, bytes _batchHeader, bytes32 _postStateRoot, bytes32 _l2MsgRoot, bytes _proof)',
           sinceTimestamp: UnixTime(1758499200),
         },
+      },
+    ],
+    // Kept open after the archive: the chain still posts blobs.
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 23405139, // first blob batch
+        inbox: ChainSpecificAddress.address(
+          discovery.getContract('Rollup').address,
+        ),
+        sequencers: discovery
+          .getContractValue<ChainSpecificAddress[]>('Rollup', 'relayer')
+          .map((a) => ChainSpecificAddress.address(a)),
       },
     ],
   },

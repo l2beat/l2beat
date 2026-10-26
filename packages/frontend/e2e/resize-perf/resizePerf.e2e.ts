@@ -10,10 +10,9 @@ import { type CDPSession, expect, type Page, test } from 'playwright/test'
  * like a user pulling the window edge. It is repeated and the best run
  * counts: a regression shows up in every drag, while a stall from a busy CI
  * runner shows up in one, so the minimum tracks the code and not the machine.
- * Counts are the proxy because they are stable across machines; script time
- * is kept with wide headroom because the regressions this catches (a sync
- * React flush per resize listener, a chart re-render per step) were ten times
- * over it, not ten percent.
+ * Counts are the proxy because they are stable across machines. Script time
+ * and slow frames are logged, not asserted, as they vary with the runner's
+ * CPU (see ../README.md).
  *
  * Lower a ceiling by running with UPDATE_CEILINGS=1, which rewrites
  * ceilings.json from the current run plus the margins below.
@@ -24,12 +23,11 @@ const DRAGS = 3
 const FROM_WIDTH = 1400
 const TO_WIDTH = 800
 const HEIGHT = 900
-// Layout counts swing by up to a fifth between runs of the same build, every
-// chart may settle twice if a step stalls, and script time varies by machine.
+// Layout counts swing by up to a fifth between runs of the same build, and
+// every chart may settle twice if a step stalls.
 const MARGIN = {
   layouts: (n: number) => Math.ceil(n * 1.25),
   chartRerenders: (n: number) => n * 2,
-  scriptMs: (n: number) => n * 4,
 }
 
 type Measurement = {
@@ -100,7 +98,6 @@ test.afterAll(() => {
         existing?.chartRerenders,
         MARGIN.chartRerenders(result.chartRerenders),
       ),
-      scriptMs: lowerOf(existing?.scriptMs, MARGIN.scriptMs(result.scriptMs)),
     }
   }
   writeFileSync(CEILINGS_FILE, `${JSON.stringify(next, null, 2)}\n`)

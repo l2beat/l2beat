@@ -6,6 +6,7 @@
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge"],
   "fields": {
     "$admin": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "upgrade",

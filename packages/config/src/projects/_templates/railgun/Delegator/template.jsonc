@@ -8,7 +8,7 @@
   "fields": {
     "owner": {
       "description": "Current controller of the Delegator. The owner bypasses the permission bitmap and can call any target through this contract.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "type": "PERMISSION",
       "permissions": [
         { "type": "act" },

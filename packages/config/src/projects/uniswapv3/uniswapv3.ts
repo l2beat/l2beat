@@ -67,7 +67,8 @@ export const uniswapv3: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(0),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossificationHistory: discovery.getOssificationHistory(),
+  // v3 starts at the UniswapV3Factory deployment, not the 2020 UNI deployment.
+  ossificationHistory: discovery.getOssificationHistory(UnixTime(1620156420)),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,

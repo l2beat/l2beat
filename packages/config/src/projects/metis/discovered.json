@@ -417,7 +417,7 @@
         "$upgradeCount": 0,
         "addressmgr": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "DEFAULT_CHAINID": 1088,
-        "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "metis-andromeda:0x4200000000000000000000000000000000000010",
         "messenger": "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
         "metis": "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
         "proxiableUUID": "EXPECT_REVERT"
@@ -425,15 +425,13 @@
       "implementationNames": {
         "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b": "L1ChugSplashProxy",
         "eth:0xa0cfE8Af2AB5C9232714647702DbACf862EA4798": "L1StandardBridge"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "metis-andromeda" } }
+      ]
     },
     {
       "address": "eth:0x4200000000000000000000000000000000000007",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x4200000000000000000000000000000000000010",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -732,6 +730,7 @@
         "$immutable": true,
         "owner": "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8": "ProxyAdmin"
       }
@@ -2521,7 +2520,7 @@
     "metis/FaultDisputeGame": "0xe7cb199f3d900ff5908cd04e3c606d092392d7a08ab2b909cb532099674f15f3",
     "metis/FaultProofLockingPool": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/L1CrossDomainMessenger": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "metis/L1StandardBridge": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/L1StandardBridge": "0x19d62ad6c44b319ba03c490bad4a34e562dba29a385bde59f6508a29fc7f1fa6",
     "metis/Lib_AddressManager": "0x54f153881f85aee7f617be39b14164ce8c64cc07b94a4d2c75e0089a4bec3e36",
     "metis/LockingInfo": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/LockingPool": "0x62830e033d07ce22b140604342c80f9ee45e8e75f07f0be34e09bd2ff01454c0",
@@ -2537,7 +2536,7 @@
     "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b"
   },
   "usedBlockNumbers": { "ethereum": 24183445, "metis": 21929673 },
-  "permissionsConfigHash": "0xb96023e04497340993ffbb0391613ffa09c63601099984150bf64225d4079020",
+  "permissionsConfigHash": "0x7de92948bdf60008d0af3e360fcf8a9fc8cecc44e837d06bc9c36ef339a6977b",
   "permissions": {
     "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": {
       "receivedPermissions": [

@@ -70,16 +70,16 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'warning',
+      sentiment: 'bad',
       exposureShort:
-        'Anyone on your network path sees when your wallet deposits and when the app contacts the operator, and can match both to the chain.',
-      exposureContinued: 'The SDK has no Tor or proxy setting.',
-      advice: 'Route the app through Tor with system-wide tools.',
+        "Alchemy, under the operator's key, sees the signed-in wallet in the session that submits each withdrawal, pairing them by timing.",
+      exposureContinued:
+        "The hosted wallet works over Tor but has no RPC setting to leave Alchemy out. Its key core runs in an iframe without network access and reaches only the operator's server and Alchemy through the page. Other third parties get token ids or nothing.",
       interior: {
         ...INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only over Tor, which the SDK lacks.',
+          note: 'Private only on a busy pool, since Alchemy times each withdrawal session.',
         },
       },
       sources: [
@@ -88,6 +88,11 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
           url: 'https://base.privacyboost.io/api/v1/info',
         },
         { title: 'SDK 1.2.5, configured with one server URL', url: SDK },
+        {
+          title:
+            'The compiled core builds and sends every request, its Rust source is unpublished',
+          url: SDK + '?activeTab=code',
+        },
       ],
     },
     privilegedInsider: {
@@ -118,7 +123,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       exposureShort:
         "Every note wraps its key to the enclave's long-lived elliptic-curve public key as well as the receiver's.",
       exposureContinued:
-        'Whoever breaks elliptic-curve cryptography or obtains that one key decrypts the entire history.',
+        'Whoever breaks elliptic-curve cryptography decrypts the entire history.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

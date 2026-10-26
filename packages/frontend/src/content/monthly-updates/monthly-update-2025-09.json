@@ -159,30 +159,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "EigenDA V2: Core Architecture",
-          "content": "EigenDA V2 is [now live](https://blog.eigencloud.xyz/eigenda-v2-core-architecture/), delivering **100 MB/s throughput** and **10x faster confirmations**, making it the most performant decentralized data availability layer to date. It separates control and data planes for better scalability and uses erasure coding to ensure data redundancy with minimal storage requirements. Blobs are confirmed in ~10 seconds without relying on L1 posts, dramatically reducing latency while maintaining security. With a design built for horizontal scale, EigenDA is laying the foundation for gigabyte-scale DA — ideal for high-performance rollups and verifiable applications."
-        },
-        {
-          "title": "Unlocking Verifiable Reputation with OpenRank and EigenCloud",
-          "content": "OpenRank, powered by EigenCloud, [introduces](https://blog.eigencloud.xyz/unlocking-verifiable-reputation-with-openrank-and-eigencloud/) verifiable reputation infrastructure — making scores transparent, challengeable, and cryptoeconomically enforced.\n\n- OpenRank runs reputation algorithms (e.g., for airdrops, social feeds, token discovery) with cryptographic proofs.\n- EigenCloud ensures honest computing with restaked security, slashing dishonest operators.\n- Use cases already live include Farcaster feeds, wallet token recs, and apps like Cura, a Reddit-style app with auditable contributor rewards.\n\nFrom Sybil-resistant airdrops to explainable social feeds, OpenRank and EigenCloud bring transparency and trust to crypto reputation."
-        },
-        {
-          "title": "Devkit Quickstart Guide: Launch AVSs in Hours, Not Weeks",
-          "content": "EigenLabs released a [Devkit Quickstart Guide](https://blog.eigencloud.xyz/devkit-quickstart-testnet-guide/) to help developers rapidly deploy Actively Validated Services (AVSs) on Sepolia and Base Sepolia testnets.\n\nDevkit streamlines the entire AVS lifecycle—from local devnet testing to live testnet deployment—cutting setup time from weeks to hours. The guide walks through the essential steps: creating a project, writing operator logic, deploying to testnet, registering operators, and verifying tasks on Base.\n\nWhether you’re building oracles, co-processors, or other AVSs, this guide is your entry point into the EigenLayer ecosystem."
-        },
-        {
-          "title": "EigenCloud Partners with Google to Power Business & Consumer Trust in AI Payments",
-          "content": "EigenCloud [has partnered](https://blog.eigencloud.xyz/eigencloud-partners-with-google/) with Google to bring cryptographic trust to the emerging world of AI-to-AI (A2A) payments. As billions of autonomous agents begin transacting on our behalf, programmable trust becomes essential. This collaboration ensures those agents act reliably, verifiably, and within human-defined parameters.\n\nUsing EigenCloud’s verifiability layer and Google’s Agent Payments Protocol (AP2), the system enables:\n\n- Verifiable AI agent actions\n- Cross-chain payment coordination\n- Restaked economic guarantees\n\nThe integration marks a major milestone in building a trusted, interoperable AI-driven economy, where verification is cryptographic, and agentic payments are frictionless."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

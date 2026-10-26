@@ -7,6 +7,7 @@
     "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3"
   ],
   "names": {
+    "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": "Executor",
     "eth:0x1a44076050125825900e736c501f859c50fE728c": "EndpointV2",
     "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3": "RsETHOFTAdapter",
     "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": "ReceiveUln302",
@@ -19,6 +20,9 @@
     }
   },
   "overrides": {
+    "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": {
+      "description": "Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source."
+    },
     "eth:0x1a44076050125825900e736c501f859c50fE728c": {
       "fields": {
         "rsETHAdapterDelegate": {

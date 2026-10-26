@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SmartAccountRelayer",
+  "description": "Immutable contract through which Fluidkey submits Safe deployments, sends, auto-earn deposits and score transfers. Anyone can submit an operation, but each needs a signature from the authorized caller. It holds no rights over Safes, so a send still needs the Safe owner's signature.",
+  "category": "core",
+  "ignoreMethods": ["usedOperationIds"],
+  "fields": {
+    "authorizedCaller": {
+      "description": "Address whose signature every forwarded operation needs.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "authorize every call this contract forwards."
+        }
+      ]
+    }
+  }
+}

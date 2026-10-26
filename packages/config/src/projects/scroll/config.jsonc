@@ -76,6 +76,7 @@
     "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
     "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "pufETHEscrow",
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow",
+    "scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62": "L2DaiGateway",
 
     "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": "L2GatewayRouter",
     "scr:0x5300000000000000000000000000000000000000": "L2MessageQueue",
@@ -129,13 +130,11 @@
     },
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": {
       // Scroll's own L1 DAI gateway: same ProxyAdmin, ScrollOwner and
-      // L1GatewayRouter as the sibling canonical gateways. The L2 side is
-      // Scroll-governed too: counterpart scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62
-      // (owner ScrollOwner L2) and L2 DAI scr:0xcA77eB3fEFe3725Dc33bccB54eDEFc3D9f764f97,
-      // both behind the L2 ProxyAdmin 0xA76a.
+      // L1GatewayRouter as the sibling canonical gateways.
       "critical": true,
-      "ignoreRelatives": ["counterpart"],
       "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "counterpart": {
           "edit": ["format", "ScrollAddress"]
         }
@@ -252,10 +251,16 @@
       "critical": true,
       "description": "Used to append messages to the L2MessageQueue from the L2ScrollMessenger.",
       "ignoreMethods": ["branches"],
-      "ignoreInWatchMode": ["messageRoot", "nextMessageIndex"]
+      "ignoreInWatchMode": ["messageRoot", "nextMessageIndex"],
+      "fields": {
+        "owner": { "severity": "MEDIUM" }
+      }
     },
     "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4": {
       "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "admin": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "paused": {
           "severity": "MEDIUM"
         },
@@ -303,6 +308,7 @@
       "description": "Used to propose and manage onchain governance proposals.",
       "category": "gov",
       "fields": {
+        "$admin": { "severity": "MEDIUM" },
         "votingPeriod": {
           "severity": "HIGH"
         },
@@ -313,6 +319,7 @@
           "severity": "HIGH"
         },
         "admin": {
+          "severity": "MEDIUM",
           "permissions": [
             {
               "type": "interact",
@@ -330,6 +337,7 @@
           ]
         },
         "manager": {
+          "severity": "MEDIUM",
           "permissions": [
             {
               "type": "interact",
@@ -350,25 +358,37 @@
     "scr:0xd29687c813D741E2F938F4aC377128810E217b1b": {
       // SCR is counted in TVS (native), and SCR voting power decides AgoraGovernor proposals that flow into the DEFAULT_ADMIN timelock of ScrollOwner (L2)
       "critical": true,
-      "ignoreMethods": ["getPastTotalSupply", "clock"]
+      "ignoreMethods": ["getPastTotalSupply", "clock"],
+      "fields": {
+        "$admin": { "severity": "MEDIUM" }
+      }
     },
     "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484": {
       // beacon/factory for all bridged standard ERC20s on L2: its implementation pointer defines the code of tokens redeemable against L1 escrow
       "critical": true,
-      "description": "Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway."
+      "description": "Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway.",
+      "fields": {
+        "owner": { "severity": "MEDIUM" }
+      }
     },
     "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": {
       // L2StandardERC20Gateway: trusted counterpart of L1StandardERC20Gateway, can send withdrawal messages releasing L1 escrow
       "critical": true,
       "category": "core",
       "description": "Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.",
-      "fields": { "counterpart": { "edit": ["format", "EthereumAddress"] } }
+      "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
+        "counterpart": { "edit": ["format", "EthereumAddress"] }
+      }
     },
     "scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988": {
       // trusted counterpart of L1CustomERC20Gateway (pufETH etc.), can send withdrawal messages releasing L1 escrow
       "critical": true,
       "description": "Counterpart to the L1CustomERC20Gateway contract.",
       "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "tokenMapping": {
           "severity": "HIGH",
           "description": "L2-to-L1 token mapping used to validate custom-token deposits and withdrawals.",
@@ -387,21 +407,47 @@
     "scr:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE": {
       // controller of USDC minters on Scroll: minter changes enable unauthorized minting redeemable against the L1 USDC escrow
       "critical": true,
-      "description": " Contract that uses controllers to manage minters for USDC on Scroll."
+      "description": " Contract that uses controllers to manage minters for USDC on Scroll.",
+      "fields": {
+        "owner": { "severity": "MEDIUM" }
+      }
+    },
+    "scr:0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62": {
+      // L2 DAI gateway: trusted counterpart of the DaiEscrow, owner ScrollOwner L2, behind the L2 ProxyAdmin
+      "critical": true,
+      "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
+        "counterpart": { "edit": ["format", "EthereumAddress"] }
+      }
     },
     "scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": {
+      // trusted counterpart of the L1ERC1155Gateway escrow, governed by Scroll on both sides
+      "critical": true,
       "description": "Counterpart to the L1ERC1155Gateway contract.",
-      "fields": { "counterpart": { "edit": ["format", "EthereumAddress"] } }
+      "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
+        "counterpart": { "edit": ["format", "EthereumAddress"] }
+      }
     },
     "scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582": {
+      // trusted counterpart of the L1ERC721Gateway escrow, governed by Scroll on both sides
+      "critical": true,
       "description": "Counterpart to the L1ERC721Gateway contract.",
-      "fields": { "counterpart": { "edit": ["format", "EthereumAddress"] } }
+      "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
+        "counterpart": { "edit": ["format", "EthereumAddress"] }
+      }
     },
     "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": {
       // L2ScrollMessenger: holds the pre-minted ETH escrow on L2 and is the sole sender of withdrawal messages trusted by L1 gateways
       "critical": true,
       "description": "ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.",
       "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "paused": {
           "severity": "MEDIUM"
         },
@@ -415,6 +461,8 @@
       "critical": true,
       "description": "Contract of the L2ScrollMessenger contract.",
       "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "counterpart": {
           "edit": ["format", "EthereumAddress"]
         }
@@ -427,6 +475,8 @@
     },
     "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79": {
       "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "ethGateway": {
           "severity": "HIGH"
         },
@@ -442,6 +492,8 @@
       // L2WETHGateway: trusted counterpart of L1WETHGateway, can send withdrawal messages releasing L1 WETH escrow
       "critical": true,
       "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "counterpart": { "edit": ["format", "EthereumAddress"] },
         "l1WETH": { "edit": ["format", "EthereumAddress"] }
       }
@@ -489,6 +541,18 @@
       "ignoreInWatchMode": ["totalBridgedUSDC"]
     },
     // --- ossification factor: per-address critical flags ---
+    "eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": {
+      // canonical NFT escrow, governed by Scroll on both sides
+      "critical": true
+    },
+    "eth:0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6": {
+      // canonical NFT escrow, governed by Scroll on both sides
+      "critical": true
+    },
+    "eth:0x1Ea29d57dAC237152d878758bAe4BeB2668998f6": {
+      // retired verifier router (MultipleVersionRollupVerifier), live until the Curie ScrollChain upgrade
+      "critical": { "untilTimestamp": 1719915047 }
+    },
     "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": {
       // retired L1MessageQueue (V1): critical until it left discovery, keeps its upgrade history in the ossification ledger
       "critical": { "untilTimestamp": 1745836741 }
@@ -515,6 +579,8 @@
     },
     "scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142": {
       "fields": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "withdrawPaused": {
           "severity": "MEDIUM"
         },
@@ -551,6 +617,13 @@
     "eth:0x7966FE0De13e3B81533470640Ac489223476B254": {
       // ZkEvmVerifierPostFeynman: registered verifier version 10 (latest, OpenVM v2.0.0)
       "critical": { "sinceTimestamp": 1790041547 }
+    },
+    "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9": {
+      "fields": {
+        "counterpart": {
+          "edit": ["format", "EthereumAddress"]
+        }
+      }
     }
   }
 }

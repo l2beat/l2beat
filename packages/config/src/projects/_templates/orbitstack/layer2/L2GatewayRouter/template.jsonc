@@ -6,14 +6,18 @@
   "description": "Router managing token <–> gateway mapping on L2.",
   "ignoreRelatives": ["counterpartGateway"],
   "fields": {
+    "defaultGateway": {
+      "severity": "HIGH"
+    },
     "router": {
       "severity": "HIGH"
     },
     "counterpartGateway": {
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "edit": ["format", "EthereumAddress"]
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

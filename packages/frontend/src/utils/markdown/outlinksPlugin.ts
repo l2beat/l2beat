@@ -1,4 +1,5 @@
 import type MarkdownIt from 'markdown-it'
+import { isExternalUrl } from '../isExternalUrl'
 
 export function outLinksPlugin(md: MarkdownIt) {
   const defaultRender =
@@ -9,7 +10,7 @@ export function outLinksPlugin(md: MarkdownIt) {
 
   md.renderer.rules.link_open = (tokens, index, options, env, self) => {
     const token = tokens[index]
-    if (token?.attrGet('href')?.startsWith('http')) {
+    if (token && isExternalUrl(token.attrGet('href'))) {
       token.attrSet('target', '_blank')
       token.attrSet('rel', 'noreferrer noopener')
     }

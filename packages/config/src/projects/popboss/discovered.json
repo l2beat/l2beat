@@ -80,8 +80,9 @@
         ]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876": "TransparentUpgradeableProxy",
@@ -304,6 +305,7 @@
         "$immutable": true,
         "owner": "arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1": "ProxyAdmin"
       }
@@ -505,7 +507,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "maxTimeVariation": {
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -640,8 +642,9 @@
         "rollup": "arb1:0x330F8fEB25f3427cABA32446728C36ae67f2135b"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0xa4270256B160C3Ebec2d6914a906c7EC38D8d072": "TransparentUpgradeableProxy",
@@ -802,7 +805,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239": "TransparentUpgradeableProxy",

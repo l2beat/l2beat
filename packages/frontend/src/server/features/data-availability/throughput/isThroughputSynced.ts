@@ -20,25 +20,16 @@ export function isThroughputSynced({
 
 export function getThroughputSyncWarning(
   syncedUntil: UnixTime,
-  opts?: { shorter?: boolean; pastDaySynced?: boolean },
 ): string | undefined {
   if (
     isThroughputSynced({
       syncedUntil,
-      pastDaySynced: opts?.pastDaySynced ?? false,
+      pastDaySynced: false,
       to: UnixTime.now(),
     })
   ) {
     return undefined
   }
-
-  if (opts?.shorter) {
-    return `No throughput data since ${formatTimestamp(syncedUntil, {
-      mode: 'datetime',
-      longMonthName: true,
-    })}.`
-  }
-
   return `No throughput data since ${formatTimestamp(syncedUntil, {
     mode: 'datetime',
     longMonthName: true,

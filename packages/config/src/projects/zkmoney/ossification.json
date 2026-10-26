@@ -1,0 +1,11 @@
+{
+  "events": [
+    {
+      "timestamp": 1791446231,
+      "type": "state",
+      "contract": "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
+      "transaction": "0xbff336f575e7d3d3b4845656e2604810abad1aebb3df960cc50036e409a5f2de",
+      "reason": "Owner renounced the sUSDS portal after its first deposits, removing the path to approve new enclave images (PCR0) and to freeze."
+    }
+  ]
+}

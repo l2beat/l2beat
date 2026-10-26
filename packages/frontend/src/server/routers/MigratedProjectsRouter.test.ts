@@ -12,14 +12,6 @@ describe(createMigratedProjectsRouter.name, () => {
       '/layer2s/projects/zksync2/tvs-breakdown',
       '/layer2s/projects/zksync-era/tvs-breakdown',
     ],
-    [
-      '/data-availability/projects/eigenda/eigenda-v2',
-      '/data-availability/projects/eigenda/eigenda',
-    ],
-    [
-      '/data-availability/projects/eigenda/eigenda-v2.md',
-      '/data-availability/projects/eigenda/eigenda.md',
-    ],
   ] as const) {
     it(`redirects ${from} to ${to}`, async () => {
       const response = await fetchFromRouter(

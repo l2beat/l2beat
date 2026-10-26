@@ -61,7 +61,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'good',
       exposureShort:
-        'Payouts into the pool and later deposits to the bridge are public with amount and time, so a round trip of similar size pairs them.',
+        'Only the amount and timing of a round trip can pair a payout into the pool with a later deposit to the bridge.',
       exposureContinued:
         'Deposit addresses are fresh per quote and spent together with the bridge change address, which marks every exit as NEAR Intents.',
       advice:
@@ -95,11 +95,11 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        "Each sync sends the lightwalletd server your account's transparent addresses outside Tor, so timing ties both the payout fetch and the exit to you.",
+        "Each sync sends the user's transparent addresses to lightwalletd outside Tor, tying both the payout fetch and the exit to that user by timing.",
       exposureContinued:
         "Zodl's Tor isolates each 1Click request, payout fetch and transaction, while block sync and these address lookups stay direct.",
       advice:
-        'Turn on Tor in Zodl and point it at a lightwalletd server you run.',
+        'Turn on Tor in Zodl and point it at a lightwalletd server the user runs.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -107,7 +107,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only with Tor on and your own lightwalletd server.',
+          note: "Private only with Tor on and the user's own lightwalletd server.",
         },
       },
       sources: [
@@ -135,7 +135,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       exposureShort:
-        'The operator custodies both legs in transit and can freeze any account or deposit, so it sets the terms on which your funds come back.',
+        "The operator custodies both legs in transit and can freeze any account or deposit, setting the terms on which the user's funds return.",
       exposureContinued:
         'Over Tor, its 1Click API sees each leg only as NEAR publishes it, with a fresh shielded address per swap. It holds no key into the shielded pool.',
       interior: {

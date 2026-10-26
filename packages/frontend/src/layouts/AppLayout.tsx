@@ -40,7 +40,9 @@ export function AppLayout({
         disableTransitionOnChange
       >
         <TooltipProvider delayDuration={300} disableHoverableContent>
-          {env.NODE_ENV === 'development' && <L2BeatDevTools />}
+          {/* The static check lets bundlers drop the dev tools from production builds */}
+          {process.env.NODE_ENV !== 'production' &&
+            env.NODE_ENV === 'development' && <L2BeatDevTools />}
           <CountdownsContextProvider countdowns={countdowns}>
             <GlossaryContextProvider terms={terms}>
               <ChangelogEntriesContextProvider

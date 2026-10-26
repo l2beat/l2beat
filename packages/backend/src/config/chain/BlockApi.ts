@@ -7,6 +7,8 @@ interface BlockBasedApi {
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant
   timeout?: number
+  /** Calls per HTTP request, the RPC rejects bigger batches */
+  maxBatchSize?: number
   multicallV3?: {
     address: EthereumAddress
     sinceBlock: number

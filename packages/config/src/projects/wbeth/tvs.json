@@ -1,0 +1,23 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "wbeth",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "wbeth-wBETH",
+      "priceId": "wrapped-beacon-eth",
+      "symbol": "wBETH",
+      "name": "Wrapped Beacon ETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1681902323
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

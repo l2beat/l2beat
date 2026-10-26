@@ -9,5 +9,25 @@
   "names": {
     "eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa": "SxNetworkMultisig",
     "eth:0xa4C325e25215C1fB2405EB28d81d2dFdbfC8D24C": "CalderaMultisig"
+  },
+  "overrides": {
+    "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a": {
+      "fields": {
+        // Seeds the transaction-filtering precompile (0x..74) as a relative.
+        "transactionFilteringPrecompile": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "sxr:0x0000000000000000000000000000000000000074"
+          },
+          "template": "orbitstack/ArbFilteredTransactionsManager"
+        }
+      }
+    },
+    "sxr:0x0000000000000000000000000000000000000074": {
+      // Precompile with a 0xfe stub as code: source from Nitro.
+      "manualSourcePaths": {
+        "sxr:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+      }
+    }
   }
 }

@@ -1,0 +1,106 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AccessControlSegregator",
+  "critical": true,
+  "description": "Stores one authorized address per bridge function selector. The authority for grantAccess can replace any function's authority, including unrestricted escrow withdrawal and access-control replacement.",
+  "fields": {
+    "grantAccessAccount": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function functionAccess(bytes4) view returns (address)",
+        "args": ["0xa973ec93"]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace every per-function bridge authority, including authority to withdraw all escrow funds."
+        }
+      ]
+    },
+    "withdrawAccount": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function functionAccess(bytes4) view returns (address)",
+        "args": ["0xbd2a1820"]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw all escrow funds through the bridge's adminWithdraw function."
+        }
+      ]
+    },
+    "accessControlAccount": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function functionAccess(bytes4) view returns (address)",
+        "args": ["0x9d33b6d4"]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the bridge's access-control contract."
+        }
+      ]
+    },
+    "resourceAccount": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function functionAccess(bytes4) view returns (address)",
+        "args": ["0x8a3234c7"]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remap token resources and their handlers in the bridge."
+        }
+      ]
+    },
+    "forwarderAccount": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function functionAccess(bytes4) view returns (address)",
+        "args": ["0xd15ef64e"]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "authorize trusted forwarders that can impersonate administrative callers by appending their address to calldata."
+        }
+      ]
+    },
+    "pauseAccount": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function functionAccess(bytes4) view returns (address)",
+        "args": ["0x80ae1c28"]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause bridge deposits and releases."
+        }
+      ]
+    },
+    "unpauseAccount": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function functionAccess(bytes4) view returns (address)",
+        "args": ["0xffaac0eb"]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "unpause bridge deposits and releases."
+        }
+      ]
+    }
+  }
+}

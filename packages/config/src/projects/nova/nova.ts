@@ -19,6 +19,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { DAC } from '../../templates/dac-template'
 import {
   getNitroGovernance,
+  getOrbitStackDaTracking,
   orbitStackL2,
   WASMVM_OTHER_CONSIDERATIONS,
 } from '../../templates/orbitStack'
@@ -56,6 +57,9 @@ const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
 
 const sequencerInbox = discovery.getContract('SequencerInbox')
 const blobBatchesSinceTimestamp = UnixTime(1783036800) // 2026-07-03T00:00:00Z
+// First blob batch on the SequencerInbox (a short fallback episode on
+// 2026-07-03; all batches are blobs since 2026-08-31).
+const blobBatchesSinceBlock = 25448296
 
 const dac = discovery.getContractValue<{
   membersCount: number
@@ -129,6 +133,9 @@ export const nova: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox,
+  daTracking: [
+    getOrbitStackDaTracking(discovery, { sinceBlock: blobBatchesSinceBlock }),
+  ],
   additionalTrackedTxs: [
     {
       uses: [
@@ -311,6 +318,14 @@ export const nova: ScalingProject = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Stylus activations paused',
+      url: 'https://nova.arbiscan.io/tx/0x79e0fed470dff7a22059b108e3f8f42eddd2b580a6771594060c4e7326c5f984',
+      date: '2026-10-02T00:00:00Z',
+      description:
+        'Security Council halts new Stylus program activations; existing programs keep running.',
+      type: 'incident',
+    },
     {
       title: 'Nova stops using its Data Availability Committee',
       url: 'https://etherscan.io/tx/0x7b7d15c0458651b00e689bf7e5444a3504098ff4fefadf71811d2963dfe3ff26',

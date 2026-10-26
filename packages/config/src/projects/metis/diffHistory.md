@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x49dc691de717846d4a0cb8da1049beb0adbb8256
+
+# Diff at Tue, 20 Oct 2026 07:51:36 GMT:
+
+- id: 2d7fe59b
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1767796662
+- current timestamp: 1767796662
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767796662 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) [metis/L1StandardBridge] {
+    +++ description: Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.
+      values.l2TokenBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "metis-andromeda:0x4200000000000000000000000000000000000010"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"metis-andromeda"}}]
+    }
+```
+
+Generated with discovered.json: 0xd138db192b3e405ee2267dd19d54606d91a06f75
+
+# Diff at Fri, 16 Oct 2026 05:36:51 GMT:
+
+- id: b49ca55a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1767796662
+- current timestamp: 1767796662
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767796662 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0xf7e796b0fd44ba9c462fb06edba8391159d47e2e
 
 # Diff at Wed, 07 Oct 2026 14:48:13 GMT:

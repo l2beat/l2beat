@@ -26,13 +26,6 @@ export const settlus: ScalingProject = opStackL2({
         EthereumAddress('0xD0b4c3aC8A50B6F1B3949ADaf55Cc9805620EB57'),
       ],
     },
-    {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      sinceBlock: 9779673,
-      untilBlock: 13618693, // last Celestia commitment before the switch back to blobs
-      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPs=',
-    },
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   isPartOfSuperchain: false,

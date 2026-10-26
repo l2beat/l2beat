@@ -40,7 +40,13 @@ export function ZkCatalogProjectPage({
             data-project-page
           >
             {!isNavigationEmpty && (
-              <StickyMobileSectionNavigation sections={navigationSections} />
+              <StickyMobileSectionNavigation
+                sections={navigationSections}
+                project={{
+                  name: projectEntry.shortName ?? projectEntry.name,
+                  icon: projectEntry.icon,
+                }}
+              />
             )}
             <div className="z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">

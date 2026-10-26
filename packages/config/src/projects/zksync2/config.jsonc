@@ -50,6 +50,7 @@
         },
         "upgraderVTL": {
           // `pick` instead of `get` / `pickRoleMembers` so that the field does not fail while the role has no members
+          "severity": "MEDIUM",
           "handler": {
             "type": "crossChainAccessControl",
             "pickChainAddress": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
@@ -64,8 +65,8 @@
         },
         "executionDelayEra": {
           // effective delay for ZKsync Era: max(executionDelay, chainExecutionDelay(Era diamond)).
-          // MEDIUM: the chain admin tuning its own delay is reviewed but does not reset the ossification clock.
-          "severity": "MEDIUM",
+          // HIGH: it is Era's withdrawal delay, whoever sets it.
+          "severity": "HIGH",
           "handler": {
             "type": "call",
             "method": "getExecutionDelay",
@@ -73,7 +74,7 @@
           }
         },
         "executionDelayEra_fmt": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "handler": {
             "type": "call",
             "method": "getExecutionDelay",

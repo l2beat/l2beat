@@ -36,7 +36,7 @@
   ],
   "fields": {
     "dao": {
-      "description": "Aragon DAO whose Clock admin role can change timing and upgrade the implementation."
+      "description": "Aragon governance contract whose Clock admin role can change timing and upgrade the implementation."
     },
     "epochDuration": {
       "description": "Duration of a veFOLD epoch.",

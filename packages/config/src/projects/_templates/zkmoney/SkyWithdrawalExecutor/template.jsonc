@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SkyWithdrawalExecutor",
+  "critical": true,
+  "category": "core",
+  "description": "Payout contract for sUSDS withdrawals and refunds. Only the PORTAL can execute a payout. It normally redeems sUSDS into USDS and converts USDS to DAI before paying the committed recipient and relayer tip. The recipient can complete an ordinary withdrawal in sUSDS shares through withdrawInShares, bypassing redemption.",
+  "ignoreRelatives": ["ASSET", "DAI_USDS", "SUSDS", "USDS"]
+}

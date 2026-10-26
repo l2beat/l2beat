@@ -42,5 +42,6 @@ export function getDiscoveryEngine(
   return {
     allProviders,
     discoveryEngine,
+    templateService,
   }
 }

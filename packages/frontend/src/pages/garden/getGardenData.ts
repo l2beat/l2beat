@@ -59,21 +59,26 @@ export async function getGardenData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const reviewed = await ps.getProjects({
-    where: ['garden'],
-    select: ['garden'],
-    optional: [
-      'scalingInfo',
-      'privacyInfo',
-      'defiInfo',
-      'daLayer',
-      'ossificationHistory',
-      'scalingRisks',
-      'tvsConfig',
-    ],
-  })
+  const [reviewed, attestation] = await Promise.all([
+    ps.getProjects({
+      where: ['garden'],
+      select: ['garden'],
+      optional: [
+        'scalingInfo',
+        'privacyInfo',
+        'defiInfo',
+        'daLayer',
+        'ossificationHistory',
+        'scalingRisks',
+        'tvsConfig',
+      ],
+    }),
+    getAttestationsMeta(),
+  ])
+  // An evaluation shows only once the attester has attested it.
+  const attested = new Set(attestation.current?.projectIds)
   const projects = reviewed
-    .filter((project) => project.garden.listing === 'listed')
+    .filter((p) => attested.has(p.id) && p.garden.listing === 'listed')
     .sort(compareByCuratedOrder)
 
   const [tvsBreakdown, depositCounts, defiTvl] = await Promise.all([
@@ -126,7 +131,7 @@ export async function getGardenData(
       props: {
         ...(await getAppLayoutProps()),
         entries,
-        attestation: getAttestationsMeta().current,
+        attestation: attestation.current,
       },
     },
   }

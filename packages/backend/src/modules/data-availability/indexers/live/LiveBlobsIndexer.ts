@@ -5,10 +5,15 @@ import type {
   LiveBlobBatchRecord,
   LiveBlockRecord,
 } from '@l2beat/database'
-import type { EthereumBlobBlock, EthereumDaProvider } from '@l2beat/shared'
+import {
+  type EthereumBlobBlock,
+  type EthereumDaProvider,
+  NotFoundOnRpcError,
+} from '@l2beat/shared'
 import {
   assert,
   type ProjectId,
+  SLOT_SECONDS,
   slotAt,
   type UnixTime,
 } from '@l2beat/shared-pure'
@@ -29,6 +34,16 @@ import {
 
 /** Blocks whose stored batches are read at once, to keep a window's worth out of memory */
 const BLOCKS_PER_READ = 1000
+/**
+ * How soon a block the RPC has not got yet is asked for again. Most come
+ * within a second; the call carries the whole block, so not more often
+ */
+const NOT_ON_RPC_RETRY_MS = 200
+/**
+ * A block still missing after a slot is a failure, not a node trailing the
+ * head. Wall-clock, since each ask can itself take a while on a slow RPC
+ */
+const NOT_ON_RPC_MAX_WAIT_MS = SLOT_SECONDS * 1000
 
 export type LiveBlobsConfig = EthereumDaTrackingConfig & {
   projectId: ProjectId
@@ -89,11 +104,7 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
         const start = Math.max(from, windowStart)
         const end = Math.min(start + this.$.batchSize - 1, to)
 
-        const blocks =
-          await this.$.daProvider.getBlocksWithBlobBatchesFromReceipts(
-            start,
-            end,
-          )
+        const blocks = await this.fetchWhenOnRpc(start, end)
         await this.assertBuildsOnStored(start, blocks)
         const liveBlocks = blocks.map(toLiveBlock)
         const liveBatches = blocks.flatMap((b) => this.toLiveBatches(b))
@@ -113,6 +124,32 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
         return end
       },
     )
+  }
+
+  /**
+   * The target saw the head on one node of a load-balanced RPC, and the node
+   * answering here may not have that block or its receipts yet: in production
+   * about one block in twenty. Waiting for it is no failure, so this asks
+   * again at a steady pace rather than the update's growing backoff
+   */
+  private async fetchWhenOnRpc(
+    start: number,
+    end: number,
+  ): Promise<EthereumBlobBlock[]> {
+    const deadline = Date.now() + NOT_ON_RPC_MAX_WAIT_MS
+    for (;;) {
+      try {
+        return await this.$.daProvider.getBlocksWithBlobBatchesFromReceipts(
+          start,
+          end,
+        )
+      } catch (error) {
+        const notYet =
+          error instanceof NotFoundOnRpcError && Date.now() < deadline
+        if (!notYet) throw error
+        await sleep(NOT_ON_RPC_RETRY_MS)
+      }
+    }
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
@@ -231,4 +268,8 @@ function toLiveBlock(block: EthereumBlobBlock): LiveBlockRecord {
     timestamp: block.timestamp,
     blobCount: block.batches.reduce((sum, b) => sum + b.blobs, 0),
   }
+}
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }

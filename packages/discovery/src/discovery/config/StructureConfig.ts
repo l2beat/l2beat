@@ -88,6 +88,11 @@ export const StructureContract = StructureContractLayer.transform(
   resolveStructureContract,
 )
 
+export const TemplateStructureContract = StructureContractLayer.check(
+  (layer) => layer.ignoreDiscovery === undefined,
+  'ignoreDiscovery cannot be set in a template',
+).transform(resolveStructureContract)
+
 export function resolveStructureContract(layer: StructureContractLayer) {
   return resolveContract(_StructureContract, _StructureContractField, layer, {
     ignoreDiscovery: false,

@@ -1,4 +1,6 @@
+import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
+import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import { CustomLink } from './link/CustomLink'
 
 interface Props {
@@ -8,6 +10,7 @@ interface Props {
 
 export function Footer({ className, innerContainerClassName }: Props) {
   const currentYear = new Date().getFullYear()
+  const markdownHref = getMarkdownAlternatePath(usePathname())
 
   return (
     <footer
@@ -36,6 +39,21 @@ export function Footer({ className, innerContainerClassName }: Props) {
             Terms of Service
           </CustomLink>
         </p>
+        {/* For agents, which follow only links in the page body: they skip <head> links and headers. */}
+        <ul className="sr-only">
+          <li>
+            <a href="/llms.txt" tabIndex={-1}>
+              llms.txt
+            </a>
+          </li>
+          {markdownHref && (
+            <li>
+              <a href={markdownHref} tabIndex={-1}>
+                Markdown version of this page
+              </a>
+            </li>
+          )}
+        </ul>
         <p className="text-center font-medium text-xs leading-none md:text-right">
           Copyright {currentYear} L2BEAT
         </p>

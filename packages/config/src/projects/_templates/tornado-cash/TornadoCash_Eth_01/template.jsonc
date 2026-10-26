@@ -10,6 +10,7 @@
       "severity": "LOW"
     },
     "operator": {
+      "severity": "MEDIUM",
       "description": "Legacy operator role retained from the trusted-setup phase.",
       "permissions": [
         {

@@ -23,7 +23,10 @@ import {
   get$PastUpgrades,
 } from '../utils/extractors'
 import { codeIsEOA } from './bytecode'
-import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
+import {
+  getFollowedParameters,
+  getRelativesWithSuggestedTemplates,
+} from './getRelativesWithSuggestedTemplates'
 import type { TemplateService } from './TemplateService'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA | Reference
@@ -44,6 +47,7 @@ interface AnalyzedCommon {
   extendedTemplate?: ExtendedTemplate
   ignoreInWatchMode?: string[]
   relatives: AddressesWithTemplates
+  followedFields: string[]
   usedTypes?: DiscoveryCustomType[]
 }
 
@@ -128,11 +132,6 @@ export class AddressAnalyzer {
       proxy.addresses,
       config.manualSourcePaths,
     )
-    const libraries =
-      config.discoverLibraries === true
-        ? getLibraries(provider.chain, sources)
-        : []
-
     if (extendedTemplate === undefined) {
       const matchingTemplates = this.templateService.findMatchingTemplates(
         sources,
@@ -156,6 +155,11 @@ export class AddressAnalyzer {
       }
     }
 
+    const libraries =
+      config.discoverLibraries === true
+        ? getLibraries(provider.chain, sources)
+        : []
+
     const { results, values, errors, usedTypes } =
       await this.handlerExecutor.execute(provider, address, sources.abi, config)
 
@@ -175,12 +179,19 @@ export class AddressAnalyzer {
       ...beacons,
       ...pastUpgrades.flatMap((e) => e[2]),
     ]
+    const parameters = handlerResults
+      .concat(proxyResults)
+      .concat(libraryResults)
     const relatives = getRelativesWithSuggestedTemplates(
-      handlerResults.concat(proxyResults).concat(libraryResults),
+      parameters,
       config.ignoreRelatives,
       ignoredAddresses,
       config.fields,
     )
+    const followedFields = getFollowedParameters(
+      parameters,
+      config.ignoreRelatives,
+    ).map((param) => param.field)
 
     const mergedValues = {
       ...proxy.values,
@@ -212,9 +223,38 @@ export class AddressAnalyzer {
       extendedTemplate,
       ignoreInWatchMode: config.ignoreInWatchMode,
       relatives,
+      followedFields,
       usedTypes,
     } as Analysis
 
     return analysis
+  }
+
+  /** Reads again the template files that changed since they were read. */
+  reloadTemplates(): void {
+    this.templateService.reload()
+  }
+
+  /**
+   * Whether `analyze` would now extend another template than it did for
+   * `analysis`, or the same template changed since. Templates change during
+   * discovery only when something writes them between levels. A template a
+   * referrer suggested stays the referrer's choice; the referrer suggests
+   * another only when it is analyzed again.
+   */
+  templateChanged(analysis: AnalyzedContract | AnalyzedEOA): boolean {
+    const used = analysis.extendedTemplate
+    const now =
+      used !== undefined && used.reason !== 'byShapeMatch'
+        ? used.template
+        : this.templateService.findMatchingTemplates(
+            { sources: analysis.sourceBundles },
+            analysis.address,
+          )[0]
+    return (
+      now !== used?.template ||
+      (now !== undefined &&
+        this.templateService.getTemplateHash(now) !== used?.templateHash)
+    )
   }
 }

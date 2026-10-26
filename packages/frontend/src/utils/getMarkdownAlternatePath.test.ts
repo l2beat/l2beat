@@ -16,11 +16,9 @@ describe(getMarkdownAlternatePath.name, () => {
     expect(getMarkdownAlternatePath('/layer2s/projects/arbitrum')).toEqual(
       '/layer2s/projects/arbitrum.md',
     )
-    expect(
-      getMarkdownAlternatePath(
-        '/data-availability/projects/celestia/blobstream',
-      ),
-    ).toEqual('/data-availability/projects/celestia/blobstream.md')
+    expect(getMarkdownAlternatePath('/privacy/projects/railgun')).toEqual(
+      '/privacy/projects/railgun.md',
+    )
   })
 
   it('resolves every path Express routes to the page', () => {

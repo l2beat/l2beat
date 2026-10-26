@@ -41,7 +41,9 @@ function orderByDependencies(handlers: Handler[]): Handler[][] {
       }
     }
     if (batch.length === 0) {
-      throw new Error('Impossible to resolve dependencies')
+      throw new Error(
+        `Impossible to resolve dependencies: ${describeUnresolved(remaining, known)}`,
+      )
     }
     for (const handler of batch) {
       known.add(handler.field)
@@ -50,4 +52,22 @@ function orderByDependencies(handlers: Handler[]): Handler[][] {
     batches.push(batch)
   }
   return batches
+}
+
+/**
+ * Which fields wait for what, so the error names the reference that is
+ * missing or circular instead of only saying that one is.
+ */
+function describeUnresolved(
+  remaining: ReadonlySet<Handler>,
+  known: ReadonlySet<string>,
+): string {
+  return [...remaining]
+    .map((handler) => {
+      const waitingFor = handler.dependencies.filter(
+        (dependency) => !known.has(dependency) && !dependency.startsWith('$'),
+      )
+      return `${handler.field} waits for {{ ${waitingFor.join(' }}, {{ ')} }}`
+    })
+    .join('; ')
 }

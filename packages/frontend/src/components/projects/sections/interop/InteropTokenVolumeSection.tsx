@@ -20,6 +20,7 @@ import {
   InteropFlowsProvider,
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
+import { UNRELIABLE_PRICE_NOTICE } from '~/pages/interop/token/getInteropTokenNotices'
 import { useInteropTokenDashboard } from '~/pages/interop/token/InteropTokenDashboardContext'
 import type { InteropTokenDashboardData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { useTRPC } from '~/trpc/React'
@@ -29,11 +30,16 @@ import type { ProjectSectionProps } from '../types'
 export interface InteropTokenVolumeSectionProps extends ProjectSectionProps {
   tokenId: string
   interopChains: InteropChainWithIcon[]
+  isPriceUnreliable: boolean
+  /** Pins the flows to the older snapshot the page shows; otherwise the latest is used. */
+  snapshotTimestamp: number | undefined
 }
 
 export function InteropTokenVolumeSection({
   tokenId,
   interopChains,
+  isPriceUnreliable,
+  snapshotTimestamp,
   ...sectionProps
 }: InteropTokenVolumeSectionProps) {
   const { data } = useInteropTokenDashboard()
@@ -47,6 +53,17 @@ export function InteropTokenVolumeSection({
     [sortedChains],
   )
 
+  // Flows are drawn by USD volume, which is zero everywhere without a price.
+  if (isPriceUnreliable) {
+    return (
+      <ProjectSection {...sectionProps}>
+        <div className="rounded-lg bg-surface-secondary px-4 py-3 font-medium text-label-value-14 text-secondary">
+          {UNRELIABLE_PRICE_NOTICE}
+        </div>
+      </ProjectSection>
+    )
+  }
+
   return (
     <ProjectSection {...sectionProps}>
       <InteropFlowsProvider
@@ -55,7 +72,11 @@ export function InteropTokenVolumeSection({
         protocols={protocols}
         defaultSelectedChains={defaultSelectedChains}
       >
-        <Content tokenId={tokenId} interopChains={sortedChains} />
+        <Content
+          tokenId={tokenId}
+          snapshotTimestamp={snapshotTimestamp}
+          interopChains={sortedChains}
+        />
       </InteropFlowsProvider>
     </ProjectSection>
   )
@@ -63,9 +84,11 @@ export function InteropTokenVolumeSection({
 
 function Content({
   tokenId,
+  snapshotTimestamp,
   interopChains,
 }: {
   tokenId: string
+  snapshotTimestamp: number | undefined
   interopChains: InteropChainWithIcon[]
 }) {
   const trpc = useTRPC()
@@ -79,6 +102,7 @@ function Content({
         chains: selectedChains,
         protocolIds: selectedProtocols,
         tokenId,
+        snapshotTimestamp,
       },
       { enabled: hasEnoughChains && hasEnoughProtocols },
     ),
@@ -153,6 +177,7 @@ function Content({
               chainId={chainA.id}
               selectedChains={selectedChains}
               tokenId={tokenId}
+              snapshotTimestamp={snapshotTimestamp}
               hideTopProtocols
             />
           )}
@@ -162,6 +187,7 @@ function Content({
               chainIdB={chainB.id}
               selectedChains={selectedChains}
               tokenId={tokenId}
+              snapshotTimestamp={snapshotTimestamp}
               hideTopProtocols
             />
           )}

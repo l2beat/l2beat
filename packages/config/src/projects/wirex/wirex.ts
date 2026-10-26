@@ -7,9 +7,11 @@ import { agglayer } from '../../templates/agglayer'
 
 const discovery = new ProjectDiscovery('wirex')
 const bridge = discovery.getContract('AgglayerBridge')
+const archivedAt = UnixTime(1792062000) // 2026-10-15T11:00:00Z, last successfully indexed TVS hour
 
 export const wirex: ScalingProject = agglayer({
   addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  archivedAt,
   additionalBadges: [BADGES.RaaS.Zeeve],
   additionalPurposes: ['Payments'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
@@ -40,6 +42,7 @@ export const wirex: ScalingProject = agglayer({
     chainId: 31415,
     explorerUrl: 'https://blockscout.wirexpaychain.com',
     sinceTimestamp: UnixTime(1720089623),
+    untilTimestamp: archivedAt,
     apis: [
       {
         type: 'rpc',
