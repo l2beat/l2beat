@@ -325,21 +325,36 @@
   --chart-sky-fill-gradient: #66ccff;
 }
 
-/* The home page's theme: pink links and its one block of colour.
+/* The home page's theme: the colours of the social post designs. Ink text,
+   white cards, hairline rules, pink links and the page's one block of
+   colour.
    The page sets it on its wrapper for the first paint, and on <html> once
    mounted, so popovers portalled to <body> get it too. */
 .home-theme {
+  --primary: #0d0c0c;
+  --surface-primary: #ffffff;
+  --divider: rgb(13 12 12 / 0.14);
   --link: #d4114f;
   --link-stroke: #f7c3d3;
   /* The page's one block of colour, and text on it. */
   --accent: #ff3776;
   --on-accent: #ffffff;
+  /* Axis labels. */
+  --muted: #878d99;
+  --chart-grid: rgb(13 12 12 / 0.09);
+  --chart-baseline: rgb(13 12 12 / 0.4);
 }
 
 .dark .home-theme,
 .dark.home-theme {
   --link: #ff6b9a;
   --link-stroke: #5a1f33;
+  --primary: #fafafa;
+  --surface-primary: #1b1e2a;
+  --divider: #3d4358;
+  --muted: #80869a;
+  --chart-grid: rgb(255 255 255 / 0.09);
+  --chart-baseline: rgb(255 255 255 / 0.4);
 }
 
 /* A block in the other theme's colours. */

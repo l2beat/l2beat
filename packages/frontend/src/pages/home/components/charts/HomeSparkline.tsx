@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { useId, useMemo } from 'react'
+import { useMemo } from 'react'
 import {
   Area,
   AreaChart,
@@ -45,9 +45,6 @@ interface Props {
   className?: string
 }
 
-/** Every home sparkline shares one colour, so the cards read as a set. */
-const STROKE = 'var(--chart-pink)'
-
 /**
  * ChartContainer has fixed heights (114px at its smallest), both on its
  * settled-size box and on the recharts wrapper. Filling an absolutely
@@ -71,6 +68,9 @@ const FILL_HEIGHT_CLASS = cn(
  * The high and low hairlines bound the plot; their values sit outside it,
  * above and below, so the line never runs through them.
  */
+/** Every home sparkline shares the brand colour, so the cards read as a set. */
+const STROKE = 'var(--chart-pink)'
+
 export function HomeSparkline({
   data: dailyData,
   tooltipLabel,
@@ -78,7 +78,6 @@ export function HomeSparkline({
   weeklyAverage,
   className,
 }: Props) {
-  const fillId = useId()
   const data = useMemo(
     () => (weeklyAverage ? toWeeklyAverages(dailyData) : dailyData),
     [dailyData, weeklyAverage],
@@ -119,12 +118,6 @@ export function HomeSparkline({
               left: 0,
             }}
           >
-            <defs>
-              <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={STROKE} stopOpacity={0.18} />
-                <stop offset="100%" stopColor={STROKE} stopOpacity={0} />
-              </linearGradient>
-            </defs>
             <XAxis dataKey="timestamp" hide />
             <YAxis hide domain={domain} />
             {range &&
@@ -132,9 +125,12 @@ export function HomeSparkline({
                 <ReferenceLine
                   key={key}
                   y={range[key]}
-                  stroke="var(--divider)"
-                  // Softer than the page's hairlines: a reference, not a frame.
-                  strokeOpacity={0.5}
+                  // The low is the plot's baseline, the high a gridline.
+                  stroke={
+                    key === 'min'
+                      ? 'var(--chart-baseline)'
+                      : 'var(--chart-grid)'
+                  }
                   // On a whole pixel the 1px line would straddle two and blur
                   // at 1x; crisp edges keep it one device pixel sharp.
                   shapeRendering="crispEdges"
@@ -152,8 +148,9 @@ export function HomeSparkline({
               // A weekly series has few enough points to show its corners.
               type={weeklyAverage ? 'monotone' : 'linear'}
               stroke={STROKE}
-              fill={`url(#${fillId})`}
-              fillOpacity={1}
+              // Flat, as in the social post designs: no gradient.
+              fill={STROKE}
+              fillOpacity={0.1}
               baseValue="dataMin"
               dot={false}
               isAnimationActive={false}
@@ -259,7 +256,7 @@ function ExtremeLabel({
       }
       textAnchor={high ? 'end' : 'start'}
       fontSize={LABEL_FONT_SIZE}
-      fill="var(--secondary)"
+      fill="var(--muted)"
     >
       {value}
     </text>
