@@ -1,8 +1,20 @@
-const SENSITIVE_PARAM_PARTS = ['key', 'token', 'secret', 'auth', 'password']
+const SENSITIVE_PARAM_PARTS = [
+  'key',
+  'token',
+  'secret',
+  'auth',
+  'password',
+  'signature',
+  'credential',
+]
+// Azure SAS tokens sign with `sig`, too short to match as a part of a name
+const SENSITIVE_PARAMS = ['sig']
 
 // Stops at characters that end a URL embedded in prose, JSON or quoted
 // attributes, e.g. ethers' `url="https://..."` or a JSON-escaped `\"`.
-const URL_IN_TEXT = /\b(?:https?|wss?):\/\/[^\s"'`<>\\]+/gi
+// Database and broker schemes carry passwords in their userinfo.
+const URL_IN_TEXT =
+  /\b(?:https?|wss?|postgres(?:ql)?|mysql|mongodb(?:\+srv)?|rediss?|amqps?):\/\/[^\s"'`<>\\]+/gi
 const TRAILING_PUNCTUATION = '.,;:!?)]}'
 
 /**
@@ -51,11 +63,12 @@ export function redactUrl(url: string): string {
       parsed.password = 'REDACTED'
     }
 
-    const sensitive = [...parsed.searchParams.keys()].filter((name) =>
-      SENSITIVE_PARAM_PARTS.some((part) => name.toLowerCase().includes(part)),
-    )
-    for (const name of sensitive) {
-      parsed.searchParams.set(name, 'REDACTED')
+    redactParams(parsed.searchParams)
+    // OAuth implicit flows put tokens in the fragment, written like a query
+    if (parsed.hash.includes('=')) {
+      const fragment = new URLSearchParams(parsed.hash.slice(1))
+      redactParams(fragment)
+      parsed.hash = fragment.toString()
     }
 
     parsed.pathname = parsed.pathname.split('/').map(sanitizeSegment).join('/')
@@ -63,6 +76,19 @@ export function redactUrl(url: string): string {
     return parsed.toString()
   } catch {
     return redactUnparsableUrl(url)
+  }
+}
+
+function redactParams(params: URLSearchParams) {
+  const sensitive = [...params.keys()].filter((name) => {
+    const lower = name.toLowerCase()
+    return (
+      SENSITIVE_PARAMS.includes(lower) ||
+      SENSITIVE_PARAM_PARTS.some((part) => lower.includes(part))
+    )
+  })
+  for (const name of sensitive) {
+    params.set(name, 'REDACTED')
   }
 }
 
@@ -91,16 +117,20 @@ function sanitizeSegment(segment: string): string {
  * Heuristic for path segments that look like API keys/tokens. Public blockchain
  * identifiers (0x-prefixed hashes and addresses) are never secrets, so they are
  * left intact; everything else that is long and mixes letters with digits is
- * treated as a secret and redacted.
+ * treated as a secret and redacted. Parts are split on `.` so that tokens such
+ * as JWTs (`header.payload.signature`) are caught too.
  */
 function isSecretLikeSegment(segment: string): boolean {
   if (segment.startsWith('0x')) {
     return false
   }
-  return (
-    segment.length >= 16 &&
-    /^[A-Za-z0-9_-]+$/.test(segment) &&
-    /[A-Za-z]/.test(segment) &&
-    /[0-9]/.test(segment)
-  )
+  return segment
+    .split('.')
+    .some(
+      (part) =>
+        part.length >= 16 &&
+        /^[A-Za-z0-9_-]+$/.test(part) &&
+        /[A-Za-z]/.test(part) &&
+        /[0-9]/.test(part),
+    )
 }

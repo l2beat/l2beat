@@ -42,6 +42,16 @@ describe(redactUrls.name, () => {
     )
   })
 
+  it('redacts the password of a database url', () => {
+    expect(
+      redactUrls(
+        'connect failed postgres://user:pw@db.example.com:5432/l2beat',
+      ),
+    ).toEqual(
+      'connect failed postgres://REDACTED:REDACTED@db.example.com:5432/l2beat',
+    )
+  })
+
   it('returns text without urls unchanged', () => {
     const text = 'Connect Timeout Error (attempted address: rpc.l2beat.com:443)'
     expect(redactUrls(text)).toEqual(text)
@@ -85,6 +95,30 @@ describe(redactUrl.name, () => {
     ).toEqual(
       'https://pro-api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1&to=2&x_cg_pro_api_key=REDACTED',
     )
+  })
+
+  it('redacts the signatures of signed urls', () => {
+    expect(
+      redactUrl(
+        'https://bucket.s3.amazonaws.com/file?X-Amz-Credential=AKIA%2Fx&X-Amz-Signature=abc&sig=xyz&se=2026',
+      ),
+    ).toEqual(
+      'https://bucket.s3.amazonaws.com/file?X-Amz-Credential=REDACTED&X-Amz-Signature=REDACTED&sig=REDACTED&se=2026',
+    )
+  })
+
+  it('redacts tokens in the fragment', () => {
+    expect(
+      redactUrl('https://app.example.com/cb#access_token=abc&state=1'),
+    ).toEqual('https://app.example.com/cb#access_token=REDACTED&state=1')
+  })
+
+  it('redacts a JWT in the path', () => {
+    expect(
+      redactUrl(
+        'https://app.example.com/reset/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.c2lnbmF0dXJl',
+      ),
+    ).toEqual('https://app.example.com/reset/REDACTED')
   })
 
   it('redacts the part after a colon in path segments', () => {
