@@ -362,24 +362,20 @@ function getUpgradeEvents(
   appendingUpdates: ReadonlyMap<string, string>,
 ): MemberEvent[] {
   return [...members.values()].flatMap((member) =>
-    member.upgrades
-      .filter(
-        (u) =>
-          !has(reviewedUpgrades, upgradeKey(member.address, u.transaction)),
-      )
-      .map((upgrade) => {
-        const updateId = appendingUpdates.get(
-          upgradeKey(member.address, upgrade.transaction) ?? '',
-        )
-        return {
+    member.upgrades.flatMap((upgrade) => {
+      const id = upgradeKey(member.address, upgrade.transaction)
+      if (has(reviewedUpgrades, id)) return []
+      return [
+        {
           type: 'code' as const,
           timestamp: upgrade.timestamp,
           earliest: upgrade.timestamp,
           contract: key(member.address),
           transaction: upgrade.transaction,
-          ...(updateId === undefined ? {} : { updateId }),
-        }
-      }),
+          updateId: id === undefined ? undefined : appendingUpdates.get(id),
+        },
+      ]
+    }),
   )
 }
 

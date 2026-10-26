@@ -436,6 +436,38 @@ describe(getOssificationHistory.name, () => {
       ])
     })
 
+    it('tags no upgrade with an ignored update', () => {
+      const history = derive({
+        entries: [
+          entry({ values: pastUpgrades([T0, TX_1], [RUN_2 - 5 * DAY, TX_2]) }),
+        ],
+        changes: update('u2', RUN_2, RUN_1, ADDRESS_A, [
+          implementation,
+          appended(RUN_2 - 5 * DAY, TX_2),
+        ]),
+        patch: patch({ ignoredUpdates: ['u2'] }),
+      })
+      expect(changes(history)).toEqual([
+        ['code', RUN_2 - 5 * DAY, RUN_2 - 5 * DAY, undefined],
+      ])
+    })
+
+    it('tags no upgrade with an update of unknown interval', () => {
+      const history = derive({
+        entries: [
+          entry({ values: pastUpgrades([T0, TX_1], [RUN_1 - 5 * DAY, TX_2]) }),
+        ],
+        // a legacy entry: no previous run time
+        changes: update('u1', RUN_1, undefined, ADDRESS_A, [
+          implementation,
+          appended(RUN_1 - 5 * DAY, TX_2),
+        ]),
+      })
+      expect(changes(history)).toEqual([
+        ['code', RUN_1 - 5 * DAY, RUN_1 - 5 * DAY, undefined],
+      ])
+    })
+
     it('keeps the history of a retired contract without giving it a row', () => {
       const history = derive({
         changes: [

@@ -213,7 +213,11 @@ history holds:
 
 - `contracts`: the contracts critical today, with name, address, verification
   status, age (`ossifyingSince`) and their own change counts.
-- `changes`: the critical changes, of current and retired contracts.
+- `changes`: the critical changes, of current and retired contracts. A
+  change carries the `updateId` of the `diffHistory.md` entry that recorded
+  it. An upgrade from `$pastUpgrades` takes the entry whose interval between
+  two runs contains it. Ignored entries and entries without a previous run
+  tag nothing.
 - `deployments`: deployments and initializations of critical contracts, to
   find the ossification genesis.
 - `observedSince`: the project start, or the earliest known contract start.
