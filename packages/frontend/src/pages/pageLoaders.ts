@@ -67,6 +67,8 @@ export const pageLoaders = {
       .InteropIntentBridgesPage,
   EthereumProjectPage: async () =>
     (await import('./ethereum/EthereumProjectPage')).EthereumProjectPage,
+  ChainProjectPage: async () =>
+    (await import('./chain/ChainProjectPage')).ChainProjectPage,
   BlobsPage: async () => (await import('./blobs/BlobsPage')).BlobsPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
