@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react'
 import { useDiffSettingsStore } from '../../store'
-import { splitCode } from '../utils/soliditySplitter'
 import { useDiffState } from './useDiffState'
 import { useLineSelection } from './useLineSelection'
 import { useUrlState } from './useUrlState'
@@ -42,15 +41,14 @@ export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
 
   useEffect(() => {
     setSettings({
-      removeUnchanged:
-        queryParams.removeUnchanged ??
-        !codeIsTheSame(props.leftCode, props.rightCode),
-      ignoreComments: queryParams.ignoreComments ?? false,
-      fold: queryParams.fold ?? false,
+      removeUnchanged: queryParams.removeUnchanged,
+      ignoreComments: queryParams.ignoreComments,
+      fold: queryParams.fold,
     })
   }, [
     queryParams.removeUnchanged,
     queryParams.ignoreComments,
+    queryParams.fold,
     props.leftCode,
     props.rightCode,
     setSettings,
@@ -99,12 +97,4 @@ export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
     splitLeft,
     splitRight,
   }
-}
-
-function codeIsTheSame(
-  left: Record<string, string>,
-  right: Record<string, string>,
-): boolean {
-  const [leftCode, rightCode] = splitCode(left, right)
-  return leftCode === rightCode
 }
