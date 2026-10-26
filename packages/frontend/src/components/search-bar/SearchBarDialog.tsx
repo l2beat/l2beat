@@ -327,6 +327,8 @@ function entryToLabel(entry: AnySearchBarEntry) {
   switch (entry.kind) {
     case 'ethereum':
       return 'Base layer'
+    case 'chain':
+      return 'Chain'
     case 'layer2':
       return 'Layer 2'
     case 'layer3':

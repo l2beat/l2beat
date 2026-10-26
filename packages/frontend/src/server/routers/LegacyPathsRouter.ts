@@ -1,5 +1,6 @@
 import express from 'express'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
+import { isChainProjectSlug } from '~/server/features/chains/getChainProjects'
 
 export function createLegacyPathsRouter() {
   const router = express.Router()
@@ -14,7 +15,11 @@ export function createLegacyPathsRouter() {
     (_req, _res, next) => next('router'),
   )
 
-  router.get('/projects/:name', (req, res) => {
+  router.get('/projects/:name', async (req, res, next) => {
+    if (await isChainProjectSlug(req.params.name)) {
+      next('router')
+      return
+    }
     res.redirect(301, `/layer2s/projects/${req.params.name}`)
   })
 

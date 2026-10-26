@@ -9,6 +9,7 @@ import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
 import { createBlobsRouter } from './blobs/BlobsRouter'
 import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
+import { createChainProjectRouter } from './chain/ChainProjectRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDefiRouter } from './defi/DefiRouter'
 import { createDevRouter } from './dev/DevRouter'
@@ -61,6 +62,8 @@ export function createServerPageRouter(
     createInteropRouter,
     createTokensRouter,
     createEthereumProjectRouter,
+    // After Ethereum's router: it owns /projects/ethereum.
+    createChainProjectRouter,
     createBlobsRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,
