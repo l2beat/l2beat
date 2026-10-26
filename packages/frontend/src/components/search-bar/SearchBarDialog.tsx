@@ -59,6 +59,13 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   const isOffline = fetchStatus === 'paused'
   const isFailed = isError && fetchStatus === 'idle'
   const showsResults = value === debouncedValue && value !== ''
+  const searchProblem = !showsResults
+    ? undefined
+    : isOffline
+      ? 'offline'
+      : isFailed
+        ? 'failed'
+        : undefined
 
   useEffect(() => {
     if (debouncedValue === '') return
@@ -137,24 +144,23 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
               </CommandGroup>
             </CommandPrimitive.Loading>
           )}
-          {showsResults && isOffline ? (
-            <SearchBarNotice>
-              You're offline. Results will appear once you're back online.
-            </SearchBarNotice>
-          ) : showsResults && isFailed ? (
-            <SearchBarNotice>
-              Couldn't search projects and tokens.{' '}
-              <button
-                type="button"
-                className={linkVariants()}
-                onClick={() => void refetch()}
-              >
-                Try again
-              </button>
-            </SearchBarNotice>
-          ) : (
-            <CommandEmpty>No results found.</CommandEmpty>
-          )}
+          <SearchBarNotice>
+            {searchProblem === 'offline' ? (
+              "You're offline. Results will appear once you're back online."
+            ) : searchProblem === 'failed' ? (
+              <>
+                Couldn't search projects and tokens.{' '}
+                <button
+                  type="button"
+                  className={linkVariants()}
+                  onClick={() => void refetch()}
+                >
+                  Try again
+                </button>
+              </>
+            ) : null}
+          </SearchBarNotice>
+          {!searchProblem && <CommandEmpty>No results found.</CommandEmpty>}
 
           {value === '' && (
             <CommandGroup heading="Recently added projects">
@@ -277,9 +283,14 @@ function SearchBarItem({
   )
 }
 
+// Rendered even when empty: screen readers announce changes only to a live
+// region that is already in the page.
 function SearchBarNotice({ children }: { children: React.ReactNode }) {
   return (
-    <div className="border-divider border-b px-4 py-3 text-center text-sm last:border-none">
+    <div
+      role="status"
+      className="border-divider border-b px-4 py-3 text-center text-sm last:border-none empty:border-none empty:p-0"
+    >
       {children}
     </div>
   )
