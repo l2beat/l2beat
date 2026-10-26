@@ -12,6 +12,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import type { InteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
+import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 import { InteropEntityPageLayout } from '../components/InteropEntityPageLayout'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import type { InteropSelection } from '../utils/types'
@@ -19,6 +20,7 @@ import { InteropProtocolSummary } from './components/InteropProtocolSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: InteropProtocolEntry
+  sectionLinks: ProjectSectionLink[]
   protocolData: InteropProtocolDashboardData
   apiSelection: InteropSelection
   selectedUpdateId?: string
@@ -27,6 +29,7 @@ interface Props extends AppLayoutProps {
 
 export function InteropProtocolPage({
   projectEntry,
+  sectionLinks,
   apiSelection,
   protocolData,
   selectedUpdateId,
@@ -38,6 +41,7 @@ export function InteropProtocolPage({
       <HydrationBoundary state={queryState}>
         <Content
           projectEntry={projectEntry}
+          sectionLinks={sectionLinks}
           apiSelection={apiSelection}
           protocolData={protocolData}
           selectedUpdateId={selectedUpdateId}
@@ -49,11 +53,13 @@ export function InteropProtocolPage({
 
 function Content({
   projectEntry,
+  sectionLinks,
   apiSelection,
   protocolData,
   selectedUpdateId,
 }: {
   projectEntry: InteropProtocolEntry
+  sectionLinks: ProjectSectionLink[]
   apiSelection: InteropSelection
   protocolData: InteropProtocolDashboardData
   selectedUpdateId?: string
@@ -77,6 +83,8 @@ function Content({
         <>
           <ProjectHeader
             project={projectEntry}
+            section="interop"
+            sectionLinks={sectionLinks}
             recentUpdatesCount={projectEntry.header.recentUpdatesCount}
           />
           <ProjectSummaryBars project={projectEntry} />

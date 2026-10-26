@@ -175,7 +175,7 @@ export async function getL2ProjectEntry(
     | 'discoveryInfo'
     | 'discoveryUpdates'
     | 'daTrackingConfig'
-    | 'crops'
+    | 'garden'
     | 'ossificationHistory'
   >,
   helpers: SsrHelpers,
@@ -393,10 +393,7 @@ export async function getL2ProjectEntry(
 
   const chartProject = toChartProject(project)
 
-  const gardenCropsSection = await getGardenCropsSection(
-    project.id,
-    project.crops,
-  )
+  const gardenCropsSection = await getGardenCropsSection(project, ossification)
   if (gardenCropsSection) {
     sections.push(gardenCropsSection)
   }

@@ -846,10 +846,7 @@ export const aztecnetworkv6: ScalingProject = {
         'No multiproof system.',
         'An exploit in the single proof system combined with private execution can be fatal for the protocol.',
       ],
-      notReviewed: [
-        CROP_NOTES.notReviewed.quantumSafety,
-        CROP_NOTES.notReviewed.circuitBreakers,
-      ],
+      notReviewed: [CROP_NOTES.notReviewed.circuitBreakers],
     },
   },
 }

@@ -20,7 +20,7 @@ export function ProjectsUsedInByStatus({ data }: Props) {
         <ProjectsUsedIn
           key={status}
           usedIn={data[status] ?? []}
-          noL2ClassName="font-medium text-label-value-12 text-secondary"
+          emptyClassName="font-medium text-label-value-12"
         />
       ))}
     </div>

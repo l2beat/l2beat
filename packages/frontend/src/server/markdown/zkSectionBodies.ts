@@ -3,6 +3,7 @@ import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAtt
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { ProgramHashesSectionProps } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
 import type { TrustedSetupSectionProps } from '~/components/projects/sections/TrustedSetupsSection'
+import type { KnownDeployment } from '~/components/projects/sections/verifiers/KnownDeployments'
 import type { VerifiersSectionProps } from '~/components/projects/sections/verifiers/VerifiersSection'
 import { externalLinks } from '~/consts/externalLinks'
 import {
@@ -258,9 +259,7 @@ function renderVerifier(
   ])
 }
 
-function renderKnownDeployments(
-  deployments: VerifiersSectionProps['proofSystemVerifiers'][number]['verifierHashes'][number]['knownDeployments'],
-) {
+function renderKnownDeployments(deployments: KnownDeployment[]) {
   if (deployments.length === 0) return ''
   return joinBlocks([
     '**Known deployments**',

@@ -24,13 +24,18 @@ on:
   push:
     branches:
       - main
+  # Security is capped by the ossification score, which grows with time alone,
+  # so a rating can cross a band with no commit or attestation to redeploy it.
+  schedule:
+    - cron: "0 4 * * *"
 
 jobs:
   affected:
     # Jobs below run whenever this one doesn't succeed, so a forced run or a
     # detection error still deploys. The backend forces a run when the
-    # attestation changes, which reaches the chain without a commit.
-    if: github.event.inputs.force != 'true'
+    # attestation changes, which reaches the chain without a commit, and the
+    # daily schedule deploys to pick up ossification scores that moved.
+    if: github.event_name != 'schedule' && github.event.inputs.force != 'true'
     uses: ./.github/workflows/affected-packages.yml
 
   deploy:

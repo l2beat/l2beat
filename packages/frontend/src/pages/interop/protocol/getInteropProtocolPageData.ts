@@ -4,6 +4,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropProtocolData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import { getInteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
+import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getInteropMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
@@ -42,6 +43,7 @@ export async function getInteropProtocolPageData(
       props: {
         ...appLayoutProps,
         projectEntry: data.projectEntry,
+        sectionLinks: data.sectionLinks,
         protocolData: data.protocolData,
         apiSelection: data.apiSelection,
         selectedUpdateId: req.query.update,
@@ -96,10 +98,10 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
     interopChains.filter((chain) => !chain.isUpcoming),
   )
 
-  const protocolData = await getInteropProtocolData({
-    id: project.id,
-    ...apiSelection,
-  })
+  const [protocolData, sectionLinks] = await Promise.all([
+    getInteropProtocolData({ id: project.id, ...apiSelection }),
+    getProjectSectionLinks(slug),
+  ])
 
   const projectEntry = await getInteropProtocolEntry(
     project,
@@ -120,6 +122,7 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
       }),
     },
     projectEntry,
+    sectionLinks,
     protocolData,
     apiSelection,
     queryState: helpers.dehydrate(),
