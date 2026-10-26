@@ -259,10 +259,7 @@ function UsedInBlock({
       }
     >
       <p className="font-medium text-label-value-12 text-secondary">Used in</p>
-      <ProjectsUsedIn
-        noL2ClassName="text-label-value-12 font-medium text-secondary"
-        usedIn={projectsUsedIn}
-      />
+      <ProjectsUsedIn usedIn={projectsUsedIn} />
     </div>
   )
 }

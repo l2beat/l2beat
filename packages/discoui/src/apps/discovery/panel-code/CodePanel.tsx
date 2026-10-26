@@ -104,6 +104,7 @@ export function CodePanel() {
           lookup={definition.lookup}
           onPick={definition.pick}
           onDismiss={definition.dismiss}
+          onClose={definition.cancel}
         />
       )}
       <EditorView
@@ -116,7 +117,7 @@ export function CodePanel() {
         features={{
           lineSelection: false,
           rangeHighlight: true,
-          goToDefinition: !IS_READONLY,
+          goToDefinition: true,
         }}
         onActiveFileChange={setActiveFile}
         tabActions={

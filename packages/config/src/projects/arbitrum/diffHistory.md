@@ -1,3 +1,74 @@
+Generated with discovered.json: 0x703e4a0d8426891181791eeb7b24bbe1fca5aa45
+
+# Diff at Sat, 24 Oct 2026 16:41:03 GMT:
+
+- id: 69cc6334
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792657864
+- current timestamp: 1792657864
+
+## Description
+
+Security Council election schedule fields are MEDIUM. PauseExecutor and OspSoundnessGuard join the ossification perimeter as pause contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792657864 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncilMemberElectionGovernor (arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C) [orbitstack/layer2/SecurityCouncilMemberElectionGovernor] {
+    +++ description: Token governance contract for the Security Council member elections.
+      fieldMeta.fullWeightDuration.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.votingPeriod.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.votingDelay.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0) [orbitstack/layer2/SecurityCouncilNomineeElectionGovernor] {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      fieldMeta.firstNominationStartDate.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.cadenceInMonths.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.nomineeVettingDuration.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.votingPeriod.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.votingDelay.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PauseExecutor (eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9) [orbitstack/PauseExecutor] {
+    +++ description: Executor-role holder that can only forward `pause()` calls: PAUSER_ROLE holders can pause any contract the UpgradeExecutor is authorized on. Not upgradeable.
+      critical:
++        {"sinceTimestamp":1790955047}
+    }
+```
+
+```diff
+    contract OspSoundnessGuard (eth:0x6DEf0F0Ffb4d77347785036ea4Cd2320a3f3A17c) [orbitstack/OspSoundnessGuard] {
+    +++ description: Permissionless circuit breaker: anyone proving that two rival edges both pass the one-step proof can pause the rollup through the PauseExecutor.
+      critical:
++        {"sinceTimestamp":1790955047}
+    }
+```
+
 Generated with discovered.json: 0x9fc0b258ba5c19a0bd2a2cfd74ac251eea91761b
 
 # Diff at Thu, 22 Oct 2026 08:32:33 GMT:

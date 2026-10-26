@@ -25,7 +25,7 @@
     },
     "operatorRenounced": {
       "description": "Whether verifier-upgrade and migration authority has been permanently renounced.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "copy": "operator",
       "edit": ["=", "eth:0x0000000000000000000000000000000000000000"]
     },
@@ -35,7 +35,7 @@
     },
     "isMigrated": {
       "description": "Whether the one-time legacy state migration path has already been used. If true, this pool behaves like the ones without this function.",
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   },
   "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]

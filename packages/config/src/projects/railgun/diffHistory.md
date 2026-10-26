@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x037d8f0d34e1ca4c2e88637bf5ac5d7dc4053ef0
+
+# Diff at Sat, 24 Oct 2026 16:41:07 GMT:
+
+- id: 7bab0f95
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792756093
+- current timestamp: 1792756093
+
+## Description
+
+VKeySetter `state` is MEDIUM: governance opening COMMITTING is a reviewed event, the return to SETTING closes the path.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792756093 (main branch discovery), not current.
+
+```diff
+    contract VerificationKeySetter_64DA (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.state.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract VerificationKeySetter_9086 (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.state.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x978fe6a00613d0c74cd98563b0ccad2be36ab179
 
 # Diff at Fri, 23 Oct 2026 11:49:27 GMT:

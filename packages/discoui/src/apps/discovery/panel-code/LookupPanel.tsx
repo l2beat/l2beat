@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useEffect } from 'react'
 import { IconClose } from '../../../icons/IconClose'
 import { rowsOf, title } from './lookupRows'
@@ -9,12 +10,17 @@ export function LookupPanel(props: {
   lookup: DefinitionLookup
   onPick: (index: number) => void
   onDismiss: () => void
+  onClose: () => void
 }) {
-  const { lookup, onPick, onDismiss } = props
+  const { lookup, onPick, onDismiss, onClose } = props
   const rows = rowsOf(lookup)
 
   useEffect(() => {
-    if (rows.length > 0 || lookup.status === 'references') {
+    if (
+      rows.length > 0 ||
+      lookup.status === 'references' ||
+      lookup.status === 'pending'
+    ) {
       return
     }
     const timeout = setTimeout(onDismiss, MESSAGE_DURATION_MS)
@@ -24,10 +30,15 @@ export function LookupPanel(props: {
   return (
     <div className="absolute top-8 right-3 z-20 w-[28rem] rounded border border-coffee-600 bg-coffee-800 text-xs shadow-lg">
       <div className="flex items-center justify-between gap-2 border-coffee-600 border-b px-2 py-1">
-        <span className="truncate font-mono text-coffee-200">
+        <span
+          className={clsx(
+            'truncate font-mono text-coffee-200',
+            lookup.status === 'pending' && 'motion-safe:animate-pulse',
+          )}
+        >
           {title(lookup)}
         </span>
-        <button type="button" onClick={onDismiss} aria-label="Close">
+        <button type="button" onClick={onClose} aria-label="Close">
           <IconClose className="text-coffee-400 hover:text-coffee-200" />
         </button>
       </div>

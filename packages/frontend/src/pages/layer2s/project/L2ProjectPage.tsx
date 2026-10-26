@@ -19,16 +19,19 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
+import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 import { ProjectL2Summary } from './components/L2ProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectL2Entry
+  sectionLinks: ProjectSectionLink[]
   queryState: DehydratedState
   selectedUpdateId?: string
 }
 
 export function L2ProjectPage({
   projectEntry,
+  sectionLinks,
   queryState,
   selectedUpdateId,
   ...props
@@ -82,6 +85,8 @@ export function L2ProjectPage({
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader
                     project={projectEntry}
+                    section="layer2s"
+                    sectionLinks={sectionLinks}
                     ongoingAnomaly={projectEntry.header.ongoingAnomaly}
                     recentUpdatesCount={projectEntry.header.recentUpdatesCount}
                   />

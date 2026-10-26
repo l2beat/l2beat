@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc9ff8208964eae01a11523e76fba3dee28267ac4
+
+# Diff at Sat, 24 Oct 2026 16:41:09 GMT:
+
+- id: a632fd99
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1753944481
+- current timestamp: 1753944481
+
+## Description
+
+Diamond `validators` is MEDIUM: it names the ValidatorTimelock, a role holder.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944481 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.validators:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0xf35202f80291a1921c0d479c7355c8dd7f9215d8
 
 # Diff at Tue, 20 Oct 2026 12:40:09 GMT:
