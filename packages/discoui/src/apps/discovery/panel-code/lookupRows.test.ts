@@ -124,6 +124,7 @@ describe('lookup rows', () => {
     )
     expect(title(nothing)).toEqual('Nothing to find references for here')
     expect(title({ status: 'failed' })).toEqual('Could not resolve this')
+    expect(title({ status: 'pending' })).toEqual('Loading project sources…')
   })
 
   it('explains why there is no contract to go to', () => {
