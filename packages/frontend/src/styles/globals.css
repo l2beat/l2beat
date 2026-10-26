@@ -336,8 +336,6 @@
   /* The charts, and the page's one block of colour, with text on it. */
   --accent: #ff3776;
   --on-accent: #ffffff;
-
-  font-family: var(--font-inter);
 }
 
 .dark .home-theme,

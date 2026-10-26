@@ -9,7 +9,7 @@
  */
 export const HOME_TEXT = {
   /** Card titles. */
-  title: 'font-bold text-heading-24 leading-7 tracking-[-0.03em]',
+  title: 'font-semibold text-heading-20 leading-6 tracking-[-0.01em]',
   /** Blocks inside a card, e.g. a ranking. */
   sectionTitle: 'font-semibold text-label-value-15',
   /** Project names and other row labels. */
@@ -27,7 +27,7 @@ export const HOME_TEXT = {
   subtitle: 'font-normal text-label-value-13 text-secondary leading-4',
   /** Headline figures. */
   number:
-    'font-bold text-heading-32 tabular-nums leading-none tracking-[-0.03em]',
+    'font-semibold text-heading-32 tabular-nums leading-none tracking-[-0.025em]',
 } as const
 
 /**
