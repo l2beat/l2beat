@@ -68,7 +68,7 @@ export const VERIFY_STEPS = [
 ]
 
 export const BADGE_RULES = [
-  'Link the badge to your project page on L2BEAT, so a visitor can read the evaluation rather than only see that one exists.',
+  'The snippet links the garden. Point its `href` at your project page on L2BEAT instead, so a visitor can read the evaluation rather than only see that one exists.',
   'The badge says we have reviewed you and named you onchain. It is not a certification, an audit, or an endorsement - please do not describe it as any of those.',
   'Your rating can change. Make sure to check the API for the latest status before showing the badge.',
 ]
