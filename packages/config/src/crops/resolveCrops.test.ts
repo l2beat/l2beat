@@ -132,6 +132,39 @@ describe('resolveCrops', () => {
       expect(resolved.listing).toEqual('ratedBad')
     })
 
+    it('grades an ungraded Security bad in the bottom band, which keeps the project out', () => {
+      const resolved = resolveGarden(
+        {
+          crops: crops({ security: { status: 'notReviewed' } }),
+          ossificationHistory: unchangedFor(7),
+        },
+        now,
+      )
+      expect(resolved.crops.security).toHaveSubset({
+        sentiment: 'bad',
+        status: 'partiallyReviewed',
+        missing: [
+          'Ossification score below 50, which means a critical change within roughly the last five weeks.',
+        ],
+      })
+      expect(resolved.listing).toEqual('ratedBad')
+    })
+
+    it('leaves an ungraded Security ungraded above the bottom band', () => {
+      const { crops: resolved } = resolveGarden(
+        {
+          crops: crops({ security: { status: 'notReviewed' } }),
+          ossificationHistory: unchangedFor(120),
+        },
+        now,
+      )
+      expect(resolved.security).toHaveSubset({
+        sentiment: 'neutral',
+        status: 'notReviewed',
+        missing: [],
+      })
+    })
+
     it('never raises a written rating', () => {
       const { crops: resolved } = resolveGarden(
         {

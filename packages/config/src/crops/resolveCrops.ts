@@ -84,8 +84,10 @@ const SENTIMENT_RANK = { bad: 0, warning: 1, good: 2 } as const
  * Security is rated no better than its ossification score allows, and a
  * capped crop says why, so the rating never contradicts its own findings. The
  * score resets with every critical change, so an upgrade pulls a project out
- * of the garden until the new code has been live for a few weeks. Without a
- * score, Security says the ossification is not reviewed yet.
+ * of the garden until the new code has been live for a few weeks. A score
+ * below the warning band is itself a finding, so it grades an ungraded
+ * Security bad, as partially reviewed. Without a score, Security says the
+ * ossification is not reviewed yet.
  */
 function capByOssification(
   security: ResolvedCropEvaluation,
@@ -98,17 +100,20 @@ function capByOssification(
     }
   }
   const cap = getOssificationSentiment(score)
-  if (
-    security.sentiment === 'neutral' ||
-    SENTIMENT_RANK[security.sentiment] <= SENTIMENT_RANK[cap]
-  ) {
-    return security
-  }
   const reason =
     cap === 'warning'
       ? `Ossification score below ${OSSIFICATION_SCORE_BANDS.good}, which takes ${OSSIFICATION_BAND_MEANING.good}.`
       : `Ossification score below ${OSSIFICATION_SCORE_BANDS.warning}, which means ${OSSIFICATION_BAND_MEANING.warning}.`
-  return { ...security, sentiment: cap, missing: [reason, ...security.missing] }
+  const capped = { ...security, missing: [reason, ...security.missing] }
+  if (security.sentiment === 'neutral') {
+    return cap === 'bad'
+      ? { ...capped, sentiment: 'bad', status: 'partiallyReviewed' }
+      : security
+  }
+  if (SENTIMENT_RANK[security.sentiment] <= SENTIMENT_RANK[cap]) {
+    return security
+  }
+  return { ...capped, sentiment: cap }
 }
 
 /**
