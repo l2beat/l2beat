@@ -70,10 +70,10 @@ export function ChangelogPage({ entries, ...props }: Props) {
                         className="relative flex scroll-mt-24 gap-4"
                         id={entry.id}
                       >
-                        <ArrowIcon className="size-[15px] shrink-0 fill-brand text-brand" />
+                        <ArrowIcon className="size-[15px] shrink-0 fill-brand text-brand-deep" />
                         <div className="mx-2 flex w-full items-center gap-3">
                           <span className="h-px flex-1 bg-brand" />
-                          <span className="font-semibold text-brand text-subtitle-12 uppercase leading-none">
+                          <span className="font-semibold text-brand-deep text-subtitle-12 uppercase leading-none">
                             Unread above
                           </span>
                           <span className="h-px flex-1 bg-brand" />
@@ -87,7 +87,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
                     <span className="mt-2 size-[15px] shrink-0 rounded-full border-2 border-surface-primary bg-brand" />
                     <article className="w-full rounded-lg border border-divider bg-surface-secondary p-4 md:p-6">
                       <div className="flex flex-wrap items-center gap-y-1">
-                        <p className="font-semibold text-brand text-subtitle-12 uppercase">
+                        <p className="font-semibold text-brand-deep text-subtitle-12 uppercase">
                           {entry.publishedOn}
                         </p>
                       </div>

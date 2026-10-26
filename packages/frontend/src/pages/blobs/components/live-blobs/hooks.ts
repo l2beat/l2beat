@@ -108,7 +108,7 @@ const LIGHT_TOKENS: ThemeTokens = {
   isDark: false,
   primary: '#131215',
   secondary: '#5f6470',
-  brand: '#9621bf',
+  brand: '#ff3776',
   surface: '#fafafa',
   surfaceSecondary: '#e6e7ec',
   divider: '#ccd0da',

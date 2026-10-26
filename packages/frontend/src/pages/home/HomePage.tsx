@@ -1,5 +1,6 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -62,87 +63,96 @@ export function HomePage({
   research,
   ...props
 }: Props) {
+  // See .home-theme in globals.css: the wrapper below themes the first paint,
+  // <html> themes what portals to <body>.
+  useEffect(() => {
+    document.documentElement.classList.add('home-theme')
+    return () => document.documentElement.classList.remove('home-theme')
+  }, [])
+
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout
-          variant="home"
-          childrenWrapperClassName="max-md:bg-surface-primary"
-        >
-          <MainPageHeader>Home</MainPageHeader>
-          {/* Cards as on every other page: 16px apart from md, edge to edge
+        <div className="home-theme contents">
+          <SideNavLayout
+            variant="home"
+            childrenWrapperClassName="max-md:bg-surface-primary"
+          >
+            <MainPageHeader>Home</MainPageHeader>
+            {/* Cards as on every other page: 16px apart from md, edge to edge
               with a line between them below it. The last one leaves its line
               to the footer's. */}
-          <div className="@container/home flex flex-col md:gap-4 [&>.primary-card:last-child]:max-md:border-b-0 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
-            {/* Below lg, where the sidebar hides behind the menu button, its
+            <div className="@container/home flex flex-col md:gap-4 [&>.primary-card:last-child]:max-md:border-b-0 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
+              {/* Below lg, where the sidebar hides behind the menu button, its
                 menu opens the page instead of the CROPS banner. */}
-            <HomeStatsStrip counts={projectCounts} className="lg:hidden" />
-            {/* Without the garden (it is behind a flag) the mandate takes
+              <HomeStatsStrip counts={projectCounts} className="lg:hidden" />
+              {/* Without the garden (it is behind a flag) the mandate takes
                 the row. */}
-            {cropsProjects.length > 0 ? (
-              <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(300px,320px)] xl:grid-cols-[minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
-                <HomeCropsBanner
-                  projects={cropsProjects}
-                  className="max-lg:hidden"
-                />
+              {cropsProjects.length > 0 ? (
+                <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(300px,320px)] xl:grid-cols-[minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
+                  <HomeCropsBanner
+                    projects={cropsProjects}
+                    className="max-lg:hidden"
+                  />
+                  <HomeMandateBanner />
+                </div>
+              ) : (
                 <HomeMandateBanner />
-              </div>
-            ) : (
-              <HomeMandateBanner />
-            )}
-            {/* The domain cards subgrid the title, chart and ranking rows, so
+              )}
+              {/* The domain cards subgrid the title, chart and ranking rows, so
                 their parts stay level. */}
-            <div className="grid @min-[880px]/home:grid-cols-2 grid-cols-1 md:gap-4">
-              <HomePrivacyCard
-                data={privacy}
-                projectCount={projectCounts.privacy}
-              />
-              <HomeL2Card
-                charts={l2Charts}
-                topProjects={topL2Projects}
-                projectCount={projectCounts.l2}
-              />
-            </div>
-            {/* Interop beside Ethereum and the recent cards, as tall as
+              <div className="grid @min-[880px]/home:grid-cols-2 grid-cols-1 md:gap-4">
+                <HomePrivacyCard
+                  data={privacy}
+                  projectCount={projectCounts.privacy}
+                />
+                <HomeL2Card
+                  charts={l2Charts}
+                  topProjects={topL2Projects}
+                  projectCount={projectCounts.l2}
+                />
+              </div>
+              {/* Interop beside Ethereum and the recent cards, as tall as
                 they are. Stacked below lg, the column dissolves so Interop
                 follows Ethereum, the data before the reading. */}
-            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-2">
-              <div className="flex min-w-0 flex-col max-lg:contents md:gap-4">
-                <HomeEthereumCard charts={ethereumCharts} />
-                {/* Two columns once wide enough: articles over project
+              <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-2">
+                <div className="flex min-w-0 flex-col max-lg:contents md:gap-4">
+                  <HomeEthereumCard charts={ethereumCharts} />
+                  {/* Two columns once wide enough: articles over project
                     changes, and new research filling the other column with
                     as many rows as fit. Stacked, the columns dissolve and
                     project changes comes last. */}
-                <div className="@container/recent flex min-w-0 flex-1 flex-col max-lg:order-last">
-                  <div className="flex @min-[560px]/recent:grid min-w-0 flex-1 @min-[560px]/recent:grid-cols-2 flex-col md:gap-4">
-                    <div className="@min-[560px]/recent:flex contents @min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-col @min-[560px]/recent:gap-4">
-                      <HomeLatestArticlesSection
-                        research={research}
-                        className="@min-[560px]/recent:flex-1"
-                      />
-                      <HomeProjectChangesSection
-                        count={recentChangesCount}
-                        projects={recentChangesProjects}
-                        className="@min-[560px]/recent:order-none order-last"
+                  <div className="@container/recent flex min-w-0 flex-1 flex-col max-lg:order-last">
+                    <div className="flex @min-[560px]/recent:grid min-w-0 flex-1 @min-[560px]/recent:grid-cols-2 flex-col md:gap-4">
+                      <div className="@min-[560px]/recent:flex contents @min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-col @min-[560px]/recent:gap-4">
+                        <HomeLatestArticlesSection
+                          research={research}
+                          className="@min-[560px]/recent:flex-1"
+                        />
+                        <HomeProjectChangesSection
+                          count={recentChangesCount}
+                          projects={recentChangesProjects}
+                          className="@min-[560px]/recent:order-none order-last"
+                        />
+                      </div>
+                      <HomeWhatsNewProjects
+                        projects={recentProjects}
+                        className="@min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-1"
                       />
                     </div>
-                    <HomeWhatsNewProjects
-                      projects={recentProjects}
-                      className="@min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-1"
-                    />
                   </div>
                 </div>
+                <HomeInteropSection
+                  chains={interopFlowChains}
+                  defaultSelectedChains={interopDefaultFlowChains}
+                  protocols={flowProtocols}
+                />
               </div>
-              <HomeInteropSection
-                chains={interopFlowChains}
-                defaultSelectedChains={interopDefaultFlowChains}
-                protocols={flowProtocols}
-              />
+              {/* The page's one action, last, across the full width. */}
+              <HomeQuestionCard />
             </div>
-            {/* The page's one action, last, across the full width. */}
-            <HomeQuestionCard />
-          </div>
-        </SideNavLayout>
+          </SideNavLayout>
+        </div>
       </HydrationBoundary>
     </AppLayout>
   )
