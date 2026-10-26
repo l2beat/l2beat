@@ -4,12 +4,12 @@ export function PinkFillGradientDef({ id }: { id: string }) {
       <stop
         offset="25%"
         stopColor="var(--chart-pink-fill-gradient)"
-        stopOpacity={0.8}
+        stopOpacity={0.45}
       />
       <stop
         offset="50%"
         stopColor="var(--chart-pink-fill-gradient)"
-        stopOpacity={0.4}
+        stopOpacity={0.18}
       />
       <stop
         offset="100%"
