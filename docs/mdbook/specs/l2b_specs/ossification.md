@@ -50,9 +50,8 @@ a HIGH state change already. New contracts that escrow funds have to be decided
 individually, based on the projected impact they will have on the TVS and their
 code diff to the old contracts.
 
-**Removing does not reset the clock.** Freezing a verifier route, unsetting a
-verifier, detaching a contract or renouncing a role makes nothing younger.
-Adding a verifier or an authority path does reset it.
+**Removing does not reset the clock.** (Freezing a verifier route, unsetting a
+verifier, detaching a contract or renouncing a role). Adding a verifier or an authority path does reset it.
 
 ## Choosing the critical perimeter
 
@@ -190,8 +189,8 @@ discovery come in with the next rediscovery, not as reviewed events.
   An event with an `updateId` replaces the automatic changes of that update
   for its contract.
 - `ignoredTransactions`: `$pastUpgrades` transactions that changed nothing,
-  for every critical contract they touched. A new implementation whose
-  bytecode differs only in its version string changed nothing.
+  for every critical contract they touched. (e.g. a new implementation whose
+  bytecode differs only in its version string)
 - `ignoredUpdates`: `diffHistory.md` entries caused by a discovery bug, or
   whose only critical change is a removal.
 - `acceptedIntervals`: `diffHistory.md` entries that may stay the newest
