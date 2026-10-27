@@ -41,6 +41,12 @@ describe(excerptAt.name, () => {
     expect(excerptAt(code, 0, 1).lines).toEqual(code.split('\n').slice(0, 6))
   })
 
+  it('skips a semicolon in a comment before the body', () => {
+    const body = Array.from({ length: 20 }, (_, i) => `  x = ${i};`)
+    const code = ['function f() /* checked; */ {', ...body, '}'].join('\n')
+    expect(excerptAt(code, 0, 1).lines.length).toEqual(22)
+  })
+
   it('cuts a long block', () => {
     const body = Array.from({ length: 100 }, (_, i) => `  x = ${i};`)
     const code = ['function long() {', ...body, '}'].join('\n')

@@ -26,11 +26,9 @@ export function excerptAt(
   }
 }
 
-// A snippet opens a block when a brace comes before the statement ends.
 function blockEnd(code: string, offset: number): number | undefined {
-  const open = code.indexOf('{', offset)
-  const semicolon = code.indexOf(';', offset)
-  if (open === -1 || (semicolon !== -1 && semicolon < open)) {
+  const open = blockOpen(code, offset)
+  if (open === undefined) {
     return undefined
   }
   let depth = 0
@@ -43,6 +41,20 @@ function blockEnd(code: string, offset: number): number | undefined {
       if (depth === 0) {
         return endOfLines(code, at, 1)
       }
+    }
+  }
+  return undefined
+}
+
+// A snippet opens a block when a brace comes before the statement ends.
+function blockOpen(code: string, offset: number): number | undefined {
+  for (let at = offset; at < code.length; at++) {
+    at = endOfCommentOrString(code, at)
+    if (code[at] === '{') {
+      return at
+    }
+    if (code[at] === ';') {
+      return undefined
     }
   }
   return undefined
