@@ -89,7 +89,7 @@ export class ChatSession {
   // first message. Every tab does, and a tab must not restart an agent
   // another tab already started.
   start(provider: ProviderId) {
-    if (this.agent !== undefined && isFresh(this.agent, provider)) {
+    if (this.agent !== undefined && canReuse(this.agent, provider)) {
       return
     }
     this.reset()
@@ -347,11 +347,11 @@ export class ChatSession {
   }
 }
 
-function isFresh(agent: RunningAgent, provider: ProviderId): boolean {
-  if (agent.provider !== provider || agent.failed) {
-    return false
-  }
-  return !agent.prompted && !agent.inTurn
+// Tabs start the agent on their own, and one tab's start can arrive after
+// another tab prompted it, so only a failure or another provider replaces
+// it. Reset is the way to start over.
+function canReuse(agent: RunningAgent, provider: ProviderId): boolean {
+  return agent.provider === provider && !agent.failed
 }
 
 function messageOf(error: unknown): string {
