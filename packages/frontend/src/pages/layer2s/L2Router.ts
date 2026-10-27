@@ -24,7 +24,6 @@ import { getL2RiskData } from './risk/getL2RiskData'
 import { getL2RiskSequencingData } from './risk/sequencing/getL2RiskSequencingData'
 import { getL2RiskStateValidationData } from './risk/state-validation/getL2RiskStateValidationData'
 import { getL2SummaryData } from './summary/getL2SummaryData'
-import { getL2TvsBreakdownData } from './tvs/breakdown/getL2TvsBreakdownData'
 import { getL2TvsData } from './tvs/getL2TvsData'
 export function createL2Router(
   manifest: Manifest,
@@ -88,12 +87,6 @@ export function createL2Router(
       res.status(200).send(html)
     },
   )
-
-  router.get('/layer2s/tvs/breakdown', async (req, res) => {
-    const data = await getL2TvsBreakdownData(req, manifest, cache)
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
 
   router.get('/layer2s/liveness', async (req, res) => {
     const data = await getL2LivenessData(req, manifest, cache)

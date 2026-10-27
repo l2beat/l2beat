@@ -31,7 +31,6 @@ export const STATIC_PAGE_PATHS = [
   '/layer2s/risk/data-availability',
   '/layer2s/risk/sequencing',
   '/layer2s/tvs',
-  '/layer2s/tvs/breakdown',
   '/layer2s/liveness',
   '/layer2s/costs',
   '/layer2s/archived',
