@@ -300,11 +300,11 @@ export const aztecnetworkv6: ScalingProject = {
     BADGES.Other.Governance,
   ],
   display: {
-    name: 'Aztec Network',
-    shortName: 'Aztec',
+    name: 'Aztec Network v6',
+    shortName: 'Aztec v6',
     slug: 'aztecnetworkv6',
     description:
-      'Aztec Network is a privacy-preserving ZK rollup that uses the AztecVM and Noir to support private and public smart contracts on Ethereum. This is its v6 deployment, which started from a new genesis.',
+      'Aztec Network v6 is a privacy-preserving ZK rollup that uses the AztecVM and Noir to support private and public smart contracts on Ethereum. It started from a new genesis.',
     purposes: ['Universal', 'Privacy'],
     links: {
       websites: ['https://aztec.network/', 'https://aztec.network/noir'],

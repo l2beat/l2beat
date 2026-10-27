@@ -301,6 +301,38 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
+  describe(TokenValueRepository.prototype.getAtOrBefore.name, () => {
+    beforeEach(async () => {
+      await repository.upsertMany([
+        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+        tokenValue('a', 'ethereum', UnixTime(200), 7, 7000, 5600, 3500, 10),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+        tokenValue('d', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000, 10),
+        tokenValue('e', 'base', UnixTime(100), 1, 1, 1, 1, 1),
+      ])
+    })
+
+    it("returns each listed token's latest record at or before its timestamp", async () => {
+      const result = await repository.getAtOrBefore([
+        { projectId: 'ethereum', tokenId: 'a', timestamp: UnixTime(170) },
+        { projectId: 'ethereum', tokenId: 'b', timestamp: UnixTime(170) },
+        { projectId: 'arbitrum', tokenId: 'd', timestamp: UnixTime(250) },
+        { projectId: 'base', tokenId: 'e', timestamp: UnixTime(50) },
+      ])
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+        tokenValue('d', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000, 10),
+      ])
+    })
+
+    it('returns nothing without targets', async () => {
+      expect(await repository.getAtOrBefore([])).toEqual([])
+    })
+  })
+
   describe(TokenValueRepository.prototype.getByProjectAtOrBefore.name, () => {
     beforeEach(async () => {
       await repository.upsertMany([

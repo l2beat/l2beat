@@ -51,6 +51,7 @@ import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { rocketpool } from '../projects/rocketpool/rocketpool'
+import { safe } from '../projects/safe/safe'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
 import { stargate } from '../projects/stargate/stargate'
@@ -60,6 +61,7 @@ import { stwo } from '../projects/stwo/stwo'
 import { tempo } from '../projects/tempo/tempo'
 import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { umbra } from '../projects/umbra/umbra'
+import { uniswapv2 } from '../projects/uniswapv2/uniswapv2'
 import { uniswapv3 } from '../projects/uniswapv3/uniswapv3'
 import { uniswapv4 } from '../projects/uniswapv4/uniswapv4'
 import { wbeth } from '../projects/wbeth/wbeth'
@@ -135,6 +137,7 @@ export const refactored: BaseProject[] = [
   frankencoin,
   liquityv2,
   chainlink,
+  uniswapv2,
   uniswapv3,
   lido,
   etherfi,
@@ -142,6 +145,7 @@ export const refactored: BaseProject[] = [
   wbeth,
   polymarket,
   rocketpool,
+  safe,
   // privacy
   cloaked,
   fluidkey,
