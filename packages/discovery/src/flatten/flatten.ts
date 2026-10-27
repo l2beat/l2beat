@@ -70,6 +70,7 @@ export function flattenStartingFrom(
 
   const typeMap = buildTypeMap(order)
   const renameMap = buildRenameMap(order)
+  renameShadowedAliasTargets(parsedFileManager, order, renameMap)
 
   let flatSource = ''
   for (const { declaration, file } of order) {
@@ -279,7 +280,9 @@ function pruneUnreachable(
     const cur = stack.pop() as DeclarationFilePair
     for (const ref of effective.get(cur.declaration.id) ?? []) {
       const head = ref.split('.')[0] as string
-      const dep = parsedFileManager.tryFindDeclaration(head, cur.file)
+      const dep =
+        parsedFileManager.tryFindDeclaration(ref, cur.file) ??
+        parsedFileManager.tryFindDeclaration(head, cur.file)
       if (dep && !reachable.has(dep.declaration.id)) {
         reachable.add(dep.declaration.id)
         stack.push(dep)
@@ -482,6 +485,36 @@ function isBeforeSolidity08(file: ParsedFile): boolean {
   )
   if (pragma === undefined) return false
   return ['0.4.', '0.5.', '0.6.', '0.7.'].some((v) => pragma.value.includes(v))
+}
+
+// `K.X` becomes plain `X` in the flat file, so X needs a fresh name when the
+// file reading it through K already uses another X
+function renameShadowedAliasTargets(
+  parsedFileManager: ParsedFilesManager,
+  order: DeclarationFilePair[],
+  renameMap: Map<string, string>,
+): void {
+  const taken = new Set(renameMap.values())
+  const namesByFile = new Map<ParsedFile, Set<string>>()
+  for (const { declaration, file } of order) {
+    const names = namesByFile.get(file) ?? new Set<string>()
+    for (const name of getASTIdentifiers(declaration.ast)) names.add(name)
+    namesByFile.set(file, names)
+  }
+
+  for (const [file, names] of namesByFile) {
+    for (const { importedName } of file.importDirectives) {
+      if (!importedName.includes('.')) continue
+      const target = parsedFileManager.tryFindDeclaration(importedName, file)
+      if (target === undefined) continue
+      const name = renameMap.get(target.declaration.id)
+      if (name === undefined || !names.has(name)) continue
+      let suffix = 1
+      while (taken.has(`${name}_${suffix}`)) suffix++
+      renameMap.set(target.declaration.id, `${name}_${suffix}`)
+      taken.add(`${name}_${suffix}`)
+    }
+  }
 }
 
 function buildRenameMap(order: DeclarationFilePair[]): Map<string, string> {

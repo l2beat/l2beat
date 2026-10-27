@@ -205,10 +205,7 @@ export class ParsedFilesManager {
       const implementationReferences = []
       if (d.type === 'ContractDefinition') {
         implementationReferences.push(
-          ...d.baseContracts.map((c) => {
-            // biome-ignore lint/style/noNonNullAssertion: we know it's there
-            return c.baseName.namePath.split('.').at(-1)!
-          }),
+          ...d.baseContracts.map((c) => c.baseName.namePath),
         )
       }
 
@@ -252,6 +249,17 @@ export class ParsedFilesManager {
       const resolvedPath = this.resolveImportPath(path, file, remappings)
       const importedFile = this.resolveImport(file, resolvedPath)
       const { topLevelDeclarations, normalizedPath } = importedFile
+
+      // `import "x" as K` exposes x's declarations only as `K.name`
+      if (i.unitAlias !== null) {
+        return topLevelDeclarations
+          .filter((e) => e.type !== 'using')
+          .map((e) => ({
+            absolutePath: normalizedPath,
+            originalName: e.name,
+            importedName: `${i.unitAlias}.${e.name}`,
+          }))
+      }
 
       const alreadyImported = alreadyImportedMap.get(normalizedPath) ?? []
 
@@ -333,6 +341,11 @@ export class ParsedFilesManager {
 
     const implementationReferences: string[] = []
     const allIdentifiers: string[] = []
+    const unitAliases = new Set(
+      file.importDirectives
+        .filter((i) => i.importedName.includes('.'))
+        .map((i) => i.importedName.split('.')[0] as string),
+    )
 
     for (const node of subNodes) {
       const ids = getASTIdentifiers(node, (n, i) => {
@@ -348,6 +361,10 @@ export class ParsedFilesManager {
         ) {
           implementationReferences.push(...i)
         }
+        const aliasMember = getUnitAliasMember(n, unitAliases)
+        if (aliasMember !== undefined) {
+          allIdentifiers.push(aliasMember)
+        }
         if (isContractCodeAccess(n)) {
           const typeCall = (n as AST.MemberAccess)
             .expression as AST.FunctionCall
@@ -362,7 +379,7 @@ export class ParsedFilesManager {
     }
 
     const identifiers = unique(
-      allIdentifiers.map((i) => i.split('.')[0] as string),
+      allIdentifiers.map((i) => toReferenceName(i, unitAliases)),
     )
 
     const signatureReferences = identifiers.filter((identifier) => {
@@ -529,6 +546,25 @@ export class ParsedFilesManager {
 
     return path
   }
+}
+
+// `K.name` names a declaration of the file imported as K, any other dotted
+// path names a member of its first segment
+function toReferenceName(identifier: string, unitAliases: Set<string>): string {
+  const [head, member] = identifier.split('.') as [string, string | undefined]
+  if (member !== undefined && unitAliases.has(head)) return `${head}.${member}`
+  return head
+}
+
+function getUnitAliasMember(
+  n: AST.BaseASTNode,
+  unitAliases: Set<string>,
+): string | undefined {
+  if (n.type !== 'MemberAccess') return undefined
+  const { expression, memberName } = n as AST.MemberAccess
+  if (expression.type !== 'Identifier') return undefined
+  if (!unitAliases.has(expression.name)) return undefined
+  return `${expression.name}.${memberName}`
 }
 
 // type(C).creationCode and type(C).runtimeCode embed C's bytecode

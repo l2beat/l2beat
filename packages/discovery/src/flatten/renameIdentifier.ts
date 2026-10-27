@@ -47,19 +47,39 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
         }
       }
       const functions = usingDecl.functions ?? []
-      const heads = functions.map((path) => path.split('.')[0] as string)
-      if (heads.some((head) => pairMap.has(head))) {
+      const needsRename = functions.some(
+        (path) =>
+          pairMap.has(path) || pairMap.has(path.split('.')[0] as string),
+      )
+      if (needsRename) {
         const functionStarts = findUsingFunctionStarts(source, start, functions)
-        for (const [i, head] of heads.entries()) {
-          const newName = pairMap.get(head)
-          if (newName !== undefined) {
-            const headStart = functionStarts[i] as number
+        for (const [i, path] of functions.entries()) {
+          const pathStart = functionStarts[i] as number
+          const head = path.split('.')[0] as string
+          const pathName = pairMap.get(path)
+          const headName = pairMap.get(head)
+          if (pathName !== undefined) {
             replacements.push({
-              start: headStart,
-              end: headStart + head.length,
-              newName,
+              start: pathStart,
+              end: pathStart + path.length,
+              newName: pathName,
+            })
+          } else if (headName !== undefined) {
+            replacements.push({
+              start: pathStart,
+              end: pathStart + head.length,
+              newName: headName,
             })
           }
+        }
+      }
+    } else if (node.type === 'MemberAccess') {
+      const access = node as AST.MemberAccess
+      if (access.expression.type === 'Identifier') {
+        const path = `${access.expression.name}.${access.memberName}`
+        const to = pairMap.get(path)
+        if (to !== undefined) {
+          replacements.push({ start, end, newName: to })
         }
       }
     } else if (node.type === 'UserDefinedTypeName') {

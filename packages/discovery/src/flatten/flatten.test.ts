@@ -876,10 +876,109 @@ describe('flatten', () => {
       dedent(`
       contract C2 { }
 
-      contract R1 is Namespace.C2 {
+      contract R1 is C2 {
           function f(address x) public {
               DC1(x).df();
           }
+      }
+    `),
+    )
+  })
+
+  it('resolves members of source unit aliases', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Constants.sol" as Constants;
+      import * as Amounts from "./Amounts.sol";
+
+      using { Amounts.isZero } for Amounts.Amount;
+
+      contract Root {
+          function f(Amounts.Amount a) public pure returns (uint256) {
+              if (a.isZero()) revert Constants.Empty();
+              return Constants.LIMIT;
+          }
+      }
+    `,
+    )
+    const constantsFile = sol(
+      'Constants.sol',
+      `
+      uint256 constant LIMIT = 7;
+      error Empty();
+    `,
+    )
+    const amountsFile = sol(
+      'Amounts.sol',
+      `
+      type Amount is uint256;
+      function isZero(Amount a) pure returns (bool) { return Amount.unwrap(a) == 0; }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, constantsFile, amountsFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      type Amount is uint256;
+
+      function isZero(Amount a) pure returns (bool) { return Amount.unwrap(a) == 0; }
+
+      using { isZero } for Amount;
+
+      error Empty();
+
+      uint256 constant LIMIT = 7;
+
+      contract Root {
+          function f(Amount a) public pure returns (uint256) {
+              if (a.isZero()) revert Empty();
+              return LIMIT;
+          }
+      }
+    `),
+    )
+  })
+
+  it('renames source unit alias targets shadowed by a local name', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Constants.sol" as Constants;
+
+      contract Root {
+          uint256 public constant LIMIT = Constants.LIMIT;
+      }
+    `,
+    )
+    const constantsFile = sol(
+      'Constants.sol',
+      `
+      uint256 constant LIMIT = 7;
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, constantsFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      uint256 constant LIMIT_1 = 7;
+
+      contract Root {
+          uint256 public constant LIMIT = LIMIT_1;
       }
     `),
     )
