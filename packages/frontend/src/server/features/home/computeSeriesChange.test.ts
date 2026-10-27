@@ -17,6 +17,13 @@ describe(computeWeeklyAverageChange.name, () => {
     expect(computeWeeklyAverageChange(values)).toEqual(0.5)
   })
 
+  it('compares the weeks the sparkline draws', () => {
+    // The sparkline drops the leftover day at the start, and its last week
+    // holds the unsynced day.
+    const values = [100, ...Array(7).fill(10), ...Array(6).fill(20), null]
+    expect(computeWeeklyAverageChange(values)).toEqual(1)
+  })
+
   it('has no change for a series shorter than two weeks', () => {
     expect(computeWeeklyAverageChange(Array(13).fill(10))).toEqual(undefined)
   })
