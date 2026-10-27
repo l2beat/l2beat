@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { IS_READONLY } from '../../../config/readonly'
 import { usePanelStore } from '../store/panel-store'
 import type { SearchItem } from './items'
@@ -23,6 +23,7 @@ export function useSearchInput(
   const setText = useSearchStore((s) => s.setText)
   const setCodeInSelected = useSearchStore((s) => s.setCodeInSelected)
 
+  const afterCodePrefix = useRef(false)
   const queryKey = `${scope}:${codeInSelected}:${text}`
   const [highlight, setHighlight] = useState({ queryKey, index: 0 })
   const highlightIndex =
@@ -37,30 +38,27 @@ export function useSearchInput(
   function switchScope(next: SearchScope) {
     setScope(next)
     setCodeInSelected(false)
+    afterCodePrefix.current = false
   }
 
   function onChange(value: string) {
     let rest = value
-    let nextScope = scope
+    let enteredCode = afterCodePrefix.current
     if (scope === 'all' && text === '') {
       const prefixScope = scopeForPrefix(SEARCH_SCOPES, rest.slice(0, 1))
       if (prefixScope !== undefined) {
-        nextScope = prefixScope
         rest = rest.slice(1)
         switchScope(prefixScope)
+        enteredCode = prefixScope === 'code'
       }
     }
     const hasSelection = usePanelStore.getState().selected[0] !== undefined
-    if (
-      nextScope === 'code' &&
-      !codeInSelected &&
-      hasSelection &&
-      text === '' &&
-      rest.startsWith('%')
-    ) {
+    if (enteredCode && hasSelection && rest.startsWith('%')) {
       rest = rest.slice(1)
       setCodeInSelected(true)
+      enteredCode = false
     }
+    afterCodePrefix.current = enteredCode && rest === ''
     setText(rest)
   }
 
