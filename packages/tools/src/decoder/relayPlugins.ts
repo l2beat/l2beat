@@ -9,7 +9,6 @@ export const relayPlugins = [
   taikoExecutePlugin,
   taikoMessageInvocationPlugin,
   whitebitBatchPlugin,
-  erc20AmountPlugin,
 ]
 
 const ETHEREUM_CHAIN_ID = 1
@@ -247,33 +246,30 @@ function whitebitBatchPlugin(
   return decoded
 }
 
-const ERC20_AMOUNT_ABIS = [
-  'function transfer(address to, uint256 amount)',
-  'function transferFrom(address from, address to, uint256 amount)',
-  'function approve(address spender, uint256 amount)',
-  'function increaseAllowance(address spender, uint256 amount)',
-  'function decreaseAllowance(address spender, uint256 amount)',
-  'function burn(uint256 amount)',
-  'function burn(address from, uint256 amount)',
-  'function burnFrom(address from, uint256 amount)',
-  'function mint(uint256 amount)',
-  'function mint(address to, uint256 amount)',
-  'function mintFrom(address from, uint256 amount)',
+const ERC20_AMOUNT_ABIS: [string, number][] = [
+  ['function transfer(address, uint256)', 1],
+  ['function transferFrom(address, address, uint256)', 2],
+  ['function approve(address, uint256)', 1],
+  ['function increaseAllowance(address, uint256)', 1],
+  ['function decreaseAllowance(address, uint256)', 1],
+  ['function burn(uint256)', 0],
+  ['function burn(address, uint256)', 1],
+  ['function burnFrom(address, uint256)', 1],
+  ['function mint(uint256)', 0],
+  ['function mint(address, uint256)', 1],
+  ['function mintFrom(address, uint256)', 1],
 ]
+const ERC20_AMOUNT_INDEXES: Record<string, number> = Object.fromEntries(
+  ERC20_AMOUNT_ABIS.map(([abi, index]) => [toFunctionSelector(abi), index]),
+)
 
-function erc20AmountPlugin(
-  data: `0x${string}`,
-  chainId: number,
-  address?: `0x${string}`,
-): DecodedValue | undefined {
-  if (!address) return
-  for (const abi of ERC20_AMOUNT_ABIS) {
-    const decoded = decodeCall(abi, data, chainId, address)
-    if (!decoded) continue
-    const amount = members(decoded).find((x) => x.name === 'amount')
-    if (amount) amount.token = address
-    return decoded
-  }
+// Runs after decoding, so a colliding non-token ABI never gets an amount.
+export function markTokenAmount(value: DecodedValue) {
+  if (value.type !== 'call' || !value.address) return
+  const index = ERC20_AMOUNT_INDEXES[value.bytes.slice(0, 10).toLowerCase()]
+  if (index === undefined) return
+  const amount = value.members?.[index]
+  if (amount?.type === 'number') amount.token = value.address
 }
 
 function replaceBytesArgument(

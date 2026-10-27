@@ -178,10 +178,32 @@ describe('relay plugins', () => {
       args: [TARGET, 1_000_000n],
     })
 
-    const amount = member(decode(data, [], 1, TOKEN), 'amount')
+    const decoded = decode(
+      data,
+      ['function transfer(address to, uint256 value)'],
+      1,
+      TOKEN,
+    )
 
-    expect(amount.value).toEqual('1000000')
-    expect(amount.token).toEqual(TOKEN)
+    expect(member(decoded, 'value').value).toEqual('1000000')
+    expect(member(decoded, 'value').token).toEqual(TOKEN)
+  })
+
+  it('does not mark an amount on a colliding non-token ABI', () => {
+    const data = encodeFunctionData({
+      abi: parseAbi(['function burn(uint256)']),
+      args: [BigInt(`0x${'ab'.repeat(16)}${'00'.repeat(16)}`)],
+    })
+
+    const decoded = decode(
+      data,
+      ['function collate_propagate_storage(bytes16 key)'],
+      1,
+      TOKEN,
+    )
+
+    expect(decoded?.functionName).toEqual('collate_propagate_storage')
+    expect(member(decoded, 'key').token).toEqual(undefined)
   })
 })
 

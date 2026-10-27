@@ -3,7 +3,7 @@ import { BinaryReader } from './BinaryReader'
 import { type DecodedValue, decodeType } from './decode'
 import { decodePacked, type PackedSchema } from './packed'
 import { OP_PERMISSIONED_GAME_ARGS_SCHEMA } from './packedSchemas'
-import { relayPlugins } from './relayPlugins'
+import { markTokenAmount, relayPlugins } from './relayPlugins'
 import { SAFE_EXEC_ABI } from './safe'
 
 const plugins = [
@@ -54,7 +54,10 @@ export function decode(
       } catch {}
     }
   }
-  if (value) applyCallTargetHeuristic(value)
+  if (value) {
+    applyCallTargetHeuristic(value)
+    markTokenAmount(value)
+  }
   return value
 }
 

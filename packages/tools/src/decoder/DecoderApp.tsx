@@ -223,6 +223,20 @@ function compareSignatures(a: Signature, b: Signature): number {
   return a.signature.length - b.signature.length
 }
 
+function selectSignatures(
+  signatures: Signature[] | undefined,
+  chainId: number,
+  address: `0x${string}` | undefined,
+): string[] {
+  return (signatures ?? [])
+    .filter(
+      (x) =>
+        x.address === undefined ||
+        (x.address === address && x.chainId === chainId),
+    )
+    .map((x) => x.signature)
+}
+
 const useStore = create<State & Actions>((set) => ({
   signatures: {},
   requestedSignatures: {},
@@ -519,8 +533,14 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
     if (decoded.type === 'bytes') {
       const selector = decoded.bytes.slice(0, 10) as `0x${string}`
       store.requestSignature(selector)
-      const signatures =
-        store.signatures[selector]?.map((x) => x.signature) ?? []
+      if (decoded.address && decoded.chainId) {
+        store.requestAddress(decoded.chainId, decoded.address)
+      }
+      const signatures = selectSignatures(
+        store.signatures[selector],
+        decoded.chainId ?? 1,
+        decoded.address,
+      )
       const newDecoded = decode(
         decoded.bytes,
         signatures,
@@ -531,8 +551,11 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
     }
     if (decoded.type === 'call') {
       const selector = decoded.bytes.slice(0, 10) as `0x${string}`
-      const signatures =
-        store.signatures[selector]?.map((x) => x.signature) ?? []
+      const signatures = selectSignatures(
+        store.signatures[selector],
+        decoded.chainId ?? 1,
+        decoded.address,
+      )
       const newDecoded = decode(
         decoded.bytes,
         signatures,
@@ -542,7 +565,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
       if (newDecoded && newDecoded.functionAbi !== decoded.functionAbi)
         setDecoded(newDecoded)
     }
-  }, [decoded, store.requestSignature, store.signatures])
+  }, [decoded, store.requestSignature, store.requestAddress, store.signatures])
 
   if (!decoded) return null
 
