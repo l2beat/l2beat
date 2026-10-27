@@ -185,7 +185,8 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
                     }
                   : { tickCount: 4, allowDecimals: false }
             }
-            syncedUntil={data?.syncedUntil}
+            // Project counts don't depend on TVS sync
+            syncedUntil={metric === 'value' ? data?.syncedUntil : undefined}
           />
           <ChartTooltip
             filterNull={false}

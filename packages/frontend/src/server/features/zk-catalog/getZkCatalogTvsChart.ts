@@ -79,8 +79,11 @@ export async function getZkCatalogTvsChart({
     dataStart: minTimestamp,
     resolution,
   })
-  // When TVS lags, run to the range end so the gap shows as unsynced
-  const endTimestamp = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
+  // When TVS lags, run to the range end so the gap shows as unsynced. The
+  // range comes from the request, so never past the current hour.
+  const endTimestamp = isTvsSynced(maxTimestamp)
+    ? maxTimestamp
+    : Math.min(range[1], UnixTime.toStartOf(UnixTime.now(), 'hour'))
   const timestamps = generateTimestamps(
     [UnixTime(startTimestamp), UnixTime(endTimestamp)],
     resolution,
