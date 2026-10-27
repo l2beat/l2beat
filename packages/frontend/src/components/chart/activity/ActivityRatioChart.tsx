@@ -15,7 +15,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
+import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
 import { formatRange } from '~/utils/dates'
 
 interface ActivityRatioChartDataPoint {
@@ -50,8 +50,8 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
       <AreaChart responsive data={data} margin={{ top: 20 }}>
         <Area
           dataKey="ratio"
-          fillOpacity={1}
-          fill="url(#fillRatio)"
+          fillOpacity={AREA_FILL_OPACITY}
+          fill={chartMeta.ratio.color}
           stroke={chartMeta.ratio.color}
           dot={false}
           isAnimationActive={false}
@@ -69,9 +69,6 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
 
         <ChartTooltip filterNull={false} content={<ActivityCustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
-        <defs>
-          <EmeraldFillGradientDef id="fillRatio" />
-        </defs>
       </AreaChart>
     </ChartContainer>
   )

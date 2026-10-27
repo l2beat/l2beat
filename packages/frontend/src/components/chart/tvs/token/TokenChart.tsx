@@ -17,10 +17,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
+import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { formatTimestamp } from '~/utils/dates'
 
@@ -68,16 +65,12 @@ export function TokenChart({
       project={project}
     >
       <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <defs>
-          <PinkFillGradientDef id="fill" />
-          <PinkStrokeGradientDef id="stroke" />
-        </defs>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="value"
-          fill="url(#fill)"
-          fillOpacity={1}
-          stroke="url(#stroke)"
+          fill={chartMeta.value.color}
+          fillOpacity={AREA_FILL_OPACITY}
+          stroke={chartMeta.value.color}
           isAnimationActive={false}
         />
         <ChartCommonComponents

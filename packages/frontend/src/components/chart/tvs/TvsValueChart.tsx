@@ -16,10 +16,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
+import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 
@@ -60,15 +57,11 @@ export function TvsValueChart({
       milestones={milestones}
     >
       <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <defs>
-          <PinkFillGradientDef id="tvs-value-fill" />
-          <PinkStrokeGradientDef id="tvs-value-stroke" />
-        </defs>
         <Area
           dataKey="value"
-          fill="url(#tvs-value-fill)"
-          fillOpacity={1}
-          stroke="url(#tvs-value-stroke)"
+          fill={chartMeta.value.color}
+          fillOpacity={AREA_FILL_OPACITY}
+          stroke={chartMeta.value.color}
           isAnimationActive={false}
         />
         <ChartTooltip filterNull={false} content={<TvsValueChartTooltip />} />

@@ -11,11 +11,6 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/EthereumGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
@@ -136,14 +131,12 @@ export function EcosystemsActivityChart({
             data={[
               {
                 dataKey: 'ethereum',
-                stroke: 'url(#strokeEthereum)',
-                fill: 'url(#fillEthereum)',
+                stroke: 'var(--chart-ethereum)',
                 hide: !dataKeys.includes('ethereum'),
               },
               {
                 dataKey: 'projects',
                 stroke: 'var(--ecosystem-primary)',
-                fill: 'url(#fillProjects)',
                 hide: !dataKeys.includes('projects'),
               },
             ]}
@@ -157,17 +150,6 @@ export function EcosystemsActivityChart({
             syncedUntil={data?.syncedUntil}
           />
           <ChartTooltip content={<ActivityCustomTooltip metric="uops" />} />
-          <defs>
-            <CustomFillGradientDef
-              id="fillProjects"
-              colors={{
-                primary: 'var(--ecosystem-primary)',
-                secondary: 'var(--ecosystem-secondary)',
-              }}
-            />
-            <EthereumFillGradientDef id="fillEthereum" />
-            <EthereumStrokeGradientDef id="strokeEthereum" />
-          </defs>
         </AreaChart>
       </ChartContainer>
       <div className="mt-2.5 ml-auto w-fit">

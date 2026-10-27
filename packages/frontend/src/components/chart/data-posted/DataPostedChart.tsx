@@ -17,7 +17,6 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
@@ -87,7 +86,6 @@ export function DataPostedChart({
             dataKey: key,
             stroke:
               filteredChartMeta[key as keyof typeof filteredChartMeta]?.color,
-            fill: `url(#${key}-fill)`,
             hide: !dataKeys.includes(key as keyof typeof filteredChartMeta),
           }))}
         />
@@ -104,7 +102,6 @@ export function DataPostedChart({
           content={<DataPostedCustomTooltip resolution={resolution} />}
         />
         <defs>
-          <EthereumFillGradientDef id="ethereum-fill" />
           <NoDataPatternDef />
         </defs>
       </AreaChart>

@@ -13,7 +13,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { EcosystemMilestone } from '~/server/features/ecosystems/getEcosystemEntry'
@@ -71,19 +71,10 @@ export function EcosystemsProjectsChart({
           className="h-[110px]! min-h-[110px]!"
           margin={{ top: 20 }}
         >
-          <defs>
-            <CustomFillGradientDef
-              id="fill"
-              colors={{
-                primary: 'var(--ecosystem-primary)',
-                secondary: 'var(--ecosystem-secondary)',
-              }}
-            />
-          </defs>
           <Area
             dataKey="projectCount"
-            fill="url(#fill)"
-            fillOpacity={1}
+            fill="var(--ecosystem-primary)"
+            fillOpacity={AREA_FILL_OPACITY}
             stroke="var(--ecosystem-primary)"
             type="stepAfter"
             isAnimationActive={false}

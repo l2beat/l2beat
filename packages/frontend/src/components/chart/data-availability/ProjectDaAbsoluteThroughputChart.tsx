@@ -17,9 +17,9 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -106,16 +106,13 @@ export function ProjectDaAbsoluteThroughputChart({
     >
       <AreaChart responsive data={chartData} margin={{ top: 20 }}>
         <defs>
-          {project.id === 'ethereum' && (
-            <EthereumFillGradientDef id="ethereum-fill" />
-          )}
           <NoDataPatternDef />
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="project"
-          fill={`url(#${project.id}-fill)`}
-          fillOpacity={1}
+          fill={projectChartMeta.project?.color}
+          fillOpacity={AREA_FILL_OPACITY}
           stroke={projectChartMeta.project?.color}
           isAnimationActive={false}
           dot={false}
