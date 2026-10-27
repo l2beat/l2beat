@@ -524,9 +524,14 @@ function runSolcBinary(
           reject(error)
           return
         }
-        resolve(JSON.parse(stdout) as SolidityOutput)
+        try {
+          resolve(JSON.parse(stdout) as SolidityOutput)
+        } catch (parseError) {
+          reject(parseError)
+        }
       },
     )
+    child.stdin?.on('error', () => {})
     child.stdin?.end(JSON.stringify(input))
   })
 }
