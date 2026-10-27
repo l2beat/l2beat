@@ -6,6 +6,9 @@ export interface PermissionHolder {
   name: string | undefined
   isEOA: boolean
   receivedPermissions?: ReceivedPermission[]
+  // Granted to this holder itself, before the model passes them on to
+  // whoever controls it.
+  directPermissions?: ReceivedPermission[]
   // Set for multisigs.
   signers?: { threshold: number; members: ChainSpecificAddress[] }
   // What its $admin and owner fields point at.
@@ -20,6 +23,9 @@ export interface PermissionPath {
   delaySeconds: number
   conditions: string[]
   descriptions: string[]
+  // Granted to the holder itself with no modelled route through it, so the
+  // target's own admin may still control it too.
+  isDirectGrant: boolean
 }
 
 export function permissionPaths(
@@ -29,44 +35,74 @@ export function permissionPaths(
   return indexPermissionPaths(holders).get(target) ?? []
 }
 
-// Every target's paths in one pass. One entry per distinct route: a holder
-// granted several functions over the same route gets one path listing what
-// each grants.
+// Every target's paths. One entry per distinct route: a holder granted
+// several functions over the same route gets one path listing what each
+// grants. A grant to a contract that no modelled route passes through, like
+// one nothing controls, is a way to act on its target too.
 export function indexPermissionPaths(
   holders: readonly PermissionHolder[],
 ): Map<ChainSpecificAddress, PermissionPath[]> {
   const byRoute = new Map<string, PermissionPath>()
   for (const holder of holders) {
     for (const received of holder.receivedPermissions ?? []) {
-      const path = toPath(holder.address, received, received.from)
-      const key = [
-        path.permission,
-        path.role,
-        path.delaySeconds,
-        ...path.path,
-        ...path.conditions,
-      ].join(' ')
-      const existing = byRoute.get(key)
-      if (existing === undefined) {
-        byRoute.set(key, path)
-      } else {
-        for (const description of path.descriptions) {
-          if (!existing.descriptions.includes(description)) {
-            existing.descriptions.push(description)
-          }
-        }
+      addRoute(byRoute, toPath(holder.address, received, received.from, false))
+    }
+  }
+  const covered = holdersOnRoutes(byRoute.values())
+  for (const holder of holders) {
+    for (const direct of holder.directPermissions ?? []) {
+      if (!covered.has(`${holder.address}>${direct.from}`)) {
+        addRoute(byRoute, toPath(holder.address, direct, direct.from, true))
       }
     }
   }
-  const byTarget = new Map<ChainSpecificAddress, PermissionPath[]>()
-  for (const path of byRoute.values()) {
-    const target = path.path[path.path.length - 1] as ChainSpecificAddress
-    const paths = byTarget.get(target) ?? []
-    paths.push(path)
-    byTarget.set(target, paths)
+  return groupByTarget(byRoute.values())
+}
+
+function addRoute(byRoute: Map<string, PermissionPath>, path: PermissionPath) {
+  const key = [
+    path.permission,
+    path.role,
+    path.delaySeconds,
+    ...path.path,
+    ...path.conditions,
+  ].join(' ')
+  const existing = byRoute.get(key)
+  if (existing === undefined) {
+    byRoute.set(key, path)
+    return
   }
-  for (const paths of byTarget.values()) {
-    paths.sort(
+  for (const description of path.descriptions) {
+    if (!existing.descriptions.includes(description)) {
+      existing.descriptions.push(description)
+    }
+  }
+}
+
+// "holder>target" for every contract a route to the target passes through.
+function holdersOnRoutes(paths: Iterable<PermissionPath>): Set<string> {
+  const covered = new Set<string>()
+  for (const { path } of paths) {
+    const target = path[path.length - 1]
+    for (const address of path.slice(0, -1)) {
+      covered.add(`${address}>${target}`)
+    }
+  }
+  return covered
+}
+
+function groupByTarget(
+  paths: Iterable<PermissionPath>,
+): Map<ChainSpecificAddress, PermissionPath[]> {
+  const byTarget = new Map<ChainSpecificAddress, PermissionPath[]>()
+  for (const path of paths) {
+    const target = path.path[path.path.length - 1] as ChainSpecificAddress
+    const targetPaths = byTarget.get(target) ?? []
+    targetPaths.push(path)
+    byTarget.set(target, targetPaths)
+  }
+  for (const targetPaths of byTarget.values()) {
+    targetPaths.sort(
       (a, b) =>
         a.permission.localeCompare(b.permission) ||
         a.delaySeconds - b.delaySeconds ||
@@ -80,6 +116,7 @@ function toPath(
   holder: ChainSpecificAddress,
   received: ReceivedPermission,
   target: ChainSpecificAddress,
+  isDirectGrant: boolean,
 ): PermissionPath {
   const via = received.via ?? []
   const conditions: string[] = []
@@ -97,6 +134,7 @@ function toPath(
     conditions,
     descriptions:
       received.description === undefined ? [] : [received.description],
+    isDirectGrant,
   }
 }
 
@@ -154,16 +192,16 @@ export function controlPaths(
   byAddress: ReadonlyMap<ChainSpecificAddress, PermissionHolder>,
   index: ReadonlyMap<ChainSpecificAddress, readonly PermissionPath[]>,
 ): ControlPaths {
-  const direct = index.get(target) ?? []
-  if (direct.length > 0) {
-    return { paths: [...direct], inherited: undefined }
+  const own = index.get(target) ?? []
+  if (own.some((p) => !p.isDirectGrant)) {
+    return { paths: [...own], inherited: undefined }
   }
   const inherited = inheritedPaths(target, byAddress, (a) => index.get(a) ?? [])
   if (inherited === undefined) {
-    return { paths: [], inherited: undefined }
+    return { paths: [...own], inherited: undefined }
   }
   return {
-    paths: inherited.paths,
+    paths: [...own, ...inherited.paths],
     inherited: { controller: inherited.controller, chain: inherited.chain },
   }
 }

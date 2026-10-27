@@ -2,7 +2,9 @@ import type { ReceivedPermission } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
+  controlPaths,
   formatDelay,
+  indexPermissionPaths,
   inheritedPaths,
   type PermissionHolder,
   permissionPaths,
@@ -49,6 +51,33 @@ describe(permissionPaths.name, () => {
     ])
   })
 
+  it('adds a direct grant no modelled route passes through', () => {
+    const paths = permissionPaths(
+      [
+        holder(COUNCIL, {
+          receivedPermissions: [
+            {
+              permission: 'upgrade',
+              from: BRIDGE,
+              via: [{ address: PROXY_ADMIN }],
+            },
+          ],
+        }),
+        holder(PROXY_ADMIN, {
+          directPermissions: [{ permission: 'upgrade', from: BRIDGE }],
+        }),
+        holder(EXECUTOR, {
+          directPermissions: [{ permission: 'upgrade', from: BRIDGE }],
+        }),
+      ],
+      BRIDGE,
+    )
+    expect(paths.map((p) => p.path)).toEqual([
+      [EXECUTOR, BRIDGE],
+      [COUNCIL, PROXY_ADMIN, BRIDGE],
+    ])
+  })
+
   it('merges a route granted for several functions into one path', () => {
     const grant = (description: string): ReceivedPermission => ({
       permission: 'interact',
@@ -70,6 +99,30 @@ describe(permissionPaths.name, () => {
     )
     expect(paths.length).toEqual(1)
     expect(paths[0]?.descriptions).toEqual(['pause', 'unpause'])
+  })
+})
+
+describe(controlPaths.name, () => {
+  it('still follows the admin of a target only direct grants reach', () => {
+    const holders = [
+      holder(BRIDGE, { controllers: [PROXY_ADMIN] }),
+      holder(PROXY_ADMIN, {}),
+      holder(COUNCIL, {
+        receivedPermissions: [{ permission: 'upgrade', from: PROXY_ADMIN }],
+      }),
+      holder(EXECUTOR, {
+        directPermissions: [{ permission: 'interact', from: BRIDGE }],
+      }),
+    ]
+    const control = controlPaths(
+      BRIDGE,
+      index(holders),
+      indexPermissionPaths(holders),
+    )
+    expect(control.paths.map((p) => p.path)).toEqual([
+      [EXECUTOR, BRIDGE],
+      [COUNCIL, PROXY_ADMIN, BRIDGE],
+    ])
   })
 })
 
