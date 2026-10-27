@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "timestamp": 1792587967,
-  "configHash": "0xd8e2c40318ae560fdd12bde2f372cbcefe03d77b266f8e507998fbe24fd88718",
+  "configHash": "0x48be6eb748a65b37f25f194cd0d5e1f22c1b3584e86bae51511a5d1a2edb3494",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -2464,6 +2464,56 @@
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
+      "name": "OperatorFeeVault",
+      "address": "ink:0x420000000000000000000000000000000000001b",
+      "type": "Contract",
+      "template": "opstack/Layer2/OperatorFeeVault",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x0ba9b644913957c9f60eda0ab433da4523bb2437156e4dd8dadca627c884ba2a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "values": {
+        "$admin": "ink:0x4200000000000000000000000000000000000018",
+        "$implementation": "ink:0xEddf416c7159387cc6DF3015700F79Cfb8911373",
+        "$pastUpgrades": [
+          [
+            "2025-05-09T16:00:01.000Z",
+            "0xf162acc8ebbaf9237755736b62331a4817fe27bbbe3712f473ecfa8fee499f7c",
+            ["ink:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537"]
+          ],
+          [
+            "2026-07-08T16:00:01.000Z",
+            "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+            ["ink:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]
+          ],
+          [
+            "2026-07-08T16:00:01.000Z",
+            "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+            ["ink:0xEddf416c7159387cc6DF3015700F79Cfb8911373"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "MIN_WITHDRAWAL_AMOUNT": "150000000000000000",
+        "minWithdrawalAmount": "150000000000000000",
+        "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
+        "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+        "recipient": "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+        "RECIPIENT": "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9",
+        "totalProcessed": 0,
+        "version": "1.1.1",
+        "WITHDRAWAL_NETWORK": 0,
+        "withdrawalNetwork": 0
+      },
+      "implementationNames": {
+        "ink:0x420000000000000000000000000000000000001b": "Proxy",
+        "ink:0xEddf416c7159387cc6DF3015700F79Cfb8911373": "OperatorFeeVault"
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
       "name": "SchemaRegistry",
       "address": "ink:0x4200000000000000000000000000000000000020",
       "type": "Contract",
@@ -3786,6 +3836,16 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "ink:0x420000000000000000000000000000000000001b": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "ink:0x4200000000000000000000000000000000000020": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -4075,6 +4135,37 @@
       "function getL1BlockNumber() view returns (uint256)",
       "function version() view returns (string)"
     ],
+    "ink:0xEddf416c7159387cc6DF3015700F79Cfb8911373": [
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "event Initialized(uint64 version)",
+      "event MinWithdrawalAmountUpdated(uint256 oldWithdrawalAmount, uint256 newWithdrawalAmount)",
+      "event RecipientUpdated(address oldRecipient, address newRecipient)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "event WithdrawalNetworkUpdated(uint8 oldWithdrawalNetwork, uint8 newWithdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function initialize(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
+      "function minWithdrawalAmount() view returns (uint256)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function recipient() view returns (address)",
+      "function setMinWithdrawalAmount(uint256 _newMinWithdrawalAmount)",
+      "function setRecipient(address _newRecipient)",
+      "function setWithdrawalNetwork(uint8 _newWithdrawalNetwork)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw() returns (uint256 value_)",
+      "function withdrawalNetwork() view returns (uint8)"
+    ],
     "ink:0xf43862B9d814BB4504158CecCB0b74b31265e4eE": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
@@ -4154,6 +4245,7 @@
     "opstack/Layer2/L2ProxyAdmin_karst": "0x70d00d08dd524425b6612b13b16781498c13da3b7e3fac0a5ccd63078eeb5644",
     "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
+    "opstack/Layer2/OperatorFeeVault": "0x044085f5049dce846d88feaa0007d7805521906a1025bb3acc0ee57c09befe47",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
@@ -4167,7 +4259,7 @@
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 26241162, "ink": 59089556 },
-  "permissionsConfigHash": "0x165b953ad86b1ea73535332237b0cb1e7982ed9bba51da6af283fcfd5f3cbe72",
+  "permissionsConfigHash": "0x8884f5e7b4fa47d0097e8d03d86fa6daf1be2d62ea4ef719293cc12bbeb98a9f",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -4458,6 +4550,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "ink:0x420000000000000000000000000000000000001b",
+          "role": "admin",
+          "via": [
+            { "address": "ink:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "ink:0x4200000000000000000000000000000000000020",
           "role": "admin",
           "via": [
@@ -4716,6 +4816,11 @@
         {
           "permission": "upgrade",
           "from": "ink:0x420000000000000000000000000000000000001A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ink:0x420000000000000000000000000000000000001b",
           "role": "admin"
         },
         {
