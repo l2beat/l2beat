@@ -60,6 +60,9 @@ export function useSearchResults(project: string): SearchResults {
     isProjectsError,
     isProjectsPending,
   })
+  if (status !== 'success') {
+    return { rows: [], items: [], needles, status, isFetching: code.isFetching }
+  }
   return { rows, items, needles, status, isFetching: code.isFetching }
 }
 
