@@ -1,5 +1,6 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useEffect, useRef } from 'react'
+import { Checkbox } from '~/components/core/Checkbox'
 import {
   Table,
   TableBody,
@@ -21,16 +22,19 @@ import {
   DismissedBadge,
 } from './DismissalCell'
 import {
+  formatChain,
   formatSnapshotDay,
   type Row,
   rowId,
   type Snapshot,
   type Sort,
   type SortKey,
+  shortAddress,
 } from './rows'
+import type { Selection } from './useRowSelection'
 import { ValueCell } from './ValueCell'
 
-const COLUMNS = 8
+const COLUMNS = 9
 
 export function TvsCoverageTable({
   rows,
@@ -40,6 +44,7 @@ export function TvsCoverageTable({
   onSort,
   onShowMore,
   dismissalActions,
+  selection,
 }: {
   rows: Row[]
   totalRows: number
@@ -48,6 +53,7 @@ export function TvsCoverageTable({
   onSort: (key: SortKey) => void
   onShowMore: () => void
   dismissalActions: DismissalActions
+  selection: Selection
 }) {
   const projects = new Map(snapshot.projects.map((p) => [p.id, p]))
   const bridges = new Map(snapshot.bridges.map((b) => [b.id, b]))
@@ -64,6 +70,13 @@ export function TvsCoverageTable({
     <Table className="min-w-[880px] table-fixed">
       <TableHeader className="sticky top-0 z-10 bg-card">
         <TableRow>
+          <TableHead className="w-8 pr-0">
+            <Checkbox
+              checked={selection.all}
+              onCheckedChange={selection.toggleAll}
+              aria-label="Select all rows"
+            />
+          </TableHead>
           <SortableHead
             {...head}
             className="w-[18%]"
@@ -118,7 +131,17 @@ export function TvsCoverageTable({
           </TableRow>
         )}
         {rows.map((row) => (
-          <TableRow key={rowId(row)}>
+          <TableRow
+            key={rowId(row)}
+            data-state={selection.isSelected(row) ? 'selected' : undefined}
+          >
+            <TableCell className="pr-0">
+              <Checkbox
+                checked={selection.isSelected(row)}
+                onCheckedChange={() => selection.toggle(row)}
+                aria-label={`Select ${row.symbol ?? row.abstractSymbol ?? 'Unknown'} ${shortAddress(row.address)} on ${formatChain(row.chain)} for ${projects.get(row.projectId)?.name ?? row.projectId}`}
+              />
+            </TableCell>
             <TableCell>
               <ProjectCell row={row} project={projects.get(row.projectId)} />
             </TableCell>
