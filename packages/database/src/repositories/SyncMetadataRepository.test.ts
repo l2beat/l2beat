@@ -343,10 +343,11 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       expect(maxTarget).toEqual(roundedHour + 2 * UnixTime.HOUR)
     })
 
-    it('should throw error for non-existing feature', async () => {
-      await expect(
-        repository.getMaxTargetForFeature('nonexistent' as any),
-      ).toBeRejectedWith('Max target for feature not found')
+    it('should return undefined for non-existing feature', async () => {
+      const maxTarget = await repository.getMaxTargetForFeature(
+        'nonexistent' as any,
+      )
+      expect(maxTarget).toEqual(undefined)
     })
   })
 

@@ -21,7 +21,11 @@ export function getLatestTvsTimestamp(): Promise<UnixTime> {
   if (env.MOCK) {
     return Promise.resolve(getTvsTargetTimestamp())
   }
-  return cache.get({ key: ['tvs', 'latest-timestamp'], ttl: 60 }, () =>
-    getDb().syncMetadata.getMaxTargetForFeature('tvs'),
+  return cache.get(
+    { key: ['tvs', 'latest-timestamp'], ttl: 60 },
+    async () =>
+      // No rows when the backend doesn't run TVS
+      (await getDb().syncMetadata.getMaxTargetForFeature('tvs')) ??
+      getTvsTargetTimestamp(),
   )
 }
