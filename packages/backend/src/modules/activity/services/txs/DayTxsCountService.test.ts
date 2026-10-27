@@ -227,6 +227,24 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
     })
     expect(getHourlyCounts).toHaveBeenOnlyCalledWith(5, 7)
   })
+
+  it('throws when the provider has hours but none for a day', async () => {
+    const day = 5 * UnixTime.DAY
+    const provider = mockObject<DayProvider>({
+      getDailyTxsCount: mockFn().resolvesTo({ [day]: 9 }),
+      getDailyUopsCount: mockFn().resolvesTo({ [day]: 9 }),
+      getHourlyCounts: mockFn().resolvesTo([]),
+    })
+
+    const txsCountProvider = new DayTxsCountService({
+      provider,
+      projectId: ProjectId('a'),
+    })
+
+    await expect(txsCountProvider.getTxsCount(5, 6)).toBeRejectedWith(
+      'Hours are missing',
+    )
+  })
 })
 
 function mockProvider(data: {

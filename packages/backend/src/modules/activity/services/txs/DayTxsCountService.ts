@@ -37,6 +37,14 @@ export class DayTxsCountService {
       const timestamp = day * UnixTime.DAY
       const count = dailyTxs[timestamp]
       assert(count !== undefined, 'Count is undefined')
+      // Fetched apart from the days, so a day can come without its hours
+      assert(
+        !hours ||
+          hours.some(
+            (hour) => UnixTime.toStartOf(hour.timestamp, 'day') === timestamp,
+          ),
+        'Hours are missing',
+      )
       return {
         projectId: this.$.projectId,
         timestamp: timestamp,
