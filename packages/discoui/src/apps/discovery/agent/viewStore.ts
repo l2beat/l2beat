@@ -152,18 +152,20 @@ function applyAgentView(event: AgentViewEvent) {
 }
 
 export function discardAgentView(eventId?: string) {
-  const pending = useAgentViewStore.getState().pending
+  const { pending, queued } = useAgentViewStore.getState()
   if (pending !== undefined) {
     useNodeStore.getState().setNodes([...pending.before])
-    useAgentViewStore.setState({ pending: undefined })
     fitGraphTo(new Set(visibleContracts(pending.before)))
   }
+  // Views still waiting for their graph go too, or they would apply later.
+  useAgentViewStore.setState({ pending: undefined, queued: [] })
   // Only a tab that put something back answers, so the agent hears from it
   // and not from a tab that had nothing pending.
-  if (eventId !== undefined && pending !== undefined) {
+  const undone = (pending?.changes ?? 0) + queued.length
+  if (eventId !== undefined && undone > 0) {
     void sendReceipt(eventId, {
       ...summarize(useNodeStore.getState().nodes),
-      undone: pending.changes,
+      undone,
     })
   }
 }
