@@ -20,30 +20,31 @@ const KINDS: {
   kind: CropsBadgeKind
   label: string
   hint: string
-  /** Preview box height and the badge's rendered width inside it. */
+  /** Preview box height. */
   frame: string
-  width: string
+  /** Rendered width in px, in the preview and in the copied markup. */
+  width: number
 }[] = [
   {
     kind: 'badge',
     label: 'Badge',
     hint: 'About pages, footers, docs',
     frame: 'h-[220px]',
-    width: 'w-[180px]',
+    width: 180,
   },
   {
     kind: 'tag',
     label: 'Tag',
     hint: 'Headers, app UIs, next to a connect button',
     frame: 'h-[120px]',
-    width: 'w-[220px]',
+    width: 220,
   },
   {
     kind: 'icon',
     label: 'Icon',
     hint: 'Wallets and lists - works down to 20px',
     frame: 'h-[120px]',
-    width: 'w-[56px]',
+    width: 56,
   },
 ]
 
@@ -149,7 +150,7 @@ function BadgeTile({
   label: string
   dark: boolean
   frame: string
-  width: string
+  width: number
   href: string
 }) {
   return (
@@ -164,7 +165,8 @@ function BadgeTile({
         <img
           src={asset.url}
           alt={`CROPS ${asset.kind}, ${label.toLowerCase()}`}
-          className={cn('h-auto max-w-full', width)}
+          className="h-auto max-w-full"
+          style={{ width }}
         />
       </div>
       <div className="flex items-center justify-between gap-2 border-divider border-t bg-surface-secondary py-1.5 pr-1.5 pl-3">
@@ -181,7 +183,7 @@ function BadgeTile({
           >
             <DownloadArrowIcon className="size-4 fill-current" />
           </a>
-          <CopyMarkupButton url={asset.url} href={href} />
+          <CopyMarkupButton url={asset.url} width={width} href={href} />
         </div>
       </div>
     </div>
@@ -189,7 +191,15 @@ function BadgeTile({
 }
 
 /** Copies the SVG inline, wrapped in a link to the garden, so it needs nothing from our domain. */
-function CopyMarkupButton({ url, href }: { url: string; href: string }) {
+function CopyMarkupButton({
+  url,
+  width,
+  href,
+}: {
+  url: string
+  width: number
+  href: string
+}) {
   const [copied, setCopied] = useState(false)
 
   useTimeout(() => setCopied(false), copied ? 1400 : null)
@@ -201,8 +211,8 @@ function CopyMarkupButton({ url, href }: { url: string; href: string }) {
           cause: { url, status: res.status },
         })
       }
-      const svg = await res.text()
-      const markup = `<a href="${href}" title="${LINK_TITLE}">\n${svg.trim()}\n</a>`
+      const svg = resizeSvg(await res.text(), width)
+      const markup = `<a href="${href}" title="${LINK_TITLE}">\n${svg}\n</a>`
       return new Blob([markup], { type: 'text/plain' })
     })
     try {
@@ -232,4 +242,15 @@ function CopyMarkupButton({ url, href }: { url: string; href: string }) {
       )}
     </button>
   )
+}
+
+/** Sets the root `<svg>` to `width`, keeping its aspect ratio, as exports carry their Figma frame size. */
+function resizeSvg(svg: string, width: number) {
+  return svg
+    .trim()
+    .replace(
+      /^<svg([^>]*?) width="([\d.]+)" height="([\d.]+)"/,
+      (_, attrs: string, w: string, h: string) =>
+        `<svg${attrs} width="${width}" height="${Math.round((width * Number(h)) / Number(w))}"`,
+    )
 }
