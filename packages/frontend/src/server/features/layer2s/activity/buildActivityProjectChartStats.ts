@@ -1,4 +1,5 @@
-import type { ActivityTotals } from '@l2beat/database'
+import type { ActivityPeak, ActivityTotals } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   calculatePercentageChange,
   type PercentageChangePeriod,
@@ -15,11 +16,17 @@ export interface ActivityMetricStats {
   pastDayChange: number
   pastDayChangePeriod: PercentageChangePeriod
   pastDaySum: number | null
-  maxCount: {
-    value: number
-    timestamp: number
-  }
+  maxCount: MaxRate
+  /** Only block and slot chains have them, and only for recent days */
+  peaks: { sinceTimestamp: number; hour: MaxRate; minute: MaxRate } | undefined
   totalCount?: TotalCount
+}
+
+interface MaxRate {
+  /** Per second */
+  value: number
+  /** Of the day it happened */
+  timestamp: number
 }
 
 export interface ActivityProjectChartStats {
@@ -34,12 +41,19 @@ interface ActivityMaxCounts {
   uopsTimestamp: number
 }
 
+export interface ActivityMaxPeaks {
+  since: UnixTime
+  hour: ActivityPeak
+  minute: ActivityPeak
+}
+
 interface Params {
   pastDayCount: number | null
   pastDayUopsCount: number | null
   sevenDaysAgoCount: number
   sevenDaysAgoUopsCount: number
   maxCounts: ActivityMaxCounts
+  peaks: ActivityMaxPeaks | undefined
   totals: ActivityTotals | undefined
 }
 
@@ -49,6 +63,7 @@ export function buildActivityProjectChartStats({
   sevenDaysAgoCount,
   sevenDaysAgoUopsCount,
   maxCounts,
+  peaks,
   totals,
 }: Params): ActivityProjectChartStats {
   return {
@@ -57,6 +72,7 @@ export function buildActivityProjectChartStats({
       sevenDaysAgoSum: sevenDaysAgoCount,
       maxCount: maxCounts.count,
       maxTimestamp: maxCounts.countTimestamp,
+      peaks: toPeakRates(peaks, 'count'),
       totalCount: totals
         ? { value: totals.count, sinceTimestamp: totals.sinceTimestamp }
         : undefined,
@@ -66,6 +82,7 @@ export function buildActivityProjectChartStats({
       sevenDaysAgoSum: sevenDaysAgoUopsCount,
       maxCount: maxCounts.uopsCount,
       maxTimestamp: maxCounts.uopsTimestamp,
+      peaks: toPeakRates(peaks, 'uops'),
       totalCount:
         totals !== undefined &&
         totals.uopsSinceTimestamp === totals.sinceTimestamp
@@ -83,12 +100,14 @@ function buildMetricStats({
   sevenDaysAgoSum,
   maxCount,
   maxTimestamp,
+  peaks,
   totalCount,
 }: {
   pastDaySum: number | null
   sevenDaysAgoSum: number
   maxCount: number
   maxTimestamp: number
+  peaks: ActivityMetricStats['peaks']
   totalCount: TotalCount | undefined
 }): ActivityMetricStats {
   return {
@@ -103,6 +122,23 @@ function buildMetricStats({
       value: countPerSecond(maxCount),
       timestamp: maxTimestamp,
     },
+    peaks,
     totalCount,
+  }
+}
+
+function toPeakRates(
+  peaks: ActivityMaxPeaks | undefined,
+  counted: 'count' | 'uops',
+): ActivityMetricStats['peaks'] {
+  if (!peaks) return undefined
+  const toRate = (peak: ActivityPeak, seconds: number): MaxRate =>
+    counted === 'count'
+      ? { value: peak.count / seconds, timestamp: peak.countTimestamp }
+      : { value: peak.uopsCount / seconds, timestamp: peak.uopsTimestamp }
+  return {
+    sinceTimestamp: peaks.since,
+    hour: toRate(peaks.hour, UnixTime.HOUR),
+    minute: toRate(peaks.minute, UnixTime.MINUTE),
   }
 }

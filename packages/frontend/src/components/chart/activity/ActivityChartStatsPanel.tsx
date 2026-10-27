@@ -48,6 +48,7 @@ export function ActivityChartStatsPanel({
   const metricUi = METRIC_UI[metric]
   const metricStats = stats?.[metric]
   const totalCount = metricStats?.totalCount
+  const peaks = metricStats?.peaks
   const showTotalCount =
     metricUi.showTotalWithoutData || totalCount !== undefined
 
@@ -102,23 +103,6 @@ export function ActivityChartStatsPanel({
         </ChartStatsItem>
       )}
       <ChartStatsItem
-        label={`Max. ${metricUi.rateLabel}`}
-        tooltip={`Shows the maximum sustained ${metricUi.rateLabel}, calculated as an average over the count for a day.`}
-        className="max-md:h-7"
-        isLoading={isLoading}
-      >
-        {metricStats?.maxCount !== undefined ? (
-          <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
-            <div>{formatActivityCount(metricStats.maxCount.value)}</div>
-            <div className="font-medium text-label-value-14 text-secondary">
-              {formatTimestamp(metricStats.maxCount.timestamp)}
-            </div>
-          </div>
-        ) : (
-          'No data'
-        )}
-      </ChartStatsItem>
-      <ChartStatsItem
         label="Past day UOPS/TPS Ratio"
         className="max-md:h-7"
         tooltip="The ratio of user operations to transactions over the past day. A high ratio indicates that for some transactions multiple individual user operations are bundled in a single transaction."
@@ -128,6 +112,74 @@ export function ActivityChartStatsPanel({
           ? formatUopsRatio(lastRatio)
           : 'No data'}
       </ChartStatsItem>
+      {/* The maxima share a row, so they read as one comparison */}
+      <ChartStatsItem
+        label={`Max. ${metricUi.rateLabel} (day avg.)`}
+        tooltip={`The highest ${metricUi.rateLabel}, averaged over the busiest day.`}
+        className="max-md:h-7 lg:col-start-1"
+        isLoading={isLoading}
+      >
+        {metricStats?.maxCount !== undefined ? (
+          <MaxRate
+            value={metricStats.maxCount.value}
+            timestamp={metricStats.maxCount.timestamp}
+          />
+        ) : (
+          'No data'
+        )}
+      </ChartStatsItem>
+      {(isLoading || peaks !== undefined) &&
+        (['hour', 'minute'] as const).map((period) => (
+          <ChartStatsItem
+            key={period}
+            label={`Max. ${metricUi.rateLabel} (${period} avg.)`}
+            tooltip={`The highest ${metricUi.rateLabel}, averaged over the busiest ${period}.${formatTrackedSince(peaks)}`}
+            className="max-md:h-7"
+            isLoading={isLoading}
+          >
+            {peaks && (
+              <MaxRate
+                value={peaks[period].value}
+                timestamp={peaks[period].timestamp}
+                sinceTimestamp={peaks.sinceTimestamp}
+              />
+            )}
+          </ChartStatsItem>
+        ))}
     </ChartStats>
   )
+}
+
+function MaxRate({
+  value,
+  timestamp,
+  sinceTimestamp,
+}: {
+  value: number
+  timestamp: number
+  sinceTimestamp?: number
+}) {
+  return (
+    <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
+      <div>{formatActivityCount(value)}</div>
+      <div className="font-medium text-label-value-14 text-secondary">
+        {formatTimestamp(timestamp)}
+        {/* Mobile rows have no room for it, so there it is in the tooltip */}
+        {sinceTimestamp !== undefined && (
+          <span className="max-md:hidden">
+            {' '}
+            · since {formatTimestamp(sinceTimestamp)}
+          </span>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function formatTrackedSince(
+  peaks: { sinceTimestamp: number } | undefined,
+): string {
+  return peaks
+    ? ` Tracked only since ${formatTimestamp(peaks.sinceTimestamp)}.`
+    : ''
 }

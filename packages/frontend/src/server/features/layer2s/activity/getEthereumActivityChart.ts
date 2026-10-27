@@ -6,6 +6,7 @@ import { getDb } from '~/server/database'
 import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import {
+  type ActivityMaxPeaks,
   type ActivityProjectChartStats,
   buildActivityProjectChartStats,
 } from './buildActivityProjectChartStats'
@@ -47,12 +48,17 @@ export async function getEthereumActivityChart(
 
   const adjustedRange = await getFullySyncedActivityRange(params.range)
 
-  const [entries, maxCounts, syncInfo, activityTotals] = await Promise.all([
-    db.activity.getByProjectsAndTimeRange([ProjectId.ETHEREUM], adjustedRange),
-    db.activity.getMaxCountsForProject(ProjectId.ETHEREUM),
-    getActivitySyncInfo(ProjectId.ETHEREUM, adjustedRange[1]),
-    db.activity.getActivityTotalsForProjects([ProjectId.ETHEREUM]),
-  ])
+  const [entries, maxCounts, peaks, syncInfo, activityTotals] =
+    await Promise.all([
+      db.activity.getByProjectsAndTimeRange(
+        [ProjectId.ETHEREUM],
+        adjustedRange,
+      ),
+      db.activity.getMaxCountsForProject(ProjectId.ETHEREUM),
+      db.activity.getMaxPeaksForProject(ProjectId.ETHEREUM),
+      getActivitySyncInfo(ProjectId.ETHEREUM, adjustedRange[1]),
+      db.activity.getActivityTotalsForProjects([ProjectId.ETHEREUM]),
+    ])
 
   if (!syncInfo.hasSyncData) {
     return {
@@ -100,6 +106,7 @@ export async function getEthereumActivityChart(
     data,
     syncedUntil,
     maxCounts,
+    peaks,
     activityTotals[ProjectId.ETHEREUM],
   )
 
@@ -122,6 +129,7 @@ function getEthereumActivityChartStats(
         countTimestamp: number
       }
     | undefined,
+  peaks: ActivityMaxPeaks | undefined,
   totals: ActivityTotals | undefined,
 ): ActivityProjectChartStats | undefined {
   if (!maxCounts) return undefined
@@ -142,6 +150,7 @@ function getEthereumActivityChartStats(
     sevenDaysAgoCount: sevenDaysAgoTps,
     sevenDaysAgoUopsCount: sevenDaysAgoUops,
     maxCounts,
+    peaks,
     totals,
   })
 }

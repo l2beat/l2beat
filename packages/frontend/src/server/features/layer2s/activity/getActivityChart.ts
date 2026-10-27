@@ -7,6 +7,7 @@ import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import {
+  type ActivityMaxPeaks,
   type ActivityProjectChartStats,
   buildActivityProjectChartStats,
 } from './buildActivityProjectChartStats'
@@ -59,9 +60,10 @@ export async function getActivityChart({
   const projectId = projects.length === 2 ? projects[0] : undefined
   const adjustedRange = await getFullySyncedActivityRange(range)
 
-  const [entries, maxCounts, activityTotals] = await Promise.all([
+  const [entries, maxCounts, peaks, activityTotals] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(projects, adjustedRange),
     projectId ? db.activity.getMaxCountsForProject(projectId) : undefined,
+    projectId ? db.activity.getMaxPeaksForProject(projectId) : undefined,
     projectId
       ? db.activity.getActivityTotalsForProjects([projectId])
       : undefined,
@@ -140,6 +142,7 @@ export async function getActivityChart({
         data,
         syncedUntil,
         maxCounts,
+        peaks,
         activityTotals?.[projectId],
       )
     : undefined
@@ -177,6 +180,7 @@ function getActivityChartStats(
         countTimestamp: number
       }
     | undefined,
+  peaks: ActivityMaxPeaks | undefined,
   totals: ActivityTotals | undefined,
 ): ActivityProjectChartStats | undefined {
   if (!maxCounts) return undefined
@@ -197,6 +201,7 @@ function getActivityChartStats(
     sevenDaysAgoCount: sevenDaysAgoTps,
     sevenDaysAgoUopsCount: sevenDaysAgoUops,
     maxCounts,
+    peaks,
     totals,
   })
 }

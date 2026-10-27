@@ -18,6 +18,7 @@ describe(buildActivityProjectChartStats.name, () => {
       sevenDaysAgoCount: UnixTime.DAY,
       sevenDaysAgoUopsCount: UnixTime.DAY,
       maxCounts,
+      peaks: undefined,
       totals: {
         count: 100,
         uopsCount: 0,
@@ -33,6 +34,7 @@ describe(buildActivityProjectChartStats.name, () => {
         pastDayChangePeriod: '7D',
         pastDaySum: 2 * UnixTime.DAY,
         maxCount: { value: 4, timestamp: 100 },
+        peaks: undefined,
         totalCount: { value: 100, sinceTimestamp: SINCE },
       },
       uops: {
@@ -41,6 +43,7 @@ describe(buildActivityProjectChartStats.name, () => {
         pastDayChangePeriod: '7D',
         pastDaySum: 3 * UnixTime.DAY,
         maxCount: { value: 5, timestamp: 200 },
+        peaks: undefined,
         totalCount: { value: 0, sinceTimestamp: SINCE },
       },
     })
@@ -53,6 +56,7 @@ describe(buildActivityProjectChartStats.name, () => {
       sevenDaysAgoCount: 0,
       sevenDaysAgoUopsCount: 0,
       maxCounts,
+      peaks: undefined,
       totals: {
         count: 100,
         uopsCount: 150,
@@ -65,6 +69,44 @@ describe(buildActivityProjectChartStats.name, () => {
     expect(result.tps.totalCount).toEqual({
       value: 100,
       sinceTimestamp: SINCE,
+    })
+  })
+
+  it("averages the busiest hour and minute over their length, as the busiest day's is averaged over a day", () => {
+    const DAY = UnixTime.DAY
+    const result = buildActivityProjectChartStats({
+      pastDayCount: null,
+      pastDayUopsCount: null,
+      sevenDaysAgoCount: 0,
+      sevenDaysAgoUopsCount: 0,
+      maxCounts,
+      peaks: {
+        since: SINCE,
+        hour: {
+          count: 6 * 3600,
+          countTimestamp: SINCE + DAY,
+          uopsCount: 8 * 3600,
+          uopsTimestamp: SINCE + 2 * DAY,
+        },
+        minute: {
+          count: 30 * 60,
+          countTimestamp: SINCE + 3 * DAY,
+          uopsCount: 40 * 60,
+          uopsTimestamp: SINCE + 4 * DAY,
+        },
+      },
+      totals: undefined,
+    })
+
+    expect(result.tps.peaks).toEqual({
+      sinceTimestamp: SINCE,
+      hour: { value: 6, timestamp: SINCE + DAY },
+      minute: { value: 30, timestamp: SINCE + 3 * DAY },
+    })
+    expect(result.uops.peaks).toEqual({
+      sinceTimestamp: SINCE,
+      hour: { value: 8, timestamp: SINCE + 2 * DAY },
+      minute: { value: 40, timestamp: SINCE + 4 * DAY },
     })
   })
 })
