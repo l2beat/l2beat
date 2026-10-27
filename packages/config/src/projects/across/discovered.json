@@ -932,7 +932,7 @@
       "template": "acrossv3/SpokePool",
       "sourceHashes": [
         "0xd2812a145d2b7f3e3e1571f68022076a2cccd5fe82f8035d427714135197a6f1",
-        "0x667fb3db67749e9488a6511b73f11c5acfa08bd66fa64944fe1d3064fa551c6e"
+        "0x856340a74262764fa24254884d4608c39fe683a013d2d2e60d093992e46b3fb7"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.",
@@ -3395,7 +3395,7 @@
       "template": "acrossv3/SpokePool",
       "sourceHashes": [
         "0xd2812a145d2b7f3e3e1571f68022076a2cccd5fe82f8035d427714135197a6f1",
-        "0x63512362033eb12727887f57a9397e800b1fa1b98ff0fe2742abe67f53d493f1"
+        "0x62e75647ffea5664ef890dc403412e0f7902d7206522e92619765d092d63d906"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.",
