@@ -50,7 +50,7 @@ export const PROJECT_PAGES_WITH_MARKDOWN = [
   '/privacy/projects/:slug',
   '/interop/protocols/:slug',
   '/zk-catalog/:slug',
-  '/interop/tokens/:slug{/:issuer}{/:symbol}',
+  '/tokens/:slug{/:issuer}{/:symbol}',
   ...(env.CLIENT_SIDE_DEFI_ENABLED ? (['/defi/projects/:slug'] as const) : []),
 ] as const
 

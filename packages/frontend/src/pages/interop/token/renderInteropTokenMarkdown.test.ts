@@ -18,7 +18,7 @@ import {
 describe(renderInteropTokenMarkdown.name, () => {
   it('opens with the token symbol and a link to the canonical HTML page', () => {
     expect(renderInteropTokenMarkdown(PAGE)).toMatchRegex(
-      /^# USDC\n\nMarkdown version of https:\/\/l2beat\.com\/interop\/tokens\/usdc01\/circle\/usdc\n\n/,
+      /^# USDC\n\nMarkdown version of https:\/\/l2beat\.com\/tokens\/usdc01\/circle\/usdc\n\n/,
     )
   })
 
@@ -58,7 +58,7 @@ describe(renderInteropTokenMarkdown.name, () => {
       getSection(renderInteropTokenMarkdown(PAGE), 'Volume and flows'),
     ).toInclude(
       '### Top routes by volume (last 24h)\n\n- Hyperliquid → Arbitrum One: $3.00 M\n- Polygon PoS → Ethereum: $2.00 M',
-      'https://l2beat.com/interop/tokens/usdc01/circle/usdc#interop-volume',
+      'https://l2beat.com/tokens/usdc01/circle/usdc#interop-volume',
     )
   })
 
@@ -66,7 +66,7 @@ describe(renderInteropTokenMarkdown.name, () => {
     const markdown = renderInteropTokenMarkdown(PAGE)
 
     expect(getSection(markdown, 'Transfers')).toInclude(
-      'https://l2beat.com/interop/tokens/usdc01/circle/usdc#interop-transfers',
+      'https://l2beat.com/tokens/usdc01/circle/usdc#interop-transfers',
     )
   })
 
