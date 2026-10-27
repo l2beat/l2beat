@@ -36,6 +36,19 @@ describe(excerptAt.name, () => {
     expect(excerpt.isCut).toEqual(true)
   })
 
+  it('reads past call options in a statement', () => {
+    const body = Array.from({ length: 20 }, (_, i) => `  x = ${i};`)
+    const code = [
+      'function f() {',
+      '  receiver.deposit{value: amount}();',
+      ...body,
+      '}',
+    ].join('\n')
+    const excerpt = excerptAt(code, code.indexOf('receiver'), 2)
+    expect(excerpt.lines.length).toEqual(12)
+    expect(excerpt.isCut).toEqual(true)
+  })
+
   it('skips named arguments before the body', () => {
     const body = Array.from({ length: 20 }, (_, i) => `  x = ${i};`)
     const code = ['function f() check({x: 1}) {', ...body, '}'].join('\n')

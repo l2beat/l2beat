@@ -33,27 +33,14 @@ export function excerptAt(
 
 function blockEnd(code: string, offset: number): number | undefined {
   const open = blockOpen(code, offset)
-  if (open === undefined) {
-    return undefined
-  }
-  let depth = 0
-  for (let at = open; at < code.length; at++) {
-    at = endOfCommentOrString(code, at)
-    if (code[at] === '{') {
-      depth++
-    } else if (code[at] === '}') {
-      depth--
-      if (depth === 0) {
-        return endOfLines(code, at, 1)
-      }
-    }
-  }
-  return undefined
+  const close = open === undefined ? undefined : closingBrace(code, open)
+  return close === undefined ? undefined : endOfLines(code, close, 1)
 }
 
 // A snippet opens a block when a brace comes before the statement ends.
 // Semicolons in parentheses, like a for loop's, do not end it, and braces
-// there, like named arguments, do not open it.
+// there, like named arguments, or before a call's parentheses, like
+// `deposit{value: v}()`, do not open it.
 function blockOpen(code: string, offset: number): number | undefined {
   let parens = 0
   for (let at = offset; at < code.length; at++) {
@@ -63,12 +50,40 @@ function blockOpen(code: string, offset: number): number | undefined {
     } else if (code[at] === ')') {
       parens--
     } else if (code[at] === '{' && parens === 0) {
-      return at
+      const close = closingBrace(code, at)
+      if (close === undefined || code[nextCodeChar(code, close + 1)] !== '(') {
+        return at
+      }
+      at = close
     } else if (code[at] === ';' && parens === 0) {
       return undefined
     }
   }
   return undefined
+}
+
+function closingBrace(code: string, open: number): number | undefined {
+  let depth = 0
+  for (let at = open; at < code.length; at++) {
+    at = endOfCommentOrString(code, at)
+    if (code[at] === '{') {
+      depth++
+    } else if (code[at] === '}') {
+      depth--
+      if (depth === 0) {
+        return at
+      }
+    }
+  }
+  return undefined
+}
+
+function nextCodeChar(code: string, from: number): number {
+  let at = from
+  while (at < code.length && ' \t\r\n'.includes(code[at] as string)) {
+    at++
+  }
+  return at
 }
 
 // Braces in comments and strings, like commented-out code, do not open or
