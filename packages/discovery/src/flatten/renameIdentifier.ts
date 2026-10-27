@@ -46,6 +46,20 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
           })
         }
       }
+      const functions = usingDecl.functions ?? []
+      const functionStarts = findUsingFunctionStarts(source, start, functions)
+      for (const [i, path] of functions.entries()) {
+        const head = path.split('.')[0] as string
+        const newName = pairMap.get(head)
+        if (newName !== undefined) {
+          const headStart = functionStarts[i] as number
+          replacements.push({
+            start: headStart,
+            end: headStart + head.length,
+            newName,
+          })
+        }
+      }
     } else if (node.type === 'UserDefinedTypeName') {
       const udt = node as AST.UserDefinedTypeName
       const to = pairMap.get(udt.namePath)
@@ -160,13 +174,35 @@ function findConstantNameStart(
   return nameStart
 }
 
+// The parser gives `using { a, L.b as + }` entries without ranges
+function findUsingFunctionStarts(
+  source: string,
+  rangeStart: number,
+  functions: string[],
+): number[] {
+  const starts: number[] = []
+  let index = source.indexOf('{', rangeStart) + 1
+  for (const path of functions) {
+    index = skipWhitespace(source, index)
+    assert(source.startsWith(path, index), 'Using function not found')
+    starts.push(index)
+    index = source.indexOf(',', index) + 1
+  }
+  return starts
+}
+
 function findUsingLibraryNameStart(source: string, rangeStart: number): number {
   const usingEnd = rangeStart + 'using'.length
   return skipWhitespace(source, usingEnd)
 }
 
 function skipWhitespace(source: string, index: number): number {
-  while (source[index] === ' ' || source[index] === '\n') {
+  while (
+    source[index] === ' ' ||
+    source[index] === '\n' ||
+    source[index] === '\r' ||
+    source[index] === '\t'
+  ) {
     index++
   }
   return index

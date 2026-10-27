@@ -648,6 +648,66 @@ describe('flatten', () => {
     )
   })
 
+  it('renames free functions bound as operators in global using lists', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Timestamp } from "./Timestamp.sol";
+      import { Duration } from "./Duration.sol";
+      contract Root {
+          function f(Timestamp a, Duration b) public pure returns (bool) {
+              return a < a && b < b;
+          }
+      }
+    `,
+    )
+    const timestampFile = sol(
+      'Timestamp.sol',
+      `
+      type Timestamp is uint40;
+      function lt(Timestamp a, Timestamp b) pure returns (bool) { return Timestamp.unwrap(a) < Timestamp.unwrap(b); }
+      using {lt as <} for Timestamp global;
+    `,
+    )
+    const durationFile = sol(
+      'Duration.sol',
+      `
+      type Duration is uint32;
+      function lt(Duration a, Duration b) pure returns (bool) { return Duration.unwrap(a) < Duration.unwrap(b); }
+      using {lt as <} for Duration global;
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, timestampFile, durationFile],
+      [],
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      function lt(Timestamp a, Timestamp b) pure returns (bool) { return Timestamp.unwrap(a) < Timestamp.unwrap(b); }
+
+      using {lt as <} for Timestamp global;
+
+      type Timestamp is uint40;
+
+      function lt_1(Duration a, Duration b) pure returns (bool) { return Duration.unwrap(a) < Duration.unwrap(b); }
+
+      using {lt_1 as <} for Duration global;
+
+      type Duration is uint32;
+
+      contract Root {
+          function f(Timestamp a, Duration b) public pure returns (bool) {
+              return a < a && b < b;
+          }
+      }
+    `),
+    )
+  })
+
   it('inheritance namespacing', () => {
     const rootFile = sol(
       'Root.sol',
