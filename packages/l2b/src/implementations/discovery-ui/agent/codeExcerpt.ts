@@ -78,9 +78,11 @@ function closingBrace(code: string, open: number): number | undefined {
   return undefined
 }
 
+// Call options keep their parentheses on the same line; a parenthesis on a
+// later line starts the next statement, like a tuple assignment after a block.
 function nextCodeChar(code: string, from: number): number {
   let at = from
-  while (at < code.length && ' \t\r\n'.includes(code[at] as string)) {
+  while (at < code.length && ' \t'.includes(code[at] as string)) {
     at++
   }
   return at

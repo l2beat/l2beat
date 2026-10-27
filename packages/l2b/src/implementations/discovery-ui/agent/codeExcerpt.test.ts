@@ -49,6 +49,19 @@ describe(excerptAt.name, () => {
     expect(excerpt.isCut).toEqual(true)
   })
 
+  it('gives the whole block a tuple assignment follows', () => {
+    const body = Array.from({ length: 20 }, (_, i) => `    x = ${i};`)
+    const code = [
+      '  if (amount > limit) {',
+      ...body,
+      '  }',
+      '  (bool ok, bytes memory data) = target.call("");',
+    ].join('\n')
+    const excerpt = excerptAt(code, 0, 1)
+    expect(excerpt.lines.length).toEqual(22)
+    expect(excerpt.isCut).toEqual(false)
+  })
+
   it('skips named arguments before the body', () => {
     const body = Array.from({ length: 20 }, (_, i) => `  x = ${i};`)
     const code = ['function f() check({x: 1}) {', ...body, '}'].join('\n')
