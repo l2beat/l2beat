@@ -29,7 +29,15 @@ describe(findCodeAnchor.name, () => {
       line: 7,
       contract: 'Executor',
       length: 'function upgradeTo()'.length,
-      others: [],
+      others: [
+        {
+          sourceIndex: 0,
+          sourceName: 'Proxy.p.sol',
+          offset: 0,
+          line: 1,
+          contract: undefined,
+        },
+      ],
     })
   })
 
@@ -65,6 +73,36 @@ describe(findCodeAnchor.name, () => {
     expect(anchor?.contract).toEqual('Facet')
   })
 
+  it('lists implementations in other sources', () => {
+    const facet = {
+      name: 'Facet.sol',
+      code: 'contract Facet {\n  function upgradeTo() {}\n}',
+    }
+    const anchor = findCodeAnchor(
+      [PROXY, IMPLEMENTATION, facet],
+      'function upgradeTo()',
+    )
+    expect(anchor?.sourceName).toEqual('Executor.sol')
+    expect(anchor?.others.map((m) => [m.sourceName, m.line])).toEqual([
+      ['Proxy.p.sol', 1],
+      ['Facet.sol', 2],
+    ])
+  })
+
+  it('counts a one-line function as implemented', () => {
+    const proxy = {
+      name: 'Proxy.p.sol',
+      code: 'contract P {\n  function g() {\n    return msg.sender;\n  }\n}',
+    }
+    const oneLine = {
+      name: 'C.sol',
+      code: 'contract C {\n  function f() external { return msg.sender; }\n}',
+    }
+    const anchor = findCodeAnchor([proxy, oneLine], 'return msg.sender;')
+    expect(anchor?.sourceName).toEqual('C.sol')
+    expect(anchor?.line).toEqual(2)
+  })
+
   it('shows a declaration nothing implements', () => {
     const code = 'interface IVault {\n  function pause() external;\n}'
     const anchor = findCodeAnchor([{ name: 'Vault.sol', code }], 'pause()')
@@ -77,6 +115,8 @@ describe(findCodeAnchor.name, () => {
     expect(anchor?.line).toEqual(5)
     expect(anchor?.others).toEqual([
       {
+        sourceIndex: 1,
+        sourceName: 'Executor.sol',
         offset: IMPLEMENTATION.code.lastIndexOf('onlyRole'),
         line: 6,
         contract: 'Executor',

@@ -1,4 +1,6 @@
 export interface CodeMatch {
+  sourceIndex: number
+  sourceName: string
   offset: number
   line: number
   // The contract, interface or library the match sits in.
@@ -6,11 +8,10 @@ export interface CodeMatch {
 }
 
 export interface CodeAnchor extends CodeMatch {
-  sourceIndex: number
-  sourceName: string
   length: number
-  // Where else the snippet is, so the agent can tell the researcher there
-  // is more than one implementation or quote a longer snippet.
+  // Where else the snippet is, in any source, so the agent can tell the
+  // researcher there is more than one implementation or quote a longer
+  // snippet.
   others: CodeMatch[]
 }
 
@@ -34,43 +35,27 @@ export function findCodeAnchor(
   }
   const first = sources.length > 1 ? 1 : 0
   const order = [first, ...[...sources.keys()].filter((i) => i !== first)]
-  let declaration: CodeAnchor | undefined
+  const implemented: CodeMatch[] = []
+  const declared: CodeMatch[] = []
   for (const sourceIndex of order) {
     const source = sources[sourceIndex]
     if (source === undefined) {
       continue
     }
-    const offsets = findOffsets(source.code, find)
-    const implemented = offsets.filter((o) => !isBodiless(source.code, o))
-    if (implemented.length > 0) {
-      return anchorAt(source, sourceIndex, implemented, find)
-    }
-    if (declaration === undefined && offsets.length > 0) {
-      declaration = anchorAt(source, sourceIndex, offsets, find)
+    for (const offset of findOffsets(source.code, find)) {
+      const match = matchAt(source, sourceIndex, offset)
+      if (isBodiless(source.code, offset)) {
+        declared.push(match)
+      } else {
+        implemented.push(match)
+      }
     }
   }
-  return declaration
-}
-
-function anchorAt(
-  source: { name: string; code: string },
-  sourceIndex: number,
-  offsets: readonly number[],
-  find: string,
-): CodeAnchor {
-  const [shown, ...others] = offsets.map((offset) =>
-    matchAt(source.code, offset),
-  )
+  const [shown, ...others] = implemented.length > 0 ? implemented : declared
   if (shown === undefined) {
-    throw new Error('Code anchor without a match')
+    return undefined
   }
-  return {
-    sourceIndex,
-    sourceName: source.name,
-    length: find.length,
-    ...shown,
-    others,
-  }
+  return { ...shown, length: find.length, others }
 }
 
 function findOffsets(code: string, find: string): number[] {
@@ -92,16 +77,24 @@ function isBodiless(code: string, offset: number): boolean {
   if (!line.trimStart().startsWith('function ')) {
     return false
   }
-  const semicolon = code.indexOf(';', offset)
-  const brace = code.indexOf('{', offset)
+  // From the header, not the match: a snippet can start inside a one-line
+  // body, past its brace.
+  const semicolon = code.indexOf(';', lineStart)
+  const brace = code.indexOf('{', lineStart)
   return semicolon !== -1 && (brace === -1 || semicolon < brace)
 }
 
-function matchAt(code: string, offset: number): CodeMatch {
+function matchAt(
+  source: { name: string; code: string },
+  sourceIndex: number,
+  offset: number,
+): CodeMatch {
   return {
+    sourceIndex,
+    sourceName: source.name,
     offset,
-    line: lineOf(code, offset),
-    contract: enclosingDeclaration(code, offset),
+    line: lineOf(source.code, offset),
+    contract: enclosingDeclaration(source.code, offset),
   }
 }
 

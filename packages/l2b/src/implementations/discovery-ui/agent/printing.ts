@@ -33,7 +33,11 @@ export function printStep(
       `  code   ${name(step.code.address)} ${sourceName}:${place(step.code)}`,
     )
     if (others.length > 0) {
-      lines.push(`         also at ${others.map(place).join(', ')}`)
+      const where = (match: CodeMatch) =>
+        match.sourceName === sourceName
+          ? place(match)
+          : `${match.sourceName}:${place(match)}`
+      lines.push(`         also at ${others.map(where).join(', ')}`)
     }
   }
 }
