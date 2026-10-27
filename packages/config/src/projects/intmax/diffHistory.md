@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xc991c8a6bee1cd5fc96cbe59ad0ee88b1c68f56a
+
+# Diff at Tue, 27 Oct 2026 17:08:39 GMT:
+
+- id: 36e9c581
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1787230588
+- current timestamp: 1787230588
+
+## Description
+
+Flattener now resolves source unit aliases (import "x" as K) and writes K.X as the flat name of X. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787230588 (main branch discovery), not current.
+
+```diff
+    contract Rollup (scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e) [intmax/Rollup] {
+    +++ description: Main rollup contract used to submit blocks and process deposits. It saves block hashes to be then referenced by the Withdrawal contract.
+      sourceHashes.1:
+-        "0x01e64846204b53ce78748a8251f96e296b27338062a89fee75f56dce512cf39e"
++        "0xcde08a089eec973ec20e8c99c91d7bc9387910726ebb345c085d673e8b515204"
+    }
+```
+
 Generated with discovered.json: 0xa8bf6407909d8f72b842a637c7f0df353b2855b6
 
 # Diff at Tue, 20 Oct 2026 07:51:31 GMT:
