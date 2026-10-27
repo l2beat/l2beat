@@ -60,27 +60,33 @@ export function connectChat(): () => void {
   }
 }
 
-export function chooseProvider(provider: ProviderId) {
+export async function chooseProvider(provider: ProviderId) {
+  requireReplay()
   localStorage.setItem(PROVIDER_STORAGE_KEY, provider)
   useChatStore.setState({ chosenProvider: provider })
-  return startChat()
+  await startChat()
 }
 
 export async function sendMessage(text: string) {
-  const { status, chosenProvider, replayed } = useChatStore.getState()
-  // Until the replay arrives an ongoing chat looks idle, and starting one
-  // would reset it.
-  if (!replayed) {
-    throw new Error('The chat is still loading')
-  }
+  requireReplay()
+  const { status, chosenProvider } = useChatStore.getState()
   if (status === 'idle' || status === 'failed') {
     await post('start', { provider: chosenProvider })
   }
   await post('prompt', { text })
 }
 
-export function startChat() {
-  return post('start', { provider: useChatStore.getState().chosenProvider })
+export async function startChat() {
+  requireReplay()
+  await post('start', { provider: useChatStore.getState().chosenProvider })
+}
+
+// Until the replay arrives an ongoing chat looks idle, and starting one
+// would reset it.
+function requireReplay() {
+  if (!useChatStore.getState().replayed) {
+    throw new Error('The chat is still loading')
+  }
 }
 
 export function newChat() {

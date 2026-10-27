@@ -222,6 +222,7 @@ function EmptyState() {
 
 function ProviderPicker() {
   const chosen = useChatStore((state) => state.chosenProvider)
+  const replayed = useChatStore((state) => state.replayed)
   return (
     <div
       className="mt-4 flex w-fit gap-0.5 rounded-md bg-coffee-800 p-0.5 text-xs"
@@ -233,6 +234,7 @@ function ProviderPicker() {
           type="button"
           role="radio"
           aria-checked={chosen === provider.id}
+          disabled={!replayed}
           onClick={() => chooseProvider(provider.id).catch(reportError)}
           className={cn(
             'flex items-center gap-1.5 rounded-sm px-2.5 py-1 transition-colors',
