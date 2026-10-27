@@ -88,12 +88,14 @@ export function Layout() {
                 </Link>
               </li>
               <li>
-                <Link
-                  className="font-mono underline"
-                  to="https://uops.l2beat.com/"
+                <NavLink
+                  className={({ isActive }) =>
+                    clsx('font-mono underline', isActive && 'text-orange-500')
+                  }
+                  to="/uops"
                 >
-                  /uops-analyzer
-                </Link>
+                  /uops
+                </NavLink>
               </li>
               <li>
                 <NavLink
