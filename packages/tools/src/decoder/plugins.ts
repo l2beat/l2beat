@@ -1,7 +1,9 @@
 import { getCreate2Address, toFunctionSelector } from 'viem'
+import { BinaryReader } from './BinaryReader'
 import { type DecodedValue, decodeType } from './decode'
 import { decodePacked, type PackedSchema } from './packed'
 import { OP_PERMISSIONED_GAME_ARGS_SCHEMA } from './packedSchemas'
+import { relayPlugins } from './relayPlugins'
 import { SAFE_EXEC_ABI } from './safe'
 
 const plugins = [
@@ -9,6 +11,7 @@ const plugins = [
   packedArgumentPlugin,
   multiSendPlugin,
   create2FactoryPlugin,
+  ...relayPlugins,
 ]
 
 // Fixed ABIs keep Safe hash verification independent of signature lookup services.
@@ -122,7 +125,7 @@ function applyCallTargetHeuristic(value: DecodedValue) {
   for (const member of value.members) {
     applyCallTargetHeuristic(member)
     if (target && member.type === 'bytes') {
-      member.address = target as `0x${string}`
+      member.address ??= target as `0x${string}`
     }
   }
 }
@@ -248,35 +251,5 @@ function create2FactoryPlugin(
         chainId,
       },
     ],
-  }
-}
-
-class BinaryReader {
-  private position = 0
-  constructor(private readonly input: `0x${string}`) {}
-
-  isAtEnd() {
-    return !this.has(1)
-  }
-
-  get length() {
-    return this.input.length / 2 - 1
-  }
-
-  has(n: number) {
-    return this.position + n <= this.length
-  }
-
-  read(n: number): `0x${string}` {
-    if (!this.has(n)) {
-      throw new Error(
-        `Cannot read ${n} bytes. Position: ${this.position}, total: ${this.length}`,
-      )
-    }
-
-    const start = this.position * 2 + 2
-    const slice = this.input.slice(start, start + n * 2)
-    this.position += n
-    return `0x${slice}`
   }
 }

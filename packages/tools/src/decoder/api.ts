@@ -13,10 +13,12 @@ export {
   TransactionResult,
   LookupQuery,
   SignatureResult,
+  PreimageResult,
   Chain,
 }
 
 export type AddressAlias = NonNullable<AddressResult['alias']>
+export type TokenInfo = NonNullable<AddressResult['token']>
 
 const baseUrl =
   process.env.NODE_ENV === 'production'

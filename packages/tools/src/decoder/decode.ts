@@ -21,6 +21,7 @@ export interface DecodedValue {
   extra?: `0x${string}`
   chainId?: number
   address?: `0x${string}`
+  token?: `0x${string}`
 }
 
 export function decodeType(

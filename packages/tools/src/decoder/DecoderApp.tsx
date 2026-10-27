@@ -18,7 +18,7 @@ import { create } from 'zustand'
 import * as API from './api'
 import type { DecodedValue } from './decode'
 import { Form, type FormValues } from './form/Form'
-import { formatNumber, getFormatHint } from './format'
+import { formatDecimals, formatNumber, getFormatHint } from './format'
 import { HashReferencesProvider, useHashReferences } from './HashReferences'
 import { findKnownHashes } from './knownHashes'
 import {
@@ -184,8 +184,9 @@ interface State {
   requestedSignatures: Record<`0x${string}`, boolean>
   names: Record<`${number}:0x${string}`, string>
   aliases: Record<`${number}:0x${string}`, API.AddressAlias>
+  tokens: Record<`${number}:0x${string}`, API.TokenInfo>
   requestedAddresses: Record<`${number}:0x${string}`, boolean>
-  preimages: Record<`0x${string}`, string>
+  preimages: Record<`0x${string}`, API.PreimageResult>
   requestedPreimages: Record<`0x${string}`, boolean>
   tooltipId: string
 }
@@ -201,8 +202,9 @@ interface Actions {
     address: `0x${string}`,
     alias: API.AddressAlias,
   ): void
+  setToken(chainId: number, address: `0x${string}`, token: API.TokenInfo): void
   requestPreimage(hash: `0x${string}`): void
-  setPreimage(hash: `0x${string}`, preimage: string): void
+  setPreimage(preimage: API.PreimageResult): void
   showTooltip(id: string): void
 }
 
@@ -226,6 +228,7 @@ const useStore = create<State & Actions>((set) => ({
   requestedSignatures: {},
   names: {},
   aliases: {},
+  tokens: {},
   requestedAddresses: {},
   preimages: {},
   requestedPreimages: {},
@@ -290,6 +293,10 @@ const useStore = create<State & Actions>((set) => ({
     set((state) => ({
       aliases: { ...state.aliases, [`${chainId}:${address}`]: alias },
     })),
+  setToken: (chainId, address, token) =>
+    set((state) => ({
+      tokens: { ...state.tokens, [`${chainId}:${address}`]: token },
+    })),
   requestPreimage: (hash) =>
     set((state) => {
       if (state.requestedPreimages[hash]) return {}
@@ -297,8 +304,10 @@ const useStore = create<State & Actions>((set) => ({
         requestedPreimages: { ...state.requestedPreimages, [hash]: true },
       }
     }),
-  setPreimage: (hash, preimage) =>
-    set((state) => ({ preimages: { ...state.preimages, [hash]: preimage } })),
+  setPreimage: (preimage) =>
+    set((state) => ({
+      preimages: { ...state.preimages, [preimage.hash]: preimage },
+    })),
   showTooltip: (id) =>
     set((state) => ({ tooltipId: state.tooltipId !== id ? id : '' })),
 }))
@@ -353,6 +362,7 @@ function APIChecker() {
       void API.lookupAddress(chainId, address).then((res) => {
         if (res.name) store.setName(chainId, address, res.name)
         if (res.alias) store.setAlias(chainId, address, res.alias)
+        if (res.token) store.setToken(chainId, address, res.token)
         if (res.abi.length > 0) {
           store.addSignatures(
             res.abi.map((x) => ({
@@ -365,7 +375,13 @@ function APIChecker() {
         }
       })
     }
-  }, [requestedAddresses, store.addSignatures, store.setName, store.setAlias])
+  }, [
+    requestedAddresses,
+    store.addSignatures,
+    store.setName,
+    store.setAlias,
+    store.setToken,
+  ])
 
   useEffect(() => {
     const preimagesToFetch: string[] = []
@@ -377,8 +393,8 @@ function APIChecker() {
     }
     void API.lookupPreimages(preimagesToFetch as `0x${string}`[]).then(
       (res) => {
-        for (const { hash, preimage } of res) {
-          store.setPreimage(hash, preimage)
+        for (const preimage of res) {
+          store.setPreimage(preimage)
         }
       },
     )
@@ -563,6 +579,13 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
     </>
   )
 
+  const extra = decoded.extra && (
+    <div className="pl-4">
+      <span className="text-amber-400">unexpected extra bytes </span>
+      <DisplayBytes bytes={decoded.extra} />
+    </div>
+  )
+
   if (decoded.type === 'call') {
     return (
       <div
@@ -589,6 +612,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
         <span className="text-zinc-300">(</span>
         {members}
         <span className="text-zinc-300">)</span>
+        {extra}
         {decoded.bytes.slice(0, 10).toLowerCase() === '0x6a761202' && (
           <SafeHashes
             key={`${decoded.chainId}:${decoded.address}:${decoded.bytes}`}
@@ -611,6 +635,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
         <span className="text-zinc-300">{isTuple ? '{' : '['}</span>
         {members}
         <span className="text-zinc-300">{isTuple ? '}' : ']'}</span>
+        {extra}
       </div>
     )
   }
@@ -621,6 +646,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
         {nameElement}
         <DisplayBytes bytes={decoded.bytes} />
         <HashMeaning hash={decoded.bytes} chainId={decoded.chainId} />
+        {extra}
       </div>
     )
   }
@@ -642,6 +668,8 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
           name={value.name}
           bytes={decoded.bytes}
           value={decoded.value}
+          token={decoded.token}
+          chainId={decoded.chainId}
         />
       </div>
     )
@@ -656,6 +684,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
           <span>{decoded.value}</span>
           <span className="select-none text-zinc-500">&rdquo;</span>
         </ValueWithTooltip>
+        {extra}
       </div>
     )
   }
@@ -751,9 +780,11 @@ function DisplayBytes(props: { bytes: `0x${string}` }) {
       <ValueWithTooltip items={[{ name: 'Copy bytes', copy: props.bytes }]}>
         <span className="select-none font-mono text-zinc-500">hash(</span>
         <span className="select-none text-zinc-500">&ldquo;</span>
-        <span>{preimage}</span>
+        <span>{preimage.preimage}</span>
         <span className="select-none text-zinc-500">&rdquo;</span>
-        <span className="select-none font-mono text-zinc-500">)</span>
+        <span className="select-none font-mono text-zinc-500">
+          ){preimage.minusOne && ' - 1'}
+        </span>
       </ValueWithTooltip>
     )
   }
@@ -810,26 +841,43 @@ function DisplayNumber(props: {
   name?: string
   bytes: `0x${string}`
   value: string
+  token?: `0x${string}`
+  chainId?: number
 }) {
+  const store = useStore()
+  const token = props.token
+    ? store.tokens[`${props.chainId ?? 1}:${props.token}`]
+    : undefined
   const [format, setFormat] = useState('e0')
   useEffect(() => {
-    setFormat(getFormatHint(props.name ?? ''))
-  }, [props.name, setFormat])
+    setFormat(token ? 'token' : getFormatHint(props.name ?? ''))
+  }, [props.name, token, setFormat])
 
   return (
     <ValueWithTooltip
       items={[
         { name: 'Copy bytes', copy: props.bytes },
+        ...(token
+          ? [{ name: token.name, onClick: () => setFormat('token') }]
+          : []),
         { name: 'e0', onClick: () => setFormat('e0') },
         { name: 'e6', onClick: () => setFormat('e6') },
         { name: 'e8', onClick: () => setFormat('e8') },
+        { name: 'e9', onClick: () => setFormat('e9') },
         { name: 'e18', onClick: () => setFormat('e18') },
         { name: 'date', onClick: () => setFormat('date') },
         { name: 'seconds', onClick: () => setFormat('seconds') },
       ]}
     >
       <span className="font-mono">
-        {formatNumber(props.value, format)}
+        {format === 'token' && token ? (
+          <>
+            {formatDecimals(props.value, token.decimals)}
+            <span className="select-none text-zinc-500"> {token.name}</span>
+          </>
+        ) : (
+          formatNumber(props.value, format)
+        )}
         {format.startsWith('e') && format !== 'e0' && (
           <span className="select-none text-zinc-500">{format}</span>
         )}
