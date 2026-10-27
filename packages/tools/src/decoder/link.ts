@@ -18,7 +18,9 @@ const LEGACY_LOCAL_STORAGE_DATA = '0xLOCALSTORAGE'
 
 // Calldata links live in the fragment, which never reaches Vercel's 14 KB URL limit.
 export function linkParams(search: string, fragment: string) {
-  return new URLSearchParams(search.length > 0 ? search : fragment.slice(1))
+  const query = new URLSearchParams(search)
+  if (query.has('hash') || query.has('data')) return query
+  return new URLSearchParams(fragment.slice(1))
 }
 
 export function readLink(search: URLSearchParams): DecoderLink | undefined {

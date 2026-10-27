@@ -20,6 +20,12 @@ describe(linkParams.name, () => {
     expect(linkParams('?hash=1', '#data=2').toString()).toEqual('hash=1')
     expect(linkParams('', '#data=2').toString()).toEqual('data=2')
   })
+
+  it('ignores unrelated query parameters', () => {
+    expect(linkParams('?utm_source=mail', '#data=2').toString()).toEqual(
+      'data=2',
+    )
+  })
 })
 
 describe(readLink.name, () => {
