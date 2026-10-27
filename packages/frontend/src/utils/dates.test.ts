@@ -81,7 +81,12 @@ describe('dates', () => {
   describe(formatLocalDateTime.name, () => {
     const originalTz = process.env.TZ
     afterEach(() => {
-      process.env.TZ = originalTz
+      // Assigning undefined would store the string "undefined"
+      if (originalTz === undefined) {
+        delete process.env.TZ
+      } else {
+        process.env.TZ = originalTz
+      }
     })
 
     it('formats the instant in the visitor zone with its UTC offset', () => {
