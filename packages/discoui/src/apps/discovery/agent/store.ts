@@ -4,6 +4,8 @@ import { usePanelStore } from '../store/panel-store'
 import type { AgentViewEvent } from './viewStore'
 
 export interface AgentCodeMatch {
+  sourceIndex: number
+  sourceName: string
   offset: number
   line: number
   contract?: string
@@ -11,8 +13,6 @@ export interface AgentCodeMatch {
 
 export interface AgentCode extends AgentCodeMatch {
   address: string
-  sourceIndex: number
-  sourceName: string
   length: number
   others: AgentCodeMatch[]
 }
