@@ -1,7 +1,7 @@
 {
   "name": "base",
   "timestamp": 1791538610,
-  "configHash": "0x1962f9f33d5f18e0c52e9e7c368d5593c25f5d2a4acb206784e20e3498a11b53",
+  "configHash": "0x0c75411f47b06c8e150f600b19d122f556141708eae314fdaca3bd379a96b446",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -502,6 +502,47 @@
       "implementationNames": {
         "base:0x420000000000000000000000000000000000001A": "Proxy",
         "base:0x0c9034b92351cF8f067379a1fFA4fa35f5AF9dCC": "L1FeeVault"
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "name": "OperatorFeeVault",
+      "address": "base:0x420000000000000000000000000000000000001b",
+      "type": "Contract",
+      "template": "opstack/Layer2/OperatorFeeVault",
+      "sourceHashes": [
+        "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
+        "0x8ee929b67fce68f8daf1dac67514e5e05678a9f554e8d6e676fa28fe81874844"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "deployerAddress": "base:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1686789349,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "base:0x4200000000000000000000000000000000000018",
+        "$implementation": "base:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537",
+        "$pastUpgrades": [
+          [
+            "2025-05-09T16:00:01.000Z",
+            "0xf162acc8ebbaf9237755736b62331a4817fe27bbbe3712f473ecfa8fee499f7c",
+            ["base:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "MIN_WITHDRAWAL_AMOUNT": 0,
+        "minWithdrawalAmount": 0,
+        "recipient": "base:0x4200000000000000000000000000000000000019",
+        "RECIPIENT": "base:0x4200000000000000000000000000000000000019",
+        "totalProcessed": 0,
+        "version": "1.0.0",
+        "WITHDRAWAL_NETWORK": 1,
+        "withdrawalNetwork": 1
+      },
+      "implementationNames": {
+        "base:0x420000000000000000000000000000000000001b": "Proxy",
+        "base:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537": "OperatorFeeVault"
       },
       "category": { "name": "Non-Critical", "priority": 0 }
     },
@@ -3054,6 +3095,16 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "base:0x420000000000000000000000000000000000001b": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "base:0x4200000000000000000000000000000000000020": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3084,6 +3135,20 @@
       "function totalProcessed() view returns (uint256)",
       "function version() view returns (string)",
       "function withdraw()"
+    ],
+    "base:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537": [
+      "constructor()",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function minWithdrawalAmount() view returns (uint256 amount_)",
+      "function recipient() view returns (address recipient_)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()",
+      "function withdrawalNetwork() view returns (uint8 network_)"
     ],
     "base:0x6922ac4DbDfEdEa3a1E5535f12c3171f2b964C91": [
       "constructor()",
@@ -4781,6 +4846,7 @@
     "opstack/Layer2/L2ERC721Bridge": "0x134c37b08d464eb53a9ae063f26e795155695ec752fda38644e23175466793ca",
     "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
+    "opstack/Layer2/OperatorFeeVault": "0x044085f5049dce846d88feaa0007d7805521906a1025bb3acc0ee57c09befe47",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -4796,7 +4862,7 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "base": 52374631, "ethereum": 26153997 },
-  "permissionsConfigHash": "0xf6ec625d76247d98bfbe9b347f14325ebcf445c00661dd0ba8bf8281b1b779b4",
+  "permissionsConfigHash": "0xb22e94d48f1ec17c25ab2d247a8997fd24d272cf4042321ad79081843e9235f7",
   "permissions": {
     "base:0x4200000000000000000000000000000000000018": {
       "directlyReceivedPermissions": [
@@ -4858,6 +4924,11 @@
         {
           "permission": "upgrade",
           "from": "base:0x420000000000000000000000000000000000001A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x420000000000000000000000000000000000001b",
           "role": "admin"
         },
         {
@@ -5119,6 +5190,14 @@
         {
           "permission": "upgrade",
           "from": "base:0x420000000000000000000000000000000000001A",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x420000000000000000000000000000000000001b",
           "role": "admin",
           "via": [
             { "address": "base:0x4200000000000000000000000000000000000018" }
