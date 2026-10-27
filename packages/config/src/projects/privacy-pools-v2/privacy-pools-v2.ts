@@ -139,7 +139,7 @@ export const privacyPoolsV2: BaseProject = {
     links: {
       websites: ['https://privacypools.com'],
       documentation: ['https://privacy-pools-v2-docs.vercel.app'],
-      repositories: [MONOREPO_REPOSITORY, REFERENCE_CLIENT.repository],
+      repositories: [MONOREPO_REPOSITORY, REFERENCE_CLIENT.source.repository],
     },
     badges: [],
   },

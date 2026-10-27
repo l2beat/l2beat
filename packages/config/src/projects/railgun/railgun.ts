@@ -252,8 +252,21 @@ export const railgun: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceClient: {
       name: 'RailOxide',
-      repository: 'https://github.com/triamazikamno/railoxide',
-      commit: '8773f4ecb00c6ac7cf164ba1f989eb77dd4b0ec5',
+      url: 'https://github.com/triamazikamno/railoxide',
+      version: '0.2.0-beta.8',
+      source: {
+        repository: 'https://github.com/triamazikamno/railoxide',
+        commit: '8773f4ecb00c6ac7cf164ba1f989eb77dd4b0ec5',
+      },
+      alternatives: [
+        {
+          name: 'Railway',
+          finding:
+            "Asks Railway's PPoI node about the user's notes in batches without Tor, so the node can tie them together and to the user's IP.",
+          source:
+            'https://github.com/Railgun-Community/wallet/blob/5c9d04c844879b8377d91775052e88c836b48730/src/services/poi/wallet-poi-node-interface.ts#L140-L176',
+        },
+      ],
     },
     trackedOn: ['ethereum'],
     tokens: privacyTokens,

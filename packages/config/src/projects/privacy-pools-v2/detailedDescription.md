@@ -24,7 +24,7 @@ All keys derive from one signature of the user's wallet. Contract wallets and si
 
 ### App
 
-The ratings assume the website at [privacypools.com](https://privacypools.com), built from [public source](https://github.com/0xbow-io/privacy-pools-website-v2) and hosted by 0xbow. It reads the chain from Alchemy under 0xbow's key unless the user sets an endpoint per chain. It downloads the pool's events whole from the ASP but offers only 0xbow's relayer. Its Tor option requires a user-run Tor gateway and covers only RPC calls. It does not support connecting a local node with Tor enabled. Privacy Pools v2 is deployed on BNB Chain, Citrea, Optimism, Base, Arbitrum and Robinhood Chain, which L2BEAT does not track.
+0xbow hosts the app, built from public source. It reads the chain from Alchemy under 0xbow's key unless the user sets an endpoint per chain. It downloads the pool's events whole from the ASP but offers only 0xbow's relayer. Its Tor option requires a user-run Tor gateway and covers only RPC calls. It does not support connecting a local node with Tor enabled. Privacy Pools v2 is deployed on BNB Chain, Citrea, Optimism, Base, Arbitrum and Robinhood Chain, which L2BEAT does not track.
 
 ### Swaps and yield
 

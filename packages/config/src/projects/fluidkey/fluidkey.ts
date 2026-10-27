@@ -47,6 +47,10 @@ export const fluidkey: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
+    referenceClient: {
+      name: 'Fluidkey web app',
+      url: 'https://app.fluidkey.com',
+    },
     trackedOn: [
       'ethereum',
       'base',

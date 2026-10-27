@@ -19,7 +19,7 @@ The user's wallet derives spending and viewing keys from a recovery phrase. The 
 
 ### App
 
-Railgun names no reference wallet, so the ratings assume [RailOxide](https://github.com/triamazikamno/railoxide). It routes all traffic through built-in Tor and builds Private Proofs of Innocence (PPoI) from a local copy of the lists. Other wallets likely leak significantly more.
+Railgun names no reference wallet. RailOxide routes all traffic through built-in Tor and builds Private Proofs of Innocence (PPoI) from a local copy of the lists.
 
 ### Swaps
 

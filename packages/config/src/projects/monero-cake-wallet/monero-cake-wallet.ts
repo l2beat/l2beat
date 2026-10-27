@@ -52,8 +52,12 @@ export const moneroCakeWallet: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceClient: {
       name: 'Cake Wallet',
-      repository: 'https://github.com/cake-tech/cake_wallet',
-      commit: '7ce3cd75c3fd0c0add1cead41038ab8806ffebde',
+      url: 'https://cakewallet.com',
+      version: '6.4.6',
+      source: {
+        repository: 'https://github.com/cake-tech/cake_wallet',
+        commit: '7ce3cd75c3fd0c0add1cead41038ab8806ffebde',
+      },
     },
     trackedOn: ['ethereum'],
     tokens: [],

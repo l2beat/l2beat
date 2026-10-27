@@ -14,7 +14,7 @@ The app creates the user's keys in their browser, from a passkey, a wallet signa
 
 ### App
 
-The web app at [app.clkd.xyz](https://app.clkd.xyz) and the browser extension are closed source. They read balances through Cloaked's servers, and a linked ENS name through Alchemy under Cloaked's key. The open [recovery tool](https://github.com/cloakedxyz/clkd-recovery) recreates the user's address keys offline.
+Cloaked also offers a closed browser extension. Both read balances through Cloaked's servers, and a linked ENS name through Alchemy under Cloaked's key. The open [recovery tool](https://github.com/cloakedxyz/clkd-recovery) recreates the user's address keys offline.
 
 ### Incognito
 

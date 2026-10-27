@@ -65,8 +65,21 @@ export const zcashNearIntents: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceClient: {
       name: 'Zodl',
-      repository: 'https://github.com/zodl-inc/zodl-ios',
-      commit: '75b83d7601573e165e2dacdfaffb69750dadd05f',
+      url: 'https://zodl.com',
+      version: '3.15.0',
+      source: {
+        repository: 'https://github.com/zodl-inc/zodl-ios',
+        commit: '75b83d7601573e165e2dacdfaffb69750dadd05f',
+      },
+      alternatives: [
+        {
+          name: 'NEAR Intents web app',
+          finding:
+            'Pays only transparent Zcash addresses, which adds a public shielding step.',
+          source:
+            'https://github.com/defuse-protocol/defuse-frontend/blob/594085d3c7e60ce912fb62b768b12f46c4917510/src/components/DefuseSDK/utils/validateAddress.ts#L130-L169',
+        },
+      ],
     },
     trackedOn: ['ethereum'],
     tokens: [],

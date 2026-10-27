@@ -346,9 +346,13 @@ export const zkmoney: BaseProject = {
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceClient: {
-      name: 'zk.money',
-      repository: 'https://github.com/aztec-labs-eng/zkmoney-public',
-      commit: '00e54087526d6d89f1755958eb027e077184cd9a',
+      name: 'zk.money Desktop',
+      url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.5.0',
+      version: '0.5.0',
+      source: {
+        repository: 'https://github.com/aztec-labs-eng/zkmoney-public',
+        commit: '00e54087526d6d89f1755958eb027e077184cd9a',
+      },
     },
     anonymitySet: { type: 'partially-attributed' },
     relayerTracking: {

@@ -26,7 +26,7 @@ Losing the note secret and latest signed balance that are saved by the app loses
 
 ### App
 
-The ratings assume OA Chat, a hosted browser app with public source and local build instructions. It fetches the whole note tree and proves in the browser. It relays inference and chain reads through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build runs code beyond the public main branch, including Google and passkey sign-in, analytics and a looser verifier check. zkapi-clientd is a local daemon with an OpenAI-compatible API. It asks the operator's indexer for the user's note path and reuses keys across requests, both of which can harm privacy.
+OA Chat is a hosted browser app with local build instructions. It fetches the whole note tree and proves in the browser. It relays inference and chain reads through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build runs code beyond the public main branch, including Google and passkey sign-in, analytics and a looser verifier check. zkapi-clientd is a local daemon with an OpenAI-compatible API. It asks the operator's indexer for the user's note path and reuses keys across requests, both of which can harm privacy.
 
 ### Providers and verifier
 

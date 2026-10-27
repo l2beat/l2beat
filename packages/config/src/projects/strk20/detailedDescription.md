@@ -19,11 +19,11 @@ A shadow account is a contract the pool deploys for one user, app and index. The
 
 ### Keys
 
-The user's Starknet account signs every action, and their viewing key decrypts their notes. Ready's servers create the viewing key for most accounts, while Xverse derives it from a wallet signature. Registration cannot be changed, so a leaked viewing key exposes the user's history for good.
+The user's Starknet account signs every action, and their viewing key decrypts their notes. Ready's servers create the viewing key for most accounts. Registration cannot be changed, so a leaked viewing key exposes the user's history for good.
 
 ### App
 
-StarkWare lists Ready and Xverse as wallets, and both are closed source. Both send the user's viewing key to their own servers, which run note discovery and proving and relay pool transactions. The [SDK](https://github.com/starkware-libs/starknet-privacy) is open, and a custom client on it can use its own [prover](https://github.com/starkware-libs/sequencer/tree/main/crates/starknet_transaction_prover) (high hardware requirements), its own note discovery and an oblivious relay. Deposits still need the screening signature.
+Ready sends the user's viewing key to its own servers, which run note discovery and proving and relay pool transactions. The [SDK](https://github.com/starkware-libs/starknet-privacy) is open, and a custom client on it can use its own [prover](https://github.com/starkware-libs/sequencer/tree/main/crates/starknet_transaction_prover) (high hardware requirements), its own note discovery and an oblivious relay. Deposits still need the screening signature.
 
 ### Compliance
 

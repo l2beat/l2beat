@@ -181,8 +181,11 @@ export const interfold: BaseProject = {
     category: PRIVACY_CATEGORIES.secretBallot,
     referenceClient: {
       name: 'Interfold governance app',
-      repository: 'https://github.com/theinterfold/the-interfold-governance',
-      commit: '28b03a8b529dfa7491f01229724391665f06bd95',
+      url: 'https://governance.theinterfold.com',
+      source: {
+        repository: 'https://github.com/theinterfold/the-interfold-governance',
+        commit: '28b03a8b529dfa7491f01229724391665f06bd95',
+      },
     },
     trackedOn: ['ethereum'],
     tokens: [],

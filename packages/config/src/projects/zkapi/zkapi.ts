@@ -173,8 +173,11 @@ export const zkapi: BaseProject = {
     category: PRIVACY_CATEGORIES.anonymousAccess,
     referenceClient: {
       name: 'OA Chat',
-      repository: 'https://github.com/OpenAnonymity/oa-chat',
-      commit: '60ed5be2957d984c70a7299474927becec47b61f',
+      url: 'https://chat.openanonymity.ai',
+      source: {
+        repository: 'https://github.com/OpenAnonymity/oa-chat',
+        commit: '60ed5be2957d984c70a7299474927becec47b61f',
+      },
     },
     trackedOn: ['ethereum'],
     tokens: [

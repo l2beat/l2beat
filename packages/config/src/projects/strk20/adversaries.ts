@@ -86,7 +86,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Ready's analytics, on by default, report each shield and unshield under the user's id, while no other third party gets the account or viewing key.",
       exposureContinued:
-        "Both wallets send the account and viewing key only to their makers' servers, which run note discovery and relay pool transactions. Ready works over Tor, while Xverse's privacy endpoints refuse it.",
+        'Ready sends the account and viewing key only to its own servers, which run note discovery and relay pool transactions. It works over Tor.',
       advice: 'In Ready, switch off "Share anonymous data".',
       interior: {
         sender: 'unverifiable',
@@ -103,10 +103,6 @@ export const strk20Adversaries = definePrivacyAdversaries({
           title: 'Ready extension (discovery and relay on Ready servers)',
           url: 'https://chromewebstore.google.com/detail/dlcobpjiigpikoobohmabehhmhfoodbb',
         },
-        {
-          title: 'Xverse extension (pool calls on Xverse servers)',
-          url: 'https://chromewebstore.google.com/detail/idnnbdplmphpflfnlkomgpfbpcgelopg',
-        },
       ],
     },
     privilegedInsider: {
@@ -114,7 +110,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay.",
       exposureContinued:
-        "The wallets' servers receive the user's viewing key for note discovery and proving, and Ready's servers create it for every new account. Apps that drive a shadow account or a swap through the pool get the user's main address from the wallet connection. The holder of the screener key can block any screened depositor.",
+        "Ready's servers create every new account's viewing key and use it for note discovery and proving. Apps that drive a shadow account or a swap through the pool get the user's main address from the wallet connection. The holder of the screener key can block any screened depositor.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

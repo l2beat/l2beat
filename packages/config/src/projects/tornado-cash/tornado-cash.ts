@@ -280,8 +280,11 @@ export const tornadoCash: BaseProject = {
     category: PRIVACY_CATEGORIES.pool,
     referenceClient: {
       name: 'Tornado Cash classic app',
-      repository: 'https://github.com/tornado-dao/classic-ui',
-      commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',
+      url: 'https://app.ens.domains/tornadocash.eth?tab=records',
+      source: {
+        repository: 'https://github.com/tornado-dao/classic-ui',
+        commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',
+      },
     },
     trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),

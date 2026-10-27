@@ -250,6 +250,10 @@ export const payy: ScalingProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceClient: {
+      name: 'Payy mobile app',
+      url: 'https://payy.network',
+    },
     trackedOn: ['ethereum'],
     detailedDescription: readProjectMarkdown('payy', 'detailedDescription', {
       multisigStats: discovery.getMultisigStats('PayyMultisig'),

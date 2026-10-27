@@ -15,11 +15,9 @@ The portal releases funds only after Aztec proves the withdrawal message and one
 Accounts sign with a passkey. The released wallet requires a registered name to access an account on a new device.
 
 ### App
-The privacy ratings cover DAI payments and sUSDS savings in [zk.money Desktop v0.5.0](https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.5.0).
+The ratings cover DAI payments and sUSDS savings.
 
 The Desktop release runs local code. Its endpoint settings accept the user's own Aztec node, Ethereum endpoint and DAI enclave. The sUSDS enclave address is always fetched from Aztec Labs among other addresses in two unsigned contract lists. Replacing them can redirect future deposits and payments.
-
-The hosted wallet reloads code on every visit. Its owner can read viewing keys and request harmful passkey signatures through misleading prompts.
 
 Independent operation remains untested. It requires a modified Desktop build without screening, pointed at self-hosted contract lists. Users would submit Ethereum transactions themselves and register an approved enclave on AWS. New names still require Aztec Labs' signature. The [enclave guide](https://docs.zk.money/docs/run-an-enclave) describes image downloads and registration.
 

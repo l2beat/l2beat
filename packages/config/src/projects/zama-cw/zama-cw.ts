@@ -353,6 +353,10 @@ export const zamaCw: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.confidentialAmounts,
+    referenceClient: {
+      name: 'Zama app',
+      url: 'https://app.zama.org',
+    },
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
     anonymitySet: {
