@@ -116,6 +116,29 @@ describe(renameIdentifiers.name, () => {
     )
   })
 
+  it('renames using list entries separated by comments', () => {
+    const src = [
+      'using {',
+      '    M.inc, /* decrement, too */ M.dec,',
+      '    // addition',
+      '    add as + // with a comma, here',
+      '} for uint256 global;',
+    ].join('\n')
+    const result = renameIdentifiers(src, [
+      { from: 'M', to: 'M_1' },
+      { from: 'add', to: 'add_1' },
+    ])
+    expect(result).toEqual(
+      [
+        'using {',
+        '    M_1.inc, /* decrement, too */ M_1.dec,',
+        '    // addition',
+        '    add_1 as + // with a comma, here',
+        '} for uint256 global;',
+      ].join('\n'),
+    )
+  })
+
   it('renames across a struct definition', () => {
     const src = [
       'contract Foo {',

@@ -47,17 +47,19 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
         }
       }
       const functions = usingDecl.functions ?? []
-      const functionStarts = findUsingFunctionStarts(source, start, functions)
-      for (const [i, path] of functions.entries()) {
-        const head = path.split('.')[0] as string
-        const newName = pairMap.get(head)
-        if (newName !== undefined) {
-          const headStart = functionStarts[i] as number
-          replacements.push({
-            start: headStart,
-            end: headStart + head.length,
-            newName,
-          })
+      const heads = functions.map((path) => path.split('.')[0] as string)
+      if (heads.some((head) => pairMap.has(head))) {
+        const functionStarts = findUsingFunctionStarts(source, start, functions)
+        for (const [i, head] of heads.entries()) {
+          const newName = pairMap.get(head)
+          if (newName !== undefined) {
+            const headStart = functionStarts[i] as number
+            replacements.push({
+              start: headStart,
+              end: headStart + head.length,
+              newName,
+            })
+          }
         }
       }
     } else if (node.type === 'UserDefinedTypeName') {
@@ -183,12 +185,37 @@ function findUsingFunctionStarts(
   const starts: number[] = []
   let index = source.indexOf('{', rangeStart) + 1
   for (const path of functions) {
-    index = skipWhitespace(source, index)
+    index = skipWhitespaceAndComments(source, index)
     assert(source.startsWith(path, index), 'Using function not found')
     starts.push(index)
-    index = source.indexOf(',', index) + 1
+    index = skipPastEntry(source, index + path.length)
   }
   return starts
+}
+
+function skipPastEntry(source: string, index: number): number {
+  while (index < source.length) {
+    if (source[index] === ',' || source[index] === '}') return index + 1
+    const next = skipWhitespaceAndComments(source, index)
+    index = next === index ? index + 1 : next
+  }
+  return index
+}
+
+function skipWhitespaceAndComments(source: string, index: number): number {
+  while (true) {
+    const next = skipWhitespace(source, index)
+    if (source.startsWith('//', next)) {
+      const lineEnd = source.indexOf('\n', next)
+      index = lineEnd === -1 ? source.length : lineEnd
+    } else if (source.startsWith('/*', next)) {
+      const commentEnd = source.indexOf('*/', next + 2)
+      assert(commentEnd !== -1, 'Unterminated comment')
+      index = commentEnd + 2
+    } else {
+      return next
+    }
+  }
 }
 
 function findUsingLibraryNameStart(source: string, rangeStart: number): number {
