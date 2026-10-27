@@ -15,6 +15,7 @@ export const REFERENCE_APP = {
   referenceChip: 'Reference',
   checkedChip: 'Leaks more',
   fixLabel: 'Fix',
+  partialSource: 'The released build runs code this commit does not publish.',
   methodologyLink: 'How an app becomes the reference',
   methodologyHref: `${PRIVACY_METHODOLOGY_PATH}#${PRIVACY_REFERENCE_APP_ANCHOR}`,
 } as const
@@ -28,6 +29,7 @@ export function getReferenceAppLabel(app: PrivacyReferenceApp) {
 export function getReferenceAppNotes(app: PrivacyReferenceApp) {
   return [
     ...(app.source ? [] : ['closed source']),
+    ...(app.source?.partial ? ['partial source'] : []),
     ...(app.checkedApps.length > 0
       ? [`most private of ${app.checkedApps.length + 1} checked`]
       : []),

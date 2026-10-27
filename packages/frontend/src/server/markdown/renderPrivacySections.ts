@@ -68,10 +68,11 @@ export function renderPrivacyAdversaries(
 function renderReferenceApps(app: PrivacyReferenceApp) {
   const commit = app.source && getReferenceAppCommit(app.source)
   const version = app.version ? ` v${app.version}` : ''
+  const partial = app.source?.partial ? ` ${REFERENCE_APP.partialSource}` : ''
   return joinBlocks([
     `**${REFERENCE_APP.listTitle}**`,
     bulletList([
-      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${getReferenceAppSince(app)} ${commit ? `Commit ${link(commit.label, commit.href)}.` : 'Closed source.'}`,
+      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${getReferenceAppSince(app)} ${commit ? `Commit ${link(commit.label, commit.href)}.${partial}` : 'Closed source.'}`,
       ...app.checkedApps.map((checkedApp) => {
         const fix = checkedApp.fix
           ? ` ${REFERENCE_APP.fixLabel}: ${checkedApp.fix}`

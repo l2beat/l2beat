@@ -42,6 +42,7 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
           {commit ? (
             <>
               Commit <CustomLink href={commit.href}>{commit.label}</CustomLink>.
+              {app.source?.partial && ` ${REFERENCE_APP.partialSource}`}
             </>
           ) : (
             'Closed source.'

@@ -1163,6 +1163,8 @@ export interface ProjectPrivacyReferenceApp {
     repository: string
     /** Full commit hash. Adversary sources into the repository pin it. */
     commit: string
+    /** The released build runs code this source does not publish. */
+    partial?: boolean
   }
   /**
    * Other released apps for the protocol, checked but not rated. Each one
