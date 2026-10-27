@@ -1263,6 +1263,66 @@ describe('flatten', () => {
     ).not.toThrow()
   })
 
+  it('generated getters of struct state variables return the members', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Registry } from "./Registry.sol";
+      contract Root {
+          function signer(address registry) public view returns (address s) {
+              (, s, ) = Registry(registry).validators(1);
+          }
+      }
+    `,
+    )
+    const registryFile = sol(
+      'Registry.sol',
+      `
+      contract Registry {
+          struct Validator {
+              uint256 amount;
+              address signer;
+              uint256[] history;
+              mapping(address => bool) delegates;
+              string name;
+          }
+          mapping(uint256 => Validator) public validators;
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, registryFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      // NOTE(l2beat): This is an interface, generated from the contract source code.
+      interface Registry {
+          struct Validator {
+              uint256 amount;
+              address signer;
+              uint256[] history;
+              mapping(address => bool) delegates;
+              string name;
+          }
+
+          function validators(uint256) external view returns (uint256 amount, address signer, string memory name);
+      }
+
+      contract Root {
+          function signer(address registry) public view returns (address s) {
+              (, s, ) = Registry(registry).validators(1);
+          }
+      }
+    `),
+    )
+  })
+
   it('regression - drops used things when turned into an interface', () => {
     const file = sol(
       'Root.sol',

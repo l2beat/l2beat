@@ -5,6 +5,7 @@ import type { DeclarationType, TopLevelDeclaration } from './ParsedFilesManager'
 export function generateInterfaceSourceFromContract(
   contract: TopLevelDeclaration,
   typeMap: Map<string, DeclarationType>,
+  structMap: Map<string, AST.StructDefinition>,
   keep?: Set<string>,
 ): string {
   assert(
@@ -99,7 +100,17 @@ export function generateInterfaceSourceFromContract(
           if (!isKept(variable.name)) continue
           elements.push([
             'FunctionDefinition',
-            padding + formatPublicVariableGetter(variable, typeMap),
+            padding +
+              formatPublicVariableGetter(
+                variable,
+                typeMap,
+                findStruct(
+                  structMap,
+                  typeMap,
+                  contract.name,
+                  variable.typeName,
+                ),
+              ),
           ])
         }
         break
@@ -244,15 +255,55 @@ function formatFunctionDefinition(fn: AST.FunctionDefinition): string {
 function formatPublicVariableGetter(
   variable: AST.StateVariableDeclarationVariable,
   typeMap: Map<string, DeclarationType>,
+  struct: AST.StructDefinition | undefined,
 ): string {
   assert(variable.typeName !== null, 'Variable must have a type')
 
   const params: string[] = []
   const leafType = unwindGetterType(variable.typeName, params)
-  const returnStr = formatTypeNameForReturn(leafType, typeMap)
+  const returnStr =
+    struct === undefined
+      ? formatTypeNameForReturn(leafType, typeMap)
+      : formatStructGetterReturns(struct, typeMap)
 
   const paramStr = params.join(', ')
   return `function ${variable.name}(${paramStr}) external view returns (${returnStr});`
+}
+
+// A struct getter returns the members one by one and leaves out mappings and
+// arrays, because the getter cannot return them.
+function formatStructGetterReturns(
+  struct: AST.StructDefinition,
+  typeMap: Map<string, DeclarationType>,
+): string {
+  const returns: string[] = []
+  for (const member of struct.members) {
+    assert(member.typeName !== null, 'Struct member must have a type')
+    const type = member.typeName.type
+    if (type === 'Mapping' || type === 'ArrayTypeName') continue
+    returns.push(
+      `${formatTypeNameForReturn(member.typeName, typeMap)} ${member.name}`,
+    )
+  }
+  assert(returns.length > 0, 'Struct getter returns nothing')
+  return returns.join(', ')
+}
+
+function findStruct(
+  structMap: Map<string, AST.StructDefinition>,
+  typeMap: Map<string, DeclarationType>,
+  contractName: string,
+  typeName: AST.TypeName | null,
+): AST.StructDefinition | undefined {
+  assert(typeName !== null, 'Variable must have a type')
+  let leaf = typeName
+  while (leaf.type === 'Mapping' || leaf.type === 'ArrayTypeName') {
+    leaf = leaf.type === 'Mapping' ? leaf.valueType : leaf.baseTypeName
+  }
+  if (leaf.type !== 'UserDefinedTypeName') return undefined
+  const nested = `${contractName}.${leaf.namePath}`
+  const name = typeMap.has(nested) ? nested : leaf.namePath
+  return typeMap.get(name) === 'struct' ? structMap.get(name) : undefined
 }
 
 function unwindGetterType(
