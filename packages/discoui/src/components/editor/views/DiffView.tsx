@@ -12,6 +12,7 @@ import { IconSwap } from '../../../icons/IconSwap'
 import { IconTick } from '../../../icons/IconTick'
 import { cn } from '../../../utils/cn'
 import { DiffEditorComponent } from '../diff/DiffEditorComponent'
+import type { DiffVerdict } from '../diff/diffVerdict'
 import { useDiffEditorSettings } from '../diff/hooks/useDiffEditorSettings'
 import { LineSelector } from '../diff/plugins/lineSelector'
 import { getInlineDiff } from '../diff/utils/getInlineDiff'
@@ -22,6 +23,9 @@ export interface DiffViewProps {
   leftCode: Record<string, string>
   rightAddress: string
   rightCode: Record<string, string>
+  // EOAs and unverified contracts come as placeholder text, which can't
+  // tell whether two contracts are the same.
+  bothSidesHaveSource: boolean
   editorKey: string
 }
 
@@ -211,8 +215,44 @@ export function DiffView(props: DiffViewProps) {
           </span>
         </div>
       </div>
+      {props.bothSidesHaveSource && diff && diff.verdict !== 'different' && (
+        <SameCodeBanner
+          verdict={diff.verdict}
+          unchangedHidden={removeUnchanged}
+          onShowUnchanged={toggleRemoveUnchanged}
+        />
+      )}
       <div className="h-1 bg-coffee-900" />
       <DiffEditorComponent editorKey={props.editorKey} />
+    </div>
+  )
+}
+
+const SAME_CODE_MESSAGES: Record<Exclude<DiffVerdict, 'different'>, string> = {
+  identical: 'The contracts are identical',
+  formattingDiffers:
+    'The contracts have the same code, only formatting differs',
+  sameIgnoringComments:
+    'The contracts have the same code, ignoring comments and formatting',
+}
+
+function SameCodeBanner(props: {
+  verdict: Exclude<DiffVerdict, 'different'>
+  unchangedHidden: boolean
+  onShowUnchanged: () => void
+}) {
+  return (
+    <div className="flex items-center justify-center gap-2 border-aux-green/30 border-b bg-aux-green/10 px-4 py-1.5 text-aux-green text-sm">
+      <IconTick className="size-4 shrink-0" />
+      <span>{SAME_CODE_MESSAGES[props.verdict]}</span>
+      {props.unchangedHidden && (
+        <button
+          className="rounded-sm px-1.5 text-coffee-200 underline transition-colors hover:text-coffee-100"
+          onClick={props.onShowUnchanged}
+        >
+          Show unchanged declarations
+        </button>
+      )}
     </div>
   )
 }
