@@ -50,9 +50,16 @@ export function useSearchInput(
         switchScope(prefixScope)
       }
     }
-    if (nextScope === 'code' && text === '' && rest.startsWith('%')) {
+    const hasSelection = usePanelStore.getState().selected[0] !== undefined
+    if (
+      nextScope === 'code' &&
+      !codeInSelected &&
+      hasSelection &&
+      text === '' &&
+      rest.startsWith('%')
+    ) {
       rest = rest.slice(1)
-      setCodeInSelected(usePanelStore.getState().selected[0] !== undefined)
+      setCodeInSelected(true)
     }
     setText(rest)
   }

@@ -109,7 +109,7 @@ export function buildProjectSearchables(
       kind: 'project',
       key: `project:${project.name}`,
       title: project.name,
-      detail: `${project.contractNames.length} contracts`,
+      detail: '',
       trailing: '',
       project: project.name,
     },
