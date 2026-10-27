@@ -1,6 +1,7 @@
 import type { ConfigReader } from '@l2beat/discovery'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
+import { attachChatRouter } from './chat/router'
 import { projectSchema } from './entries'
 import { attachMcpRouter } from './mcp'
 import { AgentSession } from './session'
@@ -47,8 +48,13 @@ export const agentReceiptSchema = z.object({
 })
 export type AgentReceipt = z.infer<typeof agentReceiptSchema>
 
-export function attachAgentRouter(app: Express, configReader: ConfigReader) {
+export function attachAgentRouter(
+  app: Express,
+  configReader: ConfigReader,
+  cwd: string,
+) {
   const session = new AgentSession<AgentContext, AgentReceipt>()
+  attachChatRouter(app, cwd, () => session.context)
   attachMcpRouter(app, { configReader, session })
 
   app.get('/api/agent/events', (req, res) => session.connect(req, res))
