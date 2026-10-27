@@ -60,6 +60,11 @@ export class AgentSession<Context, Receipt extends { unavailable?: boolean }> {
     return this.broadcast(this.latestShow)
   }
 
+  // Tells tabs something changed that they fetch themselves, like a board.
+  notify(event: object): number {
+    return this.broadcast({ ...event, id: this.newId() }, VIEW_PROTOCOL)
+  }
+
   clear(): number {
     this.latestShow = undefined
     return this.broadcast({ type: 'clear' })

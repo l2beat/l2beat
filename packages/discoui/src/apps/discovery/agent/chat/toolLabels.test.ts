@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { describeTool } from './toolLabels'
+import { builtBoardId, describeTool } from './toolLabels'
 
 describe(describeTool.name, () => {
   it('names what a DiscoUI command did', () => {
@@ -61,5 +61,25 @@ describe(describeTool.name, () => {
       inDiscoUi: false,
       verbatim: true,
     })
+  })
+})
+
+describe(builtBoardId.name, () => {
+  it('reads the board a board call built, fenced or not', () => {
+    const output = 'Board 3f2a1b9c "Multisigs" shown in 1 tab: arbitrum'
+    expect(builtBoardId('mcp__discoui__board', output)).toEqual('3f2a1b9c')
+    expect(
+      builtBoardId('mcp.discoui.board', `\`\`\`\n${output}\n\`\`\``),
+    ).toEqual('3f2a1b9c')
+    expect(builtBoardId('l2b ui-agent board -', output)).toEqual('3f2a1b9c')
+  })
+
+  it('reads nothing from other tools or failed calls', () => {
+    expect(builtBoardId('mcp__discoui__boards', 'Board 1 open')).toEqual(
+      undefined,
+    )
+    expect(
+      builtBoardId('mcp__discoui__board', 'A board needs a title'),
+    ).toEqual(undefined)
   })
 })

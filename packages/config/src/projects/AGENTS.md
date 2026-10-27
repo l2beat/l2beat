@@ -47,6 +47,9 @@ Change the graph:
 - `find`: what a selector matches; when nothing, the values that exist. Selectors: a contract, `all`, `name:*Escrow*`, `template:orbitstack/*`, `category:*Bridges`, `type:eoa|multisig|contract`, `chain:eth`, `controlledBy:<contract>`, `upgradeableBy:<contract>`. The last two count signers: `upgradeableBy:"Security Council"` matches what a multisig it signs for can upgrade.
 - `discard`: put back the graph from before all your pending views.
 
+Build a board:
+- `board`: for "show me a table of", "list everything that", "compare". A board is blocks in DiscoUI's board panel: markdown, tables whose rows are selectors and whose columns are properties, discovered value paths (`$threshold`) or per-row selectors (`upgradeableBy:{row}`), buttons that apply a view, and sandboxed HTML for what the rest cannot draw. Find the answer with any tool you like, then show it on a board, not in your reply or a file; the reply says in a sentence what the board shows. Prefer bindings to copied values: a saved board (`boards/<name>.json` in the project) reads the discovery again when opened, while cells you computed stay as written. What did not bind comes back in the result and shows on the board. Pass `id` to change a board; `boards` lists them and gives one's spec.
+
 A wrong name or selector fails with candidates, a snippet that is not in the code fails too: fix it and call again. A snippet opens where it is implemented, past interface declarations; found more than once, it opens at the first and the result lists the others: quote a longer snippet, or when they are other implementations, name them in the note. Keep notes short, the details go in your reply.
 
 ## Templates
