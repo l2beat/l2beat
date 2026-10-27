@@ -6,9 +6,11 @@ import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('earnm')
+const archivedAt = UnixTime(1793059200) // 2026-10-27T00:00:00Z
 
 export const earnm: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1761662460),
+  archivedAt,
   hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Alchemy],
@@ -39,6 +41,7 @@ export const earnm: ScalingProject = orbitStackL3({
   chainConfig: {
     name: 'earnm',
     chainId: 32766,
+    untilTimestamp: archivedAt,
     explorerUrl: 'https://earnm-mainnet.explorer.alchemy.com',
     gasTokens: ['ETH'],
     multicallContracts: [
