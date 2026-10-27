@@ -35,6 +35,7 @@ import {
   type SideFilter,
   type Snapshot,
   type Sort,
+  STATUS_FILTERS,
   type StatusFilter,
   sortRows,
 } from './rows'
@@ -74,7 +75,7 @@ export function TvsCoveragePage() {
   )
 
   return (
-    <AppLayout>
+    <AppLayout className="min-w-0">
       <Card className="flex h-[calc(100vh-16px)] flex-col">
         {isLoading ? (
           <LoadingState className="h-full" />
@@ -175,25 +176,32 @@ function Coverage({
               </span>
             </WithTooltip>
           )}
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            className="ml-auto size-8 self-center"
+            disabled={isRefreshing}
+            aria-label="Rebuild snapshot"
+            title="Rebuild snapshot"
+            onClick={onRefresh}
+          >
+            <RotateCwIcon className={cn(isRefreshing && 'animate-spin')} />
+          </Button>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <FilterSelect
             label="TVS status"
-            className="w-36"
             value={filters.status}
             onChange={(status) => update({ status: status as StatusFilter })}
-            options={[
-              ['missing', 'Missing'],
-              ['review', 'Needs review'],
-              ['unpriced', 'Needs pricing'],
-              ['scheduled', 'Scheduled'],
-              ['counted', 'Counted'],
-              ['all', 'All'],
-            ]}
+            options={STATUS_FILTERS.map((option) => [
+              option.value,
+              option.label,
+              option.description,
+            ])}
           />
           <FilterSelect
             label="Project"
-            className="w-44"
             value={filters.project}
             onChange={(project) => update({ project })}
             options={[
@@ -203,7 +211,6 @@ function Coverage({
           />
           <FilterSelect
             label="Side"
-            className="w-32"
             value={filters.side}
             onChange={(side) => update({ side: side as SideFilter })}
             options={[
@@ -214,7 +221,6 @@ function Coverage({
           />
           <FilterSelect
             label="Last seen"
-            className="w-32"
             value={String(filters.seenWithinDays ?? 'any')}
             onChange={(days) =>
               update({
@@ -236,7 +242,7 @@ function Coverage({
             onChange={(event) =>
               update({ minValueUsd: Number(event.target.value) || 0 })
             }
-            className="h-8 w-32"
+            className="h-8 w-28"
             placeholder="Min value $"
             aria-label="Minimum value"
           />
@@ -245,8 +251,8 @@ function Coverage({
             value={filters.search}
             onChange={(event) => update({ search: event.target.value })}
             className="h-8 w-40 min-w-40 flex-1"
-            placeholder="Search"
-            aria-label="Search"
+            placeholder="Token, address, project or bridge"
+            aria-label="Search by token, address, project or bridge"
             autoComplete="off"
           />
           <div className="flex items-center gap-1.5">
@@ -257,25 +263,16 @@ function Coverage({
                 update({ showIgnored: checked === true })
               }
             />
-            <Label htmlFor="tvs-coverage-ignored" className="text-xs">
-              Ignored
+            <Label
+              htmlFor="tvs-coverage-ignored"
+              className="whitespace-nowrap text-xs"
+            >
+              Show ignored
             </Label>
           </div>
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="size-8"
-            disabled={isRefreshing}
-            aria-label="Rebuild snapshot"
-            title="Rebuild snapshot"
-            onClick={onRefresh}
-          >
-            <RotateCwIcon className={cn(isRefreshing && 'animate-spin')} />
-          </Button>
         </div>
       </CardHeader>
-      <CardContent className="min-h-0 flex-1 overflow-y-auto">
+      <CardContent className="min-h-0 flex-1 overflow-y-auto [&_[data-slot=table-container]]:overflow-visible">
         <TvsCoverageTable
           rows={rows.slice(0, visibleRows)}
           totalRows={rows.length}
@@ -291,25 +288,23 @@ function Coverage({
 
 function FilterSelect({
   label,
-  className,
   value,
   onChange,
   options,
 }: {
   label: string
-  className: string
   value: string
   onChange: (value: string) => void
-  options: [string, string][]
+  options: [string, string, string?][]
 }) {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger size="sm" className={className} aria-label={label}>
+      <SelectTrigger size="sm" aria-label={label}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        {options.map(([option, name]) => (
-          <SelectItem key={option} value={option}>
+        {options.map(([option, name, description]) => (
+          <SelectItem key={option} value={option} description={description}>
             {name}
           </SelectItem>
         ))}

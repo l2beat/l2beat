@@ -14,6 +14,47 @@ export type StatusFilter =
   | 'all'
 export type SideFilter = 'all' | 'chain' | 'escrow'
 
+export const STATUS_FILTERS: {
+  value: StatusFilter
+  label: string
+  description: string
+}[] = [
+  {
+    value: 'missing',
+    label: 'Missing',
+    description:
+      'The project counts neither this token nor any other deployment of its asset.',
+  },
+  {
+    value: 'review',
+    label: 'Needs review',
+    description:
+      'The project counts another deployment of the same asset, but not this one.',
+  },
+  {
+    value: 'unpriced',
+    label: 'Needs pricing',
+    description:
+      'Missing or review rows without a CoinGecko price, so they have no value.',
+  },
+  {
+    value: 'scheduled',
+    label: 'Scheduled',
+    description: 'Counted by a formula that starts in the future.',
+  },
+  {
+    value: 'counted',
+    label: 'Counted',
+    description:
+      "Counted directly, or through its locked counterpart in the project's escrow.",
+  },
+  {
+    value: 'all',
+    label: 'All',
+    description: 'Every row, including counted ones.',
+  },
+]
+
 export interface Filters {
   status: StatusFilter
   project: string
@@ -32,11 +73,9 @@ export interface Names {
 export type SortKey =
   | 'project'
   | 'token'
-  | 'amount'
   | 'value'
   | 'volume'
   | 'status'
-  | 'role'
   | 'bridges'
   | 'lastSeen'
 
@@ -145,16 +184,12 @@ function sortValue(
       return names.project(row.projectId)
     case 'token':
       return row.symbol ?? row.abstractSymbol
-    case 'amount':
-      return row.value?.amount
     case 'value':
       return row.value?.valueUsd
     case 'volume':
       return row.volumeUsd
     case 'status':
       return formatStatus(row.status)
-    case 'role':
-      return row.role ? formatRole(row.role) : undefined
     case 'bridges':
       return row.bridges.map((bridge) => names.bridge(bridge.id)).join(', ')
     case 'lastSeen':
@@ -163,7 +198,7 @@ function sortValue(
 }
 
 export function defaultDirection(key: SortKey): Sort['direction'] {
-  return ['project', 'token', 'status', 'role', 'bridges'].includes(key)
+  return ['project', 'token', 'status', 'bridges'].includes(key)
     ? 'asc'
     : 'desc'
 }
@@ -238,6 +273,10 @@ export function formatAge(timestamp: number, now: number) {
   if (seconds < 60 * 60) return `${Math.floor(seconds / 60)} min ago`
   if (seconds < DAY) return `${Math.floor(seconds / (60 * 60))} h ago`
   return `${Math.floor(seconds / DAY)} d ago`
+}
+
+export function formatChain(chain: string) {
+  return chain.charAt(0).toUpperCase() + chain.slice(1)
 }
 
 export function shortAddress(address: string) {

@@ -14,6 +14,8 @@ import {
   describeStatus,
   formatAmount,
   formatBridgeType,
+  formatChain,
+  formatRole,
   formatStatus,
   type Row,
   type Snapshot,
@@ -79,17 +81,26 @@ export function ProjectCell({
   project: Snapshot['projects'][number] | undefined
 }) {
   return (
-    <>
-      <div className="flex items-center gap-2 font-medium">
-        {project && (
-          <Icon src={project.iconUrl} className="size-5 rounded-sm" />
+    <div className="flex min-w-0 items-start gap-2">
+      {project ? (
+        <Icon
+          src={project.iconUrl}
+          className="mt-0.5 size-4 shrink-0 rounded-sm"
+        />
+      ) : (
+        <span className="size-4 shrink-0" />
+      )}
+      <div className="min-w-0">
+        <div className="truncate font-medium">
+          {project?.name ?? row.projectId}
+        </div>
+        {row.side === 'escrow' && (
+          <div className="truncate text-muted-foreground text-xs">
+            Escrow on {formatChain(row.chain)}
+          </div>
         )}
-        {project?.name ?? row.projectId}
       </div>
-      <div className="text-muted-foreground text-xs">
-        {row.side === 'escrow' ? `escrow on ${row.chain}` : row.chain}
-      </div>
-    </>
+    </div>
   )
 }
 
@@ -103,17 +114,24 @@ export function TokenCell({
   const symbol = row.symbol ?? row.abstractSymbol ?? 'Unknown'
   const vault = row.value?.vaultAsset
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex min-w-0 items-center gap-2">
       <Icon
         src={tokenIconUrl(row.iconUrl)}
         fallback="/images/token-placeholder.png"
-        className="size-6 rounded-full bg-muted"
+        className="size-6 shrink-0 rounded-full bg-muted"
       />
       <div className="min-w-0">
-        <div className="flex flex-wrap items-center gap-1">
-          <span className="font-medium">{symbol}</span>
+        <div className="flex min-w-0 items-center gap-1.5">
+          <span className="truncate font-medium">{symbol}</span>
+          {row.role && row.role !== 'unknown' && (
+            <span className="shrink-0 text-muted-foreground text-xs">
+              {formatRole(row.role).toLowerCase()}
+            </span>
+          )}
           {row.ignored && (
-            <span className="text-muted-foreground text-xs">ignored</span>
+            <span className="shrink-0 text-muted-foreground text-xs">
+              ignored
+            </span>
           )}
           {vault && (
             <WithTooltip
@@ -130,18 +148,19 @@ export function TokenCell({
               <Badge
                 variant="outline"
                 className={cn(
-                  'h-5 max-w-32 px-1.5 font-normal text-[10px]',
+                  'h-5 max-w-28 px-1.5 font-normal text-[10px]',
                   vault.counted && NOTE_BADGE,
                 )}
               >
-                Vault: {vault.symbol ?? shortAddress(vault.address)}
-                {vault.counted && ' (counted)'}
+                <span className="truncate">
+                  Vault: {vault.symbol ?? shortAddress(vault.address)}
+                </span>
               </Badge>
             </WithTooltip>
           )}
         </div>
         <div
-          className="font-mono text-muted-foreground text-xs"
+          className="truncate font-mono text-muted-foreground text-xs"
           title={row.address}
         >
           {explorerUrl && /^0x[0-9a-f]{40}$/.test(row.address) ? (
@@ -161,26 +180,9 @@ export function TokenCell({
   )
 }
 
-export function AmountCell({ row }: { row: Row }) {
-  const value = row.value
-  if (value?.amount === undefined) return <Empty />
-  return (
-    <div className="flex flex-col items-end gap-1">
-      <span title={String(value.amount)}>{formatAmount(value.amount)}</span>
-      {value.cappedByCirculatingSupply && (
-        <WithTooltip content="The on-chain supply is above CoinGecko's global circulating supply, so the circulating supply is used.">
-          <Badge variant="outline" className={NOTE_BADGE}>
-            capped
-          </Badge>
-        </WithTooltip>
-      )}
-    </div>
-  )
-}
-
 export function ValueCell({ row }: { row: Row }) {
-  const valueUsd = row.value?.valueUsd
-  if (valueUsd === undefined) {
+  const value = row.value
+  if (value?.amount === undefined) {
     return (
       <WithTooltip
         content={row.pricing ? undefined : 'No price for this token'}
@@ -191,26 +193,48 @@ export function ValueCell({ row }: { row: Row }) {
   }
   const via = row.pricing?.via
   return (
-    <WithTooltip
-      content={
-        <>
-          <div>
-            Price {formatCurrency(row.value?.priceUsd ?? 0, 'usd')} from{' '}
-            {row.pricing?.coingeckoId}
-          </div>
-          {via && (
-            <div>
-              Priced as its locked counterpart on {via.chain} ({via.address})
-            </div>
-          )}
-        </>
-      }
-    >
-      <span className="font-medium">
-        {formatCurrency(valueUsd, 'usd')}
-        {via && <span className="text-muted-foreground">*</span>}
-      </span>
-    </WithTooltip>
+    <div className="flex flex-col items-end">
+      {value.valueUsd === undefined ? (
+        <WithTooltip content="No price for this token">
+          <Empty />
+        </WithTooltip>
+      ) : (
+        <WithTooltip
+          content={
+            <>
+              <div>
+                Price {formatCurrency(value.priceUsd ?? 0, 'usd')} from{' '}
+                {row.pricing?.coingeckoId}
+              </div>
+              {via && (
+                <div>
+                  Priced as its locked counterpart on {via.chain} ({via.address}
+                  )
+                </div>
+              )}
+            </>
+          }
+        >
+          <span className="font-medium">
+            {formatCurrency(value.valueUsd, 'usd')}
+            {via && <span className="text-muted-foreground">*</span>}
+          </span>
+        </WithTooltip>
+      )}
+      <div className="flex items-center gap-1 text-muted-foreground text-xs">
+        {value.cappedByCirculatingSupply && (
+          <WithTooltip content="The on-chain supply is above CoinGecko's global circulating supply, so the circulating supply is used.">
+            <Badge
+              variant="outline"
+              className={cn(NOTE_BADGE, 'h-4 px-1 text-[10px]')}
+            >
+              capped
+            </Badge>
+          </WithTooltip>
+        )}
+        <span title={String(value.amount)}>{formatAmount(value.amount)}</span>
+      </div>
+    </div>
   )
 }
 
@@ -233,7 +257,7 @@ export function BridgeIconStack({
         </div>
       ))}
     >
-      <div className="-space-x-1.5 flex items-center">
+      <div className="-space-x-1.5 isolate flex items-center">
         {visible.map((bridge, index) => (
           <span
             key={`${bridge.id}:${bridge.bridgeType}`}
