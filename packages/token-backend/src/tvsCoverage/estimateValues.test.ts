@@ -4,14 +4,16 @@ import {
   type ChainCallResult,
   estimateValues,
   type MarketData,
+  MissingRpcError,
   rowKey,
 } from './estimateValues'
-import type { CoverageResult, CoverageRow } from './model'
+import type { CoverageResult, CoverageRow, MintedCopy } from './model'
 
 const TOKEN = '0x1111111111111111111111111111111111111111'
 const ESCROW_A = '0x2222222222222222222222222222222222222222'
 const ESCROW_B = '0x3333333333333333333333333333333333333333'
 const ASSET = '0x4444444444444444444444444444444444444444'
+const MINTED = '0x5555555555555555555555555555555555555555'
 
 describe(estimateValues.name, () => {
   it('values a chain token by total supply capped at circulating supply', async () => {
@@ -28,7 +30,10 @@ describe(estimateValues.name, () => {
 
     expect(values.get(rowKey(row))).toEqual({
       amount: 3,
+      amountGap: undefined,
       cappedByCirculatingSupply: true,
+      escrowBalance: undefined,
+      mintedCopy: undefined,
       priceUsd: 2,
       valueUsd: 6,
       vaultAsset: undefined,
@@ -50,11 +55,68 @@ describe(estimateValues.name, () => {
 
     expect(values.get(rowKey(row))).toEqual({
       amount: 5,
+      amountGap: undefined,
       cappedByCirculatingSupply: false,
+      escrowBalance: 5,
+      mintedCopy: undefined,
       priceUsd: 10,
       valueUsd: 50,
       vaultAsset: undefined,
     })
+  })
+
+  it('values an escrow token by its minted copy when that is larger', async () => {
+    const row = coverageRow({ side: 'escrow', chain: 'ethereum', decimals: 0 })
+    const reader = fakeReader({
+      [`balanceOf:${TOKEN}:${ESCROW_A}`]: 0n,
+      [`totalSupply:${MINTED}`]: 900n,
+    })
+
+    const { values } = await estimateValues(
+      coverage([row], {
+        escrows: [ESCROW_A],
+        minted: {
+          chain: 'arbitrum',
+          address: MINTED,
+          symbol: 'USDC.e',
+          decimals: 2,
+        },
+      }),
+      reader,
+      prices({ 'usd-coin': { priceUsd: 1, circulatingSupply: undefined } }),
+    )
+
+    expect(reader.read).toHaveBeenCalledWith('arbitrum', [
+      { type: 'totalSupply', token: MINTED },
+    ])
+    expect(values.get(rowKey(row))).toEqual({
+      amount: 9,
+      amountGap: undefined,
+      cappedByCirculatingSupply: false,
+      escrowBalance: 0,
+      mintedCopy: {
+        chain: 'arbitrum',
+        address: MINTED,
+        symbol: 'USDC.e',
+        decimals: 2,
+        supply: 9,
+      },
+      priceUsd: 1,
+      valueUsd: 9,
+      vaultAsset: undefined,
+    })
+  })
+
+  it('reads decimals on chain for tokens missing from the token DB', async () => {
+    const row = coverageRow({ decimals: undefined })
+    const reader = fakeReader({
+      [`totalSupply:${TOKEN}`]: 2_000_000n,
+      [`decimals:${TOKEN}`]: 6n,
+    })
+
+    const { values } = await estimateValues(coverage([row]), reader, prices({}))
+
+    expect(values.get(rowKey(row))?.amount).toEqual(2)
   })
 
   it('flags vault tokens and whether the project counts their asset', async () => {
@@ -78,19 +140,47 @@ describe(estimateValues.name, () => {
     expect(values.get(rowKey(row))?.valueUsd).toEqual(undefined)
   })
 
-  it('skips counted rows and non-EVM addresses', async () => {
+  it('skips counted rows and says why other rows have no amount', async () => {
+    const nonEvm = coverageRow({
+      address: 'So11111111111111111111111111111111111111112',
+    })
+    const native = coverageRow({ address: 'native' })
+    const noEscrows = coverageRow({ side: 'escrow', chain: 'ethereum' })
     const reader = fakeReader({})
+
     const { values } = await estimateValues(
-      coverage([
-        coverageRow({ status: 'counted' }),
-        coverageRow({ address: 'So11111111111111111111111111111111111111112' }),
-      ]),
+      coverage([coverageRow({ status: 'counted' }), nonEvm, native, noEscrows]),
       reader,
       prices({}),
     )
 
-    expect(values.size).toEqual(0)
+    expect(Array.from(values.values()).map((value) => value.amountGap)).toEqual(
+      ['nonEvm', 'nativeSupply', 'noEscrows'],
+    )
     expect(reader.read).toHaveBeenCalledTimes(0)
+  })
+
+  it('tells a chain without an RPC apart from a failed read', async () => {
+    const noRpc = coverageRow({ chain: 'scroll' })
+    const failed = coverageRow()
+    const reader = {
+      read: mockFn(async (chain: string, calls: ChainCall[]) => {
+        if (chain === 'scroll') throw new MissingRpcError('scroll')
+        return calls.map(() => undefined)
+      }),
+    }
+
+    const { values, warnings } = await estimateValues(
+      coverage([noRpc, failed]),
+      reader,
+      prices({}),
+    )
+
+    expect(values.get(rowKey(noRpc))?.amountGap).toEqual('noRpc')
+    expect(values.get(rowKey(failed))?.amountGap).toEqual('readFailed')
+    expect(warnings).toEqual([
+      'Reading scroll failed: No RPC for scroll in the token DB',
+    ])
   })
 
   it('reports a failing chain and keeps other values', async () => {
@@ -145,13 +235,14 @@ function coverageRow(overrides: Partial<CoverageRow> = {}): CoverageRow {
 
 function coverage(
   rows: CoverageRow[],
-  options: { escrows?: string[]; counted?: string[] } = {},
+  options: { escrows?: string[]; counted?: string[]; minted?: MintedCopy } = {},
 ): CoverageResult {
   return {
     rows,
     isCounted: (_, token) =>
       (options.counted ?? []).includes(`${token.chain}:${token.address}`),
     escrowAddresses: () => options.escrows ?? [],
+    mintedCopy: () => options.minted,
   }
 }
 

@@ -7,7 +7,12 @@ import {
   parseAbi,
   zeroAddress,
 } from 'viem'
-import type { ChainCall, ChainCallResult, ChainReader } from './estimateValues'
+import {
+  type ChainCall,
+  type ChainCallResult,
+  type ChainReader,
+  MissingRpcError,
+} from './estimateValues'
 
 const MULTICALL3 = '0xcA11bde05977b3631167028862bE2a173976CA11'
 const MULTICALL_CHUNK = 200
@@ -31,8 +36,9 @@ export class ViemChainReader implements ChainReader {
   constructor(private readonly rpcUrls: Map<string, string>) {}
 
   async read(chain: string, calls: ChainCall[]): Promise<ChainCallResult[]> {
+    if (calls.length === 0) return []
     const client = this.getClient(chain)
-    if (!client || calls.length === 0) return calls.map(() => undefined)
+    if (!client) throw new MissingRpcError(chain)
 
     const contractCalls: { index: number; call: ContractCall }[] = []
     const nativeBalances: { index: number; holder: Address }[] = []
@@ -67,7 +73,12 @@ export class ViemChainReader implements ChainReader {
     contractCalls.forEach(({ index, call }, i) => {
       const value = contractResults[i]
       if (calls[index]?.type !== 'vaultAsset') {
-        results[index] = typeof value === 'bigint' ? value : undefined
+        results[index] =
+          typeof value === 'bigint'
+            ? value
+            : typeof value === 'number'
+              ? BigInt(value)
+              : undefined
       } else if (call.functionName === 'asset') {
         if (typeof value === 'string' && value !== zeroAddress) {
           assets.set(index, value as Address)
@@ -155,6 +166,8 @@ function toContractCalls(call: ChainCall): ContractCall[] {
   switch (call.type) {
     case 'totalSupply':
       return [{ address, abi: erc20Abi, functionName: 'totalSupply' }]
+    case 'decimals':
+      return [{ address, abi: erc20Abi, functionName: 'decimals' }]
     case 'balanceOf':
       return [
         {

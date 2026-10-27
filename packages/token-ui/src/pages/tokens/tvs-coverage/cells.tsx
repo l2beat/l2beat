@@ -185,22 +185,24 @@ export function TokenCell({
 
 export function ValueCell({ row }: { row: Row }) {
   const value = row.value
-  if (value?.amount === undefined) {
+  if (!value) return null
+  if (value.amount === undefined) {
     return (
-      <WithTooltip
-        content={row.pricing ? undefined : 'No price for this token'}
-      >
-        <Empty />
-      </WithTooltip>
+      <Muted tooltip={describeAmountGap(row)}>
+        {AMOUNT_GAPS[value.amountGap ?? 'readFailed']}
+      </Muted>
     )
   }
   const via = row.pricing?.via
+  const minted = value.mintedCopy
+  const fromMinted =
+    row.side === 'escrow' &&
+    minted?.supply !== undefined &&
+    minted.supply > (value.escrowBalance ?? 0)
   return (
     <div className="flex flex-col items-end">
       {value.valueUsd === undefined ? (
-        <WithTooltip content="No price for this token">
-          <Empty />
-        </WithTooltip>
+        <Muted tooltip={describeMissingPrice(row)}>no price</Muted>
       ) : (
         <WithTooltip
           content={`Price ${formatCurrency(value.priceUsd ?? 0, 'usd')} from ${row.pricing?.coingeckoId}`}
@@ -238,9 +240,118 @@ export function ValueCell({ row }: { row: Row }) {
             </Badge>
           </WithTooltip>
         )}
-        <span title={String(value.amount)}>{formatAmount(value.amount)}</span>
+        {fromMinted && (
+          <Badge variant="outline" className={cn(NOTE_BADGE, 'h-4 px-1')}>
+            minted
+          </Badge>
+        )}
+        <WithTooltip
+          content={
+            row.side === 'escrow' ? <EscrowAmounts row={row} /> : undefined
+          }
+        >
+          <span
+            title={row.side === 'escrow' ? undefined : String(value.amount)}
+          >
+            {row.side === 'escrow' && value.amount === 0
+              ? 'none in escrows'
+              : formatAmount(value.amount)}
+          </span>
+        </WithTooltip>
       </div>
     </div>
+  )
+}
+
+const AMOUNT_GAPS: Record<
+  NonNullable<NonNullable<Row['value']>['amountGap']>,
+  string
+> = {
+  nonEvm: 'non-EVM',
+  nativeSupply: 'native',
+  noEscrows: 'no escrows',
+  noRpc: 'no RPC',
+  readFailed: 'read failed',
+}
+
+function describeAmountGap(row: Row) {
+  const chain = formatChain(row.chain)
+  switch (row.value?.amountGap) {
+    case 'nonEvm':
+      return 'Only EVM token addresses are read.'
+    case 'nativeSupply':
+      return "The supply of a chain's native token is not read."
+    case 'noEscrows':
+      return `The project's TVS config lists no escrows on ${chain}, and there is no minted copy to read.`
+    case 'noRpc':
+      return `The token DB has no RPC for ${chain}.`
+    default:
+      return row.side === 'escrow'
+        ? `Reading the escrow balances on ${chain} failed.`
+        : `Reading totalSupply or decimals on ${chain} failed. The address may not be an ERC-20 token.`
+  }
+}
+
+function describeMissingPrice(row: Row) {
+  if (row.coingeckoId && !row.pricing) {
+    return 'The token DB marks the price of this token as unreliable.'
+  }
+  if (row.pricing) {
+    return `CoinGecko returned no price for ${row.pricing.coingeckoId}.`
+  }
+  return 'The token DB has no CoinGecko id for this token, and there is no locked counterpart to take a price from.'
+}
+
+function EscrowAmounts({ row }: { row: Row }) {
+  const value = row.value
+  if (!value) return null
+  const minted = value.mintedCopy
+  return (
+    <div className="space-y-1">
+      <div>
+        In {row.escrowAddresses.length} known escrows:{' '}
+        {value.escrowBalance === undefined
+          ? 'not read'
+          : formatAmount(value.escrowBalance)}
+      </div>
+      {minted && (
+        <div>
+          Minted as {minted.symbol ?? shortAddress(minted.address)} on{' '}
+          {formatChain(minted.chain)}:{' '}
+          {minted.supply === undefined
+            ? 'not read'
+            : formatAmount(minted.supply)}
+        </div>
+      )}
+      {minted?.supply !== undefined &&
+        minted.supply > (value.escrowBalance ?? 0) && (
+          <div>
+            The minted supply is larger and is used. The rest is locked in
+            escrows the TVS config does not list.
+          </div>
+        )}
+      {row.escrowAddresses.length > 0 && (
+        <div className="font-mono opacity-75">
+          {row.escrowAddresses.map((address) => (
+            <div key={address}>{address}</div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function Muted({
+  tooltip,
+  children,
+}: {
+  tooltip: string
+  children: ReactNode
+}) {
+  return (
+    <WithTooltip content={tooltip}>
+      <span className="text-muted-foreground text-xs">{children}</span>
+    </WithTooltip>
   )
 }
 

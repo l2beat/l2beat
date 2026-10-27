@@ -72,10 +72,16 @@ export interface Pricing {
   via: (TokenRef & { symbol: string }) | undefined
 }
 
+export interface MintedCopy extends TokenRef {
+  symbol: string | undefined
+  decimals: number | undefined
+}
+
 export interface CoverageResult {
   rows: CoverageRow[]
   isCounted: (projectId: string, token: TokenRef) => boolean
   escrowAddresses: (projectId: string, chain: string) => string[]
+  mintedCopy: (projectId: string, token: TokenRef) => MintedCopy | undefined
 }
 
 interface FormulaLeaf extends TokenRef {
@@ -261,6 +267,32 @@ export function buildCoverage(input: {
       }
       return Array.from(addresses).sort()
     },
+    mintedCopy: (projectId, token) => {
+      const index = byId.get(projectId)
+      if (!index) return undefined
+      const copies = (relations.get(tokenKey(token.chain, token.address)) ?? [])
+        .filter(
+          (edge) =>
+            edge.bridgeType === 'lockAndMint' &&
+            edge.role === 'locked' &&
+            index.plugins.has(edge.plugin),
+        )
+        .map((edge) => toMintedCopy(edge.counterpart, tokens))
+      return (
+        copies.find((copy) => copy.chain === index.project.chain) ?? copies[0]
+      )
+    },
+  }
+}
+
+function toMintedCopy(key: string, tokens: Map<string, TokenInfo>): MintedCopy {
+  const deployedToken = tokens.get(key)?.deployedToken
+  const separator = key.indexOf(':')
+  return {
+    chain: key.slice(0, separator),
+    address: key.slice(separator + 1),
+    symbol: deployedToken?.symbol,
+    decimals: deployedToken?.decimals,
   }
 }
 

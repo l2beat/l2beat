@@ -22,7 +22,10 @@ export interface TvsCoverageSnapshot {
   }[]
   chains: { name: string; explorerUrl: string | undefined }[]
   bridges: { id: string; name: string; iconUrl: string }[]
-  rows: (CoverageRow & { value: RowValue | undefined })[]
+  rows: (CoverageRow & {
+    value: RowValue | undefined
+    escrowAddresses: string[]
+  })[]
   warnings: string[]
 }
 
@@ -121,6 +124,10 @@ export async function buildSnapshot(
     rows: coverage.rows.map((row) => ({
       ...row,
       value: values.get(rowKey(row)),
+      escrowAddresses:
+        row.side === 'escrow'
+          ? coverage.escrowAddresses(row.projectId, row.chain)
+          : [],
     })),
     warnings,
   }

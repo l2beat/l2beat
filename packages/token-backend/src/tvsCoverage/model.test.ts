@@ -480,6 +480,36 @@ describe('buildCoverage helpers', () => {
       [ARB_USDC, undefined],
     ])
   })
+
+  it("finds the copy minted by the project's own bridge for an escrow token", () => {
+    const result = buildCoverage({
+      stats: [],
+      projects: [project],
+      deployedTokens: [deployedToken('arbitrum', ARB_USDC_E, 'circle.USDC')],
+      abstractTokens: [],
+      relations: [
+        relation(['ethereum', L1_USDC], ['base', ARB_USDC], 'axelar'),
+        relation(
+          ['ethereum', L1_USDC],
+          ['arbitrum', ARB_USDC_E],
+          'orbitstack-standardgateway',
+        ),
+      ],
+      timestamp: NOW,
+    })
+
+    expect(
+      result.mintedCopy('arbitrum', { chain: 'ethereum', address: L1_USDC }),
+    ).toEqual({
+      chain: 'arbitrum',
+      address: ARB_USDC_E,
+      symbol: 'USDC',
+      decimals: 6,
+    })
+    expect(
+      result.mintedCopy('arbitrum', { chain: 'ethereum', address: ARB_USDC }),
+    ).toEqual(undefined)
+  })
 })
 
 function coverage(input: {

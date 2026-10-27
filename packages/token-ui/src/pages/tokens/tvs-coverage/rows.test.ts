@@ -104,7 +104,10 @@ function addresses(rows: Row[]) {
 function value(valueUsd: number): Row['value'] {
   return {
     amount: 1,
+    amountGap: undefined,
     cappedByCirculatingSupply: false,
+    escrowBalance: undefined,
+    mintedCopy: undefined,
     priceUsd: valueUsd,
     valueUsd,
     vaultAsset: undefined,
@@ -134,6 +137,7 @@ function row(overrides: Partial<Row>): Row {
     transferCount: 0,
     lastSeen: NOW,
     value: undefined,
+    escrowAddresses: [],
     ...overrides,
   }
 }
