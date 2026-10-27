@@ -146,6 +146,7 @@ export function applyStep(step: AgentStep) {
   docking.ensureLeaf('code')
   const code = useCodeStore.getState()
   code.setSourceIndex(step.code.address, step.code.sourceIndex)
+  agentRangeAddress = step.code.address
   code.showRange(step.code.address, {
     startOffset: step.code.offset,
     length: step.code.length,
@@ -153,11 +154,19 @@ export function applyStep(step: AgentStep) {
   })
 }
 
+// The code panel shows a stored range again whenever its contract opens, so
+// clearing the agent's highlight clears its range too, and only its own.
+let agentRangeAddress: string | undefined
+
 function clearCodeHighlight() {
-  useCodeStore
-    .getState()
-    .editors[CODE_EDITOR_ID]?.getPlugin(RangeHighlightPlugin)
+  const code = useCodeStore.getState()
+  code.editors[CODE_EDITOR_ID]
+    ?.getPlugin(RangeHighlightPlugin)
     ?.clearHighlight()
+  if (agentRangeAddress !== undefined) {
+    code.showRange(agentRangeAddress, undefined)
+    agentRangeAddress = undefined
+  }
 }
 
 function useAgentKeyboard() {
