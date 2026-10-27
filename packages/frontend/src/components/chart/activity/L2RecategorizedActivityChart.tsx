@@ -18,22 +18,6 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  CyanFillGradientDef,
-  CyanStrokeGradientDef,
-} from '~/components/core/chart/defs/CyanGradientDef'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/EthereumGradientDef'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
-import {
-  YellowFillGradientDef,
-  YellowStrokeGradientDef,
-} from '~/components/core/chart/defs/YellowGradientDef'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
@@ -146,41 +130,28 @@ export function L2RecategorizedActivityChart({
     >
       {/* Without right:1 the chart last point is not hoverable for some reason */}
       <AreaChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
-        <defs>
-          <PinkFillGradientDef id="rollups-fill" />
-          <PinkStrokeGradientDef id="rollups-stroke" />
-          <CyanFillGradientDef id="validiums-and-optimiums-fill" />
-          <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
-          <YellowFillGradientDef id="others-fill" />
-          <YellowStrokeGradientDef id="others-stroke" />
-          <EthereumFillGradientDef id="ethereum-fill" />
-          <EthereumStrokeGradientDef id="ethereum-stroke" />
-        </defs>
         <ChartLegend content={<ChartLegendContent />} />
         <ChartStrokeOverFillAreaComponents
           data={[
             {
               dataKey: 'rollups',
-              stroke: 'url(#rollups-stroke)',
-              fill: 'url(#rollups-fill)',
+              stroke: RECATEGORISED_ACTIVITY_CHART_META.rollups.color,
               hide: !dataKeys.includes('rollups'),
             },
             {
               dataKey: 'validiumsAndOptimiums',
-              stroke: 'url(#validiums-and-optimiums-stroke)',
-              fill: 'url(#validiums-and-optimiums-fill)',
+              stroke:
+                RECATEGORISED_ACTIVITY_CHART_META.validiumsAndOptimiums.color,
               hide: !dataKeys.includes('validiumsAndOptimiums'),
             },
             {
               dataKey: 'others',
-              stroke: 'url(#others-stroke)',
-              fill: 'url(#others-fill)',
+              stroke: RECATEGORISED_ACTIVITY_CHART_META.others.color,
               hide: !dataKeys.includes('others'),
             },
             {
               dataKey: 'ethereum',
-              stroke: 'url(#ethereum-stroke)',
-              fill: 'url(#ethereum-fill)',
+              stroke: RECATEGORISED_ACTIVITY_CHART_META.ethereum.color,
               hide: !dataKeys.includes('ethereum'),
             },
           ]}

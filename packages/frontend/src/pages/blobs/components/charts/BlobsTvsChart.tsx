@@ -16,14 +16,6 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/EthereumGradientDef'
-import {
-  YellowFillGradientDef,
-  YellowStrokeGradientDef,
-} from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -112,25 +104,17 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
           // Without right:1 the chart last point is not hoverable for some reason
           margin={{ top: 20, right: 1, left: 0, bottom: 0 }}
         >
-          <defs>
-            <EthereumFillGradientDef id="full-data-fill" />
-            <EthereumStrokeGradientDef id="full-data-stroke" />
-            <YellowFillGradientDef id="settlement-only-fill" />
-            <YellowStrokeGradientDef id="settlement-only-stroke" />
-          </defs>
           <ChartLegend content={<ChartLegendContent />} />
           <ChartStrokeOverFillAreaComponents
             data={[
               {
                 dataKey: 'fullData',
-                stroke: 'url(#full-data-stroke)',
-                fill: 'url(#full-data-fill)',
+                stroke: chartMeta.fullData.color,
                 hide: !dataKeys.includes('fullData'),
               },
               {
                 dataKey: 'settlementOnly',
-                stroke: 'url(#settlement-only-stroke)',
-                fill: 'url(#settlement-only-fill)',
+                stroke: chartMeta.settlementOnly.color,
                 hide: !dataKeys.includes('settlementOnly'),
               },
             ]}

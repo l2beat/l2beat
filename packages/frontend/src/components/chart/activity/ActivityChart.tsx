@@ -24,22 +24,6 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  CyanFillGradientDef,
-  CyanStrokeGradientDef,
-} from '~/components/core/chart/defs/CyanGradientDef'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/EthereumGradientDef'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
-import {
-  YellowFillGradientDef,
-  YellowStrokeGradientDef,
-} from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
@@ -132,16 +116,14 @@ export function ActivityChart({
           data={[
             {
               dataKey: 'ethereum',
-              stroke: 'url(#strokeEthereum)',
-              fill: 'url(#fillEthereum)',
+              stroke: chartMeta.ethereum.color,
               hide: !dataKeys.includes('ethereum'),
             },
             ...(project.id !== ProjectId.ETHEREUM
               ? [
                   {
                     dataKey: 'projects',
-                    stroke: 'url(#strokeProjects)',
-                    fill: 'url(#fillProjects)',
+                    stroke: typeToColor(type),
                     hide: !dataKeys.includes('projects'),
                   },
                 ]
@@ -163,28 +145,6 @@ export function ActivityChart({
           filterNull={false}
           content={<ActivityCustomTooltip metric={metric} />}
         />
-        <defs>
-          {type === 'Rollups' && (
-            <>
-              <PinkFillGradientDef id="fillProjects" />
-              <PinkStrokeGradientDef id="strokeProjects" />
-            </>
-          )}
-          {type === 'ValidiumsAndOptimiums' && (
-            <>
-              <CyanFillGradientDef id="fillProjects" />
-              <CyanStrokeGradientDef id="strokeProjects" />
-            </>
-          )}
-          {type === 'Others' && (
-            <>
-              <YellowFillGradientDef id="fillProjects" />
-              <YellowStrokeGradientDef id="strokeProjects" />
-            </>
-          )}
-          <EthereumFillGradientDef id="fillEthereum" />
-          <EthereumStrokeGradientDef id="strokeEthereum" />
-        </defs>
       </AreaChart>
     </ChartContainer>
   )

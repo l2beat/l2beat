@@ -16,7 +16,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -127,19 +127,10 @@ export function EcosystemsTvsChart({
           // Without right:1 the chart last point is not hoverable for some reason
           margin={{ top: 20, right: 1 }}
         >
-          <defs>
-            <CustomFillGradientDef
-              id="fill"
-              colors={{
-                primary: 'var(--ecosystem-primary)',
-                secondary: 'var(--ecosystem-secondary)',
-              }}
-            />
-          </defs>
           <Area
             dataKey="value"
-            fill="url(#fill)"
-            fillOpacity={1}
+            fill="var(--ecosystem-primary)"
+            fillOpacity={AREA_FILL_OPACITY}
             stroke="var(--ecosystem-primary)"
             isAnimationActive={false}
           />
