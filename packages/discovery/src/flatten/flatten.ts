@@ -71,6 +71,7 @@ export function flattenStartingFrom(
   const typeMap = buildTypeMap(order)
   const renameMap = buildRenameMap(order)
   renameShadowedAliasTargets(parsedFileManager, order, renameMap)
+  const structNames = collectStructNames(order)
 
   let flatSource = ''
   for (const { declaration, file } of order) {
@@ -90,7 +91,7 @@ export function flattenStartingFrom(
       return to !== undefined && from !== to ? [{ from, to }] : []
     })
 
-    flatSource += renameIdentifiers(content, remapNames) + '\n\n'
+    flatSource += renameIdentifiers(content, remapNames, structNames) + '\n\n'
   }
 
   return flatSource.trimEnd().replace(/\r\n/g, '\n')
@@ -185,7 +186,13 @@ function computeUsedMembers(
         recordUse(receiver, memberName, entry.file)
       } else if (node.type === 'UserDefinedTypeName') {
         const parts = (node as AST.UserDefinedTypeName).namePath.split('.')
-        if (parts.length >= 2) {
+        const aliased = `${parts[0]}.${parts[1]}`
+        if (
+          parts.length >= 3 &&
+          parsedFileManager.tryFindDeclaration(aliased, entry.file)
+        ) {
+          recordUse(aliased, parts[2] as string, entry.file)
+        } else if (parts.length >= 2) {
           recordUse(parts[0], parts[1] as string, entry.file)
         }
       }
@@ -499,36 +506,94 @@ function renameShadowedAliasTargets(
   order: DeclarationFilePair[],
   renameMap: Map<string, string>,
 ): void {
-  const taken = new Set(renameMap.values())
   const namesByFile = new Map<ParsedFile, Set<string>>()
-  for (const { declaration, file } of order) {
-    const names = namesByFile.get(file) ?? new Set<string>()
-    for (const name of getASTIdentifiers(declaration.ast)) names.add(name)
-    for (const name of getMemberNames(declaration.ast)) names.add(name)
-    namesByFile.set(file, names)
+  for (const entry of order) {
+    const names = namesByFile.get(entry.file) ?? new Set<string>()
+    for (const name of getASTIdentifiers(entry.declaration.ast)) names.add(name)
+    for (const name of getScopeMemberNames(parsedFileManager, entry)) {
+      names.add(name)
+    }
+    namesByFile.set(entry.file, names)
   }
 
+  const conflictsByTarget = new Map<string, Set<string>>()
   for (const [file, names] of namesByFile) {
     for (const { importedName } of file.importDirectives) {
       if (!importedName.includes('.')) continue
       const target = parsedFileManager.tryFindDeclaration(importedName, file)
       if (target === undefined) continue
-      const name = renameMap.get(target.declaration.id)
-      if (name === undefined || !names.has(name)) continue
-      let suffix = 1
-      while (taken.has(`${name}_${suffix}`)) suffix++
-      renameMap.set(target.declaration.id, `${name}_${suffix}`)
-      taken.add(`${name}_${suffix}`)
+      const id = target.declaration.id
+      const conflicts = conflictsByTarget.get(id) ?? new Set<string>()
+      for (const name of names) conflicts.add(name)
+      conflictsByTarget.set(id, conflicts)
     }
+  }
+
+  const taken = new Set(renameMap.values())
+  for (const [id, conflicts] of conflictsByTarget) {
+    const name = renameMap.get(id)
+    if (name === undefined || !conflicts.has(name)) continue
+    let suffix = 1
+    while (
+      taken.has(`${name}_${suffix}`) ||
+      conflicts.has(`${name}_${suffix}`)
+    ) {
+      suffix++
+    }
+    renameMap.set(id, `${name}_${suffix}`)
+    taken.add(`${name}_${suffix}`)
   }
 }
 
-function getMemberNames(ast: AST.ASTNode): string[] {
-  if (ast.type !== 'ContractDefinition') return []
+// Members of a contract and of every contract it inherits from, which shadow
+// file-level names inside it
+function getScopeMemberNames(
+  parsedFileManager: ParsedFilesManager,
+  entry: DeclarationFilePair,
+): string[] {
+  const names: string[] = []
+  const visited = new Set<string>()
+  const stack: DeclarationFilePair[] = [entry]
+  while (stack.length > 0) {
+    const pair = stack.pop() as DeclarationFilePair
+    if (visited.has(pair.declaration.id)) continue
+    visited.add(pair.declaration.id)
+    const ast = pair.declaration.ast as AST.ASTNode
+    if (ast.type !== 'ContractDefinition') continue
+    names.push(...getMemberNames(ast))
+    for (const base of ast.baseContracts) {
+      const resolved = parsedFileManager.tryFindDeclaration(
+        base.baseName.namePath,
+        pair.file,
+      )
+      if (resolved !== undefined) stack.push(resolved)
+    }
+  }
+  return names
+}
+
+function getMemberNames(ast: AST.ContractDefinition): string[] {
   return ast.subNodes.flatMap((sub) => {
     const node = sub as AST.ASTNode
+    if (node.type === 'StateVariableDeclaration') {
+      return node.variables.flatMap((v) => (v.name === null ? [] : [v.name]))
+    }
     return 'name' in node && typeof node.name === 'string' ? [node.name] : []
   })
+}
+
+function collectStructNames(order: DeclarationFilePair[]): Set<string> {
+  const names = new Set<string>()
+  for (const { declaration } of order) {
+    if (declaration.type === 'struct') names.add(declaration.name)
+    const ast = declaration.ast as AST.ASTNode
+    if (ast.type !== 'ContractDefinition') continue
+    for (const sub of ast.subNodes) {
+      const node = sub as AST.ASTNode
+      if (node.type === 'StructDefinition') names.add(node.name)
+    }
+  }
+  return names
 }
 
 function buildRenameMap(order: DeclarationFilePair[]): Map<string, string> {

@@ -14,7 +14,13 @@ interface Replacement {
   newName: string
 }
 
-export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
+// Labels of named struct initializers such as `S({ a: 1 })` name members,
+// which keep their names, so calls to `structNames` keep their labels
+export function renameIdentifiers(
+  source: string,
+  pairs: RenamePair[],
+  structNames: ReadonlySet<string> = new Set(),
+): string {
   const filtered = pairs.filter((p) => p.from !== p.to)
   if (filtered.length === 0) return source
   const ast = parse(source, { range: true })
@@ -129,7 +135,18 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
       }
     } else if (node.type === 'FunctionCall') {
       const call = node as AST.FunctionCall
-      for (const ident of call.identifiers) {
+      const callee = call.expression
+      const calleeName =
+        callee.type === 'Identifier'
+          ? callee.name
+          : callee.type === 'MemberAccess'
+            ? callee.memberName
+            : undefined
+      const labels =
+        calleeName !== undefined && structNames.has(calleeName)
+          ? []
+          : call.identifiers
+      for (const ident of labels) {
         if (ident.range) {
           const [idStart, idEnd] = [ident.range[0], ident.range[1] + 1]
           const to = pairMap.get(ident.name)

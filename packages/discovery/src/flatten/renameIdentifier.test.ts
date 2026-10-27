@@ -161,6 +161,19 @@ describe(renameIdentifiers.name, () => {
     )
   })
 
+  it('keeps labels of named struct initializers', () => {
+    const src =
+      'function make() pure returns (Cfg memory) { return Cfg({ fee: fee }); }'
+    const result = renameIdentifiers(
+      src,
+      [{ from: 'fee', to: 'fee_1' }],
+      new Set(['Cfg']),
+    )
+    expect(result).toEqual(
+      'function make() pure returns (Cfg memory) { return Cfg({ fee: fee_1 }); }',
+    )
+  })
+
   it('renames across a struct definition', () => {
     const src = [
       'contract Foo {',
