@@ -155,7 +155,7 @@ export function LivenessChart({
           isAnimationActive={false}
           stroke="url(#strokeRange)"
           fill="var(--chart-pink-fill-gradient)"
-          fillOpacity={0.4}
+          fillOpacity={0.2}
         />
         <Area
           dataKey="avg"

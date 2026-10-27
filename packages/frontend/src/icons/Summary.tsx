@@ -26,7 +26,7 @@ export function SummaryIcon(props: SvgIconProps) {
           />
           <path
             d="m14.587.065-4.13 9.968L20.5 6.112A10.75 10.75 0 0014.586.065"
-            fill="#D864FF"
+            fill="#FF3776"
           />
         </g>
       </g>
