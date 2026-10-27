@@ -47,4 +47,14 @@ describe('splitCode', () => {
       expect(rightOut.includes('// new comment')).toEqual(true)
     })
   })
+
+  it('keeps renamed declarations whose lines are only reordered', () => {
+    const left = { A: 'x = 1;\ny = 2;\n' }
+    const right = { B: 'y = 2;\nx = 1;\n' }
+
+    const [smallerLeft, smallerRight] = splitCode(left, right, true)
+
+    expect(smallerLeft).toInclude('x = 1;\ny = 2;')
+    expect(smallerRight).toInclude('y = 2;\nx = 1;')
+  })
 })

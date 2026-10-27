@@ -122,6 +122,7 @@ function Content({
           slug: token.slug,
           icon: token.iconUrl,
         }}
+        section="interop"
         secondLine={
           token.issuer ? (
             <>

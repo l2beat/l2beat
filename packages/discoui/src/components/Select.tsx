@@ -1,5 +1,4 @@
 import * as RadixSelect from '@radix-ui/react-select'
-import clsx from 'clsx'
 import { IconChecked } from '../icons/IconChcked'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { cn } from '../utils/cn'
@@ -26,7 +25,7 @@ function SelectTrigger({
 }: RadixSelect.SelectTriggerProps & { placeholder?: string }) {
   return (
     <RadixSelect.Trigger
-      className={clsx(
+      className={cn(
         'inline-flex w-full leading-none outline-hidden focus:outline-hidden active:outline-hidden',
         className,
       )}
@@ -103,7 +102,7 @@ function SelectLabel({
 }: RadixSelect.SelectLabelProps) {
   return (
     <RadixSelect.Label
-      className={clsx('px-2 text-coffee-400 text-xs', className)}
+      className={cn('px-2 text-coffee-400 text-xs', className)}
       {...props}
     >
       {children}
@@ -118,7 +117,7 @@ function SelectItem({
 }: RadixSelect.SelectItemProps) {
   return (
     <RadixSelect.Item
-      className={clsx(
+      className={cn(
         'group relative flex max-w-fit cursor-pointer select-none items-center border-coffee-400 py-1 pr-8 pl-6 text-xs leading-none hover:underline hover:outline-hidden focus:outline-hidden active:outline-hidden',
         className,
       )}

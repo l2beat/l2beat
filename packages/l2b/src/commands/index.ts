@@ -3,6 +3,7 @@ import { Analyze } from './Analyze'
 import { AuditCoverage } from './AuditCoverage'
 import { BlobSenders } from './BlobSenders'
 import { CheckRpc } from './CheckRpc'
+import { ClientDrift } from './ClientDrift'
 import { Colorize } from './Colorize'
 import { CountUserOperations } from './CountUserOperations'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
@@ -49,6 +50,7 @@ export function getSubcommands() {
     AuditCoverage,
     BlobSenders,
     CheckRpc,
+    ClientDrift,
     Colorize,
     CountUserOperations,
     DeploymentTimestamp,

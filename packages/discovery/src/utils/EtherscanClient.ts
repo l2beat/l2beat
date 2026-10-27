@@ -1,4 +1,4 @@
-import { type Logger, RateLimiter } from '@l2beat/backend-tools'
+import { type Logger, RateLimiter, redactUrl } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import {
   assert,
@@ -305,8 +305,9 @@ export class EtherscanClient implements IEtherscanClient {
     const etherscanResponse = tryParseEtherscanResponse(response)
 
     if (!etherscanResponse) {
-      const message = `Invalid Etherscan response [${JSON.stringify(response)}] for request [${url}].`
-      throw new TypeError(message)
+      throw new TypeError('Invalid Etherscan response', {
+        cause: { url: redactUrl(url), response },
+      })
     }
 
     if (etherscanResponse.message !== 'OK') {

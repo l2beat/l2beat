@@ -13,9 +13,6 @@ export const pageLoaders = {
   L2RiskPage: async () =>
     (await import('./layer2s/risk/L2RiskPage')).L2RiskPage,
   L2TvsPage: async () => (await import('./layer2s/tvs/L2TvsPage')).L2TvsPage,
-  L2TvsBreakdownPage: async () =>
-    (await import('./layer2s/tvs/breakdown/L2TvsBreakdownPage'))
-      .L2TvsBreakdownPage,
   L2ActivityPage: async () =>
     (await import('./layer2s/activity/L2ActivityPage')).L2ActivityPage,
   L2ComparePage: async () =>
@@ -67,6 +64,8 @@ export const pageLoaders = {
       .InteropIntentBridgesPage,
   EthereumProjectPage: async () =>
     (await import('./ethereum/EthereumProjectPage')).EthereumProjectPage,
+  ChainProjectPage: async () =>
+    (await import('./chain/ChainProjectPage')).ChainProjectPage,
   BlobsPage: async () => (await import('./blobs/BlobsPage')).BlobsPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,

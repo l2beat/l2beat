@@ -9,7 +9,7 @@ import {
 } from './panel-nodes/store/utils/constants'
 import { getGraphProjection } from './panel-nodes/store/utils/graphProjection'
 import { stackAutoLayout } from './panel-nodes/store/utils/stackLayout'
-import { Viewport, type ViewportRenderer } from './panel-nodes/view/Viewport'
+import { Viewport } from './panel-nodes/view/Viewport'
 
 const GRID_HGAP = 80
 const GRID_VGAP = 60
@@ -18,7 +18,6 @@ export function RendererBenchPage() {
   const [nodeCount, setNodeCount] = useState(500)
   const [fieldsPerNode, setFieldsPerNode] = useState(10)
   const [seed, setSeed] = useState(1)
-  const [renderer, setRenderer] = useState<ViewportRenderer>('webgl')
   const layoutAction = useStore((s) => s.layout)
 
   const nodes = useMemo(
@@ -58,25 +57,8 @@ export function RendererBenchPage() {
 
   return (
     <div className="relative h-screen w-screen overflow-hidden">
-      <Viewport renderer={renderer} />
+      <Viewport />
       <div className="absolute top-3 left-3 z-50 flex flex-col gap-2 rounded-sm bg-coffee-900/90 p-3 font-mono text-coffee-200 text-xs shadow-lg">
-        <div className="flex items-center gap-2">
-          <span className="w-28">Renderer</span>
-          <button
-            type="button"
-            className={btnClass(renderer === 'dom')}
-            onClick={() => setRenderer('dom')}
-          >
-            dom
-          </button>
-          <button
-            type="button"
-            className={btnClass(renderer === 'webgl')}
-            onClick={() => setRenderer('webgl')}
-          >
-            webgl
-          </button>
-        </div>
         <NumberRow
           label="Nodes"
           value={nodeCount}

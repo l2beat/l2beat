@@ -1,4 +1,8 @@
-import { type ConfigReader, get$Implementations } from '@l2beat/discovery'
+import {
+  type ConfigReader,
+  type EntryParameters,
+  get$Implementations,
+} from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { compareFiles, getCodePaths } from '../discovery/getCodePaths'
@@ -93,16 +97,40 @@ export async function getCodeFromEtherscan(
   address: ChainSpecificAddress,
   flatSourceClient: FlatSourceClient,
 ): Promise<ApiCodeResponse> {
-  const { entryName, links } = getEntryLinks(configReader, project, address)
+  const entry = configReader
+    .readDiscoveryWithReferences(project)
+    .map((d) => d.entries.find((x) => x.address === address))
+    .find((e) => e && e.type !== 'Reference')
+  if (entry === undefined) {
+    return { entryName: undefined, sources: [] }
+  }
 
   const sources = await Promise.all(
-    links.map(async ({ address, name }) => ({
-      name,
-      code: (await flatSourceClient.getFlat(address)).flat,
-    })),
+    entrySourceLinks(entry).map(async ({ address, name }) => {
+      const source =
+        entry.type === 'Contract'
+          ? await flatSourceClient.getContractFlat(address)
+          : await flatSourceClient.getFlat(address)
+      return {
+        name,
+        code:
+          source.kind === 'flat' ? addFlattenerNote(source.flat) : source.flat,
+      }
+    }),
   )
+  return { entryName: entry.name, sources }
+}
 
-  return { entryName, sources }
+// The sources the code panel lists for an entry, in the order it lists them.
+export function entrySourceLinks(
+  entry: EntryParameters,
+): { address: ChainSpecificAddress; name: string }[] {
+  const addresses = [entry.address, ...get$Implementations(entry.values)]
+  const names = entry.implementationNames ?? {}
+  return addresses.map((a, i) => ({
+    address: a,
+    name: names[a] ?? getFallbackSourceName(i, addresses.length),
+  }))
 }
 
 function getFallbackSourceName(index: number, total: number): string {
@@ -174,29 +202,4 @@ export function getAllCode(
   }
 
   return result
-}
-
-function getEntryLinks(
-  configReader: ConfigReader,
-  project: string,
-  address: ChainSpecificAddress,
-): {
-  entryName: string | undefined
-  links: { address: ChainSpecificAddress; name: string }[]
-} {
-  const entry = configReader
-    .readDiscoveryWithReferences(project)
-    .map((d) => d.entries.find((x) => x.address === address))
-    .find((e) => e && e.type !== 'Reference')
-
-  const addresses = entry
-    ? [entry.address, ...get$Implementations(entry.values)]
-    : []
-
-  const names = entry?.implementationNames ?? {}
-  const links = addresses.map((a, i) => ({
-    address: a,
-    name: names[a] ?? getFallbackSourceName(i, addresses.length),
-  }))
-  return { entryName: entry?.name, links }
 }

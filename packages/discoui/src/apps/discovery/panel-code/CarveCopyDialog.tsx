@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useMemo, useState } from 'react'
 import type { ApiCodeSegment } from '../../../api/types'
 import { Button } from '../../../components/Button'
@@ -6,6 +5,7 @@ import { Dialog } from '../../../components/Dialog'
 import { useCopy } from '../../../hooks/useCopy'
 import { IconCopy } from '../../../icons/IconCopy'
 import { IconTick } from '../../../icons/IconTick'
+import { cn } from '../../../utils/cn'
 import { joinSelectedDeclarations } from './declarations'
 import { KNOWN_LIBRARY_NAMES } from './knownLibraryNames'
 
@@ -106,7 +106,7 @@ export function CarveCopyDialog(props: CarveCopyDialogProps) {
                 type="button"
                 onClick={() => toggle(declaration.index)}
                 title={`${declaration.name} · ${declaration.lineCount} lines`}
-                className={clsx(
+                className={cn(
                   'flex items-center gap-2 border px-2.5 py-1.5 font-mono text-sm transition-colors',
                   isSelected
                     ? 'border-autumn-300 bg-autumn-300 text-black'
@@ -115,7 +115,7 @@ export function CarveCopyDialog(props: CarveCopyDialogProps) {
               >
                 <span className="truncate">{declaration.name}</span>
                 <span
-                  className={clsx(
+                  className={cn(
                     'text-xs',
                     isSelected ? 'text-black/50' : 'text-coffee-400',
                   )}

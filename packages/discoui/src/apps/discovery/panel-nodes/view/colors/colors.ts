@@ -26,7 +26,7 @@ export function getColor({
   color: number
   colorSourceId?: string
   hueShift: number
-}): { color: string; isDark: boolean } {
+}): NodeColor {
   const chain = color === 0 ? (colorSourceId ?? id).split(':')[0] : undefined
   const key = `${color}:${hueShift}:${chain ?? ''}`
   let cached = colorCache.get(key)
@@ -37,15 +37,25 @@ export function getColor({
   return cached
 }
 
-// The renderers ask for every node's color on every frame they rebuild, and
+// The renderer asks for every node's color on every frame they rebuild, and
 // a project has only a few distinct ones.
-const colorCache = new Map<string, { color: string; isDark: boolean }>()
+const colorCache = new Map<string, NodeColor>()
+
+interface NodeColor {
+  color: string
+  isDark: boolean
+  // Initial contracts ring their header with this, the color mixed 15% toward
+  // black or white the way CSS color-mix(in oklch) does.
+  ringColor: string
+}
+
+const INITIAL_RING_MIX = 0.15
 
 function computeColor(
   color: number,
   chain: string,
   hueShift: number,
-): { color: string; isDark: boolean } {
+): NodeColor {
   const result =
     color === 0
       ? getChainColor(chain)
@@ -55,9 +65,16 @@ function computeColor(
     ...result.color,
     h: (result.color.h + hueShift) % 360,
   }
+  const ringTarget = result.isDark ? colors.black : colors.white
+  const ringColor = {
+    l: colorCopy.l * (1 - INITIAL_RING_MIX) + ringTarget.l * INITIAL_RING_MIX,
+    c: colorCopy.c * (1 - INITIAL_RING_MIX) + ringTarget.c * INITIAL_RING_MIX,
+    h: colorCopy.h,
+  }
   return {
     color: oklchColorToCSS(colorCopy),
     isDark: result.isDark,
+    ringColor: oklchColorToCSS(ringColor),
   }
 }
 

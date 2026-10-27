@@ -6,6 +6,7 @@ import {
   INTEGRATE_CROPS_PATH,
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
+import { getChainProjects } from './features/chains/getChainProjects'
 import { ps } from './projects'
 
 type PagePath = `/${string}`
@@ -30,7 +31,6 @@ export const STATIC_PAGE_PATHS = [
   '/layer2s/risk/data-availability',
   '/layer2s/risk/sequencing',
   '/layer2s/tvs',
-  '/layer2s/tvs/breakdown',
   '/layer2s/liveness',
   '/layer2s/costs',
   '/layer2s/archived',
@@ -89,6 +89,7 @@ async function getDynamicPages(): Promise<Page[]> {
     privacyProjects,
     defiProjects,
     interopProtocols,
+    chainProjects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
@@ -103,6 +104,7 @@ async function getDynamicPages(): Promise<Page[]> {
       : Promise.resolve([]),
     // Protocols that are also scaling projects redirect to the scaling page.
     ps.getProjects({ where: ['interopConfig'], whereNot: ['scalingInfo'] }),
+    getChainProjects(),
   ])
 
   const pages: Page[] = [
@@ -115,6 +117,7 @@ async function getDynamicPages(): Promise<Page[]> {
     ...privacyProjects.map(projectPage('/privacy/projects')),
     ...defiProjects.map(projectPage('/defi/projects')),
     ...interopProtocols.map(projectPage('/interop/protocols')),
+    ...chainProjects.map(projectPage('/projects')),
   ]
 
   const publications = [

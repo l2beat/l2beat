@@ -245,11 +245,6 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
   freshExit:
     'Wait before exiting and pick a different time of day than the deposit. Exit to a fresh address every time and spend from it with a different wallet than the one that deposited.',
 
-  // Network observer
-  /** Open clients with an RPC setting and a relayer. */
-  ownNodeAndTor: (relayer: string) =>
-    `Read the chain from the user's own node, send through a public RPC over Tor, and use a popular ${relayer}. If using a VPN instead of Tor, choose a trusted provider: it hides the user's IP from the ${relayer} but sees it itself.`,
-
   // Privileged insider
   /** Open clients served from a hosted frontend. */
   localBuild:

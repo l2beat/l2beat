@@ -2,14 +2,14 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "AdminPlugin",
   "category": "gov",
-  "description": "Non-upgradeable Aragon Admin plugin. Holders of its DAO-granted EXECUTE_PROPOSAL permission can submit actions that the plugin forwards immediately, without a vote or onchain delay.",
+  "description": "Non-upgradeable Aragon Admin plugin. Holders of the EXECUTE_PROPOSAL permission its governance contract grants can submit actions that the plugin forwards immediately, without a vote or onchain delay.",
   "ignoreMethods": ["canExecute", "hasSucceeded", "proposalCount"],
   "fields": {
     "dao": {
-      "description": "Aragon DAO whose permission manager authorizes the plugin and its callers."
+      "description": "Aragon governance contract whose permission manager authorizes the plugin and its callers."
     },
     "getCurrentTargetConfig": {
-      "description": "Stored execution target and operation. A zero target resolves to the DAO; delegatecall changes the security context.",
+      "description": "Stored execution target and operation. A zero target resolves to the governance contract; delegatecall changes the security context.",
       "type": "CODE_CHANGE"
     }
   }

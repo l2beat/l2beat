@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "timestamp": 1792657864,
-  "configHash": "0x91593737f4ec409090e26bedb18c0fd9ab4ceeee8a7766fa0db01b451cc499c8",
+  "configHash": "0x0b60481ff56eae0e3d8ac30da2cc448b06ac954350f3c2d95c66108e51659601",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -589,11 +589,11 @@
         "votingPeriod": 151200
       },
       "fieldMeta": {
-        "fullWeightDuration": { "severity": "HIGH" },
+        "fullWeightDuration": { "severity": "MEDIUM" },
         "nomineeElectionGovernor": { "severity": "HIGH" },
         "securityCouncilManager": { "severity": "HIGH" },
-        "votingPeriod": { "severity": "HIGH" },
-        "votingDelay": { "severity": "HIGH" },
+        "votingPeriod": { "severity": "MEDIUM" },
+        "votingDelay": { "severity": "MEDIUM" },
         "proposalThreshold": { "severity": "HIGH" },
         "token": { "severity": "HIGH" },
         "owner": { "severity": "MEDIUM" },
@@ -1087,16 +1087,16 @@
         "votingPeriod": 50400
       },
       "fieldMeta": {
-        "firstNominationStartDate": { "severity": "HIGH" },
-        "cadenceInMonths": { "severity": "HIGH" },
-        "nomineeVettingDuration": { "severity": "HIGH" },
+        "firstNominationStartDate": { "severity": "MEDIUM" },
+        "cadenceInMonths": { "severity": "MEDIUM" },
+        "nomineeVettingDuration": { "severity": "MEDIUM" },
         "nomineeVetter": { "severity": "MEDIUM" },
         "securityCouncilMemberElectionGovernor": { "severity": "HIGH" },
         "securityCouncilManager": { "severity": "HIGH" },
         "quorumDenominator": { "severity": "HIGH" },
         "quorumNumerator": { "severity": "HIGH" },
-        "votingPeriod": { "severity": "HIGH" },
-        "votingDelay": { "severity": "HIGH" },
+        "votingPeriod": { "severity": "MEDIUM" },
+        "votingDelay": { "severity": "MEDIUM" },
         "proposalThreshold": { "severity": "HIGH" },
         "token": { "severity": "HIGH" },
         "owner": { "severity": "MEDIUM" },
@@ -2271,6 +2271,7 @@
       ],
       "proxyType": "immutable",
       "description": "Executor-role holder that can only forward `pause()` calls: PAUSER_ROLE holders can pause any contract the UpgradeExecutor is authorized on. Not upgradeable.",
+      "critical": { "sinceTimestamp": 1790955047 },
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1790771531,
       "sinceBlock": 26090315,
@@ -2942,6 +2943,7 @@
       ],
       "proxyType": "immutable",
       "description": "Permissionless circuit breaker: anyone proving that two rival edges both pass the one-step proof can pause the rollup through the PauseExecutor.",
+      "critical": { "sinceTimestamp": 1790955047 },
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1790771555,
       "sinceBlock": 26090317,

@@ -106,8 +106,13 @@ const chainStart = UnixTime(1716620627)
 
 const proverPlural = whitelistedProverCount === 1 ? '' : 's'
 const taikoMultisigStats = discovery.getMultisigStats('Taiko Multisig')
-const risc0SafeStats = discovery.getMultisigStats(
-  'eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609',
+const risc0TimelockProposers = discovery.getContractValue<
+  ChainSpecificAddress[]
+>('eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711', 'Proposer')
+assert(
+  risc0TimelockProposers.length === 1 &&
+    discovery.isEOA(risc0TimelockProposers[0]),
+  'RISC Zero timelock proposer changed, update the governance research.',
 )
 const risc0TimelockDelay = formatSeconds(
   discovery.getContractValue<number>(
@@ -578,7 +583,6 @@ export const taiko: ScalingProject = {
     content: readProjectMarkdown('taiko', 'upgradesAndGovernance', {
       securityCouncilStats,
       taikoMultisigStats,
-      risc0SafeStats,
       risc0TimelockDelay,
       standardProposalThreshold,
       standardProposalDuration,

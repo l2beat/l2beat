@@ -1,14 +1,13 @@
-import { findLeadingCommentStart } from '@l2beat/discovery'
 import {
   assert,
   type ChainSpecificAddress,
   partition,
 } from '@l2beat/shared-pure'
-import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
-import { getASTTopLevelChildName } from '../solidityDeclarations'
-import type { FlatSourceClient } from './FlatSourceClient'
+import { splitSolidityDeclarations } from '../solidityDeclarations'
+import type { FlatSource, FlatSourceClient } from './FlatSourceClient'
 
 type DiffoveryResult = {
+  kind: FlatSource['kind']
   name: string
   sources: Record<string, string>
 }
@@ -20,19 +19,26 @@ export class DiffoveryController {
     const result = await this.flatSourceClient.getFlat(address)
     switch (result.kind) {
       case 'eoa':
-        return { name: result.name, sources: { 'L2BEAT-EOA': result.flat } }
+        return {
+          kind: result.kind,
+          name: result.name,
+          sources: { 'L2BEAT-EOA': result.flat },
+        }
       case 'unverified':
         return {
+          kind: result.kind,
           name: result.name,
           sources: { 'L2BEAT-UNVERIFIED': result.flat },
         }
       case 'non-solidity':
         return {
+          kind: result.kind,
           name: result.name,
           sources: { 'L2BEAT-NON-SOLIDITY': result.flat },
         }
       case 'flat':
         return {
+          kind: result.kind,
           name: result.name,
           sources: {
             '#ConstructorArguments': result.constructorArguments,
@@ -43,34 +49,37 @@ export class DiffoveryController {
   }
 }
 
+// Text between declarations, like a comment after the last one, goes to
+// #Directives, so that a difference there is not lost.
 function splitFlatSolidity(flat: string): Record<string, string> {
   const result: Record<string, string> = {}
 
-  const AST = parse(flat, { range: true })
-  const [named, nameless] = partition(
-    AST.children,
-    (child) => getASTTopLevelChildName(child) !== undefined,
+  const [named, unnamed] = partition(
+    splitSolidityDeclarations(flat),
+    (segment) => segment.name !== null,
   )
 
-  if (nameless.length > 0) {
-    result['#Directives'] = nameless
-      .map((n) => getNodeContent(flat, n))
-      .join('\n\n')
+  const directives = unnamed
+    .map((segment) => segment.content.trim())
+    .filter((content) => content !== '')
+  if (directives.length > 0) {
+    result['#Directives'] = directives.join('\n\n')
   }
 
-  for (const child of named) {
-    const childName = getASTTopLevelChildName(child)
-    assert(childName !== undefined)
-
-    result[childName] = getNodeContent(flat, child)
+  for (const segment of named) {
+    assert(segment.name !== null)
+    result[uniqueKey(result, segment.name)] = segment.content
   }
 
   return result
 }
 
-function getNodeContent(flat: string, node: ASTNode): string {
-  assert(node.range !== undefined)
-
-  const left = findLeadingCommentStart(flat, node.range[0])
-  return flat.substring(left, node.range[1] + 1)
+// Overloaded free functions share a name, and a later one would replace
+// the earlier one.
+function uniqueKey(result: Record<string, string>, name: string): string {
+  let key = name
+  for (let occurrence = 2; key in result; occurrence++) {
+    key = `${name} (${occurrence})`
+  }
+  return key
 }

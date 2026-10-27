@@ -316,6 +316,94 @@ describe(extractPrivacyFlow.name, () => {
     })
   })
 
+  describe('privacyPoolsV2Value', () => {
+    const iface = new utils.Interface([
+      'event Deposited(uint256 outputCommitment, address indexed asset, uint256 depositedValue, address indexed caller)',
+      'event Transacted(uint256[] outputCommitments, uint256[] nullifierHashes, address indexed asset, uint256 withdrawnValue, address indexed caller)',
+      'event Ragequit(address indexed ragequitter, address indexed asset, uint256 value, uint256 commitment, uint256 nullifierHash, uint256 label)',
+    ])
+    const params = { tokenAddress: TOKEN_ADDRESS }
+
+    it('extracts a deposit of the configured asset', () => {
+      const log = encodeLog(iface, 'Deposited', [
+        1,
+        TOKEN_ADDRESS,
+        500n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 500n })
+    })
+
+    it('extracts the withdrawn value of a transact', () => {
+      const log = encodeLog(iface, 'Transacted', [
+        [1, 2],
+        [3],
+        TOKEN_ADDRESS,
+        700n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 700n })
+    })
+
+    it('extracts a ragequit', () => {
+      const log = encodeLog(iface, 'Ragequit', [
+        ADDRESS,
+        TOKEN_ADDRESS,
+        900n,
+        1,
+        2,
+        3,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 900n })
+    })
+
+    it('ignores another asset of the same vault', () => {
+      const log = encodeLog(iface, 'Deposited', [
+        1,
+        OTHER_TOKEN_ADDRESS,
+        500n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual(undefined)
+    })
+
+    it('ignores a pure private transfer, which withdraws nothing', () => {
+      const log = encodeLog(iface, 'Transacted', [
+        [1],
+        [2],
+        EthereumAddress.ZERO,
+        0n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual(undefined)
+    })
+  })
+
   describe('railgunShield', () => {
     const config: PrivacyFlowIndexerConfig = {
       ...baseFlowConfig,
@@ -608,6 +696,23 @@ describe(extractPrivacyAnonymitySetMember.name, () => {
     expect(() => extractPrivacyAnonymitySetMember(source, log)).toThrow(
       'Privacy Pools deposit is missing depositor',
     )
+  })
+
+  it('requests the transaction sender for Privacy Pools v2 deposits', () => {
+    const iface = new utils.Interface([
+      'event Deposited(uint256 outputCommitment, address indexed asset, uint256 depositedValue, address indexed caller)',
+    ])
+    const log = encodeLog(iface, 'Deposited', [1, TOKEN_ADDRESS, 500n, ADDRESS])
+    expect(
+      extractPrivacyAnonymitySetMember(
+        {
+          event: log.topics[0]!,
+          extractor: 'privacyPoolsV2Value',
+          params: { tokenAddress: TOKEN_ADDRESS },
+        },
+        log,
+      ),
+    ).toEqual({ amount: 500n, origin: { type: 'transaction' } })
   })
 
   it('requests the transaction sender for fixed deposits', () => {

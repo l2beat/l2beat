@@ -174,7 +174,7 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
           ))}
         </div>
       )}
-      <div className="overflow-x-auto bg-coffee-900 px-10 py-0.5">
+      <div className="overflow-x-auto bg-coffee-900 px-10 py-0.5 contain-paint">
         {field.name === '$pastUpgrades' ? (
           <PastUpgradesDisplay value={field.value} />
         ) : (

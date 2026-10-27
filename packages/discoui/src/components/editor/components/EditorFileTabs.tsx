@@ -1,6 +1,6 @@
-import clsx from 'clsx'
 import type { ReactNode } from 'react'
 import { IconCodeFile } from '../../../icons/IconCodeFile'
+import { cn } from '../../../utils/cn'
 
 type EditorFileTabsProps = {
   files: EditorFileTabProps[]
@@ -37,7 +37,7 @@ function EditorFileTab(props: EditorFileTabProps) {
   return (
     <button
       onClick={props.onClick}
-      className={clsx(
+      className={cn(
         'flex h-6 items-center gap-1 px-2 text-sm',
         props.isActive && 'bg-autumn-300 text-black',
         !props.isActive && 'text-coffee-200 hover:bg-coffee-200/20',

@@ -5,6 +5,19 @@
   "category": "core",
   "description": "Registry for Zama confidential token wrappers.",
   "fields": {
+    "confidentialTokens": {
+      "description": "Confidential wrappers the registry lists as valid.",
+      "handler": {
+        "type": "call",
+        "method": "function getTokenConfidentialTokenPairs() view returns ((address tokenAddress, address confidentialTokenAddress, bool isValid)[])",
+        "args": []
+      },
+      "edit": [
+        "pipe",
+        ["filter", ["get", "isValid"]],
+        ["map", ["get", "confidentialTokenAddress"]]
+      ]
+    },
     "owner": {
       "permissions": [
         {

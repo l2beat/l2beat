@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x5e8078628d435c8d6294bee62d129b60fd2d612f
+
+# Diff at Sat, 24 Oct 2026 16:41:06 GMT:
+
+- id: a9649894
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1790851283
+- current timestamp: 1790851283
+
+## Description
+
+`tokenMapping`, `rewardPercentage`, `stakingValue` and `minimumStake` are MEDIUM: listings and incentives, not safety rules.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790851283 (main branch discovery), not current.
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) [morph/L1Staking] {
+    +++ description: Staking registry of the L2 sequencer set. It relays staker additions and removals to the L2 Staking contract through the messenger, which determines the L2 block-producing sequencer set. The Rollup does not reference it: L1 batch submission and slashing are authorized through the Submitter contract, so the stake, challenge-deposit and reward parameters here are not enforced by the Rollup.
+      fieldMeta.rewardPercentage.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.stakingValue.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1) [morph/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens with custom L2 representations from L1 to L2. It allows to change the token mappings.
+      fieldMeta.tokenMapping.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Submitter (eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6) [morph/Submitter] {
+    +++ description: Registry and ETH staking contract for the accounts allowed to commit transaction batches and propose state roots to the Rollup. The owner whitelists submitters, who are active only while registered, not withdrawing and staked at or above the minimum. When a submitter's batch is successfully challenged, the Rollup slashes the submitter's whole stake through this contract: the configured reward share is forwarded to the Rollup for the challenger and the remainder accrues to the owner. Stake withdrawals are claimable only once the batch committed at withdrawal time is finalized.
+      fieldMeta.minimumStake.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rewardPercentage.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xeeab701c6beeddd65f048e415597faefef282343
 
 # Diff at Fri, 16 Oct 2026 09:37:48 GMT:

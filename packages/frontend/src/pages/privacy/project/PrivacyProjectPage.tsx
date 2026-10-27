@@ -23,18 +23,21 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
+import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 import { getPrivacyAdversaryRosetteValues } from '../adversaries/privacyAdversaryUi'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 
 interface Props extends AppLayoutProps {
   entry: ProjectPrivacyEntry
+  sectionLinks: ProjectSectionLink[]
   queryState: DehydratedState
   selectedUpdateId?: string
 }
 
 export function PrivacyProjectPage({
   entry,
+  sectionLinks,
   queryState,
   selectedUpdateId,
   ...props
@@ -65,6 +68,8 @@ export function PrivacyProjectPage({
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader
                     project={entry}
+                    section="privacy"
+                    sectionLinks={sectionLinks}
                     recentUpdatesCount={entry.recentUpdatesCount}
                   />
                   <ProjectSummaryBars

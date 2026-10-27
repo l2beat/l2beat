@@ -51,22 +51,24 @@ export function tornadoCashAdversaries(upgradeDelay: string) {
       networkObserver: {
         sentiment: 'good',
         exposureShort:
-          "The app works in Tor Browser and downloads every deposit of a pool, so its services learn the pool but never the user's note.",
+          "The app works in Tor Browser and downloads every deposit of a pool, so its services learn the pool but not the user's note.",
         exposureContinued:
-          'Every listed relayer gets a status request, and the chosen one receives the finished withdrawal.',
-        advice: `${S.ownNodeAndTor('relayer')} Withdraw without connecting a wallet.`,
+          "The Graph learns whether the note is newer than the app's event cache. Every listed relayer gets a status request, and the chosen one receives the finished withdrawal.",
+        advice:
+          "Use the app in Tor Browser, or from the user's own IPFS node in Firefox set to Tor's proxy. Withdraw through a popular relayer without connecting a wallet.",
         sources: [
           {
             title: 'Deposits fetched per pool and matched locally',
             url: APP + 'services/events.js#L90-L115',
           },
           {
-            title: 'The relayer receives only the finished withdrawal',
-            url: APP + 'store/relayer.js#L430-L460',
+            title:
+              "Tree slices download newest first and stop at the note's slice",
+            url: APP + 'services/merkleTree.js#L66-L102',
           },
           {
-            title: 'Custom RPC setting',
-            url: APP + 'components/Settings.vue#L8-L50',
+            title: 'The relayer receives only the finished withdrawal',
+            url: APP + 'store/relayer.js#L430-L460',
           },
           {
             title: 'Only withdrawals without a relayer need a wallet',

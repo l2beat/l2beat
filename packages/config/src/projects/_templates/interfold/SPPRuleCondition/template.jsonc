@@ -6,7 +6,7 @@
   "ignoreMethods": ["decodeRuleValue"],
   "fields": {
     "dao": {
-      "description": "Aragon DAO whose permission manager controls updates to the condition's rule program."
+      "description": "Aragon governance contract whose permission manager controls updates to the condition's rule program."
     },
     "getRules": {
       "description": "Current ordered rule program evaluated for public proposal creation.",

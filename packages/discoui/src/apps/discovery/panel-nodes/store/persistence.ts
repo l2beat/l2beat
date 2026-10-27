@@ -5,7 +5,6 @@ const UserPreferencesSchema = v.object({
   enableDimming: v.boolean(),
   hideLargeArrays: v.boolean(),
   highlightOverlapping: v.boolean(),
-  useExperimentalRenderer: v.boolean(),
 })
 
 const PersistedNodeStoreStateSchema = v.object({
@@ -20,7 +19,6 @@ export const DEFAULT_USER_PREFERENCES: State['userPreferences'] = {
   enableDimming: true,
   hideLargeArrays: true,
   highlightOverlapping: true,
-  useExperimentalRenderer: false,
 }
 
 export const NODE_STORE_VERSION = 1

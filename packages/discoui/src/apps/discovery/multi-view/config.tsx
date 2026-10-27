@@ -1,5 +1,4 @@
 import * as RadixSelect from '@radix-ui/react-select'
-import clsx from 'clsx'
 import type { FC, JSX } from 'react'
 import {
   type DockingConfig,
@@ -24,6 +23,7 @@ import { IconTerminal } from '../../../icons/IconTerminal'
 import { IconToken } from '../../../icons/IconToken'
 import { IconTreemap } from '../../../icons/IconTreemap'
 import { IconWebApp } from '../../../icons/IconWebApp'
+import { cn } from '../../../utils/cn'
 import { AnalyzePanel } from '../panel-analyze/AnalyzePanel'
 import { CodePanel } from '../panel-code/CodePanel'
 import { ConfigPanel } from '../panel-config/ConfigPanel'
@@ -147,7 +147,7 @@ function PanelHeader(props: { api: LeafApi }) {
       >
         <RadixSelect.Trigger
           aria-label="Panel"
-          className={clsx(
+          className={cn(
             'group/sel inline-flex h-[26px] items-center gap-1.5 border-b px-3 font-bold text-xs uppercase outline-hidden transition-colors focus-visible:outline-hidden',
             props.api.isActive
               ? 'border-coffee-200 text-coffee-100'

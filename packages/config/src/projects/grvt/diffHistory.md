@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xc8ff0886005d8087f6cd80cb7dcf02cf3e00a469
+
+# Diff at Sat, 24 Oct 2026 16:41:05 GMT:
+
+- id: 236ab4d7
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792750638
+- current timestamp: 1792750638
+
+## Description
+
+Diamond `validators` is MEDIUM: it names the ValidatorTimelock, a role holder.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792750638 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.validators:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0x97bb6c851dd48647c12171ef4ffe322696a37244
+
+# Diff at Fri, 23 Oct 2026 10:18:22 GMT:
+
+- id: 59f8be76
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e5da6875dac4af99f827db5faa99b87f99ca760f block: 1792144186
+- current timestamp: 1792750638
+
+## Description
+
+Governance approved proposal that sends trxs to L2: https://tools.l2beat.com/decoder-new/?hash=0x301cafca68144cabff26ffe4007100c05ef451203bf461840acd2756ddc0f27d&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        53
++        54
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        53
++        54
+    }
+```
+
 Generated with discovered.json: 0x543a13a39939bf30b1183be2f5e3a5bee289e7ed
 
 # Diff at Tue, 20 Oct 2026 12:40:06 GMT:

@@ -1,3 +1,102 @@
+Generated with discovered.json: 0x037d8f0d34e1ca4c2e88637bf5ac5d7dc4053ef0
+
+# Diff at Sat, 24 Oct 2026 16:41:07 GMT:
+
+- id: 7bab0f95
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792756093
+- current timestamp: 1792756093
+
+## Description
+
+VKeySetter `state` is MEDIUM: governance opening COMMITTING is a reviewed event, the return to SETTING closes the path.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792756093 (main branch discovery), not current.
+
+```diff
+    contract VerificationKeySetter_64DA (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.state.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract VerificationKeySetter_9086 (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.state.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x978fe6a00613d0c74cd98563b0ccad2be36ab179
+
+# Diff at Fri, 23 Oct 2026 11:49:27 GMT:
+
+- id: 9b397c3e
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9f2ce66c3b876f816dd83e5dba8ecb05c508320e block: 1789711666
+- current timestamp: 1792756093
+
+## Description
+
+Discover both RelayAdapt7702 deployments, Railgun's EIP-7702 delegation targets: 0x1F74 from Railgun's shared config and 0x05ae, which RailOxide pins.
+
+## Watched changes
+
+```diff
+    contract RelayAdapt7702_1F74 (eth:0x1F74b4339990Db761bC0168F20D294A3a141497e) [railgun/RelayAdapt7702] {
+    +++ description: Implementation that accounts delegate to with EIP-7702 to run Railgun DeFi actions. A delegated account unshields through Railgun, runs calls and shields or sends the resulting tokens. Each action needs a signature from the account's own key, so anyone, such as a broadcaster, can submit it.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      template:
++        "railgun/RelayAdapt7702"
+      sourceHashes:
++        ["0xe677c8fcceecb91897609845535917eb2012931220853e62705536acc690e42b"]
+      description:
++        "Implementation that accounts delegate to with EIP-7702 to run Railgun DeFi actions. A delegated account unshields through Railgun, runs calls and shields or sends the resulting tokens. Each action needs a signature from the account's own key, so anyone, such as a broadcaster, can submit it."
+      deployerAddress:
++        "eth:0x43b89E9f43b2ded5392D4eB9B21543bAFCE38e1B"
+      sinceTimestamp:
++        1790628623
+      sinceBlock:
++        26078451
+      values:
++        {"$immutable":true,"adaptImplementation":"eth:0x1F74b4339990Db761bC0168F20D294A3a141497e","DOMAIN_SEPARATOR":"0x62615f60e6de8a1f4686082f9507bcd1b989a17bf7aad577657d344991d12c56","EXECUTE_TYPEHASH":"0xf24df5a0a7b800b8aa018f2ee7814e1f20511e66c80cc9b50ad5e68d95c85ff0","MULTICALL_TYPEHASH":"0x8bc0c0cf848c4ed87fd79dd13bc882697157c33ae51240463630f848bc06cd18","nonce":0,"railgun":"eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9","wBase":"eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"}
+      implementationNames:
++        {"eth:0x1F74b4339990Db761bC0168F20D294A3a141497e":"RelayAdapt7702"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../projects/railgun/.flat/RelayAdapt7702_1F74.sol | 3727 ++++++++++++++++++++
+ 1 file changed, 3727 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789711666 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract RelayAdapt7702_05ae (eth:0x05ae73c5925d843864ae6F261f3175De2ebCd963) [railgun/RelayAdapt7702]
+    +++ description: Implementation that accounts delegate to with EIP-7702 to run Railgun DeFi actions. A delegated account unshields through Railgun, runs calls and shields or sends the resulting tokens. Each action needs a signature from the account's own key, so anyone, such as a broadcaster, can submit it.
+```
+
 Generated with discovered.json: 0x95a2d0fe734f03e339fd81dcceaefddeb33eb7ae
 
 # Diff at Fri, 16 Oct 2026 05:36:52 GMT:

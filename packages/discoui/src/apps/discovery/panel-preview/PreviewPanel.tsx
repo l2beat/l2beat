@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
 import { useState } from 'react'
 import { useParams } from 'react-router'
 import { getPreview } from '../../../api/api'
@@ -11,6 +10,7 @@ import type {
 } from '../../../api/types'
 import { Checkbox } from '../../../components/Checkbox'
 import { LoadingState } from '../../../components/LoadingState'
+import { cn } from '../../../utils/cn'
 import { AddressDisplay } from '../panel-values/AddressDisplay'
 import { usePanelStore } from '../store/panel-store'
 
@@ -184,7 +184,7 @@ function PreviewItem(props: {
 }) {
   return (
     <div
-      className={clsx(
+      className={cn(
         'mb-1 flex flex-col gap-2 border-l-4 p-2 pl-1',
         props.isHighlighted ? 'border-autumn-300' : 'border-transparent',
       )}

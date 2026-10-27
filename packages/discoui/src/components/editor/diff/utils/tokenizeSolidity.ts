@@ -22,7 +22,7 @@ export function tokenizeSolidity(source: string): Token[] {
       i++
       continue
     }
-    if (c === ' ' || c === '\t' || c === '\r') {
+    if (c === ' ' || c === '\t' || c === '\r' || c === '\v' || c === '\f') {
       i++
       continue
     }
@@ -31,7 +31,7 @@ export function tokenizeSolidity(source: string): Token[] {
       const startLine = line
       const start = i
       i += 2
-      while (i < len && source[i] !== '\n') {
+      while (i < len && !isLineTerminator(source[i] as string)) {
         i++
       }
       tokens.push(comment(source.slice(start, i), startLine, line))
@@ -95,6 +95,13 @@ export function tokenizeSolidity(source: string): Token[] {
       continue
     }
 
+    // Spaces decide how solc splits these, so a++ + b and a + ++b differ.
+    if ((c === '+' || c === '-') && next === c) {
+      tokens.push(structural(c + next, line, line))
+      i += 2
+      continue
+    }
+
     tokens.push(structural(c, line, line))
     i++
   }
@@ -108,6 +115,11 @@ function comment(content: string, start: number, end: number): Token {
 
 function structural(content: string, start: number, end: number): Token {
   return { type: 'structural', content, startLine: start, endLine: end }
+}
+
+// The ones solc ends a line comment at: \n, \v, \f and \r.
+function isLineTerminator(c: string): boolean {
+  return c >= '\n' && c <= '\r'
 }
 
 function isIdentChar(c: string): boolean {

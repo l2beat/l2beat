@@ -1,8 +1,8 @@
-import clsx from 'clsx'
 import { useState } from 'react'
 import { IconContract } from '../../../../icons/IconContract'
 import { IconFolder } from '../../../../icons/IconFolder'
 import { IconFolderOpened } from '../../../../icons/IconFolderOpened'
+import { cn } from '../../../../utils/cn'
 
 export function TemplateFolder({
   name,
@@ -24,9 +24,7 @@ export function TemplateFolder({
         onClick={() => setSelected(name)}
       >
         <IconContract />
-        <span
-          className={clsx('text-sm', selected === name && 'text-coffee-300')}
-        >
+        <span className={cn('text-sm', selected === name && 'text-coffee-300')}>
           {name}
         </span>
       </div>
@@ -40,7 +38,7 @@ export function TemplateFolder({
           {isOpen ? <IconFolderOpened /> : <IconFolder />}
         </div>
         <span
-          className={clsx(
+          className={cn(
             'w-full text-sm group-hover:text-coffee-300',
             selected === name && 'text-coffee-300',
           )}
@@ -56,7 +54,7 @@ export function TemplateFolder({
             return (
               <span
                 key={key}
-                className={clsx(
+                className={cn(
                   'w-full cursor-pointer pl-5 text-xs hover:bg-coffee-400/20 hover:text-coffee-300',
                   selected === key && 'text-coffee-300',
                 )}

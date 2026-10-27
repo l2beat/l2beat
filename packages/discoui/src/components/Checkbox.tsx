@@ -1,6 +1,6 @@
-import clsx from 'clsx'
 import { Icon } from '../icons/Icon'
 import { IconChecked } from '../icons/IconChcked'
+import { cn } from '../utils/cn'
 
 type CheckboxProps = {
   checked: 'indeterminate' | boolean
@@ -20,7 +20,7 @@ export function Checkbox({
   return (
     <div
       role="checkbox"
-      className={clsx(
+      className={cn(
         'flex size-4 cursor-pointer items-center justify-center border-coffee-400 bg-coffee-700 hover:bg-coffee-700/50 disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
