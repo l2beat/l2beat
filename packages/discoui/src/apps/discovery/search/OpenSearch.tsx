@@ -53,6 +53,7 @@ export function OpenSearch({ project }: { project: string }) {
       <SearchResultsBody
         rows={results.rows}
         status={results.status}
+        isStale={results.isStale}
         emptyMessage={emptyMessage(scope, text)}
         needles={results.needles}
         highlightIndex={input.highlightIndex}
@@ -130,6 +131,7 @@ function ScopeTabs(props: {
 function SearchResultsBody(props: {
   rows: SearchRow[]
   status: 'pending' | 'error' | 'success'
+  isStale: boolean
   emptyMessage: string
   needles: string[]
   highlightIndex: number
@@ -163,7 +165,10 @@ function SearchResultsBody(props: {
   return (
     <div
       ref={listRef}
-      className="min-h-0 flex-1 overflow-y-auto overscroll-contain py-1"
+      className={cn(
+        'min-h-0 flex-1 overflow-y-auto overscroll-contain py-1',
+        props.isStale && 'pointer-events-none opacity-50',
+      )}
     >
       {props.rows.map((row) =>
         row.kind === 'label' ? (

@@ -33,6 +33,7 @@ export interface SearchResults {
   items: SearchItem[]
   needles: string[]
   status: 'pending' | 'error' | 'success'
+  isStale: boolean
   isFetching: boolean
 }
 
@@ -60,13 +61,14 @@ export function useSearchResults(project: string): SearchResults {
     isProjectsError,
     isProjectsPending,
   })
+  const isFetching = code.isFetching
   if (status !== 'success') {
-    return { rows: [], items: [], needles, status, isFetching: code.isFetching }
+    return { rows: [], items: [], needles, status, isStale: false, isFetching }
   }
   if (scope === 'code' && code.isStale) {
-    return { rows, items: [], needles, status, isFetching: code.isFetching }
+    return { rows, items: [], needles, status, isStale: true, isFetching }
   }
-  return { rows, items, needles, status, isFetching: code.isFetching }
+  return { rows, items, needles, status, isStale: false, isFetching }
 }
 
 function statusFor(
@@ -177,6 +179,7 @@ function useCodeSearch(project: string) {
   const query = useQuery({
     queryKey: ['search', 'code', project, address, needle],
     queryFn: async () => ({
+      project,
       needle,
       address,
       response: await searchCode(project, needle, address),
@@ -195,7 +198,10 @@ function useCodeSearch(project: string) {
   return {
     groups,
     needle: query.data?.needle ?? needle,
-    isStale: query.data?.needle !== text || query.data.address !== address,
+    isStale:
+      query.data?.project !== project ||
+      query.data.needle !== text ||
+      query.data.address !== address,
     isError: query.isError,
     isFetching: enabled && query.isFetching,
   }
