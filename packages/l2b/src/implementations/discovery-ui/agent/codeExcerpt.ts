@@ -35,6 +35,7 @@ function blockEnd(code: string, offset: number): number | undefined {
   }
   let depth = 0
   for (let at = open; at < code.length; at++) {
+    at = endOfCommentOrString(code, at)
     if (code[at] === '{') {
       depth++
     } else if (code[at] === '}') {
@@ -45,6 +46,31 @@ function blockEnd(code: string, offset: number): number | undefined {
     }
   }
   return undefined
+}
+
+// Braces in comments and strings, like commented-out code, do not open or
+// close a block: returns where the comment or string at `at` ends, or `at`.
+function endOfCommentOrString(code: string, at: number): number {
+  if (code.startsWith('//', at)) {
+    const end = code.indexOf('\n', at)
+    return end === -1 ? code.length : end
+  }
+  if (code.startsWith('/*', at)) {
+    const end = code.indexOf('*/', at + 2)
+    return end === -1 ? code.length : end + 1
+  }
+  const quote = code[at]
+  if (quote !== '"' && quote !== "'") {
+    return at
+  }
+  for (let i = at + 1; i < code.length; i++) {
+    if (code[i] === '\\') {
+      i++
+    } else if (code[i] === quote) {
+      return i
+    }
+  }
+  return code.length
 }
 
 function endOfLines(code: string, from: number, count: number): number {
