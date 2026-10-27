@@ -253,7 +253,10 @@ function CodeChip(props: { focus: AgentFocus; entries: ApiProjectChain[] }) {
   }
   const name = findSelected(props.entries, code.address)?.name
   const open = (match: AgentCodeMatch) =>
-    applyStep({ ...step, code: { ...code, offset: match.offset } })
+    applyStep({
+      ...step,
+      code: { ...code, offset: match.offset, sourceIndex: match.sourceIndex },
+    })
   return (
     <div className="flex flex-wrap items-center gap-1 text-xs">
       <span className="text-coffee-400">code</span>
@@ -267,7 +270,7 @@ function CodeChip(props: { focus: AgentFocus; entries: ApiProjectChain[] }) {
       {code.others.length > 0 && <span className="text-coffee-400">also</span>}
       {code.others.map((match) => (
         <button
-          key={match.offset}
+          key={`${match.sourceIndex}:${match.offset}`}
           type="button"
           onClick={() => open(match)}
           className="rounded-sm border border-coffee-600 px-1.5 font-mono leading-5 hover:border-aux-blue"
@@ -280,9 +283,7 @@ function CodeChip(props: { focus: AgentFocus; entries: ApiProjectChain[] }) {
 }
 
 function placeOf(match: AgentCodeMatch): string {
-  return match.contract === undefined
-    ? `line ${match.line}`
-    : `${match.contract}:${match.line}`
+  return `${match.contract ?? match.sourceName}:${match.line}`
 }
 
 function chainOf(address: string): string {
