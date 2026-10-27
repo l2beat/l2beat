@@ -40,7 +40,7 @@ function EditorFileTab(props: EditorFileTabProps) {
       onClick={props.onClick}
       className={cn(
         'flex h-6 items-center gap-1 px-2 text-sm',
-        props.isActive && 'min-w-0 bg-autumn-300 text-black',
+        props.isActive && 'min-w-24 bg-autumn-300 text-black',
         !props.isActive &&
           'min-w-16 max-w-[200px] shrink-[100] text-coffee-200 hover:bg-coffee-200/20',
       )}
@@ -51,12 +51,12 @@ function EditorFileTab(props: EditorFileTabProps) {
         <span className="min-w-0 truncate">{props.name}</span>
         {props.isDirty && (
           <span
-            className="h-2 w-2 rounded-full bg-aux-orange"
+            className="h-2 w-2 shrink-0 rounded-full bg-aux-orange"
             title="File has unsaved changes"
           />
         )}
         {props.readOnly && (
-          <span title="Read-only file">
+          <span className="shrink-0" title="Read-only file">
             <IconLock className="size-3 shrink-0 opacity-60" />
           </span>
         )}
