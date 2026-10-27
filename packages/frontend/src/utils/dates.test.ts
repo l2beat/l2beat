@@ -81,8 +81,8 @@ describe('dates', () => {
   describe(formatLocalDateTime.name, () => {
     const originalTz = process.env.TZ
     afterEach(() => {
-      // Assigning undefined would store the string "undefined"
       if (originalTz === undefined) {
+        // biome-ignore lint/performance/noDelete: assigning undefined stores the string "undefined"
         delete process.env.TZ
       } else {
         process.env.TZ = originalTz
