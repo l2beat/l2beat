@@ -45,6 +45,26 @@ describe(findCodeAnchor.name, () => {
     expect(anchor?.others).toEqual([])
   })
 
+  it('takes an implementation in another source over a declaration', () => {
+    const facet = {
+      name: 'Facet.sol',
+      code: 'contract Facet {\n  function execute() {}\n}',
+    }
+    const anchor = findCodeAnchor(
+      [
+        PROXY,
+        {
+          name: 'IExecutor.sol',
+          code: IMPLEMENTATION.code.split('\n').slice(0, 3).join('\n'),
+        },
+        facet,
+      ],
+      'function execute(',
+    )
+    expect(anchor?.sourceName).toEqual('Facet.sol')
+    expect(anchor?.contract).toEqual('Facet')
+  })
+
   it('shows a declaration nothing implements', () => {
     const code = 'interface IVault {\n  function pause() external;\n}'
     const anchor = findCodeAnchor([{ name: 'Vault.sol', code }], 'pause()')
