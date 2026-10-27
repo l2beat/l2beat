@@ -60,10 +60,7 @@ export const swellStaking: BaseProject = {
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning: undefined,
-    redWarning: {
-      text: `A ${safe('Swell Multisig')} multisig can mint ${rswETH} without delay through forced oracle reports, and the staking balances reported to both oracles are not verified on-chain.`,
-      detailAnchor: 'permissions',
-    },
+    redWarning: undefined,
     emergencyWarning: anyPaused('withdrawalsPaused')
       ? `Withdrawals are paused: no new ${swETH} or ${rswETH} exit requests can be made and processed requests cannot be claimed.`
       : undefined,
@@ -71,7 +68,7 @@ export const swellStaking: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Swell runs two liquid staking tokens on one code base: ${swETH}, backed by Ethereum validators, and ${rswETH}, backed by validators whose withdrawals go through EigenLayer. Each has its own contracts and ETH, but both are priced by Swell's reports and governed by the same multisigs and timelock.`,
+    description: `Swell runs two liquid staking tokens: ${swETH}, backed by Ethereum validators, and ${rswETH}, backed by validators whose withdrawals go through EigenLayer. Each has its own contracts and ETH, but both are priced by Swell's reports and governed by the same multisigs and timelock.`,
     detailedDescription: readProjectMarkdown(
       'swell-staking',
       'detailedDescription',

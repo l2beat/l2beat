@@ -4,7 +4,7 @@ Swell issues two liquid staking tokens from two copies of the same contracts. {{
 
 Anyone can deposit ETH and receive tokens at the current rate; the ETH is forwarded in the same call to the token's deposit manager. A Swell bot decides when that ETH is staked and with which providers; each provider's keys are used in the order it registered them. Keys come from a registry of staking providers chosen by Swell ({{swOperators}} registered for {{swETH}}, {{rswOperators}} for {{rswETH}}); providers post no bond, so slashing losses fall on all holders. Each new stake reverts if another deposit changed the beacon deposit root after the bot read it, and ETH reserved for queued exits is never staked.
 
-{{swETH}} stakes withdraw to the deposit manager itself. {{rswETH}} stakes withdraw to a Swell-controlled EigenPod (each restaking account has one, and the deposit manager keeps an older one of its own), so their ETH comes back through EigenLayer's withdrawal queue. Swell's multisig picks the EigenLayer operator each account delegates to without delay; restaked ETH can only be slashed once that operator allocates stake to a service.
+{{swETH}} stakes withdraw to the deposit manager itself. {{rswETH}} stakes withdraw to Swell-controlled EigenPods, so their ETH comes back through EigenLayer's withdrawal queue. Swell's multisig picks the EigenLayer operator each account delegates to without delay; restaked ETH can only be slashed once that operator allocates stake to a service.
 
 ![Swell deposits](/images/architecture/swell-staking-deposits.png#center)
 
