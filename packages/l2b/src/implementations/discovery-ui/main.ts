@@ -14,6 +14,7 @@ import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
 import { getCodePaths } from '../discovery/getCodePaths'
+import { localOnly } from './agent/localOnly'
 import { attachAgentRouter } from './agent/router'
 import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
@@ -147,9 +148,15 @@ export function createDiscoveryUiApp({
   const diffoveryController = new DiffoveryController(flatSourceClient)
 
   // A tab reports its whole graph to the agent routes, past the parser's
-  // 100kb default, which every other route keeps.
+  // 100kb default, which every other route keeps. The agent routes change
+  // what the researcher sees, so they refuse other machines, even a page that
+  // rebinds its domain to this one, before reading a body that large.
   if (!readonly) {
-    app.use('/api/agent', express.json({ limit: '16mb' }))
+    app.use(
+      '/api/agent',
+      localOnly('DiscoUI agent routes answer only locally'),
+      express.json({ limit: '16mb' }),
+    )
   }
   app.use(express.json())
 

@@ -2,7 +2,6 @@ import type { ConfigReader } from '@l2beat/discovery'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
 import { projectSchema } from './entries'
-import { localOnly } from './localOnly'
 import { attachMcpRouter } from './mcp'
 import { AgentSession } from './session'
 
@@ -50,9 +49,6 @@ export type AgentReceipt = z.infer<typeof agentReceiptSchema>
 
 export function attachAgentRouter(app: Express, configReader: ConfigReader) {
   const session = new AgentSession<AgentContext, AgentReceipt>()
-  // The tools and events change what the researcher sees, so a page elsewhere
-  // must not reach them, even one that rebinds its domain to this machine.
-  app.use('/api/agent', localOnly('DiscoUI agent routes answer only locally'))
   attachMcpRouter(app, { configReader, session })
 
   app.get('/api/agent/events', (req, res) => session.connect(req, res))
