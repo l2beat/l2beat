@@ -12,6 +12,7 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { useNavigate, useSearchParams } from 'react-router'
 import { toFunctionSelector } from 'viem'
 import { create } from 'zustand'
 import * as API from './api'
@@ -20,41 +21,33 @@ import { Form, type FormValues } from './form/Form'
 import { formatNumber, getFormatHint } from './format'
 import { HashReferencesProvider, useHashReferences } from './HashReferences'
 import { findKnownHashes } from './knownHashes'
+import {
+  type DecoderLink,
+  decompressCalldata,
+  readLink,
+  writeLink,
+} from './link'
 import { decode } from './plugins'
 import { SafeHashes } from './SafeHashes'
 
 export function DecoderApp() {
-  const [values, setValues] = useState<FormValues | undefined>()
+  const [search] = useSearchParams()
+  const navigate = useNavigate()
+  const link = readLink(search)
 
-  const showForm = !values
-  const showFetch = values && values.hash && !values.data
-
-  const value: DecodedValue | undefined = useMemo(() => {
-    if (!values) return undefined
-    return {
-      type: 'bytes',
-      bytes: values.data as `0x${string}`,
-      value: values.data as `0x${string}`,
-      chainId: values.chainId,
-      address: values.address as `0x${string}`,
-    }
-  }, [values])
-
-  const showDecoded = values && value && !(values.hash && !values.data)
+  async function openLink(values: FormValues) {
+    await navigate(`/decoder?${await writeLink(values)}`)
+  }
 
   return (
     <ChainsContextProvider>
       <APIChecker />
-      {showForm && <Form onSubmit={setValues} />}
-      {showFetch && <FetchTx values={values} setValues={setValues} />}
-      {showDecoded && (
-        <main className="mx-auto max-w-[1200px] p-12 pb-20">
-          <AbiManager />
-          <HashReferencesProvider>
-            <DecodedView value={value} path="transaction" />
-          </HashReferencesProvider>
-        </main>
+      {!link && <Form onSubmit={(values) => void openLink(values)} />}
+      {link?.type === 'invalid' && (
+        <Message className="text-red-500">Invalid decoder link.</Message>
       )}
+      {link?.type === 'transaction' && <TransactionLoader link={link} />}
+      {link?.type === 'calldata' && <CalldataLoader link={link} />}
     </ChainsContextProvider>
   )
 }
@@ -69,49 +62,111 @@ function ChainsContextProvider({ children }: { children: ReactNode }) {
   return <ChainsContext value={query.data ?? []} children={children} />
 }
 
-export function FetchTx(props: {
-  values: FormValues
-  setValues(values: FormValues): void
+interface Transaction {
+  hash?: `0x${string}`
+  chainId: number
+  to: `0x${string}` | undefined
+  data: `0x${string}`
+}
+
+function TransactionLoader({
+  link,
+}: {
+  link: Extract<DecoderLink, { type: 'transaction' }>
 }) {
   const query = useQuery({
-    queryFn: () =>
-      API.lookupTx({
-        hash: props.values.hash as `0x${string}`,
-        chainId: props.values.chainId || undefined,
-      }),
-    queryKey: [props.values.chainId, props.values.hash],
+    queryFn: () => API.lookupTx({ hash: link.hash, chainId: link.chainId }),
+    queryKey: ['transaction', link.chainId, link.hash],
   })
 
-  useEffect(() => {
-    if (query.data) {
-      props.setValues({
-        address: query.data.to ?? '',
-        chainId: query.data.chainId,
-        data: query.data.data,
-        hash: query.data.hash,
-      })
-    }
-  }, [query.data, props.setValues])
+  if (query.error) {
+    return <Message className="text-red-500">Something went wrong :(</Message>
+  }
+  if (query.data === null) {
+    return <Message>Transaction {link.hash} not found.</Message>
+  }
+  if (!query.data) {
+    return <Message className="text-zinc-500">Loading...</Message>
+  }
+  return <DecodedTransaction transaction={query.data} />
+}
+
+function CalldataLoader({
+  link,
+}: {
+  link: Extract<DecoderLink, { type: 'calldata' }>
+}) {
+  const query = useQuery({
+    queryFn: () => decompressCalldata(link.data),
+    queryKey: ['calldata', link.data],
+    retry: false,
+  })
 
   if (query.error) {
-    return (
-      <main className="mx-auto max-w-[1200px] p-12 pb-20">
-        <div className="text-red-500">Something went wrong :(</div>
-      </main>
-    )
+    return <Message className="text-red-500">Invalid decoder link.</Message>
   }
+  if (!query.data) {
+    return <Message className="text-zinc-500">Loading...</Message>
+  }
+  return (
+    <DecodedTransaction
+      transaction={{ chainId: link.chainId, to: link.to, data: query.data }}
+    />
+  )
+}
 
-  if (query.data === null) {
-    return (
-      <main className="mx-auto max-w-[1200px] p-12 pb-20">
-        Transaction {props.values.hash} not found.
-      </main>
-    )
-  }
+function DecodedTransaction({ transaction }: { transaction: Transaction }) {
+  const value: DecodedValue = useMemo(
+    () => ({
+      type: 'bytes',
+      bytes: transaction.data,
+      value: transaction.data,
+      chainId: transaction.chainId,
+      address: transaction.to,
+    }),
+    [transaction],
+  )
 
   return (
     <main className="mx-auto max-w-[1200px] p-12 pb-20">
-      <div className="text-zinc-500">Loading...</div>
+      {transaction.hash && (
+        <TransactionHeader
+          hash={transaction.hash}
+          chainId={transaction.chainId}
+        />
+      )}
+      <AbiManager />
+      <HashReferencesProvider>
+        <DecodedView value={value} path="transaction" />
+      </HashReferencesProvider>
+    </main>
+  )
+}
+
+function TransactionHeader(props: { hash: `0x${string}`; chainId: number }) {
+  const chains = useContext(ChainsContext)
+  const chain = chains.find((x) => x.chainId === props.chainId)
+  const explorer = chain?.explorerUrl || 'https://etherscan.io'
+  return (
+    <div className="mb-4">
+      <span className="text-zinc-500">tx </span>
+      <a
+        className="break-all font-mono text-blue-400"
+        href={`${explorer}/tx/${props.hash}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {props.hash}
+      </a>
+      <span className="text-zinc-500"> on {chain?.name ?? props.chainId}</span>
+    </div>
+  )
+}
+
+function Message(props: { className?: string; children: ReactNode }) {
+  return (
+    <main className="mx-auto max-w-[1200px] p-12 pb-20">
+      <div className={props.className}>{props.children}</div>
     </main>
   )
 }
