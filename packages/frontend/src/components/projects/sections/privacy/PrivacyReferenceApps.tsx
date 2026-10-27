@@ -1,27 +1,34 @@
 import type { ReactNode } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PRIVACY_EXPOSURE_CHIP_CLASS_NAME } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import { REFERENCE_APP } from '~/pages/privacy/referenceAppUi'
+import {
+  getCheckedAppSourceLabel,
+  getReferenceAppCommit,
+  getReferenceAppSince,
+  REFERENCE_APP,
+} from '~/pages/privacy/referenceAppUi'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
 
 const CHIPS = {
   reference: {
-    label: 'Reference',
+    label: REFERENCE_APP.referenceChip,
     className: PRIVACY_EXPOSURE_CHIP_CLASS_NAME.private,
   },
-  leaksMore: {
-    label: 'Leaks more',
+  checked: {
+    label: REFERENCE_APP.checkedChip,
     className: PRIVACY_EXPOSURE_CHIP_CLASS_NAME.exposed,
   },
 } as const
 
 /** The reference app first, then the other apps checked against it. */
 export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
+  const commit = app.source && getReferenceAppCommit(app.source)
+
   return (
     <div className="mt-4 flex flex-col gap-2">
       <span className="font-medium text-paragraph-12 text-secondary uppercase tracking-wide">
-        Apps
+        {REFERENCE_APP.listTitle}
       </span>
       <ul className="divide-y divide-divider rounded-lg border border-divider">
         <AppRow
@@ -31,33 +38,26 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
           version={app.version}
           chip="reference"
         >
-          The ratings have assumed this app since {app.since}.{' '}
-          {app.source ? (
+          {getReferenceAppSince(app)}{' '}
+          {commit ? (
             <>
-              Commit{' '}
-              <CustomLink
-                href={`${app.source.repository}/tree/${app.source.commit}`}
-              >
-                {app.source.commit.slice(0, 7)}
-              </CustomLink>
-              .
+              Commit <CustomLink href={commit.href}>{commit.label}</CustomLink>.
             </>
           ) : (
             'Closed source.'
           )}
         </AppRow>
-        {app.alternatives.map((alternative) => (
+        {app.checkedApps.map((checkedApp) => (
           <AppRow
-            key={alternative.name}
-            iconUrl={alternative.iconUrl}
-            name={alternative.name}
-            chip="leaksMore"
+            key={checkedApp.name}
+            iconUrl={checkedApp.iconUrl}
+            name={checkedApp.name}
+            chip="checked"
+            fix={checkedApp.fix}
           >
-            {alternative.finding}{' '}
-            <CustomLink href={alternative.source} className="whitespace-nowrap">
-              {alternative.checked
-                ? `Source (checked ${alternative.checked})`
-                : 'Source'}
+            {checkedApp.finding}{' '}
+            <CustomLink href={checkedApp.source} className="whitespace-nowrap">
+              {getCheckedAppSourceLabel(checkedApp)}
             </CustomLink>
           </AppRow>
         ))}
@@ -66,7 +66,7 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
         href={REFERENCE_APP.methodologyHref}
         className="self-start text-paragraph-13"
       >
-        How an app becomes the reference
+        {REFERENCE_APP.methodologyLink}
       </CustomLink>
     </div>
   )
@@ -78,6 +78,7 @@ function AppRow({
   href,
   version,
   chip,
+  fix,
   children,
 }: {
   iconUrl: string
@@ -85,6 +86,7 @@ function AppRow({
   href?: string
   version?: string
   chip: keyof typeof CHIPS
+  fix?: string
   children: ReactNode
 }) {
   return (
@@ -114,6 +116,12 @@ function AppRow({
         <p className="mt-0.5 text-paragraph-14 md:text-paragraph-15">
           {children}
         </p>
+        {fix && (
+          <p className="mt-1 text-paragraph-13 text-secondary md:text-paragraph-14">
+            <span className="font-medium">{REFERENCE_APP.fixLabel}: </span>
+            {fix}
+          </p>
+        )}
       </div>
     </li>
   )

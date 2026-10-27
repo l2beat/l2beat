@@ -47,7 +47,7 @@ export const cloaked: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
-    referenceClient: {
+    referenceApp: {
       name: 'Cloaked web app',
       url: 'https://app.clkd.xyz',
       since: '2026-09-16',

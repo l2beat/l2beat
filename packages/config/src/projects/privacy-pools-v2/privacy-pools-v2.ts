@@ -29,7 +29,7 @@ import {
   MONOREPO_COMMIT,
   MONOREPO_REPOSITORY,
   privacyPoolsV2Adversaries,
-  REFERENCE_CLIENT,
+  REFERENCE_APP,
 } from './adversaries'
 
 const discovery = new ProjectDiscovery('privacy-pools-v2')
@@ -139,7 +139,7 @@ export const privacyPoolsV2: BaseProject = {
     links: {
       websites: ['https://privacypools.com'],
       documentation: ['https://privacy-pools-v2-docs.vercel.app'],
-      repositories: [MONOREPO_REPOSITORY, REFERENCE_CLIENT.source.repository],
+      repositories: [MONOREPO_REPOSITORY, REFERENCE_APP.source.repository],
     },
     badges: [],
   },
@@ -228,7 +228,7 @@ export const privacyPoolsV2: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
-    referenceClient: REFERENCE_CLIENT,
+    referenceApp: REFERENCE_APP,
     trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),
     relayerTracking: {

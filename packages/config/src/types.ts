@@ -1088,10 +1088,10 @@ export interface ProjectPrivacyInfo {
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
   /**
-   * The released app the adversary ratings assume, shown on the project page
-   * as the reviewed app. Absent for reviews that rate several apps together.
+   * The most private released app found for the protocol, which the adversary
+   * ratings assume. The project page lists it above the other apps checked.
    */
-  referenceClient?: ProjectPrivacyReferenceClient
+  referenceApp?: ProjectPrivacyReferenceApp
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
   anonymitySet?:
@@ -1144,7 +1144,7 @@ export type PrivacyAnonymitySetRegistrationSource = {
   extractor: 'umbraStealthKeyChanged'
 }
 
-export interface ProjectPrivacyReferenceClient {
+export interface ProjectPrivacyReferenceApp {
   name: string
   /** Icon slug under /icons. Defaults to the project's icon, for apps its team builds. */
   icon?: string
@@ -1166,17 +1166,19 @@ export interface ProjectPrivacyReferenceClient {
   }
   /**
    * Other released apps for the protocol, checked but not rated. Each one
-   * leaks more than the reference client, which its finding shows.
+   * leaks more than the reference app, which its finding shows.
    */
-  alternatives?: ProjectPrivacyClientAlternative[]
+  checkedApps?: ProjectPrivacyCheckedApp[]
 }
 
-export interface ProjectPrivacyClientAlternative {
+export interface ProjectPrivacyCheckedApp {
   name: string
   /** Icon slug under /icons, e.g. "railway" for /icons/railway.png. Absent when the app has no logo. */
   icon?: string
   /** The traced behaviour that leaks more, as one sentence. */
   finding: string
+  /** What the app changes to match the reference app on this finding, as one sentence. */
+  fix?: string
   /** Proves the finding: pinned code, or the app itself when it is closed. */
   source: string
   /** Day the finding was checked, YYYY-MM-DD. Set when `source` is the app itself. */

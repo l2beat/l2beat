@@ -1,8 +1,8 @@
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import {
-  getCheckedAppsCount,
   getReferenceAppLabel,
+  getReferenceAppNotes,
   REFERENCE_APP,
 } from '../../referenceAppUi'
 
@@ -13,11 +13,7 @@ interface Props {
 }
 
 export function PrivacyReferenceAppStat({ app, href }: Props) {
-  const checked = getCheckedAppsCount(app)
-  const notes = [
-    ...(app.source ? [] : ['closed source']),
-    ...(checked ? [`most private of ${checked} checked`] : []),
-  ]
+  const notes = getReferenceAppNotes(app)
 
   return (
     <ProjectSummaryStat

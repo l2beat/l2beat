@@ -50,7 +50,7 @@ export const moneroCakeWallet: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
-    referenceClient: {
+    referenceApp: {
       name: 'Cake Wallet',
       url: 'https://cakewallet.com',
       since: '2026-09-29',

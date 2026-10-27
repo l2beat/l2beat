@@ -187,7 +187,7 @@ export const privacyPools: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
-    referenceClient: {
+    referenceApp: {
       name: 'v1.privacypools.com',
       url: 'https://v1.privacypools.com',
       since: '2026-09-16',

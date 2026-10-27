@@ -278,7 +278,7 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
-    referenceClient: {
+    referenceApp: {
       name: 'Tornado Cash classic app',
       url: 'https://app.ens.domains/tornadocash.eth?tab=records',
       since: '2026-10-13',

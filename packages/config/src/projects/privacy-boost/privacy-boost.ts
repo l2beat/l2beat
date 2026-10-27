@@ -346,7 +346,7 @@ export const privacyBoost: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
-    referenceClient: {
+    referenceApp: {
       name: 'Privacy Boost wallet',
       url: 'https://app.privacyboost.io',
       since: '2026-10-13',

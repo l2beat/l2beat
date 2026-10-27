@@ -179,7 +179,7 @@ export const interfold: BaseProject = {
   ],
   privacyInfo: {
     category: PRIVACY_CATEGORIES.secretBallot,
-    referenceClient: {
+    referenceApp: {
       name: 'Interfold governance app',
       url: 'https://governance.theinterfold.com',
       since: '2026-10-20',

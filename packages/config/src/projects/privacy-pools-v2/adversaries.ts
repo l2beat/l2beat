@@ -2,10 +2,10 @@ import {
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
-import type { ProjectPrivacyReferenceClient } from '../../types'
+import type { ProjectPrivacyReferenceApp } from '../../types'
 
 // main after v1.2.1 of the web app, the build privacypools.com serves.
-export const REFERENCE_CLIENT = {
+export const REFERENCE_APP = {
   name: 'privacypools.com',
   url: 'https://privacypools.com',
   since: '2026-10-23',
@@ -13,8 +13,8 @@ export const REFERENCE_CLIENT = {
     repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
     commit: '6c292b47a977cd86d506994f1b9a0fc51b9a79db',
   },
-} satisfies ProjectPrivacyReferenceClient
-const WEBSITE = `${REFERENCE_CLIENT.source.repository}/blob/${REFERENCE_CLIENT.source.commit}/`
+} satisfies ProjectPrivacyReferenceApp
+const WEBSITE = `${REFERENCE_APP.source.repository}/blob/${REFERENCE_APP.source.commit}/`
 // v1.0.2 of the monorepo: the circuits behind the live verifiers and the SDK the app vendors.
 export const MONOREPO_REPOSITORY =
   'https://github.com/0xbow-io/privacy-pools-v2-monorepo'

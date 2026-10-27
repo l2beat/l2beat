@@ -113,7 +113,7 @@ export const umbra: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
-    referenceClient: {
+    referenceApp: {
       name: 'Umbra app',
       url: 'https://app.umbra.cash',
       since: '2026-09-16',

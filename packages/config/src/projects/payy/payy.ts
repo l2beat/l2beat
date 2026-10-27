@@ -250,7 +250,7 @@ export const payy: ScalingProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
-    referenceClient: {
+    referenceApp: {
       name: 'Payy mobile app',
       url: 'https://payy.network',
       since: '2026-10-13',

@@ -138,8 +138,7 @@ export async function getPrivacyProjectEntry(
   }
   const icon = manifest.getUrl(`/icons/${details.slug}.png`)
   const referenceApp =
-    details.referenceClient &&
-    getPrivacyReferenceApp(details.referenceClient, icon)
+    details.referenceApp && getPrivacyReferenceApp(details.referenceApp, icon)
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined

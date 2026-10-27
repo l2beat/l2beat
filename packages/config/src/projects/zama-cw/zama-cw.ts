@@ -353,7 +353,7 @@ export const zamaCw: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.confidentialAmounts,
-    referenceClient: {
+    referenceApp: {
       name: 'Zama app',
       url: 'https://app.zama.org',
       since: '2026-10-09',

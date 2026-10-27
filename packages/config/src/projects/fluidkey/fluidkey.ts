@@ -47,7 +47,7 @@ export const fluidkey: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
-    referenceClient: {
+    referenceApp: {
       name: 'Fluidkey web app',
       url: 'https://app.fluidkey.com',
       since: '2026-10-13',

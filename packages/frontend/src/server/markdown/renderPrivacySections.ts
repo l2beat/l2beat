@@ -22,7 +22,14 @@ import {
   getPrivacyAssetsTotals,
   PRIVACY_ASSETS_BREAKDOWN_HEADERS as HEADERS,
 } from '~/pages/privacy/project/components/assets-breakdown/privacyAssetsBreakdown'
+import {
+  getCheckedAppSourceLabel,
+  getReferenceAppCommit,
+  getReferenceAppSince,
+  REFERENCE_APP,
+} from '~/pages/privacy/referenceAppUi'
 import type { PrivacyBucket } from '~/server/features/privacy/types'
+import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import {
   bulletList,
   formatCount,
@@ -36,12 +43,16 @@ import {
 
 /** The promise, then one subsection per adversary with what it learns, as the HTML section shows it. */
 export function renderPrivacyAdversaries(
-  { adversaries }: Pick<PrivacyAdversariesSectionProps, 'adversaries'>,
+  {
+    adversaries,
+    referenceApp,
+  }: Pick<PrivacyAdversariesSectionProps, 'adversaries' | 'referenceApp'>,
   level: number,
 ) {
   const baseline = adversaries.cells.publicObserver
   return joinBlocks([
     `**What the protocol promises:** ${adversaries.promise.text}`,
+    referenceApp ? renderReferenceApps(referenceApp) : '',
     `${PRIVACY_ADVERSARIES_TOOLTIP} Fields marked at risk stay private only under the condition in their note.`,
     ...adversaries.adversaries.map((adversary) => {
       const cell = adversaries.cells[adversary.id]
@@ -50,6 +61,25 @@ export function renderPrivacyAdversaries(
         fields: adversaries.fields,
       })
     }),
+  ])
+}
+
+/** The reference app first, then the other apps checked against it, like the HTML. */
+function renderReferenceApps(app: PrivacyReferenceApp) {
+  const commit = app.source && getReferenceAppCommit(app.source)
+  const version = app.version ? ` v${app.version}` : ''
+  return joinBlocks([
+    `**${REFERENCE_APP.listTitle}**`,
+    bulletList([
+      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${getReferenceAppSince(app)} ${commit ? `Commit ${link(commit.label, commit.href)}.` : 'Closed source.'}`,
+      ...app.checkedApps.map((checkedApp) => {
+        const fix = checkedApp.fix
+          ? ` ${REFERENCE_APP.fixLabel}: ${checkedApp.fix}`
+          : ''
+        return `**${checkedApp.name}** (${REFERENCE_APP.checkedChip}): ${checkedApp.finding} ${link(getCheckedAppSourceLabel(checkedApp), checkedApp.source)}${fix}`
+      }),
+    ]),
+    link(REFERENCE_APP.methodologyLink, REFERENCE_APP.methodologyHref),
   ])
 }
 

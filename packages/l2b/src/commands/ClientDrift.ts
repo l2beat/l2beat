@@ -1,7 +1,4 @@
-import {
-  type ProjectPrivacyReferenceClient,
-  ProjectService,
-} from '@l2beat/config'
+import { type ProjectPrivacyReferenceApp, ProjectService } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import chalk from 'chalk'
@@ -33,13 +30,13 @@ const Comparison = v.object({
 interface ProjectClient {
   id: string
   name: string
-  source: NonNullable<ProjectPrivacyReferenceClient['source']>
+  source: NonNullable<ProjectPrivacyReferenceApp['source']>
 }
 
 export const ClientDrift = command({
   name: 'client-drift',
   description:
-    "Lists what changed in a privacy project's reference client since the commit its ratings were reviewed against, or in every project's when none is given. Set GITHUB_TOKEN to lift GitHub's anonymous rate limit. Rebuild packages/config first.",
+    "Lists what changed in a privacy project's reference app since the commit its ratings were reviewed against, or in every project's when none is given. Set GITHUB_TOKEN to lift GitHub's anonymous rate limit. Rebuild packages/config first.",
   args: {
     project: positional({
       type: optional(string),
@@ -61,7 +58,7 @@ async function getProjectClients(
   if (projectId === undefined) {
     const projects = await ps.getProjects({ select: ['privacyInfo'] })
     return projects.flatMap((project) => {
-      const client = project.privacyInfo.referenceClient
+      const client = project.privacyInfo.referenceApp
       return client?.source
         ? [{ id: project.id, name: client.name, source: client.source }]
         : []
@@ -79,9 +76,9 @@ async function getProjectClients(
     process.exitCode = 1
     return []
   }
-  const client = project.privacyInfo?.referenceClient
+  const client = project.privacyInfo?.referenceApp
   if (!client?.source) {
-    console.log(`${project.id} has no open-source reference client`)
+    console.log(`${project.id} has no open-source reference app`)
     return []
   }
   return [{ id: project.id, name: client.name, source: client.source }]

@@ -53,11 +53,11 @@ describe('icons', () => {
       const projects = await ps.getProjects({ select: ['privacyInfo'] })
 
       for (const project of projects) {
-        const app = project.privacyInfo.referenceClient
+        const app = project.privacyInfo.referenceApp
         const slugs = [
           ...(app?.icon ? [app.icon] : []),
-          ...(app?.alternatives ?? []).flatMap(
-            (alternative) => alternative.icon ?? [],
+          ...(app?.checkedApps ?? []).flatMap(
+            (checkedApp) => checkedApp.icon ?? [],
           ),
         ]
         for (const slug of slugs) {

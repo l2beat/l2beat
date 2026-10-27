@@ -345,7 +345,7 @@ export const zkmoney: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
-    referenceClient: {
+    referenceApp: {
       name: 'zk.money Desktop',
       url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.5.0',
       since: '2026-10-05',

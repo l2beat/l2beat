@@ -625,6 +625,29 @@ describe('getProjects', () => {
       }
       expect(problems).toEqual([])
     })
+
+    // The page prints these dates and hashes as they are.
+    it('every reference app has valid dates and a full commit hash', () => {
+      const isDay = (value: string) =>
+        /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(Date.parse(value))
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const app = privacyInfo.referenceApp
+        if (!app) continue
+        if (!isDay(app.since)) {
+          problems.push(`${project.id}: since ${app.since}`)
+        }
+        if (app.source && !/^[0-9a-f]{40}$/.test(app.source.commit)) {
+          problems.push(`${project.id}: commit ${app.source.commit}`)
+        }
+        for (const checkedApp of app.checkedApps ?? []) {
+          if (checkedApp.checked !== undefined && !isDay(checkedApp.checked)) {
+            problems.push(`${project.id}: ${checkedApp.name} checked`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
   })
 
   describe('contracts', () => {
