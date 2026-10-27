@@ -115,7 +115,9 @@ function Display({
         <div className="mb-1 flex items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-1.5 font-semibold text-base text-coffee-100 leading-6">
             <AddressIcon className="shrink-0" type={selected.type} />
-            <span className="truncate">{selected.name ?? 'Unknown'}</span>
+            <span className="min-w-0 break-words">
+              {selected.name ?? 'Unknown'}
+            </span>
             {selected.type === 'Unverified' && (
               <span className="shrink-0 text-aux-red">(Unverified)</span>
             )}

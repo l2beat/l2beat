@@ -118,7 +118,7 @@ const PANEL_OPTIONS = (
           <RadixSelect.Item
             key={panelId}
             value={panelId}
-            className="relative flex h-7 cursor-pointer items-center gap-2.5 rounded-sm pr-9 pl-2 outline-hidden focus-visible:outline-hidden data-highlighted:bg-coffee-700 data-highlighted:text-coffee-100"
+            className="relative flex h-7 cursor-pointer items-center gap-2.5 rounded-sm pr-9 pl-2 outline-hidden focus-visible:outline-hidden data-highlighted:bg-coffee-600 data-highlighted:text-coffee-100"
           >
             <PanelLabel id={panelId} />
             <RadixSelect.ItemIndicator className="absolute right-2.5">

@@ -117,7 +117,7 @@ function ListItemChain(props: {
           >
             {open && <IconChevronDown />}
             {!open && <IconChevronRight />}
-            <span className="truncate">{`${props.entry.project} on ${chain}`}</span>
+            <span className="min-w-0 break-words text-left">{`${props.entry.project} on ${chain}`}</span>
           </button>
           {props.entry.project !== props.openedProject && (
             <Link

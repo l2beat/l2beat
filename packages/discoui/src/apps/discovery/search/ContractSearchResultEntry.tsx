@@ -24,7 +24,7 @@ export function ContractSearchResultEntry({
           key={result.address}
           data-index={index}
           className={cn(
-            'grid min-h-[29px] cursor-pointer grid-cols-[minmax(0,1fr)_148px] items-center gap-3 border-coffee-800 border-b px-3 text-[13px] text-coffee-200',
+            'grid min-h-[29px] cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-coffee-800 border-b px-3 text-[13px] text-coffee-200',
             index === selectedIndex
               ? 'bg-coffee-700 shadow-[inset_2px_0_0_#BAD80A]'
               : 'hover:bg-coffee-800',
