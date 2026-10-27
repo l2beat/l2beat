@@ -154,7 +154,7 @@ function useSearchSources(project: string): {
   return {
     sources,
     isError: projectQuery.isError,
-    isProjectsError: projectsQuery.isError,
+    isProjectsError: projectsQuery.isLoadingError,
     isProjectsPending: projectsQuery.isPending,
   }
 }
