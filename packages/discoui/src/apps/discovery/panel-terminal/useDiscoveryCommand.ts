@@ -13,6 +13,9 @@ export function useDiscoveryCommand() {
   }
 
   async function handleDiscoverCommand(project: string, devMode?: boolean) {
+    if (useTerminalStore.getState().command.inFlight) {
+      return
+    }
     toast.loading('Discovery has started', { id: toastId })
     if (devMode !== undefined) {
       setDevMode(devMode)
