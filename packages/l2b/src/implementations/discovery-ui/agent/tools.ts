@@ -1,6 +1,7 @@
 import type { ConfigReader } from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { type Validator, v as z } from '@l2beat/validate'
+import type { BoardStore } from './boardStore'
 import { projectSchema, readProjectEntries } from './entries'
 import { controlPaths, indexPermissionPaths } from './permissionPaths'
 import {
@@ -35,6 +36,7 @@ const NO_TAB =
 export interface DiscoUi {
   configReader: ConfigReader
   session: AgentSession<AgentContext, AgentReceipt>
+  boards: BoardStore
 }
 
 export interface AgentTool {
@@ -45,6 +47,9 @@ export interface AgentTool {
   argumentHelp: Record<string, string>
   readOnly: boolean
   run: (input: unknown, ui: DiscoUi) => Promise<string[]> | string[]
+  // Names the mistake in arguments the schema refused, when the schema's own
+  // message would list every variant of a union.
+  explainInvalid?: (args: unknown) => string | undefined
 }
 
 // The agent reads the message, fixes what it names and calls again.
@@ -175,6 +180,7 @@ export function tool<T>(definition: {
   argumentHelp: Record<string, string>
   readOnly: boolean
   run: (input: T, ui: DiscoUi) => Promise<string[]> | string[]
+  explainInvalid?: (args: unknown) => string | undefined
 }): AgentTool {
   return definition as AgentTool
 }
@@ -187,10 +193,9 @@ export async function runTool(
 ): Promise<{ text: string; isError: boolean }> {
   const input = tool.input.safeParse(args ?? {})
   if (!input.success) {
-    return {
-      text: `Invalid arguments: At ${input.path || '@'}: ${input.message}`,
-      isError: true,
-    }
+    const message =
+      tool.explainInvalid?.(args) ?? `At ${input.path || '@'}: ${input.message}`
+    return { text: `Invalid arguments: ${message}`, isError: true }
   }
   try {
     const lines = await tool.run(input.data, ui)

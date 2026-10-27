@@ -11,6 +11,7 @@ import {
   subcommands,
 } from 'cmd-ts'
 import { readFileSync } from 'fs'
+import { BOARD_DESCRIPTION } from '../implementations/discovery-ui/agent/boardTools'
 import { callTool, fail } from '../implementations/discovery-ui/agent/client'
 import { SELECTOR_HELP } from '../implementations/discovery-ui/agent/selectors'
 import type { AgentStepRequest } from '../implementations/discovery-ui/agent/steps'
@@ -260,6 +261,37 @@ const Permissions = command({
   },
 })
 
+const Board = command({
+  name: 'board',
+  description: `${BOARD_DESCRIPTION}\nReads {"title", "blocks", "id"?} as JSON from a file or stdin with "-".`,
+  args: {
+    url,
+    project,
+    file: positional({ type: string, displayName: 'file' }),
+  },
+  handler: async (args) => {
+    const board = readJsonObject(args.file)
+    await callTool(args.url, 'board', {
+      ...board,
+      project: args.project ?? board.project,
+    })
+  },
+})
+
+const Boards = command({
+  name: 'boards',
+  description:
+    'The boards open in DiscoUI and the ones saved for the project; with --id, the spec of one, to change it with board.',
+  args: {
+    url,
+    project,
+    id: option({ type: optional(string), long: 'id' }),
+  },
+  handler: async (args) => {
+    await callTool(args.url, 'boards', { project: args.project, id: args.id })
+  },
+})
+
 const Clear = command({
   name: 'clear',
   description: 'Removes what show and tour put in DiscoUI.',
@@ -272,7 +304,7 @@ const Clear = command({
 export const UIAgent = subcommands({
   name: 'ui-agent',
   description:
-    'Lets an agent read what the researcher looks at in DiscoUI, point at contracts, paths and code there and change the graph with views.',
+    'Lets an agent read what the researcher looks at in DiscoUI, point at contracts, paths and code there, change the graph with views and build boards.',
   cmds: {
     context: Context,
     state: State,
@@ -284,6 +316,8 @@ export const UIAgent = subcommands({
     'control-map': ControlMap,
     discard: Discard,
     clear: Clear,
+    board: Board,
+    boards: Boards,
   },
 })
 

@@ -11,6 +11,8 @@ const DISCOUI_LABELS: Record<string, string> = {
   control_map: 'Mapped who controls what',
   discard: 'Put your graph back',
   clear: 'Cleared its note',
+  board: 'Built a board',
+  boards: 'Looked at your boards',
 }
 
 const DRY_RUN_LABELS: Record<string, string> = {
@@ -50,6 +52,28 @@ export function describeTool(title: string, dryRun = false): ToolLabel {
     DISCOUI_LABELS[tool] ??
     `Used DiscoUI ${tool}`
   return { label, inDiscoUi: true, verbatim: false }
+}
+
+const BOARD_RESULT = 'Board '
+
+// The board tool answers "Board <id> ...", which lets the transcript open
+// the board it built.
+export function builtBoardId(
+  title: string,
+  output: string,
+): string | undefined {
+  if (discoUiTool(unquote(title.trim())) !== 'board') {
+    return undefined
+  }
+  const text = output.startsWith('```')
+    ? output.slice(output.indexOf('\n') + 1)
+    : output
+  if (!text.startsWith(BOARD_RESULT)) {
+    return undefined
+  }
+  const rest = text.slice(BOARD_RESULT.length)
+  const end = rest.indexOf(' ')
+  return end > 0 ? rest.slice(0, end) : undefined
 }
 
 function discoUiTool(command: string): string | undefined {

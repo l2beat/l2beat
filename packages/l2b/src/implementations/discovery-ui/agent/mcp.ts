@@ -1,8 +1,9 @@
 import { toJsonSchema, type Validator, v as z } from '@l2beat/validate'
 import type { Express, NextFunction, Request, Response } from 'express'
+import { BOARD_TOOLS } from './boardTools'
 import { AGENT_TOOLS, type AgentTool, type DiscoUi, runTool } from './tools'
 
-const TOOLS = AGENT_TOOLS
+const TOOLS = [...AGENT_TOOLS, ...BOARD_TOOLS]
 
 export const MCP_PATH = '/api/agent/mcp'
 
@@ -15,6 +16,7 @@ const INSTRUCTIONS = [
   'Read what they look at with `context` first: "this" means their selection. Point at your answer with `show`, and change their graph with `view` or `control_map` when they ask.',
   'For "who controls this" start with `permissions`, for "show me the power structure" with `control_map`.',
   "DiscoUI shows each source behind a 12-line note, so its line numbers are the .flat file's plus 12. show reports DiscoUI's; cite those to the researcher.",
+  'For "show me a table of", "list everything that" or a comparison, build a `board`: tables, text and view buttons bound to the discovery, in a panel next to the graph. Research with your own tools, then show the result on the board, not in your reply or a file: the reply says what the board shows in a sentence or two.',
   'Contracts are names (Bridge), chain:Name (arb1:L2Timelock) when a name repeats across chains, or chain:0x addresses, which `permissions` gives you.',
   'A wrong name or selector fails with candidates, a snippet that is not in the code fails too: fix it and call again. A snippet opens where it is implemented, past interface declarations; found more than once, it opens at the first and the result lists the others: quote a longer snippet, or when they are other implementations, name them in the note. Keep notes short, the details go in your reply.',
 ].join('\n')

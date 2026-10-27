@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import type { BoardEvent } from '../panel-board/boardApi'
 import { useStore as useNodeStore } from '../panel-nodes/store/store'
 import { usePanelStore } from '../store/panel-store'
 import type { AgentViewEvent } from './viewStore'
@@ -37,6 +38,7 @@ export interface AgentShow {
 export type AgentEvent =
   | AgentShow
   | AgentViewEvent
+  | BoardEvent
   | { type: 'clear' }
   | { type: 'discard'; id: string }
 

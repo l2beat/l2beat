@@ -2,6 +2,7 @@ import type { ConfigReader } from '@l2beat/discovery'
 import { expect } from 'earl'
 import express from 'express'
 import type { AddressInfo } from 'net'
+import { BoardStore } from './boardStore'
 import { attachMcpRouter, MCP_PATH } from './mcp'
 import type { AgentContext, AgentReceipt } from './router'
 import { AgentSession } from './session'
@@ -18,6 +19,7 @@ describe(attachMcpRouter.name, () => {
     attachMcpRouter(app, {
       configReader: { hasDiscovery: () => false } as unknown as ConfigReader,
       session: new AgentSession<AgentContext, AgentReceipt>(),
+      boards: new BoardStore(),
     })
     const server = app.listen(0, '127.0.0.1')
     await new Promise((resolve) => server.once('listening', resolve))
@@ -61,6 +63,8 @@ describe(attachMcpRouter.name, () => {
       'control_map',
       'discard',
       'clear',
+      'board',
+      'boards',
     ])
     for (const tool of tools) {
       expect(tool.inputSchema.type).toEqual('object')
@@ -79,6 +83,22 @@ describe(attachMcpRouter.name, () => {
     })
     expect(invalid.result?.isError).toEqual(true)
     expect(JSON.stringify(invalid.result?.content)).toInclude('At .contract')
+  })
+
+  it('names the block a board call got wrong', async () => {
+    const result = (
+      await call('tools/call', {
+        name: 'board',
+        arguments: { title: 'T', blocks: [{ type: 'text', text: 1 }] },
+      })
+    ).result
+    expect(result?.isError).toEqual(true)
+    expect(result?.content).toEqual([
+      {
+        type: 'text',
+        text: 'Invalid arguments: At .blocks[0].text: Expected string, got number.',
+      },
+    ])
   })
 
   it('names a project that has no discovery', async () => {
