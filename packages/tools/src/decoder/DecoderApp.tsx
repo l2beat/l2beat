@@ -97,7 +97,7 @@ function CalldataLoader({
   link: Extract<DecoderLink, { type: 'calldata' }>
 }) {
   const query = useQuery({
-    queryFn: () => decompressCalldata(link.data),
+    queryFn: () => decompressCalldata(readLegacyLocalStorage(link.data)),
     queryKey: ['calldata', link.data],
     retry: false,
   })
@@ -113,6 +113,12 @@ function CalldataLoader({
       transaction={{ chainId: link.chainId, to: link.to, data: query.data }}
     />
   )
+}
+
+// decoder-new kept long calldata in local storage and put this marker in the link.
+function readLegacyLocalStorage(data: string) {
+  if (data !== '0xLOCALSTORAGE') return data
+  return localStorage.getItem('data') ?? ''
 }
 
 function DecodedTransaction({ transaction }: { transaction: Transaction }) {
@@ -513,6 +519,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
   const { target } = useHashReferences()
   const [lessMembers, setLessMembers] = useState(false)
   const [decoded, setDecoded] = useState(value)
+  const [isCustom, setIsCustom] = useState(false)
 
   useLayoutEffect(() => {
     if (
@@ -527,9 +534,11 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
 
   useEffect(() => {
     setDecoded(value)
+    setIsCustom(false)
   }, [value])
 
   useEffect(() => {
+    if (isCustom) return
     if (decoded.type === 'bytes') {
       const selector = decoded.bytes.slice(0, 10) as `0x${string}`
       store.requestSignature(selector)
@@ -565,7 +574,13 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
       if (newDecoded && newDecoded.functionAbi !== decoded.functionAbi)
         setDecoded(newDecoded)
     }
-  }, [decoded, store.requestSignature, store.requestAddress, store.signatures])
+  }, [
+    decoded,
+    isCustom,
+    store.requestSignature,
+    store.requestAddress,
+    store.signatures,
+  ])
 
   if (!decoded) return null
 
@@ -673,7 +688,10 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
             bytes={decoded.bytes}
             chainId={decoded.chainId ?? 1}
             address={decoded.address}
-            onDecode={setDecoded}
+            onDecode={(custom) => {
+              setIsCustom(true)
+              setDecoded(custom)
+            }}
           />
         )}
         <HashMeaning hash={decoded.bytes} chainId={decoded.chainId} />

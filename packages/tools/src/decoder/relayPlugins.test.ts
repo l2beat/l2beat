@@ -116,6 +116,22 @@ describe('relay plugins', () => {
     })
   })
 
+  it('keeps extra bytes after a decoded Taiko execute call', () => {
+    const actions = encodeAbiParameters(
+      parseAbiParameters('(address, uint256, bytes)[]'),
+      [[[TARGET, 0n, INNER_CALL]]],
+    )
+    const data = encodeFunctionData({
+      abi: parseAbi(['function execute(bytes)']),
+      args: [actions],
+    })
+
+    const decoded = decode(concatHex([data, '0xdead']), [], 1, CALLER)
+
+    expect(member(decoded, 'actions').type).toEqual('array')
+    expect(decoded?.extra).toEqual('0xdead')
+  })
+
   it('leaves unrelated execute bytes to the signatures', () => {
     const data = encodeFunctionData({
       abi: parseAbi(['function execute(bytes)']),

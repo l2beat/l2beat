@@ -63,7 +63,7 @@ export function decode(
 
 export const DECODE_AS_PRESETS = [
   'multiSend',
-  '(address targetInbox, address l2Target, uint256 l2Value, uint256 gasLimit, uint256 maxFeePerGas, bytes l2Calldata)',
+  'address targetInbox, address l2Target, uint256 l2Value, uint256 gasLimit, uint256 maxFeePerGas, bytes l2Calldata',
   'function upgrade((address, address, bytes32)[])',
 ]
 
@@ -83,7 +83,7 @@ export function decodeAs(
       chainId,
       members: decodeMultiSendTransactions(bytes, chainId),
     }
-  } else if (trimmed.startsWith('function') || trimmed.startsWith('(')) {
+  } else if (trimmed.startsWith('function')) {
     value = decodeType(trimmed, bytes, chainId, address)
   } else {
     value = decodeType(`(${trimmed})`, bytes, chainId, address)

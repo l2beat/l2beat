@@ -104,6 +104,22 @@ describe(decodeAs.name, () => {
     expect(decoded.members?.[1]?.address).toEqual(TARGET)
   })
 
+  it('decodes a parenthesized type as one tuple like abi.decode', () => {
+    const bytes = encodeAbiParameters(
+      parseAbiParameters('(uint256 a, string b)'),
+      [{ a: 7n, b: 'hi' }],
+    )
+
+    const decoded = decodeAs('(uint256 a, string b)', bytes, 1)
+
+    expect(
+      decoded.members?.[0]?.members?.map((x) => [x.name, x.value]),
+    ).toEqual([
+      ['a', '7'],
+      ['b', 'hi'],
+    ])
+  })
+
   it('decodes a function call', () => {
     const bytes = encodeFunctionData({
       abi: parseAbi(['function foo(uint256 a)']),

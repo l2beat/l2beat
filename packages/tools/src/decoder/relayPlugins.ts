@@ -57,6 +57,7 @@ function decodeRetryableTicket(
     return payload
   }
   ticket.name = payload.name
+  ticket.extra ??= payload.extra
   const [inbox, l2Target, , , , l2Calldata] = members(ticket)
   const l2ChainId = ARBITRUM_INBOX_CHAIN_IDS[inbox?.value ?? '']
   if (l2Target && l2Calldata) {
@@ -286,6 +287,7 @@ function replaceBytesArgument(
   if (!replacement) return
   replacement.name = argument.name
   decoded.members = [replacement]
+  decoded.extra ??= argument.extra
   return decoded
 }
 
