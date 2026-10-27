@@ -353,10 +353,11 @@ function formatError(error: unknown): string {
   if (!(error instanceof Error)) {
     return String(error)
   }
-  const compilerErrors = (error as { errors?: { formattedMessage: string }[] })
-    .errors
+  const compilerErrors = (
+    error as { errors?: { message: string; formattedMessage?: string }[] }
+  ).errors
   if (compilerErrors !== undefined) {
-    return compilerErrors.map((e) => e.formattedMessage).join('\n')
+    return compilerErrors.map((e) => e.formattedMessage ?? e.message).join('\n')
   }
   return error.message
 }
