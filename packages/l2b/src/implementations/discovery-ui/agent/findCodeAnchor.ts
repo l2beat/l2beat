@@ -24,7 +24,7 @@ const DECLARATION_KEYWORDS = [
 // Searches the source DiscoUI opens by default first (the implementation of a
 // proxy), so a snippet shared with the proxy lands on the code that runs.
 // A function header without a body (an interface's or an abstract one) only
-// shows when nothing implements it.
+// shows when no source implements it.
 export function findCodeAnchor(
   sources: readonly { name: string; code: string }[],
   find: string,
@@ -34,31 +34,43 @@ export function findCodeAnchor(
   }
   const first = sources.length > 1 ? 1 : 0
   const order = [first, ...[...sources.keys()].filter((i) => i !== first)]
+  let declaration: CodeAnchor | undefined
   for (const sourceIndex of order) {
     const source = sources[sourceIndex]
     if (source === undefined) {
       continue
     }
     const offsets = findOffsets(source.code, find)
-    if (offsets.length === 0) {
-      continue
-    }
     const implemented = offsets.filter((o) => !isBodiless(source.code, o))
-    const [shown, ...others] = (
-      implemented.length > 0 ? implemented : offsets
-    ).map((offset) => matchAt(source.code, offset))
-    if (shown === undefined) {
-      throw new Error('Code anchor without a match')
+    if (implemented.length > 0) {
+      return anchorAt(source, sourceIndex, implemented, find)
     }
-    return {
-      sourceIndex,
-      sourceName: source.name,
-      length: find.length,
-      ...shown,
-      others,
+    if (declaration === undefined && offsets.length > 0) {
+      declaration = anchorAt(source, sourceIndex, offsets, find)
     }
   }
-  return undefined
+  return declaration
+}
+
+function anchorAt(
+  source: { name: string; code: string },
+  sourceIndex: number,
+  offsets: readonly number[],
+  find: string,
+): CodeAnchor {
+  const [shown, ...others] = offsets.map((offset) =>
+    matchAt(source.code, offset),
+  )
+  if (shown === undefined) {
+    throw new Error('Code anchor without a match')
+  }
+  return {
+    sourceIndex,
+    sourceName: source.name,
+    length: find.length,
+    ...shown,
+    others,
+  }
 }
 
 function findOffsets(code: string, find: string): number[] {
