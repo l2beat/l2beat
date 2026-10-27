@@ -153,7 +153,11 @@ function applyAgentView(event: AgentViewEvent) {
 
 export function discardAgentView(eventId?: string) {
   const { pending, queued } = useAgentViewStore.getState()
-  if (pending !== undefined) {
+  // While another project loads, its graph must not get this one's nodes.
+  if (
+    pending !== undefined &&
+    pending.project === useNodeStore.getState().projectId
+  ) {
     useNodeStore.getState().setNodes([...pending.before])
     fitGraphTo(new Set(visibleContracts(pending.before)))
   }
