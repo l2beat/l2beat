@@ -70,8 +70,6 @@ export function StatsPage() {
     setProgress(undefined)
   }
 
-  const chain = chains.data?.find((c) => c.id === chainId)
-
   return (
     <UopsPage description="Pick a chain and the number of blocks to analyze, counting back from the latest block. Running it again fetches the blocks before the ones already analyzed and adds them to the totals.">
       <form
@@ -126,7 +124,7 @@ export function StatsPage() {
       <div className="mt-8">
         {progress && <ProgressBar progress={progress} />}
         {error && <div className="mb-4 text-red-500">{error}</div>}
-        {stats && <StatsDetails stats={stats} chainId={chain?.id} />}
+        {stats && <StatsDetails stats={stats} chainId={chainId} />}
       </div>
     </UopsPage>
   )
@@ -143,10 +141,7 @@ function ProgressBar(props: { progress: Progress }) {
   )
 }
 
-function StatsDetails(props: {
-  stats: AggregatedStats
-  chainId: string | undefined
-}) {
+function StatsDetails(props: { stats: AggregatedStats; chainId: string }) {
   const { stats } = props
   return (
     <>
@@ -207,10 +202,7 @@ function SmartAccountTable(props: { usage: API.SmartAccountUsage[] }) {
   )
 }
 
-function TopBlocksTable(props: {
-  blocks: API.BlockRatio[]
-  chainId: string | undefined
-}) {
+function TopBlocksTable(props: { blocks: API.BlockRatio[]; chainId: string }) {
   return (
     <section>
       <h2 className="mb-2 font-bold">Top blocks</h2>
