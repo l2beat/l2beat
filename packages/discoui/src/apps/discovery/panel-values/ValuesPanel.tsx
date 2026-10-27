@@ -61,9 +61,7 @@ function Display({
   sourceProject: string
 }) {
   const { configModel, templateModel, canModify } = useConfigModels()
-  const isRevealingField = usePanelStore(
-    (s) => s.revealedField?.address === selected.address,
-  )
+  const revealedField = usePanelStore((s) => s.revealedField)
   const canModifyTemplate = canModify && templateModel.hasTemplate
   const templateIgnoredMethods = templateModel.ignoreMethods ?? []
   const configIgnoredMethods = configModel.ignoreMethods ?? []
@@ -99,6 +97,9 @@ function Display({
   const fields = fieldsFromSelected.filter(
     (field) => !ignoredMethodsSet.has(field.name),
   )
+  const isRevealingField =
+    revealedField?.address === selected.address &&
+    fields.some((field) => field.name === revealedField.name)
   const ignoredFieldNames = [
     ...fieldsFromSelected
       .filter((field) => ignoredMethodsSet.has(field.name))

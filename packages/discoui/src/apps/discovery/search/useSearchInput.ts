@@ -63,7 +63,7 @@ export function useSearchInput(
       if (count === 0) return
       const step = e.key === 'ArrowDown' ? 1 : -1
       highlightAt((highlightIndex + step + count) % count)
-    } else if (e.key === 'Enter') {
+    } else if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
       const item = items[highlightIndex]
       if (item !== undefined) runItem(item)
     } else if (e.key === 'Tab') {
