@@ -116,9 +116,11 @@ export function configure(configId: string, value: string) {
 
 // A new chat starts with the agent's defaults; the researcher's last
 // choices for this agent replace them.
+// Runs when this tab sees the agent become ready, also after a message sent
+// while it started, so only that first turn runs on the defaults.
 function applyRememberedSettings() {
-  const { provider, config, items } = useChatStore.getState()
-  if (provider === undefined || items.length > 0) {
+  const { provider, config } = useChatStore.getState()
+  if (provider === undefined) {
     return
   }
   const settings = readSettings(provider)
