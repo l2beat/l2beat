@@ -20,7 +20,9 @@ describe(BlockTimestampProvider.name, () => {
         })
         const blockProvider = mockObject<BlockProvider>({
           chain: CHAIN,
-          getBlockTimestamp: mockFn().resolvesToOnce(TIMESTAMP + 12),
+          getBlockTimestamp: mockFn(async (n: number) =>
+            n === BLOCK_NUMBER ? TIMESTAMP - 1 : TIMESTAMP + 12,
+          ),
           getBlockNumberAtOrBefore: mockFn(),
         })
 
@@ -35,10 +37,37 @@ describe(BlockTimestampProvider.name, () => {
         expect(indexerClient.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
           TIMESTAMP,
         )
-        expect(blockProvider.getBlockTimestamp).toHaveBeenOnlyCalledWith(
+        expect(blockProvider.getBlockTimestamp).toHaveBeenCalledWith(
+          BLOCK_NUMBER,
+        )
+        expect(blockProvider.getBlockTimestamp).toHaveBeenCalledWith(
           BLOCK_NUMBER + 1,
         )
         expect(blockProvider.getBlockNumberAtOrBefore).not.toHaveBeenCalled()
+      })
+
+      it('searches the RPC when the explorer block is after the timestamp', async () => {
+        // e.g. the explorer answered from a fork the RPC has reorged away
+        const indexerClient = mockObject<BlockIndexerClient>({
+          chain: CHAIN,
+          getBlockNumberAtOrBefore: mockFn().resolvesToOnce(BLOCK_NUMBER),
+        })
+        const blockProvider = mockObject<BlockProvider>({
+          chain: CHAIN,
+          getBlockTimestamp: mockFn(async (n: number) =>
+            n === BLOCK_NUMBER ? TIMESTAMP + 2 : TIMESTAMP + 4,
+          ),
+          getBlockNumberAtOrBefore: mockFn().resolvesToOnce(BLOCK_NUMBER - 1),
+        })
+
+        const provider = new BlockTimestampProvider({
+          indexerClients: [indexerClient],
+          blockProviders: [blockProvider],
+        })
+
+        const result = await provider.getBlockNumberAtOrBefore(TIMESTAMP, CHAIN)
+
+        expect(result).toEqual(BLOCK_NUMBER - 1)
       })
 
       it('searches the RPC when the explorer block is not the last one at or before the timestamp', async () => {
@@ -49,7 +78,7 @@ describe(BlockTimestampProvider.name, () => {
         })
         const blockProvider = mockObject<BlockProvider>({
           chain: CHAIN,
-          getBlockTimestamp: mockFn().resolvesToOnce(TIMESTAMP - 60),
+          getBlockTimestamp: mockFn().resolvesTo(TIMESTAMP - 60),
           getBlockNumberAtOrBefore: mockFn().resolvesToOnce(BLOCK_NUMBER),
         })
 
@@ -75,11 +104,12 @@ describe(BlockTimestampProvider.name, () => {
         })
         const blockProvider = mockObject<BlockProvider>({
           chain: CHAIN,
-          getBlockTimestamp: mockFn().rejectsWithOnce(
-            new Error('Block not found'),
-          ),
+          getBlockTimestamp: mockFn(async (n: number) => {
+            if (n === BLOCK_NUMBER) return TIMESTAMP - 30
+            throw new Error('Block not found')
+          }),
           getBlockNumberAtOrBefore: mockFn().rejectsWithOnce(
-            new TargetNotReadyError(TIMESTAMP, TIMESTAMP - 30),
+            new TargetNotReadyError(TIMESTAMP, BLOCK_NUMBER, TIMESTAMP - 30),
           ),
         })
 
@@ -141,10 +171,10 @@ describe(BlockTimestampProvider.name, () => {
         )
       })
 
-      it('throws if the chain has no block data source', async () => {
+      it('returns the explorer block unchecked if the chain has no other block data source', async () => {
         const indexerClient = mockObject<BlockIndexerClient>({
           chain: CHAIN,
-          getBlockNumberAtOrBefore: mockFn(),
+          getBlockNumberAtOrBefore: mockFn().resolvesToOnce(BLOCK_NUMBER),
         })
         const otherChainProvider = mockObject<BlockProvider>({
           chain: 'other-chain',
@@ -156,10 +186,23 @@ describe(BlockTimestampProvider.name, () => {
           blockProviders: [otherChainProvider],
         })
 
+        const result = await provider.getBlockNumberAtOrBefore(TIMESTAMP, CHAIN)
+
+        expect(result).toEqual(BLOCK_NUMBER)
+        expect(
+          otherChainProvider.getBlockNumberAtOrBefore,
+        ).not.toHaveBeenCalled()
+      })
+
+      it('throws if the chain has no block data source', async () => {
+        const provider = new BlockTimestampProvider({
+          indexerClients: [],
+          blockProviders: [],
+        })
+
         await expect(
           provider.getBlockNumberAtOrBefore(TIMESTAMP, CHAIN),
         ).toBeRejectedWith('Missing block data source for chain')
-        expect(indexerClient.getBlockNumberAtOrBefore).not.toHaveBeenCalled()
       })
     },
   )

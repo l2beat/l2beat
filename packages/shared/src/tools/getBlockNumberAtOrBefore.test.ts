@@ -52,6 +52,33 @@ describe(getBlockNumberAtOrBefore.name, async () => {
       }
     })
 
+    it('reports the tip when not ready', async () => {
+      const getBlock = linear(7, 42)
+      const rhs = 77
+      const rhsTimestamp = (await getBlock(rhs)).timestamp
+
+      const error = await getBlockNumberAtOrBefore(
+        UnixTime(rhsTimestamp + 1),
+        0,
+        rhs,
+        getBlock,
+        { requireLaterBlock: true },
+      ).catch((e: unknown) => e)
+
+      expect(error).toEqual(
+        new TargetNotReadyError(UnixTime(rhsTimestamp + 1), rhs, rhsTimestamp),
+      )
+    })
+
+    it('is not ready when the only block is at the timestamp', async () => {
+      const getBlock = linear(10)
+      await expect(
+        getBlockNumberAtOrBefore(UnixTime(420), 42, 42, getBlock, {
+          requireLaterBlock: true,
+        }),
+      ).toBeRejectedWith(TargetNotReadyError)
+    })
+
     it('returns the last block at or before the timestamp once rhsBlock is after it', async () => {
       // two blocks per timestamp, so the last one is not the first match
       const getBlock = async (n: number) => ({ timestamp: Math.floor(n / 2) })

@@ -11,7 +11,11 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { keepPublishedHours, waitForPrices } from '../../../tools/waitForData'
+import {
+  allOrCancel,
+  keepPublishedHours,
+  waitForPrices,
+} from '../../../tools/waitForData'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { PriceConfig } from '../types'
 
@@ -58,8 +62,9 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       configurations: configurations.length,
     })
 
-    const results = await Promise.all(
-      configurations.map(async (configuration) => {
+    const results = await allOrCancel(
+      configurations,
+      async (configuration, signal) => {
         try {
           const prices = await waitForPrices(
             () =>
@@ -71,6 +76,7 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
             {
               logger: this.logger,
               priceId: configuration.properties.priceId,
+              signal,
             },
           )
           const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
@@ -105,7 +111,7 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
 
           throw error
         }
-      }),
+      },
     )
 
     const { records, syncedTo } = keepPublishedHours(

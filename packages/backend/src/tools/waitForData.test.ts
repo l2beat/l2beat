@@ -3,7 +3,7 @@ import { DataNotReadyError, TargetNotReadyError } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { withFakeTimers } from '../test/withFakeTimers'
-import { waitForPrices, waitForTarget } from './waitForData'
+import { allOrCancel, waitForPrices, waitForTarget } from './waitForData'
 
 const TIMESTAMP = UnixTime.fromDate(new Date('2026-10-23T12:00:00Z'))
 
@@ -24,8 +24,8 @@ describe(waitForTarget.name, () => {
   it('waits while the tip has not passed the target', async () => {
     const logger = mockObject<Logger>({ info: mockFn().returns(undefined) })
     const resolve = mockFn<() => Promise<number>>()
-      .rejectsWithOnce(new TargetNotReadyError(TIMESTAMP, TIMESTAMP - 30))
-      .rejectsWithOnce(new TargetNotReadyError(TIMESTAMP, TIMESTAMP - 10))
+      .rejectsWithOnce(new TargetNotReadyError(TIMESTAMP, 100, TIMESTAMP - 30))
+      .rejectsWithOnce(new TargetNotReadyError(TIMESTAMP, 110, TIMESTAMP - 10))
       .resolvesToOnce(123)
 
     const result = await withFakeTimers(() =>
@@ -68,6 +68,31 @@ describe(waitForTarget.name, () => {
     })
   })
 
+  it('uses the tip once the chain has stalled for an hour past the target', async () => {
+    const logger = mockObject<Logger>({
+      info: mockFn().returns(undefined),
+      warn: mockFn().returns(undefined),
+    })
+    const timestamp = UnixTime.now() - UnixTime.HOUR
+    const resolve = mockFn<() => Promise<number>>().rejectsWithOnce(
+      new TargetNotReadyError(timestamp, 100, timestamp - 30),
+    )
+
+    const result = await waitForTarget(resolve, {
+      logger,
+      chain: 'ethereum',
+      timestamp,
+    })
+
+    expect(result).toEqual(100)
+    expect(logger.warn).toHaveBeenOnlyCalledWith('Chain stalled, using tip', {
+      chain: 'ethereum',
+      timestamp,
+      tip: 100,
+      tipTimestamp: timestamp - 30,
+    })
+  })
+
   it('rethrows other errors', async () => {
     const logger = mockObject<Logger>({ info: mockFn().returns(undefined) })
 
@@ -97,5 +122,25 @@ describe(waitForPrices.name, () => {
       'Price not published, waiting',
       { priceId: 'ethereum', attempt: 1 },
     )
+  })
+})
+
+describe(allOrCancel.name, () => {
+  it('stops waiting for the other prices once one fails', async () => {
+    const logger = mockObject<Logger>({ info: mockFn().returns(undefined) })
+    const unpublished = mockFn<() => Promise<number[]>>().rejectsWith(
+      new DataNotReadyError('Not published'),
+    )
+
+    const batch = withFakeTimers(() =>
+      allOrCancel(['ethereum', 'bitcoin'], (priceId, signal) =>
+        priceId === 'ethereum'
+          ? waitForPrices(unpublished, { logger, priceId, signal })
+          : Promise.reject(new Error('HTTP error')),
+      ),
+    )
+
+    await expect(batch).toBeRejectedWith('HTTP error')
+    expect(unpublished).toHaveBeenCalledTimes(1)
   })
 })

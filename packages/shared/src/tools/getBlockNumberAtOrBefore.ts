@@ -42,13 +42,14 @@ export async function getBlockNumberAtOrBefore(
   let [{ timestamp: lhsTimestamp }, { timestamp: rhsTimestamp }] =
     await Promise.all([getBlock(lhsBlock), getBlock(rhsBlock)])
 
-  if (timestamp <= lhsTimestamp) return lhsBlock
+  // Checked before lhs, so a one-block range at the timestamp is not ready
   if (timestamp >= rhsTimestamp) {
     if (options.requireLaterBlock) {
-      throw new TargetNotReadyError(timestamp, UnixTime(rhsTimestamp))
+      throw new TargetNotReadyError(timestamp, rhsBlock, UnixTime(rhsTimestamp))
     }
     return rhsBlock
   }
+  if (timestamp <= lhsTimestamp) return lhsBlock
 
   while (lhsBlock + 1 < rhsBlock) {
     const rangeBefore = rhsBlock - lhsBlock

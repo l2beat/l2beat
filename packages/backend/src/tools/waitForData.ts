@@ -4,6 +4,11 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 const POLL_INTERVAL_MS = 60_000
 
+// A chain with no block for this long after the target has stalled, and its
+// tip is the last block at or before the target. It equals the default clock
+// offset, so at that offset a stalled chain's tip is used at once.
+const MAX_TARGET_WAIT = UnixTime.HOUR
+
 // Data that is minutes away must not go through the indexer retry strategy,
 // whose exponential back-off grows to an hour and would add the lag back. Each
 // wait is logged, which also satisfies the alerting that expects an indexer to
@@ -12,16 +17,17 @@ const POLL_INTERVAL_MS = 60_000
 
 /**
  * Resolves the block or slot for a target timestamp, waiting while the chain
- * tip has not passed the timestamp yet.
+ * tip has not passed the timestamp yet. Returns the tip once the chain has
+ * had MAX_TARGET_WAIT to produce a block after the timestamp.
  */
-export async function waitForTarget<T>(
-  resolve: () => Promise<T>,
+export async function waitForTarget(
+  resolve: () => Promise<number>,
   options: {
     logger: Logger
     chain: string
     timestamp: UnixTime
   },
-): Promise<T> {
+): Promise<number> {
   const { logger, chain, timestamp } = options
   const start = Date.now()
   let attempts = 0
@@ -40,6 +46,15 @@ export async function waitForTarget<T>(
       return result
     } catch (error) {
       if (!(error instanceof TargetNotReadyError)) throw error
+      if (UnixTime.now() - timestamp >= MAX_TARGET_WAIT) {
+        logger.warn('Chain stalled, using tip', {
+          chain,
+          timestamp,
+          tip: error.tip,
+          tipTimestamp: error.tipTimestamp,
+        })
+        return error.tip
+      }
       attempts++
       logger.info('Target not ready, waiting', {
         chain,
@@ -53,10 +68,13 @@ export async function waitForTarget<T>(
   }
 }
 
-/** Fetches prices, waiting while CoinGecko has not published the hour yet. */
+/**
+ * Fetches prices, waiting while CoinGecko has not published the hour yet.
+ * Stops waiting once `signal` is aborted.
+ */
 export async function waitForPrices<T>(
   fetch: () => Promise<T>,
-  options: { logger: Logger; priceId: string },
+  options: { logger: Logger; priceId: string; signal?: AbortSignal },
 ): Promise<T> {
   let attempts = 0
   while (true) {
@@ -64,13 +82,31 @@ export async function waitForPrices<T>(
       return await fetch()
     } catch (error) {
       if (!(error instanceof DataNotReadyError)) throw error
+      if (options.signal?.aborted) throw error
       attempts++
       options.logger.info('Price not published, waiting', {
         priceId: options.priceId,
         attempt: attempts,
       })
-      await sleep(POLL_INTERVAL_MS)
+      await sleep(POLL_INTERVAL_MS, options.signal)
+      if (options.signal?.aborted) throw error
     }
+  }
+}
+
+/**
+ * Promise.all for a batch of waitForPrices calls. Once one item fails the
+ * batch is rejected, so the signal stops the waits of the others.
+ */
+export async function allOrCancel<T, R>(
+  items: T[],
+  run: (item: T, signal: AbortSignal) => Promise<R>,
+): Promise<R[]> {
+  const controller = new AbortController()
+  try {
+    return await Promise.all(items.map((item) => run(item, controller.signal)))
+  } finally {
+    controller.abort()
   }
 }
 
@@ -101,6 +137,16 @@ export function keepPublishedHours<T extends { timestamp: number }>(
 
 // The global setTimeout, unlike node:timers/promises, is replaced by fake
 // timers, so tests skip the wait.
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms))
+function sleep(ms: number, signal?: AbortSignal): Promise<void> {
+  return new Promise((resolve) => {
+    const onAbort = () => {
+      clearTimeout(timeout)
+      resolve()
+    }
+    const timeout = setTimeout(() => {
+      signal?.removeEventListener('abort', onAbort)
+      resolve()
+    }, ms)
+    signal?.addEventListener('abort', onAbort, { once: true })
+  })
 }

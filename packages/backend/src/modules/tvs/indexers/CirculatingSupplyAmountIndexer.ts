@@ -12,7 +12,11 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { keepPublishedHours, waitForPrices } from '../../../tools/waitForData'
+import {
+  allOrCancel,
+  keepPublishedHours,
+  waitForPrices,
+} from '../../../tools/waitForData'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 export interface CirculatingSupplyAmountIndexerDeps
@@ -61,8 +65,9 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
       configurations: configurations.length,
     })
 
-    const results = await Promise.all(
-      configurations.map(async (configuration) => {
+    const results = await allOrCancel(
+      configurations,
+      async (configuration, signal) => {
         try {
           const supplies = await waitForPrices(
             () =>
@@ -73,6 +78,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
             {
               logger: this.logger,
               priceId: configuration.properties.apiId,
+              signal,
             },
           )
 
@@ -130,7 +136,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
 
           throw error
         }
-      }),
+      },
     )
 
     const { records, syncedTo } = keepPublishedHours(

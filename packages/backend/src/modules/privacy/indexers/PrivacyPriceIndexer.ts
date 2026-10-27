@@ -13,7 +13,11 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { keepPublishedHours, waitForPrices } from '../../../tools/waitForData'
+import {
+  allOrCancel,
+  keepPublishedHours,
+  waitForPrices,
+} from '../../../tools/waitForData'
 import type { PrivacyPriceIndexerConfig } from '../types'
 
 export interface PrivacyPriceIndexerDeps
@@ -60,8 +64,9 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
       configsByPriceId.set(priceId, existing)
     }
 
-    const results = await Promise.all(
-      Array.from(configsByPriceId.entries()).map(async ([priceId, configs]) => {
+    const results = await allOrCancel(
+      Array.from(configsByPriceId.entries()),
+      async ([priceId, configs], signal) => {
         try {
           const prices = await withCoreFeatureRpcMetricsContext(
             'privacy.price',
@@ -77,6 +82,7 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
                 {
                   logger: this.logger,
                   priceId,
+                  signal,
                 },
               ),
           )
@@ -109,7 +115,7 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
 
           throw error
         }
-      }),
+      },
     )
 
     const { records, syncedTo } = keepPublishedHours(

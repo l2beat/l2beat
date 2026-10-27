@@ -79,7 +79,9 @@ describe(BlockTargetIndexer.name, () => {
       const BLOCK_NUMBER = 123
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
         getBlockNumberAtOrBefore: mockFn()
-          .rejectsWithOnce(new TargetNotReadyError(LAST_HOUR, LAST_HOUR - 5))
+          .rejectsWithOnce(
+            new TargetNotReadyError(LAST_HOUR, 122, LAST_HOUR - 5),
+          )
           .resolvesToOnce(BLOCK_NUMBER),
       })
       const onTick = mockFn().resolvesTo(undefined)

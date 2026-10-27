@@ -17,10 +17,12 @@ export class DataNotReadyError extends Error {
 export class TargetNotReadyError extends DataNotReadyError {
   constructor(
     readonly timestamp: UnixTime,
+    /** The newest block or slot, the answer if the chain has stalled. */
+    readonly tip: number,
     readonly tipTimestamp: UnixTime,
   ) {
     super('No block after the timestamp yet', {
-      cause: { timestamp, tipTimestamp },
+      cause: { timestamp, tip, tipTimestamp },
     })
     this.name = 'TargetNotReadyError'
   }
