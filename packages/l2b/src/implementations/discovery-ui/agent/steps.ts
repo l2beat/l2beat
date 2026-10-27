@@ -2,6 +2,7 @@ import type { ConfigReader } from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import { getCodeFromDisk } from '../getCode'
+import { type CodeExcerpt, excerptAt } from './codeExcerpt'
 import { projectSchema } from './entries'
 import { type CodeAnchor, findCodeAnchor } from './findCodeAnchor'
 import { type AgentEntry, resolveRef } from './resolveRef'
@@ -74,17 +75,24 @@ export class AgentCodeError extends Error {
   }
 }
 
+// The excerpt goes only to the agent; tabs open the code themselves.
+export interface ResolvedStep {
+  step: AgentStep
+  excerpt: CodeExcerpt | undefined
+}
+
 export function resolveStep(
   configReader: ConfigReader,
   project: string,
   entries: readonly AgentEntry[],
   step: AgentStepRequest,
-): AgentStep {
+): ResolvedStep {
   const resolve = (ref: string) => resolveRef(entries, ref)
   const paths = (step.paths ?? []).map((path) => path.map(resolve))
   const nodes = (step.nodes ?? []).map(resolve)
-  const code =
+  const resolved =
     step.code && resolveCode(configReader, project, entries, step.code)
+  const code = resolved?.code
   const select =
     step.select !== undefined
       ? resolve(step.select)
@@ -95,7 +103,10 @@ export function resolveStep(
       ref: step.select ?? '',
     })
   }
-  return { note: step.note, paths, nodes, select, code }
+  return {
+    step: { note: step.note, paths, nodes, select, code },
+    excerpt: resolved?.excerpt,
+  }
 }
 
 function resolveCode(
@@ -118,5 +129,12 @@ function resolveCode(
       find: code.find,
     })
   }
-  return { address, ...anchor }
+  const source = sources[anchor.sourceIndex]
+  if (source === undefined) {
+    throw new Error('Code anchor outside the sources')
+  }
+  return {
+    code: { address, ...anchor },
+    excerpt: excerptAt(source.code, anchor.offset, anchor.line),
+  }
 }
