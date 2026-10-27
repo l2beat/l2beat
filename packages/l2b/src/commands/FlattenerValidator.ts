@@ -17,20 +17,13 @@ import {
   get$Implementations,
   getChainConfigs,
   getDiscoveryPaths,
-  type IProvider,
   SQLiteCache,
 } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
-import {
-  Bytes,
-  ChainSpecificAddress,
-  UnixTime,
-  unique,
-} from '@l2beat/shared-pure'
+import { Bytes, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, number, option, restPositionals } from 'cmd-ts'
 import { createHash } from 'crypto'
-import intersection from 'lodash/intersection'
 import { dirname, join } from 'path'
 import {
   type CliLogger,
@@ -74,14 +67,13 @@ export const FlattenerValidator = command({
     const configReader = new ConfigReader(paths.discovery)
     const { allProviders, cache } = getProviders(paths, cli.toLogger('INFO'))
 
-    const now = UnixTime(1778573466)
-    const addresses = selectAddresses(configReader, filterAddresses)
-    if (addresses.length === 0) {
+    const targets = selectTargets(configReader, filterAddresses)
+    if (targets.length === 0) {
       cli.log('No contracts to verify')
       return
     }
 
-    const total = addresses.length
+    const total = targets.length
     const maxLength = Math.floor(Math.log10(total)) + 1
     const totalText = total.toString().padStart(maxLength)
     const runStartedAtMs = Date.now()
@@ -98,12 +90,10 @@ export const FlattenerValidator = command({
       `avg=${formatDuration(verificationTimeMsTotal / completed)} ` +
       `elapsed=${formatDuration(Date.now() - runStartedAtMs)}`
 
-    await mapWithConcurrency(addresses, concurrency, async (address) => {
-      const chain = ChainSpecificAddress.longChain(address)
-      const provider = await allProviders.get(chain, now)
-
+    await mapWithConcurrency(targets, concurrency, async (target) => {
+      const { address } = target
       const startedAtMs = Date.now()
-      const status = await verifyAddress(provider, address, paths, cache)
+      const status = await verifyTarget(allProviders, target, paths, cache)
       const verificationTimeMs = Date.now() - startedAtMs
 
       completed++
@@ -158,25 +148,31 @@ function printFailures(
   }
 }
 
-async function verifyAddress(
-  provider: IProvider,
-  address: ChainSpecificAddress,
+async function verifyTarget(
+  allProviders: AllProviders,
+  { address, timestamp }: Target,
   paths: DiscoveryPaths,
   cache: DiscoveryCache,
 ): Promise<VerificationResult> {
   try {
+    const chain = ChainSpecificAddress.longChain(address)
+    const provider = await allProviders.get(chain, timestamp)
     const [bytecode, source] = await Promise.all([
       provider.getBytecode(address),
       provider.getSource(address),
     ])
 
     if (!source.isVerified) return { type: 'skip' }
+    if (source.solidityVersion.startsWith('vyper')) return { type: 'skip' }
 
     const flat = flattenSource(source)
 
     return await verifyBytecode(source, flat, bytecode, paths, cache)
-  } catch {
-    return { type: 'failure', message: 'Top level thrown an error' }
+  } catch (error) {
+    return {
+      type: 'failure',
+      message: `Top level thrown an error\n${formatError(error)}`,
+    }
   }
 }
 
@@ -225,7 +221,7 @@ function flattenSource(source: ContractSource): string {
       path: fileName,
       content,
     }))
-    .filter((e) => e.path.endsWith('.sol'))
+    .filter((e) => e.path.endsWith('.sol') || e.path === source.rootFile)
   const flat = flattenStartingFrom(
     source.name,
     source.rootFile,
@@ -265,21 +261,25 @@ function getCompilersLogger(cli: CliLogger): ICompilersLogger {
   return logger
 }
 
-function selectAddresses(
-  configReader: ConfigReader,
-  filterAddresses: ChainSpecificAddress[],
-): ChainSpecificAddress[] {
-  const addresses = getAllContractAddresses(configReader)
-  if (filterAddresses.length === 0) {
-    return addresses
-  }
-  return intersection(addresses, filterAddresses)
+interface Target {
+  address: ChainSpecificAddress
+  timestamp: UnixTime
 }
 
-function getAllContractAddresses(
+function selectTargets(
   configReader: ConfigReader,
-): ChainSpecificAddress[] {
-  const result: ChainSpecificAddress[] = []
+  filterAddresses: ChainSpecificAddress[],
+): Target[] {
+  const targets = getAllContractTargets(configReader)
+  if (filterAddresses.length === 0) {
+    return targets
+  }
+  const filter = new Set(filterAddresses)
+  return targets.filter((t) => filter.has(t.address))
+}
+
+function getAllContractTargets(configReader: ConfigReader): Target[] {
+  const timestamps = new Map<ChainSpecificAddress, UnixTime>()
   const projects = configReader.readAllDiscoveredProjects()
   for (const project of projects) {
     const discovery = configReader.readDiscovery(project)
@@ -304,13 +304,19 @@ function getAllContractAddresses(
         return result
       })
 
-    result.push(...contractAddresses)
+    for (const address of contractAddresses) {
+      const timestamp = timestamps.get(address) ?? 0
+      timestamps.set(
+        address,
+        UnixTime(Math.max(timestamp, discovery.timestamp)),
+      )
+    }
   }
 
   const ignoredChains = new Set(['kinto', 'zksync2', 'gateway'])
-  return unique(result).filter(
-    (a) => !ignoredChains.has(ChainSpecificAddress.longChain(a)),
-  )
+  return [...timestamps]
+    .filter(([a]) => !ignoredChains.has(ChainSpecificAddress.longChain(a)))
+    .map(([address, timestamp]) => ({ address, timestamp }))
 }
 
 type VerificationResult =
@@ -335,9 +341,25 @@ async function verifyBytecode(
     }
 
     return matchesRuntimeBytecode(contract, bytecode)
-  } catch {
-    return { type: 'failure', message: 'An errow was thrown' }
+  } catch (error) {
+    return {
+      type: 'failure',
+      message: `Compilation thrown an error\n${formatError(error)}`,
+    }
   }
+}
+
+function formatError(error: unknown): string {
+  if (!(error instanceof Error)) {
+    return String(error)
+  }
+  const compilerErrors = (
+    error as { errors?: { message: string; formattedMessage?: string }[] }
+  ).errors
+  if (compilerErrors !== undefined) {
+    return compilerErrors.map((e) => e.formattedMessage ?? e.message).join('\n')
+  }
+  return error.message
 }
 
 function sha256(input: string): string {
@@ -427,7 +449,7 @@ function matchesRuntimeBytecode(
   const mismatch = getBytecodeMismatch(
     contract,
     deployedBytecode,
-    Bytes.fromHex(`0x${compiledBytecode}`),
+    Bytes.fromHex(`0x${zeroLinkPlaceholders(contract, compiledBytecode)}`),
   )
 
   if (mismatch) {
@@ -452,6 +474,7 @@ function getBytecodeMismatch(
     maskCallProtection,
     stripAuxdata,
     maskImmutableReferences,
+    maskLinkReferences,
     maskSolidityAuxdata,
   ]
 
@@ -481,13 +504,14 @@ function stripAuxdata(_: SolidityOutputContract, bytecode: Bytes): Bytes {
   return Bytes.fromHex(stripped)
 }
 
-// CBOR metadata prefixes per hash scheme: map(2) + key + bytes(N). The section
+// CBOR metadata prefixes per hash scheme: map(N) + key + bytes(N). The section
 // ends with a 2-byte big-endian length equal to its own size — used as a
 // checksum to confirm the match and determine how much to mask.
 const CBOR_MARKERS: Buffer[] = [
   Buffer.from([0xa2, 0x64, 0x69, 0x70, 0x66, 0x73, 0x58, 0x22]), //       "ipfs"  + bytes(34)
   Buffer.from([0xa2, 0x65, 0x62, 0x7a, 0x7a, 0x72, 0x31, 0x58, 0x20]), // "bzzr1" + bytes(32)
   Buffer.from([0xa2, 0x65, 0x62, 0x7a, 0x7a, 0x72, 0x30, 0x58, 0x20]), // "bzzr0" + bytes(32)
+  Buffer.from([0xa1, 0x65, 0x62, 0x7a, 0x7a, 0x72, 0x30, 0x58, 0x20]), // "bzzr0" + bytes(32), solc <0.5.9
 ]
 
 function maskSolidityAuxdata(
@@ -510,10 +534,41 @@ function maskSolidityAuxdata(
 }
 
 function findCborTotalBytes(buf: Buffer, start: number): number | undefined {
-  for (let len = 50; len <= 80; len++) {
+  for (let len = 41; len <= 80; len++) {
     if (start + len + 2 > buf.length) return
     if (buf.readUInt16BE(start + len) === len) return len + 2
   }
+}
+
+function getLinkReferences(
+  contract: SolidityOutputContract,
+): { start: number; length: number }[] {
+  const references = contract.evm.deployedBytecode.linkReferences ?? {}
+  return Object.values(references).flatMap((libraries) =>
+    Object.values(libraries).flat(),
+  )
+}
+
+function zeroLinkPlaceholders(
+  contract: SolidityOutputContract,
+  hex: string,
+): string {
+  let result = hex
+  for (const { start, length } of getLinkReferences(contract)) {
+    result =
+      result.slice(0, start * 2) +
+      '00'.repeat(length) +
+      result.slice((start + length) * 2)
+  }
+  return result
+}
+
+function maskLinkReferences(
+  contract: SolidityOutputContract,
+  bytecode: Bytes,
+): Bytes {
+  const hex = bytecode.toString().slice(2)
+  return Bytes.fromHex(`0x${zeroLinkPlaceholders(contract, hex)}`)
 }
 
 function maskImmutableReferences(
