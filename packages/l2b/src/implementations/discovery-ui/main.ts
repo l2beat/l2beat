@@ -146,8 +146,12 @@ export function createDiscoveryUiApp({
   const flatSourceClient = new FlatSourceClient()
   const diffoveryController = new DiffoveryController(flatSourceClient)
 
-  // A tab reports its whole graph, past the parser's 100kb default.
-  app.use(express.json({ limit: '16mb' }))
+  // A tab reports its whole graph to the agent routes, past the parser's
+  // 100kb default, which every other route keeps.
+  if (!readonly) {
+    app.use('/api/agent', express.json({ limit: '16mb' }))
+  }
+  app.use(express.json())
 
   app.get('/health', (_, res) => {
     res.status(200).send('OK')
