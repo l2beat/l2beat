@@ -1323,6 +1323,62 @@ describe('flatten', () => {
     )
   })
 
+  it('generated struct getters resolve the struct in the contract scope', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Other } from "./Other.sol";
+      import { Registry } from "./Registry.sol";
+      contract Root {
+          function f(address registry, address other) public view returns (uint256 x, address who) {
+              (x, ) = Registry(registry).info();
+              (who) = Other(other).info();
+          }
+      }
+    `,
+    )
+    const otherFile = sol(
+      'Other.sol',
+      `
+      struct Info {
+          address who;
+      }
+      contract Other {
+          Info public info;
+      }
+    `,
+    )
+    const registryFile = sol(
+      'Registry.sol',
+      `
+      interface IBase {
+          struct Info {
+              uint256 x;
+              uint256 y;
+          }
+      }
+      contract Registry is IBase {
+          Info public info;
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, otherFile, registryFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toInclude(
+      'function info() external view returns (address who);',
+    )
+    expect(flattened).toInclude(
+      'function info() external view returns (uint256 x, uint256 y);',
+    )
+  })
+
   it('regression - drops used things when turned into an interface', () => {
     const file = sol(
       'Root.sol',
