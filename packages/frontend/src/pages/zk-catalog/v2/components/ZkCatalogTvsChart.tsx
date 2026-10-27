@@ -29,7 +29,18 @@ import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
 
-type Metric = 'absolute' | 'percentage'
+type Metric = 'absolute' | 'percentage' | 'projects'
+
+const TITLES: Record<Metric, string> = {
+  absolute: 'Value secured by prover',
+  percentage: 'Share of value secured by prover',
+  projects: 'Projects using each prover',
+}
+
+interface Point {
+  values: Record<string, number | null>
+  projectCounts: Record<string, number>
+}
 
 interface Props {
   /** In legend order */
@@ -45,7 +56,18 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
     trpc.tvs.zkCatalogChart.queryOptions({ range }),
   )
 
-  const valuesByTimestamp = useMemo(() => new Map(data?.chart ?? []), [data])
+  const pointsByTimestamp = useMemo(
+    () =>
+      new Map(
+        data?.chart.map(
+          ([timestamp, values, projectCounts]): [number, Point] => [
+            timestamp,
+            { values, projectCounts },
+          ],
+        ),
+      ),
+    [data],
+  )
 
   const timeRange = useMemo(
     () =>
@@ -75,7 +97,7 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, valuesByProver]) => {
+      data?.chart.map(([timestamp, valuesByProver, projectCountByProver]) => {
         const point: { timestamp: number; [key: string]: number | null } = {
           timestamp,
         }
@@ -86,11 +108,15 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
         for (const id of Object.keys(chartMeta)) {
           const value = valuesByProver[id] ?? null
           point[id] =
-            metric === 'absolute' || value === null
-              ? value
-              : total === 0
-                ? 0
-                : round((value / total) * 100, 2)
+            value === null
+              ? null
+              : metric === 'absolute'
+                ? value
+                : metric === 'projects'
+                  ? (projectCountByProver[id] ?? 0)
+                  : total === 0
+                    ? 0
+                    : round((value / total) * 100, 2)
         }
         return point
       }),
@@ -100,11 +126,7 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
   return (
     <PrimaryCard className="mb-4">
       <div className="mb-3">
-        <h2 className="font-bold text-lg md:text-xl">
-          {metric === 'absolute'
-            ? 'Value secured by prover'
-            : 'Share of value secured by prover'}
-        </h2>
+        <h2 className="font-bold text-lg md:text-xl">{TITLES[metric]}</h2>
         <ChartTimeRange timeRange={timeRange} />
       </div>
       <ChartContainer
@@ -145,12 +167,14 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
                     tickFormatter: (value) =>
                       formatCurrency(Number(value), 'usd'),
                   }
-                : {
-                    unit: '%',
-                    // To avoid showing 100.000001% we specify domain manually
-                    domain: [0, 100],
-                    allowDataOverflow: true,
-                  }
+                : metric === 'percentage'
+                  ? {
+                      unit: '%',
+                      // To avoid showing 100.000001% we specify domain manually
+                      domain: [0, 100],
+                      allowDataOverflow: true,
+                    }
+                  : { tickCount: 4, allowDecimals: false }
             }
             syncedUntil={data?.syncedUntil}
           />
@@ -159,7 +183,7 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
             content={
               <CustomTooltip
                 metric={metric}
-                valuesByTimestamp={valuesByTimestamp}
+                pointsByTimestamp={pointsByTimestamp}
               />
             }
           />
@@ -173,6 +197,7 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
         >
           <RadioGroupItem value="absolute">Absolute</RadioGroupItem>
           <RadioGroupItem value="percentage">Percentage</RadioGroupItem>
+          <RadioGroupItem value="projects">Projects</RadioGroupItem>
         </RadioGroup>
         <TvsChartRangeControls range={range} setRange={setRange} />
       </div>
@@ -184,22 +209,29 @@ function CustomTooltip({
   payload,
   label,
   metric,
-  valuesByTimestamp,
+  pointsByTimestamp,
 }: CustomChartTooltipProps & {
   metric: Metric
-  valuesByTimestamp: Map<number, Record<string, number | null>>
+  pointsByTimestamp: Map<number, Point>
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
 
-  const values = valuesByTimestamp.get(label) ?? {}
+  const point = pointsByTimestamp.get(label)
   const visible = payload
     .flatMap(({ name, type, hide }) => {
-      const usd = name ? values[name] : undefined
-      return name && usd && type !== 'none' && !hide ? [{ name, usd }] : []
+      const usd = name ? point?.values[name] : undefined
+      const projects = name ? (point?.projectCounts[name] ?? 0) : 0
+      const shown = metric === 'projects' ? projects : usd
+      return name && shown && type !== 'none' && !hide
+        ? [{ name, usd: usd ?? 0, projects }]
+        : []
     })
-    .sort((a, b) => b.usd - a.usd)
-  const total = visible.reduce((acc, curr) => acc + curr.usd, 0)
+    .sort((a, b) =>
+      metric === 'projects' ? b.projects - a.projects : b.usd - a.usd,
+    )
+  const totalUsd = visible.reduce((acc, curr) => acc + curr.usd, 0)
+  const totalProjects = visible.reduce((acc, curr) => acc + curr.projects, 0)
 
   return (
     <ChartTooltipWrapper>
@@ -207,23 +239,25 @@ function CustomTooltip({
         <div className="font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>
-        {metric === 'absolute' && (
+        {metric !== 'percentage' && (
           <>
             <div className="mt-3 mb-1.5 flex items-center justify-between gap-2 text-heading-16">
               <span>Total</span>
               <span className="text-primary">
-                {formatCurrency(total, 'usd')}
+                {metric === 'absolute'
+                  ? formatCurrency(totalUsd, 'usd')
+                  : totalProjects}
               </span>
             </div>
             <HorizontalSeparator />
           </>
         )}
         <div className="mt-2 flex flex-col gap-2">
-          {visible.map(({ name, usd }) => {
+          {visible.map(({ name, usd, projects }) => {
             const config = meta[name]
             if (!config) return null
             const usdText = formatCurrency(usd, 'usd')
-            const shareText = formatPercent(total > 0 ? usd / total : 0)
+            const shareText = formatPercent(totalUsd > 0 ? usd / totalUsd : 0)
             return (
               <div
                 key={name}
@@ -239,11 +273,17 @@ function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
-                  {metric === 'absolute' ? usdText : shareText}
-                  <span className="text-secondary">
-                    {' '}
-                    ({metric === 'absolute' ? shareText : usdText})
-                  </span>
+                  {metric === 'projects' ? (
+                    projects
+                  ) : (
+                    <>
+                      {metric === 'absolute' ? usdText : shareText}
+                      <span className="text-secondary">
+                        {' '}
+                        ({metric === 'absolute' ? shareText : usdText})
+                      </span>
+                    </>
+                  )}
                 </span>
               </div>
             )

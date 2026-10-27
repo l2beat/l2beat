@@ -18,8 +18,12 @@ export const ZkCatalogTvsChartParams = v.object({
 export type ZkCatalogTvsChartParams = v.infer<typeof ZkCatalogTvsChartParams>
 
 export interface ZkCatalogTvsChartData {
-  /** TVS of every prover's projects, keyed by prover id */
-  chart: [timestamp: number, valuesByProver: Record<string, number | null>][]
+  /** Keyed by prover id. TVS is null before the prover's first project. */
+  chart: [
+    timestamp: number,
+    valuesByProver: Record<string, number | null>,
+    projectCountByProver: Record<string, number>,
+  ][]
   syncedUntil: number | undefined
 }
 
@@ -80,6 +84,7 @@ export async function getZkCatalogTvsChart({
   const chart = timestamps.map(
     (timestamp): ZkCatalogTvsChartData['chart'][number] => {
       const valuesByProver: Record<string, number | null> = {}
+      const projectCountByProver: Record<string, number> = {}
       for (const [proverId, ranges] of rangesByProver) {
         // A project can be listed more than once, e.g. directly and through a
         // DA bridge, but its TVS counts once.
@@ -93,6 +98,7 @@ export async function getZkCatalogTvsChart({
             )
             .map((r) => r.projectId),
         )
+        projectCountByProver[proverId] = liveProjects.size
         valuesByProver[proverId] =
           liveProjects.size === 0
             ? null
@@ -102,7 +108,7 @@ export async function getZkCatalogTvsChart({
                 0,
               )
       }
-      return [timestamp, valuesByProver]
+      return [timestamp, valuesByProver, projectCountByProver]
     },
   )
 
@@ -160,6 +166,7 @@ function getMockZkCatalogTvsChart(
     Object.fromEntries(
       proverIds.map((id, i) => [id, (proverIds.length - i) * 1_000_000_000]),
     ),
+    Object.fromEntries(proverIds.map((id, i) => [id, proverIds.length - i])),
   ])
   return { chart, syncedUntil: to }
 }
