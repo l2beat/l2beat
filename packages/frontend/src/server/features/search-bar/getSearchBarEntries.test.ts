@@ -127,7 +127,7 @@ describe(getSearchBarEntries.name, () => {
     expect(result).toHaveLength(1)
     expect(result[0]?.type).toEqual('token')
     expect(result[0]?.name).toEqual('USDC')
-    expect(result[0]?.href).toEqual('/interop/tokens/usdc01/circle/usdc')
+    expect(result[0]?.href).toEqual('/tokens/usdc01/circle/usdc')
     expect(result[0]?.searchMatchKind).toEqual('direct')
   })
 

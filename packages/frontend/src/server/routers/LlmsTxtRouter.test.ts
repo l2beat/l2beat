@@ -102,7 +102,7 @@ describe(createLlmsTxtRouter.name, () => {
       'https://l2beat.com/privacy/projects/{slug}.md',
       'https://l2beat.com/interop/protocols/{slug}.md',
       'https://l2beat.com/zk-catalog/{slug}.md',
-      'https://l2beat.com/interop/tokens/{slug}.md',
+      'https://l2beat.com/tokens/{slug}.md',
       ...(env.CLIENT_SIDE_DEFI_ENABLED
         ? ['https://l2beat.com/defi/projects/{slug}.md']
         : []),

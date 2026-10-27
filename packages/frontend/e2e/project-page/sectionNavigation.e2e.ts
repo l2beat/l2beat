@@ -7,7 +7,7 @@ import { expect, test } from 'playwright/test'
  * the section, at a desktop and a tablet width.
  */
 const PAGE = '/scaling/projects/base'
-const INTEROP_TOKEN_PAGE = '/interop/tokens/usdc01'
+const INTEROP_TOKEN_PAGE = '/tokens/usdc01'
 const DESKTOP = { width: 1400, height: 900 }
 const TABLET = { width: 900, height: 900 }
 const viewports = [DESKTOP, TABLET]
