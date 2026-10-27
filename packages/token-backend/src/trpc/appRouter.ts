@@ -1,5 +1,6 @@
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
+import type { TvsCoverageService } from '../tvsCoverage/TvsCoverageService'
 import { abstractTokensRouter } from './routers/abstractTokens'
 import { chainsRouter } from './routers/chains'
 import { deployedTokensRouter } from './routers/deployedTokens'
@@ -7,16 +8,19 @@ import { planRouter } from './routers/plan'
 import { searchRouter } from './routers/search'
 import { tokenDbHistoryRouter } from './routers/tokenDbHistory'
 import { tokenIngestionQueueRouter } from './routers/tokenIngestionQueue'
+import { tvsCoverageRouter } from './routers/tvsCoverage'
 import { router } from './trpc'
 
 interface AppRouterDeps {
   coingeckoClient: CoingeckoClient
   etherscanApiKey: string | undefined
+  tvsCoverageService: TvsCoverageService | undefined
 }
 
 export function createAppRouter({
   coingeckoClient,
   etherscanApiKey,
+  tvsCoverageService,
 }: AppRouterDeps) {
   return router({
     plan: planRouter,
@@ -26,6 +30,7 @@ export function createAppRouter({
     search: searchRouter,
     tokenDbHistory: tokenDbHistoryRouter,
     tokenIngestionQueue: tokenIngestionQueueRouter,
+    tvsCoverage: tvsCoverageRouter(tvsCoverageService),
   })
 }
 
