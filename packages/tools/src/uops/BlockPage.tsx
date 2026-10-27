@@ -46,13 +46,18 @@ export function BlockPage() {
         className="max-w-[900px]"
         onSubmit={(e) => {
           e.preventDefault()
-          setSearchParams({ chain: chainId, block: blockNumber })
+          if (chainId === chainParam && blockNumber === blockParam) {
+            void block.refetch()
+          } else {
+            setSearchParams({ chain: chainId, block: blockNumber })
+          }
         }}
       >
         {chains.data && (
           <ChainSelect
             chains={chains.data}
             value={chainId}
+            disabled={latest.isPending}
             onChange={(id) => {
               setChainId(id)
               setBlockNumber('')

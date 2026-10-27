@@ -69,11 +69,11 @@ function createChainService(
       ? undefined
       : {
           getName: async (address: string) => {
-            const source = await etherscanClient.getContractSource(
+            const info = await etherscanClient.getContractInfo(
               etherscanChainId,
               address as `0x${string}`,
             )
-            return source.ContractName
+            return info.name
           },
         }
   const nameService = new NameService(

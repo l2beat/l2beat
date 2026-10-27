@@ -23,9 +23,9 @@ export class StarknetClient implements BlockClient {
     })
 
     if (!response.ok) {
-      throw new Error(
-        `Starknet getBlock request failed with status: ${response.status}`,
-      )
+      throw new Error('Starknet getBlock request failed', {
+        cause: { status: response.status },
+      })
     }
 
     const text = await response.text()
@@ -52,9 +52,9 @@ export class StarknetClient implements BlockClient {
     })
 
     if (!response.ok) {
-      throw new Error(
-        `Starknet getBlock request failed with status: ${response.status}`,
-      )
+      throw new Error('Starknet getBlock request failed', {
+        cause: { status: response.status },
+      })
     }
 
     const text = await response.text()

@@ -40,6 +40,8 @@ export function StatsPage() {
     blockCount > 0 &&
     blockCount <= BLOCK_COUNT_MAX
   const isRunning = progress !== undefined
+  const isAtGenesis = stats?.startBlock === 0
+  const canRun = isBlockCountValid && !isRunning && !isAtGenesis
 
   async function run(total: number) {
     setError('')
@@ -106,8 +108,8 @@ export function StatsPage() {
         </div>
         <button
           type="submit"
-          disabled={!isBlockCountValid || isRunning}
-          className={buttonClass(!isBlockCountValid || isRunning)}
+          disabled={!canRun}
+          className={buttonClass(!canRun)}
         >
           {stats ? 'Analyze more' : 'Analyze'}
         </button>
