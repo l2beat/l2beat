@@ -393,13 +393,12 @@ function resolveStruct(
   owner: DeclarationFilePair,
   namePath: string,
 ): AST.StructDefinition | undefined {
-  const aliased = parsedFileManager.tryFindDeclaration(namePath, owner.file)
-  if (aliased?.declaration.type === 'struct') {
-    return aliased.declaration.ast as AST.StructDefinition
-  }
-
   const [head, member] = namePath.split('.') as [string, string | undefined]
   if (member !== undefined) {
+    const aliased = parsedFileManager.tryFindDeclaration(namePath, owner.file)
+    if (aliased?.declaration.type === 'struct') {
+      return aliased.declaration.ast as AST.StructDefinition
+    }
     const container = parsedFileManager.tryFindDeclaration(head, owner.file)
     const nested = container && findNestedType(container.declaration, member)
     return nested?.type === 'StructDefinition' ? nested : undefined

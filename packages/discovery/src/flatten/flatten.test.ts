@@ -1784,6 +1784,42 @@ describe('flatten', () => {
     )
   })
 
+  it('generated struct getters prefer the nested struct over a top-level one', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Registry } from "./Registry.sol";
+      contract Root {
+          function f(address registry) public view returns (uint256 x) {
+              (x, ) = Registry(registry).info();
+          }
+      }
+    `,
+    )
+    const registryFile = sol(
+      'Registry.sol',
+      `
+      struct Info { address who; }
+      contract Registry {
+          struct Info { uint256 x; uint256 y; }
+          Info public info;
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, registryFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toInclude(
+      'function info() external view returns (uint256 x, uint256 y);',
+    )
+  })
+
   it('regression - drops used things when turned into an interface', () => {
     const file = sol(
       'Root.sol',
