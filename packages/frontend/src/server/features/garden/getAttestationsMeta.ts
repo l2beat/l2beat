@@ -37,8 +37,27 @@ async function getMockAttestationsMeta(): Promise<CropsAttestationsMeta> {
   })
 }
 
-/** Whether the current attestation names the project. */
-export async function isCropsAttested(projectId: string): Promise<boolean> {
-  const meta = await getAttestationsMeta()
-  return meta.current?.projectIds.includes(projectId) ?? false
+/**
+ * TODO: remove once CROPS launches. Until the attester Safe attests on
+ * Ethereum, the projects the last Sepolia attestation named stay shown,
+ * without an attestation.
+ */
+const PRE_LAUNCH_PROJECT_IDS = [
+  'aztecnetworkv6',
+  'ethscriptions',
+  'tornado-cash',
+  'umbra',
+  'uniswapv3',
+]
+
+/** The projects whose CROPS evaluation is shown. */
+export function getShownCropsProjectIds(
+  meta: CropsAttestationsMeta,
+): Set<string> {
+  return new Set(meta.current?.projectIds ?? PRE_LAUNCH_PROJECT_IDS)
+}
+
+/** Whether the project's CROPS evaluation is shown. */
+export async function isCropsShown(projectId: string): Promise<boolean> {
+  return getShownCropsProjectIds(await getAttestationsMeta()).has(projectId)
 }

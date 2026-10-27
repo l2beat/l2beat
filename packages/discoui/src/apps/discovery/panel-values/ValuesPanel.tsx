@@ -111,16 +111,18 @@ function Display({
 
   return (
     <>
-      <div id={selected.address} className="mb-2 px-5 text-lg">
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-1 font-bold">
-            <AddressIcon type={selected.type} />
-            {selected.name ?? 'Unknown'}
+      <div id={selected.address} className="@container px-3 pt-2 pb-2">
+        <div className="mb-1 flex items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-1.5 font-semibold text-base text-coffee-100 leading-6">
+            <AddressIcon className="shrink-0" type={selected.type} />
+            <span className="min-w-0 break-words">
+              {selected.name ?? 'Unknown'}
+            </span>
             {selected.type === 'Unverified' && (
-              <span className="text-aux-red"> (Unverified)</span>
+              <span className="shrink-0 text-aux-red">(Unverified)</span>
             )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             {templateDialog}
             {contractConfigDialog}
           </div>
@@ -172,7 +174,7 @@ function Display({
         )}
 
         {selected.roles.length > 0 && (
-          <div className="font-mono text-xs">
+          <div>
             <WithHeadline headline="Roles">
               <div className="flex gap-1">
                 {selected.roles.map((role) => (
@@ -200,10 +202,10 @@ function Display({
       </div>
       {'implementationNames' in selected && selected.implementationNames && (
         <Folder title="Implementation names" collapsed={true}>
-          <div className="overflow-x-auto bg-coffee-900 px-5 py-2 font-mono text-sm">
+          <div className="overflow-x-auto bg-coffee-900 px-3 py-1.5 font-mono text-xs">
             {Object.entries(selected.implementationNames).map(
               ([key, value]) => (
-                <div key={key} className="mb-1 flex items-center gap-2">
+                <div key={key} className="flex items-center gap-2 leading-5">
                   <span className="text-coffee-400">{key}:</span>
                   <span className="text-aux-cyan">{value}</span>
                 </div>
@@ -215,15 +217,20 @@ function Display({
 
       {selected.referencedBy.length > 0 && (
         <Folder title="Referenced by">
-          <ol className="overflow-x-auto bg-coffee-900 py-0.5 pl-5">
+          <ol className="overflow-x-auto bg-coffee-900">
             {selected.referencedBy.map((value) => (
-              <li key={value.address}>
-                <AddressDisplay value={value} />
-                <div className="mt-1 mb-2 ml-4 text-xs">
+              <li
+                key={value.address}
+                className="flex min-h-7 flex-wrap items-center gap-x-2 gap-y-1 border-coffee-800 border-b py-1 pr-3 pl-8 last:border-b-0"
+              >
+                <div className="-ml-5">
+                  <AddressDisplay value={value} />
+                </div>
+                <div className="flex flex-wrap gap-1">
                   {value.fieldNames.map((fieldName, i) => (
                     <span
                       key={i}
-                      className="mr-2 inline-block rounded-sm bg-coffee-800 px-1.5 py-0.5"
+                      className="rounded-sm bg-coffee-800 px-1.5 text-coffee-300 text-xs leading-5"
                     >
                       {fieldName}
                     </span>
@@ -357,9 +364,11 @@ function Badge(props: { children: React.ReactNode }) {
 
 function WithHeadline(props: { headline: string; children: React.ReactNode }) {
   return (
-    <div className="mb-1 flex flex-col overflow-x-auto font-mono text-xs">
-      <span className="text-coffee-400">{props.headline}</span>
-      {props.children}
+    <div className="grid @[480px]:grid-cols-[104px_minmax(0,1fr)] grid-cols-1 items-baseline gap-x-3 py-0.5">
+      <span className="text-coffee-300 text-xs">{props.headline}</span>
+      <div className="min-w-0 overflow-x-auto font-mono text-xs leading-[18px]">
+        {props.children}
+      </div>
     </div>
   )
 }
@@ -413,7 +422,7 @@ function Description() {
 
   return (
     <WithHeadline headline="Description">
-      <p className="font-serif text-sm italic">
+      <p className="font-sans text-[13px] text-coffee-200 leading-[18px]">
         {interpolateDescription(description)}
       </p>
     </WithHeadline>

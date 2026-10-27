@@ -13,10 +13,10 @@ export function Folder(props: {
     <div className="border-coffee-600 border-t">
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex min-h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
+        className="flex h-6 w-full cursor-pointer select-none items-center gap-1.5 bg-coffee-800 px-3 font-semibold text-coffee-300 text-xs hover:text-coffee-100"
       >
-        {open && <IconChevronDown />}
-        {!open && <IconChevronRight />}
+        {open && <IconChevronDown className="size-3 shrink-0" />}
+        {!open && <IconChevronRight className="size-3 shrink-0" />}
         {props.title}
       </button>
       {open && props.children}

@@ -89,7 +89,7 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
   const project = await ps.getProject({
     slug,
     select: ['interopConfig'],
-    optional: ['statuses', 'display', 'discoveryUpdates'],
+    optional: ['statuses', 'display', 'discoveryUpdates', 'discoveryInfo'],
   })
   if (!project) return undefined
 

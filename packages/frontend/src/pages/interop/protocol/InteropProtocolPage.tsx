@@ -98,6 +98,7 @@ function Content({
           <div className="max-md:hidden">
             <DesktopProjectLinks
               projectLinks={projectEntry.header.links ?? []}
+              discoUiHref={projectEntry.header.discoUiHref}
             />
           </div>
         </>
