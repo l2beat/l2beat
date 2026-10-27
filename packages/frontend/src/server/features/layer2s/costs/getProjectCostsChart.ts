@@ -98,7 +98,7 @@ export async function getProjectCostsChart(
   }
 }
 
-function getTotal(data: Omit<LatestCostsProjectResponse, 'syncedUntil'>) {
+function getTotal(data: LatestCostsProjectResponse) {
   return {
     gas:
       data.gas.overhead +
