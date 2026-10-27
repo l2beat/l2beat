@@ -1633,5 +1633,7 @@
   "static/meta-images/privacy/projects/privacy-pools-v2/opengraph-image.png": "5cdc72874d40febdde6d082de899016e",
   "static/meta-images/zk-catalog/projects/privacy-pools-v2/opengraph-image.png": "15438b0f802a51887b3a66744237ec06",
   "static/icons/uniswapv2.png": "2e3d5f6b5badb27112f8d72c76b46def",
-  "static/meta-images/defi/projects/uniswapv2/opengraph-image.png": "dc77200d6cc72338e114ea6cea5dd0bc"
+  "static/meta-images/defi/projects/uniswapv2/opengraph-image.png": "dc77200d6cc72338e114ea6cea5dd0bc",
+  "static/meta-images/defi/projects/safe/opengraph-image.png": "6fc1394435ec38d3d940aee5ea23b472",
+  "static/icons/safe.png": "fa1390aa761b4d5ec06b10fd20e7f578"
 }
