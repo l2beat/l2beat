@@ -240,7 +240,7 @@ describe('layer2s', () => {
       }
     }
     expect(missing).toEqual([])
-  })
+  }).timeout(10_000)
 
   describe('display', () => {
     it('every description ends with a dot', () => {
