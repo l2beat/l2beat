@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x853be1730e12c04695b64f3edcf187c2ef9c2ed0
+
+# Diff at Tue, 27 Oct 2026 16:27:27 GMT:
+
+- id: 45615958
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1791537166
+- current timestamp: 1791537166
+
+## Description
+
+Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791537166 (main branch discovery), not current.
+
+```diff
+    contract UniswapV2Factory (eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f) [uniswapv2/UniswapV2Factory] {
+    +++ description: Deploys Uniswap v2 pairs: anyone can create one pair per token pair, at a CREATE2 address deterministic in the two tokens. Immutable. Its fee setter can switch a protocol fee on or off by choosing its recipient, and can hand the setter role to another address. It cannot modify, pause, or upgrade deployed pairs, or touch their funds.
+      sourceHashes.0:
+-        "0x740f0bedcd24236a442f73bc92b35f0491744573f6c6248069d63b2e8105c076"
++        "0x3448ad23f0967356ad68756866c394610ffdde82b63068cc36964eb72d0c450e"
+    }
+```
+
 Generated with discovered.json: 0x8ba572cb26c8daf05fcbf47e0b04db7e6624f385
 
 # Diff at Fri, 16 Oct 2026 12:01:52 GMT:

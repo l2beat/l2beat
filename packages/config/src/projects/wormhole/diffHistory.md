@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x20d2b808c3e78de2f5b8050c78bfce9380b2f179
+
+# Diff at Tue, 27 Oct 2026 16:27:27 GMT:
+
+- id: 166520fb
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1783513675
+- current timestamp: 1783513675
+
+## Description
+
+Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783513675 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585) [wormhole/TokenBridge] {
+    +++ description: Wormhole Token Bridge on Ethereum. It escrows Ethereum-native tokens and mints or burns wrapped assets such as WSOL after Wormhole Core verifies Guardian-signed VAAs. WSOL has no Ethereum-side escrow because it is a wrapped asset on Ethereum.
+      sourceHashes.1:
+-        "0x694d7e12e343544cde20da708d139637b87150808347040bf2ca863629f1bb19"
++        "0x928bec4b4b171c8fddc6b57132c2bd4eb3bf152b72e43600f4f3ec89f215c6f2"
+    }
+```
+
 Generated with discovered.json: 0xded71d8dc43e1d5bee9e4f96b6ed4cc49b076be9
 
 # Diff at Wed, 08 Jul 2026 12:29:11 GMT:

@@ -1,15 +1,15 @@
-Generated with discovered.json: 0xfdc5d1592884603eb33552024c6c3b2c94985a89
+Generated with discovered.json: 0x1cfa4bfc88c7939b4e2333a1bbccfa9df445f91b
 
-# Diff at Tue, 27 Oct 2026 11:31:39 GMT:
+# Diff at Tue, 27 Oct 2026 16:27:07 GMT:
 
 - id: 3a25b6b8
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@de2e3d4ee6aef60add0cf0b261ced3c797f9fb6e block: 1791789484
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1791789484
 - current timestamp: 1791789484
 
 ## Description
 
-Mark FeeTreasury non-critical. It holds only protocol fees from the intent contracts.
+Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
 
 ## Config/verification related changes
 
@@ -22,6 +22,15 @@ discovery. Values are for block 1791789484 (main branch discovery), not current.
     +++ description: Holds fees collected by deBridge intent contracts. Authorized collectors can withdraw native tokens and ERC20 tokens to any recipient.
       category:
 +        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract DeBridgeTokenDeployer (eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) [debridge/DeBridgeTokenDeployer] {
+    +++ description: Deploys deBridge-wrapped token (deToken) contracts when an asset is bridged to this chain for the first time (callable only by the DeBridgeGate). All deTokens are beacon proxies whose beacon is this contract itself, so its tokenImplementation applies to every deToken on this chain at once.
+      sourceHashes.1:
+-        "0xff2a8bb5572e1959e22acdc6818bcb1da107807340ef1416129cae0cf740d02a"
++        "0xa9992178cce17f92c934ff2617b67a393fb5ec068d6219bde6c62fa46ce32540"
     }
 ```
 
