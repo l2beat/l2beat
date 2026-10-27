@@ -28,6 +28,19 @@ describe(excerptAt.name, () => {
     expect(excerptAt(CODE, offset, 6).lines).toEqual(CODE.split('\n').slice(5))
   })
 
+  it('skips braces in comments and strings', () => {
+    const code = [
+      'function f() {',
+      '  // if (x) {',
+      "  require(ok, '}');",
+      '  /* } */',
+      '  x = 1;',
+      '}',
+      'function g() {}',
+    ].join('\n')
+    expect(excerptAt(code, 0, 1).lines).toEqual(code.split('\n').slice(0, 6))
+  })
+
   it('cuts a long block', () => {
     const body = Array.from({ length: 100 }, (_, i) => `  x = ${i};`)
     const code = ['function long() {', ...body, '}'].join('\n')
