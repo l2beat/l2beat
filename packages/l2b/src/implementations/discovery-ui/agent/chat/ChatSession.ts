@@ -125,6 +125,9 @@ export class ChatSession {
     if (agent === undefined) {
       throw new ChatError('Start a chat first')
     }
+    if (agent.failed) {
+      throw new ChatError('The agent did not start, start it again')
+    }
     if (agent.inTurn) {
       throw new ChatError('The agent is still answering')
     }
@@ -135,8 +138,17 @@ export class ChatSession {
 
   private async runTurn(agent: RunningAgent, text: string) {
     await agent.ready
-    if (agent !== this.agent || agent.sessionId === undefined) {
+    if (agent !== this.agent) {
       agent.inTurn = false
+      return
+    }
+    // The tabs show the message, so they hear that it went nowhere.
+    if (agent.sessionId === undefined) {
+      agent.inTurn = false
+      this.emit({
+        type: 'error',
+        message: 'The agent did not start, so the message was not sent',
+      })
       return
     }
     if (agent.stopBeforeTurn) {
