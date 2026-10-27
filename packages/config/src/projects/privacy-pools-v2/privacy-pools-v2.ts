@@ -1,0 +1,348 @@
+import type { ContractValue } from '@l2beat/discovery'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { formatBasisPoints } from '../../common/formatBasisPoints'
+import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
+import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
+import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
+import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getTokenByAddress } from '../../tokens/getTokenByAddress'
+import type {
+  BaseProject,
+  PrivacyRelayerExtractorConfig,
+  ProjectPrivacyOnchainRelayerSource,
+  ProjectPrivacyToken,
+} from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
+import {
+  MONOREPO_COMMIT,
+  MONOREPO_REPOSITORY,
+  privacyPoolsV2Adversaries,
+  REFERENCE_CLIENT,
+} from './adversaries'
+
+const discovery = new ProjectDiscovery('privacy-pools-v2')
+
+// PoolVault events: Deposited, Transacted and Ragequit all index the asset.
+const DEPOSITED_EVENT =
+  '0xed45e0df2bf0e287a792a7b79b19292af5cbab76cc8819049bf37aa067bf8501'
+const TRANSACTED_EVENT =
+  '0x10763cc44bf9290f53ec1afd9f70684d93fe62b7d1956d9a18410ae38da9d048'
+const RAGEQUIT_EVENT =
+  '0x507455b25c1a4595720da5b6a8f6b76e4aa36db987a63b47266112d3cbf2e103'
+
+const POOL_VAULT = discovery.getContract('PoolVault')
+const SHARE_TOKENS = ['ppUSDC', 'ppUSDT', 'ppETH']
+
+const SINCE_TIMESTAMP = getSinceTimestamp(POOL_VAULT)
+
+const yieldFeeBps = discovery.getContractValue<number>('ppUSDC', 'feeBps')
+assert(
+  SHARE_TOKENS.every(
+    (name) =>
+      discovery.getContractValue<number>(name, 'feeBps') === yieldFeeBps,
+  ),
+  'Share tokens must charge the same yield fee',
+)
+const yieldFee = formatBasisPoints(yieldFeeBps)
+const maxYieldFee = formatBasisPoints(
+  discovery.getContractValue<number>('ppUSDC', 'MAX_FEE_BPS'),
+)
+// Entries are [enabled, minAmount, vettingFeeBPS, maxRelayFee].
+const assetConfigs = discovery.getContractValue<
+  Record<string, ContractValue[]>
+>('Entrypoint', 'assetConfigs')
+assert(
+  Object.values(assetConfigs).every((config) => config[2] === 0),
+  'Deposits must pay no vetting fee',
+)
+const rootLiveness = formatSeconds(
+  discovery.getContractValue<number>('Keystore', 'keystoreRootLiveness'),
+)
+const ADMIN_ROLES = [
+  'defaultAdmins',
+  'opsAdmins',
+  'upgraders',
+  'pausers',
+  'unpausers',
+  'entrypointManagers',
+]
+const [admin] = discovery.getContractValue<string[]>(
+  'AccessRouter',
+  'upgraders',
+)
+assert(
+  ADMIN_ROLES.every((role) => {
+    const members = discovery.getContractValue<string[]>('AccessRouter', role)
+    return members.length === 1 && members[0] === admin
+  }) &&
+    SHARE_TOKENS.every(
+      (name) => discovery.getContractValue<string>(name, 'owner') === admin,
+    ),
+  'One multisig must hold every admin role and own the share tokens',
+)
+const adminThreshold = discovery.getMultisigStats(admin)
+
+const ETH = EthereumAddress('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')
+const POOL_ASSETS = [
+  ETH,
+  ...SHARE_TOKENS.map((name) =>
+    ChainSpecificAddress.address(discovery.getContract(name).address),
+  ),
+]
+
+// Every verifier the vault routes proofs to, replaced together on 2026-10-20
+// with the ceremony keys (DepositVerifierSet, RagequitVerifierSet and 25
+// VerifierConfigured events in block 26234240).
+const VERIFIERS = [
+  'DepositVerifier',
+  'RagequitVerifier',
+  ...[1, 2, 3, 4, 5].flatMap((n) =>
+    [1, 2, 3, 4, 5].map((m) => `Transact${n}x${m}Verifier`),
+  ),
+].map((name) => discovery.getContract(name).address)
+
+export const privacyPoolsV2: BaseProject = {
+  id: ProjectId('privacy-pools-v2'),
+  slug: 'privacy-pools-v2',
+  name: 'Privacy Pools v2',
+  shortName: undefined,
+  addedAt: UnixTime.fromDate(new Date('2026-10-20')),
+  discoveryInfo: getDiscoveryInfo([discovery]),
+  statuses: {
+    yellowWarning:
+      'Privacy Pools v2 opened to the public on 2026-10-20 after a capped beta. We are still early, so the ratings rest on the design and ignore the small anonymity set.',
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  },
+  display: {
+    description:
+      'A shielded ledger with private transfers, swaps and Aave yield inside the pool, where only deposits the ASP approves can be spent privately.',
+    detailedDescription: readProjectMarkdown(
+      'privacy-pools-v2',
+      'detailedDescription',
+      { yieldFee, rootLiveness },
+    ),
+    links: {
+      websites: ['https://privacypools.com'],
+      documentation: ['https://privacy-pools-v2-docs.vercel.app'],
+      repositories: [MONOREPO_REPOSITORY, REFERENCE_CLIENT.repository],
+    },
+    badges: [],
+  },
+  milestones: [
+    {
+      // Website v1.0.0 CHANGELOG: "First public release of the Privacy Pools
+      // v2 web app, live at https://privacypools.com". v1 moved to
+      // v1.privacypools.com the same day (privacy-pools-website PR #232).
+      title: 'Privacy Pools v2 public launch',
+      url: 'https://github.com/0xbow-io/privacy-pools-website-v2/releases/tag/v1.0.0',
+      date: '2026-10-20T00:00:00Z',
+      description:
+        'The v2 app opens at privacypools.com with transfers, swaps and yield inside the pool.',
+      type: 'general',
+    },
+    {
+      // All 27 verifiers were replaced in block 26234240 (2026-10-20 13:57
+      // UTC). Monorepo CHANGELOG 1.0.1: "1.0.0 shipped single-contributor dev
+      // keys", and the verifiers set at deployment (block 25884277,
+      // 2026-09-01) were those. Whoever generated those keys could forge
+      // proofs against the beta deposits until this rotation.
+      title: 'Beta verifiers used single-contributor keys',
+      url: `${MONOREPO_REPOSITORY}/blob/${MONOREPO_COMMIT}/CHANGELOG.md`,
+      date: '2026-10-20T00:00:00Z',
+      description:
+        'From 2026-09-01 until this rotation, every verifier held a developer key, not the ceremony key.',
+      type: 'incident',
+    },
+    {
+      // environments.ts: "Prod launches at $100 (Ameen, 2026-09-03)". First
+      // mainnet deposit in block 25893288, 2026-09-03 00:47 UTC. The v1 site
+      // invited users with "deposits capped at $100 for now".
+      title: 'Mainnet beta with a $100 deposit cap',
+      url: 'https://github.com/0xbow-io/privacy-pools-website/pull/232',
+      date: '2026-09-03T00:00:00Z',
+      description:
+        'The production contracts take their first deposits, capped at $100 each by the ASP and the app.',
+      type: 'general',
+    },
+  ],
+  escrows: [
+    {
+      address: ChainSpecificAddress.address(POOL_VAULT.address),
+      chain: ChainSpecificAddress.longChain(POOL_VAULT.address),
+      sinceTimestamp: SINCE_TIMESTAMP,
+      tokens: ['ETH', 'USDC', 'ppUSDC', 'ppUSDT', 'ppETH'],
+    },
+  ],
+  tvsInfo: {
+    associatedTokens: [],
+    warnings: [],
+  },
+  zkCatalogInfo: {
+    creator: '0xbow',
+    techStack: {
+      zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.Snarkjs],
+    },
+    proofSystemInfo: '',
+    trustedSetups: [
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        ...TRUSTED_SETUPS.PrivacyPoolsV2,
+      },
+    ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('privacy-pools-v2'),
+        sinceTimestamp: SINCE_TIMESTAMP,
+      },
+    ],
+    verifierHashes: [
+      {
+        hash: 'Privacy Pools v2 verifiers 20.10.2026',
+        name: 'Privacy Pools v2 verifiers v1.0.1',
+        sourceLink: `${MONOREPO_REPOSITORY}/tree/${MONOREPO_COMMIT}/packages/circuits`,
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: VERIFIERS.map((address) => ({ address })),
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'privacy-pools-v2',
+          'verificationSteps-20.10.2026',
+        ),
+      },
+    ],
+  },
+  privacyInfo: {
+    category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceClient: REFERENCE_CLIENT,
+    trackedOn: ['ethereum'],
+    tokens: getPrivacyTokens(),
+    relayerTracking: {
+      type: 'onchainEvents',
+      sources: [relayerSource(POOL_VAULT, 'privacyPoolsV2Withdrawal')],
+    },
+    exitWindow: {
+      value: 'None',
+      sentiment: 'bad',
+      orderHint: 0,
+      description:
+        'The upgrader role can replace the PoolVault that escrows deposits without delay, so a malicious upgrade takes the funds before anyone can leave. Ragequit works while the vault is paused, but the same role can stop it at once without an upgrade.',
+      walkawayTest: {
+        passed: false,
+        reason:
+          "New deposits need the ASP's approval to be spent privately. The app offers only 0xbow's relayer.",
+      },
+    },
+    reproducibility: {
+      value: 'Reproducible',
+      sentiment: 'good',
+      description:
+        'Contracts, circuits, SDK, relayer and website are public and build locally, the contracts under a Business Source License. The 27 verifiers rebuild from the circuit sources and ceremony keys. The ASP service is closed.',
+    },
+    attributes: [
+      PRIVACY_ATTRIBUTES.zk,
+      PRIVACY_ATTRIBUTES.transfers,
+      PRIVACY_ATTRIBUTES.defi,
+      PRIVACY_ATTRIBUTES.anyAmount,
+    ],
+    adversaries: privacyPoolsV2Adversaries,
+    riskSummary: readProjectMarkdown('privacy-pools-v2', 'riskSummary'),
+    upgradesAndGovernance: {
+      content: readProjectMarkdown(
+        'privacy-pools-v2',
+        'upgradesAndGovernance',
+        {
+          adminThreshold,
+          maxYieldFee,
+        },
+      ),
+    },
+  },
+  permissions: discovery.getDiscoveredPermissions(),
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [],
+    zkVerifiers: VERIFIERS,
+  },
+}
+
+interface DiscoveredContract {
+  address: ChainSpecificAddress
+  sinceTimestamp?: number
+}
+
+function getSinceTimestamp(contract: DiscoveredContract): UnixTime {
+  assert(
+    contract.sinceTimestamp !== undefined,
+    'Contract must have a sinceTimestamp',
+    { address: contract.address },
+  )
+  return UnixTime(contract.sinceTimestamp)
+}
+
+function relayerSource(
+  contract: DiscoveredContract,
+  extractor: Exclude<
+    PrivacyRelayerExtractorConfig,
+    { params: unknown }
+  >['extractor'],
+): ProjectPrivacyOnchainRelayerSource {
+  return {
+    address: contract.address,
+    sinceTimestamp: getSinceTimestamp(contract),
+    extractor,
+  }
+}
+
+// One vault holds every asset, so each asset is a bucket on the same address.
+function getPrivacyTokens(): ProjectPrivacyToken[] {
+  return POOL_ASSETS.map((tokenAddress) => {
+    const resolved = getTokenByAddress(tokenAddress.toString())
+    const minimumAmounts =
+      PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[resolved.symbol]
+    assert(minimumAmounts, 'Missing anonymity set thresholds', {
+      symbol: resolved.symbol,
+    })
+    const flow = {
+      extractor: 'privacyPoolsV2Value' as const,
+      params: { tokenAddress },
+    }
+    return {
+      token: {
+        address: tokenAddress,
+        iconUrl: resolved.iconUrl,
+        symbol: resolved.symbol,
+        decimals: resolved.decimals,
+        priceId: resolved.coingeckoId,
+        sinceTimestamp: SINCE_TIMESTAMP,
+      },
+      buckets: [
+        {
+          id: `privacy-pools-v2-${resolved.symbol}`,
+          type: 'pool',
+          label: resolved.symbol,
+          address: POOL_VAULT.address,
+          sinceTimestamp: SINCE_TIMESTAMP,
+          anonymitySet: { minimumAmounts },
+          deposit: { event: DEPOSITED_EVENT, ...flow },
+          withdrawal: { event: TRANSACTED_EVENT, ...flow },
+          additionalWithdrawals: [{ event: RAGEQUIT_EVENT, ...flow }],
+        },
+      ],
+    }
+  })
+}

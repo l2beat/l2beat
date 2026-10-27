@@ -1,8 +1,8 @@
 import { type RefObject, useEffect, useLayoutEffect, useRef } from 'react'
 import { PINNED_CELL_ATTRIBUTE } from '~/components/table/utils/commonPinningStyles'
+import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import { cn } from '~/utils/cn'
-import { toRgba } from './color'
-import { usePrefersReducedMotion } from './hooks'
+import { toRgba } from '~/utils/color'
 
 /** Long enough to read as counting, short enough to be done before the next block */
 const ROLL_MS = 900

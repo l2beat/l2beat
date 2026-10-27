@@ -16,5 +16,23 @@
     "address": "eth:0xEB4D0d5FfbDD508d6FF352255DCFc7b13FA28EC0",
     "chain": "ethereum",
     "blockNumber": 25998905
+  },
+  "DecryptionAggregatorVerifier_secure8192_micro_v0.19.0": {
+    "hash": "0xdc107e88edafdb9413343d11ed4180890968688ff843d7aa642441721464115e",
+    "address": "eth:0x769C243b712aD4D844bCbAed3981F7C24fA64Ada",
+    "chain": "ethereum",
+    "blockNumber": 26204316
+  },
+  "DecryptionAggregatorVerifier_secure8192_small_v0.19.0": {
+    "hash": "0xad196b015e725e72b5b8ccbd95938b4a6e7fcdc147220a8eec0f1d9d8f653dd8",
+    "address": "eth:0xC590b979c9BDA89f87443EBE134321272a5dD013",
+    "chain": "ethereum",
+    "blockNumber": 26204316
+  },
+  "DecryptionAggregatorVerifier_secure8192_minimum_v0.19.0": {
+    "hash": "0xd6f966756381a04b4a08d60153dd17bc71ca35d6ecf4d85931861715558d57fa",
+    "address": "eth:0xbe012465a45179170cFb863405427f8ecAcb5C80",
+    "chain": "ethereum",
+    "blockNumber": 26204316
   }
 }

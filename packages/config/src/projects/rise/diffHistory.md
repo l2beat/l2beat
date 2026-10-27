@@ -1,3 +1,266 @@
+Generated with discovered.json: 0x20d74b5fbe94af99f6baa27f99a3d72b7e9a5586
+
+# Diff at Tue, 20 Oct 2026 08:59:34 GMT:
+
+- id: 4d55ae4b
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@9417c9f8ea024cc7ebc3d153bed576e95746815a block: 1790947041
+- current timestamp: 1790947041
+
+## Description
+
+Config-only rerun on the same block number. The EigenDA cert verifier router RISE's range program verifies DA certificates against (hokulea's EigenLabs address fetcher maps mainnet to EigenDA's canonical router) is now referenced from the shared-eigenda module.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790947041 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","description":"can add and remove strategies","role":".owner"},{"permission":"interact","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","description":"can add cert verifiers to the router, changing which contract validates DA certificates from a chosen block onwards.","role":".owner"},{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer","role":".owner"},{"permission":"interact","from":"eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15","description":"can add blob versions with their coding parameters, which define what the cert verifiers accept as a valid blob.","role":".owner"},{"permission":"upgrade","from":"eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99","role":".owner"}]
+    }
+```
+
+```diff
+    external contract (eth:0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry"}]
+    }
+```
+
+```diff
+    external contract (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can create rewards submissions.","role":".rewardsInitiator"}]
+    }
+```
+
+```diff
+    external contract (eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806","role":".pausers"}]
+    }
+```
+
+```diff
+    external contract (eth:0x2E158da11961426E2A1Cc9e79f40244486b6845C) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"},{"address":"eth:0x5050389572f2d220ad927CcbeA0D406831012390"}]}]
+    }
+```
+
+```diff
+    external contract (eth:0x338477FfaF63c04AC06048787f910671eC914B34) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E","description":"can eject DA operators from a quorum.","role":".ejectors"}]
+    }
+```
+
+```diff
+    external contract (eth:0x347660a632B0Aac5B70dCd5e6C3444a7C933a137) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"},{"address":"eth:0x5050389572f2d220ad927CcbeA0D406831012390"}]}]
+    }
+```
+
+```diff
+    external contract (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x0c431C66F4dE941d089625E5B423D00707977060","role":".pausers"},{"permission":"act","from":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","role":".owner"},{"permission":"act","from":"eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806","role":".pausers"},{"permission":"interact","from":"eth:0x0fCE0A591D96BB76883323eF555867111E2050a9","description":"change the beacon implementation.","role":".owner"}]
+    }
+```
+
+```diff
+    external contract (eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75","role":"admin"}]
+    }
+```
+
+```diff
+    external contract (eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can confirm batches to the DA bridge.","role":".batchConfirmers"}]
+    }
+```
+
+```diff
+    external contract (eth:0x45dcD05251F3327EcCd4766a9264DBDAab3A4065) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"},{"address":"eth:0x5050389572f2d220ad927CcbeA0D406831012390"}]}]
+    }
+```
+
+```diff
+    external contract (eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0fCE0A591D96BB76883323eF555867111E2050a9","description":"change the beacon implementation.","role":".owner","via":[{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"interact","from":"eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53","description":"executes scheduled operations after the delay","role":".executors"},{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"interact","from":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","description":"executes scheduled operations after the delay","role":".executors"},{"permission":"upgrade","from":"eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x132b466d9d5723531F68797519DfED701aC2C749","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75","role":"admin","via":[{"address":"eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"},{"address":"eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d"},{"address":"eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53","delay":2073600}]},{"permission":"upgrade","from":"eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xAe60d8180437b5C34bB956822ac2710972584473","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53","delay":2073600,"role":".proposers"},{"permission":"act","from":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000,"role":".proposers"}]
+    }
+```
+
+```diff
+    external contract (eth:0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x0c431C66F4dE941d089625E5B423D00707977060","role":".pausers"},{"permission":"act","from":"eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806","role":".pausers"}]
+    }
+```
+
+```diff
+    external contract (eth:0x57af860e3a1C16641CDDDa92898266D2df7Dfa71) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"},{"address":"eth:0x5050389572f2d220ad927CcbeA0D406831012390"}]}]
+    }
+```
+
+```diff
+    external contract (eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can confirm batches to the DA bridge.","role":".batchConfirmers"}]
+    }
+```
+
+```diff
+    external contract (eth:0x7474E1D80E844e6EdB430841DeEF702a6B747863) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"},{"address":"eth:0x5050389572f2d220ad927CcbeA0D406831012390"}]}]
+    }
+```
+
+```diff
+    external contract (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D","role":"admin"},{"permission":"upgrade","from":"eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","role":"admin"},{"permission":"upgrade","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","role":"admin"},{"permission":"upgrade","from":"eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E","role":"admin"},{"permission":"upgrade","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","role":"admin"},{"permission":"upgrade","from":"eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2","role":"admin"},{"permission":"upgrade","from":"eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad","role":"admin"},{"permission":"upgrade","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","role":"admin"},{"permission":"upgrade","from":"eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05","role":"admin"},{"permission":"upgrade","from":"eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030","role":"admin"},{"permission":"upgrade","from":"eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B","role":"admin"},{"permission":"upgrade","from":"eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15","role":"admin"}]
+    }
+```
+
+```diff
+    external contract (eth:0x8642473a123FE33b0aaE90bD8604eA1029417236) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E","description":"can eject DA operators from a quorum.","role":".ejectors"}]
+    }
+```
+
+```diff
+    external contract (eth:0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can confirm batches to the DA bridge.","role":".batchConfirmers"}]
+    }
+```
+
+```diff
+    external contract (eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","role":"admin"},{"permission":"upgrade","from":"eth:0x132b466d9d5723531F68797519DfED701aC2C749","role":"admin"},{"permission":"upgrade","from":"eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF","role":"admin"},{"permission":"upgrade","from":"eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","role":"admin"},{"permission":"upgrade","from":"eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","role":"admin"},{"permission":"upgrade","from":"eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5","role":"admin"},{"permission":"upgrade","from":"eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129","role":"admin"},{"permission":"upgrade","from":"eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","role":"admin"},{"permission":"upgrade","from":"eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A","role":"admin"},{"permission":"upgrade","from":"eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A","role":"admin"},{"permission":"upgrade","from":"eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","role":"admin"},{"permission":"upgrade","from":"eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4","role":"admin"},{"permission":"upgrade","from":"eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5","role":"admin"},{"permission":"upgrade","from":"eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","role":"admin"},{"permission":"upgrade","from":"eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647","role":"admin"},{"permission":"upgrade","from":"eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84","role":"admin"},{"permission":"upgrade","from":"eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda","role":"admin"},{"permission":"upgrade","from":"eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184","role":"admin"},{"permission":"upgrade","from":"eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A","role":"admin"},{"permission":"upgrade","from":"eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","role":"admin"},{"permission":"upgrade","from":"eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338","role":"admin"},{"permission":"upgrade","from":"eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b","role":"admin"},{"permission":"upgrade","from":"eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D","role":"admin"},{"permission":"upgrade","from":"eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39","role":"admin"},{"permission":"upgrade","from":"eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","role":"admin"},{"permission":"upgrade","from":"eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059","role":"admin"},{"permission":"upgrade","from":"eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7","role":"admin"},{"permission":"upgrade","from":"eth:0xAe60d8180437b5C34bB956822ac2710972584473","role":"admin"},{"permission":"upgrade","from":"eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25","role":"admin"},{"permission":"upgrade","from":"eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83","role":"admin"},{"permission":"upgrade","from":"eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F","role":"admin"}]
+    }
+```
+
+```diff
+    external contract (eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9","role":".owner"}]
+    }
+```
+
+```diff
+    external contract (eth:0x9b2C61521AF4AB9f4BE25297838F72a56462B578) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"},{"address":"eth:0x5050389572f2d220ad927CcbeA0D406831012390"}]}]
+    }
+```
+
+```diff
+    external contract (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0fCE0A591D96BB76883323eF555867111E2050a9","description":"change the beacon implementation.","role":".owner","via":[{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"interact","from":"eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53","description":"can cancel scheduled operations","role":".cancellers"},{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"interact","from":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","description":"can cancel scheduled operations","role":".cancellers"},{"permission":"upgrade","from":"eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x132b466d9d5723531F68797519DfED701aC2C749","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75","role":"admin","via":[{"address":"eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"},{"address":"eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d"},{"address":"eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53","delay":2073600}]},{"permission":"upgrade","from":"eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xAe60d8180437b5C34bB956822ac2710972584473","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]},{"permission":"upgrade","from":"eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x0c431C66F4dE941d089625E5B423D00707977060","role":".pausers"},{"permission":"act","from":"eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53","delay":2073600,"role":".proposers"},{"permission":"act","from":"eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806","role":".pausers"},{"permission":"act","from":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000,"role":".proposers"}]
+    }
+```
+
+```diff
+    external contract (eth:0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E","description":"can eject DA operators from a quorum.","role":".ejectors"}]
+    }
+```
+
+```diff
+    external contract (eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad","description":"Can disperse EigenDA blobs to the EigenDA node operators.","role":".dispersers"}]
+    }
+```
+
+```diff
+    external contract (eth:0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0fCE0A591D96BB76883323eF555867111E2050a9","description":"change the beacon implementation.","role":".owner","via":[{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x132b466d9d5723531F68797519DfED701aC2C749","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75","role":"admin","via":[{"address":"eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"},{"address":"eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d"}]},{"permission":"upgrade","from":"eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0xAe60d8180437b5C34bB956822ac2710972584473","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","from":"eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}]
+    }
+```
+
+```diff
+    external contract (eth:0xe0550117Cb066D3b330eBd764B0d75D3BA378734) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","description":"can approve the replacement of churned operators from a quorum","role":".churnApprover"}]
+    }
+```
+
+```diff
+    external contract (eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B","description":"Can store and serve both unencoded blobs as well as encoded chunks.","role":".relayers"}]
+    }
+```
+
+```diff
+    external contract (eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"},{"address":"eth:0x5050389572f2d220ad927CcbeA0D406831012390"}]}]
+    }
+```
+
+```diff
++   Status: CREATED
+    external contract EigenDACertVerifierRouter (eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x58a11c42d49034fc96f80792f73336418becb7e0
 
 # Diff at Fri, 16 Oct 2026 09:37:50 GMT:

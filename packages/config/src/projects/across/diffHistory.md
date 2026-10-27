@@ -1,3 +1,84 @@
+Generated with discovered.json: 0xd5e149eb45f3b8eec92a07b2a1f7709f34dd2cc0
+
+# Diff at Tue, 20 Oct 2026 10:25:37 GMT:
+
+- id: a54d415c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1792144273
+- current timestamp: 1792144273
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144273 (main branch discovery), not current.
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.CrossChainContracts.OP Mainnet:
+-        "eth:0x6f26Bf09B1C792e3228e5467807a900A503c0281"
++        "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281"
+    }
+```
+
+```diff
+    contract OP_SpokePool (oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      values.withdrawalRecipient:
+-        "oeth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++        "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+    }
+```
+
+Generated with discovered.json: 0xf9a11413d3972a9078dd5fbc3f18ceaf3c321676
+
+# Diff at Fri, 16 Oct 2026 09:52:47 GMT:
+
+- id: cb3f3b12
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791789448
+- current timestamp: 1792144273
+
+## Description
+
+Gateway (OP Mainnet) upgrade: minor (6 lines) changes, permissions and trust assumptions unchanged.
+- https://disco.l2beat.com/diff/oeth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e/oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0
+
+## Watched changes
+
+```diff
+    contract Gateway (oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707) [acrossv3/Gateway] {
+    +++ description: Entry point for Across V5 intent executions. Anyone can submit a user-signed execution path: the Gateway pulls the depositor's funds via standing token approvals or signed permits (Permit2 witness permits, EIP-3009, ERC-2612, EIP-712 transfer authorizations), then calls the committed executor. While executing, it exposes the execution context (submitter, executor, step commitment) that the SpokePool trusts to authenticate V5 fills.
+      sourceHashes.1:
+-        "0xf2ee0aa25d03ecbb1796a6eac55e023884760df22fda47dedfaed361c1ec6c35"
++        "0x758d7b789b8c7d62dd988d0b7d796f9811d75afa480252b92492fe28259d538f"
+      values.$implementation:
+-        "oeth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e"
++        "oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0"
+      values.$pastUpgrades.2:
++        ["2026-10-14T00:29:47.000Z","0x40abecfcbb47eb482a6bd29d464e77aedc689b06b6fe75af4f92db1f7e92f106",["oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.oeth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e:
+-        "Gateway"
+      implementationNames.oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0:
++        "Gateway"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Gateway.sol                                                  | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+```
+
 Generated with discovered.json: 0x50b68af0225714258a73d481a36ce6bfb99c0dbf
 
 # Diff at Mon, 12 Oct 2026 07:57:23 GMT:

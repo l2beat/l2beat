@@ -1,6 +1,6 @@
 {
   "name": "fluidkey",
-  "timestamp": 1791549206,
+  "timestamp": 1792144252,
   "configHash": "0x71d98b475cc05d2f3897c2b044b30e83e4e60ea0725c6b691d9b83dd4ee5dd36",
   "entries": [
     {
@@ -220,7 +220,7 @@
         ],
         "$upgradeCount": 1,
         "decimals": 18,
-        "holders": 2189,
+        "holders": 2204,
         "name": "Fluidkey Score",
         "owner": "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
         "symbol": "FKS",
@@ -1664,12 +1664,12 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": {
-    "arbitrum": 513197445,
-    "base": 52379929,
-    "ethereum": 26154878,
-    "gnosis": 48668694,
-    "optimism": 157975214,
-    "polygonpos": 95229324
+    "arbitrum": 515339592,
+    "base": 52677452,
+    "ethereum": 26204309,
+    "gnosis": 48784392,
+    "optimism": 158272737,
+    "polygonpos": 95625944
   },
   "permissionsConfigHash": "0x371809e28349e048c51f6e732bb69ecf4593111970edb74312c87cb44f07946e",
   "permissions": {

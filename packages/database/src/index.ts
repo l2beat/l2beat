@@ -11,6 +11,7 @@ export type {
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
 export type {
+  ActivityPeaks,
   ActivityRecord,
   ActivityTotals,
 } from './repositories/ActivityRepository'
@@ -36,6 +37,7 @@ export type {
   ChainRecord,
   ChainUpdateable,
 } from './repositories/ChainRepository'
+export type { CropAttestationRecord } from './repositories/CropAttestationRepository'
 export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
   DataAvailabilityRecord,
@@ -56,6 +58,7 @@ export type {
   FlatSourcesJsonRecord,
   FlatSourcesRecord,
 } from './repositories/FlatSourcesRepository'
+export type { HourlyActivityRecord } from './repositories/HourlyActivityRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
 export type {

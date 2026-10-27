@@ -1,18 +1,11 @@
-import type {
-  ProjectCrops,
-  ProjectPrivacyInfo,
-  ProjectScalingInfo,
-} from '@l2beat/config'
-import { CROP_ATTESTATIONS } from '@l2beat/config'
+import type { Project, ProjectGarden, ResolvedCrops } from '@l2beat/config'
+import { measureOssificationBand } from '@l2beat/shared'
 import { type Validator, v } from '@l2beat/validate'
 import {
   CropSentimentSchema,
   CropStatusSchema,
-  qualifiesForGarden,
   ResolvedCropEvaluationSchema,
-  type ResolvedCrops,
   ResolvedCropsSchema,
-  resolveProjectCrops,
 } from './crops'
 
 // The CROPS API contract. The validators are the contract: the OpenAPI
@@ -31,13 +24,12 @@ export const CropsAttestationsMetaSchema = v.strictObject({
     .string()
     .meta({ description: 'EAS network the attestation lives on.' }),
   chainId: v.number(),
-  isTestnet: v
-    .boolean()
-    .meta({ description: 'True while attestations are on a testnet.' }),
   eas: v.string().meta({ description: 'EAS contract address.' }),
   schemaUid: v.string(),
   schema: v.string().meta({ description: 'EAS schema definition string.' }),
-  attester: v.string(),
+  attester: v
+    .union([v.string(), v.null()])
+    .meta({ description: 'The attester Safe, or null until it is set.' }),
   current: v
     .union([
       v.strictObject({
@@ -51,7 +43,8 @@ export const CropsAttestationsMetaSchema = v.strictObject({
       v.null(),
     ])
     .meta({
-      description: 'The live attestation naming the reviewed set, or null.',
+      description:
+        "The attester's current attestation, which names the reviewed set, or null before it has attested.",
     }),
 })
 export type CropsAttestationsMeta = v.infer<typeof CropsAttestationsMetaSchema>
@@ -86,7 +79,8 @@ const projectFields = {
   }),
   crops: ResolvedCropsSchema,
   inGarden: v.boolean().meta({
-    description: 'False while any crop is bad, even though it is reviewed.',
+    description:
+      'False while any crop is bad or the project has no ossification score yet, even though it is reviewed.',
   }),
   attestation: v.union([CropsApiAttestationSchema, v.null()]).meta({
     description:
@@ -181,7 +175,7 @@ export const CROPS_API_ROUTES: CropsApiRoute[] = [
     path: '/v1/address/{chainId}/{address}.json',
     summary: 'Which protocol is this address?',
     description:
-      'The reviewed protocols a contract, proxy implementation or permission holder belongs to, with a rating per crop. A shared contract lists every protocol that claims it, each once, with the name that protocol gives it.',
+      'The reviewed protocols a contract, proxy implementation or permission holder belongs to, with a rating per property. A shared contract lists every protocol that claims it, each once, with the name that protocol gives it.',
     params: [
       {
         name: 'chainId',
@@ -202,7 +196,7 @@ export const CROPS_API_ROUTES: CropsApiRoute[] = [
     path: '/v1/project/{id}.json',
     summary: 'Everything about one protocol',
     description:
-      'The crop evaluations of one protocol, with the reasoning behind each rating.',
+      'The CROPS evaluations of one protocol, with the reasoning behind each rating.',
     params: [
       {
         name: 'id',
@@ -216,58 +210,34 @@ export const CROPS_API_ROUTES: CropsApiRoute[] = [
   {
     key: 'crops',
     path: '/v1/crops.json',
-    summary: 'The whole garden',
+    summary: 'All reviewed protocols',
     description:
-      'Every reviewed protocol in one response, with the full crop evaluations and the attestation that names them.',
+      'Every reviewed protocol in one response, with the full CROPS evaluations and the attestation that names them.',
     params: [],
     result: 'CropsResponse',
   },
 ]
-
-/** Reads the committed ledger, so no RPC call is needed. */
-export function getAttestationsMeta(): CropsAttestationsMeta {
-  const ledger = CROP_ATTESTATIONS
-  // Anything live under another schema awaits revocation by l2b. Case-insensitive: EAS returns uids in lowercase.
-  const current = ledger.live.find(
-    (x) => x.schema.toLowerCase() === ledger.schemaUid.toLowerCase(),
-  )
-  return {
-    network: ledger.network,
-    chainId: ledger.chainId,
-    isTestnet: ledger.isTestnet,
-    eas: ledger.eas,
-    schemaUid: ledger.schemaUid,
-    schema: ledger.schema,
-    attester: ledger.attester,
-    current: current
-      ? {
-          uid: current.uid,
-          revision: current.revision,
-          reviewedAt: current.reviewedAt,
-          projectIds: current.projectIds,
-          txHash: current.txHash,
-          explorerUrl: `${ledger.explorer}/attestation/view/${current.uid}`,
-        }
-      : null,
-  }
-}
 
 /** Only the fields the API needs, so tests can supply plain fixtures. */
 export interface CropsSourceProject {
   id: string
   slug: string
   name: string
-  crops: ProjectCrops
-  privacyInfo?: ProjectPrivacyInfo | undefined
-  scalingInfo?: ProjectScalingInfo | undefined
+  garden: ProjectGarden
+  ossificationHistory?:
+    | Project<'ossificationHistory'>['ossificationHistory']
+    | undefined
 }
 
+/** Resolved as of `generatedAt`, so a file and its timestamp agree. */
 export function resolveCropsProject(
   project: CropsSourceProject,
   meta: CropsAttestationsMeta,
+  generatedAt: number,
 ): CropsApiProject {
-  const path = getGardenProjectPath(project)
-  const crops = resolveProjectCrops(project.crops)
+  const { path, verdicts } = project.garden
+  const { crops, listing } =
+    verdicts[measureOssificationBand(project.ossificationHistory, generatedAt)]
   const attested = meta.current?.projectIds.includes(project.id)
   return {
     id: project.id,
@@ -275,7 +245,7 @@ export function resolveCropsProject(
     name: project.name,
     href: path ? `${L2BEAT_ORIGIN}${path}` : null,
     crops,
-    inGarden: qualifiesForGarden(crops),
+    inGarden: listing === 'listed',
     attestation:
       meta.current && attested
         ? {
@@ -286,21 +256,6 @@ export function resolveCropsProject(
           }
         : null,
   }
-}
-
-/**
- * The page a reviewed project has on l2beat.com, or null when it has none.
- * The API links only to pages that exist, so this never falls back to a
- * scaling url the way the frontend's getProjectUrl does.
- */
-function getGardenProjectPath(project: CropsSourceProject): string | null {
-  if (project.privacyInfo) {
-    return `/privacy/projects/${project.slug}`
-  }
-  if (project.scalingInfo) {
-    return `/layer2s/projects/${project.slug}`
-  }
-  return null
 }
 
 export function toCropsSummary(crops: ResolvedCrops): CropsApiSummary {

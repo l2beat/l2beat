@@ -29,6 +29,7 @@ import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
 import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
+import { interfold } from '../projects/interfold/interfold'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
 import { lido } from '../projects/lido/lido'
@@ -45,6 +46,7 @@ import { openvmprover } from '../projects/openvmprover/openvmprover'
 import { polymarket } from '../projects/polymarket/polymarket'
 import { privacyBoost } from '../projects/privacy-boost/privacy-boost'
 import { privacyPools } from '../projects/privacy-pools/privacy-pools'
+import { privacyPoolsV2 } from '../projects/privacy-pools-v2/privacy-pools-v2'
 import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
@@ -146,6 +148,7 @@ export const refactored: BaseProject[] = [
   cloaked,
   fluidkey,
   privacyPools,
+  privacyPoolsV2,
   railgun,
   strk20,
   tornadoCash,
@@ -156,4 +159,5 @@ export const refactored: BaseProject[] = [
   privacyBoost,
   zkmoney,
   zkapi,
+  interfold,
 ]

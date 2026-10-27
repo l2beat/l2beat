@@ -6,12 +6,16 @@
     "eth:0xfa7093cdd9ee6932b4eb2c9e1cde7ce00b1fa4b9",
     "eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405",
     "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
-    "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46"
+    "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+    "eth:0x1F74b4339990Db761bC0168F20D294A3a141497e", // EIP-7702 delegate named in Railgun's shared config
+    "eth:0x05ae73c5925d843864ae6f261f3175de2ebcd963" // EIP-7702 delegate pinned by RailOxide
   ],
   "names": {
     "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": "VerificationKeySetter_64DA",
     "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": "VerificationKeySetter_9086",
-    "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": "LegacySweeper"
+    "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": "LegacySweeper",
+    "eth:0x1F74b4339990Db761bC0168F20D294A3a141497e": "RelayAdapt7702_1F74",
+    "eth:0x05ae73c5925d843864ae6f261f3175de2ebcd963": "RelayAdapt7702_05ae"
   },
   "overrides": {
     "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": {

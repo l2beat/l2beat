@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "nova",
+  "maxAddresses": 200,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
@@ -25,7 +26,6 @@
     "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4": "L2ARBGateway",
     "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C": "L2GatewaysProxyAdmin",
     "arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3": "L2SecurityCouncilEmergency",
-    "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock",
     "eth:0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": "ValidatorUtils",
     "eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148": "ProxyAdmin",
     "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin 2",
@@ -61,7 +61,22 @@
             "type": "event",
             "select": ["recipients", "weights"],
             "add": { "event": "RecipientsUpdated" }
-          }
+          },
+          "edit": [
+            "map",
+            [
+              "set",
+              "recipients",
+              [
+                "map",
+                [
+                  "if",
+                  ["=", "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"],
+                  ["format", "UndoL2Alias"]
+                ]
+              ]
+            ]
+          ]
         }
       }
     },
@@ -73,7 +88,22 @@
             "type": "event",
             "select": ["recipients", "weights"],
             "add": { "event": "RecipientsUpdated" }
-          }
+          },
+          "edit": [
+            "map",
+            [
+              "set",
+              "recipients",
+              [
+                "map",
+                [
+                  "if",
+                  ["=", "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"],
+                  ["format", "UndoL2Alias"]
+                ]
+              ]
+            ]
+          ]
         }
       }
     },
@@ -94,7 +124,21 @@
     },
     "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482": {
       "fields": {
-        "accessControl": { "handler": { "type": "accessControl" } },
+        "accessControl": {
+          "handler": { "type": "accessControl" },
+          "edit": [
+            "set",
+            ["EXECUTOR_ROLE", "members"],
+            [
+              "map",
+              [
+                "if",
+                ["=", "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"],
+                ["format", "UndoL2Alias"]
+              ]
+            ]
+          ]
+        },
         // Seeds the ArbOS 61 transaction-filtering precompile (0x..74) as a
         // relative and applies the shared orbitstack/ArbFilteredTransactionsManager
         // template (censored-tx counts + authorized filterer set). The feature is
@@ -107,6 +151,16 @@
             "value": "arb-nova:0x0000000000000000000000000000000000000074"
           },
           "template": "orbitstack/ArbFilteredTransactionsManager"
+        },
+        "executors": {
+          "edit": [
+            "map",
+            [
+              "if",
+              ["=", "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"],
+              ["format", "UndoL2Alias"]
+            ]
+          ]
         }
       }
     },
@@ -173,6 +227,21 @@
             }
           ]
         }
+      }
+    },
+    "eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "NovaAddress"] }
+      }
+    },
+    "eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "NovaAddress"] }
+      }
+    },
+    "eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "NovaAddress"] }
       }
     }
   }

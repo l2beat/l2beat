@@ -9,6 +9,7 @@ import {
   EthereumAddress,
   isDateOnly,
   type KnownInteropBridgeType,
+  type OssificationBand,
   type ProjectId,
   TokenId,
   type TrackedTxsConfigSubtype,
@@ -17,7 +18,7 @@ import {
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 import type { ZkCatalogTagType } from './common/zkCatalogTags'
-import type { OsiLicenseId } from './crops/osiLicenses'
+import type { OsiLicense, OsiLicenseId } from './crops/osiLicenses'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -261,6 +262,8 @@ export interface BaseProject {
 
   // crops data
   crops?: ProjectCrops
+  /** Built from `crops` when config builds, see `ProjectGarden`. */
+  garden?: ProjectGarden
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -1083,6 +1086,12 @@ export interface ProjectPrivacyInfo {
    * mixing kinds within one project is not representable.
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
+  /**
+   * The released open-source client the adversary ratings assume, at the
+   * commit they were reviewed against. `l2b client-drift` lists what changed
+   * upstream since. Absent for closed clients and for reviews that pin none.
+   */
+  referenceClient?: ProjectPrivacyReferenceClient
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
   anonymitySet?:
@@ -1135,6 +1144,14 @@ export type PrivacyAnonymitySetRegistrationSource = {
   extractor: 'umbraStealthKeyChanged'
 }
 
+export interface ProjectPrivacyReferenceClient {
+  name: string
+  /** GitHub repository, e.g. https://github.com/owner/repo */
+  repository: string
+  /** Full commit hash. Adversary sources into the repository pin it. */
+  commit: string
+}
+
 export type ProjectPrivacyRelayerTracking =
   | {
       type: 'onchainEvents'
@@ -1149,7 +1166,14 @@ export type ProjectPrivacyOnchainRelayerSource = {
 } & PrivacyRelayerExtractorConfig
 
 export type PrivacyRelayerExtractorConfig =
-  | { extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal' }
+  | {
+      extractor:
+        | 'privacyPoolsWithdrawalRelayed'
+        // Privacy Pools v2, from the vault: the fee recipient of a paid
+        // processor's payout, or the sender of a withdrawal without one.
+        | 'privacyPoolsV2Withdrawal'
+        | 'tornadoCashWithdrawal'
+    }
   | {
       extractor: 'zkMoneyWithdrawalRelayer'
       params: ZkMoneyWithdrawalRelayerParams
@@ -1217,6 +1241,7 @@ export type PrivacyCategoryId =
   | 'shieldedLedger'
   | 'stealthAddress'
   | 'confidentialAmounts'
+  | 'secretBallot'
 
 export interface PrivacyCategory {
   id: PrivacyCategoryId
@@ -1471,6 +1496,7 @@ export type PrivacyAnonymitySetDepositSource = {
     extractor:
       | 'fixedAmount'
       | 'privacyPoolsValue'
+      | 'privacyPoolsV2Value'
       | 'railgunShield'
       | 'strk20Deposit'
       | 'zkMoneyDeposit'
@@ -1512,6 +1538,19 @@ export type PrivacyFlowExtractorConfig =
       params: Record<string, never>
     }
   | {
+      /**
+       * Privacy Pools v2 PoolVault events Deposited, Transacted and Ragequit,
+       * which all index the asset and carry its amount. Only logs of
+       * `tokenAddress` count, so one multi-asset vault serves one bucket per
+       * asset. A relayed private transfer pays its fee as a Transacted
+       * payout, which the flow indexer drops after reading the transaction.
+       */
+      extractor: 'privacyPoolsV2Value'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
       extractor: 'railgunShield'
       params: {
         tokenAddress: EthereumAddress
@@ -1527,16 +1566,6 @@ export type PrivacyFlowExtractorConfig =
       extractor: 'umbraAmount'
       params: {
         tokenAddress: EthereumAddress
-      }
-    }
-  | {
-      extractor: 'zamaWrap'
-      params: Record<string, never>
-    }
-  | {
-      extractor: 'zamaUnwrap'
-      params: {
-        rate: string
       }
     }
   | {
@@ -1626,6 +1655,44 @@ export interface ProjectCrops {
   openSource: ProjectOpenSourceCropEvaluation
   privacy: ProjectCropEvaluation
   security: ProjectCropEvaluation
+}
+
+/** `neutral` is never declared in config: it is what an ungraded crop resolves to. */
+export type CropSentiment = ProjectCropSentiment | 'neutral'
+
+/** An evaluation with every optional field resolved to a concrete value. */
+export interface ResolvedCropEvaluation {
+  sentiment: CropSentiment
+  status: ProjectCropStatus
+  /** Only on the open source crop, once the license is confirmed. */
+  license?: OsiLicense
+  points: string[]
+  missing: string[]
+  additionalConsiderations: string[]
+  notReviewed: string[]
+}
+
+export type ResolvedCrops = Record<keyof ProjectCrops, ResolvedCropEvaluation>
+
+/** Whether a reviewed project is listed in the garden, and if not, why. */
+export type GardenListing = 'listed' | 'ratedBad' | 'noOssificationScore'
+
+/** `crops` as shown: every default filled in, Security capped, and whether the garden lists the project. */
+export interface GardenVerdict {
+  crops: ResolvedCrops
+  listing: GardenListing
+}
+
+/**
+ * What the site and the CROPS API show for a reviewed project. Security is
+ * capped by the ossification score, which moves with time while the config
+ * build is cached, so there is a verdict per band: read the one for the band
+ * measured now (`measureOssificationBand`).
+ */
+export interface ProjectGarden {
+  /** The l2beat.com page to link, or null when the project has none. */
+  path: string | null
+  verdicts: Record<OssificationBand, GardenVerdict>
 }
 
 // #endregion
@@ -2056,6 +2123,9 @@ interface InteropConfigBase {
   /** Permissions displayed on the interop project page. For canonical bridges,
    * this is intentionally a different (narrower) set than the chain page. */
   permissions?: Record<string, ProjectPermissions>
+  /** Milestones displayed on the interop project page. For canonical bridges,
+   * these are separate from the chain's milestones. */
+  milestones?: Milestone[]
 }
 
 export type InteropConfig =

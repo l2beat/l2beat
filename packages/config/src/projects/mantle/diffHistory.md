@@ -1,3 +1,103 @@
+Generated with discovered.json: 0xb976585f7f3e2190c736e05b1172702fbf3c77b7
+
+# Diff at Sat, 24 Oct 2026 16:41:06 GMT:
+
+- id: 8aea879b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792586696
+- current timestamp: 1792586696
+
+## Description
+
+`mintCapNumerator` is MEDIUM: an issuance rate limit.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792586696 (main branch discovery), not current.
+
+```diff
+    contract L1MantleToken (eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354) [N/A] {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      fieldMeta.mintCapNumerator.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x727f247f9acd4bbe7b05d8bc9389caa87c7c0b20
+
+# Diff at Tue, 20 Oct 2026 07:51:35 GMT:
+
+- id: f0655def
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1789917555
+- current timestamp: 1789917555
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917555 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x676A795fe6E43C17c668de16730c3F690FEB7120) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.OTHER_MESSENGER:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "mantle:0x4200000000000000000000000000000000000007"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"mantle"}}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.l2TokenBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "mantle:0x4200000000000000000000000000000000000010"
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "mantle:0x4200000000000000000000000000000000000010"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"mantle"}}]
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (mantle:0x4200000000000000000000000000000000000007) [N/A] {
+    +++ description: None
+      values.l1CrossDomainMessenger:
+-        "mantle:0x676A795fe6E43C17c668de16730c3F690FEB7120"
++        "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120"
+      values.OTHER_MESSENGER:
+-        "mantle:0x676A795fe6E43C17c668de16730c3F690FEB7120"
++        "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (mantle:0x4200000000000000000000000000000000000010) [N/A] {
+    +++ description: None
+      values.l1TokenBridge:
+-        "mantle:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
++        "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      values.OTHER_BRIDGE:
+-        "mantle:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
++        "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
 Generated with discovered.json: 0x948fc0f75a607d08aa74573c2d6d1c9aff4aa177
 
 # Diff at Fri, 16 Oct 2026 09:37:48 GMT:

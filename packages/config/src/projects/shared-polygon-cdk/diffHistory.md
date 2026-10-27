@@ -1,3 +1,68 @@
+Generated with discovered.json: 0xd15850f28fe9931b5c385d6bb8b9040486cceadc
+
+# Diff at Sat, 24 Oct 2026 16:41:08 GMT:
+
+- id: b258af71
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792144133
+- current timestamp: 1792144133
+
+## Description
+
+AgglayerBridge `proxiedTokensManager` is MEDIUM: a role holder.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144133 (main branch discovery), not current.
+
+```diff
+    contract AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [polygon-cdk/AgglayerBridge] {
+    +++ description: The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.
+      fieldMeta.proxiedTokensManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x42313e03c1b2d2d6a5997c0e92e3d7e60b8227b1
+
+# Diff at Fri, 16 Oct 2026 10:36:21 GMT:
+
+- id: 06a32294
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791789180
+- current timestamp: 1792144133
+
+## Description
+
+New Agglayer chain Cedar (rollup ID 30, chain ID 881600159, eth:0x4fa513E4ae5920e0359e24F39f0cB6D51A9Dd8Bb). It uses AggchainECDSAMultisig with one signer and threshold 1, so a single key attests its state. PolygonCreateRollupMultisig swapped one signer.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.rollupCount:
+-        29
++        30
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.29:
++        {"rollupContract":"eth:0x4fa513E4ae5920e0359e24F39f0cB6D51A9Dd8Bb","chainID":881600159,"verifier":"eth:0x0000000000000000000000000000000000000000","forkID":0,"rollupTypeID":14,"rollupVerifierType":2,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
++        "eth:0xFd6F4310817fCa819Fc59671DEFFad218136d56A"
+    }
+```
+
 Generated with discovered.json: 0x644231216bbf11f83bf469cc934f7af4fedc8fc1
 
 # Diff at Fri, 16 Oct 2026 09:37:50 GMT:

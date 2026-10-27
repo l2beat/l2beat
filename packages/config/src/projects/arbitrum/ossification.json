@@ -120,13 +120,6 @@
       "reason": "Transferred the L2 canonical gateway ProxyAdmin from an EOA (0x6c26d7f7) to the L2 multisig 0x98e4db7e: single signer to multisig."
     },
     {
-      "timestamp": 1661457944,
-      "type": "code",
-      "contract": "eth:0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-      "transaction": "0x248787fbf0415ff1da68ba618da0cbdd5dcc7c6029be38709f95ea837211edc5",
-      "reason": "Upgraded the (since retired, pre-BoLD) RollupProxy that settled Arbitrum One state before the BoLD rollup took over."
-    },
-    {
       "timestamp": 1661490543,
       "type": "state",
       "contract": "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
@@ -212,6 +205,14 @@
       "reason": "ArbOS 20 / EIP-4844 governance execution upgraded the SequencerInbox (blob support, batch-poster manager). Replaces both the $pastUpgrades entry of this tx and the interval-dated field changes of the same diff (batchPosterManager, maxTimeVariation, isUsingFeeToken)."
     },
     {
+      "timestamp": 1710423719,
+      "type": "code",
+      "contract": "eth:0xe5896783a2F463446E1f624e64Aa6836BE4C6f58",
+      "transaction": "0x51b492ac498a88565639cfe3df77be8729d61f1c413d00b66530d4022a13c36a",
+      "reason": "ArbOS 20 upgraded the (since retired, pre-BoLD) ChallengeManager in the same transaction as the SequencerInbox (Upgraded event).",
+      "updateId": "5edc278c"
+    },
+    {
       "timestamp": 1719023040,
       "type": "state",
       "contract": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
@@ -219,18 +220,19 @@
       "reason": "Raised the threshold of the non-emergency Security Council Safe L2SecurityCouncilPropose (0xADd68bCb, a PROPOSER on this L2Timelock; the Safe itself is outside the perimeter) from 7/12 to 9/12 without a membership change (AIPIncreaseNonEmergencySCThresholdAction), crossing the 75% Security Council bar."
     },
     {
-      "timestamp": 1720582885,
-      "type": "state",
-      "contract": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-      "transaction": "0xf2929a5ee3c2a073de95293f91f163b4d743fdec38e4dceaa7c4796e090783c3",
-      "reason": "SwitchManagerRolesAction: moved MEMBER_ADDER, MEMBER_REPLACER, MEMBER_ROTATOR and MEMBER_REMOVER roles on the SecurityCouncilManager from the emergency Security Council (0x423552c0) to the non-emergency Security Council (0xADd68bCb)."
-    },
-    {
       "timestamp": 1724809031,
       "type": "state",
       "contract": "eth:0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
       "transaction": "0x1462f79e3920cc7c99a886743cb86aa6b05b16d92babc23fe7349e2543bb7b32",
       "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 31. (pre-BoLD RollupProxy, since retired)."
+    },
+    {
+      "timestamp": 1724809031,
+      "type": "code",
+      "contract": "eth:0xe5896783a2F463446E1f624e64Aa6836BE4C6f58",
+      "transaction": "0x1462f79e3920cc7c99a886743cb86aa6b05b16d92babc23fe7349e2543bb7b32",
+      "reason": "ArbOS 31 upgraded the (since retired, pre-BoLD) ChallengeManager (Upgraded event).",
+      "updateId": "a1a19b5d"
     },
     {
       "timestamp": 1727230595,

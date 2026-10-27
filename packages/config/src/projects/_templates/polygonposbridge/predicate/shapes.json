@@ -53,5 +53,23 @@
     "hash": "0x5d61795be40290be89c2a606f418d8753d722c036da5a377e78b478b0f943f23",
     "address": "eth:0x1F4c1E0afBeb5b5B86d7722549274434b29884F6",
     "blockNumber": 23290158
+  },
+  "MintableERC20Predicate_polygonpos": {
+    "hash": "0x800a9eaaca3f0ccd3542904caee78ecb2176a6fc4f885369f25c5fb6c59f1a76",
+    "address": "eth:0x94D40724d6aA4AB313065006E4bA8CA448dcDfae",
+    "chain": "ethereum",
+    "blockNumber": 26204320
+  },
+  "MintableERC1155Predicate_polygonpos": {
+    "hash": "0x49ea7dca7ae9088144634bb910a7d879e4520293a4bd957c25a0b6451c9a7401",
+    "address": "eth:0xFD47E7d657b07B071C3362bBCe908a70895EE747",
+    "chain": "ethereum",
+    "blockNumber": 26204320
+  },
+  "ChainExitERC1155Predicate_polygonpos": {
+    "hash": "0x55412158ace37850905a083574e7c2bee354950e64b054dbe62a367ea114e41f",
+    "address": "eth:0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f",
+    "chain": "ethereum",
+    "blockNumber": 26204320
   }
 }

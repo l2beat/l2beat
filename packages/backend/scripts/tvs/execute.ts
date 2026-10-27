@@ -335,108 +335,9 @@ function calculateBreakdown(
     timestamp: UnixTime.toDate(timestamp).toISOString(),
     tvs: toDollarString(tvsBreakdown.tvs),
     source: {
-      canonical: {
-        value: toDollarString(tvsBreakdown.source.canonical.value),
-        tokens: tvsBreakdown.source.canonical.tokens
-          .sort((a, b) => b.value - a.value)
-          .map((t) => {
-            const tokenConfig = config.find((tt) => tt.id === t.tokenId)
-            assert(tokenConfig, `${t.tokenId} config not found`)
-            return {
-              symbol: tokenConfig.symbol,
-              amount: formatNumberWithCommas(t.amount, fixedTwoDecimals),
-              value: '$' + formatNumberWithCommas(t.value, fixedTwoDecimals),
-              ...(t.valueForProject !== t.value
-                ? {
-                    valueForProject:
-                      '$' +
-                      formatNumberWithCommas(
-                        t.valueForProject,
-                        fixedTwoDecimals,
-                      ),
-                  }
-                : {}),
-              ...(t.valueForSummary !== t.valueForProject
-                ? {
-                    valueForSummary:
-                      '$' +
-                      formatNumberWithCommas(
-                        t.valueForSummary,
-                        fixedTwoDecimals,
-                      ),
-                  }
-                : {}),
-            }
-          }),
-      },
-      external: {
-        value: toDollarString(tvsBreakdown.source.external.value),
-        tokens: tvsBreakdown.source.external.tokens
-          .sort((a, b) => b.value - a.value)
-          .map((t) => {
-            const tokenConfig = config.find((tt) => tt.id === t.tokenId)
-            assert(tokenConfig, `${t.tokenId} config not found`)
-            return {
-              symbol: tokenConfig.symbol,
-              amount: formatNumberWithCommas(t.amount, fixedTwoDecimals),
-              value: '$' + formatNumberWithCommas(t.value, fixedTwoDecimals),
-              ...(t.valueForProject !== t.value
-                ? {
-                    valueForProject:
-                      '$' +
-                      formatNumberWithCommas(
-                        t.valueForProject,
-                        fixedTwoDecimals,
-                      ),
-                  }
-                : {}),
-              ...(t.valueForSummary !== t.valueForProject
-                ? {
-                    valueForSummary:
-                      '$' +
-                      formatNumberWithCommas(
-                        t.valueForSummary,
-                        fixedTwoDecimals,
-                      ),
-                  }
-                : {}),
-            }
-          }),
-      },
-      native: {
-        value: toDollarString(tvsBreakdown.source.native.value),
-        tokens: tvsBreakdown.source.native.tokens
-          .sort((a, b) => b.value - a.value)
-          .map((t) => {
-            const tokenConfig = config.find((tt) => tt.id === t.tokenId)
-            assert(tokenConfig, `${t.tokenId} config not found`)
-            return {
-              symbol: tokenConfig.symbol,
-              amount: formatNumberWithCommas(t.amount, fixedTwoDecimals),
-              value: '$' + formatNumberWithCommas(t.value, fixedTwoDecimals),
-              ...(t.valueForProject !== t.value
-                ? {
-                    valueForProject:
-                      '$' +
-                      formatNumberWithCommas(
-                        t.valueForProject,
-                        fixedTwoDecimals,
-                      ),
-                  }
-                : {}),
-              ...(t.valueForSummary !== t.valueForProject
-                ? {
-                    valueForSummary:
-                      '$' +
-                      formatNumberWithCommas(
-                        t.valueForSummary,
-                        fixedTwoDecimals,
-                      ),
-                  }
-                : {}),
-            }
-          }),
-      },
+      canonical: formatSource(tvsBreakdown.source.canonical, config),
+      external: formatSource(tvsBreakdown.source.external, config),
+      native: formatSource(tvsBreakdown.source.native, config),
     },
     category: {
       associated: {
@@ -487,6 +388,40 @@ function calculateBreakdown(
           '%',
       },
     },
+  }
+}
+
+function formatSource(
+  source: TvsBreakdown['source']['canonical'],
+  config: TvsToken[],
+) {
+  return {
+    value: toDollarString(source.value),
+    tokens: source.tokens
+      .sort((a, b) => b.value - a.value)
+      .map((t) => {
+        const tokenConfig = config.find((tt) => tt.id === t.tokenId)
+        assert(tokenConfig, `${t.tokenId} config not found`)
+        return {
+          symbol: tokenConfig.symbol,
+          amount: formatNumberWithCommas(t.amount, fixedTwoDecimals),
+          value: '$' + formatNumberWithCommas(t.value, fixedTwoDecimals),
+          ...(t.valueForProject !== t.value
+            ? {
+                valueForProject:
+                  '$' +
+                  formatNumberWithCommas(t.valueForProject, fixedTwoDecimals),
+              }
+            : {}),
+          ...(t.valueForSummary !== t.valueForProject
+            ? {
+                valueForSummary:
+                  '$' +
+                  formatNumberWithCommas(t.valueForSummary, fixedTwoDecimals),
+              }
+            : {}),
+        }
+      }),
   }
 }
 

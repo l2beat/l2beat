@@ -20,6 +20,7 @@ import type {
 } from '../../clients/rpc/types'
 import type {
   BlockClient,
+  BlockHeader,
   LogsClient,
   LogsTopicFilter,
 } from '../../clients/types'
@@ -151,9 +152,13 @@ export class RpcClientCompat implements IRpcClient {
     return await this.getBlock(blockNumber, true)
   }
 
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<BlockHeader> {
+    return await this.getBlock(blockNumber, false)
+  }
+
   async getBlockTimestamp(blockNumber: number): Promise<number> {
-    const block = await this.getBlock(blockNumber, false)
-    return block.timestamp
+    const header = await this.getBlockHeader(blockNumber)
+    return header.timestamp
   }
 
   async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
@@ -265,6 +270,7 @@ export class RpcClientCompat implements IRpcClient {
       return logs.map(toEVMLog)
     } catch (e) {
       if (
+        from < to &&
         e instanceof Error &&
         e.message.startsWith('RPC call failed') &&
         isLimitExceededError(e)

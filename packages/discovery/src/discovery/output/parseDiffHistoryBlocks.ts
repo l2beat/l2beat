@@ -39,6 +39,36 @@ export function parseDiffHistoryBlocks(body: string): DiffHistoryBlock[] {
   return blocks
 }
 
+const BLOCK_START = '```diff\n'
+const STATUS_LINES = [
+  { line: '+   Status: CREATED\n', type: 'created' },
+  { line: '-   Status: DELETED\n', type: 'deleted' },
+] as const
+
+export function parseDiffHistoryStatuses(body: string): DiffHistoryBlock[] {
+  const blocks: DiffHistoryBlock[] = []
+  let at = body.indexOf(BLOCK_START)
+  while (at !== -1) {
+    const start = at + BLOCK_START.length
+    const status = STATUS_LINES.find(({ line }) => body.startsWith(line, start))
+    if (status !== undefined) {
+      const headerStart = start + status.line.length
+      const headerEnd = body.indexOf('\n', headerStart)
+      const line = body.slice(
+        headerStart,
+        headerEnd === -1 ? undefined : headerEnd,
+      )
+      const header = parseHeaderLine(line)
+      if (header === undefined) {
+        throw new Error('Bad diff block header', { cause: { line } })
+      }
+      blocks.push({ ...header.block, type: status.type })
+    }
+    at = body.indexOf(BLOCK_START, start)
+  }
+  return blocks
+}
+
 function parseBlock(lines: string[]): DiffHistoryBlock {
   let i = 0
   const type =

@@ -134,7 +134,22 @@
         "type": "ethereum",
         "daLayer": "ethereum",
         "sinceBlock": 25533241,
+        "untilBlock": 26275527,
         "inbox": "0x0000000000000000000000000000000000000000",
+        "topics": [
+          "0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0"
+        ]
+      }
+    }
+  ],
+  "aztecnetworkv6": [
+    {
+      "id": "79f1c9de1bf4",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 26275528,
+        "inbox": "0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
         "topics": [
           "0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0"
         ]
@@ -328,6 +343,7 @@
         "type": "ethereum",
         "daLayer": "ethereum",
         "sinceBlock": 23281847,
+        "untilBlock": 26158243,
         "inbox": "0x003FBC27c32dBE174A7BB1EfdD49da79C6Ea1774",
         "sequencers": ["0x8839E742fd56ebC0d31d11DD5A2cA25aA61c54DA"]
       }
@@ -367,6 +383,17 @@
         "inbox": "0x00b4148589a62ec7ca2c46722940e4dd79306c8d",
         "sequencers": ["0x0f3498258819bece3f47661b3e331bd36c1cf857"],
         "sinceBlock": 26063366
+      }
+    }
+  ],
+  "gwei-blogposts": [
+    {
+      "id": "1ec920a86fd0",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x73849f6f2785ba7fd2f41b5b4573b75554417981",
+        "sinceBlock": 26268082
       }
     }
   ],

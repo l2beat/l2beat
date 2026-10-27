@@ -1,7 +1,7 @@
 {
   "name": "lighter",
-  "timestamp": 1791897358,
-  "configHash": "0x5efcc823cd489dbac97355d6777ada06a44ffa1b5683f304cfe34ad893a6b3a9",
+  "timestamp": 1792751506,
+  "configHash": "0xd45800419870344b657f6a2c7431a34674f60102ccdf49ecbc7ae7179b938878",
   "entries": [
     {
       "address": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
@@ -43,7 +43,17 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x26Bb4084573e27CF57394593A0c95FF0cd14dd16",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x2994d343b6b17EC23E9E4a08082184Fd43F763a3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x3896449AFb8a6D07a7Dd3E7e1cDF4810112EA47a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -86,6 +96,124 @@
           "eth:0xE16c893252616dD49913969f145e733b96a3E5A7",
           "eth:0xE1A19e35320218E41526ad619cf55985cfF20810"
         ],
+        "$pastUpgrades": [
+          [
+            "2025-01-17T05:05:35.000Z",
+            "0x228496195e6c4a6cdbf9fc3c153cce0fb652e5aeee5a4f0a966b16257ebb34b9",
+            ["eth:0xF5FE2d298ce8C322760f89c3F4E3EDE704bedBDC"]
+          ],
+          [
+            "2025-01-19T07:56:23.000Z",
+            "0xa52f3641ad982d5b0e09c7ac1e79cb581a48079ba93b13363754ddb41a94858e",
+            ["eth:0xcb41DA19C2f50Ce0B7E4162bdf1B80F4D0b67DBC"]
+          ],
+          [
+            "2025-01-19T08:11:47.000Z",
+            "0x6c8d7629d060da8f8d1f7a9820217af1a9154dbefaea7187fc8ba562726196a4",
+            ["eth:0x976Aa7fD3296e01DaCf48B020A3549Bccd38F93A"]
+          ],
+          [
+            "2025-03-25T23:14:23.000Z",
+            "0xfc21149bf7617045c6d712a98f8f295bbbd11711b3735bd8b5eb820a13fc9d2f",
+            ["eth:0x727A1b1dc3DDB929Dd53CF810E973B5D0A1cDa5a"]
+          ],
+          [
+            "2025-08-19T20:38:23.000Z",
+            "0xf2e42f9cfc2bed3790856bbf59b356b50c41c484918019f458576582d2a137b3",
+            ["eth:0xa7a0086e8A55280244fcB0e6dd737b88C5937a93"]
+          ],
+          [
+            "2025-10-01T19:51:11.000Z",
+            "0xe14eed4202c18ee491ad3f6f382893c9fd751830675263589550b0c30c23a704",
+            ["eth:0x1D2624A65F8aaD1c4Bc406b4D2418ba577D218cb"]
+          ],
+          [
+            "2025-10-26T15:00:59.000Z",
+            "0x22ab76561381e19943cbe1295afed904b7365e5d4563c0a5b056ae9e3c3901ea",
+            ["eth:0x4FF23C6cA650166A95D854935a8b012B53ac59Bc"]
+          ],
+          [
+            "2025-11-02T11:51:11.000Z",
+            "0x19c5561bbb435fc86359f88ecab343437083f7950a22ee2719558ce2155fcba5",
+            ["eth:0x59e71dc90E662F17c4eB156A8cA1BCCD106aCfA0"]
+          ],
+          [
+            "2025-12-04T12:00:11.000Z",
+            "0x296d8eab328a0c8ab492d806082c40965da2433e95e22d02d5db028b56107aa1",
+            ["eth:0xe5FB592Ef1b620909000Af0D5fb55a3593026142"]
+          ],
+          [
+            "2026-01-29T04:00:35.000Z",
+            "0x12d0b1ab84807853ddeb2b448d3c6c675e8de09f69635de335efc67485a768eb",
+            ["eth:0x8bdccd961Ae8b8B99dBA5FbAd0e5AA92bE8c59Fb"]
+          ],
+          [
+            "2026-02-13T01:22:47.000Z",
+            "0x90e72d6dafdd25dfd773319e940fef87f2ebd100975f6cbd990acca5d8a66146",
+            ["eth:0x803bd6a0577c083c1EDe82Da455C8e69e697c878"]
+          ],
+          [
+            "2026-02-17T02:19:35.000Z",
+            "0xdd1e3f155eee3a835a461e5cbf13737a695dbc80d643bd5abe33db89f05ba9a7",
+            ["eth:0xdC2877f6C162991B47fC5f7Cc50F85c084B9B408"]
+          ],
+          [
+            "2026-03-08T14:49:59.000Z",
+            "0xd482ace4957446a98530bec155c60609eb387142f1a5e122b1d0ef610232574e",
+            ["eth:0xE315CbEDc21c5beC186bF478D899e91A604a6bC8"]
+          ],
+          [
+            "2026-04-24T15:46:47.000Z",
+            "0x8923691c2360182d281ac96d37d319d862e2def3591cbec06335fe99a2454932",
+            ["eth:0x13d4Ed7Db9d2cF73C7A45bfA6e23aa9742e8598C"]
+          ],
+          [
+            "2026-05-14T21:53:59.000Z",
+            "0x41e2eb68d35adedb5bff64d45d6d1096845888d0f5c437d1b4722acd51619ef9",
+            ["eth:0xc4F38883af6d07D826A20A581cB21fFc2a58009C"]
+          ],
+          [
+            "2026-05-30T15:32:23.000Z",
+            "0x18ad0e043ddb0030244021674c1fc377902627a2451e75b73ac33d009e97ab59",
+            ["eth:0x831EF69BaB8AF8B1037a4961B8d0674b124E7008"]
+          ],
+          [
+            "2026-07-18T13:55:23.000Z",
+            "0x2c35ea5f0c22fd84de28ab6a5b35b22ad84cdf1eed003989135e32934c3e271f",
+            ["eth:0x9397837Fa581F7f527E0f71a0CB53eb633bF0F1B"]
+          ],
+          [
+            "2026-07-23T12:12:47.000Z",
+            "0x2ca4f16340bb2e315188773587abc5f4303473ea650a94934de0a12606b235ff",
+            ["eth:0xE67606837D3d68a679B25B49b8abE5cB4B0Ae483"]
+          ],
+          [
+            "2026-08-09T16:27:47.000Z",
+            "0xfd927dd04081b15043890d0cb7acf06b781562b854d085b6a0b193e01ed60b67",
+            ["eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e"]
+          ],
+          [
+            "2026-09-13T10:57:11.000Z",
+            "0xdc0622bd85573a485e6c1341bbd0c06595d4e486442c2612a1936a0f8c799666",
+            ["eth:0x78068b8b64d23F0dd3fA599FCAc00931D55BcF9b"]
+          ],
+          [
+            "2026-09-13T13:00:59.000Z",
+            "0x9b8150e97075beb78f1fa7aae7e635af7d92238766c09f7b34b2c3f0806b451f",
+            ["eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e"]
+          ],
+          [
+            "2026-09-20T13:16:59.000Z",
+            "0x53b096c0402d58dd25446adcabafe7fc04ae31219144df9123a33128067ce17b",
+            ["eth:0x6e1433585b320880f488D0A7c1d2077D43B6Ca4E"]
+          ],
+          [
+            "2026-09-30T22:05:47.000Z",
+            "0x1e9044695ebca965fdfcc1a837e73bc52bdbbc1b4b6a09dbc07196e03396378d",
+            ["eth:0xE16c893252616dD49913969f145e733b96a3E5A7"]
+          ]
+        ],
+        "$upgradeCount": 23,
         "additionalZkLighter": "eth:0xE1A19e35320218E41526ad619cf55985cfF20810",
         "assetConfigETH": {
           "tokenAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -103,8 +231,8 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 247273,
-        "committedPriorityRequestCount": 1962080,
+        "committedBatchesCount": 252965,
+        "committedPriorityRequestCount": 1969601,
         "createdMarketsPostSpot": [
           "ETH/USDC",
           "STABLE",
@@ -237,7 +365,9 @@
           "OURA",
           "PRL",
           "VARIATIONAL",
-          "DRV"
+          "DRV",
+          "weETH/USDC",
+          "TUR30"
         ],
         "createdMarketsPreSpot": [
           "USELESS",
@@ -295,17 +425,17 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0x866418061d4C1168e1c8E8f6facE79675395E008",
-        "executedBatchesCount": 247264,
-        "executedOnChainBatchesCount": 148270,
-        "executedPriorityRequestCount": 1962064,
+        "executedBatchesCount": 252962,
+        "executedOnChainBatchesCount": 150071,
+        "executedPriorityRequestCount": 1969597,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0xE16c893252616dD49913969f145e733b96a3E5A7",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
-        "lastAccountIndex": 760668,
-        "lastVerifiedEndBlockNumber": 354746503,
-        "lastVerifiedStateRoot": "0xbf9f96f6e63b6724f3681cbbbe45f1b0a210acb79cb5fe038c4779ba03ab9f2e",
-        "lastVerifiedValidiumRoot": "0x2fad778a860c53adb3e4238c270fb56f1e6cc8be970429b5c3e7d02a8ca59516",
+        "lastAccountIndex": 763314,
+        "lastVerifiedEndBlockNumber": 363857412,
+        "lastVerifiedStateRoot": "0x65d40017a4fde3fbddae7b542963b627d477e4d5da872921853a89474c7b4a2e",
+        "lastVerifiedValidiumRoot": "0xa8f0075fe1cd08ce858ed9d41ffc0c139214db01989c1bb1ba5af36febd1e82c",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -329,8 +459,8 @@
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_PUBLIC_MARKET_INDEX": 255,
-        "openPriorityRequestCount": 18,
-        "pendingOnChainBatchesCount": 4,
+        "openPriorityRequestCount": 6,
+        "pendingOnChainBatchesCount": 1,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
           {
@@ -380,15 +510,19 @@
           {
             "assetIndex": 13,
             "tokenAddress": "eth:0x227fF9D1a9931db2585a45c41fC84e3b3f48B37b"
+          },
+          {
+            "assetIndex": 14,
+            "tokenAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
           }
         ],
-        "stateRoot": "0x84680df4c29ae62cef54968c5cd05ce6f6be6c84e67709e3c195c4f48ed0ab9f",
+        "stateRoot": "0x65d40017a4fde3fbddae7b542963b627d477e4d5da872921853a89474c7b4a2e",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0x1231e5258396c6d82d7804bf4b758e468a53fb604ad763a71bb5610d7b46f896",
-        "verifiedBatchesCount": 247267,
-        "verifiedPriorityRequestCount": 1962069,
+        "validiumRoot": "0xa8f0075fe1cd08ce858ed9d41ffc0c139214db01989c1bb1ba5af36febd1e82c",
+        "verifiedBatchesCount": 252962,
+        "verifiedPriorityRequestCount": 1969597,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -536,7 +670,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 87,
+        "nonce": 89,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -573,7 +707,7 @@
         "securityCouncilAddress": "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045",
         "upgradeStartTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 75,
+        "versionId": 77,
         "zkLighterProxy": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"
       },
       "fieldMeta": {
@@ -625,7 +759,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 223,
+        "nonce": 234,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -684,7 +818,7 @@
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
         "0x87a6efe7d369db405cf65a6d33bb772aae12a632406fb4533c845a4b4a2e8869"
       ],
-      "proxyType": "EIP1967 proxy",
+      "proxyType": "UpgradeGatekeeper proxy",
       "description": "Manages the list of validators, the network governor and the emergency pause guardians.",
       "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
@@ -693,12 +827,23 @@
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "$implementation": "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2025-01-17T05:05:35.000Z",
+            "0x228496195e6c4a6cdbf9fc3c153cce0fb652e5aeee5a4f0a966b16257ebb34b9",
+            ["eth:0x46D3C0c01D5DAae4FE8e3f54f32901d9Fbde1f08"]
+          ],
+          [
+            "2026-09-30T22:05:47.000Z",
+            "0x1e9044695ebca965fdfcc1a837e73bc52bdbbc1b4b6a09dbc07196e03396378d",
+            ["eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43"]
+          ]
+        ],
+        "$upgradeCount": 2,
         "EMERGENCY_GUARDIAN_COOLDOWN": 604800,
         "EMERGENCY_GUARDIAN_MAX_DURATION": 259200,
         "EMERGENCY_GUARDIAN_MIN_DURATION": 86400,
-        "emergencyGuardian": "eth:0x0000000000000000000000000000000000000000",
+        "emergencyGuardian": "eth:0x26Bb4084573e27CF57394593A0c95FF0cd14dd16",
         "emergencyGuardianPaused": false,
         "emergencyGuardianState": {
           "startedAt": 0,
@@ -734,12 +879,12 @@
         "PAUSE_GUARDIAN_COOLDOWN": 86400,
         "PAUSE_GUARDIAN_MAX_DURATION": 86400,
         "PAUSE_GUARDIAN_MIN_DURATION": 7200,
-        "pauseGuardian": "eth:0x0000000000000000000000000000000000000000",
+        "pauseGuardian": "eth:0x3896449AFb8a6D07a7Dd3E7e1cDF4810112EA47a",
         "pauseGuardianPaused": false,
         "pauseGuardianState": {
-          "startedAt": 0,
-          "expiresAt": 0,
-          "cooldownEndsAt": 0
+          "startedAt": 1792223063,
+          "expiresAt": 1792230263,
+          "cooldownEndsAt": 1792316663
         },
         "PRIORITY_EXPIRATION": 1209600,
         "usdc": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -781,9 +926,9 @@
       "template": "lighter/ZkLighterVerifier",
       "sourceHashes": [
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
-        "0xb90e379e327aaf48e4d92789e2d24b41ab6c89ed69c958ddbab73b0fb6f47290"
+        "0x98cdd7bd388e4b7e4ed3c0c1d15f0c8dfdb6233164923805cec57cd0156f36fc"
       ],
-      "proxyType": "EIP1967 proxy",
+      "proxyType": "UpgradeGatekeeper proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
       "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
@@ -791,15 +936,361 @@
       "sinceBlock": 21642011,
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "$implementation": "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$implementation": "eth:0x2F7FC37b104d25a420A761c16ee515c2e23B9200",
+        "$pastUpgrades": [
+          [
+            "2025-01-17T05:05:35.000Z",
+            "0x228496195e6c4a6cdbf9fc3c153cce0fb652e5aeee5a4f0a966b16257ebb34b9",
+            ["eth:0x0F656194d3B8c2Aa076932CB8FA375eb8cc56113"]
+          ],
+          [
+            "2025-01-17T18:52:59.000Z",
+            "0xc80653f3b2c829922b19246cf7e60a8cb107930721fc9a5b3cd87885a8d9f5e5",
+            ["eth:0xAe317287A95a58DD8A2095E33be85BCb0fB876fa"]
+          ],
+          [
+            "2025-01-19T07:56:23.000Z",
+            "0xa52f3641ad982d5b0e09c7ac1e79cb581a48079ba93b13363754ddb41a94858e",
+            ["eth:0x414a6Eaa25F967E25436e1D9982EC4f0899B79a5"]
+          ],
+          [
+            "2025-01-23T09:11:11.000Z",
+            "0xe19967ba9f4ce12ae96045591b4b02f9b6eed92235b7ec2232995f920fe68652",
+            ["eth:0x811aB7298cb2e24e633F0fF349b240547c1E7C5b"]
+          ],
+          [
+            "2025-02-05T05:41:47.000Z",
+            "0x18780be243d7fcc3c504858b5fe099db9bbffb22ca12d2de82d72d4a0d5b5ef4",
+            ["eth:0xf84FCBfaAb4dd4B448CC6B7EA79FaA5631baec3c"]
+          ],
+          [
+            "2025-02-08T01:30:47.000Z",
+            "0xd83aa9e44f299fddb8764ad1d8274589acf094581286c45ea4c4544e2f1c129c",
+            ["eth:0x7B867660F6d269ed47A99E1ce9E834CE54Ec5290"]
+          ],
+          [
+            "2025-02-13T06:31:11.000Z",
+            "0xea950a8fd87d104c1c1b22fac0c4a277aa36598b0f7e071d8c466116337d2632",
+            ["eth:0x78bD150e281c1D8A40e7EC0bdB65C9aBeeb099C6"]
+          ],
+          [
+            "2025-03-05T14:50:35.000Z",
+            "0xd8586f11ba976b871d537161df62cd5fc5b61d619a088187d1130b699642ee5f",
+            ["eth:0xD4633d934550EFcB7809DE4Aba2E2C8C951F09cB"]
+          ],
+          [
+            "2025-03-10T23:06:11.000Z",
+            "0x25725c327e42148cd5e2ffb9f74ea51e30861909cf547f8df5ff69f97068aca4",
+            ["eth:0x3B7d826EcAC37152745f051BFb1a8bf663D00D66"]
+          ],
+          [
+            "2025-03-25T23:14:23.000Z",
+            "0xfc21149bf7617045c6d712a98f8f295bbbd11711b3735bd8b5eb820a13fc9d2f",
+            ["eth:0x73a64b7Ec827b257c84b1d0Da29671429d255FF9"]
+          ],
+          [
+            "2025-03-26T03:56:11.000Z",
+            "0x58a0982c3ece1185b2c2fa85177c16a528e8e002a8fb39a29a6e92a53cd543b3",
+            ["eth:0x6c542994c2f8ad487098284dA0918cBa1ad269C4"]
+          ],
+          [
+            "2025-03-26T16:49:11.000Z",
+            "0x49fb99191c71c9e8cdf81fc1f39c6ebb4cd012002e3537f78219fce7c95481b3",
+            ["eth:0x84a74B5FaCCF6B595C34b273A452FC46fA1d5512"]
+          ],
+          [
+            "2025-03-27T01:42:11.000Z",
+            "0x1be04f1a8d9fb527e6950565216e2c9bb3b68f5cf92b5cdb5616358b4e2024ee",
+            ["eth:0x7132Bb88E11D992963B928a6280A0d5a298ED328"]
+          ],
+          [
+            "2025-03-27T20:02:59.000Z",
+            "0x192616679ecfef3d096b82630517e5494932344b92ea66301c2d6adf01428eb3",
+            ["eth:0x7c91c0e85da0b6c49BFa4F92571A7191A845ACB9"]
+          ],
+          [
+            "2025-03-29T20:28:59.000Z",
+            "0x295b2538276bbf46b967c964d1723e278a171c83f46d63323c4dc104328155aa",
+            ["eth:0xfCfD7E36fd05eCD42E05147c2f5Af610aDba69f3"]
+          ],
+          [
+            "2025-04-08T18:25:47.000Z",
+            "0xbe31d7f434b7f0c46bed3783f1d1c8720980f73e0d0c6d11e30f5aeb40d94e74",
+            ["eth:0xA5264990AD1ea8C93b64f29Cd0509242EAC1c76D"]
+          ],
+          [
+            "2025-04-08T18:31:59.000Z",
+            "0x296fed36fd00f8794a7f1185f12dae23230a6a895a3043c7311b2a0a0ace3182",
+            ["eth:0xA92D3aEC1B4223474fC6c85124359e06245E9012"]
+          ],
+          [
+            "2025-04-09T16:06:47.000Z",
+            "0x0c2030d4ae004157d7da714d008d61835572a9175b0873385bbf60065d3b1216",
+            ["eth:0xB985c1B89d812c19F59f1abd3d50D924E6dc3972"]
+          ],
+          [
+            "2025-05-01T20:41:35.000Z",
+            "0xd93d24e203a43d9862fad372387bf7d0bd20acd9c74a715f67a520c557f27a9d",
+            ["eth:0x1913669621cE3d2819426A6a37577d21a64b7727"]
+          ],
+          [
+            "2025-05-07T00:46:23.000Z",
+            "0xd0ebdde6dc3bd12f1ada1ebe002b7805f43067d789bbc89c54b34658c6203073",
+            ["eth:0x3b8DC3cd945a1a12662220b017af8F4daD6BE78D"]
+          ],
+          [
+            "2025-06-07T07:10:35.000Z",
+            "0xadce4652999d2a125b9fd0f731d9547c1384a63803883e76fb2ccc7dd9eac847",
+            ["eth:0xD9c41dA29226Cfe6BC5fb6cD4c125Ed4b661f755"]
+          ],
+          [
+            "2025-06-07T10:16:35.000Z",
+            "0x1407c2b02575b8ae48f646dc8131055c2b579b03af5392dfbf0eba256703db64",
+            ["eth:0xB696b3333e0877Fd370aD3d4be9f8a664fC4663A"]
+          ],
+          [
+            "2025-06-07T16:00:11.000Z",
+            "0x2a7ddd9795b8621074d545d4ff9bedb9b61c0eb8178bce6ef59981ddfdb13fc1",
+            ["eth:0x14eeAEA3409cB5BCa5e318796d4E4d7287cbD018"]
+          ],
+          [
+            "2025-06-07T19:47:47.000Z",
+            "0x689cea75d744b55555bd05ba092d468e1dd7da8e0f4fa848e8b857727d44ce5b",
+            ["eth:0x412D2BfD2bCb366f4b0140259E6CA80fB267711E"]
+          ],
+          [
+            "2025-06-23T23:35:47.000Z",
+            "0x655490635753f123dbaecee43de8fa35e4ae371846f3513be55d3b1f05ef8500",
+            ["eth:0xc1C03d1fC0704a66745A93dE790C8D8d0F99Da12"]
+          ],
+          [
+            "2025-06-24T22:25:35.000Z",
+            "0x2b7865579b7e0fcb3df93cbb74602838ec7313e7bc1f3d393044f6f6034d68d1",
+            ["eth:0xa0868aa029A4977C1A73683F377AAb36135230AD"]
+          ],
+          [
+            "2025-07-04T02:35:59.000Z",
+            "0x494008324ee2bb06c0dd3f6aaba333673d76bac77d96fb146d4769fd8c6465a3",
+            ["eth:0xed6aF5f15451448a18C73cee76f454088426b102"]
+          ],
+          [
+            "2025-07-04T02:44:11.000Z",
+            "0x9b0131952945bb0a0568aaf9e96983d5b1e34c24973688fd3f9870fa6755d22a",
+            ["eth:0x66B2B3A7F3e1671B8EFb5D7088A5587f7C15CBEd"]
+          ],
+          [
+            "2025-07-29T00:48:59.000Z",
+            "0x4f40afbb6048ab0747305427c025439422d4faf28b972552e3d1792f8c21d2f2",
+            ["eth:0x9a3Cc15b31Aec100d0C49B16cC401eaEf5A0A500"]
+          ],
+          [
+            "2025-12-04T22:10:59.000Z",
+            "0xefd233b6841dd9b3db5bf5b66f86c85b8517498c55b5ed1601330ffc244307fc",
+            ["eth:0x7ddAD28962571F77fE5E9cB2fE74A896300EEed4"]
+          ],
+          [
+            "2025-12-25T00:20:23.000Z",
+            "0x1b6e33d17fccb83abe67c7d51a526d86bff25ea6a22d406319f40c230795b43c",
+            ["eth:0xd1e77113c6626f9879cDBC493746a31182137Da2"]
+          ],
+          [
+            "2026-01-04T23:37:35.000Z",
+            "0xbe4b9fb433ac2a73f745bc4f9685b4bf0a495bccdd2f59457441e3d80301016c",
+            ["eth:0x05F8176860955D94F974dB0CE8BB4F160AE425a2"]
+          ],
+          [
+            "2026-01-11T23:16:23.000Z",
+            "0x8a0b4647e7f91c2c49c17a1160667af3eee597f87e17b6c0112917a152e5bf68",
+            ["eth:0xd42b2D9eFD409c2a3074AE4f874F3f42389DB931"]
+          ],
+          [
+            "2026-01-20T12:22:23.000Z",
+            "0x28825bb17b92d82bfbf027ee8662cac2f3c6165cb989b2bb415f099c16e96970",
+            ["eth:0x023B02ad3b8f9045595Ac7139FdBA643b562cfe3"]
+          ],
+          [
+            "2026-01-29T04:00:35.000Z",
+            "0x12d0b1ab84807853ddeb2b448d3c6c675e8de09f69635de335efc67485a768eb",
+            ["eth:0x6d456bCAAc437EAa3f8603E06C5850d88D3A48F7"]
+          ],
+          [
+            "2026-02-13T01:22:47.000Z",
+            "0x90e72d6dafdd25dfd773319e940fef87f2ebd100975f6cbd990acca5d8a66146",
+            ["eth:0xC5d17b2ae295F81209410B00a791720660efc706"]
+          ],
+          [
+            "2026-02-17T02:19:35.000Z",
+            "0xdd1e3f155eee3a835a461e5cbf13737a695dbc80d643bd5abe33db89f05ba9a7",
+            ["eth:0xae6961882D8Ad8d1d6840228CCca471ffffd5EA5"]
+          ],
+          [
+            "2026-02-20T22:22:35.000Z",
+            "0xedd322206cdf1b7e3a30f3fe5b35b1b306d18007cb0f61562ad368e0912c2788",
+            ["eth:0xa271Df8660A318F155A31e64d0529ed85C2d1616"]
+          ],
+          [
+            "2026-03-08T14:49:59.000Z",
+            "0xd482ace4957446a98530bec155c60609eb387142f1a5e122b1d0ef610232574e",
+            ["eth:0x5D36a933de9A89550f6b1cDB561861c615199944"]
+          ],
+          [
+            "2026-03-11T11:51:23.000Z",
+            "0x5e01f97ffe6c33c5d1a3f6f3b44d4b7b47d11374d6deef2a4b78701a87dabef8",
+            ["eth:0x840b49E7d53699C7eC4333ffFe27Dc679B171Db8"]
+          ],
+          [
+            "2026-03-27T08:58:23.000Z",
+            "0xd0899abdc6ecb0def0594d2b8390b7c2d45c6979d731beb3ec3a75b33d63ff52",
+            ["eth:0xd37860196FA845bC6A92817f6140A43b62823350"]
+          ],
+          [
+            "2026-03-29T13:57:47.000Z",
+            "0xe5a720f80c9b7655b07b653f70cf2b0d4b238027f116ff950e09940070207aa9",
+            ["eth:0xb20De28D78b63bc0c94eef89Db53F6338af17825"]
+          ],
+          [
+            "2026-04-12T15:49:11.000Z",
+            "0x2f4d630c9c7e21c1d1deea3e453aa59f2e440845b3d694fde538f382d4874bb2",
+            ["eth:0xC8A6CCec3f41dF6a80905030251c39A6b434f0b4"]
+          ],
+          [
+            "2026-04-20T05:23:47.000Z",
+            "0xf109116d6bd084e7830fe941a60f197a63f9a4000e0ff0d9caad938271f6bfda",
+            ["eth:0x7B2cAc7b45E87d0392ACCf7c88764b7d2288938f"]
+          ],
+          [
+            "2026-04-24T15:46:47.000Z",
+            "0x8923691c2360182d281ac96d37d319d862e2def3591cbec06335fe99a2454932",
+            ["eth:0x5344f0022841CbF81dDDd5cEc0BF64B8ffb39A12"]
+          ],
+          [
+            "2026-04-24T19:27:59.000Z",
+            "0xd0606f27af9af02c2867665aebec784e3a637f486b4c0c2fde5694e25bb02ca3",
+            ["eth:0x8354C555C221B3BBaA62e34fb79CecAfBaf5C220"]
+          ],
+          [
+            "2026-04-25T01:28:47.000Z",
+            "0x34edd12a3b32dbdddc9e094376d7595ae7c8f89862e8e4fe7a353f36e229a8c7",
+            ["eth:0x3Cc2652498C0f1950c05e4111B9c20B9a38c6fC7"]
+          ],
+          [
+            "2026-04-25T13:13:11.000Z",
+            "0x047ed39a151c70d9b9ebf41c20e425b0e308cf7449539b82c8a7815603fb7ade",
+            ["eth:0xD76E5C5507C56D721BB9cE6601DCd379d09AFaD2"]
+          ],
+          [
+            "2026-05-03T17:19:47.000Z",
+            "0x95be744efcfa341cefc4320e389856b7bcd12d857c52822c02a8e4c53fa1969a",
+            ["eth:0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82"]
+          ],
+          [
+            "2026-05-05T14:37:23.000Z",
+            "0xbffc26955516ff0bbd0fa25f5edcc5a0472a898ff7d34299b27afa83cd69c844",
+            ["eth:0x9338A847A1d6218f6Eb67568433505f59bb52d9b"]
+          ],
+          [
+            "2026-05-11T13:08:59.000Z",
+            "0x000a90d3d1a1c98121033d69994368a424483a8a2da405d33d464a2f62e28cc2",
+            ["eth:0x21c7480b72c47fe93102BE5B865d18b770338098"]
+          ],
+          [
+            "2026-05-17T16:03:23.000Z",
+            "0xbfab05b3c43baf060e0d93e5b6f3721d23587ddfd7db3a5171b131c2ce4d5d33",
+            ["eth:0xaa76aC5cC406037be638d483d8c1daF2AFDC1A68"]
+          ],
+          [
+            "2026-05-27T15:35:35.000Z",
+            "0x2637713f76625917f08dea6a226a4f521ef17fd41967916711fe7d2001d248d1",
+            ["eth:0x5CC966453378D05302E1DCB4F8F272aA3c264Aa4"]
+          ],
+          [
+            "2026-05-30T15:32:23.000Z",
+            "0x18ad0e043ddb0030244021674c1fc377902627a2451e75b73ac33d009e97ab59",
+            ["eth:0xAa0b5b65890162C5C96D82F088822247EC5Df5D6"]
+          ],
+          [
+            "2026-07-12T16:41:23.000Z",
+            "0xb7dafec9c0697fc24b7ca92a04672a99c7715e957205414c9e49e0d519dc6f35",
+            ["eth:0x52277Bc0f0cd1C2f64Aa20Edd7d535d67780640D"]
+          ],
+          [
+            "2026-07-18T13:55:23.000Z",
+            "0x2c35ea5f0c22fd84de28ab6a5b35b22ad84cdf1eed003989135e32934c3e271f",
+            ["eth:0xd33EA7286196F5fdAB5C06e9E90844e61E586428"]
+          ],
+          [
+            "2026-07-23T12:12:47.000Z",
+            "0x2ca4f16340bb2e315188773587abc5f4303473ea650a94934de0a12606b235ff",
+            ["eth:0xEd0a60EDaCd8c9B1221d2D9F753b6dF09Ea3baaa"]
+          ],
+          [
+            "2026-08-09T16:27:47.000Z",
+            "0xfd927dd04081b15043890d0cb7acf06b781562b854d085b6a0b193e01ed60b67",
+            ["eth:0xf7b964eD0C05a7aA12fdC54865295531C9D2AEC1"]
+          ],
+          [
+            "2026-08-22T02:29:35.000Z",
+            "0xce02a6657e070ecf4e1e1a71fa3938c049b2a29aa0575adfc6cd1e30239080ff",
+            ["eth:0x8Edc9cC49C44B50452408667BFf3d84138C096DF"]
+          ],
+          [
+            "2026-08-23T13:14:11.000Z",
+            "0x3a2f706b954d205be00b2584a63571b08e931fbcb2604b5d0b679fa369ff86e9",
+            ["eth:0x9Ca512d2F131134972EB95515325F69812395332"]
+          ],
+          [
+            "2026-08-25T12:49:35.000Z",
+            "0x6a42d03a7547e1335cea9db28dcf796131a957ab2520e888e8f01b47ac06f3ea",
+            ["eth:0xB1386c4266974D81256afB9908e104B00587112A"]
+          ],
+          [
+            "2026-08-31T19:39:23.000Z",
+            "0x923ce4c50fc5b576b228c4f56d1e850d668f714198a06a61fc65fbc1cc054f40",
+            ["eth:0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C"]
+          ],
+          [
+            "2026-09-08T20:46:11.000Z",
+            "0x1015146b573e50f8a18bcbc6314742c427e856930560d6a3353e589915fd0d05",
+            ["eth:0x4E6505D3AE8Aa910e5d35557c76F567077622a6A"]
+          ],
+          [
+            "2026-09-13T13:00:59.000Z",
+            "0x9b8150e97075beb78f1fa7aae7e635af7d92238766c09f7b34b2c3f0806b451f",
+            ["eth:0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE"]
+          ],
+          [
+            "2026-09-20T13:16:59.000Z",
+            "0x53b096c0402d58dd25446adcabafe7fc04ae31219144df9123a33128067ce17b",
+            ["eth:0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046"]
+          ],
+          [
+            "2026-10-01T18:34:23.000Z",
+            "0xa23c2cbf56da3c129a56b5691a289b621d81b0da8946983e0b33898501322723",
+            ["eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11"]
+          ],
+          [
+            "2026-10-11T13:46:59.000Z",
+            "0x4d19276f7c56bbb0b723c97cdda41bb2fb3b3e84bb3467ebd614955fa366b624",
+            ["eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463"]
+          ],
+          [
+            "2026-10-18T12:47:47.000Z",
+            "0xedaf98f4d73c8175bb9552039d921d5988df3e233196c1cbdff3562526870ec6",
+            ["eth:0x9dF23Dd94d71228EFec935EdC2B5be4A861227ca"]
+          ],
+          [
+            "2026-10-20T11:02:23.000Z",
+            "0x5f793c7f171322041b01227219045e97b9884393658962513c63c8a9f4b0e287",
+            ["eth:0x2F7FC37b104d25a420A761c16ee515c2e23B9200"]
+          ]
+        ],
+        "$upgradeCount": 69,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463"
+        "getTarget": "eth:0x2F7FC37b104d25a420A761c16ee515c2e23B9200"
       },
       "implementationNames": {
         "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": "Proxy",
-        "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463": "ZkLighterVerifier"
+        "eth:0x2F7FC37b104d25a420A761c16ee515c2e23B9200": "ZkLighterVerifier"
       }
     },
     {
@@ -849,6 +1340,11 @@
     }
   ],
   "abis": {
+    "eth:0x2F7FC37b104d25a420A761c16ee515c2e23B9200": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
+    ],
     "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": [
       "constructor(address target, bytes targetInitializationParameters)",
       "function getMaster() view returns (address master)",
@@ -1253,11 +1749,6 @@
       "function verifiedPriorityRequestCount() view returns (uint64)",
       "function withdraw(uint48 _accountIndex, uint16 _assetIndex, uint8 _routeType, uint64 _baseAmount)"
     ],
-    "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
-    ],
     "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43": [
       "constructor()",
       "error AlreadyPaused()",
@@ -1347,8 +1838,8 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithSpot": "0x557fce146526c6fd859e5d8ec58a0d624c2c2d1d2372e1d433f3d132136f6ba7"
   },
-  "usedBlockNumbers": { "ethereum": 26183806 },
-  "permissionsConfigHash": "0xa3f6f14b2e6e9c3a968cc8f4f094f5face07c413b7a3efa12c56b1a05c5ec446",
+  "usedBlockNumbers": { "ethereum": 26254744 },
+  "permissionsConfigHash": "0x4cae4c8a9d367f54241075f76e8db10fe0563ace256218b71703b0a5b7083b29",
   "permissions": {
     "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f": {
       "receivedPermissions": [
@@ -1357,6 +1848,26 @@
           "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
           "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
           "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x26Bb4084573e27CF57394593A0c95FF0cd14dd16": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "pause batch commitment, verification, execution and withdrawals for 24h to 72h (extendable up to 72h in total), followed by a 7d cooldown. Does not affect desert mode.",
+          "role": ".emergencyGuardian"
+        }
+      ]
+    },
+    "eth:0x3896449AFb8a6D07a7Dd3E7e1cDF4810112EA47a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "pause batch commitment, verification, execution and withdrawals for 2h to 24h (extendable up to 24h in total), followed by a 24h cooldown. Does not affect desert mode.",
+          "role": ".pauseGuardian"
         }
       ]
     },

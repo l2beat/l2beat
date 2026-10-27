@@ -33,6 +33,12 @@ export async function discoverAndUpdateDiffHistory(
     options.debug,
     options.logger,
   )
+  if (config.maxDepth !== undefined) {
+    options.logger.info(
+      'discovered.json is partial (--max-depth), so diffHistory.md and entrypoints are left as they are; run without --max-depth before committing',
+    )
+    return
+  }
   await updateDiffHistory(
     config.project,
     options.description,

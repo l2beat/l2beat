@@ -13,7 +13,8 @@
       "severity": "HIGH"
     },
     "counterpartGateway": {
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "edit": ["format", "EthereumAddress"]
     },
     "$admin": {
       "severity": "MEDIUM"

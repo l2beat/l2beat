@@ -9,7 +9,7 @@ import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { FetchInit } from '../http/fetchWithTimeout'
-import type { LogsTopicFilter } from '../types'
+import type { BlockHeader, LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import { BATCH_REJECTED, isBatchRejected, RpcBatcher } from './RpcBatcher'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
@@ -94,9 +94,14 @@ export class RpcClient extends ClientCore implements IRpcClient {
   }
 
   /** Calls eth_getBlockByNumber on RPC without transaction bodies. */
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<BlockHeader> {
+    return await this.getBlock(blockNumber, false)
+  }
+
+  /** Calls eth_getBlockByNumber on RPC without transaction bodies. */
   async getBlockTimestamp(blockNumber: number): Promise<number> {
-    const block = await this.getBlock(blockNumber, false)
-    return block.timestamp
+    const header = await this.getBlockHeader(blockNumber)
+    return header.timestamp
   }
 
   async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
@@ -245,7 +250,11 @@ export class RpcClient extends ClientCore implements IRpcClient {
     if (!logsResponse.success) {
       // in EVM chains there can be a limit on the number of logs returned
       const parsedError = RPCError.safeParse(response)
-      if (parsedError.success && isLimitExceededError(parsedError.data.error)) {
+      if (
+        from < to &&
+        parsedError.success &&
+        isLimitExceededError(parsedError.data.error)
+      ) {
         const midpoint = Math.floor((from + to) / 2)
 
         this.$.logger.warn('Limit exceeded for logs. Splitting in half', {

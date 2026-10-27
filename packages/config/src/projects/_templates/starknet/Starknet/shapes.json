@@ -13,5 +13,11 @@
     "hash": "0xef60960a959a9506c3f6eece9374f7fbcd095a488763801577ae88e427fd3d51",
     "address": "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A",
     "blockNumber": 24927241
+  },
+  "Starknet_v2026-12": {
+    "hash": "0xa6f25883f5a84ab9a53152a85a18e735a7ebc3fd96b8f56c87862df1245de198",
+    "address": "eth:0x73352C6228Ec1DCf737973Db9822bB8e8a465c99",
+    "chain": "ethereum",
+    "blockNumber": 26204307
   }
 }

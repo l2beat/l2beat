@@ -7,6 +7,7 @@ const discovery = new ProjectDiscovery('forknet')
 const bridge = discovery.getContract('AgglayerBridge')
 
 const opgenesisTimestamp = UnixTime(1756159379)
+const archivedAt = UnixTime(1791590400) // 2026-10-10T00:00:00Z, end of the last day with activity
 
 const sequencerInbox = discovery.getContractValue<ChainSpecificAddress>(
   'SystemConfig',
@@ -27,6 +28,7 @@ const sequencer = discovery.getContractValue<ChainSpecificAddress>(
 export const forknet: ScalingProject = agglayer({
   capability: 'universal',
   addedAt: UnixTime(1756724480), // 2025-09-01T12:01:20Z
+  archivedAt,
   display: {
     name: 'Forknet',
     slug: 'forknet',
@@ -45,6 +47,7 @@ export const forknet: ScalingProject = agglayer({
     chainId: 8338,
     explorerUrl: 'https://forkscan.org',
     sinceTimestamp: UnixTime(1756893611),
+    untilTimestamp: archivedAt,
     apis: [
       {
         type: 'rpc',
@@ -109,6 +112,7 @@ export const forknet: ScalingProject = agglayer({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: inboxStartBlock,
+      untilBlock: 26158243, // Last blob batch before the archive cutoff.
       inbox: ChainSpecificAddress.address(sequencerInbox),
       sequencers: [ChainSpecificAddress.address(sequencer)],
     },

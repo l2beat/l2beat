@@ -295,15 +295,17 @@ describe(getInteropMetadataDescription.name, () => {
 })
 
 describe(getPrivacyMetadataDescription.name, () => {
-  it('leads with the privacy category', () => {
+  it('leads with the privacy category and ends with what the protocol hides', () => {
     const description = getPrivacyMetadataDescription({
       name: 'Railgun',
       category: 'Shielded ledger',
       description: 'An onchain privacy system for Ethereum.',
+      promise:
+        'Hides everything inside the pool. Shields and unshields are public.',
     })
 
     expect(description).toEqual(
-      'Shielded ledger. Railgun – An onchain privacy system for Ethereum.',
+      'Shielded ledger. Railgun – An onchain privacy system for Ethereum. Hides everything inside the pool.',
     )
   })
 
@@ -314,19 +316,47 @@ describe(getPrivacyMetadataDescription.name, () => {
       name: 'Umbra Cash',
       category: 'Stealth address',
       description: 'A stealth-address payment protocol.',
+      promise: 'Hides the recipient.',
     })
     const inName = getPrivacyMetadataDescription({
       name: 'Privacy Pools',
       category: 'Pool',
       description: 'A selective-disclosure privacy system.',
+      promise: 'Hides the link.',
     })
 
     expect(hyphenated).toEqual(
-      'Umbra Cash – A stealth-address payment protocol.',
+      'Umbra Cash – A stealth-address payment protocol. Hides the recipient.',
     )
     expect(inName).toEqual(
-      'Privacy Pools – A selective-disclosure privacy system.',
+      'Privacy Pools – A selective-disclosure privacy system. Hides the link.',
     )
+  })
+
+  it('leaves out the promise when the description already says what it hides', () => {
+    const description = getPrivacyMetadataDescription({
+      name: 'zkAPI',
+      category: 'Pool',
+      description:
+        'Anonymous access to AI models that hides which deposit pays for which request.',
+      promise: 'Hides which deposit pays for which API request.',
+    })
+
+    expect(description).toEqual(
+      'Pool. zkAPI – Anonymous access to AI models that hides which deposit pays for which request.',
+    )
+  })
+
+  it('drops the promise before cutting into the description', () => {
+    const longDescription = `A shielded ledger ${'with many features, '.repeat(13)}and more.`
+    const description = getPrivacyMetadataDescription({
+      name: 'Railgun',
+      category: 'Shielded ledger',
+      description: longDescription,
+      promise: 'Hides everything inside the pool.',
+    })
+
+    expect(description).toEqual(`Railgun – ${longDescription}`)
   })
 })
 

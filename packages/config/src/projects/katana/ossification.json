@@ -29,41 +29,6 @@
       "reason": "Upgraded AgglayerBridgeL2 from its genesis implementation 0x5ac4182a to 0xd4ac5935 through the L2Timelock. The reinitializer set the proxied-tokens manager and the emergency unpauser to the Katana Foundation Engineering Safe (Upgraded, AcceptProxiedTokensManagerRole). This first $pastUpgrades entry is a real upgrade, not the initialization."
     },
     {
-      "timestamp": 1748345483,
-      "type": "state",
-      "contract": "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e",
-      "transaction": "0x7fc8e167ed80c264b0034c717ee3d72671138f295d00e7f3b0ba79a0995d7907",
-      "reason": "Mechanism change: Katana vaultBridge Multisig 3, which owns the vbUSDC ProxyAdmin and holds its DEFAULT_ADMIN_ROLE, raised its threshold from 1 to 2 (ChangedThreshold)."
-    },
-    {
-      "timestamp": 1748352971,
-      "type": "state",
-      "contract": "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
-      "transaction": "0x854c6d88d6efdf7b53ea4b250c3bf2abb09dad64d5c3fc06bdfe60dd08bb35b8",
-      "reason": "Mechanism change: Katana vaultBridge Multisig 1, which owns the vbETH ProxyAdmin and holds its DEFAULT_ADMIN_ROLE, raised its threshold from 1 to 2 (ChangedThreshold)."
-    },
-    {
-      "timestamp": 1748352971,
-      "type": "state",
-      "contract": "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
-      "transaction": "0x854c6d88d6efdf7b53ea4b250c3bf2abb09dad64d5c3fc06bdfe60dd08bb35b8",
-      "reason": "Mechanism change: Katana vaultBridge Multisig 1, which owns the vbUSDT ProxyAdmin and holds its DEFAULT_ADMIN_ROLE, raised its threshold from 1 to 2 (ChangedThreshold)."
-    },
-    {
-      "timestamp": 1748352971,
-      "type": "state",
-      "contract": "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
-      "transaction": "0x854c6d88d6efdf7b53ea4b250c3bf2abb09dad64d5c3fc06bdfe60dd08bb35b8",
-      "reason": "Mechanism change: Katana vaultBridge Multisig 1, which owns the vbWBTC ProxyAdmin and holds its DEFAULT_ADMIN_ROLE, raised its threshold from 1 to 2 (ChangedThreshold)."
-    },
-    {
-      "timestamp": 1748432759,
-      "type": "state",
-      "contract": "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
-      "transaction": "0xd78de5d871101cf98f9047d6a6768f2cccc01ce1c3bd1f5570c08ff225de04ef",
-      "reason": "Mechanism change: Katana vaultBridge Multisig 2, which owns the vbUSDS ProxyAdmin and holds its DEFAULT_ADMIN_ROLE, raised its threshold from 1 to 2 (ChangedThreshold)."
-    },
-    {
       "timestamp": 1750690439,
       "type": "state",
       "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
@@ -76,6 +41,30 @@
       "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
       "transaction": "0x69b66ecfc6cd449a80b58c1fcb937f436ca4afedc3cb9586fb7f9b3f35546c79",
       "reason": "AgglayerManager moved Katana (rollupID 20) to rollup type 12: upgraded AggchainFEP to implementation 0xe7FE4557 and switched verification from the direct SP1 pessimistic verifier to the AgglayerGateway (verifier type ALGateway). The same tx set the aggchainManager to the Katana Foundation Engineering Safe; the FEP parameters followed in tx 0x22f34418 at 14:11 (UpdateRollup, Upgraded, AcceptAggchainManagerRole)."
+    },
+    {
+      "timestamp": 1751279627,
+      "type": "state",
+      "contract": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
+      "transaction": "0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558",
+      "reason": "Conduit Multisig 1 (4 of 11) handed ownership to Katana Foundation Engineering (3 of 5), a new threshold for the authority that upgrades the portal, bridges, SystemConfig and DisputeGameFactory.",
+      "updateId": "41b0c8bb"
+    },
+    {
+      "timestamp": 1751279627,
+      "type": "state",
+      "contract": "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52",
+      "transaction": "0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558",
+      "reason": "Conduit Multisig 1 (4 of 11) handed ownership to Katana Foundation Engineering (3 of 5), a new threshold for the authority that upgrades the SuperchainConfig fork.",
+      "updateId": "41b0c8bb"
+    },
+    {
+      "timestamp": 1751279627,
+      "type": "state",
+      "contract": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
+      "transaction": "0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558",
+      "reason": "Conduit Multisig 1 (4 of 11) handed ownership to Katana Foundation Engineering (3 of 5), a new threshold for the authority that sets the dispute game implementations.",
+      "updateId": "41b0c8bb"
     },
     {
       "timestamp": 1753290299,

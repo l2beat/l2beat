@@ -1,3 +1,74 @@
+Generated with discovered.json: 0x03028ae157c0f853c392ec7d274e2874be849669
+
+# Diff at Fri, 23 Oct 2026 10:31:32 GMT:
+
+- id: 39ccf741
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e5da6875dac4af99f827db5faa99b87f99ca760f block: 1791897274
+- current timestamp: 1792751428
+
+## Description
+
+Rotated two members on two msigs.
+
+## Watched changes
+
+```diff
+    contract Linea Multisig 2 (eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x3acC729EdE75355EDab57aB82bEb32011cB1B079"
++        "eth:0x741aAf7dB0f4960Be696CF1727b970F2FA39028c"
+      values.$members.3:
+-        "eth:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451"
++        "eth:0xb275d362C8c1A226eb538FC2349ed9FA00C83AF8"
+    }
+```
+
+```diff
+    contract Linea Multisig 4 (linea:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "linea:0x3acC729EdE75355EDab57aB82bEb32011cB1B079"
++        "linea:0x741aAf7dB0f4960Be696CF1727b970F2FA39028c"
+      values.$members.3:
+-        "linea:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451"
++        "linea:0xb275d362C8c1A226eb538FC2349ed9FA00C83AF8"
+    }
+```
+
+Generated with discovered.json: 0x9c20ccd98a04432cfa2c29d0664d6b9aa1306648
+
+# Diff at Tue, 20 Oct 2026 10:25:38 GMT:
+
+- id: f34726ce
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1791897274
+- current timestamp: 1791897274
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791897274 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
++++ description: The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here.
+      values.remoteSender:
+-        "linea:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      usedTypes.0.arg.prefix:
+-        "linea"
++        "eth"
+    }
+```
+
 Generated with discovered.json: 0x8a602cb0e24e1efbae2697f13f3319e6a0408601
 
 # Diff at Fri, 16 Oct 2026 05:36:51 GMT:

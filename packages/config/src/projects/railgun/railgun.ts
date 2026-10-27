@@ -250,6 +250,11 @@ export const railgun: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceClient: {
+      name: 'RailOxide',
+      repository: 'https://github.com/triamazikamno/railoxide',
+      commit: '8773f4ecb00c6ac7cf164ba1f989eb77dd4b0ec5',
+    },
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
     relayerTracking: {

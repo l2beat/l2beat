@@ -76,6 +76,7 @@ export function getPrivacyMetadataDescription(project: {
   name: string
   category: string
   description: string
+  promise: string
 }) {
   return describe(
     [
@@ -84,8 +85,23 @@ export function getPrivacyMetadataDescription(project: {
         `${project.name} ${project.description}`,
       ),
     ],
-    project,
+    {
+      name: project.name,
+      description: withPromise(project.description, project.promise),
+    },
   )
+}
+
+// The promise's first sentence ("Hides which deposit funds which
+// withdrawal.") answers searches like "is Tornado Cash private". It goes
+// last, so the length cap drops it before any of the description. Some
+// descriptions already say what they hide, in nearly the promise's words.
+function withPromise(description: string, promise: string) {
+  if (mentions(description, 'hide')) {
+    return description
+  }
+  const [whatItHides] = splitSentences(collapseWhitespace(promise) ?? '')
+  return whatItHides ? `${description} ${whatItHides}` : description
 }
 
 /** For project pages that have no key facts to lead with. */

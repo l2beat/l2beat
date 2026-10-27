@@ -1,3 +1,262 @@
+Generated with discovered.json: 0xe4bc9bd96c34312fc9fc925903fd708ca74e93c3
+
+# Diff at Sat, 24 Oct 2026 16:41:06 GMT:
+
+- id: 6844a59b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792144034
+- current timestamp: 1792144034
+
+## Description
+
+Vault-bridge tokens and their ProxyAdmins leave the ossification perimeter: vaultBridge multisigs can upgrade them and they invest the backing. AggchainFEP `submissionInterval` is MEDIUM.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144034 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.submissionInterval.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
+-        true
+    }
+```
+
+```diff
+    contract vbWBTC (eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      critical:
+-        true
+      fieldMeta.yieldVault.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.migrationManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.minimumReservePercentage.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract vbETH (eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      critical:
+-        true
+      fieldMeta.yieldVault.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.migrationManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.minimumReservePercentage.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
+-        true
+    }
+```
+
+```diff
+    contract vbUSDS (eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      critical:
+-        true
+      fieldMeta.yieldVault.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.migrationManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.minimumReservePercentage.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
+-        true
+    }
+```
+
+```diff
+    contract vbUSDC (eth:0x53E82ABbb12638F09d9e624578ccB666217a765e) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      critical:
+-        true
+      fieldMeta.yieldVault.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.migrationManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.minimumReservePercentage.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract vbUSDT (eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      critical:
+-        true
+      fieldMeta.yieldVault.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.migrationManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.minimumReservePercentage.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
+-        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xD1e389c046FB734D2a0c7C390312210c408ba832) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
+-        true
+    }
+```
+
+Generated with discovered.json: 0x3bf57e01a8880b8d87667f25bb4f9775dd87bdee
+
+# Diff at Tue, 20 Oct 2026 07:51:33 GMT:
+
+- id: 6824c505
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1792144034
+- current timestamp: 1792144034
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144034 (main branch discovery), not current.
+
+```diff
+    contract L1ERC721Bridge (eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000014"
++        "katana:0x4200000000000000000000000000000000000014"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000014"
++        "katana:0x4200000000000000000000000000000000000014"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"katana"}}]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.OTHER_MESSENGER:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "katana:0x4200000000000000000000000000000000000007"
+      values.otherMessenger:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "katana:0x4200000000000000000000000000000000000007"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"katana"}}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.l2TokenBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "katana:0x4200000000000000000000000000000000000010"
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "katana:0x4200000000000000000000000000000000000010"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "katana:0x4200000000000000000000000000000000000010"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"katana"}}]
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (katana:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      values.OTHER_BRIDGE:
+-        "katana:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
++        "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
+      values.otherBridge:
+-        "katana:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
++        "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+Generated with discovered.json: 0xd520eebc77ecf391ea1376b4bbca7fc721fb506a
+
+# Diff at Fri, 16 Oct 2026 10:35:37 GMT:
+
+- id: a6c713f2
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791788974
+- current timestamp: 1792144034
+
+## Description
+
+Yearn Strategist Multisig (a member of Katana vaultBridge Multisig 2) removed two signers, now 3 of 6.
+
+## Watched changes
+
+```diff
+    contract Yearn Strategist Multisig (eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F"
+      values.$members.4:
+-        "eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xd0c34f97422f70691d0f23702eab87bf2e93a9fc
 
 # Diff at Fri, 16 Oct 2026 09:37:47 GMT:

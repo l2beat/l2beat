@@ -4,6 +4,7 @@ import type { BlockTimestampProvider } from '@l2beat/shared'
 import { createPrivacyConfigurationId } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -68,11 +69,15 @@ export class PrivacyBlockTimestampIndexer extends ManagedMultiIndexer<PrivacyBlo
       timestamp,
     })
 
-    const blockNumber =
-      await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
-        timestamp,
-        configurations[0].properties.chain,
-      )
+    const blockNumber = await withCoreFeatureRpcMetricsContext(
+      'privacy.blockTimestamp',
+      { chain: configurations[0].properties.chain },
+      () =>
+        this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
+          timestamp,
+          configurations[0].properties.chain,
+        ),
+    )
 
     this.logger.info('Fetched block number for timestamp', {
       timestamp,

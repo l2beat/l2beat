@@ -9,6 +9,7 @@ import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
 import { createBlobsRouter } from './blobs/BlobsRouter'
 import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
+import { createChainProjectRouter } from './chain/ChainProjectRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDefiRouter } from './defi/DefiRouter'
 import { createDevRouter } from './dev/DevRouter'
@@ -22,6 +23,7 @@ import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createHomeRouter } from './home/HomeRouter'
 import { createInteropRouter } from './interop/InteropRouter'
 import { createL2Router } from './layer2s/L2Router'
+import { createMandateRouter } from './mandate/MandateRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
 import { NotFoundHandler } from './not-found/NotFoundHandler'
@@ -60,6 +62,8 @@ export function createServerPageRouter(
     createInteropRouter,
     createTokensRouter,
     createEthereumProjectRouter,
+    // After Ethereum's router: it owns /projects/ethereum.
+    createChainProjectRouter,
     createBlobsRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,
@@ -72,6 +76,7 @@ export function createServerPageRouter(
     createChangelogRouter,
     createDonateRouter,
     createGlossaryRouter,
+    createMandateRouter,
     createMultisigReportRouter,
     createPrivacyRouter,
     createDefiRouter,

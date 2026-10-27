@@ -235,7 +235,7 @@ export const intmax: ScalingProject = {
       url: 'https://x.com/intmaxIO/status/2020160706893553808',
       date: '2026-02-07T00:00:00Z',
       description:
-        'Due to technical problems with ZK proving system, INTMAX L2 operation was paused and users were encouraged to withdraw deposited tokens.',
+        'INTMAX L2 paused over ZK proving system problems. Users were asked to withdraw their tokens.',
       type: 'incident',
     },
   ],

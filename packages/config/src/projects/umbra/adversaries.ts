@@ -3,6 +3,9 @@ import {
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 
+// app.umbra.cash serves 120c335c, whose diff from this pin adds a contact form
+// with Cloudflare Turnstile, logos from app.umbra.cash and block timestamps
+// from the wallet RPC.
 const UMBRA =
   'https://github.com/ScopeLift/umbra-protocol/blob/947c4f3b9b89f6cf5d69b2d43d3cffec673da655/'
 const ANALYSIS = 'https://arxiv.org/html/2308.01703v2'
@@ -66,7 +69,7 @@ export function umbraAdversaries(registrants: number) {
         exposureShort:
           "The hosted app checks the payee's address with its Alchemy RPC seconds before each payment, so timing ties the payee to the payment.",
         exposureContinued:
-          "When the payee withdraws, the same RPC receives their wallet address and the withdrawal address in one session. The wallet's own RPC receives the wallet address together with the matched stealth addresses. On connect, the wallet library also sends the user's wallet address to Cloudflare's RPC to look up its ENS name.",
+          "The same RPC gets the payee's wallet on connect, the sender of every matched payment on each scan, and the withdrawal address. The wallet's own RPC receives the wallet address together with the matched stealth addresses. On connect, the wallet library also sends the wallet address to Cloudflare's RPC to look up its ENS name.",
         advice:
           "Pay and withdraw from a local build with all RPC URLs and the user's wallet pointed at their own node, and block cloudflare-eth.com.",
         sources: [

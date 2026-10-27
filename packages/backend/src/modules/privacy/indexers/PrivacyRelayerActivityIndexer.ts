@@ -7,7 +7,7 @@ import {
 } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import chunk from 'lodash/chunk'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -21,11 +21,10 @@ import type {
   PrivacyRelayerActivityIndexerConfigProperties,
 } from '../types'
 import { extractPrivacyRelayerActivity } from '../utils/extractPrivacyRelayerActivity'
-import { fetchPrivacyLogMatches } from '../utils/privacyLogIndexerUtils'
-import { ReceiptLogCache } from '../utils/ReceiptLogCache'
-
-// Receipt-based extractors make several RPC requests per log.
-const EXTRACTION_BATCH_SIZE = 20
+import {
+  extractPrivacyLogMatches,
+  fetchPrivacyLogMatches,
+} from '../utils/privacyLogIndexerUtils'
 
 interface PrivacyRelayerActivityIndexerDeps
   extends Omit<
@@ -70,7 +69,11 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
       configurations: configurations.length,
     })
 
-    const records = await this.fetchRecords(configurations, from, adjustedTo)
+    const records = await withCoreFeatureRpcMetricsContext(
+      'privacy.relayerActivity',
+      { chain: this.$.chain },
+      () => this.fetchRecords(configurations, from, adjustedTo),
+    )
 
     this.logger.info('Fetched privacy relayer activity logs', {
       from,
@@ -145,35 +148,28 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
       logger: this.logger,
     })
 
-    const context = {
-      rpc: this.$.rpcClient,
-      receipts: new ReceiptLogCache(this.$.rpcClient),
-    }
-    const records: PrivacyRelayerActivityRecord[] = []
-    for (const batch of chunk(matches, EXTRACTION_BATCH_SIZE)) {
-      const extracted = await Promise.all(
-        batch.map(async ({ log, timestamp, configuration }) => {
-          const activity = await extractPrivacyRelayerActivity(
-            configuration.properties,
-            log,
-            context,
-          )
-          if (!activity) return undefined
-          return {
-            configurationId: configuration.id,
-            projectId: configuration.properties.projectId,
-            chain: configuration.properties.chain,
-            timestamp,
-            blockNumber: log.blockNumber,
-            txHash: log.transactionHash,
-            logIndex: log.logIndex,
-            relayerAddress: activity.relayerAddress,
-          }
-        }),
-      )
-      records.push(...extracted.filter((record) => record !== undefined))
-    }
-    return records
+    return extractPrivacyLogMatches(
+      matches,
+      this.$.rpcClient,
+      async ({ log, timestamp, configuration }, context) => {
+        const activity = await extractPrivacyRelayerActivity(
+          configuration.properties,
+          log,
+          context,
+        )
+        if (!activity) return undefined
+        return {
+          configurationId: configuration.id,
+          projectId: configuration.properties.projectId,
+          chain: configuration.properties.chain,
+          timestamp,
+          blockNumber: log.blockNumber,
+          txHash: log.transactionHash,
+          logIndex: log.logIndex,
+          relayerAddress: activity.relayerAddress,
+        }
+      },
+    )
   }
 
   static idToConfigurationId(

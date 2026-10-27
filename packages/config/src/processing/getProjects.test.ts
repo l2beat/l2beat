@@ -10,6 +10,7 @@ import {
   EthereumAddress,
   notUndefined,
   type ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { expect } from 'earl'
@@ -24,7 +25,7 @@ import {
   arePermissionsDiscoveryDriven,
 } from '../utils/discoveryDriven'
 import { getProjects } from './getProjects'
-import { layer2s } from './layer2s'
+import { layer2s, milestonesLayer2s } from './layer2s'
 import { layer3s } from './layer3s'
 
 describe('getProjects', () => {
@@ -529,6 +530,88 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
+    // Risk summaries share one layout, so readers can compare projects item by item.
+    it('every risk summary follows the shared layout', () => {
+      const headings = [
+        'Funds can be stolen if',
+        'Funds can be lost if',
+        'Funds can be frozen if',
+        'Use can be stopped if',
+        'Privacy can be lost if',
+      ]
+      const cellNames: Record<string, string> = {
+        publicObserver: 'public observer',
+        chainAnalyst: 'chain analyst',
+        networkObserver: 'network observer',
+        privilegedInsider: 'privileged insider',
+        futureAdversary: 'future adversary',
+      }
+      const sections = [
+        'upgrades-and-governance',
+        'trusted-setups',
+        'contracts',
+        'permissions',
+        'verifiers',
+      ]
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const summary = privacyInfo.riskSummary
+        if (!summary) continue
+
+        const found = [...summary.matchAll(/^## (.+)$/gm)].map((m) => m[1])
+        const order = found.map((heading) => headings.indexOf(heading))
+        if (order.some((i, k) => i === -1 || (k > 0 && i <= order[k - 1]))) {
+          problems.push(`${project.id}: headings ${found.join(' > ')}`)
+        }
+        if (/^## .*\n[ \t]*\n/m.test(summary)) {
+          problems.push(`${project.id}: blank line after a heading`)
+        }
+
+        const pointed = new Set<string>()
+        for (const [, item] of summary.matchAll(/^\d+\. (.+)$/gm)) {
+          if (!item.endsWith('.')) {
+            problems.push(`${project.id}: no final dot: ${item}`)
+          }
+          const words = item
+            .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+            .split(/\s+/).length
+          if (words > 25) {
+            problems.push(`${project.id}: ${words} words: ${item}`)
+          }
+          const see = item.match(/\(see (.+)\)\.$/)?.[1]
+          if (!see) continue
+          const link = see.match(/^\[[^\]]+\]\(#([a-z-]+)\)$/)
+          if (link) {
+            if (!sections.includes(link[1])) {
+              problems.push(`${project.id}: link to missing section ${see}`)
+            }
+            continue
+          }
+          for (const name of see.split(' and ')) {
+            if (!Object.values(cellNames).includes(name)) {
+              problems.push(`${project.id}: unknown pointer ${name}`)
+            }
+            pointed.add(name)
+          }
+        }
+
+        for (const [id, cell] of Object.entries(
+          privacyInfo.adversaries?.cells ?? {},
+        )) {
+          if (cell.sentiment !== 'good' && !pointed.has(cellNames[id])) {
+            problems.push(`${project.id}: no item points at ${cellNames[id]}`)
+          }
+        }
+        if (
+          (project.zkCatalogInfo?.trustedSetups?.length ?? 0) > 0 &&
+          !summary.includes('](#trusted-setups)')
+        ) {
+          problems.push(`${project.id}: trusted setup not linked`)
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
     // The tooltip shows the short description alone, so a second sentence would read as cut off.
     it('every adversary short description is one sentence', () => {
       const problems: string[] = []
@@ -620,6 +703,67 @@ describe('getProjects', () => {
           .filter((r) => !isRiskCorrectlyFormatted(r))
           .map((r) => `${p.id}: ${r.text}`),
       )
+      expect(invalid).toEqual([])
+    })
+  })
+
+  describe('milestones', () => {
+    const allMilestones = [
+      ...milestonesLayer2s.map((milestone) => ({
+        label: `${milestone.title} (main page)`,
+        milestone,
+      })),
+      ...projects.flatMap((p) =>
+        [...(p.milestones ?? []), ...(p.interopConfig?.milestones ?? [])].map(
+          (milestone) => ({
+            label: `${milestone.title} (${p.id})`,
+            milestone,
+          }),
+        ),
+      ),
+    ]
+
+    it('name is no longer than 50 characters', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => milestone.title.length > 50)
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('description ends with a dot', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => milestone.description !== undefined)
+        .filter(({ milestone }) => !milestone.description?.endsWith('.'))
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('description is no longer than 100 characters', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => (milestone.description?.length ?? 0) > 100)
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('date is full day', () => {
+      const invalid = allMilestones
+        .filter(
+          ({ milestone }) =>
+            !UnixTime.isFull(
+              UnixTime.fromDate(new Date(milestone.date)),
+              'day',
+            ),
+        )
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('date is correct', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) =>
+          Number.isNaN(new Date(milestone.date).getTime()),
+        )
+        .map(({ label }) => label)
       expect(invalid).toEqual([])
     })
   })

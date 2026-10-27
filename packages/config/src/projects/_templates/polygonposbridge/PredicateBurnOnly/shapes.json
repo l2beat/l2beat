@@ -1,0 +1,14 @@
+{
+  "ERC20PredicateBurnOnly": {
+    "hash": "0x480f11a18ba73f3bf220b01ec644e804083a6af4470bc72e9eca19368e48249c",
+    "address": "eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0",
+    "chain": "ethereum",
+    "blockNumber": 26204320
+  },
+  "ERC721PredicateBurnOnly": {
+    "hash": "0x76759aacba9526feb38826dfeaf56f6a05126b41aafa260d8e2352cec2aa7faf",
+    "address": "eth:0x36C2503d53C6948331144b85D1e74a3B96731d1b",
+    "chain": "ethereum",
+    "blockNumber": 26204320
+  }
+}
