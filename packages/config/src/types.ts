@@ -1020,6 +1020,7 @@ export type ProjectDefiCategory =
   | 'Oracle'
   | 'Stablecoin'
   | 'Prediction market'
+  | 'Multisig'
 
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
