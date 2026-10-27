@@ -148,7 +148,7 @@ function PanelHeader(props: { api: LeafApi }) {
         <RadixSelect.Trigger
           aria-label="Panel"
           className={cn(
-            'group/sel inline-flex h-6 items-center gap-1.5 px-3 font-semibold text-xs capitalize outline-hidden transition-colors focus-visible:outline-hidden',
+            'group/sel inline-flex h-6 items-center gap-1.5 rounded-sm px-3 font-semibold text-xs capitalize outline-hidden transition-colors focus-visible:ring-1 focus-visible:ring-autumn-300 focus-visible:ring-inset',
             props.api.isActive
               ? 'text-coffee-100'
               : 'text-coffee-300 hover:text-coffee-100',

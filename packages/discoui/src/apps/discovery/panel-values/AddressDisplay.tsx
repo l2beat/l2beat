@@ -67,10 +67,12 @@ export function AddressDisplay({ value, simplified }: AddressDisplayProps) {
             className="relative top-[3px] block"
             type={value.addressType}
           />
-          <strong>
+          <span className="font-medium font-sans text-[13px]">
             {value.name ?? (value.addressType === 'EOA' ? 'EOA' : 'Unknown')}
-          </strong>
-          {toShortenedAddress(value.address)}
+          </span>
+          <span className="text-coffee-300">
+            {toShortenedAddress(value.address)}
+          </span>
         </button>
         {copy}
         {explore}

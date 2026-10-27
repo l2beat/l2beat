@@ -219,17 +219,19 @@ function Display({
             {selected.referencedBy.map((value) => (
               <li
                 key={value.address}
-                className="flex min-h-7 flex-wrap items-center gap-x-2 gap-y-1 border-coffee-800 border-b px-3 py-1 last:border-b-0"
+                className="flex min-h-7 items-start gap-x-2 border-coffee-800 border-b px-3 py-1 last:border-b-0"
               >
                 <AddressDisplay value={value} />
-                {value.fieldNames.map((fieldName, i) => (
-                  <span
-                    key={i}
-                    className="rounded-sm bg-coffee-800 px-1.5 text-coffee-300 text-xs leading-5"
-                  >
-                    {fieldName}
-                  </span>
-                ))}
+                <div className="flex min-w-0 flex-1 flex-wrap gap-1">
+                  {value.fieldNames.map((fieldName, i) => (
+                    <span
+                      key={i}
+                      className="rounded-sm bg-coffee-800 px-1.5 text-coffee-300 text-xs leading-5"
+                    >
+                      {fieldName}
+                    </span>
+                  ))}
+                </div>
               </li>
             ))}
           </ol>
