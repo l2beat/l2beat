@@ -118,7 +118,11 @@ function useApplyFocusedStep() {
       clearCodeHighlight()
       return
     }
+    // Another project's file can share the editor, and the highlight would
+    // move onto it; coming back applies the step again.
     if (focus.project !== openProject || focus.project !== loadedProject) {
+      applied.current = undefined
+      clearCodeHighlight()
       return
     }
     if (applied.current === focus.key) {
