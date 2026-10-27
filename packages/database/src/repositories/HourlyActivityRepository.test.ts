@@ -31,10 +31,10 @@ describeDatabase(HourlyActivityRepository.name, (db) => {
       ]
       expect(totals).toEqualUnsorted(expected)
       expect(
-        await repository.getByProjectAndTimeRange(ProjectId('a'), [
-          START,
-          START + HOUR,
-        ]),
+        await repository.getByProjectsAndTimeRange(
+          [ProjectId('a')],
+          [START, START + HOUR],
+        ),
       ).toEqual(expected)
     })
 
@@ -48,29 +48,53 @@ describeDatabase(HourlyActivityRepository.name, (db) => {
   })
 
   describe(
-    HourlyActivityRepository.prototype.getByProjectAndTimeRange.name,
+    HourlyActivityRepository.prototype.getByProjectsAndTimeRange.name,
     () => {
-      it("returns the project's hours within the range, both ends included", async () => {
+      it("returns the projects' hours within the range by time, both ends included", async () => {
         await repository.addMany([
           record('a', START, 1, 1),
           record('a', START + 1 * HOUR, 2, 2),
-          record('a', START + 2 * HOUR, 3, 3),
-          record('a', START + 3 * HOUR, 4, 4),
           record('b', START + 1 * HOUR, 5, 5),
+          record('a', START + 2 * HOUR, 3, 3),
+          record('c', START + 2 * HOUR, 6, 6),
+          record('a', START + 3 * HOUR, 4, 4),
         ])
 
-        const results = await repository.getByProjectAndTimeRange(
-          ProjectId('a'),
+        const results = await repository.getByProjectsAndTimeRange(
+          [ProjectId('a'), ProjectId('b')],
           [START + 1 * HOUR, START + 2 * HOUR],
         )
 
-        expect(results).toEqual([
+        expect(results).toEqualUnsorted([
           record('a', START + 1 * HOUR, 2, 2),
+          record('b', START + 1 * HOUR, 5, 5),
           record('a', START + 2 * HOUR, 3, 3),
         ])
+        expect(results.map((r) => r.timestamp)).toEqual([
+          START + 1 * HOUR,
+          START + 1 * HOUR,
+          START + 2 * HOUR,
+        ])
+      })
+
+      it('returns nothing for no projects', async () => {
+        await repository.addMany([record('a', START, 1, 1)])
+
+        expect(
+          await repository.getByProjectsAndTimeRange([], [START, START]),
+        ).toEqual([])
       })
     },
   )
+
+  describe(HourlyActivityRepository.prototype.checkIfExists.name, () => {
+    it('is true only for a project with hours', async () => {
+      await repository.addMany([record('a', START, 1, 1)])
+
+      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(true)
+      expect(await repository.checkIfExists(ProjectId('b'))).toEqual(false)
+    })
+  })
 
   describe(
     HourlyActivityRepository.prototype.deleteByProjectIdFrom.name,
@@ -123,10 +147,10 @@ describeDatabase(HourlyActivityRepository.name, (db) => {
   )
 
   function hoursOf(projectId: string) {
-    return repository.getByProjectAndTimeRange(ProjectId(projectId), [
-      START,
-      START + 3 * HOUR,
-    ])
+    return repository.getByProjectsAndTimeRange(
+      [ProjectId(projectId)],
+      [START, START + 3 * HOUR],
+    )
   }
 })
 

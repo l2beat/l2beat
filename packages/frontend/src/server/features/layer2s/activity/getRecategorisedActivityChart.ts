@@ -1,10 +1,15 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import type { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
+import {
+  type ActivityResolution,
+  getActivityResolution,
+  getLastHourOfDay,
+} from './utils/getActivityResolution'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 import type { ActivityProjectFilter } from './utils/projectFilterUtils'
 import { createActivityProjectsFilter } from './utils/projectFilterUtils'
@@ -23,6 +28,9 @@ export type RecategorisedActivityChartData = {
   ][]
   syncWarning: string | undefined
   syncedUntil: number
+  resolution: ActivityResolution
+  /** Names of the projects active in the range that are indexed per day, so the hours leave them out */
+  withoutHours: string[]
 }
 
 /**
@@ -32,6 +40,8 @@ export type RecategorisedActivityChartData = {
 export async function getRecategorisedActivityChart(
   filter: ActivityProjectFilter,
   range: ChartRange,
+  /** Lets the shortest ranges read hours. Callers that read days leave it out */
+  hourly?: boolean,
 ): Promise<RecategorisedActivityChartData> {
   if (env.MOCK) {
     return getMockRecategorisedActivityChart(filter, range)
@@ -61,22 +71,32 @@ export async function getRecategorisedActivityChart(
     .map((p) => p.id)
 
   const adjustedRange = await getFullySyncedActivityRange(range)
+  const resolution = hourly ? getActivityResolution(range) : 'day'
+  // The last fully synced day, hour by hour
+  const end =
+    resolution === 'hour'
+      ? getLastHourOfDay(adjustedRange[1])
+      : adjustedRange[1]
+  const getEntries = (projectIds: ProjectId[]) => {
+    if (resolution === 'day') {
+      return db.activity.getByProjectsAndTimeRange(projectIds, adjustedRange)
+    }
+    assert(adjustedRange[0] !== null, 'Hourly range without a start')
+    return db.hourlyActivity.getByProjectsAndTimeRange(projectIds, [
+      adjustedRange[0],
+      end,
+    ])
+  }
   const [
     rollupsEntries,
     validiumsAndOptimiumsEntries,
     othersEntries,
     ethereumEntries,
   ] = await Promise.all([
-    await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
-    await db.activity.getByProjectsAndTimeRange(
-      validiumsAndOptimiums,
-      adjustedRange,
-    ),
-    await db.activity.getByProjectsAndTimeRange(others, adjustedRange),
-    await db.activity.getByProjectsAndTimeRange(
-      [ProjectId.ETHEREUM],
-      adjustedRange,
-    ),
+    getEntries(rollups),
+    getEntries(validiumsAndOptimiums),
+    getEntries(others),
+    getEntries([ProjectId.ETHEREUM]),
   ])
 
   const aggregatedRollupsEntries =
@@ -93,7 +113,13 @@ export async function getRecategorisedActivityChart(
     Object.values(aggregatedOthersEntries).length === 0 &&
     Object.values(aggregatedEthereumEntries).length === 0
   ) {
-    return { data: [], syncWarning: undefined, syncedUntil: adjustedRange[1] }
+    return {
+      data: [],
+      syncWarning: undefined,
+      syncedUntil: end,
+      resolution,
+      withoutHours: [],
+    }
   }
 
   const startTimestamp = Math.min(
@@ -103,8 +129,8 @@ export async function getRecategorisedActivityChart(
     ...Object.keys(aggregatedEthereumEntries).map(Number),
   )
   const timestamps = generateTimestamps(
-    [UnixTime(startTimestamp), adjustedRange[1]],
-    'day',
+    [UnixTime(startTimestamp), end],
+    resolution,
   )
 
   const data: RecategorisedActivityChartData['data'] = timestamps.map(
@@ -141,11 +167,43 @@ export async function getRecategorisedActivityChart(
       ]
     },
   )
+  const withoutHours =
+    resolution === 'hour'
+      ? await getActiveProjectsWithoutHours(
+          projects,
+          [
+            ...rollupsEntries,
+            ...validiumsAndOptimiumsEntries,
+            ...othersEntries,
+          ],
+          adjustedRange,
+        )
+      : []
+
   return {
     data,
     syncWarning: undefined,
-    syncedUntil: adjustedRange[1],
+    syncedUntil: end,
+    resolution,
+    withoutHours: withoutHours.map((p) => p.name),
   }
+}
+
+async function getActiveProjectsWithoutHours<T extends { id: ProjectId }>(
+  projects: T[],
+  hours: { projectId: ProjectId }[],
+  range: ChartRange,
+): Promise<T[]> {
+  const withHours = new Set(hours.map((e) => e.projectId))
+  const candidates = projects.filter((p) => !withHours.has(p.id))
+  const days = await getDb().activity.getByProjectsAndTimeRange(
+    candidates.map((p) => p.id),
+    range,
+  )
+  const active = new Set(
+    days.filter((e) => e.count > 0).map((e) => e.projectId),
+  )
+  return candidates.filter((p) => active.has(p.id))
 }
 
 function getMockRecategorisedActivityChart(
@@ -169,5 +227,7 @@ function getMockRecategorisedActivityChart(
     ]),
     syncWarning: undefined,
     syncedUntil: adjustedRange[1],
+    resolution: 'day',
+    withoutHours: [],
   }
 }
