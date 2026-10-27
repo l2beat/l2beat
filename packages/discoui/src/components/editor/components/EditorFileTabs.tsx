@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { IconCodeFile } from '../../../icons/IconCodeFile'
+import { IconLock } from '../../../icons/IconLock'
 import { cn } from '../../../utils/cn'
 
 type EditorFileTabsProps = {
@@ -38,15 +39,16 @@ function EditorFileTab(props: EditorFileTabProps) {
     <button
       onClick={props.onClick}
       className={cn(
-        'flex h-6 items-center gap-1 px-2 text-sm',
+        'flex h-6 shrink-0 items-center gap-1 px-2 text-sm',
         props.isActive && 'bg-autumn-300 text-black',
-        !props.isActive && 'text-coffee-200 hover:bg-coffee-200/20',
+        !props.isActive &&
+          'max-w-[200px] text-coffee-200 hover:bg-coffee-200/20',
       )}
       title={`${props.name}${props.readOnly ? ' (read-only)' : ''}${props.isDirty ? ' (modified)' : ''}`}
     >
-      <IconCodeFile />
-      <span className="flex items-center gap-1">
-        {props.name}
+      <IconCodeFile className="shrink-0" />
+      <span className="flex min-w-0 items-center gap-1">
+        <span className="min-w-0 truncate">{props.name}</span>
         {props.isDirty && (
           <span
             className="h-2 w-2 rounded-full bg-aux-orange"
@@ -54,8 +56,8 @@ function EditorFileTab(props: EditorFileTabProps) {
           />
         )}
         {props.readOnly && (
-          <span className="text-xs opacity-60" title="Read-only file">
-            🔒
+          <span title="Read-only file">
+            <IconLock className="size-3 shrink-0 opacity-60" />
           </span>
         )}
       </span>

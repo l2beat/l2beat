@@ -60,7 +60,7 @@ export function PastUpgradesDisplay({ value }: PastUpgradesDisplayProps) {
     <div className="flex flex-col gap-1">
       <table className="border-separate border-spacing-x-4 border-spacing-y-0.5 font-mono text-xs">
         <thead>
-          <tr className="text-left text-2xs text-coffee-500 uppercase tracking-wider">
+          <tr className="text-left text-2xs text-coffee-400 uppercase tracking-wider">
             <th className="whitespace-nowrap border-coffee-700 border-b pb-1 font-medium">
               Date
             </th>
@@ -173,14 +173,14 @@ function CopyButton({ value, title }: { value: string; title: string }) {
   return (
     <button
       type="button"
-      className="block h-4 w-4"
+      className="block h-4 w-4 text-coffee-400 hover:text-coffee-200"
       title={title}
       onClick={() => copy(value)}
     >
       {copied ? (
         <IconTick className="relative top-[2px] block size-3.5 text-aux-green" />
       ) : (
-        <IconCopy className="relative top-[2px] block size-3.5 text-coffee-600" />
+        <IconCopy className="relative top-[2px] block size-3.5" />
       )}
     </button>
   )

@@ -26,7 +26,7 @@ export function ContractSearchResultEntry({
           className={cn(
             'flex cursor-pointer items-center gap-2 border-coffee-700 border-b p-1 px-2 text-sm',
             index === selectedIndex
-              ? 'bg-coffee-700 text-autumn-300'
+              ? 'bg-coffee-700 text-coffee-200 shadow-[inset_2px_0_0_#BAD80A]'
               : 'text-coffee-200 hover:bg-coffee-700',
           )}
           onClick={() => {
