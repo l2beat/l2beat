@@ -1,19 +1,22 @@
-import type { ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
+import { CustomLinkIcon } from '~/icons/Outlink'
 import { PRIVACY_EXPOSURE_CHIP_CLASS_NAME } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   getCheckedAppSourceLabel,
-  getReferenceAppCommit,
   getReferenceAppSince,
+  getReferenceAppSource,
   REFERENCE_APP,
 } from '~/pages/privacy/referenceAppUi'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
 
 const CHIPS = {
+  // Neutral, since green would read as a privacy verdict the app may not earn.
   reference: {
     label: REFERENCE_APP.referenceChip,
-    className: PRIVACY_EXPOSURE_CHIP_CLASS_NAME.private,
+    className:
+      'border-[#CCDBFF] bg-[#D5E5F1] text-secondary dark:border-[#1B3C54] dark:bg-[#192E3C]',
   },
   checked: {
     label: REFERENCE_APP.checkedChip,
@@ -23,13 +26,21 @@ const CHIPS = {
 
 /** The reference app first, then the other apps checked against it. */
 export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
-  const commit = app.source && getReferenceAppCommit(app.source)
+  const source = getReferenceAppSource(app)
 
   return (
     <div className="mt-4 flex flex-col gap-2">
-      <span className="font-medium text-paragraph-12 text-secondary uppercase tracking-wide">
-        {REFERENCE_APP.listTitle}
-      </span>
+      <div className="flex items-baseline justify-between gap-2">
+        <span className="font-medium text-paragraph-12 text-secondary uppercase tracking-wide">
+          {REFERENCE_APP.listTitle}
+        </span>
+        <CustomLink
+          href={REFERENCE_APP.methodologyHref}
+          className="text-paragraph-13"
+        >
+          {REFERENCE_APP.methodologyLink}
+        </CustomLink>
+      </div>
       <ul className="divide-y divide-divider rounded-lg border border-divider">
         <AppRow
           iconUrl={app.iconUrl}
@@ -38,15 +49,22 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
           version={app.version}
           chip="reference"
         >
-          {getReferenceAppSince(app)}{' '}
-          {commit ? (
-            <>
-              Commit <CustomLink href={commit.href}>{commit.label}</CustomLink>.
-              {app.source?.partial && ` ${REFERENCE_APP.partialSource}`}
-            </>
-          ) : (
-            'Closed source.'
-          )}
+          <Meta
+            parts={[
+              getReferenceAppSince(app),
+              source.commit ? (
+                <>
+                  {source.label}{' '}
+                  <CustomLink href={source.commit.href}>
+                    {source.commit.label}
+                  </CustomLink>
+                </>
+              ) : (
+                source.label
+              ),
+              source.note,
+            ]}
+          />
         </AppRow>
         {app.checkedApps.map((checkedApp) => (
           <AppRow
@@ -54,21 +72,32 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
             iconUrl={checkedApp.iconUrl}
             name={checkedApp.name}
             chip="checked"
-            fix={checkedApp.fix}
           >
-            {checkedApp.finding}{' '}
-            <CustomLink href={checkedApp.source} className="whitespace-nowrap">
-              {getCheckedAppSourceLabel(checkedApp)}
-            </CustomLink>
+            <p className="text-paragraph-14 md:text-paragraph-15">
+              {checkedApp.finding}
+            </p>
+            <Meta
+              parts={[
+                checkedApp.fix && (
+                  <>
+                    <span className="font-medium">
+                      {REFERENCE_APP.fixLabel}:
+                    </span>{' '}
+                    {checkedApp.fix}
+                  </>
+                ),
+                <CustomLink
+                  key="source"
+                  href={checkedApp.source}
+                  className="whitespace-nowrap"
+                >
+                  {getCheckedAppSourceLabel(checkedApp)}
+                </CustomLink>,
+              ]}
+            />
           </AppRow>
         ))}
       </ul>
-      <CustomLink
-        href={REFERENCE_APP.methodologyHref}
-        className="self-start text-paragraph-13"
-      >
-        {REFERENCE_APP.methodologyLink}
-      </CustomLink>
     </div>
   )
 }
@@ -79,7 +108,6 @@ function AppRow({
   href,
   version,
   chip,
-  fix,
   children,
 }: {
   iconUrl: string
@@ -87,17 +115,22 @@ function AppRow({
   href?: string
   version?: string
   chip: keyof typeof CHIPS
-  fix?: string
   children: ReactNode
 }) {
   return (
     <li className="flex items-start gap-3 px-4 py-3">
       <img src={iconUrl} alt="" className="mt-0.5 size-6 shrink-0 rounded-sm" />
-      <div className="min-w-0">
+      <div className="flex min-w-0 flex-col gap-0.5">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           {href ? (
-            <CustomLink href={href} className="font-bold">
+            <CustomLink
+              href={href}
+              variant="plain"
+              underline={false}
+              className="inline-flex items-center gap-0.5 font-bold hover:underline"
+            >
               {name}
+              <CustomLinkIcon className="size-3.5 fill-current" />
             </CustomLink>
           ) : (
             <span className="font-bold">{name}</span>
@@ -114,16 +147,22 @@ function AppRow({
             {CHIPS[chip].label}
           </span>
         </div>
-        <p className="mt-0.5 text-paragraph-14 md:text-paragraph-15">
-          {children}
-        </p>
-        {fix && (
-          <p className="mt-1 text-paragraph-13 text-secondary md:text-paragraph-14">
-            <span className="font-medium">{REFERENCE_APP.fixLabel}: </span>
-            {fix}
-          </p>
-        )}
+        {children}
       </div>
     </li>
+  )
+}
+
+/** Secondary details on one line, separated by dots. */
+function Meta({ parts }: { parts: ReactNode[] }) {
+  return (
+    <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
+      {parts.filter(Boolean).map((part, i) => (
+        <Fragment key={i}>
+          {i > 0 && ' · '}
+          {part}
+        </Fragment>
+      ))}
+    </p>
   )
 }

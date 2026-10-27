@@ -24,8 +24,8 @@ import {
 } from '~/pages/privacy/project/components/assets-breakdown/privacyAssetsBreakdown'
 import {
   getCheckedAppSourceLabel,
-  getReferenceAppCommit,
   getReferenceAppSince,
+  getReferenceAppSource,
   REFERENCE_APP,
 } from '~/pages/privacy/referenceAppUi'
 import type { PrivacyBucket } from '~/server/features/privacy/types'
@@ -66,22 +66,34 @@ export function renderPrivacyAdversaries(
 
 /** The reference app first, then the other apps checked against it, like the HTML. */
 function renderReferenceApps(app: PrivacyReferenceApp) {
-  const commit = app.source && getReferenceAppCommit(app.source)
+  const source = getReferenceAppSource(app)
   const version = app.version ? ` v${app.version}` : ''
-  const partial = app.source?.partial ? ` ${REFERENCE_APP.partialSource}` : ''
+  const meta = [
+    getReferenceAppSince(app),
+    source.commit
+      ? `${source.label} ${link(source.commit.label, source.commit.href)}`
+      : source.label,
+    source.note,
+  ]
   return joinBlocks([
     `**${REFERENCE_APP.listTitle}**`,
     bulletList([
-      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${getReferenceAppSince(app)} ${commit ? `Commit ${link(commit.label, commit.href)}.${partial}` : 'Closed source.'}`,
+      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${joinMeta(meta)}`,
       ...app.checkedApps.map((checkedApp) => {
-        const fix = checkedApp.fix
-          ? ` ${REFERENCE_APP.fixLabel}: ${checkedApp.fix}`
-          : ''
-        return `**${checkedApp.name}** (${REFERENCE_APP.checkedChip}): ${checkedApp.finding} ${link(getCheckedAppSourceLabel(checkedApp), checkedApp.source)}${fix}`
+        const meta = [
+          checkedApp.fix && `${REFERENCE_APP.fixLabel}: ${checkedApp.fix}`,
+          link(getCheckedAppSourceLabel(checkedApp), checkedApp.source),
+        ]
+        return `**${checkedApp.name}** (${REFERENCE_APP.checkedChip}): ${checkedApp.finding} ${joinMeta(meta)}`
       }),
     ]),
     link(REFERENCE_APP.methodologyLink, REFERENCE_APP.methodologyHref),
   ])
+}
+
+/** Secondary details separated by dots, like the HTML's grey line. */
+function joinMeta(parts: (string | undefined)[]) {
+  return parts.filter(Boolean).join(' · ')
 }
 
 function renderAdversary(

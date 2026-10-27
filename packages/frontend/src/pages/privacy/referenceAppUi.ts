@@ -15,8 +15,8 @@ export const REFERENCE_APP = {
   referenceChip: 'Reference',
   checkedChip: 'Leaks more',
   fixLabel: 'Fix',
-  partialSource: 'The released build runs code this commit does not publish.',
-  methodologyLink: 'How an app becomes the reference',
+  partialSource: 'The released build runs unpublished code',
+  methodologyLink: 'How we pick the reference',
   methodologyHref: `${PRIVACY_METHODOLOGY_PATH}#${PRIVACY_REFERENCE_APP_ANCHOR}`,
 } as const
 
@@ -37,16 +37,21 @@ export function getReferenceAppNotes(app: PrivacyReferenceApp) {
 }
 
 export function getReferenceAppSince(app: PrivacyReferenceApp) {
-  return `The ratings have assumed this app since ${app.since}.`
+  return `The ratings assume this app, since ${app.since}`
 }
 
-/** The reviewed commit as a short hash and a link to the tree. */
-export function getReferenceAppCommit(
-  source: NonNullable<PrivacyReferenceApp['source']>,
-) {
+/** The reviewed code: a short hash linking to its tree, absent when closed. */
+export function getReferenceAppSource(app: PrivacyReferenceApp) {
+  if (!app.source) {
+    return { label: 'Closed source' }
+  }
   return {
-    label: source.commit.slice(0, 7),
-    href: `${source.repository}/tree/${source.commit}`,
+    label: app.source.partial ? 'Partial source' : 'Source',
+    commit: {
+      label: app.source.commit.slice(0, 7),
+      href: `${app.source.repository}/tree/${app.source.commit}`,
+    },
+    note: app.source.partial ? REFERENCE_APP.partialSource : undefined,
   }
 }
 

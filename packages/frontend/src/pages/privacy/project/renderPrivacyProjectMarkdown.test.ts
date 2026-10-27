@@ -222,7 +222,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     it('lists the reference app, then each checked app with its finding and fix', () => {
       expect(privacy()).toInclude(
-        '**Apps**\n\n- **[Classic app](https://tornado.example)** (Reference): The ratings have assumed this app since 2026-10-13. Commit [17c54da](https://github.com/tornado-dao/classic-ui/tree/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4).\n- **Mirror app** (Leaks more): Reads every note through a hosted indexer. [Source (checked 2026-10-22)](https://mirror.example) Fix: Scan notes locally.\n\n[How an app becomes the reference](https://l2beat.com/publications/privacy-methodology#reference-app)',
+        '**Apps**\n\n- **[Classic app](https://tornado.example)** (Reference): The ratings assume this app, since 2026-10-13 · Source [17c54da](https://github.com/tornado-dao/classic-ui/tree/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4)\n- **Mirror app** (Leaks more): Reads every note through a hosted indexer. Fix: Scan notes locally. · [Source (checked 2026-10-22)](https://mirror.example)\n\n[How we pick the reference](https://l2beat.com/publications/privacy-methodology#reference-app)',
       )
     })
 
