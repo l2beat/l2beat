@@ -78,6 +78,30 @@ describe(permissionPaths.name, () => {
     ])
   })
 
+  it('keeps a direct grant of another permission than the route through it', () => {
+    const paths = permissionPaths(
+      [
+        holder(COUNCIL, {
+          receivedPermissions: [
+            {
+              permission: 'interact',
+              from: BRIDGE,
+              via: [{ address: PROXY_ADMIN }],
+            },
+          ],
+        }),
+        holder(PROXY_ADMIN, {
+          directPermissions: [{ permission: 'upgrade', from: BRIDGE }],
+        }),
+      ],
+      BRIDGE,
+    )
+    expect(paths.map((p) => [p.permission, p.path])).toEqual([
+      ['interact', [COUNCIL, PROXY_ADMIN, BRIDGE]],
+      ['upgrade', [PROXY_ADMIN, BRIDGE]],
+    ])
+  })
+
   it('merges a route granted for several functions into one path', () => {
     const grant = (description: string): ReceivedPermission => ({
       permission: 'interact',
@@ -122,6 +146,31 @@ describe(controlPaths.name, () => {
     expect(control.paths.map((p) => p.path)).toEqual([
       [EXECUTOR, BRIDGE],
       [COUNCIL, PROXY_ADMIN, BRIDGE],
+    ])
+  })
+})
+
+describe('controlPaths past direct grants', () => {
+  it('follows controllers past one with only direct grants', () => {
+    const holders = [
+      holder(BRIDGE, { controllers: [PROXY_ADMIN] }),
+      holder(PROXY_ADMIN, { controllers: [EXECUTOR] }),
+      holder(EXECUTOR, {}),
+      holder(TIMELOCK, {
+        directPermissions: [{ permission: 'interact', from: PROXY_ADMIN }],
+      }),
+      holder(COUNCIL, {
+        receivedPermissions: [{ permission: 'upgrade', from: EXECUTOR }],
+      }),
+    ]
+    const control = controlPaths(
+      BRIDGE,
+      index(holders),
+      indexPermissionPaths(holders),
+    )
+    expect(control.inherited?.controller).toEqual(EXECUTOR)
+    expect(control.paths.map((p) => p.path)).toEqual([
+      [COUNCIL, EXECUTOR, PROXY_ADMIN, BRIDGE],
     ])
   })
 })

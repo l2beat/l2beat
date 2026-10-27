@@ -51,7 +51,9 @@ export function indexPermissionPaths(
   const covered = holdersOnRoutes(byRoute.values())
   for (const holder of holders) {
     for (const direct of holder.directPermissions ?? []) {
-      if (!covered.has(`${holder.address}>${direct.from}`)) {
+      if (
+        !covered.has(`${direct.permission} ${holder.address}>${direct.from}`)
+      ) {
         addRoute(byRoute, toPath(holder.address, direct, direct.from, true))
       }
     }
@@ -79,13 +81,14 @@ function addRoute(byRoute: Map<string, PermissionPath>, path: PermissionPath) {
   }
 }
 
-// "holder>target" for every contract a route to the target passes through.
+// "permission holder>target" for every contract a route to the target
+// passes through, per permission it grants.
 function holdersOnRoutes(paths: Iterable<PermissionPath>): Set<string> {
   const covered = new Set<string>()
-  for (const { path } of paths) {
+  for (const { permission, path } of paths) {
     const target = path[path.length - 1]
     for (const address of path.slice(0, -1)) {
-      covered.add(`${address}>${target}`)
+      covered.add(`${permission} ${address}>${target}`)
     }
   }
   return covered
@@ -196,7 +199,11 @@ export function controlPaths(
   if (own.some((p) => !p.isDirectGrant)) {
     return { paths: [...own], inherited: undefined }
   }
-  const inherited = inheritedPaths(target, byAddress, (a) => index.get(a) ?? [])
+  // The nearest controller with a modelled route answers; one with only
+  // direct grants does not end the search.
+  const modelled = (address: ChainSpecificAddress) =>
+    (index.get(address) ?? []).filter((p) => !p.isDirectGrant)
+  const inherited = inheritedPaths(target, byAddress, modelled)
   if (inherited === undefined) {
     return { paths: [...own], inherited: undefined }
   }
