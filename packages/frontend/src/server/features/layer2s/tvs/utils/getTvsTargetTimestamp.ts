@@ -1,12 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 /**
- * A wall-clock guess of the latest synced hour: getSyncedTvsTimestamp's
- * fallback when sync metadata has nothing fresh, and enough wherever an hour
- * either way does not matter. The backend targets the previous full hour;
- * the extra 15 minutes give it time to sync that hour, since nothing here
- * says whether it has. A project whose synced hour is still earlier is
- * late, and gets a sync warning.
+ * The hour every project should have synced by now: the backend targets the
+ * previous full hour and gets 15 minutes to sync it. Older values are late
+ * and get a sync warning. Reads use getLatestTvsTimestamp instead.
  */
 export function getTvsTargetTimestamp() {
   return UnixTime.toStartOf(

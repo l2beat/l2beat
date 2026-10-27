@@ -306,41 +306,28 @@ describeDatabase(TokenValueRepository.name, (db) => {
       await repository.upsertMany([
         tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
         tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+        tokenValue('a', 'ethereum', UnixTime(200), 7, 7000, 5600, 3500, 10),
         tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
-        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000, 10),
-        tokenValue('d', 'arbitrum', UnixTime(100), 10, 10000, 8000, 5000, 10),
         tokenValue('d', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000, 10),
         tokenValue('e', 'base', UnixTime(100), 1, 1, 1, 1, 1),
       ])
     })
 
-    it("returns each listed token's latest record at or before its timestamp", async () => {
-      const result = await repository.getAtOrBefore([
-        { projectId: 'ethereum', tokenId: 'a', timestamp: UnixTime(170) },
-        { projectId: 'ethereum', tokenId: 'b', timestamp: UnixTime(170) },
-        { projectId: 'arbitrum', tokenId: 'd', timestamp: UnixTime(250) },
+    it("returns each listed token's latest record at or before the timestamp", async () => {
+      const result = await repository.getAtOrBefore(UnixTime(170), [
+        { projectId: 'ethereum', tokenId: 'a' },
+        { projectId: 'ethereum', tokenId: 'b' },
+        { projectId: 'arbitrum', tokenId: 'd' },
       ])
 
       expect(result).toEqualUnsorted([
         tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
         tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
-        tokenValue('d', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000, 10),
       ])
     })
 
-    it('skips tokens with nothing at or before their timestamp', async () => {
-      const result = await repository.getAtOrBefore([
-        { projectId: 'ethereum', tokenId: 'a', timestamp: UnixTime(50) },
-        { projectId: 'base', tokenId: 'e', timestamp: UnixTime(100) },
-      ])
-
-      expect(result).toEqual([
-        tokenValue('e', 'base', UnixTime(100), 1, 1, 1, 1, 1),
-      ])
-    })
-
-    it('returns nothing without targets', async () => {
-      expect(await repository.getAtOrBefore([])).toEqual([])
+    it('returns nothing without tokens', async () => {
+      expect(await repository.getAtOrBefore(UnixTime(170), [])).toEqual([])
     })
   })
 
@@ -2299,8 +2286,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
       it('sums each project at its latest timestamp in range and seven days before it', async () => {
         const result =
           await repository.getSummedByProjectAtLatestAndSevenDaysBefore(
-            upTo(['arbitrum', 'base'], T0 + 3 * UnixTime.HOUR),
-            T0,
+            ['arbitrum', 'base'],
+            [T0, T0 + 3 * UnixTime.HOUR],
             {
               excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: true,
@@ -2321,8 +2308,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
         }
         const result =
           await repository.getSummedByProjectAtLatestAndSevenDaysBefore(
-            upTo(['arbitrum'], T0 + 3 * UnixTime.HOUR),
-            T0,
+            ['arbitrum'],
+            [T0, T0 + 3 * UnixTime.HOUR],
             opts,
           )
         const reference = await repository.getSummedByProjectForRanges(
@@ -2372,8 +2359,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
         const result =
           await repository.getSummedByProjectAtLatestAndSevenDaysBefore(
-            upTo(['optimism'], T0 + 3 * UnixTime.HOUR),
-            T0,
+            ['optimism'],
+            [T0, T0 + 3 * UnixTime.HOUR],
             {
               excludeAssociatedTokens: true,
               excludeRwaRestrictedTokens: false,
@@ -2386,31 +2373,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
         ])
       })
 
-      it('caps each project at its own timestamp', async () => {
-        const result =
-          await repository.getSummedByProjectAtLatestAndSevenDaysBefore(
-            [
-              { projectId: 'arbitrum', to: T0 + UnixTime.HOUR },
-              { projectId: 'base', to: T0 + 3 * UnixTime.HOUR },
-            ],
-            T0,
-            {
-              excludeAssociatedTokens: false,
-              excludeRwaRestrictedTokens: true,
-            },
-          )
-
-        expect(result.map((r) => [r.project, r.timestamp, r.value])).toEqual([
-          ['arbitrum', T0 + UnixTime.HOUR, 200],
-          ['base', T0 + UnixTime.HOUR, 500],
-        ])
-      })
-
       it('is scoped to the given projects', async () => {
         const result =
           await repository.getSummedByProjectAtLatestAndSevenDaysBefore(
-            upTo(['base'], T0 + 3 * UnixTime.HOUR),
-            T0,
+            ['base'],
+            [T0, T0 + 3 * UnixTime.HOUR],
             {
               excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
@@ -2425,10 +2392,6 @@ describeDatabase(TokenValueRepository.name, (db) => {
     await repository.deleteAll()
   })
 })
-
-function upTo(projectIds: string[], to: UnixTime) {
-  return projectIds.map((projectId) => ({ projectId, to }))
-}
 
 function tokenValue(
   configId: string,

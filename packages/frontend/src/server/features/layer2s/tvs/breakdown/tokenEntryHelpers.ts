@@ -150,23 +150,14 @@ function processAddress(
   }
 }
 
-/**
- * @param isLate the token holds the project's hour back, see
- * getLateTvsTokenIds
- */
 export function getSyncStatus(
   valueTimestamp: UnixTime,
   targetTimestamp: UnixTime,
-  isLate: boolean,
 ) {
   if (valueTimestamp < targetTimestamp) {
-    return `No token data since ${formatSyncTimestamp(valueTimestamp)}.`
+    return `No token data since ${formatTimestamp(valueTimestamp, {
+      mode: 'datetime',
+      longMonthName: true,
+    })}.`
   }
-  if (isLate) {
-    return `This token is still syncing, so the project's values are shown as of ${formatSyncTimestamp(targetTimestamp)}.`
-  }
-}
-
-function formatSyncTimestamp(timestamp: UnixTime) {
-  return formatTimestamp(timestamp, { mode: 'datetime', longMonthName: true })
 }

@@ -108,23 +108,23 @@ export class TokenValueRepository extends BaseRepository {
   }
 
   /**
-   * Each listed token's latest record at or before its timestamp: one probe
+   * Each listed token's latest record at or before the timestamp: one probe
    * of the (projectId, tokenId, timestamp) index per token. Grouping every
-   * row up to the timestamp by token read 25x more of the table.
+   * row up to the timestamp by token reads 25x more of the table.
    */
   async getAtOrBefore(
-    targets: { projectId: string; tokenId: string; timestamp: UnixTime }[],
+    timestamp: UnixTime,
+    tokens: { projectId: string; tokenId: string }[],
   ): Promise<TokenValueRecord[]> {
-    if (targets.length === 0) {
+    if (tokens.length === 0) {
       return []
     }
     const rows = await this.db
       .selectFrom(
-        sql<{ projectId: string; tokenId: string; timestamp: Date }>`unnest(
-          ${targets.map((t) => t.projectId)}::text[],
-          ${targets.map((t) => t.tokenId)}::text[],
-          ${targets.map((t) => UnixTime.toDate(t.timestamp))}::timestamp[]
-        )`.as<'t'>(sql`t("projectId", "tokenId", "timestamp")`),
+        sql<{ projectId: string; tokenId: string }>`unnest(
+          ${tokens.map((t) => t.projectId)}::text[],
+          ${tokens.map((t) => t.tokenId)}::text[]
+        )`.as<'t'>(sql`t("projectId", "tokenId")`),
       )
       .innerJoinLateral(
         (eb) =>
@@ -133,7 +133,7 @@ export class TokenValueRepository extends BaseRepository {
             .selectAll('TokenValue')
             .whereRef('TokenValue.projectId', '=', 't.projectId')
             .whereRef('TokenValue.tokenId', '=', 't.tokenId')
-            .whereRef('TokenValue.timestamp', '<=', 't.timestamp')
+            .where('TokenValue.timestamp', '<=', UnixTime.toDate(timestamp))
             .orderBy('TokenValue.timestamp', 'desc')
             .limit(1)
             .as('v'),
@@ -637,22 +637,22 @@ export class TokenValueRepository extends BaseRepository {
    */
   /**
    * Same sums as getSummedByProjectForRanges, but only at each project's
-   * latest timestamp between `from` and its own `to`, and at the timestamp
-   * exactly seven days before it. The 7-day breakdown reads nothing else,
-   * and aggregating every hour of the range first made it the slowest query
-   * on project pages.
+   * latest timestamp within the range and at the timestamp exactly seven
+   * days before it. The 7-day breakdown reads nothing else, and aggregating
+   * every hour of the range first made it the slowest query on project pages.
    */
   async getSummedByProjectAtLatestAndSevenDaysBefore(
-    projects: { projectId: string; to: UnixTime }[],
-    from: UnixTime,
+    projectIds: string[],
+    range: [UnixTime, UnixTime],
     opts: {
       excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
     },
   ): Promise<SummedByProjectRow[]> {
-    if (projects.length === 0) {
+    if (projectIds.length === 0) {
       return []
     }
+    const [from, to] = range
 
     const withTokenFilters = <Q extends TokenFilterable>(query: Q): Q => {
       let filtered = query
@@ -678,12 +678,9 @@ export class TokenValueRepository extends BaseRepository {
       .with('latest', (eb) =>
         eb
           .selectFrom(
-            // Each column binds as one array parameter, so any number of
-            // projects stays within the parameter limit.
-            sql<{ projectId: string; to: Date }>`unnest(
-              ${projects.map((p) => p.projectId)}::text[],
-              ${projects.map((p) => UnixTime.toDate(p.to))}::timestamp[]
-            )`.as<'p'>(sql`p("projectId", "to")`),
+            sql<{
+              projectId: string
+            }>`(select unnest(${projectIds}::text[]) as "projectId")`.as('p'),
           )
           .innerJoinLateral(
             (eb) =>
@@ -698,7 +695,7 @@ export class TokenValueRepository extends BaseRepository {
                   .select('TokenValue.timestamp')
                   .whereRef('TokenValue.projectId', '=', 'p.projectId')
                   .where('TokenValue.timestamp', '>=', UnixTime.toDate(from))
-                  .whereRef('TokenValue.timestamp', '<=', 'p.to'),
+                  .where('TokenValue.timestamp', '<=', UnixTime.toDate(to)),
               )
                 .orderBy('TokenValue.timestamp', 'desc')
                 .limit(1)

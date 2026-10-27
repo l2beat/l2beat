@@ -11,11 +11,7 @@ import {
 import { optionToRange } from '~/utils/range/range'
 import type { SyncState } from '../../utils/syncState'
 import { getAdditionalTrustAssumptionsPercentage } from './utils/getAdditionalTrustAssumptionsPercentage'
-import {
-  getSyncedTvsTimestamp,
-  getTvsSyncMetadata,
-  withoutExcludedTokens,
-} from './utils/getSyncedTvsTimestamp'
+import { getLatestTvsTimestamp } from './utils/getLatestTvsTimestamp'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 
@@ -87,42 +83,28 @@ export async function get7dTvsBreakdown(
   }
 
   const db = getDb()
-  const [tvsProjects, syncMetadata] = await Promise.all([
-    getTvsProjects(createTvsBreakdownProjectFilter(params)),
-    getTvsSyncMetadata(),
-  ])
+  const tvsProjects = await getTvsProjects(
+    createTvsBreakdownProjectFilter(params),
+  )
 
-  const tokenFilters = {
-    excludeAssociatedTokens: params.excludeAssociatedTokens ?? false,
-    excludeRwaRestrictedTokens: params.excludeRwaRestrictedTokens ?? true,
-  }
-
-  // Each project ends at its own synced hour, so one that lags does not hold
-  // the others back. Only the start of optionToRange is used: its end is a
-  // wall-clock guess of the synced hour.
-  const from = params.customTarget
-    ? params.customTarget - 3 * UnixTime.DAY
-    : optionToRange('3d')[0]
+  const [from, to] = params.customTarget
+    ? [params.customTarget - 3 * UnixTime.DAY, params.customTarget]
+    : [optionToRange('3d')[0], await getLatestTvsTimestamp()]
   assert(from !== null, 'from is null')
-  const ends = tvsProjects.map((p) => ({
-    projectId: p.projectId,
-    to:
-      params.customTarget ??
-      getSyncedTvsTimestamp(
-        syncMetadata,
-        withoutExcludedTokens(p.details.tvsConfig, tokenFilters),
-      ),
-  }))
   // A project whose newest values are older is late
   const expected = params.customTarget ?? getTvsTargetTimestamp()
-  const syncMetadataRecords = [...syncMetadata.values()]
 
-  const values =
-    await db.tvsTokenValue.getSummedByProjectAtLatestAndSevenDaysBefore(
-      ends,
-      from,
-      tokenFilters,
-    )
+  const [values, syncMetadataRecords] = await Promise.all([
+    db.tvsTokenValue.getSummedByProjectAtLatestAndSevenDaysBefore(
+      tvsProjects.map((p) => p.projectId),
+      [from, to],
+      {
+        excludeAssociatedTokens: params.excludeAssociatedTokens ?? false,
+        excludeRwaRestrictedTokens: params.excludeRwaRestrictedTokens ?? true,
+      },
+    ),
+    db.syncMetadata.getByFeature('tvs'),
+  ])
 
   // The query returns at most two rows per project, sorted by timestamp:
   // the one seven days before (optional) followed by the latest.

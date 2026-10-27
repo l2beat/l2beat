@@ -6,7 +6,7 @@ import { ps } from '~/server/projects'
 interface TvsProject {
   projectId: ProjectId
   category?: 'rollups' | 'validiumsAndOptimiums' | 'others'
-  details: Project<'tvsConfig', 'scalingInfo' | 'tvsInfo'>
+  details: Project<never, 'scalingInfo' | 'tvsInfo'>
 }
 
 export async function getTvsProjects(

@@ -2,11 +2,7 @@ import type { ProjectDefiInfo, TvsToken } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import {
-  getSyncedTvsTimestamp,
-  getTvsSyncMetadata,
-  withoutExcludedTokens,
-} from '~/server/features/layer2s/tvs/utils/getSyncedTvsTimestamp'
+import { getLatestTvsTimestamp } from '~/server/features/layer2s/tvs/utils/getLatestTvsTimestamp'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import type { ValuePoint } from './normalizeSeries'
 
@@ -67,15 +63,7 @@ export async function getOssificationSeries(
     }
   }
 
-  const tokenFilters = {
-    excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens: true,
-  }
-  // Later hours are at most partially synced, see getSyncedTvsTimestamp.
-  const to = getSyncedTvsTimestamp(
-    await getTvsSyncMetadata(),
-    withoutExcludedTokens(project.tvsConfig ?? [], tokenFilters),
-  )
+  const to = await getLatestTvsTimestamp()
   // min() keeps a clock younger than the target on its preceding synced value.
   const start =
     (await db.tvsTokenValue.getMaxTimestampAtOrBeforeForProjects(
@@ -88,7 +76,8 @@ export async function getOssificationSeries(
     to,
     {
       forSummary: false,
-      ...tokenFilters,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
     },
   )
   // Canonical only: unlike TVS elsewhere, customCanonical (canonical with

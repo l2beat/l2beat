@@ -3,10 +3,7 @@ import { notUndefined, type TokenId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import {
-  getSyncedTvsTimestamp,
-  getTvsSyncMetadata,
-} from '../utils/getSyncedTvsTimestamp'
+import { getLatestTvsTimestamp } from '../utils/getLatestTvsTimestamp'
 
 export type ProjectToken = {
   id: TokenId
@@ -27,13 +24,9 @@ export async function getTokensForProject(
   }
 
   const db = getDb()
-  const targetTimestamp = getSyncedTvsTimestamp(
-    await getTvsSyncMetadata(),
-    project.tvsConfig,
-  )
   const tokenValues = await db.tvsTokenValue.getByProjectAtOrBefore(
     project.id,
-    targetTimestamp,
+    await getLatestTvsTimestamp(),
   )
 
   const tokenValuesMap = new Map(tokenValues.map((x) => [x.tokenId, x]))

@@ -6,12 +6,8 @@ import { categoryToLabel } from '~/pages/layer2s/project/tvs-breakdown/component
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import {
-  getLateTvsTokenIds,
-  getSyncedTvsTimestamp,
-  getTvsSyncMetadata,
-  type TvsSyncMetadata,
-} from '../utils/getSyncedTvsTimestamp'
+import { getLatestTvsTimestamp } from '../utils/getLatestTvsTimestamp'
+import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
 import { sourceToLabel } from '../utils/sourceToLabel'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
 import type { ProjectTvsBreakdownTokenEntry } from './getProjectTokensEntries'
@@ -29,28 +25,23 @@ export async function getAllTokensEntries(): Promise<TvsBreakdownTokenEntry[]> {
   if (env.MOCK) {
     return getMockTvsBreakdownForProjectData()
   }
-  const [allProjects, syncMetadata] = await Promise.all([
-    ps.getProjects({
-      select: ['tvsConfig'],
-      optional: ['chainConfig', 'contracts'],
-    }),
-    getTvsSyncMetadata(),
-  ])
+  const allProjects = await ps.getProjects({
+    select: ['tvsConfig'],
+    optional: ['chainConfig', 'contracts'],
+  })
 
   const db = getDb()
+  const targetTimestamp = getTvsTargetTimestamp()
+
   const [projects, tokenValues] = await Promise.all([
     ps.getProjects({
       select: ['chainConfig'],
     }),
     db.tvsTokenValue.getAtOrBefore(
-      allProjects.flatMap((p) => {
-        const timestamp = getSyncedTvsTimestamp(syncMetadata, p.tvsConfig)
-        return p.tvsConfig.map((t) => ({
-          projectId: p.id,
-          tokenId: t.id,
-          timestamp,
-        }))
-      }),
+      await getLatestTvsTimestamp(),
+      allProjects.flatMap((p) =>
+        p.tvsConfig.map((t) => ({ projectId: p.id, tokenId: t.id })),
+      ),
     ),
   ])
 
@@ -59,7 +50,12 @@ export async function getAllTokensEntries(): Promise<TvsBreakdownTokenEntry[]> {
     tokenValues.map((x) => [TokenId(x.tokenId), x]),
   )
 
-  const entries = getEntries(allProjects, tokenValuesMap, chains, syncMetadata)
+  const entries = getEntries(
+    allProjects,
+    tokenValuesMap,
+    chains,
+    targetTimestamp,
+  )
 
   return entries
 }
@@ -68,18 +64,13 @@ function getEntries(
   projects: Project<'tvsConfig', 'chainConfig' | 'contracts'>[],
   tokenValuesMap: Map<TokenId, TokenValueRecord>,
   chains: ChainConfig[],
-  syncMetadata: TvsSyncMetadata,
+  targetTimestamp: UnixTime,
 ) {
   const entries: TvsBreakdownTokenEntry[] = []
 
   for (const project of projects) {
     const projectTokens = project.tvsConfig
     const gasTokens = project.chainConfig?.gasTokens
-    const targetTimestamp = getSyncedTvsTimestamp(
-      syncMetadata,
-      project.tvsConfig,
-    )
-    const lateTokenIds = getLateTvsTokenIds(syncMetadata, project.tvsConfig)
 
     for (const token of projectTokens) {
       const tokenValue = tokenValuesMap.get(token.id)
@@ -114,11 +105,7 @@ function getEntries(
         value: tokenValue.value,
         amount: tokenValue.amount,
         isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
-        syncStatus: getSyncStatus(
-          tokenValue.timestamp,
-          targetTimestamp,
-          lateTokenIds.has(token.id),
-        ),
+        syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
         bridgedUsing: token.bridgedUsing,
         filterable: [
           {
@@ -185,7 +172,7 @@ async function getMockTvsBreakdownForProjectData(): Promise<
     ),
   )
 
-  const entries = getEntries(projects, tokenValuesMap, chains, new Map())
+  const entries = getEntries(projects, tokenValuesMap, chains, UnixTime.now())
 
   return entries
 }
