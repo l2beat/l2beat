@@ -19,11 +19,8 @@ export function compareTransactions(
   if (b.type === 'unknown') {
     return -1
   }
-  if (isStandardType(a.type)) {
-    return -1
-  }
-  if (isStandardType(b.type)) {
-    return 1
+  if (isStandardType(a.type) !== isStandardType(b.type)) {
+    return isStandardType(a.type) ? -1 : 1
   }
   return a.type.localeCompare(b.type)
 }
