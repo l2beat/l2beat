@@ -21,7 +21,7 @@ import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGr
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
-import { formatRange } from '~/utils/dates'
+import { formatPeriod } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
 
 const chartMeta = {
@@ -126,10 +126,7 @@ function DataPostedCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-50 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(
-            timestamp,
-            timestamp + UnixTime.periodToSeconds(resolution),
-          )}
+          {formatPeriod(timestamp, UnixTime.periodToSeconds(resolution))}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {

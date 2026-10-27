@@ -27,7 +27,7 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/layer2s/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/layer2s/costs/types'
-import { formatRange } from '~/utils/dates'
+import { formatPeriod } from '~/utils/dates'
 import {
   type ChartRange,
   type ChartResolution,
@@ -263,7 +263,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
+          {formatPeriod(label, UnixTime.periodToSeconds(resolution))}
         </div>
         {costPayload.length > 1 && (
           <>

@@ -25,7 +25,7 @@ describe(describeOssification.name, () => {
   it('lists the score, the last critical change and the exposure', () => {
     expect(describeOssification(stats)).toEqual([
       'Score: 99 of 100.',
-      'No critical change since 2020 May 18.',
+      'No critical change since 18 May 2020.',
       // formatCurrency puts a hair space before the unit.
       'Battle-tested exposure: $2.64 B·years.',
     ])
@@ -36,7 +36,7 @@ describe(describeOssification.name, () => {
       describeOssification({ ...stats, isUnverified: true, exposure: null }),
     ).toEqual([
       'No score: some critical contracts are unverified.',
-      'No critical change since 2020 May 18.',
+      'No critical change since 18 May 2020.',
     ])
   })
 

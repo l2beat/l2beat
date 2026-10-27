@@ -127,7 +127,6 @@ export function HomeL2Card({ charts, l2CategoryCounts }: Props) {
             formatValue={(value) => formatActivityCount(value)}
             yAxisUnit=" UOPS"
             syncedUntil={charts.activity.syncedUntil}
-            tooltipDayRange
             withEthereum
           />
         </HomeChartSection>

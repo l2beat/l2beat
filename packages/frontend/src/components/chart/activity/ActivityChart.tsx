@@ -43,7 +43,7 @@ import {
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
-import { formatRange } from '~/utils/dates'
+import { formatPeriod } from '~/utils/dates'
 import { ChartStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
 import type { ChartScale } from '../types'
 
@@ -204,7 +204,7 @@ export function ActivityCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(timestamp, timestamp + UnixTime.DAY)}
+          {formatPeriod(timestamp, UnixTime.DAY)}
         </div>
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />

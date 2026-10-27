@@ -1,25 +1,19 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { EM_DASH } from '~/consts/characters'
 
-export const MONTHS: Record<
-  string,
-  {
-    longName: string
-    shortName: string
-  }
-> = {
-  '01': { shortName: 'Jan', longName: 'January' },
-  '02': { shortName: 'Feb', longName: 'February' },
-  '03': { shortName: 'Mar', longName: 'March' },
-  '04': { shortName: 'Apr', longName: 'April' },
-  '05': { shortName: 'May', longName: 'May' },
-  '06': { shortName: 'Jun', longName: 'June' },
-  '07': { shortName: 'Jul', longName: 'July' },
-  '08': { shortName: 'Aug', longName: 'August' },
-  '09': { shortName: 'Sep', longName: 'September' },
-  '10': { shortName: 'Oct', longName: 'October' },
-  '11': { shortName: 'Nov', longName: 'November' },
-  '12': { shortName: 'Dec', longName: 'December' },
+export const MONTHS: Record<string, { shortName: string }> = {
+  '01': { shortName: 'Jan' },
+  '02': { shortName: 'Feb' },
+  '03': { shortName: 'Mar' },
+  '04': { shortName: 'Apr' },
+  '05': { shortName: 'May' },
+  '06': { shortName: 'Jun' },
+  '07': { shortName: 'Jul' },
+  '08': { shortName: 'Aug' },
+  '09': { shortName: 'Sep' },
+  '10': { shortName: 'Oct' },
+  '11': { shortName: 'Nov' },
+  '12': { shortName: 'Dec' },
 }
 
 export function parseTimestamp(timestamp: number) {
@@ -53,26 +47,16 @@ function formatTimeAndDate(
   }
 }
 
-function toNiceDate(
-  day: string,
-  month?: string,
-  year?: string,
-  longMonthName = false,
-) {
-  if (month) {
-    const monthRecord = MONTHS[month]
-    assert(monthRecord !== undefined, `Invalid month: ${month}`)
-    const monthName = longMonthName
-      ? monthRecord.longName
-      : monthRecord.shortName
+/** "1 Jul 2026", or "1 Jul" / "1" when a range already shows the rest. */
+function toNiceDate(day: string, month?: string, year?: string) {
+  const dayNumber = String(Number(day))
+  if (!month) return dayNumber
 
-    if (year) {
-      return `${year} ${monthName} ${day}`
-    }
-    return `${monthName} ${day}`
-  }
-
-  return day
+  const monthName = MONTHS[month]?.shortName
+  assert(monthName !== undefined, 'Invalid month')
+  return year
+    ? `${dayNumber} ${monthName} ${year}`
+    : `${dayNumber} ${monthName}`
 }
 
 export function formatRange(from: number, to: number) {
@@ -80,38 +64,41 @@ export function formatRange(from: number, to: number) {
   const parsedTo = parseTimestamp(to)
 
   if (to - from >= 23 * UnixTime.HOUR) {
-    // Format as date range (existing behavior)
+    // "30 Jun — 2 Jul 2026": the start drops the parts it shares with the end
+    const sameYear = parsedFrom.year === parsedTo.year
     const fromDate = toNiceDate(
       parsedFrom.day,
-      parsedFrom.month,
-      parsedFrom.year,
-    )
-    const toDate = toNiceDate(
-      parsedTo.day,
-      parsedFrom.month === parsedTo.month && parsedFrom.year === parsedTo.year
+      sameYear && parsedFrom.month === parsedTo.month
         ? undefined
-        : parsedTo.month,
-      parsedFrom.year === parsedTo.year ? undefined : parsedTo.year,
+        : parsedFrom.month,
+      sameYear ? undefined : parsedFrom.year,
     )
+    const toDate = toNiceDate(parsedTo.day, parsedTo.month, parsedTo.year)
     return `${fromDate} ${EM_DASH}\n${toDate}`
   }
 
-  // Format as "Jun 30 01:00 - 2:00"
+  // "30 Jun 2026, 01:00 — 02:00 UTC"
   const date = toNiceDate(parsedFrom.day, parsedFrom.month, parsedFrom.year)
-  const fromTime = parsedFrom.time
-  const toTime = parsedTo.time
-  return `${date} ${fromTime} ${EM_DASH} ${toTime}`
+  return `${date}, ${parsedFrom.time} ${EM_DASH} ${parsedTo.time} UTC`
+}
+
+/**
+ * A chart point that covers `seconds` from `start`: the date for a daily
+ * point, "30 Jun 2026, 01:00 — 02:00 UTC" for a shorter one.
+ */
+export function formatPeriod(start: number, seconds: number) {
+  if (seconds >= UnixTime.DAY) return formatTimestamp(start)
+  return formatRange(start, start + seconds)
 }
 
 export function formatTimestamp(
   timestamp: number,
   opts?: {
     mode?: 'date' | 'datetime' | 'time'
-    longMonthName?: boolean
   },
 ) {
   const { year, month, day, time } = parseTimestamp(timestamp)
-  const date = toNiceDate(day, month, year, opts?.longMonthName)
+  const date = toNiceDate(day, month, year)
   return formatTimeAndDate(date, time, opts?.mode)
 }
 
@@ -121,34 +108,32 @@ export function formatDate(date: string) {
   return toNiceDate(day, month, year)
 }
 
-export function formatTimestampToDateWithHour(timestamp: number) {
-  const { year, month, day, time } = parseTimestamp(timestamp)
+/**
+ * The instant in the visitor's time zone, e.g. "1 Jul 2026, 16:00 UTC+2", or
+ * undefined when that zone is at UTC+0 then. Call it only in the browser: on
+ * the server it would use the server's zone.
+ */
+export function formatLocalDateTime(timestamp: number) {
+  if (new Date(timestamp * 1000).getTimezoneOffset() === 0) return undefined
 
-  const monthRecord = MONTHS[month]
-  assert(monthRecord !== undefined, `Invalid month: ${month}`)
-  const monthAbbr = monthRecord.shortName
-  const numericDay = +day
+  const parts = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+    timeZoneName: 'shortOffset',
+  }).formatToParts(timestamp * 1000)
+  const part = (type: Intl.DateTimeFormatPartTypes) => {
+    const value = parts.find((p) => p.type === type)?.value
+    assert(value !== undefined, 'Missing date part')
+    return value
+  }
 
-  const daySuffix =
-    numericDay >= 11 && numericDay <= 13
-      ? 'th'
-      : numericDay % 10 === 1
-        ? 'st'
-        : numericDay % 10 === 2
-          ? 'nd'
-          : numericDay % 10 === 3
-            ? 'rd'
-            : 'th'
-
-  const numericHour = +time.slice(0, 2)
-
-  const hour = numericHour % 12 || 12
-  const ampm = numericHour >= 12 ? 'PM' : 'AM'
-  const minute = String(time.slice(3, 5)).padStart(2, '0')
-
-  const formattedDate = `${hour}:${minute} ${ampm} UTC, ${monthAbbr} ${day}${daySuffix} ${year}`
-
-  return formattedDate
+  const zone = part('timeZoneName').replace('GMT', 'UTC')
+  const date = toNiceDate(part('day'), part('month'), part('year'))
+  return `${date}, ${part('hour')}:${part('minute')} ${zone}`
 }
 
 export function getNextDateForDayOfWeek(

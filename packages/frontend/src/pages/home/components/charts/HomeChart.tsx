@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type {
@@ -16,7 +15,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { PinkFillGradientDef } from '~/components/core/chart/defs/PinkGradientDef'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatRange, formatTimestamp } from '~/utils/dates'
+import { formatTimestamp } from '~/utils/dates'
 
 export type HomeChartColor = 'pink' | 'ethereum'
 
@@ -38,7 +37,6 @@ interface Props {
   formatValue: (value: number) => string
   yAxisUnit?: string
   syncedUntil?: number
-  tooltipDayRange?: boolean
   withEthereum?: boolean
 }
 
@@ -72,7 +70,6 @@ export function HomeChart({
   formatValue,
   yAxisUnit,
   syncedUntil,
-  tooltipDayRange,
   withEthereum,
 }: Props) {
   const fillId = useId()
@@ -158,12 +155,7 @@ export function HomeChart({
               syncedUntil={syncedUntil}
             />
             <ChartTooltip
-              content={
-                <HomeChartTooltip
-                  formatValue={formatValue}
-                  dayRange={tooltipDayRange}
-                />
-              }
+              content={<HomeChartTooltip formatValue={formatValue} />}
               filterNull={false}
             />
           </AreaChart>
@@ -177,10 +169,8 @@ function HomeChartTooltip({
   payload,
   label,
   formatValue,
-  dayRange,
 }: CustomChartTooltipProps & {
   formatValue: (value: number) => string
-  dayRange?: boolean
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -198,9 +188,7 @@ function HomeChartTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-50 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {dayRange
-            ? formatRange(label, label + UnixTime.DAY)
-            : formatTimestamp(label, { longMonthName: true })}
+          {formatTimestamp(label)}
         </div>
         <div className="flex flex-col gap-2">
           {entries.map(({ entry, config }) => (

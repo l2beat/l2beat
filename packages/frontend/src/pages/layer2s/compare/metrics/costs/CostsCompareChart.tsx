@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { formatCostValue } from '~/pages/layer2s/costs/utils/formatCostValue'
 import { useTRPC } from '~/trpc/React'
-import { formatRange } from '~/utils/dates'
+import { formatPeriod } from '~/utils/dates'
 import { rangeToResolution } from '~/utils/range/range'
 import {
   CompareMetricLineChart,
@@ -51,7 +51,7 @@ export function CostsCompareChart({
       formatYAxisLabel={(value) => formatCostValue(value, unit)}
       formatTooltipValue={(value) => formatCostValue(value, unit)}
       renderTooltipTimestamp={(label) =>
-        formatRange(label, label + UnixTime.periodToSeconds(resolution))
+        formatPeriod(label, UnixTime.periodToSeconds(resolution))
       }
     />
   )

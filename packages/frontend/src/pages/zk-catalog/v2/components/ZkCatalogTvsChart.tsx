@@ -253,7 +253,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+          {formatTimestamp(label, { mode: 'datetime' })}
         </div>
         {unit === 'absolute' && (
           <>
