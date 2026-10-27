@@ -8,6 +8,7 @@ import type {
 } from '@l2beat/database'
 import type { DiscordClient } from '@l2beat/shared'
 import { type Block, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxProject, TrackedTxsConfig } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
@@ -856,6 +857,17 @@ describe(AnomalyNotifier.name, () => {
   })
 
   describe(AnomalyNotifier.prototype.dailyReport.name, () => {
+    const NOW = UnixTime.fromDate(new Date('2026-07-14T11:44:00Z'))
+    let time: InstalledClock
+
+    beforeEach(() => {
+      time = install({ now: NOW * 1000, toFake: ['Date'] })
+    })
+
+    afterEach(() => {
+      time.uninstall()
+    })
+
     it('sends daily report', async () => {
       const realTimeAnomaliesRepository = mockObject<
         Database['realTimeAnomalies']
@@ -866,7 +878,7 @@ describe(AnomalyNotifier.name, () => {
             subtype: 'batchSubmissions',
             status: 'ongoing',
             isApproved: false,
-            start: UnixTime.now(),
+            start: NOW,
           },
         ] as RealTimeAnomalyRecord[]),
       })
@@ -894,7 +906,7 @@ describe(AnomalyNotifier.name, () => {
       expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
-        `# Daily report @ ${UnixTime.toYYYYMMDD(UnixTime.now())}\n` +
+        '# Daily report @ 2026-07-14\n' +
           '### Ongoing anomalies:\n' +
           '```|  Duration | ProjectId |          Subtype |     Approval | Implementation Change |\n' +
           '|-----------|-----------|------------------|--------------|-----------------------|\n' +
@@ -913,7 +925,7 @@ describe(AnomalyNotifier.name, () => {
             subtype: 'batchSubmissions',
             status: 'ongoing',
             isApproved: false,
-            start: UnixTime.now(),
+            start: NOW,
           },
         ] as RealTimeAnomalyRecord[]),
       })
@@ -956,7 +968,7 @@ describe(AnomalyNotifier.name, () => {
       expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
-        `# Daily report @ ${UnixTime.toYYYYMMDD(UnixTime.now())}\n` +
+        '# Daily report @ 2026-07-14\n' +
           '### Ongoing anomalies:\n' +
           '```|  Duration | ProjectId |          Subtype |     Approval | Implementation Change |\n' +
           '|-----------|-----------|------------------|--------------|-----------------------|\n' +
