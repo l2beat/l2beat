@@ -25,6 +25,7 @@ export interface SignatureResult {
 export interface PreimageResult {
   hash: `0x${string}`
   preimage: string
+  minusOne?: boolean
 }
 
 export interface AddressResult {
@@ -32,6 +33,7 @@ export interface AddressResult {
   address: `0x${string}`
   name?: string
   alias?: AddressAlias
+  token?: { name: string; decimals: number }
   abi: SignatureResult[]
 }
 
@@ -88,6 +90,7 @@ export class ApiController {
       address,
       name: result.name,
       alias: result.alias,
+      token: result.token,
       abi: result.abi,
     }
   }
@@ -99,10 +102,15 @@ export class ApiController {
   }
 
   lookupPreimages(hashes: `0x${string}`[]): PreimageResult[] {
-    return hashes.flatMap((hash) => {
+    return hashes.flatMap((hash): PreimageResult[] => {
       const preimage = this.hashes[hash]
-      if (!preimage) return []
-      return [{ hash, preimage }]
+      if (preimage) return [{ hash, preimage }]
+      const plusOne: `0x${string}` = `0x${(BigInt(hash) + 1n).toString(16).padStart(64, '0')}`
+      const preimageMinusOne = this.hashes[plusOne]
+      if (preimageMinusOne) {
+        return [{ hash, preimage: preimageMinusOne, minusOne: true }]
+      }
+      return []
     })
   }
 
