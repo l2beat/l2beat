@@ -220,6 +220,8 @@ function TopBlocksTable(props: { blocks: API.BlockRatio[]; chainId: string }) {
                 <Link
                   className="text-orange-500 underline"
                   to={`/uops?chain=${props.chainId}&block=${block.number}`}
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   {block.number}
                 </Link>
