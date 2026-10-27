@@ -2,6 +2,7 @@ import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { isTvsSynced } from '~/server/features/layer2s/tvs/utils/isTvsSynced'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ps } from '~/server/projects'
@@ -18,7 +19,10 @@ export const ZkCatalogTvsChartParams = v.object({
 export type ZkCatalogTvsChartParams = v.infer<typeof ZkCatalogTvsChartParams>
 
 export interface ZkCatalogTvsChartData {
-  /** Keyed by prover id. TVS is null before the prover's first project. */
+  /**
+   * Keyed by prover id. TVS is null before the prover's first project and
+   * after `syncedUntil`.
+   */
   chart: [
     timestamp: number,
     valuesByProver: Record<string, number | null>,
@@ -75,8 +79,10 @@ export async function getZkCatalogTvsChart({
     dataStart: minTimestamp,
     resolution,
   })
+  // When TVS lags, run to the range end so the gap shows as unsynced
+  const endTimestamp = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
   const timestamps = generateTimestamps(
-    [UnixTime(startTimestamp), UnixTime(maxTimestamp)],
+    [UnixTime(startTimestamp), UnixTime(endTimestamp)],
     resolution,
     { addTarget: true },
   )
@@ -100,7 +106,7 @@ export async function getZkCatalogTvsChart({
         )
         projectCountByProver[proverId] = liveProjects.size
         valuesByProver[proverId] =
-          liveProjects.size === 0
+          liveProjects.size === 0 || timestamp > maxTimestamp
             ? null
             : [...liveProjects].reduce(
                 (sum, projectId) =>

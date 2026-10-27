@@ -214,11 +214,10 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
   )
 }
 
-/** Null before the prover's first project */
+/** Null when there is nothing to stack, so the prover's area is absent */
 function getAmount(point: Point, proverId: string, metric: Metric) {
-  const value = point.values[proverId] ?? null
-  if (value === null || metric === 'value') return value
-  return point.projectCounts[proverId] ?? 0
+  if (metric === 'value') return point.values[proverId] ?? null
+  return point.projectCounts[proverId] || null
 }
 
 function CustomTooltip({
