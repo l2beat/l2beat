@@ -22,14 +22,13 @@ export function createUopsModule(
   etherscanClient: EtherscanClient,
   logger: Logger,
 ): ApplicationModule {
-  const knownNames = loadKnownNames()
   const chainServices = new Map<string, ChainService>()
   for (const chain of config.uopsChains) {
     chainServices.set(
       chain.id,
       createChainService(
         chain,
-        knownNames,
+        loadKnownNames(),
         signatureService,
         etherscanClient,
         logger,

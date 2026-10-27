@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import * as API from './api'
 import {
@@ -33,6 +33,13 @@ export function StatsPage() {
   const [stats, setStats] = useState<AggregatedStats>()
   const [progress, setProgress] = useState<Progress>()
   const [error, setError] = useState('')
+  const isMounted = useRef(false)
+  useEffect(() => {
+    isMounted.current = true
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
 
   const blockCount = Number(blockCountInput)
   const isBlockCountValid =
@@ -49,6 +56,7 @@ export function StatsPage() {
     let aggregated = stats
     try {
       for (let loaded = 0; loaded < total; loaded += BATCH_SIZE_BLOCKS) {
+        if (!isMounted.current) return
         const count = Math.min(BATCH_SIZE_BLOCKS, total - loaded)
         const batch = await API.getStats(chainId, count, aggregated?.startBlock)
         aggregated = mergeStats(aggregated, batch)

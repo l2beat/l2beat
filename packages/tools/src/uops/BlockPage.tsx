@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 import * as API from './api'
 import {
@@ -23,6 +23,10 @@ export function BlockPage() {
 
   const [chainId, setChainId] = useState(chainParam)
   const [blockNumber, setBlockNumber] = useState(blockParam)
+  useEffect(() => {
+    setChainId(chainParam)
+    setBlockNumber(blockParam)
+  }, [chainParam, blockParam])
 
   const chains = useChains()
   const latest = useMutation({
