@@ -628,8 +628,14 @@ describe('getProjects', () => {
 
     // The page prints these dates and hashes as they are.
     it('every reference app has valid dates and a full commit hash', () => {
-      const isDay = (value: string) =>
-        /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(Date.parse(value))
+      // Round-trip, since Date.parse rolls 2026-02-30 over to March.
+      const isDay = (value: string) => {
+        const time = Date.parse(value)
+        return (
+          !Number.isNaN(time) &&
+          new Date(time).toISOString().slice(0, 10) === value
+        )
+      }
       const problems: string[] = []
       for (const { project, privacyInfo } of privacyProjects) {
         const app = privacyInfo.referenceApp
