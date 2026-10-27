@@ -1,16 +1,21 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+export interface RevealedField {
+  readonly address: string
+  readonly name: string
+}
+
 interface State {
   readonly selected: string[]
   readonly highlighted: readonly string[]
-  readonly revealedField: string | undefined
+  readonly revealedField: RevealedField | undefined
 }
 
 interface Actions {
   select: (selected: string[]) => void
   highlight: (highlighted: readonly string[]) => void
-  revealField: (revealedField: string | undefined) => void
+  revealField: (revealedField: RevealedField | undefined) => void
 }
 
 const INITIAL_STATE: State = {

@@ -10,9 +10,10 @@ import { PastUpgradesDisplay } from './PastUpgradesDisplay'
 
 export interface FieldDisplayProps {
   field: Field
+  address: string
 }
 
-export function FieldDisplay({ field }: FieldDisplayProps) {
+export function FieldDisplay({ field, address }: FieldDisplayProps) {
   const {
     configModel,
     templateModel,
@@ -20,7 +21,11 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
   } = useConfigModels()
 
   const ref = useRef<HTMLLIElement>(null)
-  const isRevealed = usePanelStore((s) => s.revealedField === field.name)
+  const isRevealed = usePanelStore(
+    (s) =>
+      s.revealedField?.address === address &&
+      s.revealedField.name === field.name,
+  )
   const revealField = usePanelStore((s) => s.revealField)
   useEffect(() => {
     if (!isRevealed) return

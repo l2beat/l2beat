@@ -86,7 +86,7 @@ export function useRunSearchItem(project: string): (item: SearchItem) => void {
       case 'field':
         ensureLeaf('values')
         select([item.address])
-        revealField(item.fieldName)
+        revealField({ address: item.address, name: item.fieldName })
         pushRecentAddress(item.address)
         break
       case 'code':

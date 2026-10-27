@@ -80,6 +80,7 @@ function CodeInSelectedToggle(props: {
     <button
       type="button"
       tabIndex={-1}
+      onMouseDown={(e) => e.preventDefault()}
       disabled={selectedAddress === undefined}
       onClick={() => props.onChange(!props.value)}
       className={cn(
@@ -105,6 +106,7 @@ function ScopeTabs(props: {
           key={scope}
           type="button"
           tabIndex={-1}
+          onMouseDown={(e) => e.preventDefault()}
           onClick={() => props.onSelect(scope)}
           className={cn(
             'flex h-6 items-center gap-1.5 rounded-sm px-2 text-xs',
