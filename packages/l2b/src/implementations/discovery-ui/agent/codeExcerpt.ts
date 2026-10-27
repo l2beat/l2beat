@@ -17,12 +17,17 @@ export function excerptAt(
   line: number,
 ): CodeExcerpt {
   const start = code.lastIndexOf('\n', offset - 1) + 1
-  const end = blockEnd(code, offset) ?? endOfLines(code, start, CONTEXT_LINES)
+  const block = blockEnd(code, offset)
+  const end = block ?? endOfLines(code, start, CONTEXT_LINES)
   const lines = code.slice(start, end).split('\n')
   return {
     line,
     lines: lines.slice(0, EXCERPT_LINES_MAX),
-    isCut: lines.length > EXCERPT_LINES_MAX,
+    // Lines after a statement are only its context: the rest of the
+    // function is cut too.
+    isCut:
+      lines.length > EXCERPT_LINES_MAX ||
+      (block === undefined && end < code.length),
   }
 }
 
@@ -47,7 +52,8 @@ function blockEnd(code: string, offset: number): number | undefined {
 }
 
 // A snippet opens a block when a brace comes before the statement ends.
-// Semicolons in parentheses, like a for loop's, do not end it.
+// Semicolons in parentheses, like a for loop's, do not end it, and braces
+// there, like named arguments, do not open it.
 function blockOpen(code: string, offset: number): number | undefined {
   let parens = 0
   for (let at = offset; at < code.length; at++) {
@@ -56,7 +62,7 @@ function blockOpen(code: string, offset: number): number | undefined {
       parens++
     } else if (code[at] === ')') {
       parens--
-    } else if (code[at] === '{') {
+    } else if (code[at] === '{' && parens === 0) {
       return at
     } else if (code[at] === ';' && parens === 0) {
       return undefined

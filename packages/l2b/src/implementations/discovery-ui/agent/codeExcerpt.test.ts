@@ -28,6 +28,20 @@ describe(excerptAt.name, () => {
     expect(excerptAt(CODE, offset, 6).lines).toEqual(CODE.split('\n').slice(5))
   })
 
+  it('says the lines after a statement are cut from the rest', () => {
+    const body = Array.from({ length: 30 }, (_, i) => `  x = ${i};`)
+    const code = ['function f() {', ...body, '}'].join('\n')
+    const excerpt = excerptAt(code, code.indexOf('x = 0'), 2)
+    expect(excerpt.lines.length).toEqual(12)
+    expect(excerpt.isCut).toEqual(true)
+  })
+
+  it('skips named arguments before the body', () => {
+    const body = Array.from({ length: 20 }, (_, i) => `  x = ${i};`)
+    const code = ['function f() check({x: 1}) {', ...body, '}'].join('\n')
+    expect(excerptAt(code, 0, 1).lines.length).toEqual(22)
+  })
+
   it('skips braces in comments and strings', () => {
     const code = [
       'function f() {',
