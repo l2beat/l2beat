@@ -413,7 +413,7 @@ function Description() {
 
   return (
     <WithHeadline headline="Description">
-      <p className="font-serif text-sm italic">
+      <p className="font-sans text-[13px] leading-5">
         {interpolateDescription(description)}
       </p>
     </WithHeadline>

@@ -31,14 +31,14 @@ export function HomePage() {
     <>
       <Title title="DiscoUI - Home" />
       <div className="mx-auto max-w-(--breakpoint-md) p-4">
-        <h1 className="my-8 flex justify-center">
+        <h1 className="my-6 flex justify-center">
           <img
-            className="w-[200px] md:w-[400px]"
+            className="w-[200px] md:w-[280px]"
             src="/logo.svg"
             alt="DSCVRY"
           />
         </h1>
-        <div className="mb-8 flex items-center justify-center space-x-2">
+        <div className="mb-6 flex items-center justify-center space-x-2">
           <input
             ref={inputRef}
             className="w-full max-w-[464px] border border-coffee-600 bg-coffee-800 px-4 py-2 placeholder:text-coffee-400"
