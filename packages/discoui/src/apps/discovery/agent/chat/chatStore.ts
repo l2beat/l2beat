@@ -38,9 +38,11 @@ export function providerName(id: string | undefined): string {
 export function connectChat(): () => void {
   const source = new EventSource('/api/agent/chat/events')
   source.onopen = () => useChatStore.setState({ connected: true })
-  // A reconnect replays the chat again; until then the old state may be stale.
-  source.onerror = () =>
+  // A reconnect or a reopened panel gets the chat replayed again; until then
+  // the old state may be stale.
+  const disconnect = () =>
     useChatStore.setState({ connected: false, replayed: false })
+  source.onerror = disconnect
   source.onmessage = (message) => {
     const event = JSON.parse(message.data) as StreamEvent
     const before = useChatStore.getState().status
@@ -52,7 +54,10 @@ export function connectChat(): () => void {
       applyRememberedSettings()
     }
   }
-  return () => source.close()
+  return () => {
+    source.close()
+    disconnect()
+  }
 }
 
 export function chooseProvider(provider: ProviderId) {
