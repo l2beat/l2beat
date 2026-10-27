@@ -63,6 +63,8 @@ export type PanelId = (typeof PANEL_IDS)[number]
 interface Panel {
   icon: FC<{ className?: string }>
   body: () => JSX.Element
+  // The id, capitalized, unless it reads wrong that way.
+  label?: string
 }
 
 const PANELS: Record<PanelId, Panel> = {
@@ -79,7 +81,7 @@ const PANELS: Record<PanelId, Panel> = {
   tvl: { icon: IconToken, body: TvlPanel },
   tvlMap: { icon: IconTreemap, body: TvlMapPanel },
   usage: { icon: IconShare, body: UsagePanel },
-  ai: { icon: IconSparkle, body: ChatPanel },
+  ai: { icon: IconSparkle, body: ChatPanel, label: 'AI' },
 }
 
 const unallowedInReadOnly = new Set([
@@ -100,11 +102,11 @@ function isPanelId(key: string): key is PanelId {
 }
 
 function PanelLabel(props: { id: PanelId }) {
-  const Icon = PANELS[props.id].icon
+  const { icon: Icon, label } = PANELS[props.id]
   return (
     <span className="flex items-center gap-1.5">
       <Icon className="size-3.5 shrink-0" />
-      <span>{props.id}</span>
+      <span>{label ?? props.id}</span>
     </span>
   )
 }
