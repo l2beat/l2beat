@@ -23,7 +23,7 @@ export function decodePacked(
     ...field,
     size: packedTypeSize(field.type),
   }))
-  const expectedLength = fields.reduce((sum, field) => sum + field.size, 0)
+  const expectedLength = packedSchemaSize(schema)
   const actualLength = (encoded.length - 2) / 2
 
   if (!Number.isInteger(actualLength) || actualLength !== expectedLength) {
@@ -47,6 +47,13 @@ export function decodePacked(
   }
   if (chainId !== undefined) decoded.chainId = chainId
   return decoded
+}
+
+export function packedSchemaSize(schema: PackedSchema): number {
+  return schema.fields.reduce(
+    (sum, field) => sum + packedTypeSize(field.type),
+    0,
+  )
 }
 
 function decodePackedField(

@@ -1,5 +1,8 @@
 import type { Chain } from '../../../config/types'
-import type { AlchemyClient } from '../../../third-party/AlchemyClient'
+import type {
+  AccountInfo,
+  AlchemyClient,
+} from '../../../third-party/AlchemyClient'
 import type { IAddressService } from './AddressService'
 import type { AddressAlias } from './addressAlias'
 import type { Decoder, Transaction } from './Decoder'
@@ -32,7 +35,15 @@ export interface AddressResult {
   address: `0x${string}`
   name?: string
   alias?: AddressAlias
+  account?: AccountInfo
+  // Set for an OptimismPortal: the L2 chain where its deposits execute.
+  depositChainId?: number
   abi: SignatureResult[]
+}
+
+export interface StateResult {
+  blockNumber: string
+  results: (`0x${string}` | null)[]
 }
 
 export interface TransactionQuery {
@@ -88,6 +99,8 @@ export class ApiController {
       address,
       name: result.name,
       alias: result.alias,
+      account: result.account,
+      depositChainId: result.depositChainId,
       abi: result.abi,
     }
   }
@@ -96,6 +109,16 @@ export class ApiController {
     const chain = this.chains.find((x) => x.chainId === chainId)
     if (!chain) throw new Error('Unknown chain id')
     return await this.alchemyClient.getSafeState(address, chain)
+  }
+
+  async readState(
+    chainId: number,
+    address: `0x${string}`,
+    calls: `0x${string}`[],
+  ): Promise<StateResult> {
+    const chain = this.chains.find((x) => x.chainId === chainId)
+    if (!chain) throw new Error('Unknown chain id')
+    return await this.alchemyClient.readState(address, calls, chain)
   }
 
   lookupPreimages(hashes: `0x${string}`[]): PreimageResult[] {

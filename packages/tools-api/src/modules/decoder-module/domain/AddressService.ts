@@ -2,7 +2,10 @@ import { assert } from '@l2beat/shared-pure'
 import { toFunctionSelector } from 'viem'
 import { decodeAddress } from '../../../config/address'
 import type { Address, Chain, DiscoveredConfig } from '../../../config/types'
-import type { AlchemyClient } from '../../../third-party/AlchemyClient'
+import type {
+  AccountInfo,
+  AlchemyClient,
+} from '../../../third-party/AlchemyClient'
 import type {
   ContractInfo,
   EtherscanClient,
@@ -20,6 +23,8 @@ export interface AddressInfo {
   alias?: AddressAlias
   explorerLink: string
   eoa?: boolean
+  account?: AccountInfo
+  depositChainId?: number
   unverified?: boolean
   fromDiscovery?: boolean
   token?: {
@@ -49,8 +54,8 @@ export class AddressService implements IAddressService {
     const chain = this.chains.find((x) => x.shortName === shortChainName)
     assert(chain, `No chain found for ${shortChainName}`)
 
-    const [isEoa, contractInfo] = await Promise.all([
-      this.alchemyClient.hasNoCode(noprefix, chain),
+    const [account, contractInfo] = await Promise.all([
+      this.alchemyClient.getAccount(noprefix, chain),
       chain.etherscanApi
         ? this.etherscanClient.getContractInfo(chain.chainId, noprefix)
         : undefined,
@@ -79,6 +84,7 @@ export class AddressService implements IAddressService {
         }),
       )
 
+    const isEoa = account.kind !== 'contract'
     const unverified =
       !isEoa &&
       ((contractInfo && !contractInfo.verified) ||
@@ -95,6 +101,8 @@ export class AddressService implements IAddressService {
       name,
       alias: findAddressAlias(noprefix, chain.chainId, this.discovered.names),
       eoa: isEoa,
+      account,
+      depositChainId: this.discovered.depositChains[address],
       fromDiscovery: !!discoveryName || !!discoveryAbi,
       unverified,
       token,

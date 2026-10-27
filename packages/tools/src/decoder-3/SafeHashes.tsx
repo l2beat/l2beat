@@ -3,7 +3,11 @@ import { useId, useMemo, useState } from 'react'
 import { type Hex, isAddress } from 'viem'
 import { getSafeState } from './api'
 import { useRegisterKnownHash } from './HashReferences'
-import { calculateNearbySafeHashes, calculateSafeHashes } from './safe'
+import {
+  calculateNearbySafeHashes,
+  calculateSafeHashes,
+  matchExpectedHashes,
+} from './safe'
 
 export function SafeHashes(props: {
   calldata: Hex
@@ -15,6 +19,7 @@ export function SafeHashes(props: {
   const id = useId()
   const [address, setAddress] = useState<string>(props.address ?? '')
   const [nonceOverride, setNonceOverride] = useState<string>()
+  const [expectedText, setExpectedText] = useState('')
   const chainId = props.chainId ?? 0
   const validAddress = isAddress(address, { strict: false })
   const query = useQuery({
@@ -75,6 +80,30 @@ export function SafeHashes(props: {
     ],
   )
   useRegisterKnownHash(knownHash)
+
+  const expected = useMemo(() => {
+    if (!hashes || !query.data) return
+    const pasted = (expectedText.match(/0x[\da-f]{64}/gi) ?? []) as Hex[]
+    if (pasted.length === 0) return
+    return matchExpectedHashes(
+      {
+        calldata: props.calldata,
+        safe: address as Hex,
+        chainId,
+        version: query.data.version,
+        nonce,
+      },
+      pasted,
+    )
+  }, [
+    hashes?.safeTxHash,
+    expectedText,
+    props.calldata,
+    address,
+    chainId,
+    query.data?.version,
+    nonce,
+  ])
 
   return (
     <section
@@ -182,6 +211,69 @@ export function SafeHashes(props: {
             </summary>
             <HashValue label="Signing data" value={hashes.signingData} />
           </details>
+          <label
+            htmlFor={`${id}-expected`}
+            className="mt-3 mb-1 block text-zinc-400"
+          >
+            Expected hashes
+          </label>
+          <textarea
+            id={`${id}-expected`}
+            rows={3}
+            className="w-full rounded-sm bg-zinc-800 px-2 py-1 font-mono"
+            placeholder="Paste the domain and message hashes from the task instructions"
+            spellCheck={false}
+            value={expectedText}
+            onChange={(e) => setExpectedText(e.target.value)}
+          />
+          {expected && (
+            <ul aria-label="Expected hash matches" className="mt-2 space-y-1">
+              {expected.matches.map((match) => (
+                <li key={match.hash} className="break-all">
+                  <code className="text-zinc-200">{match.hash}</code>{' '}
+                  {!match.kind && (
+                    <span className="text-red-400">
+                      matches nothing for this Safe (domain hash, or message and
+                      Safe transaction hash at nonces {expected.from} to{' '}
+                      {expected.to})
+                    </span>
+                  )}
+                  {match.kind &&
+                    (match.nonce === undefined || match.nonce === nonce) && (
+                      <span className="text-green-400">
+                        matches the {match.kind}
+                        {match.nonce !== undefined &&
+                          ` at nonce ${match.nonce}`}
+                      </span>
+                    )}
+                  {match.kind &&
+                    match.nonce !== undefined &&
+                    match.nonce !== nonce && (
+                      <>
+                        <span className="text-amber-400">
+                          matches the {match.kind} at nonce {match.nonce}, not
+                          the selected nonce {nonce}
+                        </span>{' '}
+                        <button
+                          type="button"
+                          className="min-h-8 text-blue-400"
+                          onClick={() => setNonceOverride(match.nonce)}
+                        >
+                          Use nonce {match.nonce}
+                        </button>
+                      </>
+                    )}
+                </li>
+              ))}
+            </ul>
+          )}
+          {expected?.matches.some(({ kind }) => kind === 'message hash') && (
+            <p className="mt-2 text-zinc-400">
+              A message hash covers the call and its nonce but not the Safe, so
+              identical calls to two Safes share it. Only the domain hash ties
+              it to this Safe and chain.
+            </p>
+          )}
         </>
       )}
     </section>

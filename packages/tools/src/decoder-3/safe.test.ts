@@ -12,7 +12,9 @@ import { decode } from './plugins'
 import {
   calculateNearbySafeHashes,
   calculateSafeHashes,
+  decodeSafeSignatures,
   decodeSafeTransaction,
+  matchExpectedHashes,
   SAFE_ABI,
 } from './safe'
 
@@ -300,5 +302,122 @@ describe('Safe hashes', () => {
     ]) {
       expect(() => calculateSafeHashes({ ...input, ...change })).toThrow()
     }
+  })
+})
+
+describe(decodeSafeSignatures.name, () => {
+  const owner = '0xc2819dc788505aac350142a7a707bf9d03e3bd03'
+  const word = (value: bigint) => value.toString(16).padStart(64, '0')
+  const approval = `${word(BigInt(owner))}${word(0n)}01`
+
+  it('labels the operation and splits signatures in execTransaction', () => {
+    const tx = decodeSafeTransaction(first.callData)
+    const calldata = encodeFunctionData({
+      abi: SAFE_ABI,
+      functionName: 'execTransaction',
+      args: [
+        tx.to,
+        tx.value,
+        tx.data,
+        1,
+        tx.safeTxGas,
+        tx.baseGas,
+        tx.gasPrice,
+        tx.gasToken,
+        tx.refundReceiver,
+        `0x${approval}`,
+      ],
+    })
+    const decoded = decode(calldata, [], 1, first.target)
+    const operation = decoded?.members?.find((x) => x.name === 'operation')
+    expect(operation?.note).toEqual({ text: 'delegatecall', warning: true })
+    const signatures = decoded?.members?.find((x) => x.name === 'signatures')
+    expect(signatures?.type).toEqual('array')
+    expect(signatures?.members?.[0]?.note?.text).toEqual(
+      'pre-validated: the signer sends this call or approved the hash onchain',
+    )
+    expect(signatures?.members?.[0]?.members?.[0]?.value).toEqual(owner)
+  })
+
+  it('reads ECDSA, eth_sign and contract signatures', () => {
+    const r = word(1n)
+    const s = word(2n)
+    const contractData = 'abcd'
+    const signatures: Hex = `0x${r}${s}1b${r}${s}1f${word(BigInt(owner))}${word(195n)}00${word(2n)}${contractData}`
+    const decoded = decodeSafeSignatures(signatures, 1)
+
+    expect(decoded?.members?.map((x) => x.note?.text)).toEqual([
+      'ECDSA signature',
+      'eth_sign signature',
+      'contract signature (EIP-1271), checked by the signer',
+    ])
+    expect(decoded?.members?.[0]?.members?.[0]?.value).toEqual('27')
+    expect(decoded?.members?.[0]?.members?.[1]?.opaque).toEqual(true)
+    expect(decoded?.members?.[2]?.members?.map((x) => x.value)).toEqual([
+      owner,
+      `0x${contractData}`,
+    ])
+  })
+
+  it('leaves bytes that are not Safe signatures undecoded', () => {
+    expect(decodeSafeSignatures('0x')).toEqual(undefined)
+    expect(decodeSafeSignatures('0x1234')).toEqual(undefined)
+    expect(decodeSafeSignatures(`0x${approval}00`)).toEqual(undefined)
+    // A pre-validated signature whose r is not an address.
+    expect(decodeSafeSignatures(`0x${word(2n ** 255n)}${word(0n)}01`)).toEqual(
+      undefined,
+    )
+    // A contract signature whose data points past the end.
+    expect(
+      decodeSafeSignatures(`0x${word(BigInt(owner))}${word(65n)}00`),
+    ).toEqual(undefined)
+  })
+})
+
+describe(matchExpectedHashes.name, () => {
+  const data = readFileSync(
+    `${__dirname}/fixtures/unichain-proposer-rotation.txt`,
+    'utf8',
+  ).trim() as Hex
+  const council = decodeFunctionData({ abi: multicallAbi, data }).args[0][0]!
+  const councilInput = {
+    calldata: council.callData,
+    safe: council.target,
+    chainId: 1,
+    version: '1.3.0',
+    nonce: '71',
+  }
+  // From the task's VALIDATION.md.
+  const domain =
+    '0xdf53d510b56e539b90b369ef08fce3631020fbf921e3136ea5f8747c20bce967'
+  const message =
+    '0xd1ca01c6a00f0dc65b492552ee6de24afc78285209cd2d70532b040c3a297d3f'
+
+  it('matches the task hashes at the selected nonce', () => {
+    expect(
+      matchExpectedHashes(councilInput, [domain, message]).matches,
+    ).toEqual([
+      { hash: domain, kind: 'domain hash' },
+      { hash: message, kind: 'message hash', nonce: '71' },
+    ])
+  })
+
+  it('finds the pinned nonce when the selected nonce differs', () => {
+    const result = matchExpectedHashes({ ...councilInput, nonce: '68' }, [
+      message.toUpperCase().replace('0X', '0x') as Hex,
+    ])
+    expect(result.matches).toEqual([
+      { hash: message, kind: 'message hash', nonce: '71' },
+    ])
+    expect(result.from).toEqual('0')
+    expect(result.to).toEqual('168')
+  })
+
+  it('reports hashes that match nothing', () => {
+    const other =
+      '0xa4a9c312badf3fcaa05eafe5dc9bee8bd9316c78ee8b0bebe3115bb21b732672'
+    expect(matchExpectedHashes(councilInput, [other]).matches).toEqual([
+      { hash: other },
+    ])
   })
 })

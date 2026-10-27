@@ -4,6 +4,7 @@ import type {
   LookupQuery,
   PreimageResult,
   SignatureResult,
+  StateResult,
   TransactionQuery,
   TransactionResult,
 } from '@l2beat/tools-api/types'
@@ -17,6 +18,7 @@ export {
 }
 
 export type AddressAlias = NonNullable<AddressResult['alias']>
+export type AccountInfo = NonNullable<AddressResult['account']>
 
 const baseUrl =
   process.env.NODE_ENV === 'production'
@@ -39,6 +41,21 @@ export async function getSafeState(
   })
   if (!res.ok)
     throw new Error('Could not read Safe version and nonce from RPC.')
+  return await res.json()
+}
+
+export async function readState(
+  chainId: number,
+  address: `0x${string}`,
+  calls: `0x${string}`[],
+): Promise<StateResult> {
+  const res = await fetch(`${baseUrl}/api/read-state`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chainId, address: address.toLowerCase(), calls }),
+    signal: AbortSignal.timeout(40_000),
+  })
+  if (!res.ok) throw new Error('Could not read state from RPC.')
   return await res.json()
 }
 

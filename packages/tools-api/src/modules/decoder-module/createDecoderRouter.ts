@@ -2,6 +2,7 @@ import { v as z } from '@l2beat/validate'
 import express from 'express'
 import type { Chain } from '../../types'
 import type { ApiController, ApiQuery } from './domain/ApiController'
+import { isAllowedStateRead } from './domain/stateReads'
 
 export function createDecoderRouter(
   chains: Chain[],
@@ -52,6 +53,25 @@ export function createDecoderRouter(
     }
   })
 
+  router.post('/api/read-state', express.json(), async (req, res) => {
+    const query = StateRequest.parse(req.body)
+    if (!chains.some((chain) => chain.chainId === query.chainId)) {
+      res.status(400).json({ error: 'Unknown chain id' })
+      return
+    }
+    if (!query.calls.every(isAllowedStateRead)) {
+      res.status(400).json({ error: 'Unsupported state read' })
+      return
+    }
+    try {
+      res.json(
+        await controller.readState(query.chainId, query.address, query.calls),
+      )
+    } catch {
+      res.status(502).json({ error: 'Could not read state from RPC.' })
+    }
+  })
+
   router.post('/api/lookup-preimages', express.json(), (req, res) => {
     const query = PreimageRequest.parse(req.body)
     const result = controller.lookupPreimages(query)
@@ -85,6 +105,22 @@ const AddressRequest = z.object({
   address: z
     .string()
     .check((v): v is `0x${string}` => /^0x[a-f\d]{40}$/.test(v)),
+})
+
+const StateRequest = z.object({
+  chainId: z.number(),
+  address: z
+    .string()
+    .check((v): v is `0x${string}` => /^0x[a-f\d]{40}$/.test(v)),
+  calls: z
+    .array(
+      z
+        .string()
+        .check((v): v is `0x${string}` =>
+          /^0x[a-f\d]{8}(?:[a-f\d]{64}){0,4}$/.test(v),
+        ),
+    )
+    .check((v) => v.length > 0 && v.length <= 8),
 })
 
 const PreimageRequest = z.array(

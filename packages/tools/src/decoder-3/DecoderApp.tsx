@@ -17,11 +17,14 @@ import { create } from 'zustand'
 import { Form, type FormValues } from '../decoder-new/form/Form'
 import * as API from './api'
 import type { DecodedValue } from './decode'
+import { getCallContext, isOpDeposit, onDepositChain } from './deposits'
 import { formatNumber, getFormatHint } from './format'
 import { HashReferencesProvider, useHashReferences } from './HashReferences'
 import { findKnownHashes } from './knownHashes'
 import { decode } from './plugins'
 import { SafeHashes } from './SafeHashes'
+import { StateChanges } from './StateChanges'
+import { getStateReads } from './stateDiff'
 
 export function DecoderApp() {
   const [values, setValues] = useState<FormValues | undefined>()
@@ -129,6 +132,10 @@ interface State {
   requestedSignatures: Record<`0x${string}`, boolean>
   names: Record<`${number}:0x${string}`, string>
   aliases: Record<`${number}:0x${string}`, API.AddressAlias>
+  accounts: Record<`${number}:0x${string}`, API.AccountInfo>
+  // L2 chain id of an OptimismPortal, null once looked up and not a portal.
+  depositChains: Record<`${number}:0x${string}`, number | null>
+  abis: Record<`${number}:0x${string}`, string[]>
   requestedAddresses: Record<`${number}:0x${string}`, boolean>
   preimages: Record<`0x${string}`, string>
   requestedPreimages: Record<`0x${string}`, boolean>
@@ -146,6 +153,17 @@ interface Actions {
     address: `0x${string}`,
     alias: API.AddressAlias,
   ): void
+  setAccount(
+    chainId: number,
+    address: `0x${string}`,
+    account: API.AccountInfo,
+  ): void
+  setDepositChain(
+    chainId: number,
+    address: `0x${string}`,
+    depositChainId: number | null,
+  ): void
+  setAbi(chainId: number, address: `0x${string}`, abi: string[]): void
   requestPreimage(hash: `0x${string}`): void
   setPreimage(hash: `0x${string}`, preimage: string): void
   showTooltip(id: string): void
@@ -171,6 +189,9 @@ const useStore = create<State & Actions>((set) => ({
   requestedSignatures: {},
   names: {},
   aliases: {},
+  accounts: {},
+  depositChains: {},
+  abis: {},
   requestedAddresses: {},
   preimages: {},
   requestedPreimages: {},
@@ -235,6 +256,21 @@ const useStore = create<State & Actions>((set) => ({
     set((state) => ({
       aliases: { ...state.aliases, [`${chainId}:${address}`]: alias },
     })),
+  setAccount: (chainId, address, account) =>
+    set((state) => ({
+      accounts: { ...state.accounts, [`${chainId}:${address}`]: account },
+    })),
+  setDepositChain: (chainId, address, depositChainId) =>
+    set((state) => ({
+      depositChains: {
+        ...state.depositChains,
+        [`${chainId}:${address}`]: depositChainId,
+      },
+    })),
+  setAbi: (chainId, address, abi) =>
+    set((state) => ({
+      abis: { ...state.abis, [`${chainId}:${address}`]: abi },
+    })),
   requestPreimage: (hash) =>
     set((state) => {
       if (state.requestedPreimages[hash]) return {}
@@ -298,7 +334,14 @@ function APIChecker() {
       void API.lookupAddress(chainId, address).then((res) => {
         if (res.name) store.setName(chainId, address, res.name)
         if (res.alias) store.setAlias(chainId, address, res.alias)
+        if (res.account) store.setAccount(chainId, address, res.account)
+        store.setDepositChain(chainId, address, res.depositChainId ?? null)
         if (res.abi.length > 0) {
+          store.setAbi(
+            chainId,
+            address,
+            res.abi.map((x) => x.signature),
+          )
           store.addSignatures(
             res.abi.map((x) => ({
               selector: x.selector,
@@ -310,7 +353,15 @@ function APIChecker() {
         }
       })
     }
-  }, [requestedAddresses, store.addSignatures, store.setName, store.setAlias])
+  }, [
+    requestedAddresses,
+    store.addSignatures,
+    store.setName,
+    store.setAlias,
+    store.setAccount,
+    store.setDepositChain,
+    store.setAbi,
+  ])
 
   useEffect(() => {
     const preimagesToFetch: string[] = []
@@ -422,12 +473,55 @@ function AbiManager() {
   )
 }
 
-function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
+function DecodedView({
+  value,
+  path,
+  executor,
+}: {
+  value: DecodedValue
+  path: string
+  // The account whose code makes the calls in this value.
+  executor?: `0x${string}`
+}) {
   const store = useStore()
   const anchor = useId()
   const { target } = useHashReferences()
   const [lessMembers, setLessMembers] = useState(false)
   const [decoded, setDecoded] = useState(value)
+
+  const key =
+    decoded.chainId && decoded.address
+      ? (`${decoded.chainId}:${decoded.address}` as const)
+      : undefined
+  const { sender, l2Sender, childExecutor } = getCallContext(
+    value,
+    decoded,
+    executor,
+    (address) =>
+      decoded.chainId
+        ? store.accounts[`${decoded.chainId}:${address}`]?.kind
+        : undefined,
+  )
+  const isDeposit = isOpDeposit(decoded)
+  const depositChainId = isDeposit && key ? store.depositChains[key] : undefined
+  const shown = useMemo(
+    () =>
+      isDeposit && depositChainId !== undefined
+        ? onDepositChain(decoded, depositChainId ?? 0)
+        : decoded,
+    [decoded, isDeposit, depositChainId],
+  )
+  const abi = key ? store.abis[key] : undefined
+  const stateReads = useMemo(
+    () => getStateReads(decoded, { abi, sender }),
+    [decoded, abi, sender],
+  )
+
+  useEffect(() => {
+    if (isDeposit && sender && decoded.chainId) {
+      store.requestAddress(decoded.chainId, sender)
+    }
+  }, [isDeposit, sender, decoded.chainId, store.requestAddress])
 
   useLayoutEffect(() => {
     if (
@@ -445,7 +539,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
   }, [value])
 
   useEffect(() => {
-    if (decoded.type === 'bytes') {
+    if (decoded.type === 'bytes' && !decoded.opaque) {
       const selector = decoded.bytes.slice(0, 10) as `0x${string}`
       store.requestSignature(selector)
       const signatures =
@@ -483,24 +577,25 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
     </>
   )
 
-  const members = decoded.members && decoded.members.length > 0 && (
+  const members = shown.members && shown.members.length > 0 && (
     <>
       <button
         className="text-zinc-500"
         onClick={() => setLessMembers(!lessMembers)}
       >
         {!lessMembers && '[-]'}
-        {lessMembers && decoded.members.length === 1 && '[+ 1 member]'}
+        {lessMembers && shown.members.length === 1 && '[+ 1 member]'}
         {lessMembers &&
-          decoded.members.length > 1 &&
-          `[+ ${decoded.members.length} members]`}
+          shown.members.length > 1 &&
+          `[+ ${shown.members.length} members]`}
       </button>
       <ol className={clsx('pl-4', lessMembers && 'hidden')}>
-        {decoded.members.map((m, i) => (
+        {shown.members.map((m, i) => (
           <li key={i}>
             <DecodedView
               value={m}
               path={`${path}${/^\d+$/.test(m.name ?? '') ? `[${m.name}]` : `.${m.name ?? i}`}`}
+              executor={childExecutor}
             />
           </li>
         ))}
@@ -532,6 +627,9 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
           <span className="text-orange-400">{decoded.functionName}</span>
         </ValueWithTooltip>
         <span className="text-zinc-300">(</span>
+        {isDeposit && (
+          <DepositInfo l2ChainId={depositChainId} l2Sender={l2Sender} />
+        )}
         {members}
         <span className="text-zinc-300">)</span>
         {decoded.bytes.slice(0, 10).toLowerCase() === '0x6a761202' && (
@@ -544,6 +642,15 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
             anchor={anchor}
           />
         )}
+        {stateReads && decoded.address && !!decoded.chainId && (
+          <StateChanges
+            key={`${decoded.chainId}:${decoded.address}:${decoded.bytes}`}
+            reads={stateReads}
+            address={decoded.address}
+            chainId={decoded.chainId}
+            renderValue={(value) => <PlainValue value={value} />}
+          />
+        )}
       </div>
     )
   }
@@ -554,6 +661,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
       <div className="group">
         {nameElement}
         <span className="text-zinc-300">{isTuple ? '{' : '['}</span>
+        <Note note={decoded.note} />
         {members}
         <span className="text-zinc-300">{isTuple ? '}' : ']'}</span>
       </div>
@@ -565,6 +673,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
       <div>
         {nameElement}
         <DisplayBytes bytes={decoded.bytes} />
+        <Note note={decoded.note} />
         <HashMeaning hash={decoded.bytes} chainId={decoded.chainId} />
       </div>
     )
@@ -575,6 +684,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
       <div>
         {nameElement}
         <DisplayAddress address={decoded.bytes} chainId={decoded.chainId} />
+        <Note note={decoded.note} />
       </div>
     )
   }
@@ -588,6 +698,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
           bytes={decoded.bytes}
           value={decoded.value}
         />
+        <Note note={decoded.note} />
       </div>
     )
   }
@@ -601,6 +712,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
           <span>{decoded.value}</span>
           <span className="select-none text-zinc-500">&rdquo;</span>
         </ValueWithTooltip>
+        <Note note={decoded.note} />
       </div>
     )
   }
@@ -612,9 +724,77 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
         <ValueWithTooltip items={[{ name: 'Copy bytes', copy: decoded.bytes }]}>
           <span className="font-mono">{decoded.value}</span>
         </ValueWithTooltip>
+        <Note note={decoded.note} />
       </div>
     )
   }
+}
+
+function Note({ note }: { note: DecodedValue['note'] }) {
+  if (!note) return null
+  return (
+    <span
+      className={clsx(
+        'ml-2 font-sans text-sm',
+        note.warning ? 'text-amber-400' : 'text-zinc-500',
+      )}
+    >
+      {note.text}
+    </span>
+  )
+}
+
+function PlainValue({ value }: { value: DecodedValue }) {
+  if (value.type === 'address') {
+    return <DisplayAddress address={value.bytes} chainId={value.chainId} />
+  }
+  if (value.type === 'bytes' || value.type === 'tuple') {
+    return <DisplayBytes bytes={value.bytes} />
+  }
+  if (value.type === 'number') {
+    return (
+      <>
+        <DisplayNumber
+          name={value.name}
+          bytes={value.bytes}
+          value={value.value}
+        />
+        <Note note={value.note} />
+      </>
+    )
+  }
+  return <span className="font-mono">{value.value}</span>
+}
+
+function DepositInfo(props: {
+  l2ChainId: number | null | undefined
+  l2Sender: `0x${string}` | undefined
+}) {
+  const chains = useContext(ChainsContext)
+  if (props.l2ChainId === undefined) return null
+  if (props.l2ChainId === null) {
+    return (
+      <span className="ml-2 font-sans text-amber-400 text-sm">
+        deposit to an L2 that L2BEAT does not know, so its target is not looked
+        up
+      </span>
+    )
+  }
+  const chain = chains.find((chain) => chain.chainId === props.l2ChainId)
+  return (
+    <span className="ml-2 font-sans text-sm text-zinc-400">
+      runs on {chain?.name ?? 'chain'} ({props.l2ChainId}) as{' '}
+      {props.l2Sender ? (
+        <DisplayAddress
+          short
+          address={props.l2Sender}
+          chainId={props.l2ChainId}
+        />
+      ) : (
+        'its sender, aliased if that is a contract'
+      )}
+    </span>
+  )
 }
 
 function HashMeaning({
@@ -799,6 +979,10 @@ function DisplayAddress(props: {
     props.chainId && props.address
       ? store.names[`${props.chainId}:${props.address}`]
       : undefined
+  const account =
+    props.chainId && props.address
+      ? store.accounts[`${props.chainId}:${props.address}`]
+      : undefined
 
   const chains = useContext(ChainsContext)
   const chain = chains.find((x) => x.chainId === props.chainId)
@@ -839,6 +1023,9 @@ function DisplayAddress(props: {
           )}
         </span>
       </ValueWithTooltip>
+      {account && !props.short && props.address !== ADDRESS_ZERO && (
+        <AccountKind account={account} chainId={props.chainId} />
+      )}
       {alias && !props.short && (
         <span
           className="block pl-4 text-sm text-zinc-400"
@@ -865,6 +1052,50 @@ function DisplayAddress(props: {
         </span>
       )}
     </>
+  )
+}
+
+function AccountKind(props: {
+  account: API.AccountInfo
+  chainId: number | undefined
+}) {
+  const chains = useContext(ChainsContext)
+  // An address argument may belong to another chain than its call.
+  const chain =
+    props.chainId !== 1
+      ? chains.find((chain) => chain.chainId === props.chainId)?.name
+      : undefined
+  const where = chain ? ` on ${chain}` : ''
+  if (props.account.kind === 'contract') {
+    return (
+      <span className="ml-2 font-sans text-sm text-zinc-500">
+        contract{where}
+      </span>
+    )
+  }
+  // Without code or transactions, nothing shows that the address is an EOA.
+  const kind =
+    props.account.kind === 'delegated'
+      ? 'EIP-7702 EOA'
+      : props.account.nonce === '0'
+        ? 'no code'
+        : 'EOA'
+  return (
+    <span className="ml-2 font-sans text-sm text-zinc-400">
+      {kind}
+      {where}
+      {props.account.nonce !== undefined && ` · nonce ${props.account.nonce}`}
+      {props.account.delegate && (
+        <>
+          {' · delegates to '}
+          <DisplayAddress
+            short
+            address={props.account.delegate}
+            chainId={props.chainId}
+          />
+        </>
+      )}
+    </span>
   )
 }
 
