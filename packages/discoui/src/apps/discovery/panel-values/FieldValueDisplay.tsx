@@ -132,7 +132,9 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
 function getNameNode(name: FieldValue | undefined, index: number | undefined) {
   if (name?.type === 'string') {
     return (
-      <span className="font-mono text-coffee-400 text-xs">{name.value}:</span>
+      <span className="font-medium font-mono text-coffee-300 text-xs">
+        {name.value}:
+      </span>
     )
   }
   if (name) {

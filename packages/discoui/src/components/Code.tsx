@@ -9,7 +9,7 @@ export function Code({ content, className }: Props) {
   return (
     <code
       className={cn(
-        'flex overflow-y-auto border border-coffee-400 bg-coffee-700 px-2 py-1 text-2xs text-coffee-400',
+        'flex overflow-y-auto rounded-sm border border-coffee-600 bg-coffee-800 px-2.5 py-1.5 font-mono text-coffee-200 text-xs',
         className,
       )}
     >

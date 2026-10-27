@@ -29,10 +29,11 @@ export function DescriptionEditor(props: Props) {
         onChange={(e) => setDescription(e.target.value ?? undefined)}
         placeholder="No description"
       />
+      <span className="mt-1 text-2xs text-coffee-400">Preview</span>
       <TextArea
         value={interpolateDescription(description)}
-        placeholder="Preview"
-        className="bg-coffee-700/50 selection:bg-coffee-600"
+        placeholder="Nothing to preview"
+        className="cursor-default resize-none border-coffee-700 bg-coffee-900 text-coffee-300 focus:border-coffee-700"
         readOnly
       />
       <div className="flex w-full justify-end">
@@ -43,6 +44,8 @@ export function DescriptionEditor(props: Props) {
             props.setContent(description)
           }}
           disabled={!isDirty}
+          title="Save description"
+          aria-label="Save description"
         >
           <IconTick className="size-4 text-coffee-200/80" />
         </Button>
@@ -53,6 +56,9 @@ export function DescriptionEditor(props: Props) {
             setDescription('')
             props.setContent(undefined)
           }}
+          disabled={description === '' && props.content === undefined}
+          title="Clear description"
+          aria-label="Clear description"
         >
           <IconClose className="size-4 text-coffee-200/80" />
         </Button>

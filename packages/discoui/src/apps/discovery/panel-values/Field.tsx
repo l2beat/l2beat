@@ -161,10 +161,10 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
                 )}
                 <span
                   className={cn(
-                    'inline-block w-3 select-none rounded-xs text-center text-2xs',
+                    'inline-block w-3.5 select-none rounded-xs py-0.5 text-center font-mono font-semibold text-[11px] text-coffee-100 leading-3',
                     source === 'template'
-                      ? 'bg-aux-green/15 text-aux-green'
-                      : 'bg-aux-cyan/15 text-aux-cyan',
+                      ? 'bg-aux-green/25'
+                      : 'bg-aux-cyan/25',
                   )}
                   title={`from ${source}`}
                 >
