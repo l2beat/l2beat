@@ -14,6 +14,10 @@ const HASH_BYTES = 32
 const ADDRESS_BYTES = 20
 const CHAIN_ID_DEFAULT = 1
 export const CALLDATA_BYTES_MAX = 64 * 1024
+// Vercel rejects URLs over 14 KB, so longer data stays in this browser like decoder-new did.
+const LINK_DATA_LENGTH_MAX = 8 * 1024
+const LOCAL_STORAGE_DATA = '0xLOCALSTORAGE'
+const LOCAL_STORAGE_KEY = 'data'
 
 export function readLink(search: URLSearchParams): DecoderLink | undefined {
   if (search.size === 0) return undefined
@@ -52,10 +56,21 @@ export async function writeLink(values: FormValues): Promise<string> {
     if (values.chainId !== 0) params.set('chainId', values.chainId.toString())
     return params.toString()
   }
-  params.set('data', await compressCalldata(values.data as `0x${string}`))
+  const data = await compressCalldata(values.data as `0x${string}`)
+  if (data.length > LINK_DATA_LENGTH_MAX) {
+    localStorage.setItem(LOCAL_STORAGE_KEY, data)
+    params.set('data', LOCAL_STORAGE_DATA)
+  } else {
+    params.set('data', data)
+  }
   if (values.address) params.set('to', values.address)
   params.set('chainId', values.chainId.toString())
   return params.toString()
+}
+
+export function readLinkData(data: string) {
+  if (data !== LOCAL_STORAGE_DATA) return data
+  return localStorage.getItem(LOCAL_STORAGE_KEY) ?? ''
 }
 
 function parseChainId(value: string | null): number | undefined | 'invalid' {

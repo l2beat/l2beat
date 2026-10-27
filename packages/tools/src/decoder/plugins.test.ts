@@ -87,6 +87,7 @@ describe('packed argument plugin', () => {
 
 describe(decodeAs.name, () => {
   const TARGET = '0x1111111111111111111111111111111111111111'
+  const TOKEN = '0x4444444444444444444444444444444444444444'
 
   it('decodes a parameter list without parentheses', () => {
     const bytes = encodeAbiParameters(parseAbiParameters('address, bytes'), [
@@ -118,6 +119,45 @@ describe(decodeAs.name, () => {
       ['a', '7'],
       ['b', 'hi'],
     ])
+  })
+
+  it('routes a retryable ticket to its L2 target', () => {
+    const bytes = encodeAbiParameters(
+      parseAbiParameters('address, address, uint256, uint256, uint256, bytes'),
+      [
+        '0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f',
+        TARGET,
+        0n,
+        100_000n,
+        1n,
+        '0xdeadbeef',
+      ],
+    )
+
+    const decoded = decodeAs('retryableTicket', bytes, 1)
+
+    const l2Calldata = decoded.members?.[5]
+    expect([
+      l2Calldata?.name,
+      l2Calldata?.address,
+      l2Calldata?.chainId,
+    ]).toEqual(['l2Calldata', TARGET, 42161])
+  })
+
+  it('marks token amounts in a custom function', () => {
+    const bytes = encodeFunctionData({
+      abi: parseAbi(['function transfer(address, uint256)']),
+      args: [TARGET, 7n],
+    })
+
+    const decoded = decodeAs(
+      'function transfer(address to, uint256 value)',
+      bytes,
+      1,
+      TOKEN,
+    )
+
+    expect(decoded.members?.[1]?.token).toEqual(TOKEN)
   })
 
   it('decodes a function call', () => {

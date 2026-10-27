@@ -1,10 +1,12 @@
+import { randomBytes } from 'node:crypto'
 import { deflateRawSync, inflateRawSync } from 'node:zlib'
-import { expect } from 'earl'
+import { expect, mockObject } from 'earl'
 import {
   CALLDATA_BYTES_MAX,
   compressCalldata,
   decompressCalldata,
   readLink,
+  readLinkData,
   writeLink,
 } from './link'
 
@@ -96,6 +98,37 @@ describe(writeLink.name, () => {
     expect(link.to).toEqual(ADDRESS)
     expect(link.chainId).toEqual(42161)
     expect(await decompressCalldata(link.data)).toEqual('0xa9059cbb0000')
+  })
+})
+
+describe('long calldata links', () => {
+  const storage = new Map<string, string>()
+  before(() => {
+    globalThis.localStorage = mockObject<Storage>({
+      getItem: (key) => storage.get(key) ?? null,
+      setItem: (key, value) => {
+        storage.set(key, value)
+      },
+    })
+  })
+  after(() => {
+    Reflect.deleteProperty(globalThis, 'localStorage')
+  })
+
+  it('keeps data too long for a URL in local storage', async () => {
+    const calldata = randomBytes(16 * 1024).toString('hex')
+    const query = await writeLink({
+      hash: '',
+      data: `0x${calldata}`,
+      address: '',
+      chainId: 1,
+    })
+    expect(query).toEqual('data=0xLOCALSTORAGE&chainId=1')
+    const link = readLink(new URLSearchParams(query))
+    if (link?.type !== 'calldata') throw new Error('Expected calldata link')
+    expect(await decompressCalldata(readLinkData(link.data))).toEqual(
+      `0x${calldata}`,
+    )
   })
 })
 

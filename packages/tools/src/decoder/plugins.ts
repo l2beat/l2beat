@@ -3,7 +3,11 @@ import { BinaryReader } from './BinaryReader'
 import { type DecodedValue, decodeType } from './decode'
 import { decodePacked, type PackedSchema } from './packed'
 import { OP_PERMISSIONED_GAME_ARGS_SCHEMA } from './packedSchemas'
-import { markTokenAmount, relayPlugins } from './relayPlugins'
+import {
+  decodeRetryableTicket,
+  markTokenAmount,
+  relayPlugins,
+} from './relayPlugins'
 import { SAFE_EXEC_ABI } from './safe'
 
 const plugins = [
@@ -63,7 +67,7 @@ export function decode(
 
 export const DECODE_AS_PRESETS = [
   'multiSend',
-  'address targetInbox, address l2Target, uint256 l2Value, uint256 gasLimit, uint256 maxFeePerGas, bytes l2Calldata',
+  'retryableTicket',
   'function upgrade((address, address, bytes32)[])',
 ]
 
@@ -83,12 +87,15 @@ export function decodeAs(
       chainId,
       members: decodeMultiSendTransactions(bytes, chainId),
     }
+  } else if (trimmed === 'retryableTicket') {
+    value = decodeRetryableTicket(bytes, chainId)
   } else if (trimmed.startsWith('function')) {
     value = decodeType(trimmed, bytes, chainId, address)
   } else {
     value = decodeType(`(${trimmed})`, bytes, chainId, address)
   }
   applyCallTargetHeuristic(value)
+  markTokenAmount(value)
   return value
 }
 

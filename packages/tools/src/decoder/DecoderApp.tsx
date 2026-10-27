@@ -25,6 +25,7 @@ import {
   type DecoderLink,
   decompressCalldata,
   readLink,
+  readLinkData,
   writeLink,
 } from './link'
 import { DECODE_AS_PRESETS, decode, decodeAs } from './plugins'
@@ -96,9 +97,10 @@ function CalldataLoader({
 }: {
   link: Extract<DecoderLink, { type: 'calldata' }>
 }) {
+  const data = readLinkData(link.data)
   const query = useQuery({
-    queryFn: () => decompressCalldata(readLegacyLocalStorage(link.data)),
-    queryKey: ['calldata', link.data],
+    queryFn: () => decompressCalldata(data),
+    queryKey: ['calldata', data],
     retry: false,
   })
 
@@ -113,12 +115,6 @@ function CalldataLoader({
       transaction={{ chainId: link.chainId, to: link.to, data: query.data }}
     />
   )
-}
-
-// decoder-new kept long calldata in local storage and put this marker in the link.
-function readLegacyLocalStorage(data: string) {
-  if (data !== '0xLOCALSTORAGE') return data
-  return localStorage.getItem('data') ?? ''
 }
 
 function DecodedTransaction({ transaction }: { transaction: Transaction }) {

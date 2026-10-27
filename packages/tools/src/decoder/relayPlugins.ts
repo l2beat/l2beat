@@ -38,7 +38,7 @@ function arbitrumScheduleBatchPlugin(
   payloads.members = payloads.members.map((payload, i) => {
     const target = targetMembers[i]?.value as `0x${string}` | undefined
     if (target === RETRYABLE_TICKET_MAGIC) {
-      return decodeRetryableTicket(payload, chainId)
+      return decodeRetryableTicketPayload(payload, chainId)
     }
     payload.address = target
     return payload
@@ -46,18 +46,26 @@ function arbitrumScheduleBatchPlugin(
   return decoded
 }
 
-function decodeRetryableTicket(
+function decodeRetryableTicketPayload(
   payload: DecodedValue,
   chainId: number,
 ): DecodedValue {
   let ticket: DecodedValue
   try {
-    ticket = decodeType(RETRYABLE_TICKET_TYPE, payload.bytes, chainId)
+    ticket = decodeRetryableTicket(payload.bytes, chainId)
   } catch {
     return payload
   }
   ticket.name = payload.name
   ticket.extra ??= payload.extra
+  return ticket
+}
+
+export function decodeRetryableTicket(
+  bytes: `0x${string}`,
+  chainId: number,
+): DecodedValue {
+  const ticket = decodeType(RETRYABLE_TICKET_TYPE, bytes, chainId)
   const [inbox, l2Target, , , , l2Calldata] = members(ticket)
   const l2ChainId = ARBITRUM_INBOX_CHAIN_IDS[inbox?.value ?? '']
   if (l2Target && l2Calldata) {
