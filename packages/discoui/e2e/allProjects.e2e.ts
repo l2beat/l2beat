@@ -1,6 +1,6 @@
 import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
-import { expect, type Page, test } from 'playwright/test'
+import { expect, type Page, type Request, test } from 'playwright/test'
 
 const PROJECTS_ROOT = join(__dirname, '../../config/src/projects')
 const SHARD_COUNT = 8
@@ -58,16 +58,19 @@ function collectPageErrors(page: Page): string[] {
   return errors
 }
 
+// An event stream, like the one DiscoUI keeps open for agents, never
+// finishes, so it is not part of a page loading.
 function trackNetwork(page: Page) {
   let inFlight = 0
-  page.on('request', () => {
-    inFlight++
+  const isLoad = (request: Request) => request.resourceType() !== 'eventsource'
+  page.on('request', (request) => {
+    if (isLoad(request)) inFlight++
   })
-  page.on('requestfinished', () => {
-    inFlight--
+  page.on('requestfinished', (request) => {
+    if (isLoad(request)) inFlight--
   })
-  page.on('requestfailed', () => {
-    inFlight--
+  page.on('requestfailed', (request) => {
+    if (isLoad(request)) inFlight--
   })
   return {
     async waitForQuiet(quietMs: number) {
