@@ -1,7 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { RotateCwIcon, TriangleAlertIcon } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '~/components/core/Button'
 import {
@@ -132,6 +132,10 @@ function Coverage({
     [filters, names, snapshot, sort],
   )
 
+  const showMore = useCallback(
+    () => setVisibleRows((current) => current + PAGE_SIZE),
+    [],
+  )
   const update = (change: Partial<Filters>) => {
     setFilters((current) => ({ ...current, ...change }))
     setVisibleRows(PAGE_SIZE)
@@ -279,7 +283,7 @@ function Coverage({
           snapshot={snapshot}
           sort={sort}
           onSort={onSort}
-          onShowMore={() => setVisibleRows((current) => current + PAGE_SIZE)}
+          onShowMore={showMore}
         />
       </CardContent>
     </>

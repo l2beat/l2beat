@@ -1,5 +1,5 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import { Button } from '~/components/core/Button'
+import { useEffect, useRef } from 'react'
 import {
   Table,
   TableBody,
@@ -146,20 +146,33 @@ export function TvsCoverageTable({
           )
         })}
         {rows.length < totalRows && (
-          <TableRow className="hover:bg-transparent">
-            <TableCell colSpan={COLUMNS} className="py-3 text-center">
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={onShowMore}
-              >
-                Show more ({(totalRows - rows.length).toLocaleString()} left)
-              </Button>
-            </TableCell>
-          </TableRow>
+          <LoadMoreRow key={rows.length} onVisible={onShowMore} />
         )}
       </TableBody>
     </Table>
+  )
+}
+
+function LoadMoreRow({ onVisible }: { onVisible: () => void }) {
+  const ref = useRef<HTMLTableRowElement>(null)
+  useEffect(() => {
+    const row = ref.current
+    if (!row) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) onVisible()
+      },
+      {
+        root: row.closest('[data-slot="card-content"]'),
+        rootMargin: '0px 0px 600px 0px',
+      },
+    )
+    observer.observe(row)
+    return () => observer.disconnect()
+  }, [onVisible])
+  return (
+    <TableRow ref={ref} aria-hidden="true" className="border-0">
+      <TableCell colSpan={COLUMNS} className="h-px p-0" />
+    </TableRow>
   )
 }
