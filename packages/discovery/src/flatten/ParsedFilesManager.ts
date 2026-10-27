@@ -317,12 +317,12 @@ export class ParsedFilesManager {
     } else if (c.type === 'UsingForDeclaration') {
       subNodes = [c]
       const [typeName, ...rest] = getASTIdentifiers(c.typeName)
-      if (typeName !== undefined && rest.length === 0) {
+      if (c.isGlobal && typeName !== undefined && rest.length === 0) {
         backwardLinks = [typeName]
       } else {
-        // The target is a built-in type, so no declaration exists to link back
-        // to. The directive still applies to the whole source unit, so link it
-        // to every declaration in the file instead.
+        // A directive without `global` applies to its own source unit, which
+        // need not be the file defining the target type, so link it to every
+        // declaration in the file instead.
         backwardLinks = file.topLevelDeclarations
           .filter((declaration) => declaration.type !== 'using')
           .map((declaration) => declaration.name)
