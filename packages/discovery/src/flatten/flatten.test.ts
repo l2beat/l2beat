@@ -590,6 +590,62 @@ describe('flatten', () => {
     )
   })
 
+  it('includes file-scoped using declarations for a type defined in another file', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Element, LibElement } from "Element.sol";
+
+      using LibElement for Element;
+
+      contract Root {
+          function length(Element e) public pure returns (uint256) {
+              return e.length();
+          }
+      }
+    `,
+    )
+    const elementFile = sol(
+      'Element.sol',
+      `
+      type Element is uint256;
+
+      library LibElement {
+          function length(Element e) internal pure returns (uint256) {
+              return Element.unwrap(e) >> 160;
+          }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, elementFile],
+      [],
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      type Element is uint256;
+
+      library LibElement {
+          function length(Element e) internal pure returns (uint256) {
+              return Element.unwrap(e) >> 160;
+          }
+      }
+
+      using LibElement for Element;
+
+      contract Root {
+          function length(Element e) public pure returns (uint256) {
+              return e.length();
+          }
+      }
+    `),
+    )
+  })
+
   it('renames library aliases in global using declarations', () => {
     const rootFile = sol(
       'Root.sol',
