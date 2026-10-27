@@ -1,4 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { CodeExcerpt } from './codeExcerpt'
 import type { ProjectEntry } from './entries'
 import type { CodeMatch } from './findCodeAnchor'
 import {
@@ -19,6 +20,7 @@ export function printStep(
   index: number,
   count: number,
   step: AgentStep,
+  excerpt: CodeExcerpt | undefined,
   names: Record<string, string>,
 ) {
   const name = (address: string) => names[address] ?? address
@@ -39,6 +41,17 @@ export function printStep(
           : `${match.sourceName}:${place(match)}`
       lines.push(`         also at ${others.map(where).join(', ')}`)
     }
+  }
+  if (excerpt) printExcerpt(lines, excerpt)
+}
+
+function printExcerpt(lines: string[], excerpt: CodeExcerpt) {
+  const width = String(excerpt.line + excerpt.lines.length).length
+  for (const [i, text] of excerpt.lines.entries()) {
+    lines.push(`  ${String(excerpt.line + i).padStart(width)} | ${text}`)
+  }
+  if (excerpt.isCut) {
+    lines.push('  … cut here, read the rest in the .flat source')
   }
 }
 
