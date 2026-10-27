@@ -20,7 +20,7 @@ import {
   DrawerTrigger,
 } from '../Drawer'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
-import { useChart } from './Chart'
+import { useChart } from './ChartContext'
 import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
 
 interface Props<T extends { timestamp: number }> {

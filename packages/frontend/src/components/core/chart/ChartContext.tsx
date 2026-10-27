@@ -1,0 +1,34 @@
+import * as React from 'react'
+import type { ChartDataIndicatorType } from './ChartDataIndicator'
+
+export type ChartMeta = Record<
+  string,
+  | {
+      label: React.ReactNode
+      color: string
+      legendLabel?: string
+      indicatorType: ChartDataIndicatorType
+    }
+  | undefined
+>
+
+type ChartContextProps = {
+  meta: ChartMeta
+  interactiveLegend?: {
+    dataKeys: string[]
+    onItemClick: (dataKey: string) => void
+    disableOnboarding?: boolean
+  }
+}
+
+export const ChartContext = React.createContext<ChartContextProps | null>(null)
+
+export function useChart() {
+  const context = React.useContext(ChartContext)
+
+  if (!context) {
+    throw new Error('useChart must be used within a <ChartContainer />')
+  }
+
+  return context
+}

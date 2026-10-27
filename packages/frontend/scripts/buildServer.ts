@@ -24,6 +24,27 @@ const tsxBoundaryPlugin: esbuild.Plugin = {
   },
 }
 
+// The server bundle is CommonJS and loads packages with require(), but
+// @tanstack/charts is ESM-only (its exports have only an `import` condition),
+// so it is bundled, with its own dependencies, while every other package
+// stays external. Only bundled packages have importers in node_modules.
+const BUNDLED_PACKAGES = /^@tanstack\/charts(\/|$)/
+const externalPackagesPlugin: esbuild.Plugin = {
+  name: 'external-packages',
+  setup(build) {
+    build.onResolve({ filter: /^[^./]/ }, (args) => {
+      if (
+        args.path.startsWith('~/') ||
+        BUNDLED_PACKAGES.test(args.path) ||
+        args.importer.includes('/node_modules/')
+      ) {
+        return undefined
+      }
+      return { path: args.path, external: true }
+    })
+  },
+}
+
 async function main() {
   const args = process.argv.slice(2)
   const watch = args.includes('--watch')
@@ -33,11 +54,12 @@ async function main() {
     entryPoints: [prod ? 'src/index.ts' : 'src/index.dev.ts'],
     bundle: true,
     platform: 'node',
-    packages: 'external',
     jsx: 'automatic',
     outfile: 'dist/server/index.js',
     minify: prod,
-    plugins: prod ? [] : [tsxBoundaryPlugin],
+    plugins: prod
+      ? [externalPackagesPlugin]
+      : [externalPackagesPlugin, tsxBoundaryPlugin],
     // Lets esbuild drop development-only branches (e.g. dev pages in
     // pageLoaders) instead of bundling code that only works under Vite.
     define: prod ? { 'process.env.NODE_ENV': '"production"' } : {},

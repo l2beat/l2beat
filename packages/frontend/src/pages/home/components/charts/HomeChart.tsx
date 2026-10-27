@@ -1,20 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useId, useMemo } from 'react'
-import { Area, AreaChart } from 'recharts'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { PinkFillGradientDef } from '~/components/core/chart/defs/PinkGradientDef'
+import { TsChartContainer } from '~/components/core/chart/tanstack/TsChartContainer'
+import {
+  TsChartTooltipWrapper,
+  type TsSeries,
+  TsTimeSeriesChart,
+} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange, formatTimestamp } from '~/utils/dates'
 
@@ -47,22 +42,7 @@ const STROKE_COLOR: Record<HomeChartColor, string> = {
   ethereum: 'var(--chart-ethereum)',
 }
 
-/**
- * The chart is absolutely positioned inside the relative wrapper so the
- * rendered svg (fixed pixel height) never contributes to layout height —
- * otherwise a transiently tall grid row makes the chart render taller, which
- * then holds the row at that height forever (ratchets up on window resize).
- */
-const FILL_HEIGHT_CLASS =
-  'absolute inset-0 [&>div]:h-full [&_.recharts-wrapper]:h-full! [&_.recharts-wrapper]:min-h-0! [&_.recharts-wrapper]:aspect-auto!'
-
-const Y_AXIS_TICK_SIZE_CLASS =
-  '[&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:!text-2xs [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:!font-medium [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:!leading-none'
-
-const X_AXIS_PROPS = {
-  height: 18,
-  tickMargin: 3,
-} as const
+const MARGIN = { top: 14, right: 1, bottom: 18, left: 1 }
 
 export function HomeChart({
   data,
@@ -99,103 +79,91 @@ export function HomeChart({
     [stroke, tooltipLabel, withEthereum],
   )
 
+  const series = useMemo(() => {
+    const result: TsSeries<'value' | 'ethereum'>[] = [
+      { key: 'value', stroke, fill: `url(#${fillId})` },
+    ]
+    if (withEthereum) {
+      result.push({
+        key: 'ethereum',
+        stroke: STROKE_COLOR.ethereum,
+        fill: `url(#${ethereumFillId})`,
+      })
+    }
+    return result
+  }, [stroke, fillId, ethereumFillId, withEthereum])
+
+  // The chart is absolutely positioned inside the relative wrapper so the
+  // rendered svg never contributes to the grid row's height.
   return (
     <div className="relative h-full min-h-[120px]">
-      <div className={`${FILL_HEIGHT_CLASS} ${Y_AXIS_TICK_SIZE_CLASS}`}>
-        <ChartContainer
+      <div className="absolute inset-0 [&>div]:h-full">
+        <TsChartContainer
           meta={meta}
           data={data}
           isLoading={isLoading}
           size="small"
         >
-          <AreaChart
-            responsive
+          <TsTimeSeriesChart
             data={data}
-            margin={{ top: 14, right: 1, bottom: 0, left: 1 }}
-          >
-            <defs>
-              {color === 'pink' && <PinkFillGradientDef id={fillId} />}
-              {color === 'ethereum' && <EthereumFillGradientDef id={fillId} />}
-              {withEthereum && <EthereumFillGradientDef id={ethereumFillId} />}
-            </defs>
-            <Area
-              dataKey="value"
-              stroke={stroke}
-              fill={`url(#${fillId})`}
-              fillOpacity={1}
-              dot={false}
-              isAnimationActive={false}
-              connectNulls={false}
-              activeDot={{
-                r: 3,
-                stroke: '#fff',
-                strokeWidth: 1,
-                fill: stroke,
-              }}
-            />
-            {withEthereum && (
-              <Area
-                dataKey="ethereum"
-                stroke={STROKE_COLOR.ethereum}
-                fill={`url(#${ethereumFillId})`}
-                fillOpacity={1}
-                dot={false}
-                isAnimationActive={false}
-                connectNulls={false}
-                activeDot={{
-                  r: 3,
-                  stroke: '#fff',
-                  strokeWidth: 1,
-                  fill: STROKE_COLOR.ethereum,
-                }}
+            series={series}
+            ariaLabel={tooltipLabel}
+            margin={MARGIN}
+            syncedUntil={syncedUntil}
+            yAxis={{
+              format: formatValue,
+              unit: yAxisUnit,
+              dy: -8,
+              fontSize: 12,
+              fontWeight: 500,
+            }}
+            defs={
+              <>
+                {color === 'pink' && <PinkFillGradientDef id={fillId} />}
+                {color === 'ethereum' && (
+                  <EthereumFillGradientDef id={fillId} />
+                )}
+                {withEthereum && (
+                  <EthereumFillGradientDef id={ethereumFillId} />
+                )}
+              </>
+            }
+            renderTooltip={(row, keys) => (
+              <HomeChartTooltip
+                row={row}
+                keys={keys}
+                formatValue={formatValue}
+                dayRange={tooltipDayRange}
               />
             )}
-            <ChartCommonComponents
-              data={data}
-              isLoading={isLoading}
-              xAxis={X_AXIS_PROPS}
-              yAxis={{ tickFormatter: formatValue, unit: yAxisUnit, dy: -8 }}
-              syncedUntil={syncedUntil}
-            />
-            <ChartTooltip
-              content={
-                <HomeChartTooltip
-                  formatValue={formatValue}
-                  dayRange={tooltipDayRange}
-                />
-              }
-              filterNull={false}
-            />
-          </AreaChart>
-        </ChartContainer>
+          />
+        </TsChartContainer>
       </div>
     </div>
   )
 }
 
 function HomeChartTooltip({
-  payload,
-  label,
+  row,
+  keys,
   formatValue,
   dayRange,
-}: CustomChartTooltipProps & {
+}: {
+  row: HomeChartDataPoint
+  keys: ('value' | 'ethereum')[]
   formatValue: (value: number) => string
   dayRange?: boolean
 }) {
   const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
-  const entries = payload.flatMap((entry) => {
-    if (entry.name === undefined) return []
-    const config = meta[entry.name]
+  const label = row.timestamp
+  const entries = keys.flatMap((name) => {
+    const config = meta[name]
     if (!config) return []
-    return { entry, config }
+    return { entry: { name, value: row[name] }, config }
   })
-  const firstEntry = entries[0]
-  if (!firstEntry) return null
-  const row = firstEntry.entry.payload as HomeChartDataPoint | undefined
-  const breakdown = row?.tvsBreakdown
+  const breakdown = row.tvsBreakdown
   return (
-    <ChartTooltipWrapper>
+    <TsChartTooltipWrapper>
       <div className="flex w-50 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {dayRange
@@ -252,6 +220,6 @@ function HomeChartTooltip({
           )}
         </div>
       </div>
-    </ChartTooltipWrapper>
+    </TsChartTooltipWrapper>
   )
 }

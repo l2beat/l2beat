@@ -10,10 +10,8 @@ import { cn } from '~/utils/cn'
 import { ignorePointerWhileScrollingClassName } from '~/utils/scrollActivity'
 import { OverflowWrapper } from '../OverflowWrapper'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
-import {
-  ChartDataIndicator,
-  type ChartDataIndicatorType,
-} from './ChartDataIndicator'
+import { ChartContext, type ChartMeta, useChart } from './ChartContext'
+import { ChartDataIndicator } from './ChartDataIndicator'
 import {
   legendOnboardingHintClassName,
   useChartLegendOnboarding,
@@ -25,38 +23,6 @@ import { ChartNoDataState } from './ChartNoDataState'
 import { ChartProjectLogo } from './ChartProjectLogo'
 import { ChartSettledSize } from './ChartSettledSize'
 import { sortLegend } from './utils/sortLegend'
-
-export type ChartMeta = Record<
-  string,
-  | {
-      label: React.ReactNode
-      color: string
-      legendLabel?: string
-      indicatorType: ChartDataIndicatorType
-    }
-  | undefined
->
-
-type ChartContextProps = {
-  meta: ChartMeta
-  interactiveLegend?: {
-    dataKeys: string[]
-    onItemClick: (dataKey: string) => void
-    disableOnboarding?: boolean
-  }
-}
-
-const ChartContext = React.createContext<ChartContextProps | null>(null)
-
-export function useChart() {
-  const context = React.useContext(ChartContext)
-
-  if (!context) {
-    throw new Error('useChart must be used within a <ChartContainer />')
-  }
-
-  return context
-}
 
 const chartContainerClassNames = cn(
   "flex aspect-video justify-center text-xs [&_.recharts-sector[stroke='#fff']]:stroke-transparent",
@@ -472,6 +438,7 @@ function getPayloadConfigFromPayload(
   return configLabelKey in config ? config[configLabelKey] : config[key]
 }
 
+export { type ChartMeta, useChart } from './ChartContext'
 export {
   ChartContainer,
   ChartLegend,

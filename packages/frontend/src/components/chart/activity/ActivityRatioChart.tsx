@@ -1,21 +1,13 @@
 import { assert, formatActivityCount, UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
-import { Area, AreaChart } from 'recharts'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
+import { TsChartContainer } from '~/components/core/chart/tanstack/TsChartContainer'
+import {
+  TsChartTooltipWrapper,
+  TsTimeSeriesChart,
+} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
 import { formatRange } from '~/utils/dates'
 
 interface ActivityRatioChartDataPoint {
@@ -40,64 +32,50 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
     },
   } satisfies ChartMeta
   return (
-    <ChartContainer
+    <TsChartContainer
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
       milestones={undefined}
       size="small"
+      legend
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <Area
-          dataKey="ratio"
-          fillOpacity={1}
-          fill="url(#fillRatio)"
-          stroke={chartMeta.ratio.color}
-          dot={false}
-          isAnimationActive={false}
-        />
-
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            tickFormatter: (value) => `${round(value, 2)}x`,
-            domain: ([_, dataMax]) => [1, dataMax + (dataMax - 1) * 0.1],
-          }}
-          syncedUntil={syncedUntil}
-        />
-
-        <ChartTooltip filterNull={false} content={<ActivityCustomTooltip />} />
-        <ChartLegend content={<ChartLegendContent />} />
-        <defs>
-          <EmeraldFillGradientDef id="fillRatio" />
-        </defs>
-      </AreaChart>
-    </ChartContainer>
+      <TsTimeSeriesChart
+        data={data}
+        ariaLabel="UOPS/TPS ratio"
+        margin={{ top: 20 }}
+        series={[
+          {
+            key: 'ratio',
+            stroke: chartMeta.ratio.color,
+            fill: 'url(#fillRatio)',
+          },
+        ]}
+        yAxis={{
+          format: (value) => `${round(value, 2)}x`,
+          domain: (_, dataMax) => [1, dataMax + (dataMax - 1) * 0.1],
+        }}
+        syncedUntil={syncedUntil}
+        defs={<EmeraldFillGradientDef id="fillRatio" />}
+        renderTooltip={(row) => <ActivityCustomTooltip row={row} />}
+      />
+    </TsChartContainer>
   )
 }
 
-function ActivityCustomTooltip({
-  payload,
-  label: timestamp,
-}: CustomChartTooltipProps) {
+function ActivityCustomTooltip({ row }: { row: ActivityRatioChartDataPoint }) {
   const { meta } = useChart()
-  if (!payload || typeof timestamp !== 'number') return null
+  const timestamp = row.timestamp
+  const payload = [{ name: 'ratio', value: row.ratio }]
 
   return (
-    <ChartTooltipWrapper>
+    <TsChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(timestamp, timestamp + UnixTime.DAY)}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
-            if (
-              entry.name === undefined ||
-              entry.value === undefined ||
-              entry.type === 'none'
-            )
-              return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -125,6 +103,6 @@ function ActivityCustomTooltip({
           })}
         </div>
       </div>
-    </ChartTooltipWrapper>
+    </TsChartTooltipWrapper>
   )
 }

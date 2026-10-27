@@ -5,18 +5,9 @@ import {
   formatInteger,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  type ChartMeta,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  type CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   CyanFillGradientDef,
@@ -34,7 +25,11 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
-import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { TsChartContainer } from '~/components/core/chart/tanstack/TsChartContainer'
+import {
+  TsChartTooltipWrapper,
+  TsTimeSeriesChart,
+} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   type ActivityMetric,
@@ -75,6 +70,15 @@ export const RECATEGORISED_ACTIVITY_CHART_META = {
     },
   },
 } satisfies ChartMeta
+
+const SERIES_GRADIENT_ID = {
+  rollups: 'rollups',
+  validiumsAndOptimiums: 'validiums-and-optimiums',
+  others: 'others',
+  ethereum: 'ethereum',
+} as const
+
+type SeriesKey = keyof typeof SERIES_GRADIENT_ID
 
 interface Props {
   data: RecategorisedActivityChartData | undefined
@@ -133,10 +137,11 @@ export function L2RecategorizedActivityChart({
   }, [data, metric])
 
   return (
-    <ChartContainer
+    <TsChartContainer
       meta={chartMeta}
       data={chartData}
       isLoading={isLoading}
+      legend
       interactiveLegend={{
         dataKeys,
         onItemClick,
@@ -144,86 +149,68 @@ export function L2RecategorizedActivityChart({
       }}
       milestones={milestones}
     >
-      {/* Without right:1 the chart last point is not hoverable for some reason */}
-      <AreaChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
-        <defs>
-          <PinkFillGradientDef id="rollups-fill" />
-          <PinkStrokeGradientDef id="rollups-stroke" />
-          <CyanFillGradientDef id="validiums-and-optimiums-fill" />
-          <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
-          <YellowFillGradientDef id="others-fill" />
-          <YellowStrokeGradientDef id="others-stroke" />
-          <EthereumFillGradientDef id="ethereum-fill" />
-          <EthereumStrokeGradientDef id="ethereum-stroke" />
-        </defs>
-        <ChartLegend content={<ChartLegendContent />} />
-        <ChartStrokeOverFillAreaComponents
-          data={[
-            {
-              dataKey: 'rollups',
-              stroke: 'url(#rollups-stroke)',
-              fill: 'url(#rollups-fill)',
-              hide: !dataKeys.includes('rollups'),
-            },
-            {
-              dataKey: 'validiumsAndOptimiums',
-              stroke: 'url(#validiums-and-optimiums-stroke)',
-              fill: 'url(#validiums-and-optimiums-fill)',
-              hide: !dataKeys.includes('validiumsAndOptimiums'),
-            },
-            {
-              dataKey: 'others',
-              stroke: 'url(#others-stroke)',
-              fill: 'url(#others-fill)',
-              hide: !dataKeys.includes('others'),
-            },
-            {
-              dataKey: 'ethereum',
-              stroke: 'url(#ethereum-stroke)',
-              fill: 'url(#ethereum-fill)',
-              hide: !dataKeys.includes('ethereum'),
-            },
-          ]}
-        />
-        <ChartTooltip
-          content={
-            <CustomTooltip
-              syncedUntil={data?.syncedUntil}
-              metric={metric}
-              chartMeta={chartMeta}
-            />
-          }
-        />
-        <ChartCommonComponents
-          data={chartData}
-          isLoading={isLoading}
-          yAxis={{
-            scale: scale === 'linear' ? 'auto' : scale,
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            unit: metric === 'uops' ? ' UOPS' : ' TPS',
-          }}
-          syncedUntil={data?.syncedUntil}
-        />
-      </AreaChart>
-    </ChartContainer>
+      <TsTimeSeriesChart
+        data={chartData}
+        ariaLabel="Activity"
+        margin={{ top: 20, right: 1 }}
+        series={(
+          ['rollups', 'validiumsAndOptimiums', 'others', 'ethereum'] as const
+        ).map((key) => ({
+          key,
+          stroke: `url(#${SERIES_GRADIENT_ID[key]}-stroke)`,
+          fill: `url(#${SERIES_GRADIENT_ID[key]}-fill)`,
+          hidden: !dataKeys.includes(key),
+        }))}
+        yAxis={{
+          scale: scale === 'symlog' ? scaleSymlog : undefined,
+          domain: dataKeys.length === 1 ? 'auto' : undefined,
+          unit: metric === 'uops' ? ' UOPS' : ' TPS',
+        }}
+        syncedUntil={data?.syncedUntil}
+        defs={
+          <>
+            <PinkFillGradientDef id="rollups-fill" />
+            <PinkStrokeGradientDef id="rollups-stroke" />
+            <CyanFillGradientDef id="validiums-and-optimiums-fill" />
+            <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
+            <YellowFillGradientDef id="others-fill" />
+            <YellowStrokeGradientDef id="others-stroke" />
+            <EthereumFillGradientDef id="ethereum-fill" />
+            <EthereumStrokeGradientDef id="ethereum-stroke" />
+          </>
+        }
+        renderTooltip={(row, keys) => (
+          <CustomTooltip
+            row={row}
+            visibleKeys={keys}
+            syncedUntil={data?.syncedUntil}
+            metric={metric}
+            chartMeta={chartMeta}
+          />
+        )}
+      />
+    </TsChartContainer>
   )
 }
 
 function CustomTooltip({
-  payload,
-  label,
+  row,
+  visibleKeys,
   syncedUntil,
   metric,
   chartMeta,
-}: CustomChartTooltipProps & {
+}: {
+  row: { timestamp: number } & Record<SeriesKey, number | null>
+  visibleKeys: SeriesKey[]
   syncedUntil: number | undefined
   metric: ActivityMetric
   chartMeta: ChartMeta
 }) {
-  if (!payload || typeof label !== 'number') return null
+  const label = row.timestamp
+  const payload = visibleKeys.map((name) => ({ name, value: row[name] }))
 
   return (
-    <ChartTooltipWrapper>
+    <TsChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(label, label + UnixTime.DAY)}
@@ -232,7 +219,6 @@ function CustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             assert(config, 'No config')
 
@@ -251,7 +237,7 @@ function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value !== null && entry.value !== undefined
+                  {entry.value !== null
                     ? formatActivityCount(entry.value)
                     : 'No data'}
                 </span>
@@ -266,12 +252,7 @@ function CustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (
-              entry.value === undefined ||
-              entry.value === null ||
-              entry.type === 'none'
-            )
-              return null
+            if (entry.value === null) return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             assert(config, 'No config')
             return (
@@ -298,6 +279,6 @@ function CustomTooltip({
           })}
         </div>
       </div>
-    </ChartTooltipWrapper>
+    </TsChartTooltipWrapper>
   )
 }

@@ -1,0 +1,115 @@
+import type { Milestone } from '@l2beat/config'
+import type * as React from 'react'
+import { Logo } from '~/components/Logo'
+import { useIsNearViewport } from '~/hooks/useIsNearViewport'
+import { cn } from '~/utils/cn'
+import { ignorePointerWhileScrollingClassName } from '~/utils/scrollActivity'
+import { ChartContext, type ChartMeta } from '../ChartContext'
+import { useChartLegendOnboarding } from '../ChartLegendOnboardingContext'
+import { ChartLoader } from '../ChartLoader'
+import { ChartMilestones } from '../ChartMilestones'
+import { ChartNoDataSourceState } from '../ChartNoDataSourceState'
+import { ChartNoDataState } from '../ChartNoDataState'
+import { TsChartLegend } from './TsChartLegend'
+
+/**
+ * The TanStack Charts counterpart of `ChartContainer`: same sizing, loader,
+ * empty states, logos and milestones, but the legend is plain DOM under the
+ * chart instead of a Recharts slot, so nothing here imports Recharts.
+ */
+export function TsChartContainer<T extends { timestamp: number }>({
+  children,
+  meta,
+  data,
+  isLoading,
+  milestones,
+  size = 'regular',
+  interactiveLegend,
+  legend = false,
+  className,
+}: {
+  meta: ChartMeta
+  children: React.ReactNode
+  data: T[] | undefined
+  interactiveLegend?: {
+    dataKeys: string[]
+    onItemClick: (dataKey: string) => void
+    disableOnboarding?: boolean
+  }
+  legend?: boolean
+  milestones?: Milestone[]
+  isLoading?: boolean
+  size?: 'regular' | 'small'
+  className?: string
+}) {
+  // Building a chart blocks the main thread, so build each one only when it
+  // is about to be seen.
+  const [ref, shouldMountChart] = useIsNearViewport()
+
+  const hasData = data && data.length > 1
+
+  const noDataSourcesSelected = Object.keys(meta).every(
+    (key) => interactiveLegend && !interactiveLegend?.dataKeys.includes(key),
+  )
+  const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
+  return (
+    <ChartContext.Provider value={{ meta, interactiveLegend }}>
+      <div ref={ref} className="group relative">
+        <div
+          className={cn(
+            'flex flex-col',
+            size === 'regular' &&
+              'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
+            size === 'small' && 'h-[114px] min-h-[114px] w-full',
+            className,
+          )}
+        >
+          <div
+            className={cn(
+              'relative min-h-0 flex-1 select-none text-xs outline-none',
+              ignorePointerWhileScrollingClassName,
+              (isLoading || !hasData) && 'pointer-events-none',
+              noDataSourcesSelected && '[&_.ts-chart-tooltip]:hidden',
+            )}
+          >
+            {shouldMountChart ? children : null}
+          </div>
+          {legend && shouldMountChart && <TsChartLegend />}
+        </div>
+        {(!!isLoading || !shouldMountChart) && (
+          <ChartLoader
+            animated={shouldMountChart && !!isLoading}
+            className={cn(
+              'absolute inset-x-0 m-auto select-none opacity-40',
+              '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.ts-legend]:top-[calc(50%-18px)]',
+            )}
+          />
+        )}
+        {!hasData &&
+          !isLoading &&
+          !(noDataSourcesSelected && shouldMountChart) && (
+            <ChartNoDataState size={size} />
+          )}
+        {noDataSourcesSelected && !isLoading && shouldMountChart && (
+          <ChartNoDataSourceState />
+        )}
+        {shouldMountChart && size !== 'small' && (
+          <Logo
+            animated={false}
+            className={cn(
+              'pointer-events-none absolute right-3 bottom-12 h-8 w-20 opacity-50 group-has-[.ts-legend]:bottom-14',
+              !!interactiveLegend &&
+                !interactiveLegend.disableOnboarding &&
+                !hasFinishedOnboardingInitial
+                ? 'bottom-[60px] group-has-[.ts-legend]:bottom-[68px]'
+                : 'bottom-12 group-has-[.ts-legend]:bottom-14',
+            )}
+          />
+        )}
+        {!isLoading && milestones && (
+          <ChartMilestones data={data} milestones={milestones} />
+        )}
+      </div>
+    </ChartContext.Provider>
+  )
+}
