@@ -388,7 +388,9 @@ function SeverityButton({
   return (
     <Button
       onClick={onClick}
-      className={cn(isActive && 'bg-coffee-400/50')}
+      className={cn(
+        isActive && 'border-autumn-300 bg-autumn-300/15 text-autumn-300',
+      )}
       size="small"
     >
       {children}

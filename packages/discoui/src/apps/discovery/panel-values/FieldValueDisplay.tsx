@@ -70,7 +70,7 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
   } else if (value.type === 'array') {
     if (value.values.length !== 0) {
       blockDisplay = (
-        <ol className="border-coffee-700 border-l pl-3">
+        <ol className="border-coffee-600 border-l pl-3">
           {value.values.map((value, i) => (
             <FieldValueDisplay key={i} index={i} value={value} />
           ))}
@@ -85,7 +85,7 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
     const entries = value.values
     if (entries.length !== 0) {
       blockDisplay = (
-        <ul className="border-coffee-700 border-l pl-3">
+        <ul className="border-coffee-600 border-l pl-3">
           {entries.map(([key, value], i) => (
             <FieldValueDisplay key={i} name={key} value={value} />
           ))}

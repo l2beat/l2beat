@@ -154,7 +154,7 @@ export function NewProjectPage() {
               </>
             )}
             <Button
-              className="border-autumn-300 bg-autumn-300 font-semibold text-coffee-900 hover:bg-autumn-200 hover:text-coffee-900 disabled:border-coffee-600 disabled:bg-coffee-800 disabled:text-coffee-400"
+              className="border-autumn-300 bg-autumn-300 font-semibold text-coffee-900 hover:bg-autumn-200 hover:text-coffee-900 disabled:border-coffee-600 disabled:bg-coffee-800 disabled:text-coffee-400 disabled:opacity-100"
               onClick={() => createConfigFileMutation.mutate()}
               disabled={createConfigFileMutation.isPending || !isFormValid}
             >

@@ -311,7 +311,7 @@ const Entry = memo(function Entry({ entry, index, bulkOp }: EntryProps) {
       data-entry-idx={index}
       className="border border-coffee-600 bg-coffee-800"
     >
-      <header className="flex flex-col gap-1 border-coffee-600 border-b p-2 text-xs">
+      <header className="flex flex-col gap-1 border-coffee-700 border-b p-2 text-xs">
         <div className="flex flex-wrap items-baseline gap-2">
           {entry.current ? (
             <SwitchableValue
@@ -351,7 +351,7 @@ const Entry = memo(function Entry({ entry, index, bulkOp }: EntryProps) {
         )}
       </header>
       {entry.description && (
-        <div className="border-coffee-600 border-b">
+        <div className="border-coffee-700 border-b">
           <Markdown>{entry.description}</Markdown>
         </div>
       )}
@@ -376,7 +376,7 @@ function CollapsibleSection(props: {
 
   const title = SECTION_TITLE[section.kind]
   return (
-    <section className="border-coffee-600 border-t">
+    <section className="border-coffee-700 border-t">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
