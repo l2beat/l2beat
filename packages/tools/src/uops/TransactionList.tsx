@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react'
 import type * as API from './api'
 import { ExplorerLink, Flags } from './common'
+import { compareTransactions } from './compareTransactions'
 
 export function TransactionList(props: {
   transactions: API.CountedTransaction[]
@@ -113,36 +114,4 @@ function flattenOperations(root: API.CountedOperation): API.CountedOperation[] {
     stack.push(...[...operation.children].reverse())
   }
   return result
-}
-
-function compareTransactions(
-  a: API.CountedTransaction,
-  b: API.CountedTransaction,
-): number {
-  if (a.operationsCount !== b.operationsCount) {
-    return b.operationsCount - a.operationsCount
-  }
-  if (a.details !== b.details) {
-    return a.details ? -1 : 1
-  }
-  if (a.type === b.type) {
-    return 0
-  }
-  if (a.type === 'unknown') {
-    return 1
-  }
-  if (b.type === 'unknown') {
-    return -1
-  }
-  if (isStandardType(a.type)) {
-    return -1
-  }
-  if (isStandardType(b.type)) {
-    return 1
-  }
-  return a.type.localeCompare(b.type)
-}
-
-function isStandardType(type: string): boolean {
-  return type.startsWith('ERC') || type.startsWith('EIP-712')
 }
