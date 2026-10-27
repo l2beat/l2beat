@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Button } from '../../../components/Button'
 import { Input, InputDescription } from '../../../components/Input'
-import { cn } from '../../../utils/cn'
 
 type Props = {
   value: string[]
@@ -37,11 +36,8 @@ export function InitialAddressesInput(props: Props) {
 
   return (
     <div className="flex flex-col">
-      <div className="mb-1 flex items-stretch text-sm">
-        <div className="whitespace-nowrap">Initial addresses</div>
-        <InputDescription>
-          More inputs will appear as you enter valid addresses
-        </InputDescription>
+      <div className="mb-1 font-medium text-coffee-100 text-sm">
+        Initial addresses
       </div>
 
       <div className="flex flex-col gap-2">
@@ -51,7 +47,7 @@ export function InitialAddressesInput(props: Props) {
               readOnly
               disabled={props.disabled}
               value={address}
-              className="w-full px-4 py-2 font-mono"
+              className="w-full px-3 py-2 font-mono"
             />
             <Button onClick={() => removeAt(i)} disabled={props.disabled}>
               x
@@ -62,7 +58,7 @@ export function InitialAddressesInput(props: Props) {
         <div className="flex flex-col">
           <Input
             disabled={props.disabled}
-            className={cn('w-full bg-coffee-800 px-4 py-2 font-mono')}
+            className="w-full px-3 py-2 font-mono"
             placeholder="eth:0x0000000000000000000000000000000000000000"
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
@@ -74,18 +70,18 @@ export function InitialAddressesInput(props: Props) {
             }}
           />
           {draft.length > 0 && !isValid && (
-            <p className="text-red-400 text-xs">
+            <p className="mt-1 text-aux-red text-xs">
               {isDuplicate
                 ? 'Duplicate address'
                 : 'Invalid address. Use format shortName:checksumHex'}
             </p>
           )}
+          <InputDescription>
+            More inputs will appear as you enter valid addresses
+          </InputDescription>
           {isValid && (
             <div className="mt-2 flex justify-end">
-              <Button
-                className="mt-1 border border-coffee-600 px-3 py-1 text-sm hover:bg-coffee-700"
-                onClick={addDraftIfValid}
-              >
+              <Button size="small" onClick={addDraftIfValid}>
                 Add address
               </Button>
             </div>

@@ -172,15 +172,17 @@ export function FieldDisplay({ field, address }: FieldDisplayProps) {
           {sourcedPermissions.map(({ permission, source }, i) => (
             <Fragment key={i}>
               <span className="flex items-center gap-1 whitespace-nowrap font-mono">
-                <span className="text-coffee-600">▸</span>
+                <span className="text-coffee-400">▸</span>
                 <span className="text-aux-teal">{permission.type}</span>
                 {permission.role && (
                   <span className="text-coffee-400">({permission.role})</span>
                 )}
                 <span
                   className={cn(
-                    'inline-block w-3 select-none rounded-xs text-center text-2xs text-coffee-800',
-                    source === 'template' ? 'bg-aux-green' : 'bg-aux-cyan',
+                    'inline-block w-3.5 select-none rounded-xs py-0.5 text-center font-mono font-semibold text-[11px] text-coffee-100 leading-3',
+                    source === 'template'
+                      ? 'bg-aux-green/25'
+                      : 'bg-aux-cyan/25',
                   )}
                   title={`from ${source}`}
                 >
@@ -192,7 +194,7 @@ export function FieldDisplay({ field, address }: FieldDisplayProps) {
           ))}
         </div>
       )}
-      <div className="overflow-x-auto bg-coffee-900 px-6 py-0.5 contain-paint">
+      <div className="overflow-x-auto bg-coffee-900 px-3 py-1 contain-paint">
         {field.name === '$pastUpgrades' ? (
           <PastUpgradesDisplay value={field.value} />
         ) : (

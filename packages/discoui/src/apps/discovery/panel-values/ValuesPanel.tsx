@@ -221,7 +221,7 @@ function Display({
       )}
 
       {selected.referencedBy.length > 0 && (
-        <Folder title="Referenced by">
+        <Folder title={`Referenced by (${selected.referencedBy.length})`}>
           <ol className="overflow-x-auto bg-coffee-900">
             {selected.referencedBy.map((value) => (
               <li
@@ -235,7 +235,7 @@ function Display({
                   {value.fieldNames.map((fieldName, i) => (
                     <span
                       key={i}
-                      className="rounded-sm bg-coffee-800 px-1.5 text-coffee-300 text-xs leading-5"
+                      className="rounded-sm bg-coffee-800 px-1.5 font-mono text-coffee-300 text-xs leading-5"
                     >
                       {fieldName}
                     </span>
@@ -247,7 +247,7 @@ function Display({
         </Folder>
       )}
       {fields.length > 0 && (
-        <Folder title="Fields" expand={isRevealingField}>
+        <Folder title={`Fields (${fields.length})`} expand={isRevealingField}>
           <ol>
             {fields.map((field) => (
               <FieldDisplay
