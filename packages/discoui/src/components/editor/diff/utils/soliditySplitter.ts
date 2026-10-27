@@ -98,14 +98,12 @@ function matchUp(
       }
     }
 
-    if (bestScore === 1 && removeSameDeclarations) {
+    const r = differentRightKeys[best]
+    if (removeSameDeclarations && r !== undefined && left[lk] === right[r]) {
       usedRight.add(best)
-    } else if (bestScore >= threshold && best !== -1) {
-      const r = differentRightKeys[best]
-      if (r !== undefined) {
-        diff.push([lk, r])
-        usedRight.add(best)
-      }
+    } else if (bestScore >= threshold && r !== undefined) {
+      diff.push([lk, r])
+      usedRight.add(best)
     } else {
       removed.push([lk, ''])
     }

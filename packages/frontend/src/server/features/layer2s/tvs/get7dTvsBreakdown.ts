@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import type { SyncMetadataRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
@@ -9,10 +8,12 @@ import {
   calculatePercentageChange,
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
-import { getSyncState, type SyncState } from '../../utils/syncState'
+import { optionToRange } from '~/utils/range/range'
+import type { SyncState } from '../../utils/syncState'
 import { getAdditionalTrustAssumptionsPercentage } from './utils/getAdditionalTrustAssumptionsPercentage'
+import { getLatestTvsTimestamp } from './utils/getLatestTvsTimestamp'
 import { getTvsProjects } from './utils/getTvsProjects'
+import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 
 export interface SevenDayTvsBreakdown {
   total: number
@@ -88,9 +89,10 @@ export async function get7dTvsBreakdown(
 
   const [from, to] = params.customTarget
     ? [params.customTarget - 3 * UnixTime.DAY, params.customTarget]
-    : await getFullySyncedTvsRange(optionToRange('3d'))
-
+    : [optionToRange('3d')[0], await getLatestTvsTimestamp()]
   assert(from !== null, 'from is null')
+  // A project whose newest values are older is late
+  const expected = params.customTarget ?? getTvsTargetTimestamp()
 
   const [values, syncMetadataRecords] = await Promise.all([
     db.tvsTokenValue.getSummedByProjectAtLatestAndSevenDaysBefore(
@@ -111,14 +113,22 @@ export async function get7dTvsBreakdown(
   let total = 0
   const projects: Record<string, ProjectSevenDayTvsBreakdown> = {}
   for (const [projectId, rows] of Object.entries(rowsByProject)) {
-    const syncState = getTvsSyncState({ projectId, syncMetadataRecords, to })
-    if (!syncState) {
+    const hasSyncMetadata = syncMetadataRecords.some((r) =>
+      // Sync metadata records are stored per token in the database in format of <projectId>-<tokenId> (i.e. "arbitrum-USDC")
+      r.id.startsWith(`${projectId}-`),
+    )
+    if (!hasSyncMetadata) {
       continue
     }
 
     const lastValue = rows.at(-1)
     if (!lastValue) {
       continue
+    }
+    const syncState: SyncState = {
+      isSynced: lastValue.timestamp >= expected,
+      syncedUntil: lastValue.timestamp,
+      target: expected,
     }
     const sevenDaysAgoValue = rows.length === 2 ? rows[0] : undefined
 
@@ -299,44 +309,6 @@ export function createTvsBreakdownProjectFilter(
   }
 }
 
-function getTvsSyncState({
-  projectId,
-  syncMetadataRecords,
-  to,
-}: {
-  projectId: string
-  syncMetadataRecords: SyncMetadataRecord[]
-  to: UnixTime
-}): SyncState | undefined {
-  const projectSyncMetadataRecords = syncMetadataRecords.filter((r) =>
-    // Sync metadata records are stored per token in the database in format of <projectId>-<tokenId> (i.e. "arbitrum-USDC")
-    r.id.startsWith(`${projectId}-`),
-  )
-  if (projectSyncMetadataRecords.length === 0) {
-    return
-  }
-
-  const syncedUntils = projectSyncMetadataRecords
-    .map((r) => r.syncedUntil)
-    .filter((r) => r !== null)
-  // Records for TVS are stored per token in the database, so we need to get the max target and syncedUntil for the project
-  const record = {
-    feature: 'tvs' as const,
-    id: projectId,
-    target: Math.max(...projectSyncMetadataRecords.map((r) => r.target)),
-    syncedUntil: syncedUntils.length > 0 ? Math.max(...syncedUntils) : null,
-    blockTarget: null,
-    blockSyncedUntil: null,
-  }
-  return getSyncState(record, to)
-}
-
-async function getFullySyncedTvsRange(range: ChartRange) {
-  const db = getDb()
-  const target = await db.syncMetadata.getMaxTargetForFeature('tvs')
-  return [range[0], Math.min(range[1], target)] as const
-}
-
 async function getMockTvsBreakdownData(
   props: TvsBreakdownProjectFilter,
 ): Promise<SevenDayTvsBreakdown> {
@@ -391,8 +363,8 @@ async function getMockTvsBreakdownData(
             project.projectId === 'base' ? 0.8 : 0,
           syncState: {
             isSynced: true,
-            syncedUntil: UnixTime.now(),
-            target: UnixTime.now(),
+            syncedUntil: getTvsTargetTimestamp(),
+            target: getTvsTargetTimestamp(),
           },
         },
       ]),

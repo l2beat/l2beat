@@ -18,6 +18,16 @@ describe(createLegacyPathsRouter.name, () => {
       '/projects/ethereum.md',
     ],
     ['/projects/arbitrum', '/layer2s/projects/arbitrum'],
+    ['/projects/arbitrum.md', '/layer2s/projects/arbitrum.md'],
+    // Renamed since: MigratedProjectsRouter takes it on to the current slug.
+    ['/projects/zksync2', '/layer2s/projects/zksync2'],
+    ['/interop/tokens/9HN5PN/circle/usdc', '/tokens/9HN5PN/circle/usdc'],
+    ['/interop/tokens/9HN5PN/circle/usdc.md', '/tokens/9HN5PN/circle/usdc.md'],
+    [
+      '/interop/tokens/9HN5PN/opengraph-image.png',
+      '/tokens/9HN5PN/opengraph-image.png',
+    ],
+    ['/Interop/Tokens/9HN5PN', '/tokens/9HN5PN'],
   ] as const) {
     it(`redirects ${from} to ${to}`, async () => {
       const response = await fetchFromRouter(createLegacyPathsRouter(), from, {
@@ -36,6 +46,8 @@ describe(createLegacyPathsRouter.name, () => {
     '/projects/ethereum',
     '/projects/Ethereum/',
     '/projects/ethereum.md',
+    '/projects/bsc',
+    '/projects/solana',
   ]) {
     it(`leaves ${path} to the page router`, async () => {
       const response = await fetchFromRouter(createLegacyPathsRouter(), path, {

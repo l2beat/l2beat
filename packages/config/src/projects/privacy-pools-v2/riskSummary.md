@@ -1,15 +1,18 @@
 ## Funds can be stolen if
 1. the zk proof system is broken, allowing invalid spends or withdrawals.
 2. all [trusted setup](#trusted-setups) participants collude or leak their secrets, allowing forged proofs.
-3. the upgrader key deploys a malicious [upgrade](#upgrades-and-governance) of the PoolVault, which holds every deposit, or a verifier that accepts any proof, with no delay.
+3. the admin multisig deploys a malicious [upgrade](#upgrades-and-governance) of the PoolVault, which holds every deposit, or a verifier that accepts any proof, with no delay.
 <br>
 ## Funds can be lost if
 1. a user loses the wallet whose signature derives their keys and the exported account key.
 2. the payer loses a claim link before the recipient claims it.
 3. Aave suffers a loss on the reserve behind a yield share.
 <br>
+## Funds can be frozen if
+1. the admin multisig lets the state tree fill by lowering its capacity, which stops every ragequit, deposit and spend, with no delay.
+<br>
 ## Use can be stopped if
-1. the upgrader key pauses deposits and spends, or raises the vetting fee on deposits up to 99.99% of their value.
+1. the admin multisig pauses deposits and spends, or raises the vetting fee on deposits up to 99.99% of their value.
 <br>
 ## Privacy can be lost if
 1. the ASP leaves deposits out of its latest list, which freezes every note from them, up to halting all private spends (see privileged insider).

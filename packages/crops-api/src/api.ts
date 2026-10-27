@@ -1,17 +1,11 @@
-import type {
-  ProjectCrops,
-  ProjectPrivacyInfo,
-  ProjectScalingInfo,
-} from '@l2beat/config'
+import type { Project, ProjectGarden, ResolvedCrops } from '@l2beat/config'
+import { measureOssificationBand } from '@l2beat/shared'
 import { type Validator, v } from '@l2beat/validate'
 import {
   CropSentimentSchema,
   CropStatusSchema,
-  qualifiesForGarden,
   ResolvedCropEvaluationSchema,
-  type ResolvedCrops,
   ResolvedCropsSchema,
-  resolveProjectCrops,
 } from './crops'
 
 // The CROPS API contract. The validators are the contract: the OpenAPI
@@ -85,7 +79,8 @@ const projectFields = {
   }),
   crops: ResolvedCropsSchema,
   inGarden: v.boolean().meta({
-    description: 'False while any crop is bad, even though it is reviewed.',
+    description:
+      'False while any crop is bad or the project has no ossification score yet, even though it is reviewed.',
   }),
   attestation: v.union([CropsApiAttestationSchema, v.null()]).meta({
     description:
@@ -180,7 +175,7 @@ export const CROPS_API_ROUTES: CropsApiRoute[] = [
     path: '/v1/address/{chainId}/{address}.json',
     summary: 'Which protocol is this address?',
     description:
-      'The reviewed protocols a contract, proxy implementation or permission holder belongs to, with a rating per crop. A shared contract lists every protocol that claims it, each once, with the name that protocol gives it.',
+      'The reviewed protocols a contract, proxy implementation or permission holder belongs to, with a rating per property. A shared contract lists every protocol that claims it, each once, with the name that protocol gives it.',
     params: [
       {
         name: 'chainId',
@@ -201,7 +196,7 @@ export const CROPS_API_ROUTES: CropsApiRoute[] = [
     path: '/v1/project/{id}.json',
     summary: 'Everything about one protocol',
     description:
-      'The crop evaluations of one protocol, with the reasoning behind each rating.',
+      'The CROPS evaluations of one protocol, with the reasoning behind each rating.',
     params: [
       {
         name: 'id',
@@ -215,9 +210,9 @@ export const CROPS_API_ROUTES: CropsApiRoute[] = [
   {
     key: 'crops',
     path: '/v1/crops.json',
-    summary: 'The whole garden',
+    summary: 'All reviewed protocols',
     description:
-      'Every reviewed protocol in one response, with the full crop evaluations and the attestation that names them.',
+      'Every reviewed protocol in one response, with the full CROPS evaluations and the attestation that names them.',
     params: [],
     result: 'CropsResponse',
   },
@@ -228,17 +223,21 @@ export interface CropsSourceProject {
   id: string
   slug: string
   name: string
-  crops: ProjectCrops
-  privacyInfo?: ProjectPrivacyInfo | undefined
-  scalingInfo?: ProjectScalingInfo | undefined
+  garden: ProjectGarden
+  ossificationHistory?:
+    | Project<'ossificationHistory'>['ossificationHistory']
+    | undefined
 }
 
+/** Resolved as of `generatedAt`, so a file and its timestamp agree. */
 export function resolveCropsProject(
   project: CropsSourceProject,
   meta: CropsAttestationsMeta,
+  generatedAt: number,
 ): CropsApiProject {
-  const path = getGardenProjectPath(project)
-  const crops = resolveProjectCrops(project.crops)
+  const { path, verdicts } = project.garden
+  const { crops, listing } =
+    verdicts[measureOssificationBand(project.ossificationHistory, generatedAt)]
   const attested = meta.current?.projectIds.includes(project.id)
   return {
     id: project.id,
@@ -246,7 +245,7 @@ export function resolveCropsProject(
     name: project.name,
     href: path ? `${L2BEAT_ORIGIN}${path}` : null,
     crops,
-    inGarden: qualifiesForGarden(crops),
+    inGarden: listing === 'listed',
     attestation:
       meta.current && attested
         ? {
@@ -257,21 +256,6 @@ export function resolveCropsProject(
           }
         : null,
   }
-}
-
-/**
- * The page a reviewed project has on l2beat.com, or null when it has none.
- * The API links only to pages that exist, so this never falls back to a
- * scaling url the way the frontend's getProjectUrl does.
- */
-function getGardenProjectPath(project: CropsSourceProject): string | null {
-  if (project.privacyInfo) {
-    return `/privacy/projects/${project.slug}`
-  }
-  if (project.scalingInfo) {
-    return `/layer2s/projects/${project.slug}`
-  }
-  return null
 }
 
 export function toCropsSummary(crops: ResolvedCrops): CropsApiSummary {

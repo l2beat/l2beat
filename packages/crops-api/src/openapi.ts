@@ -1,3 +1,7 @@
+import {
+  OSSIFICATION_BAND_MEANING,
+  OSSIFICATION_SCORE_BANDS,
+} from '@l2beat/shared-pure'
 import { toJsonSchemaDefinitions } from '@l2beat/validate'
 import {
   CROPS_API_ROUTES,
@@ -53,7 +57,7 @@ export function buildOpenApiDocument(attestations: CropsAttestationsMeta) {
 /** Only the network section depends on the attestations. */
 export function describeApi(attestations: CropsAttestationsMeta): string {
   const where = `lives on ${attestations.network} (chain id ${attestations.chainId})`
-  return `CROPS is L2BEAT's review of a protocol along four crops: censorship resistance, open source, privacy and security. Each crop gets a sentiment (good, warning, bad or neutral) and a status saying how far the review went. A protocol is in the garden when no crop is bad. Separately, the set of reviewed protocols is attested onchain with the Ethereum Attestation Service.
+  return `CROPS is L2BEAT's review of a protocol along four crops: censorship resistance, open source, privacy and security. Each crop gets a sentiment (good, warning, bad or neutral) and a status saying how far the review went. A protocol is in the garden when no crop is bad and it has an ossification score. Security is capped by that score: below ${OSSIFICATION_SCORE_BANDS.good} it is at most warning, and below ${OSSIFICATION_SCORE_BANDS.warning}, which means ${OSSIFICATION_BAND_MEANING.warning}, it is bad. Separately, the set of reviewed protocols is attested onchain with the Ethereum Attestation Service.
 
 Every response is a static file generated from the L2BEAT repository, so it is served from a CDN with no API key and no rate limit.
 
@@ -75,7 +79,7 @@ The attestation ${where}. It proves the set L2BEAT named, not that the ratings a
 2. Check \`attester\` and \`schema\` against \`attestations.attester\` and \`attestations.schemaUid\`, so an attestation someone else made cannot be mistaken for L2BEAT's.
 3. Check it is the current one. The newest wins: of the attester's attestations under the schema that are not revoked, the one with the highest revision names the current set. A change is a new attestation that points to the one it supersedes through \`refUID\`; older ones stay valid in EAS but no longer count.
 4. Decode \`projectIds\`: these are the protocols L2BEAT has reviewed, as of \`reviewedAt\`, at revision \`revision\`.
-5. For the rating per crop, the reasoning and what was not looked at, read \`/v1/project/{id}.json\`.`
+5. For the rating per property, the reasoning and what was not looked at, read \`/v1/project/{id}.json\`.`
 }
 
 function toOperation(route: CropsApiRoute): OpenApiOperation {

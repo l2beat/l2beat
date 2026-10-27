@@ -1,4 +1,10 @@
-import type { ProjectCrops, ProjectScalingInfo } from '@l2beat/config'
+import {
+  type GardenVerdict,
+  OSI_LICENSES,
+  type ProjectGarden,
+  type ResolvedCropEvaluation,
+  type ResolvedCrops,
+} from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { CropsAttestationsMeta } from '../api'
 import type {
@@ -31,16 +37,41 @@ export function lowerAddress(address: ChainSpecificAddress): string {
   return ChainSpecificAddress.address(address).toLowerCase()
 }
 
-const ALL_GOOD: ProjectCrops = {
-  censorshipResistance: { sentiment: 'good' },
-  openSource: { sentiment: 'good', license: 'MIT' },
-  privacy: { sentiment: 'good' },
-  security: { sentiment: 'good' },
+const GOOD: ResolvedCropEvaluation = {
+  sentiment: 'good',
+  status: 'reviewed',
+  points: [],
+  missing: [],
+  additionalConsiderations: [],
+  notReviewed: [],
 }
 
-const ONE_BAD: ProjectCrops = {
+const ALL_GOOD: ResolvedCrops = {
+  censorshipResistance: GOOD,
+  openSource: { ...GOOD, license: OSI_LICENSES.MIT },
+  privacy: GOOD,
+  security: GOOD,
+}
+
+const ONE_BAD: ResolvedCrops = {
   ...ALL_GOOD,
-  security: { sentiment: 'bad', missing: ['No audits.'] },
+  security: { ...GOOD, sentiment: 'bad', missing: ['No audits.'] },
+}
+
+/** One verdict for every band: these fixtures test the files, not the cap. */
+export function gardenOf(
+  path: string | null,
+  verdict: GardenVerdict,
+): ProjectGarden {
+  return {
+    path,
+    verdicts: {
+      good: verdict,
+      warning: verdict,
+      bad: verdict,
+      unscored: verdict,
+    },
+  }
 }
 
 export const ATTESTATION_UID =
@@ -67,8 +98,26 @@ export const UNISWAP: CropsApiInputProject = {
   id: 'uniswapv3',
   slug: 'uniswap-v3',
   name: 'Uniswap V3',
-  crops: ALL_GOOD,
-  scalingInfo: {} as ProjectScalingInfo,
+  garden: gardenOf('/layer2s/projects/uniswap-v3', {
+    crops: ALL_GOOD,
+    listing: 'listed',
+  }),
+  // Unchanged for years by `generatedAt`, so it scores in the top band.
+  ossificationHistory: {
+    contracts: [
+      {
+        name: 'UniswapV3Factory',
+        address: FACTORY,
+        isVerified: true,
+        ossifyingSince: 1620000000,
+        codeChangeCount: 0,
+        stateChangeCount: 0,
+      },
+    ],
+    changes: [],
+    deployments: [1620000000],
+    observedSince: 1620000000,
+  },
   contracts: {
     addresses: {
       ethereum: [
@@ -93,7 +142,7 @@ export const OTHER: CropsApiInputProject = {
   id: 'other',
   slug: 'other',
   name: 'Other',
-  crops: ONE_BAD,
+  garden: gardenOf(null, { crops: ONE_BAD, listing: 'ratedBad' }),
   contracts: {
     addresses: {
       ethereum: [{ address: FACTORY, name: 'SharedFactory' }],

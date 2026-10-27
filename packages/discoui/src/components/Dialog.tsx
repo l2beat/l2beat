@@ -1,5 +1,4 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
-import clsx from 'clsx'
 import { useEffect } from 'react'
 import { IconClose } from '../icons/IconClose'
 import { cn } from '../utils/cn'
@@ -25,7 +24,7 @@ function DialogTitle({ children, ...props }: RadixDialog.DialogTitleProps) {
   return (
     <RadixDialog.Title
       {...props}
-      className={clsx('mb-1 font-medium text-lg', props.className)}
+      className={cn('mb-1 font-medium text-lg', props.className)}
     >
       {children}
     </RadixDialog.Title>
@@ -39,7 +38,7 @@ function DialogDescription({
   return (
     <RadixDialog.Description
       {...props}
-      className={clsx('mb-5 text-sm leading-normal', props.className)}
+      className={cn('mb-5 text-sm leading-normal', props.className)}
     >
       {children}
     </RadixDialog.Description>

@@ -7,6 +7,7 @@ import { getSearchBarEntries } from './getSearchBarEntries'
 describe(getSearchBarEntries.name, () => {
   const originalGetProjects = ps.getProjects.bind(ps)
   const originalMock = env.MOCK
+  const originalInteropChains = env.INTEROP_CHAINS
 
   beforeEach(() => {
     env.MOCK = true
@@ -15,6 +16,7 @@ describe(getSearchBarEntries.name, () => {
   afterEach(() => {
     ps.getProjects = originalGetProjects
     env.MOCK = originalMock
+    env.INTEROP_CHAINS = originalInteropChains
   })
 
   it('keeps only direct project matches when they exist', async () => {
@@ -47,6 +49,33 @@ describe(getSearchBarEntries.name, () => {
     expect(result.find((entry) => entry.name === 'Ethereum')?.href).toEqual(
       '/projects/ethereum',
     )
+  })
+
+  // Some chain pages have no project behind them, like Solana's.
+  it('finds interop chains that have a chain page', async () => {
+    env.INTEROP_CHAINS = ['solana', 'arbitrum']
+    ps.getProjects = async () =>
+      [l2Project('arbitrum', 'Arbitrum One')] as never
+
+    const result = await getSearchBarEntries('sol')
+
+    expect(
+      result.map(({ name, href, category }) => ({ name, href, category })),
+    ).toEqual([
+      { name: 'Solana', href: '/projects/solana', category: 'interop' },
+    ])
+  })
+
+  it('links a scaling chain to its scaling page only', async () => {
+    env.INTEROP_CHAINS = ['solana', 'arbitrum']
+    ps.getProjects = async () =>
+      [l2Project('arbitrum', 'Arbitrum One')] as never
+
+    const result = await getSearchBarEntries('arbitrum')
+
+    expect(result.map((entry) => entry.href)).toEqual([
+      '/layer2s/projects/arbitrum',
+    ])
   })
 
   it('falls back to fuzzy project matches when there are no direct matches', async () => {
@@ -98,7 +127,7 @@ describe(getSearchBarEntries.name, () => {
     expect(result).toHaveLength(1)
     expect(result[0]?.type).toEqual('token')
     expect(result[0]?.name).toEqual('USDC')
-    expect(result[0]?.href).toEqual('/interop/tokens/usdc01/circle/usdc')
+    expect(result[0]?.href).toEqual('/tokens/usdc01/circle/usdc')
     expect(result[0]?.searchMatchKind).toEqual('direct')
   })
 

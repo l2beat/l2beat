@@ -2,6 +2,7 @@ export { parseReportDate } from './tools/audits'
 export { createTrackedTxId } from './tools/createTrackedTxConfigId'
 export {
   measureOssification,
+  measureOssificationBand,
   type OssificationChangeType,
   type OssificationCriticalUpdate,
   type OssificationHistory,

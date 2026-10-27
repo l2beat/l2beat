@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
 import {
   type KeyboardEvent,
   memo,
@@ -20,6 +19,7 @@ import { IconEyeClosed } from '../../../icons/IconEyeClosed'
 import { IconFolder } from '../../../icons/IconFolder'
 import { IconFolderOpened } from '../../../icons/IconFolderOpened'
 import { IconUnlinked } from '../../../icons/IconUnliked'
+import { cn } from '../../../utils/cn'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { useStore as useNodesStore } from '../panel-nodes/store/store'
@@ -108,7 +108,7 @@ function ListItemChain(props: {
     ([chain, blockNumber]) => (
       <li
         key={chain}
-        className={clsx(!props.first && 'border-t border-t-coffee-600')}
+        className={cn(!props.first && 'border-t border-t-coffee-600')}
       >
         <div className="group flex min-h-[22px] items-center justify-between pr-1 hover:bg-aux-brown">
           <button
@@ -260,7 +260,7 @@ const AddressEntry = memo(function AddressEntry({
   return (
     <li
       data-address={entry.address}
-      className={clsx(
+      className={cn(
         'flex min-h-[22px] cursor-pointer select-none items-center gap-1 whitespace-pre pl-4 text-sm',
         isSelected && 'bg-autumn-300 text-black',
         !isSelected && 'bg-coffee-800 hover:bg-aux-brown',

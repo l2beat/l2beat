@@ -1,6 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import clsx from 'clsx'
 import { useState } from 'react'
+import { cn } from '../utils/cn'
 import { splitChainPrefix } from '../utils/splitChainPrefix'
 import { ChainPicker } from './ChainPicker'
 
@@ -38,7 +38,7 @@ export function ChainAddressField(props: {
         {props.label}
       </label>
       <div
-        className={clsx(
+        className={cn(
           'flex border bg-coffee-900 transition-colors',
           errorVisible
             ? 'border-aux-red'

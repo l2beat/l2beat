@@ -1,4 +1,5 @@
 import { Fragment, useRef } from 'react'
+import { cn } from '../../utils/cn'
 import { useDockingHook } from './context'
 import { LeafView } from './LeafView'
 import type { LayoutNode, SplitNode } from './types'
@@ -78,11 +79,12 @@ function Splitter(props: { splitId: string; index: number; isRow: boolean }) {
       }}
       onPointerMove={onPointerMove}
       onPointerUp={(e) => ref.current?.releasePointerCapture(e.pointerId)}
-      className={
+      className={cn(
+        'relative z-20 shrink-0 select-none bg-coffee-600 before:absolute hover:bg-coffee-400 active:bg-coffee-400',
         props.isRow
-          ? 'w-[6px] shrink-0 cursor-col-resize select-none bg-coffee-600 hover:bg-coffee-400'
-          : 'h-[6px] shrink-0 cursor-row-resize select-none bg-coffee-600 hover:bg-coffee-400'
-      }
+          ? 'before:-right-2 w-px cursor-col-resize before:inset-y-0 before:left-0'
+          : '-mb-px before:-bottom-2 h-px cursor-row-resize before:inset-x-0 before:top-0',
+      )}
     />
   )
 }

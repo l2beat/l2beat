@@ -15,7 +15,10 @@ describe(fetchWithTimeout.name, () => {
           (e: unknown) => e,
         )
         expect(error).toBeA(HttpTimeoutError)
-        expect((error as Error).message).toInclude('for 20ms')
+        expect((error as Error).cause).toEqual({
+          url: `${url}/`,
+          timeoutMs: 20,
+        })
       },
     )
   })

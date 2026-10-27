@@ -1,10 +1,12 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { searchEntries } from '~/components/search-bar/searchBarResults'
+import { selectChainProjects } from '~/server/features/chains/getChainProjects'
 import { getActiveInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { ps } from '~/server/projects'
 import { getLogger } from '../../utils/logger'
 import type { SearchBarProjectEntry, SearchBarTokenEntry } from './types'
 import { getAbstractTokensByAddress } from './utils/getAbstractTokensByAddress'
+import { getSearchBarChainEntry } from './utils/getSearchBarChainEntry'
 import { getSearchBarProjectEntries } from './utils/getSearchBarProjectEntries'
 import { getSearchBarTokenEntries } from './utils/getSearchBarTokenEntries'
 import { toSearchBarProject } from './utils/toSearchBarProject'
@@ -62,9 +64,13 @@ export async function getSearchBarEntries(search: string) {
     ),
   ])
 
-  const searchBarEntries = projects.flatMap((p) =>
-    getSearchBarProjectEntries(p),
+  const l2ProjectIds = new Set(
+    projects.filter((p) => p.scalingInfo).map((p) => p.id),
   )
+  const searchBarEntries = [
+    ...projects.flatMap((p) => getSearchBarProjectEntries(p)),
+    ...selectChainProjects(l2ProjectIds).map(getSearchBarChainEntry),
+  ]
 
   if (address) {
     // Tokens first: a bridge escrow lists the token contracts it holds, but

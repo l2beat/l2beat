@@ -1,9 +1,9 @@
-import clsx from 'clsx'
 import { useState } from 'react'
 import { Checkbox } from '../../../../../../components/Checkbox'
 import { IconEyeClosed } from '../../../../../../icons/IconEyeClosed'
 import { IconFoldVertical } from '../../../../../../icons/IconFoldVertical'
 import { IconUnfoldVertical } from '../../../../../../icons/IconUnfoldVertical'
+import { cn } from '../../../../../../utils/cn'
 import type { ExpandedField } from './buildFieldTree'
 import {
   type DisplayedFieldState,
@@ -55,7 +55,7 @@ export function FieldNode({
   if (field.type === 'simple') {
     return (
       <div className="flex items-center gap-1 pl-1">
-        <div className={clsx(state === 'off' && 'text-coffee-400')}>
+        <div className={cn(state === 'off' && 'text-coffee-400')}>
           {field.property}
         </div>
         <div className="mb-1 w-full border-coffee-200/50 border-b border-dashed" />
@@ -70,7 +70,7 @@ export function FieldNode({
         {isCollapsed ? '▼' : '▲'}
         <div
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className={clsx(
+          className={cn(
             'cursor-pointer hover:underline',
             state === 'off' && 'text-coffee-400',
           )}
@@ -132,7 +132,7 @@ function StateToggle({
           type="button"
           title={option.title}
           onClick={() => onSelect(option.state)}
-          className={clsx(
+          className={cn(
             'flex size-4 items-center justify-center',
             option.state === state
               ? 'bg-autumn-300 text-black'

@@ -15,6 +15,7 @@ import { automata } from '../projects/automata/automata'
 import { aztec } from '../projects/aztec/aztec'
 import { aztecconnect } from '../projects/aztecconnect/aztecconnect'
 import { aztecnetwork } from '../projects/aztecnetwork/aztecnetwork'
+import { aztecnetworkv6 } from '../projects/aztecnetworkv6/aztecnetworkv6'
 import { base } from '../projects/base/base'
 import { blast } from '../projects/blast/blast'
 import { bob } from '../projects/bob/bob'
@@ -182,6 +183,7 @@ export const layer2s: ScalingProject[] = [
   aztecconnect,
   aztec,
   aztecnetwork,
+  aztecnetworkv6,
   base,
   blast,
   bob,

@@ -1,9 +1,14 @@
 import type { ProjectCropStatus } from '@l2beat/config'
 import { CropPlant } from '~/components/garden/CropPlant'
-import type { CropSentiment } from '~/components/garden/crops'
+import {
+  CROP_SENTIMENT_LABELS,
+  CROP_STATUS_LABELS,
+  type CropSentiment,
+} from '~/components/garden/crops'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { SectionHeading } from './SectionHeading'
 
+// Titles come from the tooltip labels, so the legend and the ratings use the same words.
 const PLANTS: {
   sentiment: CropSentiment
   status: ProjectCropStatus
@@ -13,35 +18,36 @@ const PLANTS: {
   {
     sentiment: 'good',
     status: 'reviewed',
-    title: 'In bloom',
+    title: CROP_SENTIMENT_LABELS.good,
     description:
-      'The crop clears the bar. Additional considerations may still be listed, but they do not undermine the property.',
+      'The property holds. Additional considerations may still be listed, but they do not undermine it.',
   },
   {
     sentiment: 'warning',
     status: 'reviewed',
-    title: 'A bud',
+    title: CROP_SENTIMENT_LABELS.warning,
     description:
-      'The property mostly holds, but something is missing: check the tooltips and detailed pages for details.',
+      'The property mostly holds, but something is missing. The tooltip and the project page say what.',
   },
   {
     sentiment: 'bad',
     status: 'reviewed',
-    title: 'Wilting',
-    description: 'The property does not hold in practice.',
+    title: CROP_SENTIMENT_LABELS.bad,
+    description:
+      'The property does not hold in practice. A project with a bad rating is not listed above.',
   },
   {
     sentiment: 'neutral',
     status: 'notReviewed',
-    title: 'Not reviewed',
+    title: CROP_STATUS_LABELS.notReviewed,
     description: 'We have not reviewed the property yet.',
   },
   {
     sentiment: 'neutral',
     status: 'fullyTransparent',
-    title: 'Fully transparent',
+    title: CROP_STATUS_LABELS.fullyTransparent,
     description:
-      'Applies to Privacy only: the protocol makes no claim to the property and is fully transparent.',
+      'Used for privacy only, when the protocol makes no privacy claims and everything it does is public.',
   },
 ]
 
@@ -49,8 +55,8 @@ export function PlantLegendSection() {
   return (
     <section className="mt-8 md:mt-12">
       <SectionHeading
-        title="How to read a plant"
-        description="The shape and colour tell you the state of the property."
+        title="What the ratings mean"
+        description="The shape and color of each icon show how a project does on a property."
         size="md"
       />
       <PrimaryCard className="md:p-8">

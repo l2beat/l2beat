@@ -1,3 +1,199 @@
+Generated with discovered.json: 0xd07b7d499fcdc84534e3de731a65ff864d91a2ba
+
+# Diff at Mon, 26 Oct 2026 14:25:49 GMT:
+
+- id: 6bd52cf6
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2fdfb735f35d3ca1562723ce81893cc4afb9f5f6 block: 1792559137
+- current timestamp: 1793024667
+
+## Description
+
+Every AccessRouter admin role and the three yield shares moved from an EOA to a 2/4 Safe, without a delay. RelaySwaps is verified now and gets a template. maxStateTreeSize is HIGH, since lowering it stops ragequit.
+
+## Watched changes
+
+```diff
+    EOA (eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160","description":"enable or disable assets, set minimum deposits, vetting fees of up to 99.99% and relayer fee caps, and sweep fees held by the Entrypoint.","role":".entrypointManagers"},{"permission":"interact","from":"eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160","description":"grant and revoke the ops admin, upgrader, unpauser and depositor roles.","role":".defaultAdmins"},{"permission":"interact","from":"eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160","description":"grant and revoke the pauser, entrypoint manager and postman roles.","role":".opsAdmins"},{"permission":"interact","from":"eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160","description":"pause deposits and transacts in the PoolVault.","role":".pausers"},{"permission":"interact","from":"eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160","description":"unpause the PoolVault.","role":".unpausers"},{"permission":"interact","from":"eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160","description":"upgrade the PoolVault, Entrypoint, Keystore and ASPRegistry, and replace the vault's verifiers, registries and tree limits.","role":".upgraders"},{"permission":"interact","from":"eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7","description":"set the yield fee up to 20%, claim fees, pause minting, set a rewards controller and rescue tokens other than the backing aToken.","role":".owner"},{"permission":"interact","from":"eth:0xA4cF419558Ef36CC6FfB666195684dC963910426","description":"set the yield fee up to 20%, claim fees, pause minting, set a rewards controller and rescue tokens other than the backing aToken.","role":".owner"},{"permission":"interact","from":"eth:0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6","description":"set the yield fee up to 20%, claim fees, pause minting, set a rewards controller and rescue tokens other than the backing aToken.","role":".owner"}]
+    }
+```
+
+```diff
+    contract AccessRouter (eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160) [privacy-pools-v2/AccessRouter] {
+    +++ description: Role registry the Privacy Pools v2 core contracts check. No role has a delay.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+      values.accessControl.ENTRYPOINT_MANAGER_ROLE.members.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+      values.accessControl.OPS_ADMIN_ROLE.members.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+      values.accessControl.UPGRADER_ROLE.members.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+      values.accessControl.UNPAUSER_ROLE.members.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
++++ severity: HIGH
+      values.defaultAdmins.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
++++ severity: MEDIUM
+      values.entrypointManagers.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
++++ severity: HIGH
+      values.opsAdmins.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
++++ severity: MEDIUM
+      values.pausers.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
++++ severity: MEDIUM
+      values.unpausers.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
++++ severity: HIGH
+      values.upgraders.0:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+    }
+```
+
+```diff
+    contract ppETH (eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7) [privacy-pools-v2/PPYieldToken] {
+    +++ description: ERC-4626 share token over an Aave v3 aToken, the asset the pool holds for a yield deposit. The admin's fee applies to the yield only.
+      values.admin:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+      values.owner:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+    }
+```
+
+```diff
+    contract ppUSDT (eth:0xA4cF419558Ef36CC6FfB666195684dC963910426) [privacy-pools-v2/PPYieldToken] {
+    +++ description: ERC-4626 share token over an Aave v3 aToken, the asset the pool holds for a yield deposit. The admin's fee applies to the yield only.
+      values.admin:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+      values.owner:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+    }
+```
+
+```diff
+    contract ppUSDC (eth:0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6) [privacy-pools-v2/PPYieldToken] {
+    +++ description: ERC-4626 share token over an Aave v3 aToken, the asset the pool holds for a yield deposit. The admin's fee applies to the yield only.
+      values.admin:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+      values.owner:
+-        "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
++        "eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6"
+    }
+```
+
+```diff
++   Status: CREATED
+    EOA (eth:0x98AdDcc75931795eB66c52cA954541c18535E3c0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (eth:0xd563affc5ccA233514426e725c2d0b12C516a3e6) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../privacy-pools-v2/.flat/SafeL2/SafeL2.sol       | 1286 ++++++++++++++++++++
+ .../privacy-pools-v2/.flat/SafeL2/SafeProxy.p.sol  |   42 +
+ 2 files changed, 1328 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792559137 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x0967755AfA2016866D12EefB820705026842dCe8) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "approve the aggregator routers and yield zaps that RelaySwaps sends withdrawn funds through."
++        "approve the aggregator routers and yield zaps that RelaySwaps sends withdrawn funds through, and rescue any token it holds, such as bridge refunds."
+    }
+```
+
+```diff
+    contract PoolVault (eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed) [privacy-pools-v2/PoolVault] {
+    +++ description: Holds every pool asset and the state tree of note commitments and spent nullifiers.
+      fieldMeta.maxStateTreeSize.severity:
+-        "LOW"
++        "HIGH"
+    }
+```
+
+```diff
+    EOA (eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92) {
+    +++ description: None
+      receivedPermissions.6.description:
+-        "set the yield fee up to 20%, claim fees, pause minting, set the Aave rewards controller and rescue tokens other than the backing aToken."
++        "set the yield fee up to 20%, claim fees, pause minting, set a rewards controller and rescue tokens other than the backing aToken."
+      receivedPermissions.7.description:
+-        "set the yield fee up to 20%, claim fees, pause minting, set the Aave rewards controller and rescue tokens other than the backing aToken."
++        "set the yield fee up to 20%, claim fees, pause minting, set a rewards controller and rescue tokens other than the backing aToken."
+      receivedPermissions.8.description:
+-        "set the yield fee up to 20%, claim fees, pause minting, set the Aave rewards controller and rescue tokens other than the backing aToken."
++        "set the yield fee up to 20%, claim fees, pause minting, set a rewards controller and rescue tokens other than the backing aToken."
+    }
+```
+
+```diff
+    contract RelaySwaps (eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8) [privacy-pools-v2/RelaySwaps] {
+    +++ description: Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, unwrapping yield shares through an approved zap first where needed, with the swap calldata bound into the proof.
+      unverified:
+-        true
+      description:
+-        "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, with the swap calldata bound into the proof."
++        "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, unwrapping yield shares through an approved zap first where needed, with the swap calldata bound into the proof."
+      values.approvedZapList:
++        ["eth:0x9Ea986BcDF6784D85B518b15bEEE1E65b585817B","eth:0xDC3D922df81FC7B7f58229431ED91acB0482f3A5","eth:0x33c1eEf370bBb447414156CFc4fDABD434776EAf"]
+      values.ENTRYPOINT:
++        "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3"
+      values.NATIVE_ASSET:
++        "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+      values.POOL:
++        "eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed"
+      values.ROUTING_TYPEHASH:
++        "0xe11f9c010588c4c3c1b43d85f2825f9bb06ba076295d1e7b89d5e0a8b3ad1f7e"
+      implementationNames.eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8:
+-        ""
++        "RelaySwaps"
+      template:
++        "privacy-pools-v2/RelaySwaps"
+      sourceHashes:
++        ["0xd7dea0ccf32266bccfea5f538324c1c915194aaf691347720a0f2f5a26e91459"]
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
 Generated with discovered.json: 0xe957b0db264a854916d1c5a44bbc64e6f1576170
 
 # Diff at Thu, 22 Oct 2026 10:01:44 GMT:

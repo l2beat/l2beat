@@ -70,6 +70,29 @@ assert(
 const rootLiveness = formatSeconds(
   discovery.getContractValue<number>('Keystore', 'keystoreRootLiveness'),
 )
+const ADMIN_ROLES = [
+  'defaultAdmins',
+  'opsAdmins',
+  'upgraders',
+  'pausers',
+  'unpausers',
+  'entrypointManagers',
+]
+const [admin] = discovery.getContractValue<string[]>(
+  'AccessRouter',
+  'upgraders',
+)
+assert(
+  ADMIN_ROLES.every((role) => {
+    const members = discovery.getContractValue<string[]>('AccessRouter', role)
+    return members.length === 1 && members[0] === admin
+  }) &&
+    SHARE_TOKENS.every(
+      (name) => discovery.getContractValue<string>(name, 'owner') === admin,
+    ),
+  'One multisig must hold every admin role and own the share tokens',
+)
+const adminThreshold = discovery.getMultisigStats(admin)
 
 const ETH = EthereumAddress('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')
 const POOL_ASSETS = [
@@ -217,7 +240,7 @@ export const privacyPoolsV2: BaseProject = {
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The upgrader role can replace the PoolVault that escrows deposits without delay, so a malicious upgrade takes the funds before anyone can leave. Ragequit works while the vault is paused, but not against a new implementation.',
+        'The upgrader role can replace the PoolVault that escrows deposits without delay, so a malicious upgrade takes the funds before anyone can leave. Ragequit works while the vault is paused, but the same role can stop it at once without an upgrade.',
       walkawayTest: {
         passed: false,
         reason:
@@ -243,6 +266,7 @@ export const privacyPoolsV2: BaseProject = {
         'privacy-pools-v2',
         'upgradesAndGovernance',
         {
+          adminThreshold,
           maxYieldFee,
         },
       ),

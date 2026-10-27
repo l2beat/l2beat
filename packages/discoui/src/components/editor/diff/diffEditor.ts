@@ -40,6 +40,7 @@ import {
 } from './collapseUnchanged'
 import { type ComputedDiff, computeDiff } from './computeDiff'
 import { diffTheme } from './diffTheme'
+import { type DiffVerdict, getDiffVerdict } from './diffVerdict'
 import type { LineRange, LineRangeMapping } from './utils/diffFilter'
 
 export interface Change {
@@ -51,6 +52,7 @@ export interface Diff {
   deletions: number
   additions: number
   changes: Change[]
+  verdict: DiffVerdict
 }
 
 interface Disposable {
@@ -258,7 +260,7 @@ export class DiffEditor {
     for (const listener of this.buildListeners) {
       listener()
     }
-    this.lastDiff = summarize(computed)
+    this.lastDiff = summarize(computed, this.ignoreComments)
     for (const listener of this.diffListeners) {
       listener(this.lastDiff)
     }
@@ -344,7 +346,7 @@ function previousStart(starts: number[], position: number): number {
 // Monaco's ILineChange shape, which the inline diff copy reads: line numbers
 // are inclusive, and an empty side has an end of 0 and a start on the line
 // before the change.
-function summarize(computed: ComputedDiff): Diff {
+function summarize(computed: ComputedDiff, ignoreComments: boolean): Diff {
   let deletions = 0
   let additions = 0
   const changes: Change[] = []
@@ -356,7 +358,8 @@ function summarize(computed: ComputedDiff): Diff {
     deletions += lineCount(change.original)
     additions += lineCount(change.modified)
   }
-  return { deletions, additions, changes }
+  const verdict = getDiffVerdict(computed, ignoreComments)
+  return { deletions, additions, changes, verdict }
 }
 
 function inclusiveLines(range: LineRange): [number, number] {

@@ -1,5 +1,5 @@
 import type { ActivityRecord, Database } from '@l2beat/database'
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { rangeToDays } from '../../utils/range'
 import type { ActivityRange, ActivityResultItem } from './types'
@@ -51,6 +51,7 @@ async function getFullySyncedActivityRange(
   range: ActivityRange,
 ): Promise<[UnixTime | null, UnixTime]> {
   const target = await db.syncMetadata.getMaxTargetForFeature('activity')
+  assert(target, 'Max target for feature not found')
   const end = UnixTime.toStartOf(target, 'day') - 1 * UnixTime.DAY
   const days = rangeToDays(range)
 

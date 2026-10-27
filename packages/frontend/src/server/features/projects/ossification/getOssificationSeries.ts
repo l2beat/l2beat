@@ -2,7 +2,7 @@ import type { ProjectDefiInfo, TvsToken } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getTvsTargetTimestamp } from '~/server/features/layer2s/tvs/utils/getTvsTargetTimestamp'
+import { getLatestTvsTimestamp } from '~/server/features/layer2s/tvs/utils/getLatestTvsTimestamp'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import type { ValuePoint } from './normalizeSeries'
 
@@ -63,8 +63,7 @@ export async function getOssificationSeries(
     }
   }
 
-  // The hour after the target is usually only partially synced.
-  const to = getTvsTargetTimestamp()
+  const to = await getLatestTvsTimestamp()
   // min() keeps a clock younger than the target on its preceding synced value.
   const start =
     (await db.tvsTokenValue.getMaxTimestampAtOrBeforeForProjects(

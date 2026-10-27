@@ -4,6 +4,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
+import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
@@ -66,6 +67,7 @@ export async function getDefiProjectEntry(
       'discoveryUpdates',
       'ossificationHistory',
       'auditCoverage',
+      'garden',
     ],
   })
 
@@ -128,6 +130,11 @@ export async function getDefiProjectEntry(
   }
 
   const sections: ProjectDetailsSection[] = []
+
+  const gardenCropsSection = await getGardenCropsSection(project, ossification)
+  if (gardenCropsSection) {
+    sections.push(gardenCropsSection)
+  }
 
   if (
     project.display.detailedDescription ||

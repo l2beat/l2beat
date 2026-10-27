@@ -7,7 +7,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
-  CROP_NOTES,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -190,6 +189,8 @@ const escapeHatchAddress = ChainSpecificAddress.address(escapeHatch.address)
 
 const v5ActivationTimestamp = UnixTime(1784060567) // 14 July 2026 20:22:47 UTC
 const v5ActivationBlock = 25533241 // https://etherscan.io/tx/0xff2db4e4bba583f2451478bfe4703e16afc79f0b463fb60615ebe3494142437b
+const v6ActivationTimestamp = UnixTime(1793001623) // 26 October 2026 08:00:23 UTC
+const v6ActivationBlock = 26275528 // https://etherscan.io/tx/0x2ec0909c5d1a39fb123392b18d6d30ffab21072c961497ee36167923bf589a0f
 
 function formatAztecAmount(amount: bigint): string {
   return `${formatNumber(Number(amount / 10n ** 18n))} AZTEC`
@@ -297,6 +298,7 @@ export const aztecnetwork: ScalingProject = {
   id: ProjectId('aztecnetwork'),
   capability: 'universal',
   addedAt: UnixTime(1773405732),
+  archivedAt: v6ActivationTimestamp,
   badges: [
     BADGES.VM.AztecVM,
     BADGES.DA.EthereumBlobs,
@@ -304,14 +306,14 @@ export const aztecnetwork: ScalingProject = {
     BADGES.Other.Governance,
   ],
   display: {
-    name: 'Aztec Network',
-    shortName: 'Aztec',
+    name: 'Aztec Network v5',
+    shortName: 'Aztec v5',
     slug: 'aztecnetwork',
     description:
-      'Aztec Network is a privacy-preserving ZK rollup that uses the AztecVM and Noir to support private and public smart contracts on Ethereum.',
+      'Aztec Network v5 is the previous deployment of the privacy-preserving Aztec ZK rollup. Since governance made v6 canonical, two operators run all remaining v5 validators, and regular block production needs both.',
     purposes: ['Universal', 'Privacy'],
     warning:
-      'Aztec v5 has a [known critical proving-system vulnerability](https://aztec.network/blog/alpha-v5-proving-system-vulnerability) that puts funds, applications, and contract state at risk. A fix is planned for v6.',
+      'Aztec v5 has a [known critical proving-system vulnerability](https://aztec.network/blog/alpha-v5-proving-system-vulnerability) that puts funds, applications, and contract state at risk.',
     links: {
       websites: ['https://aztec.network/', 'https://aztec.network/noir'],
       documentation: ['https://docs.aztec.network/'],
@@ -389,6 +391,7 @@ export const aztecnetwork: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: v5ActivationBlock,
+        untilBlock: v6ActivationBlock - 1,
         inbox: EthereumAddress.ZERO, // Event-only tracking
         topics: [
           '0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0', // CheckpointProposed
@@ -438,7 +441,7 @@ export const aztecnetwork: ScalingProject = {
   chainConfig: {
     gasTokens: ['AZTEC'],
     name: 'aztecnetwork',
-    chainId: 677868, // on chainlist, but aztec is not evm
+    chainId: undefined, // 677868 moved to aztecnetworkv6
     apis: [
       {
         type: 'aztec-rpc',
@@ -822,6 +825,14 @@ export const aztecnetwork: ScalingProject = {
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
     {
+      title: 'Aztec v6 Upgrade',
+      url: 'https://etherscan.io/tx/0x2ec0909c5d1a39fb123392b18d6d30ffab21072c961497ee36167923bf589a0f',
+      date: '2026-10-26T00:00:00Z',
+      description:
+        'Governance makes v6 canonical. v5 keeps running with a reduced, earmarked checkpoint reward.',
+      type: 'general',
+    },
+    {
       title: 'v5 Proving System Vulnerability',
       url: 'https://aztec.network/blog/alpha-v5-proving-system-vulnerability',
       date: '2026-08-07T00:00:00Z',
@@ -862,49 +873,4 @@ export const aztecnetwork: ScalingProject = {
       type: 'general',
     },
   ],
-  crops: {
-    censorshipResistance: {
-      sentiment: 'warning',
-      points: [
-        'Sequencing is permissionless with no single privileged actor.',
-        'Decentralised sequencing and private execution environment provide excellent realtime, probabilistic CR.',
-        'Exit window is infinite due to immutable core contracts + Escape Hatch.',
-        CROP_NOTES.passesWalkawayTest(),
-      ],
-      missing: [
-        'No deterministic CR: Self-proposal is probabilistic through the escape hatch.',
-      ],
-    },
-    openSource: {
-      sentiment: 'good',
-      license: 'Apache-2.0',
-      points: [
-        'Onchain verifier has been reproduced.',
-        'Rollup is forkable onchain by design.',
-      ],
-    },
-    privacy: {
-      sentiment: 'good',
-      points: [
-        'Programmable privacy: private state, private and public smart contracts are protocol-native.',
-        'Private transactions are proven client-side (private inputs do not leave the device).',
-      ],
-      missing: [
-        'The complicated execution environment might leak some metadata.',
-      ],
-    },
-    security: {
-      sentiment: 'bad',
-      points: ['All state is validated with validity proofs on Ethereum.'],
-      missing: [
-        'The current proof system has known critical vulnerabilities',
-        'No multiproof system.',
-        'An exploit in the single proof system combined with private execution can be fatal for the protocol.',
-      ],
-      notReviewed: [
-        CROP_NOTES.notReviewed.quantumSafety,
-        CROP_NOTES.notReviewed.circuitBreakers,
-      ],
-    },
-  },
 }

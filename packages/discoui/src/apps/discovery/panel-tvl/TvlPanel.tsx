@@ -1,12 +1,12 @@
 import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
 import type { ReactNode } from 'react'
 import { useParams } from 'react-router'
 import { getTvl } from '../../../api/api'
 import type { ApiTvlEntry } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { LoadingState } from '../../../components/LoadingState'
+import { cn } from '../../../utils/cn'
 import { usePanelStore } from '../store/panel-store'
 
 const COLUMN = 'w-20 shrink-0 text-right'
@@ -105,7 +105,7 @@ function TvlRow(props: { entry: ApiTvlEntry; share: number }) {
 function Cell(props: { children: ReactNode; bright?: boolean }) {
   return (
     <span
-      className={clsx(
+      className={cn(
         COLUMN,
         'relative font-mono text-xs tabular-nums',
         props.bright ? 'text-coffee-200' : 'text-coffee-400',

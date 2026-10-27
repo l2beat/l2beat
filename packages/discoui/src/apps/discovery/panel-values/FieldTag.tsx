@@ -1,6 +1,6 @@
-import clsx from 'clsx'
 import { Button } from '../../../components/Button'
 import { IconClose } from '../../../icons/IconClose'
+import { cn } from '../../../utils/cn'
 
 export function FieldTag(props: {
   source: 'config' | 'template' | 'legacy'
@@ -13,7 +13,7 @@ export function FieldTag(props: {
         {props.children}
       </div>
       <span
-        className={clsx(
+        className={cn(
           'w-4 select-none px-1 py-0.5 font-normal last:rounded-r-xs',
           toTagColor(props.source),
         )}

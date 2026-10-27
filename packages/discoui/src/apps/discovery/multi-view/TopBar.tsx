@@ -1,10 +1,10 @@
-import clsx from 'clsx'
 import { Link } from 'react-router'
 import { Button } from '../../../components/Button'
 import { IS_READONLY } from '../../../config/readonly'
 import { IconClose } from '../../../icons/IconClose'
 import { IconPlus } from '../../../icons/IconPlus'
 import { IconRefresh } from '../../../icons/IconRefresh'
+import { cn } from '../../../utils/cn'
 import { useTerminalStore } from '../panel-terminal/store'
 import { useDiscoveryCommand } from '../panel-terminal/useDiscoveryCommand'
 import { Search } from '../search/Search'
@@ -62,7 +62,7 @@ export function TopBar(props: { project: string }) {
             {layouts.map((_, i) => (
               <button
                 key={i}
-                className={clsx(
+                className={cn(
                   'flex size-5 items-center justify-center rounded-xs font-medium text-xs transition-all duration-100',
                   selectedLayout === i
                     ? 'bg-autumn-300 text-black shadow-xs'

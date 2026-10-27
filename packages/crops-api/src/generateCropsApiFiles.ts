@@ -59,7 +59,7 @@ export function generateCropsApiFiles(input: CropsApiInput): CropsApiFile[] {
   const projects = input.projects
     .map((source) => ({
       ...source,
-      api: resolveCropsProject(source, input.attestations),
+      api: resolveCropsProject(source, input.attestations, input.generatedAt),
     }))
     .sort((a, b) => a.id.localeCompare(b.id))
   const files: CropsApiFile[] = [
