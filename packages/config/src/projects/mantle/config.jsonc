@@ -6,14 +6,20 @@
     "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
     "mantle:0x4200000000000000000000000000000000000007",
     "mantle:0x4200000000000000000000000000000000000010",
-    "mantle:0x4200000000000000000000000000000000000016"
+    "mantle:0x4200000000000000000000000000000000000016",
+    "mantle:0x4200000000000000000000000000000000000011",
+    "mantle:0x4200000000000000000000000000000000000019",
+    "mantle:0x420000000000000000000000000000000000001A",
+    "mantle:0x420000000000000000000000000000000000001b"
   ],
   "names": {
     "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354": "L1MantleToken",
     "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "MantleTokenProxyAdmin",
     "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f": "MantleSecurityMultisig",
     "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": "MantleEngineeringMultisig",
-    "mantle:0x4200000000000000000000000000000000000018": "L2ProxyAdmin"
+    "mantle:0x4200000000000000000000000000000000000018": "L2ProxyAdmin",
+    "mantle:0x420000000000000000000000000000000000001A": "L1FeeVault",
+    "mantle:0x420000000000000000000000000000000000001b": "OperatorFeeVault"
   },
   "overrides": {
     "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": {
@@ -108,6 +114,40 @@
     "mantle:0x4200000000000000000000000000000000000016": {
       "critical": true,
       "ignoreInWatchMode": ["messageNonce"]
+    },
+    // Fee vaults: RECIPIENT is fixed in the implementation and is an L1 address.
+    "mantle:0x4200000000000000000000000000000000000011": {
+      "description": "Collects the sequencer fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.",
+      "category": "non-critical",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "fields": {
+        "RECIPIENT": { "edit": ["format", "EthereumAddress"] },
+        "l1FeeWallet": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "mantle:0x4200000000000000000000000000000000000019": {
+      "description": "Collects the EIP-1559 base fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.",
+      "category": "non-critical",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "fields": {
+        "RECIPIENT": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "mantle:0x420000000000000000000000000000000000001A": {
+      "description": "Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.",
+      "category": "non-critical",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "fields": {
+        "RECIPIENT": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "mantle:0x420000000000000000000000000000000000001b": {
+      "description": "Collects the operator fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.",
+      "category": "non-critical",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "fields": {
+        "RECIPIENT": { "edit": ["format", "EthereumAddress"] }
+      }
     },
     // L2ProxyAdmin: upgrades the L2 predeploys. Its implementation is unverified on
     // Mantle but byte-identical to the verified Base L2 ProxyAdmin implementation
