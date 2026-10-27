@@ -27,7 +27,7 @@ import {
   readLink,
   writeLink,
 } from './link'
-import { decode } from './plugins'
+import { DECODE_AS_PRESETS, decode, decodeAs } from './plugins'
 import { SafeHashes } from './SafeHashes'
 
 export function DecoderApp() {
@@ -645,6 +645,14 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
       <div>
         {nameElement}
         <DisplayBytes bytes={decoded.bytes} />
+        {decoded.bytes.length > 66 && (
+          <DecodeAs
+            bytes={decoded.bytes}
+            chainId={decoded.chainId ?? 1}
+            address={decoded.address}
+            onDecode={setDecoded}
+          />
+        )}
         <HashMeaning hash={decoded.bytes} chainId={decoded.chainId} />
         {extra}
       </div>
@@ -699,6 +707,69 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
       </div>
     )
   }
+}
+
+function DecodeAs(props: {
+  bytes: `0x${string}`
+  chainId: number
+  address: `0x${string}` | undefined
+  onDecode(value: DecodedValue): void
+}) {
+  const presetsId = useId()
+  const [open, setOpen] = useState(false)
+  const [input, setInput] = useState('')
+  const [error, setError] = useState('')
+
+  function submit(e: FormEvent) {
+    e.preventDefault()
+    try {
+      props.onDecode(decodeAs(input, props.bytes, props.chainId, props.address))
+    } catch {
+      setError('Cannot decode the bytes as this type.')
+    }
+  }
+
+  if (!open) {
+    return (
+      <button
+        className="ml-2 cursor-pointer text-zinc-500"
+        onClick={() => setOpen(true)}
+      >
+        [decode as]
+      </button>
+    )
+  }
+
+  return (
+    <form className="pl-4" onSubmit={submit}>
+      <div className="flex max-w-[600px] gap-2">
+        <input
+          autoFocus
+          list={presetsId}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="address, bytes · (uint a, string b) · function foo(uint a) · multiSend"
+          className="flex-1 bg-zinc-900 px-2 placeholder:text-zinc-500"
+        />
+        <datalist id={presetsId}>
+          {DECODE_AS_PRESETS.map((preset) => (
+            <option key={preset} value={preset} />
+          ))}
+        </datalist>
+        <button className="text-zinc-500" type="submit">
+          [decode]
+        </button>
+        <button
+          className="text-zinc-500"
+          type="button"
+          onClick={() => setOpen(false)}
+        >
+          [cancel]
+        </button>
+      </div>
+      {error && <div className="text-red-500">{error}</div>}
+    </form>
+  )
 }
 
 function HashMeaning({

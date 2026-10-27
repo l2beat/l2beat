@@ -1,7 +1,14 @@
 import { expect } from 'earl'
 import { describe } from 'mocha'
-import { encodeFunctionData, parseAbi } from 'viem'
-import { decode } from './plugins'
+import {
+  concatHex,
+  encodeAbiParameters,
+  encodeFunctionData,
+  parseAbi,
+  parseAbiParameters,
+  toHex,
+} from 'viem'
+import { decode, decodeAs } from './plugins'
 
 const SET_IMPLEMENTATION_ABI =
   'function setImplementation(uint32 _gameType, address _impl, bytes _args)'
@@ -75,5 +82,63 @@ describe('packed argument plugin', () => {
     const args = decoded?.members?.find((member) => member.name === 'args')
     expect(args?.type).toEqual('bytes')
     expect(args?.value).toEqual('0xdeadbeef')
+  })
+})
+
+describe(decodeAs.name, () => {
+  const TARGET = '0x1111111111111111111111111111111111111111'
+
+  it('decodes a parameter list without parentheses', () => {
+    const bytes = encodeAbiParameters(parseAbiParameters('address, bytes'), [
+      TARGET,
+      '0xdeadbeef',
+    ])
+
+    const decoded = decodeAs(' address, bytes ', bytes, 10)
+
+    expect(decoded.type).toEqual('tuple')
+    expect(decoded.members?.map((x) => [x.type, x.value, x.chainId])).toEqual([
+      ['address', TARGET, 10],
+      ['bytes', '0xdeadbeef', 10],
+    ])
+    expect(decoded.members?.[1]?.address).toEqual(TARGET)
+  })
+
+  it('decodes a function call', () => {
+    const bytes = encodeFunctionData({
+      abi: parseAbi(['function foo(uint256 a)']),
+      args: [7n],
+    })
+
+    const decoded = decodeAs('function foo(uint a)', bytes, 1, TARGET)
+
+    expect(decoded.functionName).toEqual('foo')
+    expect(decoded.address).toEqual(TARGET)
+    expect(decoded.members?.[0]?.value).toEqual('7')
+  })
+
+  it('decodes packed multiSend transactions', () => {
+    const bytes = concatHex([
+      '0x01',
+      TARGET,
+      toHex(5n, { size: 32 }),
+      toHex(4n, { size: 32 }),
+      '0xdeadbeef',
+    ])
+
+    const decoded = decodeAs('multiSend', bytes, 1)
+
+    expect(
+      decoded.members?.[0]?.members?.map((x) => [x.name, x.value]),
+    ).toEqual([
+      ['operation', 'delegatecall'],
+      ['target', TARGET],
+      ['value', '5'],
+      ['data', '0xdeadbeef'],
+    ])
+  })
+
+  it('rejects bytes that do not match the type', () => {
+    expect(() => decodeAs('address', '0xdeadbeef', 1)).toThrow()
   })
 })

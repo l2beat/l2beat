@@ -58,6 +58,37 @@ export function decode(
   return value
 }
 
+export const DECODE_AS_PRESETS = [
+  'multiSend',
+  '(address targetInbox, address l2Target, uint256 l2Value, uint256 gasLimit, uint256 maxFeePerGas, bytes l2Calldata)',
+  'function upgrade((address, address, bytes32)[])',
+]
+
+export function decodeAs(
+  type: string,
+  bytes: `0x${string}`,
+  chainId: number,
+  address?: `0x${string}`,
+): DecodedValue {
+  const trimmed = type.trim()
+  let value: DecodedValue
+  if (trimmed === 'multiSend') {
+    value = {
+      type: 'array',
+      bytes,
+      value: '',
+      chainId,
+      members: decodeMultiSendTransactions(bytes, chainId),
+    }
+  } else if (trimmed.startsWith('function') || trimmed.startsWith('(')) {
+    value = decodeType(trimmed, bytes, chainId, address)
+  } else {
+    value = decodeType(`(${trimmed})`, bytes, chainId, address)
+  }
+  applyCallTargetHeuristic(value)
+  return value
+}
+
 const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
 interface PackedArgumentCodec {
@@ -147,7 +178,14 @@ function multiSendPlugin(
     address,
   )
   const bytes = decoded.members?.[0]?.bytes ?? '0x'
+  decoded.members = decodeMultiSendTransactions(bytes, chainId)
+  return decoded
+}
 
+function decodeMultiSendTransactions(
+  bytes: `0x${string}`,
+  chainId: number,
+): DecodedValue[] {
   const reader = new BinaryReader(bytes)
   const values: DecodedValue[] = []
 
@@ -202,8 +240,7 @@ function multiSendPlugin(
       chainId,
     })
   }
-  decoded.members = values
-  return decoded
+  return values
 }
 
 const CREATE2_DEPLOYER = '0x4e59b44847b379578588920ca78fbf26c0b4956c'
