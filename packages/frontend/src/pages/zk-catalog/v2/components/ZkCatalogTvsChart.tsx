@@ -45,6 +45,8 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
     trpc.tvs.zkCatalogChart.queryOptions({ range }),
   )
 
+  const valuesByTimestamp = useMemo(() => new Map(data?.chart ?? []), [data])
+
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
@@ -154,7 +156,12 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
           />
           <ChartTooltip
             filterNull={false}
-            content={<CustomTooltip metric={metric} />}
+            content={
+              <CustomTooltip
+                metric={metric}
+                valuesByTimestamp={valuesByTimestamp}
+              />
+            }
           />
         </AreaChart>
       </ChartContainer>
@@ -177,14 +184,22 @@ function CustomTooltip({
   payload,
   label,
   metric,
-}: CustomChartTooltipProps & { metric: Metric }) {
+  valuesByTimestamp,
+}: CustomChartTooltipProps & {
+  metric: Metric
+  valuesByTimestamp: Map<number, Record<string, number | null>>
+}) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
 
+  const values = valuesByTimestamp.get(label) ?? {}
   const visible = payload
-    .filter((p) => p.type !== 'none' && !p.hide && p.value != null)
-    .sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
-  const total = visible.reduce((acc, curr) => acc + (curr.value ?? 0), 0)
+    .flatMap(({ name, type, hide }) => {
+      const usd = name ? values[name] : undefined
+      return name && usd && type !== 'none' && !hide ? [{ name, usd }] : []
+    })
+    .sort((a, b) => b.usd - a.usd)
+  const total = visible.reduce((acc, curr) => acc + curr.usd, 0)
 
   return (
     <ChartTooltipWrapper>
@@ -204,13 +219,14 @@ function CustomTooltip({
           </>
         )}
         <div className="mt-2 flex flex-col gap-2">
-          {visible.map((entry) => {
-            const config = entry.name ? meta[entry.name] : undefined
+          {visible.map(({ name, usd }) => {
+            const config = meta[name]
             if (!config) return null
-            const value = entry.value ?? 0
+            const usdText = formatCurrency(usd, 'usd')
+            const shareText = formatPercent(total > 0 ? usd / total : 0)
             return (
               <div
-                key={entry.name}
+                key={name}
                 className="flex items-center justify-between gap-x-3"
               >
                 <div className="flex items-center gap-1">
@@ -223,15 +239,11 @@ function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
-                  {metric === 'absolute'
-                    ? formatCurrency(value, 'usd')
-                    : formatPercent(value / 100)}
-                  {metric === 'absolute' && total > 0 && (
-                    <span className="text-secondary">
-                      {' '}
-                      ({formatPercent(value / total)})
-                    </span>
-                  )}
+                  {metric === 'absolute' ? usdText : shareText}
+                  <span className="text-secondary">
+                    {' '}
+                    ({metric === 'absolute' ? shareText : usdText})
+                  </span>
                 </span>
               </div>
             )
