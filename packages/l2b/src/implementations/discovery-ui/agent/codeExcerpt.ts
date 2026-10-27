@@ -27,7 +27,7 @@ export function excerptAt(
     // function is cut too.
     isCut:
       lines.length > EXCERPT_LINES_MAX ||
-      (block === undefined && end < code.length),
+      (block === undefined && end < code.trimEnd().length),
   }
 }
 

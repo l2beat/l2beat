@@ -36,6 +36,11 @@ describe(excerptAt.name, () => {
     expect(excerpt.isCut).toEqual(true)
   })
 
+  it('does not call the end of the source a cut', () => {
+    const code = `${Array.from({ length: 12 }, (_, i) => `x = ${i};`).join('\n')}\n`
+    expect(excerptAt(code, 0, 1).isCut).toEqual(false)
+  })
+
   it('reads past call options in a statement', () => {
     const body = Array.from({ length: 20 }, (_, i) => `  x = ${i};`)
     const code = [
