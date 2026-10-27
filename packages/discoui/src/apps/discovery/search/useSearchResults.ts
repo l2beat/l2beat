@@ -1,0 +1,136 @@
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { useMemo } from 'react'
+import { getProjects, searchCode } from '../../../api/api'
+import { useDebounce } from '../../../hooks/useDebounce'
+import { useProjectQueryOptions } from '../hooks/projectQuery'
+import { usePanelStore } from '../store/panel-store'
+import {
+  buildCodeGroups,
+  buildSearchGroups,
+  type SearchGroup,
+  type SearchRow,
+  type SearchSources,
+  toSearchRows,
+} from './groups'
+import {
+  buildCommandSearchables,
+  buildContractSearchables,
+  buildFieldSearchables,
+  buildProjectSearchables,
+  type SearchItem,
+} from './items'
+import { toSearchQuery } from './rank'
+import { useSearchStore } from './store'
+import { useSearchCommands } from './useRunSearchItem'
+
+const CODE_SEARCH_DEBOUNCE_MS = 250
+
+export interface SearchResults {
+  rows: SearchRow[]
+  items: SearchItem[]
+  needles: string[]
+  status: 'pending' | 'error' | 'success'
+  isFetching: boolean
+}
+
+export function useSearchResults(project: string): SearchResults {
+  const scope = useSearchStore((s) => s.scope)
+  const text = useSearchStore((s) => s.text)
+  const recentAddresses = useSearchStore((s) => s.recentAddresses)
+  const { sources, isError } = useSearchSources(project)
+  const code = useCodeSearch(project)
+
+  const groups = useMemo((): SearchGroup[] | undefined => {
+    if (scope === 'code') return code.groups
+    if (sources === undefined) return undefined
+    return buildSearchGroups({ scope, text, sources, recentAddresses })
+  }, [scope, text, sources, recentAddresses, code.groups])
+
+  const { rows, items } = useMemo(() => toSearchRows(groups ?? []), [groups])
+  const needles = scope === 'code' ? [code.needle] : toSearchQuery(text).tokens
+
+  const status =
+    scope === 'code'
+      ? toStatus(code.isError, false)
+      : toStatus(isError, sources === undefined)
+  return { rows, items, needles, status, isFetching: code.isFetching }
+}
+
+function toStatus(
+  isError: boolean,
+  isPending: boolean,
+): SearchResults['status'] {
+  if (isError) return 'error'
+  if (isPending) return 'pending'
+  return 'success'
+}
+
+function useSearchSources(project: string): {
+  sources: SearchSources | undefined
+  isError: boolean
+} {
+  const scope = useSearchStore((s) => s.scope)
+  const projectQuery = useQuery(useProjectQueryOptions(project))
+  const projectsQuery = useQuery({
+    queryKey: ['projects'],
+    queryFn: () => getProjects(),
+  })
+  const commands = useSearchCommands()
+  const commandSearchables = useMemo(
+    () => buildCommandSearchables(commands),
+    [commands],
+  )
+
+  const chains = projectQuery.data?.entries
+  const contracts = useMemo(
+    () => (chains ? buildContractSearchables(chains) : undefined),
+    [chains],
+  )
+  const fields = useMemo(
+    () => (chains ? buildFieldSearchables(chains) : undefined),
+    [chains],
+  )
+  const matchContractNames = scope === 'projects'
+  const projects = useMemo(
+    () =>
+      buildProjectSearchables(projectsQuery.data ?? [], {
+        matchContractNames,
+      }),
+    [projectsQuery.data, matchContractNames],
+  )
+
+  const sources = useMemo(() => {
+    if (contracts === undefined || fields === undefined) return undefined
+    return { contracts, fields, projects, commands: commandSearchables }
+  }, [contracts, fields, projects, commandSearchables])
+  return { sources, isError: projectQuery.isError }
+}
+
+function useCodeSearch(project: string) {
+  const scope = useSearchStore((s) => s.scope)
+  const text = useSearchStore((s) => s.text)
+  const codeInSelected = useSearchStore((s) => s.codeInSelected)
+  const selectedAddress = usePanelStore((s) => s.selected[0])
+  const needle = useDebounce(text, CODE_SEARCH_DEBOUNCE_MS)
+  const address = codeInSelected ? selectedAddress : undefined
+  const enabled = scope === 'code' && needle.length > 0
+
+  const query = useQuery({
+    queryKey: ['search', 'code', project, address, needle],
+    queryFn: () => searchCode(project, needle, address),
+    enabled,
+    placeholderData: keepPreviousData,
+  })
+
+  const groups = useMemo(
+    () =>
+      enabled && query.data ? buildCodeGroups(query.data, needle.length) : [],
+    [enabled, query.data, needle],
+  )
+  return {
+    groups,
+    needle,
+    isError: query.isError,
+    isFetching: enabled && query.isFetching,
+  }
+}
