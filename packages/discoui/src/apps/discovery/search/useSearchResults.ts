@@ -22,6 +22,7 @@ import {
   type SearchItem,
 } from './items'
 import { toSearchQuery } from './rank'
+import type { SearchScope } from './scopes'
 import { useSearchStore } from './store'
 import { useSearchCommands } from './useRunSearchItem'
 
@@ -39,7 +40,8 @@ export function useSearchResults(project: string): SearchResults {
   const scope = useSearchStore((s) => s.scope)
   const text = useSearchStore((s) => s.text)
   const recentAddresses = useSearchStore((s) => s.recentAddresses)
-  const { sources, isError } = useSearchSources(project)
+  const { sources, isError, isProjectsError, isProjectsPending } =
+    useSearchSources(project)
   const code = useCodeSearch(project)
 
   const groups = useMemo((): SearchGroup[] | undefined => {
@@ -51,11 +53,34 @@ export function useSearchResults(project: string): SearchResults {
   const { rows, items } = useMemo(() => toSearchRows(groups ?? []), [groups])
   const needles = scope === 'code' ? [code.needle] : toSearchQuery(text).tokens
 
-  const status =
-    scope === 'code'
-      ? toStatus(code.isError, false)
-      : toStatus(isError, sources === undefined)
+  const status = statusFor(scope, {
+    code,
+    isError,
+    isPending: sources === undefined,
+    isProjectsError,
+    isProjectsPending,
+  })
   return { rows, items, needles, status, isFetching: code.isFetching }
+}
+
+function statusFor(
+  scope: SearchScope,
+  state: {
+    code: { isError: boolean }
+    isError: boolean
+    isPending: boolean
+    isProjectsError: boolean
+    isProjectsPending: boolean
+  },
+): SearchResults['status'] {
+  if (scope === 'code') return toStatus(state.code.isError, false)
+  if (scope === 'projects') {
+    return toStatus(
+      state.isError || state.isProjectsError,
+      state.isPending || state.isProjectsPending,
+    )
+  }
+  return toStatus(state.isError, state.isPending)
 }
 
 function toStatus(
@@ -94,6 +119,8 @@ function cached<K extends object>(
 function useSearchSources(project: string): {
   sources: SearchSources | undefined
   isError: boolean
+  isProjectsError: boolean
+  isProjectsPending: boolean
 } {
   const scope = useSearchStore((s) => s.scope)
   const projectQuery = useQuery(useProjectQueryOptions(project))
@@ -121,7 +148,12 @@ function useSearchSources(project: string): {
     if (contracts === undefined || fields === undefined) return undefined
     return { contracts, fields, projects, commands: commandSearchables }
   }, [contracts, fields, projects, commandSearchables])
-  return { sources, isError: projectQuery.isError }
+  return {
+    sources,
+    isError: projectQuery.isError,
+    isProjectsError: projectsQuery.isError,
+    isProjectsPending: projectsQuery.isPending,
+  }
 }
 
 function useCodeSearch(project: string) {

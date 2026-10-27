@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useParams } from 'react-router'
 import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
@@ -100,6 +101,13 @@ function Display({
   const isRevealingField =
     revealedField?.address === selected.address &&
     fields.some((field) => field.name === revealedField.name)
+  const isRevealingIgnoredField =
+    revealedField?.address === selected.address &&
+    ignoredMethodsSet.has(revealedField.name)
+  const revealField = usePanelStore((s) => s.revealField)
+  useEffect(() => {
+    if (isRevealingIgnoredField) revealField(undefined)
+  }, [isRevealingIgnoredField, revealField])
   const ignoredFieldNames = [
     ...fieldsFromSelected
       .filter((field) => ignoredMethodsSet.has(field.name))
@@ -260,7 +268,11 @@ function Display({
         </Folder>
       )}
       {ignoredFields.length > 0 && (
-        <Folder title={`Ignored methods (${ignoredFields.length})`} collapsed>
+        <Folder
+          title={`Ignored methods (${ignoredFields.length})`}
+          collapsed
+          expand={isRevealingIgnoredField}
+        >
           <div className="flex flex-wrap items-center gap-1 bg-coffee-900 px-4 py-2 text-2xs">
             {ignoredFields.flatMap((field) => [
               field.inTemplate && (
