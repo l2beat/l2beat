@@ -57,11 +57,6 @@ const items = [
         url: '/tokens/relations-graph',
         icon: NetworkIcon,
       },
-      {
-        title: 'TVS gaps',
-        url: '/tokens/tvs-coverage',
-        icon: TablePropertiesIcon,
-      },
     ],
   },
   {
@@ -76,6 +71,16 @@ const items = [
         title: 'Add',
         url: '/chains/new',
         icon: CirclePlusIcon,
+      },
+    ],
+  },
+  {
+    title: 'TVS',
+    items: [
+      {
+        title: 'Gaps',
+        url: '/tokens/tvs-coverage',
+        icon: TablePropertiesIcon,
       },
     ],
   },
