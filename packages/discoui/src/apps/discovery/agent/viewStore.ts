@@ -179,7 +179,10 @@ export async function saveAgentView(name: string) {
     description: pending?.note ?? pending?.title,
   })
   await saveProjectLayout(state.projectId, name, layout)
-  keepAgentView()
+  // A view that arrived while saving still waits for its own decision.
+  if (useAgentViewStore.getState().pending === pending) {
+    keepAgentView()
+  }
 }
 
 // On arrival DiscoUI selects a first contract, and a view can move that one
