@@ -219,10 +219,12 @@ function Display({
             {selected.referencedBy.map((value) => (
               <li
                 key={value.address}
-                className="flex min-h-7 items-start gap-x-2 border-coffee-800 border-b px-3 py-1 last:border-b-0"
+                className="flex min-h-7 flex-wrap items-center gap-x-2 gap-y-1 border-coffee-800 border-b py-1 pr-3 pl-8 last:border-b-0"
               >
-                <AddressDisplay value={value} />
-                <div className="flex min-w-0 flex-1 flex-wrap gap-1">
+                <div className="-ml-5">
+                  <AddressDisplay value={value} />
+                </div>
+                <div className="flex flex-wrap gap-1">
                   {value.fieldNames.map((fieldName, i) => (
                     <span
                       key={i}
