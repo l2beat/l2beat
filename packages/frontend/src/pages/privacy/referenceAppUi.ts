@@ -15,7 +15,6 @@ export const REFERENCE_APP = {
   referenceChip: 'Reference',
   checkedChip: 'Leaks more',
   fixLabel: 'Fix',
-  partialSource: 'The released build runs unpublished code',
   methodologyLink: 'How we pick the reference',
   methodologyHref: `${PRIVACY_METHODOLOGY_PATH}#${PRIVACY_REFERENCE_APP_ANCHOR}`,
 } as const
@@ -29,7 +28,6 @@ export function getReferenceAppLabel(app: PrivacyReferenceApp) {
 export function getReferenceAppNotes(app: PrivacyReferenceApp) {
   return [
     ...(app.source ? [] : ['closed source']),
-    ...(app.source?.partial ? ['partial source'] : []),
     ...(app.checkedApps.length > 0
       ? [`most private of ${app.checkedApps.length + 1} checked`]
       : []),
@@ -40,18 +38,26 @@ export function getReferenceAppSince(app: PrivacyReferenceApp) {
   return `The ratings assume this app, since ${app.since}`
 }
 
-/** The reviewed code: a short hash linking to its tree, absent when closed. */
+/**
+ * The reviewed code: a short hash linking to its tree, or for a closed app the
+ * served build and the day the review traced it.
+ */
 export function getReferenceAppSource(app: PrivacyReferenceApp) {
   if (!app.source) {
-    return { label: 'Closed source' }
+    return {
+      label: [
+        'Closed source',
+        ...(app.build ? [`build ${app.build}`] : []),
+        ...(app.checked ? [`checked ${app.checked}`] : []),
+      ].join(', '),
+    }
   }
   return {
-    label: app.source.partial ? 'Partial source' : 'Source',
+    label: 'Source',
     commit: {
       label: app.source.commit.slice(0, 7),
       href: `${app.source.repository}/tree/${app.source.commit}`,
     },
-    note: app.source.partial ? REFERENCE_APP.partialSource : undefined,
   }
 }
 

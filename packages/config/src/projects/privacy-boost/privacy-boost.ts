@@ -350,6 +350,7 @@ export const privacyBoost: BaseProject = {
       name: 'Privacy Boost wallet',
       url: 'https://app.privacyboost.io',
       since: '2026-10-13',
+      checked: '2026-10-22',
     },
     tokens: privacyTokens,
     trackedOn: ['base'],

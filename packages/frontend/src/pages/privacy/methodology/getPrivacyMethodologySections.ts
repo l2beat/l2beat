@@ -42,6 +42,7 @@ export function getPrivacyMethodologySections() {
         `**${VERDICT.warning}** (yellow): protection is limited, private use can be denied, or keeping the field hidden takes substantial effort beyond the app's options. A workaround must preserve ordinary use of the protocol.`,
         `**${VERDICT.bad}** (red): the field is exposed with no reasonable workaround, or no usable, verifiable app supports private use. A custodian who can require disclosure to release funds also earns red.`,
       ]),
+      "A closed app's delivery risk falls to the privileged insider. When the review reads and pins the code a closed web app or extension serves, the other cells rate that code like open code. A native closed app caps the network observer at yellow.",
       'When privacy depends on hiding among other users, the size of that group (anonymity set) affects the adversary who sees the later action.',
     ]),
 

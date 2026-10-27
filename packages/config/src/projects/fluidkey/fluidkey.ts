@@ -51,6 +51,7 @@ export const fluidkey: BaseProject = {
       name: 'Fluidkey web app',
       url: 'https://app.fluidkey.com',
       since: '2026-10-13',
+      checked: '2026-10-22',
     },
     trackedOn: [
       'ethereum',
@@ -73,7 +74,7 @@ export const fluidkey: BaseProject = {
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        "The user's funds sit in Safes controlled only by their keys. The open recovery app finds and withdraws them without Fluidkey. Money in auto-earn vaults follows the vaults' withdrawal rules.",
+        "The user's funds sit in Safes controlled only by their keys. The open recovery app finds them and Eternal Safe withdraws them, both without Fluidkey. Money in auto-earn vaults follows the vaults' withdrawal rules.",
       walkawayTest: {
         passed: false,
         reason:

@@ -19,11 +19,11 @@ A shadow account is a contract the pool deploys for one user, app and index. The
 
 ### Keys
 
-The user's Starknet account signs every action, and their viewing key decrypts their notes. Ready's servers create the viewing key for most accounts. Registration cannot be changed, so a leaked viewing key exposes the user's history for good.
+The user's Starknet account signs every action, and their viewing key decrypts their notes. Bramble derives the viewing key on the device from a signature of the account key. Registration cannot be changed, so a leaked viewing key exposes the user's history for good.
 
 ### App
 
-Ready sends the user's viewing key to its own servers, which run note discovery and proving and relay pool transactions. The [SDK](https://github.com/starkware-libs/starknet-privacy) is open, and a custom client on it can use its own [prover](https://github.com/starkware-libs/sequencer/tree/main/crates/starknet_transaction_prover) (high hardware requirements), its own note discovery and an oblivious relay. Deposits still need the screening signature.
+Bramble is an open-source Chromium extension that Starknet Holdings publishes. By default it talks to Starknet Holdings' gateway, which forwards note discovery to StarkWare's discovery service and relayed transactions to AVNU's paymaster. Starkscan, also run by Starknet Holdings, serves the activity list. The settings point the RPC, discovery service, prover and paymaster elsewhere. A self-run discovery service keeps the viewing key from the gateway. A self-run [prover](https://github.com/starkware-libs/sequencer/tree/main/crates/starknet_transaction_prover) (high hardware requirements) covers transfers and withdrawals, while deposits need a prover with screening credentials.
 
 ### Compliance
 

@@ -19,7 +19,7 @@ The closed SDK can derive the private account's keys from a wallet signature, wh
 
 ### App
 
-Apps integrate the Privacy Boost SDK, whose core ships as closed-source WebAssembly. The operator's hosted wallet is the only public app. It runs that core and reads the chain through Alchemy under the operator's key.
+Apps integrate the Privacy Boost SDK, whose core is closed source. The operator's hosted wallet is the only public app. It runs that core as WebAssembly and reads the chain through Alchemy under the operator's key.
 
 ### Exits
 

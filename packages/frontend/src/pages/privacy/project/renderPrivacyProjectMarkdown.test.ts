@@ -226,6 +226,31 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       )
     })
 
+    it('pins a closed reference app by its build and the day it was traced', () => {
+      const { source: _, ...closedApp } = REFERENCE_APP
+      const markdown = renderPrivacyProjectMarkdown({
+        ...ENTRY,
+        sections: SECTIONS.map((section) =>
+          section.type === 'PrivacyAdversariesSection'
+            ? {
+                ...section,
+                props: {
+                  ...section.props,
+                  referenceApp: {
+                    ...closedApp,
+                    build: '99da543',
+                    checked: '2026-10-22',
+                  },
+                },
+              }
+            : section,
+        ),
+      })
+      expect(getSection(markdown, 'Privacy')).toInclude(
+        '(Reference): The ratings assume this app, since 2026-10-13 · Closed source, build 99da543, checked 2026-10-22',
+      )
+    })
+
     it('grades the promise against each adversary and says why', () => {
       expect(privacy()).toInclude(
         '### Chain analyst\n\nLink at risk (sentiment: warning)\n\n**Who:** Correlates all public data. Examples: Chain analytics firms.\n\nTiming narrows the anonymity set.\n\n**Advice:** Wait before withdrawing.',

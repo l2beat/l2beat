@@ -23,7 +23,12 @@ Review at least the default setup and the best setup supported by the released c
 
 ## Checked apps
 
-The reference app is the most private released app found for the protocol. Every other released app gets a screening with the questions below, answered from its source at a release tag, or from a short trace when it is closed. Compare each answer with the reference app's. The first answer that leaks more becomes the app's finding, with its source and a fix: what the app changes to match the reference app. An app that leaks less on any answer gets a full review as a reference candidate.
+The reference app is the most private released app found for the protocol. Screen every other released app with the questions below. Answer them from source at a release tag, or for a closed app from a short trace and its served bundle. Compare each answer with the reference app's.
+
+- An app that leaks more gets one finding: its first answer that leaks more, or, when several do, the one its settings and Tor cannot avoid.
+- A finding comes with a source and a fix, what the app changes to match the reference app. A closed app's source is its URL with the check date.
+- An app that leaks less on an answer about the promised field gets a full review as a reference candidate.
+- When answers are mixed, compare each app's worst leak that settings and Tor cannot avoid. The one that reaches fewer parties wins, and a public link outweighs a link at one server.
 
 | Scope | Questions |
 | --- | --- |

@@ -73,7 +73,6 @@ function renderReferenceApps(app: PrivacyReferenceApp) {
     source.commit
       ? `${source.label} ${link(source.commit.label, source.commit.href)}`
       : source.label,
-    source.note,
   ]
   return joinBlocks([
     `**${REFERENCE_APP.listTitle}**`,

@@ -62,7 +62,6 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
               ) : (
                 source.label
               ),
-              source.note,
             ]}
           />
         </AppRow>

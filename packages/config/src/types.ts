@@ -1155,17 +1155,23 @@ export interface ProjectPrivacyReferenceApp {
   /** Release the review covers, without a leading v. Absent for hosted apps. */
   version?: string
   /**
-   * Source at the reviewed commit, absent for closed apps. `l2b client-drift`
-   * lists what changed upstream since.
+   * Source at the reviewed commit, absent for closed apps. An app counts as
+   * open only when its released build reproduces from this commit.
+   * `l2b client-drift` lists what changed upstream since.
    */
   source?: {
     /** GitHub repository, e.g. https://github.com/owner/repo */
     repository: string
     /** Full commit hash. Adversary sources into the repository pin it. */
     commit: string
-    /** The released build runs code this source does not publish. */
-    partial?: boolean
   }
+  /**
+   * Served build the review traced, e.g. a deployment or bundle id. For a
+   * closed hosted app without a release version.
+   */
+  build?: string
+  /** Day the review traced the closed app, YYYY-MM-DD. Absent when untraced. */
+  checked?: string
   /**
    * Other released apps for the protocol, checked but not rated. Each one
    * leaks more than the reference app, which its finding shows.

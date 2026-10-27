@@ -357,6 +357,39 @@ export const zamaCw: BaseProject = {
       name: 'Zama app',
       url: 'https://app.zama.org',
       since: '2026-10-09',
+      // Next.js build id of the served app, read from its chunks.
+      build: 'Rh4Nfrd-QpbxA2axbN31u',
+      checked: '2026-10-22',
+      checkedApps: [
+        {
+          name: 'Zerion',
+          icon: 'zerion',
+          finding:
+            "Decrypts the user's confidential balances on Zerion's servers, so Zerion sees every amount the user reveals.",
+          fix: 'Decrypt balances on the device under a key only the device holds.',
+          source:
+            'https://github.com/zeriontech/zerion-wallet-extension/blob/dc9be458cd0e08be170058ba256bd4144e362f0a/docs/adr/0007-signed-permits-live-in-storage-session.md#L5',
+        },
+        {
+          name: 'Bron',
+          icon: 'bron',
+          finding:
+            "Ties the wallet to the user's name and email in a Bron account, which its store listing says Bron shares with other companies.",
+          fix: 'Let users create and use a wallet without giving a name or email.',
+          source:
+            'https://play.google.com/store/apps/datasafety?id=org.bron.mobile',
+          checked: '2026-10-27',
+        },
+        {
+          name: 'cToken',
+          icon: 'ctoken',
+          finding:
+            "Reads the user's address through Alchemy and PublicNode straight from the browser, so both see it with the user's IP.",
+          fix: "Read the chain through the app's own server, as the Zama app does.",
+          source: 'https://ct-7984-chriswilder.netlify.app',
+          checked: '2026-10-27',
+        },
+      ],
     },
     trackedOn: ['ethereum'],
     tokens: privacyTokens,

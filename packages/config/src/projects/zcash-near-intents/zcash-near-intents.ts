@@ -82,6 +82,42 @@ export const zcashNearIntents: BaseProject = {
           source:
             'https://github.com/defuse-protocol/defuse-frontend/blob/594085d3c7e60ce912fb62b768b12f46c4917510/src/components/DefuseSDK/utils/validateAddress.ts#L130-L169',
         },
+        {
+          name: 'Cake Wallet',
+          icon: 'monero-cake-wallet',
+          finding:
+            "Its built-in Tor skips the Zcash wallet, so the lightwalletd server gets each transaction it sends with the user's IP.",
+          fix: "Route the Zcash wallet's lightwalletd connections through the built-in Tor.",
+          source:
+            'https://github.com/cake-tech/cake_wallet/blob/196f5a15a9f180602767c56968dcb30114d0b15e/cw_zcash/lib/src/zcash_wallet.dart#L155-L179',
+        },
+        {
+          name: 'Brave Wallet',
+          icon: 'brave',
+          finding:
+            "The wallet is disabled in Tor windows and has no Tor setting, so Brave's Zcash and swap servers get the user's IP.",
+          fix: "Offer a Tor setting that covers the wallet's Zcash sync and swap requests.",
+          source:
+            'https://github.com/brave/brave-core/blob/7bfa200812971b7811541ae6e5b72620abebe3a7/browser/brave_wallet/brave_wallet_context_utils.cc#L17-L20',
+        },
+        {
+          name: 'Unstoppable Wallet',
+          icon: 'unstoppable',
+          finding:
+            "Routes every swap through Unstoppable's own server, which records each leg's payout and refund addresses and deposit transaction hash.",
+          fix: 'Request quotes and report deposits to the 1Click API directly.',
+          source:
+            'https://github.com/horizontalsystems/unstoppable-wallet-android/blob/d6661c8d0dc02d259767f58b7cd73cabb877da18/walletkit/src/main/java/io/horizontalsystems/walletkit/modules/multiswap/providers/USwapProvider.kt#L1375-L1399',
+        },
+        {
+          name: 'Zkool',
+          icon: 'zkool',
+          finding:
+            "Pays swaps only to the account's transparent address, which adds a public shielding step.",
+          fix: 'Pay each swap to a fresh shielded address.',
+          source:
+            'https://github.com/hhanh00/zkool2/blob/59a558fb7383c03b3633f015b33ef120cfbc3bdc/lib/services/swap_quote.dart#L37-L41',
+        },
       ],
     },
     trackedOn: ['ethereum'],

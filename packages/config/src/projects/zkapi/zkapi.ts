@@ -175,11 +175,10 @@ export const zkapi: BaseProject = {
       name: 'OA Chat',
       url: 'https://chat.openanonymity.ai',
       since: '2026-10-12',
-      source: {
-        repository: 'https://github.com/OpenAnonymity/oa-chat',
-        commit: '60ed5be2957d984c70a7299474927becec47b61f',
-        partial: true,
-      },
+      // The served release 99da543 is not in the public repo, so the app
+      // counts as closed. Sources pin the public repo at 60ed5be.
+      build: '99da543',
+      checked: '2026-10-22',
       checkedApps: [
         {
           name: 'zkapi-clientd',
@@ -188,6 +187,15 @@ export const zkapi: BaseProject = {
           fix: "Fetch the whole note tree, as OA Chat does, instead of one note's path.",
           source:
             'https://github.com/ethereum/zkapi/blob/20aa542ae98e767c0507133fd34b12a56f5ccd3d/crates/zkapi-clientd/src/indexer.rs#L71-L80',
+        },
+        {
+          name: 'openzk.app',
+          icon: 'openzk-app',
+          finding:
+            "Sends request proofs and withdrawals through OpenZK's own server, so OpenZK also sees each request's time and budget.",
+          fix: "Send zkAPI calls straight to Open Anonymity's servers, so only the operator sees them, as in OA Chat.",
+          source: 'https://openzk.app/zkapi/browser-config.json',
+          checked: '2026-10-27',
         },
       ],
     },
