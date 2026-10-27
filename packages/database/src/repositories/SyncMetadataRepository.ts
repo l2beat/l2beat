@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { SyncMetadata } from '../kysely/generated/types'
@@ -184,14 +184,13 @@ export class SyncMetadataRepository extends BaseRepository {
 
   async getMaxTargetForFeature(
     feature: SyncMetadataRecord['feature'],
-  ): Promise<UnixTime> {
+  ): Promise<UnixTime | undefined> {
     const row = await this.db
       .selectFrom('SyncMetadata')
       .select(this.db.fn.max('target').as('maxTarget'))
       .where('feature', '=', feature)
       .executeTakeFirst()
-    assert(row?.maxTarget, 'Max target for feature not found')
-    return UnixTime.fromDate(row.maxTarget)
+    return row?.maxTarget ? UnixTime.fromDate(row.maxTarget) : undefined
   }
 
   async getAll(): Promise<SyncMetadataRecord[]> {

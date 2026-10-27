@@ -245,7 +245,7 @@ describe(renderL2ProjectMarkdown.name, () => {
       '- Last 24h cross-chain volume: $12.00 M',
       '- Last 24h cross-chain transfers: 1\n',
       '- Interop protocols used (last 24h volume): [Across](https://l2beat.com/interop/protocols/across) ($8.00 M), and 4 more',
-      '- Tokens by volume (last 24h): [ETH](https://l2beat.com/interop/tokens/C0Hmkq/eth) ($7.00 M), Unknown ($1.00 M)',
+      '- Tokens by volume (last 24h): [ETH](https://l2beat.com/tokens/C0Hmkq/eth) ($7.00 M), Unknown ($1.00 M)',
     )
   })
 
