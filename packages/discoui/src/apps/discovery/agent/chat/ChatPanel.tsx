@@ -278,6 +278,7 @@ function Failure() {
 function Composer() {
   const [text, setText] = useState('')
   const inTurn = useChatStore((state) => state.inTurn)
+  const replayed = useChatStore((state) => state.replayed)
   const provider = useChatStore((state) => state.provider)
   const chosen = useChatStore((state) => state.chosenProvider)
   const input = useRef<HTMLTextAreaElement>(null)
@@ -337,7 +338,7 @@ function Composer() {
             <button
               type="button"
               onClick={send}
-              disabled={text.trim().length === 0}
+              disabled={text.trim().length === 0 || !replayed}
               title="Send (Enter)"
               className="flex size-6 items-center justify-center rounded-md bg-aux-purple text-white transition-colors hover:brightness-110 disabled:bg-coffee-700 disabled:text-coffee-600"
             >

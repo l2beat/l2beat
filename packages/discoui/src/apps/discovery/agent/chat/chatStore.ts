@@ -67,7 +67,12 @@ export function chooseProvider(provider: ProviderId) {
 }
 
 export async function sendMessage(text: string) {
-  const { status, chosenProvider } = useChatStore.getState()
+  const { status, chosenProvider, replayed } = useChatStore.getState()
+  // Until the replay arrives an ongoing chat looks idle, and starting one
+  // would reset it.
+  if (!replayed) {
+    throw new Error('The chat is still loading')
+  }
   if (status === 'idle' || status === 'failed') {
     await post('start', { provider: chosenProvider })
   }
