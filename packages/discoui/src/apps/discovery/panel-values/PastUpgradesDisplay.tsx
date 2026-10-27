@@ -58,19 +58,19 @@ export function PastUpgradesDisplay({ value }: PastUpgradesDisplayProps) {
 
   return (
     <div className="flex flex-col gap-1">
-      <table className="border-separate border-spacing-x-4 border-spacing-y-0.5 font-mono text-xs">
+      <table className="border-collapse font-mono text-xs">
         <thead>
           <tr className="text-left text-2xs text-coffee-400 uppercase tracking-wider">
-            <th className="whitespace-nowrap border-coffee-700 border-b pb-1 font-medium">
+            <th className="whitespace-nowrap border-coffee-700 border-b pr-6 pb-1 font-medium">
               Date
             </th>
-            <th className="whitespace-nowrap border-coffee-700 border-b pb-1 font-medium">
+            <th className="whitespace-nowrap border-coffee-700 border-b pr-6 pb-1 font-medium">
               Tx
             </th>
             {implementationHeaders.map((header, i) => (
               <th
                 key={i}
-                className="whitespace-nowrap border-coffee-700 border-b pb-1 font-medium"
+                className="whitespace-nowrap border-coffee-700 border-b pr-6 pb-1 font-medium"
               >
                 {header}
               </th>
@@ -80,10 +80,10 @@ export function PastUpgradesDisplay({ value }: PastUpgradesDisplayProps) {
         <tbody>
           {rows.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              <td className="whitespace-nowrap align-baseline text-coffee-400">
+              <td className="whitespace-nowrap py-0.5 pr-6 align-baseline text-coffee-300">
                 {row.formattedDate}
               </td>
-              <td className="whitespace-nowrap align-baseline">
+              <td className="whitespace-nowrap py-0.5 pr-6 align-baseline">
                 <TxCell txHash={row.txHash} txUrl={row.txUrl} />
               </td>
               {Array.from({ length: columnCount }, (_, columnIndex) => {
@@ -94,7 +94,7 @@ export function PastUpgradesDisplay({ value }: PastUpgradesDisplayProps) {
                 return (
                   <td
                     key={columnIndex}
-                    className="whitespace-nowrap align-baseline text-coffee-200"
+                    className="whitespace-nowrap py-0.5 pr-6 align-baseline text-coffee-200"
                   >
                     {address && (
                       <span className="inline-flex items-baseline gap-1.5">
@@ -129,7 +129,7 @@ export function PastUpgradesDisplay({ value }: PastUpgradesDisplayProps) {
           ))}
         </tbody>
       </table>
-      <span className="text-2xs text-coffee-600">
+      <span className="text-2xs text-coffee-400">
         {selected
           ? `Old side: ${toShortenedAddress(selected.address)} — click another implementation to set the new side, or click it again to cancel.`
           : 'Click an implementation to set the old side of a diff, then another for the new side.'}

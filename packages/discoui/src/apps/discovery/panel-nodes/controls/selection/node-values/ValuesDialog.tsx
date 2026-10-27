@@ -97,9 +97,7 @@ function ValuesDialogBody({ node }: { node: Node }) {
 
   return (
     <Dialog.Body>
-      <Dialog.Title className="m-0 font-medium text-lg">
-        Values visibility
-      </Dialog.Title>
+      <Dialog.Title className="m-0">Values visibility</Dialog.Title>
       <Dialog.Description className="mb-5 text-sm leading-normal">
         Each value can be shown on its own row, compressed with the rest of its
         group into one row that still links to every value, or hidden.

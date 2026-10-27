@@ -29,15 +29,17 @@ type RGBA = [number, number, number, number]
 const COFFEE_600: RGBA = [0x59 / 255, 0x4c / 255, 0x43 / 255, 1]
 const COFFEE_400: RGBA = [0xa9 / 255, 0x87 / 255, 0x63 / 255, 1]
 const COFFEE_200: RGBA = [0xf0 / 255, 0xd8 / 255, 0xbd / 255, 1]
-const GRID_DOT: RGBA = [0x3c / 255, 0x33 / 255, 0x2d / 255, 1]
+const GRID_DOT: RGBA = [0x3c / 255, 0x33 / 255, 0x2d / 255, 0.6]
 const AUTUMN_300: RGBA = [0xba / 255, 0xd8 / 255, 0x0a / 255, 1]
 const AUX_RED: RGBA = [0xfb / 255, 0x4a / 255, 0x35 / 255, 1]
 const AUX_GREEN: RGBA = [0x9d / 255, 0xde / 255, 0x6c / 255, 1]
 const AUX_ORANGE: RGBA = [0xfe / 255, 0x80 / 255, 0x19 / 255, 1]
 
-const DIMMED_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.3)
+const DEFAULT_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.6)
+const DIMMED_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.18)
 const GRAYED_CONNECTION_COLOR = withAlpha(COFFEE_200, 0.1)
 const BLACK: RGBA = [0, 0, 0, 1]
+const NODE_BODY: RGBA = [0x12 / 255, 0x0f / 255, 0x0e / 255, 1]
 // Transparent ring color: a plain fill.
 const NO_RING: RGBA = [0, 0, 0, 0]
 
@@ -89,8 +91,8 @@ const QUAD_STRIDE_F = 18 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z, 
 const TEXT_STRIDE_F = 13 // pos.xy, size.xy, uv.xyzw, color.rgba, z
 const LINE_STRIDE_F = 6 // pos.xy, color.rgba
 const CONNECTION_STRIDE_F = 12 // from.xy, to.xy, controlX.xy, color.rgba, width, dashed
-const CONNECTION_WIDTH = 2
-const HIGHLIGHTED_CONNECTION_WIDTH = 3
+const CONNECTION_WIDTH = 1.5
+const HIGHLIGHTED_CONNECTION_WIDTH = 2.5
 
 // ============================================================================
 // Types
@@ -1401,7 +1403,7 @@ class WebGLRenderer {
         y,
         width,
         height,
-        BLACK,
+        NODE_BODY,
         corner,
         corner,
         corner,
@@ -2202,7 +2204,7 @@ function connectionColor(span: ConnectionSpan, data: DrawData): RGBA {
   if (data.enableDimming && data.anyNodeSelected) {
     return DIMMED_CONNECTION_COLOR
   }
-  return COFFEE_400
+  return DEFAULT_CONNECTION_COLOR
 }
 
 // ============================================================================

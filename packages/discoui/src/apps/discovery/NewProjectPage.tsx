@@ -56,20 +56,23 @@ export function NewProjectPage() {
     <>
       <Title title={`DiscoUI - ${!title ? 'New project' : title}`} />
       <div className="mx-auto max-w-(--breakpoint-md) space-y-6 p-4">
+        <h1 className="border-coffee-700 border-b pb-3 font-semibold text-coffee-100 text-lg">
+          New project
+        </h1>
         <div>
-          <div className="mb-1 flex items-stretch text-sm">
-            <div className="whitespace-nowrap">Project title</div>
-            <InputDescription>
-              Unique, no spaces, words can be separated by '-'
-            </InputDescription>
+          <div className="mb-1 font-medium text-coffee-100 text-sm">
+            Project title
           </div>
           <Input
-            className="w-full bg-transparent px-4 py-2"
+            className="w-full px-3 py-2"
             value={title}
             disabled={createConfigFileMutation.isPending}
             placeholder="new-project"
             onChange={(e) => setTitle(e.target.value)}
           />
+          <InputDescription>
+            Unique, no spaces, words can be separated by '-'
+          </InputDescription>
         </div>
         <InitialAddressesInput
           value={initialAddresses}
@@ -79,7 +82,7 @@ export function NewProjectPage() {
         <div className="space-y-4">
           <div className="flex flex-col gap-2">
             <div
-              className="flex cursor-pointer select-none items-center gap-2 text-sm"
+              className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm"
               onClick={() => setUseCustomDepth(!useCustomDepth)}
             >
               <Checkbox checked={useCustomDepth} />
@@ -88,7 +91,7 @@ export function NewProjectPage() {
             {useCustomDepth && (
               <Input
                 type="number"
-                className="w-full bg-transparent px-4 py-2"
+                className="w-full px-3 py-2"
                 value={maxDepth.toString()}
                 min="0"
                 placeholder="7"
@@ -104,7 +107,7 @@ export function NewProjectPage() {
           </div>
           <div className="flex flex-col gap-2">
             <div
-              className="flex cursor-pointer select-none items-center gap-2 text-sm"
+              className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm"
               onClick={() => setUseCustomAddresses(!useCustomAddresses)}
             >
               <Checkbox checked={useCustomAddresses} />
@@ -113,7 +116,7 @@ export function NewProjectPage() {
             {useCustomAddresses && (
               <Input
                 type="number"
-                className="w-full bg-transparent px-4 py-2"
+                className="w-full px-3 py-2"
                 value={maxAddresses.toString()}
                 min="1"
                 placeholder="100"
@@ -128,9 +131,9 @@ export function NewProjectPage() {
             )}
           </div>
         </div>
-        <div className="mt-4 flex justify-between border-coffee-400 border-t pt-4">
+        <div className="mt-4 flex justify-between border-coffee-700 border-t pt-4">
           <div
-            className="flex cursor-pointer select-none items-center gap-2 text-sm"
+            className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm"
             onClick={() => setOverwrite(!overwrite)}
           >
             <Checkbox checked={overwrite} />
@@ -151,6 +154,7 @@ export function NewProjectPage() {
               </>
             )}
             <Button
+              className="border-autumn-300 bg-autumn-300 font-semibold text-coffee-900 hover:bg-autumn-200 hover:text-coffee-900 disabled:border-coffee-600 disabled:bg-coffee-800 disabled:text-coffee-400"
               onClick={() => createConfigFileMutation.mutate()}
               disabled={createConfigFileMutation.isPending || !isFormValid}
             >

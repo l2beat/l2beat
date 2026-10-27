@@ -169,7 +169,10 @@ export function DiffHistoryPanel() {
 
   return (
     <div className="relative h-full">
-      <div ref={scrollRef} className="flex h-full flex-col overflow-auto p-2">
+      <div
+        ref={scrollRef}
+        className="flex h-full flex-col overflow-auto py-2 pr-14 pl-2"
+      >
         <div className="flex flex-col gap-3">
           {entries.map((entry, i) => (
             <Entry
@@ -267,10 +270,10 @@ function Toolbar(props: ToolbarProps) {
 
       <div
         title={`${props.loaded} of ${props.total} entries loaded`}
-        className="px-1 text-center text-[7px] text-coffee-400 italic"
+        className="px-0.5 text-center text-[10px] text-coffee-300 tabular-nums leading-3"
       >
         <div>{props.loaded}</div>
-        out of
+        <div className="text-coffee-400">of</div>
         <div>{props.total}</div>
       </div>
     </div>
@@ -377,7 +380,7 @@ function CollapsibleSection(props: {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center gap-2 bg-coffee-700 px-2 py-1 text-left font-bold text-xs hover:bg-coffee-700/70"
+        className="flex w-full items-center gap-2 bg-coffee-800 px-2 py-1 text-left font-medium text-coffee-300 text-xs hover:bg-coffee-700 hover:text-coffee-100"
       >
         <span className="inline-block w-3 text-coffee-400">
           {open ? '▾' : '▸'}
