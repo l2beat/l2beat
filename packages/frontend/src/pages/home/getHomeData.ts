@@ -133,7 +133,10 @@ async function getCachedData(manifest: Manifest) {
     ),
     getRecentProjectsForHome(manifest),
     getHomeProjectCounts(),
-    getRecentChangesOverview(),
+    orEmpty('recentChanges', getRecentChangesOverview(), {
+      count: 0,
+      groups: [],
+    }),
     orEmpty('l2Charts', getHomeL2Charts(chartRange), {
       tvs: { chart: [], change: undefined },
       activity: { chart: [], change: undefined },

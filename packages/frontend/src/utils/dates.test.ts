@@ -18,7 +18,11 @@ describe('dates', () => {
       process.env.TZ = 'America/Los_Angeles'
     })
     after(() => {
-      process.env.TZ = previousTimezone
+      if (previousTimezone === undefined) {
+        Reflect.deleteProperty(process.env, 'TZ')
+      } else {
+        process.env.TZ = previousTimezone
+      }
     })
 
     it('formats the calendar day the date stands for, in any timezone', () => {
