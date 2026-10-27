@@ -11,7 +11,11 @@ describe(MilestonesAndIncidentsSection.name, () => {
   const originalTz = process.env.TZ
 
   afterEach(() => {
-    process.env.TZ = originalTz
+    if (originalTz === undefined) {
+      Reflect.deleteProperty(process.env, 'TZ')
+    } else {
+      process.env.TZ = originalTz
+    }
   })
 
   it('shows the UTC date in a time zone west of UTC', () => {
