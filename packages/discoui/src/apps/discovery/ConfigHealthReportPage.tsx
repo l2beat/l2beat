@@ -46,19 +46,21 @@ export function ConfigHealthReportPage() {
     <div className="mx-auto max-w-(--breakpoint-md) p-4">
       <Title title="DiscoUI - Config health report" />
 
-      <div className="mb-4 flex gap-4">
-        <div className="flex-1">
-          <h1 className="font-bold text-lg">Config Health</h1>
-          <p className="text-coffee-400 text-sm">
+      <div className="mb-5 flex flex-wrap items-start justify-between gap-4 border-coffee-700 border-b pb-4">
+        <div className="min-w-0 flex-1">
+          <h1 className="font-semibold text-coffee-100 text-lg">
+            Config health
+          </h1>
+          <p className="text-coffee-300 text-sm">
             This report shows if there are excessive ignore rules in the config
             (compared to the ABI).
           </p>
         </div>
 
-        <div className="flex-1 space-y-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Button
-            className="w-full text-2xs"
-            variant="solid"
+            size="small"
+            className="border-autumn-300 bg-autumn-300 font-semibold text-coffee-900 hover:bg-autumn-200 hover:text-coffee-900"
             disabled={configHealth.isPending}
             onClick={() => void configHealth.generate()}
           >
@@ -73,7 +75,7 @@ export function ConfigHealthReportPage() {
           </Button>
 
           <Button
-            className="w-full text-2xs"
+            size="small"
             disabled={!markdownReport}
             onClick={() => markdownCopy.copy(markdownReport ?? '')}
           >
@@ -85,7 +87,7 @@ export function ConfigHealthReportPage() {
           </Button>
 
           <Button
-            className="w-full text-2xs"
+            size="small"
             disabled={!healthHints}
             onClick={() => jsonCopy.copy(jsonReport)}
           >
@@ -118,7 +120,7 @@ export function ConfigHealthReportPage() {
             </Tabs.Content>
 
             <Tabs.Content value="markdown">
-              <Markdown className="border border-coffee-200 bg-coffee-900 p-2">
+              <Markdown className="rounded-sm border border-coffee-700 bg-coffee-900 p-2">
                 {markdownReport ?? ''}
               </Markdown>
             </Tabs.Content>
@@ -126,7 +128,9 @@ export function ConfigHealthReportPage() {
         </div>
       )}
       {!healthHints && (
-        <div className="text-coffee-400 text-xs">No generated report yet</div>
+        <div className="rounded-sm border border-coffee-700 bg-coffee-900 px-3 py-3 text-coffee-300 text-xs">
+          No generated report yet
+        </div>
       )}
     </div>
   )
@@ -194,9 +198,11 @@ function PrettySection(props: {
   const total = props.groups.reduce((acc, g) => acc + g.hints.length, 0)
 
   return (
-    <div className="border border-coffee-200 bg-coffee-900 p-3">
+    <div className="rounded-sm border border-coffee-700 bg-coffee-900 p-3">
       <div className="flex items-center justify-between">
-        <div className="font-medium">{props.title}</div>
+        <div className="font-semibold text-coffee-100 text-sm">
+          {props.title}
+        </div>
         <div className="text-2xs text-coffee-400">{total} items</div>
       </div>
 
@@ -205,7 +211,10 @@ function PrettySection(props: {
       ) : (
         <div className="mt-3 space-y-3">
           {props.groups.map((group) => (
-            <div key={group.title} className="border border-coffee-200/50 p-2">
+            <div
+              key={group.title}
+              className="rounded-sm border border-coffee-700 p-2"
+            >
               <div className="flex items-center justify-between">
                 <div className="font-mono text-xs">{group.title}</div>
                 <div className="text-2xs text-coffee-400">

@@ -100,7 +100,7 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
   return (
     <Dialog.Root onOpenChange={onOpenChange}>
       <Dialog.Trigger asChild>
-        <div className="absolute top-0 right-0 hidden h-full w-full cursor-pointer items-center justify-center bg-coffee-700/50 group-hover:flex">
+        <div className="absolute top-0 right-0 hidden h-full w-full cursor-pointer items-center justify-center rounded-sm bg-coffee-800/75 group-hover:flex">
           <IconEdit className="size-4 text-coffee-200/80" />
         </div>
       </Dialog.Trigger>
@@ -123,8 +123,8 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
           </div>
         ) : (
           <div className="grid min-h-0 flex-1 grid-cols-5 gap-2">
-            <div className="col-span-3 flex min-h-0 w-full flex-col gap-2 border-coffee-400 border-r pr-2">
-              <div className="flex min-h-0 flex-1 flex-col border border-coffee-400 bg-coffee-900 p-4 pl-0">
+            <div className="col-span-3 flex min-h-0 w-full flex-col gap-2 border-coffee-700 border-r pr-2">
+              <div className="flex min-h-0 flex-1 flex-col rounded-sm border border-coffee-600 bg-coffee-900 p-4 pl-0">
                 <HandlerEditor
                   context={context}
                   editorKey={editorKey}
