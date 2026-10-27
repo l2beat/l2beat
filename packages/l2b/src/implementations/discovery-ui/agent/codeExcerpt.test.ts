@@ -47,6 +47,14 @@ describe(excerptAt.name, () => {
     expect(excerptAt(code, 0, 1).lines.length).toEqual(22)
   })
 
+  it('gives the whole loop a for header opens', () => {
+    const body = Array.from({ length: 20 }, (_, i) => `    x += ${i};`)
+    const code = ['  for (uint256 i = 0; i < n; i++) {', ...body, '  }'].join(
+      '\n',
+    )
+    expect(excerptAt(code, 2, 1).lines.length).toEqual(22)
+  })
+
   it('cuts a long block', () => {
     const body = Array.from({ length: 100 }, (_, i) => `  x = ${i};`)
     const code = ['function long() {', ...body, '}'].join('\n')

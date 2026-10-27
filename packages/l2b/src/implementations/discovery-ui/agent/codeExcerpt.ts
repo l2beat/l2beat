@@ -47,13 +47,18 @@ function blockEnd(code: string, offset: number): number | undefined {
 }
 
 // A snippet opens a block when a brace comes before the statement ends.
+// Semicolons in parentheses, like a for loop's, do not end it.
 function blockOpen(code: string, offset: number): number | undefined {
+  let parens = 0
   for (let at = offset; at < code.length; at++) {
     at = endOfCommentOrString(code, at)
-    if (code[at] === '{') {
+    if (code[at] === '(') {
+      parens++
+    } else if (code[at] === ')') {
+      parens--
+    } else if (code[at] === '{') {
       return at
-    }
-    if (code[at] === ';') {
+    } else if (code[at] === ';' && parens === 0) {
       return undefined
     }
   }
