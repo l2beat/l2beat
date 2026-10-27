@@ -153,6 +153,14 @@ describe(renameIdentifiers.name, () => {
     )
   })
 
+  it('renames a function whose name occurs inside the function keyword', () => {
+    const src = 'function f() pure returns (uint256) { return 7; }'
+    const result = renameIdentifiers(src, [{ from: 'f', to: 'f_1' }])
+    expect(result).toEqual(
+      'function f_1() pure returns (uint256) { return 7; }',
+    )
+  })
+
   it('renames across a struct definition', () => {
     const src = [
       'contract Foo {',

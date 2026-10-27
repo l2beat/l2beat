@@ -504,6 +504,7 @@ function renameShadowedAliasTargets(
   for (const { declaration, file } of order) {
     const names = namesByFile.get(file) ?? new Set<string>()
     for (const name of getASTIdentifiers(declaration.ast)) names.add(name)
+    for (const name of getMemberNames(declaration.ast)) names.add(name)
     namesByFile.set(file, names)
   }
 
@@ -520,6 +521,14 @@ function renameShadowedAliasTargets(
       taken.add(`${name}_${suffix}`)
     }
   }
+}
+
+function getMemberNames(ast: AST.ASTNode): string[] {
+  if (ast.type !== 'ContractDefinition') return []
+  return ast.subNodes.flatMap((sub) => {
+    const node = sub as AST.ASTNode
+    return 'name' in node && typeof node.name === 'string' ? [node.name] : []
+  })
 }
 
 function buildRenameMap(order: DeclarationFilePair[]): Map<string, string> {

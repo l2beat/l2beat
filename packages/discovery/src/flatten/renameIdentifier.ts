@@ -197,9 +197,27 @@ function findDeclNameRange(
   rangeStart: number,
   name: string,
 ): { start: number; end: number } | undefined {
-  const start = source.indexOf(name, rangeStart)
-  if (start !== -1) return { start, end: start + name.length }
+  let start = source.indexOf(name, rangeStart)
+  while (start !== -1) {
+    const before = source[start - 1]
+    const after = source[start + name.length]
+    if (!isIdentifierChar(before) && !isIdentifierChar(after)) {
+      return { start, end: start + name.length }
+    }
+    start = source.indexOf(name, start + 1)
+  }
   return undefined
+}
+
+function isIdentifierChar(c: string | undefined): boolean {
+  if (c === undefined) return false
+  return (
+    (c >= 'a' && c <= 'z') ||
+    (c >= 'A' && c <= 'Z') ||
+    (c >= '0' && c <= '9') ||
+    c === '_' ||
+    c === '$'
+  )
 }
 
 function findConstantNameStart(

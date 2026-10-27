@@ -1103,6 +1103,42 @@ describe('flatten', () => {
     )
   })
 
+  it('renames source unit alias targets shadowed by a member function', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Lib.sol" as K;
+      contract Root {
+          function f() public pure returns (uint256) { return K.f() + 1; }
+      }
+    `,
+    )
+    const libFile = sol(
+      'Lib.sol',
+      `
+      function f() pure returns (uint256) { return 7; }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, libFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      function f_1() pure returns (uint256) { return 7; }
+
+      contract Root {
+          function f() public pure returns (uint256) { return f_1() + 1; }
+      }
+    `),
+    )
+  })
+
   it('../ in unit name', () => {
     const rootFile = sol(
       'a/b/c/Root.sol',
