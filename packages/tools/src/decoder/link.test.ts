@@ -5,6 +5,7 @@ import {
   CALLDATA_BYTES_MAX,
   compressCalldata,
   decompressCalldata,
+  linkParams,
   readLink,
   readLinkData,
   writeLink,
@@ -13,6 +14,13 @@ import {
 const HASH =
   '0x72cd8876128636f521ee95d874b59f0ce2c6e7f621bca48e342262f4285e40f0'
 const ADDRESS = '0x8eab2d97dfce405a1692a21b3ff3a172d593d319'
+
+describe(linkParams.name, () => {
+  it('prefers the query so decoder-new links keep working', () => {
+    expect(linkParams('?hash=1', '#data=2').toString()).toEqual('hash=1')
+    expect(linkParams('', '#data=2').toString()).toEqual('data=2')
+  })
+})
 
 describe(readLink.name, () => {
   it('reads nothing from an empty query', () => {
@@ -78,22 +86,23 @@ describe(writeLink.name, () => {
       address: '',
       chainId: 0,
     })
-    expect(query).toEqual(`hash=${HASH}`)
-    expect(readLink(new URLSearchParams(query))).toEqual({
+    expect(query).toEqual(`?hash=${HASH}`)
+    expect(readLink(linkParams(query, ''))).toEqual({
       type: 'transaction',
       hash: HASH,
       chainId: undefined,
     })
   })
 
-  it('round trips calldata through the link', async () => {
-    const query = await writeLink({
+  it('round trips calldata through the fragment', async () => {
+    const fragment = await writeLink({
       hash: '',
       data: '0xa9059cbb0000',
       address: ADDRESS,
       chainId: 42161,
     })
-    const link = readLink(new URLSearchParams(query))
+    expect(fragment.startsWith('#data=')).toEqual(true)
+    const link = readLink(linkParams('', fragment))
     if (link?.type !== 'calldata') throw new Error('Expected calldata link')
     expect(link.to).toEqual(ADDRESS)
     expect(link.chainId).toEqual(42161)
@@ -102,33 +111,30 @@ describe(writeLink.name, () => {
 })
 
 describe('long calldata links', () => {
-  const storage = new Map<string, string>()
-  before(() => {
-    globalThis.localStorage = mockObject<Storage>({
-      getItem: (key) => storage.get(key) ?? null,
-      setItem: (key, value) => {
-        storage.set(key, value)
-      },
-    })
-  })
-  after(() => {
-    Reflect.deleteProperty(globalThis, 'localStorage')
-  })
-
-  it('keeps data too long for a URL in local storage', async () => {
+  it('keeps data too long for a request URL in the fragment', async () => {
     const calldata = randomBytes(16 * 1024).toString('hex')
-    const query = await writeLink({
+    const fragment = await writeLink({
       hash: '',
       data: `0x${calldata}`,
       address: '',
       chainId: 1,
     })
-    expect(query).toEqual('data=0xLOCALSTORAGE&chainId=1')
-    const link = readLink(new URLSearchParams(query))
+    const link = readLink(linkParams('', fragment))
     if (link?.type !== 'calldata') throw new Error('Expected calldata link')
     expect(await decompressCalldata(readLinkData(link.data))).toEqual(
       `0x${calldata}`,
     )
+  })
+
+  it('reads decoder-new data kept in local storage', () => {
+    globalThis.localStorage = mockObject<Storage>({
+      getItem: (key) => (key === 'data' ? 'AwA' : null),
+    })
+    try {
+      expect(readLinkData('0xLOCALSTORAGE')).toEqual('AwA')
+    } finally {
+      Reflect.deleteProperty(globalThis, 'localStorage')
+    }
   })
 })
 

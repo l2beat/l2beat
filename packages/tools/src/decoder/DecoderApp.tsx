@@ -12,7 +12,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { useNavigate, useSearchParams } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { toFunctionSelector } from 'viem'
 import { create } from 'zustand'
 import * as API from './api'
@@ -24,6 +24,7 @@ import { findKnownHashes } from './knownHashes'
 import {
   type DecoderLink,
   decompressCalldata,
+  linkParams,
   readLink,
   readLinkData,
   writeLink,
@@ -32,12 +33,12 @@ import { DECODE_AS_PRESETS, decode, decodeAs } from './plugins'
 import { SafeHashes } from './SafeHashes'
 
 export function DecoderApp() {
-  const [search] = useSearchParams()
+  const location = useLocation()
   const navigate = useNavigate()
-  const link = readLink(search)
+  const link = readLink(linkParams(location.search, location.hash))
 
   async function openLink(values: FormValues) {
-    await navigate(`/decoder?${await writeLink(values)}`)
+    await navigate(`/decoder${await writeLink(values)}`)
   }
 
   return (
@@ -97,10 +98,9 @@ function CalldataLoader({
 }: {
   link: Extract<DecoderLink, { type: 'calldata' }>
 }) {
-  const data = readLinkData(link.data)
   const query = useQuery({
-    queryFn: () => decompressCalldata(data),
-    queryKey: ['calldata', data],
+    queryFn: () => decompressCalldata(readLinkData(link.data)),
+    queryKey: ['calldata', link.data],
     retry: false,
   })
 

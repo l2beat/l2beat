@@ -14,10 +14,12 @@ const HASH_BYTES = 32
 const ADDRESS_BYTES = 20
 const CHAIN_ID_DEFAULT = 1
 export const CALLDATA_BYTES_MAX = 64 * 1024
-// Vercel rejects URLs over 14 KB, so longer data stays in this browser like decoder-new did.
-const LINK_DATA_LENGTH_MAX = 8 * 1024
-const LOCAL_STORAGE_DATA = '0xLOCALSTORAGE'
-const LOCAL_STORAGE_KEY = 'data'
+const LEGACY_LOCAL_STORAGE_DATA = '0xLOCALSTORAGE'
+
+// Calldata links live in the fragment, which never reaches Vercel's 14 KB URL limit.
+export function linkParams(search: string, fragment: string) {
+  return new URLSearchParams(search.length > 0 ? search : fragment.slice(1))
+}
 
 export function readLink(search: URLSearchParams): DecoderLink | undefined {
   if (search.size === 0) return undefined
@@ -54,23 +56,18 @@ export async function writeLink(values: FormValues): Promise<string> {
   if (values.hash) {
     params.set('hash', values.hash)
     if (values.chainId !== 0) params.set('chainId', values.chainId.toString())
-    return params.toString()
+    return `?${params.toString()}`
   }
-  const data = await compressCalldata(values.data as `0x${string}`)
-  if (data.length > LINK_DATA_LENGTH_MAX) {
-    localStorage.setItem(LOCAL_STORAGE_KEY, data)
-    params.set('data', LOCAL_STORAGE_DATA)
-  } else {
-    params.set('data', data)
-  }
+  params.set('data', await compressCalldata(values.data as `0x${string}`))
   if (values.address) params.set('to', values.address)
   params.set('chainId', values.chainId.toString())
-  return params.toString()
+  return `#${params.toString()}`
 }
 
+// decoder-new kept long calldata in local storage and put a marker in the link.
 export function readLinkData(data: string) {
-  if (data !== LOCAL_STORAGE_DATA) return data
-  return localStorage.getItem(LOCAL_STORAGE_KEY) ?? ''
+  if (data !== LEGACY_LOCAL_STORAGE_DATA) return data
+  return localStorage.getItem('data') ?? ''
 }
 
 function parseChainId(value: string | null): number | undefined | 'invalid' {
