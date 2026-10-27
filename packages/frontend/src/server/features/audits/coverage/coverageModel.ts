@@ -1,7 +1,7 @@
 import type { ProjectAuditCoverage } from '@l2beat/config'
 import type {
+  AuditNotCountedReason,
   AuditStatusCounts,
-  AuditUnitKind,
   AuditUnitStatus,
 } from '../types'
 
@@ -52,16 +52,41 @@ export function unitStatus(
       return 'unaudited'
     case 'differs':
       return 'differs'
-    case 'identical': {
-      const collections = (unit.reports ?? []).flatMap(
-        (id) => coverage.reports[id]?.collections ?? [],
-      )
-      const libraryOnly =
-        collections.length > 0 &&
-        collections.every((id) => coverage.collections[id]?.kind === 'library')
-      return libraryOnly ? 'library' : 'identical'
-    }
+    case 'identical':
+      return auditedInLibrariesOnly(unit, coverage) ? 'library' : 'identical'
   }
+}
+
+/** Every report that audited the unit belongs to library collections only. */
+export function auditedInLibrariesOnly(
+  unit: CoverageUnit,
+  coverage: ProjectAuditCoverage,
+): boolean {
+  const collections = (unit.reports ?? []).flatMap(
+    (id) => coverage.reports[id]?.collections ?? [],
+  )
+  return (
+    collections.length > 0 &&
+    collections.every((id) => coverage.collections[id]?.kind === 'library')
+  )
+}
+
+/**
+ * Why a unit is listed and diffed but left out of every count, or undefined
+ * when it counts. Interfaces declare no logic and OP-style reviews rarely
+ * scope them. Vendor code (OpenZeppelin, Solady, ...) that differs from its
+ * audited library version is usually a version bump or a local tweak of a
+ * widely reviewed library, so it would mostly add noise to the differing side.
+ */
+export function notCountedReason(
+  unit: CoverageUnit,
+  coverage: ProjectAuditCoverage,
+): AuditNotCountedReason | undefined {
+  if (unit.kind === 'interface') return 'interface'
+  if (unit.status === 'differs' && auditedInLibrariesOnly(unit, coverage)) {
+    return 'vendor'
+  }
+  return undefined
 }
 
 export function unitCoveredLines(
@@ -116,28 +141,19 @@ export function contractSources(
 
 export interface UnitSummaryInput {
   unitId: string
-  kind: AuditUnitKind
   status: AuditUnitStatus
   lines: number
   coveredLines: number
-}
-
-/**
- * Whether a unit counts in the coverage numbers. Interfaces are listed and
- * diffed like every other unit, but they declare no logic and OP-style
- * reviews rarely scope them, so they are left out of the unit counts and the
- * line coverage. A changed interface still shows as differs in its row.
- */
-export function countsTowardCoverage(kind: AuditUnitKind): boolean {
-  return kind !== 'interface'
+  /** Set when the unit is left out of every count, see notCountedReason. */
+  notCounted?: AuditNotCountedReason
 }
 
 export interface UnitsSummary {
-  /** Deployed unit instances per status, interfaces excluded. */
+  /** Deployed unit instances per status, uncounted units excluded. */
   units: AuditStatusCounts
   /** Same, deduplicated by unit id. */
   uniqueUnits: AuditStatusCounts
-  /** Lines of the counted units, interfaces excluded. */
+  /** Lines of the counted units. */
   lines: { total: number; covered: number; uncovered: number }
 }
 
@@ -148,7 +164,7 @@ export function summarizeUnits(units: UnitSummaryInput[]): UnitsSummary {
   let total = 0
   let covered = 0
   for (const unit of units) {
-    if (!countsTowardCoverage(unit.kind)) continue
+    if (unit.notCounted) continue
     counts[unit.status]++
     if (!seen.has(unit.unitId)) {
       seen.add(unit.unitId)

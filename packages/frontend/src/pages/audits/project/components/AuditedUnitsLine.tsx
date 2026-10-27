@@ -22,7 +22,13 @@ export function AuditedUnitsLine({ units }: { units: AuditsUnitEntry[] }) {
         {units.map((unit, i) => (
           <span key={unit.id}>
             {i > 0 && ', '}
-            <AuditedUnitName unit={unit} />
+            {unit.notCounted ? (
+              <span className="rounded-sm bg-not-counted-stripes px-1 py-px ring-1 ring-not-counted/30 ring-inset">
+                <AuditedUnitName unit={unit} />
+              </span>
+            ) : (
+              <AuditedUnitName unit={unit} />
+            )}
           </span>
         ))}
       </span>
@@ -61,7 +67,7 @@ function AuditedUnitName({ unit }: { unit: AuditsUnitEntry }) {
           </div>
         ))}
         <div className="text-secondary">
-          {unit.kind === 'interface' && 'Interface, not counted. '}
+          {unit.notCounted === 'interface' && "Interface, doesn't count. "}
           {match.auditedName && `Audited as ${match.auditedName}. `}
           {match.repository}/{match.path}{' '}
           <span className="font-mono">@{match.commit.slice(0, 8)}</span>

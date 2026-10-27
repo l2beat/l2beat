@@ -23,9 +23,13 @@ export type AuditReportOrigin = 'own' | 'stack' | 'library' | 'other'
 export type AuditStatusCounts = Record<AuditUnitStatus, number>
 
 /**
- * Unit and line counts of the counted units. Interfaces are listed and
- * diffed but never counted, see `countsTowardCoverage` in coverageModel.
+ * Why a unit is listed and diffed but never counted: it is an interface, or
+ * vendor code that differs from its audited library version. See
+ * `notCountedReason` in coverageModel.
  */
+export type AuditNotCountedReason = 'interface' | 'vendor'
+
+/** Unit and line counts of the counted units, see AuditNotCountedReason. */
 export interface AuditCoverageNumbers {
   units: AuditStatusCounts
   lines: { total: number; covered: number; uncovered: number }
@@ -172,6 +176,8 @@ export interface AuditsUnitEntry {
   match?: AuditsUnitMatchEntry
   /** Changed lines when the unit differs from the audited code. */
   changedLines?: { added: number; removed: number }
+  /** Set when the unit is shown but left out of every count. */
+  notCounted?: AuditNotCountedReason
 }
 
 export interface AuditsSourceEntry {

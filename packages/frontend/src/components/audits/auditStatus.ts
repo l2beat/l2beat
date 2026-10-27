@@ -46,12 +46,14 @@ export const AUDIT_STATUS_META: Record<
 }
 
 /**
- * Interfaces declare no logic and are rarely scoped by audits, so they are
- * shown and diffed in the unit list but left out of every count: unit
- * statuses, line coverage and the fully audited contracts.
+ * Interfaces declare no logic and are rarely scoped by audits, and vendor
+ * code that differs from its audited library version is mostly a version bump
+ * of a widely reviewed library. Both are shown and diffed in the unit list but
+ * left out of every count: unit statuses, line coverage and the fully audited
+ * contracts. See `notCountedReason` in coverageModel.
  */
-export const INTERFACES_NOT_COUNTED =
-  'Interfaces are listed and diffed but not counted.'
+export const UNCOUNTED_UNITS_NOTE =
+  'Interfaces, and vendor library code that differs from its audited version, are listed and diffed but not counted.'
 
 export function totalUnits(counts: AuditStatusCounts): number {
   return AUDIT_STATUS_ORDER.reduce((sum, s) => sum + counts[s], 0)

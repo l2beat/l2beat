@@ -2,10 +2,11 @@ import type { DiscoveryOutput, EntryParameters } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { expect } from 'earl'
+import type { Unit } from './AuditCoverage'
 import { buildAuditedCode } from './AuditedCode'
 import type { AuditIndex } from './AuditIndex'
 import { auditCoverageOfProject } from './auditCoverageOfProject'
-import { coverageHistoryOfProject } from './coverageHistory'
+import { coverageHistoryOfProject, isCounted } from './coverageHistory'
 import type { DeployedSource } from './deployedSource'
 
 // One proxy with two implementations over time, audited by two reports:
@@ -273,5 +274,49 @@ describe(`${auditCoverageOfProject.name} with history`, () => {
     // Covered by the command run on real projects; the main pass reads
     // discovery from disk, which the unit test above avoids.
     expect(typeof auditCoverageOfProject).toEqual('function')
+  })
+})
+
+describe(isCounted.name, () => {
+  const libraries: AuditIndex = {
+    ...index,
+    collections: {
+      ...index.collections,
+      '_libs/oz': { name: 'OpenZeppelin', kind: 'library' },
+    },
+    reports: {
+      ...index.reports,
+      oz: {
+        collections: ['_libs/oz'],
+        title: 'OZ',
+        auditor: 'B',
+        date: '2023-01-01',
+        document: '_libs/oz/reports/oz.pdf',
+      },
+    },
+  }
+
+  it('leaves out interfaces', () => {
+    expect(
+      isCounted(
+        { name: 'I', kind: 'interface', lines: 3, status: 'none' },
+        libraries,
+      ),
+    ).toEqual(false)
+  })
+
+  it('leaves out code that differs from a version audited in libraries only', () => {
+    const unit: Unit = {
+      name: 'Address',
+      kind: 'library',
+      lines: 10,
+      status: 'differs',
+      reports: ['oz'],
+    }
+    expect(isCounted(unit, libraries)).toEqual(false)
+    expect(isCounted({ ...unit, reports: ['oz', 'first'] }, libraries)).toEqual(
+      true,
+    )
+    expect(isCounted({ ...unit, status: 'identical' }, libraries)).toEqual(true)
   })
 })

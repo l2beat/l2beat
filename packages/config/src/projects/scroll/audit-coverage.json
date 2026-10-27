@@ -6296,8 +6296,8 @@
         "timestamp": 1696917600,
         "contracts": 33,
         "withoutSource": 0,
-        "units": { "identical": 122, "differs": 192, "none": 70 },
-        "lines": { "total": 42059, "covered": 31033 },
+        "units": { "identical": 122, "differs": 45, "none": 70 },
+        "lines": { "total": 31788, "covered": 21768 },
         "reports": [
           "code4rena-zksync-era-system-contracts-2023-03",
           "consensys-arbitrum-core-token-bridge-2021-11",
@@ -6329,8 +6329,8 @@
         "timestamp": 1707177600,
         "contracts": 33,
         "withoutSource": 0,
-        "units": { "identical": 124, "differs": 190, "none": 70 },
-        "lines": { "total": 42059, "covered": 31099 },
+        "units": { "identical": 124, "differs": 43, "none": 70 },
+        "lines": { "total": 31788, "covered": 21834 },
         "reports": [
           "openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02"
         ]
@@ -6339,8 +6339,8 @@
         "timestamp": 1708589325,
         "contracts": 33,
         "withoutSource": 0,
-        "units": { "identical": 164, "differs": 195, "none": 81 },
-        "lines": { "total": 48110, "covered": 35507 },
+        "units": { "identical": 164, "differs": 24, "none": 81 },
+        "lines": { "total": 36043, "covered": 24632 },
         "changes": [
           {
             "address": "eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
@@ -6433,8 +6433,8 @@
         "timestamp": 1714341995,
         "contracts": 33,
         "withoutSource": 0,
-        "units": { "identical": 166, "differs": 195, "none": 81 },
-        "lines": { "total": 48785, "covered": 36182 },
+        "units": { "identical": 166, "differs": 25, "none": 81 },
+        "lines": { "total": 36818, "covered": 25397 },
         "changes": [
           {
             "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
@@ -6444,11 +6444,18 @@
         ]
       },
       {
+        "timestamp": 1715904000,
+        "contracts": 33,
+        "withoutSource": 0,
+        "units": { "identical": 166, "differs": 28, "none": 81 },
+        "lines": { "total": 37118, "covered": 25667 }
+      },
+      {
         "timestamp": 1719915047,
         "contracts": 33,
         "withoutSource": 0,
-        "units": { "identical": 165, "differs": 196, "none": 81 },
-        "lines": { "total": 48781, "covered": 36173 },
+        "units": { "identical": 165, "differs": 29, "none": 81 },
+        "lines": { "total": 37114, "covered": 25658 },
         "changes": [
           {
             "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
@@ -6461,24 +6468,24 @@
         "timestamp": 1721260800,
         "contracts": 33,
         "withoutSource": 0,
-        "units": { "identical": 165, "differs": 196, "none": 81 },
-        "lines": { "total": 48781, "covered": 36203 },
+        "units": { "identical": 165, "differs": 29, "none": 81 },
+        "lines": { "total": 37114, "covered": 25688 },
         "reports": ["trailofbits-morph-l2-2024-07"]
       },
       {
         "timestamp": 1722470400,
         "contracts": 33,
         "withoutSource": 0,
-        "units": { "identical": 167, "differs": 196, "none": 79 },
-        "lines": { "total": 48781, "covered": 36397 },
+        "units": { "identical": 167, "differs": 29, "none": 79 },
+        "lines": { "total": 37114, "covered": 25882 },
         "reports": ["trailofbits-custom-fee-token-2024-08"]
       },
       {
         "timestamp": 1722833675,
         "contracts": 34,
         "withoutSource": 0,
-        "units": { "identical": 168, "differs": 198, "none": 79 },
-        "lines": { "total": 49020, "covered": 36620 },
+        "units": { "identical": 168, "differs": 30, "none": 79 },
+        "lines": { "total": 37289, "covered": 26045 },
         "changes": [
           {
             "address": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
@@ -6491,8 +6498,8 @@
         "timestamp": 1724196995,
         "contracts": 34,
         "withoutSource": 0,
-        "units": { "identical": 164, "differs": 202, "none": 80 },
-        "lines": { "total": 49207, "covered": 36390 },
+        "units": { "identical": 164, "differs": 34, "none": 80 },
+        "lines": { "total": 37476, "covered": 25815 },
         "changes": [
           {
             "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
@@ -6505,8 +6512,8 @@
         "timestamp": 1725336741,
         "contracts": 40,
         "withoutSource": 0,
-        "units": { "identical": 185, "differs": 223, "none": 88 },
-        "lines": { "total": 56501, "covered": 42716 },
+        "units": { "identical": 185, "differs": 37, "none": 88 },
+        "lines": { "total": 41054, "covered": 28662 },
         "changes": [
           {
             "address": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
@@ -6544,24 +6551,24 @@
         "timestamp": 1727049600,
         "contracts": 40,
         "withoutSource": 0,
-        "units": { "identical": 185, "differs": 223, "none": 88 },
-        "lines": { "total": 56501, "covered": 42716 },
+        "units": { "identical": 185, "differs": 37, "none": 88 },
+        "lines": { "total": 41054, "covered": 28662 },
         "reports": ["sherlock-morph-l2-contest-2024-09"]
       },
       {
         "timestamp": 1727913600,
         "contracts": 40,
         "withoutSource": 0,
-        "units": { "identical": 185, "differs": 223, "none": 88 },
-        "lines": { "total": 56501, "covered": 42818 },
+        "units": { "identical": 185, "differs": 37, "none": 88 },
+        "lines": { "total": 41054, "covered": 28662 },
         "reports": ["contracts__audits__2024-10-v5.1"]
       },
       {
         "timestamp": 1729119781,
         "contracts": 40,
         "withoutSource": 0,
-        "units": { "identical": 189, "differs": 233, "none": 95 },
-        "lines": { "total": 61505, "covered": 46423 },
+        "units": { "identical": 189, "differs": 39, "none": 95 },
+        "lines": { "total": 44593, "covered": 30932 },
         "changes": [
           {
             "address": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
@@ -6574,8 +6581,8 @@
         "timestamp": 1729781135,
         "contracts": 41,
         "withoutSource": 0,
-        "units": { "identical": 195, "differs": 234, "none": 95 },
-        "lines": { "total": 62559, "covered": 47457 },
+        "units": { "identical": 195, "differs": 39, "none": 95 },
+        "lines": { "total": 45448, "covered": 31787 },
         "changes": [
           {
             "address": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
@@ -6588,8 +6595,8 @@
         "timestamp": 1730294447,
         "contracts": 45,
         "withoutSource": 0,
-        "units": { "identical": 219, "differs": 238, "none": 95 },
-        "lines": { "total": 66775, "covered": 51593 },
+        "units": { "identical": 219, "differs": 39, "none": 95 },
+        "lines": { "total": 48868, "covered": 35207 },
         "changes": [
           {
             "address": "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b",
@@ -6617,8 +6624,8 @@
         "timestamp": 1742476115,
         "contracts": 47,
         "withoutSource": 0,
-        "units": { "identical": 227, "differs": 242, "none": 97 },
-        "lines": { "total": 68189, "covered": 52715 },
+        "units": { "identical": 227, "differs": 39, "none": 97 },
+        "lines": { "total": 50104, "covered": 36163 },
         "changes": [
           {
             "address": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
@@ -6636,24 +6643,24 @@
         "timestamp": 1743638400,
         "contracts": 47,
         "withoutSource": 0,
-        "units": { "identical": 227, "differs": 242, "none": 97 },
-        "lines": { "total": 68189, "covered": 52715 },
+        "units": { "identical": 227, "differs": 35, "none": 97 },
+        "lines": { "total": 49704, "covered": 35803 },
         "reports": ["contracts__audits__2025-04-v5.3"]
       },
       {
         "timestamp": 1743724800,
         "contracts": 47,
         "withoutSource": 0,
-        "units": { "identical": 227, "differs": 243, "none": 96 },
-        "lines": { "total": 68189, "covered": 52780 },
+        "units": { "identical": 227, "differs": 36, "none": 96 },
+        "lines": { "total": 49704, "covered": 35868 },
         "reports": ["trailofbits-scroll-euclid-phase1-2025-04"]
       },
       {
         "timestamp": 1744728443,
         "contracts": 47,
         "withoutSource": 0,
-        "units": { "identical": 229, "differs": 241, "none": 96 },
-        "lines": { "total": 67977, "covered": 52899 },
+        "units": { "identical": 229, "differs": 34, "none": 96 },
+        "lines": { "total": 49492, "covered": 35987 },
         "changes": [
           {
             "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
@@ -6666,8 +6673,8 @@
         "timestamp": 1745301695,
         "contracts": 47,
         "withoutSource": 0,
-        "units": { "identical": 235, "differs": 246, "none": 98 },
-        "lines": { "total": 70018, "covered": 54422 },
+        "units": { "identical": 235, "differs": 33, "none": 98 },
+        "lines": { "total": 51123, "covered": 37148 },
         "changes": [
           {
             "address": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
@@ -6700,8 +6707,8 @@
         "timestamp": 1745564819,
         "contracts": 47,
         "withoutSource": 0,
-        "units": { "identical": 234, "differs": 247, "none": 98 },
-        "lines": { "total": 70019, "covered": 54419 },
+        "units": { "identical": 234, "differs": 34, "none": 98 },
+        "lines": { "total": 51124, "covered": 37145 },
         "changes": [
           {
             "address": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
@@ -6714,32 +6721,32 @@
         "timestamp": 1748390400,
         "contracts": 47,
         "withoutSource": 0,
-        "units": { "identical": 234, "differs": 247, "none": 98 },
-        "lines": { "total": 70019, "covered": 54419 },
+        "units": { "identical": 234, "differs": 34, "none": 98 },
+        "lines": { "total": 51124, "covered": 37145 },
         "reports": ["ackee-safe-1-5-0"]
       },
       {
         "timestamp": 1752105600,
         "contracts": 47,
         "withoutSource": 0,
-        "units": { "identical": 236, "differs": 245, "none": 98 },
-        "lines": { "total": 70019, "covered": 54431 },
+        "units": { "identical": 236, "differs": 32, "none": 98 },
+        "lines": { "total": 51124, "covered": 37157 },
         "reports": ["trailofbits-scroll-feynman-upgrade"]
       },
       {
         "timestamp": 1752710400,
         "contracts": 47,
         "withoutSource": 0,
-        "units": { "identical": 236, "differs": 245, "none": 98 },
-        "lines": { "total": 70019, "covered": 54442 },
+        "units": { "identical": 236, "differs": 32, "none": 98 },
+        "lines": { "total": 51124, "covered": 37157 },
         "reports": ["contracts__audits__2025-07-v5.4"]
       },
       {
         "timestamp": 1753067003,
         "contracts": 49,
         "withoutSource": 0,
-        "units": { "identical": 255, "differs": 262, "none": 102 },
-        "lines": { "total": 74995, "covered": 58540 },
+        "units": { "identical": 255, "differs": 34, "none": 102 },
+        "lines": { "total": 54953, "covered": 40212 },
         "changes": [
           {
             "address": "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd",
@@ -6757,8 +6764,8 @@
         "timestamp": 1754761103,
         "contracts": 51,
         "withoutSource": 1,
-        "units": { "identical": 256, "differs": 262, "none": 102 },
-        "lines": { "total": 75087, "covered": 58632 },
+        "units": { "identical": 256, "differs": 34, "none": 102 },
+        "lines": { "total": 55045, "covered": 40304 },
         "changes": [
           {
             "address": "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4",
@@ -6776,8 +6783,8 @@
         "timestamp": 1755485183,
         "contracts": 52,
         "withoutSource": 1,
-        "units": { "identical": 259, "differs": 258, "none": 102 },
-        "lines": { "total": 74349, "covered": 57914 },
+        "units": { "identical": 259, "differs": 30, "none": 102 },
+        "lines": { "total": 54307, "covered": 39586 },
         "changes": [
           {
             "address": "eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
@@ -6840,8 +6847,8 @@
         "timestamp": 1765784711,
         "contracts": 54,
         "withoutSource": 2,
-        "units": { "identical": 260, "differs": 258, "none": 102 },
-        "lines": { "total": 74446, "covered": 58011 },
+        "units": { "identical": 260, "differs": 30, "none": 102 },
+        "lines": { "total": 54404, "covered": 39683 },
         "changes": [
           {
             "address": "eth:0x749fC77A1a131632a8b88e8703E489557660C75e",
@@ -6859,16 +6866,16 @@
         "timestamp": 1772150400,
         "contracts": 54,
         "withoutSource": 2,
-        "units": { "identical": 260, "differs": 258, "none": 102 },
-        "lines": { "total": 74446, "covered": 58018 },
+        "units": { "identical": 260, "differs": 30, "none": 102 },
+        "lines": { "total": 54404, "covered": 39683 },
         "reports": ["contracts__audits__2026-02-v5.6"]
       },
       {
         "timestamp": 1790041547,
         "contracts": 56,
         "withoutSource": 3,
-        "units": { "identical": 261, "differs": 258, "none": 102 },
-        "lines": { "total": 74545, "covered": 58117 },
+        "units": { "identical": 261, "differs": 30, "none": 102 },
+        "lines": { "total": 54503, "covered": 39782 },
         "changes": [
           {
             "address": "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6",
@@ -6886,8 +6893,8 @@
         "timestamp": 1791455050,
         "contracts": 56,
         "withoutSource": 3,
-        "units": { "identical": 261, "differs": 258, "none": 102 },
-        "lines": { "total": 74545, "covered": 58117 }
+        "units": { "identical": 261, "differs": 30, "none": 102 },
+        "lines": { "total": 54503, "covered": 39782 }
       }
     ],
     "undatedReports": ["g0-safe-allowance-v0-1-0"]

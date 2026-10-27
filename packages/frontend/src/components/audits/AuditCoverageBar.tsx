@@ -3,8 +3,8 @@ import {
   AUDIT_STATUS_META,
   AUDIT_STATUS_ORDER,
   formatShare,
-  INTERFACES_NOT_COUNTED,
   totalUnits,
+  UNCOUNTED_UNITS_NOTE,
 } from '~/components/audits/auditStatus'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import type {
@@ -13,7 +13,7 @@ import type {
 } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
 
-/** Stacked bar of deployed unit instances per status, interfaces excluded. */
+/** Stacked bar of deployed unit instances per status, uncounted units excluded. */
 export function UnitStatusBar({
   counts,
   className,
@@ -32,7 +32,7 @@ export function UnitStatusBar({
   )
 }
 
-/** Stacked bar of covered vs uncovered lines, interfaces excluded. */
+/** Stacked bar of covered vs uncovered lines, uncounted units excluded. */
 export function LineCoverageBar({
   lines,
   className,
@@ -85,7 +85,7 @@ export function UnitStatusBarTooltipContent({
         </div>
       ))}
       <p className="max-w-[280px] pt-1 text-secondary text-xs">
-        {INTERFACES_NOT_COUNTED}
+        {UNCOUNTED_UNITS_NOTE}
       </p>
     </div>
   )
@@ -128,7 +128,7 @@ export function LineCoverageTooltipContent({
       <p className="max-w-[280px] pt-1 text-secondary text-xs">
         Not covered lines are all lines of units without audited source plus the
         lines added in units that differ from their audited version.{' '}
-        {INTERFACES_NOT_COUNTED}
+        {UNCOUNTED_UNITS_NOTE}
       </p>
     </div>
   )

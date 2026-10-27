@@ -10,7 +10,7 @@ import { LineCoverageTooltipContent } from '~/components/audits/AuditCoverageBar
 import { AuditsCoverageSparkline } from '~/components/audits/AuditsCoverageSparkline'
 import {
   formatShare,
-  INTERFACES_NOT_COUNTED,
+  UNCOUNTED_UNITS_NOTE,
 } from '~/components/audits/auditStatus'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
@@ -67,7 +67,7 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        "Lines of the critical contracts not covered by the audits published by then, from the launch to today. Fully audited is at the top, so the line rises as audits cover code. Green when there are fewer unaudited lines now than at the launch, red when there are more. Click one to open the project's full timeline.",
+        "Lines of the critical contracts not covered by the audits published by then, from the launch to today. The line falls as audits cover code and rises as unaudited code is deployed. Green when there are fewer unaudited lines now than at the launch, red when there are more. Click one to open the project's full timeline.",
     },
   }),
   columnHelper.accessor(
@@ -114,7 +114,7 @@ const columns = [
     },
     sortDescFirst: true,
     meta: {
-      tooltip: `Share of the critical contracts whose whole deployed source, every unit of every file, is identical to audited code. Contracts without verified source count as not covered. ${INTERFACES_NOT_COUNTED}`,
+      tooltip: `Share of the critical contracts whose whole deployed source, every unit of every file, is identical to audited code. Contracts without verified source count as not covered. ${UNCOUNTED_UNITS_NOTE}`,
     },
   }),
   columnHelper.accessor(linesCoveredShare, {
@@ -142,7 +142,7 @@ const columns = [
     },
     sortDescFirst: true,
     meta: {
-      tooltip: `Share of deployed lines identical to audited code, across the critical contracts. ${INTERFACES_NOT_COUNTED}`,
+      tooltip: `Share of deployed lines identical to audited code, across the critical contracts. ${UNCOUNTED_UNITS_NOTE}`,
     },
   }),
 ]

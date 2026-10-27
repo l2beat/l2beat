@@ -3067,8 +3067,8 @@
         "timestamp": 1733855519,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 23, "differs": 18, "none": 4 },
-        "lines": { "total": 8689, "covered": 5998 },
+        "units": { "identical": 23, "differs": 11, "none": 4 },
+        "lines": { "total": 7800, "covered": 5231 },
         "reports": [
           "cantina-fault-proofs-mips-2024-08",
           "cantina-mcp-l1-2024-02",
@@ -3107,96 +3107,96 @@
         "timestamp": 1735344000,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 23, "differs": 18, "none": 4 },
-        "lines": { "total": 8689, "covered": 5998 },
+        "units": { "identical": 23, "differs": 11, "none": 4 },
+        "lines": { "total": 7800, "covered": 5231 },
         "reports": ["radiantlabs-deputypausemodule-2024-12"]
       },
       {
         "timestamp": 1741478400,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 23, "differs": 18, "none": 4 },
-        "lines": { "total": 8689, "covered": 5998 },
+        "units": { "identical": 23, "differs": 11, "none": 4 },
+        "lines": { "total": 7800, "covered": 5231 },
         "reports": ["cantina-eip7702-2025-02"]
       },
       {
         "timestamp": 1747699200,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 24, "differs": 17, "none": 4 },
-        "lines": { "total": 8689, "covered": 6093 },
+        "units": { "identical": 24, "differs": 10, "none": 4 },
+        "lines": { "total": 7800, "covered": 5326 },
         "reports": ["spearbit-upgrade16-2025-05"]
       },
       {
         "timestamp": 1748390400,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 24, "differs": 17, "none": 4 },
-        "lines": { "total": 8689, "covered": 6093 },
+        "units": { "identical": 24, "differs": 10, "none": 4 },
+        "lines": { "total": 7800, "covered": 5326 },
         "reports": ["ackee-safe-1-5-0"]
       },
       {
         "timestamp": 1748995200,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 24, "differs": 17, "none": 4 },
-        "lines": { "total": 8689, "covered": 6093 },
+        "units": { "identical": 24, "differs": 10, "none": 4 },
+        "lines": { "total": 7800, "covered": 5326 },
         "reports": ["cantina-interop-portal-2025-04"]
       },
       {
         "timestamp": 1751328000,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 24, "differs": 17, "none": 4 },
-        "lines": { "total": 8689, "covered": 6134 },
+        "units": { "identical": 24, "differs": 10, "none": 4 },
+        "lines": { "total": 7800, "covered": 5367 },
         "reports": ["nethermind-nm-0561-celo-custom-gas-token-2025-07-01"]
       },
       {
         "timestamp": 1762992000,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 24, "differs": 17, "none": 4 },
-        "lines": { "total": 8689, "covered": 6134 },
+        "units": { "identical": 24, "differs": 10, "none": 4 },
+        "lines": { "total": 7800, "covered": 5367 },
         "reports": ["spearbit-safersafes-2025-11"]
       },
       {
         "timestamp": 1763424000,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 24, "differs": 17, "none": 4 },
-        "lines": { "total": 8689, "covered": 6134 },
+        "units": { "identical": 24, "differs": 10, "none": 4 },
+        "lines": { "total": 7800, "covered": 5367 },
         "reports": ["cantina-custom-gas-token-2025-11"]
       },
       {
         "timestamp": 1768176000,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 24, "differs": 17, "none": 4 },
-        "lines": { "total": 8689, "covered": 6134 },
+        "units": { "identical": 24, "differs": 10, "none": 4 },
+        "lines": { "total": 7800, "covered": 5367 },
         "reports": ["cantina-u18-2026-01"]
       },
       {
         "timestamp": 1772150400,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 24, "differs": 17, "none": 4 },
-        "lines": { "total": 8689, "covered": 6134 },
+        "units": { "identical": 24, "differs": 10, "none": 4 },
+        "lines": { "total": 7800, "covered": 5367 },
         "reports": ["contracts__audits__2026-02-v5.6"]
       },
       {
         "timestamp": 1772236800,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 24, "differs": 17, "none": 4 },
-        "lines": { "total": 8689, "covered": 6134 },
+        "units": { "identical": 24, "differs": 10, "none": 4 },
+        "lines": { "total": 7800, "covered": 5367 },
         "reports": ["hashlock-celo-optimism-superchain-2026-02"]
       },
       {
         "timestamp": 1780407005,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 24, "differs": 17, "none": 4 },
-        "lines": { "total": 8689, "covered": 6134 }
+        "units": { "identical": 24, "differs": 10, "none": 4 },
+        "lines": { "total": 7800, "covered": 5367 }
       }
     ],
     "undatedReports": []

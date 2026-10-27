@@ -5272,8 +5272,8 @@
         "timestamp": 1712862023,
         "contracts": 6,
         "withoutSource": 0,
-        "units": { "identical": 49, "differs": 41, "none": 17 },
-        "lines": { "total": 14348, "covered": 11200 },
+        "units": { "identical": 49, "differs": 19, "none": 17 },
+        "lines": { "total": 12553, "covered": 9678 },
         "reports": [
           "cantina-mcp-l1-2024-02",
           "code4rena-base-2023-08",
@@ -5306,48 +5306,48 @@
         "timestamp": 1713398400,
         "contracts": 6,
         "withoutSource": 0,
-        "units": { "identical": 56, "differs": 39, "none": 12 },
-        "lines": { "total": 14348, "covered": 11762 },
+        "units": { "identical": 56, "differs": 17, "none": 12 },
+        "lines": { "total": 12553, "covered": 10240 },
         "reports": ["secure3-mantle-v2-public-contest-2024-04"]
       },
       {
         "timestamp": 1714089600,
         "contracts": 6,
         "withoutSource": 0,
-        "units": { "identical": 56, "differs": 39, "none": 12 },
-        "lines": { "total": 14348, "covered": 11762 },
+        "units": { "identical": 56, "differs": 17, "none": 12 },
+        "lines": { "total": 12553, "covered": 10240 },
         "reports": ["code4rena-taiko-2024-04"]
       },
       {
         "timestamp": 1715299200,
         "contracts": 6,
         "withoutSource": 0,
-        "units": { "identical": 56, "differs": 39, "none": 12 },
-        "lines": { "total": 14348, "covered": 11762 },
+        "units": { "identical": 56, "differs": 17, "none": 12 },
+        "lines": { "total": 12553, "covered": 10240 },
         "reports": ["secure3-mantle-v2-public-contest-final-2024-05"]
       },
       {
         "timestamp": 1717632000,
         "contracts": 6,
         "withoutSource": 0,
-        "units": { "identical": 56, "differs": 39, "none": 12 },
-        "lines": { "total": 14348, "covered": 11762 },
+        "units": { "identical": 56, "differs": 17, "none": 12 },
+        "lines": { "total": 12553, "covered": 10240 },
         "reports": ["cantina-safe-extensions-2024-06"]
       },
       {
         "timestamp": 1717718400,
         "contracts": 6,
         "withoutSource": 0,
-        "units": { "identical": 57, "differs": 39, "none": 11 },
-        "lines": { "total": 14348, "covered": 11848 },
+        "units": { "identical": 57, "differs": 17, "none": 11 },
+        "lines": { "total": 12553, "covered": 10326 },
         "reports": ["sherlock-fault-proofs-2024-06"]
       },
       {
         "timestamp": 1718237363,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 63, "differs": 43, "none": 12 },
-        "lines": { "total": 15380, "covered": 12778 },
+        "units": { "identical": 63, "differs": 17, "none": 12 },
+        "lines": { "total": 13370, "covered": 11066 },
         "changes": [
           {
             "address": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -5365,88 +5365,88 @@
         "timestamp": 1721260800,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 63, "differs": 43, "none": 12 },
-        "lines": { "total": 15380, "covered": 12778 },
+        "units": { "identical": 63, "differs": 17, "none": 12 },
+        "lines": { "total": 13370, "covered": 11066 },
         "reports": ["trailofbits-morph-l2-2024-07"]
       },
       {
         "timestamp": 1723593600,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 63, "differs": 43, "none": 12 },
-        "lines": { "total": 15380, "covered": 12778 },
+        "units": { "identical": 63, "differs": 17, "none": 12 },
+        "lines": { "total": 13370, "covered": 11066 },
         "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
       },
       {
         "timestamp": 1730678400,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 63, "differs": 43, "none": 12 },
-        "lines": { "total": 15380, "covered": 12780 },
+        "units": { "identical": 63, "differs": 17, "none": 12 },
+        "lines": { "total": 13370, "covered": 11068 },
         "reports": ["zellic-facet-bridge-2024-11-04"]
       },
       {
         "timestamp": 1735344000,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 63, "differs": 43, "none": 12 },
-        "lines": { "total": 15380, "covered": 12780 },
+        "units": { "identical": 63, "differs": 17, "none": 12 },
+        "lines": { "total": 13370, "covered": 11068 },
         "reports": ["radiantlabs-deputypausemodule-2024-12"]
       },
       {
         "timestamp": 1741132800,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 63, "differs": 43, "none": 12 },
-        "lines": { "total": 15380, "covered": 12784 },
+        "units": { "identical": 63, "differs": 17, "none": 12 },
+        "lines": { "total": 13370, "covered": 11072 },
         "reports": ["spearbit-upgrade13-2025-02"]
       },
       {
         "timestamp": 1741478400,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 64, "differs": 43, "none": 11 },
-        "lines": { "total": 15380, "covered": 12804 },
+        "units": { "identical": 64, "differs": 17, "none": 11 },
+        "lines": { "total": 13370, "covered": 11092 },
         "reports": ["cantina-eip7702-2025-02"]
       },
       {
         "timestamp": 1747699200,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 68, "differs": 42, "none": 8 },
-        "lines": { "total": 15380, "covered": 13169 },
+        "units": { "identical": 68, "differs": 16, "none": 8 },
+        "lines": { "total": 13370, "covered": 11457 },
         "reports": ["spearbit-upgrade16-2025-05"]
       },
       {
         "timestamp": 1748390400,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 68, "differs": 42, "none": 8 },
-        "lines": { "total": 15380, "covered": 13169 },
+        "units": { "identical": 68, "differs": 16, "none": 8 },
+        "lines": { "total": 13370, "covered": 11457 },
         "reports": ["ackee-safe-1-5-0"]
       },
       {
         "timestamp": 1748995200,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 68, "differs": 42, "none": 8 },
-        "lines": { "total": 15380, "covered": 13169 },
+        "units": { "identical": 68, "differs": 16, "none": 8 },
+        "lines": { "total": 13370, "covered": 11457 },
         "reports": ["cantina-interop-portal-2025-04"]
       },
       {
         "timestamp": 1751328000,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 68, "differs": 42, "none": 8 },
-        "lines": { "total": 15380, "covered": 13169 },
+        "units": { "identical": 68, "differs": 16, "none": 8 },
+        "lines": { "total": 13370, "covered": 11457 },
         "reports": ["nethermind-nm-0561-celo-custom-gas-token-2025-07-01"]
       },
       {
         "timestamp": 1751494331,
         "contracts": 10,
         "withoutSource": 0,
-        "units": { "identical": 72, "differs": 43, "none": 17 },
-        "lines": { "total": 17265, "covered": 14548 },
+        "units": { "identical": 72, "differs": 16, "none": 17 },
+        "lines": { "total": 15242, "covered": 12826 },
         "changes": [
           {
             "address": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9",
@@ -5464,8 +5464,8 @@
         "timestamp": 1752682883,
         "contracts": 13,
         "withoutSource": 0,
-        "units": { "identical": 93, "differs": 39, "none": 18 },
-        "lines": { "total": 18076, "covered": 14544 },
+        "units": { "identical": 93, "differs": 17, "none": 18 },
+        "lines": { "total": 16257, "covered": 12946 },
         "reports": ["contracts__audits__2025-07-v5.4"],
         "changes": [
           {
@@ -5504,8 +5504,8 @@
         "timestamp": 1752710400,
         "contracts": 13,
         "withoutSource": 0,
-        "units": { "identical": 99, "differs": 54, "none": 21 },
-        "lines": { "total": 22309, "covered": 17747 },
+        "units": { "identical": 99, "differs": 21, "none": 21 },
+        "lines": { "total": 19727, "covered": 15540 },
         "changes": [
           {
             "address": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
@@ -5533,8 +5533,8 @@
         "timestamp": 1753056000,
         "contracts": 13,
         "withoutSource": 0,
-        "units": { "identical": 93, "differs": 39, "none": 18 },
-        "lines": { "total": 18076, "covered": 14544 },
+        "units": { "identical": 93, "differs": 17, "none": 18 },
+        "lines": { "total": 16257, "covered": 12946 },
         "changes": [
           {
             "address": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
@@ -5562,8 +5562,8 @@
         "timestamp": 1755283775,
         "contracts": 15,
         "withoutSource": 0,
-        "units": { "identical": 97, "differs": 40, "none": 27 },
-        "lines": { "total": 19961, "covered": 15923 },
+        "units": { "identical": 97, "differs": 17, "none": 27 },
+        "lines": { "total": 18129, "covered": 14315 },
         "changes": [
           {
             "address": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D",
@@ -5581,8 +5581,8 @@
         "timestamp": 1756842743,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 102, "differs": 41, "none": 34 },
-        "lines": { "total": 20962, "covered": 16663 },
+        "units": { "identical": 102, "differs": 17, "none": 34 },
+        "lines": { "total": 19117, "covered": 15045 },
         "changes": [
           {
             "address": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85",
@@ -5600,48 +5600,48 @@
         "timestamp": 1759795200,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 102, "differs": 41, "none": 34 },
-        "lines": { "total": 20962, "covered": 16664 },
+        "units": { "identical": 102, "differs": 17, "none": 34 },
+        "lines": { "total": 19117, "covered": 15046 },
         "reports": ["spearbit-u16a-2025-09"]
       },
       {
         "timestamp": 1761523200,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 102, "differs": 42, "none": 33 },
-        "lines": { "total": 20962, "covered": 16701 },
+        "units": { "identical": 102, "differs": 18, "none": 33 },
+        "lines": { "total": 19117, "covered": 15083 },
         "reports": ["cantina-u17-2025-10"]
       },
       {
         "timestamp": 1762992000,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 102, "differs": 42, "none": 33 },
-        "lines": { "total": 20962, "covered": 16702 },
+        "units": { "identical": 102, "differs": 18, "none": 33 },
+        "lines": { "total": 19117, "covered": 15084 },
         "reports": ["spearbit-safersafes-2025-11"]
       },
       {
         "timestamp": 1763424000,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 102, "differs": 42, "none": 33 },
-        "lines": { "total": 20962, "covered": 16702 },
+        "units": { "identical": 102, "differs": 18, "none": 33 },
+        "lines": { "total": 19117, "covered": 15084 },
         "reports": ["cantina-custom-gas-token-2025-11"]
       },
       {
         "timestamp": 1768176000,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 102, "differs": 42, "none": 33 },
-        "lines": { "total": 20962, "covered": 16702 },
+        "units": { "identical": 102, "differs": 18, "none": 33 },
+        "lines": { "total": 19117, "covered": 15084 },
         "reports": ["cantina-u18-2026-01"]
       },
       {
         "timestamp": 1768920023,
         "contracts": 18,
         "withoutSource": 0,
-        "units": { "identical": 161, "differs": 43, "none": 38 },
-        "lines": { "total": 27184, "covered": 21037 },
+        "units": { "identical": 161, "differs": 17, "none": 38 },
+        "lines": { "total": 25086, "covered": 19202 },
         "changes": [
           {
             "address": "eth:0xC9AC21AcD8696B64270716528bF83630Ea7a293c",
@@ -5679,24 +5679,24 @@
         "timestamp": 1772150400,
         "contracts": 18,
         "withoutSource": 0,
-        "units": { "identical": 161, "differs": 43, "none": 38 },
-        "lines": { "total": 27184, "covered": 21037 },
+        "units": { "identical": 161, "differs": 17, "none": 38 },
+        "lines": { "total": 25086, "covered": 19202 },
         "reports": ["contracts__audits__2026-02-v5.6"]
       },
       {
         "timestamp": 1772236800,
         "contracts": 18,
         "withoutSource": 0,
-        "units": { "identical": 161, "differs": 43, "none": 38 },
-        "lines": { "total": 27184, "covered": 21037 },
+        "units": { "identical": 161, "differs": 17, "none": 38 },
+        "lines": { "total": 25086, "covered": 19202 },
         "reports": ["hashlock-celo-optimism-superchain-2026-02"]
       },
       {
         "timestamp": 1773311975,
         "contracts": 18,
         "withoutSource": 0,
-        "units": { "identical": 161, "differs": 43, "none": 38 },
-        "lines": { "total": 27184, "covered": 21037 },
+        "units": { "identical": 161, "differs": 17, "none": 38 },
+        "lines": { "total": 25086, "covered": 19202 },
         "changes": [
           {
             "address": "eth:0xC9AC21AcD8696B64270716528bF83630Ea7a293c",
@@ -5709,8 +5709,8 @@
         "timestamp": 1777898291,
         "contracts": 21,
         "withoutSource": 0,
-        "units": { "identical": 190, "differs": 48, "none": 42 },
-        "lines": { "total": 32525, "covered": 24834 },
+        "units": { "identical": 190, "differs": 22, "none": 42 },
+        "lines": { "total": 30427, "covered": 22999 },
         "changes": [
           {
             "address": "eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b",
@@ -5733,32 +5733,32 @@
         "timestamp": 1780876800,
         "contracts": 21,
         "withoutSource": 0,
-        "units": { "identical": 190, "differs": 48, "none": 42 },
-        "lines": { "total": 32525, "covered": 24837 },
+        "units": { "identical": 190, "differs": 22, "none": 42 },
+        "lines": { "total": 30427, "covered": 23002 },
         "reports": ["cantina-opcmv2-2026-06"]
       },
       {
         "timestamp": 1781740800,
         "contracts": 21,
         "withoutSource": 0,
-        "units": { "identical": 191, "differs": 47, "none": 42 },
-        "lines": { "total": 32525, "covered": 24848 },
+        "units": { "identical": 191, "differs": 21, "none": 42 },
+        "lines": { "total": 30427, "covered": 23013 },
         "reports": ["cantina-interop-l2-rereview-2026-06"]
       },
       {
         "timestamp": 1787184000,
         "contracts": 21,
         "withoutSource": 0,
-        "units": { "identical": 191, "differs": 47, "none": 42 },
-        "lines": { "total": 32525, "covered": 24849 },
+        "units": { "identical": 191, "differs": 21, "none": 42 },
+        "lines": { "total": 30427, "covered": 23014 },
         "reports": ["cantina-upgrade20-2026-08"]
       },
       {
         "timestamp": 1788946907,
         "contracts": 24,
         "withoutSource": 0,
-        "units": { "identical": 222, "differs": 50, "none": 46 },
-        "lines": { "total": 41763, "covered": 32441 },
+        "units": { "identical": 222, "differs": 22, "none": 46 },
+        "lines": { "total": 38378, "covered": 29428 },
         "changes": [
           {
             "address": "eth:0xb6B6342ff75b4213cBF101c135f1fC33695acc13",
@@ -5781,8 +5781,8 @@
         "timestamp": 1789547003,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 164, "differs": 55, "none": 13 },
-        "lines": { "total": 31196, "covered": 25782 },
+        "units": { "identical": 164, "differs": 30, "none": 13 },
+        "lines": { "total": 27623, "covered": 22602 },
         "changes": [
           {
             "address": "eth:0xC9AC21AcD8696B64270716528bF83630Ea7a293c",
@@ -5880,8 +5880,8 @@
         "timestamp": 1791965825,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 164, "differs": 55, "none": 13 },
-        "lines": { "total": 31196, "covered": 25782 }
+        "units": { "identical": 164, "differs": 30, "none": 13 },
+        "lines": { "total": 27623, "covered": 22602 }
       }
     ],
     "undatedReports": []

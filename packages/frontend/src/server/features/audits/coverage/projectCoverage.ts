@@ -10,6 +10,7 @@ import type {
 import {
   type CoverageUnit,
   contractSources,
+  notCountedReason,
   selectContracts,
   summarizeUnits,
   type UnitsSummary,
@@ -76,6 +77,7 @@ export function buildProjectCoverage(
               removed: groupLines(unit.removed ?? []),
             }
           : undefined,
+      notCounted: notCountedReason(unit, coverage),
     }
   }
 

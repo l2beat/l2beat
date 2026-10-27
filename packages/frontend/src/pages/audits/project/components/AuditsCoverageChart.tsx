@@ -6,7 +6,6 @@ import {
   getTimeTicks,
 } from '~/components/audits/auditsTimeline'
 import {
-  getCoverageTrendColor,
   getValueDomain,
   getValueTicks,
 } from '~/components/audits/coverageScale'
@@ -41,9 +40,6 @@ interface Props {
  * present, as a step: the value only changes at a point, where an audit began
  * to count or the perimeter's code changed. Absolute lines, not a share, as
  * every uncovered line is a possible exploit whatever the perimeter's size.
- * Drawn hanging from zero at the top, so that the line rises as audits cover
- * code and falls as unaudited code is deployed, and colored by whether the
- * range ends higher (green) or lower (red) than it starts.
  * Hovering a step shows what changed there, below the plot so that the
  * tooltip covers no data. The range is the chart's own; MAX reaches back to
  * the launch, where the series starts.
@@ -69,14 +65,14 @@ export function AuditsCoverageChart({ history }: Props) {
     () => getSteps(history.points, from, to),
     [history.points, from, to],
   )
-  // Zero, fully audited, is always the top of the axis.
+  // The y axis follows the visible values, see coverageScale.
   const domain = useMemo(
-    () => getValueDomain([0, ...steps.map((step) => uncoveredOf(step.point))]),
+    () => getValueDomain(steps.map((step) => uncoveredOf(step.point))),
     [steps],
   )
   const valueTicks = useMemo(() => getValueTicks(domain), [domain])
   const toY = (value: number) =>
-    PLOT_TOP +
+    PLOT_BOTTOM -
     ((value - domain.min) / (domain.max - domain.min)) *
       (PLOT_BOTTOM - PLOT_TOP)
   const line =
@@ -92,12 +88,8 @@ export function AuditsCoverageChart({ history }: Props) {
   const last = steps[steps.length - 1]
   const area =
     line !== undefined && first !== undefined && last !== undefined
-      ? `${line} L${toX(last.end)} ${toY(0)} L${toX(first.start)} ${toY(0)} Z`
+      ? `${line} L${toX(last.end)} ${PLOT_BOTTOM} L${toX(first.start)} ${PLOT_BOTTOM} Z`
       : undefined
-  const color =
-    first === undefined || last === undefined
-      ? 'var(--secondary)'
-      : getCoverageTrendColor(uncoveredOf(first.point), uncoveredOf(last.point))
   const active =
     hovered === undefined
       ? undefined
@@ -139,7 +131,7 @@ export function AuditsCoverageChart({ history }: Props) {
               width={width}
               height={HEIGHT}
               role="img"
-              aria-label="Lines of the critical contracts not covered by audits over time, fully audited at the top"
+              aria-label="Lines of the critical contracts not covered by audits over time"
             >
               {valueTicks.map((value) => (
                 <g key={value}>
@@ -148,18 +140,16 @@ export function AuditsCoverageChart({ history }: Props) {
                     x2={width - PAD_X}
                     y1={snap(toY(value))}
                     y2={snap(toY(value))}
-                    stroke={value === 0 ? 'var(--secondary)' : 'var(--divider)'}
+                    stroke="var(--divider)"
                     {...CRISP}
                   />
                   <text
                     x={PAD_X + 2}
-                    y={value === 0 ? toY(value) + 11 : toY(value) - 3}
+                    y={toY(value) - 3}
                     fontSize={10}
                     fill="var(--secondary)"
                   >
-                    {value === 0
-                      ? 'Fully audited'
-                      : `${formatCompact(value)} unaudited`}
+                    {formatInteger(value)}
                   </text>
                 </g>
               ))}
@@ -187,12 +177,14 @@ export function AuditsCoverageChart({ history }: Props) {
                   )}
                 </g>
               ))}
-              {area && <path d={area} fill={color} fillOpacity={0.1} />}
+              {area && (
+                <path d={area} fill="var(--negative)" fillOpacity={0.1} />
+              )}
               {line && (
                 <path
                   d={line}
                   fill="none"
-                  stroke={color}
+                  stroke="var(--negative)"
                   strokeWidth={2}
                   strokeLinejoin="round"
                 />
@@ -206,7 +198,7 @@ export function AuditsCoverageChart({ history }: Props) {
                     cy={toY(uncoveredOf(step.point))}
                     r={DOT_RADIUS}
                     fill="var(--surface-primary)"
-                    stroke={color}
+                    stroke="var(--negative)"
                     strokeWidth={2}
                   />
                 ))}
@@ -225,7 +217,7 @@ export function AuditsCoverageChart({ history }: Props) {
                     cx={toX(Math.max(active.point.timestamp, from))}
                     cy={toY(uncoveredOf(active.point))}
                     r={DOT_RADIUS + 1}
-                    fill={color}
+                    fill="var(--negative)"
                   />
                 </g>
               )}
@@ -244,14 +236,11 @@ export function AuditsCoverageChart({ history }: Props) {
       </div>
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-secondary text-xs">
         <span className="flex items-center gap-1.5">
-          <span className="h-0.5 w-3" style={{ backgroundColor: color }} />
-          Lines not covered by the audits published by then, higher is better
+          <span className="h-0.5 w-3 bg-negative" />
+          Lines not covered by the audits published by then
         </span>
         <span className="flex items-center gap-1.5">
-          <span
-            className="size-2.5 rounded-full border-2"
-            style={{ borderColor: color }}
-          />
+          <span className="size-2.5 rounded-full border-2 border-negative" />
           Audit counted or code changed
         </span>
       </div>
@@ -262,11 +251,6 @@ export function AuditsCoverageChart({ history }: Props) {
 /** What the chart draws. */
 function uncoveredOf(point: AuditsCoverageHistoryPoint): number {
   return point.lines.uncovered
-}
-
-/** 2500 as 2.5k, for the axis. */
-function formatCompact(value: number): string {
-  return value >= 1000 ? `${Number((value / 1000).toFixed(1))}k` : `${value}`
 }
 
 interface Step {

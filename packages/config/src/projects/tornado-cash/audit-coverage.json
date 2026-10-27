@@ -2837,8 +2837,8 @@
         "timestamp": 1576523275,
         "contracts": 5,
         "withoutSource": 1,
-        "units": { "identical": 0, "differs": 20, "none": 1 },
-        "lines": { "total": 1115, "covered": 1006 },
+        "units": { "identical": 0, "differs": 16, "none": 1 },
+        "lines": { "total": 1019, "covered": 914 },
         "reports": [
           "abdk-tornado-smart-contract-audit-2019-11-19",
           "contracts__audits__2018-10"
@@ -2848,8 +2848,8 @@
         "timestamp": 1577296976,
         "contracts": 12,
         "withoutSource": 1,
-        "units": { "identical": 0, "differs": 55, "none": 1 },
-        "lines": { "total": 3133, "covered": 2911 },
+        "units": { "identical": 0, "differs": 44, "none": 1 },
+        "lines": { "total": 2869, "covered": 2658 },
         "changes": [
           {
             "address": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
@@ -2892,8 +2892,8 @@
         "timestamp": 1589278208,
         "contracts": 13,
         "withoutSource": 1,
-        "units": { "identical": 0, "differs": 55, "none": 3 },
-        "lines": { "total": 3327, "covered": 2911 },
+        "units": { "identical": 0, "differs": 44, "none": 3 },
+        "lines": { "total": 3063, "covered": 2658 },
         "changes": [
           {
             "address": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -2914,8 +2914,8 @@
         "timestamp": 1616114822,
         "contracts": 21,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 68, "none": 38 },
-        "lines": { "total": 9505, "covered": 4162 },
+        "units": { "identical": 11, "differs": 60, "none": 38 },
+        "lines": { "total": 9041, "covered": 3826 },
         "changes": [
           {
             "address": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
@@ -2963,56 +2963,56 @@
         "timestamp": 1636070400,
         "contracts": 21,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 68, "none": 38 },
-        "lines": { "total": 9505, "covered": 4162 },
+        "units": { "identical": 11, "differs": 60, "none": 38 },
+        "lines": { "total": 9041, "covered": 3826 },
         "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
       },
       {
         "timestamp": 1686700800,
         "contracts": 21,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 76, "none": 30 },
-        "lines": { "total": 9505, "covered": 5426 },
+        "units": { "identical": 11, "differs": 68, "none": 30 },
+        "lines": { "total": 9041, "covered": 5090 },
         "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
       },
       {
         "timestamp": 1709164800,
         "contracts": 21,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 76, "none": 30 },
-        "lines": { "total": 9505, "covered": 5426 },
+        "units": { "identical": 11, "differs": 68, "none": 30 },
+        "lines": { "total": 9041, "covered": 5090 },
         "reports": ["code4rena-zksync-era-2023-10"]
       },
       {
         "timestamp": 1716508800,
         "contracts": 21,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 84, "none": 22 },
-        "lines": { "total": 9505, "covered": 6138 },
+        "units": { "identical": 11, "differs": 76, "none": 22 },
+        "lines": { "total": 9041, "covered": 5802 },
         "reports": ["oxorio-privacy-pools-v1-2024-05"]
       },
       {
         "timestamp": 1762905600,
         "contracts": 21,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 84, "none": 22 },
-        "lines": { "total": 9505, "covered": 6138 },
+        "units": { "identical": 11, "differs": 76, "none": 22 },
+        "lines": { "total": 9041, "covered": 5802 },
         "reports": ["cantina-rollup-contracts-2025-11-12"]
       },
       {
         "timestamp": 1772668800,
         "contracts": 21,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 84, "none": 22 },
-        "lines": { "total": 9505, "covered": 6138 },
+        "units": { "identical": 11, "differs": 76, "none": 22 },
+        "lines": { "total": 9041, "covered": 5802 },
         "reports": ["cantina-payload-2026-03-05"]
       },
       {
         "timestamp": 1791619122,
         "contracts": 21,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 84, "none": 22 },
-        "lines": { "total": 9505, "covered": 6138 }
+        "units": { "identical": 11, "differs": 76, "none": 22 },
+        "lines": { "total": 9041, "covered": 5802 }
       }
     ],
     "undatedReports": []

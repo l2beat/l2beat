@@ -2,8 +2,8 @@ import type { ProjectAuditCoverage } from '@l2beat/config'
 import { expect } from 'earl'
 import {
   contractSources,
-  countsTowardCoverage,
   isFlatHash,
+  notCountedReason,
   selectContracts,
   summarizeUnits,
   unitCoveredLines,
@@ -132,13 +132,48 @@ describe('coverageModel', () => {
     })
   })
 
-  describe(countsTowardCoverage.name, () => {
-    it('counts every kind but interfaces', () => {
-      expect(countsTowardCoverage('contract')).toEqual(true)
-      expect(countsTowardCoverage('abstract')).toEqual(true)
-      expect(countsTowardCoverage('library')).toEqual(true)
-      expect(countsTowardCoverage('function')).toEqual(true)
-      expect(countsTowardCoverage('interface')).toEqual(false)
+  describe(notCountedReason.name, () => {
+    const c = coverage()
+
+    it('leaves out interfaces whatever their status', () => {
+      expect(
+        notCountedReason(unit({ kind: 'interface', status: 'none' }), c),
+      ).toEqual('interface')
+      expect(
+        notCountedReason(
+          unit({ kind: 'interface', status: 'identical', reports: ['own'] }),
+          c,
+        ),
+      ).toEqual('interface')
+    })
+
+    it('leaves out differing code audited in library collections only', () => {
+      for (const kind of ['library', 'abstract', 'contract'] as const) {
+        expect(
+          notCountedReason(
+            unit({ kind, status: 'differs', reports: ['oz'] }),
+            c,
+          ),
+        ).toEqual('vendor')
+      }
+    })
+
+    it('counts vendor code that is identical, and code audited by a project', () => {
+      expect(
+        notCountedReason(
+          unit({ kind: 'library', status: 'identical', reports: ['oz'] }),
+          c,
+        ),
+      ).toEqual(undefined)
+      expect(
+        notCountedReason(
+          unit({ kind: 'library', status: 'differs', reports: ['oz', 'op'] }),
+          c,
+        ),
+      ).toEqual(undefined)
+      expect(
+        notCountedReason(unit({ kind: 'library', status: 'none' }), c),
+      ).toEqual(undefined)
     })
   })
 
@@ -186,28 +221,24 @@ describe('coverageModel', () => {
       const summary = summarizeUnits([
         {
           unitId: 'x',
-          kind: 'contract',
           status: 'identical',
           lines: 10,
           coveredLines: 10,
         },
         {
           unitId: 'x',
-          kind: 'contract',
           status: 'identical',
           lines: 10,
           coveredLines: 10,
         },
         {
           unitId: 'y',
-          kind: 'library',
           status: 'differs',
           lines: 20,
           coveredLines: 15,
         },
         {
           unitId: 'z',
-          kind: 'function',
           status: 'unaudited',
           lines: 5,
           coveredLines: 0,
@@ -220,25 +251,24 @@ describe('coverageModel', () => {
       })
     })
 
-    it('leaves interfaces out of every count', () => {
+    it('leaves uncounted units out of every count', () => {
       const summary = summarizeUnits([
         {
           unitId: 'x',
-          kind: 'contract',
           status: 'identical',
           lines: 10,
           coveredLines: 10,
         },
         {
           unitId: 'i',
-          kind: 'interface',
+          notCounted: 'interface',
           status: 'unaudited',
           lines: 30,
           coveredLines: 0,
         },
         {
           unitId: 'j',
-          kind: 'interface',
+          notCounted: 'interface',
           status: 'differs',
           lines: 20,
           coveredLines: 5,

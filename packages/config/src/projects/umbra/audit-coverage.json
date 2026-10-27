@@ -391,8 +391,8 @@
         "timestamp": 1619813937,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 0, "differs": 3, "none": 3 },
-        "lines": { "total": 813, "covered": 396 },
+        "units": { "identical": 0, "differs": 1, "none": 3 },
+        "lines": { "total": 704, "covered": 314 },
         "reports": [
           "consensys-diligence-umbra-smart-contracts-2021-03",
           "contracts__audits__2018-10",
@@ -404,8 +404,8 @@
         "timestamp": 1629943007,
         "contracts": 2,
         "withoutSource": 0,
-        "units": { "identical": 0, "differs": 3, "none": 4 },
-        "lines": { "total": 1006, "covered": 396 },
+        "units": { "identical": 0, "differs": 1, "none": 4 },
+        "lines": { "total": 897, "covered": 314 },
         "changes": [
           {
             "address": "eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
@@ -418,32 +418,32 @@
         "timestamp": 1636070400,
         "contracts": 2,
         "withoutSource": 0,
-        "units": { "identical": 0, "differs": 3, "none": 4 },
-        "lines": { "total": 1006, "covered": 396 },
+        "units": { "identical": 0, "differs": 1, "none": 4 },
+        "lines": { "total": 897, "covered": 314 },
         "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
       },
       {
         "timestamp": 1686700800,
         "contracts": 2,
         "withoutSource": 0,
-        "units": { "identical": 0, "differs": 4, "none": 3 },
-        "lines": { "total": 1006, "covered": 554 },
+        "units": { "identical": 0, "differs": 2, "none": 3 },
+        "lines": { "total": 897, "covered": 472 },
         "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
       },
       {
         "timestamp": 1696291200,
         "contracts": 2,
         "withoutSource": 0,
-        "units": { "identical": 0, "differs": 5, "none": 2 },
-        "lines": { "total": 1006, "covered": 561 },
+        "units": { "identical": 0, "differs": 2, "none": 2 },
+        "lines": { "total": 887, "covered": 472 },
         "reports": ["contracts__audits__2023-10-v5.0"]
       },
       {
         "timestamp": 1791530581,
         "contracts": 2,
         "withoutSource": 0,
-        "units": { "identical": 0, "differs": 5, "none": 2 },
-        "lines": { "total": 1006, "covered": 561 }
+        "units": { "identical": 0, "differs": 2, "none": 2 },
+        "lines": { "total": 887, "covered": 472 }
       }
     ],
     "undatedReports": []

@@ -14,8 +14,8 @@ import { getCoverageTrendColor } from './coverageScale'
 const WIDTH = 240
 const HEIGHT = 32
 const PAD = 4
-// Zero, fully audited, is the top of the plot; year ticks and labels hang
-// below it.
+// Zero, fully audited, is the bottom of the plot; year ticks and labels
+// hang below it.
 const PLOT_TOP = 2
 const PLOT_BOTTOM = 20
 const CRISP = { shapeRendering: 'crispEdges' } as const
@@ -27,8 +27,8 @@ function snap(x: number) {
 
 /**
  * AuditsCoverageChart at its MAX range on one line: the uncovered lines from
- * the launch to the present, hanging from zero at the top and colored by
- * whether the present is above (green) or below (red) the launch. A link to
+ * the launch to the present, rising from zero at the bottom and colored by
+ * whether the present is below (green) or above (red) the launch. A link to
  * the full chart.
  */
 export function AuditsCoverageSparkline({
@@ -54,7 +54,7 @@ export function AuditsCoverageSparkline({
   const labeled = getLabeledTicks(years, toX, 24)
   const max = Math.max(1, ...points.map((point) => point.uncovered))
   const toY = (value: number) =>
-    PLOT_TOP + (value / max) * (PLOT_BOTTOM - PLOT_TOP)
+    PLOT_BOTTOM - (value / max) * (PLOT_BOTTOM - PLOT_TOP)
   const line = points
     .map((point, i) => {
       const end = points[i + 1]?.timestamp ?? to
@@ -86,16 +86,6 @@ export function AuditsCoverageSparkline({
             aria-label={`Unaudited lines over time. ${now}, ${then}. ${trend}`}
           >
             <path d={area} fill={color} fillOpacity={0.15} />
-            <line
-              x1={0}
-              x2={WIDTH}
-              y1={snap(PLOT_TOP)}
-              y2={snap(PLOT_TOP)}
-              stroke="var(--secondary)"
-              strokeOpacity={0.6}
-              strokeDasharray="2 2"
-              {...CRISP}
-            />
             <path
               d={line}
               fill="none"
@@ -134,9 +124,6 @@ export function AuditsCoverageSparkline({
         <span className="font-bold">{now}</span>
         <span className="text-secondary">
           {then}. {trend}
-        </span>
-        <span className="text-secondary">
-          The dashed line at the top is fully audited.
         </span>
         <TooltipVisualOnly>
           <span className="text-secondary">

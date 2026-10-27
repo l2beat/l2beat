@@ -16,6 +16,7 @@
     "compound": { "name": "Compound", "kind": "project" },
     "katana": { "name": "Katana", "kind": "project" },
     "roninnetwork": { "name": "Ronin", "kind": "project" },
+    "starknet": { "name": "Starknet", "kind": "project" },
     "uniswapv3": { "name": "Uniswap V3", "kind": "project" },
     "zksync2": { "name": "ZKsync Era", "kind": "project" }
   },
@@ -115,6 +116,20 @@
       "date": "2026-02-27",
       "document": "_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
     },
+    "g0-safe-1-3-0-final": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
+      "auditor": "G0 Group",
+      "date": "2021-05-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
+    },
+    "g0-safe-1-3-0-initial": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
+      "auditor": "G0 Group",
+      "date": "2021-04-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Initial.pdf"
+    },
     "openzeppelin-compound-alpha-governance-2020-02": {
       "collections": ["compound"],
       "title": "Compound Alpha Governance System Audit",
@@ -135,6 +150,20 @@
       "auditor": "OpenZeppelin",
       "date": "2019-10-23",
       "document": "compound/reports/OpenZeppelin - Compound Timelock Audit.html"
+    },
+    "peckshield-starkex-v1-0-2020-02": {
+      "collections": ["starknet"],
+      "title": "PeckShield StarkEx v1.0 Smart Contract Audit",
+      "auditor": "PeckShield",
+      "date": "2020-02-26",
+      "document": "starknet/reports/2020_02-peckshield-starkex-v1.0-audit.pdf"
+    },
+    "peckshield-starkex-v2-0-2020-10": {
+      "collections": ["starknet"],
+      "title": "PeckShield StarkEx V2 Smart Contract Audit",
+      "auditor": "PeckShield",
+      "date": "2020-10-26",
+      "document": "starknet/reports/2020_10-peckshield-starkex-v2.0-audit.pdf"
     },
     "sigmaprime-yield-exposed-token-2025-04": {
       "collections": ["katana"],
@@ -2956,13 +2985,11 @@
     },
     "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
       "name": "Timelock",
-      "source": "76cfb7ea6698e731470f40ef6b3ad9df1e8edc2860ad0b419796dea273d3209e",
-      "critical": true
+      "source": "76cfb7ea6698e731470f40ef6b3ad9df1e8edc2860ad0b419796dea273d3209e"
     },
     "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": {
       "name": "UNIToken",
-      "source": "aca66259b04e71a19a841c0c773e47e0765e01df86465f671e3d61211710719a",
-      "critical": true
+      "source": "aca66259b04e71a19a841c0c773e47e0765e01df86465f671e3d61211710719a"
     },
     "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984": {
       "name": "UniswapV3Factory",
@@ -2972,7 +2999,6 @@
     "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": {
       "name": "GovernorBravo",
       "source": "4705ed63b3a4915ec085657f7bd1e3363236ca25d513feaa1f9c8cf73fbeeae7",
-      "critical": true,
       "implementations": {
         "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": "aef081f3cbce46c38475469da5e205795ed726a9852648e06b1ce904c658d26d"
       }
@@ -3006,8 +3032,7 @@
     },
     "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A": {
       "name": "V3OpenFeeAdapter",
-      "source": "94f949e41b10073dec64deaf33b1414e4f0942e90772dc21f7253361f79af21a",
-      "critical": true
+      "source": "94f949e41b10073dec64deaf33b1414e4f0942e90772dc21f7253361f79af21a"
     },
     "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85": {
       "name": "TokenJar",
@@ -3015,49 +3040,31 @@
     }
   },
   "history": {
-    "launch": 1600107086,
+    "launch": 1620156420,
     "points": [
       {
-        "timestamp": 1600107086,
-        "contracts": 2,
-        "withoutSource": 0,
-        "units": { "identical": 1, "differs": 0, "none": 3 },
-        "lines": { "total": 833, "covered": 107 },
-        "reports": [
-          "openzeppelin-compound-timelock-2019-10",
-          "trailofbits-compound-governance-2020-02"
-        ]
-      },
-      {
         "timestamp": 1620156420,
-        "contracts": 5,
+        "contracts": 3,
         "withoutSource": 0,
-        "units": { "identical": 33, "differs": 12, "none": 25 },
-        "lines": { "total": 8286, "covered": 5073 },
-        "changes": [
-          {
-            "address": "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88",
-            "name": "NonfungiblePositionManager",
-            "kind": "added"
-          },
-          {
-            "address": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
-            "name": "UniswapV3Factory",
-            "kind": "added"
-          },
-          {
-            "address": "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD",
-            "name": "UniswapV3Pool_WBTC_WETH_03",
-            "kind": "added"
-          }
+        "units": { "identical": 32, "differs": 11, "none": 22 },
+        "lines": { "total": 7411, "covered": 4930 },
+        "reports": [
+          "abdk-uniswap-v3-core-2021-03",
+          "abdk-uniswap-v3-periphery-part1-2021-04",
+          "contracts__audits__2018-10",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "peckshield-starkex-v1-0-2020-02",
+          "peckshield-starkex-v2-0-2020-10",
+          "trailofbits-uniswap-v3-core-2021-03"
         ]
       },
       {
         "timestamp": 1620250931,
-        "contracts": 6,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 46, "differs": 17, "none": 25 },
-        "lines": { "total": 10606, "covered": 7146 },
+        "units": { "identical": 45, "differs": 16, "none": 22 },
+        "lines": { "total": 9731, "covered": 7003 },
         "changes": [
           {
             "address": "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640",
@@ -3067,151 +3074,123 @@
         ]
       },
       {
-        "timestamp": 1629421922,
-        "contracts": 7,
-        "withoutSource": 0,
-        "units": { "identical": 50, "differs": 20, "none": 25 },
-        "lines": { "total": 11261, "covered": 7772 },
-        "changes": [
-          {
-            "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
-            "name": "GovernorBravo",
-            "kind": "added"
-          }
-        ]
-      },
-      {
         "timestamp": 1636070400,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 20, "none": 25 },
-        "lines": { "total": 11261, "covered": 7772 },
+        "units": { "identical": 45, "differs": 16, "none": 22 },
+        "lines": { "total": 9731, "covered": 7003 },
         "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
       },
       {
         "timestamp": 1652227200,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 20, "none": 25 },
-        "lines": { "total": 11261, "covered": 7772 },
+        "units": { "identical": 45, "differs": 16, "none": 22 },
+        "lines": { "total": 9731, "covered": 7003 },
         "reports": ["solidified-aztec-element-bridge-2022-05-11"]
       },
       {
         "timestamp": 1652832000,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 20, "none": 25 },
-        "lines": { "total": 11261, "covered": 7772 },
+        "units": { "identical": 45, "differs": 16, "none": 22 },
+        "lines": { "total": 9731, "covered": 7003 },
         "reports": ["solidified-aztec-aave-bridge-2022-05-18"]
       },
       {
         "timestamp": 1672963200,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 20, "none": 25 },
-        "lines": { "total": 11261, "covered": 7772 },
+        "units": { "identical": 45, "differs": 16, "none": 22 },
+        "lines": { "total": 9731, "covered": 7003 },
         "reports": ["trailofbits-governance-token-bridge-2023-06"]
       },
       {
         "timestamp": 1679961600,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 20, "none": 25 },
-        "lines": { "total": 11261, "covered": 7772 },
+        "units": { "identical": 45, "differs": 16, "none": 22 },
+        "lines": { "total": 9731, "covered": 7003 },
         "reports": ["ackee-safe-1-4-0"]
       },
       {
         "timestamp": 1686700800,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 21, "none": 24 },
-        "lines": { "total": 11261, "covered": 7930 },
+        "units": { "identical": 45, "differs": 17, "none": 21 },
+        "lines": { "total": 9731, "covered": 7161 },
         "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
       },
       {
         "timestamp": 1696291200,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 23, "none": 22 },
-        "lines": { "total": 11261, "covered": 8202 },
+        "units": { "identical": 45, "differs": 17, "none": 19 },
+        "lines": { "total": 9452, "covered": 7161 },
         "reports": ["contracts__audits__2023-10-v5.0"]
       },
       {
         "timestamp": 1732492800,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 26, "none": 19 },
-        "lines": { "total": 11261, "covered": 8272 },
+        "units": { "identical": 45, "differs": 20, "none": 16 },
+        "lines": { "total": 9452, "covered": 7231 },
         "reports": ["code4rena-ronin-katana-v3-2024-10"]
       },
       {
         "timestamp": 1743465600,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 26, "none": 19 },
-        "lines": { "total": 11261, "covered": 8272 },
+        "units": { "identical": 45, "differs": 20, "none": 16 },
+        "lines": { "total": 9452, "covered": 7231 },
         "reports": ["sigmaprime-yield-exposed-token-2025-04"]
       },
       {
         "timestamp": 1746057600,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 26, "none": 19 },
-        "lines": { "total": 11261, "covered": 8272 },
+        "units": { "identical": 45, "differs": 20, "none": 16 },
+        "lines": { "total": 9452, "covered": 7231 },
         "reports": ["certora-vault-bridge-2025-05"]
       },
       {
         "timestamp": 1748390400,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 26, "none": 19 },
-        "lines": { "total": 11261, "covered": 8272 },
+        "units": { "identical": 45, "differs": 20, "none": 16 },
+        "lines": { "total": 9452, "covered": 7231 },
         "reports": ["ackee-safe-1-5-0"]
       },
       {
         "timestamp": 1748736000,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 26, "none": 19 },
-        "lines": { "total": 11261, "covered": 8272 },
+        "units": { "identical": 45, "differs": 20, "none": 16 },
+        "lines": { "total": 9452, "covered": 7231 },
         "reports": ["certora-vault-bridge-fv-2025-06"]
       },
       {
         "timestamp": 1761955200,
-        "contracts": 7,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 26, "none": 19 },
-        "lines": { "total": 11261, "covered": 8272 },
+        "units": { "identical": 45, "differs": 20, "none": 16 },
+        "lines": { "total": 9452, "covered": 7231 },
         "reports": ["certora-vault-bridge-v1-1-2025-11"]
       },
       {
-        "timestamp": 1771859579,
-        "contracts": 8,
-        "withoutSource": 0,
-        "units": { "identical": 50, "differs": 26, "none": 22 },
-        "lines": { "total": 11595, "covered": 8272 },
-        "changes": [
-          {
-            "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
-            "name": "V3OpenFeeAdapter",
-            "kind": "added"
-          }
-        ]
-      },
-      {
         "timestamp": 1772150400,
-        "contracts": 8,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 26, "none": 22 },
-        "lines": { "total": 11595, "covered": 8272 },
+        "units": { "identical": 45, "differs": 20, "none": 16 },
+        "lines": { "total": 9452, "covered": 7231 },
         "reports": ["contracts__audits__2026-02-v5.6"]
       },
       {
         "timestamp": 1786913047,
-        "contracts": 8,
+        "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 50, "differs": 26, "none": 22 },
-        "lines": { "total": 11595, "covered": 8272 }
+        "units": { "identical": 45, "differs": 20, "none": 16 },
+        "lines": { "total": 9452, "covered": 7231 }
       }
     ],
     "undatedReports": []

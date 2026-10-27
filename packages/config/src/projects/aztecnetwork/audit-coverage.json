@@ -6130,8 +6130,8 @@
         "timestamp": 1790298635,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 42, "differs": 7, "none": 7 },
-        "lines": { "total": 4095, "covered": 2794 },
+        "units": { "identical": 42, "differs": 3, "none": 7 },
+        "lines": { "total": 3188, "covered": 1912 },
         "reports": [
           "ackee-safe-1-4-0",
           "ackee-safe-1-5-0",
@@ -6150,8 +6150,8 @@
         "timestamp": 1791316739,
         "contracts": 2,
         "withoutSource": 0,
-        "units": { "identical": 84, "differs": 14, "none": 14 },
-        "lines": { "total": 8191, "covered": 5588 },
+        "units": { "identical": 84, "differs": 6, "none": 14 },
+        "lines": { "total": 6377, "covered": 3824 },
         "changes": [
           {
             "address": "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
@@ -6164,8 +6164,8 @@
         "timestamp": 1792144307,
         "contracts": 2,
         "withoutSource": 0,
-        "units": { "identical": 84, "differs": 14, "none": 14 },
-        "lines": { "total": 8191, "covered": 5588 }
+        "units": { "identical": 84, "differs": 6, "none": 14 },
+        "lines": { "total": 6377, "covered": 3824 }
       }
     ],
     "undatedReports": []

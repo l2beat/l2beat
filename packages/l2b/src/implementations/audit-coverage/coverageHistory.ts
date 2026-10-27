@@ -230,7 +230,7 @@ export async function coverageHistoryOfProject(
       }
       members.set(member.address, { member, sources, units })
     }
-    return { point, members, numbers: summarize(members) }
+    return { point, members, numbers: summarize(members, index) }
   }
 
   const present = (point: HistoryPoint, state: PerimeterState): Evaluated => {
@@ -251,7 +251,7 @@ export async function coverageHistoryOfProject(
       )
       members.set(member.address, { member, sources, units })
     }
-    return { point, members, numbers: summarize(members) }
+    return { point, members, numbers: summarize(members, index) }
   }
 
   const retained: AuditCoverageHistoryPoint[] = []
@@ -317,7 +317,10 @@ export async function coverageHistoryOfProject(
   }
 }
 
-function summarize(members: Map<ChainSpecificAddress, MemberCode>): Numbers {
+function summarize(
+  members: Map<ChainSpecificAddress, MemberCode>,
+  index: AuditIndex,
+): Numbers {
   const numbers: Numbers = {
     contracts: members.size,
     withoutSource: 0,
@@ -329,13 +332,30 @@ function summarize(members: Map<ChainSpecificAddress, MemberCode>): Numbers {
       numbers.withoutSource++
     }
     for (const unit of units) {
-      if (unit.kind === 'interface') continue
+      if (!isCounted(unit, index)) continue
       numbers.units[unit.status]++
       numbers.lines.total += unit.lines
       numbers.lines.covered += coveredLines(unit)
     }
   }
   return numbers
+}
+
+/**
+ * The dashboard's rule, see notCountedReason in the frontend's
+ * coverageModel.ts: interfaces, and code that differs from a version audited
+ * in library collections only, are listed but not counted.
+ */
+export function isCounted(unit: Unit, index: AuditIndex): boolean {
+  if (unit.kind === 'interface') return false
+  if (unit.status !== 'differs') return true
+  const collections = (unit.reports ?? []).flatMap(
+    (id) => index.reports[id]?.collections ?? [],
+  )
+  const libraryOnly =
+    collections.length > 0 &&
+    collections.every((id) => index.collections[id]?.kind === 'library')
+  return !libraryOnly
 }
 
 /** The dashboard's rule, see coverageModel.ts in the frontend. */

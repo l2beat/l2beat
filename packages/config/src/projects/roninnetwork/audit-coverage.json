@@ -6221,8 +6221,8 @@
         "timestamp": 1778598960,
         "contracts": 13,
         "withoutSource": 0,
-        "units": { "identical": 179, "differs": 51, "none": 18 },
-        "lines": { "total": 32901, "covered": 25524 },
+        "units": { "identical": 179, "differs": 24, "none": 18 },
+        "lines": { "total": 29075, "covered": 22127 },
         "reports": [
           "ackee-safe-1-4-0",
           "ackee-safe-1-5-0",
@@ -6281,32 +6281,32 @@
         "timestamp": 1779494400,
         "contracts": 13,
         "withoutSource": 0,
-        "units": { "identical": 182, "differs": 48, "none": 18 },
-        "lines": { "total": 32901, "covered": 25589 },
+        "units": { "identical": 182, "differs": 21, "none": 18 },
+        "lines": { "total": 29075, "covered": 22192 },
         "reports": ["cantina-u19-2026-05"]
       },
       {
         "timestamp": 1780876800,
         "contracts": 13,
         "withoutSource": 0,
-        "units": { "identical": 182, "differs": 48, "none": 18 },
-        "lines": { "total": 32901, "covered": 25592 },
+        "units": { "identical": 182, "differs": 21, "none": 18 },
+        "lines": { "total": 29075, "covered": 22195 },
         "reports": ["cantina-opcmv2-2026-06"]
       },
       {
         "timestamp": 1781740800,
         "contracts": 13,
         "withoutSource": 0,
-        "units": { "identical": 184, "differs": 46, "none": 18 },
-        "lines": { "total": 32901, "covered": 25638 },
+        "units": { "identical": 184, "differs": 19, "none": 18 },
+        "lines": { "total": 29075, "covered": 22241 },
         "reports": ["cantina-interop-l2-rereview-2026-06"]
       },
       {
         "timestamp": 1782901175,
         "contracts": 24,
         "withoutSource": 0,
-        "units": { "identical": 234, "differs": 56, "none": 48 },
-        "lines": { "total": 44045, "covered": 33882 },
+        "units": { "identical": 234, "differs": 24, "none": 48 },
+        "lines": { "total": 40154, "covered": 30435 },
         "changes": [
           {
             "address": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
@@ -6369,16 +6369,16 @@
         "timestamp": 1787184000,
         "contracts": 24,
         "withoutSource": 0,
-        "units": { "identical": 234, "differs": 56, "none": 48 },
-        "lines": { "total": 44045, "covered": 33883 },
+        "units": { "identical": 234, "differs": 24, "none": 48 },
+        "lines": { "total": 40154, "covered": 30436 },
         "reports": ["cantina-upgrade20-2026-08"]
       },
       {
         "timestamp": 1788777107,
         "contracts": 13,
         "withoutSource": 0,
-        "units": { "identical": 184, "differs": 46, "none": 18 },
-        "lines": { "total": 32901, "covered": 25639 },
+        "units": { "identical": 184, "differs": 19, "none": 18 },
+        "lines": { "total": 29075, "covered": 22242 },
         "changes": [
           {
             "address": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
@@ -6441,8 +6441,8 @@
         "timestamp": 1789973519,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 174, "differs": 63, "none": 15 },
-        "lines": { "total": 33372, "covered": 27118 },
+        "units": { "identical": 174, "differs": 34, "none": 15 },
+        "lines": { "total": 29293, "covered": 23504 },
         "changes": [
           {
             "address": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
@@ -6485,8 +6485,8 @@
         "timestamp": 1791965839,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 174, "differs": 63, "none": 15 },
-        "lines": { "total": 33372, "covered": 27118 }
+        "units": { "identical": 174, "differs": 34, "none": 15 },
+        "lines": { "total": 29293, "covered": 23504 }
       }
     ],
     "undatedReports": []

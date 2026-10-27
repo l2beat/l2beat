@@ -61,7 +61,7 @@ type AuditCoverage = {
       timestamp: number
       contracts: number // members of the perimeter
       withoutSource: number // members whose every code address lacks verified Solidity
-      units: { identical: number; differs: number; none: number } // interfaces excluded
+      units: { identical: number; differs: number; none: number } // interfaces and differing vendor code excluded, as the dashboard counts them
       lines: { total: number; covered: number } // as the dashboard counts them
       reports?: ReportId[] // first counted here and referenced by a unit of this state
       changes?: { address: ChainSpecificAddress; name: string; kind: 'added' | 'removed' | 'upgraded' }[]
