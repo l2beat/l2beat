@@ -63,6 +63,9 @@ export function useSearchResults(project: string): SearchResults {
   if (status !== 'success') {
     return { rows: [], items: [], needles, status, isFetching: code.isFetching }
   }
+  if (scope === 'code' && code.isStale) {
+    return { rows, items: [], needles, status, isFetching: code.isFetching }
+  }
   return { rows, items, needles, status, isFetching: code.isFetching }
 }
 
@@ -166,12 +169,16 @@ function useCodeSearch(project: string) {
   const selectedAddress = usePanelStore((s) => s.selected[0])
   const needle = useDebounce(text, CODE_SEARCH_DEBOUNCE_MS)
   const address = codeInSelected ? selectedAddress : undefined
-  const enabled = scope === 'code' && needle.length > 0
+  const enabled =
+    scope === 'code' &&
+    needle.length > 0 &&
+    (!codeInSelected || selectedAddress !== undefined)
 
   const query = useQuery({
     queryKey: ['search', 'code', project, address, needle],
     queryFn: async () => ({
       needle,
+      address,
       response: await searchCode(project, needle, address),
     }),
     enabled,
@@ -188,6 +195,7 @@ function useCodeSearch(project: string) {
   return {
     groups,
     needle: query.data?.needle ?? needle,
+    isStale: query.data?.needle !== text || query.data.address !== address,
     isError: query.isError,
     isFetching: enabled && query.isFetching,
   }

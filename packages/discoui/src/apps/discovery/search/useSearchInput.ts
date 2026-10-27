@@ -25,14 +25,21 @@ export function useSearchInput(
 
   const afterCodePrefix = useRef(false)
   const queryKey = `${scope}:${codeInSelected}:${text}`
-  const [highlight, setHighlight] = useState({ queryKey, index: 0 })
-  const highlightIndex =
+  const [highlight, setHighlight] = useState<{
+    queryKey: string
+    itemKey: string | undefined
+  }>({ queryKey, itemKey: undefined })
+  const highlightedIndex =
     highlight.queryKey === queryKey
-      ? Math.min(highlight.index, items.length - 1)
-      : 0
+      ? items.findIndex((item) => item.key === highlight.itemKey)
+      : -1
+  const highlightIndex = Math.min(
+    Math.max(highlightedIndex, 0),
+    items.length - 1,
+  )
 
   function highlightAt(index: number) {
-    setHighlight({ queryKey, index })
+    setHighlight({ queryKey, itemKey: items[index]?.key })
   }
 
   function switchScope(next: SearchScope) {
@@ -44,7 +51,7 @@ export function useSearchInput(
   function onChange(value: string) {
     let rest = value
     let enteredCode = afterCodePrefix.current
-    if (scope === 'all' && text === '') {
+    if (scope === 'all') {
       const prefixScope = scopeForPrefix(SEARCH_SCOPES, rest.slice(0, 1))
       if (prefixScope !== undefined) {
         rest = rest.slice(1)
