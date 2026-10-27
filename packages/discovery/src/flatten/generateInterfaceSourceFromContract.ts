@@ -5,7 +5,7 @@ import type { DeclarationType, TopLevelDeclaration } from './ParsedFilesManager'
 export function generateInterfaceSourceFromContract(
   contract: TopLevelDeclaration,
   typeMap: Map<string, DeclarationType>,
-  structMap: Map<string, AST.StructDefinition>,
+  resolveStruct: (namePath: string) => AST.StructDefinition | undefined,
   keep?: Set<string>,
 ): string {
   assert(
@@ -104,12 +104,7 @@ export function generateInterfaceSourceFromContract(
               formatPublicVariableGetter(
                 variable,
                 typeMap,
-                findStruct(
-                  structMap,
-                  typeMap,
-                  contract.name,
-                  variable.typeName,
-                ),
+                findGetterStruct(variable.typeName, resolveStruct),
               ),
           ])
         }
@@ -289,11 +284,9 @@ function formatStructGetterReturns(
   return returns.join(', ')
 }
 
-function findStruct(
-  structMap: Map<string, AST.StructDefinition>,
-  typeMap: Map<string, DeclarationType>,
-  contractName: string,
+function findGetterStruct(
   typeName: AST.TypeName | null,
+  resolveStruct: (namePath: string) => AST.StructDefinition | undefined,
 ): AST.StructDefinition | undefined {
   assert(typeName !== null, 'Variable must have a type')
   let leaf = typeName
@@ -301,9 +294,7 @@ function findStruct(
     leaf = leaf.type === 'Mapping' ? leaf.valueType : leaf.baseTypeName
   }
   if (leaf.type !== 'UserDefinedTypeName') return undefined
-  const nested = `${contractName}.${leaf.namePath}`
-  const name = typeMap.has(nested) ? nested : leaf.namePath
-  return typeMap.get(name) === 'struct' ? structMap.get(name) : undefined
+  return resolveStruct(leaf.namePath)
 }
 
 function unwindGetterType(
