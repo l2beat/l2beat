@@ -983,6 +983,48 @@ describe('flatten', () => {
     )
   })
 
+  it('contracts whose code is read with type(C) are not turned into interfaces', () => {
+    const file = sol(
+      'Root.sol',
+      `
+      contract Created {
+          function f() external {}
+      }
+
+      contract Run {
+          function g() external {}
+      }
+
+      contract R1 {
+          function code() public pure returns (bytes memory, bytes memory) {
+              return (type(Created).creationCode, type(Run).runtimeCode);
+          }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
+      includeAll: true,
+    })
+    expect(flattened).toEqual(
+      dedent(`
+      contract Created {
+          function f() external {}
+      }
+
+      contract Run {
+          function g() external {}
+      }
+
+      contract R1 {
+          function code() public pure returns (bytes memory, bytes memory) {
+              return (type(Created).creationCode, type(Run).runtimeCode);
+          }
+      }
+    `),
+    )
+  })
+
   it('regression - drops used things when turned into an interface', () => {
     const file = sol(
       'Root.sol',

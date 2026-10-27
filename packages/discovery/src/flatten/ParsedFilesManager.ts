@@ -348,6 +348,13 @@ export class ParsedFilesManager {
         ) {
           implementationReferences.push(...i)
         }
+        if (isContractCodeAccess(n)) {
+          const typeCall = (n as AST.MemberAccess)
+            .expression as AST.FunctionCall
+          implementationReferences.push(
+            ...typeCall.arguments.flatMap((a) => getASTIdentifiers(a)),
+          )
+        }
       })
       allIdentifiers.push(...ids)
     }
@@ -520,6 +527,18 @@ export class ParsedFilesManager {
 
     return path
   }
+}
+
+// type(C).creationCode and type(C).runtimeCode embed C's bytecode
+function isContractCodeAccess(n: AST.BaseASTNode): boolean {
+  if (n.type !== 'MemberAccess') return false
+  const { expression, memberName } = n as AST.MemberAccess
+  if (memberName !== 'creationCode' && memberName !== 'runtimeCode') {
+    return false
+  }
+  if (expression.type !== 'FunctionCall') return false
+  const callee = (expression as AST.FunctionCall).expression
+  return callee.type === 'Identifier' && callee.name === 'type'
 }
 
 function sha1(s: string): string {
