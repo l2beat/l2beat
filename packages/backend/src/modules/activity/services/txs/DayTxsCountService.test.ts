@@ -161,6 +161,72 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
       latestTimestamp: 7 * UnixTime.DAY,
     })
   })
+
+  it('returns the hours, and the busiest hour of each day, when the provider has them', async () => {
+    const day = 5 * UnixTime.DAY
+    const getHourlyCounts = mockFn().resolvesTo([
+      { timestamp: day, count: 2, uopsCount: 50 },
+      { timestamp: day + UnixTime.HOUR, count: 7, uopsCount: 40 },
+      { timestamp: day + UnixTime.DAY, count: 1, uopsCount: 10 },
+    ])
+    const provider = mockObject<DayProvider>({
+      getDailyTxsCount: mockFn().resolvesTo({
+        [day]: 9,
+        [day + UnixTime.DAY]: 1,
+      }),
+      getDailyUopsCount: mockFn().resolvesTo({
+        [day]: 90,
+        [day + UnixTime.DAY]: 10,
+      }),
+      getHourlyCounts,
+    })
+
+    const txsCountProvider = new DayTxsCountService({
+      provider,
+      projectId: ProjectId('a'),
+    })
+
+    const result = await txsCountProvider.getTxsCount(5, 7)
+
+    expect(result).toEqual({
+      records: [
+        {
+          ...activityRecord('a', day, 9, 90, day, day + UnixTime.DAY - 1),
+          peakHourCount: 7,
+          peakHourUopsCount: 50,
+        },
+        {
+          ...activityRecord(
+            'a',
+            day + UnixTime.DAY,
+            1,
+            10,
+            day + UnixTime.DAY,
+            day + 2 * UnixTime.DAY - 1,
+          ),
+          peakHourCount: 1,
+          peakHourUopsCount: 10,
+        },
+      ],
+      hours: [
+        { projectId: ProjectId('a'), timestamp: day, count: 2, uopsCount: 50 },
+        {
+          projectId: ProjectId('a'),
+          timestamp: day + UnixTime.HOUR,
+          count: 7,
+          uopsCount: 40,
+        },
+        {
+          projectId: ProjectId('a'),
+          timestamp: day + UnixTime.DAY,
+          count: 1,
+          uopsCount: 10,
+        },
+      ],
+      latestTimestamp: day + UnixTime.DAY,
+    })
+    expect(getHourlyCounts).toHaveBeenOnlyCalledWith(5, 7)
+  })
 })
 
 function mockProvider(data: {
@@ -170,6 +236,7 @@ function mockProvider(data: {
   return mockObject<DayProvider>({
     getDailyTxsCount: mockFn().resolvesTo(data.txs),
     getDailyUopsCount: mockFn().resolvesTo(data.uops),
+    getHourlyCounts: undefined,
   })
 }
 

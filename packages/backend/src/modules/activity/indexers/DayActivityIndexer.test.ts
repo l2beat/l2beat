@@ -92,15 +92,78 @@ describe(DayActivityIndexer.name, () => {
       )
       expect(newSafeHeight).toEqual(10)
     })
+
+    it('replaces the hours of the days it syncs again, keeping two weeks', async () => {
+      const calls: string[] = []
+      const hourlyActivityRepository = mockObject<Database['hourlyActivity']>({
+        deleteByProjectIdFrom: mockFn(async () => {
+          calls.push('deleteFrom')
+          return 0
+        }),
+        addMany: mockFn(async () => {
+          calls.push('add')
+          return []
+        }),
+        deleteByProjectIdUntil: mockFn().resolvesTo(0),
+      })
+      const hours = [15, 16, 29].map((day) => ({
+        projectId: ProjectId('a'),
+        timestamp: day * UnixTime.DAY,
+        count: day,
+        uopsCount: null,
+      }))
+
+      const indexer = createIndexer({
+        txsCountService: mockObject<TxsCountService>({
+          getTxsCount: mockFn().resolvesTo({
+            records: [],
+            hours,
+            latestTimestamp: 29 * UnixTime.DAY,
+          }),
+        }),
+        db: mockDatabase({
+          activity: mockObject<Database['activity']>({
+            upsertMany: mockFn().resolvesTo(0),
+          }),
+          hourlyActivity: hourlyActivityRepository,
+          syncMetadata: mockObject<Database['syncMetadata']>({
+            updateSyncedUntil: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        batchSize: 100,
+        uncertaintyBuffer: 5,
+      })
+
+      await indexer.update(21, 30)
+
+      expect(
+        hourlyActivityRepository.deleteByProjectIdFrom,
+      ).toHaveBeenOnlyCalledWith(ProjectId('a'), 15 * UnixTime.DAY)
+      expect(hourlyActivityRepository.addMany).toHaveBeenOnlyCalledWith(
+        hours.slice(1),
+      )
+      expect(
+        hourlyActivityRepository.deleteByProjectIdUntil,
+      ).toHaveBeenOnlyCalledWith(ProjectId('a'), 16 * UnixTime.DAY)
+      expect(calls).toEqual(['deleteFrom', 'add'])
+    })
   })
 
   describe(DayActivityIndexer.prototype.invalidate.name, () => {
-    it('returns targetHeight', async () => {
-      const indexer = createIndexer()
+    it('deletes the hours past targetHeight', async () => {
+      const hourlyActivityRepository = mockObject<Database['hourlyActivity']>({
+        deleteByProjectIdFrom: mockFn().resolvesTo(0),
+      })
+      const indexer = createIndexer({
+        db: mockDatabase({ hourlyActivity: hourlyActivityRepository }),
+      })
 
-      const targetHeight = 0
+      const targetHeight = 10
       const newSafeHeight = await indexer.invalidate(targetHeight)
 
+      expect(
+        hourlyActivityRepository.deleteByProjectIdFrom,
+      ).toHaveBeenOnlyCalledWith(ProjectId('a'), 10 * UnixTime.DAY)
       expect(newSafeHeight).toEqual(targetHeight)
     })
   })

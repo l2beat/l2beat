@@ -1,4 +1,9 @@
-import type { ActivityRecord, Database } from '@l2beat/database'
+import type {
+  ActivityPeaks,
+  ActivityRecord,
+  Database,
+  HourlyActivityRecord,
+} from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
 import type { ActivityBlock } from '../services/txs/types'
@@ -25,12 +30,18 @@ export interface ActivityBlockSource {
   getBlocks(from: number, to: number): Promise<ActivityBlock[]>
 }
 
+/** Sources with hours also give the day's busiest hour */
+export type DayActivityRecord = ActivityRecord &
+  Partial<Pick<ActivityPeaks, 'peakHourCount' | 'peakHourUopsCount'>>
+
 export interface TxsCountService {
   getTxsCount(
     from: number,
     to: number,
   ): Promise<{
-    records: ActivityRecord[]
+    records: DayActivityRecord[]
+    /** Only from sources with hours */
+    hours?: HourlyActivityRecord[]
     latestTimestamp: number
   }>
 }

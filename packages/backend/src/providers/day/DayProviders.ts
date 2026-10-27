@@ -3,7 +3,7 @@ import type {
   StarkexClient,
   VoyagerClient,
 } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../config/chain/ChainApi'
 import { LighterDayProvider } from './LighterDayProvider'
 import { StarkexDayProvider } from './StarkexDayProvider'
@@ -18,6 +18,14 @@ interface DayProvidersClients {
 export interface DayProvider {
   getDailyTxsCount(from: number, to: number): Promise<Record<number, number>>
   getDailyUopsCount(from: number, to: number): Promise<Record<number, number>>
+  /** Only for sources with hours. Those of days `from` to `to` (exclusive) */
+  getHourlyCounts?(from: number, to: number): Promise<HourlyCount[]>
+}
+
+export interface HourlyCount {
+  timestamp: UnixTime
+  count: number
+  uopsCount: number
 }
 
 export class DayProviders {

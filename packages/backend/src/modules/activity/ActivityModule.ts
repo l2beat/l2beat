@@ -172,6 +172,9 @@ export function initActivityModule({
             batchSize:
               project.activityConfig.batchSize ?? Number.POSITIVE_INFINITY,
             uncertaintyBuffer: project.activityConfig.resyncLastDays ?? 0,
+            // A new hash syncs again from the start. Sources with hours did so
+            // once, to fill in their last two weeks of hours and their peaks
+            configHash: provider.getHourlyCounts ? 'hourly' : undefined,
           },
           logger,
         )

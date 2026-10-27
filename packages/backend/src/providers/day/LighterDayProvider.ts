@@ -1,6 +1,6 @@
 import type { LighterClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { DayProvider } from './DayProviders'
+import type { DayProvider, HourlyCount } from './DayProviders'
 
 export class LighterDayProvider implements DayProvider {
   constructor(private lighterClient: LighterClient) {}
@@ -43,5 +43,14 @@ export class LighterDayProvider implements DayProvider {
     }
 
     return Object.fromEntries(dailyData)
+  }
+
+  async getHourlyCounts(from: number, to: number): Promise<HourlyCount[]> {
+    const hourlyStats = await this.lighterClient.getHourlyStats()
+    return hourlyStats.filter(
+      (stat) =>
+        stat.timestamp >= from * UnixTime.DAY &&
+        stat.timestamp < to * UnixTime.DAY,
+    )
   }
 }
