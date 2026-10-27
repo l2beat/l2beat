@@ -24,6 +24,7 @@ export function useDiscoveryCommand() {
     const isOk = await discover(project)
 
     queryClient.invalidateQueries({ queryKey: ['projects', project] })
+    queryClient.invalidateQueries({ queryKey: ['projects'], exact: true })
     queryClient.invalidateQueries({ queryKey: ['config-sync-status', project] })
     queryClient.invalidateQueries({ queryKey: ['address-usage'] })
 
