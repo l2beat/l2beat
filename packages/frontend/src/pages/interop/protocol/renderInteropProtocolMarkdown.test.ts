@@ -80,7 +80,7 @@ describe(renderInteropProtocolMarkdown.name, () => {
     expect(summary).toInclude('(min under $0.01, average $1.25 K')
   })
 
-  it('lists the project links', () => {
+  it('lists the project links and the contracts explorer', () => {
     const markdown = renderInteropProtocolMarkdown({
       ...PAGE,
       projectEntry: {
@@ -88,11 +88,14 @@ describe(renderInteropProtocolMarkdown.name, () => {
         header: {
           ...PAGE.projectEntry.header,
           links: [{ name: 'Website', links: ['https://across.to'] }],
+          discoUiHref: 'https://disco.l2beat.com/ui/p/across',
         },
       },
     })
 
-    expect(markdown).toInclude('### Links\n\n- Website: https://across.to')
+    expect(markdown).toInclude(
+      '### Links\n\n- Website: https://across.to\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/across',
+    )
   })
 
   it('reports the average transfer time the way the HTML cell does', () => {
