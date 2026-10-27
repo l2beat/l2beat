@@ -14,8 +14,10 @@ import type { ApiProjectEntry } from '../../api/types'
 import { ErrorState } from '../../components/ErrorState'
 import { Title } from '../../components/Title'
 import { IS_READONLY } from '../../config/readonly'
+import { IconPlus } from '../../icons/IconPlus'
 import { IconStarEmpty } from '../../icons/IconStarEmpty'
 import { IconStarFull } from '../../icons/IconStarFull'
+import { cn } from '../../utils/cn'
 
 export function HomePage() {
   const [search, setSearch] = useState('')
@@ -30,29 +32,30 @@ export function HomePage() {
   return (
     <>
       <Title title="DiscoUI - Home" />
-      <div className="mx-auto max-w-(--breakpoint-md) p-4">
-        <h1 className="my-6 flex justify-center">
-          <img
-            className="w-[200px] md:w-[280px]"
-            src="/logo.svg"
-            alt="DSCVRY"
-          />
-        </h1>
-        <div className="mb-6 flex items-center justify-center space-x-2">
-          <input
-            ref={inputRef}
-            className="w-full max-w-[464px] border border-coffee-600 bg-coffee-800 px-4 py-2 placeholder:text-coffee-400"
-            placeholder="Filter projects"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          {!IS_READONLY && (
-            <Link to="/ui/new">
-              <button className="items-center justify-center border border-coffee-600 px-4 py-2 text-coffee-400 transition-colors duration-100 hover:cursor-pointer hover:bg-coffee-600">
-                +
-              </button>
-            </Link>
-          )}
+      <div className="mx-auto max-w-[1040px] px-6 py-6">
+        <div className="mb-5 flex items-center gap-6">
+          <h1 className="shrink-0">
+            <img className="w-[120px]" src="/logo.svg" alt="DSCVRY" />
+          </h1>
+          <div className="flex min-w-0 flex-1 items-center gap-2">
+            <input
+              ref={inputRef}
+              className="h-9 min-w-0 flex-1 border border-coffee-600 bg-coffee-800 px-3 text-sm placeholder:text-coffee-400"
+              placeholder="Filter projects"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {!IS_READONLY && (
+              <Link
+                to="/ui/new"
+                aria-label="New project"
+                title="New project"
+                className="flex size-9 shrink-0 items-center justify-center border border-coffee-600 text-coffee-300 transition-colors duration-100 hover:bg-coffee-700 hover:text-coffee-100"
+              >
+                <IconPlus />
+              </Link>
+            )}
+          </div>
         </div>
         <AllProjects search={deferredSearch} />
       </div>
@@ -314,18 +317,26 @@ function ProjectList(props: {
   favorites?: boolean
 }) {
   return (
-    <ol className="mb-8 grid grid-cols-2 gap-x-1 gap-y-2 md:grid-cols-4">
+    <ol className="mb-6 grid grid-cols-2 gap-x-4 gap-y-0 md:grid-cols-4">
       {props.entries.map((entry, i) => {
         const isSelected = i === props.selectedIndex
 
         return (
           <li
             ref={props.itemRefs[i]}
-            className={`group flex items-center gap-2 p-1 ${isSelected ? 'rounded-sm bg-coffee-700' : ''}`}
+            className={cn(
+              'group flex min-h-8 min-w-0 items-center gap-2 rounded-sm px-2 text-[13px]',
+              isSelected &&
+                'bg-autumn-300/15 text-coffee-100 shadow-[inset_2px_0_0_#BAD80A]',
+              !isSelected && 'hover:bg-coffee-800',
+            )}
             key={i}
           >
             <button
-              className="opacity-25 md:opacity-0 md:group-hover:opacity-100"
+              className="shrink-0 opacity-25 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
+              aria-label={
+                props.favorites ? 'Remove from favorites' : 'Add to favorites'
+              }
               onClick={() => props.toggleFavorite(entry.name)}
             >
               {props.favorites ? (
@@ -334,8 +345,11 @@ function ProjectList(props: {
                 <IconStarEmpty />
               )}
             </button>
-            <Link to={`/ui/p/${entry.name}`}>
-              <span className="block">{entry.name}</span>
+            <Link
+              to={`/ui/p/${entry.name}`}
+              className="min-w-0 flex-1 break-words py-1"
+            >
+              {entry.name}
             </Link>
           </li>
         )
@@ -361,7 +375,7 @@ function WithHeader({
 }) {
   return (
     <>
-      <p className="mb-2 border-coffee-600 border-b pb-2 pl-6 font-semibold text-sm uppercase">
+      <p className="mb-1 border-coffee-700 border-b px-2 pb-1.5 font-semibold text-coffee-300 text-xs uppercase tracking-wide">
         {title}
       </p>
       {children}
@@ -371,7 +385,7 @@ function WithHeader({
 
 function ProjectListSkeleton(props: { amount: number }) {
   return (
-    <ol className="mb-8 grid grid-cols-2 gap-x-1 gap-y-4 md:grid-cols-4">
+    <ol className="mb-6 grid grid-cols-2 gap-x-4 gap-y-4 px-2 md:grid-cols-4">
       {Array.from({ length: props.amount }).map((_, i) => {
         const projectNameWidth = randomWidth(40, 100)
         const chainsWidth = randomWidth(20, 80)

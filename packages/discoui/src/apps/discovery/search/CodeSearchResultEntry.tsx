@@ -30,13 +30,13 @@ export function CodeSearchResultEntry({
       {entries.map((result) => (
         <li
           key={result.address}
-          className="flex flex-col border-coffee-700 border-b p-2 text-sm"
+          className="flex flex-col border-coffee-800 border-b px-3 py-2 text-[13px]"
         >
           <div className="flex items-center gap-2">
-            <span className="max-w-100 truncate font-medium">
+            <span className="min-w-0 truncate font-medium">
               {result.name ?? 'EOA'}
             </span>
-            <span className="font-mono text-coffee-400 text-xs">
+            <span className="shrink-0 font-mono text-coffee-300 text-xs">
               {toShortenedAddress(result.address)}
             </span>
           </div>

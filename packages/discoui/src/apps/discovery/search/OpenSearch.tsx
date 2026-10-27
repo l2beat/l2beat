@@ -144,27 +144,25 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   }, [searchTermDebounced])
 
   return (
-    <div>
-      <div className="pt-3">
-        <div className="flex w-full items-center justify-center gap-2 border-coffee-400 border-b px-3 pb-3">
-          <IconSearch />
-          <Input
-            ref={inputRef}
-            type="text"
-            size="ghost"
-            variant="ghost"
-            placeholder="Search by name or address (or in code with % prefix)"
-            autoFocus
-            value={searchTerm}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-          />
-        </div>
+    <div className="flex h-full flex-col">
+      <div className="flex h-11 shrink-0 items-center gap-2 border-coffee-600 border-b bg-coffee-800 px-3">
+        <IconSearch className="shrink-0 text-coffee-300" />
+        <Input
+          ref={inputRef}
+          type="text"
+          size="ghost"
+          variant="ghost"
+          placeholder="Search by name or address (or in code with % prefix)"
+          autoFocus
+          value={searchTerm}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+        />
       </div>
 
       <div
         ref={resultsRef}
-        className="h-[350px] min-w-full overflow-y-auto text-wrap break-all"
+        className="min-h-0 min-w-full flex-1 overflow-y-auto overscroll-contain text-wrap break-all"
       >
         {isPending ? (
           <div className="flex h-full w-full items-center justify-center">

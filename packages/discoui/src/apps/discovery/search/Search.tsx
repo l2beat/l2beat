@@ -29,7 +29,7 @@ export function Search() {
       <Dialog.Body
         nonModal
         noCloseButton
-        className="h-[400px] rounded-sm bg-coffee-800 p-0"
+        className="h-[400px] max-w-[600px] overflow-hidden rounded-md border-coffee-500 bg-coffee-900 p-0 shadow-2xl"
       >
         <Dialog.Title className="sr-only">Search</Dialog.Title>
         <OpenSearch inputRef={inputRef} project={project} select={select} />

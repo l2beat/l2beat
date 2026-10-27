@@ -113,8 +113,8 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
   return (
     <li className="group/field border-coffee-800 border-b text-sm last:border-b-0">
       <div className="sticky top-0 z-10 border-coffee-800 border-b bg-coffee-800">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-1 text-xs">
-          <div className="flex flex-wrap items-center gap-1 font-bold">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-3 py-1 text-xs">
+          <div className="flex flex-wrap items-center gap-1 font-semibold text-coffee-100">
             <span>{field.name}</span>
             {templateTags
               .filter((x) => x.isActive)
@@ -144,13 +144,13 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
           </div>
         </div>
         {description && (
-          <div className="whitespace-normal px-5 pb-1 font-serif text-coffee-200 italic">
+          <div className="whitespace-normal px-3 pb-1 text-[13px] text-coffee-300 leading-[18px]">
             {description}
           </div>
         )}
       </div>
       {sourcedPermissions.length > 0 && (
-        <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 whitespace-normal px-5 pb-1 text-xs">
+        <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 whitespace-normal px-3 pb-1 text-xs">
           {sourcedPermissions.map(({ permission, source }, i) => (
             <Fragment key={i}>
               <span className="flex items-center gap-1 whitespace-nowrap font-mono">
@@ -174,7 +174,7 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
           ))}
         </div>
       )}
-      <div className="overflow-x-auto bg-coffee-900 px-10 py-0.5 contain-paint">
+      <div className="overflow-x-auto bg-coffee-900 px-6 py-0.5 contain-paint">
         {field.name === '$pastUpgrades' ? (
           <PastUpgradesDisplay value={field.value} />
         ) : (
