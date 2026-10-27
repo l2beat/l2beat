@@ -35,7 +35,8 @@ export function DescriptionEditor(props: Props) {
       <TextArea
         value={interpolateDescription(description)}
         placeholder="Nothing to preview"
-        className="cursor-default resize-none border-coffee-700 bg-coffee-900 text-coffee-300 focus:border-coffee-700"
+        aria-label="Preview"
+        className="cursor-default resize-none border-coffee-700 bg-coffee-900 text-coffee-300"
         readOnly
       />
       <div className="flex w-full justify-end">
