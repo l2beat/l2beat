@@ -82,20 +82,19 @@ export class AgentSession<Context, Receipt extends { unavailable?: boolean }> {
       return { tabs }
     }
     const receipt = await new Promise<Receipt | undefined>((resolve) => {
-      let unavailable: Receipt | undefined
       let unavailableCount = 0
       const finish = (r: Receipt | undefined) => {
         clearTimeout(timeout)
         this.receiptWaiters.delete(id)
         resolve(r)
       }
-      const timeout = setTimeout(() => finish(unavailable), timeoutMs)
+      // A tab still silent may yet act, so a timeout confirms nothing.
+      const timeout = setTimeout(() => finish(undefined), timeoutMs)
       this.receiptWaiters.set(id, (r) => {
         if (r.unavailable !== true) {
           finish(r)
           return
         }
-        unavailable = r
         unavailableCount++
         if (unavailableCount === tabs) {
           finish(r)

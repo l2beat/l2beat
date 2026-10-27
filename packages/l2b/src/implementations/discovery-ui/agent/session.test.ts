@@ -22,6 +22,17 @@ describe(AgentSession.name, () => {
     expect(await request).toEqual({ tabs: 2, receipt: { applied: true } })
   })
 
+  it('confirms nothing when a tab stays silent', async () => {
+    const session = new AgentSession<unknown, Receipt>()
+    const tab = connectTab(session)
+    connectTab(session)
+
+    const request = session.request({ type: 'view' }, 10)
+    session.receive(tab.lastEventId(), { unavailable: true })
+
+    expect(await request).toEqual({ tabs: 2, receipt: undefined })
+  })
+
   it('answers unavailable once every tab said so', async () => {
     const session = new AgentSession<unknown, Receipt>()
     const tab = connectTab(session)
