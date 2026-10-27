@@ -7,7 +7,10 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiSummaryEntries'
 import { describeOssification } from '~/server/features/garden/describeOssification'
-import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
+import {
+  getAttestationsMeta,
+  getShownCropsProjectIds,
+} from '~/server/features/garden/getAttestationsMeta'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
@@ -77,11 +80,10 @@ export async function getGardenData(
     }),
     getAttestationsMeta(),
   ])
-  // An evaluation shows only once the attester has attested it.
-  const attested = new Set(attestation.current?.projectIds)
+  const shown = getShownCropsProjectIds(attestation)
   const now = UnixTime.now()
   const listed = reviewed
-    .filter((project) => attested.has(project.id))
+    .filter((project) => shown.has(project.id))
     .map((project) => ({
       project,
       verdict:
