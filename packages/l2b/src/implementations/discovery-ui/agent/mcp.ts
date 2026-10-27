@@ -1,6 +1,5 @@
 import { toJsonSchema, type Validator, v as z } from '@l2beat/validate'
 import type { Express, NextFunction, Request, Response } from 'express'
-import { localOnly } from './localOnly'
 import { AGENT_TOOLS, type AgentTool, type DiscoUi, runTool } from './tools'
 
 const TOOLS = AGENT_TOOLS
@@ -45,10 +44,6 @@ class RpcError extends Error {
 }
 
 export function attachMcpRouter(app: Express, ui: DiscoUi) {
-  // The tools change what the researcher sees, so a page elsewhere must not
-  // reach them, even one that rebinds its domain to this machine.
-  app.use(MCP_PATH, localOnly('DiscoUI tools answer only on localhost'))
-
   app.post(MCP_PATH, async (req, res) => {
     if (Array.isArray(req.body)) {
       res.status(400).json(rpcError(null, -32600, 'Batches are not supported'))
