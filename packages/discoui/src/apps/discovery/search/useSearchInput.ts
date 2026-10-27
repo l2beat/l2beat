@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { IS_READONLY } from '../../../config/readonly'
+import { usePanelStore } from '../store/panel-store'
 import type { SearchItem } from './items'
 import {
   cycleScope,
@@ -51,7 +52,7 @@ export function useSearchInput(
     }
     if (nextScope === 'code' && text === '' && rest.startsWith('%')) {
       rest = rest.slice(1)
-      setCodeInSelected(true)
+      setCodeInSelected(usePanelStore.getState().selected[0] !== undefined)
     }
     setText(rest)
   }

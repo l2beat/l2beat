@@ -117,19 +117,24 @@ function useCodeSearch(project: string) {
 
   const query = useQuery({
     queryKey: ['search', 'code', project, address, needle],
-    queryFn: () => searchCode(project, needle, address),
+    queryFn: async () => ({
+      needle,
+      response: await searchCode(project, needle, address),
+    }),
     enabled,
     placeholderData: keepPreviousData,
   })
 
   const groups = useMemo(
     () =>
-      enabled && query.data ? buildCodeGroups(query.data, needle.length) : [],
-    [enabled, query.data, needle],
+      enabled && query.data
+        ? buildCodeGroups(query.data.response, query.data.needle.length)
+        : [],
+    [enabled, query.data],
   )
   return {
     groups,
-    needle,
+    needle: query.data?.needle ?? needle,
     isError: query.isError,
     isFetching: enabled && query.isFetching,
   }
