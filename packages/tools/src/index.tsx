@@ -1,10 +1,14 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import React, { useEffect } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router'
-import { DecoderApp as OldDecoderApp } from './decoder/DecoderApp'
-import { DecoderApp as DecoderApp3 } from './decoder-3/DecoderApp'
-import { DecoderApp as NewDecoderApp } from './decoder-new/DecoderApp'
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router'
+import { DecoderApp } from './decoder/DecoderApp'
 import { Layout } from './Layout'
 import { MonitorApp } from './monitor/MonitorApp'
 import { SimulatorApp } from './simulator/SimulatorApp'
@@ -20,10 +24,10 @@ ReactDOM.createRoot(root).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<AutoRedirect />} />
-            <Route path="/decoder-3" element={<DecoderApp3 />} />
-            <Route path="/decoder" element={<OldDecoderApp />} />
-            <Route path="/decoder-new" element={<NewDecoderApp />} />
+            <Route index element={<DecoderRedirect />} />
+            <Route path="/decoder" element={<DecoderApp />} />
+            <Route path="/decoder-3" element={<DecoderRedirect />} />
+            <Route path="/decoder-new" element={<DecoderRedirect />} />
             <Route path="/simulator" element={<SimulatorApp />} />
             <Route path="/monitor" element={<MonitorApp />} />
           </Route>
@@ -33,10 +37,7 @@ ReactDOM.createRoot(root).render(
   </React.StrictMode>,
 )
 
-function AutoRedirect() {
-  const navigate = useNavigate()
-  useEffect(() => {
-    void navigate('/decoder-3')
-  }, [])
-  return null
+function DecoderRedirect() {
+  const location = useLocation()
+  return <Navigate to={`/decoder${location.search}`} replace />
 }
