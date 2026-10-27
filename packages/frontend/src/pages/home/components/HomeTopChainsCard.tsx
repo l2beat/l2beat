@@ -119,7 +119,7 @@ function getHomeTopChainsColumns() {
       cell: (ctx) => (
         <PizzaRosetteCell
           values={ctx.row.original.risks}
-          isUnderReview={!!ctx.row.original.statuses?.underReview}
+          isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
           href={`/layer2s/projects/${ctx.row.original.slug}#risk-analysis`}
         />
       ),

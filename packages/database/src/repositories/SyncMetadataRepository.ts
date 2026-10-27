@@ -1,5 +1,5 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { SyncMetadata } from '../kysely/generated/types'
 
@@ -100,6 +100,48 @@ export class SyncMetadataRepository extends BaseRepository {
       .where('feature', '=', feature)
       .where('id', 'in', ids)
       .execute()
+  }
+
+  /**
+   * Moves `target` to where the work ended and caps `syncedUntil` there.
+   * Updates only existing rows that differ, so repeated calls write nothing.
+   */
+  async markEnded(
+    feature: SyncMetadataRecord['feature'],
+    records: { id: string; end: UnixTime }[],
+  ): Promise<number> {
+    if (records.length === 0) {
+      return 0
+    }
+
+    const v = sql<{ id: string; end: Date }>`unnest(
+      ${records.map((r) => r.id)}::varchar[],
+      ${records.map((r) => UnixTime.toDate(r.end))}::timestamp[]
+    )`.as<'v'>(sql`v("id", "end")`)
+
+    const result = await this.db
+      .updateTable('SyncMetadata')
+      .from(v)
+      .set((eb) => ({
+        target: eb.ref('v.end'),
+        // Not least(): it skips nulls, and a null syncedUntil has to stay null
+        syncedUntil: eb
+          .case()
+          .when('SyncMetadata.syncedUntil', '>', eb.ref('v.end'))
+          .then(eb.ref('v.end'))
+          .else(eb.ref('SyncMetadata.syncedUntil'))
+          .end(),
+      }))
+      .where('SyncMetadata.feature', '=', feature)
+      .whereRef('SyncMetadata.id', '=', 'v.id')
+      .where((eb) =>
+        eb.or([
+          eb('SyncMetadata.target', '<>', eb.ref('v.end')),
+          eb('SyncMetadata.syncedUntil', '>', eb.ref('v.end')),
+        ]),
+      )
+      .executeTakeFirst()
+    return Number(result.numUpdatedRows)
   }
 
   async getByFeature(feature: SyncMetadataRecord['feature']) {

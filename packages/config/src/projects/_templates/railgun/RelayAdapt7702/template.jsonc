@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RelayAdapt7702",
+  "description": "Implementation that accounts delegate to with EIP-7702 to run Railgun DeFi actions. A delegated account unshields through Railgun, runs calls and shields or sends the resulting tokens. Each action needs a signature from the account's own key, so anyone, such as a broadcaster, can submit it.",
+  "ignoreRelatives": ["wBase"]
+}

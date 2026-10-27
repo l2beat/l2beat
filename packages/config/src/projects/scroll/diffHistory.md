@@ -1,3 +1,82 @@
+Generated with discovered.json: 0x5fc1f1dd4091cd4772edb740a92dd6a606fc14ca
+
+# Diff at Sat, 24 Oct 2026 16:41:08 GMT:
+
+- id: 1a275b7f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1791455050
+- current timestamp: 1791455050
+
+## Description
+
+`tokenMapping`, USDC `masterMinter` and `removedMinters` are MEDIUM: listings, a role holder and removals.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791455050 (main branch discovery), not current.
+
+```diff
+    contract pufETHEscrow (eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) [scroll/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      fieldMeta.tokenMapping.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff) [scroll/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      fieldMeta.tokenMapping.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Scroll USDC (scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4) [N/A] {
+    +++ description: Contract of the USDC token on Scroll.
+      fieldMeta.masterMinter.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.removedMinters.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x9e7ea0a61c410c82430c3e84659fc36f9085c680
+
+# Diff at Tue, 20 Oct 2026 07:52:41 GMT:
+
+- id: fcd4e195
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1791455050
+- current timestamp: 1791455050
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791455050 (main branch discovery), not current.
+
+```diff
+    contract L2LidoGateway (scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9) [N/A] {
+    +++ description: None
+      values.counterpart:
+-        "scr:0x6625C6332c9F91F2D27c304E729B86db87A3f504"
++        "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
 Generated with discovered.json: 0xa887d640070a725229a67a4d7c7c674c5ec60287
 
 # Diff at Fri, 16 Oct 2026 05:36:53 GMT:

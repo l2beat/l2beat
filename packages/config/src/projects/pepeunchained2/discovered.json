@@ -1,6 +1,6 @@
 {
   "name": "pepeunchained2",
-  "timestamp": 1787668995,
+  "timestamp": 1792490887,
   "configHash": "0x774601a276154ecd0bf2c5e0246cc59601ef6fdbb3e9f0b9119252860aa69b7e",
   "entries": [
     {
@@ -41,7 +41,7 @@
         ],
         "$upgradeCount": 1,
         "anyTrustFastConfirmer": "eth:0x0000000000000000000000000000000000000000",
-        "arbOsFromWmRoot": "ArbOS v51 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v61 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "eth:0xd3643255ea784c75a5325CC5a4A549C7CD62E499",
         "chainId": 97741,
@@ -53,7 +53,7 @@
         "getValidators": ["eth:0xd1e56283216127E1F40A3752735C94A13d97bc92"],
         "inbox": "eth:0xE92Df19F4e0Fd067FE3b788Cf03ffD06Cd9Be4A7",
         "isPostBoLD": true,
-        "latestConfirmed": "0x698d197ce971fab57b5e2ddd1c3c8f21f828f5c5b342ea23eb37892c0c405281",
+        "latestConfirmed": "0x8c9fb3b2a805ddcc94c24ecfb339bd527b87da74cb676344fcd06c03113942a3",
         "loserStakeEscrow": "eth:0xd1e56283216127E1F40A3752735C94A13d97bc92",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xd2E3B3be0ddA5E3214f551aF5A4f4049b9D031A9",
@@ -68,7 +68,7 @@
         "validatorAfkBlocks": 1125899906842624,
         "validatorWalletCreator": "eth:0x0A5eC2286bB15893d5b8f320aAbc823B2186BA09",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499"
+        "wasmModuleRoot": "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
       },
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
@@ -291,7 +291,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 304,
+        "nonce": 353,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -472,7 +472,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 16513,
+        "batchCount": 17814,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -522,7 +522,7 @@
         "rollup": "eth:0x0aeAe1A2A6f24284aA676B1E93f44AdC1A712850",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 10154,
+        "totalDelayedMessagesRead": 10264,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -752,7 +752,7 @@
           "eth:0xd1AF4aD8Be9a8A2f288048140c6E6380420c55fA"
         ],
         "allowedOutboxList": ["eth:0xd2E3B3be0ddA5E3214f551aF5A4f4049b9D031A9"],
-        "delayedMessageCount": 10154,
+        "delayedMessageCount": 10264,
         "inboxHistory": [
           "eth:0xE92Df19F4e0Fd067FE3b788Cf03ffD06Cd9Be4A7",
           "eth:0xd1AF4aD8Be9a8A2f288048140c6E6380420c55fA"
@@ -762,8 +762,8 @@
         "outboxHistory": ["eth:0xd2E3B3be0ddA5E3214f551aF5A4f4049b9D031A9"],
         "rollup": "eth:0x0aeAe1A2A6f24284aA676B1E93f44AdC1A712850",
         "sequencerInbox": "eth:0x93CA3db0dF3e78e798004bbE14e1ADE222B14dFa",
-        "sequencerMessageCount": 16513,
-        "sequencerReportedSubMessageCount": 10494521
+        "sequencerMessageCount": 17814,
+        "sequencerReportedSubMessageCount": 10542073
       },
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
@@ -1581,7 +1581,7 @@
     "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "ethereum": 25832884 },
+  "usedBlockNumbers": { "ethereum": 26233096 },
   "permissionsConfigHash": "0xfc5cc4b6026f8471cd323c0d3e2a79ab35169d03aeca8d5a1fda01c4a11a0635",
   "permissions": {
     "eth:0x16a93209382236236e964b9C22853e34C3095028": {

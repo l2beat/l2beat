@@ -1,7 +1,7 @@
 {
   "name": "zkmoney",
-  "timestamp": 1791882651,
-  "configHash": "0xc2316a1903e6581f043389bceba2e77da69807cc0ef0e65afef1e7b71bee8492",
+  "timestamp": 1793012002,
+  "configHash": "0x937336ad351c040950b6a5a816ae0f9656fc379ec2c307837f984db7f7619403",
   "entries": [
     {
       "name": "NitroValidator",
@@ -303,7 +303,7 @@
         "inputToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "L2_BENEFICIARY": "0x29a05add03279509317161fc25a0621159cdbaab95b042a53e098da664cb8ff1",
         "quoteBalanceAndBounty": {
-          "balance": "100000000000000000",
+          "balance": "1600000000000000000",
           "bounty": 0
         }
       },
@@ -311,6 +311,29 @@
         "eth:0x37cD81C39Bf276ea7e1c6a416A254f688c70eAFb": "FPCFunderDAI"
       },
       "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "name": "SwapEscrowFactoryV2",
+      "address": "eth:0x3B5D8c731364902eAFa46Be327AFB044C10c5952",
+      "type": "Contract",
+      "template": "zkmoney/SwapEscrowFactoryV2",
+      "sourceHashes": [
+        "0xd03bb7633accc8612103334e933c22b38fb9c6a12fd5965686410ac29773f697"
+      ],
+      "proxyType": "immutable",
+      "description": "Swap-on-withdraw: a withdrawal can pay DAI to a SwapEscrowV2 clone whose route, recipient, gas share and tip are fixed in its address. Anyone can deploy and execute a funded clone to pay USDC, USDT, ETH or DAI to the recipient.",
+      "deployerAddress": "eth:0x45E6CFE2A96c74228c2bDa854d1e90917831ED64",
+      "sinceTimestamp": 1791275795,
+      "sinceBlock": 26132184,
+      "values": {
+        "$immutable": true,
+        "DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "IMPLEMENTATION": "eth:0xcfAf1DFc22CE92cf3F2b534b3b5C1F116028FB95"
+      },
+      "implementationNames": {
+        "eth:0x3B5D8c731364902eAFa46Be327AFB044C10c5952": "SwapEscrowFactory"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Resolver",
@@ -801,6 +824,45 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "SwapEscrowV2",
+      "address": "eth:0xcfAf1DFc22CE92cf3F2b534b3b5C1F116028FB95",
+      "type": "Contract",
+      "template": "zkmoney/SwapEscrowV2",
+      "sourceHashes": [
+        "0xff4c84f8eb7c3f429048409399c2615d057007221091ade2de6688f6bf90b41e"
+      ],
+      "proxyType": "immutable",
+      "description": "SwapEscrowV2 implementation. A clone swaps via the Curve 3pool (and Uniswap for ETH) with a slippage bound of 100 bps for stablecoins and 200 bps against the Chainlink ETH/USD price for ETH. It can first swap a capped share of the DAI to ETH for the recipient's gas. If the swap cannot execute, only the recovery key committed in the clone's address can move the funds.",
+      "deployerAddress": "eth:0x45E6CFE2A96c74228c2bDa854d1e90917831ED64",
+      "sinceTimestamp": 1791275795,
+      "sinceBlock": 26132184,
+      "values": {
+        "$immutable": true,
+        "BPS_DENOMINATOR": 10000,
+        "DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "DAI_WETH_PAIR": "eth:0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
+        "ETH_MAX_SLIPPAGE_BPS": 200,
+        "ETH_USD_FEED": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+        "FACTORY": "eth:0x3B5D8c731364902eAFa46Be327AFB044C10c5952",
+        "MAX_DAI_FOR_GAS": "50000000000000000000",
+        "MAX_PRICE_AGE": 3900,
+        "ROUTE_DAI": 3,
+        "ROUTE_ETH": 2,
+        "ROUTE_USDC": 0,
+        "ROUTE_USDT": 1,
+        "STABLE_MAX_SLIPPAGE_BPS": 100,
+        "THREE_POOL": "eth:0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+        "UNISWAP_UNIVERSAL_ROUTER": "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af",
+        "USDC": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "USDT": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "implementationNames": {
+        "eth:0xcfAf1DFc22CE92cf3F2b534b3b5C1F116028FB95": "SwapEscrow"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "name": "FrozenNotesRefundVerifier_sUSDS",
       "address": "eth:0xd24a49321878AB82E46992ab853A11903882abf2",
       "type": "Contract",
@@ -854,15 +916,15 @@
       "sinceTimestamp": 1791316739,
       "sinceBlock": 26135579,
       "values": {
-        "_$cachedAvailable": "49997504449688617568427",
-        "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "_$cachedAvailable": "49994162449153286490395",
+        "_$freezeArchive": "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7",
         "_$freezeCheckpointCount": 0,
-        "_$freezeCheckpointNumber": 0,
-        "_$freezeEpochNumber": 0,
-        "_$frozen": false,
+        "_$freezeCheckpointNumber": 118925,
+        "_$freezeEpochNumber": 4426,
+        "_$frozen": true,
         "_$initialized": true,
         "_$l2Portal": "0x2bb708cb67bbda3ec2c79b842ef5d3b3d55897663d29cac5b5518c2e9af7171b",
-        "_$lastUpdatedTime": 1791874367,
+        "_$lastUpdatedTime": 1792512479,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0xbfdd552587f517a9f18ef6ed588e3bd57a21ac2070fda39ac4612558df3e72c8"
@@ -1017,15 +1079,15 @@
       "sinceTimestamp": 1790298635,
       "sinceBlock": 26051097,
       "values": {
-        "_$cachedAvailable": "49989806083732457108100",
-        "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "_$cachedAvailable": "49920097558524361119397",
+        "_$freezeArchive": "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7",
         "_$freezeCheckpointCount": 0,
-        "_$freezeCheckpointNumber": 0,
-        "_$freezeEpochNumber": 0,
-        "_$frozen": false,
+        "_$freezeCheckpointNumber": 118925,
+        "_$freezeEpochNumber": 4426,
+        "_$frozen": true,
         "_$initialized": true,
         "_$l2Portal": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
-        "_$lastUpdatedTime": 1791874067,
+        "_$lastUpdatedTime": 1792937099,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0x9c846102f8ac909695f7176cec0f60380ac770286bb9eec459d6152f6e676988"
@@ -1428,6 +1490,19 @@
       "function quoteBalanceAndBounty() view returns (uint256 balance, uint256 bounty)",
       "function swapAndDepositAsFeeJuice() returns (bytes32 key, uint256 index)"
     ],
+    "eth:0x3B5D8c731364902eAFa46Be327AFB044C10c5952": [
+      "constructor(address _dai, address _usdc, address _usdt, address _weth, address _router, address _threePool, address _ethUsdFeed, address _daiWethPair)",
+      "error CloneArgumentsTooLong()",
+      "error Create2EmptyBytecode()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "event EscrowExecuted(address indexed escrow, address tipRecipient)",
+      "function DAI() view returns (address)",
+      "function IMPLEMENTATION() view returns (address)",
+      "function deploy(tuple(uint8 route, address recipient, uint256 daiForGas, uint256 minEthForGas, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) returns (address escrow)",
+      "function deployAndExecute(tuple(uint8 route, address recipient, uint256 daiForGas, uint256 minEthForGas, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) returns (address escrow)",
+      "function predictEscrowAddress(tuple(uint8 route, address recipient, uint256 daiForGas, uint256 minEthForGas, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) view returns (address)"
+    ],
     "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F": [
       "constructor(address _nameRegistry, address _sipaFactory, address _verifier)",
       "error OffchainLookup(address sender, string[] urls, bytes callData, bytes4 callbackFunction, bytes extraData)",
@@ -1645,6 +1720,59 @@
       "function renounceOwnership()",
       "function sipaIntentOf(address caller) view returns (uint8)",
       "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xcfAf1DFc22CE92cf3F2b534b3b5C1F116028FB95": [
+      "constructor(address _dai, address _usdc, address _usdt, address _weth, address _router, address _threePool, address _ethUsdFeed, address _daiWethPair)",
+      "error EscrowBase__EmptyBalance()",
+      "error EscrowBase__EthTransferFailed()",
+      "error EscrowBase__InvalidSignature()",
+      "error EscrowBase__NonceAlreadyUsed()",
+      "error EscrowBase__NotClone()",
+      "error EscrowBase__NotFactory()",
+      "error EscrowBase__RecoveryCommitmentMismatch()",
+      "error EscrowBase__RecoveryExpired(uint256 deadline)",
+      "error EthUsdMinOut__InvalidPrice(int256 answer)",
+      "error EthUsdMinOut__StalePrice(uint256 updatedAt)",
+      "error InvalidReserves()",
+      "error SafeERC20FailedOperation(address token)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SwapEscrow__DaiForGasExceedsBalanceAfterTip(uint256 daiForGas, uint256 balanceAfterTip)",
+      "error SwapEscrow__DaiForGasExceedsMax(uint256 daiForGas)",
+      "error SwapEscrow__DaiForGasOnEthRoute()",
+      "error SwapEscrow__EthForGasBelowMin(uint256 ethOut, uint256 minEthForGas)",
+      "error SwapEscrow__EthNotFromWeth()",
+      "error SwapEscrow__FeedWithoutCode()",
+      "error SwapEscrow__UnknownRoute(uint8 route)",
+      "event EscrowRecovered(address indexed token, address indexed target, uint256 amount)",
+      "function BPS_DENOMINATOR() view returns (uint256)",
+      "function DAI() view returns (address)",
+      "function DAI_WETH_PAIR() view returns (address)",
+      "function ETH_MAX_SLIPPAGE_BPS() view returns (uint256)",
+      "function ETH_USD_FEED() view returns (address)",
+      "function FACTORY() view returns (address)",
+      "function MAX_DAI_FOR_GAS() view returns (uint256)",
+      "function MAX_PRICE_AGE() view returns (uint256)",
+      "function ROUTE_DAI() view returns (uint8)",
+      "function ROUTE_ETH() view returns (uint8)",
+      "function ROUTE_USDC() view returns (uint8)",
+      "function ROUTE_USDT() view returns (uint8)",
+      "function STABLE_MAX_SLIPPAGE_BPS() view returns (uint256)",
+      "function THREE_POOL() view returns (address)",
+      "function UNISWAP_UNIVERSAL_ROUTER() view returns (address)",
+      "function USDC() view returns (address)",
+      "function USDT() view returns (address)",
+      "function WETH() view returns (address)",
+      "function daiForGas() view returns (uint256)",
+      "function execute(address _tipRecipient)",
+      "function minEthForGas() view returns (uint256)",
+      "function nonce() view returns (bytes32)",
+      "function recipient() view returns (address)",
+      "function recoverERC20(bytes32 _recoverySalt, address _account, bytes _signature, address _target, address _token, bytes32 _nonce, uint256 _deadline)",
+      "function recoverETH(bytes32 _recoverySalt, address _account, bytes _signature, address _target, bytes32 _nonce, uint256 _deadline)",
+      "function recoveryCommitment() view returns (bytes32)",
+      "function relayerTip() view returns (uint256)",
+      "function route() view returns (uint8)",
+      "function usedNonces(bytes32 nonce) view returns (bool used)"
     ],
     "eth:0xd24a49321878AB82E46992ab853A11903882abf2": [
       "error InvertOfZero()",
@@ -2125,11 +2253,13 @@
     "zkmoney/SkyWithdrawalExecutor": "0x83daa1fe76f9377c13d63a09c01d5b9fa3c7d6b97963b1bb4eda533e74926783",
     "zkmoney/SwapEscrow": "0xb67c3531cfb5bc288fa5dd8326d0620b26194674c3e56e478a14214fc7b5ee03",
     "zkmoney/SwapEscrowFactory": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",
+    "zkmoney/SwapEscrowFactoryV2": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",
+    "zkmoney/SwapEscrowV2": "0x84cc242a76dad9bb39d117b773e1d6d5aa9175466c4c41d63c1d181ab30b41cc",
     "zkmoney/UnprocessedDepositRefundVerifier": "0x973590db53f201980888f82d4c8ccc44430edb76a016489d94d133c448daaf8d",
     "zkmoney/ZkMoneyPortal": "0x4849cf15f068d591a1aa63a22d45dab667cc83726b39e596ca465b8c122c6383"
   },
-  "usedBlockNumbers": { "ethereum": 26182584 },
-  "permissionsConfigHash": "0x00527a89ae747a032b6a0015dd2714fbc1160720bdd088ea460141a59dfaefde",
+  "usedBlockNumbers": { "ethereum": 26276386 },
+  "permissionsConfigHash": "0x60d7677d3e8ec52df80ea33848cb8348b3af7871c21ffa59f693ad708cb59bfb",
   "permissions": {
     "eth:0x05406F53174EC1bFE5C94aF253CdD62A4adF2F29": {
       "receivedPermissions": [

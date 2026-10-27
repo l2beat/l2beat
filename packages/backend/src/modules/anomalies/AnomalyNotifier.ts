@@ -88,7 +88,9 @@ export class AnomalyNotifier {
       `- interval: \`${formatDuration(interval)}\`\n` +
       `- avg interval: \`${formatDuration(latestStat.mean)}\`\n` +
       `- z-score: \`${z}\` (interval: \`${interval}\`, mean: \`${latestStat.mean}\`, stddev: \`${latestStat.stdDev}\`)\n\n` +
-      `Run \`pnpm anomalies --approve ${newAnomaly.projectId}-${newAnomaly.subtype}\` to approve the anomaly`
+      (newAnomaly.isApproved
+        ? 'Already approved'
+        : `Run \`pnpm anomalies --approve ${newAnomaly.projectId}-${newAnomaly.subtype}\` to approve the anomaly`)
 
     const id = await this.sendDiscordNotification(message)
 

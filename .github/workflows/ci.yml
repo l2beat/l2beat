@@ -67,8 +67,8 @@ jobs:
           name: frontend-build-summary
           path: .turbo/runs
 
-  build-protocolbeat:
-    name: Build protocolbeat
+  build-discoui:
+    name: Build discoui
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -82,8 +82,8 @@ jobs:
       - name: Set up pnpm and install dependencies
         uses: ./.github/actions/setup-pnpm
 
-      - name: Build protocolbeat
-        run: pnpm build:protocolbeat
+      - name: Build discoui
+        run: pnpm build:discoui
 
   build-tools:
     name: Build tools
@@ -290,13 +290,13 @@ jobs:
           - name: Set up Playwright
             uses: ./.github/actions/setup-playwright
             with:
-              package-dir: packages/protocolbeat
+              package-dir: packages/discoui
 
           - name: Build dependencies
             run: pnpm build:dependencies:l2b
 
       - name: Run page e2e tests
-        working-directory: packages/protocolbeat
+        working-directory: packages/discoui
         run: pnpm test:e2e --shard ${{ matrix.shard }}/2
 
       - name: Run backend e2e tests

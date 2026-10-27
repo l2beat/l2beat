@@ -17,6 +17,7 @@ import { DBStorage } from './tools/DBStorage'
 import { createAmountConfig } from './tools/extractPricesAndAmounts'
 import { getTokenSyncRange } from './tools/getTokenSyncRange'
 import { SyncOptimizer } from './tools/SyncOptimizer'
+import { updateSyncMetadataTargets } from './tools/updateSyncMetadataTargets'
 import { isOnchainAmountConfig, type ProjectTvsConfig } from './types'
 export function initTvsModule({
   config,
@@ -51,23 +52,7 @@ export function initTvsModule({
   const hourlyIndexer = new HourlyIndexer(logger, clock, {
     onTick: async (targetTimestamp) => {
       if (!config.tvs) return
-      const recordIds = []
-      for (const project of config.tvs.projects) {
-        const tokensWithRanges = getTokensWithRanges(project.tokens).filter(
-          (t) =>
-            t.sinceTimestamp <= targetTimestamp &&
-            (!t.untilTimestamp || t.untilTimestamp >= targetTimestamp),
-        )
-        recordIds.push(...tokensWithRanges.map((t) => t.id))
-      }
-
-      await db.syncMetadata.upsertMany(
-        recordIds.map((id) => ({
-          feature: 'tvs',
-          id,
-          target: targetTimestamp,
-        })),
-      )
+      await updateSyncMetadataTargets(db, config.tvs.projects, targetTimestamp)
     },
   })
 

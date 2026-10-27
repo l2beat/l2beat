@@ -3,10 +3,9 @@ import { Analyze } from './Analyze'
 import { AuditCoverage } from './AuditCoverage'
 import { BlobSenders } from './BlobSenders'
 import { CheckRpc } from './CheckRpc'
+import { ClientDrift } from './ClientDrift'
 import { Colorize } from './Colorize'
 import { CountUserOperations } from './CountUserOperations'
-import { CropsAttest } from './CropsAttest'
-import { CropsVerify } from './CropsVerify'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
 import { DownloadAllShapes, DownloadShapes } from './DownloadShapes'
@@ -41,6 +40,7 @@ import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 import { UI } from './UI'
 import { Why } from './Why'
+import { Xref } from './Xref'
 import { ZkGovProposal } from './ZkGovProposal'
 
 export function getSubcommands() {
@@ -50,10 +50,9 @@ export function getSubcommands() {
     AuditCoverage,
     BlobSenders,
     CheckRpc,
+    ClientDrift,
     Colorize,
     CountUserOperations,
-    CropsAttest,
-    CropsVerify,
     DeploymentTimestamp,
     DetectProxy,
     Discover,
@@ -89,6 +88,7 @@ export function getSubcommands() {
     TVL,
     UI,
     Why,
+    Xref,
     ZkGovProposal,
   ]
 }

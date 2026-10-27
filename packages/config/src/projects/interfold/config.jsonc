@@ -18,7 +18,7 @@
     "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC", // public token voting plugin
     "eth:0xD0C2A1f94f7c584f0BF5588a519E82AD71dC1EC2", // public proposal condition
     "eth:0x028deEA644258c78b1B5B2eacF469F5D781Fb43E", // voting-power adapter used by TokenVoting
-    "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C", // listed-member executor of the voting-escrow DAO
+    "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C", // listed-member executor of VotingEscrowGovCore
     "eth:0xde423A95f7955CcA8848e0eDCA773F6A2FBA2d76", // membership condition on its public proposal grant
     "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3", // Interfold Protocol Proposal (IPP) staged proposal processor
     "eth:0x4c9D0A2B8E5917c480bdF3E42F1b1c9365EF2115", // IPP proposal-creation condition (currently no rules)
@@ -36,7 +36,7 @@
     "eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c": "CrispTokenVoting",
     "eth:0x53fcdb21e73a461cfe6c64b19855204384b91ba3": "CRISPProgramV2",
     "eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A": "NodeReleaseRegistry",
-    "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e": "InterfoldDAO",
+    "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e": "InterfoldGovCore",
     "eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018": "InterfoldSafeA",
     "eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593": "InterfoldSafeB",
     "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": "CRISPProgram",
@@ -46,7 +46,7 @@
     "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC": "PublicTokenVoting",
     "eth:0xD0C2A1f94f7c584f0BF5588a519E82AD71dC1EC2": "PublicProposalCondition",
     "eth:0x028deEA644258c78b1B5B2eacF469F5D781Fb43E": "BondedVotes",
-    "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B": "VotingEscrowDAO",
+    "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B": "VotingEscrowGovCore",
     "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C": "VotingEscrowMultisig",
     "eth:0xde423A95f7955CcA8848e0eDCA773F6A2FBA2d76": "VotingEscrowMemberCondition",
     "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12": "VotingEscrow",
@@ -56,101 +56,21 @@
     "eth:0xF3eeE0f5E721b8c0073C8d85bf26A3d6EC293A0E": "VotingEscrowLockNFT",
     "eth:0x8095C0B90Be4abCBF5CA7371f588fe1637E02b7f": "VotingEscrowExitQueue",
     "eth:0x0A32454FC578e3CAFeE86F6E03f267b25ad0bAf0": "VotingEscrowGaugeVoter",
-    "eth:0x56ce4D8006292Abf418291FaE813C1E3769240A4": "AragonExecutor"
+    "eth:0x56ce4D8006292Abf418291FaE813C1E3769240A4": "AragonExecutor",
+    "eth:0x6E1eC1e74162D9c141e12B593Cad390aEfFb6bD0": "CrispBallotVerifier",
+    "eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8": "CrispOnchainBallotVerifier"
   },
   "overrides": {
+    "eth:0x6E1eC1e74162D9c141e12B593Cad390aEfFb6bD0": {
+      "description": "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds whose voters are listed in a Merkle tree."
+    },
+    "eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8": {
+      "description": "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every governance vote."
+    },
     "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e": {
       "fields": {
-        "daoExecutors": {
-          "description": "Current grantees of Aragon's EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.",
-          "type": "PERMISSION",
-          "copy": "$activePermissions",
-          "edit": [
-            "pipe",
-            [
-              "filter",
-              [
-                "and",
-                [
-                  "=",
-                  "0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d",
-                  ["get", "permissionId"]
-                ],
-                [
-                  "=",
-                  "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-                  ["get", "where"]
-                ]
-              ]
-            ],
-            ["map", ["get", "who"]]
-          ],
-          "permissions": [
-            {
-              "type": "act",
-              "description": "execute arbitrary calls from the DAO, including calls to protocol owners and ProxyAdmins."
-            }
-          ]
-        },
-        "daoRootHolders": {
-          "description": "Current grantees of Aragon's ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.",
-          "type": "PERMISSION",
-          "copy": "$activePermissions",
-          "edit": [
-            "pipe",
-            [
-              "filter",
-              [
-                "and",
-                [
-                  "=",
-                  "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
-                  ["get", "permissionId"]
-                ],
-                [
-                  "=",
-                  "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-                  ["get", "where"]
-                ]
-              ]
-            ],
-            ["map", ["get", "who"]]
-          ],
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "grant and revoke permissions in the DAO."
-            }
-          ]
-        },
-        "daoUpgraders": {
-          "description": "Current grantees of Aragon's UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.",
-          "type": "PERMISSION",
-          "copy": "$activePermissions",
-          "edit": [
-            "pipe",
-            [
-              "filter",
-              [
-                "and",
-                [
-                  "=",
-                  "0x1f53edd44352e5d15bad2b29233baa93bcd595e09457780bc7c5445bbbe751cc",
-                  ["get", "permissionId"]
-                ],
-                [
-                  "=",
-                  "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-                  ["get", "where"]
-                ]
-              ]
-            ],
-            ["map", ["get", "who"]]
-          ],
-          "permissions": [{ "type": "upgrade" }]
-        },
         "adminPluginExecutors": {
-          "description": "Addresses that can drive the armed Admin plugin without a DAO vote, reconstructed from Aragon grant and revoke events.",
+          "description": "Addresses that can drive the armed Admin plugin without a governance vote, reconstructed from Aragon grant and revoke events.",
           "type": "PERMISSION",
           "copy": "$activePermissions",
           "edit": [
@@ -176,7 +96,7 @@
           "permissions": [
             {
               "type": "act",
-              "description": "execute arbitrary DAO actions through the armed Admin plugin without a vote or an onchain delay."
+              "description": "execute arbitrary governance actions through the armed Admin plugin without a vote or an onchain delay."
             }
           ]
         },
@@ -847,7 +767,7 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage."
+              "description": "change the settings of the CRISP token-voting plugin used as the IPP voting stage, including the committee size of future votes."
             }
           ]
         },
@@ -979,7 +899,7 @@
     "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B": {
       "fields": {
         "veDaoExecutors": {
-          "description": "Current grantees of EXECUTE_PERMISSION on the voting-escrow DAO.",
+          "description": "Current grantees of EXECUTE_PERMISSION on this contract.",
           "type": "PERMISSION",
           "copy": "$activePermissions",
           "edit": [
@@ -997,12 +917,12 @@
           "permissions": [
             {
               "type": "act",
-              "description": "execute arbitrary calls from the voting-escrow DAO, including administration and upgrades of the voting-power stack."
+              "description": "execute arbitrary calls from this contract, including administration and upgrades of the voting-power stack."
             }
           ]
         },
         "veDaoRootHolders": {
-          "description": "Current grantees of ROOT_PERMISSION on the voting-escrow DAO.",
+          "description": "Current grantees of ROOT_PERMISSION on this contract.",
           "type": "PERMISSION",
           "copy": "$activePermissions",
           "edit": [
@@ -1020,12 +940,12 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "grant and revoke permissions in the voting-escrow DAO."
+              "description": "grant and revoke permissions in this contract."
             }
           ]
         },
         "veDaoUpgraders": {
-          "description": "Current grantees of UPGRADE_DAO_PERMISSION on the voting-escrow DAO.",
+          "description": "Current grantees of UPGRADE_DAO_PERMISSION on this contract.",
           "type": "PERMISSION",
           "copy": "$activePermissions",
           "edit": [

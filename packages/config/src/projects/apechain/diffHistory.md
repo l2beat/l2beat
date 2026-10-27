@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x84347359a960fccbb5242c6d974a3854714ba3b4
+
+# Diff at Tue, 20 Oct 2026 10:10:15 GMT:
+
+- id: 125c2130
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1791533574
+- current timestamp: 1792490944
+
+## Description
+
+SequencerInbox `sequencerVersion` 0x00 → 0x88: batches are DAC certificates again since 2026-10-15.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) [orbitstack/SequencerInbox_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x00"
++        "0x88"
+    }
+```
+
 Generated with discovered.json: 0xa9661fd3cf463dec0b4665c4c666e810ae820775
 
 # Diff at Fri, 16 Oct 2026 09:37:44 GMT:

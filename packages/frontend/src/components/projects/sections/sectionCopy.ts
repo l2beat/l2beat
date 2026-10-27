@@ -1,4 +1,5 @@
 import { formatNumberWithCommas } from '@l2beat/shared-pure'
+import type { GardenListing } from '~/components/garden/crops'
 import type { PrivacyAnonymitySetCoverage } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetCoverage'
 import type { PrivacyAnonymitySetType } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSeries'
 
@@ -175,8 +176,15 @@ export function anonymitySetCoverageNote(
   return `Depositors were identified for ${formatNumberWithCommas(coverage.attributed)} of ${formatNumberWithCommas(coverage.total)} deposits (${percentage}%) during the last ${windowDays} complete UTC days. The remaining deposits are not counted.`
 }
 
-export function gardenVerdictText(inGarden: boolean) {
-  return inGarden ? 'Grows in the garden.' : 'Not in the garden yet.'
+export function gardenVerdictText(listing: GardenListing) {
+  switch (listing) {
+    case 'listed':
+      return 'Listed in The Infinite Garden.'
+    case 'ratedBad':
+      return 'Not listed in The Infinite Garden: a property is rated bad.'
+    case 'noOssificationScore':
+      return 'Not listed in The Infinite Garden yet: it has no ossification score.'
+  }
 }
 
 /** Split around the stage, which the page shows as a badge. */

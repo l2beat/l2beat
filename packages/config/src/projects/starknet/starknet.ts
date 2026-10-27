@@ -759,7 +759,8 @@ export const starknet: ScalingProject = {
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_USDC_ADDRESS),
         sinceTimestamp: UnixTime(1657137639),
-        tokens: [], // removed due to custom config in starknet.json
+        tokens: [], // removed due to custom config in tvs.json
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for USDC.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
@@ -856,6 +857,7 @@ export const starknet: ScalingProject = {
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_LBTC_ADDRESS),
         tokens: ['LBTC'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description: 'StarkGate bridge for LBTC.',
       }),
     ],

@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xab024bab9b7eec70b527430cf477d2321b0aa68b
+
+# Diff at Tue, 20 Oct 2026 10:10:04 GMT:
+
+- id: 1685c469
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1789569237
+- current timestamp: 1792490921
+
+## Description
+
+RollupProxy: ArbOS v51 → v61 wasm module root, executed by Conduit Multisig 1 through the UpgradeExecutor.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0xB55002d2795217Fd3B91EcBb3385ba9A231E5327) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v51 wasmModuleRoot"
++        "ArbOS v61 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
++++ severity: HIGH
+      values.wasmModuleRoot:
+-        "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499"
++        "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
+    }
+```
+
 Generated with discovered.json: 0x334543c645b9c429683b967f79b1145092332579
 
 # Diff at Fri, 16 Oct 2026 09:37:49 GMT:

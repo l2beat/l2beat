@@ -4,6 +4,7 @@ import type { BlockProvider, StarknetClient } from '@l2beat/shared'
 import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import { assert, UnixTime, unique } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -56,7 +57,11 @@ export class StarknetPrivacyAnonymitySetIndexer extends ManagedMultiIndexer<Star
     configurations: Configuration<StarknetPrivacyAnonymitySetIndexerConfig>[],
   ) {
     const adjustedTo = Math.min(UnixTime.toNext(from, 'day'), to)
-    const records = await this.fetchRecords(configurations, from, adjustedTo)
+    const records = await withCoreFeatureRpcMetricsContext(
+      'privacy.anonymitySet',
+      { chain: this.$.chain },
+      () => this.fetchRecords(configurations, from, adjustedTo),
+    )
 
     return async () => {
       await this.$.db.privacyAnonymitySetEvent.upsertMany(records)

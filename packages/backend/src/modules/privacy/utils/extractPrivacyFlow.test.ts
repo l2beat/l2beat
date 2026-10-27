@@ -34,11 +34,6 @@ const umbraRegistryInterface = new utils.Interface([
   'event StealthKeyChanged(address indexed registrant, uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)',
 ])
 
-const zamaInterface = new utils.Interface([
-  'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
-  'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
-])
-
 const zkMoneyInterface = new utils.Interface([
   'event Deposit(bytes32 indexed recipientCommitment, uint256 amount, bytes32 key, uint256 index)',
   'event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)',
@@ -321,6 +316,94 @@ describe(extractPrivacyFlow.name, () => {
     })
   })
 
+  describe('privacyPoolsV2Value', () => {
+    const iface = new utils.Interface([
+      'event Deposited(uint256 outputCommitment, address indexed asset, uint256 depositedValue, address indexed caller)',
+      'event Transacted(uint256[] outputCommitments, uint256[] nullifierHashes, address indexed asset, uint256 withdrawnValue, address indexed caller)',
+      'event Ragequit(address indexed ragequitter, address indexed asset, uint256 value, uint256 commitment, uint256 nullifierHash, uint256 label)',
+    ])
+    const params = { tokenAddress: TOKEN_ADDRESS }
+
+    it('extracts a deposit of the configured asset', () => {
+      const log = encodeLog(iface, 'Deposited', [
+        1,
+        TOKEN_ADDRESS,
+        500n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 500n })
+    })
+
+    it('extracts the withdrawn value of a transact', () => {
+      const log = encodeLog(iface, 'Transacted', [
+        [1, 2],
+        [3],
+        TOKEN_ADDRESS,
+        700n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 700n })
+    })
+
+    it('extracts a ragequit', () => {
+      const log = encodeLog(iface, 'Ragequit', [
+        ADDRESS,
+        TOKEN_ADDRESS,
+        900n,
+        1,
+        2,
+        3,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 900n })
+    })
+
+    it('ignores another asset of the same vault', () => {
+      const log = encodeLog(iface, 'Deposited', [
+        1,
+        OTHER_TOKEN_ADDRESS,
+        500n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual(undefined)
+    })
+
+    it('ignores a pure private transfer, which withdraws nothing', () => {
+      const log = encodeLog(iface, 'Transacted', [
+        [1],
+        [2],
+        EthereumAddress.ZERO,
+        0n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual(undefined)
+    })
+  })
+
   describe('railgunShield', () => {
     const config: PrivacyFlowIndexerConfig = {
       ...baseFlowConfig,
@@ -573,48 +656,6 @@ describe(extractPrivacyFlow.name, () => {
       ).toEqual({ count: 1, amount: 7n })
     })
   })
-
-  describe('zamaWrap', () => {
-    it('extracts roundedAmount from Wrap event', () => {
-      const config: PrivacyFlowIndexerConfig = {
-        ...baseFlowConfig,
-        event: 'Wrap',
-        extractor: 'zamaWrap',
-        params: {},
-      }
-      const log = encodeLog(zamaInterface, 'Wrap', [
-        EthereumAddress.random().toString(),
-        123_456n,
-        '0x' + '11'.repeat(32),
-      ])
-
-      const result = extractPrivacyFlow(config, log)
-
-      expect(result).toEqual({ count: 1, amount: 123_456n })
-    })
-  })
-
-  describe('zamaUnwrap', () => {
-    it('extracts cleartextAmount multiplied by wrapper rate', () => {
-      const config: PrivacyFlowIndexerConfig = {
-        ...baseFlowConfig,
-        direction: 'withdrawal',
-        event: 'UnwrapFinalized',
-        extractor: 'zamaUnwrap',
-        params: { rate: '10' },
-      }
-      const log = encodeLog(zamaInterface, 'UnwrapFinalized', [
-        EthereumAddress.random().toString(),
-        '0x' + '22'.repeat(32),
-        '0x' + '33'.repeat(32),
-        987n,
-      ])
-
-      const result = extractPrivacyFlow(config, log)
-
-      expect(result).toEqual({ count: 1, amount: 9_870n })
-    })
-  })
 })
 
 describe(extractPrivacyAnonymitySetMember.name, () => {
@@ -655,6 +696,23 @@ describe(extractPrivacyAnonymitySetMember.name, () => {
     expect(() => extractPrivacyAnonymitySetMember(source, log)).toThrow(
       'Privacy Pools deposit is missing depositor',
     )
+  })
+
+  it('requests the transaction sender for Privacy Pools v2 deposits', () => {
+    const iface = new utils.Interface([
+      'event Deposited(uint256 outputCommitment, address indexed asset, uint256 depositedValue, address indexed caller)',
+    ])
+    const log = encodeLog(iface, 'Deposited', [1, TOKEN_ADDRESS, 500n, ADDRESS])
+    expect(
+      extractPrivacyAnonymitySetMember(
+        {
+          event: log.topics[0]!,
+          extractor: 'privacyPoolsV2Value',
+          params: { tokenAddress: TOKEN_ADDRESS },
+        },
+        log,
+      ),
+    ).toEqual({ amount: 500n, origin: { type: 'transaction' } })
   })
 
   it('requests the transaction sender for fixed deposits', () => {

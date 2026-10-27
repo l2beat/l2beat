@@ -1,10 +1,11 @@
 import type { ImageParams } from '~/utils/project/getImageParams'
 import type { PublicationEntry } from '../utils/getPublicationEntry'
-import { PublicationTag } from './PublicationsList'
+import { PublicationTag } from './PublicationTag'
 
 export function PublicationHeader<
   T extends {
     title: string
+    description: string | undefined
     readTimeInMinutes: number
     author: {
       avatar: ImageParams
@@ -28,6 +29,11 @@ export function PublicationHeader<
       <h1 className="mt-2 text-heading-24 md:text-heading-32">
         {publication.title}
       </h1>
+      {publication.description && (
+        <p className="mt-3 font-inter text-xl leading-[1.6] opacity-80">
+          {publication.description}
+        </p>
+      )}
       <div className="mt-6 flex items-center justify-start">
         <img
           {...publication.author.avatar}

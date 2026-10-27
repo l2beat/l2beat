@@ -1,4 +1,10 @@
-import type { ProjectCrops, ProjectScalingInfo } from '@l2beat/config'
+import {
+  type GardenVerdict,
+  OSI_LICENSES,
+  type ProjectGarden,
+  type ResolvedCropEvaluation,
+  type ResolvedCrops,
+} from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { CropsAttestationsMeta } from '../api'
 import type {
@@ -31,26 +37,50 @@ export function lowerAddress(address: ChainSpecificAddress): string {
   return ChainSpecificAddress.address(address).toLowerCase()
 }
 
-const ALL_GOOD: ProjectCrops = {
-  censorshipResistance: { sentiment: 'good' },
-  openSource: { sentiment: 'good', license: 'MIT' },
-  privacy: { sentiment: 'good' },
-  security: { sentiment: 'good' },
+const GOOD: ResolvedCropEvaluation = {
+  sentiment: 'good',
+  status: 'reviewed',
+  points: [],
+  missing: [],
+  additionalConsiderations: [],
+  notReviewed: [],
 }
 
-const ONE_BAD: ProjectCrops = {
+const ALL_GOOD: ResolvedCrops = {
+  censorshipResistance: GOOD,
+  openSource: { ...GOOD, license: OSI_LICENSES.MIT },
+  privacy: GOOD,
+  security: GOOD,
+}
+
+const ONE_BAD: ResolvedCrops = {
   ...ALL_GOOD,
-  security: { sentiment: 'bad', missing: ['No audits.'] },
+  security: { ...GOOD, sentiment: 'bad', missing: ['No audits.'] },
+}
+
+/** One verdict for every band: these fixtures test the files, not the cap. */
+export function gardenOf(
+  path: string | null,
+  verdict: GardenVerdict,
+): ProjectGarden {
+  return {
+    path,
+    verdicts: {
+      good: verdict,
+      warning: verdict,
+      bad: verdict,
+      unscored: verdict,
+    },
+  }
 }
 
 export const ATTESTATION_UID =
   '0xe390390934d3ac2a3f238a0b6f655ec9f847c7dade8240e7450ecd3ef339d24d'
 
-export const LEDGER: CropsAttestationsMeta = {
-  network: 'sepolia',
-  chainId: 11155111,
-  isTestnet: true,
-  eas: '0xC2679fBD37d54388Ce493F1DB75320D236e1815e',
+export const ATTESTATIONS: CropsAttestationsMeta = {
+  network: 'ethereum',
+  chainId: 1,
+  eas: '0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587',
   schemaUid: '0xbe00',
   schema: 'string[] projectIds,uint64 reviewedAt,uint32 revision',
   attester: '0xb55D684Be25227b722a007F6bB8AA706ca18BdDA',
@@ -60,7 +90,7 @@ export const LEDGER: CropsAttestationsMeta = {
     reviewedAt: 1787132641,
     projectIds: ['uniswapv3'],
     txHash: '0x70ef',
-    explorerUrl: `https://sepolia.easscan.org/attestation/view/${ATTESTATION_UID}`,
+    explorerUrl: `https://easscan.org/attestation/view/${ATTESTATION_UID}`,
   },
 }
 
@@ -68,8 +98,26 @@ export const UNISWAP: CropsApiInputProject = {
   id: 'uniswapv3',
   slug: 'uniswap-v3',
   name: 'Uniswap V3',
-  crops: ALL_GOOD,
-  scalingInfo: {} as ProjectScalingInfo,
+  garden: gardenOf('/layer2s/projects/uniswap-v3', {
+    crops: ALL_GOOD,
+    listing: 'listed',
+  }),
+  // Unchanged for years by `generatedAt`, so it scores in the top band.
+  ossificationHistory: {
+    contracts: [
+      {
+        name: 'UniswapV3Factory',
+        address: FACTORY,
+        isVerified: true,
+        ossifyingSince: 1620000000,
+        codeChangeCount: 0,
+        stateChangeCount: 0,
+      },
+    ],
+    changes: [],
+    deployments: [1620000000],
+    observedSince: 1620000000,
+  },
   contracts: {
     addresses: {
       ethereum: [
@@ -94,7 +142,7 @@ export const OTHER: CropsApiInputProject = {
   id: 'other',
   slug: 'other',
   name: 'Other',
-  crops: ONE_BAD,
+  garden: gardenOf(null, { crops: ONE_BAD, listing: 'ratedBad' }),
   contracts: {
     addresses: {
       ethereum: [{ address: FACTORY, name: 'SharedFactory' }],
@@ -106,7 +154,7 @@ export const OTHER: CropsApiInputProject = {
 export const FIXTURE_INPUT: CropsApiInput = {
   projects: [OTHER, UNISWAP],
   chains: { ethereum: 1, arbitrum: 42161 },
-  ledger: LEDGER,
+  attestations: ATTESTATIONS,
   commit: 'abc123',
   generatedAt: 1_800_000_000,
 }

@@ -1,38 +1,72 @@
 @reference "tailwindcss";
 
+/* Long-form text. Children inherit the face, size and ink from here, so a
+   page can retune the whole article with utilities on the element itself. */
+.article {
+  @apply font-inter text-base text-primary leading-[1.65] md:text-[19px];
+  font-kerning: normal;
+}
+
+/* Full white glares on a dark surface over a long read. Headings and bold
+   keep the full ink, which also gives them a little more weight. */
+.dark .article {
+  color: color-mix(in oklab, var(--primary) 88%, transparent);
+}
+
+/* Space is set in em, so it follows whatever size the page gives the text. */
 .article:not(.changelog) > * {
-  @apply mb-4;
+  margin-block: 0 1.1em;
 }
 
 .article:not(.changelog) > *:last-child {
   @apply mb-8;
 }
 
-.article p,
-.article li {
-  @apply font-roboto-serif;
+.article p {
+  text-wrap: pretty;
 }
 
-.article.extended-char-set p,
-.article.extended-char-set li {
-  @apply font-roboto-serif-ext;
+.article h2,
+.article h3,
+.article h4 {
+  @apply font-semibold text-primary;
+  text-wrap: balance;
 }
 
 .article h2 {
-  @apply text-2xl font-bold md:text-3xl mt-12 mb-6;
+  @apply text-2xl leading-[1.25] tracking-[-0.02em] md:text-[28px];
 }
 
 .article h3 {
-  @apply text-xl font-bold md:text-2xl mb-4 mt-6;
+  @apply text-lg leading-[1.35] tracking-[-0.01em] md:text-[22px];
 }
 
-.article p,
-.article li {
-  @apply text-sm text-primary/80 md:text-[17px] leading-[1.6] font-light;
+.article h4 {
+  @apply text-[1em] leading-[1.4];
+}
+
+.article:not(.changelog) > h2 {
+  margin-block: 2em 0.5em;
+}
+
+.article:not(.changelog) > h3 {
+  margin-block: 1.6em 0.45em;
+}
+
+.article:not(.changelog) > h4 {
+  margin-block: 1.4em 0.4em;
+}
+
+.article:not(.changelog) > :is(h2, h3, h4) + :is(h3, h4) {
+  margin-top: 0.6em;
+}
+
+.article:not(.changelog) > :first-child {
+  margin-top: 0;
 }
 
 .article blockquote {
-  @apply border-l-2 border-brand bg-brand/10 px-7 py-6 text-sm md:text-[17px] leading-[1.6] font-light;
+  @apply border-l-2 border-brand bg-brand/10 px-7 py-6 leading-[1.6];
 }
 
 .article blockquote p {
@@ -47,23 +81,26 @@
   @apply opacity-80 dark:opacity-50;
 }
 
+.article ul,
+.article ol {
+  padding-left: 1.4em;
+}
+
 .article ul {
-  @apply list-disc pl-4;
+  @apply list-disc;
 }
 
 .article ol {
-  @apply list-decimal pl-4;
-}
-
-.article ul ul,
-.article ol ul,
-.article ul ol,
-.article ol ol {
-  @apply mb-0;
+  @apply list-decimal;
 }
 
 .article li {
-  @apply ml-4;
+  padding-left: 0.3em;
+}
+
+.article li + li,
+.article li > :is(ul, ol) {
+  margin-top: 0.4em;
 }
 
 .article strong {
@@ -85,7 +122,7 @@
 /* Make sure this is compatible with the <Link /> component */
 .article a {
   @apply text-link underline transition-colors hover:text-blue-550;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .article.privacy-best-practices > h2:first-child {

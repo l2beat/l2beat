@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
@@ -7,6 +7,7 @@ import { getSearchBarEntries } from './getSearchBarEntries'
 describe(getSearchBarEntries.name, () => {
   const originalGetProjects = ps.getProjects.bind(ps)
   const originalMock = env.MOCK
+  const originalInteropChains = env.INTEROP_CHAINS
 
   beforeEach(() => {
     env.MOCK = true
@@ -15,6 +16,7 @@ describe(getSearchBarEntries.name, () => {
   afterEach(() => {
     ps.getProjects = originalGetProjects
     env.MOCK = originalMock
+    env.INTEROP_CHAINS = originalInteropChains
   })
 
   it('keeps only direct project matches when they exist', async () => {
@@ -47,6 +49,33 @@ describe(getSearchBarEntries.name, () => {
     expect(result.find((entry) => entry.name === 'Ethereum')?.href).toEqual(
       '/projects/ethereum',
     )
+  })
+
+  // Some chain pages have no project behind them, like Solana's.
+  it('finds interop chains that have a chain page', async () => {
+    env.INTEROP_CHAINS = ['solana', 'arbitrum']
+    ps.getProjects = async () =>
+      [l2Project('arbitrum', 'Arbitrum One')] as never
+
+    const result = await getSearchBarEntries('sol')
+
+    expect(
+      result.map(({ name, href, category }) => ({ name, href, category })),
+    ).toEqual([
+      { name: 'Solana', href: '/projects/solana', category: 'interop' },
+    ])
+  })
+
+  it('links a scaling chain to its scaling page only', async () => {
+    env.INTEROP_CHAINS = ['solana', 'arbitrum']
+    ps.getProjects = async () =>
+      [l2Project('arbitrum', 'Arbitrum One')] as never
+
+    const result = await getSearchBarEntries('arbitrum')
+
+    expect(result.map((entry) => entry.href)).toEqual([
+      '/layer2s/projects/arbitrum',
+    ])
   })
 
   it('falls back to fuzzy project matches when there are no direct matches', async () => {
@@ -89,7 +118,61 @@ describe(getSearchBarEntries.name, () => {
     expect(result[0]?.name).toEqual('USDC')
     expect(result[0]?.searchMatchKind).toEqual('direct')
   })
+
+  it('finds a token by the address of its onchain deployment', async () => {
+    ps.getProjects = async () => [] as never
+
+    const result = await getSearchBarEntries(USDC_ADDRESS)
+
+    expect(result).toHaveLength(1)
+    expect(result[0]?.type).toEqual('token')
+    expect(result[0]?.name).toEqual('USDC')
+    expect(result[0]?.href).toEqual('/interop/tokens/usdc01/circle/usdc')
+    expect(result[0]?.searchMatchKind).toEqual('direct')
+  })
+
+  it('ranks the token above projects that list its contract', async () => {
+    ps.getProjects = async () =>
+      [l2ProjectWithContract('etherex', 'Etherex', USDC_ADDRESS)] as never
+
+    const result = await getSearchBarEntries(USDC_ADDRESS)
+
+    expect(result.map((entry) => entry.name)).toEqual(['USDC', 'Etherex'])
+  })
+
+  it('finds projects by a lowercase contract address', async () => {
+    const address = '0xabcdefabcdefabcdefabcdefabcdefabcdefabcd'
+    ps.getProjects = async () =>
+      [l2ProjectWithContract('etherex', 'Etherex', address)] as never
+
+    const result = await getSearchBarEntries(address)
+
+    expect(result.map((entry) => entry.name)).toEqual(['Etherex'])
+  })
+
+  it('ignores whitespace around a pasted address', async () => {
+    ps.getProjects = async () => [] as never
+
+    const result = await getSearchBarEntries(` ${USDC_ADDRESS}\n`)
+
+    expect(result.map((entry) => entry.name)).toEqual(['USDC'])
+  })
 })
+
+const USDC_ADDRESS = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+
+function l2ProjectWithContract(slug: string, name: string, address: string) {
+  return {
+    ...l2Project(slug, name),
+    contracts: {
+      addresses: {
+        ethereum: [
+          { address: `eth:${EthereumAddress(address)}`, name: 'Bridge' },
+        ],
+      },
+    },
+  }
+}
 
 function l2Project(
   slug: string,

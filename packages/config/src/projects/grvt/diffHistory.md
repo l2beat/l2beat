@@ -1,3 +1,142 @@
+Generated with discovered.json: 0xc8ff0886005d8087f6cd80cb7dcf02cf3e00a469
+
+# Diff at Sat, 24 Oct 2026 16:41:05 GMT:
+
+- id: 236ab4d7
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792750638
+- current timestamp: 1792750638
+
+## Description
+
+Diamond `validators` is MEDIUM: it names the ValidatorTimelock, a role holder.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792750638 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.validators:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0x97bb6c851dd48647c12171ef4ffe322696a37244
+
+# Diff at Fri, 23 Oct 2026 10:18:22 GMT:
+
+- id: 59f8be76
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e5da6875dac4af99f827db5faa99b87f99ca760f block: 1792144186
+- current timestamp: 1792750638
+
+## Description
+
+Governance approved proposal that sends trxs to L2: https://tools.l2beat.com/decoder-new/?hash=0x301cafca68144cabff26ffe4007100c05ef451203bf461840acd2756ddc0f27d&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        53
++        54
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        53
++        54
+    }
+```
+
+Generated with discovered.json: 0x543a13a39939bf30b1183be2f5e3a5bee289e7ed
+
+# Diff at Tue, 20 Oct 2026 12:40:06 GMT:
+
+- id: 354e41fb
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1792144186
+- current timestamp: 1792144186
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144186 (main branch discovery), not current.
+
+```diff
+    external contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC","role":".owner"}
+      directlyReceivedPermissions.9:
++        {"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"control all roles in the ZkToken access control, including the minter roles.","role":".DefaultAdmin"}
+    }
+```
+
+```diff
+    external contract (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
+    }
+```
+
+```diff
+    external contract (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"control all roles in the ZkToken access control, including the minter roles.","role":".DefaultAdmin","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","role":"admin","via":[{"address":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
+    external contract (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","role":".PROPOSE_GUARDIAN"}
+    }
+```
+
+```diff
+    external contract (zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"},{"permission":"interact","from":"zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}]
+    }
+```
+
+```diff
+    external contract (zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"control all roles in the ZkToken access control, including the minter roles.","role":".DefaultAdmin"},{"permission":"upgrade","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","role":"admin","via":[{"address":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC","role":".owner"}]
+    }
+```
+
+```diff
+    external contract (zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","role":".PROPOSE_GUARDIAN"}]
+    }
+```
+
 Generated with discovered.json: 0x31ab98383b882d81adbefd44ee4a7e4cdd32e397
 
 # Diff at Fri, 16 Oct 2026 10:35:07 GMT:

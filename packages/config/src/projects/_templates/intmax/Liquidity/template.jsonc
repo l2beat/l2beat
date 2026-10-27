@@ -9,6 +9,7 @@
   ],
   "ignoreInWatchMode": ["getLastDepositId", "getLastRelayedDepositId"],
   "fields": {
+    "rollup": { "edit": ["format", "ScrollAddress"] },
     "accessControl": {
       "handler": {
         "type": "accessControl",

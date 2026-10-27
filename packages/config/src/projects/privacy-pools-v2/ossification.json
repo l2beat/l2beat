@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1792680419,
+      "type": "state",
+      "contract": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+      "transaction": "0x73304049d66c1a29ab853fa4afd38ddf87439b34cb3c62aefae2e0d21797c2ce",
+      "updateId": "6bd52cf6",
+      "reason": "AccessRouter: every admin role moved from EOA 0x12Dbd633 to a 2/4 Safe 0xd563affc (granted in blocks 26248732-26248737, EOA revoked by the Safe in this transaction)."
+    }
+  ]
+}

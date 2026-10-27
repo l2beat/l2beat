@@ -2,6 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2ProjectEntry'
+import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getScalingMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
@@ -88,15 +89,16 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       'daTrackingConfig',
       'costsInfo',
       'activityConfig',
-      'crops',
+      'garden',
       'ossificationHistory',
     ],
   })
   if (!project) return undefined
 
-  const [appLayoutProps, projectEntry] = await Promise.all([
+  const [appLayoutProps, projectEntry, sectionLinks] = await Promise.all([
     getAppLayoutProps(),
     getL2ProjectEntry(project, helpers),
+    getProjectSectionLinks(slug),
   ])
   return {
     head: {
@@ -131,6 +133,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
     props: {
       ...appLayoutProps,
       projectEntry,
+      sectionLinks,
       queryState: helpers.dehydrate(),
     },
   }

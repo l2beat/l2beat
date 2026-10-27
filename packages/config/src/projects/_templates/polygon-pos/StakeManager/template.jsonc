@@ -18,8 +18,33 @@
       }
     }
   },
-  // validator auctions were removed, these storage values are unused
-  "ignoreMethods": ["auctionPeriod", "replacementCoolDown"],
+  "ignoreRelatives": ["token", "tokenMatic", "migration"],
+  // validator auctions were removed, auctionPeriod and replacementCoolDown are unused
+  "ignoreMethods": [
+    "auctionPeriod",
+    "replacementCoolDown",
+    "getValidatorContract",
+    "delegatedAmount",
+    "isValidator",
+    "latestSignerUpdateEpoch",
+    "signers",
+    "validatorAuction",
+    "validators",
+    "validatorStake",
+    "validatorStateChanges",
+    "accountStateRoot"
+  ],
+  "ignoreInWatchMode": [
+    "currentEpoch",
+    "currentValidatorSetTotalStake",
+    "epoch",
+    "rewardPerStake",
+    "totalRewardsLiquidated",
+    "totalStaked",
+    "validatorState",
+    "totalHeimdallFee",
+    "NFTCounter"
+  ],
   "category": "core",
-  "description": "Manages the Polygon PoS validator set."
+  "description": "Manages the validator set, stakes and rewards. The RootChain uses it to check that each checkpoint is signed by more than 2/3 of the stake."
 }

@@ -278,6 +278,11 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
+    referenceClient: {
+      name: 'Tornado Cash classic app',
+      repository: 'https://github.com/tornado-dao/classic-ui',
+      commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',
+    },
     trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),
     relayerTracking: {
@@ -354,9 +359,8 @@ export const tornadoCash: BaseProject = {
     },
     security: {
       sentiment: 'good',
-      points: ['Simple, well-ossified design.'],
+      points: ['Simple design.'],
       missing: [
-        'Not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
         'Brittle onchain governance (token voting) controls the official frontend (ENS+IPFS).',
       ],
       notReviewed: ['Formal verification.'],

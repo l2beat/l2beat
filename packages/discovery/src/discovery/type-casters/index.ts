@@ -15,6 +15,7 @@ import { SliceBytes32 } from './SliceBytes32'
 import { SliceUint256 } from './SliceUint256'
 import { TimeSince } from './TimeSince'
 import { Undecimal } from './Undecimal'
+import { UndoL2Alias } from './UndoL2Alias'
 
 export const TypeConverters = {
   Bytes32ToString,
@@ -32,6 +33,7 @@ export const TypeConverters = {
   SliceBytes32,
   SliceUint256,
   Ocr3OffchainConfig,
+  UndoL2Alias,
 }
 
 export function isCustomTypeCaster(name: string): boolean {

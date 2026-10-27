@@ -24,6 +24,7 @@ import { shouldSkip } from './shouldSkip'
 export interface AddressStats {
   discovered: number
   skipped: number
+  beyondMaxDepth: ChainSpecificAddress[]
 }
 
 /**
@@ -56,6 +57,7 @@ export class DiscoveryEngine {
     let toAnalyze: AddressesWithTemplates = {}
     let depth = 0
     let skipped = 0
+    const beyondMaxDepth: ChainSpecificAddress[] = []
 
     config.initialAddresses.forEach((address) => {
       toAnalyze[address.toString()] = new Set()
@@ -115,6 +117,9 @@ export class DiscoveryEngine {
           if (skipReason !== undefined) {
             if (skipReason.startsWith('total ')) {
               skipped++
+            }
+            if (skipReason.startsWith('depth ')) {
+              beyondMaxDepth.push(address)
             }
             const info = `↓${depth} ${counter.increment()}/${total}`
             const entries = [
@@ -201,7 +206,7 @@ export class DiscoveryEngine {
 
     return {
       analyses,
-      stats: { discovered: analyses.length, skipped },
+      stats: { discovered: analyses.length, skipped, beyondMaxDepth },
     }
   }
 

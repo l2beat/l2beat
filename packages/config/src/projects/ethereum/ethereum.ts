@@ -549,6 +549,19 @@ export const ethereum: BaseProject = {
           },
         ],
       },
+      {
+        // Blogposts on .gwei names (gwei.limo), published as blobs. Anyone may publish one, so the
+        // inbox alone identifies them: GnsPosts only takes blobs through publish().
+        projectId: ProjectId('gwei-blogposts'),
+        name: '.gwei blogposts',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x73849f6f2785ba7fd2f41b5b4573b75554417981',
+            sinceBlock: 26268082,
+          },
+        ],
+      },
     ],
   },
   daBridge: {
@@ -612,7 +625,7 @@ export const ethereum: BaseProject = {
       url: 'https://blog.ethereum.org/2025/11/06/fusaka-mainnet-announcement',
       date: '2025-12-09T00:00:00Z',
       description:
-        'First Blob Parameter Only fork after Fusaka increases blob limits: target from 6 to 10 blobs and max from 9 to 15 blobs.',
+        'First Blob Parameter Only fork after Fusaka: blob target from 6 to 10, max from 9 to 15.',
       type: 'general',
     },
     {
@@ -620,7 +633,7 @@ export const ethereum: BaseProject = {
       url: 'https://github.com/ethereum/pm/issues/1772',
       date: '2026-01-07T00:00:00Z',
       description:
-        'Second Blob Parameter Only fork increases blob limits: target from 10 to 14 blobs and max from 15 to 21 blobs.',
+        'Second Blob Parameter Only fork: blob target from 10 to 14, max from 15 to 21.',
       type: 'general',
     },
   ],

@@ -311,7 +311,18 @@ function contractFromDiscovery(
   }
 }
 
+const abiEntries = new Map<string, ApiAbiEntry>()
+
 function abiEntry(entry: string): ApiAbiEntry {
+  let cached = abiEntries.get(entry)
+  if (cached === undefined) {
+    cached = parseAbiEntry(entry)
+    abiEntries.set(entry, cached)
+  }
+  return cached
+}
+
+function parseAbiEntry(entry: string): ApiAbiEntry {
   if (entry.startsWith('function')) {
     const fragment = utils.FunctionFragment.from(entry.slice(9))
     return { value: entry, signature: utils.Interface.getSighash(fragment) }

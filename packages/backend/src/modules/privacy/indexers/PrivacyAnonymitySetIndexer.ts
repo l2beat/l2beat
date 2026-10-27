@@ -1,11 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyAnonymitySetEventRecord } from '@l2beat/database'
-import type {
-  BlockProvider,
-  BlockTimestampProvider,
-  IRpcClient,
-  LogsProvider,
-} from '@l2beat/shared'
+import type { BlockProvider, IRpcClient, LogsProvider } from '@l2beat/shared'
 import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import {
   assert,
@@ -17,6 +12,7 @@ import {
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import groupBy from 'lodash/groupBy'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -33,10 +29,11 @@ import {
   extractPrivacyAnonymitySetMember,
   type PrivacyAnonymitySetMember,
 } from '../utils/extractPrivacyAnonymitySetMember'
+import { isPrivacyPoolsV2Reshield } from '../utils/extractPrivacyPoolsV2Event'
 import {
-  buildPrivacyLogConfigMap,
-  buildPrivacyLogFilter,
-  getPrivacyLogKey,
+  extractPrivacyLogMatches,
+  fetchPrivacyLogMatches,
+  type PrivacyLogMatch,
 } from '../utils/privacyLogIndexerUtils'
 import { traceZkMoneyFunders } from '../zkmoney/traceFunders'
 
@@ -49,7 +46,6 @@ interface PrivacyAnonymitySetIndexerDeps
   > {
   chain: string
   blockProvider: BlockProvider
-  blockTimestampProvider: BlockTimestampProvider
   logsProvider: LogsProvider
   rpcClient: IRpcClient
   db: Database
@@ -86,10 +82,10 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       configurations: configurations.length,
     })
 
-    const records = await this.fetchEventsForConfigurations(
-      configurations,
-      from,
-      adjustedTo,
+    const records = await withCoreFeatureRpcMetricsContext(
+      'privacy.anonymitySet',
+      { chain: this.$.chain },
+      () => this.fetchEventsForConfigurations(configurations, from, adjustedTo),
     )
 
     this.logger.info('Fetched privacy anonymity set events', {
@@ -155,77 +151,43 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     from: number,
     to: number,
   ): Promise<PrivacyAnonymitySetEventRecord[]> {
-    if (configurations.length === 0) return []
-
-    const [blockFrom, blockTo] = await Promise.all([
-      this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
-        UnixTime(from),
-        this.$.chain,
-      ),
-      this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
-        UnixTime(to),
-        this.$.chain,
-      ),
-    ])
-
-    // atOrBefore can make adjacent time ranges share boundary blocks. Filtering
-    // by timestamp below keeps the exact range; repository upserts deduplicate
-    // any boundary logs fetched again by the following update.
-    const { addresses, events } = buildPrivacyLogFilter(configurations)
-    const logs = await this.$.logsProvider.getLogs(
-      blockFrom,
-      blockTo,
-      addresses,
-      [events],
-    )
-
-    const configMap = buildPrivacyLogConfigMap(configurations)
-    const rawRecords = extractRawRecords(logs, configMap)
-    if (rawRecords.length === 0) return []
-
-    const blockTimestamps = await this.$.blockProvider.getBlockTimestamps(
-      unique(rawRecords.map((record) => record.log.blockNumber)),
-    )
-    const recordsInRange = rawRecords.flatMap((record) => {
-      const timestamp = blockTimestamps.get(record.log.blockNumber)
-      assert(
-        timestamp !== undefined,
-        `Missing block timestamp for block ${record.log.blockNumber}`,
-      )
-
-      if (timestamp < from || timestamp > to) return []
-
-      return [{ ...record, timestamp }]
+    const matches = await fetchPrivacyLogMatches(configurations, {
+      chain: this.$.chain,
+      from,
+      to,
+      privacyBlockTimestamp: this.$.db.privacyBlockTimestamp,
+      logsProvider: this.$.logsProvider,
+      blockProvider: this.$.blockProvider,
+      logger: this.logger,
     })
-    if (recordsInRange.length === 0) return []
+    const rawRecords = await extractRawRecords(matches, this.$.rpcClient)
+    if (rawRecords.length === 0) return []
 
     const transactionSenders = await this.getTransactionSenders(
       unique(
-        recordsInRange
+        rawRecords
           .filter((record) => record.origin.type === 'transaction')
           .map((record) => record.log.transactionHash.toLowerCase()),
       ),
     )
 
-    const tracedFunders = await this.getTracedFunders(recordsInRange)
+    const tracedFunders = await this.getTracedFunders(rawRecords)
 
-    return withoutUntracedFunders(recordsInRange, tracedFunders).map(
-      (record) => {
-        const config = record.configuration.properties
-        return {
-          configurationId: record.configuration.id,
-          projectId: config.projectId,
-          bucketId: config.bucketId,
-          chain: config.chain,
-          timestamp: record.timestamp,
-          blockNumber: record.log.blockNumber,
-          txHash: record.log.transactionHash,
-          logIndex: record.log.logIndex,
-          sender: this.resolveSender(record, transactionSenders, tracedFunders),
-          amount: record.amount,
-        }
-      },
-    )
+    return withoutUntracedFunders(rawRecords, tracedFunders).map((record) => {
+      const config = record.configuration.properties
+      return {
+        configurationId: record.configuration.id,
+        projectId: config.projectId,
+        bucketId: config.bucketId,
+        chain: config.chain,
+        timestamp: record.timestamp,
+        blockNumber: record.log.blockNumber,
+        txHash: record.log.transactionHash,
+        logIndex: record.log.logIndex,
+        sender: this.resolveSender(record, transactionSenders, tracedFunders),
+        amount: record.amount,
+      }
+    })
   }
 
   private resolveSender(
@@ -261,7 +223,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
 
   /** One trace per configuration, as each carries its own funding params. */
   private async getTracedFunders(
-    records: TimedRawRecord[],
+    records: RawRecord[],
   ): Promise<Map<RawRecord, EthereumAddress>> {
     const funders = new Map<RawRecord, EthereumAddress>()
     const byConfiguration = groupBy(
@@ -274,11 +236,11 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       const traced = await traceZkMoneyFunders(group, first.origin.params, {
         rpc: this.$.rpcClient,
         logsProvider: this.$.logsProvider,
-        getBlockNumberAtOrBefore: (timestamp) =>
-          this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
-            timestamp,
+        getBlockNumberAtOrBefore: async (timestamp) =>
+          (await this.$.db.privacyBlockTimestamp.findBlockNumberByChainAndTimestamp(
             this.$.chain,
-          ),
+            UnixTime.toStartOf(timestamp, 'hour'),
+          )) ?? 0,
       })
       for (const record of group) {
         const funder = traced.get(record.log)
@@ -337,21 +299,16 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
 interface RawRecord {
   configuration: Configuration<PrivacyAnonymitySetIndexerConfig>
   log: Log
+  timestamp: UnixTime
   amount: bigint
   origin: PrivacyAnonymitySetMember['origin']
 }
 
-interface TimedRawRecord extends RawRecord {
-  timestamp: UnixTime
-}
-
-type TracedFunderRecord = TimedRawRecord & {
+type TracedFunderRecord = RawRecord & {
   origin: Extract<RawRecord['origin'], { type: 'tracedFunder' }>
 }
 
-function isTracedFunderRecord(
-  record: TimedRawRecord,
-): record is TracedFunderRecord {
+function isTracedFunderRecord(record: RawRecord): record is TracedFunderRecord {
   return record.origin.type === 'tracedFunder'
 }
 
@@ -360,9 +317,9 @@ function isTracedFunderRecord(
  * attributed to an intermediary; the frontend reports the coverage.
  */
 function withoutUntracedFunders(
-  records: TimedRawRecord[],
+  records: RawRecord[],
   tracedFunders: Map<RawRecord, EthereumAddress>,
-): TimedRawRecord[] {
+): RawRecord[] {
   return records.filter(
     (record) =>
       record.origin.type !== 'tracedFunder' || tracedFunders.has(record),
@@ -370,30 +327,27 @@ function withoutUntracedFunders(
 }
 
 function extractRawRecords(
-  logs: Log[],
-  configMap: Map<string, Configuration<PrivacyAnonymitySetIndexerConfig>[]>,
-): RawRecord[] {
-  const records: RawRecord[] = []
-
-  for (const log of logs) {
-    const key = getPrivacyLogKey(log)
-    const configurations = configMap.get(key) ?? []
-
-    for (const configuration of configurations) {
+  matches: PrivacyLogMatch<PrivacyAnonymitySetIndexerConfig>[],
+  rpc: IRpcClient,
+): Promise<RawRecord[]> {
+  return extractPrivacyLogMatches(
+    matches,
+    rpc,
+    async ({ log, timestamp, configuration }, context) => {
       const result = extractPrivacyAnonymitySetMember(
         configuration.properties,
         log,
       )
-      if (!result) continue
-
-      records.push({
+      if (!result || (await isPrivacyPoolsV2Reshield(log, context))) {
+        return undefined
+      }
+      return {
         configuration,
         log,
+        timestamp,
         amount: result.amount,
         origin: result.origin,
-      })
-    }
-  }
-
-  return records
+      }
+    },
+  )
 }

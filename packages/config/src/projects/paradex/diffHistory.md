@@ -1,3 +1,100 @@
+Generated with discovered.json: 0xbbb473b351933ee981c858948dc353c0adcf499c
+
+# Diff at Sat, 24 Oct 2026 16:41:07 GMT:
+
+- id: 32471009
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792751394
+- current timestamp: 1792751394
+
+## Description
+
+Starknet `isFinalized` is MEDIUM: a one-way lock.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792751394 (main branch discovery), not current.
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      fieldMeta.isFinalized.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0xbc148b1801172a93a4a15f7941cd40ec23caf12e
+
+# Diff at Fri, 23 Oct 2026 10:30:56 GMT:
+
+- id: 2a5d3af3
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e5da6875dac4af99f827db5faa99b87f99ca760f block: 1792492705
+- current timestamp: 1792751394
+
+## Description
+
+Removed one ms member.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x94d5dc7c96Eb6176783787669571970C7ba43e01"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0x272be52c7f69b43d5b0b3c919832fdad7ff04669
+
+# Diff at Tue, 20 Oct 2026 10:39:28 GMT:
+
+- id: 62c0458c
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1784193913
+- current timestamp: 1792492705
+
+## Description
+
+Upgraded one ms contract to Safe 1.5.0.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
++        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      values.$implementation:
+-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b"
+      values.getChainId:
+-        1
+      values.VERSION:
+-        "1.4.1"
++        "1.5.0"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Paradex Multisig 2/Safe.sol                    | 1537 ++++++++++++++------
+ 1 file changed, 1059 insertions(+), 478 deletions(-)
+```
+
 Generated with discovered.json: 0xc0239d58cdc30b925b696b57fa1ef7a2188d8714
 
 # Diff at Fri, 16 Oct 2026 10:35:43 GMT:

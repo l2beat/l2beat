@@ -132,6 +132,14 @@ export const strk20: BaseProject = {
         'StarkWare opens the pool to users through the Ready and Xverse wallets.',
       type: 'general',
     },
+    {
+      title: 'Shadow accounts launch',
+      url: 'https://x.com/StarkWareLtd/status/2110007213331026343',
+      date: '2026-10-13T00:00:00Z',
+      description:
+        'StarkWare opens per-app shadow accounts, which let apps act for pool users without naming them.',
+      type: 'general',
+    },
   ],
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
@@ -143,7 +151,7 @@ export const strk20: BaseProject = {
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The pool implementation is immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
+        'The pool and the anonymizer that owns every shadow account are immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
       walkawayTest: {
         passed: false,
         reason:
@@ -154,7 +162,7 @@ export const strk20: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The pool contract, SDK, discovery service and prover are open source. The deployed pool runs a version without a release tag, which has not been rebuilt from source, and the wallets are closed.',
+        'The pool contract, SDK, discovery service and prover are open source. The deployed pool, anonymizer and bridge helpers rebuild from their published source. Source for the AVNU, Endur and escrow helpers is not published, and the wallets are closed.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

@@ -12,6 +12,7 @@ export const zkprover: BaseProject = {
   shortName: undefined,
   aliases: ['Polygon Zero'],
   addedAt: UnixTime.fromDate(new Date('2025-07-18')),
+  archivedAt: UnixTime.fromDate(new Date('2026-10-23')),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,

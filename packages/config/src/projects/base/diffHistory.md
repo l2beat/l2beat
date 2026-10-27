@@ -1,3 +1,183 @@
+Generated with discovered.json: 0xb014cd6e694ec54707e4443698ca7526db6719a4
+
+# Diff at Sat, 24 Oct 2026 16:41:04 GMT:
+
+- id: a8812653
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1791538610
+- current timestamp: 1791538610
+
+## Description
+
+TEEVerifier and ZkVerifier `nullified` is MEDIUM: a one-way kill switch.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791538610 (main branch discovery), not current.
+
+```diff
+    contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [base/TEEVerifier] {
+    +++ description: Stateless verifier of TEE proofs. Recovers an ECDSA signature over the journal and checks that the signer is registered in the eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA with the expected enclave image hash. Can be permanently nullified.
+      fieldMeta.nullified.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ZkVerifier (eth:0xB88D95bDf6972508942d184866890c1834219B75) [base/ZkVerifier] {
+    +++ description: Thin router that forwards SP1 ZK proof verification to the eth:0xdc32E228636273285Befa5F001dBB5142517C106. Can be permanently nullified.
+      fieldMeta.nullified.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0xff22924d127c3d6ba9c48fff2b7fc7ee7e1de55c
+
+# Diff at Tue, 20 Oct 2026 12:39:54 GMT:
+
+- id: c4a2de3d
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1791538610
+- current timestamp: 1791538610
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791538610 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (base:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
++++ severity: MEDIUM
+      values.owner:
+-        "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d"
++        "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000007","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000010","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000011","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000012","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000013","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000014","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000015","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000016","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000017","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000019","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"base:0x420000000000000000000000000000000000001A","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000020","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000021","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"base:0x4200000000000000000000000000000000000018","role":".owner"}
+    }
+```
+
+Generated with discovered.json: 0x67a6245dc85527b7b1743bb70bc3189eb32d19f6
+
+# Diff at Tue, 20 Oct 2026 07:51:27 GMT:
+
+- id: 65ca45bd
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1791538610
+- current timestamp: 1791538610
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791538610 (main branch discovery), not current.
+
+```diff
+    contract L2ERC721Bridge (base:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      values.OTHER_BRIDGE:
+-        "base:0x608d94945A64503E642E6370Ec598e519a2C1E53"
++        "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53"
+      values.otherBridge:
+-        "base:0x608d94945A64503E642E6370Ec598e519a2C1E53"
++        "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.l2TokenBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "base:0x4200000000000000000000000000000000000010"
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "base:0x4200000000000000000000000000000000000010"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "base:0x4200000000000000000000000000000000000010"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"base"}}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x608d94945A64503E642E6370Ec598e519a2C1E53) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000014"
++        "base:0x4200000000000000000000000000000000000014"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000014"
++        "base:0x4200000000000000000000000000000000000014"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"base"}}]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.OTHER_MESSENGER:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "base:0x4200000000000000000000000000000000000007"
+      values.otherMessenger:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "base:0x4200000000000000000000000000000000000007"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"base"}}]
+    }
+```
+
 Generated with discovered.json: 0x6211e043deda35dc351e99d23e117877b931f3ac
 
 # Diff at Fri, 16 Oct 2026 09:37:44 GMT:

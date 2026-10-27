@@ -1,14 +1,16 @@
-import type {
-  PrivacyFlowExtractorConfig,
-  PrivacyFlowSource,
-} from '@l2beat/config'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { PrivacyFlowExtractorConfig } from '@l2beat/config'
+import { assertUnreachable, EthereumAddress } from '@l2beat/shared-pure'
 import { type BigNumber, utils } from 'ethers'
-import type { PrivacyFlowExtractResult, PrivacyRpcLog } from '../types'
+import type {
+  EvmPrivacyFlowExtractorConfig,
+  PrivacyFlowExtractResult,
+  PrivacyRpcLog,
+} from '../types'
 import { zkApiInterface } from '../zkapi/abi'
 import { zkMoneyInterface } from '../zkmoney/abi'
 import { erc20Interface } from './erc20'
 import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
+import { extractPrivacyPoolsV2Event } from './extractPrivacyPoolsV2Event'
 
 const ERC20_TOKEN_TYPE = 0
 
@@ -26,12 +28,7 @@ const umbraInterface = new utils.Interface([
   'event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)',
 ])
 
-const zamaInterface = new utils.Interface([
-  'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
-  'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
-])
-
-export function extractPrivacyFlow<T extends PrivacyFlowSource>(
+export function extractPrivacyFlow<T extends EvmPrivacyFlowExtractorConfig>(
   source: T,
   log: PrivacyRpcLog,
 ): PrivacyFlowExtractResult | undefined {
@@ -48,16 +45,14 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
         count: 1,
         amount: extractPrivacyPoolsEvent(log).amount,
       }
+    case 'privacyPoolsV2Value':
+      return extractPrivacyPoolsV2Value(source, log)
     case 'railgunShield':
       return extractRailgunShield(source, log)
     case 'railgunUnshield':
       return extractRailgunUnshield(source, log)
     case 'umbraAmount':
       return extractUmbraAmount(source, log)
-    case 'zamaWrap':
-      return extractZamaWrap(log)
-    case 'zamaUnwrap':
-      return extractZamaUnwrap(source, log)
     case 'zkMoneyDeposit':
       return {
         count: 1,
@@ -87,8 +82,24 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
         ),
       }
     default:
-      return undefined
+      return assertUnreachable(source)
   }
+}
+
+// The vault serves every asset, so a bucket keeps only its own asset's logs.
+// A pure private transfer has no withdrawn value and crosses no boundary.
+function extractPrivacyPoolsV2Value(
+  source: Extract<
+    PrivacyFlowExtractorConfig,
+    { extractor: 'privacyPoolsV2Value' }
+  >,
+  log: PrivacyRpcLog,
+): PrivacyFlowExtractResult | undefined {
+  const result = extractPrivacyPoolsV2Event(log)
+  if (result.asset !== source.params.tokenAddress || result.amount === 0n) {
+    return undefined
+  }
+  return { count: 1, amount: result.amount }
 }
 
 // Zero-value and self transfers move nothing across the pool boundary, so
@@ -181,29 +192,6 @@ function extractUmbraAmount(
   return {
     count: 1,
     amount: BigInt(parsedLog.args.amount.toString()),
-  }
-}
-
-function extractZamaWrap(log: PrivacyRpcLog): PrivacyFlowExtractResult {
-  const parsedLog = zamaInterface.parseLog(log)
-
-  return {
-    count: 1,
-    amount: BigInt(parsedLog.args.roundedAmount.toString()),
-  }
-}
-
-function extractZamaUnwrap(
-  source: Extract<PrivacyFlowExtractorConfig, { extractor: 'zamaUnwrap' }>,
-  log: PrivacyRpcLog,
-): PrivacyFlowExtractResult {
-  const parsedLog = zamaInterface.parseLog(log)
-
-  return {
-    count: 1,
-    amount:
-      BigInt(parsedLog.args.cleartextAmount.toString()) *
-      BigInt(source.params.rate),
   }
 }
 
