@@ -9,6 +9,8 @@ Generated with discovered.json: 0x1cfa4bfc88c7939b4e2333a1bbccfa9df445f91b
 
 ## Description
 
+Mark FeeTreasury non-critical. It holds only protocol fees from the intent contracts.
+
 Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
 
 ## Config/verification related changes
