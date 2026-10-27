@@ -13,13 +13,13 @@
       "handler": {
         "type": "call",
         "method": "function approvedRelayers(address) view returns (bool)",
-        "args": ["0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"]
+        "args": ["0x61AB85BAE30435F43A276D51968D3Fa947093966"]
       }
     },
     "relayers": {
       "handler": {
         "type": "hardcoded",
-        "value": ["0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"]
+        "value": ["0x61AB85BAE30435F43A276D51968D3Fa947093966"]
       },
       "permissions": [
         {
