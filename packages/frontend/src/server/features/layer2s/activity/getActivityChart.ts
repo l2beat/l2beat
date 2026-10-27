@@ -1,5 +1,5 @@
 import type { ActivityRecord, ActivityTotals } from '@l2beat/database'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -13,6 +13,11 @@ import {
 } from './buildActivityProjectChartStats'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
+import {
+  type ActivityResolution,
+  getActivityResolution,
+  getLastHourOfDay,
+} from './utils/getActivityResolution'
 import { getActivitySyncInfo } from './utils/getActivitySyncInfo'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 import {
@@ -24,6 +29,8 @@ export type ActivityChartParams = v.infer<typeof ActivityChartParams>
 export const ActivityChartParams = v.object({
   filter: ActivityProjectFilter,
   range: ChartRange,
+  /** Lets the shortest ranges read hours. Callers that read days leave it out */
+  hourly: v.boolean().optional(),
 })
 
 type ActivityChartDataPoint = [
@@ -39,6 +46,9 @@ export type ActivityChartData = {
   syncWarning: string | undefined
   syncedUntil: UnixTime
   stats: ActivityProjectChartStats | undefined
+  resolution: ActivityResolution
+  /** Of a single project. Projects indexed per day have no hours */
+  hasHourly: boolean | undefined
 }
 /**
  * A function that computes values for chart data of the activity over time.
@@ -47,6 +57,7 @@ export type ActivityChartData = {
 export async function getActivityChart({
   filter,
   range,
+  hourly,
 }: ActivityChartParams): Promise<ActivityChartData> {
   if (env.MOCK) {
     return getMockActivityChart({ filter, range })
@@ -60,43 +71,52 @@ export async function getActivityChart({
   const projectId = projects.length === 2 ? projects[0] : undefined
   const adjustedRange = await getFullySyncedActivityRange(range)
 
-  const [entries, maxCounts, peaks, activityTotals] = await Promise.all([
-    db.activity.getByProjectsAndTimeRange(projects, adjustedRange),
-    projectId ? db.activity.getMaxCountsForProject(projectId) : undefined,
-    projectId ? db.activity.getMaxPeaksForProject(projectId) : undefined,
-    projectId
-      ? db.activity.getActivityTotalsForProjects([projectId])
-      : undefined,
-  ])
+  const [hasHourly, maxCounts, peaks, activityTotals, syncInfo] =
+    await Promise.all([
+      hourly && projectId
+        ? db.hourlyActivity.checkIfExists(projectId)
+        : undefined,
+      projectId ? db.activity.getMaxCountsForProject(projectId) : undefined,
+      projectId ? db.activity.getMaxPeaksForProject(projectId) : undefined,
+      projectId
+        ? db.activity.getActivityTotalsForProjects([projectId])
+        : undefined,
+      // A single project is synced until the last day we have data for
+      projectId ? getActivitySyncInfo(projectId, adjustedRange[1]) : undefined,
+    ])
+  const resolution =
+    hourly && hasHourly !== false ? getActivityResolution(range) : 'day'
 
-  // By default, we assume we're always synced...
-  let syncedUntil = adjustedRange[1]
-  let syncWarning = undefined
-
-  // ...but if we are looking at a single project, we check the last day we have data for,
-  // and use that as the cutoff.
-  if (projectId) {
-    const syncInfo = await getActivitySyncInfo(projectId, adjustedRange[1])
-    if (!syncInfo.hasSyncData) {
-      return {
-        data: [],
-        syncWarning,
-        syncedUntil: adjustedRange[1],
-        stats: undefined,
-      }
+  if (syncInfo && !syncInfo.hasSyncData) {
+    return {
+      data: [],
+      syncWarning: undefined,
+      syncedUntil: adjustedRange[1],
+      stats: undefined,
+      resolution,
+      hasHourly,
     }
-    syncedUntil = syncInfo.syncedUntil
-    syncWarning = syncInfo.syncWarning
   }
+  const syncedUntil = syncInfo?.syncedUntil ?? adjustedRange[1]
+  const syncWarning = syncInfo?.syncWarning
 
-  const projectDataStart = findFirstActivityTimestamp(entries, projectId) ?? 0
+  // The stats compare the past day with a week before, so they need days
+  const dailyRange: ChartRange =
+    resolution === 'hour'
+      ? [syncedUntil - 7 * UnixTime.DAY, adjustedRange[1]]
+      : adjustedRange
+  const entries = await db.activity.getByProjectsAndTimeRange(
+    projects,
+    dailyRange,
+  )
 
+  const firstProjectTimestamp = projectId
+    ? activityTotals?.[projectId]?.sinceTimestamp
+    : undefined
   const startTimestamp = getChartStartTimestamp({
-    rangeStart: adjustedRange[0],
-    firstProjectTimestamp: projectId
-      ? activityTotals?.[projectId]?.sinceTimestamp
-      : undefined,
-    dataStart: projectDataStart,
+    rangeStart: dailyRange[0],
+    firstProjectTimestamp,
+    dataStart: findFirstActivityTimestamp(entries, projectId) ?? 0,
     resolution: 'day',
   })
 
@@ -104,15 +124,84 @@ export async function getActivityChart({
     startTimestamp,
   })
   if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
-    return { data: [], syncWarning, syncedUntil, stats: undefined }
+    return {
+      data: [],
+      syncWarning,
+      syncedUntil,
+      stats: undefined,
+      resolution,
+      hasHourly,
+    }
   }
 
-  const timestamps = generateTimestamps(
-    [startTimestamp, adjustedRange[1]],
-    'day',
+  const dailyData = toDataPoints(
+    generateTimestamps([startTimestamp, adjustedRange[1]], 'day'),
+    aggregatedEntries,
+    syncedUntil,
+    projectId,
   )
 
-  const data: ActivityChartDataPoint[] = timestamps.map((timestamp) => {
+  const stats = projectId
+    ? getActivityChartStats(
+        dailyData,
+        syncedUntil,
+        maxCounts,
+        peaks,
+        activityTotals?.[projectId],
+      )
+    : undefined
+
+  if (resolution === 'day') {
+    return {
+      data: dailyData,
+      syncWarning,
+      syncedUntil,
+      stats,
+      resolution,
+      hasHourly,
+    }
+  }
+
+  // The hours of the last synced day are synced too
+  const lastHour = getLastHourOfDay(adjustedRange[1])
+  const hourlySyncedUntil = getLastHourOfDay(syncedUntil)
+  const hourlyStart = adjustedRange[0]
+  assert(hourlyStart !== null, 'Hourly range without a start')
+  const hourlyEntries = await db.hourlyActivity.getByProjectsAndTimeRange(
+    projects,
+    [hourlyStart, lastHour],
+  )
+  // Hourly data can start after the range does
+  const firstHour = hourlyEntries.find((e) =>
+    projectId ? e.projectId === projectId : e.projectId !== ProjectId.ETHEREUM,
+  )?.timestamp
+  return {
+    data:
+      firstHour === undefined
+        ? []
+        : toDataPoints(
+            generateTimestamps([firstHour, lastHour], 'hour'),
+            aggregateActivityRecords(hourlyEntries, {
+              startTimestamp: firstHour,
+            }) ?? {},
+            hourlySyncedUntil,
+            projectId,
+          ),
+    syncWarning,
+    syncedUntil: hourlySyncedUntil,
+    stats,
+    resolution,
+    hasHourly,
+  }
+}
+
+function toDataPoints(
+  timestamps: UnixTime[],
+  aggregatedEntries: NonNullable<ReturnType<typeof aggregateActivityRecords>>,
+  syncedUntil: UnixTime,
+  projectId: ProjectId | undefined,
+): ActivityChartDataPoint[] {
+  return timestamps.map((timestamp) => {
     const isSynced = syncedUntil >= timestamp
     const fallbackValue = isSynced ? 0 : null
     const projectFallback = projectId ? fallbackValue : null
@@ -136,29 +225,12 @@ export async function getActivityChart({
       entry.ethereumUopsCount ?? fallbackValue,
     ]
   })
-
-  const stats = projectId
-    ? getActivityChartStats(
-        data,
-        syncedUntil,
-        maxCounts,
-        peaks,
-        activityTotals?.[projectId],
-      )
-    : undefined
-
-  return {
-    data,
-    syncWarning,
-    syncedUntil,
-    stats,
-  }
 }
 
 // Without a single project, the chart aggregates many projects, so any
 // non-Ethereum activity marks where it starts.
 function findFirstActivityTimestamp(
-  entries: ActivityRecord[],
+  entries: Pick<ActivityRecord, 'projectId' | 'timestamp' | 'count'>[],
   projectId: ProjectId | undefined,
 ): UnixTime | undefined {
   return entries.find(
@@ -217,5 +289,7 @@ function getMockActivityChart({
     syncWarning: undefined,
     syncedUntil: adjustedRange[1],
     stats: undefined,
+    resolution: 'day',
+    hasHourly: undefined,
   }
 }

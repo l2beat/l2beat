@@ -3,7 +3,10 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 
 export function aggregateActivityRecords(
-  entries: ActivityRecord[],
+  entries: Pick<
+    ActivityRecord,
+    'projectId' | 'timestamp' | 'count' | 'uopsCount'
+  >[],
   options?: {
     forEthereum?: boolean
     startTimestamp?: UnixTime

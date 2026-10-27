@@ -45,6 +45,7 @@ export function L2ActivityChart({ milestones, entries }: Props) {
         type: 'projects',
         projectIds: entries.map((entry) => entry.id),
       },
+      hourly: true,
     }),
   )
 
@@ -53,14 +54,14 @@ export function L2ActivityChart({ milestones, entries }: Props) {
     () =>
       getChartTimeRangeFromData(
         data?.data.map(([timestamp, ..._]) => ({ timestamp })),
-        { bucket: 'day' },
+        { bucket: data?.resolution ?? 'day' },
       ),
-    [data?.data],
+    [data?.data, data?.resolution],
   )
 
   return (
     <div className="flex flex-col">
-      <ActivityChartHeader />
+      <ActivityChartHeader resolution={data?.resolution ?? 'day'} />
       <L2RecategorizedActivityStats entries={entries} />
       <div className="mt-1 mb-2">
         <ChartTimeRange timeRange={timeRange} />
@@ -76,11 +77,18 @@ export function L2ActivityChart({ milestones, entries }: Props) {
           onItemClick: toggleDataKey,
         }}
       />
+      {data && data.withoutHours.length > 0 && (
+        <p className="mt-1 mb-3 text-center font-medium text-secondary text-xs">
+          Hourly data leaves out {formatList(data.withoutHours)}, which report
+          activity per day only.
+        </p>
+      )}
       <div className="mb-2">
         <ActivityRatioChart
           data={ratioData}
           isLoading={isLoading}
           syncedUntil={data?.syncedUntil}
+          resolution={data?.resolution}
         />
       </div>
       <Controls
@@ -121,7 +129,15 @@ function Controls({ scale, setScale, range, setRange }: ControlsProps) {
           href={getCompareEntryUrl({ metric: 'activity' })}
         />
       </div>
-      <ActivityChartRangeControls range={range} setRange={setRange} />
+      <ActivityChartRangeControls
+        range={range}
+        setRange={setRange}
+        hourlyRanges="enabled"
+      />
     </ChartControlsWrapper>
   )
+}
+
+function formatList(items: string[]) {
+  return new Intl.ListFormat('en', { type: 'conjunction' }).format(items)
 }

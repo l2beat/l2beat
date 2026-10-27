@@ -12,7 +12,6 @@ import { formatTimestamp } from '~/utils/dates'
 interface Props {
   stats: ActivityProjectChartStats | undefined
   metric: ActivityMetric
-  lastRatio: number | null | undefined
   isLoading: boolean
 }
 
@@ -39,16 +38,12 @@ const METRIC_UI = {
   }
 >
 
-export function ActivityChartStatsPanel({
-  stats,
-  metric,
-  lastRatio,
-  isLoading,
-}: Props) {
+export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
   const metricUi = METRIC_UI[metric]
   const metricStats = stats?.[metric]
   const totalCount = metricStats?.totalCount
   const peaks = metricStats?.peaks
+  const pastDayRatio = getPastDayRatio(stats)
   const showTotalCount =
     metricUi.showTotalWithoutData || totalCount !== undefined
 
@@ -108,9 +103,7 @@ export function ActivityChartStatsPanel({
         tooltip="The ratio of user operations to transactions over the past day. A high ratio indicates that for some transactions multiple individual user operations are bundled in a single transaction."
         isLoading={isLoading}
       >
-        {lastRatio !== undefined && lastRatio !== null
-          ? formatUopsRatio(lastRatio)
-          : 'No data'}
+        {pastDayRatio !== undefined ? formatUopsRatio(pastDayRatio) : 'No data'}
       </ChartStatsItem>
       {/* The maxima share a row, so they read as one comparison */}
       <ChartStatsItem
@@ -182,4 +175,18 @@ function formatTrackedSince(
   return peaks
     ? ` Tracked only since ${formatTimestamp(peaks.sinceTimestamp)}.`
     : ''
+}
+
+function getPastDayRatio(stats: ActivityProjectChartStats | undefined) {
+  const txs = stats?.tps.pastDaySum
+  const uops = stats?.uops.pastDaySum
+  if (
+    txs === undefined ||
+    txs === null ||
+    uops === undefined ||
+    uops === null
+  ) {
+    return undefined
+  }
+  return txs === 0 ? 1 : uops / txs
 }
