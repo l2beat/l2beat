@@ -6,12 +6,12 @@ type InputProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
   VariantProps<typeof inputVariants>
 
 const inputVariants = cva(
-  'placeholder:text-coffee-200/40 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
+  'placeholder:text-coffee-400 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
         default:
-          'border border-coffee-400 bg-coffee-400/20 focus:border-coffee-300',
+          'rounded-sm border border-coffee-600 bg-coffee-800 text-coffee-100 focus:border-autumn-300',
         ghost: 'border-none bg-transparent',
       },
       size: {
@@ -41,7 +41,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           e.stopPropagation()
           props.onKeyDown?.(e)
         }}
-        className={cn(className, inputVariants({ variant, size }))}
+        className={cn(inputVariants({ variant, size }), className)}
         {...props}
       />
     )
@@ -49,5 +49,5 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 )
 
 export function InputDescription({ children }: { children: React.ReactNode }) {
-  return <p className="w-full text-right text-coffee-400 text-xs">{children}</p>
+  return <p className="mt-1 text-coffee-400 text-xs">{children}</p>
 }
