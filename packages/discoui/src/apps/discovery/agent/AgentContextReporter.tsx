@@ -1,0 +1,121 @@
+import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { allKeys } from '../../../components/docking'
+import { useCodeStore } from '../../../components/editor/store'
+import { findSelected } from '../../../utils/findSelected'
+import { useProjectQueryOptions } from '../hooks/projectQuery'
+import { useDockingStore } from '../multi-view/store'
+import { useStore as useNodeStore } from '../panel-nodes/store/store'
+import { usePanelStore } from '../store/panel-store'
+import { AGENT_CONNECTED } from './AgentBridge'
+import { describeGraph } from './graphState'
+import { useAgentStore } from './store'
+import { useAgentViewStore } from './viewStore'
+
+const REPORT_DELAY_MS = 300
+const CODE_TEXT_LENGTH_MAX = 8_000
+
+// Reports what the researcher looks at, so an agent asked "what is this?" can
+// read it instead of being told addresses and pasted code.
+export function AgentContextReporter(props: { project: string }) {
+  const response = useQuery(useProjectQueryOptions(props.project))
+  const selected = usePanelStore((state) => state.selected)
+  const tree = useDockingStore((state) => state.tree)
+  const focus = useAgentStore((state) => state.focus)
+  const view = useAgentStore((state) => state.view)
+
+  useEffect(() => {
+    const entries = response.data?.entries
+    if (entries === undefined) {
+      return
+    }
+    let timeout: ReturnType<typeof setTimeout> | undefined
+    // Only the tab in front speaks for the researcher: the server keeps one
+    // context, and a tab in the background would overwrite it.
+    const report = () => {
+      if (document.visibilityState !== 'visible') {
+        return
+      }
+      clearTimeout(timeout)
+      timeout = setTimeout(() => {
+        void putContext({
+          project: props.project,
+          selected: selected.map((address) => ({
+            address,
+            name: findSelected(entries, address)?.name ?? '',
+          })),
+          panels: allKeys(tree),
+          code: readCodeSelection(selected[0]),
+          // A tour or view of another project is not on this screen.
+          agent:
+            focus?.project === props.project
+              ? { step: focus.stepIndex + 1, steps: focus.stepCount, view }
+              : undefined,
+          graph: readGraph(props.project),
+        })
+      }, REPORT_DELAY_MS)
+    }
+    report()
+    document.addEventListener('mouseup', report)
+    document.addEventListener('keyup', report)
+    window.addEventListener(AGENT_CONNECTED, report)
+    document.addEventListener('visibilitychange', report)
+    const unsubscribeNodes = useNodeStore.subscribe(
+      (state, previous) => state.nodes !== previous.nodes && report(),
+    )
+    const unsubscribeView = useAgentViewStore.subscribe(report)
+    return () => {
+      clearTimeout(timeout)
+      document.removeEventListener('mouseup', report)
+      document.removeEventListener('keyup', report)
+      window.removeEventListener(AGENT_CONNECTED, report)
+      document.removeEventListener('visibilitychange', report)
+      unsubscribeNodes()
+      unsubscribeView()
+    }
+  }, [props.project, response.data, selected, tree, focus, view])
+
+  return null
+}
+
+function readGraph(project: string) {
+  const nodes = useNodeStore.getState()
+  if (!nodes.loaded || nodes.projectId !== project) {
+    return undefined
+  }
+  const pending = useAgentViewStore.getState().pending
+  const pendingHere = pending?.project === project ? pending : undefined
+  return {
+    contracts: describeGraph(nodes.nodes),
+    pendingView: pendingHere && {
+      title: pendingHere.title,
+      changes: pendingHere.changes,
+    },
+  }
+}
+
+function readCodeSelection(address: string | undefined) {
+  const editor = useCodeStore.getState().editors['code-panel']
+  if (address === undefined || editor === undefined) {
+    return undefined
+  }
+  const { from, to } = editor.view.state.selection.main
+  if (from === to) {
+    return undefined
+  }
+  const text = editor.view.state.sliceDoc(from, to)
+  return { address, text: text.slice(0, CODE_TEXT_LENGTH_MAX) }
+}
+
+// The tab reports again on the next change, so a server that is down misses
+// nothing that matters.
+async function putContext(context: object) {
+  const response = await fetch('/api/agent/context', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(context),
+  }).catch(() => undefined)
+  if (response !== undefined && !response.ok) {
+    console.warn('Agent context rejected', { status: response.status })
+  }
+}

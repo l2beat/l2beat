@@ -1,4 +1,4 @@
-import { EditorSelection, StateEffect } from '@codemirror/state'
+import { StateEffect } from '@codemirror/state'
 import {
   Decoration,
   type DecorationSet,
@@ -77,9 +77,9 @@ export class RangeHighlightPlugin implements EditorPlugin {
       selection: { anchor: from },
       effects: [
         setHighlight.of(highlight),
-        EditorView.scrollIntoView(EditorSelection.range(from, to), {
-          y: 'center',
-        }),
+        // The start, not the range: a long range would scroll sideways to
+        // its end and hide where it begins.
+        EditorView.scrollIntoView(from, { y: 'center' }),
       ],
     })
 

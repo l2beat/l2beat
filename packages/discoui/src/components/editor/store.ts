@@ -5,6 +5,7 @@ import type { DiffEditor } from './diff/diffEditor'
 export interface Range {
   startOffset: number
   length: number
+  highlightDurationMs?: number
 }
 
 export type EditorFile = {

@@ -118,11 +118,12 @@ export function EditorView(props: EditorViewProps) {
         return
       }
 
-      const { startOffset, length } = props.range.data
+      const { startOffset, length, highlightDurationMs } = props.range.data
       resetRange()
-      editor
-        .getPlugin(RangeHighlightPlugin)
-        ?.showRange(startOffset, length, { highlight: true })
+      editor.getPlugin(RangeHighlightPlugin)?.showRange(startOffset, length, {
+        highlight: true,
+        highlightDuration: highlightDurationMs,
+      })
     }
   }, [editor, props.range, activeFileIndex])
 
