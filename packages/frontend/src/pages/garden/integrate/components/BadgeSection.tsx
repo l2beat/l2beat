@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { useCopyToClipboard } from '~/hooks/useCopyToClipboard'
 import { useTimeout } from '~/hooks/useTimeout'
 import { CopyIcon } from '~/icons/Copy'
 import { DownloadArrowIcon } from '~/icons/DownloadArrow'
@@ -68,7 +67,7 @@ export function BadgeSection({
     <section className="mt-6 md:mt-8">
       <SectionHeading
         title="Wear the badge"
-        description="If your project is in the attested set, the badge is yours to use. Download the SVG, or copy it as markup that links back to your evaluation in the garden."
+        description="If your project is in the attested set, the badge is yours to use. Download the SVG, or copy it as markup that links to the garden."
       />
       <PrimaryCard className="max-md:mx-4 md:p-8">
         <div className="flex flex-col divide-y divide-divider">
@@ -191,15 +190,31 @@ function BadgeTile({
 
 /** Copies the SVG inline, wrapped in a link to the garden, so it needs nothing from our domain. */
 function CopyMarkupButton({ url, href }: { url: string; href: string }) {
-  const copy = useCopyToClipboard()
   const [copied, setCopied] = useState(false)
 
   useTimeout(() => setCopied(false), copied ? 1400 : null)
 
   async function onClick() {
-    const svg = await fetch(url).then((res) => res.text())
-    const markup = `<a href="${href}" title="${LINK_TITLE}">\n${svg.trim()}\n</a>`
-    setCopied(await copy(markup))
+    const blob = fetch(url).then(async (res) => {
+      if (!res.ok) {
+        throw new Error('Badge SVG fetch failed', {
+          cause: { url, status: res.status },
+        })
+      }
+      const svg = await res.text()
+      const markup = `<a href="${href}" title="${LINK_TITLE}">\n${svg.trim()}\n</a>`
+      return new Blob([markup], { type: 'text/plain' })
+    })
+    try {
+      // The write starts inside the click and takes the pending fetch, so
+      // Safari does not drop the user gesture while the SVG loads.
+      await navigator.clipboard.write([
+        new ClipboardItem({ 'text/plain': blob }),
+      ])
+      setCopied(true)
+    } catch (error) {
+      console.warn('Badge markup copy failed', error)
+    }
   }
 
   return (
