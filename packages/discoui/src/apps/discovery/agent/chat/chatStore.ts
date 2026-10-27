@@ -38,7 +38,9 @@ export function providerName(id: string | undefined): string {
 export function connectChat(): () => void {
   const source = new EventSource('/api/agent/chat/events')
   source.onopen = () => useChatStore.setState({ connected: true })
-  source.onerror = () => useChatStore.setState({ connected: false })
+  // A reconnect replays the chat again; until then the old state may be stale.
+  source.onerror = () =>
+    useChatStore.setState({ connected: false, replayed: false })
   source.onmessage = (message) => {
     const event = JSON.parse(message.data) as StreamEvent
     const before = useChatStore.getState().status
