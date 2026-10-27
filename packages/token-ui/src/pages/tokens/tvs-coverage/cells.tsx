@@ -40,6 +40,9 @@ const STATUS_STYLES: Record<Status, string> = {
     'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300',
 }
 
+const PROXY_BADGE =
+  'border-sky-200 bg-sky-50 font-normal text-[10px] text-sky-700 dark:border-sky-900 dark:bg-sky-950 dark:text-sky-300'
+
 const NOTE_BADGE =
   'h-5 border-amber-300 bg-amber-50 px-1.5 font-normal text-[10px] text-amber-800 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200'
 
@@ -200,35 +203,38 @@ export function ValueCell({ row }: { row: Row }) {
         </WithTooltip>
       ) : (
         <WithTooltip
-          content={
-            <>
-              <div>
-                Price {formatCurrency(value.priceUsd ?? 0, 'usd')} from{' '}
-                {row.pricing?.coingeckoId}
-              </div>
-              {via && (
-                <div>
-                  Priced as its locked counterpart on {via.chain} ({via.address}
-                  )
-                </div>
-              )}
-            </>
-          }
+          content={`Price ${formatCurrency(value.priceUsd ?? 0, 'usd')} from ${row.pricing?.coingeckoId}`}
         >
           <span className="font-medium">
             {formatCurrency(value.valueUsd, 'usd')}
-            {via && <span className="text-muted-foreground">*</span>}
           </span>
         </WithTooltip>
       )}
-      <div className="flex items-center gap-1 text-muted-foreground text-xs">
+      <div className="flex flex-wrap items-center justify-end gap-1 text-muted-foreground text-xs">
         {value.cappedByCirculatingSupply && (
           <WithTooltip content="The on-chain supply is above CoinGecko's global circulating supply, so the circulating supply is used.">
-            <Badge
-              variant="outline"
-              className={cn(NOTE_BADGE, 'h-4 px-1 text-[10px]')}
-            >
+            <Badge variant="outline" className={cn(NOTE_BADGE, 'h-4 px-1')}>
               capped
+            </Badge>
+          </WithTooltip>
+        )}
+        {via && (
+          <WithTooltip
+            content={
+              <>
+                <div>
+                  Not listed on CoinGecko, so it is valued at the price of its
+                  locked counterpart.
+                </div>
+                <div className="opacity-75">
+                  {via.symbol} on {formatChain(via.chain)},{' '}
+                  {shortAddress(via.address)}
+                </div>
+              </>
+            }
+          >
+            <Badge variant="outline" className={cn(PROXY_BADGE, 'h-4 px-1')}>
+              via {via.symbol}
             </Badge>
           </WithTooltip>
         )}

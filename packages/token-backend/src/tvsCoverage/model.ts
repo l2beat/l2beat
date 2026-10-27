@@ -69,7 +69,7 @@ export interface CoverageRow extends TokenRef {
 
 export interface Pricing {
   coingeckoId: string
-  via: TokenRef | undefined
+  via: (TokenRef & { symbol: string }) | undefined
 }
 
 export interface CoverageResult {
@@ -444,6 +444,7 @@ function getPricing(
         via: {
           chain: counterpart.deployedToken.chain,
           address: normalizeTokenAddress(counterpart.deployedToken.address),
+          symbol: counterpart.deployedToken.symbol,
         },
       }
     }

@@ -474,7 +474,7 @@ describe('buildCoverage helpers', () => {
         mintedCopy,
         {
           coingeckoId: 'usd-coin',
-          via: { chain: 'ethereum', address: L1_USDC },
+          via: { chain: 'ethereum', address: L1_USDC, symbol: 'USDC' },
         },
       ],
       [ARB_USDC, undefined],
