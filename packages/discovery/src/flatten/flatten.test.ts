@@ -1250,6 +1250,46 @@ describe('flatten', () => {
     expect(flattened).toInclude('Types.S memory s;')
   })
 
+  it('rewrites aliased bases in override lists', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Base.sol" as K;
+      import { Other as O } from "./Other.sol";
+      contract Root is K.Base, O {
+          function f() public pure override(K.Base, O) returns (uint256) { return 2; }
+      }
+    `,
+    )
+    const baseFile = sol(
+      'Base.sol',
+      `
+      abstract contract Base {
+          function f() public pure virtual returns (uint256);
+      }
+    `,
+    )
+    const otherFile = sol(
+      'Other.sol',
+      `
+      abstract contract Other {
+          function f() public pure virtual returns (uint256);
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, baseFile, otherFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toInclude('contract Root is Base, Other {')
+    expect(flattened).toInclude('override(Base, Other)')
+  })
+
   it('../ in unit name', () => {
     const rootFile = sol(
       'a/b/c/Root.sol',
