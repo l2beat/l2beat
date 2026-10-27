@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { type KeyboardEvent, useEffect, useRef, useState } from 'react'
 import {
   AVAILABLE_CHAINS,
@@ -8,6 +7,7 @@ import {
 } from '../config/chains'
 import { IconChecked } from '../icons/IconChcked'
 import { IconChevronDown } from '../icons/IconChevronDown'
+import { cn } from '../utils/cn'
 import { Popover, PopoverContent, PopoverTrigger } from './Popover'
 
 const CHAINS_BY_DISPLAY_NAME = AVAILABLE_CHAINS.toSorted((a, b) =>
@@ -120,7 +120,7 @@ function ChainList(props: {
             aria-selected={chain.shortName === props.selected}
             onMouseMove={() => setHighlighted(i)}
             onClick={() => props.onPick(chain.shortName)}
-            className={clsx(
+            className={cn(
               'flex cursor-pointer items-center gap-2 px-3 py-1.5 text-sm',
               i === highlighted && 'bg-coffee-700',
             )}
@@ -131,7 +131,7 @@ function ChainList(props: {
               {chain.shortName}:
             </span>
             <IconChecked
-              className={clsx(
+              className={cn(
                 'shrink-0 text-autumn-300',
                 chain.shortName !== props.selected && 'invisible',
               )}

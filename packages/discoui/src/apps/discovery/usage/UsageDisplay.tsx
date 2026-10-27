@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import { useState } from 'react'
+import { cn } from '../../../utils/cn'
 import {
   type AddressUsageSummary,
   summarizeAddressUsage,
@@ -114,7 +114,7 @@ function PlaceList(props: { places: UsagePlace[]; address: string }) {
           project={place.project}
           selectAddress={props.address}
           title={describePlace(place)}
-          className={clsx(
+          className={cn(
             'rounded-sm border px-1.5 py-0.5 hover:underline',
             RELATION_STYLE[place.relation],
           )}

@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { cn } from '../utils/cn'
 import { Icon } from './Icon'
 
 export function IconGear(props: { className?: string }) {
@@ -23,25 +23,23 @@ export function IconGears(props: {
   animate?: boolean
 }) {
   return (
-    <div className={clsx('relative', 'size-4', props.containerClassName)}>
+    <div className={cn('relative', 'size-4', props.containerClassName)}>
       <div
-        className={clsx(
+        className={cn(
           '-translate-x-3/4 -translate-y-1/4 absolute top-1/2 left-1/2',
           props.className,
         )}
       >
-        <IconGear
-          className={clsx(props.animate && 'animate-spin', 'size-2.5')}
-        />
+        <IconGear className={cn(props.animate && 'animate-spin', 'size-2.5')} />
       </div>
       <div
-        className={clsx(
+        className={cn(
           '-translate-x-1/4 -translate-y-3/4 absolute top-1/2 left-1/2',
           props.className,
         )}
       >
         <IconGear
-          className={clsx(props.animate && 'animate-spin-reverse', 'size-2.5')}
+          className={cn(props.animate && 'animate-spin-reverse', 'size-2.5')}
         />
       </div>
     </div>

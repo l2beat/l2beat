@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import type { ApiAddressEntry } from '../../../api/types'
+import { cn } from '../../../utils/cn'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { HighlightedText } from './HighlightedText'
 import { useSearchStore } from './store'
@@ -23,7 +23,7 @@ export function ContractSearchResultEntry({
         <li
           key={result.address}
           data-index={index}
-          className={clsx(
+          className={cn(
             'flex cursor-pointer items-center gap-2 border-coffee-700 border-b p-1 px-2 text-sm',
             index === selectedIndex
               ? 'bg-coffee-700 text-autumn-300'

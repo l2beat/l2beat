@@ -1,8 +1,8 @@
-import clsx from 'clsx'
 import { memo } from 'react'
 import { IconClose } from '../../icons/IconClose'
 import { IconFullscreen } from '../../icons/IconFullscreen'
 import { IconFullscreenExit } from '../../icons/IconFullscreenExit'
+import { cn } from '../../utils/cn'
 import { useDockingHook } from './context'
 import type { LeafKey, LeafNode } from './types'
 
@@ -28,7 +28,7 @@ function LeafViewImpl(props: { node: LeafNode }) {
   return (
     <div
       data-leaf-key={key}
-      className={clsx(
+      className={cn(
         'flex h-full w-full flex-col bg-coffee-900',
         isPickedUp && 'opacity-50',
       )}

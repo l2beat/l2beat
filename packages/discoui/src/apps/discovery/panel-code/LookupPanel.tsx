@@ -1,6 +1,6 @@
-import clsx from 'clsx'
 import { useEffect } from 'react'
 import { IconClose } from '../../../icons/IconClose'
+import { cn } from '../../../utils/cn'
 import { rowsOf, title } from './lookupRows'
 import type { DefinitionLookup } from './useGoToDefinition'
 
@@ -31,7 +31,7 @@ export function LookupPanel(props: {
     <div className="absolute top-8 right-3 z-20 w-[28rem] rounded border border-coffee-600 bg-coffee-800 text-xs shadow-lg">
       <div className="flex items-center justify-between gap-2 border-coffee-600 border-b px-2 py-1">
         <span
-          className={clsx(
+          className={cn(
             'truncate font-mono text-coffee-200',
             lookup.status === 'pending' && 'motion-safe:animate-pulse',
           )}
