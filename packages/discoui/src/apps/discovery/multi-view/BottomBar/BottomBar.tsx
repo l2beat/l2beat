@@ -76,8 +76,8 @@ export function BottomBar() {
   }, [])
 
   return (
-    <div className="hidden h-8 select-none items-center justify-between border-coffee-600 border-t px-2 text-sm md:flex">
-      <div className="flex gap-2 text-xs">
+    <div className="hidden h-7 select-none items-center justify-between border-coffee-700 border-t bg-coffee-800 px-2 text-xs md:flex">
+      <div className="flex gap-2 text-coffee-400">
         <div>Copyright {new Date().getUTCFullYear()} L2BEAT</div>
         {IS_READONLY && (
           <>
@@ -88,20 +88,21 @@ export function BottomBar() {
           </>
         )}
       </div>
-      <div className="flex gap-4">
+      <div className="flex h-full items-center gap-3">
         {depthSpecified && (
-          <div className="flex items-center justify-center border border-aux-green px-1.5 py-0.5 text-aux-green text-xs">
+          <div className="flex items-center justify-center rounded-sm border border-aux-green/60 px-1.5 text-aux-green">
             Depth: {maxReachableDepth}
           </div>
         )}
         <StatusRibbon />
-        <div className="flex gap-2">
-          <button onClick={() => setHintOpen((open) => !open)}>
-            Help <Keys keys={['F1']} />
-          </button>
-        </div>
+        <button
+          className="flex h-full items-center gap-1.5 border-coffee-600 border-l pl-3 text-coffee-300 hover:text-coffee-100"
+          onClick={() => setHintOpen((open) => !open)}
+        >
+          Help <Keys keys={['F1']} />
+        </button>
         {hintOpen && (
-          <div className="fixed right-2 bottom-10 border border-coffee-600 bg-coffee-800 p-4">
+          <div className="fixed right-2 bottom-9 rounded-md border border-coffee-600 bg-coffee-800 p-4 text-sm shadow-lg">
             <p>Keyboard Shortcuts</p>
             <ul>
               <li>

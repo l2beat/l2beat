@@ -21,7 +21,7 @@ export function Controls() {
 
   return (
     <TooltipProvider>
-      <div className="pointer-events-none absolute inset-x-2 bottom-4 z-10 flex flex-col items-center gap-2">
+      <div className="@container pointer-events-none absolute inset-x-2 bottom-3 z-10 flex flex-col items-center gap-1.5">
         {hasSelection && (
           <Toolbar label="Selection">
             <ToolbarSection label="Selected nodes">

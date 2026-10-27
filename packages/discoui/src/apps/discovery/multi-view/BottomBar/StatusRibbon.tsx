@@ -31,28 +31,22 @@ export function StatusRibbon() {
   }
 
   return (
-    <div className="flex h-full items-center justify-center gap-4">
-      <div className="flex max-h-fit items-center justify-center gap-2 border border-coffee-200 bg-coffee-200 px-1.5 py-0.5 text-coffee-800 text-xs">
-        <Link
-          to="/ui/reports/config-health"
-          className="flex items-center gap-1 hover:underline"
-        >
-          Health <IconLink className="size-3" />
-        </Link>
-      </div>
-      <div className="flex items-center justify-center border border-coffee-200">
-        <div className="bg-coffee-200 px-1.5 py-0.5 text-coffee-800 text-xs">
-          Outputs
-        </div>
-        <div className="flex items-center justify-center gap-2 px-1">
+    <div className="flex h-full items-center">
+      <Link
+        to="/ui/reports/config-health"
+        className="flex h-full items-center gap-1 border-coffee-600 border-l px-3 text-coffee-300 hover:text-coffee-100"
+      >
+        Health <IconLink className="size-3" />
+      </Link>
+      <div className="flex h-full items-center gap-1.5 border-coffee-600 border-l px-3">
+        <span className="text-coffee-400">Outputs</span>
+        <div className="flex items-center justify-center gap-2 text-coffee-200">
           <OutputsSyncBadge project={project} />
         </div>
       </div>
-      <div className="flex items-center justify-center border border-coffee-200">
-        <div className="bg-coffee-200 px-1.5 py-0.5 text-coffee-800 text-xs">
-          Files
-        </div>
-        <div className="flex items-center justify-center gap-2 px-1">
+      <div className="flex h-full items-center gap-1.5 border-coffee-600 border-l px-3">
+        <span className="text-coffee-400">Files</span>
+        <div className="flex items-center justify-center gap-2 text-coffee-200">
           <Status
             isInSync={configModel.isInSync && templateModel.isInSync}
             isError={

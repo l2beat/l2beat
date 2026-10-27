@@ -24,20 +24,20 @@ export function ContractSearchResultEntry({
           key={result.address}
           data-index={index}
           className={cn(
-            'flex cursor-pointer items-center gap-2 border-coffee-700 border-b p-1 px-2 text-sm',
+            'grid min-h-[29px] cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-coffee-800 border-b px-3 text-[13px] text-coffee-200',
             index === selectedIndex
-              ? 'bg-coffee-700 text-coffee-200 shadow-[inset_2px_0_0_#BAD80A]'
-              : 'text-coffee-200 hover:bg-coffee-700',
+              ? 'bg-coffee-700 shadow-[inset_2px_0_0_#BAD80A]'
+              : 'hover:bg-coffee-800',
           )}
           onClick={() => {
             select([result.address])
             setOpen(false)
           }}
         >
-          <span className="max-w-100 truncate font-medium">
+          <span className="min-w-0 truncate font-medium">
             <HighlightedText text={result.name ?? 'EOA'} run={searchTerm} />
           </span>
-          <span className="truncate font-mono text-coffee-400">
+          <span className="truncate text-right font-mono text-coffee-300 text-xs">
             {toShortenedAddress(result.address)}
           </span>
         </li>

@@ -16,7 +16,10 @@ export function SettingsDialog() {
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger>
+      <Dialog.Trigger
+        className="flex size-7 items-center justify-center rounded-sm text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100"
+        aria-label="Settings"
+      >
         <IconGear />
       </Dialog.Trigger>
       <Dialog.Body>
