@@ -10,6 +10,7 @@ import type {
   ProjectGarden,
   ProjectPermissions,
   ProjectPrivacyAdversaries,
+  ProjectPrivacyReferenceClient,
   ProjectStatuses,
   ProjectUpgradesAndGovernance,
   ProjectZkCatalogInfo,
@@ -71,6 +72,7 @@ export interface PrivacyProjectDetails {
   category: PrivacyCategory
   exitWindow: PrivacyExitWindow
   adversaries: ProjectPrivacyAdversaries
+  referenceClient?: ProjectPrivacyReferenceClient
   reproducibility: PrivacySummaryValue
   anonymitySetType: PrivacyAnonymitySetType | undefined
   hasTvl: boolean
@@ -294,6 +296,7 @@ export async function getPrivacyProjectDetails(
     category: project.privacyInfo.category,
     exitWindow: project.privacyInfo.exitWindow,
     adversaries: project.privacyInfo.adversaries,
+    referenceClient: project.privacyInfo.referenceClient,
     reproducibility: project.privacyInfo.reproducibility,
     anonymitySetType: getPrivacyAnonymitySetType(project),
     hasTvl: project.tvsConfig !== undefined,

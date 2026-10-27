@@ -24,9 +24,13 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
-import { getPrivacyAdversaryRosetteValues } from '../adversaries/privacyAdversaryUi'
+import {
+  getPrivacyAdversaryRosetteValues,
+  PRIVACY_ADVERSARIES_SECTION_ID,
+} from '../adversaries/privacyAdversaryUi'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
+import { PrivacyReviewedAppStat } from './components/PrivacyReviewedAppStat'
 
 interface Props extends AppLayoutProps {
   entry: ProjectPrivacyEntry
@@ -169,6 +173,12 @@ export function PrivacyProjectPage({
                                     attribute={attribute}
                                   />
                                 ))}
+                              />
+                            )}
+                            {entry.reviewedApp && (
+                              <PrivacyReviewedAppStat
+                                app={entry.reviewedApp}
+                                href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
                               />
                             )}
                           </div>

@@ -2,6 +2,7 @@ import type {
   PrivacyAttribute,
   PrivacyExitWindow,
   PrivacySummaryValue,
+  ProjectPrivacyReferenceClient,
   ProjectRedWarning,
 } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
@@ -65,6 +66,7 @@ export interface ProjectPrivacyEntry {
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
   reproducibility: PrivacySummaryValue
+  reviewedApp?: ProjectPrivacyReferenceClient
   summary: {
     totalValueLockedUsd: number | undefined
     totalValueLockedChange7d: number | undefined
@@ -332,6 +334,7 @@ export async function getPrivacyProjectEntry(
       title: 'Privacy',
       isUnderReview: !!details.statuses.reviewStatus,
       adversaries: resolvePrivacySources(details.adversaries, sections),
+      reviewedApp: details.referenceClient,
     },
   })
 
@@ -360,6 +363,7 @@ export async function getPrivacyProjectEntry(
       getPrivacyTrustedSetup(details.trustedSetups),
     ),
     reproducibility: details.reproducibility,
+    reviewedApp: details.referenceClient,
     summary: {
       totalValueLockedUsd: details.hasTvl
         ? tvs.projects[details.id]?.breakdown.total

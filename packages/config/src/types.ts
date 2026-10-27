@@ -1088,9 +1088,8 @@ export interface ProjectPrivacyInfo {
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
   /**
-   * The released open-source client the adversary ratings assume, at the
-   * commit they were reviewed against. `l2b client-drift` lists what changed
-   * upstream since. Absent for closed clients and for reviews that pin none.
+   * The released app the adversary ratings assume, shown on the project page
+   * as the reviewed app. Absent for reviews that rate several apps together.
    */
   referenceClient?: ProjectPrivacyReferenceClient
   /** The deployed mechanism. Decides the promised field, not the grade. */
@@ -1147,10 +1146,35 @@ export type PrivacyAnonymitySetRegistrationSource = {
 
 export interface ProjectPrivacyReferenceClient {
   name: string
-  /** GitHub repository, e.g. https://github.com/owner/repo */
-  repository: string
-  /** Full commit hash. Adversary sources into the repository pin it. */
-  commit: string
+  /** Where users get the app: its website, release page or repository. */
+  url: string
+  /** Release the review covers, without a leading v. Absent for hosted apps. */
+  version?: string
+  /**
+   * Source at the reviewed commit, absent for closed apps. `l2b client-drift`
+   * lists what changed upstream since.
+   */
+  source?: {
+    /** GitHub repository, e.g. https://github.com/owner/repo */
+    repository: string
+    /** Full commit hash. Adversary sources into the repository pin it. */
+    commit: string
+  }
+  /**
+   * Other released apps for the protocol, checked but not rated. Each one
+   * leaks more than the reference client, which its finding shows.
+   */
+  alternatives?: ProjectPrivacyClientAlternative[]
+}
+
+export interface ProjectPrivacyClientAlternative {
+  name: string
+  /** The traced behaviour that leaks more, as one sentence. */
+  finding: string
+  /** Proves the finding: pinned code, or the app itself when it is closed. */
+  source: string
+  /** Day the finding was checked, YYYY-MM-DD. Set when `source` is the app itself. */
+  checked?: string
 }
 
 export type ProjectPrivacyRelayerTracking =
