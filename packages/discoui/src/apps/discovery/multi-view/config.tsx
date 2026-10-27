@@ -18,12 +18,14 @@ import { IconList } from '../../../icons/IconList'
 import { IconNodes } from '../../../icons/IconNodes'
 import { IconShare } from '../../../icons/IconShare'
 import { IconSigma } from '../../../icons/IconSigma'
+import { IconSparkle } from '../../../icons/IconSparkle'
 import { IconStamp } from '../../../icons/IconStamp'
 import { IconTerminal } from '../../../icons/IconTerminal'
 import { IconToken } from '../../../icons/IconToken'
 import { IconTreemap } from '../../../icons/IconTreemap'
 import { IconWebApp } from '../../../icons/IconWebApp'
 import { cn } from '../../../utils/cn'
+import { ChatPanel } from '../agent/chat/ChatPanel'
 import { AnalyzePanel } from '../panel-analyze/AnalyzePanel'
 import { CodePanel } from '../panel-code/CodePanel'
 import { ConfigPanel } from '../panel-config/ConfigPanel'
@@ -53,6 +55,7 @@ export const PANEL_IDS = [
   'tvl',
   'tvlMap',
   'usage',
+  'ai',
 ] as const
 
 export type PanelId = (typeof PANEL_IDS)[number]
@@ -76,6 +79,7 @@ const PANELS: Record<PanelId, Panel> = {
   tvl: { icon: IconToken, body: TvlPanel },
   tvlMap: { icon: IconTreemap, body: TvlMapPanel },
   usage: { icon: IconShare, body: UsagePanel },
+  ai: { icon: IconSparkle, body: ChatPanel },
 }
 
 const unallowedInReadOnly = new Set([
@@ -84,6 +88,7 @@ const unallowedInReadOnly = new Set([
   'tvl',
   'tvlMap',
   'usage',
+  'ai',
 ] as PanelId[])
 
 export function isAllowedPanel(id: PanelId): boolean {

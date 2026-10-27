@@ -4,6 +4,7 @@ import { IS_READONLY } from '../../../config/readonly'
 import { IconClose } from '../../../icons/IconClose'
 import { IconPlus } from '../../../icons/IconPlus'
 import { IconRefresh } from '../../../icons/IconRefresh'
+import { IconSparkle } from '../../../icons/IconSparkle'
 import { cn } from '../../../utils/cn'
 import { useTerminalStore } from '../panel-terminal/store'
 import { useDiscoveryCommand } from '../panel-terminal/useDiscoveryCommand'
@@ -15,6 +16,7 @@ export function TopBar(props: { project: string }) {
   const layouts = useDockingStore((state) => state.layouts)
   const selectedLayout = useDockingStore((state) => state.selectedLayout)
   const loadLayout = useDockingStore((state) => state.loadLayout)
+  const ensureLeaf = useDockingStore((state) => state.ensureLeaf)
   const resetLayout = useDockingStore((state) => state.resetLayout)
   const { command } = useTerminalStore()
   const { killCommand, discover } = useDiscoveryCommand()
@@ -55,6 +57,15 @@ export function TopBar(props: { project: string }) {
             >
               <IconClose />
               <span className="max-md:hidden">Kill</span>
+            </Button>
+            <Button
+              size="small"
+              className="h-7 gap-1"
+              onClick={() => ensureLeaf('ai')}
+              title="Chat with Claude Code or Codex about this project"
+            >
+              <IconSparkle className="size-3" />
+              <span className="max-md:hidden">AI</span>
             </Button>
           </div>
         )}
