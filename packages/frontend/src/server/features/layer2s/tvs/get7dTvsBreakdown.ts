@@ -363,8 +363,8 @@ async function getMockTvsBreakdownData(
             project.projectId === 'base' ? 0.8 : 0,
           syncState: {
             isSynced: true,
-            syncedUntil: UnixTime.now(),
-            target: UnixTime.now(),
+            syncedUntil: getTvsTargetTimestamp(),
+            target: getTvsTargetTimestamp(),
           },
         },
       ]),

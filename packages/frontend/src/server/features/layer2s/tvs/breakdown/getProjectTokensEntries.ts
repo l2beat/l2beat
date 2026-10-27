@@ -64,15 +64,23 @@ export async function getProjectTokensEntries(
 
   const db = getDb()
   const latestTimestamp = await getLatestTvsTimestamp()
-  const sevenDaysAgoTimestamp = latestTimestamp - 7 * UnixTime.DAY
 
-  const [projects, tokenValues, sevenDaysAgoTokenValues] = await Promise.all([
+  const [projects, tokenValues] = await Promise.all([
     ps.getProjects({
       select: ['chainConfig'],
     }),
     db.tvsTokenValue.getByProjectAtOrBefore(project.id, latestTimestamp),
-    db.tvsTokenValue.getByProjectAtOrBefore(project.id, sevenDaysAgoTimestamp),
   ])
+  // Count back from the project's own hour, not the latest: the 7d changes
+  // need values exactly seven days apart
+  const projectTimestamp = Math.max(...tokenValues.map((x) => x.timestamp))
+  const sevenDaysAgoTokenValues =
+    tokenValues.length > 0
+      ? await db.tvsTokenValue.getByProjectAtOrBefore(
+          project.id,
+          projectTimestamp - 7 * UnixTime.DAY,
+        )
+      : []
 
   const chains = projects.map((x) => x.chainConfig)
   const tokenValuesMap = new Map(
