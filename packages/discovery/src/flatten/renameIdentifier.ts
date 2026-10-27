@@ -21,6 +21,7 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
 
   const pairMap = new Map(filtered.map((p) => [p.from, p.to]))
   const replacements: Replacement[] = []
+  const structMembers = findStructMemberStarts(ast)
 
   getASTIdentifiers(ast, (node) => {
     if (!node.range) return
@@ -101,7 +102,11 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
       }
     } else if (node.type === 'VariableDeclaration') {
       const decl = node as AST.VariableDeclaration
-      if (decl.identifier?.name && decl.identifier.range) {
+      if (
+        decl.identifier?.name &&
+        decl.identifier.range &&
+        !structMembers.has(decl.identifier.range[0])
+      ) {
         const [idStart, idEnd] = [
           decl.identifier.range[0],
           decl.identifier.range[1] + 1,
@@ -155,6 +160,19 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
   }
 
   return result
+}
+
+// Struct members are read as `s.member`, which is never renamed, so their
+// declarations must keep their names too
+function findStructMemberStarts(ast: AST.BaseASTNode): Set<number> {
+  const starts = new Set<number>()
+  getASTIdentifiers(ast, (node) => {
+    if (node.type !== 'StructDefinition') return
+    for (const member of (node as AST.StructDefinition).members) {
+      if (member.identifier?.range) starts.add(member.identifier.range[0])
+    }
+  })
+  return starts
 }
 
 function getDeclName(node: AST.BaseASTNode): string | undefined {

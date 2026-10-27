@@ -139,6 +139,20 @@ describe(renameIdentifiers.name, () => {
     )
   })
 
+  it('keeps struct member names that match a renamed identifier', () => {
+    const src = [
+      'struct Cfg { uint256 fee; }',
+      'function get(Cfg memory c) pure returns (uint256) { return c.fee + fee; }',
+    ].join('\n')
+    const result = renameIdentifiers(src, [{ from: 'fee', to: 'fee_1' }])
+    expect(result).toEqual(
+      [
+        'struct Cfg { uint256 fee; }',
+        'function get(Cfg memory c) pure returns (uint256) { return c.fee + fee_1; }',
+      ].join('\n'),
+    )
+  })
+
   it('renames across a struct definition', () => {
     const src = [
       'contract Foo {',

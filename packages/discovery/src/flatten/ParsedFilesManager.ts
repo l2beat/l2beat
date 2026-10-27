@@ -134,10 +134,8 @@ export class ParsedFilesManager {
         file.topLevelDeclarations.map((c) => c.name),
       )
 
-      file.importDirectives = result.resolveFileImports(
-        file,
-        result.remappings,
-        alreadyImportedMap,
+      file.importDirectives = uniqueImports(
+        result.resolveFileImports(file, result.remappings, alreadyImportedMap),
       )
     }
 
@@ -369,9 +367,11 @@ export class ParsedFilesManager {
           const typeCall = (n as AST.MemberAccess)
             .expression as AST.FunctionCall
           implementationReferences.push(
-            ...typeCall.arguments.flatMap((a) =>
-              a.type === 'Identifier' ? [a.name] : [],
-            ),
+            ...typeCall.arguments.flatMap((a) => {
+              if (a.type === 'Identifier') return [a.name]
+              const aliasMember = getUnitAliasMember(a, unitAliases)
+              return aliasMember === undefined ? [] : [aliasMember]
+            }),
           )
         }
       })
@@ -577,6 +577,16 @@ function isContractCodeAccess(n: AST.BaseASTNode): boolean {
   if (expression.type !== 'FunctionCall') return false
   const callee = (expression as AST.FunctionCall).expression
   return callee.type === 'Identifier' && callee.name === 'type'
+}
+
+// The same declaration can arrive twice, e.g. `import {E, E}` or one alias
+// reached through two files, and a lookup must still find exactly one entry
+function uniqueImports(imports: ImportDirective[]): ImportDirective[] {
+  const byKey = new Map<string, ImportDirective>()
+  for (const i of imports) {
+    byKey.set(`${i.absolutePath}:${i.originalName}:${i.importedName}`, i)
+  }
+  return [...byKey.values()]
 }
 
 function sha1(s: string): string {

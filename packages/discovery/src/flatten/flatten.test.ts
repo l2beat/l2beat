@@ -984,6 +984,125 @@ describe('flatten', () => {
     )
   })
 
+  it('resolves an alias that arrives through two imports', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Lib.sol" as K;
+      import "./Other.sol";
+      contract Root {
+          function f() public pure returns (uint256) { return K.Lib.g() + h(); }
+      }
+    `,
+    )
+    const otherFile = sol(
+      'Other.sol',
+      `
+      import "./Lib.sol" as K;
+      function h() pure returns (uint256) { return K.Lib.g(); }
+    `,
+    )
+    const libFile = sol(
+      'Lib.sol',
+      `
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, otherFile, libFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+
+      function h() pure returns (uint256) { return Lib.g(); }
+
+      contract Root {
+          function f() public pure returns (uint256) { return Lib.g() + h(); }
+      }
+    `),
+    )
+  })
+
+  it('resolves names imported twice in one import list', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Empty, Empty } from "./Errors.sol";
+      contract Root {
+          function f() public pure { revert Empty(); }
+      }
+    `,
+    )
+    const errorsFile = sol('Errors.sol', 'error Empty();')
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, errorsFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      error Empty();
+
+      contract Root {
+          function f() public pure { revert Empty(); }
+      }
+    `),
+    )
+  })
+
+  it('keeps aliased contracts read with type() as contracts', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Created.sol" as K;
+      contract Root {
+          function code() public pure returns (bytes memory) {
+              return type(K.Created).creationCode;
+          }
+      }
+    `,
+    )
+    const createdFile = sol(
+      'Created.sol',
+      'contract Created { function f() external {} }',
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, createdFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      contract Created { function f() external {} }
+
+      contract Root {
+          function code() public pure returns (bytes memory) {
+              return type(Created).creationCode;
+          }
+      }
+    `),
+    )
+  })
+
   it('../ in unit name', () => {
     const rootFile = sol(
       'a/b/c/Root.sol',
