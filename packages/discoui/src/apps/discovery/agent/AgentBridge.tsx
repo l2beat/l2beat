@@ -146,6 +146,12 @@ export function applyStep(step: AgentStep) {
   docking.ensureLeaf('code')
   const code = useCodeStore.getState()
   code.setSourceIndex(step.code.address, step.code.sourceIndex)
+  if (
+    agentRangeAddress !== undefined &&
+    agentRangeAddress !== step.code.address
+  ) {
+    code.showRange(agentRangeAddress, undefined)
+  }
   agentRangeAddress = step.code.address
   code.showRange(step.code.address, {
     startOffset: step.code.offset,
