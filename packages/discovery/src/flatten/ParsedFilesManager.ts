@@ -352,7 +352,9 @@ export class ParsedFilesManager {
           const typeCall = (n as AST.MemberAccess)
             .expression as AST.FunctionCall
           implementationReferences.push(
-            ...typeCall.arguments.flatMap((a) => getASTIdentifiers(a)),
+            ...typeCall.arguments.flatMap((a) =>
+              a.type === 'Identifier' ? [a.name] : [],
+            ),
           )
         }
       })
