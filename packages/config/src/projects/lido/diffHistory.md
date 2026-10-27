@@ -9,6 +9,8 @@ Generated with discovered.json: 0x74a5d2e62827091d9ebfa872325bb52c2a0e5295
 
 ## Description
 
+Flattener now renames free functions inside using { ... } lists, so each list points at its own file's function. Only source hashes and flat files change.
+
 Flattener now keeps file-level using-for directives whose target type is defined in another file. Only source hashes and flat files change.
 
 ## Config/verification related changes
