@@ -58,6 +58,7 @@ import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { strk20 } from '../projects/strk20/strk20'
 import { stwo } from '../projects/stwo/stwo'
+import { swellStaking } from '../projects/swell-staking/swell-staking'
 import { tempo } from '../projects/tempo/tempo'
 import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { umbra } from '../projects/umbra/umbra'
@@ -143,6 +144,7 @@ export const refactored: BaseProject[] = [
   etherfi,
   uniswapv4,
   wbeth,
+  swellStaking,
   polymarket,
   rocketpool,
   safe,

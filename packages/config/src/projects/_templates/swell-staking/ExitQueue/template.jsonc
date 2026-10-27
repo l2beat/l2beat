@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ExitQueue",
+  "category": "core",
+  "description": "Exit queue of the token. A holder burns tokens for an NFT claim that records the rate at request time ({{withdrawRequestMinimum}} to {{withdrawRequestMaximum}} tokens per request, 18 decimals). Requests are processed in order only by the oracle during a bot report, with ETH pulled from the deposit manager; a claim pays the lower of the request-time and processing-time rate. New requests and claims revert while withdrawals are paused.",
+  "ignoreMethods": [
+    "getProcessedRateForTokenId",
+    "tokenByIndex",
+    "withdrawalRequests",
+    "getApproved",
+    "ownerOf",
+    "tokenURI"
+  ],
+  "ignoreInWatchMode": [
+    "exitingETH",
+    "getLastTokenIdCreated",
+    "getLastTokenIdProcessed",
+    "totalETHExited",
+    "totalSupply"
+  ],
+  "fields": {
+    "withdrawRequestMaximum": {
+      "severity": "MEDIUM"
+    },
+    "withdrawRequestMinimum": {
+      "severity": "LOW"
+    },
+    "whitelistEnabled": {
+      "severity": "HIGH"
+    }
+  }
+}

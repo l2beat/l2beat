@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ProxyOFT",
+  "category": "bridge-external",
+  "description": "LayerZero v1 proxy OFT. It locks the token on Ethereum when it is sent to another chain and releases it when it comes back; tokens on other chains are backed only by this lockbox. Its owner sets the trusted remote contracts and LayerZero configuration.",
+  "ignoreRelatives": ["lzEndpoint", "token"],
+  "ignoreInWatchMode": ["circulatingSupply"],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set trusted remote contracts and LayerZero settings, which decide which messages can release the tokens locked here, with no delay."
+        }
+      ]
+    }
+  }
+}

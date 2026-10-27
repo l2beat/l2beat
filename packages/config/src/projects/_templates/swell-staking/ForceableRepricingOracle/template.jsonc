@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RepricingOracle",
+  "category": "core",
+  "description": "Entry point for the bot's balance reports. A report must be recent (at most {{maximumRepriceBlockAtSnapshotStaleness}} blocks old) and its new rate within {{maximumReferencePriceDiffPercentage}} (1e18 = 100%) of a reference rate computed from the same report's balances and on-chain supply, so the reported validator balances themselves are not verified on-chain. The external proof-of-reserves feed is {{ExternalV3ReservesPoROracle}} (zero address = disabled). A falling rate pauses the whole system. Each report also processes the exit queue up to a request chosen by the bot. A snapshot admin can force a report that skips the pause, freshness and reference-rate checks and does not pause on a falling rate.",
+  "ignoreInWatchMode": ["lastRepriceSnapshot"],
+  "fields": {
+    "ExternalV3ReservesPoROracle": {
+      "severity": "HIGH"
+    },
+    "maximumReferencePriceDiffPercentage": {
+      "severity": "MEDIUM"
+    }
+  },
+  "canActIndependently": false
+}

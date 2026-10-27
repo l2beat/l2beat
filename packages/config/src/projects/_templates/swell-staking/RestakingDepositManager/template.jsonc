@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositManager",
+  "category": "core",
+  "description": "Receives all deposited ETH. ETH leaves to the EigenLayerManager when the bot funds validators whose withdrawal credential is a restaking account's EigenPod, to the exit queue, or, through a legacy bot function, to validators withdrawing to this contract's own EigenPod {{eigenPodDeprecated}}. Deposits of other liquid staking tokens mint at a rate from a provider set by the platform admin. ETH reserved for queued exits stays."
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NodeOperatorRegistry",
+  "category": "core",
+  "description": "Registry of node operators and their validator keys ({{numOperators}} operators). The operator registry maintainer adds, disables and edits operators; each operator registers keys from its controlling address, and keys are used in order when the bot funds validators. Operators post no bond, so slashing losses fall on all token holders. Deposit signatures are not checked on-chain.",
+  "ignoreMethods": ["getNextValidatorDetails"],
+  "ignoreInWatchMode": ["numPendingValidators", "getPoRAddressListLength"]
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "rswETH",
+  "category": "core",
+  "description": "Liquid staking token. Anyone can deposit ETH unless the whitelist is on (whitelist enabled: {{whitelistEnabled}}); tokens are minted at the current rate and the ETH is forwarded to the deposit manager in the same call. The ETH value per token changes only when the oracle reprices it: each update may move it by at most {{maximumRepriceDifferencePercentage}} (1e18 = 100%), at least {{minimumRepriceTime}} seconds apart. Each reprice mints a share of the reported rewards as new tokens for node operators and the treasury.",
+  "ignoreInWatchMode": [
+    "rswETHToETHRate",
+    "ethToRswETHRate",
+    "getRate",
+    "lastRepriceETHReserves",
+    "lastRepriceUNIX",
+    "totalETHDeposited",
+    "totalSupply"
+  ],
+  "fields": {
+    "maximumRepriceDifferencePercentage": {
+      "severity": "HIGH",
+      "description": "Largest change of the exchange rate per reprice (1e18 = 100%)."
+    },
+    "minimumRepriceTime": {
+      "severity": "HIGH",
+      "description": "Minimum seconds between two reprices."
+    },
+    "maximumRepriceRswETHDifferencePercentage": {
+      "severity": "MEDIUM",
+      "description": "Largest allowed difference between the supply in a report and the actual supply (1e18 = 100%)."
+    },
+    "nodeOperatorRewardPercentage": {
+      "severity": "MEDIUM",
+      "description": "Share of reported rewards minted to node operators (1e18 = 100%)."
+    },
+    "swellTreasuryRewardPercentage": {
+      "severity": "MEDIUM",
+      "description": "Share of reported rewards minted to the treasury (1e18 = 100%)."
+    },
+    "whitelistEnabled": {
+      "severity": "HIGH"
+    }
+  }
+}

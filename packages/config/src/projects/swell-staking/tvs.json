@@ -1,0 +1,40 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "swell-staking",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "swell-staking-swETH",
+      "priceId": "sweth",
+      "symbol": "swETH",
+      "name": "swETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xf951E335afb289353dc249e82926178EaC7DEd78",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1681288427
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "swell-staking-rswETH",
+      "priceId": "restaked-swell-eth",
+      "symbol": "rswETH",
+      "name": "rswETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1706241095
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

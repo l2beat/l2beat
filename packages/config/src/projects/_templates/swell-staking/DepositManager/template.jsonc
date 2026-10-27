@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositManager",
+  "category": "core",
+  "description": "Receives all deposited ETH and is the withdrawal credential of every validator ({{getWithdrawalCredentials}}), so exited and skimmed validator ETH returns here. ETH leaves only to new validators, when the bot funds the next registered keys (the call reverts if the deposit root changed since the bot read it, and ETH reserved for queued exits stays), or to the exit queue."
+}
