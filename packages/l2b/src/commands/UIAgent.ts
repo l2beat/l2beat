@@ -204,8 +204,8 @@ const View = command({
       args.file !== undefined ? readJsonObject(args.file) : viewFromFlags(args)
     await callTool(args.url, 'view', {
       ...spec,
-      project: args.project,
-      dryRun: args.dryRun,
+      project: args.project ?? spec.project,
+      dryRun: args.dryRun || spec.dryRun === true,
     })
   },
 })
