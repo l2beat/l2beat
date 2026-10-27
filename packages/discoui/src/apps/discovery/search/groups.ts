@@ -4,7 +4,7 @@ import { NO_MATCH, rankSearchTerms, toSearchQuery } from './rank'
 import { SCOPE_INFO, type SearchScope } from './scopes'
 
 export const GROUP_LIMIT_MIXED = 6
-export const GROUP_LIMIT_SCOPED = 200
+export const GROUP_LIMIT_SCOPED = 100
 export const RECENT_LIMIT = 8
 
 export interface SearchGroup {

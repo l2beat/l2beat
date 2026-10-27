@@ -1,6 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { getProjects, searchCode } from '../../../api/api'
+import type { ApiProjectChain, ApiProjectEntry } from '../../../api/types'
 import { useDebounce } from '../../../hooks/useDebounce'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
@@ -17,6 +18,7 @@ import {
   buildContractSearchables,
   buildFieldSearchables,
   buildProjectSearchables,
+  type Searchable,
   type SearchItem,
 } from './items'
 import { toSearchQuery } from './rank'
@@ -65,16 +67,37 @@ function toStatus(
   return 'success'
 }
 
+const PROJECTS_QUERY = {
+  queryKey: ['projects'],
+  queryFn: () => getProjects(),
+  staleTime: Number.POSITIVE_INFINITY,
+}
+const NO_PROJECTS: ApiProjectEntry[] = []
+const contractCache = new WeakMap<ApiProjectChain[], Searchable[]>()
+const fieldCache = new WeakMap<ApiProjectChain[], Searchable[]>()
+const projectCache = new WeakMap<ApiProjectEntry[], Searchable[]>()
+const deepProjectCache = new WeakMap<ApiProjectEntry[], Searchable[]>()
+
+function cached<K extends object>(
+  cache: WeakMap<K, Searchable[]>,
+  key: K,
+  build: (key: K) => Searchable[],
+): Searchable[] {
+  let value = cache.get(key)
+  if (value === undefined) {
+    value = build(key)
+    cache.set(key, value)
+  }
+  return value
+}
+
 function useSearchSources(project: string): {
   sources: SearchSources | undefined
   isError: boolean
 } {
   const scope = useSearchStore((s) => s.scope)
   const projectQuery = useQuery(useProjectQueryOptions(project))
-  const projectsQuery = useQuery({
-    queryKey: ['projects'],
-    queryFn: () => getProjects(),
-  })
+  const projectsQuery = useQuery(PROJECTS_QUERY)
   const commands = useSearchCommands()
   const commandSearchables = useMemo(
     () => buildCommandSearchables(commands),
@@ -82,21 +105,16 @@ function useSearchSources(project: string): {
   )
 
   const chains = projectQuery.data?.entries
-  const contracts = useMemo(
-    () => (chains ? buildContractSearchables(chains) : undefined),
-    [chains],
-  )
-  const fields = useMemo(
-    () => (chains ? buildFieldSearchables(chains) : undefined),
-    [chains],
-  )
-  const matchContractNames = scope === 'projects'
-  const projects = useMemo(
-    () =>
-      buildProjectSearchables(projectsQuery.data ?? [], {
-        matchContractNames,
+  const contracts =
+    chains && cached(contractCache, chains, buildContractSearchables)
+  const fields = chains && cached(fieldCache, chains, buildFieldSearchables)
+  const projects = cached(
+    scope === 'projects' ? deepProjectCache : projectCache,
+    projectsQuery.data ?? NO_PROJECTS,
+    (entries) =>
+      buildProjectSearchables(entries, {
+        matchContractNames: scope === 'projects',
       }),
-    [projectsQuery.data, matchContractNames],
   )
 
   const sources = useMemo(() => {
