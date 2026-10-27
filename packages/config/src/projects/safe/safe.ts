@@ -75,7 +75,7 @@ export const safe: BaseProject = {
       points: [
         CROP_NOTES.infiniteExitWindow,
         'Anyone can create an account, and anyone can submit a transaction once enough owners have signed it.',
-        "Only an account's owners can act for it or change its rules.",
+        "Only an account's owners, and the modules they enable, can act for it or change its rules.",
         CROP_NOTES.passesWalkawayTest(
           'owners do not need the Safe{Wallet} interface or the Safe transaction service.',
         ),

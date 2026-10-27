@@ -1,4 +1,4 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Deploys Safe accounts as proxies and sets them up in the same transaction. It has no owner and no control over the accounts it created."
+  "description": "Deploys Safe accounts as proxies and, when given setup data, sets them up in the same transaction. A proxy deployed without it can be set up by anyone, and the first to do so chooses its owners. The factory has no owner and no control over the accounts it created."
 }

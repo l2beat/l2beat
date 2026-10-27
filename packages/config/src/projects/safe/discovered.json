@@ -1,6 +1,6 @@
 {
   "name": "safe",
-  "timestamp": 1792398877,
+  "timestamp": 1793093365,
   "configHash": "0x39d65897808d765d6245b3b4d4a620c5b05fad5dbe1dc3fee363abfe5a9008ee",
   "entries": [
     {
@@ -30,7 +30,7 @@
         "0xbf5b822276748072c1b653477b64b6ba78dd14e285da7654dc87f67558abc79c"
       ],
       "proxyType": "immutable",
-      "description": "Deploys Safe accounts as proxies and sets them up in the same transaction. It has no owner and no control over the accounts it created.",
+      "description": "Deploys Safe accounts as proxies and, when given setup data, sets them up in the same transaction. A proxy deployed without it can be set up by anyone, and the first to do so chooses its owners. The factory has no owner and no control over the accounts it created.",
       "critical": true,
       "deployerAddress": "eth:0x4776Ec9158a37948a2aA42F5180fB0468D46F700",
       "sinceTimestamp": 1750776395,
@@ -240,7 +240,7 @@
         "0xfda4d35a812abea3459a31690c18bb447cf8a61398f614756032e400b165f794"
       ],
       "proxyType": "immutable",
-      "description": "Deploys Safe accounts as proxies and sets them up in the same transaction. It has no owner and no control over the accounts it created.",
+      "description": "Deploys Safe accounts as proxies and, when given setup data, sets them up in the same transaction. A proxy deployed without it can be set up by anyone, and the first to do so chooses its owners. The factory has no owner and no control over the accounts it created.",
       "critical": true,
       "deployerAddress": "eth:0xd0b86B35a0d991c5Fb62fDF58e797935224E62B5",
       "sinceTimestamp": 1686289703,
@@ -389,7 +389,7 @@
         "0x9260c410435b49ca893b5c7b6ed1c9c0ca69519d850be6302a776f35d2c75822"
       ],
       "proxyType": "immutable",
-      "description": "Deploys Safe accounts as proxies and sets them up in the same transaction. It has no owner and no control over the accounts it created.",
+      "description": "Deploys Safe accounts as proxies and, when given setup data, sets them up in the same transaction. A proxy deployed without it can be set up by anyone, and the first to do so chooses its owners. The factory has no owner and no control over the accounts it created.",
       "critical": true,
       "deployerAddress": "eth:0x5D5FB487FC5A9f8e0049Bc41c1E1e011EC92281c",
       "sinceTimestamp": 1621954220,
@@ -998,6 +998,6 @@
     "safe/SignMessageLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "safe/SimulateTxAccessor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26225459 },
+  "usedBlockNumbers": { "ethereum": 26283152 },
   "permissionsConfigHash": "0xae715681bb7e08f68e5fb9141358ab9894bfde1bd6767932d3881c1ad0f1c437"
 }

@@ -1,4 +1,4 @@
-Each Safe account is a proxy of an immutable implementation with no owner, and keeps its own owners, threshold and settings. Anyone can create an account through any version's factory, which sets it up in the same transaction.
+Each Safe account is a proxy of an immutable implementation with no owner, and keeps its own owners, threshold and settings. Anyone can create an account through any version's factory, which sets it up in the same transaction when given setup data.
 
 ### Transactions
 
@@ -14,7 +14,7 @@ A transaction can also be a delegatecall, which runs another contract's code ins
 
 ### Upgrades
 
-No upgrade applies to all accounts. Only an account's owners can move it to another implementation, through a delegatecall.
+No upgrade applies to all accounts. Only an account's owners, or a module they enabled, can move it to another implementation, through a delegatecall.
 
 ### Offchain services
 

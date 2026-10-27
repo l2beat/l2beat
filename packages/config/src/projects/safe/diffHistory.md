@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa8b3c97c30bad1d31580e50fbc5e65a546b3315e
+Generated with discovered.json: 0xeb208cf289f634f8e8317b31091d2edf2b8c60ce
 
-# Diff at Mon, 19 Oct 2026 08:35:39 GMT:
+# Diff at Tue, 27 Oct 2026 09:30:48 GMT:
 
 - id: 9877274c
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current timestamp: 1792398877
+- current timestamp: 1793093365
 
 ## Description
 
@@ -21,7 +21,7 @@ Initial discovery of the canonical Safe v1.3.0, v1.4.1 and v1.5.0 deployments: t
 ```diff
 +   Status: CREATED
     contract SafeProxyFactory_v1_5_0 (eth:0x14F2982D601c9458F93bd70B218933A6f8165e7b) [safe/SafeProxyFactory]
-    +++ description: Deploys Safe accounts as proxies and sets them up in the same transaction. It has no owner and no control over the accounts it created.
+    +++ description: Deploys Safe accounts as proxies and, when given setup data, sets them up in the same transaction. A proxy deployed without it can be set up by anyone, and the first to do so chooses its owners. The factory has no owner and no control over the accounts it created.
 ```
 
 ```diff
@@ -81,7 +81,7 @@ Initial discovery of the canonical Safe v1.3.0, v1.4.1 and v1.5.0 deployments: t
 ```diff
 +   Status: CREATED
     contract SafeProxyFactory_v1_4_1 (eth:0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67) [safe/SafeProxyFactory]
-    +++ description: Deploys Safe accounts as proxies and sets them up in the same transaction. It has no owner and no control over the accounts it created.
+    +++ description: Deploys Safe accounts as proxies and, when given setup data, sets them up in the same transaction. A proxy deployed without it can be set up by anyone, and the first to do so chooses its owners. The factory has no owner and no control over the accounts it created.
 ```
 
 ```diff
@@ -129,7 +129,7 @@ Initial discovery of the canonical Safe v1.3.0, v1.4.1 and v1.5.0 deployments: t
 ```diff
 +   Status: CREATED
     contract GnosisSafeProxyFactory (eth:0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2) [safe/SafeProxyFactory]
-    +++ description: Deploys Safe accounts as proxies and sets them up in the same transaction. It has no owner and no control over the accounts it created.
+    +++ description: Deploys Safe accounts as proxies and, when given setup data, sets them up in the same transaction. A proxy deployed without it can be set up by anyone, and the first to do so chooses its owners. The factory has no owner and no control over the accounts it created.
 ```
 
 ```diff
