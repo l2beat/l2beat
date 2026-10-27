@@ -82,8 +82,8 @@ function Splitter(props: { splitId: string; index: number; isRow: boolean }) {
       className={cn(
         'relative z-20 shrink-0 select-none bg-coffee-600 before:absolute hover:bg-coffee-400 active:bg-coffee-400',
         props.isRow
-          ? 'before:-inset-x-1 w-px cursor-col-resize before:inset-y-0'
-          : '-mb-px before:-inset-y-1 h-px cursor-row-resize before:inset-x-0',
+          ? 'before:-right-2 w-px cursor-col-resize before:inset-y-0 before:left-0'
+          : '-mb-px before:-bottom-2 h-px cursor-row-resize before:inset-x-0 before:top-0',
       )}
     />
   )
