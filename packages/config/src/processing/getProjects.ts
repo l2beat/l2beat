@@ -20,7 +20,6 @@ import { resolveGarden } from '../crops/resolveCrops'
 import { loadAuditCoverage } from '../discovery/loadAuditCoverage'
 import { loadDiscoveryUpdates } from '../discovery/loadDiscoveryUpdates'
 import type {
-  Bridge,
   Layer2TxConfig,
   ProjectScalingRiskView,
   ScalingProject,
@@ -28,9 +27,11 @@ import type {
 import { asArray, emptyArrayToUndefined } from '../templates/utils'
 import {
   type BaseProject,
+  type ProjectContracts,
   type ProjectCostsInfo,
   type ProjectDiscoveryInfo,
   type ProjectLivenessInfo,
+  type ProjectPermissions,
   type ProjectRiskView,
   type ProjectScalingCategory,
   ProjectTvsConfigSchema,
@@ -380,9 +381,11 @@ function toBackendTrackedTxParams(
   }
 }
 
-export function adjustDiscoveryInfo(
-  project: ScalingProject | Bridge,
-): ProjectDiscoveryInfo {
+export function adjustDiscoveryInfo(project: {
+  discoveryInfo: ProjectDiscoveryInfo
+  contracts?: ProjectContracts
+  permissions?: Record<string, ProjectPermissions>
+}): ProjectDiscoveryInfo {
   const contractsDiscoDriven = areContractsDiscoveryDriven(project.contracts)
   const permissionsDiscoDriven = arePermissionsDiscoveryDriven(
     project.permissions,
