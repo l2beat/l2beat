@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x380de8bf7719806a94521574aec471e393180542
+Generated with discovered.json: 0x74a5d2e62827091d9ebfa872325bb52c2a0e5295
 
-# Diff at Tue, 27 Oct 2026 16:31:39 GMT:
+# Diff at Tue, 27 Oct 2026 16:38:00 GMT:
 
 - id: d5ce46db
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
@@ -9,7 +9,7 @@ Generated with discovered.json: 0x380de8bf7719806a94521574aec471e393180542
 
 ## Description
 
-Flattener now renames free functions inside using { ... } lists, so each list points at its own file's function. Only source hashes and flat files change.
+Flattener now keeps file-level using-for directives whose target type is defined in another file. Only source hashes and flat files change.
 
 ## Config/verification related changes
 
@@ -84,11 +84,20 @@ discovery. Values are for block 1792491537 (main branch discovery), not current.
 ```
 
 ```diff
+    contract CuratedModule (eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1) [lido/CuratedModule] {
+    +++ description: The permissioned Curated Staking Module. It manages approved node operators and validator keys, accepts deposits and top-ups from the StakingRouter, and processes validator lifecycle reports and penalties.
+      sourceHashes.1:
+-        "0x11df3957a67843e530316489a83ca4adda4d9953f0e25c17d0ea7f24edd89c20"
++        "0x0ceb6b13fce2d21622791203fc60e34a4b7c935d47af0d436c7dc2b3134302e6"
+    }
+```
+
+```diff
     contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) [lido/CSModule] {
     +++ description: Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.
       sourceHashes.1:
 -        "0x19666aa54a37d52558d2c5a2354e67ce7f975afd7cfa437feb6ef96489092bb8"
-+        "0xea7dbf301f2c6396dda21bdb9fede89dc76490dbdba56f62155f932e685caad6"
++        "0xa325b9aed994ecf293c71c548bc27bfe51cf2fbb24bc5493905db083c119dd74"
     }
 ```
 

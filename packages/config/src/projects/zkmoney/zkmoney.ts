@@ -139,13 +139,13 @@ const attestationMaxAge = formatSeconds(
 // against the verified portal source, which includes OxideConstants.
 assert(
   portal.sourceHashes?.includes(
-    '0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e',
+    '0x4d89fd312c737814de5e81632ef9671e232ec8faa7bbbfbba98e7c9c2787b25b',
   ),
   'ZkMoneyPortal source changed, recheck TX_AMOUNT_CAP',
 )
 assert(
   susdsPortal.sourceHashes?.includes(
-    '0x7020e3729f66f6c8ddada17eeb82b33ae8b7f623c0ffb3bb6c921bf966a7f6a8',
+    '0xd99b45ced6473f41ba909b533b1096d83b7d9633cee20987ca077ce8eb389be6',
   ),
   'ZkMoneyPortal_sUSDS source changed, recheck TX_AMOUNT_CAP',
 )
