@@ -138,6 +138,12 @@ describe(decodeAs.name, () => {
     ])
   })
 
+  it('decodes a single word', () => {
+    const decoded = decodeAs('uint256', toHex(42n, { size: 32 }), 1)
+
+    expect(decoded.members?.[0]?.value).toEqual('42')
+  })
+
   it('rejects bytes that do not match the type', () => {
     expect(() => decodeAs('address', '0xdeadbeef', 1)).toThrow()
   })

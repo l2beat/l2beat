@@ -645,7 +645,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
       <div>
         {nameElement}
         <DisplayBytes bytes={decoded.bytes} />
-        {decoded.bytes.length > 66 && (
+        {(path === 'transaction' || decoded.bytes.length > 66) && (
           <DecodeAs
             bytes={decoded.bytes}
             chainId={decoded.chainId ?? 1}
