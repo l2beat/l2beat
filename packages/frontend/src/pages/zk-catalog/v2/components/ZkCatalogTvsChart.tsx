@@ -29,13 +29,8 @@ import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
 
-type Metric = 'absolute' | 'percentage' | 'projects'
-
-const TITLES: Record<Metric, string> = {
-  absolute: 'Value secured by prover',
-  percentage: 'Share of value secured by prover',
-  projects: 'Projects using each prover',
-}
+type Metric = 'value' | 'projects'
+type Unit = 'absolute' | 'percentage'
 
 interface Point {
   values: Record<string, number | null>
@@ -51,7 +46,8 @@ interface Props {
 export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const [metric, setMetric] = useState<Metric>('absolute')
+  const [metric, setMetric] = useState<Metric>('value')
+  const [unit, setUnit] = useState<Unit>('absolute')
   const { data, isLoading } = useQuery(
     trpc.tvs.zkCatalogChart.queryOptions({ range }),
   )
@@ -97,36 +93,49 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, valuesByProver, projectCountByProver]) => {
+      data?.chart.map(([timestamp, values, projectCounts]) => {
         const point: { timestamp: number; [key: string]: number | null } = {
           timestamp,
         }
+        const amounts = { values, projectCounts }
         const total = dataKeys.reduce<number>(
-          (acc, key) => acc + (valuesByProver[key] ?? 0),
+          (acc, key) => acc + (getAmount(amounts, key, metric) ?? 0),
           0,
         )
         for (const id of Object.keys(chartMeta)) {
-          const value = valuesByProver[id] ?? null
+          const amount = getAmount(amounts, id, metric)
           point[id] =
-            value === null
-              ? null
-              : metric === 'absolute'
-                ? value
-                : metric === 'projects'
-                  ? (projectCountByProver[id] ?? 0)
-                  : total === 0
-                    ? 0
-                    : round((value / total) * 100, 2)
+            amount === null || unit === 'absolute'
+              ? amount
+              : total === 0
+                ? 0
+                : round((amount / total) * 100, 2)
         }
         return point
       }),
-    [data, chartMeta, dataKeys, metric],
+    [data, chartMeta, dataKeys, metric, unit],
   )
 
   return (
     <PrimaryCard className="mb-4">
       <div className="mb-3">
-        <h2 className="font-bold text-lg md:text-xl">{TITLES[metric]}</h2>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <h2 className="font-bold text-lg md:text-xl">Prover adoption</h2>
+          <RadioGroup
+            name="zkCatalogProverMetric"
+            value={metric}
+            onValueChange={(value) => setMetric(value as Metric)}
+            variant="highlighted"
+            className="h-9"
+          >
+            <RadioGroupItem value="value" className="md:text-base">
+              Value secured
+            </RadioGroupItem>
+            <RadioGroupItem value="projects" className="md:text-base">
+              Projects
+            </RadioGroupItem>
+          </RadioGroup>
+        </div>
         <ChartTimeRange timeRange={timeRange} />
       </div>
       <ChartContainer
@@ -161,18 +170,18 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
             data={chartData}
             isLoading={isLoading}
             yAxis={
-              metric === 'absolute'
+              unit === 'percentage'
                 ? {
-                    tickCount: 4,
-                    tickFormatter: (value) =>
-                      formatCurrency(Number(value), 'usd'),
+                    unit: '%',
+                    // To avoid showing 100.000001% we specify domain manually
+                    domain: [0, 100],
+                    allowDataOverflow: true,
                   }
-                : metric === 'percentage'
+                : metric === 'value'
                   ? {
-                      unit: '%',
-                      // To avoid showing 100.000001% we specify domain manually
-                      domain: [0, 100],
-                      allowDataOverflow: true,
+                      tickCount: 4,
+                      tickFormatter: (value) =>
+                        formatCurrency(Number(value), 'usd'),
                     }
                   : { tickCount: 4, allowDecimals: false }
             }
@@ -183,6 +192,7 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
             content={
               <CustomTooltip
                 metric={metric}
+                unit={unit}
                 pointsByTimestamp={pointsByTimestamp}
               />
             }
@@ -191,13 +201,12 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
       </ChartContainer>
       <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
         <RadioGroup
-          name="zkCatalogTvsMetric"
-          value={metric}
-          onValueChange={(value) => setMetric(value as Metric)}
+          name="zkCatalogProverUnit"
+          value={unit}
+          onValueChange={(value) => setUnit(value as Unit)}
         >
           <RadioGroupItem value="absolute">Absolute</RadioGroupItem>
           <RadioGroupItem value="percentage">Percentage</RadioGroupItem>
-          <RadioGroupItem value="projects">Projects</RadioGroupItem>
         </RadioGroup>
         <TvsChartRangeControls range={range} setRange={setRange} />
       </div>
@@ -205,33 +214,40 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
   )
 }
 
+/** Null before the prover's first project */
+function getAmount(point: Point, proverId: string, metric: Metric) {
+  const value = point.values[proverId] ?? null
+  if (value === null || metric === 'value') return value
+  return point.projectCounts[proverId] ?? 0
+}
+
 function CustomTooltip({
   payload,
   label,
   metric,
+  unit,
   pointsByTimestamp,
 }: CustomChartTooltipProps & {
   metric: Metric
+  unit: Unit
   pointsByTimestamp: Map<number, Point>
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
-
   const point = pointsByTimestamp.get(label)
+  if (!point) return null
+
   const visible = payload
     .flatMap(({ name, type, hide }) => {
-      const usd = name ? point?.values[name] : undefined
-      const projects = name ? (point?.projectCounts[name] ?? 0) : 0
-      const shown = metric === 'projects' ? projects : usd
-      return name && shown && type !== 'none' && !hide
-        ? [{ name, usd: usd ?? 0, projects }]
+      const amount = name ? getAmount(point, name, metric) : null
+      return name && amount && type !== 'none' && !hide
+        ? [{ name, amount }]
         : []
     })
-    .sort((a, b) =>
-      metric === 'projects' ? b.projects - a.projects : b.usd - a.usd,
-    )
-  const totalUsd = visible.reduce((acc, curr) => acc + curr.usd, 0)
-  const totalProjects = visible.reduce((acc, curr) => acc + curr.projects, 0)
+    .sort((a, b) => b.amount - a.amount)
+  const total = visible.reduce((acc, curr) => acc + curr.amount, 0)
+  const format = (amount: number) =>
+    metric === 'value' ? formatCurrency(amount, 'usd') : amount.toString()
 
   return (
     <ChartTooltipWrapper>
@@ -239,25 +255,21 @@ function CustomTooltip({
         <div className="font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>
-        {metric !== 'percentage' && (
+        {unit === 'absolute' && (
           <>
             <div className="mt-3 mb-1.5 flex items-center justify-between gap-2 text-heading-16">
               <span>Total</span>
-              <span className="text-primary">
-                {metric === 'absolute'
-                  ? formatCurrency(totalUsd, 'usd')
-                  : totalProjects}
-              </span>
+              <span className="text-primary">{format(total)}</span>
             </div>
             <HorizontalSeparator />
           </>
         )}
         <div className="mt-2 flex flex-col gap-2">
-          {visible.map(({ name, usd, projects }) => {
+          {visible.map(({ name, amount }) => {
             const config = meta[name]
             if (!config) return null
-            const usdText = formatCurrency(usd, 'usd')
-            const shareText = formatPercent(totalUsd > 0 ? usd / totalUsd : 0)
+            const amountText = format(amount)
+            const shareText = formatPercent(total > 0 ? amount / total : 0)
             return (
               <div
                 key={name}
@@ -273,17 +285,11 @@ function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
-                  {metric === 'projects' ? (
-                    projects
-                  ) : (
-                    <>
-                      {metric === 'absolute' ? usdText : shareText}
-                      <span className="text-secondary">
-                        {' '}
-                        ({metric === 'absolute' ? shareText : usdText})
-                      </span>
-                    </>
-                  )}
+                  {unit === 'absolute' ? amountText : shareText}
+                  <span className="text-secondary">
+                    {' '}
+                    ({unit === 'absolute' ? shareText : amountText})
+                  </span>
                 </span>
               </div>
             )
