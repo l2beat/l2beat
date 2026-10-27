@@ -22,6 +22,7 @@ import {
 import { HttpClient } from '@l2beat/shared'
 import { Bytes, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import chalk from 'chalk'
+import { execFile } from 'child_process'
 import { command, number, option, restPositionals } from 'cmd-ts'
 import { createHash } from 'crypto'
 import { dirname, join } from 'path'
@@ -215,7 +216,33 @@ function formatDuration(durationMs: number): string {
   return `${(durationMs / 1000).toFixed(1)}s`
 }
 
+const flats = new Map<string, { flat: string } | { error: unknown }>()
+
 function flattenSource(source: ContractSource): string {
+  const key = sha256(
+    JSON.stringify([
+      source.name,
+      source.rootFile,
+      source.files,
+      source.remappings,
+    ]),
+  )
+  let result = flats.get(key)
+  if (result === undefined) {
+    try {
+      result = { flat: flattenSourceUncached(source) }
+    } catch (error) {
+      result = { error }
+    }
+    flats.set(key, result)
+  }
+  if ('error' in result) {
+    throw result.error
+  }
+  return result.flat
+}
+
+function flattenSourceUncached(source: ContractSource): string {
   const input = Object.entries(source.files)
     .map(([fileName, content]) => ({
       path: fileName,
@@ -335,6 +362,13 @@ async function verifyBytecode(
 ): Promise<VerificationResult> {
   try {
     const output = await compile(source, flat, paths, cache)
+    const errors = output.errors?.filter((e) => e.severity === 'error') ?? []
+    if (errors.length > 0) {
+      return {
+        type: 'failure',
+        message: `Compilation failed\n${errors.map((e) => e.formattedMessage ?? e.message).join('\n')}`,
+      }
+    }
     const contract = output.contracts[FLAT_SOURCE_PATH]?.[source.name]
     if (contract === undefined) {
       return { type: 'failure', message: 'Root contract not found' }
@@ -350,30 +384,38 @@ async function verifyBytecode(
 }
 
 function formatError(error: unknown): string {
-  if (!(error instanceof Error)) {
-    return String(error)
-  }
-  const compilerErrors = (
-    error as { errors?: { message: string; formattedMessage?: string }[] }
-  ).errors
-  if (compilerErrors !== undefined) {
-    return compilerErrors.map((e) => e.formattedMessage ?? e.message).join('\n')
-  }
-  return error.message
+  return error instanceof Error ? error.message : String(error)
 }
 
 function sha256(input: string): string {
   return createHash('sha256').update(input).digest('hex')
 }
 
-async function compile(
+const compilations = new Map<string, Promise<SolidityOutput>>()
+
+function compile(
   source: ContractSource,
   flat: string,
   paths: DiscoveryPaths,
   cache: DiscoveryCache,
-) {
+): Promise<SolidityOutput> {
   const input = createCompilerInput(source, flat)
-  const cacheKey = `solidity-compilation-${sha256(JSON.stringify([input, source.solidityVersion]))}`
+  const cacheKey = `solidity-compilation-${sha256(JSON.stringify([input, source.solidityVersion, source.name]))}`
+  let compilation = compilations.get(cacheKey)
+  if (compilation === undefined) {
+    compilation = compileUncached(source, input, cacheKey, paths, cache)
+    compilations.set(cacheKey, compilation)
+  }
+  return compilation
+}
+
+async function compileUncached(
+  source: ContractSource,
+  input: SolidityJsonInput,
+  cacheKey: string,
+  paths: DiscoveryPaths,
+  cache: DiscoveryCache,
+): Promise<SolidityOutput> {
   const entry = await cache.get(cacheKey)
   if (entry !== undefined) {
     try {
@@ -381,18 +423,112 @@ async function compile(
     } catch {}
   }
 
+  const output = await runSolc(paths, source.solidityVersion, input)
+  const root = output.contracts?.[FLAT_SOURCE_PATH]?.[source.name]
+  const trimmed: SolidityOutput = {
+    contracts: root ? { [FLAT_SOURCE_PATH]: { [source.name]: root } } : {},
+    sources: {},
+    errors: output.errors,
+  }
+  await cache.set(cacheKey, JSON.stringify(trimmed))
+  return trimmed
+}
+
+async function runSolc(
+  paths: DiscoveryPaths,
+  version: string,
+  input: SolidityJsonInput,
+): Promise<SolidityOutput> {
+  const solcRepoPath = join(dirname(paths.cache), 'solc')
+  if (process.platform === 'darwin' && process.arch === 'arm64') {
+    const solcPath = await getMacSolcPath(solcRepoPath, version)
+    if (solcPath !== undefined) {
+      return runSolcBinary(solcPath, input)
+    }
+  }
+
   const { useSolidityCompiler } = await import('@ethereum-sourcify/compilers')
-  const output = await useSolidityCompiler(
-    join(dirname(paths.cache), 'solc'),
-    join(dirname(paths.cache), 'soljson'),
-    source.solidityVersion,
-    input,
-    false,
-  )
+  try {
+    return await useSolidityCompiler(
+      solcRepoPath,
+      join(dirname(paths.cache), 'soljson'),
+      version,
+      input,
+      false,
+    )
+  } catch (error) {
+    const errors = (error as { errors?: SolidityOutput['errors'] }).errors
+    if (errors === undefined) {
+      throw error
+    }
+    return { contracts: {}, sources: {}, errors }
+  }
+}
 
-  await cache.set(cacheKey, JSON.stringify(output))
+const macSolcPaths = new Map<string, Promise<string | undefined>>()
 
-  return output
+function getMacSolcPath(solcRepoPath: string, version: string) {
+  const cached = macSolcPaths.get(version)
+  if (cached !== undefined) {
+    return cached
+  }
+  const solcPath = (async () => {
+    const { getSolcExecutable } = await import('@ethereum-sourcify/compilers')
+    try {
+      const path = await getSolcExecutable(
+        solcRepoPath,
+        'macosx-amd64',
+        version.startsWith('v') ? version.slice(1) : version,
+      )
+      return path ?? undefined
+    } catch {
+      return undefined
+    }
+  })()
+  macSolcPaths.set(version, solcPath)
+  return solcPath
+}
+
+const SOLC_TIMEOUT_MS = 60_000
+
+function runSolcBinary(
+  solcPath: string,
+  input: SolidityJsonInput,
+): Promise<SolidityOutput> {
+  return new Promise((resolve, reject) => {
+    const child = execFile(
+      solcPath,
+      ['--standard-json'],
+      {
+        maxBuffer: 1024 * 1024 * 1024,
+        timeout: SOLC_TIMEOUT_MS,
+        killSignal: 'SIGKILL',
+      },
+      (error, stdout) => {
+        if (error?.killed) {
+          resolve({
+            contracts: {},
+            sources: {},
+            errors: [
+              {
+                type: 'Exception',
+                component: 'general',
+                severity: 'error',
+                message: 'Compilation timed out',
+              },
+            ],
+          })
+          return
+        }
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(JSON.parse(stdout) as SolidityOutput)
+      },
+    )
+    child.stdin?.end(JSON.stringify(input))
+  })
 }
 
 type SolidityJsonSettings = SolidityJsonInput['settings']
@@ -408,7 +544,15 @@ function createCompilerInput(
       ...getCompilerSettings(source),
       remappings: source.remappings,
       libraries: getLibraries(source),
-      outputSelection: { '*': { '*': ['evm.deployedBytecode'] } },
+      outputSelection: {
+        '*': {
+          '*': [
+            'evm.deployedBytecode.object',
+            'evm.deployedBytecode.immutableReferences',
+            'evm.deployedBytecode.linkReferences',
+          ],
+        },
+      },
     },
   }
 }
