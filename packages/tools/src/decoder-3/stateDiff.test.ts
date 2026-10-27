@@ -282,3 +282,34 @@ describe('state reads from the target ABI', () => {
     ])
   })
 })
+
+describe('review fixes', () => {
+  const SIGNATURE = 'function setDaoURI(string uri)'
+  const URI_ABI = ['function daoURI() view returns (string)']
+  const data = encodeFunctionData({
+    abi: parseAbi([SIGNATURE]),
+    functionName: 'setDaoURI',
+    args: ['https://example.com/abc'],
+  })
+  const call = decode(data, [SIGNATURE], 1, FACTORY)!
+
+  it('compares strings case-sensitively', () => {
+    const [read] = getStateReads(call, { abi: URI_ABI }) ?? []
+    const current = encodeAbiParameters(
+      [{ type: 'string' }],
+      ['https://example.com/ABC'],
+    )
+    expect(compareState(read!, current).map((x) => x.changed)).toEqual([true])
+  })
+
+  it('compares nothing for delegatecalled setters', () => {
+    expect(getStateReads(call, { abi: URI_ABI, delegatecall: true })).toEqual(
+      undefined,
+    )
+    expect(
+      getStateReads(setImplementation(`0x${ASR}${NEW_PROPOSER}`), {
+        delegatecall: true,
+      }),
+    ).toEqual(undefined)
+  })
+})

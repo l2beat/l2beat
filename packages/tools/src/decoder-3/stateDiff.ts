@@ -35,6 +35,9 @@ export interface StateContext {
   abi?: readonly string[]
   // msg.sender of the call, when known.
   sender?: Hex
+  // Delegatecalled code writes its caller's storage, which the target's
+  // getters do not read, so nothing is compared.
+  delegatecall?: boolean
 }
 
 const GETTERS = parseAbi([
@@ -85,7 +88,7 @@ export function getStateReads(
   call: DecodedValue,
   context: StateContext = {},
 ): StateRead[] | undefined {
-  if (call.type !== 'call') return
+  if (call.type !== 'call' || context.delegatecall) return
   const selector = call.bytes.slice(0, 10).toLowerCase()
   const setter = SETTERS.find(({ abi }) => toFunctionSelector(abi) === selector)
   try {
@@ -252,7 +255,11 @@ function isSameValue(a: DecodedValue, b: DecodedValue) {
   if (a.type === 'tuple' || b.type === 'tuple' || a.type === 'bytes') {
     return a.bytes.toLowerCase() === b.bytes.toLowerCase()
   }
-  return a.type === b.type && a.value.toLowerCase() === b.value.toLowerCase()
+  if (a.type !== b.type) return false
+  // Only hex is case-insensitive. Strings like URIs are not.
+  return a.type === 'address'
+    ? a.value.toLowerCase() === b.value.toLowerCase()
+    : a.value === b.value
 }
 
 function gameImplsRead(

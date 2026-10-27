@@ -512,9 +512,10 @@ function DecodedView({
     [decoded, isDeposit, depositChainId],
   )
   const abi = key ? store.abis[key] : undefined
+  const delegatecall = !!value.delegatecall
   const stateReads = useMemo(
-    () => getStateReads(decoded, { abi, sender }),
-    [decoded, abi, sender],
+    () => getStateReads(decoded, { abi, sender, delegatecall }),
+    [decoded, abi, sender, delegatecall],
   )
 
   useEffect(() => {
