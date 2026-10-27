@@ -5,6 +5,7 @@ import {
   ListChecksIcon,
   NetworkIcon,
   PanelsTopLeftIcon,
+  TablePropertiesIcon,
 } from 'lucide-react'
 import { Link } from 'react-router'
 
@@ -70,6 +71,16 @@ const items = [
         title: 'Add',
         url: '/chains/new',
         icon: CirclePlusIcon,
+      },
+    ],
+  },
+  {
+    title: 'TVS',
+    items: [
+      {
+        title: 'Gaps',
+        url: '/tokens/tvs-coverage',
+        icon: TablePropertiesIcon,
       },
     ],
   },
