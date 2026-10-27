@@ -22,6 +22,31 @@ Run `l2b` from `packages/config`. Its `.env` holds RPC keys: never read or print
 - `<project>/.flat/`: the flattened source of every contract discovery analyzed.
 - `abis` in `discovered.json`: discovery calls only functions without arguments (and probes single `uint256` getters at indices 0 to 4). Functions with other arguments, events, constructor arguments and private variables need a handler.
 
+## Work in DiscoUI with the researcher
+
+When the researcher has DiscoUI open (`l2b ui`), read what they look at, point at your answer there, and change their graph when they ask. DiscoUI serves these tools over MCP at `http://localhost:2021/api/agent/mcp`: add the server (`claude mcp add --transport http discoui <url>` or `codex mcp add discoui --url <url>`), or run the same tools from a shell: `l2b ui-agent <tool>`, with `control-map` for `control_map` and `--help` for the flags.
+
+DiscoUI shows each source behind a 12-line Flattener note, so a line in DiscoUI is 12 more than the same line in the `.flat` file. `show` reports DiscoUI's line; when you cite one you found with `rg`, add 12, or point at it with `show` instead.
+
+Contracts are names (`Bridge`), `chain:Name` when a name repeats across chains, or `chain:0x` addresses, which `permissions` gives you.
+
+Read:
+- `context`: the open project, selected contracts, the code the researcher selected, the agent step on screen and a graph summary. Read it first: "this" means the selection.
+- `state`: the graph contract by contract: visible, hidden, in which group.
+- `permissions`: start here for "who controls this". Who can act on the contract, through which contracts, with what delay and the multisigs behind each holder, with a ready path for `show`.
+
+Point:
+- `show`: steps that draw paths holder first, select a contract and highlight a snippet of its code. A function header opens at its implementation, not at an interface declaring it. Several steps make a tour the researcher pages through, for "how does this work".
+
+Change the graph:
+- `control_map`: start here for "show me the power structure". One lane per fastest way to upgrade, with the multisigs that sign for it, colored by delay.
+- `view`: hides, isolates, groups, colors and lays groups out in lanes. The researcher sees it as a pending view and keeps it, saves it as a layout or discards it; views sent before they decide stack. The result says what actually happened: what else got hidden, what stayed to keep things connected. Initial contracts and ones nothing references cannot be hidden in DiscoUI, so the view sets them aside in a closed group.
+- `dryRun` on `view` and `control_map` reports all that without touching the graph; use it instead of trying a view out on the researcher.
+- `find`: what a selector matches; when nothing, the values that exist. Selectors: a contract, `all`, `name:*Escrow*`, `template:orbitstack/*`, `category:*Bridges`, `type:eoa|multisig|contract`, `chain:eth`, `controlledBy:<contract>`, `upgradeableBy:<contract>`. The last two count signers: `upgradeableBy:"Security Council"` matches what a multisig it signs for can upgrade.
+- `discard`: put back the graph from before all your pending views.
+
+A wrong name or selector fails with candidates, a snippet that is not in the code fails too: fix it and call again. A snippet opens where it is implemented, past interface declarations; found more than once, it opens at the first and the result lists the others: quote a longer snippet, or when they are other implementations, name them in the note. Keep notes short, the details go in your reply.
+
 ## Templates
 
 A template is `_templates/<name>/template.jsonc` with a `shapes.json` of source hashes. It applies to every contract with that source, in every project, so it is where anything about a contract's code goes. `config.jsonc` overrides are for this project's addresses.

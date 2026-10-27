@@ -14,6 +14,7 @@ import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
 import { getCodePaths } from '../discovery/getCodePaths'
+import { attachAgentRouter } from './agent/router'
 import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
@@ -145,7 +146,8 @@ export function createDiscoveryUiApp({
   const flatSourceClient = new FlatSourceClient()
   const diffoveryController = new DiffoveryController(flatSourceClient)
 
-  app.use(express.json())
+  // A tab reports its whole graph, past the parser's 100kb default.
+  app.use(express.json({ limit: '16mb' }))
 
   app.get('/health', (_, res) => {
     res.status(200).send('OK')
@@ -326,6 +328,7 @@ export function createDiscoveryUiApp({
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
     attachModulesRouter(app, configReader, templateService, paths.discovery)
+    attachAgentRouter(app, configReader)
 
     app.get('/api/config/health', (_, res) => {
       const response = getConfigHealth(
