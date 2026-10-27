@@ -68,6 +68,7 @@ export function flattenStartingFrom(
   const order = [...collectPragmas(current, rootContract.file), ...current]
 
   const typeMap = buildTypeMap(order)
+  const structMap = buildStructMap(order)
   const renameMap = buildRenameMap(order)
 
   let flatSource = ''
@@ -76,6 +77,7 @@ export function flattenStartingFrom(
       ? generateInterfaceSourceFromContract(
           declaration,
           typeMap,
+          structMap,
           usedMembers.get(declaration.id),
         )
       : declaration.content
@@ -368,6 +370,26 @@ function buildTypeMap(
           if (!map.has(node.name)) map.set(node.name, 'typedef')
         }
       }
+    }
+  }
+  return map
+}
+
+function buildStructMap(
+  order: DeclarationFilePair[],
+): Map<string, AST.StructDefinition> {
+  const map = new Map<string, AST.StructDefinition>()
+  for (const { declaration } of order) {
+    if (declaration.type === 'struct') {
+      map.set(declaration.name, declaration.ast as AST.StructDefinition)
+      continue
+    }
+    if (declaration.ast.type !== 'ContractDefinition') continue
+    for (const sub of (declaration.ast as AST.ContractDefinition).subNodes) {
+      const node = sub as AST.ASTNode
+      if (node.type !== 'StructDefinition') continue
+      map.set(`${declaration.name}.${node.name}`, node)
+      if (!map.has(node.name)) map.set(node.name, node)
     }
   }
   return map
