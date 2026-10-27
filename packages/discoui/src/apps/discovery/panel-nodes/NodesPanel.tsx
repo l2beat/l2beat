@@ -8,6 +8,9 @@ import type {
 } from '../../../api/types'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
+import { AgentOverlay } from '../agent/AgentNote'
+import { fitGraphTo, useAgentStore } from '../agent/store'
+import { useAgentViewStore } from '../agent/viewStore'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
@@ -61,6 +64,7 @@ export function NodesPanel() {
         <NodesSync data={response.data} project={project} />
         <Viewport />
         <Controls />
+        <AgentOverlay project={project} />
       </div>
     </div>
   )
@@ -74,7 +78,28 @@ function NodesSync(props: {
 }) {
   useLoadNodes(props.data, props.project)
   useSynchronizeSelection()
+  useFitAgentFocus(props.project)
+  useEffect(() => {
+    useAgentViewStore.setState({ shownProject: props.project })
+    return () => useAgentViewStore.setState({ shownProject: undefined })
+  }, [props.project])
   return null
+}
+
+function useFitAgentFocus(project: string) {
+  const loaded = useStore((state) => state.loaded)
+  const focus = useAgentStore((state) => state.focus)
+  const view = useAgentStore((state) => state.view)
+  const fittedKey = useAgentStore((state) => state.graphFittedKey)
+
+  useEffect(() => {
+    if (!loaded || focus === undefined || focus.project !== project) {
+      return
+    }
+    if (view === 'graph' && focus.key !== fittedKey) {
+      fitGraphTo(focus.nodes)
+    }
+  }, [loaded, focus, view, project, fittedKey])
 }
 
 function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {

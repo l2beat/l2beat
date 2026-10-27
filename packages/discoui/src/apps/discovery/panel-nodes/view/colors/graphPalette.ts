@@ -15,6 +15,9 @@ export interface GraphPalette {
   accentFill: RGBA
   highlightedRowFill: RGBA
   highlightedRowText: RGBA
+  agent: RGBA
+  agentRowFill: RGBA
+  agentRowText: RGBA
   connection: RGBA
   connectionDimmed: RGBA
   connectionGrayed: RGBA
@@ -36,6 +39,9 @@ export const DARK_GRAPH_PALETTE: GraphPalette = {
   accentFill: rgbaFromHex('#bad80a', 1),
   highlightedRowFill: rgbaFromHex('#bad80a', 0.26),
   highlightedRowText: rgbaFromHex('#bad80a', 1),
+  agent: rgbaFromHex('#8b8be8', 1),
+  agentRowFill: rgbaFromHex('#8b8be8', 0.26),
+  agentRowText: rgbaFromHex('#a9a9f0', 1),
   connection: rgbaFromHex('#a98763', 0.6),
   connectionDimmed: rgbaFromHex('#a98763', 0.18),
   connectionGrayed: rgbaFromHex('#f0d8bd', 0.1),
@@ -56,6 +62,9 @@ export const LIGHT_GRAPH_PALETTE: GraphPalette = {
   accentFill: rgbaFromHex('#bad80a', 1),
   highlightedRowFill: rgbaFromHex('#bad80a', 0.35),
   highlightedRowText: rgbaFromHex('#4a5600', 1),
+  agent: rgbaFromHex('#5e5ab2', 1),
+  agentRowFill: rgbaFromHex('#8b8be8', 0.35),
+  agentRowText: rgbaFromHex('#45418f', 1),
   connection: rgbaFromHex('#856441', 0.72),
   connectionDimmed: rgbaFromHex('#856441', 0.18),
   connectionGrayed: rgbaFromHex('#412e18', 0.1),

@@ -2,7 +2,9 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { Title } from '../../components/Title'
+import { IS_READONLY } from '../../config/readonly'
 import { findSelected } from '../../utils/findSelected'
+import { AgentContextReporter } from './agent/AgentContextReporter'
 import { useProjectQueryOptions } from './hooks/projectQuery'
 import { MultiView } from './multi-view/MultiView'
 import { usePanelStore } from './store/panel-store'
@@ -18,6 +20,7 @@ export function ProjectPage() {
       <Title title={`DiscoUI - ${project}`} />
       <SelectFirstWhenMissing project={project} />
       <MultiView project={project} />
+      {!IS_READONLY && <AgentContextReporter project={project} />}
     </>
   )
 }
@@ -30,9 +33,12 @@ function SelectFirstWhenMissing(props: { project: string }) {
   const selectedAddresses = usePanelStore((state) => state.selected)
   useEffect(() => {
     if (response.data) {
+      // The selection as it is now: an effect earlier in the same commit, like
+      // an agent step, may have replaced the one this render saw.
+      const current = usePanelStore.getState().selected
       const currentlySelectedStillExists = findSelected(
         response.data.entries,
-        selectedAddresses[0],
+        current[0],
       )
       if (!currentlySelectedStillExists) {
         const first = response.data.entries[0]?.initialContracts[0]?.address

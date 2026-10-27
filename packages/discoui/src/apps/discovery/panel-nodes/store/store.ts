@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware'
 import type { Actions } from './actions/Actions'
 import { alignSelected, distributeSelected } from './actions/align'
 import { applyStoredLayout } from './actions/applyStoredLayout'
+import { fitToNodes } from './actions/fitToNodes'
 import { groupSelected, renameGroup, ungroupSelected } from './actions/group'
 import { redo, undo } from './actions/history'
 import { loadNodes } from './actions/loadNodes'
@@ -99,6 +100,7 @@ export const useStore = create<StoreState>()(
       layout: wrapUndoableAction(set, layout),
       applyStoredLayout: wrapAction(set, applyStoredLayout),
       selectAndFocus: wrapAction(set, selectAndFocus),
+      fitToNodes: wrapAction(set, fitToNodes),
       registerViewportContainer: wrapAction(set, registerViewportContainer),
       setPreferences: wrapAction(set, setPreferences),
       setTool: wrapAction(set, setTool),

@@ -193,7 +193,10 @@ function indexDescendants(
   }
 }
 
-function layoutFields(node: Node, boxById: Map<string, Box>): Node {
+export function layoutFields(
+  node: Node,
+  boxById: ReadonlyMap<string, Box>,
+): Node {
   if (node.fields.length === 0) {
     return node
   }

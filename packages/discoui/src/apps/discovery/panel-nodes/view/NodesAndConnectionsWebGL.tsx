@@ -9,6 +9,7 @@ import {
 } from '../../../../icons/IconArrowHead'
 import { IconInitial } from '../../../../icons/IconInitial'
 import { useTheme } from '../../../../theme'
+import { useAgentFocusHighlight } from '../../agent/useAgentFocusHighlight'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
@@ -41,6 +42,11 @@ import {
 // ============================================================================
 // Constants
 // ============================================================================
+
+// A field links to the user's selection, or is a link on the agent's path.
+const FIELD_PLAIN = 0
+const FIELD_SELECTION = 1
+const FIELD_AGENT = 2
 
 const HEADER_ICON_SIZE = 16
 const ICON_VIEW_BOX = 16
@@ -129,6 +135,7 @@ interface FontSpec {
 
 interface NodeFlags {
   isSelected: boolean
+  isAgentFocused: boolean
   isDimmed: boolean
   isGrayedOut: boolean
   isOverlapping: boolean
@@ -136,7 +143,20 @@ interface NodeFlags {
   fieldTargetHidden: Uint8Array
 }
 
-interface DrawData {
+// What an agent's answer points at: it stands out and the rest dims.
+export interface AgentFocusHighlight {
+  nodes: ReadonlySet<string>
+  isOnPath: (from: string, to: string) => boolean
+}
+
+// A hop of the agent's path that no field draws, like a message between
+// chains.
+export interface ConnectionHop {
+  connection: Field['connection']
+  target: string
+}
+
+export interface DrawData {
   visible: Node[]
   visibleById: Map<string, Node>
   flags: Map<string, NodeFlags>
@@ -146,6 +166,8 @@ interface DrawData {
   markUnreachableEntries: boolean
   palette: GraphPalette
   anyNodeSelected: boolean
+  hasAgentFocus: boolean
+  hops: readonly ConnectionHop[]
   liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>
 }
 
@@ -1433,7 +1455,7 @@ class WebGLRenderer {
       layout.enter(rn.range, n)
       const { x, y, width, height } = node.box
 
-      if (flags.isSelected) {
+      if (flags.isSelected || flags.isAgentFocused) {
         const inset = SELECTION_OUTLINE_INSET
         writeRound(
           buf,
@@ -1442,7 +1464,7 @@ class WebGLRenderer {
           y - inset,
           width + inset * 2,
           height + inset * 2,
-          palette.accent,
+          flags.isSelected ? palette.accent : palette.agent,
           corner + inset,
           corner + inset,
           corner + inset,
@@ -1525,7 +1547,8 @@ class WebGLRenderer {
       }
 
       for (let row = 0; row < rn.rows.length; row++) {
-        if (isRowHighlighted(rn, row)) {
+        const highlight = rowHighlight(rn, row)
+        if (highlight !== FIELD_PLAIN) {
           const rowY = y + HEADER_HEIGHT + row * FIELD_HEIGHT
           writeRound(
             buf,
@@ -1534,7 +1557,9 @@ class WebGLRenderer {
             rowY,
             width - HIGHLIGHTED_ROW_INSET * 2,
             FIELD_HEIGHT,
-            palette.highlightedRowFill,
+            highlight === FIELD_AGENT
+              ? palette.agentRowFill
+              : palette.highlightedRowFill,
             HIGHLIGHTED_ROW_RADIUS,
             HIGHLIGHTED_ROW_RADIUS,
             HIGHLIGHTED_ROW_RADIUS,
@@ -1637,13 +1662,9 @@ class WebGLRenderer {
           const isLeft = field.connection.from.direction === 'left'
           const dotX = isLeft ? x : x + width
           const dotY = rowY + FIELD_HEIGHT / 2
-          const useAutumn =
-            flags.isSelected || flags.fieldHighlighted[index] === 1
           const dotColor = flags.isGrayedOut
             ? desaturate(palette.dot)
-            : useAutumn
-              ? palette.accent
-              : palette.dot
+            : fieldColor(flags, index, palette, palette.dot)
           n += this.emitIcon(
             buf,
             n,
@@ -1816,9 +1837,7 @@ class WebGLRenderer {
       for (let row = 0; row < rn.rows.length; row++) {
         const rowY = node.box.y + HEADER_HEIGHT + row * FIELD_HEIGHT
         const baselineY = rowY + FIELD_HEIGHT / 2 + atlas.refSize / 2 - 2
-        const baseColor = isRowHighlighted(rn, row)
-          ? palette.highlightedRowText
-          : palette.text
+        const baseColor = rowTextColor(rowHighlight(rn, row), palette)
         const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
         const startX = node.box.x + HEADER_PADDING
         const maxX = node.box.x + node.box.width - HEADER_PADDING
@@ -1910,30 +1929,44 @@ class WebGLRenderer {
     data: DrawData,
     spans: readonly ConnectionSpan[],
   ): number {
-    if (spans.length === 0) return 0
-    const buffer = this.ensureConnections(spans.length)
-    const highlighted: ConnectionSpan[] = []
+    const count = spans.length + data.hops.length
+    if (count === 0) return 0
+    const buffer = this.ensureConnections(count)
+    const highlighted: [ConnectionSpan, RGBA][] = []
     let n = 0
     for (const span of spans) {
-      if (isConnectionHighlighted(span, data)) {
-        highlighted.push(span)
+      const highlight = connectionHighlight(span, data)
+      if (highlight !== undefined) {
+        highlighted.push([span, highlight])
         continue
       }
       writeConnection(
         buffer,
         n++,
-        span,
+        span.field.connection,
+        span.isDashed,
         CONNECTION_WIDTH,
         connectionColor(span, data),
       )
     }
-    for (const span of highlighted) {
+    for (const [span, color] of highlighted) {
       writeConnection(
         buffer,
         n++,
-        span,
+        span.field.connection,
+        span.isDashed,
         HIGHLIGHTED_CONNECTION_WIDTH,
-        data.palette.accent,
+        color,
+      )
+    }
+    for (const hop of data.hops) {
+      writeConnection(
+        buffer,
+        n++,
+        hop.connection,
+        true,
+        HIGHLIGHTED_CONNECTION_WIDTH,
+        data.palette.agent,
       )
     }
     return this.upload(
@@ -2323,15 +2356,31 @@ function liveConnections(data: DrawData): ConnectionSpan[] {
   return spans
 }
 
-function isConnectionHighlighted(
+function connectionHighlight(
   span: ConnectionSpan,
   data: DrawData,
-): boolean {
+): RGBA | undefined {
   const flags = data.flags.get(span.node.id)
   if (flags === undefined) {
     throw new Error('Connection from a node without flags')
   }
-  return flags.isSelected || flags.fieldHighlighted[span.fieldIndex] === 1
+  const color = fieldColor(flags, span.fieldIndex, data.palette, undefined)
+  if (data.hasAgentFocus && color !== data.palette.agent) {
+    return undefined
+  }
+  return color
+}
+
+function fieldColor<T>(
+  flags: NodeFlags,
+  index: number,
+  palette: GraphPalette,
+  plain: T,
+): RGBA | T {
+  const highlight = flags.fieldHighlighted[index]
+  if (highlight === FIELD_AGENT) return palette.agent
+  if (highlight === FIELD_SELECTION || flags.isSelected) return palette.accent
+  return plain
 }
 
 function connectionColor(span: ConnectionSpan, data: DrawData): RGBA {
@@ -2341,7 +2390,7 @@ function connectionColor(span: ConnectionSpan, data: DrawData): RGBA {
   ) {
     return data.palette.connectionGrayed
   }
-  if (data.enableDimming && data.anyNodeSelected) {
+  if (data.hasAgentFocus || (data.enableDimming && data.anyNodeSelected)) {
     return data.palette.connectionDimmed
   }
   return data.palette.connection
@@ -2362,13 +2411,23 @@ function arrowHeadsByTarget(
   for (const span of spans) {
     const side = span.field.connection.to.direction
     const heads = result.get(span.target.id) ?? {}
-    if (heads[side] === data.palette.accent) continue
-    heads[side] = isConnectionHighlighted(span, data)
-      ? data.palette.accent
-      : arrowHeadColor(span, data)
+    if (isArrowHeadHighlighted(heads[side], data.palette)) continue
+    heads[side] = connectionHighlight(span, data) ?? arrowHeadColor(span, data)
     result.set(span.target.id, heads)
   }
+  for (const hop of data.hops) {
+    const heads = result.get(hop.target) ?? {}
+    heads[hop.connection.to.direction] = data.palette.agent
+    result.set(hop.target, heads)
+  }
   return result
+}
+
+function isArrowHeadHighlighted(
+  color: RGBA | undefined,
+  palette: GraphPalette,
+): boolean {
+  return color === palette.accent || color === palette.agent
 }
 
 function arrowHeadColor(span: ConnectionSpan, data: DrawData): RGBA {
@@ -2384,11 +2443,12 @@ function arrowHeadColor(span: ConnectionSpan, data: DrawData): RGBA {
 function writeConnection(
   out: Float32Array,
   i: number,
-  span: ConnectionSpan,
+  connection: Field['connection'],
+  isDashed: boolean,
   width: number,
   color: RGBA,
 ): number {
-  const { from, to } = span.field.connection
+  const { from, to } = connection
   const b = i * CONNECTION_STRIDE_F
   out[b] = from.x
   out[b + 1] = from.y
@@ -2403,7 +2463,7 @@ function writeConnection(
   out[b + 8] = color[2]
   out[b + 9] = color[3]
   out[b + 10] = width
-  out[b + 11] = span.isDashed ? 1 : 0
+  out[b + 11] = isDashed ? 1 : 0
   return i + 1
 }
 
@@ -2789,11 +2849,19 @@ function cssRgbToRgba(css: string): RGBA {
   return [r, g, b, 1]
 }
 
-function isRowHighlighted(rn: RenderNode, row: number): boolean {
+// A row the agent's path runs through shows that over the selection.
+function rowHighlight(rn: RenderNode, row: number): number {
+  let highlight = FIELD_PLAIN
   for (const index of (rn.rows[row] as NodeRow).fieldIndices) {
-    if (rn.flags.fieldHighlighted[index] === 1) return true
+    highlight = Math.max(highlight, rn.flags.fieldHighlighted[index] ?? 0)
   }
-  return false
+  return highlight
+}
+
+function rowTextColor(highlight: number, palette: GraphPalette): RGBA {
+  if (highlight === FIELD_AGENT) return palette.agentRowText
+  if (highlight === FIELD_SELECTION) return palette.highlightedRowText
+  return palette.text
 }
 
 // Values keep their own entry, but a compressed row hands several of them the
@@ -2815,80 +2883,51 @@ function getVisibleFields(node: Node): VisibleField[] {
 // Data build
 // ============================================================================
 
-function buildDrawData(
-  nodes: readonly Node[],
-  containers: GroupContainer[],
-  hidden: ReadonlySet<string>,
-  liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>,
-  selected: readonly string[],
-  enableDimming: boolean,
-  highlightOverlapping: boolean,
-  markUnreachableEntries: boolean,
-  palette: GraphPalette,
-): DrawData {
-  const selectedSet = new Set(selected)
-  const visible: Node[] = []
-  for (const node of nodes) {
-    if (!hidden.has(node.id)) {
-      visible.push(node)
-    }
-  }
-  const visibleById = topLevelByDescendant(visible)
+export interface DrawInput {
+  nodes: readonly Node[]
+  containers: GroupContainer[]
+  hidden: ReadonlySet<string>
+  liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>
+  selected: readonly string[]
+  enableDimming: boolean
+  highlightOverlapping: boolean
+  markUnreachableEntries: boolean
+  palette: GraphPalette
+  agent: AgentFocusHighlight | undefined
+  hops: readonly ConnectionHop[]
+}
 
-  const overlappingIds = highlightOverlapping
+export function buildDrawData(input: DrawInput): DrawData {
+  const { agent, hidden, containers } = input
+  const selectedSet = new Set(input.selected)
+  const visible = input.nodes.filter((node) => !hidden.has(node.id))
+  const overlappingIds = input.highlightOverlapping
     ? computeOverlappingIds(visible)
     : new Set<string>()
-
-  const anyNodeSelected = selected.length > 0
-  const highlightedSet = new Set<string>(selectedSet)
-  if (enableDimming && anyNodeSelected) {
-    for (const node of visible) {
-      if (!selectedSet.has(node.id)) continue
-      for (const { field } of getVisibleFields(node)) {
-        if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
-        if (hidden.has(field.target)) continue
-        highlightedSet.add(field.target)
-      }
-    }
-    for (const node of visible) {
-      if (highlightedSet.has(node.id)) continue
-      for (const { field } of getVisibleFields(node)) {
-        if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
-        if (hidden.has(field.target)) continue
-        if (selectedSet.has(field.target)) {
-          highlightedSet.add(node.id)
-        }
-      }
-    }
-  }
+  const anyNodeSelected = input.selected.length > 0
+  const dimsBySelection = input.enableDimming && anyNodeSelected
+  const highlightedSet = dimsBySelection
+    ? selectionNeighbourhood(visible, selectedSet, hidden, input)
+    : selectedSet
 
   const flags = new Map<string, NodeFlags>()
   for (const node of visible) {
-    const fieldCount = node.fields.length
-    const fieldHighlighted = new Uint8Array(fieldCount)
-    const fieldTargetHidden = new Uint8Array(fieldCount)
-    for (let i = 0; i < node.fields.length; i++) {
-      const field = node.fields[i]
-      if (!field) continue
-      if (selectedSet.has(field.target)) {
-        fieldHighlighted[i] = 1
-      }
-      if (hidden.has(field.target)) fieldTargetHidden[i] = 1
-    }
+    const isAgentFocused = agent?.nodes.has(node.id) === true
     flags.set(node.id, {
       isSelected: selectedSet.has(node.id),
-      isDimmed:
-        enableDimming && anyNodeSelected && !highlightedSet.has(node.id),
-      isGrayedOut: markUnreachableEntries && !node.isReachable,
+      isAgentFocused,
+      isDimmed: agent
+        ? !isAgentFocused
+        : dimsBySelection && !highlightedSet.has(node.id),
+      isGrayedOut: input.markUnreachableEntries && !node.isReachable,
       isOverlapping: overlappingIds.has(node.id),
-      fieldHighlighted,
-      fieldTargetHidden,
+      ...fieldFlags(node, selectedSet, hidden, agent),
     })
   }
 
   return {
     visible,
-    visibleById,
+    visibleById: topLevelByDescendant(visible),
     flags,
     containers,
     selectedContainers: new Set(
@@ -2896,12 +2935,62 @@ function buildDrawData(
         .filter((group) => selectedSet.has(group.id))
         .map((group) => group.id),
     ),
-    enableDimming,
-    markUnreachableEntries,
-    palette,
+    enableDimming: input.enableDimming,
+    markUnreachableEntries: input.markUnreachableEntries,
+    palette: input.palette,
     anyNodeSelected,
-    liveGroupTargets,
+    hasAgentFocus: agent !== undefined,
+    hops: input.hops,
+    liveGroupTargets: input.liveGroupTargets,
   }
+}
+
+// The selection and every node it links to or from stay lit.
+function selectionNeighbourhood(
+  visible: readonly Node[],
+  selectedSet: ReadonlySet<string>,
+  hidden: ReadonlySet<string>,
+  input: Pick<DrawInput, 'liveGroupTargets'>,
+): Set<string> {
+  const highlightedSet = new Set<string>(selectedSet)
+  const links = (node: Node) =>
+    getVisibleFields(node).filter(
+      ({ field }) =>
+        isFieldConnectionLive(node, field, input.liveGroupTargets) &&
+        !hidden.has(field.target),
+    )
+  for (const node of visible) {
+    if (!selectedSet.has(node.id)) continue
+    for (const { field } of links(node)) {
+      highlightedSet.add(field.target)
+    }
+  }
+  for (const node of visible) {
+    if (highlightedSet.has(node.id)) continue
+    if (links(node).some(({ field }) => selectedSet.has(field.target))) {
+      highlightedSet.add(node.id)
+    }
+  }
+  return highlightedSet
+}
+
+function fieldFlags(
+  node: Node,
+  selectedSet: ReadonlySet<string>,
+  hidden: ReadonlySet<string>,
+  agent: AgentFocusHighlight | undefined,
+): Pick<NodeFlags, 'fieldHighlighted' | 'fieldTargetHidden'> {
+  const fieldHighlighted = new Uint8Array(node.fields.length)
+  const fieldTargetHidden = new Uint8Array(node.fields.length)
+  for (const [i, field] of node.fields.entries()) {
+    if (agent?.isOnPath(node.id, field.target)) {
+      fieldHighlighted[i] = FIELD_AGENT
+    } else if (agent === undefined && selectedSet.has(field.target)) {
+      fieldHighlighted[i] = FIELD_SELECTION
+    }
+    if (hidden.has(field.target)) fieldTargetHidden[i] = 1
+  }
+  return { fieldHighlighted, fieldTargetHidden }
 }
 
 function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
@@ -2945,11 +3034,6 @@ function getGridCellSize(scale: number): number {
 // ============================================================================
 
 export function NodesAndConnectionsWebGL() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const rendererRef = useRef<WebGLRenderer | null>(null)
-  const rafRef = useRef<number | null>(null)
-  const dataRef = useRef<DrawData | null>(null)
-
   const nodes = useStore((s) => s.nodes)
   const selected = useStore((s) => s.selected)
   const enableDimming = useStore(
@@ -2961,34 +3045,70 @@ export function NodesAndConnectionsWebGL() {
   const markUnreachableEntries = useGlobalSettingsStore(
     (s) => s.markUnreachableEntries,
   )
-
-  const theme = useTheme()
+  const palette = useGraphPalette()
 
   const graph = useMemo(() => buildRenderGraph(nodes), [nodes])
+  const agent = useAgentFocusHighlight(graph.nodes)
 
   const data = useMemo(
     () =>
-      buildDrawData(
-        graph.nodes,
-        graph.containers,
-        graph.hidden,
-        graph.liveGroupTargets,
+      buildDrawData({
+        nodes: graph.nodes,
+        containers: graph.containers,
+        hidden: graph.hidden,
+        liveGroupTargets: graph.liveGroupTargets,
         selected,
         enableDimming,
         highlightOverlapping,
         markUnreachableEntries,
-        theme === 'light' ? LIGHT_GRAPH_PALETTE : DARK_GRAPH_PALETTE,
-      ),
+        palette,
+        agent,
+        hops: [],
+      }),
     [
       graph,
       selected,
       enableDimming,
       highlightOverlapping,
       markUnreachableEntries,
-      theme,
+      palette,
+      agent,
     ],
   )
-  dataRef.current = data
+
+  return (
+    <GraphCanvas
+      data={data}
+      getTransform={() => useStore.getState().transform}
+      subscribe={useStore.subscribe}
+    />
+  )
+}
+
+export function useGraphPalette(): GraphPalette {
+  return useTheme() === 'light' ? LIGHT_GRAPH_PALETTE : DARK_GRAPH_PALETTE
+}
+
+interface Transform {
+  offsetX: number
+  offsetY: number
+  scale: number
+}
+
+// Draws nodes and connections already placed in world space. The graph panel
+// pans and zooms through a store; a view with a fixed transform passes one.
+export function GraphCanvas(props: {
+  data: DrawData
+  getTransform: () => Transform
+  subscribe?: (listener: () => void) => () => void
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const rendererRef = useRef<WebGLRenderer | null>(null)
+  const rafRef = useRef<number | null>(null)
+  const dataRef = useRef<DrawData>(props.data)
+  dataRef.current = props.data
+  const getTransformRef = useRef(props.getTransform)
+  getTransformRef.current = props.getTransform
 
   const scheduleDraw = useRef(() => {})
   scheduleDraw.current = () => {
@@ -2998,9 +3118,9 @@ export function NodesAndConnectionsWebGL() {
       const renderer = rendererRef.current
       const canvas = canvasRef.current
       const d = dataRef.current
-      if (!renderer || !canvas || !d) return
+      if (!renderer || !canvas) return
       const rect = canvas.getBoundingClientRect()
-      const transform = useStore.getState().transform
+      const transform = getTransformRef.current()
       renderer.render(
         d,
         transform,
@@ -3090,22 +3210,24 @@ export function NodesAndConnectionsWebGL() {
     return () => query.removeEventListener('change', onChange)
   }, [rendererGeneration])
 
-  // Redraw when derived data changes.
+  // A render brings new data or a new transform. Drawing is coalesced to a
+  // frame, and the buffers are rebuilt only for new data.
   useEffect(() => {
     scheduleDraw.current()
-  }, [data])
+  })
 
-  // Redraw on any store change (covers pan/zoom without going through React).
+  // Pan and zoom reach the store without going through React.
+  const { subscribe } = props
   useEffect(() => {
-    const unsub = useStore.subscribe(() => scheduleDraw.current())
+    const unsub = subscribe?.(() => scheduleDraw.current())
     return () => {
-      unsub()
+      unsub?.()
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current)
         rafRef.current = null
       }
     }
-  }, [])
+  }, [subscribe])
 
   useEffect(() => {
     const canvas = canvasRef.current

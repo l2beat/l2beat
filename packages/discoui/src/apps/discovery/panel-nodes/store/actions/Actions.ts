@@ -38,6 +38,7 @@ export interface Actions {
   showHidden: () => void
   clear: () => void
   selectAndFocus: (selected: string) => void
+  fitToNodes: (ids: ReadonlySet<string>, insetTopPx?: number) => void
   registerViewportContainer: (container: HTMLElement | null) => void
 
   setPreferences: (preferences: Partial<State['userPreferences']>) => void
