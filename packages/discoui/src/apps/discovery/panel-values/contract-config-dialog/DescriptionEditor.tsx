@@ -29,7 +29,9 @@ export function DescriptionEditor(props: Props) {
         onChange={(e) => setDescription(e.target.value ?? undefined)}
         placeholder="No description"
       />
-      <span className="mt-1 text-2xs text-coffee-400">Preview</span>
+      <span className="mt-0.5 text-[11px] text-coffee-400 leading-4">
+        Preview
+      </span>
       <TextArea
         value={interpolateDescription(description)}
         placeholder="Nothing to preview"

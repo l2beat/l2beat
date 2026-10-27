@@ -142,7 +142,7 @@ function getNameNode(name: FieldValue | undefined, index: number | undefined) {
   }
   if (index !== undefined) {
     return (
-      <span className="select-none font-mono text-coffee-500 text-xs tabular-nums">
+      <span className="select-none font-mono text-coffee-400 text-xs tabular-nums">
         {index}
       </span>
     )
