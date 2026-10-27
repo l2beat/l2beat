@@ -32,15 +32,19 @@ export async function getAllTokensEntries(): Promise<TvsBreakdownTokenEntry[]> {
 
   const db = getDb()
   const targetTimestamp = getTvsTargetTimestamp()
+  const latestTimestamp = await getLatestTvsTimestamp()
 
   const [projects, tokenValues] = await Promise.all([
     ps.getProjects({
       select: ['chainConfig'],
     }),
     db.tvsTokenValue.getAtOrBefore(
-      await getLatestTvsTimestamp(),
       allProjects.flatMap((p) =>
-        p.tvsConfig.map((t) => ({ projectId: p.id, tokenId: t.id })),
+        p.tvsConfig.map((t) => ({
+          projectId: p.id,
+          tokenId: t.id,
+          timestamp: latestTimestamp,
+        })),
       ),
     ),
   ])

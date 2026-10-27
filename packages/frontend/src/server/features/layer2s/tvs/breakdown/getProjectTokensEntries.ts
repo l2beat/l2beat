@@ -71,16 +71,15 @@ export async function getProjectTokensEntries(
     }),
     db.tvsTokenValue.getByProjectAtOrBefore(project.id, latestTimestamp),
   ])
-  // Count back from the project's own hour, not the latest: the 7d changes
-  // need values exactly seven days apart
-  const projectTimestamp = Math.max(...tokenValues.map((x) => x.timestamp))
-  const sevenDaysAgoTokenValues =
-    tokenValues.length > 0
-      ? await db.tvsTokenValue.getByProjectAtOrBefore(
-          project.id,
-          projectTimestamp - 7 * UnixTime.DAY,
-        )
-      : []
+  // The 7d changes need values exactly seven days apart, so count back from
+  // each value's own hour, not the latest
+  const sevenDaysAgoTokenValues = await db.tvsTokenValue.getAtOrBefore(
+    tokenValues.map((x) => ({
+      projectId: x.projectId,
+      tokenId: x.tokenId,
+      timestamp: x.timestamp - 7 * UnixTime.DAY,
+    })),
+  )
 
   const chains = projects.map((x) => x.chainConfig)
   const tokenValuesMap = new Map(

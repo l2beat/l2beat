@@ -108,23 +108,23 @@ export class TokenValueRepository extends BaseRepository {
   }
 
   /**
-   * Each listed token's latest record at or before the timestamp: one probe
+   * Each listed token's latest record at or before its timestamp: one probe
    * of the (projectId, tokenId, timestamp) index per token. Grouping every
    * row up to the timestamp by token reads 25x more of the table.
    */
   async getAtOrBefore(
-    timestamp: UnixTime,
-    tokens: { projectId: string; tokenId: string }[],
+    targets: { projectId: string; tokenId: string; timestamp: UnixTime }[],
   ): Promise<TokenValueRecord[]> {
-    if (tokens.length === 0) {
+    if (targets.length === 0) {
       return []
     }
     const rows = await this.db
       .selectFrom(
-        sql<{ projectId: string; tokenId: string }>`unnest(
-          ${tokens.map((t) => t.projectId)}::text[],
-          ${tokens.map((t) => t.tokenId)}::text[]
-        )`.as<'t'>(sql`t("projectId", "tokenId")`),
+        sql<{ projectId: string; tokenId: string; timestamp: Date }>`unnest(
+          ${targets.map((t) => t.projectId)}::text[],
+          ${targets.map((t) => t.tokenId)}::text[],
+          ${targets.map((t) => UnixTime.toDate(t.timestamp))}::timestamp[]
+        )`.as<'t'>(sql`t("projectId", "tokenId", "timestamp")`),
       )
       .innerJoinLateral(
         (eb) =>
@@ -133,7 +133,7 @@ export class TokenValueRepository extends BaseRepository {
             .selectAll('TokenValue')
             .whereRef('TokenValue.projectId', '=', 't.projectId')
             .whereRef('TokenValue.tokenId', '=', 't.tokenId')
-            .where('TokenValue.timestamp', '<=', UnixTime.toDate(timestamp))
+            .whereRef('TokenValue.timestamp', '<=', 't.timestamp')
             .orderBy('TokenValue.timestamp', 'desc')
             .limit(1)
             .as('v'),
