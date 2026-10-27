@@ -53,6 +53,7 @@ export const moneroCakeWallet: BaseProject = {
     referenceClient: {
       name: 'Cake Wallet',
       url: 'https://cakewallet.com',
+      since: '2026-09-29',
       version: '6.4.6',
       source: {
         repository: 'https://github.com/cake-tech/cake_wallet',

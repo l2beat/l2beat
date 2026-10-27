@@ -2,7 +2,6 @@ import type {
   PrivacyAttribute,
   PrivacyExitWindow,
   PrivacySummaryValue,
-  ProjectPrivacyReferenceClient,
   ProjectRedWarning,
 } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
@@ -33,6 +32,10 @@ import {
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import type { PrivacyRelayerStat } from '../types'
+import {
+  getPrivacyReferenceApp,
+  type PrivacyReferenceApp,
+} from '../utils/getPrivacyReferenceApp'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
@@ -66,7 +69,7 @@ export interface ProjectPrivacyEntry {
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
   reproducibility: PrivacySummaryValue
-  reviewedApp?: ProjectPrivacyReferenceClient
+  referenceApp?: PrivacyReferenceApp
   summary: {
     totalValueLockedUsd: number | undefined
     totalValueLockedChange7d: number | undefined
@@ -134,6 +137,9 @@ export async function getPrivacyProjectEntry(
     },
   }
   const icon = manifest.getUrl(`/icons/${details.slug}.png`)
+  const referenceApp =
+    details.referenceClient &&
+    getPrivacyReferenceApp(details.referenceClient, icon)
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
@@ -334,7 +340,7 @@ export async function getPrivacyProjectEntry(
       title: 'Privacy',
       isUnderReview: !!details.statuses.reviewStatus,
       adversaries: resolvePrivacySources(details.adversaries, sections),
-      reviewedApp: details.referenceClient,
+      referenceApp,
     },
   })
 
@@ -363,7 +369,7 @@ export async function getPrivacyProjectEntry(
       getPrivacyTrustedSetup(details.trustedSetups),
     ),
     reproducibility: details.reproducibility,
-    reviewedApp: details.referenceClient,
+    referenceApp,
     summary: {
       totalValueLockedUsd: details.hasTvl
         ? tvs.projects[details.id]?.breakdown.total

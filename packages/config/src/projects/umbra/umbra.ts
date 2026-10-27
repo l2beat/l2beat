@@ -116,6 +116,7 @@ export const umbra: BaseProject = {
     referenceClient: {
       name: 'Umbra app',
       url: 'https://app.umbra.cash',
+      since: '2026-09-16',
       source: {
         repository: 'https://github.com/ScopeLift/umbra-protocol',
         commit: '947c4f3b9b89f6cf5d69b2d43d3cffec673da655',

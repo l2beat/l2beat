@@ -174,10 +174,20 @@ export const zkapi: BaseProject = {
     referenceClient: {
       name: 'OA Chat',
       url: 'https://chat.openanonymity.ai',
+      since: '2026-10-12',
       source: {
         repository: 'https://github.com/OpenAnonymity/oa-chat',
         commit: '60ed5be2957d984c70a7299474927becec47b61f',
       },
+      alternatives: [
+        {
+          name: 'zkapi-clientd',
+          finding:
+            "Sends the note id to the operator's indexer before each request, so the operator can tie requests to their deposit by timing.",
+          source:
+            'https://github.com/ethereum/zkapi/blob/20aa542ae98e767c0507133fd34b12a56f5ccd3d/crates/zkapi-clientd/src/indexer.rs#L71-L80',
+        },
+      ],
     },
     trackedOn: ['ethereum'],
     tokens: [

@@ -8,6 +8,7 @@ import type { ProjectPrivacyReferenceClient } from '../../types'
 export const REFERENCE_CLIENT = {
   name: 'privacypools.com',
   url: 'https://privacypools.com',
+  since: '2026-10-23',
   source: {
     repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
     commit: '6c292b47a977cd86d506994f1b9a0fc51b9a79db',

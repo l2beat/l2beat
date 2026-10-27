@@ -19,6 +19,8 @@ The ratings cover DAI payments and sUSDS savings.
 
 The Desktop release runs local code. Its endpoint settings accept the user's own Aztec node, Ethereum endpoint and DAI enclave. The sUSDS enclave address is always fetched from Aztec Labs among other addresses in two unsigned contract lists. Replacing them can redirect future deposits and payments.
 
+The hosted wallet reloads code on every visit. Its owner can read viewing keys and request harmful passkey signatures through misleading prompts.
+
 Independent operation remains untested. It requires a modified Desktop build without screening, pointed at self-hosted contract lists. Users would submit Ethereum transactions themselves and register an approved enclave on AWS. New names still require Aztec Labs' signature. The [enclave guide](https://docs.zk.money/docs/run-an-enclave) describes image downloads and registration.
 
 ### Savings

@@ -30,7 +30,7 @@ import {
 } from '../adversaries/privacyAdversaryUi'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
-import { PrivacyReviewedAppStat } from './components/PrivacyReviewedAppStat'
+import { PrivacyReferenceAppStat } from './components/PrivacyReferenceAppStat'
 
 interface Props extends AppLayoutProps {
   entry: ProjectPrivacyEntry
@@ -175,9 +175,9 @@ export function PrivacyProjectPage({
                                 ))}
                               />
                             )}
-                            {entry.reviewedApp && (
-                              <PrivacyReviewedAppStat
-                                app={entry.reviewedApp}
+                            {entry.referenceApp && (
+                              <PrivacyReferenceAppStat
+                                app={entry.referenceApp}
                                 href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
                               />
                             )}

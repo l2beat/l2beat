@@ -253,6 +253,7 @@ export const payy: ScalingProject = {
     referenceClient: {
       name: 'Payy mobile app',
       url: 'https://payy.network',
+      since: '2026-10-13',
     },
     trackedOn: ['ethereum'],
     detailedDescription: readProjectMarkdown('payy', 'detailedDescription', {

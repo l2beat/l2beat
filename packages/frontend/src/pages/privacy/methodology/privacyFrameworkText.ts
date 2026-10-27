@@ -8,7 +8,7 @@ export const FRAMEWORK_ADVERSARY_TEXT: Record<PrivacyAdversaryId, string> = {
   networkObserver:
     "sees traffic to third parties, including public RPCs and relayers. An operator's own services count as the insider.",
   privilegedInsider:
-    'controls or serves part of the system, holds keys or plaintext, custodies funds, or delivers the client.',
+    'controls or serves part of the system, holds keys or plaintext, custodies funds, or delivers the app.',
   futureAdversary:
     'archives public data, then runs the known quantum attacks and uses every key they recover. Other schemes stand until an attack on them is known, and the cell names the assumption that remains. Retained logs, insider keys and recorded traffic are outside this scenario.',
 }

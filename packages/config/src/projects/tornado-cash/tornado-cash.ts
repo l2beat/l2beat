@@ -281,6 +281,7 @@ export const tornadoCash: BaseProject = {
     referenceClient: {
       name: 'Tornado Cash classic app',
       url: 'https://app.ens.domains/tornadocash.eth?tab=records',
+      since: '2026-10-13',
       source: {
         repository: 'https://github.com/tornado-dao/classic-ui',
         commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',

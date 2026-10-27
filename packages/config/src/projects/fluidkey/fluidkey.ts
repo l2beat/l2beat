@@ -50,6 +50,7 @@ export const fluidkey: BaseProject = {
     referenceClient: {
       name: 'Fluidkey web app',
       url: 'https://app.fluidkey.com',
+      since: '2026-10-13',
     },
     trackedOn: [
       'ethereum',

@@ -1635,5 +1635,10 @@
   "static/icons/uniswapv2.png": "2e3d5f6b5badb27112f8d72c76b46def",
   "static/meta-images/defi/projects/uniswapv2/opengraph-image.png": "dc77200d6cc72338e114ea6cea5dd0bc",
   "static/meta-images/defi/projects/safe/opengraph-image.png": "6fc1394435ec38d3d940aee5ea23b472",
-  "static/icons/safe.png": "fa1390aa761b4d5ec06b10fd20e7f578"
+  "static/icons/safe.png": "fa1390aa761b4d5ec06b10fd20e7f578",
+  "static/icons/near-intents.png": "81bcc568ed94b96db3b6adc2d1d22b99",
+  "static/icons/railoxide.png": "13470a21e9bff815468339269256e354",
+  "static/icons/railway.png": "85bb913440d87d32f880fffd1da0939a",
+  "static/icons/ready.png": "4bd24190861df4458595dbfc5b4ce3f5",
+  "static/icons/xverse.png": "d80f1ff1412188e43bf56f0e48ae97aa"
 }

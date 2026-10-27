@@ -1146,8 +1146,12 @@ export type PrivacyAnonymitySetRegistrationSource = {
 
 export interface ProjectPrivacyReferenceClient {
   name: string
+  /** Icon slug under /icons. Defaults to the project's icon, for apps its team builds. */
+  icon?: string
   /** Where users get the app: its website, release page or repository. */
   url: string
+  /** Day the ratings first assumed this app, YYYY-MM-DD. */
+  since: string
   /** Release the review covers, without a leading v. Absent for hosted apps. */
   version?: string
   /**
@@ -1169,6 +1173,8 @@ export interface ProjectPrivacyReferenceClient {
 
 export interface ProjectPrivacyClientAlternative {
   name: string
+  /** Icon slug under /icons, e.g. "railway" for /icons/railway.png. Absent when the app has no logo. */
+  icon?: string
   /** The traced behaviour that leaks more, as one sentence. */
   finding: string
   /** Proves the finding: pinned code, or the app itself when it is closed. */

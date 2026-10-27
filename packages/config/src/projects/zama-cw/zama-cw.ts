@@ -356,6 +356,7 @@ export const zamaCw: BaseProject = {
     referenceClient: {
       name: 'Zama app',
       url: 'https://app.zama.org',
+      since: '2026-10-09',
     },
     trackedOn: ['ethereum'],
     tokens: privacyTokens,

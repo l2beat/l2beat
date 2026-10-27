@@ -252,7 +252,9 @@ export const railgun: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceClient: {
       name: 'RailOxide',
+      icon: 'railoxide',
       url: 'https://github.com/triamazikamno/railoxide',
+      since: '2026-10-08',
       version: '0.2.0-beta.8',
       source: {
         repository: 'https://github.com/triamazikamno/railoxide',
@@ -261,6 +263,7 @@ export const railgun: BaseProject = {
       alternatives: [
         {
           name: 'Railway',
+          icon: 'railway',
           finding:
             "Asks Railway's PPoI node about the user's notes in batches without Tor, so the node can tie them together and to the user's IP.",
           source:

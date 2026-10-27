@@ -14,6 +14,7 @@ import {
 import { TRUSTED_SETUP_FRAMEWORK_LINK } from '~/server/markdown/zkSectionBodies'
 import { PRIVACY_ADVERSARY_VERDICT as VERDICT } from '../adversaries/privacyAdversaryUi'
 import { PRIVACY_COLUMN_DESCRIPTIONS as COLUMNS } from '../privacySummaryColumns'
+import { PRIVACY_REFERENCE_APP_ANCHOR } from './paths'
 import { FRAMEWORK_ADVERSARY_TEXT } from './privacyFrameworkText'
 
 export type PrivacyMethodologySections = ReturnType<
@@ -29,17 +30,17 @@ export type PrivacyMethodologySections = ReturnType<
 export function getPrivacyMethodologySections() {
   return {
     intro: joinBlocks([
-      'Privacy tools can hide activity from the public yet still leak it to specific parties. Our five adversary archetypes reveal who can learn what an app promises to hide, and whom users must trust. They assess the live protocol and a released client, using source code, onchain data and observed behaviour.',
+      'Privacy tools can hide activity from the public yet still leak it to specific parties. Our five adversary archetypes reveal who can learn what a privacy protocol promises to hide, and whom users must trust. They assess the live protocol and a released app, using source code, onchain data and observed behaviour.',
       'Each project promises at least one private field: sender, recipient, amount, asset or the link between two actions. We rate that field against each adversary independently and report other exposed fields separately. An adversary is a capability that different people or companies may have.',
     ]),
 
     ratings: joinBlocks([
       heading(2, 'Ratings'),
-      "The ratings assume a careful user follows ordinary hygiene and the review's advice, using settings offered by the assessed client. Each review names at least one client, usually the strongest functional released open-source client available.",
+      "The ratings assume a careful user follows ordinary hygiene and the review's advice, using settings offered by the reference app.",
       bulletList([
         `**${VERDICT.good}** (green): the promised field stays hidden from this adversary.`,
-        `**${VERDICT.warning}** (yellow): protection is limited, private use can be denied, or keeping the field hidden takes substantial effort beyond the client's options. A workaround must preserve ordinary use of the protocol.`,
-        `**${VERDICT.bad}** (red): the field is exposed with no reasonable workaround, or no usable, verifiable client supports private use. A custodian who can require disclosure to release funds also earns red.`,
+        `**${VERDICT.warning}** (yellow): protection is limited, private use can be denied, or keeping the field hidden takes substantial effort beyond the app's options. A workaround must preserve ordinary use of the protocol.`,
+        `**${VERDICT.bad}** (red): the field is exposed with no reasonable workaround, or no usable, verifiable app supports private use. A custodian who can require disclosure to release funds also earns red.`,
       ]),
       'When privacy depends on hiding among other users, the size of that group (anonymity set) affects the adversary who sees the later action.',
     ]),
@@ -53,6 +54,14 @@ export function getPrivacyMethodologySections() {
         ),
       ),
       'The public observer, chain analyst and future adversary see the same public data with increasing ability.',
+    ]),
+
+    referenceApp: joinBlocks([
+      // A raw heading, since markdown headings render without an id to link.
+      `<h2 id="${PRIVACY_REFERENCE_APP_ANCHOR}">Reference app</h2>`,
+      'Each project names a reference app, the most private released app we found for the protocol. The ratings assume this app. Other apps we checked appear below it, each with one sourced finding that shows it leaks more.',
+      'An app takes the spot when it leaks less to the five adversaries. Only released builds count.',
+      `App teams can propose their app in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the L2BEAT forum.`,
     ]),
 
     categories: joinBlocks([

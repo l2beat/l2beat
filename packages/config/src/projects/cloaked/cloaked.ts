@@ -50,6 +50,7 @@ export const cloaked: BaseProject = {
     referenceClient: {
       name: 'Cloaked web app',
       url: 'https://app.clkd.xyz',
+      since: '2026-09-16',
     },
     trackedOn: ['ethereum'],
     // Cloaked balances live in arbitrary one-time EOAs and cannot be

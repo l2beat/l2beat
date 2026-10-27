@@ -145,11 +145,14 @@ export const strk20: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceClient: {
       name: 'Ready extension',
+      icon: 'ready',
       url: 'https://chromewebstore.google.com/detail/dlcobpjiigpikoobohmabehhmhfoodbb',
+      since: '2026-10-13',
       version: '5.33.16',
       alternatives: [
         {
           name: 'Xverse extension',
+          icon: 'xverse',
           finding:
             "Its privacy servers refuse Tor, so they get the user's IP along with the account and viewing key.",
           source:

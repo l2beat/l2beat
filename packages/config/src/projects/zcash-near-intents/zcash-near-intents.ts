@@ -66,6 +66,7 @@ export const zcashNearIntents: BaseProject = {
     referenceClient: {
       name: 'Zodl',
       url: 'https://zodl.com',
+      since: '2026-09-16',
       version: '3.15.0',
       source: {
         repository: 'https://github.com/zodl-inc/zodl-ios',
@@ -74,6 +75,7 @@ export const zcashNearIntents: BaseProject = {
       alternatives: [
         {
           name: 'NEAR Intents web app',
+          icon: 'near-intents',
           finding:
             'Pays only transparent Zcash addresses, which adds a public shielding step.',
           source:

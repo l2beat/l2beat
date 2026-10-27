@@ -182,6 +182,7 @@ export const interfold: BaseProject = {
     referenceClient: {
       name: 'Interfold governance app',
       url: 'https://governance.theinterfold.com',
+      since: '2026-10-20',
       source: {
         repository: 'https://github.com/theinterfold/the-interfold-governance',
         commit: '28b03a8b529dfa7491f01229724391665f06bd95',
