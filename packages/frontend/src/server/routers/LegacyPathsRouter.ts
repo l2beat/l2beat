@@ -89,12 +89,15 @@ export function createLegacyPathsRouter() {
     res.redirect(301, target)
   })
 
-  // Case-insensitive like Express routing, so every matched URL is rewritten.
   router.get('/interop/tokens/*splat', (req, res) => {
-    res.redirect(
-      301,
-      req.originalUrl.replace(/^\/interop\/tokens\//i, '/tokens/'),
-    )
+    // Case-insensitive like Express routing, so every matched URL is rewritten.
+    const target = req.originalUrl.replace(/^\/interop\/tokens\//i, '/tokens/')
+    // Same-origin check as in the /scaling redirect above.
+    if (!target.startsWith('/tokens/')) {
+      res.redirect(301, '/tokens')
+      return
+    }
+    res.redirect(301, target)
   })
 
   router.get('/bridges/*splat', (_req, res) => {
