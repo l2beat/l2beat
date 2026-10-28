@@ -7,6 +7,7 @@ import {
   type InferableScaleLike,
   lineY,
   rect,
+  ruleY,
 } from '@tanstack/charts'
 import { decorative } from '@tanstack/charts/mark/decorative'
 import { Chart } from '@tanstack/charts/react'
@@ -141,86 +142,109 @@ export function TsTimeSeriesChart<
       }
     }
 
-    const notSynced = []
-    if (lastSyncedTimestamp !== undefined && rows.length > 0) {
-      notSynced.push(
-        decorative(
-          // A rect without y endpoints is skipped, so it spans the y domain.
-          rect(
-            [
-              {
-                x1: lastSyncedTimestamp,
-                x2: rows.at(-1)?.timestamp,
-                y1: yDomain[0],
-                y2: yDomain[1],
-              },
-            ],
-            {
-              id: 'not-synced',
-              x1: 'x1',
-              x2: 'x2',
-              y1: 'y1',
-              y2: 'y2',
-              fill: 'url(#noDataFill)',
-              key: () => 'not-synced',
-            },
-          ),
-        ),
-      )
-    }
+    const notSynced =
+      lastSyncedTimestamp !== undefined && rows.length > 0
+        ? [
+            decorative(
+              // A rect without y endpoints is skipped, so it spans the y domain.
+              rect(
+                [
+                  {
+                    x1: lastSyncedTimestamp,
+                    x2: rows.at(-1)?.timestamp,
+                    y1: yDomain[0],
+                    y2: yDomain[1],
+                  },
+                ],
+                {
+                  id: 'not-synced',
+                  x1: 'x1',
+                  x2: 'x2',
+                  y1: 'y1',
+                  y2: 'y2',
+                  fill: 'url(#noDataFill)',
+                  key: () => 'not-synced',
+                },
+              ),
+            ),
+          ]
+        : []
 
     const xTicks = getXTicks(rows)
-    return defineChart({
-      marks: [...notSynced, ...marks],
-      // Scale instances, not factories: a factory's domain is inferred from
-      // the marks, which would drop the tick-aligned y domain.
-      scales: {
-        x: {
-          scale: scaleLinear().domain([
-            rows[0]?.timestamp ?? 0,
-            rows.at(-1)?.timestamp ?? 1,
-          ]),
-          axis: {
-            line: false,
-            ticks: { values: xTicks.values, size: 0, format: xTicks.format },
-            tickLabels: { fontSize: 10, fontWeight: 500 },
-          },
-        },
-        y: {
-          scale: (yAxis.scale ?? scaleLinear)().domain(yDomain),
-          grid: true,
-          axis: {
-            line: false,
-            ticks: {
-              values: yTicks,
-              size: 0,
-              padding: 0,
-              format: (value: number) => {
-                const { format, unit = '' } = yAxisRef.current
-                return `${format ? format(value) : value}${unit}`
+    // Bottom: where a Recharts x-axis puts the plot's bottom edge.
+    const chartMargin = { top: 20, right: 1, bottom: 25, left: 0, ...margin }
+    const yFontSize = yAxis.fontSize ?? 15
+    // A function of the size, so the y ticks can fit the plot height.
+    return defineChart(
+      ({ height }) => {
+        const yTicksShown = fitTicks(
+          yTicks,
+          height - chartMargin.top - chartMargin.bottom,
+          yFontSize,
+        )
+        return {
+          marks: [
+            ...notSynced,
+            ...marks,
+            // A mark rather than the axis grid, so it is drawn over the
+            // fills, as Recharts draws its grid.
+            decorative(ruleY(yTicksShown, { id: 'y-grid', y: (v) => v })),
+          ],
+          // Scale instances, not factories: a factory's domain is inferred
+          // from the marks, which would drop the tick-aligned y domain.
+          scales: {
+            x: {
+              scale: scaleLinear().domain([
+                rows[0]?.timestamp ?? 0,
+                rows.at(-1)?.timestamp ?? 1,
+              ]),
+              axis: {
+                line: false,
+                ticks: {
+                  values: xTicks.values,
+                  size: 0,
+                  format: xTicks.format,
+                },
+                tickLabels: { fontSize: 10, fontWeight: 500 },
               },
             },
-            // Where Recharts' mirrored axis puts them: 8px in from the edge.
-            tickLabels: {
-              anchor: 'start',
-              dx: 8,
-              dy: yAxis.dy ?? -10,
-              fontSize: yAxis.fontSize ?? 15,
-              fontWeight: yAxis.fontWeight,
-              thin: false,
+            y: {
+              scale: (yAxis.scale ?? scaleLinear)().domain(yDomain),
+              axis: {
+                line: false,
+                ticks: {
+                  values: yTicksShown,
+                  size: 0,
+                  padding: 0,
+                  format: (value: number) => {
+                    const { format, unit = '' } = yAxisRef.current
+                    return `${format ? format(value) : value}${unit}`
+                  },
+                },
+                // Where Recharts' mirrored axis puts them: 8px in from the edge.
+                tickLabels: {
+                  anchor: 'start',
+                  dx: 8,
+                  dy: yAxis.dy ?? -10,
+                  fontSize: yFontSize,
+                  fontWeight: yAxis.fontWeight,
+                  thin: false,
+                },
+              },
             },
           },
-        },
+          margin: chartMargin,
+          clip: true,
+        }
       },
-      // Bottom: where a Recharts x-axis puts the plot's bottom edge.
-      margin: { top: 20, right: 1, bottom: 25, left: 0, ...margin },
-      clip: true,
-      // The library's hover host restyles the whole chart on every pointer
-      // move and searches rows linearly; TsHoverOverlay replaces it.
-      pointer: false,
-      keyboard: false,
-      tooltip: false,
-    })
+      {
+        // The library's hover host restyles the whole chart on every pointer
+        // move and searches rows linearly; TsHoverOverlay replaces it.
+        pointer: false,
+        keyboard: false,
+        tooltip: false,
+      },
+    )
   }, [
     rows,
     visibleKey,
@@ -319,6 +343,17 @@ function getY<T, K extends keyof T & string>(
   }
   const ticks = getNiceTicks(lo, hi, Y_TICK_COUNT)
   return { domain: [ticks[0] ?? lo, ticks.at(-1) ?? hi], ticks }
+}
+
+/**
+ * Like Recharts, drops the ticks between the ends (labels and grid lines)
+ * when their labels would touch.
+ */
+function fitTicks(ticks: number[], plotHeight: number, fontSize: number) {
+  if (ticks.length <= 2) return ticks
+  const gap = plotHeight / (ticks.length - 1)
+  if (gap >= fontSize * 2) return ticks
+  return [ticks[0], ticks.at(-1)].filter((tick) => tick !== undefined)
 }
 
 /**
