@@ -65,7 +65,10 @@ export class BoardStore {
 
   replace(id: string, spec: BoardSpec): Board | undefined {
     const board = this.boards.get(id)
-    return board && this.set({ ...board, spec, unsaved: true })
+    if (board === undefined) return undefined
+    // Applying the same spec again leaves a saved board saved.
+    const isSame = JSON.stringify(board.spec) === JSON.stringify(spec)
+    return this.set({ ...board, spec, unsaved: board.unsaved || !isSame })
   }
 
   markSaved(id: string, name: string): Board | undefined {
