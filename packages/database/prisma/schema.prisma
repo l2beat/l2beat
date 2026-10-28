@@ -693,6 +693,18 @@ model TokenDbSettings {
   @@id([key])
 }
 
+model TvsCoverageDismissal {
+  projectId   String   @db.VarChar(255)
+  chain       String   @db.VarChar(32)
+  address     String   @db.VarChar(255)
+  reason      String   @db.VarChar(32)
+  comment     String?  @db.Text
+  dismissedBy String   @db.VarChar(255)
+  dismissedAt DateTime @db.Timestamp(6)
+
+  @@id([projectId, chain, address])
+}
+
 model TokenDbHistory {
   id           BigInt   @id @default(autoincrement())
   timestamp    DateTime @db.Timestamp(6)
