@@ -39,6 +39,7 @@ import { StarknetAccessControl } from './StarknetAccessControl'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 import { UI } from './UI'
+import { Watch } from './Watch'
 import { Why } from './Why'
 import { Xref } from './Xref'
 import { ZkGovProposal } from './ZkGovProposal'
@@ -87,6 +88,7 @@ export function getSubcommands() {
     StarknetProgramHashes,
     TVL,
     UI,
+    Watch,
     Why,
     Xref,
     ZkGovProposal,
