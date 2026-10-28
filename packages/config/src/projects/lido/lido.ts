@@ -1,4 +1,4 @@
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { discoveredDefiToken } from '../../templates/defiTokens'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -96,6 +96,11 @@ const stakeLimitEth = (
   BigInt(stakeLimit.maxStakeLimit) /
   10n ** 18n
 ).toLocaleString('en-US')
+// The limit drains with deposits and refills linearly over this many blocks.
+const stakeLimitRefill = formatSeconds(
+  stakeLimit.maxStakeLimitGrowthBlocks * 12,
+  { fullUnit: true },
+)
 const oracleFrameDays =
   (discovery.getContractValue<{ epochsPerFrame: number }>(
     ACCOUNTING_HASH_CONSENSUS,
@@ -191,7 +196,7 @@ export const lido: BaseProject = {
       value: 'Permissionless',
       secondLine: `gated by DSM ${dsmQuorum}/${dsmGuardians}`,
       sentiment: 'good',
-      description: `Anyone can stake ETH for stETH, up to ${stakeLimitEth} ETH at a time. Sending it to new validators needs ${dsmQuorum} of ${dsmGuardians} guardian signatures, and any one guardian can pause that.`,
+      description: `Anyone can stake ETH for stETH, up to ${stakeLimitEth} ETH; deposits use up that limit and it refills over ${stakeLimitRefill}. Sending deposited ETH to new validators needs ${dsmQuorum} of ${dsmGuardians} guardian signatures, and any one guardian can pause that.`,
     },
     operators: {
       value: 'Hybrid',
@@ -213,9 +218,9 @@ export const lido: BaseProject = {
     },
     exit: {
       value: 'Oracle-gated',
-      secondLine: '≤1 day · pausable',
+      secondLine: `${oracleCadence} batches · pausable`,
       sentiment: 'warning',
-      description: `Withdrawal requests are finalized in a later oracle report, at the lower of the request and report rate. A ${circuitBreakerCommittee} committee can pause the queue for ${days(circuitBreakerPauseDays)}, and another can extend that indefinitely.`,
+      description: `Withdrawal requests are finalized in batches with each oracle report, at the lower of the request and report rate. When the buffer cannot cover the queue, requests wait for validators to exit, which can take days. A ${circuitBreakerCommittee} committee can pause the queue for ${days(circuitBreakerPauseDays)}, and another can extend that indefinitely.`,
     },
     upgrades: {
       value: 'Lido DAO',

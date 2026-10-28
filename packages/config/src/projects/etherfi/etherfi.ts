@@ -171,9 +171,9 @@ export const etherfi: BaseProject = {
     },
     exit: {
       value: 'Oracle-gated',
-      secondLine: '~1 day · pausable',
+      secondLine: `every ${formatSeconds(reportPeriodSeconds)} · pausable`,
       sentiment: 'warning',
-      description: `Withdrawal requests are finalized from oracle reports, at most ${maxFinalizedPerDay} ETH a day. Instant redemption from the buffer costs up to ${maxExitFee}. The ${operationsSafe} Safe can pause all exits.`,
+      description: `Withdrawal requests are finalized with oracle reports, at most ${maxFinalizedPerDay} ETH a day. When the liquid buffer cannot cover the queue, requests wait for validators to exit through EigenLayer, which adds its own withdrawal delay. Instant redemption from the buffer costs up to ${maxExitFee}. The ${operationsSafe} Safe can pause all exits.`,
     },
     upgrades: {
       value: '6/10 Safe',
