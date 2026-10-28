@@ -166,15 +166,17 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
   }, [project, data, clear, loadNodes])
 }
 
-function eq(a: readonly string[], b: readonly string[]) {
+function sameIds(a: readonly string[], b: readonly string[]) {
   return a.length === b.length && a.every((x, i) => b[i] === x)
 }
 
 function useSynchronizeSelection() {
   const loaded = useStore((state) => state.loaded)
   // What each side last heard from the other, so neither takes its own
-  // update for a new choice by the researcher.
-  const lastGraph = useRef<readonly string[]>([])
+  // update for a new choice by the researcher. Every click makes a new
+  // array, so a click on what is already selected still counts.
+  const lastNodes = useRef<readonly string[]>(undefined)
+  const isGraphOurs = useRef(false)
   const lastGlobal = useRef<readonly string[]>([])
   const selectedGlobal = usePanelStore((state) => state.selected)
   const highlightGlobal = usePanelStore((state) => state.highlight)
@@ -195,12 +197,19 @@ function useSynchronizeSelection() {
   }, [selectedNodes, hiddenNodes, highlightGlobal])
 
   useEffect(() => {
-    const graphLeaves = selectedLeafIds(nodes, new Set(selectedNodes))
-    if (graphLeaves.length > 0 && !eq(lastGraph.current, graphLeaves)) {
-      lastGraph.current = graphLeaves
-      lastGlobal.current = graphLeaves
-      selectGlobal(graphLeaves)
-      return
+    if (selectedNodes !== lastNodes.current) {
+      lastNodes.current = selectedNodes
+      const isOurs = isGraphOurs.current
+      isGraphOurs.current = false
+      const graphLeaves = selectedLeafIds(nodes, new Set(selectedNodes))
+      // A rectangle drag makes a new array on every move.
+      const isNew =
+        graphLeaves.length > 0 && !sameIds(graphLeaves, selectedGlobal)
+      if (!isOurs && isNew) {
+        lastGlobal.current = graphLeaves
+        selectGlobal(graphLeaves)
+        return
+      }
     }
     // Another panel chose: every click there is a new array, so clicking a
     // contract again selects it once it is drawn.
@@ -219,10 +228,7 @@ function useSynchronizeSelection() {
     const containing = topLevelByDescendant(expandedNodes(nodes)).get(
       firstGlobal,
     )
-    lastGraph.current =
-      containing === undefined
-        ? []
-        : selectedLeafIds(nodes, new Set([containing.id]))
+    isGraphOurs.current = true
     selectAndFocus(containing?.id ?? firstGlobal)
   }, [
     selectedGlobal,
