@@ -10,6 +10,7 @@ import {
   useId,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react'
 import { useLocation, useNavigate } from 'react-router'
@@ -532,6 +533,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
   const [decoded, setDecoded] = useState(value)
   const [isCustom, setIsCustom] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
+  const appliedOverrides = useRef('')
 
   useLayoutEffect(() => {
     if (
@@ -569,6 +571,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
         decoded.address,
         overrides,
       )
+      appliedOverrides.current = overrides.join('\n')
       if (newDecoded) setDecoded(newDecoded)
     }
     if (decoded.type === 'call') {
@@ -585,10 +588,16 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
         decoded.address,
         overrides,
       )
-      if (newDecoded && newDecoded.functionAbi !== decoded.functionAbi)
+      const overridesChanged = overrides.join('\n') !== appliedOverrides.current
+      appliedOverrides.current = overrides.join('\n')
+      if (overridesChanged) {
+        setDecoded(newDecoded ?? value)
+      } else if (newDecoded && newDecoded.functionAbi !== decoded.functionAbi) {
         setDecoded(newDecoded)
+      }
     }
   }, [
+    value,
     decoded,
     isCustom,
     store.requestSignature,
