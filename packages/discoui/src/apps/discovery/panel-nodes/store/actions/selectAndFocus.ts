@@ -5,7 +5,7 @@ export function selectAndFocus(state: State, selected: string): Partial<State> {
   const node = expandedNodes(state.nodes).find((x) => x.id === selected)
 
   if (!node) {
-    return state
+    return { selected: [] }
   }
 
   const minX = node.box.x
