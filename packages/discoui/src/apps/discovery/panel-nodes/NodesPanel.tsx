@@ -200,18 +200,17 @@ function useSynchronizeSelection() {
       selectGlobal(selectedAddresses)
     } else if (
       firstGlobal !== undefined &&
-      !lastSelection.includes(firstGlobal) &&
+      !eq(lastSelection, selectedGlobal) &&
       loaded
     ) {
       // A contract in an open group is drawn on its own, so it is selected
-      // on its own; only a closed group stands in for its members.
+      // on its own; only a closed group stands in for its members. One not
+      // drawn clears the graph's selection, which would otherwise win back.
       const containing = topLevelByDescendant(expandedNodes(nodes)).get(
         firstGlobal,
       )
       rememberSelection(selectedGlobal)
-      if (containing) {
-        selectAndFocus(containing.id)
-      }
+      selectAndFocus(containing?.id ?? firstGlobal)
     }
   }, [
     lastSelection,
