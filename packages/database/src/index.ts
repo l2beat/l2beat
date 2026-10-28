@@ -54,6 +54,7 @@ export type {
   DeployedTokenUpdateable,
 } from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
+export type { EthereumStakingDailyRecord } from './repositories/EthereumStakingDailyRepository'
 export type {
   FlatSourcesJsonRecord,
   FlatSourcesRecord,

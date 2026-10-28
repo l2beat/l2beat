@@ -38,6 +38,7 @@ const FEATURES: Record<string, string[]> = {
     'IndexerState',
     'IndexerConfiguration',
     'LiquidStakingSnapshot',
+    'EthereumStakingDaily',
   ],
   activity: [
     'IndexerState',

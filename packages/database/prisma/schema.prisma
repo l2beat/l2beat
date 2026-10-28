@@ -317,6 +317,25 @@ model LiquidStakingSnapshot {
   @@index([projectId, timestamp])
 }
 
+/// Ethereum staking per UTC day, in wei: the beacon state as the day starts and the execution flows during it.
+model EthereumStakingDaily {
+  /// Start of the day.
+  timestamp        DateTime @id @db.Timestamp(6)
+  /// The beacon state read: the last slot before the day starts.
+  slot             Int
+  /// Sum of every validator's balance.
+  totalBalance     Decimal  @db.Decimal(80, 0)
+  /// Deposits waiting to be credited; null before Pectra, when there was no queue.
+  pendingDeposits  Decimal? @db.Decimal(80, 0)
+  /// Withdrawals paid in the day's blocks.
+  withdrawals      Decimal  @db.Decimal(80, 0)
+  /// Deposit contract deposits in the day's blocks.
+  deposits         Decimal  @db.Decimal(80, 0)
+  /// What proposers earned from the day's blocks: the builder payment, or the priority fees when there is none.
+  executionRewards Decimal  @db.Decimal(80, 0)
+  blockCount       Int
+}
+
 model TokenMetadata {
   tokenId      String  @db.VarChar(255)
   projectId    String  @db.VarChar(255)
