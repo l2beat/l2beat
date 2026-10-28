@@ -135,23 +135,23 @@ export function getNextDateForDayOfWeek(
     throw new Error('Day must be between 0 (Sunday) and 6 (Saturday)')
   }
 
-  const currentDayOfWeek = currentDate.getDay()
+  const currentDayOfWeek = currentDate.getUTCDay()
   let daysToAdd = dayOfWeek - currentDayOfWeek
 
   if (daysToAdd <= 0) {
     daysToAdd += 7
   }
 
-  currentDate.setUTCDate(currentDate.getDate() + daysToAdd)
+  currentDate.setUTCDate(currentDate.getUTCDate() + daysToAdd)
   currentDate.setUTCHours(0, 0, 0, 0)
 
   return currentDate
 }
 
 export const formatPublicationDate = (date: Date) => {
-  const monthName = String(date.getMonth() + 1).padStart(2, '0')
+  const monthName = String(date.getUTCMonth() + 1).padStart(2, '0')
   const monthRecord = MONTHS[monthName]
   assert(monthRecord !== undefined, `Invalid month: ${monthName}`)
 
-  return `${date.getDate()} ${monthRecord.shortName} ${date.getFullYear()}`
+  return `${date.getUTCDate()} ${monthRecord.shortName} ${date.getUTCFullYear()}`
 }

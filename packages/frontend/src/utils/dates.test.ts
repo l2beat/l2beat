@@ -4,12 +4,25 @@ import { expect } from 'earl'
 import {
   formatDate,
   formatLocalDateTime,
+  formatPublicationDate,
   formatRange,
   formatTimestamp,
   getNextDateForDayOfWeek,
 } from './dates'
 
 const at = (iso: string) => UnixTime.fromDate(new Date(iso))
+const TIMEZONES = ['UTC', 'America/New_York', 'Asia/Tokyo']
+
+function withTimezone(tz: string, fn: () => void) {
+  const original = process.env.TZ
+  process.env.TZ = tz
+  try {
+    fn()
+  } finally {
+    if (original === undefined) Reflect.deleteProperty(process.env, 'TZ')
+    else process.env.TZ = original
+  }
+}
 
 describe('dates', () => {
   describe(formatTimestamp.name, () => {
@@ -64,29 +77,25 @@ describe('dates', () => {
   })
 
   describe(formatLocalDateTime.name, () => {
-    const originalTz = process.env.TZ
-    afterEach(() => {
-      if (originalTz === undefined) {
-        Reflect.deleteProperty(process.env, 'TZ')
-      } else {
-        process.env.TZ = originalTz
-      }
-    })
-
     it('formats the instant in the visitor zone with its UTC offset', () => {
-      process.env.TZ = 'America/New_York'
-      expect(formatLocalDateTime(at('2026-07-01T02:00:00Z'))).toEqual(
-        '30 Jun 2026, 22:00 UTC-4',
-      )
-      process.env.TZ = 'Asia/Kolkata'
-      expect(formatLocalDateTime(at('2026-07-01T14:00:00Z'))).toEqual(
-        '1 Jul 2026, 19:30 UTC+5:30',
-      )
+      withTimezone('America/New_York', () => {
+        expect(formatLocalDateTime(at('2026-07-01T02:00:00Z'))).toEqual(
+          '30 Jun 2026, 22:00 UTC-4',
+        )
+      })
+      withTimezone('Asia/Kolkata', () => {
+        expect(formatLocalDateTime(at('2026-07-01T14:00:00Z'))).toEqual(
+          '1 Jul 2026, 19:30 UTC+5:30',
+        )
+      })
     })
 
     it('returns nothing when the visitor zone is at UTC+0', () => {
-      process.env.TZ = 'Europe/London'
-      expect(formatLocalDateTime(at('2026-12-01T14:00:00Z'))).toEqual(undefined)
+      withTimezone('Europe/London', () => {
+        expect(formatLocalDateTime(at('2026-12-01T14:00:00Z'))).toEqual(
+          undefined,
+        )
+      })
     })
   })
 
@@ -96,5 +105,43 @@ describe('dates', () => {
       const nextThursday = getNextDateForDayOfWeek(4, date)
       expect(nextThursday.toISOString()).toEqual('2021-04-22T00:00:00.000Z')
     })
+
+    for (const tz of TIMEZONES) {
+      it(`uses the UTC day regardless of process timezone (TZ=${tz})`, () => {
+        withTimezone(tz, () => {
+          // Wednesday 20:00 UTC is already Thursday in Asia/Tokyo
+          expect(
+            getNextDateForDayOfWeek(
+              4,
+              new Date('2021-04-21T20:00:00Z'),
+            ).toISOString(),
+          ).toEqual('2021-04-22T00:00:00.000Z')
+          // Saturday 02:00 UTC is still Friday, 30 April in America/New_York
+          expect(
+            getNextDateForDayOfWeek(
+              6,
+              new Date('2021-05-01T02:00:00Z'),
+            ).toISOString(),
+          ).toEqual('2021-05-08T00:00:00.000Z')
+        })
+      })
+    }
+  })
+
+  describe(formatPublicationDate.name, () => {
+    for (const tz of TIMEZONES) {
+      it(`formats the UTC day regardless of process timezone (TZ=${tz})`, () => {
+        withTimezone(tz, () => {
+          // Still 31 July in America/New_York
+          expect(formatPublicationDate(new Date('2024-08-01'))).toEqual(
+            '1 Aug 2024',
+          )
+          // Already 1 January 2025 in Asia/Tokyo
+          expect(
+            formatPublicationDate(new Date('2024-12-31T23:30:00Z')),
+          ).toEqual('31 Dec 2024')
+        })
+      })
+    }
   })
 })
