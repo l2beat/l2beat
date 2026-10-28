@@ -144,17 +144,17 @@ function withNext(milestones: Milestone[]) {
   })
 }
 
+// In UTC, so the server render and every visitor's zone show the same day
 function formatDate(dateString: string): string {
   const date = new Date(dateString)
-  const year = date.getFullYear()
+  const year = date.getUTCFullYear()
   const month = date.toLocaleDateString('en', {
     month: 'short',
+    timeZone: 'UTC',
   })
-  const day = date.toLocaleDateString('en', {
-    day: 'numeric',
-  })
+  const day = date.getUTCDate()
 
-  const ending = getOrdinalSuffix(date.getDate())
+  const ending = getOrdinalSuffix(day)
 
   return `${year} ${month} ${day}${ending}`
 }
