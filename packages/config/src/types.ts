@@ -1262,6 +1262,18 @@ export type ZkMoneyFundingParams = ZkMoneyDepositParams & {
    * before a scan starts count as untraceable until the SIPA is emptied.
    */
   historyFromBlock: number
+  /**
+   * Executors that redeposit refunds from an earlier deployment. Each of their
+   * deposits joins as its own member, keyed by its recipient commitment, since
+   * the refund names no funder.
+   */
+  migrationExecutors?: EthereumAddress[]
+  /**
+   * Factories whose escrows move funds between the project's own portals. A
+   * deposit by one of their escrows joins no member, since its mover already
+   * holds funds in the project.
+   */
+  internalEscrowFactories?: EthereumAddress[]
 }
 
 /** Identifies withdrawal finalizers and excludes observable self-finalizations. */
@@ -1270,6 +1282,8 @@ export type ZkMoneyWithdrawalRelayerParams = {
   executorAddress: EthereumAddress
   /** Helper that forwards fees to its caller, so the payout is followed through it. */
   operationExecutor: EthereumAddress
+  /** Receives the fixed fee the executor pays before the principal, if it charges one. */
+  feeBeneficiary?: EthereumAddress
 }
 
 /** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */

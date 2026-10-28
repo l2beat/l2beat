@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UserOpSIPA",
+  "critical": true,
+  "category": "core",
+  "description": "Implementation of zk.money deposit addresses that carry an operation of the user's L1 account. Sweeping a funded clone executes the account operation fixed in the clone's address through the ERC-4337 EntryPoint, with the user's signature, then pays the listed fees and deposits the rest into the portal its ForwardingTable names. The recipient's account can recover any funds from the clone.",
+  "ignoreMethods": [
+    "forwardingTable",
+    "intentHash",
+    "recoveryCommitment",
+    "resweepable",
+    "rollupVersion",
+    "swept"
+  ],
+  "ignoreRelatives": ["ENTRY_POINT"]
+}
