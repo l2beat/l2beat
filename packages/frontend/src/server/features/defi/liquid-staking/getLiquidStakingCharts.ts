@@ -73,8 +73,9 @@ export async function getLiquidStakingCharts(
     db.liquidStakingSnapshot.getByProjectsInRange(
       projects.map((p) => p.id),
       lookback,
-      // The last day's requests are made until the next midnight.
-      UnixTime(to + UnixTime.DAY),
+      // Up to now, so requests made by the chart's end find when they were
+      // finalized, even when that came after the end.
+      UnixTime.now(),
     ),
     db.ethereumStakingDaily.getInRange(lookback, to),
     Promise.all(

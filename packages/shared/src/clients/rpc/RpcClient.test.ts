@@ -173,6 +173,19 @@ describe(RpcClient.name, () => {
       expect(result).toEqual({ ...parsedMockReceipt, blockHash: '0xabcdef' })
     })
 
+    it('accepts a null effective gas price, as zetachain returns', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: { ...mockReceipt, effectiveGasPrice: null },
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.getTransactionReceipt('0xabcd')
+
+      expect(result.effectiveGasPrice).toEqual(undefined)
+    })
+
     it('fetches tx receipt from rpc and parses response', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({

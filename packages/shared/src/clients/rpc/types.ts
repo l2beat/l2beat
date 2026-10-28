@@ -95,7 +95,11 @@ export const EVMTransactionResponse = z.object({
 const EVMTransactionReceipt = z.object({
   blockHash: z.string().optional(),
   gasUsed: Quantity.decode.optional(),
-  effectiveGasPrice: Quantity.decode.optional(),
+  // nullable on zetachain
+  effectiveGasPrice: z
+    .union([Quantity.decode, z.null()])
+    .transform((price) => price ?? undefined)
+    .optional(),
   logs: z.array(
     z.object({
       address: z.string(),
