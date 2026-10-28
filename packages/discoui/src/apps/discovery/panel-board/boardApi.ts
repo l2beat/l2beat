@@ -55,12 +55,24 @@ interface BoardUiState {
   // Every board event bumps it, so the panel refetches what changed.
   revision: number
   activeByProject: Record<string, string>
+  // The board whose JSON the researcher changed without applying it yet.
+  draftOf: string | undefined
 }
 
 export const useBoardUiStore = create<BoardUiState>(() => ({
   revision: 0,
   activeByProject: {},
+  draftOf: undefined,
 }))
+
+// Closing the editor drops what it holds, so leaving a draft asks first.
+export function confirmLeavingDraft(boardId?: string): boolean {
+  const { draftOf } = useBoardUiStore.getState()
+  if (draftOf === undefined || (boardId !== undefined && boardId !== draftOf)) {
+    return true
+  }
+  return window.confirm('Discard the JSON edits you have not applied?')
+}
 
 export function receiveBoardEvent(event: BoardEvent) {
   useBoardUiStore.setState((state) => ({
