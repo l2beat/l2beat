@@ -90,7 +90,7 @@ describe(attachMcpRouter.name, () => {
     ).result
     expect(result?.isError).toEqual(true)
     expect(JSON.stringify(result?.content)).toInclude(
-      'No discovered project named nope',
+      'No discovered project: nope',
     )
   })
 
