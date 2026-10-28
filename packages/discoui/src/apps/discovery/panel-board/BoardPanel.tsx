@@ -386,7 +386,9 @@ function ActiveBoard(props: {
       <HeaderButton
         title={editing ? 'Back to the board' : 'Edit the board as JSON'}
         active={editing}
-        onClick={() => setEditing(!editing)}
+        onClick={() => {
+          if (!editing || confirmLeavingDraft()) setEditing(!editing)
+        }}
       >
         <IconCode className="size-3.5" />
       </HeaderButton>
