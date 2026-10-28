@@ -43,7 +43,7 @@ function takeChars(
   let left = charsMax
   for (const line of lines) {
     if (line.length > left) {
-      taken.push(line.slice(0, left))
+      if (left > 0) taken.push(line.slice(0, left))
       return { lines: taken, isCut: true }
     }
     taken.push(line)
@@ -54,8 +54,40 @@ function takeChars(
 
 function blockEnd(code: string, offset: number): number | undefined {
   const open = blockOpen(code, offset)
-  const close = open === undefined ? undefined : closingBrace(code, open)
-  return close === undefined ? undefined : endOfLines(code, close, 1)
+  let close = open === undefined ? undefined : closingBrace(code, open)
+  if (close === undefined) return undefined
+  // An if goes on through its else, a try through its catch clauses.
+  let next = continuationAfter(code, close)
+  while (next !== undefined) {
+    close = next
+    next = continuationAfter(code, close)
+  }
+  return endOfLines(code, close, 1)
+}
+
+function continuationAfter(code: string, close: number): number | undefined {
+  const at = nextCodeChar(code, close + 1)
+  if (!startsWithWord(code, at, 'else') && !startsWithWord(code, at, 'catch')) {
+    return undefined
+  }
+  const open = blockOpen(code, at)
+  return open === undefined ? undefined : closingBrace(code, open)
+}
+
+function startsWithWord(code: string, at: number, word: string): boolean {
+  if (!code.startsWith(word, at)) return false
+  const after = code[at + word.length] ?? ' '
+  return !isIdentifierChar(after)
+}
+
+function isIdentifierChar(char: string): boolean {
+  const lower = char.toLowerCase()
+  return (
+    (lower >= 'a' && lower <= 'z') ||
+    (char >= '0' && char <= '9') ||
+    char === '_' ||
+    char === '$'
+  )
 }
 
 // A snippet opens a block when a brace comes before the statement ends.
