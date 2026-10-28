@@ -92,16 +92,17 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       'activityConfig',
       'garden',
       'ossificationHistory',
-      'versions',
     ],
   })
   if (!project) return undefined
 
-  const [appLayoutProps, projectEntry, sectionLinks] = await Promise.all([
-    getAppLayoutProps(),
-    getL2ProjectEntry(project, helpers),
-    getProjectSectionLinks(slug),
-  ])
+  const [appLayoutProps, projectEntry, sectionLinks, versionLinks] =
+    await Promise.all([
+      getAppLayoutProps(),
+      getL2ProjectEntry(project, helpers),
+      getProjectSectionLinks(slug),
+      getProjectVersionLinks(slug, 'layer2s'),
+    ])
   return {
     head: {
       manifest,
@@ -136,7 +137,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       ...appLayoutProps,
       projectEntry,
       sectionLinks,
-      versionLinks: getProjectVersionLinks(project, 'layer2s'),
+      versionLinks,
       queryState: helpers.dehydrate(),
     },
   }

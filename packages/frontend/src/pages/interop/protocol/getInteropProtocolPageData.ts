@@ -91,13 +91,7 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
   const project = await ps.getProject({
     slug,
     select: ['interopConfig'],
-    optional: [
-      'statuses',
-      'display',
-      'discoveryUpdates',
-      'discoveryInfo',
-      'versions',
-    ],
+    optional: ['statuses', 'display', 'discoveryUpdates', 'discoveryInfo'],
   })
   if (!project) return undefined
 
@@ -106,9 +100,10 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
     interopChains.filter((chain) => !chain.isUpcoming),
   )
 
-  const [protocolData, sectionLinks] = await Promise.all([
+  const [protocolData, sectionLinks, versionLinks] = await Promise.all([
     getInteropProtocolData({ id: project.id, ...apiSelection }),
     getProjectSectionLinks(slug),
+    getProjectVersionLinks(slug, 'interop'),
   ])
 
   const projectEntry = await getInteropProtocolEntry(
@@ -131,7 +126,7 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
     },
     projectEntry,
     sectionLinks,
-    versionLinks: getProjectVersionLinks(project, 'interop'),
+    versionLinks,
     protocolData,
     apiSelection,
     queryState: helpers.dehydrate(),

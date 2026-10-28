@@ -1,4 +1,5 @@
-import type { ProjectVersions } from '@l2beat/config'
+import { ps } from '~/server/projects'
+import type { ProjectSection } from './getProjectSectionLinks'
 
 export interface ProjectVersionLinks {
   groupName: string
@@ -14,25 +15,33 @@ export interface ProjectVersionLink {
   isArchived: boolean
 }
 
-const VERSION_PAGES = {
-  layer2s: (slug: string) => `/layer2s/projects/${slug}`,
-  interop: (slug: string) => `/interop/protocols/${slug}`,
+const VERSION_PAGES: Record<
+  Exclude<ProjectSection, 'tokens'>,
+  (slug: string) => string
+> = {
+  layer2s: (slug) => `/layer2s/projects/${slug}`,
+  interop: (slug) => `/interop/protocols/${slug}`,
+  zkCatalog: (slug) => `/zk-catalog/${slug}`,
+  privacy: (slug) => `/privacy/projects/${slug}`,
+  defi: (slug) => `/defi/projects/${slug}`,
 }
 
 /** Links to every version's page in the section the page belongs to. */
-export function getProjectVersionLinks(
-  project: { slug: string; versions?: ProjectVersions },
+export async function getProjectVersionLinks(
+  slug: string,
   section: keyof typeof VERSION_PAGES,
-): ProjectVersionLinks | undefined {
-  if (!project.versions) return undefined
+): Promise<ProjectVersionLinks | undefined> {
+  const project = await ps.getProject({ slug, optional: ['versions'] })
+  const versions = project?.versions
+  if (!versions) return undefined
   const href = VERSION_PAGES[section]
   return {
-    groupName: project.versions.group.name,
-    versions: project.versions.siblings.map((sibling) => ({
+    groupName: versions.group.name,
+    versions: versions.siblings.map((sibling) => ({
       name: sibling.name,
       label: sibling.label,
       href: href(sibling.slug),
-      isCurrent: sibling.slug === project.slug,
+      isCurrent: sibling.slug === slug,
       isLatest: sibling.isLatest,
       isArchived: sibling.archivedAt !== undefined,
     })),
