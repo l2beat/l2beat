@@ -1,4 +1,5 @@
 import type { ConfigReader } from '@l2beat/discovery'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { type Validator, v as z } from '@l2beat/validate'
 import { projectSchema, readProjectEntries } from './entries'
 import { controlPaths, indexPermissionPaths } from './permissionPaths'
@@ -346,13 +347,20 @@ async function controlMap(
   const project = projectOrOpen(ui, input.project)
   const entries = readProjectEntries(ui.configReader, project)
   const resolver = new SelectorResolver(entries)
-  const excluded = new Set(
-    (input.hide ?? []).flatMap((selector) => resolver.resolve(selector)),
-  )
+  const excluded = new Set<ChainSpecificAddress>()
+  const misses: string[] = []
+  for (const selector of input.hide ?? []) {
+    const matched = resolver.resolve(selector)
+    if (matched.length === 0) misses.push(selector)
+    for (const address of matched) excluded.add(address)
+  }
   const spec = controlMapRequest(entries, project, excluded)
   const lines = await sendView(ui, project, { ...spec, dryRun: input.dryRun })
   for (const group of spec.groups ?? []) {
     lines.push(`  lane "${group.name}": ${group.contracts.length} contracts`)
+  }
+  if (misses.length > 0) {
+    lines.push(`hide matched nothing, so it hid nothing: ${misses.join(', ')}`)
   }
   return lines
 }
