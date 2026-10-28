@@ -109,11 +109,15 @@ export function AssetCategoryTvsChart({
     { key: 'stablecoin', activeDot: !dataKeys.includes('ether') },
     { key: 'ether' },
   ]
+  // Only drawn series count: an excluded one can still be selected.
+  const visibleCount = seriesKeys.filter(({ key }) =>
+    dataKeys.includes(key),
+  ).length
   const series: ChartSeries<SeriesKey, TokenCategoryTvsChartDataPoint>[] =
     seriesKeys.map(({ key, activeDot }) => ({
       key,
       fill: assetCategoryTvsChartMeta[key].color,
-      stack: dataKeys.length > 1,
+      stack: visibleCount > 1,
       activeDot,
       hidden: !dataKeys.includes(key),
     }))
@@ -140,7 +144,7 @@ export function AssetCategoryTvsChart({
         ariaLabel="Value secured by asset category"
         syncedUntil={syncedUntil}
         yAxis={{
-          domain: dataKeys.length === 1 ? 'auto' : undefined,
+          domain: visibleCount === 1 ? 'auto' : undefined,
           format: (value) => formatCurrency(value, unit),
           tickCount,
         }}

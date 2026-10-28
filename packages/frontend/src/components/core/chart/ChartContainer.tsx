@@ -61,9 +61,13 @@ export function ChartContainer<T extends { timestamp: number }>({
 
   const hasData = data && data.length > 1
 
-  const noDataSourcesSelected = Object.keys(meta).every(
-    (key) => interactiveLegend && !interactiveLegend?.dataKeys.includes(key),
-  )
+  const metaKeys = Object.keys(meta)
+  // An empty chart has no sources to deselect.
+  const noDataSourcesSelected =
+    metaKeys.length > 0 &&
+    metaKeys.every(
+      (key) => interactiveLegend && !interactiveLegend.dataKeys.includes(key),
+    )
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
