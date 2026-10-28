@@ -125,6 +125,34 @@ describe(createMarkdownAlternatesRouter.name, () => {
     })
   })
 
+  // Archived L2s and L3s have only an HTML page, so this index keeps them
+  // findable in markdown, apart from the active ones.
+  it('lists active and archived scaling projects in separate sections', async () => {
+    const projects = await ps.getProjects({
+      select: ['scalingInfo'],
+      optional: ['archivedAt'],
+    })
+    const pathsOf = (layer: string, archived: boolean) =>
+      projects
+        .filter(
+          (p) => p.scalingInfo.layer === layer && !!p.archivedAt === archived,
+        )
+        .map((p) => `/layer2s/projects/${p.slug}`)
+        .toSorted()
+
+    const { 'Ecosystems (/ecosystems/{slug})': _, ...sections } =
+      await getSectionPaths('/layer2s/summary.md')
+
+    expect(pathsOf('layer2', true).length).toBeGreaterThan(0)
+    expect(pathsOf('layer3', true).length).toBeGreaterThan(0)
+    expect(sections).toEqual({
+      'Layer 2s (/layer2s/projects/{slug})': pathsOf('layer2', false),
+      'Layer 3s (/layer2s/projects/{slug})': pathsOf('layer3', false),
+      'Archived Layer 2s (/layer2s/projects/{slug})': pathsOf('layer2', true),
+      'Archived Layer 3s (/layer2s/projects/{slug})': pathsOf('layer3', true),
+    })
+  })
+
   describe('ossification', () => {
     const originalMock = env.MOCK
 
