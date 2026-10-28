@@ -33,11 +33,14 @@ export function AgentContextReporter(props: { project: string }) {
     // Only the tab in front speaks for the researcher: the server keeps one
     // context, and a tab in the background would overwrite it.
     const report = () => {
+      clearTimeout(timeout)
       if (document.visibilityState !== 'visible') {
         return
       }
-      clearTimeout(timeout)
       timeout = setTimeout(() => {
+        if (document.visibilityState !== 'visible') {
+          return
+        }
         void putContext({
           project: props.project,
           selected: selected.map((address) => ({
