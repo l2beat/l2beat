@@ -1,13 +1,8 @@
 import { assert, type json } from '@l2beat/shared-pure'
 import type { v as z } from '@l2beat/validate'
-import { utils } from 'ethers'
 import type { IRpcClient } from '../../clients2'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import {
-  BeaconChainError,
-  type Blob as BlobSchema,
-  BlockSidecarSchema,
-} from './types'
+import { BeaconChainError, type Blob as BlobSchema, BlobsSchema } from './types'
 
 export type Blob = z.infer<typeof BlobSchema>
 export interface BlobsInBlock {
@@ -31,10 +26,8 @@ export class BlobClient extends ClientCore {
     blobVersionedHashes: string[],
     blockNumber: number,
   ): Promise<BlobsInBlock> {
-    const blockSidecar = await this.getBlockSidecar(blockNumber)
-    const relevantBlobs = filterOutIrrelevant(blockSidecar, blobVersionedHashes)
-
-    return { blobs: relevantBlobs, blockNumber }
+    const blobs = await this.getBlobs(blockNumber, blobVersionedHashes)
+    return { blobs, blockNumber }
   }
 
   async getRelevantBlobs(txHash: string): Promise<BlobsInBlock> {
@@ -53,34 +46,48 @@ export class BlobClient extends ClientCore {
       'Type 3 transaction missing blobVersionedHashes',
     )
 
-    const blockSidecar = await this.getBlockSidecar(tx.blockNumber)
-    const relevantBlobs = filterOutIrrelevant(
-      blockSidecar,
-      tx.blobVersionedHashes,
-    )
-
-    return { blobs: relevantBlobs, blockNumber: tx.blockNumber }
+    const blobs = await this.getBlobs(tx.blockNumber, tx.blobVersionedHashes)
+    return { blobs, blockNumber: tx.blockNumber }
   }
 
-  async getBlockSidecar(blockNumber: number): Promise<Blob[]> {
+  /** In the block's order, which need not be that of `versionedHashes` */
+  async getBlobs(
+    blockNumber: number,
+    versionedHashes: string[],
+  ): Promise<Blob[]> {
+    // Without the param the endpoint answers every blob of the block
+    if (versionedHashes.length === 0) return []
+
     const blockId = await this.getBeaconBlockId(blockNumber)
-    const endpoint = `eth/v1/beacon/blob_sidecars/${blockId}`
+    const query = versionedHashes
+      .map((hash) => `versioned_hashes=${hash}`)
+      .join('&')
+    const endpoint = `eth/v1/beacon/blobs/${blockId}?${query}`
 
     const response = await this.call(endpoint)
-    const parsed = BlockSidecarSchema.safeParse(response)
+    const parsed = BlobsSchema.safeParse(response)
 
     if (!parsed.success) {
       this.$.logger.warn('Invalid response', {
         endpoint,
         response: JSON.stringify(response),
       })
-      throw new Error(`Block: ${blockNumber}: Error during sidecar parsing`)
+      throw new Error('Invalid blobs response', { cause: { blockNumber } })
     }
 
-    return parsed.data.data.map((blob) => ({
-      kzg_commitment: blob.kzg_commitment,
-      data: blob.blob,
-    }))
+    // A beacon block without these blobs answers an empty list, not an error
+    if (parsed.data.data.length !== versionedHashes.length) {
+      throw new Error('Beacon node answered a different number of blobs', {
+        cause: {
+          blockNumber,
+          blockId,
+          requested: versionedHashes.length,
+          received: parsed.data.data.length,
+        },
+      })
+    }
+
+    return parsed.data.data.map((data) => ({ data }))
   }
 
   async call(endpoint: string): Promise<unknown> {
@@ -116,19 +123,4 @@ export class BlobClient extends ClientCore {
   private async getBeaconBlockId(blockNumber: number): Promise<string> {
     return await this.$.rpcClient.getBlockParentBeaconRoot(blockNumber + 1)
   }
-}
-
-function filterOutIrrelevant(
-  sidecarData: Blob[],
-  relevantBlobVersionedHashes: string[],
-): Blob[] {
-  return sidecarData.filter((blob) =>
-    relevantBlobVersionedHashes.includes(
-      kzgCommitmentToVersionedHash(blob.kzg_commitment),
-    ),
-  )
-}
-
-function kzgCommitmentToVersionedHash(commitment: string): string {
-  return '0x01' + utils.sha256(commitment).substring(4)
 }
