@@ -289,6 +289,20 @@ describe(resolveBoard.name, () => {
     expect(board.problems[0]).toInclude('Hide the escrow: No contract')
   })
 
+  it('draws no button for a view that keeps only an empty list', () => {
+    const board = resolveBoard(entries, {
+      title: 'Views',
+      blocks: [
+        {
+          type: 'view',
+          label: 'Nothing',
+          view: { title: 'Nothing', only: [] },
+        },
+      ],
+    })
+    expect(board.blocks[0]?.type).toEqual('problem')
+  })
+
   it('draws no button that would keep only what nothing matches', () => {
     const board = resolveBoard(entries, {
       title: 'Views',

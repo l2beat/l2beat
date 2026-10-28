@@ -204,13 +204,17 @@ function resolveViewBlock(
   try {
     const { view, matches } = resolveView(binding.entries, block.view)
     const misses = matches.filter((m) => m.count === 0).map((m) => m.selector)
-    if (misses.length === 0) {
+    // Keeping only nothing would hide every contract.
+    const keepsNothing = view.only?.length === 0
+    if (misses.length === 0 && !keepsNothing) {
       return { type: 'view', label: block.label, view }
     }
-    const problem = `${block.label}: nothing matches ${misses.join(', ')}`
+    const problem =
+      misses.length > 0
+        ? `${block.label}: nothing matches ${misses.join(', ')}`
+        : `${block.label}: only lists no contract`
     binding.problems.add(problem)
-    // Keeping only nothing would hide every contract.
-    if (view.only?.length === 0) {
+    if (keepsNothing) {
       return { type: 'problem', text: problem }
     }
     return { type: 'view', label: block.label, view }
