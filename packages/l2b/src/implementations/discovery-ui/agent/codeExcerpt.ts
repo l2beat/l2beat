@@ -40,7 +40,8 @@ function blockEnd(code: string, offset: number): number | undefined {
 // A snippet opens a block when a brace comes before the statement ends.
 // Semicolons in parentheses, like a for loop's, do not end it, and braces
 // there, like named arguments, or before a call's parentheses, like
-// `deposit{value: v}()`, do not open it.
+// `deposit{value: v}()`, do not open it. A snippet from inside a parameter
+// list closes a parenthesis it never opened.
 function blockOpen(code: string, offset: number): number | undefined {
   let parens = 0
   for (let at = offset; at < code.length; at++) {
@@ -48,7 +49,7 @@ function blockOpen(code: string, offset: number): number | undefined {
     if (code[at] === '(') {
       parens++
     } else if (code[at] === ')') {
-      parens--
+      parens = Math.max(parens - 1, 0)
     } else if (code[at] === '{' && parens === 0) {
       const close = closingBrace(code, at)
       if (close === undefined || code[nextCodeChar(code, close + 1)] !== '(') {
