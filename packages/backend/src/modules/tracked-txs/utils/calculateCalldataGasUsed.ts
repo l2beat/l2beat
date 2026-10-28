@@ -1,11 +1,19 @@
+import type { UnixTime } from '@l2beat/shared-pure'
+import { getGlamsterdamCalldataGasUsed, isGlamsterdam } from './glamsterdam'
+
 const PECTRA_START_BLOCK = 22431084
 
 export function calculateCalldataGasUsed(
   blockNumber: number,
+  blockTimestamp: UnixTime,
   dataLength: number,
   nonZeroBytes: number,
   gasUsed: number,
 ) {
+  if (isGlamsterdam(blockTimestamp)) {
+    return getGlamsterdamCalldataGasUsed(dataLength, nonZeroBytes, gasUsed)
+  }
+
   const zeroBytes = dataLength - nonZeroBytes
   const standardCalldata = 16 * nonZeroBytes + 4 * zeroBytes
 

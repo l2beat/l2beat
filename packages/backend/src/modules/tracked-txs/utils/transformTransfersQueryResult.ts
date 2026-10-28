@@ -47,6 +47,7 @@ export function transformTransfersQueryResult(
           dataLength: r.data_length,
           calldataGasUsed: calculateCalldataGasUsed(
             r.block_number,
+            r.block_time,
             r.data_length,
             r.non_zero_bytes,
             r.gas_used,
