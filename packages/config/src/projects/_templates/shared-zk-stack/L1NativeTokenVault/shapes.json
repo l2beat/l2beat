@@ -5,12 +5,12 @@
     "blockNumber": 22188285
   },
   "L1NativeTokenVault_v27": {
-    "hash": "0x24e6f0744dc55f40116debb6c11e8bdd7821fdb1869630b1f31918c8420b7423",
+    "hash": "0x66664a6173e9232a63e193befac5f89376d562042470a8a57605ef98b8550fa7",
     "address": "eth:0xDf3a3E51aEABB5da548F854B608E3C9De1ae2947",
     "blockNumber": 22374168
   },
   "L1NativeTokenVault_v27_ADI": {
-    "hash": "0xeac1b0724c69c33183ce8e24a8f3ac28eb5adb9925dff647396c8d165f0ecae9",
+    "hash": "0xcacbab74b3abde440d2b92fb0b9499baa58dcaf51bc91222f687508934da689b",
     "address": "eth:0x2FC2a2dB562046C732d3aB0f4e1c1F62C3eE8e3E",
     "blockNumber": 24038982
   }

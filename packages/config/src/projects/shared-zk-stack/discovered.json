@@ -1433,7 +1433,7 @@
       "template": "shared-zk-stack/L1NativeTokenVault",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x24e6f0744dc55f40116debb6c11e8bdd7821fdb1869630b1f31918c8420b7423"
+        "0x66664a6173e9232a63e193befac5f89376d562042470a8a57605ef98b8550fa7"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Canonical central asset escrow for all ZK stack chains.",

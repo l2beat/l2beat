@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x92dc5406e17bef5c6639a6b81251c5ee0ae176f8
+
+# Diff at Tue, 27 Oct 2026 16:42:49 GMT:
+
+- id: 0489a868
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1781603706
+- current timestamp: 1781603706
+
+## Description
+
+Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781603706 (main branch discovery), not current.
+
+```diff
+    contract Gateway (eth:0x4F4495243837681061C4743b74B3eEdf548D56A5) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x59e958a0783ea169acb1f9451299a6eeecdfa1db1257cafe5c948a919117c2fc"
++        "0x822a5c606e9714df1be7958cc596ec9a0032cdf3678cb174f99339501ec7889e"
+    }
+```
+
+```diff
+    contract TokenDeployer (eth:0xb28478319B64f8D47e19A120209A211D902F8b8f) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xd01c3b8c2f10c224a3cad35f91603dd3154438007a3eb3a4f8f5184227f1dfce"
++        "0x62ca7adc02098a140101259b86b5fe3f1d85fa107cf0898cdcb86168bb300c81"
+    }
+```
+
 Generated with discovered.json: 0xb0109e6b20bf088d305ae4e3d59058c27a046fb4
 
 # Diff at Tue, 16 Jun 2026 09:56:17 GMT:
