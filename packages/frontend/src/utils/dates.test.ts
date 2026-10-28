@@ -2,10 +2,24 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import {
+  formatPublicationDate,
   formatTimestamp,
   formatTimestampToDateWithHour,
   getNextDateForDayOfWeek,
 } from './dates'
+
+const TIMEZONES = ['UTC', 'America/New_York', 'Asia/Tokyo']
+
+function withTimezone(tz: string, fn: () => void) {
+  const original = process.env.TZ
+  process.env.TZ = tz
+  try {
+    fn()
+  } finally {
+    if (original === undefined) Reflect.deleteProperty(process.env, 'TZ')
+    else process.env.TZ = original
+  }
+}
 
 describe('dates', () => {
   describe(formatTimestampToDateWithHour.name, () => {
@@ -150,5 +164,43 @@ describe('dates', () => {
       const nextThursday = getNextDateForDayOfWeek(4, date)
       expect(nextThursday.toISOString()).toEqual('2021-04-22T00:00:00.000Z')
     })
+
+    for (const tz of TIMEZONES) {
+      it(`uses the UTC day regardless of process timezone (TZ=${tz})`, () => {
+        withTimezone(tz, () => {
+          // Wednesday 20:00 UTC is already Thursday in Asia/Tokyo
+          expect(
+            getNextDateForDayOfWeek(
+              4,
+              new Date('2021-04-21T20:00:00Z'),
+            ).toISOString(),
+          ).toEqual('2021-04-22T00:00:00.000Z')
+          // Saturday 02:00 UTC is still Friday, 30 April in America/New_York
+          expect(
+            getNextDateForDayOfWeek(
+              6,
+              new Date('2021-05-01T02:00:00Z'),
+            ).toISOString(),
+          ).toEqual('2021-05-08T00:00:00.000Z')
+        })
+      })
+    }
+  })
+
+  describe(formatPublicationDate.name, () => {
+    for (const tz of TIMEZONES) {
+      it(`formats the UTC day regardless of process timezone (TZ=${tz})`, () => {
+        withTimezone(tz, () => {
+          // Still 31 July in America/New_York
+          expect(formatPublicationDate(new Date('2024-08-01'))).toEqual(
+            '1 Aug 2024',
+          )
+          // Already 1 January 2025 in Asia/Tokyo
+          expect(
+            formatPublicationDate(new Date('2024-12-31T23:30:00Z')),
+          ).toEqual('31 Dec 2024')
+        })
+      })
+    }
   })
 })
