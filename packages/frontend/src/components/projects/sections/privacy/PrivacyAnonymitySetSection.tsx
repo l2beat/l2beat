@@ -104,12 +104,7 @@ export function PrivacyAnonymitySetSection({
           <p className="mb-4 text-paragraph-15 text-secondary">
             {copy.durationDescription}
             {data?.syncedUntil !== undefined && (
-              <>
-                {' '}
-                {copy.countedUntil(
-                  formatTimestamp(data.syncedUntil, { longMonthName: true }),
-                )}
-              </>
+              <> {copy.countedUntil(formatTimestamp(data.syncedUntil))}</>
             )}
           </p>
           <PrivacyAnonymitySetChart

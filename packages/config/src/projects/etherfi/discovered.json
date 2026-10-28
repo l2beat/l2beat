@@ -1,7 +1,7 @@
 {
   "name": "etherfi",
   "timestamp": 1792491551,
-  "configHash": "0x6421d0e6e7608dee6b93d931a52fef74b63d98a9c5b85e6f0cb3e51da844e8c3",
+  "configHash": "0x08c960d010c878609b53ecd91c3ff640e6e2bcb83b362ee02b6fae22f1f8e082",
   "entries": [
     {
       "name": "DepositContract",
@@ -674,7 +674,7 @@
         "eth:0x2ecd155405cA52a5ca0e552981fF44A8252FAb81": "UUPSProxy",
         "eth:0x19C10a7E39D5457C4A3cB2c8909297D6020594d7": "EtherFiViewer"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x2f2806e8b288428f23707A69faA60f52BC565c17",
@@ -5301,7 +5301,7 @@
     "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 26233151 },
+  "usedBlockNumbers": { "ethereum": 26233152 },
   "permissionsConfigHash": "0x5b21b45871bd824fec8e8f3f8f7ee95d115f37020224072eafa7e01eaeb747b1",
   "permissions": {
     "eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a": {
@@ -5419,8 +5419,7 @@
           "from": "eth:0x2ecd155405cA52a5ca0e552981fF44A8252FAb81",
           "role": "admin"
         }
-      ],
-      "eoaWithUpgradePermissions": true
+      ]
     }
   }
 }

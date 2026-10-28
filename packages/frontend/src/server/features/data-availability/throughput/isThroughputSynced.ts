@@ -32,6 +32,5 @@ export function getThroughputSyncWarning(
   }
   return `No throughput data since ${formatTimestamp(syncedUntil, {
     mode: 'datetime',
-    longMonthName: true,
   })}.`
 }

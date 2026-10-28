@@ -1,8 +1,8 @@
 import { formatSeconds } from '@l2beat/shared-pure'
+import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { anomalySubtypeToLabel } from '~/components/projects/sections/liveness/anomalySubtypeToLabel'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { cn } from '~/utils/cn'
-import { formatTimestamp } from '~/utils/dates'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { getDurationColorClassName } from './LivenessDurationCell'
 
@@ -31,7 +31,7 @@ export function AnomalyText({
         </span>
         {' ('}since{' '}
         <span className="font-medium">
-          {formatTimestamp(anomaly.start, { mode: 'datetime' })}
+          <UtcDateTime timestamp={anomaly.start} />
         </span>
         {')'}. These typically occur every{' '}
         <span
@@ -64,14 +64,14 @@ export function AnomalyText({
       </span>
       {' ('}from{' '}
       <span className="font-medium">
-        {formatTimestamp(anomaly.start, { mode: 'datetime' })}
+        <UtcDateTime timestamp={anomaly.start} />
       </span>{' '}
       {anomaly.end && (
         <>
           {' '}
           until{' '}
           <span className="font-medium">
-            {formatTimestamp(anomaly.end, { mode: 'datetime' })}
+            <UtcDateTime timestamp={anomaly.end} />
           </span>
         </>
       )}
