@@ -85,6 +85,20 @@ describe('packed argument plugin', () => {
   })
 })
 
+describe('CREATE2 factory plugin', () => {
+  it('marks the salt as a fixed-size value, not calldata', () => {
+    const decoded = decode(
+      `0x8456cb59${'00'.repeat(28)}6080`,
+      [],
+      1,
+      '0x4e59b44847b379578588920ca78fbf26c0b4956c',
+    )
+
+    const salt = decoded?.members?.find((x) => x.name === 'salt')
+    expect(salt?.isFixedSize).toEqual(true)
+  })
+})
+
 describe(decodeAs.name, () => {
   const TARGET = '0x1111111111111111111111111111111111111111'
   const TOKEN = '0x4444444444444444444444444444444444444444'

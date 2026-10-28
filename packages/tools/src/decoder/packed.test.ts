@@ -51,6 +51,7 @@ describe(decodePacked.name, () => {
           value: '0xabcdef',
           bytes: '0xabcdef',
           chainId: 1,
+          isFixedSize: true,
         },
         {
           name: 'target',

@@ -289,6 +289,7 @@ function create2FactoryPlugin(
         bytes: salt,
         value: salt,
         chainId,
+        isFixedSize: true,
       },
       {
         type: 'bytes',
