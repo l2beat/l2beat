@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x402a84efcf22ed2086fee01e921406d016456460
+
+# Diff at Wed, 28 Oct 2026 13:54:43 GMT:
+
+- id: bc7e3a2e
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cc7e9e73c101d0a260af6bfe078851f3ff1d60cb block: 1793113693
+- current timestamp: 1793195490
+
+## Description
+
+The RISC Zero EOA added route 0x8b38038c on the RiscZeroVerifierRouter to RiscZeroGroth16Verifier v3.1.0. Its verifying key matches no published RISC Zero setup. Ronin's retired Kailua path no longer uses the router, so discovery ignores the new route.
+https://disco.l2beat.com/diff/eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D/eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsExecuted.21:
++        {"id":"0x682e79774f6b8e0fc1dbddd69bfca4374e9827b815d8fb2a73d602d541714c82","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af308b38038c000000000000000000000000000000000000000000000000000000000000000000000000000000009660bd6dcdf455dcfb30c07c642ab22e7cb89f50"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_8b38038c:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793113693 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_8b38038c:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.verifier_8b38038c:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x5dbd026c856bb29269341ce07442f8399e555869
 
 # Diff at Tue, 27 Oct 2026 15:08:09 GMT:
