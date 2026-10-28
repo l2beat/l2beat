@@ -24,6 +24,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { getPrivacyAdversaryRosetteValues } from '../adversaries/privacyAdversaryUi'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
@@ -31,6 +32,7 @@ import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 interface Props extends AppLayoutProps {
   entry: ProjectPrivacyEntry
   sectionLinks: ProjectSectionLink[]
+  versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
   selectedUpdateId?: string
 }
@@ -38,6 +40,7 @@ interface Props extends AppLayoutProps {
 export function PrivacyProjectPage({
   entry,
   sectionLinks,
+  versionLinks,
   queryState,
   selectedUpdateId,
   ...props
@@ -70,6 +73,7 @@ export function PrivacyProjectPage({
                     project={entry}
                     section="privacy"
                     sectionLinks={sectionLinks}
+                    versions={versionLinks}
                     recentUpdatesCount={entry.recentUpdatesCount}
                   />
                   <ProjectSummaryBars
@@ -84,6 +88,7 @@ export function PrivacyProjectPage({
                         emergencyWarning: entry.warnings.emergency,
                       },
                     }}
+                    versions={versionLinks}
                   />
                   {entry.badges && entry.badges.length > 0 && (
                     <BadgesSection
