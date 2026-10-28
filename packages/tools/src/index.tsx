@@ -39,5 +39,5 @@ ReactDOM.createRoot(root).render(
 
 function DecoderRedirect() {
   const location = useLocation()
-  return <Navigate to={`/decoder${location.search}`} replace />
+  return <Navigate to={`/decoder${location.search}${location.hash}`} replace />
 }
