@@ -67,6 +67,25 @@ export class LiquidStakingSnapshotRepository extends BaseRepository {
     return rows.length
   }
 
+  /** Oldest first. */
+  async getByProjectsInRange(
+    projectIds: string[],
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<LiquidStakingSnapshotRecord[]> {
+    if (projectIds.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('LiquidStakingSnapshot')
+      .selectAll()
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async deleteByConfigIds(ids: string[]): Promise<number> {
     if (ids.length === 0) return 0
 

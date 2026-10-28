@@ -1814,11 +1814,17 @@ export interface DayActivityConfig {
 
 export type LivenessOverwriteMode = 'no-data'
 
+export interface ProjectLiquidStakingConfig {
+  /** CoinGecko id of the token the exchange rate is for, priced by TVS. */
+  priceId: string
+  contracts: ProjectLiquidStakingContracts
+}
+
 /**
  * The contracts the liquid staking indexer reads every hour: the token's
  * exchange rate, plus whatever decides how fast a holder can exit.
  */
-export type ProjectLiquidStakingConfig =
+export type ProjectLiquidStakingContracts =
   | {
       type: 'lido'
       stETH: ChainSpecificAddress

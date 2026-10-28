@@ -16,10 +16,10 @@ export async function getLiquidStakingConfig(
     .map((project) => ({
       configurationId: getLiquidStakingConfigurationId(
         project.id,
-        project.liquidStakingConfig,
+        project.liquidStakingConfig.contracts,
       ),
       projectId: project.id,
-      contracts: project.liquidStakingConfig,
+      contracts: project.liquidStakingConfig.contracts,
     }))
 
   if (projects.length === 0) return false

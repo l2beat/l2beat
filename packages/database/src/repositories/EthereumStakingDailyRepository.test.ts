@@ -26,6 +26,17 @@ describeDatabase(EthereumStakingDailyRepository.name, (db) => {
     expect(await repository.getAll()).toEqual([updated, record(2)])
   })
 
+  it('gets the days in a range, oldest first', async () => {
+    await repository.upsertMany([record(3), record(1), record(2), record(5)])
+
+    expect(
+      await repository.getInRange(
+        UnixTime(UnixTime.DAY),
+        UnixTime(3 * UnixTime.DAY),
+      ),
+    ).toEqual([record(1), record(2), record(3)])
+  })
+
   it('deletes the days after a timestamp', async () => {
     await repository.upsertMany([record(1), record(2), record(3)])
 

@@ -1,8 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
+import { getDb } from '~/server/database'
 import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import {
+  computeLiquidStakingCharts,
+  YIELD_WINDOW_DAYS,
+} from './computeLiquidStakingCharts'
 import { getLiquidStakingProjects } from './getLiquidStakingProjects'
 
 export const LiquidStakingChartsParams = v.object({
@@ -12,6 +17,14 @@ export const LiquidStakingChartsParams = v.object({
 export type LiquidStakingChartsParams = v.infer<
   typeof LiquidStakingChartsParams
 >
+
+/**
+ * The indexers start at 2024-01-01, so this is the first day with a full
+ * window behind it.
+ */
+const FIRST_DAY =
+  UnixTime.fromDate(new Date('2024-01-01T00:00:00Z')) +
+  YIELD_WINDOW_DAYS * UnixTime.DAY
 
 export interface LiquidStakingCharts {
   yield: LiquidStakingYieldPoint[]
@@ -38,14 +51,58 @@ export interface LiquidStakingYieldPoint extends LiquidStakingChartPoint {
 export async function getLiquidStakingCharts(
   params: LiquidStakingChartsParams,
 ): Promise<LiquidStakingCharts> {
-  const projectIds = (await getLiquidStakingProjects()).map(
-    (project) => project.id,
-  )
+  const projects = await getLiquidStakingProjects()
   if (env.MOCK) {
-    return getMockLiquidStakingCharts(params, projectIds)
+    return getMockLiquidStakingCharts(
+      params,
+      projects.map((project) => project.id),
+    )
   }
-  // The daily values are not indexed yet.
-  return { yield: [], costOfExit: [] }
+
+  const to = UnixTime.toStartOf(UnixTime(params.range[1]), 'day')
+  const from = Math.max(params.range[0] ?? FIRST_DAY, FIRST_DAY)
+  // The first day's yields look back a window; its discount, a week.
+  const lookback = UnixTime(from - YIELD_WINDOW_DAYS * UnixTime.DAY)
+  const priceIds = [
+    'ethereum',
+    ...projects.map((p) => p.liquidStakingConfig.priceId),
+  ]
+
+  const db = getDb()
+  const [snapshots, network, prices] = await Promise.all([
+    db.liquidStakingSnapshot.getByProjectsInRange(
+      projects.map((p) => p.id),
+      lookback,
+      // The last day's requests are made until the next midnight.
+      UnixTime(to + UnixTime.DAY),
+    ),
+    db.ethereumStakingDaily.getInRange(lookback, to),
+    Promise.all(
+      priceIds.map(async (priceId) => {
+        const records = await db.tvsPrice.getPricesInRangeByPriceId(
+          priceId,
+          lookback,
+          to,
+        )
+        return [
+          priceId,
+          new Map(records.map((r) => [r.timestamp, r.priceUsd])),
+        ] as const
+      }),
+    ),
+  ])
+
+  return computeLiquidStakingCharts({
+    days: generateTimestamps([from, to], 'day'),
+    projects: projects.map((p) => ({
+      id: p.id,
+      type: p.liquidStakingConfig.contracts.type,
+      priceId: p.liquidStakingConfig.priceId,
+    })),
+    snapshots,
+    network,
+    prices: new Map(prices),
+  })
 }
 
 function getMockLiquidStakingCharts(

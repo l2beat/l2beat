@@ -145,9 +145,12 @@ export const etherfi: BaseProject = {
     ],
   },
   liquidStakingConfig: {
-    type: 'etherfi',
-    weETH: discovery.getContract('weETH').address,
-    withdrawRequestNft: discovery.getContract('WithdrawRequestNFT').address,
+    priceId: 'wrapped-eeth',
+    contracts: {
+      type: 'etherfi',
+      weETH: discovery.getContract('weETH').address,
+      withdrawRequestNft: discovery.getContract('WithdrawRequestNFT').address,
+    },
   },
   liquidStakingRisks: {
     minting: {

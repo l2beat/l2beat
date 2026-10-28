@@ -95,9 +95,12 @@ export const wbeth: BaseProject = {
     ],
   },
   liquidStakingConfig: {
-    type: 'wbeth',
-    wBETH: discovery.getContract('wBETH').address,
-    unwrapToken: discovery.getContract('UnwrapTokenV1ETH').address,
+    priceId: 'wrapped-beacon-eth',
+    contracts: {
+      type: 'wbeth',
+      wBETH: discovery.getContract('wBETH').address,
+      unwrapToken: discovery.getContract('UnwrapTokenV1ETH').address,
+    },
   },
   liquidStakingRisks: {
     minting: {

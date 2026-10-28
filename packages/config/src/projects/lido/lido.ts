@@ -192,9 +192,13 @@ export const lido: BaseProject = {
     ],
   },
   liquidStakingConfig: {
-    type: 'lido',
-    stETH: discovery.getContract(STETH).address,
-    withdrawalQueue: discovery.getContract('WithdrawalQueueERC721').address,
+    // Per wstETH, like the indexed rate.
+    priceId: 'wrapped-steth',
+    contracts: {
+      type: 'lido',
+      stETH: discovery.getContract(STETH).address,
+      withdrawalQueue: discovery.getContract('WithdrawalQueueERC721').address,
+    },
   },
   liquidStakingRisks: {
     minting: {

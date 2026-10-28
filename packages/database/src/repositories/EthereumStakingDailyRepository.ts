@@ -78,6 +78,21 @@ export class EthereumStakingDailyRepository extends BaseRepository {
     return rows.length
   }
 
+  /** Oldest first. */
+  async getInRange(
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<EthereumStakingDailyRecord[]> {
+    const rows = await this.db
+      .selectFrom('EthereumStakingDaily')
+      .selectAll()
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
   /** Removes the days after `from`, for an indexer invalidating its height. */
   async deleteAfter(from: UnixTime): Promise<number> {
     const result = await this.db

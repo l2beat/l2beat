@@ -1,4 +1,4 @@
-import type { ProjectLiquidStakingConfig } from '@l2beat/config'
+import type { ProjectLiquidStakingContracts } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 
@@ -8,7 +8,7 @@ import { createHash } from 'crypto'
  */
 export function getLiquidStakingConfigurationId(
   projectId: ProjectId,
-  contracts: ProjectLiquidStakingConfig,
+  contracts: ProjectLiquidStakingContracts,
 ): string {
   const identity = {
     projectId,

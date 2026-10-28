@@ -1,0 +1,205 @@
+import type {
+  EthereumStakingDailyRecord,
+  LiquidStakingSnapshotRecord,
+} from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
+import { expect } from 'earl'
+import {
+  computeLiquidStakingCharts,
+  getQueueWaits,
+  type LiquidStakingChartProject,
+} from './computeLiquidStakingCharts'
+
+const DAY = UnixTime.DAY
+const HOUR = UnixTime.HOUR
+const ETH = 10n ** 18n
+const START = UnixTime.fromDate(new Date('2025-01-01T00:00:00Z'))
+const DAY_31 = START + 31 * DAY
+
+describe(computeLiquidStakingCharts.name, () => {
+  it('annualises the 30-day rate change without compounding', () => {
+    const charts = compute(
+      [project('lido')],
+      [snapshot('lido', START + DAY, 1.0), snapshot('lido', DAY_31, 1.003)],
+    )
+    expect(present(charts.yield[0]?.projects.lido)).toBeCloseTo(
+      0.003 * (365 / 30),
+      1e-6,
+    )
+  })
+
+  it('takes the queue wait of the day’s requests, weighted by count', () => {
+    // 2 requests in the hour to 01:00, 1 in the hour to 02:00; all three
+    // finalized at 05:00, so they waited 4 and 3 hours.
+    const charts = compute(
+      [project('etherfi')],
+      [
+        snapshot('etherfi', START + DAY, 1),
+        snapshot('etherfi', DAY_31, 1, {
+          lastRequestId: 10,
+          lastFinalizedRequestId: 10,
+        }),
+        snapshot('etherfi', DAY_31 + HOUR, 1, {
+          lastRequestId: 12,
+          lastFinalizedRequestId: 10,
+        }),
+        snapshot('etherfi', DAY_31 + 2 * HOUR, 1, {
+          lastRequestId: 13,
+          lastFinalizedRequestId: 10,
+        }),
+        snapshot('etherfi', DAY_31 + 5 * HOUR, 1, {
+          lastRequestId: 13,
+          lastFinalizedRequestId: 13,
+        }),
+      ],
+    )
+    // A flat rate leaves no market route, so this is the queue.
+    expect(present(charts.costOfExit[0]?.projects.etherfi)).toBeCloseTo(
+      (2 * 4 + 1 * 3) / 3 / 24,
+      1e-6,
+    )
+  })
+
+  it('takes the market when it is cheaper than the queue', () => {
+    const prices = new Map([
+      ['ethereum', dailyPrices(2000)],
+      // 0.1% under its ETH backing.
+      ['wrapped-beacon-eth', dailyPrices(2000 * 1.01 * 0.999)],
+    ])
+    const charts = compute(
+      [project('wbeth')],
+      [
+        snapshot('wbeth', START + DAY, 1.0),
+        snapshot('wbeth', DAY_31, 1.01, { lockTime: 40 * DAY }),
+      ],
+      [],
+      prices,
+    )
+    const annualYield = 0.01 * (365 / 30)
+    expect(present(charts.costOfExit[0]?.projects.wbeth)).toBeCloseTo(
+      (0.001 * 365) / annualYield,
+      1e-6,
+    )
+  })
+
+  it('exits Rocket Pool at once while its buffer holds ETH', () => {
+    const charts = compute(
+      [project('rocketpool')],
+      [
+        snapshot('rocketpool', START + DAY, 1),
+        snapshot('rocketpool', DAY_31, 1, { instantExitEth: ETH }),
+      ],
+    )
+    expect(charts.costOfExit[0]?.projects.rocketpool).toEqual(0)
+  })
+
+  it('derives the network yield from balances, flows and execution rewards', () => {
+    // Each day the balance grows by 10 ETH while 100 ETH leaves and 50 ETH
+    // arrives, so consensus rewards are 60 ETH; proposers add 5 ETH.
+    const network = Array.from({ length: 32 }, (_, i) =>
+      day(START + i * DAY, 1_000_000n + 10n * BigInt(i)),
+    )
+    const charts = compute([], [], network)
+    const point = charts.yield[0]
+    expect(present(point?.ethStaked)).toBeCloseTo(1_000_310, 1e-6)
+    // 65 ETH a day over an average stake of 1,000,145 ETH.
+    expect(present(point?.network)).toBeCloseTo(
+      ((65 * 30) / 1_000_145) * (365 / 30),
+      1e-6,
+    )
+  })
+
+  it('leaves the network yield empty across the start of the deposit queue', () => {
+    const network = Array.from({ length: 32 }, (_, i) =>
+      day(START + i * DAY, 1_000_000n, i < 10 ? null : 0n),
+    )
+    expect(compute([], [], network).yield[0]?.network).toEqual(null)
+  })
+})
+
+describe(getQueueWaits.name, () => {
+  it('stops at the first requests that are still queued', () => {
+    expect(
+      getQueueWaits([
+        { timestamp: 0, lastRequestId: 1, lastFinalizedRequestId: 1 },
+        { timestamp: HOUR, lastRequestId: 2, lastFinalizedRequestId: 1 },
+        { timestamp: 2 * HOUR, lastRequestId: 3, lastFinalizedRequestId: 2 },
+      ]),
+    ).toEqual([{ timestamp: HOUR, requests: 1, hours: 1 }])
+  })
+})
+
+function compute(
+  projects: LiquidStakingChartProject[],
+  snapshots: LiquidStakingSnapshotRecord[],
+  network: EthereumStakingDailyRecord[] = [],
+  prices = new Map<string, Map<number, number>>(),
+) {
+  return computeLiquidStakingCharts({
+    days: [UnixTime(DAY_31)],
+    projects,
+    snapshots,
+    network,
+    prices,
+  })
+}
+
+function project(
+  type: LiquidStakingChartProject['type'],
+): LiquidStakingChartProject {
+  const priceIds = {
+    lido: 'wrapped-steth',
+    rocketpool: 'rocket-pool-eth',
+    etherfi: 'wrapped-eeth',
+    wbeth: 'wrapped-beacon-eth',
+  }
+  return { id: type, type, priceId: priceIds[type] }
+}
+
+function snapshot(
+  projectId: string,
+  timestamp: number,
+  rate: number,
+  exit: Partial<LiquidStakingSnapshotRecord> = {},
+): LiquidStakingSnapshotRecord {
+  return {
+    configurationId: projectId,
+    projectId,
+    timestamp: UnixTime(timestamp),
+    blockNumber: 0,
+    exchangeRate: BigInt(Math.round(rate * 1e9)) * 10n ** 9n,
+    lastRequestId: null,
+    lastFinalizedRequestId: null,
+    instantExitEth: null,
+    lockTime: null,
+    ...exit,
+  }
+}
+
+function day(
+  timestamp: number,
+  balanceEth: bigint,
+  pendingEth: bigint | null = null,
+): EthereumStakingDailyRecord {
+  return {
+    timestamp: UnixTime(timestamp),
+    slot: 0,
+    totalBalance: balanceEth * ETH,
+    pendingDeposits: pendingEth === null ? null : pendingEth * ETH,
+    withdrawals: 100n * ETH,
+    deposits: 50n * ETH,
+    executionRewards: 5n * ETH,
+    blockCount: 7200,
+  }
+}
+
+function dailyPrices(usd: number): Map<number, number> {
+  return new Map(
+    Array.from({ length: 40 }, (_, i) => [START + i * DAY, usd] as const),
+  )
+}
+
+function present(value: number | null | undefined): number {
+  if (value == null) throw new Error('Missing chart value')
+  return value
+}

@@ -25,6 +25,23 @@ describeDatabase(LiquidStakingSnapshotRepository.name, (db) => {
     expect(await repository.getAll()).toEqualUnsorted([updated, record('b', 1)])
   })
 
+  it('gets the projects in a range, oldest first', async () => {
+    await repository.upsertMany([
+      record('a', 3),
+      record('a', 1),
+      record('b', 2),
+      record('a', 9),
+    ])
+
+    expect(
+      await repository.getByProjectsInRange(
+        ['project-a', 'project-b'],
+        UnixTime(UnixTime.HOUR),
+        UnixTime(3 * UnixTime.HOUR),
+      ),
+    ).toEqual([record('a', 1), record('b', 2), record('a', 3)])
+  })
+
   it('deletes by configuration and by time range', async () => {
     await repository.upsertMany([
       record('a', 1),
