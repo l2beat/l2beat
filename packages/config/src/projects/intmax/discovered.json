@@ -517,7 +517,7 @@
       "template": "intmax/Rollup",
       "sourceHashes": [
         "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
-        "0x01e64846204b53ce78748a8251f96e296b27338062a89fee75f56dce512cf39e"
+        "0xcde08a089eec973ec20e8c99c91d7bc9387910726ebb345c085d673e8b515204"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main rollup contract used to submit blocks and process deposits. It saves block hashes to be then referenced by the Withdrawal contract.",

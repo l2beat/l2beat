@@ -14,13 +14,20 @@ interface Replacement {
   newName: string
 }
 
-export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
+// Labels of named struct initializers such as `S({ a: 1 })` name members,
+// which keep their names, so calls to `structNames` keep their labels
+export function renameIdentifiers(
+  source: string,
+  pairs: RenamePair[],
+  structNames: ReadonlySet<string> = new Set(),
+): string {
   const filtered = pairs.filter((p) => p.from !== p.to)
   if (filtered.length === 0) return source
   const ast = parse(source, { range: true })
 
   const pairMap = new Map(filtered.map((p) => [p.from, p.to]))
   const replacements: Replacement[] = []
+  const structMembers = findStructMemberStarts(ast)
 
   getASTIdentifiers(ast, (node) => {
     if (!node.range) return
@@ -47,19 +54,39 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
         }
       }
       const functions = usingDecl.functions ?? []
-      const heads = functions.map((path) => path.split('.')[0] as string)
-      if (heads.some((head) => pairMap.has(head))) {
+      const needsRename = functions.some(
+        (path) =>
+          pairMap.has(path) || pairMap.has(path.split('.')[0] as string),
+      )
+      if (needsRename) {
         const functionStarts = findUsingFunctionStarts(source, start, functions)
-        for (const [i, head] of heads.entries()) {
-          const newName = pairMap.get(head)
-          if (newName !== undefined) {
-            const headStart = functionStarts[i] as number
+        for (const [i, path] of functions.entries()) {
+          const pathStart = functionStarts[i] as number
+          const head = path.split('.')[0] as string
+          const pathName = pairMap.get(path)
+          const headName = pairMap.get(head)
+          if (pathName !== undefined) {
             replacements.push({
-              start: headStart,
-              end: headStart + head.length,
-              newName,
+              start: pathStart,
+              end: pathStart + path.length,
+              newName: pathName,
+            })
+          } else if (headName !== undefined) {
+            replacements.push({
+              start: pathStart,
+              end: pathStart + head.length,
+              newName: headName,
             })
           }
+        }
+      }
+    } else if (node.type === 'MemberAccess') {
+      const access = node as AST.MemberAccess
+      if (access.expression.type === 'Identifier') {
+        const path = `${access.expression.name}.${access.memberName}`
+        const to = pairMap.get(path)
+        if (to !== undefined) {
+          replacements.push({ start, end, newName: to })
         }
       }
     } else if (node.type === 'UserDefinedTypeName') {
@@ -81,7 +108,11 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
       }
     } else if (node.type === 'VariableDeclaration') {
       const decl = node as AST.VariableDeclaration
-      if (decl.identifier?.name && decl.identifier.range) {
+      if (
+        decl.identifier?.name &&
+        decl.identifier.range &&
+        !structMembers.has(decl.identifier.range[0])
+      ) {
         const [idStart, idEnd] = [
           decl.identifier.range[0],
           decl.identifier.range[1] + 1,
@@ -104,7 +135,18 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
       }
     } else if (node.type === 'FunctionCall') {
       const call = node as AST.FunctionCall
-      for (const ident of call.identifiers) {
+      const callee = call.expression
+      const calleeName =
+        callee.type === 'Identifier'
+          ? callee.name
+          : callee.type === 'MemberAccess'
+            ? callee.memberName
+            : undefined
+      const labels =
+        calleeName !== undefined && structNames.has(calleeName)
+          ? []
+          : call.identifiers
+      for (const ident of labels) {
         if (ident.range) {
           const [idStart, idEnd] = [ident.range[0], ident.range[1] + 1]
           const to = pairMap.get(ident.name)
@@ -137,6 +179,19 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
   return result
 }
 
+// Struct members are read as `s.member`, which is never renamed, so their
+// declarations must keep their names too
+function findStructMemberStarts(ast: AST.BaseASTNode): Set<number> {
+  const starts = new Set<number>()
+  getASTIdentifiers(ast, (node) => {
+    if (node.type !== 'StructDefinition') return
+    for (const member of (node as AST.StructDefinition).members) {
+      if (member.identifier?.range) starts.add(member.identifier.range[0])
+    }
+  })
+  return starts
+}
+
 function getDeclName(node: AST.BaseASTNode): string | undefined {
   const n = node as AST.ASTNode
   switch (n.type) {
@@ -159,9 +214,27 @@ function findDeclNameRange(
   rangeStart: number,
   name: string,
 ): { start: number; end: number } | undefined {
-  const start = source.indexOf(name, rangeStart)
-  if (start !== -1) return { start, end: start + name.length }
+  let start = source.indexOf(name, rangeStart)
+  while (start !== -1) {
+    const before = source[start - 1]
+    const after = source[start + name.length]
+    if (!isIdentifierChar(before) && !isIdentifierChar(after)) {
+      return { start, end: start + name.length }
+    }
+    start = source.indexOf(name, start + 1)
+  }
   return undefined
+}
+
+function isIdentifierChar(c: string | undefined): boolean {
+  if (c === undefined) return false
+  return (
+    (c >= 'a' && c <= 'z') ||
+    (c >= 'A' && c <= 'Z') ||
+    (c >= '0' && c <= '9') ||
+    c === '_' ||
+    c === '$'
+  )
 }
 
 function findConstantNameStart(

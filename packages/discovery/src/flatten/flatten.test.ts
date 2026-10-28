@@ -876,13 +876,418 @@ describe('flatten', () => {
       dedent(`
       contract C2 { }
 
-      contract R1 is Namespace.C2 {
+      contract R1 is C2 {
           function f(address x) public {
               DC1(x).df();
           }
       }
     `),
     )
+  })
+
+  it('resolves members of source unit aliases', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Constants.sol" as Constants;
+      import * as Amounts from "./Amounts.sol";
+
+      using { Amounts.isZero } for Amounts.Amount;
+
+      contract Root {
+          function f(Amounts.Amount a) public pure returns (uint256) {
+              if (a.isZero()) revert Constants.Empty();
+              return Constants.LIMIT;
+          }
+      }
+    `,
+    )
+    const constantsFile = sol(
+      'Constants.sol',
+      `
+      uint256 constant LIMIT = 7;
+      error Empty();
+    `,
+    )
+    const amountsFile = sol(
+      'Amounts.sol',
+      `
+      type Amount is uint256;
+      function isZero(Amount a) pure returns (bool) { return Amount.unwrap(a) == 0; }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, constantsFile, amountsFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      type Amount is uint256;
+
+      function isZero(Amount a) pure returns (bool) { return Amount.unwrap(a) == 0; }
+
+      using { isZero } for Amount;
+
+      error Empty();
+
+      uint256 constant LIMIT = 7;
+
+      contract Root {
+          function f(Amount a) public pure returns (uint256) {
+              if (a.isZero()) revert Empty();
+              return LIMIT;
+          }
+      }
+    `),
+    )
+  })
+
+  it('renames source unit alias targets shadowed by a local name', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Constants.sol" as Constants;
+
+      contract Root {
+          uint256 public constant LIMIT = Constants.LIMIT;
+      }
+    `,
+    )
+    const constantsFile = sol(
+      'Constants.sol',
+      `
+      uint256 constant LIMIT = 7;
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, constantsFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      uint256 constant LIMIT_1 = 7;
+
+      contract Root {
+          uint256 public constant LIMIT = LIMIT_1;
+      }
+    `),
+    )
+  })
+
+  it('resolves an alias that arrives through two imports', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Lib.sol" as K;
+      import "./Other.sol";
+      contract Root {
+          function f() public pure returns (uint256) { return K.Lib.g() + h(); }
+      }
+    `,
+    )
+    const otherFile = sol(
+      'Other.sol',
+      `
+      import "./Lib.sol" as K;
+      function h() pure returns (uint256) { return K.Lib.g(); }
+    `,
+    )
+    const libFile = sol(
+      'Lib.sol',
+      `
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, otherFile, libFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+
+      function h() pure returns (uint256) { return Lib.g(); }
+
+      contract Root {
+          function f() public pure returns (uint256) { return Lib.g() + h(); }
+      }
+    `),
+    )
+  })
+
+  it('resolves names imported twice in one import list', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Empty, Empty } from "./Errors.sol";
+      contract Root {
+          function f() public pure { revert Empty(); }
+      }
+    `,
+    )
+    const errorsFile = sol('Errors.sol', 'error Empty();')
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, errorsFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      error Empty();
+
+      contract Root {
+          function f() public pure { revert Empty(); }
+      }
+    `),
+    )
+  })
+
+  it('keeps aliased contracts read with type() as contracts', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Created.sol" as K;
+      contract Root {
+          function code() public pure returns (bytes memory) {
+              return type(K.Created).creationCode;
+          }
+      }
+    `,
+    )
+    const createdFile = sol(
+      'Created.sol',
+      'contract Created { function f() external {} }',
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, createdFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      contract Created { function f() external {} }
+
+      contract Root {
+          function code() public pure returns (bytes memory) {
+              return type(Created).creationCode;
+          }
+      }
+    `),
+    )
+  })
+
+  it('renames source unit alias targets shadowed by a member function', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Lib.sol" as K;
+      contract Root {
+          function f() public pure returns (uint256) { return K.f() + 1; }
+      }
+    `,
+    )
+    const libFile = sol(
+      'Lib.sol',
+      `
+      function f() pure returns (uint256) { return 7; }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, libFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      function f_1() pure returns (uint256) { return 7; }
+
+      contract Root {
+          function f() public pure returns (uint256) { return f_1() + 1; }
+      }
+    `),
+    )
+  })
+
+  it('renames source unit alias targets shadowed by an inherited member', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Lib.sol" as K;
+      import { Base } from "./Base.sol";
+      contract Root is Base {
+          function g() public pure returns (uint256) { return K.f(); }
+      }
+    `,
+    )
+    const baseFile = sol(
+      'Base.sol',
+      `
+      contract Base {
+          function f() public pure returns (uint256) { return 1; }
+      }
+    `,
+    )
+    const libFile = sol(
+      'Lib.sol',
+      'function f() pure returns (uint256) { return 7; }',
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, baseFile, libFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toInclude(
+      'function f_1() pure returns (uint256) { return 7; }',
+    )
+    expect(flattened).toInclude(
+      'function g() public pure returns (uint256) { return f_1(); }',
+    )
+  })
+
+  it('picks alias target names free in every importing file', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Lib.sol" as K;
+      import { a } from "./A.sol";
+      contract Root {
+          uint256 public constant LIMIT = K.LIMIT;
+          function f() public pure returns (uint256) { return a(); }
+      }
+    `,
+    )
+    const aFile = sol(
+      'A.sol',
+      `
+      import "./Lib.sol" as K;
+      function a() pure returns (uint256) { uint256 LIMIT_1 = 5; return K.LIMIT + LIMIT_1; }
+    `,
+    )
+    const libFile = sol('Lib.sol', 'uint256 constant LIMIT = 7;')
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, aFile, libFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toInclude('uint256 constant LIMIT_2 = 7;')
+    expect(flattened).toInclude('return LIMIT_2 + LIMIT_1;')
+    expect(flattened).toInclude('uint256 public constant LIMIT = LIMIT_2;')
+  })
+
+  it('keeps nested types used through a source unit alias', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Types.sol" as K;
+      contract Root {
+          function f(address t) public returns (uint256) {
+              K.Types.S memory s;
+              s.a = 1;
+              K.Types(t).poke();
+              return s.a;
+          }
+      }
+    `,
+    )
+    const typesFile = sol(
+      'Types.sol',
+      `
+      contract Types {
+          struct S { uint256 a; }
+          function poke() external {}
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, typesFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toInclude('struct S {')
+    expect(flattened).toInclude('Types.S memory s;')
+  })
+
+  it('rewrites aliased bases in override lists', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import "./Base.sol" as K;
+      import { Other as O } from "./Other.sol";
+      contract Root is K.Base, O {
+          function f() public pure override(K.Base, O) returns (uint256) { return 2; }
+      }
+    `,
+    )
+    const baseFile = sol(
+      'Base.sol',
+      `
+      abstract contract Base {
+          function f() public pure virtual returns (uint256);
+      }
+    `,
+    )
+    const otherFile = sol(
+      'Other.sol',
+      `
+      abstract contract Other {
+          function f() public pure virtual returns (uint256);
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, baseFile, otherFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toInclude('contract Root is Base, Other {')
+    expect(flattened).toInclude('override(Base, Other)')
   })
 
   it('../ in unit name', () => {
@@ -1374,6 +1779,42 @@ describe('flatten', () => {
     expect(flattened).toInclude(
       'function info() external view returns (address who);',
     )
+    expect(flattened).toInclude(
+      'function info() external view returns (uint256 x, uint256 y);',
+    )
+  })
+
+  it('generated struct getters prefer the nested struct over a top-level one', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Registry } from "./Registry.sol";
+      contract Root {
+          function f(address registry) public view returns (uint256 x) {
+              (x, ) = Registry(registry).info();
+          }
+      }
+    `,
+    )
+    const registryFile = sol(
+      'Registry.sol',
+      `
+      struct Info { address who; }
+      contract Registry {
+          struct Info { uint256 x; uint256 y; }
+          Info public info;
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, registryFile],
+      [],
+      { includeAll: true },
+    )
+
     expect(flattened).toInclude(
       'function info() external view returns (uint256 x, uint256 y);',
     )

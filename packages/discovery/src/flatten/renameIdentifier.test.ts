@@ -139,6 +139,41 @@ describe(renameIdentifiers.name, () => {
     )
   })
 
+  it('keeps struct member names that match a renamed identifier', () => {
+    const src = [
+      'struct Cfg { uint256 fee; }',
+      'function get(Cfg memory c) pure returns (uint256) { return c.fee + fee; }',
+    ].join('\n')
+    const result = renameIdentifiers(src, [{ from: 'fee', to: 'fee_1' }])
+    expect(result).toEqual(
+      [
+        'struct Cfg { uint256 fee; }',
+        'function get(Cfg memory c) pure returns (uint256) { return c.fee + fee_1; }',
+      ].join('\n'),
+    )
+  })
+
+  it('renames a function whose name occurs inside the function keyword', () => {
+    const src = 'function f() pure returns (uint256) { return 7; }'
+    const result = renameIdentifiers(src, [{ from: 'f', to: 'f_1' }])
+    expect(result).toEqual(
+      'function f_1() pure returns (uint256) { return 7; }',
+    )
+  })
+
+  it('keeps labels of named struct initializers', () => {
+    const src =
+      'function make() pure returns (Cfg memory) { return Cfg({ fee: fee }); }'
+    const result = renameIdentifiers(
+      src,
+      [{ from: 'fee', to: 'fee_1' }],
+      new Set(['Cfg']),
+    )
+    expect(result).toEqual(
+      'function make() pure returns (Cfg memory) { return Cfg({ fee: fee_1 }); }',
+    )
+  })
+
   it('renames across a struct definition', () => {
     const src = [
       'contract Foo {',

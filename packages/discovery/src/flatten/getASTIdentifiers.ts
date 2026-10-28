@@ -46,13 +46,18 @@ function emit(n: AST.ASTNode, flat: string[], kids: Node[]): void {
         ...(n.returnParameters ?? []),
         n.body,
         ...(n.modifiers ?? []).flatMap((m) => m.arguments ?? []),
+        ...(n.override ?? []),
       )
       return
     case 'ModifierDefinition':
-      kids.push(...(n.parameters ?? []), n.body)
+      kids.push(...(n.parameters ?? []), n.body, ...(n.override ?? []))
       return
     case 'StateVariableDeclaration':
-      kids.push(n.initialValue, ...n.variables)
+      kids.push(
+        n.initialValue,
+        ...n.variables,
+        ...n.variables.flatMap((v) => v.override ?? []),
+      )
       return
     case 'VariableDeclaration':
       // node.expression intentionally NOT walked: parser aliases initialValue

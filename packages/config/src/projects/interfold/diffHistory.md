@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x68c5f464dfac93f122a03803a4fba09bde457aee
+
+# Diff at Tue, 27 Oct 2026 20:07:11 GMT:
+
+- id: 6dd1a743
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1792414952
+- current timestamp: 1792414952
+
+## Description
+
+Flattener now rewrites import aliases inside override(...) lists. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792414952 (main branch discovery), not current.
+
+```diff
+    contract VotingEscrowLockNFT (eth:0xF3eeE0f5E721b8c0073C8d85bf26A3d6EC293A0E) [interfold/VotingEscrowLockNFT] {
+    +++ description: ERC-721 whose tokens represent individual veFOLD lock positions.
+      sourceHashes.1:
+-        "0x424f4df711b03adc7fa8ac4d99ece4e185fec69f61ab6beac1b7047c52275678"
++        "0x05d06a5f03ee179a4e6e0e6c173256d4cce758ffb85d348cb829a517f42a79d9"
+    }
+```
+
 Generated with discovered.json: 0xf7b41bc9006c656fa5ae912a9a0ae738c4256bbf
 
 # Diff at Fri, 23 Oct 2026 12:07:43 GMT:
