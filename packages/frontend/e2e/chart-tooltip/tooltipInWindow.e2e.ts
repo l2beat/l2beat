@@ -37,6 +37,48 @@ test('chart tooltips stay inside a phone window', async ({ browser }) => {
   await context.close()
 })
 
+/**
+ * Below a chart lies the next section. A tooltip hanging over it stays there
+ * after a tap while the page scrolls, and iOS Safari cuts it off at that
+ * section's edge. The anonymity sets chart has the most series on the site,
+ * so a tap halfway down it opens the tallest tooltip with the least room.
+ */
+test('a tapped chart tooltip stays inside its chart on a phone', async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ viewport: PHONE, hasTouch: true })
+  const page = await context.newPage()
+  await page.goto('/privacy/projects/tornado-cash', {
+    waitUntil: 'networkidle',
+  })
+  const section = page.locator('#privacy-anonymity-set')
+  // Charts mount only once they near the viewport.
+  await section.evaluate((e) => e.scrollIntoView({ block: 'end' }))
+  const chart = section.locator('.recharts-wrapper').last()
+  await chart.evaluate((e) => e.scrollIntoView({ block: 'center' }))
+  await expect(chart.locator('.recharts-line-curve').first()).toBeVisible()
+
+  // Charts ignore the pointer until the scroll settles, so tap until it shows.
+  const tooltip = chart.locator('.recharts-tooltip-wrapper')
+  await expect(async () => {
+    const tapAt = await chart.boundingBox()
+    await page.touchscreen.tap(
+      tapAt!.x + tapAt!.width * 0.75,
+      tapAt!.y + tapAt!.height / 2,
+    )
+    await expect(tooltip).toBeVisible({ timeout: 500 })
+  }).toPass()
+  const [chartBox, tooltipBox] = await Promise.all([
+    chart.boundingBox(),
+    tooltip.boundingBox(),
+  ])
+  expect(tooltipBox!.y).toBeGreaterThanOrEqual(chartBox!.y)
+  expect(tooltipBox!.y + tooltipBox!.height).toBeLessThanOrEqual(
+    chartBox!.y + chartBox!.height,
+  )
+  await context.close()
+})
+
 /** The tooltip's outermost edges and the page's width over one slide. */
 async function watchTooltip(page: Page) {
   return await page.evaluate(

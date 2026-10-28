@@ -253,7 +253,7 @@ type CustomChartTooltipProps = Omit<
 
 function ChartTooltipWrapper({ children }: { children: React.ReactNode }) {
   const ref = React.useRef<HTMLDivElement>(null)
-  useKeepTooltipInWindow(ref)
+  useKeepTooltipInPlace(ref)
   return (
     <div ref={ref} className={tooltipContentVariants()}>
       {children}
@@ -265,13 +265,15 @@ function ChartTooltipWrapper({ children }: { children: React.ReactNode }) {
 const TOOLTIP_WINDOW_MARGIN = 8
 
 /**
- * A tooltip may leave its chart (see `ChartTooltip`) but not the window: past
- * an edge it is cut off, and past the right one it also widens the page,
- * which phones answer by zooming the whole page out. After every render of
- * the content, once recharts has placed its wrapper, this moves the wrapper
- * back inside, before the frame is painted.
+ * A tooltip may leave its chart sideways (see `ChartTooltip`) but not the
+ * window: past an edge it is cut off, and past the right one it also widens
+ * the page, which phones answer by zooming the whole page out. Nor may it
+ * hang below its chart: on a phone a tap leaves it over the next section as
+ * the page scrolls, and iOS Safari cuts it off at that section's edge. After
+ * every render of the content, once recharts has placed its wrapper, this
+ * moves the wrapper back inside, before the frame is painted.
  */
-function useKeepTooltipInWindow(ref: React.RefObject<HTMLDivElement | null>) {
+function useKeepTooltipInPlace(ref: React.RefObject<HTMLDivElement | null>) {
   React.useLayoutEffect(() => {
     const wrapper = ref.current?.closest<HTMLElement>(
       '.recharts-tooltip-wrapper',
@@ -290,8 +292,12 @@ function useKeepTooltipInWindow(ref: React.RefObject<HTMLDivElement | null>) {
     if (left + shift < TOOLTIP_WINDOW_MARGIN) {
       shift = TOOLTIP_WINDOW_MARGIN - left
     }
-    if (shift !== 0) {
-      wrapper.style.transform = `translate(${x + shift}px, ${y}px)`
+    const top = Math.min(
+      y,
+      Math.max(0, chart.clientHeight - wrapper.offsetHeight),
+    )
+    if (shift !== 0 || top !== y) {
+      wrapper.style.transform = `translate(${x + shift}px, ${top}px)`
     }
   })
 }
