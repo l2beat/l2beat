@@ -930,8 +930,10 @@ function findExplorerUrl(chains: Chain[], chainName: string) {
   )
 }
 
+// The same UTC format as the token history page, so times read the same
+// for every researcher.
 function formatUnixTimestamp(timestamp: number) {
-  return new Date(timestamp * 1_000).toLocaleString()
+  return `${new Date(timestamp * 1_000).toISOString().slice(0, 19).replace('T', ' ')} UTC`
 }
 
 function readTransferEvidence(transfer: RelationDetails['transfer']) {
