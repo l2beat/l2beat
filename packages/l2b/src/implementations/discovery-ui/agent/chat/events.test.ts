@@ -184,6 +184,19 @@ describe(appendToLog.name, () => {
       { type: 'text', role: 'agent', text: '!' },
     ])
   })
+
+  it('keeps only the tail of one command output', () => {
+    const log: ChatEvent[] = []
+    appendToLog(log, { type: 'tool', id: 't', status: 'in_progress' })
+    appendToLog(log, { type: 'tool', id: 't', outputAppend: 'x'.repeat(8_000) })
+    appendToLog(log, { type: 'tool', id: 't', outputAppend: 'END' })
+    appendToLog(log, { type: 'tool', id: 'u', outputAppend: 'other' })
+    expect(log).toEqual([
+      { type: 'tool', id: 't', status: 'in_progress' },
+      { type: 'tool', id: 't', outputAppend: `${'x'.repeat(7_997)}END` },
+      { type: 'tool', id: 'u', outputAppend: 'other' },
+    ])
+  })
 })
 
 describe(describeScreen.name, () => {

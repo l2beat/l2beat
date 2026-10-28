@@ -275,5 +275,31 @@ export function appendToLog(log: ChatEvent[], event: ChatEvent) {
     log[log.length - 1] = { ...last, text: last.text + event.text }
     return
   }
+  const lastDelta = outputDeltaOf(last)
+  const delta = outputDeltaOf(event)
+  if (lastDelta !== undefined && delta !== undefined) {
+    if (lastDelta.id === delta.id) {
+      const output = (lastDelta.outputAppend + delta.outputAppend).slice(
+        -TERMINAL_OUTPUT_LENGTH_MAX,
+      )
+      log[log.length - 1] = { type: 'tool', id: delta.id, outputAppend: output }
+      return
+    }
+  }
   log.push(event)
+}
+
+// The panel shows only this much of a command's tail, so the log keeps no more.
+const TERMINAL_OUTPUT_LENGTH_MAX = 8_000
+
+function outputDeltaOf(
+  event: ChatEvent | undefined,
+): { id: string; outputAppend: string } | undefined {
+  if (event?.type !== 'tool' || event.outputAppend === undefined) {
+    return undefined
+  }
+  if (Object.keys(event).length !== 3) {
+    return undefined
+  }
+  return { id: event.id, outputAppend: event.outputAppend }
 }
