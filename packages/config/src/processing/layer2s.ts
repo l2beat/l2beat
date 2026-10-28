@@ -149,6 +149,7 @@ import { ternoa } from '../projects/ternoa/ternoa'
 import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdings'
 import { treasure } from '../projects/treasure/treasure'
 import { unichain } from '../projects/unichain/unichain'
+import { whitechain } from '../projects/whitechain/whitechain'
 import { wirex } from '../projects/wirex/wirex'
 import { witness } from '../projects/witness/witness'
 import { wonder } from '../projects/wonder/wonder'
@@ -317,6 +318,7 @@ export const layer2s: ScalingProject[] = [
   thebinaryholdings,
   treasure,
   unichain,
+  whitechain,
   wirex,
   witness,
   wonder,

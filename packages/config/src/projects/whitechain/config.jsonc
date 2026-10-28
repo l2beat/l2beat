@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "whitechain",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x1D761826ad3098D10f6dDfbd143957Aaf2b6e50C",
+    "eth:0x0665f74e013b7FCcfDa6dAF8951bAf3C982a3864",
+    "eth:0x1De4f415Dc5bF6e458Cf32d13452c24A35Ec90e3"
+  ],
+  "overrides": {
+    "eth:0x7b806b8A81Ba1D4d2Df62180147e40F32f1eeb49": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
+    // OPContractsManagerV2 8.0.1, a separate deployment used to create this
+    // chain (SystemConfig.lastUsedOPCM). Ignored so discovery doesn't follow it
+    // into bare implementations; authority is the ProxyAdmin owner.
+    "eth:0xC19CBD026d1Bf9724fEF6A2DbF5e82eEae1b1277": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      "ignoreDiscovery": true
+    }
+  }
+}
