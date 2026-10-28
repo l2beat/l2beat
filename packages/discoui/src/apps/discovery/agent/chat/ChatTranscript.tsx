@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'sonner'
@@ -6,7 +7,11 @@ import { IconChevronRight } from '../../../../icons/IconChevronRight'
 import { IconSparkle } from '../../../../icons/IconSparkle'
 import { cn } from '../../../../utils/cn'
 import { useDockingStore } from '../../multi-view/store'
-import { activateBoard } from '../../panel-board/boardApi'
+import {
+  activateBoard,
+  listBoards,
+  useBoardUiStore,
+} from '../../panel-board/boardApi'
 import {
   type ActivityStep,
   type ChatBlock,
@@ -236,10 +241,18 @@ function ToolStep(props: { step: Extract<ChatItem, { kind: 'tool' }> }) {
   )
 }
 
-// A board the researcher closed or scrolled past is one click away.
+// A board the researcher scrolled past is one click away. A closed one is
+// gone from the open boards, so it has no button.
 function OpenBoardButton(props: { boardId: string }) {
   const { project } = useParams()
-  if (project === undefined) return null
+  const revision = useBoardUiStore((state) => state.revision)
+  const list = useQuery({
+    queryKey: ['boards', project, revision],
+    queryFn: () => listBoards(project as string),
+    enabled: project !== undefined,
+  })
+  const isOpen = list.data?.open.some((b) => b.id === props.boardId)
+  if (project === undefined || isOpen !== true) return null
   return (
     <button
       type="button"
