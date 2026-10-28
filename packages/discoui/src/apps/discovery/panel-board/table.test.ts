@@ -28,6 +28,13 @@ describe(sortRows.name, () => {
     ])
   })
 
+  it('sorts decimals and negatives by value, before text', () => {
+    const values = ['1.2', 'none', '-2', '1.11', '-10']
+    const cells: BoardRow[] = values.map((text) => ({ cells: [[{ text }]] }))
+    const sorted = sortRows(cells, { column: 0, descending: false })
+    expect(sorted.map((r) => cells.indexOf(r))).toEqual([4, 2, 3, 0, 1])
+  })
+
   it('keeps the written order without a sort', () => {
     expect(sortRows(rows, undefined)).toEqual(rows)
   })

@@ -25,12 +25,20 @@ export function sortRows(
   const filled = rows.filter((row) => cellText(row, sort.column) !== '')
   const empty = rows.filter((row) => cellText(row, sort.column) === '')
   const sorted = [...filled].sort((a, b) =>
-    cellText(a, sort.column).localeCompare(cellText(b, sort.column), 'en', {
-      numeric: true,
-    }),
+    compareCells(cellText(a, sort.column), cellText(b, sort.column)),
   )
   if (sort.descending) sorted.reverse()
   return [...sorted, ...empty]
+}
+
+// Numbers by value, before text, so decimals and negatives order right.
+function compareCells(a: string, b: string): number {
+  const x = Number(a)
+  const y = Number(b)
+  if (Number.isFinite(x) && Number.isFinite(y)) return x - y
+  if (Number.isFinite(x)) return -1
+  if (Number.isFinite(y)) return 1
+  return a.localeCompare(b, 'en', { numeric: true })
 }
 
 function cellText(row: BoardRow, column: number): string {
