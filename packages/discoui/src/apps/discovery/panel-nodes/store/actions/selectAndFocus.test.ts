@@ -15,10 +15,11 @@ describe(selectAndFocus.name, () => {
     expect(result.selected).toEqual(['member'])
   })
 
-  it('leaves the selection when the contract is not drawn', () => {
+  it('clears the selection when the contract is not drawn', () => {
     const group = { ...makeNode('group'), subnodes: [makeNode('member')] }
+    const state = { ...makeState([group]), selected: ['group'] }
 
-    const result = selectAndFocus(makeState([group]), 'member')
+    const result = selectAndFocus(state, 'member')
 
     expect(result.selected).toEqual([])
   })
