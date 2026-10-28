@@ -94,10 +94,11 @@ describe(computeLiquidStakingCharts.name, () => {
   })
 
   it('derives the network yield from balances, flows and execution rewards', () => {
-    // Each day the balance grows by 10 ETH while 100 ETH leaves and 50 ETH
-    // arrives, so consensus rewards are 60 ETH; proposers add 5 ETH.
+    // After Electra: each day the balance grows by 10 ETH while 100 ETH
+    // leaves and 50 ETH is deposited, so consensus rewards are 60 ETH;
+    // proposers add 5 ETH.
     const network = Array.from({ length: 32 }, (_, i) =>
-      day(START + i * DAY, 1_000_000n + 10n * BigInt(i)),
+      day(START + i * DAY, 1_000_000n + 10n * BigInt(i), 0n),
     )
     const charts = compute([], [], network)
     const point = charts.yield[0]
@@ -105,6 +106,18 @@ describe(computeLiquidStakingCharts.name, () => {
     // 65 ETH a day over an average stake of 1,000,145 ETH.
     expect(present(point?.network)).toBeCloseTo(
       ((65 * 30) / 1_000_145) * (365 / 30),
+      1e-6,
+    )
+  })
+
+  it('counts pre-Electra deposits by the validators they created', () => {
+    // Two new validators a day, so 64 ETH credited, whatever the execution
+    // layer logged that day: 10 + 100 - 64 = 46 ETH, plus 5 from proposers.
+    const network = Array.from({ length: 32 }, (_, i) =>
+      day(START + i * DAY, 1_000_000n + 10n * BigInt(i), null, 2 * i),
+    )
+    expect(present(compute([], [], network).yield[0]?.network)).toBeCloseTo(
+      ((51 * 30) / 1_000_145) * (365 / 30),
       1e-6,
     )
   })
@@ -180,11 +193,13 @@ function day(
   timestamp: number,
   balanceEth: bigint,
   pendingEth: bigint | null = null,
+  newValidators = 0,
 ): EthereumStakingDailyRecord {
   return {
     timestamp: UnixTime(timestamp),
     slot: 0,
     totalBalance: balanceEth * ETH,
+    validatorCount: 1_000_000 + newValidators,
     pendingDeposits: pendingEth === null ? null : pendingEth * ETH,
     withdrawals: 100n * ETH,
     deposits: 50n * ETH,

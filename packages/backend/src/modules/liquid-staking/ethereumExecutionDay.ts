@@ -85,8 +85,27 @@ async function readBlock(rpc: ExecutionDayRpc, blockNumber: number) {
     getPriorityFees(
       block.baseFeePerGas,
       await rpc.getBlockReceipts(blockNumber),
-    )
+    ) + getDirectTransfers(block)
   return { withdrawals, proposerReward }
+}
+
+/**
+ * ETH sent to the fee recipient in its own transactions, such as a searcher
+ * paying for inclusion. Payments made inside contract calls need traces, so
+ * they are not counted.
+ */
+export function getDirectTransfers(
+  block: Pick<EVMBlockWithTransactions, 'miner' | 'transactions'>,
+): bigint {
+  const miner = block.miner?.toLowerCase()
+  if (miner === undefined) return 0n
+  return block.transactions.reduce(
+    (sum, tx) =>
+      tx.to?.toLowerCase() === miner && tx.from.toLowerCase() !== miner
+        ? sum + (tx.value ?? 0n)
+        : sum,
+    0n,
+  )
 }
 
 /**

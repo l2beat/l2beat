@@ -77,8 +77,8 @@ describe(BeaconChainClient.name, () => {
     })
   })
 
-  describe(BeaconChainClient.prototype.getTotalBalance.name, () => {
-    it('sums every balance at the slot, in wei', async () => {
+  describe(BeaconChainClient.prototype.getValidatorBalances.name, () => {
+    it('sums every balance at the slot in wei and counts the validators', async () => {
       const body = JSON.stringify({
         data: [
           { index: '0', balance: '32000000000' },
@@ -99,10 +99,13 @@ describe(BeaconChainClient.name, () => {
           mockClient({
             http: new HttpClient(),
             beaconApiUrl: `${url}/`,
-          }).getTotalBalance(8103597),
+          }).getValidatorBalances(8103597),
       )
 
-      expect(result).toEqual(2_080_000_000_000_000_000_000n)
+      expect(result).toEqual({
+        totalBalance: 2_080_000_000_000_000_000_000n,
+        validatorCount: 3,
+      })
     })
   })
 

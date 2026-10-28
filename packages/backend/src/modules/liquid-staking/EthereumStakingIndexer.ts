@@ -20,7 +20,7 @@ interface EthereumStakingIndexerDeps
   rpc: ExecutionDayRpc
   beacon: Pick<
     BeaconChainClient,
-    'getTotalBalance' | 'getPendingDepositsAmount'
+    'getValidatorBalances' | 'getPendingDepositsAmount'
   >
   blockTimestampProvider: Pick<
     BlockTimestampProvider,
@@ -67,9 +67,9 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
   private async readDay(day: UnixTime): Promise<EthereumStakingDailyRecord> {
     // Day boundaries never fall on a slot start, so this is the slot before.
     const slot = slotAt(day)
-    const [totalBalance, pendingDeposits, fromBlock, nextDayBlock] =
+    const [balances, pendingDeposits, fromBlock, nextDayBlock] =
       await Promise.all([
-        this.$.beacon.getTotalBalance(slot),
+        this.$.beacon.getValidatorBalances(slot),
         slot >= ELECTRA_SLOT
           ? this.$.beacon.getPendingDepositsAmount(slot)
           : Promise.resolve(null),
@@ -85,7 +85,7 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
     return {
       timestamp: day,
       slot,
-      totalBalance,
+      ...balances,
       pendingDeposits,
       ...execution,
     }

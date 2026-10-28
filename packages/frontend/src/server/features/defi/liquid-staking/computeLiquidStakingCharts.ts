@@ -254,8 +254,14 @@ class NetworkSeries {
     }
     const held = (r: EthereumStakingDailyRecord) =>
       r.totalBalance + (r.pendingDeposits ?? 0n)
-    const consensus =
-      held(end) - held(start) + start.withdrawals - start.deposits
+    // From Electra a deposit joins the pending queue in its own block. Before
+    // it, deposits were credited 7-14 hours late, and nearly every one made a
+    // new 32 ETH validator, so the new validators are what the day credited.
+    const deposits =
+      start.pendingDeposits === null
+        ? BigInt(end.validatorCount - start.validatorCount) * 32n * 10n ** 18n
+        : start.deposits
+    const consensus = held(end) - held(start) + start.withdrawals - deposits
     return toEth(consensus + start.executionRewards)
   }
 }

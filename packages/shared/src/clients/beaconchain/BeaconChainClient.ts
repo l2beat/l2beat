@@ -74,13 +74,18 @@ export class BeaconChainClient extends ClientCore {
     }
   }
 
-  /** Sum of every validator's balance at a state, in wei. */
-  async getTotalBalance(slot: number): Promise<bigint> {
-    const { sum } = await this.sumStreamed(
+  /**
+   * Every validator's balance at a state, summed in wei, and how many
+   * validators the state holds. Exited ones stay, so the count never drops.
+   */
+  async getValidatorBalances(
+    slot: number,
+  ): Promise<{ totalBalance: bigint; validatorCount: number }> {
+    const { sum, count } = await this.sumStreamed(
       `eth/v1/beacon/states/${slot}/validator_balances`,
       /^data\.\d+\.balance/,
     )
-    return sum * 10n ** 9n
+    return { totalBalance: sum * 10n ** 9n, validatorCount: count }
   }
 
   /**

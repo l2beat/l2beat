@@ -5,6 +5,7 @@ import {
   decodeDepositAmount,
   type ExecutionDayRpc,
   getBuilderPayment,
+  getDirectTransfers,
   getPriorityFees,
   readExecutionDay,
 } from './ethereumExecutionDay'
@@ -28,6 +29,16 @@ describe(getBuilderPayment.name, () => {
 
   it('is absent when the fee recipient sent no value', () => {
     expect(getBuilderPayment(block([tx(BUILDER, 0n)]))).toEqual(undefined)
+  })
+})
+
+describe(getDirectTransfers.name, () => {
+  it('sums ETH others send to the fee recipient', () => {
+    expect(
+      getDirectTransfers(
+        block([tx(USER, 3n, BUILDER), tx(USER, 5n), tx(BUILDER, 7n, BUILDER)]),
+      ),
+    ).toEqual(3n)
   })
 })
 
@@ -101,11 +112,12 @@ function block(
 function tx(
   from: string,
   value: bigint,
+  to = USER,
 ): EVMBlockWithTransactions['transactions'][number] {
   return {
     hash: '0x',
     from,
-    to: USER,
+    to,
     value,
     data: undefined,
     type: '2',
