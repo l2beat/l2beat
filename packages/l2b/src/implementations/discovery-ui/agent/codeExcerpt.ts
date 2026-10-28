@@ -1,5 +1,7 @@
 // Past these the agent reads the rest from the .flat file.
 const EXCERPT_LINES_MAX = 60
+// A minified source or a long literal can put a whole contract on one line.
+const EXCERPT_CHARS_MAX = 8_000
 const CONTEXT_LINES = 12
 
 export interface CodeExcerpt {
@@ -20,15 +22,34 @@ export function excerptAt(
   const block = blockEnd(code, offset)
   const end = block ?? endOfLines(code, start, CONTEXT_LINES)
   const lines = code.slice(start, end).split('\n')
+  const shown = takeChars(lines.slice(0, EXCERPT_LINES_MAX), EXCERPT_CHARS_MAX)
   return {
     line,
-    lines: lines.slice(0, EXCERPT_LINES_MAX),
+    lines: shown.lines,
     // Lines after a statement are only its context: the rest of the
     // function is cut too.
     isCut:
+      shown.isCut ||
       lines.length > EXCERPT_LINES_MAX ||
       (block === undefined && end < code.trimEnd().length),
   }
+}
+
+function takeChars(
+  lines: readonly string[],
+  charsMax: number,
+): { lines: string[]; isCut: boolean } {
+  const taken: string[] = []
+  let left = charsMax
+  for (const line of lines) {
+    if (line.length > left) {
+      taken.push(line.slice(0, left))
+      return { lines: taken, isCut: true }
+    }
+    taken.push(line)
+    left -= line.length + 1
+  }
+  return { lines: taken, isCut: false }
 }
 
 function blockEnd(code: string, offset: number): number | undefined {

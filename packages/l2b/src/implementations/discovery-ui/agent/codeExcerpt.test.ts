@@ -107,6 +107,13 @@ describe(excerptAt.name, () => {
     expect(excerptAt(code, 2, 1).lines.length).toEqual(22)
   })
 
+  it('cuts a long line', () => {
+    const code = `contract M { bytes c = hex"${'ab'.repeat(10_000)}"; }`
+    const excerpt = excerptAt(code, 0, 1)
+    expect(excerpt.lines.join('\n').length).toEqual(8_000)
+    expect(excerpt.isCut).toEqual(true)
+  })
+
   it('cuts a long block', () => {
     const body = Array.from({ length: 100 }, (_, i) => `  x = ${i};`)
     const code = ['function long() {', ...body, '}'].join('\n')
