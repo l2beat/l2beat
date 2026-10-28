@@ -15,8 +15,6 @@ interface DayProvidersClients {
   lighter: LighterClient | undefined
 }
 
-export type DayProvider = DailyCountsProvider | HourlyCountsProvider
-
 export interface DailyCountsProvider {
   getDailyTxsCount(from: number, to: number): Promise<Record<number, number>>
   getDailyUopsCount(from: number, to: number): Promise<Record<number, number>>
@@ -35,7 +33,8 @@ export interface HourlyCount {
 }
 
 export class DayProviders {
-  private providers = new Map<string, DayProvider>()
+  private providers = new Map<string, DailyCountsProvider>()
+  private hourlyProviders = new Map<string, HourlyCountsProvider>()
 
   constructor(chains: ChainApi[], clients: DayProvidersClients) {
     if (clients.starkex) {
@@ -53,13 +52,22 @@ export class DayProviders {
       this.providers.set('starknet', new StarknetDayProvider(clients.voyager))
     }
     if (clients.lighter) {
-      this.providers.set('lighter', new LighterDayProvider(clients.lighter))
+      this.hourlyProviders.set(
+        'lighter',
+        new LighterDayProvider(clients.lighter),
+      )
     }
   }
 
   getDayProvider(chain: string) {
     const provider = this.providers.get(chain)
     assert(provider, `DayProvider not found: ${chain}`)
+    return provider
+  }
+
+  getHourlyProvider(chain: string) {
+    const provider = this.hourlyProviders.get(chain)
+    assert(provider, 'Hourly provider not found', { chain })
     return provider
   }
 }

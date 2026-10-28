@@ -137,53 +137,25 @@ export function initActivityModule({
       }
 
       case 'day': {
-        const provider = providers.day.getDayProvider(project.chainName)
-        const minTimestamp = UnixTime.toStartOf(
-          project.activityConfig.sinceTimestamp,
-          'day',
-        )
-        const onTick = async (targetTimestamp: number) => {
-          if (!config.activity) {
-            return
-          }
-
-          await database.syncMetadata.upsertMany([
-            {
-              feature: 'activity',
-              id: project.id,
-              target: targetTimestamp,
-            },
-          ])
-        }
-
-        // Sources that count by the hour sync each hour, like block chains
-        if ('getHourlyCounts' in provider) {
-          const hourTargetIndexer = new HourTargetIndexer(logger, clock, {
-            onTick,
-          })
-
-          const activityIndexer = new HourActivityIndexer(
-            {
-              projectId: project.id,
-              minHeight: minTimestamp / UnixTime.HOUR,
-              parents: [hourTargetIndexer],
-              provider,
-              indexerService,
-              db: database,
-            },
-            logger,
-          )
-
-          indexers.push(hourTargetIndexer, activityIndexer)
-          break
-        }
-
         const dayTargetIndexer = new DayTargetIndexer(logger, clock, {
           // We do not want to index today's data because it's not fully processed yet
           // We want to process full previous day
-          onTick,
+          onTick: async (targetTimestamp) => {
+            if (!config.activity) {
+              return
+            }
+
+            await database.syncMetadata.upsertMany([
+              {
+                feature: 'activity',
+                id: project.id,
+                target: targetTimestamp,
+              },
+            ])
+          },
         })
 
+        const provider = providers.day.getDayProvider(project.chainName)
         const txsCountService = new DayTxsCountService({
           provider,
           projectId: project.id,
@@ -192,7 +164,9 @@ export function initActivityModule({
         const activityIndexer = new DayActivityIndexer(
           {
             projectId: project.id,
-            minHeight: UnixTime.toDays(minTimestamp),
+            minHeight: UnixTime.toDays(
+              UnixTime.toStartOf(project.activityConfig.sinceTimestamp, 'day'),
+            ),
             parents: [dayTargetIndexer],
             txsCountService,
             indexerService,
@@ -205,6 +179,41 @@ export function initActivityModule({
         )
 
         indexers.push(dayTargetIndexer, activityIndexer)
+        break
+      }
+
+      case 'hour': {
+        const hourTargetIndexer = new HourTargetIndexer(logger, clock, {
+          onTick: async (targetTimestamp) => {
+            if (!config.activity) {
+              return
+            }
+
+            await database.syncMetadata.upsertMany([
+              {
+                feature: 'activity',
+                id: project.id,
+                target: targetTimestamp,
+              },
+            ])
+          },
+        })
+
+        const activityIndexer = new HourActivityIndexer(
+          {
+            projectId: project.id,
+            minHeight:
+              UnixTime.toStartOf(project.activityConfig.sinceTimestamp, 'day') /
+              UnixTime.HOUR,
+            parents: [hourTargetIndexer],
+            provider: providers.day.getHourlyProvider(project.chainName),
+            indexerService,
+            db: database,
+          },
+          logger,
+        )
+
+        indexers.push(hourTargetIndexer, activityIndexer)
         break
       }
 

@@ -9,8 +9,8 @@ import { getDayHourPeak } from '../utils/peaks'
 import type { HourActivityIndexerDeps } from './types'
 
 /**
- * For day sources that count by the hour. Heights are hours since the epoch,
- * so today's day is kept up to date like a block chain's
+ * For sources that count by the hour. Heights are hours since the epoch, so
+ * today's day is kept up to date like a block chain's
  */
 export class HourActivityIndexer extends ManagedChildIndexer {
   constructor(
