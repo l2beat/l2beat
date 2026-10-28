@@ -207,6 +207,24 @@ describe(resolveBoard.name, () => {
     ])
   })
 
+  it('links an address a cell holds in lowercase', () => {
+    const board = resolveBoard(entries, {
+      title: 'Computed',
+      blocks: [
+        {
+          type: 'table',
+          rows: [{ cells: { Holder: BRIDGE.toLowerCase() } }],
+          columns: [{ label: 'Holder' }],
+        },
+      ],
+    })
+    const table = board.blocks[0]
+    if (table?.type !== 'table') throw new Error('Expected a table')
+    expect(table.rows[0]?.cells[0]).toEqual([
+      { address: BRIDGE, name: 'Bridge' },
+    ])
+  })
+
   it('lists a contract two selectors match once', () => {
     const board = resolveBoard(entries, {
       title: 'Twice',
