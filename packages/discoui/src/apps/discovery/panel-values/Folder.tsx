@@ -6,8 +6,12 @@ export function Folder(props: {
   title: string
   children: ReactNode
   collapsed?: boolean
+  expand?: boolean
 }) {
   const [open, setOpen] = useState(!props.collapsed)
+  if (props.expand && !open) {
+    setOpen(true)
+  }
 
   return (
     <div className="border-coffee-600 border-t">

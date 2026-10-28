@@ -12,6 +12,5 @@ export function getActivitySyncWarning(
   if (!syncState || syncState.isSynced) return
   return `No activity data since ${formatTimestamp(syncState.syncedUntil, {
     mode: 'datetime',
-    longMonthName: true,
   })}.`
 }
