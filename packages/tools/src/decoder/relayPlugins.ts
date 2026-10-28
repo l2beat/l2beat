@@ -19,7 +19,7 @@ const SCHEDULE_BATCH_ABI =
 const RETRYABLE_TICKET_MAGIC = '0xa723c008e76e379c55599d2e4d93879beafda79c'
 const RETRYABLE_TICKET_TYPE =
   '(address targetInbox, address l2Target, uint256 l2Value, uint256 gasLimit, uint256 maxFeePerGas, bytes l2Calldata)'
-// Inboxes stay hardcoded: historical ones must keep decoding forever.
+// Ethereum inboxes stay hardcoded: historical ones must keep decoding forever.
 const ARBITRUM_INBOX_CHAIN_IDS: Record<string, number> = {
   '0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f': 42161,
   '0xc4448b71118c9071bcb9734a0eac55d18a153949': 42170,
@@ -37,7 +37,7 @@ function arbitrumScheduleBatchPlugin(
   if (!payloads?.members) return decoded
   payloads.members = payloads.members.map((payload, i) => {
     const target = targetMembers[i]?.value as `0x${string}` | undefined
-    if (target === RETRYABLE_TICKET_MAGIC) {
+    if (chainId === ETHEREUM_CHAIN_ID && target === RETRYABLE_TICKET_MAGIC) {
       return decodeRetryableTicketPayload(payload, chainId)
     }
     payload.address = target
@@ -67,7 +67,10 @@ export function decodeRetryableTicket(
 ): DecodedValue {
   const ticket = decodeType(RETRYABLE_TICKET_TYPE, bytes, chainId)
   const [inbox, l2Target, , , , l2Calldata] = members(ticket)
-  const l2ChainId = ARBITRUM_INBOX_CHAIN_IDS[inbox?.value ?? '']
+  const l2ChainId =
+    chainId === ETHEREUM_CHAIN_ID
+      ? ARBITRUM_INBOX_CHAIN_IDS[inbox?.value ?? '']
+      : undefined
   if (l2Target && l2Calldata) {
     l2Calldata.address = l2Target.value as `0x${string}`
     if (l2ChainId !== undefined) {

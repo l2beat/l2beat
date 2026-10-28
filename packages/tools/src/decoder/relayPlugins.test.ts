@@ -62,6 +62,34 @@ describe('relay plugins', () => {
     })
   })
 
+  it('treats the retryable ticket addresses as plain targets off Ethereum', () => {
+    const ticket = encodeAbiParameters(
+      parseAbiParameters('address, address, uint256, uint256, uint256, bytes'),
+      [ARBITRUM_ONE_INBOX, L2_TARGET, 0n, 100_000n, 1n, INNER_CALL],
+    )
+    const data = encodeFunctionData({
+      abi: parseAbi([
+        'function scheduleBatch(address[], uint256[], bytes[], bytes32, bytes32, uint256)',
+      ]),
+      args: [
+        [RETRYABLE_TICKET_MAGIC],
+        [0n],
+        [ticket],
+        `0x${'00'.repeat(32)}`,
+        `0x${'00'.repeat(32)}`,
+        0n,
+      ],
+    })
+
+    const payloads = member(decode(data, [], 10, CALLER), 'payloads')
+
+    expect(target(member(payloads, '0'))).toEqual({
+      type: 'bytes',
+      chainId: 10,
+      address: RETRYABLE_TICKET_MAGIC,
+    })
+  })
+
   it('routes ArbSys messages to Ethereum', () => {
     const data = encodeFunctionData({
       abi: parseAbi(['function sendTxToL1(address, bytes)']),
