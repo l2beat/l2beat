@@ -42,27 +42,43 @@ export function decode(
   signatures: string[],
   chainId: number,
   address?: `0x${string}`,
+  overrides: string[] = [],
 ): DecodedValue | undefined {
-  let value: DecodedValue | undefined
-  for (const plugin of plugins) {
-    try {
-      value = plugin(data, chainId, address)
-      if (value) break
-    } catch {}
-  }
-  if (!value) {
-    for (const signature of signatures) {
-      try {
-        value = decodeType(signature, data, chainId, address)
-        if (value) break
-      } catch {}
-    }
-  }
+  const value =
+    decodeWithSignatures(overrides, data, chainId, address) ??
+    decodeWithPlugins(data, chainId, address) ??
+    decodeWithSignatures(signatures, data, chainId, address)
   if (value) {
     applyCallTargetHeuristic(value)
     markTokenAmount(value)
   }
   return value
+}
+
+function decodeWithPlugins(
+  data: `0x${string}`,
+  chainId: number,
+  address: `0x${string}` | undefined,
+): DecodedValue | undefined {
+  for (const plugin of plugins) {
+    try {
+      const value = plugin(data, chainId, address)
+      if (value) return value
+    } catch {}
+  }
+}
+
+function decodeWithSignatures(
+  signatures: string[],
+  data: `0x${string}`,
+  chainId: number,
+  address: `0x${string}` | undefined,
+): DecodedValue | undefined {
+  for (const signature of signatures) {
+    try {
+      return decodeType(signature, data, chainId, address)
+    } catch {}
+  }
 }
 
 export const DECODE_AS_PRESETS = [

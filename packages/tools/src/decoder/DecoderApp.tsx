@@ -16,7 +16,7 @@ import { useLocation, useNavigate } from 'react-router'
 import { toFunctionSelector } from 'viem'
 import { create } from 'zustand'
 import * as API from './api'
-import type { DecodedValue } from './decode'
+import { type DecodedValue, decodeType } from './decode'
 import { Form, type FormValues } from './form/Form'
 import { formatDecimals, formatNumber, getFormatHint } from './format'
 import { HashReferencesProvider, useHashReferences } from './HashReferences'
@@ -196,7 +196,8 @@ interface State {
 interface Actions {
   requestSignature(selector: `0x${string}`): void
   addSignatures(signatures: Signature[]): void
-  removeSignature(signature: Signature): void
+  saveLocalAbi(abi: LocalAbi): void
+  deleteLocalAbi(abi: LocalAbi): void
   requestAddress(chainId: number, address: `0x${string}`): void
   setName(chainId: number, address: `0x${string}`, name: string): void
   setAlias(
@@ -235,14 +236,30 @@ function selectSignatures(
   signatures: Signature[] | undefined,
   chainId: number,
   address: `0x${string}` | undefined,
-): string[] {
-  return (signatures ?? [])
-    .filter(
-      (x) =>
-        x.address === undefined ||
-        (x.address === address && x.chainId === chainId),
-    )
-    .map((x) => x.signature)
+): { signatures: string[]; overrides: string[] } {
+  const matching = (signatures ?? []).filter(
+    (x) =>
+      x.address === undefined ||
+      (x.address === address && x.chainId === chainId),
+  )
+  return {
+    signatures: matching.filter((x) => !x.isLocal).map((x) => x.signature),
+    overrides: matching.filter((x) => x.isLocal).map((x) => x.signature),
+  }
+}
+
+const LOCAL_ABIS_KEY = 'l2beat.decoder.abis'
+
+function readLocalAbis(): LocalAbi[] {
+  return JSON.parse(localStorage.getItem(LOCAL_ABIS_KEY) ?? '[]')
+}
+
+function writeLocalAbis(signatures: State['signatures']) {
+  const abis: LocalAbi[] = Object.values(signatures)
+    .flat()
+    .filter((x) => x.isLocal)
+    .map((x) => ({ selector: x.selector, signature: x.signature }))
+  localStorage.setItem(LOCAL_ABIS_KEY, JSON.stringify(abis))
 }
 
 const useStore = create<State & Actions>((set) => ({
@@ -283,20 +300,29 @@ const useStore = create<State & Actions>((set) => ({
       }
       return { signatures }
     }),
-  removeSignature: (signature) =>
+  saveLocalAbi: (abi) =>
     set((state) => {
-      const signatures = { ...state.signatures }
-      let array = signatures[signature.selector] ?? []
-      array = array.filter(
-        (x) =>
-          !(
-            x.signature === signature.signature &&
-            x.chainId === signature.chainId &&
-            x.address === signature.address &&
-            x.isLocal === signature.isLocal
-          ),
+      const others = (state.signatures[abi.selector] ?? []).filter(
+        (x) => !x.isLocal,
       )
-      signatures[signature.selector] = array
+      const signatures = {
+        ...state.signatures,
+        [abi.selector]: [...others, { ...abi, isLocal: true }].sort(
+          compareSignatures,
+        ),
+      }
+      writeLocalAbis(signatures)
+      return { signatures }
+    }),
+  deleteLocalAbi: (abi) =>
+    set((state) => {
+      const signatures = {
+        ...state.signatures,
+        [abi.selector]: (state.signatures[abi.selector] ?? []).filter(
+          (x) => !(x.isLocal && x.signature === abi.signature),
+        ),
+      }
+      writeLocalAbis(signatures)
       return { signatures }
     }),
   requestAddress: (chainId, address) =>
@@ -432,39 +458,22 @@ interface LocalAbi {
 
 function AbiManager() {
   const store = useStore()
-  const [localAbis, setLocalAbis] = useState<LocalAbi[]>([])
   const [expanded, setExpanded] = useState(false)
   const [error, setError] = useState('')
   const [input, setInput] = useState('')
+  const localAbis = Object.values(store.signatures)
+    .flat()
+    .filter((x) => x.isLocal)
 
   useEffect(() => {
-    const abis: LocalAbi[] = JSON.parse(
-      localStorage.getItem('l2beat.decoder.abis') ?? '[]',
-    )
-    setLocalAbis(abis)
-    store.addSignatures(abis.map((x) => ({ ...x, isLocal: true })))
+    store.addSignatures(readLocalAbis().map((x) => ({ ...x, isLocal: true })))
   }, [])
-
-  function addAbi(abi: LocalAbi) {
-    if (localAbis.some((x) => x.signature === abi.signature)) return
-    const newAbis = [...localAbis, abi]
-    localStorage.setItem('l2beat.decoder.abis', JSON.stringify(newAbis))
-    setLocalAbis(newAbis)
-    store.addSignatures([{ ...abi, isLocal: true }])
-  }
-
-  function deleteAbi(abi: LocalAbi) {
-    const newAbis = localAbis.filter((x) => x.signature !== abi.signature)
-    localStorage.setItem('l2beat.decoder.abis', JSON.stringify(newAbis))
-    setLocalAbis(newAbis)
-    store.removeSignature({ ...abi, isLocal: true })
-  }
 
   function submit(e: FormEvent) {
     e.preventDefault()
     try {
       const selector = toFunctionSelector(input)
-      addAbi({ selector, signature: input })
+      store.saveLocalAbi({ selector, signature: input })
       setError('')
       setInput('')
     } catch {
@@ -498,7 +507,7 @@ function AbiManager() {
               <li className="flex w-full items-center gap-2" key={i}>
                 <button
                   className="text-zinc-500"
-                  onClick={() => deleteAbi(abi)}
+                  onClick={() => store.deleteLocalAbi(abi)}
                 >
                   [delete]
                 </button>
@@ -522,6 +531,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
   const [lessMembers, setLessMembers] = useState(false)
   const [decoded, setDecoded] = useState(value)
   const [isCustom, setIsCustom] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
 
   useLayoutEffect(() => {
     if (
@@ -547,7 +557,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
       if (decoded.address && decoded.chainId) {
         store.requestAddress(decoded.chainId, decoded.address)
       }
-      const signatures = selectSignatures(
+      const { signatures, overrides } = selectSignatures(
         store.signatures[selector],
         decoded.chainId ?? 1,
         decoded.address,
@@ -557,12 +567,13 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
         signatures,
         decoded.chainId ?? 1,
         decoded.address,
+        overrides,
       )
       if (newDecoded) setDecoded(newDecoded)
     }
     if (decoded.type === 'call') {
       const selector = decoded.bytes.slice(0, 10) as `0x${string}`
-      const signatures = selectSignatures(
+      const { signatures, overrides } = selectSignatures(
         store.signatures[selector],
         decoded.chainId ?? 1,
         decoded.address,
@@ -572,6 +583,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
         signatures,
         decoded.chainId ?? 1,
         decoded.address,
+        overrides,
       )
       if (newDecoded && newDecoded.functionAbi !== decoded.functionAbi)
         setDecoded(newDecoded)
@@ -645,6 +657,12 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
             { name: 'Copy bytes', copy: decoded.bytes },
             { name: 'Copy selector', copy: decoded.bytes.slice(0, 10) },
             { name: 'Copy abi', copy: decoded.functionAbi },
+            {
+              name: 'Edit signature',
+              onClick: decoded.functionAbi
+                ? () => setIsEditing(true)
+                : undefined,
+            },
           ]}
         >
           <span className="text-orange-400">{decoded.functionName}</span>
@@ -653,6 +671,16 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
         {members}
         <span className="text-zinc-300">)</span>
         {extra}
+        {isEditing && decoded.functionAbi && (
+          <EditSignature
+            bytes={decoded.bytes}
+            functionAbi={decoded.functionAbi}
+            onClose={(saved) => {
+              setIsEditing(false)
+              if (saved) setIsCustom(false)
+            }}
+          />
+        )}
         {decoded.bytes.slice(0, 10).toLowerCase() === '0x6a761202' && (
           <SafeHashes
             key={`${decoded.chainId}:${decoded.address}:${decoded.bytes}`}
@@ -750,6 +778,57 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
       </div>
     )
   }
+}
+
+function EditSignature(props: {
+  bytes: `0x${string}`
+  functionAbi: string
+  onClose(saved: boolean): void
+}) {
+  const store = useStore()
+  const [input, setInput] = useState(props.functionAbi)
+  const [error, setError] = useState('')
+
+  function submit(e: FormEvent) {
+    e.preventDefault()
+    const signature = input.trim()
+    try {
+      const selector = toFunctionSelector(signature)
+      if (selector !== props.bytes.slice(0, 10).toLowerCase()) {
+        setError('The selector does not match this call.')
+        return
+      }
+      decodeType(signature, props.bytes)
+      store.saveLocalAbi({ selector, signature })
+      props.onClose(true)
+    } catch {
+      setError('Cannot decode the call with this signature.')
+    }
+  }
+
+  return (
+    <form className="pl-4" onSubmit={submit}>
+      <div className="flex max-w-[600px] gap-2">
+        <input
+          autoFocus
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="flex-1 bg-zinc-900 px-2"
+        />
+        <button className="text-zinc-500" type="submit">
+          [save]
+        </button>
+        <button
+          className="text-zinc-500"
+          type="button"
+          onClick={() => props.onClose(false)}
+        >
+          [cancel]
+        </button>
+      </div>
+      {error && <div className="mt-2 text-red-500">{error}</div>}
+    </form>
+  )
 }
 
 function DecodeAs(props: {
