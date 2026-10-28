@@ -529,8 +529,12 @@ function formatValue(
   if (Array.isArray(value)) {
     return value.flatMap((item) => formatValue(item, byAddress))
   }
-  if (typeof value === 'string' && byAddress.has(value)) {
-    return [contractPart(value, byAddress)]
+  if (typeof value === 'string') {
+    // Addresses copied from logs or explorers are often not checksummed.
+    const address = ChainSpecificAddress.tryParse(value)
+    if (address !== undefined && byAddress.has(address)) {
+      return [contractPart(address, byAddress)]
+    }
   }
   if (typeof value === 'object') {
     const text = JSON.stringify(value)
