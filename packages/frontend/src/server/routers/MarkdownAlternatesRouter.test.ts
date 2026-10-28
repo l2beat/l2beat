@@ -103,18 +103,26 @@ describe(createMarkdownAlternatesRouter.name, () => {
     expect(served.toSorted()).toEqual(registered.toSorted())
   })
 
-  // The HTML ZK catalog hides archived provers and has no archived view.
-  it('lists exactly the active proving systems of the ZK catalog', async () => {
-    const active = await ps.getProjects({
+  // The HTML ZK catalog hides archived provers and has no archived view, so
+  // this index is where they stay findable, apart from the active ones.
+  it('lists active and archived proving systems in separate sections', async () => {
+    const projects = await ps.getProjects({
       where: ['zkCatalogInfo'],
-      whereNot: ['archivedAt'],
+      optional: ['archivedAt'],
     })
+    const pathsOf = (archived: boolean) =>
+      projects
+        .filter((p) => !!p.archivedAt === archived)
+        .map((p) => `/zk-catalog/${p.slug}`)
+        .toSorted()
 
-    const paths = await getLinkPaths('/zk-catalog.md')
+    const sections = await getSectionPaths('/zk-catalog.md')
 
-    expect(paths.toSorted()).toEqual(
-      active.map((p) => `/zk-catalog/${p.slug}`).toSorted(),
-    )
+    expect(pathsOf(true).length).toBeGreaterThan(0)
+    expect(sections).toEqual({
+      'Proving systems (/zk-catalog/{slug})': pathsOf(false),
+      'Archived proving systems (/zk-catalog/{slug})': pathsOf(true),
+    })
   })
 
   describe('ossification', () => {
@@ -160,5 +168,20 @@ async function getLinkPaths(path: MarkdownAlternatePath): Promise<string[]> {
   const sections = (await alternate?.getSections()) ?? []
   return sections.flatMap((section) =>
     section.links.flatMap((link) => ('path' in link ? [link.path] : [])),
+  )
+}
+
+async function getSectionPaths(
+  path: MarkdownAlternatePath,
+): Promise<Record<string, string[]>> {
+  const alternate = MARKDOWN_ALTERNATES.find((a) => a.path === path)
+  const sections = (await alternate?.getSections()) ?? []
+  return Object.fromEntries(
+    sections.map((section) => [
+      section.heading,
+      section.links
+        .flatMap((link) => ('path' in link ? [link.path] : []))
+        .toSorted(),
+    ]),
   )
 }
