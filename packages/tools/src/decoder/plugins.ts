@@ -1,7 +1,13 @@
 import { getCreate2Address, toFunctionSelector } from 'viem'
+import { BinaryReader } from './BinaryReader'
 import { type DecodedValue, decodeType } from './decode'
 import { decodePacked, type PackedSchema } from './packed'
 import { OP_PERMISSIONED_GAME_ARGS_SCHEMA } from './packedSchemas'
+import {
+  decodeRetryableTicket,
+  markTokenAmount,
+  relayPlugins,
+} from './relayPlugins'
 import { SAFE_EXEC_ABI } from './safe'
 
 const plugins = [
@@ -9,6 +15,7 @@ const plugins = [
   packedArgumentPlugin,
   multiSendPlugin,
   create2FactoryPlugin,
+  ...relayPlugins,
 ]
 
 // Fixed ABIs keep Safe hash verification independent of signature lookup services.
@@ -51,7 +58,44 @@ export function decode(
       } catch {}
     }
   }
-  if (value) applyCallTargetHeuristic(value)
+  if (value) {
+    applyCallTargetHeuristic(value)
+    markTokenAmount(value)
+  }
+  return value
+}
+
+export const DECODE_AS_PRESETS = [
+  'multiSend',
+  'retryableTicket',
+  'function upgrade((address, address, bytes32)[])',
+]
+
+export function decodeAs(
+  type: string,
+  bytes: `0x${string}`,
+  chainId: number,
+  address?: `0x${string}`,
+): DecodedValue {
+  const trimmed = type.trim()
+  let value: DecodedValue
+  if (trimmed === 'multiSend') {
+    value = {
+      type: 'array',
+      bytes,
+      value: '',
+      chainId,
+      members: decodeMultiSendTransactions(bytes, chainId),
+    }
+  } else if (trimmed === 'retryableTicket') {
+    value = decodeRetryableTicket(bytes, chainId)
+  } else if (trimmed.startsWith('function')) {
+    value = decodeType(trimmed, bytes, chainId, address)
+  } else {
+    value = decodeType(`(${trimmed})`, bytes, chainId, address)
+  }
+  applyCallTargetHeuristic(value)
+  markTokenAmount(value)
   return value
 }
 
@@ -122,7 +166,7 @@ function applyCallTargetHeuristic(value: DecodedValue) {
   for (const member of value.members) {
     applyCallTargetHeuristic(member)
     if (target && member.type === 'bytes') {
-      member.address = target as `0x${string}`
+      member.address ??= target as `0x${string}`
     }
   }
 }
@@ -144,7 +188,14 @@ function multiSendPlugin(
     address,
   )
   const bytes = decoded.members?.[0]?.bytes ?? '0x'
+  decoded.members = decodeMultiSendTransactions(bytes, chainId)
+  return decoded
+}
 
+function decodeMultiSendTransactions(
+  bytes: `0x${string}`,
+  chainId: number,
+): DecodedValue[] {
   const reader = new BinaryReader(bytes)
   const values: DecodedValue[] = []
 
@@ -199,8 +250,7 @@ function multiSendPlugin(
       chainId,
     })
   }
-  decoded.members = values
-  return decoded
+  return values
 }
 
 const CREATE2_DEPLOYER = '0x4e59b44847b379578588920ca78fbf26c0b4956c'
@@ -211,6 +261,7 @@ function create2FactoryPlugin(
   address?: `0x${string}`,
 ): DecodedValue | undefined {
   if (address !== CREATE2_DEPLOYER) return
+  if (data.length < 2 + 32 * 2) return
   const salt = data.slice(0, 66) as `0x${string}`
   const bytecode: `0x${string}` = `0x${data.slice(66)}`
   const deployment = getCreate2Address({
@@ -239,6 +290,7 @@ function create2FactoryPlugin(
         bytes: salt,
         value: salt,
         chainId,
+        isFixedSize: true,
       },
       {
         type: 'bytes',
@@ -248,35 +300,5 @@ function create2FactoryPlugin(
         chainId,
       },
     ],
-  }
-}
-
-class BinaryReader {
-  private position = 0
-  constructor(private readonly input: `0x${string}`) {}
-
-  isAtEnd() {
-    return !this.has(1)
-  }
-
-  get length() {
-    return this.input.length / 2 - 1
-  }
-
-  has(n: number) {
-    return this.position + n <= this.length
-  }
-
-  read(n: number): `0x${string}` {
-    if (!this.has(n)) {
-      throw new Error(
-        `Cannot read ${n} bytes. Position: ${this.position}, total: ${this.length}`,
-      )
-    }
-
-    const start = this.position * 2 + 2
-    const slice = this.input.slice(start, start + n * 2)
-    this.position += n
-    return `0x${slice}`
   }
 }

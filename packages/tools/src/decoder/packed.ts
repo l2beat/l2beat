@@ -74,7 +74,7 @@ function decodePackedField(
   }
 
   if (/^bytes\d+$/.test(type)) {
-    return { ...common, type: 'bytes', value: bytes }
+    return { ...common, type: 'bytes', value: bytes, isFixedSize: true }
   }
 
   const integer = /^(u?)int(\d*)$/.exec(type)

@@ -35,6 +35,9 @@ export function formatNumber(value: string, transform?: string) {
   if (transform === 'e18') {
     return formatDecimals(value, 18)
   }
+  if (transform === 'e9') {
+    return formatDecimals(value, 9)
+  }
   if (transform === 'e8') {
     return formatDecimals(value, 8)
   }

@@ -1,11 +1,17 @@
 import { clsx } from 'clsx'
 import { useReducer } from 'react'
-import { INITIAL_STATE, reducer, type State, SUPPORTED_CHAINS } from './state'
+import {
+  INITIAL_STATE,
+  normalizeData,
+  reducer,
+  type State,
+  SUPPORTED_CHAINS,
+} from './state'
 
 export type FormValues = State['values']
 
 export interface FormProps {
-  onSubmit(data: FormValues): void
+  onSubmit(data: FormValues): Promise<void>
 }
 
 export function Form(props: FormProps) {
@@ -17,7 +23,12 @@ export function Form(props: FormProps) {
 
   function onSubmit() {
     dispatch({ type: 'submit' })
-    props.onSubmit(state.values)
+    const { values } = state
+    props
+      .onSubmit(
+        values.data ? { ...values, data: normalizeData(values.data) } : values,
+      )
+      .catch(() => dispatch({ type: 'submitted' }))
   }
 
   return (

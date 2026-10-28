@@ -122,6 +122,7 @@ describe(decodeType.name, () => {
       type: 'bytes',
       bytes: e,
       value: e,
+      isFixedSize: true,
     })
   })
 
@@ -132,6 +133,7 @@ describe(decodeType.name, () => {
       type: 'bytes',
       bytes: '0xdeadbeef',
       value: '0xdeadbeef',
+      isFixedSize: true,
     })
   })
 

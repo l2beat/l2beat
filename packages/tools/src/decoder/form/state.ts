@@ -1,3 +1,5 @@
+import { CALLDATA_BYTES_MAX } from '../link'
+
 export const SUPPORTED_CHAINS = [
   { name: 'Ethereum', chainId: 1 },
   { name: 'OP Mainnet', chainId: 10 },
@@ -93,7 +95,7 @@ export function reducer(state: State, action: Action): State {
             chainId ?? (state.values.hash !== '' ? 1 : state.values.chainId),
         },
         errors: {
-          data: !data || DATA_REGEX.test(data) ? undefined : 'Invalid data',
+          data: getDataError(data),
           address: address ? undefined : state.errors.address,
         },
       }
@@ -132,6 +134,28 @@ export function reducer(state: State, action: Action): State {
     case 'submitted':
       return { ...state, submitting: false }
   }
+}
+
+// The old decoder accepted hex without 0x and with whitespace from wrapped copies.
+export function normalizeData(value: string) {
+  let hex = ''
+  for (const char of value) {
+    if (char !== ' ' && char !== '\n' && char !== '\r' && char !== '\t') {
+      hex += char
+    }
+  }
+  hex = hex.toLowerCase()
+  return hex.startsWith('0x') ? hex : `0x${hex}`
+}
+
+function getDataError(value: string) {
+  if (!value) return undefined
+  const data = normalizeData(value)
+  if (!DATA_REGEX.test(data)) return 'Invalid data'
+  if ((data.length - 2) / 2 > CALLDATA_BYTES_MAX) {
+    return 'Data is longer than 64 KiB'
+  }
+  return undefined
 }
 
 function parseData(value: string) {

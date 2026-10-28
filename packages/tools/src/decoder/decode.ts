@@ -19,8 +19,10 @@ export interface DecodedValue {
   members?: DecodedValue[]
   bytes: `0x${string}`
   extra?: `0x${string}`
+  isFixedSize?: boolean
   chainId?: number
   address?: `0x${string}`
+  token?: `0x${string}`
 }
 
 export function decodeType(
@@ -177,7 +179,7 @@ function decodeParsed(
       throw new Error('Invalid encoding')
     }
     const bytes = sliceBytes(encoded, 0, size)
-    return { ...common, bytes, value: bytes }
+    return { ...common, bytes, value: bytes, isFixedSize: true }
   }
   throw new Error(`Invalid type: ${type.type}`)
 }
