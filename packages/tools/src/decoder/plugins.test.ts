@@ -97,6 +97,17 @@ describe('CREATE2 factory plugin', () => {
     const salt = decoded?.members?.find((x) => x.name === 'salt')
     expect(salt?.isFixedSize).toEqual(true)
   })
+
+  it('leaves data shorter than a salt to the signatures', () => {
+    const decoded = decode(
+      '0x8456cb59',
+      ['function pause()'],
+      1,
+      '0x4e59b44847b379578588920ca78fbf26c0b4956c',
+    )
+
+    expect(decoded?.functionName).toEqual('pause')
+  })
 })
 
 describe(decodeAs.name, () => {

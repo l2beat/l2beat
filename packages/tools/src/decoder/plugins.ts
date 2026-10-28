@@ -261,6 +261,7 @@ function create2FactoryPlugin(
   address?: `0x${string}`,
 ): DecodedValue | undefined {
   if (address !== CREATE2_DEPLOYER) return
+  if (data.length < 2 + 32 * 2) return
   const salt = data.slice(0, 66) as `0x${string}`
   const bytecode: `0x${string}` = `0x${data.slice(66)}`
   const deployment = getCreate2Address({
