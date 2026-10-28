@@ -34,6 +34,17 @@ describe(BeaconChainClient.name, () => {
       expect(http.fetch).not.toHaveBeenCalled()
     })
 
+    it('keeps a blob that two txs of the block posted', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: ['blob', 'blob'] }),
+      })
+      const client = mockClient({ http })
+
+      const result = await client.getBlobs('root', ['0x01aa'])
+
+      expect(result).toEqual([{ data: 'blob' }, { data: 'blob' }])
+    })
+
     it('throws when the node answers fewer blobs than asked for', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({ data: [] }),
@@ -41,7 +52,7 @@ describe(BeaconChainClient.name, () => {
       const client = mockClient({ http })
 
       await expect(client.getBlobs('root', ['0x01aa'])).toBeRejectedWith(
-        'Beacon node answered a different number of blobs',
+        'Beacon node answered fewer blobs than asked for',
       )
     })
   })

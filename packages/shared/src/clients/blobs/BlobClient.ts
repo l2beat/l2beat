@@ -75,9 +75,10 @@ export class BlobClient extends ClientCore {
       throw new Error('Invalid blobs response', { cause: { blockNumber } })
     }
 
-    // A beacon block without these blobs answers an empty list, not an error
-    if (parsed.data.data.length !== versionedHashes.length) {
-      throw new Error('Beacon node answered a different number of blobs', {
+    // A beacon block without these blobs answers an empty list, not an error.
+    // A blob posted twice in the block may come back once or twice
+    if (parsed.data.data.length < new Set(versionedHashes).size) {
+      throw new Error('Beacon node answered fewer blobs than asked for', {
         cause: {
           blockNumber,
           blockId,
