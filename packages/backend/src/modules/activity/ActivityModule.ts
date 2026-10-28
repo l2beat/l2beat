@@ -6,6 +6,8 @@ import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
 import { DayTargetIndexer } from './indexers/DayTargetIndexer'
+import { HourActivityIndexer } from './indexers/HourActivityIndexer'
+import { HourTargetIndexer } from './indexers/HourTargetIndexer'
 import { SlotTargetIndexer } from './indexers/SlotTargetIndexer'
 import type { ActivityIndexer } from './indexers/types'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
@@ -135,25 +137,53 @@ export function initActivityModule({
       }
 
       case 'day': {
+        const provider = providers.day.getDayProvider(project.chainName)
+        const minTimestamp = UnixTime.toStartOf(
+          project.activityConfig.sinceTimestamp,
+          'day',
+        )
+        const onTick = async (targetTimestamp: number) => {
+          if (!config.activity) {
+            return
+          }
+
+          await database.syncMetadata.upsertMany([
+            {
+              feature: 'activity',
+              id: project.id,
+              target: targetTimestamp,
+            },
+          ])
+        }
+
+        // Sources that count by the hour sync each hour, like block chains
+        if ('getHourlyCounts' in provider) {
+          const hourTargetIndexer = new HourTargetIndexer(logger, clock, {
+            onTick,
+          })
+
+          const activityIndexer = new HourActivityIndexer(
+            {
+              projectId: project.id,
+              minHeight: minTimestamp / UnixTime.HOUR,
+              parents: [hourTargetIndexer],
+              provider,
+              indexerService,
+              db: database,
+            },
+            logger,
+          )
+
+          indexers.push(hourTargetIndexer, activityIndexer)
+          break
+        }
+
         const dayTargetIndexer = new DayTargetIndexer(logger, clock, {
           // We do not want to index today's data because it's not fully processed yet
           // We want to process full previous day
-          onTick: async (targetTimestamp) => {
-            if (!config.activity) {
-              return
-            }
-
-            await database.syncMetadata.upsertMany([
-              {
-                feature: 'activity',
-                id: project.id,
-                target: targetTimestamp,
-              },
-            ])
-          },
+          onTick,
         })
 
-        const provider = providers.day.getDayProvider(project.chainName)
         const txsCountService = new DayTxsCountService({
           provider,
           projectId: project.id,
@@ -162,9 +192,7 @@ export function initActivityModule({
         const activityIndexer = new DayActivityIndexer(
           {
             projectId: project.id,
-            minHeight: UnixTime.toDays(
-              UnixTime.toStartOf(project.activityConfig.sinceTimestamp, 'day'),
-            ),
+            minHeight: UnixTime.toDays(minTimestamp),
             parents: [dayTargetIndexer],
             txsCountService,
             indexerService,
@@ -172,9 +200,6 @@ export function initActivityModule({
             batchSize:
               project.activityConfig.batchSize ?? Number.POSITIVE_INFINITY,
             uncertaintyBuffer: project.activityConfig.resyncLastDays ?? 0,
-            // A new hash syncs again from the start. Sources with hours did so
-            // once, to fill in their last two weeks of hours and their peaks
-            configHash: 'getHourlyCounts' in provider ? 'hourly' : undefined,
           },
           logger,
         )

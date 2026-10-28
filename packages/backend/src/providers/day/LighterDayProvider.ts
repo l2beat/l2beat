@@ -1,16 +1,15 @@
 import type { LighterClient } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import type { HourlyCount, HourlyCountsProvider } from './DayProviders'
 
 export class LighterDayProvider implements HourlyCountsProvider {
   constructor(private lighterClient: LighterClient) {}
 
-  async getHourlyCounts(from: number, to: number): Promise<HourlyCount[]> {
+  async getHourlyCounts(from: UnixTime, to: UnixTime): Promise<HourlyCount[]> {
+    // The whole history, with the hour still going on
     const hourlyStats = await this.lighterClient.getHourlyStats()
     return hourlyStats.filter(
-      (stat) =>
-        stat.timestamp >= from * UnixTime.DAY &&
-        stat.timestamp < to * UnixTime.DAY,
+      (stat) => stat.timestamp >= from && stat.timestamp < to,
     )
   }
 }

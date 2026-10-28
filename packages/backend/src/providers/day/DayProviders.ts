@@ -24,8 +24,8 @@ export interface DailyCountsProvider {
 
 /** For sources that count by the hour. Their days are the sums of the hours */
 export interface HourlyCountsProvider {
-  /** Those of days `from` to `to` (exclusive) */
-  getHourlyCounts(from: number, to: number): Promise<HourlyCount[]>
+  /** Those from `from` to `to` (exclusive) */
+  getHourlyCounts(from: UnixTime, to: UnixTime): Promise<HourlyCount[]>
 }
 
 export interface HourlyCount {
