@@ -74,9 +74,11 @@ function handleEvent(event: AgentEvent, open: (project: string) => void) {
       if (useAgentStore.getState().show?.id === event.id) {
         return
       }
-      // A replay waits for the researcher to open its project.
+      // A replay waits for the researcher to open its project. The graph
+      // loads only in a nodes panel, and the steps wait for the graph.
       if (event.replay !== true) {
         open(event.project)
+        useDockingStore.getState().ensureLeaf('nodes')
       }
       useAgentStore.getState().start(event)
   }
