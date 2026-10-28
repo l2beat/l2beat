@@ -268,16 +268,20 @@ const ERC20_AMOUNT_ABIS: [string, number][] = [
   ['function mint(address, uint256)', 1],
   ['function mintFrom(address, uint256)', 1],
 ]
-const ERC20_AMOUNT_INDEXES: Record<string, number> = Object.fromEntries(
-  ERC20_AMOUNT_ABIS.map(([abi, index]) => [toFunctionSelector(abi), index]),
-)
+const ERC20_AMOUNTS: Record<string, { name: string; index: number }> =
+  Object.fromEntries(
+    ERC20_AMOUNT_ABIS.map(([abi, index]) => [
+      toFunctionSelector(abi),
+      { name: abi.slice('function '.length, abi.indexOf('(')), index },
+    ]),
+  )
 
-// Runs after decoding, so a colliding non-token ABI never gets an amount.
+// Runs after decoding and checks the name, so a colliding non-token ABI never gets an amount.
 export function markTokenAmount(value: DecodedValue) {
   if (value.type !== 'call' || !value.address) return
-  const index = ERC20_AMOUNT_INDEXES[value.bytes.slice(0, 10).toLowerCase()]
-  if (index === undefined) return
-  const amount = value.members?.[index]
+  const erc20 = ERC20_AMOUNTS[value.bytes.slice(0, 10).toLowerCase()]
+  if (!erc20 || erc20.name !== value.functionName) return
+  const amount = value.members?.[erc20.index]
   if (amount?.type === 'number') amount.token = value.address
 }
 

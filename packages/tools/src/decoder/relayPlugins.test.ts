@@ -6,6 +6,7 @@ import {
   encodeFunctionData,
   parseAbi,
   parseAbiParameters,
+  toFunctionSelector,
 } from 'viem'
 import type { DecodedValue } from './decode'
 import { decode } from './plugins'
@@ -220,6 +221,26 @@ describe('relay plugins', () => {
 
     expect(decoded?.functionName).toEqual('collate_propagate_storage')
     expect(member(decoded, 'key').token).toEqual(undefined)
+  })
+
+  it('does not mark a colliding ABI with a numeric argument', () => {
+    const data = concatHex([
+      toFunctionSelector('function approve(address, uint256)'),
+      encodeAbiParameters(parseAbiParameters('bytes16, uint128'), [
+        `0x${'ab'.repeat(16)}`,
+        5n,
+      ]),
+    ])
+
+    const decoded = decode(
+      data,
+      ['function sign_szabo_bytecode(bytes16 key, uint128 amount)'],
+      1,
+      TOKEN,
+    )
+
+    expect(decoded?.functionName).toEqual('sign_szabo_bytecode')
+    expect(member(decoded, 'amount').token).toEqual(undefined)
   })
 })
 

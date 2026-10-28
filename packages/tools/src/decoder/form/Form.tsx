@@ -11,7 +11,7 @@ import {
 export type FormValues = State['values']
 
 export interface FormProps {
-  onSubmit(data: FormValues): void
+  onSubmit(data: FormValues): Promise<void>
 }
 
 export function Form(props: FormProps) {
@@ -24,9 +24,11 @@ export function Form(props: FormProps) {
   function onSubmit() {
     dispatch({ type: 'submit' })
     const { values } = state
-    props.onSubmit(
-      values.data ? { ...values, data: normalizeData(values.data) } : values,
-    )
+    props
+      .onSubmit(
+        values.data ? { ...values, data: normalizeData(values.data) } : values,
+      )
+      .catch(() => dispatch({ type: 'submitted' }))
   }
 
   return (
