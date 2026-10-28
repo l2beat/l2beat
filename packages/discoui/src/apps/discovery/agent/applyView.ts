@@ -68,6 +68,7 @@ export function applyView(state: State, view: AgentViewSpec): AppliedView {
     ...(view.only ?? []),
     ...view.groups.flatMap((g) => g.members),
     ...view.colors.flatMap((c) => c.members),
+    ...(view.select === undefined ? [] : [view.select]),
   ]
 
   const visibility = applyVisibility(released, view, leafIds)
