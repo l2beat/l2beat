@@ -41,28 +41,28 @@ export function getTickCondition(actualRangeInDays: number) {
     if (actualRangeInDays <= 1) return timestamp % (4 * UnixTime.HOUR) === 0
     if (actualRangeInDays <= 7) return timestamp % UnixTime.DAY === 0
     if (actualRangeInDays <= 30)
-      return start % UnixTime.DAY === 0 && date.getDay() === 1
+      return start % UnixTime.DAY === 0 && date.getUTCDay() === 1
     if (actualRangeInDays <= 90)
       return (timestamp + 3 * UnixTime.DAY) % (21 * UnixTime.DAY) === 0
     if (actualRangeInDays <= 180)
-      return start % UnixTime.DAY === 0 && date.getDate() === 1
+      return start % UnixTime.DAY === 0 && date.getUTCDate() === 1
     if (actualRangeInDays <= 365)
       return (
         start % UnixTime.DAY === 0 &&
-        date.getDate() === 1 &&
-        date.getMonth() % 2 === 0
+        date.getUTCDate() === 1 &&
+        date.getUTCMonth() % 2 === 0
       )
     if (actualRangeInDays <= 1095)
       return (
         start % UnixTime.DAY === 0 &&
-        date.getDate() === 1 &&
-        date.getMonth() % 4 === 0
+        date.getUTCDate() === 1 &&
+        date.getUTCMonth() % 4 === 0
       )
 
     return (
       start % UnixTime.DAY === 0 &&
-      date.getDate() === 1 &&
-      date.getMonth() === 0
+      date.getUTCDate() === 1 &&
+      date.getUTCMonth() === 0
     )
   }
 }
