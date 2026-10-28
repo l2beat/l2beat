@@ -41,7 +41,8 @@
   // Boundary cuts: EigenLayerManager points into EigenLayer core (DelegationManager,
   // EigenPodManager, StrategyManager) and enumerates the per-stake StakerProxy
   // clones; the StakerProxy beacon stays in scope, the clones and EigenLayer are
-  // not crawled; the rswETH DepositManager's empty legacy EigenPod is cut too. The fee sink's payment token (SWELL) is not part of the LSTs.
+  // not crawled. The rswETH DepositManager's legacy EigenPod is kept so EigenLayer's
+  // pod upgraders appear as actors (via shared-eigenlayer). The fee sink's payment token (SWELL) is not part of the LSTs.
   "overrides": {
     "eth:0xc94cffd5249df4008a043ee61e13f19af16d0936": {
       "ignoreMethods": ["stakerProxyAddresses", "isValidStaker"],
@@ -53,7 +54,7 @@
       ]
     },
     "eth:0x5e6342D8090665bE14eeB8154c8a87B7249a4889": {
-      "ignoreRelatives": ["EigenPodManager", "eigenPodDeprecated"]
+      "ignoreRelatives": ["EigenPodManager"]
     },
     "eth:0xf17b581496bc2669ce0931FAcAA1ADe35029E85D": {
       "ignoreRelatives": ["paymentToken"]

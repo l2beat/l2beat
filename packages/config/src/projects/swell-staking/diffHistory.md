@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x466a6ba7c7664d7f6ee3e4cd4988df784bafaa3a
+Generated with discovered.json: 0x241efbfc03fb9c68310ff940e38cbb49d958ccab
 
-# Diff at Tue, 27 Oct 2026 14:45:07 GMT:
+# Diff at Wed, 28 Oct 2026 11:30:01 GMT:
 
-- id: c04d6c2a
+- id: 5bf27dc9
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1793112241
+- current timestamp: 1793186936
 
 ## Description
 
-Initial discovery of Swell's swETH (liquid staking) and rswETH (liquid restaking): the two tokens, their exit queues, deposit managers, repricing oracles, node operator registries and role registries, the EigenLayer restaking accounts' manager and beacon, the fee auction, the two LayerZero OFT lockboxes, and the shared Timelock and multisigs. EigenLayer core and the per-account StakerProxy clones are not crawled.
+Initial discovery of Swell's swETH (liquid staking) and rswETH (liquid restaking): the two tokens, their exit queues, deposit managers, repricing oracles, node operator registries and role registries, the EigenLayer restaking accounts' manager and beacon, the fee auction, the two LayerZero OFT lockboxes, and the shared Timelock and multisigs. EigenLayer is attached through the shared-eigenlayer module via the EigenPod, so its multisigs appear as actors over the pods; the per-account StakerProxy clones are not crawled.
 
 ## Initial discovery
 
@@ -46,6 +46,12 @@ Initial discovery of Swell's swETH (liquid staking) and rswETH (liquid restaking
 +   Status: CREATED
     contract swETHRepricingOracle (eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71) [swell-staking/RepricingOracle]
     +++ description: Entry point for the bot's balance reports. A report must be recent (at most 150 blocks old) and its new rate within 10000000000000000 (1e18 = 100%) of a reference rate computed from the same report's balances and on-chain supply, so the reported validator balances themselves are not verified on-chain. The external proof-of-reserves feed is eth:0x0000000000000000000000000000000000000000 (zero address = disabled). A falling rate pauses the whole system. Each report also processes the exit queue up to a request chosen by the bot.
+```
+
+```diff
++   Status: CREATED
+    external contract EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    +++ description: None
 ```
 
 ```diff
@@ -94,6 +100,18 @@ Initial discovery of Swell's swETH (liquid staking) and rswETH (liquid restaking
 +   Status: CREATED
     contract rswETHAccessControlManager (eth:0x796592b2092F7E150C48643dA19Dd2F28be3333F) [swell-staking/RestakingAccessControlManager]
     +++ description: Central role and pause registry for the restaking system. Every contract of the system checks roles here and resolves the token, exit queue, deposit manager, operator registry and treasury addresses through it. Paused now: deposits true, bot functions true, operator functions false, withdrawals true.
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (eth:0x8d0B4dfCcc8B2A268486d9754b135d8aD1Ee7258) [eigenlayer/EigenPod]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    external contract EigenPodManager (eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338)
+    +++ description: None
 ```
 
 ```diff
@@ -160,4 +178,52 @@ Initial discovery of Swell's swETH (liquid staking) and rswETH (liquid restaking
 +   Status: CREATED
     contract rswETH (eth:0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0) [swell-staking/rswETH]
     +++ description: Liquid staking token. Anyone can deposit ETH unless the whitelist is on (whitelist enabled: false); tokens are minted at the current rate and the ETH is forwarded to the deposit manager in the same call. The ETH value per token changes only when the oracle reprices it: each update may move it by at most 10000000000000000 (1e18 = 100%), at least 3600 seconds apart. Each reprice mints a share of the reported rewards as new tokens for node operators and the treasury.
+```
+
+```diff
++   Status: CREATED
+    external contract (eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    external contract (eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    external contract (eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    external contract (eth:0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    external contract (eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    external contract (eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    external contract (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    external contract (eth:0xFEA47018D632A77bA579846c840d5706705Dc598)
+    +++ description: None
 ```
