@@ -65,7 +65,7 @@ export const whitechain: ScalingProject = opStackL2({
   },
   activityConfig: {
     type: 'block',
-    startBlock: 50961390,
+    startBlock: 50961391, // genesis block 50961390 has no transactions
     adjustCount: { type: 'SubtractOne' },
   },
   nonTemplateTechnology: {
