@@ -43,9 +43,9 @@
 
 /*
   Marks the edge in the header row as well, since the fade shows only over
-  content and the edge can land on a column's empty end. It takes the sticky
-  header's measured height and stops where the header stops, so tables
-  without one show the fade alone.
+  content and the edge can land on a column's empty end. Clicked, it scrolls
+  the table on. It takes the sticky header's measured height and stops where
+  the header stops, so tables without one show the fade alone.
 */
 @utility table-edge-fade-chevron {
   display: none;
@@ -56,16 +56,28 @@
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
+    width: --spacing(8);
     height: var(--sticky-table-header-height);
     margin-bottom: var(--sticky-table-header-bottom-gap);
+    margin-left: auto;
     /* Level with the labels, above the divider row and the cells' padding */
     padding-bottom: --spacing(2.5);
     /* Clears a cut label or sort icon from under it */
     background: linear-gradient(
       to left,
       var(--color-surface-primary) --spacing(5),
-      transparent --spacing(9)
+      transparent
     );
+    pointer-events: auto;
+    /*
+      Faded out it would still take clicks meant for the last column's
+      header, so it goes once the table reaches its end, and is never there
+      on a table with nothing to scroll.
+    */
+    visibility: hidden;
+    animation: table-edge-fade-chevron linear both;
+    animation-timeline: --table-scroll-timeline;
+    animation-range: calc(100% - var(--table-edge-fade-width)) 100%;
   }
 }
 
@@ -75,5 +87,14 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+@keyframes table-edge-fade-chevron {
+  from {
+    visibility: visible;
+  }
+  to {
+    visibility: hidden;
   }
 }
