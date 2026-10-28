@@ -128,6 +128,7 @@ export function EcosystemTvsByStage({
           })}
         </div>
         <DonutChart
+          ariaLabel="TVS breakdown by stage"
           meta={chartMeta}
           data={chartData}
           className="aspect-square h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"

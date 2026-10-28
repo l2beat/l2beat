@@ -43,6 +43,7 @@ export function ProtocolsPieChart({
   return (
     <div className={chartWrapperClassName}>
       <DonutChart
+        ariaLabel="Protocols"
         meta={chartMeta}
         data={chartData}
         className={cn(

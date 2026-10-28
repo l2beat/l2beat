@@ -115,9 +115,13 @@ export function ChartHoverOverlay<T>({
         setActive(null)
         return
       }
+      // Only the same x: a nearest row would show another day's values.
       const index = nearestIndex(rows, getX, value)
       const row = rows[index]
-      if (row === undefined) return
+      if (row === undefined || getX(row) !== value) {
+        setActive(null)
+        return
+      }
       setActive({
         index,
         x: scene.scales.x?.map(getX(row)) ?? 0,
@@ -197,6 +201,7 @@ export function ChartHoverOverlay<T>({
       role="application"
       aria-label={ariaLabel}
       tabIndex={0}
+      data-chart-hover=""
       className="absolute inset-0 outline-none"
       onPointerMove={onPointerMove}
       onPointerDown={onPointerMove}

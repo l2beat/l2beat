@@ -93,6 +93,7 @@ export function EcosystemTvsByTokenType({
           </tbody>
         </table>
         <DonutChart
+          ariaLabel="TVS breakdown by token type"
           meta={chartMeta}
           data={pieData}
           className="aspect-square h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"

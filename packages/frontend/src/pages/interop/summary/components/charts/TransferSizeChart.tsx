@@ -1,5 +1,6 @@
 import { assert, formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import {
+  type KeyboardEvent,
   type PointerEvent,
   useEffect,
   useId,
@@ -251,6 +252,25 @@ function TransferSizeBars({
     setActive(horizontal ? { index, x, y: center } : { index, x: center, y })
   }
 
+  function onKeyDown(event: KeyboardEvent<SVGSVGElement>) {
+    const forward = horizontal ? 'ArrowDown' : 'ArrowRight'
+    const back = horizontal ? 'ArrowUp' : 'ArrowLeft'
+    const step = event.key === forward ? 1 : event.key === back ? -1 : 0
+    if (step === 0 || count === 0 || band <= 0) return
+    event.preventDefault()
+    const from = active ? active.index : step > 0 ? -1 : count
+    const index = Math.min(count - 1, Math.max(0, from + step))
+    const center = bandStart(index) + band / 2
+    const middle = horizontal
+      ? plot.x + plot.width / 2
+      : plot.y + plot.height / 2
+    setActive(
+      horizontal
+        ? { index, x: middle, y: center }
+        : { index, x: center, y: middle },
+    )
+  }
+
   const hasSize = width > 0 && height > 0
 
   return (
@@ -265,9 +285,13 @@ function TransferSizeBars({
         <svg
           width={width}
           height={height}
-          className="absolute inset-0 block"
-          role="img"
+          className="absolute inset-0 block outline-none"
+          role="application"
           aria-label="Protocol transfer size"
+          tabIndex={0}
+          data-chart-hover=""
+          onKeyDown={onKeyDown}
+          onBlur={() => setActive(null)}
           onPointerMove={onPointerMove}
           onPointerDown={onPointerMove}
           onPointerLeave={(event) => {

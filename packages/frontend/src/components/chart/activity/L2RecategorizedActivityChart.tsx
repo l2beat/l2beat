@@ -28,6 +28,7 @@ import {
 } from '~/components/core/chart/defs/YellowGradientDef'
 import {
   ChartTooltipWrapper,
+  getTooltipEntries,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -207,7 +208,9 @@ function CustomTooltip({
   chartMeta: ChartMeta
 }) {
   const label = row.timestamp
-  const payload = visibleKeys.map((name) => ({ name, value: row[name] }))
+  // Series without a value at this day are left out, as before.
+  const payload = getTooltipEntries(row, visibleKeys, { skipNull: true })
+  if (payload.length === 0) return null
 
   return (
     <ChartTooltipWrapper>

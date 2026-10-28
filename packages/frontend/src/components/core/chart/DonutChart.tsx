@@ -1,5 +1,6 @@
 import { arc, type PieArcDatum, pie } from 'd3-shape'
 import {
+  type KeyboardEvent,
   type PointerEvent,
   type ReactNode,
   useEffect,
@@ -35,9 +36,11 @@ export function DonutChart<T extends DonutChartEntry>({
   center,
   className,
   tooltipPosition,
+  ariaLabel,
   renderTooltip,
 }: {
   meta: ChartMeta
+  ariaLabel: string
   data: T[]
   innerRadius: number
   outerRadius: number
@@ -123,11 +126,26 @@ export function DonutChart<T extends DonutChartEntry>({
     if (event.pointerType !== 'touch') setActiveIndex(null)
   }
 
+  function onKeyDown(event: KeyboardEvent) {
+    const step =
+      event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0
+    if (step === 0 || arcs.length === 0) return
+    event.preventDefault()
+    const from = activeIndex ?? (step > 0 ? -1 : 0)
+    setActiveIndex((from + step + arcs.length) % arcs.length)
+  }
+
   return (
     <ChartContext.Provider value={{ meta }}>
       <div
         ref={rootRef}
-        className={cn('relative select-none text-xs', className)}
+        role="application"
+        aria-label={ariaLabel}
+        tabIndex={0}
+        data-chart-hover=""
+        className={cn('relative select-none text-xs outline-none', className)}
+        onKeyDown={onKeyDown}
+        onBlur={() => setActiveIndex(null)}
       >
         <svg className="absolute inset-0 size-full" aria-hidden>
           <svg x="50%" y="50%" overflow="visible">
