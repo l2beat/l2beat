@@ -1,9 +1,9 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
+import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('whitechain')
 
@@ -17,7 +17,17 @@ export const whitechain: ScalingProject = opStackL2({
   genesisTimestamp,
   additionalBadges: [BADGES.Other.MigratedFromL1],
   associatedTokens: ['WBT'],
-  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 26274467 })],
+  // Lowercase addresses keep the identity first tracked for Whitechain as a
+  // sovereign blob poster (#13595), so the indexed data is preserved.
+  daTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0x00aaa63a0af768749a569dfda5fead3438091ba1',
+      sequencers: ['0x681fcc4272c14f70203ea655b1eaf9a20557a473'],
+      sinceBlock: 26274467,
+    },
+  ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Whitechain',
