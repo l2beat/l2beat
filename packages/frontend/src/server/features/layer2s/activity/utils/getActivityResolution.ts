@@ -15,8 +15,3 @@ export function getActivityResolution(range: ChartRange): ActivityResolution {
     ? 'hour'
     : 'day'
 }
-
-/** Hourly charts end with the hours of the day the daily ones end with */
-export function getLastHourOfDay(timestamp: UnixTime): UnixTime {
-  return UnixTime.toStartOf(timestamp, 'day') + UnixTime.DAY - UnixTime.HOUR
-}

@@ -14,6 +14,7 @@ import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareP
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2ActivityEntries'
 import { useTRPC } from '~/trpc/React'
+import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import type { ChartScale } from '../types'
 import { ActivityChartHeader } from './ActivityChartHeader'
@@ -83,6 +84,15 @@ export function L2ActivityChart({ milestones, entries }: Props) {
           activity per day only.
         </p>
       )}
+      {data?.behind.map(({ name, syncedUntil }) => (
+        <p
+          key={name}
+          className="mt-1 mb-3 text-center font-medium text-secondary text-xs"
+        >
+          Hourly data leaves out {name}, which has no data since{' '}
+          {formatTimestamp(syncedUntil, { mode: 'datetime' })}.
+        </p>
+      ))}
       <div className="mb-2">
         <ActivityRatioChart
           data={ratioData}

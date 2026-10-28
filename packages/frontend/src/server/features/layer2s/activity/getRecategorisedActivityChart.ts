@@ -1,4 +1,4 @@
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import type { ChartRange } from '~/utils/range/range'
@@ -8,9 +8,9 @@ import { getActivityProjects } from './utils/getActivityProjects'
 import {
   type ActivityResolution,
   getActivityResolution,
-  getLastHourOfDay,
 } from './utils/getActivityResolution'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
+import { getHourlyActivityRecords } from './utils/getHourlyActivityRecords'
 import type { ActivityProjectFilter } from './utils/projectFilterUtils'
 import { createActivityProjectsFilter } from './utils/projectFilterUtils'
 
@@ -31,6 +31,8 @@ export type RecategorisedActivityChartData = {
   resolution: ActivityResolution
   /** Names of the projects active in the range that are indexed per day, so the hours leave them out */
   withoutHours: string[]
+  /** Projects the hours leave out as they are too far behind, with the end of their last full hour */
+  behind: { name: string; syncedUntil: number }[]
 }
 
 /**
@@ -72,20 +74,21 @@ export async function getRecategorisedActivityChart(
 
   const adjustedRange = await getFullySyncedActivityRange(range)
   const resolution = hourly ? getActivityResolution(range) : 'day'
-  // The last fully synced day, hour by hour
-  const end =
+  // Hours are synced past midnight, unlike the day they belong to
+  const hours =
     resolution === 'hour'
-      ? getLastHourOfDay(adjustedRange[1])
-      : adjustedRange[1]
+      ? await getHourlyActivityRecords(
+          [...rollups, ...validiumsAndOptimiums, ...others, ProjectId.ETHEREUM],
+          range,
+        )
+      : undefined
+  const end = hours?.window.end ?? adjustedRange[1]
   const getEntries = (projectIds: ProjectId[]) => {
-    if (resolution === 'day') {
+    if (!hours) {
       return db.activity.getByProjectsAndTimeRange(projectIds, adjustedRange)
     }
-    assert(adjustedRange[0] !== null, 'Hourly range without a start')
-    return db.hourlyActivity.getByProjectsAndTimeRange(projectIds, [
-      adjustedRange[0],
-      end,
-    ])
+    const ids = new Set(projectIds)
+    return hours.records.filter((r) => ids.has(r.projectId))
   }
   const [
     rollupsEntries,
@@ -119,6 +122,7 @@ export async function getRecategorisedActivityChart(
       syncedUntil: end,
       resolution,
       withoutHours: [],
+      behind: [],
     }
   }
 
@@ -167,18 +171,15 @@ export async function getRecategorisedActivityChart(
       ]
     },
   )
-  const withoutHours =
-    resolution === 'hour'
-      ? await getActiveProjectsWithoutHours(
-          projects,
-          [
-            ...rollupsEntries,
-            ...validiumsAndOptimiumsEntries,
-            ...othersEntries,
-          ],
-          adjustedRange,
-        )
-      : []
+  const withoutHours = hours
+    ? await getActiveProjectsWithoutHours(
+        projects,
+        hours.withHours,
+        adjustedRange,
+      )
+    : []
+  const names = new Map<string, string>(projects.map((p) => [p.id, p.name]))
+  names.set(ProjectId.ETHEREUM, 'Ethereum')
 
   return {
     data,
@@ -186,15 +187,19 @@ export async function getRecategorisedActivityChart(
     syncedUntil: end,
     resolution,
     withoutHours: withoutHours.map((p) => p.name),
+    behind:
+      hours?.window.behind.map((p) => ({
+        name: names.get(p.id) ?? p.id,
+        syncedUntil: p.syncedUntil,
+      })) ?? [],
   }
 }
 
 async function getActiveProjectsWithoutHours<T extends { id: ProjectId }>(
   projects: T[],
-  hours: { projectId: ProjectId }[],
+  withHours: Set<ProjectId>,
   range: ChartRange,
 ): Promise<T[]> {
-  const withHours = new Set(hours.map((e) => e.projectId))
   const candidates = projects.filter((p) => !withHours.has(p.id))
   const days = await getDb().activity.getByProjectsAndTimeRange(
     candidates.map((p) => p.id),
@@ -229,5 +234,6 @@ function getMockRecategorisedActivityChart(
     syncedUntil: adjustedRange[1],
     resolution: 'day',
     withoutHours: [],
+    behind: [],
   }
 }
