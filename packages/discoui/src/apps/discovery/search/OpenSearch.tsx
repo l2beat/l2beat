@@ -140,8 +140,19 @@ function SearchResultsBody(props: {
 }) {
   const listRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    listRef.current
-      ?.querySelector(`[data-index="${props.highlightIndex}"]`)
+    const list = listRef.current
+    if (list === null) return
+    const lastIndex = props.rows.findLast((row) => row.kind === 'item')?.index
+    if (props.highlightIndex === 0) {
+      list.scrollTop = 0
+      return
+    }
+    if (props.highlightIndex === lastIndex) {
+      list.scrollTop = list.scrollHeight
+      return
+    }
+    list
+      .querySelector(`[data-index="${props.highlightIndex}"]`)
       ?.scrollIntoView({ block: 'nearest' })
   }, [props.highlightIndex, props.rows])
 
