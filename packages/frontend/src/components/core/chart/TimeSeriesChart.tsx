@@ -190,7 +190,8 @@ export function TimeSeriesChart<T, K extends string>({
   const sceneRef = useRef<ChartScene | null>(null)
 
   // Callers pass inline props; a new definition rebuilds the whole scene, so
-  // the memo keys on values and functions are read through refs.
+  // the memo keys on values and functions are read through refs. Scale
+  // factories are stable imports, so they are keyed on directly.
   const axesRef = useRef({ yAxis, rightAxis, xAxis })
   axesRef.current = { yAxis, rightAxis, xAxis }
   const xRef = useRef(x)
@@ -430,7 +431,7 @@ export function TimeSeriesChart<T, K extends string>({
         tooltip: false,
       },
     )
-  }, [plotted, optionsKey])
+  }, [plotted, optionsKey, yAxis.scale, rightAxis?.scale])
 
   const visibleKeys = visible.map((s) => s.key)
   return (
