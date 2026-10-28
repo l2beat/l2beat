@@ -21,6 +21,7 @@ export async function getTvsConfig(
   const [projectsWithTvs, projectsWithChains] = await Promise.all([
     ps.getProjects({
       select: ['tvsConfig'],
+      optional: ['privacyInfo'],
     }),
     ps.getProjects({ select: ['chainConfig'] }),
   ])
@@ -33,12 +34,14 @@ export async function getTvsConfig(
   let projects = enabledProjects.map((p) => ({
     projectId: p.id,
     tokens: p.tvsConfig,
+    // Privacy pages show the value of each pool (bucket) of an asset.
+    storeEscrowValues: p.privacyInfo !== undefined,
   }))
 
   // sinceTimestamp override for local development
   if (sinceTimestamp) {
     projects = projects.map((p) => ({
-      projectId: p.projectId,
+      ...p,
       tokens: getEffectiveConfig(p.tokens, sinceTimestamp),
     }))
   }
@@ -112,6 +115,7 @@ export async function getTvsConfig(
     flags.isEnabled('tvs', 'cleaner') &&
     createTvsCleanerConfigurations([
       'tvsTokenValue',
+      'tvsEscrowValue',
       'tvsBlockTimestamp',
       'tvsAmount',
       'tvsPrice',
