@@ -3,7 +3,7 @@ import { useMatch, useNavigate } from 'react-router'
 import { RangeHighlightPlugin } from '../../../components/editor/code/plugins/range'
 import { useCodeStore } from '../../../components/editor/store'
 import { useDockingStore } from '../multi-view/store'
-import { receiveBoardEvent } from '../panel-board/boardApi'
+import { receiveBoardEvent, useBoardUiStore } from '../panel-board/boardApi'
 import { useStore as useNodeStore } from '../panel-nodes/store/store'
 import {
   type AgentEvent,
@@ -63,7 +63,8 @@ function handleEvent(event: AgentEvent, open: (project: string) => void) {
       discardAgentView(event.id)
       return
     case 'board':
-      if (event.reveal) {
+      // Leaving for the board would drop JSON the researcher has not applied.
+      if (event.reveal && useBoardUiStore.getState().draftOf === undefined) {
         open(event.project)
         useDockingStore.getState().ensureLeaf('board')
       }

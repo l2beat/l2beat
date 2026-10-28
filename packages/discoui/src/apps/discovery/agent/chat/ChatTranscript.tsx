@@ -9,6 +9,7 @@ import { cn } from '../../../../utils/cn'
 import { useDockingStore } from '../../multi-view/store'
 import {
   activateBoard,
+  confirmLeavingDraft,
   listBoards,
   useBoardUiStore,
 } from '../../panel-board/boardApi'
@@ -257,6 +258,7 @@ function OpenBoardButton(props: { boardId: string }) {
     <button
       type="button"
       onClick={() => {
+        if (!confirmLeavingDraft()) return
         useDockingStore.getState().ensureLeaf('board')
         activateBoard(project, props.boardId)
       }}
