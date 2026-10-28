@@ -32,13 +32,27 @@ export function sortRows(
 }
 
 // Numbers by value, before text, so decimals and negatives order right.
+// Integers compare exactly: uint256 values pass 2^53.
 function compareCells(a: string, b: string): number {
+  if (isIntegerText(a) && isIntegerText(b)) {
+    const difference = BigInt(a) - BigInt(b)
+    return difference === 0n ? 0 : difference < 0n ? -1 : 1
+  }
   const x = Number(a)
   const y = Number(b)
   if (Number.isFinite(x) && Number.isFinite(y)) return x - y
   if (Number.isFinite(x)) return -1
   if (Number.isFinite(y)) return 1
   return a.localeCompare(b, 'en', { numeric: true })
+}
+
+function isIntegerText(text: string): boolean {
+  const digits = text.startsWith('-') ? text.slice(1) : text
+  if (digits.length === 0) return false
+  for (const char of digits) {
+    if (char < '0' || char > '9') return false
+  }
+  return true
 }
 
 function cellText(row: BoardRow, column: number): string {
