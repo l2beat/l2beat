@@ -74,9 +74,9 @@ export const lineaprover: BaseProject = {
     verifierHashes: [
       {
         hash: '0xbe73a8003797063d70b44eba376a814caf3399361069b5e5e43660cc435c27c9',
-        name: 'Linea Plonk Type 0',
-        // sourceLink:
-        //   'https://github.com/Consensys/linea-monorepo/tree/b90a3c0b6735ba39dc19356628c09c03e42c016d/prover',
+        name: 'Linea Plonk 7.6.0',
+        sourceLink:
+          'https://github.com/Consensys/linea-monorepo/tree/064531156c8c4f52fa5f00f004a87677e4f90026/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -86,7 +86,11 @@ export const lineaprover: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        verificationSteps: readProjectMarkdown(
+          'lineaprover',
+          'verificationSteps-0xbe73a800',
+        ),
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
@@ -136,7 +140,9 @@ export const lineaprover: BaseProject = {
       // },
       {
         hash: '0xabaec8554ae44d4753172f85c8b68f59eec6f51de6301b126ca07cebbeb571b1',
-        name: 'Linea Plonk Type 1',
+        name: 'Linea Plonk 7.7.0',
+        sourceLink:
+          'https://github.com/Consensys/linea-monorepo/tree/2ddc76f514d389d20286a78bfc1fb12c566e8c66/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -146,7 +152,11 @@ export const lineaprover: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        verificationSteps: readProjectMarkdown(
+          'lineaprover',
+          'verificationSteps-0xabaec855',
+        ),
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
