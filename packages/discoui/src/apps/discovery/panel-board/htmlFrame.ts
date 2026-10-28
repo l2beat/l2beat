@@ -1,8 +1,11 @@
 import colors from '../../../colors.json'
 
-// The page runs in a sandbox with no network and no access to DiscoUI: it
-// can only ask to select a contract and say how tall it is. What it shows
-// comes from the agent, which may have copied names out of discovered data.
+// The page runs in a sandbox that loads no resources from the network and
+// cannot reach DiscoUI: it can only ask to select a contract and say how tall
+// it is. A script can still navigate the frame away, but the page comes from
+// the researcher's own agent or project, which reach the network anyway.
+// What it shows comes from the agent, which may have copied names out of
+// discovered data.
 const CSP =
   "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; font-src data:"
 
