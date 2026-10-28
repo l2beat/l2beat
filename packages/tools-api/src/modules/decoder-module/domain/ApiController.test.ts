@@ -4,7 +4,7 @@ import { describe } from 'mocha'
 import { encodePacked, keccak256 } from 'viem'
 import chainList from '../../../config/chains.json'
 import { Chain } from '../../../config/types'
-import type { AlchemyClient } from '../../../third-party/AlchemyClient'
+import type { ChainRpcClient } from '../../../third-party/ChainRpcClient'
 import type { IAddressService } from './AddressService'
 import { ApiController } from './ApiController'
 import type { Decoder } from './Decoder'
@@ -69,7 +69,7 @@ function createController(addressService: IAddressService) {
     mockObject<Decoder>(),
     mockObject<ISignatureService>(),
     addressService,
-    mockObject<AlchemyClient>(),
+    mockObject<ChainRpcClient>(),
     chains,
     { [ADMIN_SLOT_HASH]: ADMIN_SLOT_PREIMAGE },
   )

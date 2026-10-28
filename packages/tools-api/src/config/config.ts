@@ -1,8 +1,10 @@
 import { getEnv } from '@l2beat/backend-tools'
+import { ProjectService } from '@l2beat/config'
 import { v } from '@l2beat/validate'
 import { encodePacked, keccak256 } from 'viem'
 import chainList from './chains.json'
 import { getDiscoveredConfig } from './discovery'
+import { getRpcUrls } from './getRpcUrls'
 import { getUopsChains } from './getUopsChains'
 import preImages from './preImages.json'
 import tokenList from './tokens.json'
@@ -17,12 +19,19 @@ export async function getConfig(): Promise<Config> {
   const env = getEnv()
 
   const discovered = getDiscoveredConfig(chains)
+  const projects = await new ProjectService().getProjects({
+    select: ['chainConfig'],
+  })
 
   return {
     port: env.integer('PORT', 3000),
-    alchemyApiKey: env.string('ALCHEMY_API_KEY'),
     etherscanApiKey: env.string('ETHERSCAN_API_KEY'),
     chains,
+    rpcUrls: getRpcUrls(
+      chains,
+      env.string('ALCHEMY_API_KEY'),
+      projects.map((project) => project.chainConfig),
+    ),
     discovered,
     tokens: Object.fromEntries(
       Object.entries(tokens).map(([k, [name, decimals]]) => [

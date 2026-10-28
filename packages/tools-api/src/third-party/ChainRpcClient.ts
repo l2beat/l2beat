@@ -8,10 +8,10 @@ export interface BasicTxInfo {
   data: `0x${string}`
 }
 
-export class AlchemyClient {
+export class ChainRpcClient {
   private client = new JsonRpcClient()
 
-  constructor(private key: string) {}
+  constructor(private rpcUrls: Record<number, string>) {}
 
   async getSafeState(address: `0x${string}`, chain: Chain) {
     const client = createPublicClient({
@@ -68,7 +68,13 @@ export class AlchemyClient {
   }
 
   private url(chain: Chain) {
-    return `https://${chain.alchemyId}.g.alchemy.com/v2/${this.key}`
+    const url = this.rpcUrls[chain.chainId]
+    if (url === undefined) {
+      throw new Error('No RPC URL for chain', {
+        cause: { chainId: chain.chainId },
+      })
+    }
+    return url
   }
 }
 

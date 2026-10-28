@@ -1,12 +1,12 @@
 import { expect, mockObject } from 'earl'
 import { encodeAbiParameters } from 'viem'
 import type { Chain } from '../config/types'
-import { AlchemyClient } from './AlchemyClient'
+import { ChainRpcClient } from './ChainRpcClient'
 
-describe('AlchemyClient.getSafeState', () => {
+describe('ChainRpcClient.getSafeState', () => {
   const originalFetch = globalThis.fetch
   const address = '0xc2819dc788505aac350142a7a707bf9d03e3bd03'
-  const chain = mockObject<Chain>({ alchemyId: 'eth-mainnet' })
+  const chain = mockObject<Chain>({ chainId: 1 })
 
   afterEach(() => {
     globalThis.fetch = originalFetch
@@ -46,7 +46,9 @@ describe('AlchemyClient.getSafeState', () => {
         { headers: { 'Content-Type': 'application/json' } },
       )
     }
-    const result = await new AlchemyClient('test').getSafeState(address, chain)
+    const result = await new ChainRpcClient({
+      1: 'https://rpc.test',
+    }).getSafeState(address, chain)
     expect(result).toEqual({
       nonce: '9007199254740993',
       version: '1.3.0',
