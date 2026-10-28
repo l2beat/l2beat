@@ -163,11 +163,12 @@ export async function getActivityChart({
   }
 
   // Hours are synced past midnight, unlike the day they belong to. A
-  // project's own chart waits for it however far behind it is
+  // project's own chart waits for it and for Ethereum, shown beside it,
+  // however far behind they are
   const { records: hourlyEntries, window } = await getHourlyActivityRecords(
     projects,
     range,
-    projectId ? { syncedBy: [projectId] } : undefined,
+    projectId ? { waitFor: [projectId, ProjectId.ETHEREUM] } : undefined,
   )
   const lastHour = window.end
   // Hourly data can start after the range does

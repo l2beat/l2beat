@@ -101,6 +101,20 @@ describe(getHourlyActivityWindow.name, () => {
     })
   })
 
+  it('waits for every project, however far behind, when told to', () => {
+    const window = getHourlyActivityWindow(
+      optionToRange('1d'),
+      [
+        synced('ethereum', '2026-10-28T14:00:00Z'),
+        catchingUp('stalled', '2026-10-28T09:00:00Z'),
+      ],
+      { waitForAll: true },
+    )
+
+    expect(window.end).toEqual(at('2026-10-28T07:00:00Z'))
+    expect(window.behind).toEqual([])
+  })
+
   it('ends where everything stopped when all projects are behind', () => {
     const window = getHourlyActivityWindow(optionToRange('1d'), [
       synced('arbitrum', '2026-10-28T05:00:00Z'),

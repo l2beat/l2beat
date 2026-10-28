@@ -11,8 +11,11 @@ export async function getHourlyActivityRecords(
   projectIds: ProjectId[],
   range: ChartRange,
   options?: {
-    /** Whose sync decides the window, of those with hours. All by default */
-    syncedBy?: ProjectId[]
+    /**
+     * The only projects whose sync decides the window, however far behind.
+     * All projects with hours by default, leaving out those too far behind
+     */
+    waitFor?: ProjectId[]
   },
 ) {
   const db = getDb()
@@ -21,7 +24,7 @@ export async function getHourlyActivityRecords(
   // indexer saves a batch in between
   const syncMetadata = await db.syncMetadata.getByFeatureAndIds(
     'activity',
-    options?.syncedBy ?? projectIds,
+    options?.waitFor ?? projectIds,
   )
   const records = await db.hourlyActivity.getByProjectsAndTimeRange(
     projectIds,
@@ -32,6 +35,7 @@ export async function getHourlyActivityRecords(
   const window = getHourlyActivityWindow(
     range,
     syncMetadata.filter((m) => withHours.has(ProjectId(m.id))),
+    { waitForAll: options?.waitFor !== undefined },
   )
   const behind = new Set(window.behind.map((p) => p.id))
 

@@ -28,6 +28,10 @@ export interface HourlyActivityWindow {
 export function getHourlyActivityWindow(
   range: ChartRange,
   syncMetadata: SyncMetadataRecord[],
+  options?: {
+    /** Never leave a project out, as on its own page */
+    waitForAll?: boolean
+  },
 ): HourlyActivityWindow {
   const projects = syncMetadata.flatMap((record) => {
     const syncedUntil = getFullySyncedUntil(record)
@@ -40,7 +44,7 @@ export function getHourlyActivityWindow(
       ? rangeEnd
       : Math.min(rangeEnd, Math.max(...projects.map((p) => p.syncedUntil)))
   const isBehind = (p: { syncedUntil: UnixTime }) =>
-    p.syncedUntil < freshest - MAX_LAG
+    !options?.waitForAll && p.syncedUntil < freshest - MAX_LAG
   const end =
     Math.min(
       freshest,
