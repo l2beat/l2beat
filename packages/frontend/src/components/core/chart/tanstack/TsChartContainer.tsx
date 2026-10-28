@@ -4,12 +4,17 @@ import { Logo } from '~/components/Logo'
 import { useIsNearViewport } from '~/hooks/useIsNearViewport'
 import { cn } from '~/utils/cn'
 import { ignorePointerWhileScrollingClassName } from '~/utils/scrollActivity'
-import { ChartContext, type ChartMeta } from '../ChartContext'
+import {
+  ChartContext,
+  type ChartMeta,
+  type ChartProject,
+} from '../ChartContext'
 import { useChartLegendOnboarding } from '../ChartLegendOnboardingContext'
 import { ChartLoader } from '../ChartLoader'
 import { ChartMilestones } from '../ChartMilestones'
 import { ChartNoDataSourceState } from '../ChartNoDataSourceState'
 import { ChartNoDataState } from '../ChartNoDataState'
+import { ChartProjectLogo } from '../ChartProjectLogo'
 import { ChartSettledSize } from '../ChartSettledSize'
 import { TsChartLegend } from './TsChartLegend'
 
@@ -28,6 +33,11 @@ export function TsChartContainer<T extends { timestamp: number }>({
   size = 'regular',
   interactiveLegend,
   legend = false,
+  legendLeading,
+  project,
+  loaderClassName,
+  logoClassName,
+  noDataSourceMessage,
   className,
 }: {
   meta: ChartMeta
@@ -39,6 +49,12 @@ export function TsChartContainer<T extends { timestamp: number }>({
     disableOnboarding?: boolean
   }
   legend?: boolean
+  /** Rendered before the legend items, e.g. a show/hide-all toggle. */
+  legendLeading?: React.ReactNode
+  project?: ChartProject
+  loaderClassName?: string
+  logoClassName?: string
+  noDataSourceMessage?: string
   milestones?: Milestone[]
   isLoading?: boolean
   size?: 'regular' | 'small'
@@ -76,7 +92,9 @@ export function TsChartContainer<T extends { timestamp: number }>({
             >
               {shouldMountChart ? children : null}
             </div>
-            {legend && shouldMountChart && <TsChartLegend />}
+            {legend && shouldMountChart && (
+              <TsChartLegend leading={legendLeading} />
+            )}
           </div>
         </ChartSettledSize>
         {(!!isLoading || !shouldMountChart) && (
@@ -85,6 +103,7 @@ export function TsChartContainer<T extends { timestamp: number }>({
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
               '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.ts-legend]:top-[calc(50%-18px)]',
+              loaderClassName,
             )}
           />
         )}
@@ -94,7 +113,7 @@ export function TsChartContainer<T extends { timestamp: number }>({
             <ChartNoDataState size={size} />
           )}
         {noDataSourcesSelected && !isLoading && shouldMountChart && (
-          <ChartNoDataSourceState />
+          <ChartNoDataSourceState message={noDataSourceMessage} />
         )}
         {shouldMountChart && size !== 'small' && (
           <Logo
@@ -106,6 +125,20 @@ export function TsChartContainer<T extends { timestamp: number }>({
                 !hasFinishedOnboardingInitial
                 ? 'bottom-[60px] group-has-[.ts-legend]:bottom-[68px]'
                 : 'bottom-12 group-has-[.ts-legend]:bottom-14',
+              logoClassName,
+            )}
+          />
+        )}
+        {shouldMountChart && size !== 'small' && project && (
+          <ChartProjectLogo
+            project={project}
+            className={cn(
+              'pointer-events-none absolute left-3 opacity-50',
+              !!interactiveLegend &&
+                !interactiveLegend.disableOnboarding &&
+                !hasFinishedOnboardingInitial
+                ? 'bottom-[68px] group-has-[.ts-legend]:bottom-[76px]'
+                : 'bottom-14 group-has-[.ts-legend]:bottom-16',
             )}
           />
         )}

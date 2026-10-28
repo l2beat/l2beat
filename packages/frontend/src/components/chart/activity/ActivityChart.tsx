@@ -9,17 +9,12 @@ import {
 } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
-import type {
-  ChartMeta,
-  ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
@@ -41,6 +36,10 @@ import {
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import {
+  getTooltipEntries,
+  TsChartTooltipWrapper,
+} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import { formatRange } from '~/utils/dates'
@@ -190,18 +189,27 @@ export function ActivityChart({
   )
 }
 
-export function ActivityCustomTooltip({
-  payload,
-  label: timestamp,
+export function ActivityCustomTooltip<
+  T extends { timestamp: number },
+  K extends string,
+>({
+  row,
+  keys,
   metric,
-}: CustomChartTooltipProps & {
+  skipNull,
+}: {
+  row: T
+  keys: K[]
   metric: ActivityMetric
+  /** Leave out series without a value, instead of showing "No data". */
+  skipNull?: boolean
 }) {
   const { meta } = useChart()
-  if (!payload || typeof timestamp !== 'number') return null
+  const timestamp = row.timestamp
+  const payload = getTooltipEntries(row, keys, { skipNull })
 
   return (
-    <ChartTooltipWrapper>
+    <TsChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(timestamp, timestamp + UnixTime.DAY)}
@@ -210,8 +218,6 @@ export function ActivityCustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.name === undefined || entry.type === 'none' || entry.hide)
-              return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -245,13 +251,6 @@ export function ActivityCustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (
-              entry.name === undefined ||
-              entry.value === undefined ||
-              entry.type === 'none' ||
-              entry.hide
-            )
-              return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -279,7 +278,7 @@ export function ActivityCustomTooltip({
           })}
         </div>
       </div>
-    </ChartTooltipWrapper>
+    </TsChartTooltipWrapper>
   )
 }
 

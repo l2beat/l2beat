@@ -8,22 +8,18 @@ import {
 } from '@l2beat/shared-pure'
 import isNumber from 'lodash/isNumber'
 import { useMemo } from 'react'
-import { Area, ComposedChart, Line, YAxis } from 'recharts'
 import type {
   ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipWrapper,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+} from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { TsChartContainer } from '~/components/core/chart/tanstack/TsChartContainer'
+import {
+  TsChartTooltipWrapper,
+  type TsSeries,
+  TsTimeSeriesChart,
+} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/layer2s/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/layer2s/costs/types'
@@ -34,7 +30,15 @@ import {
   rangeToResolution,
 } from '~/utils/range/range'
 
-const DATA_POSTED_KEY = 'ethereum'
+const DATA_POSTED_KEY = 'ethereum' as const
+/** Stack order, bottom first. */
+const COST_KEYS_BOTTOM_UP = [
+  'overhead',
+  'compute',
+  'blobs',
+  'calldata',
+] as const
+type SeriesKey = (typeof COST_KEYS_BOTTOM_UP)[number] | typeof DATA_POSTED_KEY
 
 interface CostsChartDataPoint {
   timestamp: number
@@ -113,8 +117,32 @@ export function CostsChart({
 
   const resolution = rangeToResolution(range)
 
+  const topCostKey = COST_KEYS_BOTTOM_UP.findLast(
+    (key) => dataKeys.includes(key) && chartMeta[key],
+  )
+  const series: TsSeries<SeriesKey, CostsChartDataPoint>[] = [
+    ...COST_KEYS_BOTTOM_UP.filter((key) => chartMeta[key]).map((key) => ({
+      key,
+      fill: chartMeta[key]?.color,
+      stack: true,
+      // One dot, on top of the stack, as in the Recharts chart.
+      activeDot: key === topCostKey,
+      hidden: !dataKeys.includes(key),
+    })),
+    ...(chartMeta.ethereum
+      ? [
+          {
+            key: DATA_POSTED_KEY,
+            stroke: chartMeta.ethereum.color,
+            axis: 'right' as const,
+            hidden: !dataKeys.includes(DATA_POSTED_KEY),
+          },
+        ]
+      : []),
+  ]
+
   return (
-    <ChartContainer
+    <TsChartContainer
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
@@ -124,143 +152,61 @@ export function CostsChart({
         onItemClick: toggleDataKey,
       }}
       project={project}
+      legend
     >
-      <ComposedChart responsive data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent />} />
-        <Area
-          yAxisId="left"
-          dataKey="overhead"
-          fill={chartMeta.overhead.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId="a"
-          activeDot={
-            !dataKeys.includes('calldata') &&
-            (!chartMeta.blobs || !dataKeys.includes('blobs')) &&
-            !dataKeys.includes('compute')
-          }
-          isAnimationActive={false}
-          hide={!dataKeys.includes('overhead')}
-        />
-        <Area
-          yAxisId="left"
-          dataKey="compute"
-          fill={chartMeta.compute.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId="a"
-          activeDot={
-            !dataKeys.includes('calldata') &&
-            (!chartMeta.blobs || !dataKeys.includes('blobs'))
-          }
-          isAnimationActive={false}
-          hide={!dataKeys.includes('compute')}
-        />
-        <Area
-          yAxisId="left"
-          dataKey="blobs"
-          fill={chartMeta.blobs?.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId="a"
-          activeDot={!dataKeys.includes('calldata')}
-          isAnimationActive={false}
-          hide={!dataKeys.includes('blobs') || !chartMeta.blobs}
-        />
-        <Area
-          yAxisId="left"
-          dataKey="calldata"
-          fill={chartMeta.calldata.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId="a"
-          isAnimationActive={false}
-          hide={!dataKeys.includes('calldata')}
-        />
-
-        {chartMeta.ethereum && (
-          <Line
-            yAxisId="right"
-            dataKey="ethereum"
-            stroke={chartMeta.ethereum.color}
-            isAnimationActive={false}
-            dot={false}
-            hide={!dataKeys.includes('ethereum')}
+      <TsTimeSeriesChart
+        data={data}
+        series={series}
+        ariaLabel="Costs"
+        syncedUntil={syncedUntil}
+        yAxis={{
+          format: (value) =>
+            unit === 'gas' ? formatNumber(value) : formatCurrency(value, unit),
+          tickCount,
+        }}
+        rightAxis={
+          chartMeta.ethereum ? { format: formatBytes, tickCount } : undefined
+        }
+        renderTooltip={(row, keys) => (
+          <CustomTooltip
+            row={row}
+            keys={keys}
+            unit={unit}
+            resolution={resolution}
+            chartMeta={chartMeta}
           />
         )}
-
-        <YAxis
-          yAxisId="right"
-          orientation="right"
-          tickFormatter={(value: number) => formatBytes(value)}
-          tickLine={false}
-          axisLine={false}
-          mirror
-          tickCount={tickCount ?? 3}
-          dy={-10}
-          tick={{
-            width: 100,
-          }}
-        />
-
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            yAxisId: 'left',
-            tickFormatter: (value: number) =>
-              unit === 'gas'
-                ? formatNumber(value)
-                : formatCurrency(value, unit),
-            tickCount,
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartTooltip
-          content={
-            <CustomTooltip
-              unit={unit}
-              resolution={resolution}
-              chartMeta={chartMeta}
-            />
-          }
-        />
-      </ComposedChart>
-    </ChartContainer>
+      />
+    </TsChartContainer>
   )
 }
 
 function CustomTooltip({
-  payload,
-  label,
+  row,
+  keys,
   unit,
   resolution,
   chartMeta,
-}: CustomChartTooltipProps & {
+}: {
+  row: CostsChartDataPoint
+  keys: SeriesKey[]
   unit: CostsUnit
   resolution: ChartResolution
   chartMeta: ChartMeta
 }) {
-  if (!payload || typeof label !== 'number') return null
-
-  const actualPayload = [...payload].reverse().filter((p) => !p.hide)
+  const label = row.timestamp
+  // Top of the stack first; rows without a value are left out.
+  const actualPayload = [...keys].reverse().flatMap((name) => {
+    const value = row[name]
+    return value !== null && value !== undefined ? [{ name, value }] : []
+  })
   const costPayload = actualPayload.filter((p) => !isDataPostedKey(p.name))
-  const total = actualPayload.reduce<number | null>((acc, curr) => {
-    if (isDataPostedKey(curr.name)) {
-      return acc
-    }
-    if (curr.value === null || curr.value === undefined) {
-      return acc
-    }
-
-    if (acc === null) {
-      return curr?.value ?? null
-    }
-
-    return acc + curr.value
-  }, null)
+  const total = costPayload.reduce<number | null>(
+    (acc, curr) => (acc ?? 0) + curr.value,
+    null,
+  )
   return (
-    <ChartTooltipWrapper>
+    <TsChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
         <div className="font-medium text-label-value-14 text-secondary">
           {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
@@ -280,7 +226,6 @@ function CustomTooltip({
         )}
         <div className="mt-2 flex flex-col gap-2">
           {actualPayload.map((entry) => {
-            if (entry.type === 'none' || entry.hide) return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             assert(config, 'No config')
             return (
@@ -298,20 +243,16 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.value !== null &&
-                  entry.value !== undefined &&
-                  entry.name !== undefined
-                    ? isDataPostedKey(entry.name)
-                      ? formatBytes(entry.value)
-                      : formatCostValue(entry.value, unit, 'total')
-                    : 'No data'}
+                  {isDataPostedKey(entry.name)
+                    ? formatBytes(entry.value)
+                    : formatCostValue(entry.value, unit, 'total')}
                 </span>
               </div>
             )
           })}
         </div>
       </div>
-    </ChartTooltipWrapper>
+    </TsChartTooltipWrapper>
   )
 }
 

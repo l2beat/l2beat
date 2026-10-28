@@ -22,6 +22,17 @@ interface Active {
   y: number
 }
 
+export interface OverlayDot<T> {
+  key: string
+  value: (row: T, index: number) => number | null | undefined
+  /** The scene scale the value maps through. */
+  scale: string
+}
+
+type SyncListener = (x: number | null, source: object) => void
+/** Hover shared between charts with the same sync id, by x value. */
+const syncListeners = new Map<string, Set<SyncListener>>()
+
 /**
  * Crosshair, active dots and tooltip for a time series. React renders only
  * when the hovered row changes; moves within a row just translate the
@@ -29,22 +40,27 @@ interface Active {
  * pointer (left past the middle of the plot), may leave the chart but not
  * the window, and arrow keys move it between rows.
  */
-export function TsHoverOverlay<T extends { timestamp: number }>({
+export function TsHoverOverlay<T>({
   rows,
-  keys,
+  x: getX,
+  dots,
   sceneRef,
   ariaLabel,
+  syncId,
   renderTooltip,
 }: {
   rows: T[]
-  keys: (keyof T & string)[]
+  x: (row: T) => number
+  dots: OverlayDot<T>[]
   sceneRef: RefObject<ChartScene | null>
   ariaLabel: string
+  syncId?: string
   renderTooltip: (row: T) => ReactNode
 }) {
   const [active, setActive] = useState<Active | null>(null)
   const rootRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
+  const [self] = useState(() => ({}))
 
   const scene = sceneRef.current
   const row = active ? rows[active.index] : undefined
@@ -85,12 +101,56 @@ export function TsHoverOverlay<T extends { timestamp: number }>({
     return () => document.removeEventListener('pointerdown', closeOutside)
   }, [isActive])
 
+  const latest = useRef({ rows, getX })
+  latest.current = { rows, getX }
+  useEffect(() => {
+    if (!syncId) return
+    const listeners = syncListeners.get(syncId) ?? new Set()
+    syncListeners.set(syncId, listeners)
+    const listener: SyncListener = (value, source) => {
+      if (source === self) return
+      const scene = sceneRef.current
+      const { rows, getX } = latest.current
+      if (value === null || !scene || rows.length === 0) {
+        setActive(null)
+        return
+      }
+      const index = nearestIndex(rows, getX, value)
+      const row = rows[index]
+      if (row === undefined) return
+      setActive({
+        index,
+        x: scene.scales.x?.map(getX(row)) ?? 0,
+        y: scene.chart.y + scene.chart.height / 2,
+      })
+    }
+    listeners.add(listener)
+    return () => {
+      listeners.delete(listener)
+    }
+  }, [syncId, self, sceneRef])
+
+  function broadcast(index: number | null) {
+    if (!syncId) return
+    const row = index === null ? undefined : rows[index]
+    const value = row === undefined ? null : getX(row)
+    for (const listener of syncListeners.get(syncId) ?? []) {
+      listener(value, self)
+    }
+  }
+
   function activate(index: number, x: number, y: number) {
     if (index === active?.index) {
       placeTooltip(x, y)
       return
     }
     setActive({ index, x, y })
+    broadcast(index)
+  }
+
+  function deactivate() {
+    setActive(null)
+    broadcast(null)
   }
 
   function onPointerMove(event: PointerEvent<HTMLDivElement>) {
@@ -101,7 +161,7 @@ export function TsHoverOverlay<T extends { timestamp: number }>({
     const rect = event.currentTarget.getBoundingClientRect()
     const x = event.clientX - rect.left
     const y = event.clientY - rect.top
-    activate(nearestIndex(rows, Number(invert(x))), x, y)
+    activate(nearestIndex(rows, getX, Number(invert(x))), x, y)
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -115,20 +175,21 @@ export function TsHoverOverlay<T extends { timestamp: number }>({
     const index = Math.min(rows.length - 1, Math.max(0, from + step))
     const target = rows[index]
     if (!target) return
-    const value = keys.map((key) => target[key]).find(isNumber)
+    const first = dots
+      .map((d) => ({ d, value: d.value(target, index) }))
+      .find(({ value }) => isNumber(value))
     activate(
       index,
-      current.scales.x?.map(target.timestamp) ?? 0,
-      value !== undefined
-        ? (current.scales.y?.map(value) ?? 0)
+      current.scales.x?.map(getX(target)) ?? 0,
+      first && isNumber(first.value)
+        ? (current.scales[first.d.scale]?.map(first.value) ?? 0)
         : current.chart.y + current.chart.height / 2,
     )
   }
 
   const xScale = scene?.scales.x
-  const yScale = scene?.scales.y
   const plot = scene?.chart
-  const cx = row && xScale ? xScale.map(row.timestamp) : 0
+  const cx = row !== undefined && xScale ? xScale.map(getX(row)) : 0
 
   return (
     <div
@@ -142,14 +203,14 @@ export function TsHoverOverlay<T extends { timestamp: number }>({
       onPointerLeave={(event) => {
         // A lifted finger also leaves; the tooltip stays until a tap
         // elsewhere blurs the chart.
-        if (event.pointerType !== 'touch') setActive(null)
+        if (event.pointerType !== 'touch') deactivate()
       }}
       // A swipe that turns into a scroll is cancelled, not a tap.
-      onPointerCancel={() => setActive(null)}
+      onPointerCancel={deactivate}
       onKeyDown={onKeyDown}
-      onBlur={() => setActive(null)}
+      onBlur={deactivate}
     >
-      {row && plot && yScale && (
+      {row !== undefined && active && plot && (
         <>
           <div
             className="pointer-events-none absolute w-0.5 bg-primary"
@@ -159,17 +220,18 @@ export function TsHoverOverlay<T extends { timestamp: number }>({
               transform: `translateX(${cx - 1}px)`,
             }}
           />
-          {keys.map((key) => {
-            const value = row[key]
-            if (!isNumber(value)) return null
+          {dots.map((d) => {
+            const value = d.value(row, active.index)
+            const scale = scene?.scales[d.scale]
+            if (!isNumber(value) || !scale) return null
             return (
               <div
-                key={key}
+                key={d.key}
                 className="pointer-events-none absolute rounded-full bg-primary"
                 style={{
                   width: ACTIVE_DOT_RADIUS * 2,
                   height: ACTIVE_DOT_RADIUS * 2,
-                  transform: `translate(${cx - ACTIVE_DOT_RADIUS}px, ${yScale.map(value) - ACTIVE_DOT_RADIUS}px)`,
+                  transform: `translate(${cx - ACTIVE_DOT_RADIUS}px, ${scale.map(value) - ACTIVE_DOT_RADIUS}px)`,
                 }}
               />
             )
@@ -180,9 +242,9 @@ export function TsHoverOverlay<T extends { timestamp: number }>({
         ref={tooltipRef}
         data-chart-tooltip=""
         className="pointer-events-none absolute top-0 left-0 z-110"
-        style={{ visibility: row ? 'visible' : 'hidden' }}
+        style={{ visibility: row !== undefined ? 'visible' : 'hidden' }}
       >
-        {row && renderTooltip(row)}
+        {row !== undefined && renderTooltip(row)}
       </div>
     </div>
   )
@@ -192,17 +254,19 @@ function isNumber(value: unknown): value is number {
   return typeof value === 'number' && Number.isFinite(value)
 }
 
-/** Index of the row closest to `x`; rows are sorted by timestamp. */
-function nearestIndex<T extends { timestamp: number }>(rows: T[], x: number) {
+/** Index of the row closest to `x`; rows are sorted by x. */
+function nearestIndex<T>(rows: T[], getX: (row: T) => number, x: number) {
   let lo = 0
   let hi = rows.length - 1
   while (lo < hi) {
     const mid = (lo + hi) >> 1
-    if ((rows[mid]?.timestamp ?? 0) < x) lo = mid + 1
+    if (getX(rows[mid] as T) < x) lo = mid + 1
     else hi = mid
   }
   const prev = rows[lo - 1]
   const at = rows[lo]
-  if (prev && at && x - prev.timestamp < at.timestamp - x) return lo - 1
+  if (prev !== undefined && at !== undefined && x - getX(prev) < getX(at) - x) {
+    return lo - 1
+  }
   return lo
 }

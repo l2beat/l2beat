@@ -1,5 +1,4 @@
 import type { Milestone } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
 import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
@@ -10,7 +9,12 @@ import { cn } from '~/utils/cn'
 import { ignorePointerWhileScrollingClassName } from '~/utils/scrollActivity'
 import { OverflowWrapper } from '../OverflowWrapper'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
-import { ChartContext, type ChartMeta, useChart } from './ChartContext'
+import {
+  ChartContext,
+  type ChartMeta,
+  type ChartProject,
+  useChart,
+} from './ChartContext'
 import { ChartDataIndicator } from './ChartDataIndicator'
 import {
   legendOnboardingHintClassName,
@@ -50,13 +54,6 @@ const chartContainerClassNames = cn(
   // Reference line
   "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/40",
 )
-
-export interface ChartProject {
-  id: ProjectId
-  name: string
-  shortName: string | undefined
-  iconUrl: string
-}
 
 function ChartContainer<T extends { timestamp: number }>({
   children,
@@ -438,7 +435,7 @@ function getPayloadConfigFromPayload(
   return configLabelKey in config ? config[configLabelKey] : config[key]
 }
 
-export { type ChartMeta, useChart } from './ChartContext'
+export { type ChartMeta, type ChartProject, useChart } from './ChartContext'
 export {
   ChartContainer,
   ChartLegend,

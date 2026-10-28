@@ -1,3 +1,4 @@
+import type { ProjectId } from '@l2beat/shared-pure'
 import * as React from 'react'
 import type { ChartDataIndicatorType } from './ChartDataIndicator'
 
@@ -11,6 +12,13 @@ export type ChartMeta = Record<
     }
   | undefined
 >
+
+export interface ChartProject {
+  id: ProjectId
+  name: string
+  shortName: string | undefined
+  iconUrl: string
+}
 
 type ChartContextProps = {
   meta: ChartMeta

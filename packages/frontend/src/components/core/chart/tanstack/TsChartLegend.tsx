@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { type ReactNode, useRef } from 'react'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../../OverflowWrapper'
@@ -10,7 +10,7 @@ import {
 } from '../ChartLegendOnboardingContext'
 
 /** `ChartLegendContent` without Recharts: items come from the chart meta. */
-export function TsChartLegend() {
+export function TsChartLegend({ leading }: { leading?: ReactNode }) {
   const contentRef = useRef<HTMLDivElement>(null)
   const { meta, interactiveLegend } = useChart()
   const {
@@ -35,6 +35,7 @@ export function TsChartLegend() {
       )}
     >
       <div className="mx-auto flex w-max max-w-full items-center">
+        {leading}
         <OverflowWrapper childrenRef={contentRef} className="min-w-0">
           <div className="flex h-3.5 w-max items-center gap-2" ref={contentRef}>
             {items.map(({ key, config }) => {
