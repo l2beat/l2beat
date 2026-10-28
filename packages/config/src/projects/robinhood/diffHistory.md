@@ -9,7 +9,7 @@ Generated with discovered.json: 0x5510ca7bdcaa6403810068742f848cc2037bfb3f
 
 ## Description
 
-ArbFilteredTransactionsManager: filter list 6208 → 6228.
+ArbFilteredTransactionsManager: FilteredTransactionAdded events 6208 → 6228.
 
 ## Watched changes
 

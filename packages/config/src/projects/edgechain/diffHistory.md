@@ -9,8 +9,8 @@ Generated with discovered.json: 0x8407d35cdb839401259b10f4ddd2f9466a3a66f2
 
 ## Description
 
-UpgradeExecutor: an existing executor EOA added a second executor EOA, also made L2 chain owner.
-SequencerInbox: DAC keyset replaced, 2/5 → 2/2; second batch poster added.
+UpgradeExecutor: an existing executor EOA added a second executor EOA, which is also an L2 chain owner.
+SequencerInbox: DAC reduced from 2-of-5 to 2-of-2, three members removed; second batch poster added.
 RollupProxy: second validator added.
 
 ## Watched changes
