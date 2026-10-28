@@ -83,7 +83,7 @@ export function TsTimeSeriesChart<
 }: Props<T, K>) {
   const rows = data ?? EMPTY
   const visible = series.filter((s) => !s.hidden)
-  const visibleKey = visible.map((s) => s.key).join()
+  const visibleKey = visible.map((s) => `${s.key}:${s.stroke}:${s.fill}`).join()
 
   const lastSyncedTimestamp =
     syncedUntil !== undefined

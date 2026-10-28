@@ -4,6 +4,7 @@ import {
   type PointerEvent,
   type ReactNode,
   type RefObject,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -71,6 +72,18 @@ export function TsHoverOverlay<T extends { timestamp: number }>({
   useLayoutEffect(() => {
     if (active) placeTooltip(active.x, active.y)
   }, [active])
+
+  // A tap leaves a touch tooltip open, and not every browser focuses the
+  // overlay on tap, so blur alone cannot close it.
+  const isActive = active !== null
+  useEffect(() => {
+    if (!isActive) return
+    const closeOutside = (event: globalThis.PointerEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) setActive(null)
+    }
+    document.addEventListener('pointerdown', closeOutside)
+    return () => document.removeEventListener('pointerdown', closeOutside)
+  }, [isActive])
 
   function activate(index: number, x: number, y: number) {
     if (index === active?.index) {
