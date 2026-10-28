@@ -11,12 +11,12 @@ export type BasicTableGroupParams = {
 }
 
 export function getTableOuterWrapperClassName() {
-  return 'max-md:-mr-4'
+  return 'table-scroll-root max-md:-mr-4'
 }
 
 export function getTableScrollWrapperClassName(tableWrapperClassName?: string) {
   return cn(
-    'relative w-full overflow-x-auto pb-3 max-md:pr-4',
+    'table-scroller relative w-full overflow-x-auto pb-3 max-md:pr-4',
     tableWrapperClassName,
   )
 }

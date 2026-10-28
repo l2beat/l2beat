@@ -69,6 +69,7 @@ const Table = ({
           </table>
         </HighlightedTableRowProvider>
       </div>
+      <div aria-hidden className="table-edge-fade" />
     </div>
   )
 }

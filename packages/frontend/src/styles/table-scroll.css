@@ -1,0 +1,51 @@
+/*
+  A table's sideways scroll, as a timeline for what is drawn outside its
+  scroller to follow: the sticky header copy and the edge fade.
+*/
+@utility table-scroll-root {
+  position: relative;
+  timeline-scope: --table-scroll-timeline;
+}
+
+@utility table-scroller {
+  scroll-timeline: --table-scroll-timeline inline;
+}
+
+/*
+  Shades the table's right edge while columns lie beyond it, since a column
+  cut at the edge can look like the last one. It fades out over the last
+  stretch of scroll, as long as it is wide. A table with nothing to scroll has
+  an inactive timeline, so the fade stays hidden; so does a browser without
+  scroll-driven animations.
+
+  The left edge needs none: a reader who scrolled knows the table scrolls, and
+  cells sliding under pinned columns show it too.
+*/
+@utility table-edge-fade {
+  --table-edge-fade-width: --spacing(14);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  width: var(--table-edge-fade-width);
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    to left,
+    var(--color-surface-primary),
+    transparent
+  );
+  animation: table-edge-fade linear both;
+  animation-timeline: --table-scroll-timeline;
+  animation-range: calc(100% - var(--table-edge-fade-width)) 100%;
+}
+
+@keyframes table-edge-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
