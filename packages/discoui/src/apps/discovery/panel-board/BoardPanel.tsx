@@ -23,6 +23,7 @@ import {
   BoardRequestError,
   type BoardSummary,
   closeBoard,
+  confirmLeavingDraft,
   createBoard,
   getBoard,
   listBoards,
@@ -184,7 +185,9 @@ function BoardMenu(props: {
   const saved = (props.list?.saved ?? []).filter((s) => !openFiles.has(s.name))
   const pick = (action: () => unknown) => {
     setOpen(false)
-    void action()
+    if (confirmLeavingDraft()) {
+      void action()
+    }
   }
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -450,6 +453,9 @@ async function save(id: string) {
 }
 
 async function close(board: BoardSummary) {
+  if (!confirmLeavingDraft(board.id)) {
+    return
+  }
   if (
     board.unsaved &&
     !window.confirm(`Close "${board.title}"? Its changes are not saved.`)
@@ -480,10 +486,21 @@ function SpecEditor(props: { board: ResolvedBoard; onDone: () => void }) {
     // The editor keeps what the researcher typed while the board refetches.
     [board.id],
   )
-  const [text, setText] = useState(files[0]?.content ?? '')
+  const original = files[0]?.content ?? ''
+  const [text, setText] = useState(original)
   const [error, setError] = useState<string>()
+  useEffect(() => () => useBoardUiStore.setState({ draftOf: undefined }), [])
+
+  const edit = (content: string) => {
+    setText(content)
+    setError(undefined)
+    useBoardUiStore.setState({
+      draftOf: content === original ? undefined : board.id,
+    })
+  }
 
   const apply = async (content: string) => {
+    setError(undefined)
     try {
       await replaceBoard(board.id, JSON.parse(content))
       props.onDone()
@@ -500,7 +517,7 @@ function SpecEditor(props: { board: ResolvedBoard; onDone: () => void }) {
           files={files}
           disableTabs
           callbacks={{
-            onChange: setText,
+            onChange: edit,
             onSave: (content) => {
               void apply(content)
               return true
