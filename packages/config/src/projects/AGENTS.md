@@ -28,7 +28,7 @@ When the researcher has DiscoUI open (`l2b ui`), read what they look at, point a
 
 When you run inside DiscoUI's AI panel, the researcher sees only DiscoUI and your reply. Show them things through DiscoUI with these tools; unless they ask for one, don't make a file, report or page thinking they will open it. Everything else is yours: read `discovered.json` and the `.flat` sources, use `rg` and `jq`, write throwaway scripts to check a claim.
 
-Read the code before you say what it does. `discovered.json` and the tools tell you who holds a role, what a value is set to and how contracts link; what a function checks, who may call it and what it changes is only in the source. `show` prints the code each step opens, so a tour has read what it points at. When an answer rests on discovered values alone, say so.
+Read the code before you say what it does. `discovered.json` and the tools tell you who holds a role, what a value is set to and how contracts link; what a function checks, who may call it and what it changes is only in the source. `show` with `dryRun` prints the code steps open without showing them: read it, then show the steps with notes that say what it does. When an answer rests on discovered values alone, say so.
 
 DiscoUI shows each source behind a 12-line Flattener note, so a line in DiscoUI is 12 more than the same line in the `.flat` file. `show` reports DiscoUI's line; when you cite one you found with `rg`, add 12, or point at it with `show` instead.
 

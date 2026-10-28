@@ -113,6 +113,10 @@ const Show = command({
       long: 'find',
       description: 'exact snippet of that code to highlight, keep it unique',
     }),
+    dryRun: flag({
+      long: 'dry-run',
+      description: 'print the code the step opens without showing it',
+    }),
   },
   handler: async (args) => {
     if ((args.code === undefined) !== (args.find === undefined)) {
@@ -128,7 +132,11 @@ const Show = command({
           ? { ref: args.code, find: args.find }
           : undefined,
     }
-    await callTool(args.url, 'show', { project: args.project, steps: [step] })
+    await callTool(args.url, 'show', {
+      project: args.project,
+      steps: [step],
+      dryRun: args.dryRun,
+    })
   },
 })
 

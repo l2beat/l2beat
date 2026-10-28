@@ -33,6 +33,7 @@ export const agentShowSchema = z.object({
       (v) => v.length > 0 && v.length <= STEPS_MAX,
       'Between 1 and 30 steps',
     ),
+  dryRun: z.boolean().optional(),
 })
 export type AgentShowRequest = z.infer<typeof agentShowSchema>
 
