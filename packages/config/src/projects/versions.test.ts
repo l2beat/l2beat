@@ -28,10 +28,10 @@ describe('versionGroups', () => {
         }
       }
       const sections = new Set(
-        ids.map((id) => getSection(projectsById.get(id))),
+        ids.map((id) => getSections(projectsById.get(id))),
       )
-      if (sections.size !== 1 || sections.has(undefined)) {
-        problems.push(`${group.id}: versions are not all scaling or interop`)
+      if (sections.size !== 1 || sections.has('')) {
+        problems.push(`${group.id}: versions are not all in the same sections`)
       }
     }
     expect(problems).toEqual([])
@@ -60,7 +60,16 @@ describe('versionGroups', () => {
   })
 })
 
-function getSection(project: BaseProject | undefined) {
-  if (project?.scalingInfo) return 'scaling'
-  if (project?.interopConfig) return 'interop'
+/** Sections with project pages. A page links to its siblings' pages in the
+ *  same section, so every version needs the same ones. */
+function getSections(project: BaseProject | undefined) {
+  return [
+    project?.scalingInfo && 'scaling',
+    project?.interopConfig && 'interop',
+    project?.zkCatalogInfo && 'zkCatalog',
+    project?.privacyInfo && 'privacy',
+    project?.defiInfo && 'defi',
+  ]
+    .filter(Boolean)
+    .join(',')
 }
