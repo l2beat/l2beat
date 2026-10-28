@@ -115,7 +115,7 @@ export function LiquidStakingCharts({
           title="Rate-implied yield"
           info={[
             "What a holder earned, net of protocol fees: the annualised change of each token's exchange rate over the previous 30 days.",
-            'Network average is the return of all Ethereum validators before any protocol fee: consensus issuance plus MEV-boost payments and tips, over the active stake, for the same 30 days.',
+            'Network average is the return of all Ethereum validators before any protocol fee: consensus rewards plus what proposers earn from blocks, over the balance of every validator, for the same 30 days.',
             'The shaded area is the ETH staked network-wide (right axis): rewards per validator shrink as the square root of the total stake, so the yield falls as the stake grows.',
           ].join(' ')}
           timeRange={getChartTimeRangeFromData(yieldData)}
