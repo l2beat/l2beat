@@ -195,6 +195,21 @@ describe(inheritedPaths.name, () => {
     ])
   })
 
+  it('follows the owner when the admin leads nowhere', () => {
+    const byAddress = index([
+      holder(BRIDGE, { controllers: [PROXY_ADMIN, EXECUTOR] }),
+      holder(PROXY_ADMIN, {}),
+      holder(EXECUTOR, {}),
+      holder(COUNCIL, {
+        receivedPermissions: [{ permission: 'interact', from: EXECUTOR }],
+      }),
+    ])
+    const inherited = inheritedPaths(BRIDGE, byAddress, (a) =>
+      permissionPaths([...byAddress.values()], a),
+    )
+    expect(inherited?.chain).toEqual([EXECUTOR, BRIDGE])
+  })
+
   it('gives up on a controller cycle', () => {
     const byAddress = index([
       holder(BRIDGE, { controllers: [PROXY_ADMIN] }),
