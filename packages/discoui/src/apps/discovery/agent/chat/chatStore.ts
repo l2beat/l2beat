@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { flushAgentContext } from '../AgentContextReporter'
 import {
   type ChatState,
   EMPTY_CHAT,
@@ -73,6 +74,7 @@ export async function sendMessage(text: string) {
   if (status === 'idle' || status === 'failed') {
     await post('start', { provider: currentProvider() })
   }
+  await flushAgentContext()
   await post('prompt', { text })
 }
 
