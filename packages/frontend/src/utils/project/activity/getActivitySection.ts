@@ -20,7 +20,8 @@ export async function getActivitySection(
   return {
     defaultRange: range,
     dataSource:
-      project.activityConfig.type === 'day'
+      project.activityConfig.type === 'day' ||
+      project.activityConfig.type === 'hour'
         ? project.activityConfig.dataSource
         : undefined,
   }

@@ -292,9 +292,31 @@ export interface BaseProject {
   ossificationHistory?: OssificationHistory
   auditCoverage?: ProjectAuditCoverage
 
+  /** For projects that ship each version as new contracts, with its own
+   *  page. Built from `projects/versions.ts` when config builds. */
+  versions?: ProjectVersions
+
   // tags
   archivedAt?: UnixTime
   hasTestnet?: true
+}
+
+export interface ProjectVersions {
+  group: { id: string; name: string }
+  /** This project's label within the group, e.g. "v2". */
+  label: string
+  /** Every version in the group, this project included, in display order. */
+  siblings: ProjectVersionSibling[]
+}
+
+export interface ProjectVersionSibling {
+  id: ProjectId
+  slug: string
+  name: string
+  label: string
+  /** The version to show by default. */
+  isLatest: boolean
+  archivedAt?: UnixTime
 }
 
 // #region common data
@@ -1782,6 +1804,7 @@ export interface ElasticChainEscrow {
 export type ProjectActivityConfig =
   | BlockActivityConfig
   | DayActivityConfig
+  | HourActivityConfig
   | SlotActivityConfig
 
 export interface BlockActivityConfig {
@@ -1810,6 +1833,14 @@ export interface DayActivityConfig {
   dataSource: string
   resyncLastDays?: number
   batchSize?: number
+}
+
+/** For APIs that count by the hour. Synced each hour, like block chains */
+export interface HourActivityConfig {
+  type: 'hour'
+  sinceTimestamp: UnixTime
+  /** Source of the data, will be displayed in the UI */
+  dataSource: string
 }
 
 export type LivenessOverwriteMode = 'no-data'
