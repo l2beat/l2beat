@@ -21,7 +21,7 @@ export function ProjectVersionSwitcher({
     <Popover>
       <PopoverTrigger
         aria-label={`Version ${current?.label}, switch version`}
-        className="h-7 gap-1 rounded-md border border-divider px-2 font-bold text-label-value-15 hover:bg-surface-secondary md:text-label-value-15"
+        className="h-6 gap-1 rounded border border-divider bg-surface-primary px-2 font-bold text-label-value-15 hover:bg-surface-secondary md:text-label-value-15"
       >
         {current?.label}
         <ChevronIcon className="size-2.5 fill-current transition-transform group-data-[state=open]:rotate-180" />
