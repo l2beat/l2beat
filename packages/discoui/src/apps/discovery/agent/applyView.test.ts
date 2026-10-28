@@ -40,6 +40,15 @@ describe(applyView.name, () => {
     expect(groups.map((g) => g.members)).toEqual([2])
   })
 
+  it('keeps the color of a contract it sets aside', () => {
+    const graph = [
+      { ...node('root', ['bridge'], true), color: 3 },
+      node('bridge', []),
+    ]
+    const { nodes } = applyView(stateOf(graph), view({ hide: ['root'] }))
+    expect(findNode(nodes, 'root')?.color).toEqual(3)
+  })
+
   it('reports contracts that cannot be hidden and ones not in the graph', () => {
     const { receipt } = applyView(
       stateOf(GRAPH),
