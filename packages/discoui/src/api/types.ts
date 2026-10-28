@@ -10,8 +10,21 @@ export type json =
 
 export type ApiProjectsResponse = ApiProjectEntry[]
 
+export type ApiProjectCategory =
+  | 'rollups'
+  | 'validiumsAndOptimiums'
+  | 'others'
+  | 'interop'
+  | 'privacy'
+  | 'defi'
+  | 'zkCatalog'
+  | 'sharedModules'
+  | 'unlisted'
+  | 'archived'
+
 export interface ApiProjectEntry {
   name: string
+  category: ApiProjectCategory
   addresses: string[]
   contractNames: string[]
 }

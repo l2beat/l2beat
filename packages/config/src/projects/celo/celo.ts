@@ -141,7 +141,6 @@ export const celo: ScalingProject = opStackL2({
       {
         type: 'etherscan',
         chainId,
-        contractCreationUnsupported: true,
       },
     ],
   },
