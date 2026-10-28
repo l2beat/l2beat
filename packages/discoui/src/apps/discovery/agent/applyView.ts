@@ -237,7 +237,10 @@ function groupAll(
       (id) => leafIds.has(id) && !taken.has(id),
     )
     for (const member of members) taken.add(member)
-    nodes = colorLeaves(nodes, new Set(members), group.color)
+    // Setting contracts aside only folds them away; they keep their colors.
+    if (group.name !== SET_ASIDE_NAME) {
+      nodes = colorLeaves(nodes, new Set(members), group.color)
+    }
     // A group of one still labels its contract, unlike grouping by hand.
     if (members.length === 0) continue
     const made = groupAtTop(nodes, members, group)
