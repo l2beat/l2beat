@@ -73,14 +73,19 @@ export const zcashNearIntents: BaseProject = {
         commit: '75b83d7601573e165e2dacdfaffb69750dadd05f',
       },
       checkedApps: [
+        // Next finding once this one is fixed: Mixpanel gets the wallet address,
+        // deposit tx hashes and withdrawal intent hashes, and Sentry tags each
+        // user with the wallet address (defuse-frontend 594085d,
+        // src/hooks/useSignInLogger.ts#L15-L19, src/hooks/useSetSentry.ts#L71-L76,
+        // src/hooks/useMixpanelBus.ts#L9-L20).
         {
           name: 'NEAR Intents web app',
           icon: 'near-intents',
           finding:
-            'Pays only transparent Zcash addresses, which adds a public shielding step.',
-          fix: 'Accept shielded and unified Zcash addresses for payouts.',
+            'Every swap runs through an account named after the connected wallet, whose one ZEC deposit address links all its round trips publicly.',
+          fix: 'Swap through a fresh 1Click deposit address per quote, as Zodl does.',
           source:
-            'https://github.com/defuse-protocol/defuse-frontend/blob/594085d3c7e60ce912fb62b768b12f46c4917510/src/components/DefuseSDK/utils/validateAddress.ts#L130-L169',
+            'https://github.com/defuse-protocol/defuse-frontend/blob/594085d3c7e60ce912fb62b768b12f46c4917510/src/components/DefuseSDK/features/deposit/components/DepositUIMachineProvider.tsx#L112-L121',
         },
         {
           name: 'Cake Wallet',
