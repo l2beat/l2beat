@@ -158,25 +158,31 @@ export function inheritedPaths(
       paths: PermissionPath[]
     }
   | undefined {
-  const chain = [target]
+  // Breadth first, so the nearest controller answers, through $admin before
+  // owner when both are as near.
+  const seen = new Set([target])
+  let chains = [[target]]
   for (let hop = 0; hop < CONTROLLER_HOPS_MAX; hop++) {
-    const current = chain[0] as ChainSpecificAddress
-    const next = byAddress
-      .get(current)
-      ?.controllers.find((controller) => !chain.includes(controller))
-    if (next === undefined) {
-      return undefined
-    }
-    chain.unshift(next)
-    const paths = pathsOf(next)
-    if (paths.length > 0) {
-      const below = chain.slice(1)
-      return {
-        controller: next,
-        chain,
-        paths: paths.map((p) => ({ ...p, path: [...p.path, ...below] })),
+    const nextChains: ChainSpecificAddress[][] = []
+    for (const chain of chains) {
+      const current = chain[0] as ChainSpecificAddress
+      for (const next of byAddress.get(current)?.controllers ?? []) {
+        if (seen.has(next)) continue
+        seen.add(next)
+        const nextChain = [next, ...chain]
+        const paths = pathsOf(next)
+        if (paths.length > 0) {
+          const below = nextChain.slice(1)
+          return {
+            controller: next,
+            chain: nextChain,
+            paths: paths.map((p) => ({ ...p, path: [...p.path, ...below] })),
+          }
+        }
+        nextChains.push(nextChain)
       }
     }
+    chains = nextChains
   }
   return undefined
 }
