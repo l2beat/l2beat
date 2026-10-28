@@ -41,6 +41,34 @@
   animation-range: calc(100% - var(--table-edge-fade-width)) 100%;
 }
 
+/*
+  Marks the edge in the header row as well, since the fade shows only over
+  content and the edge can land on a column's empty end. It takes the sticky
+  header's measured height and stops where the header stops, so tables
+  without one show the fade alone.
+*/
+@utility table-edge-fade-chevron {
+  display: none;
+
+  [data-sticky-table-ready] > .table-edge-fade > & {
+    position: sticky;
+    top: var(--sticky-table-header-top, 0px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    height: var(--sticky-table-header-height);
+    margin-bottom: var(--sticky-table-header-bottom-gap);
+    /* Level with the labels, above the divider row and the cells' padding */
+    padding-bottom: --spacing(2.5);
+    /* Clears a cut label or sort icon from under it */
+    background: linear-gradient(
+      to left,
+      var(--color-surface-primary) --spacing(5),
+      transparent --spacing(9)
+    );
+  }
+}
+
 @keyframes table-edge-fade {
   from {
     opacity: 1;

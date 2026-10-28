@@ -3,6 +3,7 @@ import {
   HighlightedTableRowProvider,
   useHighlightedTableRowContext,
 } from '~/components/table/HighlightedTableRowContext'
+import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { StickyTableHeader } from './StickyTableHeader'
 import { TableTooltip } from './TableTooltip'
@@ -69,7 +70,11 @@ const Table = ({
           </table>
         </HighlightedTableRowProvider>
       </div>
-      <div aria-hidden className="table-edge-fade" />
+      <div aria-hidden className="table-edge-fade">
+        <div className="table-edge-fade-chevron">
+          <ChevronIcon className="-rotate-90 size-3.5 text-zinc-500 dark:text-n-zinc-300" />
+        </div>
+      </div>
     </div>
   )
 }
