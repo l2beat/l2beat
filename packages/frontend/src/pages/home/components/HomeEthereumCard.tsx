@@ -90,6 +90,7 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
             tooltipLabel="Data posted"
             formatValue={(value) => formatBytes(value)}
             syncedUntil={charts.da.syncedUntil}
+            tooltipDayRange
           />
         </HomeChartSection>
         <HomeChartSection
@@ -114,6 +115,7 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
             formatValue={(value) => formatActivityCount(value)}
             yAxisUnit=" UOPS"
             syncedUntil={charts.activity.syncedUntil}
+            tooltipDayRange
           />
         </HomeChartSection>
       </div>

@@ -2,7 +2,7 @@ import { formatBytes, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTRPC } from '~/trpc/React'
-import { formatPeriod } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import {
   CompareMetricLineChart,
   toCompareChartPoints,
@@ -43,7 +43,9 @@ export function DataPostedCompareChart({
       syncedUntil={data?.syncedUntil}
       formatYAxisLabel={(value) => formatBytes(value)}
       formatTooltipValue={(value) => formatBytes(value)}
-      renderTooltipTimestamp={(label) => formatPeriod(label, UnixTime.DAY)}
+      renderTooltipTimestamp={(label) =>
+        formatRange(label, label + UnixTime.DAY)
+      }
     />
   )
 }

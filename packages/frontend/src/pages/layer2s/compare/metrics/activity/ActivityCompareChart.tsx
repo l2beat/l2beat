@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { countPerSecond } from '~/server/features/layer2s/activity/utils/countPerSecond'
 import { useTRPC } from '~/trpc/React'
-import { formatPeriod } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import {
   CompareMetricLineChart,
   toCompareChartPoints,
@@ -47,7 +47,9 @@ export function ActivityCompareChart({
       formatTooltipValue={(value) =>
         `${formatActivityCount(value)} ${unit.toUpperCase()}`
       }
-      renderTooltipTimestamp={(label) => formatPeriod(label, UnixTime.DAY)}
+      renderTooltipTimestamp={(label) =>
+        formatRange(label, label + UnixTime.DAY)
+      }
     />
   )
 }

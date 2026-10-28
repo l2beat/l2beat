@@ -82,15 +82,6 @@ export function formatRange(from: number, to: number) {
   return `${date}, ${parsedFrom.time} ${EM_DASH} ${parsedTo.time} UTC`
 }
 
-/**
- * A chart point that covers `seconds` from `start`: the date for a daily
- * point, "30 Jun 2026, 01:00 — 02:00 UTC" for a shorter one.
- */
-export function formatPeriod(start: number, seconds: number) {
-  if (seconds >= UnixTime.DAY) return formatTimestamp(start)
-  return formatRange(start, start + seconds)
-}
-
 export function formatTimestamp(
   timestamp: number,
   opts?: {

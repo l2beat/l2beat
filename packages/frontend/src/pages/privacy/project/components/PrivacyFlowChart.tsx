@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { formatCurrency, formatInteger, UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
 import type { ChartScale } from '~/components/chart/types'
@@ -23,7 +23,7 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { PrivacyFlowsChartPoint } from '~/server/features/privacy/getPrivacyFlowsChart'
-import { formatPeriod } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 
 interface Props {
   data: PrivacyFlowsChartPoint[] | undefined
@@ -165,7 +165,7 @@ function PrivacyFlowChartTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatPeriod(label, UnixTime.DAY)}
+        {formatRange(label, label + 1 * 24 * 60 * 60)}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">

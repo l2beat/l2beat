@@ -4,7 +4,6 @@ import { expect } from 'earl'
 import {
   formatDate,
   formatLocalDateTime,
-  formatPeriod,
   formatRange,
   formatTimestamp,
   getNextDateForDayOfWeek,
@@ -55,20 +54,6 @@ describe('dates', () => {
       expect(
         formatRange(at('2026-06-30T01:00:00Z'), at('2026-06-30T02:00:00Z')),
       ).toEqual('30 Jun 2026, 01:00 — 02:00 UTC')
-    })
-  })
-
-  describe(formatPeriod.name, () => {
-    it('shows a daily point as its date', () => {
-      expect(formatPeriod(at('2026-06-03T00:00:00Z'), UnixTime.DAY)).toEqual(
-        '3 Jun 2026',
-      )
-    })
-
-    it('shows a shorter point as its UTC hours', () => {
-      expect(
-        formatPeriod(at('2026-06-03T06:00:00Z'), UnixTime.SIX_HOURS),
-      ).toEqual('3 Jun 2026, 06:00 — 12:00 UTC')
     })
   })
 

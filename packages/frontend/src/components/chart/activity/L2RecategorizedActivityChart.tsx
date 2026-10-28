@@ -42,7 +42,7 @@ import {
 } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/layer2s/activity/utils/countPerSecond'
-import { formatPeriod } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import type { ChartScale } from '../types'
 
 export const RECATEGORISED_ACTIVITY_CHART_META = {
@@ -226,7 +226,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatPeriod(label, UnixTime.DAY)}
+          {formatRange(label, label + UnixTime.DAY)}
         </div>
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />

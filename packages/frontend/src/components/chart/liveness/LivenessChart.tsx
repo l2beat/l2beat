@@ -32,7 +32,7 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatPeriod } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
 
 interface LivenessChartDataPoint {
@@ -263,7 +263,10 @@ function LivenessCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-fit flex-col">
         <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatPeriod(timestamp, UnixTime.periodToSeconds(resolution))}
+          {formatRange(
+            timestamp,
+            timestamp + UnixTime.periodToSeconds(resolution),
+          )}
         </div>
         <HorizontalSeparator className="mt-1.5" />
         {content}

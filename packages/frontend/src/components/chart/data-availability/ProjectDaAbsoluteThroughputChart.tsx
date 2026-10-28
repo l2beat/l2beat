@@ -21,7 +21,7 @@ import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGr
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatPeriod } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
 import { getDaDataParams } from './getDaDataParams'
 
@@ -183,7 +183,7 @@ function ProjectDaThroughputCustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatPeriod(label, UnixTime.periodToSeconds(resolution))}
+        {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">

@@ -16,7 +16,7 @@ import {
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
-import { formatPeriod } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 
 interface ActivityRatioChartDataPoint {
   timestamp: number
@@ -88,7 +88,7 @@ function ActivityCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatPeriod(timestamp, UnixTime.DAY)}
+          {formatRange(timestamp, timestamp + UnixTime.DAY)}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
