@@ -704,6 +704,7 @@ export const ethereum: BaseProject = {
             sequencers: [
               '0x2edecb91091324e0138ebbbaed48ce1b2a050428',
               '0x3884fc14e604548f8ed962d566de48e7519eab78',
+              '0xf3cb1f974362483838de05ff868cf04d4cc16de8',
             ],
             sinceBlock: 23134693,
           },
