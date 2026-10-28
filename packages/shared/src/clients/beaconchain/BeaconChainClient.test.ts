@@ -34,6 +34,20 @@ describe(BeaconChainClient.name, () => {
       expect(http.fetch).not.toHaveBeenCalled()
     })
 
+    it('asks once for a hash the tx repeats', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: ['blob'] }),
+      })
+      const client = mockClient({ http, beaconApiUrl: 'example.com/' })
+
+      const result = await client.getBlobs('root', ['0x01aa', '0x01aa'])
+
+      expect(http.fetch.calls[0].args[0]).toEqual(
+        'example.com/eth/v1/beacon/blobs/root?versioned_hashes=0x01aa',
+      )
+      expect(result).toEqual([{ data: 'blob' }])
+    })
+
     it('keeps a blob that two txs of the block posted', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({ data: ['blob', 'blob'] }),

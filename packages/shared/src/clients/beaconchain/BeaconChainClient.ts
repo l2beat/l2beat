@@ -30,7 +30,8 @@ export class BeaconChainClient extends ClientCore {
     // Without the param the endpoint answers every blob of the block
     if (versionedHashes.length === 0) return []
 
-    const query = versionedHashes
+    // The spec forbids repeating a hash, which a tx may do
+    const query = [...new Set(versionedHashes)]
       .map((hash) => `versioned_hashes=${hash}`)
       .join('&')
     const endpoint = `eth/v1/beacon/blobs/${blockId}?${query}`
