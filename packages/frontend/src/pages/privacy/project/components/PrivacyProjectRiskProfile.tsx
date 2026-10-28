@@ -116,7 +116,12 @@ function RiskValue({
   return (
     <Tooltip>
       <TooltipTrigger
-        className="flex items-center gap-2 text-left"
+        className={cn(
+          'flex items-center gap-2 text-left',
+          // A lone 16px dot is too small to tap; the padding grows the
+          // target without moving the dot.
+          dotOnly && 'max-md:-m-2 max-md:p-2',
+        )}
         aria-label={value.value}
       >
         {/* Text height on phones, where the dots sit in rows of text. */}
