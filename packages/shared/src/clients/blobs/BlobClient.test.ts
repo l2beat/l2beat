@@ -148,6 +148,20 @@ describe(BlobClient.name, () => {
         'Beacon node answered fewer blobs than asked for',
       )
     })
+
+    it('throws when a doubled blob stands in for a missing one', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: ['blob', 'blob'] }),
+      })
+      const rpcClient = mockObject<RpcClient>({
+        getBlockParentBeaconRoot: async () => 'root',
+      })
+      const client = mockClient({ http, rpcClient })
+
+      await expect(client.getBlobs(1, ['0x01aa', '0x01bb'])).toBeRejectedWith(
+        'Beacon node answered fewer blobs than asked for',
+      )
+    })
   })
 
   describe(BlobClient.prototype.call.name, () => {

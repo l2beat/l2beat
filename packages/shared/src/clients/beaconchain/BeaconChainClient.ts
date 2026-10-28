@@ -48,8 +48,9 @@ export class BeaconChainClient extends ClientCore {
     }
 
     // A beacon block without these blobs answers an empty list, not an error.
-    // A blob posted twice in the block may come back once or twice
-    if (parsed.data.data.length < new Set(versionedHashes).size) {
+    // A blob posted twice in the block may come back twice, so count distinct
+    // blobs: one per hash found
+    if (new Set(parsed.data.data).size < new Set(versionedHashes).size) {
       throw new Error('Beacon node answered fewer blobs than asked for', {
         cause: {
           blockId,

@@ -69,6 +69,17 @@ describe(BeaconChainClient.name, () => {
         'Beacon node answered fewer blobs than asked for',
       )
     })
+
+    it('throws when a doubled blob stands in for a missing one', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ data: ['blob', 'blob'] }),
+      })
+      const client = mockClient({ http })
+
+      await expect(
+        client.getBlobs('root', ['0x01aa', '0x01bb']),
+      ).toBeRejectedWith('Beacon node answered fewer blobs than asked for')
+    })
   })
 
   describe(BeaconChainClient.prototype.getValidatorsInfo.name, () => {
