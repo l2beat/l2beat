@@ -36,6 +36,44 @@ describe(ApiController.name, () => {
     })
   })
 
+  describe(ApiController.prototype.getTx.name, () => {
+    const HASH = `0x${'ab'.repeat(32)}` as const
+    const TARGET = '0x1670000000000000000000000000000000010001'
+
+    it('returns a transaction found on one chain while another chain never answers', async () => {
+      const chainRpcClient = mockObject<ChainRpcClient>({
+        getTransaction: async (_, chain) => {
+          if (chain.chainId === 167000) {
+            return { to: `taiko:${TARGET}`, data: '0x1234' }
+          }
+          return new Promise(() => {})
+        },
+      })
+      const controller = createController(mockObject(), chainRpcClient)
+
+      expect(await controller.getTx({ hash: HASH })).toEqual({
+        hash: HASH,
+        chainId: 167000,
+        to: TARGET,
+        data: '0x1234',
+      })
+    })
+
+    it('returns null when no chain has the transaction', async () => {
+      const chainRpcClient = mockObject<ChainRpcClient>({
+        getTransaction: async (_, chain) => {
+          if (chain.chainId === 1) {
+            throw new Error('RPC down')
+          }
+          return undefined
+        },
+      })
+      const controller = createController(mockObject(), chainRpcClient)
+
+      expect(await controller.getTx({ hash: HASH })).toEqual(null)
+    })
+  })
+
   describe(ApiController.prototype.lookupAddress.name, () => {
     it('returns token decimals for amount formatting', async () => {
       const addressService = mockObject<IAddressService>({
@@ -64,12 +102,15 @@ describe(ApiController.name, () => {
   })
 })
 
-function createController(addressService: IAddressService) {
+function createController(
+  addressService: IAddressService,
+  chainRpcClient = mockObject<ChainRpcClient>(),
+) {
   return new ApiController(
     mockObject<Decoder>(),
     mockObject<ISignatureService>(),
     addressService,
-    mockObject<ChainRpcClient>(),
+    chainRpcClient,
     chains,
     { [ADMIN_SLOT_HASH]: ADMIN_SLOT_PREIMAGE },
   )

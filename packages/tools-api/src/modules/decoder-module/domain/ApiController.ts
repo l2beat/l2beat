@@ -175,19 +175,17 @@ export class ApiController {
       return { chain, data: tx.data, to: tx.to }
     }
 
-    const results = await Promise.allSettled(
-      this.chains.map(async (c): Promise<Transaction | undefined> => {
-        const tx = await this.chainRpcClient.getTransaction(hash, c)
-        if (tx) {
-          return { chain: c, data: tx.data, to: tx.to }
-        }
-      }),
-    )
-    for (const res of results) {
-      if (res.status === 'fulfilled' && res.value) {
-        return res.value
+    const lookups = this.chains.map(async (c): Promise<Transaction> => {
+      const tx = await this.chainRpcClient.getTransaction(hash, c)
+      if (!tx) {
+        throw new Error('Transaction not found!')
       }
+      return { chain: c, data: tx.data, to: tx.to }
+    })
+    try {
+      return await Promise.any(lookups)
+    } catch {
+      throw new Error('Transaction not found!')
     }
-    throw new Error('Transaction not found!')
   }
 }
