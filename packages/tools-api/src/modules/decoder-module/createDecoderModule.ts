@@ -1,7 +1,7 @@
 import type { Config } from '../../config/types'
 
 import type { ApplicationModule } from '../../services/ApplicationModule'
-import { AlchemyClient } from '../../third-party/AlchemyClient'
+import { ChainRpcClient } from '../../third-party/ChainRpcClient'
 import type { EtherscanClient } from '../../third-party/EtherscanClient'
 import { createDecoderRouter } from './createDecoderRouter'
 import { AddressService } from './domain/AddressService'
@@ -14,9 +14,9 @@ export function createDecoderModule(
   signatureService: SignatureService,
   etherscanClient: EtherscanClient,
 ): ApplicationModule {
-  const alchemyClient = new AlchemyClient(config.alchemyApiKey)
+  const chainRpcClient = new ChainRpcClient(config.rpcUrls)
   const addressService = new AddressService(
-    alchemyClient,
+    chainRpcClient,
     etherscanClient,
     config.discovered,
     config.tokens,
@@ -35,7 +35,7 @@ export function createDecoderModule(
     decoder,
     signatureService,
     addressService,
-    alchemyClient,
+    chainRpcClient,
     config.chains,
     config.hashes,
   )

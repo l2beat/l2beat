@@ -193,7 +193,7 @@ export const lighter: ScalingProject = {
       },
     ],
     activityConfig: {
-      type: 'day',
+      type: 'hour',
       dataSource: 'Lighter API',
       sinceTimestamp: UnixTime(1759363200), // 2025-10-01T00:00:00Z
     },

@@ -1,6 +1,6 @@
 {
   "name": "appchain",
-  "timestamp": 1791533604,
+  "timestamp": 1793113693,
   "configHash": "0x255d199b27942e73e15e0b6ff4e739ff1d8ec2a02d160c8ab57fecc33e1ad977",
   "entries": [
     {
@@ -53,6 +53,11 @@
         "eth:0x74110Fb401469FEA31A10680e28c9C4c17aFdd36": "Inbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0x18a3DB98cc57DF0ba57393dC9226c067daccD39F",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Outbox",
@@ -138,7 +143,7 @@
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
         ],
         "allowedOutboxList": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
-        "delayedMessageCount": 6827,
+        "delayedMessageCount": 6854,
         "inboxHistory": [
           "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
@@ -146,8 +151,8 @@
         "outboxHistory": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerInbox": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
-        "sequencerMessageCount": 4056,
-        "sequencerReportedSubMessageCount": 795270
+        "sequencerMessageCount": 4083,
+        "sequencerReportedSubMessageCount": 795405
       },
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
@@ -283,7 +288,7 @@
         ],
         "$upgradeCount": 1,
         "anyTrustFastConfirmer": "eth:0x0000000000000000000000000000000000000000",
-        "arbOsFromWmRoot": "ArbOS v40 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v61 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "eth:0x19df42E085e2c3fC4497172E412057F54D9f013E",
         "chainId": 466,
@@ -292,13 +297,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 800,
+        "firstUnresolvedNode": 810,
         "inbox": "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21145825,
-        "latestConfirmed": 799,
-        "latestNodeCreated": 803,
+        "latestConfirmed": 809,
+        "latestNodeCreated": 812,
         "loserStakeEscrow": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd",
@@ -316,7 +321,7 @@
         "validatorUtils": "eth:0xA79305c7D5Ad6F8AF0292c863957a2488F13f0d1",
         "validatorWalletCreator": "eth:0x6FB4500c12E1303aD174085FDEce0a097f578ED7",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a",
+        "wasmModuleRoot": "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -404,6 +409,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x9ed35515aAF24a6d236ff2C95c67e29a335bE291",
           "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
           "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d",
           "eth:0xFcB26a1DbFafF84b91f1b7D9026DA63007b88D3c",
@@ -415,8 +421,8 @@
         "domainSeparator": "0xd91194ba8cca06b67a77df9ba8745b666c7af26af03b914ede155b940b307d6b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 68,
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 81,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -446,10 +452,14 @@
       "values": {
         "$immutable": true,
         "nitroEnclaveVerifier": "eth:0x1b467761E7a125381c4f654e11B397023Fc53DD8",
-        "registeredSigners": ["eth:0x5Cf2284C82332a2a361820B0f004AB6Da86d29Dc"],
+        "registeredSigners": [
+          "eth:0x5Cf2284C82332a2a361820B0f004AB6Da86d29Dc",
+          "eth:0x18a3DB98cc57DF0ba57393dC9226c067daccD39F"
+        ],
         "teeVerifier": "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67",
         "validEnclaveHashes": [
-          "0x5731b637d9e3b693fc0d74e570bac76ca6c0defe3e4c119b1cea981a9bd307d6"
+          "0x5731b637d9e3b693fc0d74e570bac76ca6c0defe3e4c119b1cea981a9bd307d6",
+          "0xe01fc6daa6f80128ffd381ffef639c7b1531b21406e3f3bfbbd09f3920f63f98"
         ]
       },
       "fieldMeta": {
@@ -609,7 +619,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -719,7 +729,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "batchCount": 4056,
+        "batchCount": 4083,
         "batchPosterManager": "eth:0xC5dD640885cE582464e2fCa7b169581417822e6C",
         "batchPosters": ["eth:0xC5dD640885cE582464e2fCa7b169581417822e6C"],
         "bridge": "eth:0x19df42E085e2c3fC4497172E412057F54D9f013E",
@@ -750,7 +760,7 @@
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 6826,
+        "totalDelayedMessagesRead": 6853,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -769,6 +779,11 @@
     },
     {
       "address": "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x9ed35515aAF24a6d236ff2C95c67e29a335bE291",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1851,8 +1866,8 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26153581 },
-  "permissionsConfigHash": "0x5974aa28ba71036cfb7b221bb34d81f532aa59cce0c3cea24e6b5955c29971fb",
+  "usedBlockNumbers": { "ethereum": 26284836 },
+  "permissionsConfigHash": "0x4b46ae632dcb21579c424ff6cd7a3d48277dca1412f24083291e82936fcc1c09",
   "permissions": {
     "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904": {
       "receivedPermissions": [

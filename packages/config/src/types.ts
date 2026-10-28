@@ -1769,6 +1769,7 @@ export interface ElasticChainEscrow {
 export type ProjectActivityConfig =
   | BlockActivityConfig
   | DayActivityConfig
+  | HourActivityConfig
   | SlotActivityConfig
 
 export interface BlockActivityConfig {
@@ -1797,6 +1798,14 @@ export interface DayActivityConfig {
   dataSource: string
   resyncLastDays?: number
   batchSize?: number
+}
+
+/** For APIs that count by the hour. Synced each hour, like block chains */
+export interface HourActivityConfig {
+  type: 'hour'
+  sinceTimestamp: UnixTime
+  /** Source of the data, will be displayed in the UI */
+  dataSource: string
 }
 
 export type LivenessOverwriteMode = 'no-data'

@@ -1,3 +1,4 @@
+import { ProjectService } from '@l2beat/config'
 import {
   ConfigHealthService,
   ConfigReader,
@@ -137,6 +138,7 @@ export function createDiscoveryUiApp({
   const configWriter = new ConfigWriter(configReader, paths.discovery)
   const templateService = new TemplateService(paths.discovery)
   const configHealthService = new ConfigHealthService()
+  const projectService = new ProjectService()
 
   const providerCache = new ProviderCache()
   const tvlCache = new TvlCache()
@@ -151,8 +153,8 @@ export function createDiscoveryUiApp({
     res.status(200).send('OK')
   })
 
-  app.get('/api/projects', (_req, res) => {
-    const response = getProjects(configReader)
+  app.get('/api/projects', async (_req, res) => {
+    const response = await getProjects(configReader, projectService)
     res.json(response)
   })
 

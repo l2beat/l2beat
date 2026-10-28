@@ -597,4 +597,85 @@ describe(ValueService.name, () => {
       ).toBeRejected()
     })
   })
+
+  describe(ValueService.prototype.calculateEscrowValues.name, () => {
+    it('values each escrow balance a token sums, at the token price', async () => {
+      const timestamp = UnixTime(1000)
+      const priceId = 'ether'
+      const deployed = escrowBalance(EthereumAddress.random(), 0)
+      // Deployed after the timestamp, so it holds nothing yet.
+      const notYetDeployed = escrowBalance(EthereumAddress.random(), 2000)
+      const singleEscrow = escrowBalance(EthereumAddress.random(), 0)
+
+      const tvsConfig: ProjectTvsConfig = {
+        projectId: ProjectId('project'),
+        tokens: [
+          mockObject<TvsToken>({
+            id: TokenId('pooled'),
+            priceId,
+            amount: {
+              type: 'calculation',
+              operator: 'sum',
+              arguments: [deployed, notYetDeployed],
+            },
+          }),
+          mockObject<TvsToken>({
+            id: TokenId('single'),
+            priceId,
+            amount: singleEscrow,
+          }),
+        ],
+      }
+
+      const deployedId = createAmountConfig(deployed).id
+      const storage = mockObject<DataStorage>({
+        getAmount: mockFn(async (id: string) =>
+          id === deployedId ? 30n : undefined,
+        ),
+        getPrice: mockFn(async (id: string) =>
+          id === createPriceConfigId(priceId) ? 2 : undefined,
+        ),
+      })
+
+      const result = await new ValueService(
+        storage,
+        Logger.SILENT,
+      ).calculateEscrowValues(tvsConfig, [timestamp])
+
+      expect(result).toEqual([
+        {
+          tokenId: TokenId('pooled'),
+          projectId: ProjectId('project'),
+          timestamp,
+          chain: 'ethereum',
+          escrowAddress: deployed.escrowAddress,
+          amount: 30,
+          value: 60,
+        },
+        {
+          tokenId: TokenId('pooled'),
+          projectId: ProjectId('project'),
+          timestamp,
+          chain: 'ethereum',
+          escrowAddress: notYetDeployed.escrowAddress,
+          amount: 0,
+          value: 0,
+        },
+      ])
+    })
+  })
 })
+
+function escrowBalance(
+  escrowAddress: EthereumAddress,
+  sinceTimestamp: number,
+): BalanceOfEscrowAmountFormula {
+  return {
+    type: 'balanceOfEscrow',
+    chain: 'ethereum',
+    address: 'native',
+    decimals: 0,
+    escrowAddress,
+    sinceTimestamp,
+  }
+}
