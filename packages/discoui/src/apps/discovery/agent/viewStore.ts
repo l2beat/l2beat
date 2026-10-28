@@ -185,9 +185,21 @@ export async function saveAgentView(name: string) {
     description: pending?.note ?? pending?.title,
   })
   await saveProjectLayout(state.projectId, name, layout)
-  // A view that arrived while saving still waits for its own decision.
-  if (useAgentViewStore.getState().pending === pending) {
+  const current = useAgentViewStore.getState().pending
+  if (current === pending) {
     keepAgentView()
+    return
+  }
+  // A view that arrived while saving still waits for its own decision, and
+  // discarding it goes back to the graph just saved.
+  if (current !== undefined && current.before === pending?.before) {
+    useAgentViewStore.setState({
+      pending: {
+        ...current,
+        before: state.nodes,
+        changes: current.changes - pending.changes,
+      },
+    })
   }
 }
 
