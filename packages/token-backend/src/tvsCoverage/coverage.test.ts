@@ -26,6 +26,8 @@ import {
 } from './test/fixtures'
 import { tokenKey } from './tokens'
 
+const OVERRIDE_ESCROW = '0x3333333333333333333333333333333333333333'
+
 describe(Coverage.name, () => {
   const arbitrum: TvsProjectInput = {
     id: 'arbitrum',
@@ -187,6 +189,35 @@ describe(Coverage.name, () => {
 
     expect(summary(rows)).toEqual([
       ['base', 'escrow', `ethereum:${L1_USDC}`, 'countedViaCounterpart'],
+    ])
+  })
+
+  it('counts deployments of a valueForProject override', () => {
+    const native = escrow('haust', 'native', { escrowAddress: OVERRIDE_ESCROW })
+    const rows = coverage({
+      projects: [
+        {
+          id: 'haust',
+          name: 'Haust',
+          chain: 'haust',
+          plugins: [],
+          tokens: [
+            {
+              ...token(escrow('ethereum', L1_USDC)),
+              valueForProject: {
+                type: 'value',
+                priceId: 'haust',
+                amount: native,
+              },
+            },
+          ],
+        },
+      ],
+      stats: [stat({ id: 'other', tokenChain: 'haust', address: 'native' })],
+    })
+
+    expect(summary(rows)).toEqual([
+      ['haust', 'chain', 'haust:native', 'counted'],
     ])
   })
 

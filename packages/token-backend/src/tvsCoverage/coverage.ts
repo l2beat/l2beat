@@ -1,4 +1,4 @@
-import type { TvsToken } from '@l2beat/config'
+import type { Formula, TvsToken } from '@l2beat/config'
 import type {
   AbstractTokenRecord,
   AggregatedInteropDeployedTokenStats,
@@ -171,11 +171,11 @@ class ProjectFormulas {
     this.matchesPlugin = new InteropTransferClassifier().createPluginMatcher(
       project.plugins,
     )
-    for (const token of project.tokens) {
-      for (const leaf of collectActiveLeaves(token.amount, timestamp)) {
+    for (const formula of project.tokens.flatMap(countedFormulas)) {
+      for (const leaf of collectActiveLeaves(formula, timestamp)) {
         this.addCounted(leaf)
       }
-      for (const leaf of collectScheduledLeaves(token.amount, timestamp)) {
+      for (const leaf of collectScheduledLeaves(formula, timestamp)) {
         this.scheduled.add(tokenKey(leaf))
       }
     }
@@ -471,4 +471,12 @@ function toRef({ chain, address }: TokenRef): TokenRef {
 
 function sum(values: number[]): number {
   return values.reduce((total, value) => total + value, 0)
+}
+
+// The TVS runtime values the project with `valueForProject` and the summary
+// with `valueForSummary` when they are set, so their deployments count too.
+function countedFormulas(token: TvsToken): Formula[] {
+  return [token.amount, token.valueForProject, token.valueForSummary].filter(
+    (formula) => formula !== undefined,
+  )
 }

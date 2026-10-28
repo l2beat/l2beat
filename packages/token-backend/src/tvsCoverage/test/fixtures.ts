@@ -64,7 +64,7 @@ export function escrow(
   chain: string,
   address: string,
   options: { since?: number; escrowAddress?: string } = {},
-): Formula {
+): Extract<Formula, { type: 'balanceOfEscrow' }> {
   return {
     type: 'balanceOfEscrow',
     chain,
