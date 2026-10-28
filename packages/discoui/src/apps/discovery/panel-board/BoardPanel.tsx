@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { type ReactNode, useMemo, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'sonner'
 import type { EditorFile } from '../../../components/editor/store'
@@ -15,6 +15,7 @@ import { IconClose } from '../../../icons/IconClose'
 import { IconCode } from '../../../icons/IconCode'
 import { IconPlus } from '../../../icons/IconPlus'
 import { cn } from '../../../utils/cn'
+import { AGENT_CONNECTED } from '../agent/AgentBridge'
 import { BoardBlockView } from './BoardBlocks'
 import {
   activateBoard,
@@ -26,6 +27,7 @@ import {
   getBoard,
   listBoards,
   type ResolvedBoard,
+  refreshBoards,
   replaceBoard,
   saveBoard,
   useBoardUiStore,
@@ -64,8 +66,15 @@ export function BoardPanel() {
   const list = useQuery({
     queryKey: ['boards', project, revision],
     queryFn: () => listBoards(project),
-    placeholderData: (previous) => previous,
+    // Another project's boards would act on this project's graph.
+    placeholderData: (previous, previousQuery) =>
+      previousQuery?.queryKey[1] === project ? previous : undefined,
   })
+  // Board events sent while the stream was down are lost.
+  useEffect(() => {
+    window.addEventListener(AGENT_CONNECTED, refreshBoards)
+    return () => window.removeEventListener(AGENT_CONNECTED, refreshBoards)
+  }, [])
   const open = list.data?.open ?? []
   const active = open.find((b) => b.id === chosen) ?? open[open.length - 1]
 
