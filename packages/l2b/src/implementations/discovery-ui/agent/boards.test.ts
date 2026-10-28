@@ -248,6 +248,23 @@ describe(resolveBoard.name, () => {
     expect(board.blocks[1]?.type).toEqual('problem')
     expect(board.problems[0]).toInclude('Hide the escrow: No contract')
   })
+
+  it('draws no button that would keep only what nothing matches', () => {
+    const board = resolveBoard(entries, {
+      title: 'Views',
+      blocks: [
+        {
+          type: 'view',
+          label: 'Only escrows',
+          view: { title: 'Escrows', only: ['name:*Escrow*'] },
+        },
+      ],
+    })
+    expect(board.blocks[0]?.type).toEqual('problem')
+    expect(board.problems).toEqual([
+      'Only escrows: nothing matches name:*Escrow*',
+    ])
+  })
 })
 
 describe('boardSpecSchema', () => {
