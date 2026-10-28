@@ -257,8 +257,11 @@ export class ChatSession {
           ],
           // DiscoUI tools change only what the researcher sees, and every
           // view waits for them to keep it, so Claude need not ask first.
+          // Older Claude Code matches the bare server name, newer the glob.
           _meta: {
-            claudeCode: { options: { allowedTools: ['mcp__discoui'] } },
+            claudeCode: {
+              options: { allowedTools: ['mcp__discoui', 'mcp__discoui__*'] },
+            },
           },
         }),
       )
