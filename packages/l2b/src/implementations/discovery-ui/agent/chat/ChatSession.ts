@@ -133,10 +133,16 @@ export class ChatSession {
     }
     agent.inTurn = true
     this.emit({ type: 'user', text })
-    void this.runTurn(agent, text)
+    // The question is about what was selected when it was asked, not once
+    // the agent finishes starting.
+    void this.runTurn(agent, text, this.readContext())
   }
 
-  private async runTurn(agent: RunningAgent, text: string) {
+  private async runTurn(
+    agent: RunningAgent,
+    text: string,
+    context: AgentContext | undefined,
+  ) {
     await agent.ready
     if (agent !== this.agent) {
       agent.inTurn = false
@@ -158,7 +164,7 @@ export class ChatSession {
       return
     }
     this.setStatus(agent, 'working')
-    const prompt = promptBlocks(text, this.readContext(), !agent.prompted)
+    const prompt = promptBlocks(text, context, !agent.prompted)
     agent.prompted = true
     try {
       const result = await agent.connection.request('session/prompt', {
