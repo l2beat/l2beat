@@ -67,8 +67,7 @@ describe('dates', () => {
     const originalTz = process.env.TZ
     afterEach(() => {
       if (originalTz === undefined) {
-        // biome-ignore lint/performance/noDelete: assigning undefined stores the string "undefined"
-        delete process.env.TZ
+        Reflect.deleteProperty(process.env, 'TZ')
       } else {
         process.env.TZ = originalTz
       }
