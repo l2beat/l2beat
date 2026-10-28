@@ -54,8 +54,7 @@ export function getHourlyActivityWindow(
   const [from, to] = range
   assert(from !== null, 'Hourly range without a start')
   const days = getRollingDays(from, to)
-  const start =
-    days === undefined ? from : Math.max(from, end - days * UnixTime.DAY + HOUR)
+  const start = days === undefined ? from : end - days * UnixTime.DAY + HOUR
 
   return { start, end, behind: projects.filter(isBehind) }
 }

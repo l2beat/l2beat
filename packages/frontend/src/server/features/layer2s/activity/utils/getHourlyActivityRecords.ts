@@ -1,4 +1,4 @@
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type { ChartRange } from '~/utils/range/range'
 import { getHourlyActivityWindow } from './getHourlyActivityWindow'
@@ -26,9 +26,11 @@ export async function getHourlyActivityRecords(
     'activity',
     options?.waitFor ?? projectIds,
   )
+  // A day early too, so 1D and 7D keep their length while the sync is behind
+  // the day the range ends on
   const records = await db.hourlyActivity.getByProjectsAndTimeRange(
     projectIds,
-    [range[0], range[1]],
+    [range[0] - UnixTime.DAY, range[1]],
   )
   // Projects indexed per day have no hours, so they can't hold the window back
   const withHours = new Set(records.map((r) => r.projectId))

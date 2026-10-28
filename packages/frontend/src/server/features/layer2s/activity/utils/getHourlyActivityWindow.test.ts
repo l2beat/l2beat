@@ -128,13 +128,16 @@ describe(getHourlyActivityWindow.name, () => {
     })
   })
 
-  it('never starts before the range does', () => {
+  it('keeps 1D a full day when the sync is behind the start of the range day', () => {
+    // Just after the range moved to a new day, while chains still sync
+    time.setSystemTime(new Date('2026-10-28T01:20:00.000Z'))
+
     const window = getHourlyActivityWindow(optionToRange('1d'), [
-      synced('arbitrum', '2026-10-27T05:00:00Z'),
+      catchingUp('arbitrum', '2026-10-27T23:00:00Z'),
     ])
 
-    expect(window.start).toEqual(at('2026-10-27T00:00:00Z'))
-    expect(window.end).toEqual(at('2026-10-27T04:00:00Z'))
+    expect(window.start).toEqual(at('2026-10-26T22:00:00Z'))
+    expect(window.end).toEqual(at('2026-10-27T21:00:00Z'))
   })
 
   it('ignores projects that have not synced yet', () => {
