@@ -280,7 +280,7 @@ export const tornadoCash: BaseProject = {
     category: PRIVACY_CATEGORIES.pool,
     referenceApp: {
       name: 'Tornado Cash classic app',
-      url: 'https://app.ens.domains/tornadocash.eth?tab=records',
+      url: 'https://explorer.ens.domains/tornadocash.eth/records',
       since: '2026-10-13',
       source: {
         repository: 'https://github.com/tornado-dao/classic-ui',
