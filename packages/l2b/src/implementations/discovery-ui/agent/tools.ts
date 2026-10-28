@@ -47,7 +47,14 @@ export interface AgentTool {
 }
 
 // The agent reads the message, fixes what it names and calls again.
-export class ToolError extends Error {}
+export class ToolError extends Error {
+  constructor(
+    message: string,
+    readonly detail?: string,
+  ) {
+    super(message, { cause: { detail } })
+  }
+}
 
 const projectArgument = {
   project: 'defaults to the project open in DiscoUI',
@@ -198,7 +205,9 @@ export async function runTool(
 
 function describeRejection(error: unknown): string | undefined {
   if (error instanceof ToolError) {
-    return error.message
+    return error.detail === undefined
+      ? error.message
+      : `${error.message}: ${error.detail}`
   }
   if (error instanceof AgentRefError) {
     const lines = [`${error.message}: ${error.ref}`]
@@ -240,7 +249,7 @@ export function projectOrOpen(
 ): string {
   if (project !== undefined) {
     if (!ui.configReader.hasDiscovery(project)) {
-      throw new ToolError(`No discovered project named ${project}`)
+      throw new ToolError('No discovered project', project)
     }
     return project
   }
