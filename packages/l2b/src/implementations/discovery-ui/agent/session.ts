@@ -4,8 +4,9 @@ import type { Request, Response } from 'express'
 const KEEPALIVE_INTERVAL_MS = 15_000
 // Bumped when tabs need new code to handle an event. A tab loaded before
 // views existed would misread one, so it gets only what it understands.
-export const AGENT_PROTOCOL = 2
+export const AGENT_PROTOCOL = 3
 const VIEW_PROTOCOL = 2
+const BOARD_PROTOCOL = 3
 const RECEIPT_TIMEOUT_MS = 5_000
 
 // What the agent and the open tabs share. Event ids carry a per-boot prefix,
@@ -60,9 +61,9 @@ export class AgentSession<Context, Receipt extends { unavailable?: boolean }> {
     return this.broadcast(this.latestShow)
   }
 
-  // Tells tabs something changed that they fetch themselves, like a board.
-  notify(event: object): number {
-    return this.broadcast({ ...event, id: this.newId() }, VIEW_PROTOCOL)
+  // Tells tabs a board changed, which they fetch themselves.
+  notifyBoard(event: object): number {
+    return this.broadcast({ ...event, id: this.newId() }, BOARD_PROTOCOL)
   }
 
   clear(): number {
