@@ -71,8 +71,8 @@
     pointer-events: auto;
     /*
       Faded out it would still take clicks meant for the last column's
-      header, so it goes once the table reaches its end, and is never there
-      on a table with nothing to scroll.
+      header, so it goes halfway through the fade, and is never there on a
+      table with nothing to scroll.
     */
     visibility: hidden;
     animation: table-edge-fade-chevron linear both;
@@ -94,6 +94,8 @@
   from {
     visibility: visible;
   }
+  /* Fainter than half, it would take clicks it barely shows it offers */
+  50%,
   to {
     visibility: hidden;
   }
