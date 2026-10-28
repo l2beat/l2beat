@@ -1,5 +1,5 @@
 import type { ActivityRecord, ActivityTotals } from '@l2beat/database'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -16,10 +16,10 @@ import { getActivityProjects } from './utils/getActivityProjects'
 import {
   type ActivityResolution,
   getActivityResolution,
-  getLastHourOfDay,
 } from './utils/getActivityResolution'
 import { getActivitySyncInfo } from './utils/getActivitySyncInfo'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
+import { getHourlyActivityRecords } from './utils/getHourlyActivityRecords'
 import {
   ActivityProjectFilter,
   createActivityProjectsFilter,
@@ -162,15 +162,14 @@ export async function getActivityChart({
     }
   }
 
-  // The hours of the last synced day are synced too
-  const lastHour = getLastHourOfDay(adjustedRange[1])
-  const hourlySyncedUntil = getLastHourOfDay(syncedUntil)
-  const hourlyStart = adjustedRange[0]
-  assert(hourlyStart !== null, 'Hourly range without a start')
-  const hourlyEntries = await db.hourlyActivity.getByProjectsAndTimeRange(
+  // Hours are synced past midnight, unlike the day they belong to. A
+  // project's own chart waits for it however far behind it is
+  const { records: hourlyEntries, window } = await getHourlyActivityRecords(
     projects,
-    [hourlyStart, lastHour],
+    range,
+    projectId ? { syncedBy: [projectId] } : undefined,
   )
+  const lastHour = window.end
   // Hourly data can start after the range does
   const firstHour = hourlyEntries.find((e) =>
     projectId ? e.projectId === projectId : e.projectId !== ProjectId.ETHEREUM,
@@ -184,11 +183,11 @@ export async function getActivityChart({
             aggregateActivityRecords(hourlyEntries, {
               startTimestamp: firstHour,
             }) ?? {},
-            hourlySyncedUntil,
+            lastHour,
             projectId,
           ),
     syncWarning,
-    syncedUntil: hourlySyncedUntil,
+    syncedUntil: lastHour,
     stats,
     resolution,
     hasHourly,
