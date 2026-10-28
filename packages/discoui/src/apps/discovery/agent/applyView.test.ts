@@ -49,12 +49,12 @@ describe(applyView.name, () => {
     expect(receipt.missing).toEqual(['gone'])
   })
 
-  it('reports a contract to show that the graph lacks', () => {
+  it('reports a contract to show or select that the graph lacks', () => {
     const { receipt } = applyView(
       stateOf(GRAPH),
-      view({ show: ['gone'], only: ['gone'] }),
+      view({ show: ['gone'], only: ['gone'], select: 'lost' }),
     )
-    expect(receipt.missing).toEqual(['gone'])
+    expect(receipt.missing).toEqual(['gone', 'lost'])
   })
 
   it('shows what an earlier view hid', () => {

@@ -144,8 +144,10 @@ function applyAgentView(event: AgentViewEvent) {
   })
   // The path overlay would cover the graph the view just changed.
   useAgentStore.getState().setView('graph')
-  if (event.view.select !== undefined) {
-    selectAfterSettling(event.view.select)
+  // A contract this tab's graph lacks is reported missing, not selected.
+  const select = event.view.select
+  if (select !== undefined && !applied.receipt.missing.includes(select)) {
+    selectAfterSettling(select)
   }
   fitGraphTo(new Set(framed(applied)))
   void sendReceipt(event.id, applied.receipt)
