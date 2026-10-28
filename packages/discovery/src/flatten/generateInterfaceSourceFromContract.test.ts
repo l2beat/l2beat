@@ -38,7 +38,11 @@ describe(generateInterfaceSourceFromContract.name, () => {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -77,7 +81,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -96,7 +104,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -117,7 +129,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -136,7 +152,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -151,7 +171,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -166,7 +190,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -181,7 +209,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -196,7 +228,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -213,7 +249,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -229,7 +269,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -246,7 +290,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -265,7 +313,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -281,7 +333,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -298,7 +354,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -317,7 +377,11 @@ interface E {
         }`
     const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+    const result = generateInterfaceSourceFromContract(
+      declaration,
+      typeMap,
+      () => undefined,
+    )
 
     const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
 interface E {
@@ -331,7 +395,11 @@ interface E {
     const { declaration, typeMap } = fromSource(source, 'E')
 
     expect(() =>
-      generateInterfaceSourceFromContract(declaration, typeMap),
+      generateInterfaceSourceFromContract(
+        declaration,
+        typeMap,
+        () => undefined,
+      ),
     ).toThrow('Only contracts')
   })
 
@@ -340,7 +408,11 @@ interface E {
     const { declaration, typeMap } = fromSource(source, 'E')
 
     expect(() =>
-      generateInterfaceSourceFromContract(declaration, typeMap),
+      generateInterfaceSourceFromContract(
+        declaration,
+        typeMap,
+        () => undefined,
+      ),
     ).toThrow('Only contracts')
   })
 
@@ -349,7 +421,11 @@ interface E {
     const { declaration, typeMap } = fromSource(source, 'E')
 
     expect(() =>
-      generateInterfaceSourceFromContract(declaration, typeMap),
+      generateInterfaceSourceFromContract(
+        declaration,
+        typeMap,
+        () => undefined,
+      ),
     ).toThrow('Only contracts')
   })
 
@@ -358,7 +434,11 @@ interface E {
     const { declaration, typeMap } = fromSource(source, 'E')
 
     expect(() =>
-      generateInterfaceSourceFromContract(declaration, typeMap),
+      generateInterfaceSourceFromContract(
+        declaration,
+        typeMap,
+        () => undefined,
+      ),
     ).toThrow('Only contracts')
   })
 
@@ -367,7 +447,11 @@ interface E {
     const { declaration, typeMap } = fromSource(source, 'E')
 
     expect(() =>
-      generateInterfaceSourceFromContract(declaration, typeMap),
+      generateInterfaceSourceFromContract(
+        declaration,
+        typeMap,
+        () => undefined,
+      ),
     ).toThrow('Only contracts')
   })
 
@@ -376,7 +460,11 @@ interface E {
     const { declaration, typeMap } = fromSource(source, 'E')
 
     expect(() =>
-      generateInterfaceSourceFromContract(declaration, typeMap),
+      generateInterfaceSourceFromContract(
+        declaration,
+        typeMap,
+        () => undefined,
+      ),
     ).toThrow('Only contracts')
   })
 })

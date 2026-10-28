@@ -1263,6 +1263,122 @@ describe('flatten', () => {
     ).not.toThrow()
   })
 
+  it('generated getters of struct state variables return the members', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Registry } from "./Registry.sol";
+      contract Root {
+          function signer(address registry) public view returns (address s) {
+              (, s, ) = Registry(registry).validators(1);
+          }
+      }
+    `,
+    )
+    const registryFile = sol(
+      'Registry.sol',
+      `
+      contract Registry {
+          struct Validator {
+              uint256 amount;
+              address signer;
+              uint256[] history;
+              mapping(address => bool) delegates;
+              string name;
+          }
+          mapping(uint256 => Validator) public validators;
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, registryFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      // NOTE(l2beat): This is an interface, generated from the contract source code.
+      interface Registry {
+          struct Validator {
+              uint256 amount;
+              address signer;
+              uint256[] history;
+              mapping(address => bool) delegates;
+              string name;
+          }
+
+          function validators(uint256) external view returns (uint256 amount, address signer, string memory name);
+      }
+
+      contract Root {
+          function signer(address registry) public view returns (address s) {
+              (, s, ) = Registry(registry).validators(1);
+          }
+      }
+    `),
+    )
+  })
+
+  it('generated struct getters resolve the struct in the contract scope', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { Other } from "./Other.sol";
+      import { Registry } from "./Registry.sol";
+      contract Root {
+          function f(address registry, address other) public view returns (uint256 x, address who) {
+              (x, ) = Registry(registry).info();
+              (who) = Other(other).info();
+          }
+      }
+    `,
+    )
+    const otherFile = sol(
+      'Other.sol',
+      `
+      struct Info {
+          address who;
+      }
+      contract Other {
+          Info public info;
+      }
+    `,
+    )
+    const registryFile = sol(
+      'Registry.sol',
+      `
+      interface IBase {
+          struct Info {
+              uint256 x;
+              uint256 y;
+          }
+      }
+      contract Registry is IBase {
+          Info public info;
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, otherFile, registryFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toInclude(
+      'function info() external view returns (address who);',
+    )
+    expect(flattened).toInclude(
+      'function info() external view returns (uint256 x, uint256 y);',
+    )
+  })
+
   it('regression - drops used things when turned into an interface', () => {
     const file = sol(
       'Root.sol',
