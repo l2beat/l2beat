@@ -58,7 +58,8 @@ export function DonutChart<T extends DonutChartEntry>({
   const { arcs, path } = useMemo(() => {
     const total = data.reduce((acc, entry) => acc + entry.value, 0)
     // d3 measures clockwise from 12 o'clock; starting at 3 o'clock and going
-    // counter-clockwise is d3's π/2..π/2-2π.
+    // counter-clockwise is d3's π/2..π/2-2π. Empty slices are left out, so
+    // the arrow keys cannot land on one the pointer could never hover.
     const arcs =
       total > 0
         ? pie<T>()
@@ -66,6 +67,7 @@ export function DonutChart<T extends DonutChartEntry>({
             .sort(null)
             .startAngle(Math.PI / 2)
             .endAngle(Math.PI / 2 - 2 * Math.PI)(data)
+            .filter((slice) => slice.value > 0)
         : []
     const path = arc<PieArcDatum<T>>()
       .innerRadius(innerRadius)
@@ -128,7 +130,9 @@ export function DonutChart<T extends DonutChartEntry>({
 
   function onKeyDown(event: KeyboardEvent) {
     // Modified arrows are the browser's, e.g. Alt+Left goes back.
-    if (event.altKey || event.ctrlKey || event.metaKey) return
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+      return
+    }
     const step =
       event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0
     if (step === 0 || arcs.length === 0) return

@@ -254,7 +254,9 @@ function TransferSizeBars({
 
   function onKeyDown(event: KeyboardEvent<SVGSVGElement>) {
     // Modified arrows are the browser's, e.g. Alt+Left goes back.
-    if (event.altKey || event.ctrlKey || event.metaKey) return
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+      return
+    }
     const forward = horizontal ? 'ArrowDown' : 'ArrowRight'
     const back = horizontal ? 'ArrowUp' : 'ArrowLeft'
     const step = event.key === forward ? 1 : event.key === back ? -1 : 0
