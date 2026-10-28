@@ -38,12 +38,18 @@ export function useIngestionPreview() {
   const [state, setState] = useState<IngestionPreviewState | undefined>()
   const previewMutation = useMutation(
     trpc.tokenIngestionQueue.preview.mutationOptions({
-      onSuccess: (trace) => {
-        setState((prev) => (prev ? { ...prev, trace, isLoading: false } : prev))
-      },
-      onError: (error) => {
+      // A response for an address the dialog no longer shows is dropped, so a
+      // slow earlier preview cannot overwrite a newer one.
+      onSuccess: (trace, entry) => {
         setState((prev) =>
-          prev ? { ...prev, error: error.message, isLoading: false } : prev,
+          isFor(prev, entry) ? { ...prev, trace, isLoading: false } : prev,
+        )
+      },
+      onError: (error, entry) => {
+        setState((prev) =>
+          isFor(prev, entry)
+            ? { ...prev, error: error.message, isLoading: false }
+            : prev,
         )
       },
     }),
@@ -61,6 +67,13 @@ export function useIngestionPreview() {
   }
 
   return { state, start, close: () => setState(undefined) }
+}
+
+function isFor(
+  state: IngestionPreviewState | undefined,
+  entry: { chain: string; address: string },
+): state is IngestionPreviewState {
+  return state?.chain === entry.chain && state.address === entry.address
 }
 
 export function IngestionPreviewDialog({
