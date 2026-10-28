@@ -3,6 +3,7 @@ import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
+import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getScalingMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
@@ -91,6 +92,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       'activityConfig',
       'garden',
       'ossificationHistory',
+      'versions',
     ],
   })
   if (!project) return undefined
@@ -134,6 +136,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       ...appLayoutProps,
       projectEntry,
       sectionLinks,
+      versionLinks: getProjectVersionLinks(project, 'layer2s'),
       queryState: helpers.dehydrate(),
     },
   }

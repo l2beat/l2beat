@@ -1,4 +1,5 @@
 import type { ProjectRedWarning } from '@l2beat/config'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import {
   getUnderReviewText,
   type UnderReviewStatus,
@@ -15,9 +16,18 @@ interface Project {
   }
 }
 
-export function ProjectSummaryBars({ project }: { project: Project }) {
+export function ProjectSummaryBars({
+  project,
+  versions,
+}: {
+  project: Project
+  versions?: ProjectVersionLinks
+}) {
+  const latestVersion = versions?.versions.find((v) => v.isLatest)
+  const newerVersion = latestVersion?.isCurrent ? undefined : latestVersion
   if (
     !project.archivedAt &&
+    !newerVersion &&
     !project.underReviewStatus &&
     !project.header?.warning &&
     !project.header?.redWarning &&
@@ -28,9 +38,17 @@ export function ProjectSummaryBars({ project }: { project: Project }) {
 
   return (
     <div className="mb-3 space-y-2">
-      {project.archivedAt && (
+      {project.archivedAt && !newerVersion && (
         <Banner type="info" centered>
           This project is archived and no longer maintained.
+        </Banner>
+      )}
+      {newerVersion && (
+        <Banner type="info" centered asMarkdown>
+          {(project.archivedAt
+            ? 'This version is archived and no longer maintained. '
+            : '') +
+            `[${newerVersion.name}](${newerVersion.href}) is the latest version.`}
         </Banner>
       )}
       {project.underReviewStatus && (

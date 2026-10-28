@@ -5,6 +5,7 @@ import { getInteropProtocolData } from '~/server/features/layer2s/interop/getInt
 import { getInteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
+import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getInteropMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
@@ -44,6 +45,7 @@ export async function getInteropProtocolPageData(
         ...appLayoutProps,
         projectEntry: data.projectEntry,
         sectionLinks: data.sectionLinks,
+        versionLinks: data.versionLinks,
         protocolData: data.protocolData,
         apiSelection: data.apiSelection,
         selectedUpdateId: req.query.update,
@@ -89,7 +91,13 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
   const project = await ps.getProject({
     slug,
     select: ['interopConfig'],
-    optional: ['statuses', 'display', 'discoveryUpdates', 'discoveryInfo'],
+    optional: [
+      'statuses',
+      'display',
+      'discoveryUpdates',
+      'discoveryInfo',
+      'versions',
+    ],
   })
   if (!project) return undefined
 
@@ -123,6 +131,7 @@ async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
     },
     projectEntry,
     sectionLinks,
+    versionLinks: getProjectVersionLinks(project, 'interop'),
     protocolData,
     apiSelection,
     queryState: helpers.dehydrate(),
