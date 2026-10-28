@@ -42,4 +42,13 @@ export const versionGroups: ProjectVersionGroup[] = [
       { project: ProjectId('privacy-pools-v2'), label: 'v2' },
     ],
   },
+  {
+    id: 'zkmoney',
+    name: 'zk.money',
+    latest: ProjectId('zkmoneyv6'),
+    versions: [
+      { project: ProjectId('zkmoney'), label: 'v5' },
+      { project: ProjectId('zkmoneyv6'), label: 'v6' },
+    ],
+  },
 ]
