@@ -61,6 +61,20 @@ describe(excerptAt.name, () => {
     expect(excerpt.isCut).toEqual(true)
   })
 
+  it('reads past call options split across lines', () => {
+    const body = Array.from({ length: 20 }, (_, i) => `  x = ${i};`)
+    const code = [
+      'function f() {',
+      '  receiver.deposit{value: amount} // pays',
+      '    (assets);',
+      ...body,
+      '}',
+    ].join('\n')
+    const excerpt = excerptAt(code, code.indexOf('receiver'), 2)
+    expect(excerpt.lines[1]).toEqual('    (assets);')
+    expect(excerpt.isCut).toEqual(true)
+  })
+
   it('gives the whole block a tuple assignment follows', () => {
     const body = Array.from({ length: 20 }, (_, i) => `    x = ${i};`)
     const code = [
