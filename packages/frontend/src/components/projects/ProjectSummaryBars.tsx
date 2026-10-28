@@ -47,7 +47,7 @@ export function ProjectSummaryBars({
       {newerVersion && (
         <Banner type="info" centered asMarkdown>
           {(currentVersion?.isArchived
-            ?'This version is archived and no longer maintained. '
+            ? 'This version is archived and no longer maintained. '
             : '') +
             `[${newerVersion.name}](${newerVersion.href}) is the latest version.`}
         </Banner>
