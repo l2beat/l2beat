@@ -19,6 +19,19 @@ const REPORTER_KEY = 'discoui:agent-context-reporter'
 const TAB_ID = `${Date.now()}-${Math.random()}`
 const CODE_TEXT_LENGTH_MAX = 8_000
 
+// The report waiting out its delay, which a message sent meanwhile flushes:
+// a question about "this" is about what was selected when it was asked.
+let pending:
+  | { timeout: ReturnType<typeof setTimeout>; send: () => Promise<void> }
+  | undefined
+
+export async function flushAgentContext() {
+  const report = pending
+  if (report === undefined) return
+  clearTimeout(report.timeout)
+  await report.send()
+}
+
 // Reports what the researcher looks at, so an agent asked "what is this?" can
 // read it instead of being told addresses and pasted code.
 export function AgentContextReporter(props: { project: string }) {
@@ -33,20 +46,21 @@ export function AgentContextReporter(props: { project: string }) {
     if (entries === undefined) {
       return
     }
-    let timeout: ReturnType<typeof setTimeout> | undefined
     // Only the tab in front speaks for the researcher: the server keeps one
     // context, and a tab in the background would overwrite it.
     const report = () => {
-      clearTimeout(timeout)
+      clearTimeout(pending?.timeout)
+      pending = undefined
       if (document.visibilityState !== 'visible') {
         return
       }
-      timeout = setTimeout(() => {
+      const send = async () => {
+        pending = undefined
         if (document.visibilityState !== 'visible') {
           return
         }
         localStorage.setItem(REPORTER_KEY, TAB_ID)
-        void putContext({
+        await putContext({
           project: props.project,
           selected: selected.map((address) => ({
             address,
@@ -61,7 +75,11 @@ export function AgentContextReporter(props: { project: string }) {
               : undefined,
           graph: readGraph(props.project),
         })
-      }, REPORT_DELAY_MS)
+      }
+      pending = {
+        timeout: setTimeout(() => void send(), REPORT_DELAY_MS),
+        send,
+      }
     }
     report()
     document.addEventListener('mouseup', report)
@@ -73,7 +91,8 @@ export function AgentContextReporter(props: { project: string }) {
     )
     const unsubscribeView = useAgentViewStore.subscribe(report)
     return () => {
-      clearTimeout(timeout)
+      clearTimeout(pending?.timeout)
+      pending = undefined
       document.removeEventListener('mouseup', report)
       document.removeEventListener('keyup', report)
       window.removeEventListener(AGENT_CONNECTED, report)
