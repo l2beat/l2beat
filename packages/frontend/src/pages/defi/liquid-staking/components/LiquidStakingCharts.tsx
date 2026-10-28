@@ -171,7 +171,7 @@ function ChartBlock({
           <h2 className="font-bold text-lg md:text-xl">{title}</h2>
           <Tooltip>
             <TooltipTrigger>
-              <InfoIcon className="size-3.5 fill-blue-700" />
+              <InfoIcon className="size-3.5" />
             </TooltipTrigger>
             <TooltipContent>{info}</TooltipContent>
           </Tooltip>
