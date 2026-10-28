@@ -23,6 +23,13 @@ describe(excerptAt.name, () => {
     })
   })
 
+  it('gives the whole function a parameter opens', () => {
+    const offset = CODE.indexOf('uint256 n')
+    expect(excerptAt(CODE, offset, 2).lines).toEqual(
+      CODE.split('\n').slice(1, 7),
+    )
+  })
+
   it('gives the lines after a snippet that opens no block', () => {
     const offset = CODE.indexOf('finalized = n')
     expect(excerptAt(CODE, offset, 6).lines).toEqual(CODE.split('\n').slice(5))
