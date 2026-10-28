@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xc9d2b958d13f4607ef8506941eb8b15fd081c2a1
+
+# Diff at Tue, 27 Oct 2026 16:31:30 GMT:
+
+- id: 5428fcd5
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1792144273
+- current timestamp: 1792144273
+
+## Description
+
+Flattener now renames free functions inside using { ... } lists, so each list points at its own file's function. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144273 (main branch discovery), not current.
+
+```diff
+    contract Ethereum_SpokePool (eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      sourceHashes.1:
+-        "0x667fb3db67749e9488a6511b73f11c5acfa08bd66fa64944fe1d3064fa551c6e"
++        "0x856340a74262764fa24254884d4608c39fe683a013d2d2e60d093992e46b3fb7"
+    }
+```
+
+```diff
+    contract OP_SpokePool (oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      sourceHashes.1:
+-        "0x63512362033eb12727887f57a9397e800b1fa1b98ff0fe2742abe67f53d493f1"
++        "0x62e75647ffea5664ef890dc403412e0f7902d7206522e92619765d092d63d906"
+    }
+```
+
 Generated with discovered.json: 0xd5e149eb45f3b8eec92a07b2a1f7709f34dd2cc0
 
 # Diff at Tue, 20 Oct 2026 10:25:37 GMT:
