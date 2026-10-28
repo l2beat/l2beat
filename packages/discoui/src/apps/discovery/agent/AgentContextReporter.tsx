@@ -13,6 +13,10 @@ import { useAgentStore } from './store'
 import { useAgentViewStore } from './viewStore'
 
 const REPORT_DELAY_MS = 300
+// The server keeps one context: only the tab that reported it last may
+// clear it, not a background tab closing.
+const REPORTER_KEY = 'discoui:agent-context-reporter'
+const TAB_ID = `${Date.now()}-${Math.random()}`
 const CODE_TEXT_LENGTH_MAX = 8_000
 
 // Reports what the researcher looks at, so an agent asked "what is this?" can
@@ -41,6 +45,7 @@ export function AgentContextReporter(props: { project: string }) {
         if (document.visibilityState !== 'visible') {
           return
         }
+        localStorage.setItem(REPORTER_KEY, TAB_ID)
         void putContext({
           project: props.project,
           selected: selected.map((address) => ({
@@ -78,16 +83,20 @@ export function AgentContextReporter(props: { project: string }) {
     }
   }, [props.project, response.data, selected, tree, focus, view])
 
-  // Leaving the project page leaves no project on screen, so the agent must
-  // not keep answering about the last one.
-  useEffect(
-    () => () => {
-      if (document.visibilityState === 'visible') {
+  // Leaving the project page or closing the tab leaves no project on screen,
+  // so the agent must not keep answering about the last one.
+  useEffect(() => {
+    const leave = () => {
+      if (localStorage.getItem(REPORTER_KEY) === TAB_ID) {
         void putContext({ selected: [], panels: [] })
       }
-    },
-    [],
-  )
+    }
+    window.addEventListener('pagehide', leave)
+    return () => {
+      window.removeEventListener('pagehide', leave)
+      leave()
+    }
+  }, [])
 
   return null
 }
@@ -126,6 +135,8 @@ function readCodeSelection(address: string | undefined) {
 async function putContext(context: object) {
   const response = await fetch('/api/agent/context', {
     method: 'PUT',
+    // A report sent as the tab closes must outlive the page.
+    keepalive: true,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(context),
   }).catch(() => undefined)
