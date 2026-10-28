@@ -38,8 +38,9 @@ class RpcError extends Error {
   constructor(
     readonly code: number,
     message: string,
+    readonly detail: string,
   ) {
-    super(message)
+    super(message, { cause: { detail } })
   }
 }
 
@@ -66,7 +67,7 @@ export function attachMcpRouter(app: Express, ui: DiscoUi) {
       if (!(error instanceof RpcError)) {
         throw error
       }
-      res.json(rpcError(id, error.code, error.message))
+      res.json(rpcError(id, error.code, `${error.message}: ${error.detail}`))
     }
   })
 
@@ -117,12 +118,12 @@ async function answer(
     const call = parseParams(callSchema, params)
     const tool = TOOLS.find((t) => t.name === call.name)
     if (tool === undefined) {
-      throw new RpcError(-32602, `Unknown tool: ${call.name}`)
+      throw new RpcError(-32602, 'Unknown tool', call.name)
     }
     const { text, isError } = await runTool(tool, call.arguments, ui)
     return { content: [{ type: 'text', text }], isError }
   }
-  throw new RpcError(-32601, `Method not found: ${method}`)
+  throw new RpcError(-32601, 'Method not found', method)
 }
 
 function describeTool(tool: AgentTool) {
@@ -152,7 +153,7 @@ function describeTool(tool: AgentTool) {
 function parseParams<T>(schema: Validator<T>, params: unknown): T {
   const parsed = schema.safeParse(params)
   if (!parsed.success) {
-    throw new RpcError(-32602, parsed.message)
+    throw new RpcError(-32602, 'Invalid params', parsed.message)
   }
   return parsed.data
 }
