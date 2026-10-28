@@ -30,6 +30,7 @@ import {
   type ProjectOssificationView,
 } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -423,9 +424,18 @@ async function getPrivacyProjectFlowData(
     db.privacyFlowEvent.getDailyByProjectIds([projectId], from, to),
     db.tvsTokenValue.getLastNonZeroValue(now, projectId),
   ])
-  const escrowValues = await db.tvsEscrowValue.getByProjectAt(projectId, [
-    ...new Set(tokenValues.map((value) => value.timestamp)),
-  ])
+  const escrowValues = await db.tvsEscrowValue
+    .getByProjectAt(projectId, [
+      ...new Set(tokenValues.map((value) => value.timestamp)),
+    ])
+    .catch((error) => {
+      // Bucket values are optional, so the page still renders when they
+      // can't be read, e.g. before the backend has created their table.
+      getLogger()
+        .for('getPrivacyProjectDetails')
+        .warn('Escrow values unavailable', { projectId, error })
+      return []
+    })
   const bucketTvls = getPrivacyBucketTvls(
     project.privacyInfo.tokens,
     project.tvsConfig ?? [],
