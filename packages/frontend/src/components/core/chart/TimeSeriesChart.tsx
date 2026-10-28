@@ -3,7 +3,6 @@ import {
   areaY,
   type ChartCurve,
   type ChartMark,
-  type ChartScene,
   defineChart,
   dot,
   type InferableScaleLike,
@@ -17,10 +16,10 @@ import { decorative } from '@tanstack/charts/mark/decorative'
 import { Chart } from '@tanstack/charts/react'
 import { scaleLinear } from '@tanstack/charts/scales/linear'
 import { curveMonotoneX, curveStep, curveStepAfter } from 'd3-shape'
-import { type ReactNode, useMemo, useRef } from 'react'
+import { type ReactNode, useMemo, useRef, useState } from 'react'
 import { cn } from '~/utils/cn'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
-import { ChartHoverOverlay } from './ChartHoverOverlay'
+import { ChartHoverOverlay, ChartSceneStore } from './ChartHoverOverlay'
 import { NoDataPatternDef } from './defs/NoDataPatternDef'
 import { getTickCondition, getTickFormatter } from './utils/xAxisTicks'
 
@@ -132,13 +131,12 @@ const Y_SCALE = 'y'
 const RIGHT_SCALE = 'right-y'
 
 const chartClassNames = cn(
-  'absolute! inset-0',
-  // Grid
-  '[&_[data-ts-key^="y-grid"]]:stroke-primary/25 dark:[&_[data-ts-key^="y-grid"]]:stroke-primary/40',
-  '[&_[data-ts-key^="y-grid"]]:[stroke-opacity:1]',
-  // Tick labels
-  '[&_text[data-ts-key^="x-tick-label"]]:fill-secondary [&_text[data-ts-key^="x-tick-label"]]:[fill-opacity:1]',
-  '[&_text[data-ts-key*="y-tick-label"]]:fill-primary/50 [&_text[data-ts-key*="y-tick-label"]]:[fill-opacity:1] dark:[&_text[data-ts-key*="y-tick-label"]]:fill-primary/70',
+  '[--chart-grid:color-mix(in_oklab,var(--primary)_25%,transparent)] dark:[--chart-grid:color-mix(in_oklab,var(--primary)_40%,transparent)]',
+  // The theme's muted color, which paints all tick labels.
+  '[--chart-tick-label:color-mix(in_oklab,var(--primary)_50%,transparent)] dark:[--chart-tick-label:color-mix(in_oklab,var(--primary)_70%,transparent)]',
+  // The axis options have no per-axis label color, so the x labels are
+  // matched by their scene keys, which are not a documented API.
+  '[&_text[data-ts-key^="x-tick-label"]]:fill-secondary',
   '[&_svg]:outline-none',
 )
 
@@ -187,7 +185,7 @@ export function TimeSeriesChart<T, K extends string>({
   ]
 
   // The hover overlay maps rows to pixels with the last rendered scales.
-  const sceneRef = useRef<ChartScene | null>(null)
+  const [sceneRef] = useState(() => new ChartSceneStore())
 
   // Callers pass inline props; a new definition rebuilds the whole scene, so
   // the memo keys on values and functions are read through refs. Scale
@@ -304,6 +302,7 @@ export function TimeSeriesChart<T, K extends string>({
             y2: 'y2',
             fill: area.fill,
             fillOpacity: area.fillOpacity,
+            inset: 0,
             key: () => `reference-area-${i}`,
           },
         ),
@@ -366,9 +365,9 @@ export function TimeSeriesChart<T, K extends string>({
     const plotHeight = (height: number) =>
       height - chartMargin.top - chartMargin.bottom
 
-    // A function of the size, so the y ticks can fit the plot height.
-    return defineChart(
-      ({ height }) => {
+    return defineChart({
+      // A function of the size, so the y ticks can fit the plot height.
+      chart: ({ height }) => {
         const leftTicks = fitTicks(left, plotHeight(height), yAxis)
         const rightTicks = right
           ? fitTicks(right, plotHeight(height), rightAxis ?? {})
@@ -380,7 +379,14 @@ export function TimeSeriesChart<T, K extends string>({
             ...strokes,
             // A mark rather than the axis grid, so it is drawn over the
             // fills.
-            decorative(ruleY(leftTicks, { id: 'y-grid', y: (v) => v })),
+            decorative(
+              ruleY(leftTicks, {
+                id: 'y-grid',
+                y: (v) => v,
+                stroke: 'var(--chart-grid)',
+                strokeOpacity: 1,
+              }),
+            ),
             ...dotMarks,
           ],
           // Scale instances, not factories: a factory's domain is inferred
@@ -395,7 +401,7 @@ export function TimeSeriesChart<T, K extends string>({
                   size: 0,
                   format: xTicks.format,
                 },
-                tickLabels: { fontSize: 10, fontWeight: 500 },
+                tickLabels: { fontSize: 10, fontWeight: 500, opacity: 1 },
               },
             },
             [Y_SCALE]: yScaleOptions(
@@ -419,18 +425,18 @@ export function TimeSeriesChart<T, K extends string>({
                 }
               : {}),
           },
+          theme: { muted: 'var(--chart-tick-label)' },
           margin: chartMargin,
-          clip: true,
+          // Not clipped, so lines at the domain's ends keep their full width;
+          // every domain contains its data.
         }
       },
-      {
-        // The library's hover host restyles the whole chart on every pointer
-        // move and searches rows linearly; ChartHoverOverlay replaces it.
-        pointer: false,
-        keyboard: false,
-        tooltip: false,
-      },
-    )
+      // The library's hover host restyles the whole chart on every pointer
+      // move and searches rows linearly; ChartHoverOverlay replaces it.
+      focus: false,
+      pointer: false,
+      keyboard: false,
+    })
   }, [plotted, optionsKey, yAxis.scale, rightAxis?.scale])
 
   const visibleKeys = visible.map((s) => s.key)
@@ -450,11 +456,14 @@ export function TimeSeriesChart<T, K extends string>({
         definition={definition}
         ariaLabel={ariaLabel}
         className={chartClassNames}
-        style={{ width: 'auto', height: 'auto' }}
-        tabIndex={-1}
-        onRender={({ scene }) => {
-          sceneRef.current = scene
+        // Overrides the adapter's own size, so the chart fills the box.
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: 'auto',
+          height: 'auto',
         }}
+        onRender={({ scene }) => sceneRef.set(scene)}
       />
       <ChartHoverOverlay
         rows={rows}
@@ -494,7 +503,12 @@ export function getTooltipEntries<T, K extends string>(
   })
 }
 
-/** A row with each visible series' plotted edges, stacking applied. */
+/**
+ * A row with each visible series' plotted edges, stacking applied. Stacked
+ * here rather than with the library's stack layout, because the lines and the
+ * hover overlay need the stacked values too, and a missing value must leave a
+ * gap instead of being dropped.
+ */
 interface Plotted<T> {
   row: T
   top: Record<string, number | null>
@@ -576,6 +590,7 @@ function yScaleOptions(
         dy: axis.dy ?? -10,
         fontSize: axis.fontSize ?? 15,
         fontWeight: axis.fontWeight,
+        opacity: 1,
         thin: false,
       },
     },

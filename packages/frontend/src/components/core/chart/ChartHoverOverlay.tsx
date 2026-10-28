@@ -3,7 +3,6 @@ import {
   type KeyboardEvent,
   type PointerEvent,
   type ReactNode,
-  type RefObject,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -29,6 +28,24 @@ export interface OverlayDot<T> {
   scale: string
 }
 
+/** The last rendered scene, and who to tell when the chart renders again. */
+export class ChartSceneStore {
+  current: ChartScene | null = null
+  private listeners = new Set<() => void>()
+
+  set(scene: ChartScene) {
+    this.current = scene
+    for (const listener of this.listeners) listener()
+  }
+
+  subscribe(listener: () => void) {
+    this.listeners.add(listener)
+    return () => {
+      this.listeners.delete(listener)
+    }
+  }
+}
+
 type SyncListener = (x: number | null, source: object) => void
 /** Hover shared between charts with the same sync id, by x value. */
 const syncListeners = new Map<string, Set<SyncListener>>()
@@ -37,8 +54,8 @@ const syncListeners = new Map<string, Set<SyncListener>>()
  * Crosshair, active dots and tooltip for a time series. React renders only
  * when the hovered row changes; moves within a row just translate the
  * tooltip. The tooltip sits below and right of the pointer (left past the
- * middle of the plot), may leave the chart but not the window, and arrow
- * keys move it between rows.
+ * middle of the plot), may leave the chart but not the window. Arrow keys
+ * move it between rows, Home and End jump to the ends, Escape closes it.
  */
 export function ChartHoverOverlay<T>({
   rows,
@@ -52,7 +69,7 @@ export function ChartHoverOverlay<T>({
   rows: T[]
   x: (row: T) => number
   dots: OverlayDot<T>[]
-  sceneRef: RefObject<ChartScene | null>
+  sceneRef: ChartSceneStore
   ariaLabel: string
   syncId?: string
   renderTooltip: (row: T) => ReactNode
@@ -101,8 +118,42 @@ export function ChartHoverOverlay<T>({
     return () => document.removeEventListener('pointerdown', closeOutside)
   }, [isActive])
 
-  const latest = useRef({ rows, getX })
-  latest.current = { rows, getX }
+  const latest = useRef({ rows, getX, dots })
+  latest.current = { rows, getX, dots }
+
+  /** Where a row's tooltip hangs from: its first dot, or mid-plot. */
+  function anchorOf(index: number) {
+    const current = sceneRef.current
+    const { rows, getX, dots } = latest.current
+    const target = rows[index]
+    if (!current || target === undefined) return { x: 0, y: 0 }
+    const first = dots
+      .map((d) => ({ d, value: d.value(target, index) }))
+      .find(({ value }) => isNumber(value))
+    return {
+      x: current.scales.x?.map(getX(target)) ?? 0,
+      y:
+        first && isNumber(first.value)
+          ? (current.scales[first.d.scale]?.map(first.value) ?? 0)
+          : current.chart.y + current.chart.height / 2,
+    }
+  }
+
+  // A resize lays the chart out again; an open tooltip (left by a tap or
+  // the keyboard) follows its row.
+  const activeRef = useRef(active)
+  activeRef.current = active
+  // biome-ignore lint/correctness/useExhaustiveDependencies: anchorOf reads refs
+  useEffect(
+    () =>
+      sceneRef.subscribe(() => {
+        const current = activeRef.current
+        if (current) {
+          setActive({ index: current.index, ...anchorOf(current.index) })
+        }
+      }),
+    [sceneRef],
+  )
   useEffect(() => {
     if (!syncId) return
     const listeners = syncListeners.get(syncId) ?? new Set()
@@ -169,26 +220,27 @@ export function ChartHoverOverlay<T>({
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    const step =
-      event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0
-    const current = sceneRef.current
-    if (step === 0 || !current || rows.length === 0) return
+    if (event.key === 'Escape' && active) {
+      event.preventDefault()
+      deactivate()
+      return
+    }
+    if (!sceneRef.current || rows.length === 0) return
+    const last = rows.length - 1
+    let index: number
+    if (event.key === 'Home') index = 0
+    else if (event.key === 'End') index = last
+    else {
+      const step =
+        event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0
+      if (step === 0) return
+      // The first press starts from the end it points away from.
+      const from = active ? active.index : step > 0 ? -1 : rows.length
+      index = Math.min(last, Math.max(0, from + step))
+    }
     event.preventDefault()
-    // The first press starts from the end it points away from.
-    const from = active ? active.index : step > 0 ? -1 : rows.length
-    const index = Math.min(rows.length - 1, Math.max(0, from + step))
-    const target = rows[index]
-    if (!target) return
-    const first = dots
-      .map((d) => ({ d, value: d.value(target, index) }))
-      .find(({ value }) => isNumber(value))
-    activate(
-      index,
-      current.scales.x?.map(getX(target)) ?? 0,
-      first && isNumber(first.value)
-        ? (current.scales[first.d.scale]?.map(first.value) ?? 0)
-        : current.chart.y + current.chart.height / 2,
-    )
+    const { x, y } = anchorOf(index)
+    activate(index, x, y)
   }
 
   const xScale = scene?.scales.x
@@ -199,7 +251,8 @@ export function ChartHoverOverlay<T>({
     <div
       ref={rootRef}
       role="application"
-      aria-label={ariaLabel}
+      // The chart's image already carries the bare name.
+      aria-label={`${ariaLabel}: arrow keys show values`}
       tabIndex={0}
       data-chart-hover=""
       className="absolute inset-0 outline-none"
