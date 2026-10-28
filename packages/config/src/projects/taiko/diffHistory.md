@@ -1,3 +1,107 @@
+Generated with discovered.json: 0x0593d09b29f0fd6daa486c7301ddfe287b9b1aa2
+
+# Diff at Wed, 28 Oct 2026 13:54:39 GMT:
+
+- id: cf2226a4
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cc7e9e73c101d0a260af6bfe078851f3ff1d60cb block: 1792860914
+- current timestamp: 1793195421
+
+## Description
+
+The RISC Zero EOA 0xF616…d412 executed the scheduled `addVerifier(0x8b38038c, 0x9660…)` through the timelock. Taiko's RISC0 proofs can now route through the estop 0x9660… to RiscZeroGroth16Verifier v3.1.0. Its code equals v3.0.0. Only the constants differ: the Groth16 verifying key, control root and BN254 control ID. None of them appear in a public RISC Zero release or published trusted setup. The deployer left the contract unverified. L2BEAT verified the reconstructed source on etherscan and sourcify with an exact bytecode match. Current Taiko RISC0 proofs still use selector 0x73c457ba (v3.0.0).
+https://disco.l2beat.com/diff/eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D/eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e
+
+The Safe 0xF28C…, a member of the Taiko Foundation Treasury Multisig, moved to the canonical Safe 1.5.0 singleton.
+https://disco.l2beat.com/diff/eth:0x41675C099F32341bf84BFc5382aF534df5C7461a/eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.callsExecuted.21:
++        {"id":"0x682e79774f6b8e0fc1dbddd69bfca4374e9827b815d8fb2a73d602d541714c82","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af308b38038c000000000000000000000000000000000000000000000000000000000000000000000000000000009660bd6dcdf455dcfb30c07c642ab22e7cb89f50"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_8b38038c:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50"
+    }
+```
+
+```diff
+    contract Safe (eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
++        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      values.$implementation:
+-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b"
+      values.getChainId:
+-        1
+      values.VERSION:
+-        "1.4.1"
++        "1.5.0"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b:
++        "Safe"
+    }
+```
+
+```diff
+    EOA (eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50","description":"pause the verifier.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.1.0).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e that allows pausing (emergency stop) the verifier by its owner.
+```
+
+## Source code changes
+
+```diff
+...:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e.sol | 1780 ++++++++++++++++++++
+ ...:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50.sol |  366 ++++
+ .../{.flat@1792860914 => .flat}/Safe/Safe.sol      | 1537 +++++++++++------
+ 3 files changed, 3205 insertions(+), 478 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792860914 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_8b38038c:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.verifier_8b38038c:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x4091a503962f2c5fee518057b590fe73957dc689
 
 # Diff at Sat, 24 Oct 2026 16:57:44 GMT:

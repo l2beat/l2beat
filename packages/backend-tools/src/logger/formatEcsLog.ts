@@ -54,21 +54,30 @@ export function formatEcsLog(entry: LogEntry): string {
       source: source,
     },
     message: truncate(entry.message),
-    error:
-      typeof error === 'object' && error !== null && !Array.isArray(error)
-        ? {
-            message: truncate((error as Record<string, unknown>).error),
-            type: (error as Record<string, unknown>).name,
-            cause: (error as Record<string, unknown>).cause,
-            stack_trace: Array.isArray((error as Record<string, unknown>).stack)
-              ? ((error as Record<string, unknown>).stack as unknown[]).map(
-                  truncate,
-                )
-              : undefined,
-          }
-        : undefined,
+    error: formatError(error),
     parameters: hasKeys(rest) ? rest : undefined,
   })
+}
+
+function formatError(error: unknown) {
+  if (typeof error === 'string') {
+    return { message: truncate(error) }
+  }
+  if (typeof error !== 'object' || error === null || Array.isArray(error)) {
+    return undefined
+  }
+  const {
+    error: message,
+    name,
+    cause,
+    stack,
+  } = error as Record<string, unknown>
+  return {
+    message: truncate(message),
+    type: name,
+    cause,
+    stack_trace: Array.isArray(stack) ? stack.map(truncate) : undefined,
+  }
 }
 
 function hasKeys(object: Record<string, unknown>): boolean {

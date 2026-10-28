@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { DayProvider } from '../../../../providers/day/DayProviders'
+import type { DailyCountsProvider } from '../../../../providers/day/DayProviders'
 import { DayTxsCountService } from './DayTxsCountService'
 
 describe(DayTxsCountService.prototype.getTxsCount.name, () => {
@@ -167,7 +167,7 @@ function mockProvider(data: {
   txs: Record<number, number>
   uops: Record<number, number>
 }) {
-  return mockObject<DayProvider>({
+  return mockObject<DailyCountsProvider>({
     getDailyTxsCount: mockFn().resolvesTo(data.txs),
     getDailyUopsCount: mockFn().resolvesTo(data.uops),
   })
