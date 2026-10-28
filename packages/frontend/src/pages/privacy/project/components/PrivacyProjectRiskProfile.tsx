@@ -24,6 +24,7 @@ import {
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { PrivacyProjectRosette } from '../../rosette/PrivacyProjectRosette'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
+import { MOBILE_SUMMARY_ROWS } from './PrivacyProjectStats'
 
 interface Props {
   trustedSetup: PrivacyTrustedSetupSummary
@@ -46,7 +47,13 @@ export function PrivacyProjectRiskProfile({
   className,
 }: Props) {
   return (
-    <div className={cn('grid gap-4 md:grid-cols-4', className)}>
+    <div
+      className={cn(
+        'grid md:grid-cols-4 md:gap-4',
+        MOBILE_SUMMARY_ROWS,
+        className,
+      )}
+    >
       <ProjectSummaryStat
         title={PRIVACY_ASSESSMENT.title}
         tooltip={PRIVACY_ASSESSMENT.tooltip}
@@ -112,10 +119,18 @@ function RiskValue({
         className="flex items-center gap-2 text-left"
         aria-label={value.value}
       >
-        <TrustedSetupRiskDot risk={risk} size="md" className="shrink-0" />
+        {/* Text height on phones, where the dots sit in rows of text. */}
+        <TrustedSetupRiskDot
+          risk={risk}
+          size={null}
+          className="size-4 shrink-0 md:size-6"
+        />
         {!dotOnly && <span>{value.value}</span>}
         {walkawayTest && (
-          <PrivacyWalkawayTestIcon passed={walkawayTest.passed} />
+          <PrivacyWalkawayTestIcon
+            passed={walkawayTest.passed}
+            className="max-md:size-4"
+          />
         )}
       </TooltipTrigger>
       <TooltipContent className="max-w-[320px]">
