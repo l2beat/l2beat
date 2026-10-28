@@ -31,7 +31,7 @@ describeDatabase(HourActivityIndexer.name, (db) => {
 
   it('syncs until the last full hour, rewriting today each hour', async () => {
     const getHourlyStats = mockFn()
-      // Lighter gives its whole history, with the hour still going on
+      // Lighter gives its whole history, past the clock's last full hour
       .resolvesToOnce([
         ...HISTORY,
         stat(TODAY, 4, 40),
@@ -196,6 +196,7 @@ function toHeight(timestamp: UnixTime) {
   return timestamp / UnixTime.HOUR
 }
 
-function stat(timestamp: UnixTime, count: number, uopsCount: number) {
-  return { timestamp, count, uopsCount }
+/** Of the hour from `hour`, which Lighter labels with the hour's end */
+function stat(hour: UnixTime, count: number, uopsCount: number) {
+  return { timestamp: hour + UnixTime.HOUR, count, uopsCount }
 }
