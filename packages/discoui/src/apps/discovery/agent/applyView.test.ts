@@ -55,6 +55,30 @@ describe(applyView.name, () => {
     expect(hiddenIds(nodes)).toEqual([])
   })
 
+  it('shows a contract an earlier view set aside', () => {
+    const graph = [...GRAPH, node('lonely', [], true)]
+    const aside = applyView(stateOf(graph), view({ hide: ['lonely'] })).nodes
+    const { nodes } = applyView(stateOf(aside), view({ only: ['lonely'] }))
+    expect(nodes.some((n) => n.id === 'lonely')).toEqual(true)
+  })
+
+  it('shows a contract on a cycle no initial contract reaches', () => {
+    // cycleA ⇄ cycleB, referenced by nothing else.
+    const graph = [
+      ...GRAPH,
+      node('cycleA', ['cycleB']),
+      node('cycleB', ['cycleA']),
+    ]
+    const hidden = applyView(stateOf(graph), view({ hide: ['cycleA'] })).nodes
+    expect(hiddenIds(hidden)).toEqual(['cycleA', 'cycleB'])
+
+    const shown = applyView(stateOf(hidden), view({ show: ['cycleA'] }))
+    expect(hiddenIds(shown.nodes)).toEqual([])
+    const only = applyView(stateOf(hidden), view({ only: ['cycleA'] }))
+    expect(hiddenIds(only.nodes)).not.toInclude('cycleA')
+    expect(only.receipt.connectors).toEqual(['cycleB'])
+  })
+
   it('keeps only the asked contracts and the chain of references to them', () => {
     const { nodes, receipt } = applyView(
       stateOf(GRAPH),

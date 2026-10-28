@@ -57,6 +57,10 @@ export interface AppliedView {
 // So everything the view does can be kept, saved, undone or edited further.
 export function applyView(state: State, view: AgentViewSpec): AppliedView {
   const before = getGraphProjection(state.nodes)
+  const released = releaseFromSetAside(
+    state.nodes,
+    new Set([...view.show, ...(view.only ?? [])]),
+  )
   const leafIds = new Set(before.leafNodes.map((node) => node.id))
   const requested = [
     ...view.hide,
@@ -66,7 +70,7 @@ export function applyView(state: State, view: AgentViewSpec): AppliedView {
     ...view.colors.flatMap((c) => c.members),
   ]
 
-  const visibility = applyVisibility(state.nodes, view, leafIds)
+  const visibility = applyVisibility(released, view, leafIds)
   let nodes = visibility.nodes
   for (const { color, members } of view.colors) {
     nodes = colorLeaves(nodes, new Set(members), color)
@@ -77,7 +81,7 @@ export function applyView(state: State, view: AgentViewSpec): AppliedView {
       name: SET_ASIDE_NAME,
       color: 0,
       members: [
-        ...new Set([...setAsideBefore(state.nodes), ...visibility.notHideable]),
+        ...new Set([...setAsideBefore(released), ...visibility.notHideable]),
       ],
       opened: false,
     },
@@ -138,6 +142,32 @@ function setAsideBefore(nodes: readonly Node[]): string[] {
   return nodes
     .filter((node) => node.name === SET_ASIDE_NAME)
     .flatMap((node) => node.subnodes.map((member) => member.id))
+}
+
+// What a view asks to see leaves the group an earlier view set it aside in,
+// or it would stay folded away.
+function releaseFromSetAside(
+  nodes: readonly Node[],
+  ids: ReadonlySet<string>,
+): Node[] {
+  const released: Node[] = []
+  const kept = nodes.flatMap((node) => {
+    if (node.name !== SET_ASIDE_NAME) return [node]
+    const subnodes = node.subnodes.filter((member) => !ids.has(member.id))
+    if (subnodes.length === node.subnodes.length) return [node]
+    released.push(...node.subnodes.filter((member) => ids.has(member.id)))
+    if (subnodes.length === 0) return []
+    const fields = collectOutgoingFields(subnodes)
+    return [
+      {
+        ...node,
+        subnodes,
+        fields,
+        hiddenFields: reconcileNodeHiddenFields(fields, node.hiddenFields),
+      },
+    ]
+  })
+  return [...kept, ...released]
 }
 
 function applyVisibility(
