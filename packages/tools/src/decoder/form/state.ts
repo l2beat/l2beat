@@ -136,8 +136,21 @@ export function reducer(state: State, action: Action): State {
   }
 }
 
-function getDataError(data: string) {
-  if (!data) return undefined
+// The old decoder accepted hex without 0x and with whitespace from wrapped copies.
+export function normalizeData(value: string) {
+  let hex = ''
+  for (const char of value) {
+    if (char !== ' ' && char !== '\n' && char !== '\r' && char !== '\t') {
+      hex += char
+    }
+  }
+  hex = hex.toLowerCase()
+  return hex.startsWith('0x') ? hex : `0x${hex}`
+}
+
+function getDataError(value: string) {
+  if (!value) return undefined
+  const data = normalizeData(value)
   if (!DATA_REGEX.test(data)) return 'Invalid data'
   if ((data.length - 2) / 2 > CALLDATA_BYTES_MAX) {
     return 'Data is longer than 64 KiB'

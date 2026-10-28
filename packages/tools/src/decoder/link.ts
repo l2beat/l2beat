@@ -14,6 +14,10 @@ const HASH_BYTES = 32
 const ADDRESS_BYTES = 20
 const CHAIN_ID_DEFAULT = 1
 export const CALLDATA_BYTES_MAX = 64 * 1024
+// Incompressible data grows by a few bytes per deflate block, then by 4/3 in base64.
+const CALLDATA_ENCODED_LENGTH_MAX = Math.ceil(
+  ((CALLDATA_BYTES_MAX + 1024) * 4) / 3,
+)
 const LEGACY_LOCAL_STORAGE_DATA = '0xLOCALSTORAGE'
 
 // Calldata links live in the fragment, which never reaches Vercel's 14 KB URL limit.
@@ -103,6 +107,9 @@ export async function compressCalldata(calldata: `0x${string}`) {
 export async function decompressCalldata(
   encoded: string,
 ): Promise<`0x${string}`> {
+  if (encoded.length > CALLDATA_ENCODED_LENGTH_MAX) {
+    throw new Error('Calldata too long', { cause: { CALLDATA_BYTES_MAX } })
+  }
   const stream = new Blob([fromBase64Url(encoded)])
     .stream()
     .pipeThrough(new DecompressionStream('deflate-raw'))

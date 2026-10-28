@@ -163,6 +163,19 @@ describe(decompressCalldata.name, () => {
     expect(await decompressCalldata(await compressCalldata('0x'))).toEqual('0x')
   })
 
+  it('round trips incompressible calldata at the limit', async () => {
+    const calldata: `0x${string}` = `0x${randomBytes(CALLDATA_BYTES_MAX).toString('hex')}`
+    expect(await decompressCalldata(await compressCalldata(calldata))).toEqual(
+      calldata,
+    )
+  })
+
+  it('rejects encoded data longer than any valid link before decoding', async () => {
+    await expect(decompressCalldata('A'.repeat(1_000_000))).toBeRejectedWith(
+      'Calldata too long',
+    )
+  })
+
   it('rejects calldata above the limit', async () => {
     const encoded = deflateRawSync(
       Buffer.alloc(CALLDATA_BYTES_MAX + 1),
