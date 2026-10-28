@@ -44,12 +44,15 @@ import type {
   PrivacyProject,
   PrivacyRelayerStat,
 } from './types'
+import { getPrivacyBucketTvls } from './utils/getPrivacyBucketTvls'
 import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
   daily30d: PrivacyFlowDailyRecord[]
   tokenValues: TokenValueRecord[]
+  /** Value of each bucket's pool at its asset's latest TVL, by bucket id. */
+  bucketTvls: Map<string, number>
 }
 
 export interface PrivacyProjectDetails {
@@ -114,7 +117,7 @@ export async function getPrivacyProjectDetails(
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
   const [
-    { totals, daily30d, tokenValues },
+    { totals, daily30d, tokenValues, bucketTvls },
     relayerStat,
     trackedOn,
     ossification,
@@ -214,7 +217,7 @@ export async function getPrivacyProjectDetails(
         type: bucket.type,
         denomination: bucket.denomination,
         totalAmount: null,
-        totalValueUsd: null,
+        totalValueUsd: bucketTvls.get(bucket.id) ?? null,
         deposits: {
           total: depositCountTotal,
           last7d: depositCount7d,
@@ -420,7 +423,16 @@ async function getPrivacyProjectFlowData(
     db.privacyFlowEvent.getDailyByProjectIds([projectId], from, to),
     db.tvsTokenValue.getLastNonZeroValue(now, projectId),
   ])
-  return { totals, daily30d, tokenValues }
+  const escrowValues = await db.tvsEscrowValue.getByProjectAt(projectId, [
+    ...new Set(tokenValues.map((value) => value.timestamp)),
+  ])
+  const bucketTvls = getPrivacyBucketTvls(
+    project.privacyInfo.tokens,
+    project.tvsConfig ?? [],
+    tokenValues,
+    escrowValues,
+  )
+  return { totals, daily30d, tokenValues, bucketTvls }
 }
 
 function getMockPrivacyProjectFlowData(
@@ -478,5 +490,9 @@ function getMockPrivacyProjectFlowData(
     }),
   )
 
-  return { totals, daily30d, tokenValues }
+  const bucketTvls = new Map(
+    bucketIds.map((bucketId) => [bucketId, Math.random() * 1_000_000]),
+  )
+
+  return { totals, daily30d, tokenValues, bucketTvls }
 }
