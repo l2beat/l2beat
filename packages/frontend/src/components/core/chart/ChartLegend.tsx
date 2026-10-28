@@ -50,12 +50,16 @@ export function ChartLegend({
             {items.map(({ key, config }) => {
               const isHidden =
                 interactiveLegend && !interactiveLegend.dataKeys.includes(key)
+              const Item = interactiveLegend ? 'button' : 'div'
               return (
-                <div
+                <Item
                   key={key}
+                  type={interactiveLegend ? 'button' : undefined}
+                  aria-pressed={interactiveLegend ? !isHidden : undefined}
                   className={cn(
                     'group/legend-item flex items-center gap-[3px] transition-opacity [&>svg]:text-secondary',
-                    interactiveLegend && 'cursor-pointer select-none',
+                    interactiveLegend &&
+                      'focus-visible:-outline-offset-1 cursor-pointer select-none rounded-xs focus-visible:outline-1 focus-visible:outline-brand',
                     isHidden && 'opacity-50',
                   )}
                   onClick={
@@ -84,7 +88,7 @@ export function ChartLegend({
                   >
                     {config.legendLabel ?? config.label}
                   </span>
-                </div>
+                </Item>
               )
             })}
           </div>
