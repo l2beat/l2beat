@@ -153,3 +153,23 @@ export {
   getExplorerClient,
   type IEtherscanClient,
 } from './utils/IEtherscanClient'
+export {
+  diffWatched,
+  type WatchChange,
+  type WatchDiff,
+} from './watch/diffWatched'
+export { countPendingItems, stripPendingItems } from './watch/pendingItems'
+export { runWatch } from './watch/runWatch'
+export { WATCH_TEMPLATES } from './watch/templates'
+export {
+  readWatchedFile,
+  WATCH_CONFIG_FILE,
+  WATCHED_FILE,
+  type WatchConfig,
+  type WatchDefinition,
+  type Watched,
+  type WatchLocation,
+  WatchReader,
+} from './watch/WatchReader'
+export type { WatchContext, WatchTemplate } from './watch/WatchTemplate'
+export { isPendingItem, sortDeep, visitObjects } from './watch/watchedValue'
