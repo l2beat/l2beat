@@ -81,9 +81,7 @@ function showBoard(ui: DiscoUi, input: z.infer<typeof boardSchema>): string[] {
       : (ui.boards.replace(existing.id, spec) ?? existing)
   const tabs = announce({ session: ui.session }, board, true)
   const lines = [
-    tabs === 0
-      ? `Board ${board.id} "${spec.title}" is ready, but no DiscoUI tab is open: it waits in ${project}'s board panel.`
-      : `Board ${board.id} "${spec.title}" shown in ${tabsLabel(tabs)}: ${project}`,
+    describeAnnounce(board, project, tabs, ui.session.outdatedTabCount),
     ...resolved.blocks.map(describeBlock),
   ]
   if (resolved.problems.length > 0) {
@@ -93,6 +91,27 @@ function showBoard(ui: DiscoUi, input: z.infer<typeof boardSchema>): string[] {
     )
   }
   return lines
+}
+
+function describeAnnounce(
+  board: Board,
+  project: string,
+  tabs: number,
+  outdatedTabs: number,
+): string {
+  const title = `Board ${board.id} "${board.spec.title}"`
+  // Tabs from before boards existed never hear of one.
+  const reload =
+    outdatedTabs > 0
+      ? ` ${outdatedTabs === 1 ? '1 tab runs' : `${outdatedTabs} tabs run`} an older DiscoUI without boards: ask the researcher to reload.`
+      : ''
+  if (tabs > 0) {
+    return `${title} shown in ${tabsLabel(tabs)}: ${project}.${reload}`
+  }
+  if (outdatedTabs > 0) {
+    return `${title} is ready, but no open tab shows boards.${reload}`
+  }
+  return `${title} is ready, but no DiscoUI tab is open: it waits in ${project}'s board panel.`
 }
 
 function openBoard(ui: DiscoUi, id: string): Board {
