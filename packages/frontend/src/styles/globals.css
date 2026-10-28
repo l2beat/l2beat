@@ -643,6 +643,8 @@
 }
 /* After the reset above, or --color-*: initial would wipe these. */
 @theme inline {
+  --color-not-counted: var(--not-counted);
+  --color-not-counted-ink: var(--not-counted-ink);
   --color-crop-good: var(--crop-good);
   --color-crop-good-ink: var(--crop-good-ink);
   --color-crop-warning: var(--crop-warning);
@@ -1114,4 +1116,32 @@
       opacity: 0.66;
     }
   }
+}
+
+/* Audits: units that are listed but left out of every count. */
+
+:root {
+  /* `-ink` is the same hue adjusted to read as text. */
+  --not-counted: #f08a2c;
+  --not-counted-ink: #b85d0c;
+}
+
+.dark {
+  --not-counted: #ff9b45;
+  --not-counted-ink: #ffb26e;
+}
+
+/* Thin diagonal hatching that fades out to the right, so the row's text stays readable. */
+@utility bg-not-counted-stripes {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in oklab, var(--not-counted) 9%, transparent),
+      color-mix(in oklab, var(--not-counted) 3%, transparent) 60%
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      color-mix(in oklab, var(--not-counted) 14%, transparent) 0 1.5px,
+      transparent 1.5px 7px
+    );
 }

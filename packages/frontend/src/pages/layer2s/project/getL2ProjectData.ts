@@ -91,6 +91,7 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       'activityConfig',
       'garden',
       'ossificationHistory',
+      'auditCoverage',
     ],
   })
   if (!project) return undefined
