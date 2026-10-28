@@ -70,16 +70,23 @@ function AllProjects(props: { search: string }) {
   })
   const [favorites, setFavorites] = useState<string[]>(readFavorites)
   const [selectedIndex, setSelectedIndex] = useState<number>(0)
+  const [selectionScope, setSelectionScope] = useState({
+    search: props.search,
+    data: result.data,
+  })
+  if (
+    selectionScope.search !== props.search ||
+    selectionScope.data !== result.data
+  ) {
+    setSelectionScope({ search: props.search, data: result.data })
+    setSelectedIndex(0)
+  }
   const columnCount = useColumnCount()
   const itemRefs = useRef<(HTMLLIElement | null)[]>([])
 
   useEffect(() => {
     writeFavorites(favorites)
   }, [favorites])
-
-  useEffect(() => {
-    setSelectedIndex(0)
-  }, [props.search, result.isSuccess, result.data])
 
   useEffect(() => {
     itemRefs.current[selectedIndex]?.scrollIntoView({

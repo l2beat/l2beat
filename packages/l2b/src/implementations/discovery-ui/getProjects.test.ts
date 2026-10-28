@@ -15,6 +15,9 @@ describe(getProjectCategory.name, () => {
     expect(getProjectCategory('a', scaling('Plasma'))).toEqual(
       'validiumsAndOptimiums',
     )
+    expect(getProjectCategory('a', scaling(undefined))).toEqual(
+      'validiumsAndOptimiums',
+    )
     expect(getProjectCategory('a', scaling('Other'))).toEqual('others')
   })
 

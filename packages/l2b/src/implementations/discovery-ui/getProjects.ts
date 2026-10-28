@@ -81,8 +81,8 @@ function getScalingCategory(
   if (type === 'Optimistic Rollup' || type === 'ZK Rollup') {
     return 'rollups'
   }
-  if (type === 'Validium' || type === 'Optimium' || type === 'Plasma') {
-    return 'validiumsAndOptimiums'
+  if (type === 'Other') {
+    return 'others'
   }
-  return 'others'
+  return 'validiumsAndOptimiums'
 }
