@@ -225,6 +225,12 @@ function compareSignatures(a: Signature, b: Signature): number {
   return a.signature.length - b.signature.length
 }
 
+// Fixed-size values like bytes32 hashes are not calldata, but a bytes4 is a
+// selector that reads best as its function.
+function mayBeCall(value: DecodedValue) {
+  return !value.isFixedSize || value.bytes.length === 2 + 4 * 2
+}
+
 function selectSignatures(
   signatures: Signature[] | undefined,
   chainId: number,
@@ -535,8 +541,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
 
   useEffect(() => {
     if (isCustom) return
-    // Fixed-size values like bytes32 hashes are not calldata.
-    if (decoded.type === 'bytes' && !decoded.isFixedSize) {
+    if (decoded.type === 'bytes' && mayBeCall(decoded)) {
       const selector = decoded.bytes.slice(0, 10) as `0x${string}`
       store.requestSignature(selector)
       if (decoded.address && decoded.chainId) {
