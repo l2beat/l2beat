@@ -12,6 +12,7 @@ import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
 import type { DefiTvlConfig } from '../modules/defi-tvl/types'
+import type { LiquidStakingConfig } from '../modules/liquid-staking/types'
 import type { PrivacyConfig } from '../modules/privacy/types'
 import type {
   AmountConfig,
@@ -37,6 +38,7 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false
   readonly defiTvl: DefiTvlConfig | false
+  readonly liquidStaking: LiquidStakingConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false

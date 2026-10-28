@@ -108,6 +108,7 @@ export type {
 } from './repositories/InteropTransferTypeStats'
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
+export type { LiquidStakingSnapshotRecord } from './repositories/LiquidStakingSnapshotRepository'
 export type {
   LiveBlobBatchRecord,
   LiveBucketRecord,

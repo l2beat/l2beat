@@ -191,6 +191,11 @@ export const lido: BaseProject = {
       ),
     ],
   },
+  liquidStakingConfig: {
+    type: 'lido',
+    stETH: discovery.getContract(STETH).address,
+    withdrawalQueue: discovery.getContract('WithdrawalQueueERC721').address,
+  },
   liquidStakingRisks: {
     minting: {
       value: 'Permissionless',

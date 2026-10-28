@@ -279,6 +279,7 @@ export interface BaseProject {
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
   zkCatalogInfo?: ProjectZkCatalogInfo
+  liquidStakingConfig?: ProjectLiquidStakingConfig
 
   // discovery data
   permissions?: Record<string, ProjectPermissions>
@@ -1812,6 +1813,35 @@ export interface DayActivityConfig {
 }
 
 export type LivenessOverwriteMode = 'no-data'
+
+/**
+ * The contracts the liquid staking indexer reads every hour: the token's
+ * exchange rate, plus whatever decides how fast a holder can exit.
+ */
+export type ProjectLiquidStakingConfig =
+  | {
+      type: 'lido'
+      stETH: ChainSpecificAddress
+      /** Its request counters give the queue wait. */
+      withdrawalQueue: ChainSpecificAddress
+    }
+  | {
+      type: 'rocketpool'
+      /** Its collateral is the ETH that burning rETH can pay out at once. */
+      rETH: ChainSpecificAddress
+    }
+  | {
+      type: 'etherfi'
+      weETH: ChainSpecificAddress
+      /** Its request counters give the queue wait. */
+      withdrawRequestNft: ChainSpecificAddress
+    }
+  | {
+      type: 'wbeth'
+      wBETH: ChainSpecificAddress
+      /** Its lock time is the wait for an onchain redemption. */
+      unwrapToken: ChainSpecificAddress
+    }
 
 export interface ProjectLivenessInfo {
   explanation?: string

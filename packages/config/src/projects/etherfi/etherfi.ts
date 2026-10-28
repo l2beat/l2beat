@@ -144,6 +144,11 @@ export const etherfi: BaseProject = {
       ),
     ],
   },
+  liquidStakingConfig: {
+    type: 'etherfi',
+    weETH: discovery.getContract('weETH').address,
+    withdrawRequestNft: discovery.getContract('WithdrawRequestNFT').address,
+  },
   liquidStakingRisks: {
     minting: {
       value: 'Permissionless',

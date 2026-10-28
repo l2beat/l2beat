@@ -50,6 +50,7 @@ const schema = {
   customDa: 'TEXT',
 
   zkCatalogInfo: 'TEXT',
+  liquidStakingConfig: 'TEXT',
 
   interopConfig: 'TEXT',
   privacyInfo: 'TEXT',
