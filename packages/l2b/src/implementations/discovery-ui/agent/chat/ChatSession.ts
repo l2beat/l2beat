@@ -309,8 +309,10 @@ export class ChatSession {
         })),
       })
     })
-    this.permissions.delete(id)
-    this.emitFor(agent, { type: 'permission-done', id, choice })
+    // A cancelled request already told the tabs, and its agent may be gone.
+    if (this.permissions.delete(id)) {
+      this.emitFor(agent, { type: 'permission-done', id, choice })
+    }
     if (choice === undefined) {
       return { outcome: { outcome: 'cancelled' } }
     }
@@ -343,7 +345,9 @@ export class ChatSession {
   }
 
   private cancelPermissions() {
-    for (const resolve of [...this.permissions.values()]) {
+    for (const [id, resolve] of [...this.permissions]) {
+      this.permissions.delete(id)
+      this.emit({ type: 'permission-done', id, choice: undefined })
       resolve(undefined)
     }
   }
