@@ -127,6 +127,8 @@ export function DonutChart<T extends DonutChartEntry>({
   }
 
   function onKeyDown(event: KeyboardEvent) {
+    // Modified arrows are the browser's, e.g. Alt+Left goes back.
+    if (event.altKey || event.ctrlKey || event.metaKey) return
     const step =
       event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0
     if (step === 0 || arcs.length === 0) return

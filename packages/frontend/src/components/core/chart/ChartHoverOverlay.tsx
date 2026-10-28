@@ -225,6 +225,8 @@ export function ChartHoverOverlay<T>({
       deactivate()
       return
     }
+    // Modified arrows are the browser's, e.g. Alt+Left goes back.
+    if (event.altKey || event.ctrlKey || event.metaKey) return
     if (!sceneRef.current || rows.length === 0) return
     const last = rows.length - 1
     let index: number
