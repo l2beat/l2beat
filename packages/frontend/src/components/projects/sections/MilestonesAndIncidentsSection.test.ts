@@ -37,6 +37,6 @@ describe(MilestonesAndIncidentsSection.name, () => {
       }),
     )
 
-    expect(html).toInclude('2024 Aug 1st')
+    expect(html).toInclude('1 Aug 2024')
   })
 })

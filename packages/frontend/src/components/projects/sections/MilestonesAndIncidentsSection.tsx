@@ -11,6 +11,7 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { GeneralMilestoneIcon } from '~/icons/GeneralMilestone'
 import { IncidentMilestoneIcon } from '~/icons/IncidentMilestone'
 import { cn } from '~/utils/cn'
+import { formatDate } from '~/utils/dates'
 import { Markdown } from '../../markdown/Markdown'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
@@ -111,7 +112,7 @@ function MilestonesBase(props: {
                 {milestone.title}
               </p>
               <p className="mt-1.5 font-medium text-label-value-14 text-secondary md:mt-1">
-                {formatDate(milestone.date)}
+                {formatDate(milestone.date.slice(0, 10))}
               </p>
               {milestone.description && (
                 <Markdown className="mt-2 font-normal text-paragraph-15 md:text-paragraph-16">
@@ -142,33 +143,4 @@ function withNext(milestones: Milestone[]) {
       next: nextMilestone,
     }
   })
-}
-
-// In UTC, so the server render and every visitor's zone show the same day
-function formatDate(dateString: string): string {
-  const date = new Date(dateString)
-  const year = date.getUTCFullYear()
-  const month = date.toLocaleDateString('en', {
-    month: 'short',
-    timeZone: 'UTC',
-  })
-  const day = date.getUTCDate()
-
-  const ending = getOrdinalSuffix(day)
-
-  return `${year} ${month} ${day}${ending}`
-}
-
-function getOrdinalSuffix(days: number) {
-  if (days > 3 && days < 21) return 'th'
-  switch (days % 10) {
-    case 1:
-      return 'st'
-    case 2:
-      return 'nd'
-    case 3:
-      return 'rd'
-    default:
-      return 'th'
-  }
 }

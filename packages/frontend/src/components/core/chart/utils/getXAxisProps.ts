@@ -71,7 +71,8 @@ export function getTickFormatter(actualRangeInDays: number) {
   return (timestamp: number) => {
     const { month, day, time, year } = parseTimestamp(timestamp)
     if (actualRangeInDays <= 1) return time
-    if (actualRangeInDays <= 90) return `${day} ${MONTHS[month]?.shortName}`
+    if (actualRangeInDays <= 90)
+      return `${Number(day)} ${MONTHS[month]?.shortName}`
     if (actualRangeInDays <= 1095)
       return `${MONTHS[month]?.shortName} ‘${year.slice(-2)}`
     return year
