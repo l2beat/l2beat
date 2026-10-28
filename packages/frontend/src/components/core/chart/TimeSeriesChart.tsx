@@ -543,35 +543,66 @@ function renderServerSvg<TDatum>(
   const idPrefix = `ts-server-chart-${id.replaceAll(/[^a-zA-Z0-9_-]/g, '')}`
   const svg = renderChartSvg(scene, { ariaLabel, tabIndex: -1, idPrefix })
   runtime.destroy()
-  return fitToBox(trimPathPrecision(svg), size)
+  return fitToBox(trimPathPrecision(svg), scene)
 }
 
 /**
  * Fills any box the way the live chart will. A viewBox scales evenly, so in
- * a box of another width the chart would shrink, leave gaps above and below,
- * and jump to full height when the live chart replaced it. Instead the plot
- * stretches (its strokes keep their width) and the labels move to an
- * unscaled layer at the same relative positions.
+ * a box of another size the chart would shrink and jump when the live chart
+ * replaced it. Instead only the plot stretches (its strokes keep their
+ * width), the margins around it keep their pixels, and the labels move to an
+ * unscaled layer: tick labels at their tick plus their pixel offset, axis
+ * labels the same distance from the plot.
  */
-function fitToBox(svg: string, size: ChartServerSize) {
+function fitToBox(svg: string, scene: ChartScene) {
   const labelsStart = svg.lastIndexOf('<g data-ts-key="axes"')
   const end = svg.lastIndexOf('</svg>')
   if (labelsStart === -1 || end < labelsStart) return svg
+  const { width } = scene
+  const { y: top, height } = scene.chart
+  const bottom = top + height
+  const band = `position:absolute;left:0;top:${top}px;width:100%;height:calc(100% - ${scene.height - height}px);overflow:visible`
   const plot = svg
     .slice(0, labelsStart)
-    .replace('<svg ', '<svg preserveAspectRatio="none" ')
+    .replace(
+      /^<svg ([^>]*?)viewBox="[^"]*"([^>]*?)style="[^"]*"/,
+      `<svg preserveAspectRatio="none" $1viewBox="0 ${top} ${width} ${height}"$2style="${band}"`,
+    )
   const labels = svg.slice(labelsStart, end).replace(/<text [^>]*>/g, (tag) =>
-    tag.replace(/ x="([\d.-]+)" y="([\d.-]+)"/, (_, x: string, y: string) => {
-      const top = percent(Number(y) / size.height)
-      // Y-axis labels sit a fixed distance in from their edge.
-      if (tag.includes('text-anchor="start"')) return ` x="${x}" y="${top}"`
-      if (tag.includes('text-anchor="end"')) {
-        return ` x="100%" dx="${Number(x) - size.width}" y="${top}"`
-      }
-      return ` x="${percent(Number(x) / size.width)}" y="${top}"`
-    }),
+    tag.replace(
+      / x="([\d.-]+)" y="([\d.-]+)"/,
+      (_, xText: string, yText: string) => {
+        const x = Number(xText)
+        const y = Number(yText)
+        // Y-axis labels sit a fixed distance in from their edge.
+        const horizontal = tag.includes('text-anchor="start"')
+          ? ` x="${x}"`
+          : tag.includes('text-anchor="end"')
+            ? ` x="100%" dx="${round2(x - width)}"`
+            : ` x="${percent(x / width)}"`
+        const tick = /data-ts-key="([\w-]*?)-?tick-label:number:([^":]+)/.exec(
+          tag,
+        )
+        const scale =
+          tick?.[1] !== 'x' ? scene.scales[tick?.[1] ?? ''] : undefined
+        const anchor = tick && scale ? scale.map(Number(tick[2])) : undefined
+        const vertical =
+          anchor !== undefined
+            ? ` y="${percent((anchor - top) / height)}" dy="${round2(y - anchor)}"`
+            : y > bottom
+              ? ` y="100%" dy="${round2(y - bottom)}"`
+              : y < top
+                ? ` y="0" dy="${round2(y - top)}"`
+                : ` y="${percent((y - top) / height)}"`
+        return horizontal + vertical
+      },
+    ),
   )
-  return `${plot}</svg><svg aria-hidden="true" width="100%" height="100%" style="position:absolute;inset:0;overflow:visible">${labels}</svg>`
+  return `${plot}</svg><svg aria-hidden="true" style="${band}">${labels}</svg>`
+}
+
+function round2(value: number) {
+  return Number(value.toFixed(2))
 }
 
 function percent(fraction: number) {
