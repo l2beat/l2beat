@@ -66,7 +66,9 @@ export function LiquidStakingProjectSummary({
             key={key}
             title={title}
             tooltip={tooltip}
-            value={<TableValueCell value={summary.risks[key]} />}
+            value={
+              <TableValueCell value={summary.risks[key]} tooltipOnMobile />
+            }
           />
         ))}
       </ul>

@@ -197,7 +197,7 @@ export const lido: BaseProject = {
       value: 'Hybrid',
       secondLine: 'no bond; CSM bonded',
       sentiment: 'neutral',
-      description: `Most operators are curated and post no bond, so their slashing losses are shared by all holders. ${csm.nodeOperatorsCount} permissionless operators (${csm.state.stakeShareLimit / 100}% of stake) post a bond that covers their penalties.`,
+      description: `Most stake is run by curated operators who post no bond, so their slashing losses are shared by all holders. ${csm.nodeOperatorsCount} permissionless operators in the Community Staking Module, capped at ${csm.state.stakeShareLimit / 100}% of stake, post a bond that covers their penalties.`,
     },
     backing: {
       value: 'Protocol vault',
