@@ -20,19 +20,33 @@ export function revealItems(
   targetIds: readonly string[],
 ): { nodes: Node[]; via: string[] } {
   const leaves = getGraphProjection(nodes).leafNodes
-  const parent = cheapestParents(leaves)
+  const byId = new Map(leaves.map((node) => [node.id, node]))
+  const referenced = new Set(
+    leaves.flatMap((n) => n.fields.map((f) => f.target)),
+  )
+  const roots = new Set(
+    leaves
+      .filter((node) => node.isInitial || !referenced.has(node.id))
+      .map((node) => node.id),
+  )
+  const parent = cheapestParents(byId, [...roots])
   const targets = new Set(targetIds)
   const unhide = new Map<string, Set<string>>()
   const via = new Set<string>()
   for (const target of targetIds) {
-    for (let at = target, link = parent.get(at); link; link = parent.get(at)) {
+    const isDetached = !roots.has(target) && !parent.has(target)
+    const chain = isDetached
+      ? cheapestCycle(byId, target)
+      : chainOf(parent, target)
+    for (const link of chain) {
       if (link.hidden) {
         const fields = unhide.get(link.source) ?? new Set()
         fields.add(link.field)
         unhide.set(link.source, fields)
       }
-      at = link.source
-      if (parent.has(at) && !targets.has(at)) via.add(at)
+      if (!roots.has(link.source) && !targets.has(link.source)) {
+        via.add(link.source)
+      }
     }
   }
   const revealed = mapGraphItems(nodes, (node) => {
@@ -46,20 +60,50 @@ export function revealItems(
   return { nodes: revealed, via: [...via] }
 }
 
+function chainOf(parent: ReadonlyMap<string, Link>, id: string): Link[] {
+  const chain: Link[] = []
+  for (let link = parent.get(id); link; link = parent.get(link.source)) {
+    chain.push(link)
+  }
+  return chain
+}
+
+// A contract no root reaches stays visible only on a cycle of visible
+// references, so this finds the way back to it with the fewest hidden links.
+function cheapestCycle(byId: ReadonlyMap<string, Node>, target: string) {
+  const parent = cheapestParents(byId, [target])
+  let best: Link[] = []
+  let bestHiddenCount = Number.POSITIVE_INFINITY
+  for (const id of [target, ...parent.keys()]) {
+    const node = byId.get(id) as Node
+    const hiddenFields = new Set(node.hiddenFields)
+    for (const field of node.fields) {
+      if (field.target !== target) continue
+      const hidden = hiddenFields.has(field.name)
+      const chain = [
+        { source: id, field: field.name, hidden },
+        ...chainOf(parent, id),
+      ]
+      const hiddenCount = chain.filter((link) => link.hidden).length
+      if (hiddenCount < bestHiddenCount) {
+        best = chain
+        bestHiddenCount = hiddenCount
+      }
+    }
+  }
+  return best
+}
+
 // Breadth first by the number of hidden links: everything reachable without
 // one comes first, then with one, and so on, so each contract's parent lies
 // on a chain with the fewest hidden links.
-function cheapestParents(leaves: readonly Node[]): Map<string, Link> {
-  const byId = new Map(leaves.map((node) => [node.id, node]))
-  const referenced = new Set(
-    leaves.flatMap((n) => n.fields.map((f) => f.target)),
-  )
+function cheapestParents(
+  byId: ReadonlyMap<string, Node>,
+  startIds: readonly string[],
+): Map<string, Link> {
   const parent = new Map<string, Link>()
-  const reached = new Set<string>()
-  let frontier = leaves
-    .filter((node) => node.isInitial || !referenced.has(node.id))
-    .map((node) => node.id)
-  for (const id of frontier) reached.add(id)
+  const reached = new Set(startIds)
+  let frontier = [...startIds]
   while (frontier.length > 0) {
     const nextLevel = new Map<string, Link>()
     // Array iteration visits what the loop appends, so this level grows
