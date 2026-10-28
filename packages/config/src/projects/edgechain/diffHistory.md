@@ -1,3 +1,73 @@
+Generated with discovered.json: 0x8407d35cdb839401259b10f4ddd2f9466a3a66f2
+
+# Diff at Wed, 28 Oct 2026 14:12:25 GMT:
+
+- id: 999d60de
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@cc7e9e73c101d0a260af6bfe078851f3ff1d60cb block: 1791533705
+- current timestamp: 1793196526
+
+## Description
+
+UpgradeExecutor: an existing executor EOA added a second executor EOA, also made L2 chain owner.
+SequencerInbox: DAC keyset replaced, 2/5 → 2/2; second batch poster added.
+RollupProxy: second validator added.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
++++ severity: LOW
+      values.getValidators.1:
++        "arb1:0x4F12e3d982C3308039761298E4582a91Fd9C4209"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.2:
++        "arb1:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7"
++++ severity: MEDIUM
+      values.executors.2:
++        "arb1:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
++++ severity: LOW
+      values.batchPosters.0:
++        "arb1:0x5e65E7ED796e12dDFBD82829AD64BC76c87c7A88"
+      values.dacKeyset.membersCount:
+-        5
++        2
+      values.dacKeyset.blsSignatures.0:
+-        "YA10Tx0VOmY6ZaRDft0hy9Jp3KTNup+mJYlWIyySLr7CZ6ZWlfIhMVv15OXej5a+NhmH1xFFxZLR5uMgYkA+uKIDRuFYmRrAHzlBMCfnytPl68fV4yTolBaNmGb1uO/1cgjO0nnOrgADTYh1jMmZu0y87DtvsdDYr2u+hFEo1StVGlZhfd5qg0+zWEXEDrBD2BGxapx2BBj9nPt+1SlH0HDq29nHnfyiOKM0B5nAoXbBne4QdxfkKlS0XW9X2ikeJwwLvXivK+EazbtWLS+e6XgFG6pKbxzdG5+iGNBYQLC3DPb6Q1Weabl99gsebWoVPBfS3hdeoHTTq5fnpHI0iDdiM7i9t6LqMM5vmDgLMgi/w3yxOVyBSwpjn7Wt+3NkLw=="
+      values.dacKeyset.blsSignatures.1:
+-        "YAPs5RkU8pYUUt68mNKAJNIZ03qrn8DMCY1KU4KCnh5eiJaQ+K0TfcWpBTgOMyoCcBgCN15WdyFdFswj2Z0w/UYzFKBYo3lrudeovLSeRULZ+xHv96dUjnwJvtQkJEKZdxCmrdC/Xits0gGGxfbFEhB6Ywv/sKpgz7MVQcB+/by/l3DNvR+VuYpr8qm/0kNjFRYH9OULZM51D/N3uyni4aolb/NCeZJFQ9ni2jeNfvoiU7Vo5M6H3c43k+1VZJfEZhjvz9TlJbp3rg3Fmo2UBOWKkH3R4P3jcgo357B23LMoyHsdRcyoOCjYw2tZqOH1tBeaedvgFTu5d/r4l5aTMA6Hu31mkDbz0Jk1DPy2WpwBjmAMOtT/wLYAbEbGYrs7mg=="
+      values.dacKeyset.blsSignatures.2:
+-        "YAca1+a2vM6xO7/Z5qHD0swdq+vsGAierMiGew+GQAQBT3zZW7Z/LDorJtr5b6dq5wmeJFNPoGnF9kgGElWkG9lyL4vtU4Jr65YmgEOE28MecNaEtXfZM48s1RunXX04FhgJdHujSzQYkc3xxQdpIdJdVzglSXP/I9o/y1BmQFVlNQOzKFP+1HNFpephWb0WEhQsakr0KMn46QK10lD5euEeQXOKBo8srablM6v/ESP3K6QkmJtu1LD0hxW0rz83/hRYMTB2/9hMKhgQ1Nm/0veou49hv3AY3gCx85ZcSs0cLms/sp1NovNPybkQhxkTMRRz9FdXlXpgVVs/jW1KzbLs00/0wxitGfvIFrNiSkGgnPGAVqS9uCgYaX6Y+KREuA=="
+      values.keySetUpdates:
+-        2
++        3
+      values.setIsBatchPosterCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract ArbFilteredTransactionsManager (edge:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
+    +++ description: ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered.
++++ severity: HIGH
+      values.chainOwners.1:
++        "edge:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7"
+    }
+```
+
 Generated with discovered.json: 0x7800cca3f1b682d28db4e95c2cfa486a3961d308
 
 # Diff at Fri, 16 Oct 2026 09:37:46 GMT:
