@@ -1,197 +1,231 @@
-import {
-  keepPreviousData,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router'
 import { ErrorState } from '../../../components/ErrorState'
-import { useCodeStore } from '../../../components/editor/store'
 import { Input } from '../../../components/Input'
 import { Loader } from '../../../components/Loader'
-import { useDebounce } from '../../../hooks/useDebounce'
 import { IconSearch } from '../../../icons/IconSearch'
-import { useDockingStore } from '../multi-view/store'
+import { cn } from '../../../utils/cn'
+import { Keys } from '../multi-view/BottomBar/Keys'
 import { usePanelStore } from '../store/panel-store'
-import {
-  CodeSearchResultEntry,
-  getCodeSearchTerm,
-  isCodeSearchTerm,
-} from './CodeSearchResultEntry'
-import { ContractSearchResultEntry } from './ContractSearchResultEntry'
-import { searchQuery } from './implementation'
-import { ProjectSearchResultEntry } from './ProjectSearchResultEntry'
+import type { SearchRow } from './groups'
+import { SearchResultRow } from './SearchResultRow'
+import { SCOPE_INFO, type SearchScope } from './scopes'
 import { useSearchStore } from './store'
+import { useRunSearchItem } from './useRunSearchItem'
+import { SEARCH_SCOPES, useSearchInput } from './useSearchInput'
+import { useSearchResults } from './useSearchResults'
 
-interface OpenSearchProps {
-  inputRef: React.RefObject<HTMLInputElement | null>
-  project: string
-  select: (address: string[]) => void
-}
-
-export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
-  const navigate = useNavigate()
-  const queryClient = useQueryClient()
-  const ensureLeaf = useDockingStore((state) => state.ensureLeaf)
-  const setSourceIndex = useCodeStore((state) => state.setSourceIndex)
-  const showRange = useCodeStore((state) => state.showRange)
-  const selectedAddress = usePanelStore((state) => state.selected[0])
-  const setOpen = useSearchStore((state) => state.setOpen)
-  const searchTerm = useSearchStore((state) => state.searchTerm)
-  const setSearchTerm = useSearchStore((state) => state.setSearchTerm)
-  const selectedIndex = useSearchStore((state) => state.selectedIndex)
-  const setSelectedIndex = useSearchStore((state) => state.setSelectedIndex)
-
-  const resultsRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    if (selectedIndex >= 0 && resultsRef.current) {
-      const selectedElement = resultsRef.current.querySelector(
-        `[data-index="${selectedIndex}"]`,
-      ) as HTMLElement
-
-      if (selectedElement) {
-        const container = resultsRef.current
-        const containerRect = container.getBoundingClientRect()
-        const elementRect = selectedElement.getBoundingClientRect()
-
-        const isAbove = elementRect.top < containerRect.top
-        const isBelow = elementRect.bottom > containerRect.bottom
-
-        if (isAbove || isBelow) {
-          selectedElement.scrollIntoView({ block: isBelow ? 'end' : 'start' })
-        }
-      }
-    }
-  }, [selectedIndex])
-
-  const searchTermDebounced = useDebounce(searchTerm, (term: string) => {
-    return isCodeSearchTerm(term) ? 350 : 0
-  })
-
-  const { isError, isPending, data } = useQuery({
-    queryKey: ['search', project, selectedAddress, searchTermDebounced],
-    queryFn: () =>
-      searchQuery(queryClient, project, searchTermDebounced, selectedAddress),
-    placeholderData: keepPreviousData,
-  })
-
-  function nextEntry() {
-    setSelectedIndex(Math.min(selectedIndex + 1, (data?.entryCount ?? 0) - 1))
-  }
-
-  function previousEntry() {
-    setSelectedIndex(Math.max(selectedIndex - 1, 0))
-  }
-
-  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'ArrowDown') {
-      nextEntry()
-      return
-    }
-
-    if (e.key === 'ArrowUp') {
-      previousEntry()
-      return
-    }
-
-    if (e.key === 'Enter' && selectedIndex >= 0 && data) {
-      if (data.type === 'code') {
-        let runningIndex = 0
-        let entry = data.entries[0]
-        for (const loopEntry of data.entries) {
-          entry = loopEntry
-          if (runningIndex + loopEntry.codeLocation.length <= selectedIndex) {
-            runningIndex += loopEntry.codeLocation.length
-          } else {
-            break
-          }
-        }
-
-        if (entry !== undefined) {
-          ensureLeaf('code')
-          select([entry.address])
-          const codeLocation = entry.codeLocation[selectedIndex - runningIndex]
-          if (codeLocation !== undefined) {
-            setSourceIndex(entry.address, codeLocation.index)
-            showRange(entry.address, {
-              startOffset: codeLocation.offset,
-              length: getCodeSearchTerm(searchTerm).content.length,
-            })
-          }
-        }
-      }
-      if (data.type === 'project') {
-        const result = data.entries[selectedIndex]
-        void navigate(`/ui/p/${result}`)
-      } else {
-        const result = data.entries[selectedIndex]
-
-        if (result !== undefined) {
-          select([result.address])
-        }
-      }
-      setOpen(false)
-    }
-  }
-
-  function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchTerm(e.target.value)
-    setSelectedIndex((data?.entryCount ?? 0) > 0 ? 0 : -1)
-  }
-
-  useEffect(() => {
-    setSelectedIndex(0)
-  }, [searchTermDebounced])
+export function OpenSearch({ project }: { project: string }) {
+  const scope = useSearchStore((s) => s.scope)
+  const text = useSearchStore((s) => s.text)
+  const codeInSelected = useSearchStore((s) => s.codeInSelected)
+  const setCodeInSelected = useSearchStore((s) => s.setCodeInSelected)
+  const runItem = useRunSearchItem(project)
+  const results = useSearchResults(project)
+  const input = useSearchInput(results.items, runItem)
 
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-11 shrink-0 items-center gap-2 border-coffee-600 border-b bg-coffee-800 px-3">
         <IconSearch className="shrink-0 text-coffee-300" />
+        {scope !== 'all' && (
+          <span className="shrink-0 rounded-sm bg-coffee-600 px-1.5 py-0.5 font-medium text-coffee-100 text-xs">
+            {SCOPE_INFO[scope].label}
+          </span>
+        )}
         <Input
-          ref={inputRef}
           type="text"
           size="ghost"
           variant="ghost"
-          placeholder="Search by name or address (or in code with % prefix)"
+          placeholder={SCOPE_INFO[scope].placeholder}
           autoFocus
-          value={searchTerm}
-          onChange={onChange}
-          onKeyDown={onKeyDown}
+          value={text}
+          onChange={(e) => input.onChange(e.target.value)}
+          onKeyDown={input.onKeyDown}
         />
-      </div>
-
-      <div
-        ref={resultsRef}
-        className="min-h-0 min-w-full flex-1 overflow-y-auto overscroll-contain text-wrap break-all"
-      >
-        {isPending ? (
-          <div className="flex h-full w-full items-center justify-center">
-            <Loader />
-          </div>
-        ) : isError ? (
-          <ErrorState />
-        ) : data && data.entryCount > 0 ? (
-          searchTerm.startsWith('%') ? (
-            <CodeSearchResultEntry
-              select={select}
-              entries={data.type === 'code' ? data.entries : []}
-            />
-          ) : searchTerm.startsWith('@') ? (
-            <ProjectSearchResultEntry
-              entries={data.type === 'project' ? data.entries : []}
-            />
-          ) : (
-            <ContractSearchResultEntry
-              select={select}
-              entries={data.type === 'contract' ? data.entries : []}
-            />
-          )
-        ) : (
-          <div className="p-3 text-center font-mono text-coffee-400">
-            No results
-          </div>
+        {scope === 'code' && (
+          <CodeInSelectedToggle
+            value={codeInSelected}
+            onChange={setCodeInSelected}
+          />
         )}
       </div>
+      <ScopeTabs scope={scope} onSelect={input.switchScope} />
+      <SearchResultsBody
+        rows={results.rows}
+        status={results.status}
+        isStale={results.isStale}
+        emptyMessage={emptyMessage(scope, text)}
+        needles={results.needles}
+        highlightIndex={input.highlightIndex}
+        onHighlight={input.highlightAt}
+        onRun={runItem}
+      />
+      <SearchFooter isFetching={results.isFetching} />
+    </div>
+  )
+}
+
+function emptyMessage(scope: SearchScope, text: string): string {
+  if (scope === 'code' && text.trim() === '') {
+    return 'Type to search the source code of every contract'
+  }
+  return 'No results'
+}
+
+function CodeInSelectedToggle(props: {
+  value: boolean
+  onChange: (value: boolean) => void
+}) {
+  const selectedAddress = usePanelStore((s) => s.selected[0])
+  return (
+    <button
+      type="button"
+      tabIndex={-1}
+      onMouseDown={(e) => e.preventDefault()}
+      disabled={selectedAddress === undefined}
+      onClick={() => props.onChange(!props.value)}
+      className={cn(
+        'shrink-0 rounded-sm border px-1.5 py-0.5 text-xs disabled:opacity-40',
+        props.value
+          ? 'border-autumn-300 text-autumn-300'
+          : 'border-coffee-500 text-coffee-300 hover:text-coffee-100',
+      )}
+    >
+      Selected only
+    </button>
+  )
+}
+
+function ScopeTabs(props: {
+  scope: SearchScope
+  onSelect: (scope: SearchScope) => void
+}) {
+  return (
+    <div className="flex h-8 shrink-0 items-center gap-1 border-coffee-700 border-b px-2">
+      {SEARCH_SCOPES.map((scope) => (
+        <button
+          key={scope}
+          type="button"
+          tabIndex={-1}
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={() => props.onSelect(scope)}
+          className={cn(
+            'flex h-6 items-center gap-1.5 rounded-sm px-2 text-xs',
+            scope === props.scope
+              ? 'bg-coffee-700 font-medium text-coffee-100'
+              : 'text-coffee-300 hover:text-coffee-100',
+          )}
+        >
+          {SCOPE_INFO[scope].label}
+          {SCOPE_INFO[scope].prefix !== undefined && (
+            <span className="font-mono text-[11px] text-coffee-400">
+              {SCOPE_INFO[scope].prefix}
+            </span>
+          )}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function SearchResultsBody(props: {
+  rows: SearchRow[]
+  status: 'pending' | 'error' | 'success'
+  isStale: boolean
+  emptyMessage: string
+  needles: string[]
+  highlightIndex: number
+  onHighlight: (index: number) => void
+  onRun: Parameters<typeof SearchResultRow>[0]['onRun']
+}) {
+  const listRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const list = listRef.current
+    if (list === null) return
+    const lastIndex = props.rows.findLast((row) => row.kind === 'item')?.index
+    if (props.highlightIndex === 0) {
+      list.scrollTop = 0
+      return
+    }
+    if (props.highlightIndex === lastIndex) {
+      list.scrollTop = list.scrollHeight
+      return
+    }
+    list
+      .querySelector(`[data-index="${props.highlightIndex}"]`)
+      ?.scrollIntoView({ block: 'nearest' })
+  }, [props.highlightIndex, props.rows])
+
+  if (props.status === 'pending') {
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <Loader />
+      </div>
+    )
+  }
+  if (props.status === 'error') {
+    return <ErrorState />
+  }
+  if (props.rows.length === 0) {
+    return (
+      <div className="flex-1 p-4 text-center text-coffee-400 text-xs">
+        {props.emptyMessage}
+      </div>
+    )
+  }
+  return (
+    <div
+      ref={listRef}
+      className={cn(
+        'min-h-0 flex-1 overflow-y-auto overscroll-contain py-1',
+        props.isStale && 'pointer-events-none opacity-50',
+      )}
+    >
+      {props.rows.map((row) =>
+        row.kind === 'label' ? (
+          <div
+            key={row.key}
+            className="flex items-center justify-between px-3 pt-2.5 pb-1 font-semibold text-[11px] text-coffee-400"
+          >
+            <span className="truncate">{row.label}</span>
+            <span className="shrink-0 font-normal normal-case">
+              {row.count}
+            </span>
+          </div>
+        ) : (
+          <SearchResultRow
+            key={row.key}
+            item={row.item}
+            index={row.index}
+            needles={props.needles}
+            highlighted={row.index === props.highlightIndex}
+            onHighlight={props.onHighlight}
+            onRun={props.onRun}
+          />
+        ),
+      )}
+    </div>
+  )
+}
+
+function SearchFooter(props: { isFetching: boolean }) {
+  return (
+    <div className="flex h-8 shrink-0 items-center justify-between gap-3 border-coffee-700 border-t bg-coffee-800 px-3 text-[11px] text-coffee-400">
+      <div className="flex items-center gap-3">
+        <span className="flex items-center gap-1">
+          <Keys keys={['↑', '↓']} /> navigate
+        </span>
+        <span className="flex items-center gap-1">
+          <Keys keys={['Enter']} /> open
+        </span>
+        <span className="flex items-center gap-1">
+          <Keys keys={['Tab']} /> scope
+        </span>
+        <span className="flex items-center gap-1">
+          <Keys keys={['Esc']} /> close
+        </span>
+      </div>
+      {props.isFetching && <span>Searching…</span>}
     </div>
   )
 }

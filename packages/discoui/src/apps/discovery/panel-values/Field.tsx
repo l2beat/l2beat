@@ -1,7 +1,8 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import type { Field } from '../../../api/types'
 import { cn } from '../../../utils/cn'
 import { useConfigModels } from '../hooks/useConfigModels'
+import { usePanelStore } from '../store/panel-store'
 import { FieldTag } from './FieldTag'
 import { FieldValueDisplay } from './FieldValueDisplay'
 import { FieldConfigDialog } from './field-config-dialog/FieldConfigDialog'
@@ -9,14 +10,28 @@ import { PastUpgradesDisplay } from './PastUpgradesDisplay'
 
 export interface FieldDisplayProps {
   field: Field
+  address: string
 }
 
-export function FieldDisplay({ field }: FieldDisplayProps) {
+export function FieldDisplay({ field, address }: FieldDisplayProps) {
   const {
     configModel,
     templateModel,
     canModify: canModifyModel,
   } = useConfigModels()
+
+  const ref = useRef<HTMLLIElement>(null)
+  const isRevealed = usePanelStore(
+    (s) =>
+      s.revealedField?.address === address &&
+      s.revealedField.name === field.name,
+  )
+  const revealField = usePanelStore((s) => s.revealField)
+  useEffect(() => {
+    if (!isRevealed) return
+    ref.current?.scrollIntoView({ block: 'start' })
+    revealField(undefined)
+  }, [isRevealed, revealField])
 
   const canModify = canModifyField(field) && canModifyModel
   const canModifyTemplate = canModify && templateModel.hasTemplate
@@ -111,7 +126,10 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
   ] as const
 
   return (
-    <li className="group/field border-coffee-800 border-b text-sm last:border-b-0">
+    <li
+      ref={ref}
+      className="group/field border-coffee-800 border-b text-sm last:border-b-0"
+    >
       <div className="sticky top-0 z-10 border-coffee-800 border-b bg-coffee-800">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-3 py-1 text-xs">
           <div className="flex flex-wrap items-center gap-1 font-semibold text-coffee-100">

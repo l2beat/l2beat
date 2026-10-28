@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useParams } from 'react-router'
 import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
@@ -9,6 +10,7 @@ import { IconShape } from '../../../icons/IconShape'
 import { useConfigModels } from '../hooks/useConfigModels'
 import { useModelUtils } from '../hooks/useModelUtils'
 import { useProjectData } from '../hooks/useProjectData'
+import { usePanelStore } from '../store/panel-store'
 import { UsageDisplay } from '../usage/UsageDisplay'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
@@ -60,6 +62,7 @@ function Display({
   sourceProject: string
 }) {
   const { configModel, templateModel, canModify } = useConfigModels()
+  const revealedField = usePanelStore((s) => s.revealedField)
   const canModifyTemplate = canModify && templateModel.hasTemplate
   const templateIgnoredMethods = templateModel.ignoreMethods ?? []
   const configIgnoredMethods = configModel.ignoreMethods ?? []
@@ -95,6 +98,16 @@ function Display({
   const fields = fieldsFromSelected.filter(
     (field) => !ignoredMethodsSet.has(field.name),
   )
+  const isRevealingField =
+    revealedField?.address === selected.address &&
+    fields.some((field) => field.name === revealedField.name)
+  const isRevealingIgnoredField =
+    revealedField?.address === selected.address &&
+    ignoredMethodsSet.has(revealedField.name)
+  const revealField = usePanelStore((s) => s.revealField)
+  useEffect(() => {
+    if (isRevealingIgnoredField) revealField(undefined)
+  }, [isRevealingIgnoredField, revealField])
   const ignoredFieldNames = [
     ...fieldsFromSelected
       .filter((field) => ignoredMethodsSet.has(field.name))
@@ -242,16 +255,24 @@ function Display({
         </Folder>
       )}
       {fields.length > 0 && (
-        <Folder title={`Fields (${fields.length})`}>
+        <Folder title={`Fields (${fields.length})`} expand={isRevealingField}>
           <ol>
             {fields.map((field) => (
-              <FieldDisplay key={field.name} field={field} />
+              <FieldDisplay
+                key={field.name}
+                field={field}
+                address={selected.address}
+              />
             ))}
           </ol>
         </Folder>
       )}
       {ignoredFields.length > 0 && (
-        <Folder title={`Ignored methods (${ignoredFields.length})`} collapsed>
+        <Folder
+          title={`Ignored methods (${ignoredFields.length})`}
+          collapsed
+          expand={isRevealingIgnoredField}
+        >
           <div className="flex flex-wrap items-center gap-1 bg-coffee-900 px-4 py-2 text-2xs">
             {ignoredFields.flatMap((field) => [
               field.inTemplate && (
