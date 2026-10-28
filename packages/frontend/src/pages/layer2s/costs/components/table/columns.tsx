@@ -186,7 +186,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
           'before:bg-chart-stacked-purple',
         ),
         tooltip:
-          "The cost of the fixed intrinsic gas per L1 transaction (21'000 gas, or 15'000 after the Glamsterdam upgrade) for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
+          "The cost of the intrinsic gas per L1 transaction (21'000 gas, or up to 15'000 after the Glamsterdam upgrade) for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
       },
     }),
 
