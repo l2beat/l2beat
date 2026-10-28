@@ -41,6 +41,10 @@ describe('versionGroups', () => {
     for (const group of versionGroups) {
       for (const version of group.versions) {
         const project = projectsById.get(version.project)
+        expect(project?.versions?.group).toEqual({
+          id: group.id,
+          name: group.name,
+        })
         expect(project?.versions?.label).toEqual(version.label)
         expect(
           project?.versions?.siblings.map((s) => [s.id, s.label, s.isLatest]),
