@@ -234,7 +234,11 @@ export function TokenRelationsGraphPage() {
                 selection={graphSelection}
                 zoomTarget={graphZoomTarget}
                 highlightAnomalies={highlightAnomalies}
-                conflictNodeIds={showConflicts ? conflictNodeIds : undefined}
+                conflictNodeIds={
+                  showConflicts && conflictNodeIds.size > 0
+                    ? conflictNodeIds
+                    : undefined
+                }
                 deletedRelationIds={deletedRelationIds}
                 onSelectionChange={changeSelection}
               />
