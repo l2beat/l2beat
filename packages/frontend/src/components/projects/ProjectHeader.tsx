@@ -60,6 +60,8 @@ export function ProjectHeader({
           className={cn(
             'flex w-full flex-wrap gap-x-4 gap-y-3 max-md:flex-col md:items-center',
             (!!ongoingAnomaly || !!recentUpdatesCount) && 'max-md:mb-4',
+            // The version chip already ends the title in a pill
+            versions && 'gap-x-2',
           )}
         >
           <h1 className="project-title-timeline flex items-center justify-start gap-3">
