@@ -121,7 +121,11 @@ function BoardHeader(props: {
       {props.children}
       <HeaderButton
         title="New board"
-        onClick={() => void openBoard(props.project, { spec: NEW_BOARD_SPEC })}
+        onClick={() => {
+          if (confirmLeavingDraft()) {
+            void openBoard(props.project, { spec: NEW_BOARD_SPEC })
+          }
+        }}
       >
         <IconPlus className="size-3.5" />
       </HeaderButton>
