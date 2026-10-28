@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useParams } from 'react-router'
 import type {
   Field as ApiField,
@@ -172,7 +172,10 @@ function eq(a: readonly string[], b: readonly string[]) {
 
 function useSynchronizeSelection() {
   const loaded = useStore((state) => state.loaded)
-  const [lastSelection, rememberSelection] = useState<readonly string[]>([])
+  // What each side last heard from the other, so neither takes its own
+  // update for a new choice by the researcher.
+  const lastGraph = useRef<readonly string[]>([])
+  const lastGlobal = useRef<readonly string[]>([])
   const selectedGlobal = usePanelStore((state) => state.selected)
   const highlightGlobal = usePanelStore((state) => state.highlight)
   const selectGlobal = usePanelStore((state) => state.select)
@@ -192,33 +195,39 @@ function useSynchronizeSelection() {
   }, [selectedNodes, hiddenNodes, highlightGlobal])
 
   useEffect(() => {
-    const firstGlobal = selectedGlobal[0]
-    const selectedAddresses = selectedLeafIds(nodes, new Set(selectedNodes))
-
-    if (selectedAddresses.length > 0 && !eq(lastSelection, selectedAddresses)) {
-      rememberSelection(selectedAddresses)
-      selectGlobal(selectedAddresses)
-    } else if (
-      firstGlobal !== undefined &&
-      !eq(lastSelection, selectedGlobal) &&
-      loaded
-    ) {
-      // A contract in an open group is drawn on its own, so it is selected
-      // on its own; only a closed group stands in for its members. One not
-      // drawn clears the graph's selection, which would otherwise win back.
-      const containing = topLevelByDescendant(expandedNodes(nodes)).get(
-        firstGlobal,
-      )
-      rememberSelection(selectedGlobal)
-      selectAndFocus(containing?.id ?? firstGlobal)
+    const graphLeaves = selectedLeafIds(nodes, new Set(selectedNodes))
+    if (graphLeaves.length > 0 && !eq(lastGraph.current, graphLeaves)) {
+      lastGraph.current = graphLeaves
+      lastGlobal.current = graphLeaves
+      selectGlobal(graphLeaves)
+      return
     }
+    // Another panel chose: every click there is a new array, so clicking a
+    // contract again selects it once it is drawn.
+    const firstGlobal = selectedGlobal[0]
+    if (
+      firstGlobal === undefined ||
+      selectedGlobal === lastGlobal.current ||
+      !loaded
+    ) {
+      return
+    }
+    lastGlobal.current = selectedGlobal
+    // A contract in an open group is drawn on its own, so it is selected
+    // on its own; only a closed group stands in for its members. One not
+    // drawn clears the graph's selection, which would otherwise win back.
+    const containing = topLevelByDescendant(expandedNodes(nodes)).get(
+      firstGlobal,
+    )
+    lastGraph.current =
+      containing === undefined
+        ? []
+        : selectedLeafIds(nodes, new Set([containing.id]))
+    selectAndFocus(containing?.id ?? firstGlobal)
   }, [
-    lastSelection,
-    rememberSelection,
     selectedGlobal,
     selectGlobal,
     selectedNodes,
-    hiddenNodes,
     nodes,
     selectAndFocus,
     loaded,
