@@ -28,7 +28,9 @@ const tsxBoundaryPlugin: esbuild.Plugin = {
 // @tanstack/charts is ESM-only (its exports have only an `import` condition),
 // so it is bundled, with its own dependencies, while every other package
 // stays external. Only bundled packages have importers in node_modules.
+// React stays external even there: a second copy breaks hooks.
 const BUNDLED_PACKAGES = /^@tanstack\/charts(\/|$)/
+const SHARED_PACKAGES = /^react(-dom)?(\/|$)/
 const externalPackagesPlugin: esbuild.Plugin = {
   name: 'external-packages',
   setup(build) {
@@ -36,7 +38,8 @@ const externalPackagesPlugin: esbuild.Plugin = {
       if (
         args.path.startsWith('~/') ||
         BUNDLED_PACKAGES.test(args.path) ||
-        args.importer.includes('/node_modules/')
+        (args.importer.includes('/node_modules/') &&
+          !SHARED_PACKAGES.test(args.path))
       ) {
         return undefined
       }

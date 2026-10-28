@@ -80,11 +80,11 @@ function ChartMilestone({
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
 
   const common = cn(
-    'absolute bottom-5 flex items-center justify-center group-has-[.recharts-legend-wrapper]:bottom-[34px]',
+    'absolute bottom-5 flex items-center justify-center group-has-[.recharts-legend-wrapper]:bottom-[34px] group-has-[.ts-legend]:bottom-[34px]',
     !hasFinishedOnboardingInitial &&
       interactiveLegend &&
       !interactiveLegend.disableOnboarding &&
-      'group-has-[.recharts-legend-wrapper]:bottom-[46px]',
+      'group-has-[.recharts-legend-wrapper]:bottom-[46px] group-has-[.ts-legend]:bottom-[46px]',
   )
   if (isDesktop) {
     return (

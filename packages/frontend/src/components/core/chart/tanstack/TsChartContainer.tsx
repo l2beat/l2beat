@@ -10,12 +10,14 @@ import { ChartLoader } from '../ChartLoader'
 import { ChartMilestones } from '../ChartMilestones'
 import { ChartNoDataSourceState } from '../ChartNoDataSourceState'
 import { ChartNoDataState } from '../ChartNoDataState'
+import { ChartSettledSize } from '../ChartSettledSize'
 import { TsChartLegend } from './TsChartLegend'
 
 /**
- * The TanStack Charts counterpart of `ChartContainer`: same sizing, loader,
- * empty states, logos and milestones, but the legend is plain DOM under the
- * chart instead of a Recharts slot, so nothing here imports Recharts.
+ * The TanStack Charts counterpart of `ChartContainer`: same sizing, settled
+ * resizing, loader, empty states, logos and milestones, but the legend is
+ * plain DOM under the chart instead of a Recharts slot, so nothing here
+ * imports Recharts.
  */
 export function TsChartContainer<T extends { timestamp: number }>({
   children,
@@ -55,27 +57,28 @@ export function TsChartContainer<T extends { timestamp: number }>({
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div ref={ref} className="group relative">
-        <div
+        <ChartSettledSize
           className={cn(
-            'flex flex-col',
             size === 'regular' &&
               'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
             size === 'small' && 'h-[114px] min-h-[114px] w-full',
             className,
           )}
         >
-          <div
-            className={cn(
-              'relative min-h-0 flex-1 select-none text-xs outline-none',
-              ignorePointerWhileScrollingClassName,
-              (isLoading || !hasData) && 'pointer-events-none',
-              noDataSourcesSelected && '[&_.ts-chart-tooltip]:hidden',
-            )}
-          >
-            {shouldMountChart ? children : null}
+          <div className="flex size-full flex-col">
+            <div
+              className={cn(
+                'relative min-h-0 flex-1 select-none text-xs outline-none',
+                ignorePointerWhileScrollingClassName,
+                (isLoading || !hasData) && 'pointer-events-none',
+                noDataSourcesSelected && '[&_[data-chart-tooltip]]:hidden',
+              )}
+            >
+              {shouldMountChart ? children : null}
+            </div>
+            {legend && shouldMountChart && <TsChartLegend />}
           </div>
-          {legend && shouldMountChart && <TsChartLegend />}
-        </div>
+        </ChartSettledSize>
         {(!!isLoading || !shouldMountChart) && (
           <ChartLoader
             animated={shouldMountChart && !!isLoading}

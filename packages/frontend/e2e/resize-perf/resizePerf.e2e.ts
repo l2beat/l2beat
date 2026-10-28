@@ -164,6 +164,10 @@ const installProbes = `(() => {
   for (const svg of document.querySelectorAll('svg.recharts-surface')) {
     observer.observe(svg, { attributes: true, attributeFilter: ['width'] })
   }
+  // TanStack charts re-render a resized scene into a new viewBox.
+  for (const svg of document.querySelectorAll('svg.ts-chart')) {
+    observer.observe(svg, { attributes: true, attributeFilter: ['viewBox'] })
+  }
 })()`
 
 const resetProbes = `(() => {
