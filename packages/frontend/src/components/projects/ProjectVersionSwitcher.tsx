@@ -28,7 +28,11 @@ export function ProjectVersionSwitcher({
       </PopoverTrigger>
       {/* Outside the h1, so the list is not part of the heading */}
       <PopoverPortal>
-        <PopoverContent align="start" className="flex min-w-48 flex-col p-1">
+        <PopoverContent
+          aria-label="Versions"
+          align="start"
+          className="flex min-w-48 flex-col p-1"
+        >
           {versions.versions.map((version) => (
             <a
               key={version.href}
