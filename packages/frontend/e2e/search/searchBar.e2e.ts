@@ -44,11 +44,14 @@ test('keys typed while the dialog loads go into its input', async ({
 }) => {
   const release = await holdDialogChunk(page)
   await page.goto(PAGE, { waitUntil: 'networkidle' })
+  await page.getByRole('link', { name: 'Home' }).first().focus()
 
   await page.keyboard.press('/')
   await page.keyboard.type('arbit')
   await page.keyboard.press('Backspace')
   await page.keyboard.type('trum')
+  // Not for the focused link: it would leave the page.
+  await page.keyboard.press('Enter')
   await release()
 
   const input = page.getByRole('dialog').getByRole('combobox')
@@ -56,6 +59,7 @@ test('keys typed while the dialog loads go into its input', async ({
   await expect(input).toHaveValue('arbitrum')
   await page.keyboard.type(' one')
   await expect(input).toHaveValue('arbitrum one')
+  expect(new URL(page.url()).pathname).toBe(PAGE)
 })
 
 test('Escape while the dialog loads cancels opening it', async ({ page }) => {
@@ -80,18 +84,29 @@ function watchDialogRequests(page: Page) {
   return requests
 }
 
-/** Holds the dialog's chunk back until the returned function is called. */
+/**
+ * Holds the dialog's chunk back until the returned function is called, which
+ * resolves once the page has rendered with the chunk.
+ */
 async function holdDialogChunk(page: Page) {
   const { promise: requested, resolve: onRequest } =
-    Promise.withResolvers<void>()
+    Promise.withResolvers<string>()
   const { promise: released, resolve: release } = Promise.withResolvers<void>()
   await page.route(DIALOG_CHUNK, async (route) => {
-    onRequest()
+    onRequest(route.request().url())
     await released
     await route.continue()
   })
   return async () => {
-    await requested
+    const url = await requested
     release()
+    // The page imported the chunk first, so its own callbacks run before
+    // this import resolves; two frames later React has rendered them.
+    await page.evaluate(async (url) => {
+      await import(url)
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      )
+    }, url)
   }
 }

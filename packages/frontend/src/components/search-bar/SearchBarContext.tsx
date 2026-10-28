@@ -54,24 +54,24 @@ export function SearchBarContextProvider({
   // to turn the shortcut off, and a second "/" belongs in the query.
   useGlobalShortcut('/', () => setOpen(true))
 
-  // In the capture phase, so that it runs before the shortcut and doesn't
-  // take the key that opens the search for one typed into it.
+  // Until the dialog arrives, keys belong to the search, not the page: Enter
+  // would follow the focused link, and "f" would open a table's filter. In the
+  // capture phase, so that it runs before the page's listeners and doesn't
+  // take the key that opens the search for one typed into it. Keys with Ctrl,
+  // Meta or Alt are left to the browser.
   useEventListener(
     'keydown',
     (event) => {
       if (!open || SearchBarDialog) return
+      if (event.ctrlKey || event.metaKey || event.altKey) return
+      event.preventDefault()
+      event.stopPropagation()
       if (event.key === 'Escape') {
         setOpen(false)
         setTypedWhileLoading('')
       } else if (event.key === 'Backspace') {
         setTypedWhileLoading((value) => value.slice(0, -1))
-      } else if (
-        event.key.length === 1 &&
-        !event.ctrlKey &&
-        !event.metaKey &&
-        !event.altKey
-      ) {
-        event.preventDefault()
+      } else if (event.key.length === 1) {
         setTypedWhileLoading((value) => value + event.key)
       }
     },
