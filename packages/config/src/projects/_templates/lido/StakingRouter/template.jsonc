@@ -26,6 +26,48 @@
     "getTotalModulesValidatorsBalance"
   ],
   "fields": {
+    "getStakingModuleIsActive": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleIsActive",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleIsDepositsPaused": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleIsDepositsPaused",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleIsStopped": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleIsStopped",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleStateConfig": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleStateConfig",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleStatus": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleStatus",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleWithdrawalCredentials": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleWithdrawalCredentials",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
     "accessControl": {
       "handler": { "type": "accessControl", "includeEmptyRoles": true }
     },
