@@ -131,6 +131,8 @@ export function TsHoverOverlay<T extends { timestamp: number }>({
         // elsewhere blurs the chart.
         if (event.pointerType !== 'touch') setActive(null)
       }}
+      // A swipe that turns into a scroll is cancelled, not a tap.
+      onPointerCancel={() => setActive(null)}
       onKeyDown={onKeyDown}
       onBlur={() => setActive(null)}
     >
