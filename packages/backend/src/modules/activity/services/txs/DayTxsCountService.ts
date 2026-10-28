@@ -1,7 +1,10 @@
 import type { HourlyActivityRecord } from '@l2beat/database'
 import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
-import type { DayProvider } from '../../../../providers/day/DayProviders'
+import type {
+  DayProvider,
+  HourlyCount,
+} from '../../../../providers/day/DayProviders'
 import type { DayActivityRecord } from '../../indexers/types'
 import { getDayHourPeak } from '../../utils/peaks'
 
@@ -21,11 +24,20 @@ export class DayTxsCountService {
     hours?: HourlyActivityRecord[]
     latestTimestamp: number
   }> {
-    const dailyTxs = await this.$.provider.getDailyTxsCount(from, to)
-    const dailyUops = await this.$.provider.getDailyUopsCount(from, to)
-    const hours = (await this.$.provider.getHourlyCounts?.(from, to))?.map(
-      (hour) => ({ projectId: this.$.projectId, ...hour }),
-    )
+    const { provider } = this.$
+    let dailyTxs: Record<number, number>
+    let dailyUops: Record<number, number>
+    let hours: HourlyActivityRecord[] | undefined
+    if ('getHourlyCounts' in provider) {
+      // Days and hours from one response, so a day always equals its hours
+      const counts = await provider.getHourlyCounts(from, to)
+      dailyTxs = sumPerDay(counts, 'count')
+      dailyUops = sumPerDay(counts, 'uopsCount')
+      hours = counts.map((hour) => ({ projectId: this.$.projectId, ...hour }))
+    } else {
+      dailyTxs = await provider.getDailyTxsCount(from, to)
+      dailyUops = await provider.getDailyUopsCount(from, to)
+    }
 
     const latestTimestamp = Math.max(
       ...Object.keys(dailyTxs).map(Number),
@@ -37,14 +49,6 @@ export class DayTxsCountService {
       const timestamp = day * UnixTime.DAY
       const count = dailyTxs[timestamp]
       assert(count !== undefined, 'Count is undefined')
-      // Fetched apart from the days, so a day can come without its hours
-      assert(
-        !hours ||
-          hours.some(
-            (hour) => UnixTime.toStartOf(hour.timestamp, 'day') === timestamp,
-          ),
-        'Hours are missing',
-      )
       return {
         projectId: this.$.projectId,
         timestamp: timestamp,
@@ -62,4 +66,16 @@ export class DayTxsCountService {
       latestTimestamp,
     }
   }
+}
+
+function sumPerDay(
+  hours: HourlyCount[],
+  key: 'count' | 'uopsCount',
+): Record<number, number> {
+  const days: Record<number, number> = {}
+  for (const hour of hours) {
+    const day = UnixTime.toStartOf(hour.timestamp, 'day')
+    days[day] = (days[day] ?? 0) + hour[key]
+  }
+  return days
 }

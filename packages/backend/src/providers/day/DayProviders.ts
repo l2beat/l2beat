@@ -15,11 +15,17 @@ interface DayProvidersClients {
   lighter: LighterClient | undefined
 }
 
-export interface DayProvider {
+export type DayProvider = DailyCountsProvider | HourlyCountsProvider
+
+export interface DailyCountsProvider {
   getDailyTxsCount(from: number, to: number): Promise<Record<number, number>>
   getDailyUopsCount(from: number, to: number): Promise<Record<number, number>>
-  /** Only for sources with hours. Those of days `from` to `to` (exclusive) */
-  getHourlyCounts?(from: number, to: number): Promise<HourlyCount[]>
+}
+
+/** For sources that count by the hour. Their days are the sums of the hours */
+export interface HourlyCountsProvider {
+  /** Those of days `from` to `to` (exclusive) */
+  getHourlyCounts(from: number, to: number): Promise<HourlyCount[]>
 }
 
 export interface HourlyCount {

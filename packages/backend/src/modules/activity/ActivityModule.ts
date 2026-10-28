@@ -174,7 +174,7 @@ export function initActivityModule({
             uncertaintyBuffer: project.activityConfig.resyncLastDays ?? 0,
             // A new hash syncs again from the start. Sources with hours did so
             // once, to fill in their last two weeks of hours and their peaks
-            configHash: provider.getHourlyCounts ? 'hourly' : undefined,
+            configHash: 'getHourlyCounts' in provider ? 'hourly' : undefined,
           },
           logger,
         )

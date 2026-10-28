@@ -1,6 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { DayProvider } from '../../../../providers/day/DayProviders'
+import type {
+  DailyCountsProvider,
+  HourlyCountsProvider,
+} from '../../../../providers/day/DayProviders'
 import { DayTxsCountService } from './DayTxsCountService'
 
 describe(DayTxsCountService.prototype.getTxsCount.name, () => {
@@ -162,24 +165,14 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
     })
   })
 
-  it('returns the hours, and the busiest hour of each day, when the provider has them', async () => {
+  it('sums the hours of a provider that has them into days, with each busiest hour', async () => {
     const day = 5 * UnixTime.DAY
     const getHourlyCounts = mockFn().resolvesTo([
       { timestamp: day, count: 2, uopsCount: 50 },
       { timestamp: day + UnixTime.HOUR, count: 7, uopsCount: 40 },
       { timestamp: day + UnixTime.DAY, count: 1, uopsCount: 10 },
     ])
-    const provider = mockObject<DayProvider>({
-      getDailyTxsCount: mockFn().resolvesTo({
-        [day]: 9,
-        [day + UnixTime.DAY]: 1,
-      }),
-      getDailyUopsCount: mockFn().resolvesTo({
-        [day]: 90,
-        [day + UnixTime.DAY]: 10,
-      }),
-      getHourlyCounts,
-    })
+    const provider = mockObject<HourlyCountsProvider>({ getHourlyCounts })
 
     const txsCountProvider = new DayTxsCountService({
       provider,
@@ -229,10 +222,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
   })
 
   it('throws when the provider has hours but none for a day', async () => {
-    const day = 5 * UnixTime.DAY
-    const provider = mockObject<DayProvider>({
-      getDailyTxsCount: mockFn().resolvesTo({ [day]: 9 }),
-      getDailyUopsCount: mockFn().resolvesTo({ [day]: 9 }),
+    const provider = mockObject<HourlyCountsProvider>({
       getHourlyCounts: mockFn().resolvesTo([]),
     })
 
@@ -242,7 +232,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
     })
 
     await expect(txsCountProvider.getTxsCount(5, 6)).toBeRejectedWith(
-      'Hours are missing',
+      'Count is undefined',
     )
   })
 })
@@ -251,10 +241,9 @@ function mockProvider(data: {
   txs: Record<number, number>
   uops: Record<number, number>
 }) {
-  return mockObject<DayProvider>({
+  return mockObject<DailyCountsProvider>({
     getDailyTxsCount: mockFn().resolvesTo(data.txs),
     getDailyUopsCount: mockFn().resolvesTo(data.uops),
-    getHourlyCounts: undefined,
   })
 }
 
