@@ -31,7 +31,7 @@ export function ProjectVersionSwitcher({
         <PopoverContent
           aria-label="Versions"
           align="start"
-          className="flex min-w-48 flex-col p-1"
+          className="flex min-w-48 flex-col gap-1 p-1"
         >
           {versions.versions.map((version) => (
             <a
