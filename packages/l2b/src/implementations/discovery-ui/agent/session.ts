@@ -47,6 +47,11 @@ export class AgentSession<Context, Receipt> {
     req.on('close', () => {
       clearInterval(keepalive)
       this.tabs.delete(res)
+      // With no tab open, nothing is on screen: a closed project's selection
+      // must not answer for the next tab, which reports its own.
+      if (this.tabs.size === 0) {
+        this.context = undefined
+      }
     })
   }
 
