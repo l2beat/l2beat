@@ -253,9 +253,11 @@ function IngestionConflictDetails({ node }: { node: RelationGraphNode }) {
         <LoadingState className="h-24" />
       ) : error ? (
         <ErrorState message={error.message} />
-      ) : !data ? (
+      ) : data?.entry.state !== 'conflict' ? (
+        // The conflict list refreshes less often than this entry, so it can
+        // still list an entry that was retried elsewhere in the meantime.
         <div className="text-muted-foreground text-sm">
-          This address is no longer in the ingestion queue.
+          This address is no longer in conflict.
         </div>
       ) : (
         <>
