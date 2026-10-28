@@ -77,9 +77,11 @@ export function confirmLeavingDraft(boardId?: string): boolean {
 export function receiveBoardEvent(event: BoardEvent) {
   useBoardUiStore.setState((state) => ({
     revision: state.revision + 1,
-    activeByProject: event.reveal
-      ? { ...state.activeByProject, [event.project]: event.boardId }
-      : state.activeByProject,
+    // Switching boards would drop JSON the researcher has not applied.
+    activeByProject:
+      event.reveal && state.draftOf === undefined
+        ? { ...state.activeByProject, [event.project]: event.boardId }
+        : state.activeByProject,
   }))
 }
 
