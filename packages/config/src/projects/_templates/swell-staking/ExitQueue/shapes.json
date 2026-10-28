@@ -1,0 +1,14 @@
+{
+  "swEXIT.sol": {
+    "hash": "0xd1ac20cfceffd23f917ae0820b420cfafbf05cf926504f5e04c0f8904cbcc015",
+    "address": "eth:0x02454D649054276e3ED8B9f17F8D5F49aC6C8F78",
+    "chain": "ethereum",
+    "blockNumber": 26282996
+  },
+  "RswEXIT.sol": {
+    "hash": "0x391e406e99cfb97b358b7adb830f404311c8b3f2ae390cde031a74a4fc780335",
+    "address": "eth:0xBD6A5eC8A78B57871ae17d22cd686a72ebe06479",
+    "chain": "ethereum",
+    "blockNumber": 26282996
+  }
+}

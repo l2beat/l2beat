@@ -3,5 +3,11 @@
     "hash": "0x8e747ea537f6ad5dadfeed406255d8ac95c47880198374a17bd470328a673974",
     "address": "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
     "blockNumber": 24970797
+  },
+  "RswETHOFTAdapter.sol": {
+    "hash": "0x4a16083babf6532f5262089fea9a34877ba3785a6b2376fcae6ba54c23ef5f3c",
+    "address": "eth:0x1486D39646cdee84619bd05997319545A8575079",
+    "chain": "ethereum",
+    "blockNumber": 26282996
   }
 }

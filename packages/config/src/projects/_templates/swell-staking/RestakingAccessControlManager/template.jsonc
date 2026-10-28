@@ -1,0 +1,201 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AccessControlManager",
+  "category": "gov",
+  "description": "Central role and pause registry for the restaking system. Every contract of the system checks roles here and resolves the token, exit queue, deposit manager, operator registry and treasury addresses through it. Paused now: deposits {{coreMethodsPaused}}, bot functions {{botMethodsPaused}}, operator functions {{operatorMethodsPaused}}, withdrawals {{withdrawalsPaused}}.",
+  "ignoreMethods": ["DEFAULT_ADMIN_ROLE", "PLATFORM_ADMIN"],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x4ff52032f36e32ac782042a01802e20394d4255c84a3c046490be98ab632691b": "PLATFORM_ADMIN",
+          "0x902cbe3a02736af9827fb6a90bada39e955c0941e08f0c63b3a662a7b17a4e2b": "BOT",
+          "0x2d75377dcb6dd2e926b45cf6146dc2d7b3733f67c9846fef3fefd0e32c3c74e4": "REPRICER",
+          "0x539440820030c4994db4e31b6b800deafd503688728f932addfe7a410515c14c": "PAUSER",
+          "0x82b32d9ab5100db08aeb9a0e08b422d14851ec118736590462bf9c085a6e9448": "UNPAUSER",
+          "0xf9684f0897a6401e489bf73554930da5b5a20193e61dc1e6c9df178a61ae1994": "DELETE_ACTIVE_VALIDATORS",
+          "0x549433fa03f8bf67fba86db288fa1a7305349c38832642a8e4f463d1792adddb": "PROCESS_WITHDRAWALS",
+          "0xb3b63563cfe365dff73f7fab2be4855bf62d292bd02776c4e761b3ed6ff36daa": "SNAPSHOT_ADMIN",
+          "0x2733f9eee1d3e14eea57e4c08850ed9a6e9131335896ea9dea56ef2000a0a3ed": "EIGENLAYER_DELEGATOR",
+          "0x68b5130048f4cc7cd384ada7c88f93239dc62916061e88762600cfc74cad4c3d": "EIGENLAYER_WITHDRAWALS",
+          "0xe7ff44b73a990cd5d3d6abd7a6ce6088256d4502ff6298458b81306b8e820ec2": "EIGENLAYER_MAINTAINER",
+          "0x89b4b9a8e3389ae40b5062e80009a5fed62050f19d25e0d4e41d0b0704e1d108": "OPERATOR_REGISTRY_MAINTAINER"
+        }
+      }
+    },
+    "defaultAdminAC": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke every role of the system except the bot role."
+        }
+      ]
+    },
+    "platformAdminAC": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PLATFORM_ADMIN",
+        "roleNames": {
+          "0x4ff52032f36e32ac782042a01802e20394d4255c84a3c046490be98ab632691b": "PLATFORM_ADMIN"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the token, exit queue, deposit manager, operator registry and treasury addresses that every contract resolves through this registry; set the reprice bounds, fees and withdrawal limits; enable the whitelist; grant or revoke the bot role."
+        }
+      ]
+    },
+    "botAC": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "BOT",
+        "roleNames": {
+          "0x902cbe3a02736af9827fb6a90bada39e955c0941e08f0c63b3a662a7b17a4e2b": "BOT"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "report validator balances and rewards, which reprices the token within the token's per-update bound and mints the fee shares; process the exit queue up to any request; choose which node operators' next registered keys receive deposits and move ETH between the system's contracts."
+        }
+      ]
+    },
+    "pauserAC": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PAUSER",
+        "roleNames": {
+          "0x539440820030c4994db4e31b6b800deafd503688728f932addfe7a410515c14c": "PAUSER"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause deposits, bot functions, operator functions and withdrawals, including claims of processed exit requests, with no delay."
+        }
+      ]
+    },
+    "unpauserAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "UNPAUSER",
+        "roleNames": {
+          "0x82b32d9ab5100db08aeb9a0e08b422d14851ec118736590462bf9c085a6e9448": "UNPAUSER"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "lift any pause, with no delay."
+        }
+      ]
+    },
+    "snapshotAdminAC": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "SNAPSHOT_ADMIN",
+        "roleNames": {
+          "0xb3b63563cfe365dff73f7fab2be4855bf62d292bd02776c4e761b3ed6ff36daa": "SNAPSHOT_ADMIN"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "force a reprice from any reported balances and reward amount, without the pause, staleness or reference-rate checks. Only the token's per-update rate and supply bounds apply, so the reported reward can mint fee shares worth up to about a ninth of the supply per report to the operator fee addresses and the treasury while the rate stays unchanged, once per reprice interval."
+        }
+      ]
+    },
+    "deleteActiveValidatorsAC": {
+      "severity": "LOW",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DELETE_ACTIVE_VALIDATORS",
+        "roleNames": {
+          "0xf9684f0897a6401e489bf73554930da5b5a20193e61dc1e6c9df178a61ae1994": "DELETE_ACTIVE_VALIDATORS"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remove validator records from the operator registry, which changes how operator fees are split; no ETH moves."
+        }
+      ]
+    },
+    "eigenLayerDelegatorAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EIGENLAYER_DELEGATOR",
+        "roleNames": {
+          "0x2733f9eee1d3e14eea57e4c08850ed9a6e9131335896ea9dea56ef2000a0a3ed": "EIGENLAYER_DELEGATOR"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "delegate or undelegate the restaking accounts to any EigenLayer operator, which decides the slashing risk of restaked ETH, with no delay."
+        }
+      ]
+    },
+    "eigenLayerWithdrawalsAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EIGENLAYER_WITHDRAWALS",
+        "roleNames": {
+          "0x68b5130048f4cc7cd384ada7c88f93239dc62916061e88762600cfc74cad4c3d": "EIGENLAYER_WITHDRAWALS"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "queue and complete EigenLayer withdrawals, verify validators and checkpoints, and set who may claim EigenLayer rewards for the restaking accounts; withdrawn ETH stays with the restaking account. The pause flags do not stop these functions."
+        }
+      ]
+    },
+    "eigenLayerMaintainerAC": {
+      "severity": "LOW",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EIGENLAYER_MAINTAINER",
+        "roleNames": {
+          "0xe7ff44b73a990cd5d3d6abd7a6ce6088256d4502ff6298458b81306b8e820ec2": "EIGENLAYER_MAINTAINER"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create new restaking accounts and their EigenPods."
+        }
+      ]
+    },
+    "operatorRegistryMaintainerAC": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "OPERATOR_REGISTRY_MAINTAINER",
+        "roleNames": {
+          "0x89b4b9a8e3389ae40b5062e80009a5fed62050f19d25e0d4e41d0b0704e1d108": "OPERATOR_REGISTRY_MAINTAINER"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add, enable and disable node operators and change their key-registering and fee addresses, with no delay."
+        }
+      ]
+    }
+  }
+}

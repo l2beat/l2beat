@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EigenLayerManager",
+  "category": "core",
+  "description": "Manages the restaking accounts ({{stakeId}} so far), each a beacon proxy that owns one EigenPod. The bot stakes deposit manager ETH into validators whose withdrawal credential is an account's EigenPod. EigenLayer withdrawals return ETH to the account, and only the bot can send it on, to the deposit manager. Every account accepts signatures from {{adminSigner}} as its own (EIP-1271).",
+  "ignoreInWatchMode": ["stakeId"],
+  "fields": {
+    "adminSigner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign as every restaking account (EIP-1271)."
+        }
+      ]
+    }
+  }
+}

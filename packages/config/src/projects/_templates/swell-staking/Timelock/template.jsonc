@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Timelock",
+  "category": "gov",
+  "description": "Compound-style timelock. Its admin queues transactions that can execute after {{delayFormatted}} and within a grace period; the delay and admin can only be changed through the timelock itself.",
+  "fields": {
+    "delayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function delay() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "delay": {
+      "severity": "HIGH"
+    },
+    "admin": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "act",
+          "delay": "{{delay}}"
+        }
+      ]
+    }
+  }
+}

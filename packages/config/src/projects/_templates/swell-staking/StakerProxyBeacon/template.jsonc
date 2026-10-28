@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UpgradeableBeacon",
+  "category": "core",
+  "description": "Beacon holding the implementation of every restaking account ({{implementation}}). Its owner, the EigenLayerManager, upgrades all accounts at once through a platform-admin call."
+}

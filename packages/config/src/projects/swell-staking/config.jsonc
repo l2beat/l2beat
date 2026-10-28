@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "swell-staking",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 80,
+  "initialAddresses": [
+    "eth:0xf951E335afb289353dc249e82926178EaC7DEd78", // swETH
+    "eth:0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0", // rswETH
+    "eth:0x48C11b86807627AF70a34662D4865cF854251663", // swEXIT
+    "eth:0x58749C46Ffe97e4d79508a2C781C440f4756f064", // rswEXIT
+    "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71", // swETH RepricingOracle
+    "eth:0xd5A73c748449a45CC7D9f21c7ed3aB9eB3D2e959", // rswETH RepricingOracle
+    "eth:0xc94cffd5249df4008a043ee61e13f19af16d0936", // EigenLayerManager
+    "eth:0x5c6392a69dc11f254457716c682f70e4b2ed7b05", // SwETHProxyOFT
+    "eth:0x1486d39646cdee84619bd05997319545a8575079" // RswETHOFTAdapter
+  ],
+  "names": {
+    "eth:0xf951E335afb289353dc249e82926178EaC7DEd78": "swETH",
+    "eth:0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0": "rswETH",
+    "eth:0x48C11b86807627AF70a34662D4865cF854251663": "swEXIT",
+    "eth:0x58749C46Ffe97e4d79508a2C781C440f4756f064": "rswEXIT",
+    "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71": "swETHRepricingOracle",
+    "eth:0xd5A73c748449a45CC7D9f21c7ed3aB9eB3D2e959": "rswETHRepricingOracle",
+    "eth:0xc94cffd5249df4008a043ee61e13f19af16d0936": "EigenLayerManager",
+    "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC": "swETHAccessControlManager",
+    "eth:0x796592b2092F7E150C48643dA19Dd2F28be3333F": "rswETHAccessControlManager",
+    "eth:0xb3D9cf8E163bbc840195a97E81F8A34E295B8f39": "swETHDepositManager",
+    "eth:0x5e6342D8090665bE14eeB8154c8a87B7249a4889": "rswETHDepositManager",
+    "eth:0x46DdC39E780088B1B146Aba8cBBe15DC321A1A1d": "swETHNodeOperatorRegistry",
+    "eth:0xAae0B305B3F1edDE7B11b680d4FA9252F7a1c524": "rswETHNodeOperatorRegistry",
+    "eth:0xba829003e6b5dd858fbed3945719939a6dc3073b": "Timelock",
+    "eth:0x20fdf47509c5efc0e1101e3ce443691781c17f90": "Swell Multisig",
+    "eth:0x6ad7cfcda2ce9d9b9d310decb4bc16f200d3dfd7": "Swell Pauser Multisig",
+    "eth:0x9522FFF064bCb2f319c330A72ee57195775168bC": "Swell Operations Multisig",
+    "eth:0xe194661251877a69a1282bd0b2d344ccba06e8ae": "StakerProxyBeacon",
+    "eth:0x0790A0f0E0232855D4aC62beBC5C8745f150E555": "StakerProxy",
+    "eth:0xf17b581496bc2669ce0931FAcAA1ADe35029E85D": "FeeFlowController",
+    "eth:0x5c6392a69dc11f254457716c682f70e4b2ed7b05": "SwETHProxyOFT",
+    "eth:0x1486d39646cdee84619bd05997319545a8575079": "RswETHOFTAdapter"
+  },
+  // Boundary cuts: EigenLayerManager points into EigenLayer core (DelegationManager,
+  // EigenPodManager, StrategyManager) and enumerates the per-stake StakerProxy
+  // clones; the StakerProxy beacon stays in scope, the clones and EigenLayer are
+  // not crawled. The rswETH DepositManager's legacy EigenPod is kept so EigenLayer's
+  // pod upgraders appear as actors (via shared-eigenlayer). The fee sink's payment token (SWELL) is not part of the LSTs.
+  "overrides": {
+    "eth:0xc94cffd5249df4008a043ee61e13f19af16d0936": {
+      "ignoreMethods": ["stakerProxyAddresses", "isValidStaker"],
+      "ignoreRelatives": [
+        "DelegationManager",
+        "EigenPodManager",
+        "strategyManagerAddress",
+        "deprecatedDelayedWithdrawalRouter"
+      ]
+    },
+    "eth:0x5e6342D8090665bE14eeB8154c8a87B7249a4889": {
+      "ignoreRelatives": ["EigenPodManager"]
+    },
+    "eth:0xf17b581496bc2669ce0931FAcAA1ADe35029E85D": {
+      "ignoreRelatives": ["paymentToken"]
+    }
+  }
+}

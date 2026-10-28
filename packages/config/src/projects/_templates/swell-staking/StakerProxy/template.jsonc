@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StakerProxy",
+  "category": "core",
+  "description": "Implementation of the restaking accounts behind the beacon. Each account owns one EigenPod; ETH it receives can only be sent to the deposit manager.",
+  "ignoreMethods": ["implementation"]
+}
