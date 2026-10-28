@@ -35,6 +35,13 @@ describe(sortRows.name, () => {
     expect(sorted.map((r) => cells.indexOf(r))).toEqual([4, 2, 3, 0, 1])
   })
 
+  it('sorts integers past 2^53 exactly', () => {
+    const values = ['9007199254740993', '9007199254740992', '-1']
+    const cells: BoardRow[] = values.map((text) => ({ cells: [[{ text }]] }))
+    const sorted = sortRows(cells, { column: 0, descending: false })
+    expect(sorted.map((r) => cells.indexOf(r))).toEqual([2, 1, 0])
+  })
+
   it('keeps the written order without a sort', () => {
     expect(sortRows(rows, undefined)).toEqual(rows)
   })
