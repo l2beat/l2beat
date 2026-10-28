@@ -1634,5 +1634,6 @@
   "static/icons/uniswapv2.png": "2e3d5f6b5badb27112f8d72c76b46def",
   "static/meta-images/defi/projects/uniswapv2/opengraph-image.png": "dc77200d6cc72338e114ea6cea5dd0bc",
   "static/meta-images/defi/projects/safe/opengraph-image.png": "6fc1394435ec38d3d940aee5ea23b472",
-  "static/icons/safe.png": "fa1390aa761b4d5ec06b10fd20e7f578"
+  "static/icons/safe.png": "fa1390aa761b4d5ec06b10fd20e7f578",
+  "static/meta-images/defi/liquid-staking/opengraph-image.png": "4baf608ac3d6b36bda5623acff2a439d"
 }
