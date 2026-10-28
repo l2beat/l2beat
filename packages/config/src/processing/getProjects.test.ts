@@ -358,6 +358,17 @@ describe('getProjects', () => {
     expect(missing).toEqual([])
   })
 
+  it('liquid staking risks are set exactly on liquid staking projects', () => {
+    const mismatched = projects
+      .filter(
+        (p) =>
+          (p.defiInfo?.category === 'Liquid Staking') !==
+          (p.liquidStakingRisks !== undefined),
+      )
+      .map((p) => p.id)
+    expect(mismatched).toEqual([])
+  })
+
   it('every DeFi TVL source is complete', () => {
     const problems: string[] = []
     for (const project of projects) {

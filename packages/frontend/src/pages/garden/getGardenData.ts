@@ -5,7 +5,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiSummaryEntries'
+import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiTotalValueLocked'
 import { describeOssification } from '~/server/features/garden/describeOssification'
 import {
   getAttestationsMeta,

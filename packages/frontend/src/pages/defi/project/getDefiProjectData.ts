@@ -33,21 +33,23 @@ export async function getDefiProjectData(
 
 /**
  * The markdown alternate of the page, built from the same cached entry as the
- * HTML. The TVL is queried apart: the HTML page only charts it in the
- * browser, so its render should not pay for the query.
+ * HTML. Liquid staking pages show the TVL in their header, so the entry has
+ * it; the other DeFi pages only chart it in the browser, so it is queried
+ * apart for them.
  */
 export async function getDefiProjectMarkdown(
   slug: string,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<string | undefined> {
-  const [data, totalValueLockedUsd] = await Promise.all([
-    getCachedDefiProjectPage(slug, manifest, cache),
-    getCachedTotalValueLocked(slug, cache),
-  ])
-  return (
-    data && renderDefiProjectMarkdown(data.props.entry, totalValueLockedUsd)
-  )
+  const data = await getCachedDefiProjectPage(slug, manifest, cache)
+  if (!data) return undefined
+
+  const { entry } = data.props
+  const totalValueLockedUsd = entry.liquidStaking
+    ? entry.liquidStaking.totalValueLockedUsd
+    : await getCachedTotalValueLocked(slug, cache)
+  return renderDefiProjectMarkdown(entry, totalValueLockedUsd)
 }
 
 function getCachedDefiProjectPage(

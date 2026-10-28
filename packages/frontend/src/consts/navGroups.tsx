@@ -147,9 +147,9 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
   },
   env.CLIENT_SIDE_DEFI_ENABLED && {
     type: 'single',
-    title: 'DeFi',
+    title: 'Liquid Staking',
     match: 'defi',
-    href: '/defi',
+    href: '/defi/liquid-staking',
     icon: (
       <DefiIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
