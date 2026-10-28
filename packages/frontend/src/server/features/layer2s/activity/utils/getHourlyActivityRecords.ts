@@ -13,7 +13,8 @@ export async function getHourlyActivityRecords(
   options?: {
     /**
      * The only projects whose sync decides the window, however far behind.
-     * All projects with hours by default, leaving out those too far behind
+     * They must have hours. All projects with hours by default, leaving out
+     * those too far behind
      */
     waitFor?: ProjectId[]
   },
@@ -26,19 +27,24 @@ export async function getHourlyActivityRecords(
     'activity',
     options?.waitFor ?? projectIds,
   )
-  // A day early too, so 1D and 7D keep their length while the sync is behind
-  // the day the range ends on
+  const waitedWindow =
+    options?.waitFor &&
+    getHourlyActivityWindow(range, syncMetadata, { waitForAll: true })
+  // Otherwise the window needs the rows first, so read a day early too: 1D
+  // and 7D then keep their length while the sync is behind the day the range
+  // ends on
   const records = await db.hourlyActivity.getByProjectsAndTimeRange(
     projectIds,
-    [range[0] - UnixTime.DAY, range[1]],
+    [waitedWindow?.start ?? range[0] - UnixTime.DAY, range[1]],
   )
   // Projects indexed per day have no hours, so they can't hold the window back
   const withHours = new Set(records.map((r) => r.projectId))
-  const window = getHourlyActivityWindow(
-    range,
-    syncMetadata.filter((m) => withHours.has(ProjectId(m.id))),
-    { waitForAll: options?.waitFor !== undefined },
-  )
+  const window =
+    waitedWindow ??
+    getHourlyActivityWindow(
+      range,
+      syncMetadata.filter((m) => withHours.has(ProjectId(m.id))),
+    )
   const behind = new Set(window.behind.map((p) => p.id))
 
   return {
