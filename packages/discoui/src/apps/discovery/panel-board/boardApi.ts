@@ -78,8 +78,8 @@ export function activateBoard(project: string, boardId: string) {
 }
 
 // A change made in this tab shows at once; other tabs hear of it through
-// the board event.
-function refresh() {
+// the board event, or refresh once their event stream reconnects.
+export function refreshBoards() {
   useBoardUiStore.setState((state) => ({ revision: state.revision + 1 }))
 }
 
@@ -100,7 +100,7 @@ export async function createBoard(
     jsonRequest('POST', body),
   )
   activateBoard(project, board.id)
-  refresh()
+  refreshBoards()
   return board
 }
 
@@ -109,7 +109,7 @@ export async function replaceBoard(id: string, spec: unknown) {
     `/api/boards/${id}`,
     jsonRequest('PUT', { spec }),
   )
-  refresh()
+  refreshBoards()
   return board
 }
 
@@ -118,13 +118,13 @@ export async function saveBoard(id: string): Promise<BoardSummary> {
     `/api/boards/${id}/save`,
     jsonRequest('POST', {}),
   )
-  refresh()
+  refreshBoards()
   return board
 }
 
 export async function closeBoard(id: string) {
   await request(`/api/boards/${id}`, { method: 'DELETE' })
-  refresh()
+  refreshBoards()
 }
 
 export class BoardRequestError extends Error {
