@@ -101,7 +101,8 @@ function ChatHeader() {
       )}
       <div className="flex-1" />
       <SettingsMenu />
-      {!empty && (
+      {/* An agent that hangs while starting is reset from here. */}
+      {(!empty || status === 'starting') && (
         <button
           type="button"
           onClick={() => newChat().catch(reportError)}
