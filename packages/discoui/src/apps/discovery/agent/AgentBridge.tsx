@@ -148,33 +148,39 @@ export function applyStep(step: AgentStep) {
   docking.ensureLeaf('code')
   const code = useCodeStore.getState()
   code.setSourceIndex(step.code.address, step.code.sourceIndex)
-  if (
-    agentRangeAddress !== undefined &&
-    agentRangeAddress !== step.code.address
-  ) {
-    code.showRange(agentRangeAddress, undefined)
+  if (agentRange !== undefined && agentRange.address !== step.code.address) {
+    clearAgentRange()
   }
-  agentRangeAddress = step.code.address
-  code.showRange(step.code.address, {
+  const range = {
     startOffset: step.code.offset,
     length: step.code.length,
     highlightDurationMs: AGENT_HIGHLIGHT_DURATION_MS,
-  })
+  }
+  agentRange = { address: step.code.address, range }
+  code.showRange(step.code.address, range)
 }
 
 // The code panel shows a stored range again whenever its contract opens, so
-// clearing the agent's highlight clears its range too, and only its own.
-let agentRangeAddress: string | undefined
+// clearing the agent's highlight clears its range too, and only its own: a
+// range the researcher opened since in that contract stays.
+let agentRange: { address: string; range: object } | undefined
+
+function clearAgentRange() {
+  const code = useCodeStore.getState()
+  if (agentRange !== undefined) {
+    if (code.ranges[agentRange.address] === agentRange.range) {
+      code.showRange(agentRange.address, undefined)
+    }
+    agentRange = undefined
+  }
+}
 
 function clearCodeHighlight() {
-  const code = useCodeStore.getState()
-  code.editors[CODE_EDITOR_ID]
-    ?.getPlugin(RangeHighlightPlugin)
+  useCodeStore
+    .getState()
+    .editors[CODE_EDITOR_ID]?.getPlugin(RangeHighlightPlugin)
     ?.clearHighlight()
-  if (agentRangeAddress !== undefined) {
-    code.showRange(agentRangeAddress, undefined)
-    agentRangeAddress = undefined
-  }
+  clearAgentRange()
 }
 
 function useAgentKeyboard() {
