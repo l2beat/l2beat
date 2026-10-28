@@ -255,10 +255,10 @@ export const railgun: BaseProject = {
       icon: 'railoxide',
       url: 'https://github.com/triamazikamno/railoxide',
       since: '2026-10-08',
-      version: '0.2.0-beta.8',
+      version: '0.2.0-beta.10',
       source: {
         repository: 'https://github.com/triamazikamno/railoxide',
-        commit: '8773f4ecb00c6ac7cf164ba1f989eb77dd4b0ec5',
+        commit: '7981f35afe8fe5a198a450e0cad66d37f159556e',
       },
       checkedApps: [
         {

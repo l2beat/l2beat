@@ -103,11 +103,11 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        "The default RPCs, Alchemy under 0xbow's key with a public node as fallback, see the account at sign-in and can time it against the withdrawal.",
+        "The default RPCs, led by Alchemy under 0xbow's key, see the account at sign-in and can time it against the withdrawal.",
       exposureContinued:
-        'The app confirms a relayed withdrawal from bulk reads, so no request names it, and the pairing rests on timing, which Tor does not hide. Tor Browser works but cannot reach a local node. The relayer refuses many Tor exits, and the app offers no other relayer.',
+        "Tor does not hide that timing. Tor Browser and the app's Tor option cannot reach a local node, so it also needs a system-wide route.",
       advice:
-        "Set the user's own node, served over https, as the endpoint for the chain before signing in. Withdraw in a new Tor Browser session signed in with the user's account key, so no wallet is connected, and retry on a new circuit when the relayer refuses.",
+        'Route all traffic through Tor or NymVPN and set a local node as the endpoint before signing in. Withdraw signed in with the account key instead of a wallet.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -115,7 +115,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         asset: 'private',
         linkage: {
           verdict: 'atRisk',
-          note: "Private only from the user's own node, with a new Tor Browser session for the exit.",
+          note: 'Private only with a local node and all traffic through Tor or NymVPN.',
         },
       },
       sources: [

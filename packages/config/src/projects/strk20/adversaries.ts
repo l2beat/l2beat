@@ -85,13 +85,12 @@ export const strk20Adversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'warning',
+      sentiment: 'good',
       exposureShort:
-        "Every pool request goes through Starknet Holdings' gateway, so AVNU and StarkWare's discovery service get requests from the gateway, not the user's device.",
+        "Every pool request goes through Starknet Holdings' gateway, so AVNU and StarkWare's discovery service see only the gateway.",
       exposureContinued:
-        'Bramble sends the account and viewing key only to that gateway, which answers over Tor. Bramble is released only for Chromium browsers, so it cannot run in Tor Browser.',
-      advice:
-        'Run Bramble in a Chromium browser whose only route out is a Tor proxy.',
+        'The gateway answers over Tor, and Bramble runs only in Chromium, not in Tor Browser.',
+      advice: 'Run Bramble with all traffic through Tor or NymVPN.',
       interior: {
         sender: 'private',
         recipient: {
@@ -101,11 +100,11 @@ export const strk20Adversaries = definePrivacyAdversaries({
         amount: 'private',
         asset: {
           verdict: 'atRisk',
-          note: 'CoinGecko gets the tokens Bramble tracks, privately held ones included.',
+          note: 'Each private balance check sends CoinGecko every privately held token except STRK.',
         },
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only over Tor, which hides from the network path that the user talks to the gateway.',
+          note: "Private only over Tor or NymVPN and for common tokens, since CoinGecko's requests single out holders of rare ones.",
         },
       },
       sources: [
