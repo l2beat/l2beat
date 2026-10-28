@@ -23,6 +23,7 @@ export function ProjectSummaryBars({
   project: Project
   versions?: ProjectVersionLinks
 }) {
+  const currentVersion = versions?.versions.find((v) => v.isCurrent)
   const latestVersion = versions?.versions.find((v) => v.isLatest)
   const newerVersion = latestVersion?.isCurrent ? undefined : latestVersion
   if (
@@ -45,8 +46,8 @@ export function ProjectSummaryBars({
       )}
       {newerVersion && (
         <Banner type="info" centered asMarkdown>
-          {(project.archivedAt
-            ? 'This version is archived and no longer maintained. '
+          {(currentVersion?.isArchived
+            ?'This version is archived and no longer maintained. '
             : '') +
             `[${newerVersion.name}](${newerVersion.href}) is the latest version.`}
         </Banner>
