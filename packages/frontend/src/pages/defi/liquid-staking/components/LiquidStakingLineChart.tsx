@@ -113,6 +113,7 @@ export function LiquidStakingLineChart({
             />
             <YAxis
               yAxisId="right"
+              hide={!dataKeys.includes(background.key)}
               orientation="right"
               tickFormatter={background.formatAxisLabel}
               tickLine={false}
