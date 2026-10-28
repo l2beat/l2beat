@@ -6,11 +6,7 @@ import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useTRPC } from '~/trpc/React'
-import {
-  type ChartRange,
-  optionToRange,
-  rangeToResolution,
-} from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
 import { EthereumProjectsOnlyCheckbox } from './EthereumProjectsOnlyCheckbox'
 import { getDataWithConfiguredThroughputs } from './getDataWithConfiguredThroughputs'
@@ -20,6 +16,7 @@ import { DaThroughputTimeRangeValues } from './timeRangeValues'
 
 interface Props {
   project: ChartProject
+  defaultRange: ChartRange
   configuredThroughputs: DaLayerThroughput[]
   customColors: Record<string, string> | undefined
   milestones: Milestone[]
@@ -27,13 +24,14 @@ interface Props {
 
 export function ThroughputSectionChart({
   project,
+  defaultRange,
   configuredThroughputs,
   customColors,
   milestones,
 }: Props) {
   const trpc = useTRPC()
   const { includeL2Only, setIncludeL2Only } = useIncludeL2Only()
-  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
+  const [range, setRange] = useState<ChartRange>(defaultRange)
 
   const { data, isLoading } = useQuery(
     trpc.da.projectCharts.queryOptions({

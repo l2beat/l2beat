@@ -6,8 +6,10 @@ import { getDaTvsProjectIds } from '~/server/features/data-availability/summary/
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { toChartProject } from '~/utils/project/toChartProject'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getBlobsPageData(
   manifest: Manifest,
@@ -38,6 +40,46 @@ export async function getBlobsPageData(
   ])
   assert(ethereum, 'Ethereum DA layer not found')
 
+  const tvsProjectIds = getDaTvsProjectIds(
+    daLayers,
+    daBridges,
+    customDaProjects,
+    scalingProjects,
+  )
+  // The charts render on the server only with their data dehydrated under
+  // the inputs of their first browser render.
+  const helpers = getSsrHelpers()
+  const chartRange = optionToRange('1y')
+  const tvsOptions = {
+    range: chartRange,
+    excludeAssociatedTokens: false,
+    excludeRwaRestrictedTokens: true,
+  }
+  await Promise.all([
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.da.projectChart.queryOptions({
+        range: chartRange,
+        projectId: ethereum.id,
+        includeL2Only: false,
+      }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.da.pastDayUsage.queryOptions({ daLayerId: ethereum.id }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.tvs.chart.queryOptions({
+        ...tvsOptions,
+        filter: { type: 'projects', projectIds: tvsProjectIds.fullData },
+      }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.tvs.chart.queryOptions({
+        ...tvsOptions,
+        filter: { type: 'projects', projectIds: tvsProjectIds.settlementOnly },
+      }),
+    ),
+  ])
+
   return {
     head: {
       manifest,
@@ -59,12 +101,9 @@ export async function getBlobsPageData(
           href: ETHEREUM_PROJECT_PATH,
           iconUrl: manifest.getUrl(`/icons/${ethereum.slug}.png`),
         },
-        tvsProjectIds: getDaTvsProjectIds(
-          daLayers,
-          daBridges,
-          customDaProjects,
-          scalingProjects,
-        ),
+        tvsProjectIds,
+        chartRange,
+        queryState: helpers.dehydrate(),
         blobPosters,
         throughput: {
           project: toChartProject(ethereum),

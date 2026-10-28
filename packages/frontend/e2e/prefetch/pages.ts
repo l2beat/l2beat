@@ -18,6 +18,8 @@ export interface DynamicPageToVerify {
  * page should have at least one expected query path; pages without SSR
  * prefetches are not useful for this check.
  */
+// /blobs prefetches too, but its live blob feed keeps the network busy, so
+// the no-refetch check never sees the page go idle.
 export const STATIC_PAGES: PageToVerify[] = [
   page('/', ['interop.dashboard', 'interop.flows']),
   page('/layer2s/summary', [
@@ -48,6 +50,23 @@ export const STATIC_PAGES: PageToVerify[] = [
     'interop.intentBridges',
   ]),
   page('/privacy/summary', ['privacy.flowsChart', 'tvs.chartByProjects']),
+  page('/layer2s/projects/arbitrum', [
+    'tvs.detailedChart',
+    'activity.chart',
+    'costs.projectChart',
+    'da.l2ProjectChart',
+    'liveness.projectChart',
+  ]),
+  page('/projects/ethereum', ['da.projectCharts', 'activity.ethereumChart']),
+  page('/zk-catalog/sp1hypercube', ['tvs.detailedChartWithProjectsRanges']),
+  page('/ecosystems/superchain', ['tvs.chart', 'activity.chart']),
+  page('/publications/monthly-update-2026-08', ['tvs.chart', 'activity.chart']),
+  page('/defi/projects/liquityv2', ['defi.tvlChart']),
+  page('/privacy/projects/privacy-pools', [
+    'tvs.chartByProjects',
+    'privacy.anonymitySetChart',
+    'privacy.flowsChart',
+  ]),
 ]
 
 export const DYNAMIC_PAGES: DynamicPageToVerify[] = []

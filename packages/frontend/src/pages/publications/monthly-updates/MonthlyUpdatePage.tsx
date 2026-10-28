@@ -1,4 +1,5 @@
 import type { UnixTime } from '@l2beat/shared-pure'
+import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -22,9 +23,10 @@ interface Props extends AppLayoutProps {
     ecosystemsUpdatesEntries: EcosystemMonthlyUpdateEntry[]
     upcomingProjectsUpdatesEntries: UpcomingProjectUpdateEntry[]
   }
+  queryState: DehydratedState
 }
 
-export function MonthlyUpdatePage({ entry, ...props }: Props) {
+export function MonthlyUpdatePage({ entry, queryState, ...props }: Props) {
   const sections = [
     ...entry.ecosystemsUpdatesEntries,
     ...entry.upcomingProjectsUpdatesEntries,
@@ -35,52 +37,54 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
   }))
   return (
     <AppLayout {...props}>
-      <SideNavLayout childrenWrapperClassName="md:pt-0">
-        <StickyMobileSectionNavigation
-          sections={sections}
-          className="md:mb-6"
-        />
+      <HydrationBoundary state={queryState}>
+        <SideNavLayout childrenWrapperClassName="md:pt-0">
+          <StickyMobileSectionNavigation
+            sections={sections}
+            className="md:mb-6"
+          />
 
-        <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
-          <MainPageHeader>Publication</MainPageHeader>
-          <PrimaryCard className="row-start-2 md:p-8">
-            <div>
-              <div className="flex items-baseline gap-2">
-                <PublicationTag tag="monthly-update" />
-                <p className="text-brand text-subtitle-12 uppercase">
-                  Published on {entry.publishedOn}
-                </p>
+          <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
+            <MainPageHeader>Publication</MainPageHeader>
+            <PrimaryCard className="row-start-2 md:p-8">
+              <div>
+                <div className="flex items-baseline gap-2">
+                  <PublicationTag tag="monthly-update" />
+                  <p className="text-brand text-subtitle-12 uppercase">
+                    Published on {entry.publishedOn}
+                  </p>
+                </div>
+                <h1 className="mt-2 text-heading-24 md:text-heading-32">
+                  {entry.title}
+                </h1>
               </div>
-              <h1 className="mt-2 text-heading-24 md:text-heading-32">
-                {entry.title}
-              </h1>
-            </div>
-            <HorizontalSeparator className="my-6 md:my-8" />
-            <div className="mt-6 md:mt-8">
-              {entry.ecosystemsUpdatesEntries.map((ecosystem) => (
-                <EcosystemUpdateSection
-                  key={ecosystem.id}
-                  ecosystem={ecosystem}
-                  from={entry.from}
-                  to={entry.to}
-                />
-              ))}
-              {entry.upcomingProjectsUpdatesEntries.map((upcomingProject) => (
-                <UpcomingProjectUpdateSection
-                  key={upcomingProject.id}
-                  upcomingProject={upcomingProject}
-                />
-              ))}
-            </div>
-          </PrimaryCard>
-          <div className="row-start-2 mt-3 hidden shrink-0 lg:block">
-            <div className="sticky top-8 w-full">
-              <SectionNavigation sections={sections} />
+              <HorizontalSeparator className="my-6 md:my-8" />
+              <div className="mt-6 md:mt-8">
+                {entry.ecosystemsUpdatesEntries.map((ecosystem) => (
+                  <EcosystemUpdateSection
+                    key={ecosystem.id}
+                    ecosystem={ecosystem}
+                    from={entry.from}
+                    to={entry.to}
+                  />
+                ))}
+                {entry.upcomingProjectsUpdatesEntries.map((upcomingProject) => (
+                  <UpcomingProjectUpdateSection
+                    key={upcomingProject.id}
+                    upcomingProject={upcomingProject}
+                  />
+                ))}
+              </div>
+            </PrimaryCard>
+            <div className="row-start-2 mt-3 hidden shrink-0 lg:block">
+              <div className="sticky top-8 w-full">
+                <SectionNavigation sections={sections} />
+              </div>
             </div>
           </div>
-        </div>
-        <ScrollToTopButton />
-      </SideNavLayout>
+          <ScrollToTopButton />
+        </SideNavLayout>
+      </HydrationBoundary>
     </AppLayout>
   )
 }

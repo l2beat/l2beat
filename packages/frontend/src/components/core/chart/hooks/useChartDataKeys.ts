@@ -5,22 +5,23 @@ export function useChartDataKeys<T extends ChartMeta>(
   chartMeta: T,
   hiddenDataKeys?: (keyof T)[] | readonly (keyof T)[],
 ) {
-  const [dataKeys, setDataKeys] = useState<(keyof T)[] | null>(null)
-
-  useEffect(() => {
+  const getDefaultDataKeys = () => {
     if (Object.keys(chartMeta).length === 0) {
-      return
+      return null
     }
+    return hiddenDataKeys
+      ? Object.keys(chartMeta).filter((key) => !hiddenDataKeys.includes(key))
+      : Object.keys(chartMeta)
+  }
+  // Known meta sets the keys in the first render, so server-rendered charts
+  // show their series. Meta that arrives later sets them in the effect.
+  const [dataKeys, setDataKeys] = useState<(keyof T)[] | null>(
+    getDefaultDataKeys,
+  )
 
-    setDataKeys((prev) => {
-      if (prev) {
-        return prev
-      }
-
-      return hiddenDataKeys
-        ? Object.keys(chartMeta).filter((key) => !hiddenDataKeys.includes(key))
-        : Object.keys(chartMeta)
-    })
+  // biome-ignore lint/correctness/useExhaustiveDependencies: getDefaultDataKeys reads only the dependencies
+  useEffect(() => {
+    setDataKeys((prev) => prev ?? getDefaultDataKeys())
   }, [chartMeta, hiddenDataKeys])
 
   const allKeys = Object.keys(chartMeta)

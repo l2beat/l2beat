@@ -76,6 +76,7 @@ export async function getEthereumProjectEntry(
         layerGrissiniValues,
         bridgeGrissiniValues,
         interopData,
+        helpers,
       }),
       getDaProjectValidators(ethereum.id, ethereum.daLayer.validators),
     ])

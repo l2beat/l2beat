@@ -65,7 +65,7 @@ async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
   const [appLayoutProps, projectEntry, sectionLinks, versionLinks] =
     await Promise.all([
       getAppLayoutProps(),
-      getZkCatalogProjectEntry(project),
+      getZkCatalogProjectEntry(project, helpers),
       getProjectSectionLinks(slug),
       getProjectVersionLinks(slug, 'zkCatalog'),
     ])

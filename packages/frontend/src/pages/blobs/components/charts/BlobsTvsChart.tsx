@@ -1,6 +1,6 @@
 import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { tvsRangeToReadable } from '~/components/chart/tvs/tvsRangeToReadable'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
@@ -26,7 +26,7 @@ import { ChevronIcon } from '~/icons/Chevron'
 import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import type { ChartRange } from '~/utils/range/range'
 import { getTvsSeriesStats, type TvsSeriesStats } from './getTvsSeriesStats'
 import { mergeTvsSeries, type TvsSeriesPoint } from './mergeTvsSeries'
 
@@ -47,11 +47,16 @@ const chartMeta = {
   },
 } satisfies ChartMeta
 
-export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
+export function BlobsTvsChart({
+  projectIds,
+  range,
+}: {
+  projectIds: DaTvsProjectIds
+  /** Fixed for the life of the page. */
+  range: ChartRange
+}) {
   const trpc = useTRPC()
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
-  // Kept for the life of the page, a new range every render would refetch
-  const [range] = useState(() => optionToRange('1y'))
 
   const options = {
     range,

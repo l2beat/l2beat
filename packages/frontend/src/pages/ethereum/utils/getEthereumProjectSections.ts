@@ -2,6 +2,7 @@ import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectInteropData } from '~/server/features/layer2s/interop/getProjectInteropData'
+import type { SsrHelpers } from '~/trpc/server'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
 import { toChartProject } from '~/utils/project/toChartProject'
@@ -19,11 +20,13 @@ export async function getEthereumProjectSections({
   layerGrissiniValues,
   bridgeGrissiniValues,
   interopData,
+  helpers,
 }: {
   ethereum: EthereumProject
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
   interopData: ProjectInteropData | undefined
+  helpers: SsrHelpers
 }) {
   const riskSummarySection = getDaProjectRiskSummarySection(
     ethereum,
@@ -33,7 +36,25 @@ export async function getEthereumProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
+  const activityRange = optionToRange('1y')
   const throughputSection = await getDaThroughputSection(ethereum)
+  // The charts render on the server only with their data dehydrated under
+  // the inputs of their first browser render.
+  await Promise.all([
+    throughputSection &&
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.da.projectCharts.queryOptions({
+          range: throughputSection.defaultRange,
+          projectId: ethereum.id,
+          includeL2Only: true,
+        }),
+      ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.activity.ethereumChart.queryOptions({
+        range: activityRange,
+      }),
+    ),
+  ])
 
   if (interopData) {
     items.push({
@@ -66,7 +87,7 @@ export async function getEthereumProjectSections({
       id: 'activity',
       title: 'Activity',
       dataSource: undefined,
-      defaultRange: optionToRange('1y'),
+      defaultRange: activityRange,
       project: toChartProject(ethereum),
       milestones: ethereum.milestones ?? [],
     },

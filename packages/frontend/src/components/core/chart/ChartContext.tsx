@@ -27,6 +27,16 @@ type ChartContextProps = {
     onItemClick: (dataKey: string) => void
     disableOnboarding?: boolean
   }
+  /**
+   * Set while the chart is still the SVG the server drew at this size,
+   * before the live chart replaces it.
+   */
+  serverSize?: ChartServerSize
+}
+
+export interface ChartServerSize {
+  width: number
+  height: number
 }
 
 export const ChartContext = React.createContext<ChartContextProps | null>(null)

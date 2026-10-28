@@ -9,6 +9,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { cn } from '~/utils/cn'
+import type { ChartRange } from '~/utils/range/range'
 import { EcosystemsActivityChart } from './components/charts/EcosystemsActivityChart'
 import { EcosystemsProjectsChart } from './components/charts/EcosystemsProjectsChart'
 import { EcosystemsTvsChart } from './components/charts/EcosystemsTvsChart'
@@ -28,11 +29,13 @@ import { EcosystemUpdateLink } from './components/widgets/EcosystemUpdateLink'
 
 interface Props extends AppLayoutProps {
   ecosystem: EcosystemEntry
+  chartRange: ChartRange
   queryState: DehydratedState
 }
 
 export function EcosystemProjectPage({
   ecosystem,
+  chartRange,
   queryState,
   ...props
 }: Props) {
@@ -84,6 +87,7 @@ export function EcosystemProjectPage({
                     entries={ecosystem.liveProjects}
                     allL2ProjectsTvs={ecosystem.allL2Projects.tvs}
                     ecosystemMilestones={ecosystem.ecosystemMilestones}
+                    defaultRange={chartRange}
                     className="col-span-12 md:col-span-6"
                   />
                   <EcosystemsActivityChart
@@ -92,6 +96,7 @@ export function EcosystemProjectPage({
                     entries={ecosystem.liveProjects}
                     allL2ProjectsUops={ecosystem.allL2Projects.uops}
                     ecosystemMilestones={ecosystem.ecosystemMilestones}
+                    defaultRange={chartRange}
                     className="col-span-12 md:col-span-6"
                   />
                   <div className="col-span-12 grid gap-(--ecosystem-spacing) lg:hidden lg:grid-cols-2">

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { useCallback } from 'react'
+import { createContext, useCallback } from 'react'
 import { useIsNearViewport } from '~/hooks/useIsNearViewport'
 import { cn } from '~/utils/cn'
 
@@ -25,6 +25,13 @@ const RESIZE_SETTLE_MS = 200
 // changes, so a fresh one per render would wipe the server markup on any
 // re-render before the section mounts.
 const KEEP_SERVER_MARKUP = { __html: '' }
+
+/**
+ * True inside a section that mounted because it came near the viewport, so
+ * its contents need not wait for the viewport again. Mounting replaces the
+ * server markup, and content that waited would show a placeholder in between.
+ */
+export const MountedNearViewportContext = createContext(false)
 
 /**
  * Keeps the server-rendered markup in place and mounts the React tree only
@@ -68,10 +75,19 @@ export function LazyHydrate({ children, eager = false, className }: Props) {
     [nearViewportRef],
   )
 
-  if (isServer || eager || isNear) {
+  if (isServer || eager) {
     return (
       <div ref={ref} className={wrapperClassName}>
         {children}
+      </div>
+    )
+  }
+  if (isNear) {
+    return (
+      <div ref={ref} className={wrapperClassName}>
+        <MountedNearViewportContext.Provider value={true}>
+          {children}
+        </MountedNearViewportContext.Provider>
       </div>
     )
   }

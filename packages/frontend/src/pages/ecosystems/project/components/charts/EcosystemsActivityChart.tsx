@@ -30,7 +30,6 @@ import type {
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import type { ChartRange } from '~/utils/range/range'
-import { optionToRange } from '~/utils/range/range'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
@@ -52,6 +51,7 @@ export function EcosystemsActivityChart({
   allL2ProjectsUops,
   className,
   ecosystemMilestones,
+  defaultRange,
 }: {
   id: string
   name: string
@@ -59,6 +59,7 @@ export function EcosystemsActivityChart({
   allL2ProjectsUops: number
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
+  defaultRange: ChartRange
 }) {
   const trpc = useTRPC()
   const chartMeta = useMemo(() => {
@@ -83,7 +84,7 @@ export function EcosystemsActivityChart({
     chartMeta,
     hiddenDataKeys,
   )
-  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
+  const [range, setRange] = useState<ChartRange>(defaultRange)
 
   const { data, isLoading } = useQuery(
     trpc.activity.chart.queryOptions({

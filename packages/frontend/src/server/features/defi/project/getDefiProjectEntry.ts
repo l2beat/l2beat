@@ -151,6 +151,14 @@ export async function getDefiProjectEntry(
   }
 
   if (project.defiInfo.tvl !== undefined) {
+    // The chart renders on the server only with its data dehydrated under
+    // the input of its first browser render.
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.defi.tvlChart.queryOptions({
+        projectId: project.id,
+        range: defaultChartRange,
+      }),
+    )
     sections.push({
       type: 'DefiTvlSection',
       props: {

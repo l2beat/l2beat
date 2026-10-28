@@ -1,7 +1,9 @@
+import { useChartDefId } from './chartDefId'
+
 export function NoDataPatternDef() {
   return (
     <pattern
-      id="noDataFill"
+      id={useChartDefId('noDataFill')}
       patternUnits="userSpaceOnUse"
       width="20"
       height="20"

@@ -13,13 +13,14 @@ import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ClockIcon } from '~/icons/Clock'
 import { useTRPC } from '~/trpc/React'
-import { optionToRange } from '~/utils/range/range'
+import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import { THROUGHPUT_DESCRIPTION } from '../sectionCopy'
 import type { ProjectSectionProps } from '../types'
 
 export interface ThroughputSectionProps extends ProjectSectionProps {
   project: ChartProject
+  defaultRange: ChartRange
   throughput: DaLayerThroughput[]
   customColors: Record<string, string> | undefined
   syncStatus: {
@@ -31,6 +32,7 @@ export interface ThroughputSectionProps extends ProjectSectionProps {
 
 export function ThroughputSection({
   project,
+  defaultRange,
   throughput,
   customColors,
   syncStatus,
@@ -54,12 +56,17 @@ export function ThroughputSection({
         <HorizontalSeparator className="my-4" />
         <ThroughputSectionChart
           project={project}
+          defaultRange={defaultRange}
           configuredThroughputs={throughput}
           customColors={customColors}
           milestones={milestones}
         />
         <HorizontalSeparator className="my-4" />
-        <ThroughputChartStats projectId={project.id} syncStatus={syncStatus} />
+        <ThroughputChartStats
+          projectId={project.id}
+          range={defaultRange}
+          syncStatus={syncStatus}
+        />
       </IncludeL2OnlyProvider>
     </ProjectSection>
   )
@@ -67,9 +74,11 @@ export function ThroughputSection({
 
 function ThroughputChartStats({
   projectId,
+  range,
   syncStatus,
 }: {
   projectId: ProjectId
+  range: ChartRange
   syncStatus: {
     warning: string | undefined
     isSynced: boolean
@@ -79,7 +88,7 @@ function ThroughputChartStats({
   const { includeL2Only } = useIncludeL2Only()
   const { data, isLoading } = useQuery(
     trpc.da.projectCharts.queryOptions({
-      range: optionToRange('1y'),
+      range,
       projectId,
       includeL2Only,
     }),

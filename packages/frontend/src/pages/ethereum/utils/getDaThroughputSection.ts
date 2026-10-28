@@ -12,7 +12,8 @@ export async function getDaThroughputSection(
   if (!configuredThroughput || configuredThroughput.length === 0)
     return undefined
 
-  const [rangeStart] = optionToRange('1y')
+  const defaultRange = optionToRange('1y')
+  const [rangeStart] = defaultRange
   const [syncedUntil, projectsWithColors] = await Promise.all([
     getL2OnlyThroughputSyncedUntil(project),
     ps.getProjects({ select: ['colors'] }),
@@ -27,6 +28,7 @@ export async function getDaThroughputSection(
 
   return {
     project: toChartProject(project),
+    defaultRange,
     throughput: project.daLayer.throughput ?? [],
     syncStatus: {
       warning: syncWarning,

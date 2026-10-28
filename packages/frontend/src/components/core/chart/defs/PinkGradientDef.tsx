@@ -1,6 +1,9 @@
+import { useChartDefId } from './chartDefId'
+
 export function PinkFillGradientDef({ id }: { id: string }) {
+  const scopedId = useChartDefId(id)
   return (
-    <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id={scopedId} x1="0" y1="0" x2="0" y2="1">
       <stop
         offset="25%"
         stopColor="var(--chart-pink-fill-gradient)"
@@ -21,9 +24,10 @@ export function PinkFillGradientDef({ id }: { id: string }) {
 }
 
 export function PinkStrokeGradientDef({ id }: { id: string }) {
+  const scopedId = useChartDefId(id)
   return (
     <linearGradient
-      id={id}
+      id={scopedId}
       x1="0"
       y1="0"
       x2="100%"

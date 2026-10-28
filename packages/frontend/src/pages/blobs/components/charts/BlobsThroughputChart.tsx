@@ -9,7 +9,7 @@ import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useTRPC } from '~/trpc/React'
-import { optionToRange, rangeToResolution } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 
 export interface BlobsThroughputChartProps {
   project: ChartProject
@@ -17,6 +17,8 @@ export interface BlobsThroughputChartProps {
   milestones: Milestone[]
   /** By project name */
   customColors: Record<string, string>
+  /** Fixed for the life of the page. */
+  range: ChartRange
 }
 
 type View = 'total' | 'per-project'
@@ -26,11 +28,10 @@ export function BlobsThroughputChart({
   configuredThroughputs,
   milestones,
   customColors,
+  range,
 }: BlobsThroughputChartProps) {
   const trpc = useTRPC()
   const [view, setView] = useState<View>('total')
-  // Kept for the life of the page, a new range every render would refetch
-  const [range] = useState(() => optionToRange('1y'))
   const resolution = useMemo(() => rangeToResolution(range), [range])
 
   const params = {

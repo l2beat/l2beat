@@ -7,6 +7,7 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { manifest } from '~/utils/Manifest'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
@@ -58,6 +59,7 @@ export async function getZkCatalogProjectEntry(
     'display' | 'zkCatalogInfo' | 'statuses',
     'archivedAt' | 'milestones' | 'tvsInfo'
   >,
+  helpers: SsrHelpers,
 ): Promise<ProjectZkCatalogEntry> {
   const [allProjects, allProjectsWithContracts, tvs, contractUtils] =
     await Promise.all([
@@ -122,6 +124,16 @@ export async function getZkCatalogProjectEntry(
 
   const zkCatalogTvsSection = getZkCatalogTvsSection(project, allProjects)
   if (zkCatalogTvsSection) {
+    // The chart renders on the server only with its data dehydrated under
+    // the input of its first browser render.
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
+        projects: zkCatalogTvsSection.projectsForTvs,
+        range: zkCatalogTvsSection.defaultRange,
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: true,
+      }),
+    )
     sections.push({
       type: 'ZkCatalogTvsSection',
       props: {

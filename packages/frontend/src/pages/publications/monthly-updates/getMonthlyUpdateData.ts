@@ -5,6 +5,7 @@ import { getArticleStructuredData } from '~/pages/publications/utils/getArticleS
 import { getMonthlyUpdateEntry } from '~/server/features/monthly-reports/getMonthlyUpdateEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getMonthlyUpdateData(
@@ -13,17 +14,18 @@ export async function getMonthlyUpdateData(
   url: string,
   cache: InMemoryCache,
 ): Promise<RenderData> {
-  const [appLayoutProps, monthlyUpdateEntry] = await Promise.all([
-    getAppLayoutProps(),
-    cache.get(
-      {
-        key: ['monthly-updates', 'data', monthlyUpdate.id],
-        ttl: UnixTime.HOUR,
-        staleWhileRevalidate: UnixTime.HOUR,
-      },
-      () => getMonthlyUpdateEntry(monthlyUpdate),
-    ),
-  ])
+  const [appLayoutProps, { entry: monthlyUpdateEntry, queryState }] =
+    await Promise.all([
+      getAppLayoutProps(),
+      cache.get(
+        {
+          key: ['monthly-updates', 'data', monthlyUpdate.id],
+          ttl: UnixTime.HOUR,
+          staleWhileRevalidate: UnixTime.HOUR,
+        },
+        () => loadMonthlyUpdate(monthlyUpdate),
+      ),
+    ])
 
   return {
     head: {
@@ -51,7 +53,37 @@ export async function getMonthlyUpdateData(
       props: {
         ...appLayoutProps,
         entry: monthlyUpdateEntry,
+        queryState,
       },
     },
   }
+}
+
+async function loadMonthlyUpdate(
+  monthlyUpdate: CollectionEntry<'monthly-updates'>,
+) {
+  const entry = await getMonthlyUpdateEntry(monthlyUpdate)
+  // The charts render on the server only with their data dehydrated under
+  // the inputs of their first browser render.
+  const helpers = getSsrHelpers()
+  const range: [UnixTime, UnixTime] = [entry.from, entry.to]
+  await Promise.all(
+    entry.ecosystemsUpdatesEntries.flatMap((ecosystem) => [
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.tvs.chart.queryOptions({
+          range,
+          excludeAssociatedTokens: false,
+          excludeRwaRestrictedTokens: true,
+          filter: { type: 'projects', projectIds: ecosystem.projects },
+        }),
+      ),
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.activity.chart.queryOptions({
+          range,
+          filter: { type: 'projects', projectIds: ecosystem.projects },
+        }),
+      ),
+    ]),
+  )
+  return { entry, queryState: helpers.dehydrate() }
 }

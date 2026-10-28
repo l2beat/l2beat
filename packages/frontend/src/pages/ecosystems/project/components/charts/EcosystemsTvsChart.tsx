@@ -30,7 +30,6 @@ import type {
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import type { ChartRange } from '~/utils/range/range'
-import { optionToRange } from '~/utils/range/range'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
@@ -46,6 +45,7 @@ export function EcosystemsTvsChart({
   allL2ProjectsTvs,
   className,
   ecosystemMilestones,
+  defaultRange,
 }: {
   id: string
   name: string
@@ -53,10 +53,11 @@ export function EcosystemsTvsChart({
   allL2ProjectsTvs: EcosystemEntry['allL2Projects']['tvs']
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
+  defaultRange: ChartRange
 }) {
   const trpc = useTRPC()
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
+  const [range, setRange] = useState<ChartRange>(defaultRange)
   const {
     display: { excludeRwaRestrictedTokens },
   } = useEcosystemDisplayControlsContext()

@@ -2,8 +2,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import {
   areaY,
   type ChartCurve,
+  type ChartDefinition,
   type ChartMark,
   type ChartScene,
+  createChartRuntime,
   defineChart,
   dot,
   type InferableScaleLike,
@@ -16,11 +18,14 @@ import { d3Curve } from '@tanstack/charts/d3/shape'
 import { decorative } from '@tanstack/charts/mark/decorative'
 import { Chart } from '@tanstack/charts/react'
 import { scaleLinear } from '@tanstack/charts/scales/linear'
+import { renderChartSvg } from '@tanstack/charts/svg'
 import { curveMonotoneX, curveStep, curveStepAfter } from 'd3-shape'
-import { type ReactNode, useMemo, useRef } from 'react'
+import { type ReactNode, useId, useMemo, useRef, useState } from 'react'
 import { cn } from '~/utils/cn'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
+import { type ChartServerSize, useChart } from './ChartContext'
 import { ChartHoverOverlay } from './ChartHoverOverlay'
+import { ChartDefIdPrefix, scopePaint } from './defs/chartDefId'
 import { NoDataPatternDef } from './defs/NoDataPatternDef'
 import { getTickCondition, getTickFormatter } from './utils/xAxisTicks'
 
@@ -186,6 +191,11 @@ export function TimeSeriesChart<T, K extends string>({
     ...(referenceAreas ?? []),
   ]
 
+  const { serverSize } = useChart()
+  const defIdPrefix = useId()
+  const scoped = <P extends string | undefined>(paint: P) =>
+    scopePaint(paint, defIdPrefix)
+
   // The hover overlay maps rows to pixels with the last rendered scales.
   const sceneRef = useRef<ChartScene | null>(null)
 
@@ -256,7 +266,7 @@ export function TimeSeriesChart<T, K extends string>({
               y1: (p) =>
                 p.top[s.key] === null ? null : (p.bottom[s.key] ?? base),
               y2: top,
-              fill: s.fill,
+              fill: scoped(s.fill),
               fillOpacity: s.fillOpacity ?? 1,
               curve,
               yScale: scaleOf(s),
@@ -271,7 +281,7 @@ export function TimeSeriesChart<T, K extends string>({
               id: `${s.key}-stroke`,
               x: getX,
               y: top,
-              stroke: s.stroke,
+              stroke: scoped(s.stroke),
               strokeWidth: s.strokeWidth ?? SERIES_STROKE_WIDTH,
               strokeOpacity: s.strokeOpacity,
               strokeDasharray: s.strokeDasharray,
@@ -302,7 +312,7 @@ export function TimeSeriesChart<T, K extends string>({
             x2: 'x2',
             y1: 'y1',
             y2: 'y2',
-            fill: area.fill,
+            fill: scoped(area.fill),
             fillOpacity: area.fillOpacity,
             key: () => `reference-area-${i}`,
           },
@@ -319,9 +329,9 @@ export function TimeSeriesChart<T, K extends string>({
             x: 'x',
             y: 'y',
             r: d.r,
-            fill: d.fill,
+            fill: scoped(d.fill),
             fillOpacity: d.fillOpacity,
-            stroke: d.stroke,
+            stroke: scoped(d.stroke),
             strokeWidth: d.strokeWidth,
             yScale,
           }),
@@ -442,37 +452,139 @@ export function TimeSeriesChart<T, K extends string>({
         className="pointer-events-none absolute inset-0 size-full"
       >
         <defs>
-          {defs}
-          {lastSyncedX !== undefined && <NoDataPatternDef />}
+          <ChartDefIdPrefix.Provider value={defIdPrefix}>
+            {defs}
+            {lastSyncedX !== undefined && <NoDataPatternDef />}
+          </ChartDefIdPrefix.Provider>
         </defs>
       </svg>
-      <Chart
-        definition={definition}
-        ariaLabel={ariaLabel}
-        className={chartClassNames}
-        style={{ width: 'auto', height: 'auto' }}
-        tabIndex={-1}
-        onRender={({ scene }) => {
-          sceneRef.current = scene
-        }}
-      />
-      <ChartHoverOverlay
-        rows={rows}
-        x={x}
-        dots={visible
-          .filter((s) => s.activeDot !== false)
-          .map((s) => ({
-            key: s.key,
-            value: (_row: T, index: number) => plotted[index]?.top[s.key],
-            scale: s.axis === 'right' && rightAxis ? RIGHT_SCALE : Y_SCALE,
-          }))}
-        sceneRef={sceneRef}
-        ariaLabel={ariaLabel}
-        syncId={syncId}
-        renderTooltip={(row) => renderTooltip(row, visibleKeys)}
-      />
+      {serverSize ? (
+        <ServerChart
+          definition={definition}
+          ariaLabel={ariaLabel}
+          size={serverSize}
+        />
+      ) : (
+        <>
+          <Chart
+            definition={definition}
+            ariaLabel={ariaLabel}
+            className={chartClassNames}
+            style={{ width: 'auto', height: 'auto' }}
+            tabIndex={-1}
+            onRender={({ scene }) => {
+              sceneRef.current = scene
+            }}
+          />
+          <ChartHoverOverlay
+            rows={rows}
+            x={x}
+            dots={visible
+              .filter((s) => s.activeDot !== false)
+              .map((s) => ({
+                key: s.key,
+                value: (_row: T, index: number) => plotted[index]?.top[s.key],
+                scale: s.axis === 'right' && rightAxis ? RIGHT_SCALE : Y_SCALE,
+              }))}
+            sceneRef={sceneRef}
+            ariaLabel={ariaLabel}
+            syncId={syncId}
+            renderTooltip={(row) => renderTooltip(row, visibleKeys)}
+          />
+        </>
+      )}
     </>
   )
+}
+
+/**
+ * The SVG the server drew, left as it is through hydration. Hydrating
+ * `<Chart>` would build every chart again during hydration, including the
+ * copies a breakpoint hides.
+ */
+function ServerChart<TDatum>({
+  definition,
+  ariaLabel,
+  size,
+}: {
+  definition: ChartDefinition<TDatum, number, number>
+  ariaLabel: string
+  size: ChartServerSize
+}) {
+  const id = useId()
+  // React sets the HTML whenever this object changes, so it is created once,
+  // and in the browser it holds the server's SVG rather than a new drawing.
+  const [html] = useState(() => ({
+    __html:
+      typeof window === 'undefined'
+        ? renderServerSvg(definition, ariaLabel, size, id)
+        : (document.getElementById(id)?.innerHTML ?? ''),
+  }))
+  return (
+    <div
+      id={id}
+      className={cn(
+        chartClassNames,
+        '[&_line]:[vector-effect:non-scaling-stroke]',
+      )}
+      dangerouslySetInnerHTML={html}
+    />
+  )
+}
+
+function renderServerSvg<TDatum>(
+  definition: ChartDefinition<TDatum, number, number>,
+  ariaLabel: string,
+  size: ChartServerSize,
+  id: string,
+) {
+  const runtime = createChartRuntime()
+  const scene = runtime.render(definition, size)
+  const idPrefix = `ts-server-chart-${id.replaceAll(/[^a-zA-Z0-9_-]/g, '')}`
+  const svg = renderChartSvg(scene, { ariaLabel, tabIndex: -1, idPrefix })
+  runtime.destroy()
+  return fitToBox(trimPathPrecision(svg), size)
+}
+
+/**
+ * Fills any box the way the live chart will. A viewBox scales evenly, so in
+ * a box of another width the chart would shrink, leave gaps above and below,
+ * and jump to full height when the live chart replaced it. Instead the plot
+ * stretches (its strokes keep their width) and the labels move to an
+ * unscaled layer at the same relative positions.
+ */
+function fitToBox(svg: string, size: ChartServerSize) {
+  const labelsStart = svg.lastIndexOf('<g data-ts-key="axes"')
+  const end = svg.lastIndexOf('</svg>')
+  if (labelsStart === -1 || end < labelsStart) return svg
+  const plot = svg
+    .slice(0, labelsStart)
+    .replace('<svg ', '<svg preserveAspectRatio="none" ')
+  const labels = svg.slice(labelsStart, end).replace(/<text [^>]*>/g, (tag) =>
+    tag.replace(/ x="([\d.-]+)" y="([\d.-]+)"/, (_, x: string, y: string) => {
+      const top = percent(Number(y) / size.height)
+      // Y-axis labels sit a fixed distance in from their edge.
+      if (tag.includes('text-anchor="start"')) return ` x="${x}" y="${top}"`
+      if (tag.includes('text-anchor="end"')) {
+        return ` x="100%" dx="${Number(x) - size.width}" y="${top}"`
+      }
+      return ` x="${percent(Number(x) / size.width)}" y="${top}"`
+    }),
+  )
+  return `${plot}</svg><svg aria-hidden="true" width="100%" height="100%" style="position:absolute;inset:0;overflow:visible">${labels}</svg>`
+}
+
+function percent(fraction: number) {
+  return `${Number((fraction * 100).toFixed(2))}%`
+}
+
+/**
+ * Path coordinates come with two decimals. A tenth of a pixel is invisible,
+ * and paths are most of the bytes every server-rendered chart adds to the
+ * page's HTML.
+ */
+function trimPathPrecision(svg: string) {
+  return svg.replace(/ d="[^"]*"/g, (path) => path.replace(/(\.\d)\d+/g, '$1'))
 }
 
 export function ChartTooltipWrapper({ children }: { children: ReactNode }) {

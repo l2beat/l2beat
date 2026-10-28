@@ -1,10 +1,17 @@
 import type { Milestone } from '@l2beat/config'
 import type * as React from 'react'
+import { useContext, useState, useSyncExternalStore } from 'react'
+import { MountedNearViewportContext } from '~/components/LazyHydrate'
 import { Logo } from '~/components/Logo'
 import { useIsNearViewport } from '~/hooks/useIsNearViewport'
 import { cn } from '~/utils/cn'
 import { ignorePointerWhileScrollingClassName } from '~/utils/scrollActivity'
-import { ChartContext, type ChartMeta, type ChartProject } from './ChartContext'
+import {
+  ChartContext,
+  type ChartMeta,
+  type ChartProject,
+  type ChartServerSize,
+} from './ChartContext'
 import { ChartLegend } from './ChartLegend'
 import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
 import { ChartLoader } from './ChartLoader'
@@ -16,8 +23,9 @@ import { ChartSettledSize } from './ChartSettledSize'
 
 /**
  * The frame around a chart: sizing, settled resizing, the loader and empty
- * states, logos, milestones and the legend under the chart. The chart itself
- * mounts only near the viewport.
+ * states, logos, milestones and the legend under the chart. The live chart
+ * mounts only near the viewport; until then a chart whose data was in the
+ * server render shows the SVG the server drew.
  */
 export function ChartContainer<T extends { timestamp: number }>({
   children,
@@ -56,10 +64,19 @@ export function ChartContainer<T extends { timestamp: number }>({
   className?: string
 }) {
   // Building a chart blocks the main thread, so build each one only when it
-  // is about to be seen.
-  const [ref, shouldMountChart] = useIsNearViewport()
+  // is about to be seen, as it is in a section mounted near the viewport.
+  const [ref, isNearViewport] = useIsNearViewport()
+  const isInMountedSection = useContext(MountedNearViewportContext)
+  const shouldMountChart = isNearViewport || isInMountedSection
 
   const hasData = data && data.length > 1
+
+  // Decided once: a chart first rendered in the browser (e.g. in a tab opened
+  // later) has no server markup to show.
+  const isHydrating = useIsHydrating()
+  const [hasServerChart] = useState(isHydrating && !isLoading && !!hasData)
+  const showsServerChart = hasServerChart && !shouldMountChart
+  const showsChart = shouldMountChart || showsServerChart
 
   const metaKeys = Object.keys(meta)
   // An empty chart has no sources to deselect.
@@ -70,7 +87,13 @@ export function ChartContainer<T extends { timestamp: number }>({
     )
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
-    <ChartContext.Provider value={{ meta, interactiveLegend }}>
+    <ChartContext.Provider
+      value={{
+        meta,
+        interactiveLegend,
+        serverSize: showsServerChart ? getServerSize(size, legend) : undefined,
+      }}
+    >
       <div ref={ref} className="group relative">
         <ChartSettledSize
           className={cn(
@@ -89,14 +112,12 @@ export function ChartContainer<T extends { timestamp: number }>({
                 noDataSourcesSelected && '[&_[data-chart-tooltip]]:hidden',
               )}
             >
-              {shouldMountChart ? children : null}
+              {showsChart ? children : null}
             </div>
-            {legend && shouldMountChart && (
-              <ChartLegend leading={legendLeading} />
-            )}
+            {legend && showsChart && <ChartLegend leading={legendLeading} />}
           </div>
         </ChartSettledSize>
-        {(!!isLoading || !shouldMountChart) && (
+        {(!!isLoading || !showsChart) && (
           <ChartLoader
             animated={shouldMountChart && !!isLoading}
             className={cn(
@@ -106,15 +127,13 @@ export function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {!hasData &&
-          !isLoading &&
-          !(noDataSourcesSelected && shouldMountChart) && (
-            <ChartNoDataState size={size} />
-          )}
-        {noDataSourcesSelected && !isLoading && shouldMountChart && (
+        {!hasData && !isLoading && !(noDataSourcesSelected && showsChart) && (
+          <ChartNoDataState size={size} />
+        )}
+        {noDataSourcesSelected && !isLoading && showsChart && (
           <ChartNoDataSourceState message={noDataSourceMessage} />
         )}
-        {shouldMountChart && size !== 'small' && (
+        {showsChart && size !== 'small' && (
           <Logo
             animated={false}
             className={cn(
@@ -128,7 +147,7 @@ export function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {shouldMountChart && size !== 'small' && project && (
+        {showsChart && size !== 'small' && project && (
           <ChartProjectLogo
             project={project}
             className={cn(
@@ -146,5 +165,33 @@ export function ChartContainer<T extends { timestamp: number }>({
         )}
       </div>
     </ChartContext.Provider>
+  )
+}
+
+const LEGEND_HEIGHT = 18
+
+/**
+ * The plot in a 390px-wide window. One HTML serves every device (pages are
+ * cached by URL alone), and the server's SVG stretches to the box the chart
+ * really gets: exact on phones, which wait longest for the live chart, and
+ * drawn narrow, so its axis labels cannot crowd in a wider box.
+ */
+function getServerSize(
+  size: 'regular' | 'small',
+  legend: boolean,
+): ChartServerSize {
+  const legendHeight = legend ? LEGEND_HEIGHT : 0
+  const height = size === 'small' ? 114 : 188
+  return { width: 358, height: height - legendHeight }
+}
+
+const subscribeToNothing = () => () => {}
+
+/** True on the server and while React hydrates its HTML. */
+function useIsHydrating() {
+  return useSyncExternalStore(
+    subscribeToNothing,
+    () => false,
+    () => true,
   )
 }

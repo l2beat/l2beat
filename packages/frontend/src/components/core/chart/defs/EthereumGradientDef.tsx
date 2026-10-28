@@ -1,6 +1,9 @@
+import { useChartDefId } from './chartDefId'
+
 export function EthereumFillGradientDef({ id }: { id: string }) {
+  const scopedId = useChartDefId(id)
   return (
-    <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id={scopedId} x1="0" y1="0" x2="0" y2="1">
       <stop
         offset="25%"
         stopColor="var(--chart-ethereum-fill-gradient)"
@@ -21,8 +24,9 @@ export function EthereumFillGradientDef({ id }: { id: string }) {
 }
 
 export function EthereumStrokeGradientDef({ id }: { id: string }) {
+  const scopedId = useChartDefId(id)
   return (
-    <linearGradient id={id} x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id={scopedId} x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stopColor="var(--chart-ethereum-stroke-gradient-1)" />
       <stop offset="100%" stopColor="var(--chart-ethereum-stroke-gradient-2)" />
     </linearGradient>

@@ -74,6 +74,7 @@ import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarnin
 import { getL2DaSolutions } from './getL2DaSolutions'
 import type { L2Rosette } from './getL2RosetteValues'
 import { getL2Rosette } from './getL2RosetteValues'
+import { prefetchL2ProjectCharts } from './prefetchL2ProjectCharts'
 
 export interface ProjectL2Entry {
   id: ProjectId
@@ -794,6 +795,14 @@ export async function getL2ProjectEntry(
       },
     })
   }
+
+  await prefetchL2ProjectCharts(helpers, project.id, {
+    tvs: l2TvsSection,
+    activity: activitySection,
+    costs: costsSection,
+    dataPosted: dataPostedSection,
+    liveness: livenessSection,
+  })
 
   return { ...common, sections }
 }

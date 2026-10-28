@@ -1,3 +1,4 @@
+import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
@@ -5,6 +6,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChartTabs } from '~/pages/layer2s/summary/components/ChartTabs'
 import type { BlobPoster } from '~/server/features/data-availability/live-blobs/getBlobPosters'
 import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
+import type { ChartRange } from '~/utils/range/range'
 import {
   BlobsThroughputChart,
   type BlobsThroughputChartProps,
@@ -17,8 +19,10 @@ import { useBlockLimits } from './components/live-blobs/useBlockLimits'
 interface Props extends AppLayoutProps {
   ethereum: EthereumLink
   tvsProjectIds: DaTvsProjectIds
-  throughput: BlobsThroughputChartProps
+  throughput: Omit<BlobsThroughputChartProps, 'range'>
   blobPosters: BlobPoster[]
+  chartRange: ChartRange
+  queryState: DehydratedState
 }
 
 export function BlobsPage({
@@ -26,43 +30,51 @@ export function BlobsPage({
   tvsProjectIds,
   throughput,
   blobPosters,
+  chartRange,
+  queryState,
   ...props
 }: Props) {
-  const tvsChart = <BlobsTvsChart projectIds={tvsProjectIds} />
-  const throughputChart = <BlobsThroughputChart {...throughput} />
+  const tvsChart = (
+    <BlobsTvsChart projectIds={tvsProjectIds} range={chartRange} />
+  )
+  const throughputChart = (
+    <BlobsThroughputChart {...throughput} range={chartRange} />
+  )
   const limits = useBlockLimits(throughput.configuredThroughputs)
 
   return (
     <AppLayout {...props}>
-      <SideNavLayout>
-        <MainPageHeader>Blobs</MainPageHeader>
-        {/* On mobile the sections run edge to edge, split by a line */}
-        <div className="flex flex-col md:gap-4 [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
-          {/* The cards share their rows, so both charts start level however
+      <HydrationBoundary state={queryState}>
+        <SideNavLayout>
+          <MainPageHeader>Blobs</MainPageHeader>
+          {/* On mobile the sections run edge to edge, split by a line */}
+          <div className="flex flex-col md:gap-4 [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
+            {/* The cards share their rows, so both charts start level however
               tall either header is. Each card's one column may shrink below
               its chart, or a chart drawn wider holds the card at that width
               when the window narrows */}
-          <div className="grid grid-cols-2 gap-4 max-lg:hidden">
-            <PrimaryCard className="row-span-2 grid grid-cols-1 grid-rows-subgrid">
-              {tvsChart}
-            </PrimaryCard>
-            <PrimaryCard className="row-span-2 grid grid-cols-1 grid-rows-subgrid">
-              {throughputChart}
-            </PrimaryCard>
-          </div>
-          {/* Phones open on what the page is about, the value it secures
+            <div className="grid grid-cols-2 gap-4 max-lg:hidden">
+              <PrimaryCard className="row-span-2 grid grid-cols-1 grid-rows-subgrid">
+                {tvsChart}
+              </PrimaryCard>
+              <PrimaryCard className="row-span-2 grid grid-cols-1 grid-rows-subgrid">
+                {throughputChart}
+              </PrimaryCard>
+            </div>
+            {/* Phones open on what the page is about, the value it secures
               one swipe away */}
-          <ChartTabs
-            className="lg:hidden"
-            charts={[throughputChart, tvsChart]}
-          />
-          <LiveBlobsCard
-            projects={blobPosters}
-            limits={limits}
-            ethereum={ethereum}
-          />
-        </div>
-      </SideNavLayout>
+            <ChartTabs
+              className="lg:hidden"
+              charts={[throughputChart, tvsChart]}
+            />
+            <LiveBlobsCard
+              projects={blobPosters}
+              limits={limits}
+              ethereum={ethereum}
+            />
+          </div>
+        </SideNavLayout>
+      </HydrationBoundary>
     </AppLayout>
   )
 }

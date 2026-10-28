@@ -171,6 +171,32 @@ export async function getPrivacyProjectEntry(
     iconUrl: icon,
   }
 
+  // The charts render on the server only with their data dehydrated under
+  // the inputs of their first browser render.
+  await Promise.all([
+    details.hasTvl &&
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.tvs.chartByProjects.queryOptions({
+          projectIds: [chartProject.id],
+          range: defaultChartRange,
+        }),
+      ),
+    details.anonymitySetType !== undefined &&
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.privacy.anonymitySetChart.queryOptions({
+          projectId: chartProject.id,
+          range: defaultChartRange,
+        }),
+      ),
+    hasTrackedAssets &&
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.privacy.flowsChart.queryOptions({
+          projectIds: [chartProject.id],
+          range: defaultChartRange,
+        }),
+      ),
+  ])
+
   if (details.hasTvl) {
     sections.push({
       type: 'TvsValueSection',
