@@ -1,13 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import fuzzysort from 'fuzzysort'
-import {
-  createRef,
-  useDeferredValue,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { getProjects } from '../../api/api'
 import type { ApiProjectEntry } from '../../api/types'
@@ -18,6 +11,13 @@ import { IconPlus } from '../../icons/IconPlus'
 import { IconStarEmpty } from '../../icons/IconStarEmpty'
 import { IconStarFull } from '../../icons/IconStarFull'
 import { cn } from '../../utils/cn'
+import {
+  buildHomeSections,
+  CATEGORY_TITLES,
+  type GridKey,
+  type HomeSection,
+  moveInSections,
+} from './homeSections'
 
 export function HomePage() {
   const [search, setSearch] = useState('')
@@ -70,151 +70,40 @@ function AllProjects(props: { search: string }) {
   })
   const [favorites, setFavorites] = useState<string[]>(readFavorites)
   const [selectedIndex, setSelectedIndex] = useState<number>(0)
-  const navigate = useNavigate()
-
-  // Create refs for favorites and projects lists
-  const projectsRefs = useRef<Array<React.RefObject<HTMLLIElement>>>([])
-
-  // Get window width to determine column count
-  const [columnCount, setColumnCount] = useState<number>(
-    window.innerWidth >= 768 ? 4 : 2,
-  )
-
-  useEffect(() => {
-    const handleResize = () => {
-      setColumnCount(window.innerWidth >= 768 ? 4 : 2)
-    }
-
-    window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
+  const columnCount = useColumnCount()
+  const itemRefs = useRef<(HTMLLIElement | null)[]>([])
 
   useEffect(() => {
     writeFavorites(favorites)
   }, [favorites])
 
-  // Reset selection when search changes
   useEffect(() => {
     setSelectedIndex(0)
   }, [props.search, result.isSuccess, result.data])
 
-  // Scroll selected item into view when selection changes
   useEffect(() => {
-    if (selectedIndex >= 0) {
-      const projects = projectsRefs.current
-
-      if (projects[selectedIndex] && projects[selectedIndex].current) {
-        projects[selectedIndex].current?.scrollIntoView({
-          behavior: 'instant',
-          block: 'center',
-        })
-      }
-    }
+    itemRefs.current[selectedIndex]?.scrollIntoView({
+      behavior: 'instant',
+      block: 'center',
+    })
   }, [selectedIndex, columnCount])
 
   const filtered = useFilteredProjects(result.data, props.search)
+  const sections = useMemo(
+    () => buildHomeSections(filtered, favorites, props.search.trim() !== ''),
+    [filtered, favorites, props.search],
+  )
 
-  const { favoriteList, otherList } = useMemo(() => {
-    const favoriteList = filtered.filter((x) => favorites.includes(x.name))
-    const otherList = filtered.filter((x) => !favorites.includes(x.name))
-
-    return { favoriteList, otherList }
-  }, [filtered, favorites])
-
-  useEffect(() => {
-    projectsRefs.current = Array(filtered.length)
-      .fill(null)
-      .map((_, i) => projectsRefs.current[i] || createRef<HTMLLIElement>())
-      .filter(
-        (ref): ref is React.RefObject<HTMLLIElement> => ref !== undefined,
-      ) as Array<React.RefObject<HTMLLIElement>> // Add type assertion here
-  }, [filtered])
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const breakIndex = favoriteList.length
-
-      switch (e.key) {
-        case 'ArrowDown': {
-          e.preventDefault()
-
-          let nextIndex = selectedIndex + columnCount
-          // are we in the favorites section and about to cross into the non-fav block?
-          if (selectedIndex < breakIndex && nextIndex >= breakIndex) {
-            nextIndex = breakIndex + (selectedIndex % columnCount)
-          }
-
-          setSelectedIndex(Math.min(nextIndex, filtered.length - 1))
-          break
-        }
-
-        case 'ArrowUp': {
-          e.preventDefault()
-
-          let nextIndex = selectedIndex - columnCount
-
-          // are we in the projects section and about to cross into the favorites block?
-          if (selectedIndex >= breakIndex && nextIndex < breakIndex) {
-            const col = (selectedIndex - breakIndex) % columnCount
-            const columnsInLastRow = breakIndex % columnCount
-            const toRemove = col - columnsInLastRow
-
-            nextIndex =
-              breakIndex + (toRemove < 0 ? toRemove : toRemove - columnCount)
-          }
-
-          setSelectedIndex(Math.max(nextIndex, 0))
-          break
-        }
-
-        case 'ArrowRight': {
-          e.preventDefault()
-
-          setSelectedIndex(Math.min(selectedIndex + 1, filtered.length - 1))
-          break
-        }
-
-        case 'ArrowLeft': {
-          e.preventDefault()
-
-          setSelectedIndex(Math.max(selectedIndex - 1, 0))
-          break
-        }
-
-        case 'Enter': {
-          if (selectedIndex >= 0) {
-            e.preventDefault()
-
-            const favoriteIndex = selectedIndex
-            const otherIndex = selectedIndex - favoriteList.length
-            if (favoriteList[favoriteIndex]?.name !== undefined) {
-              void navigate(`/ui/p/${favoriteList[favoriteIndex].name}`)
-            }
-            if (otherList[otherIndex]?.name !== undefined) {
-              void navigate(`/ui/p/${otherList[otherIndex].name}`)
-            }
-          }
-          break
-        }
-      }
-    }
-
-    document.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [selectedIndex, favoriteList, otherList, columnCount, navigate, filtered])
+  useGridKeyboard(sections, selectedIndex, setSelectedIndex, columnCount)
 
   if (result.isPending) {
     return (
       <>
-        <WithHeader title="Favorites">
-          <ProjectListSkeleton amount={4} />
+        <WithHeader title={CATEGORY_TITLES.rollups}>
+          <ProjectListSkeleton amount={8} />
         </WithHeader>
-        <WithHeader title="Projects">
-          <ProjectListSkeleton amount={16} />
+        <WithHeader title={CATEGORY_TITLES.validiumsAndOptimiums}>
+          <ProjectListSkeleton amount={4} />
         </WithHeader>
       </>
     )
@@ -232,45 +121,110 @@ function AllProjects(props: { search: string }) {
     }
   }
 
-  if (filtered.length === 0) {
+  if (sections.length === 0) {
     return (
-      <>
-        <WithHeader title="Projects">
-          <p className="pl-6">No matching projects</p>
-        </WithHeader>
-      </>
+      <WithHeader title="Results">
+        <p className="pl-6">No matching projects</p>
+      </WithHeader>
     )
   }
 
-  const favoriteRefs = projectsRefs.current.slice(0, favoriteList.length)
-  const projectRefs = projectsRefs.current.slice(favoriteList.length)
-
   return (
-    <>
-      {favoriteList.length > 0 && (
-        <WithHeader title="Favorites">
-          <ProjectList
-            favorites
-            entries={favoriteList}
-            toggleFavorite={toggleFavorite}
-            selectedIndex={selectedIndex}
-            columnCount={columnCount}
-            itemRefs={favoriteRefs}
-          />
-        </WithHeader>
-      )}
-      {otherList.length > 0 && (
-        <WithHeader>
-          <ProjectList
-            entries={otherList}
-            toggleFavorite={toggleFavorite}
-            selectedIndex={selectedIndex - favoriteList.length}
-            columnCount={columnCount}
-            itemRefs={projectRefs}
-          />
-        </WithHeader>
-      )}
-    </>
+    <Sections
+      sections={sections}
+      selectedIndex={selectedIndex}
+      toggleFavorite={toggleFavorite}
+      itemRefs={itemRefs}
+    />
+  )
+}
+
+function Sections(props: {
+  sections: HomeSection[]
+  selectedIndex: number
+  toggleFavorite: (project: string) => void
+  itemRefs: React.RefObject<(HTMLLIElement | null)[]>
+}) {
+  let sectionStart = 0
+  return props.sections.map((section) => {
+    const start = sectionStart
+    sectionStart += section.entries.length
+    return (
+      <WithHeader
+        key={section.title}
+        title={section.title}
+        count={section.entries.length}
+      >
+        <ProjectList
+          favorites={section.favorites}
+          entries={section.entries}
+          toggleFavorite={props.toggleFavorite}
+          selectedIndex={props.selectedIndex - start}
+          itemRef={(i, element) => {
+            props.itemRefs.current[start + i] = element
+          }}
+        />
+      </WithHeader>
+    )
+  })
+}
+
+function useGridKeyboard(
+  sections: HomeSection[],
+  selectedIndex: number,
+  setSelectedIndex: (index: number) => void,
+  columnCount: number,
+) {
+  const navigate = useNavigate()
+  useEffect(() => {
+    const flat = sections.flatMap((x) => x.entries)
+    const lengths = sections.map((x) => x.entries.length)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (flat.length === 0) {
+        return
+      }
+      if (isGridKey(e.key)) {
+        e.preventDefault()
+        setSelectedIndex(
+          moveInSections(lengths, selectedIndex, e.key, columnCount),
+        )
+      }
+      const selected = flat[selectedIndex]
+      if (e.key === 'Enter' && selected !== undefined) {
+        e.preventDefault()
+        void navigate(`/ui/p/${selected.name}`)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [sections, selectedIndex, setSelectedIndex, columnCount, navigate])
+}
+
+function useColumnCount() {
+  const [columnCount, setColumnCount] = useState(getColumnCount)
+  useEffect(() => {
+    const handleResize = () => setColumnCount(getColumnCount())
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+  return columnCount
+}
+
+function getColumnCount() {
+  return window.innerWidth >= 768 ? 4 : 2
+}
+
+function isGridKey(key: string): key is GridKey {
+  return (
+    key === 'ArrowUp' ||
+    key === 'ArrowDown' ||
+    key === 'ArrowLeft' ||
+    key === 'ArrowRight'
   )
 }
 
@@ -312,9 +266,8 @@ function ProjectList(props: {
   entries: ApiProjectEntry[]
   toggleFavorite: (project: string) => void
   selectedIndex: number
-  columnCount: number
-  itemRefs: React.RefObject<HTMLLIElement>[]
-  favorites?: boolean
+  itemRef: (index: number, element: HTMLLIElement | null) => void
+  favorites: boolean
 }) {
   return (
     <ol className="mb-6 grid grid-cols-2 gap-x-4 gap-y-0 md:grid-cols-4">
@@ -323,14 +276,14 @@ function ProjectList(props: {
 
         return (
           <li
-            ref={props.itemRefs[i]}
+            ref={(element) => props.itemRef(i, element)}
             className={cn(
               'group flex min-h-8 min-w-0 items-center gap-2 rounded-sm px-2 text-[13px]',
               isSelected &&
                 'bg-autumn-300/15 text-coffee-100 shadow-[inset_2px_0_0_#BAD80A]',
               !isSelected && 'hover:bg-coffee-800',
             )}
-            key={i}
+            key={entry.name}
           >
             <button
               className="shrink-0 opacity-25 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
@@ -366,19 +319,22 @@ function writeFavorites(favorites: string[]) {
   localStorage.setItem('favorites', favorites.join(','))
 }
 
-function WithHeader({
-  children,
-  title = 'Projects',
-}: {
+function WithHeader(props: {
   children: React.ReactNode
-  title?: string
+  title: string
+  count?: number
 }) {
   return (
     <>
-      <p className="mb-1 border-coffee-700 border-b px-2 pb-1.5 font-semibold text-coffee-300 text-xs uppercase tracking-wide">
-        {title}
+      <p className="mb-1 flex items-baseline justify-between border-coffee-700 border-b px-2 pb-1.5 font-semibold text-coffee-300 text-xs uppercase tracking-wide">
+        {props.title}
+        {props.count !== undefined && (
+          <span className="font-normal text-coffee-400 tabular-nums">
+            {props.count}
+          </span>
+        )}
       </p>
-      {children}
+      {props.children}
     </>
   )
 }
