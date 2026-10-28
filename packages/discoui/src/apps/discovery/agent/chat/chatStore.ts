@@ -69,16 +69,23 @@ export async function chooseProvider(provider: ProviderId) {
 
 export async function sendMessage(text: string) {
   requireReplay()
-  const { status, chosenProvider } = useChatStore.getState()
+  const { status } = useChatStore.getState()
   if (status === 'idle' || status === 'failed') {
-    await post('start', { provider: chosenProvider })
+    await post('start', { provider: currentProvider() })
   }
   await post('prompt', { text })
 }
 
 export async function startChat() {
   requireReplay()
-  await post('start', { provider: useChatStore.getState().chosenProvider })
+  await post('start', { provider: currentProvider() })
+}
+
+// Another tab may have chosen a provider since this one read the choice.
+function currentProvider(): ProviderId {
+  const provider = readChosenProvider()
+  useChatStore.setState({ chosenProvider: provider })
+  return provider
 }
 
 // Until the replay arrives an ongoing chat looks idle, and starting one
