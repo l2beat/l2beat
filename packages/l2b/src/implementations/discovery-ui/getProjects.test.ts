@@ -47,7 +47,7 @@ describe(getProjectCategory.name, () => {
   })
 })
 
-function base(): Parameters<typeof getProjectCategory>[1] & {} {
+function base(): NonNullable<Parameters<typeof getProjectCategory>[1]> {
   return {
     id: ProjectId('a'),
     slug: 'a',
