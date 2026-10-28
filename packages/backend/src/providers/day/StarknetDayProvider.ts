@@ -1,8 +1,8 @@
 import type { VoyagerClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { DayProvider } from './DayProviders'
+import type { DailyCountsProvider } from './DayProviders'
 
-export class StarknetDayProvider implements DayProvider {
+export class StarknetDayProvider implements DailyCountsProvider {
   constructor(private voyagerClient: VoyagerClient) {}
 
   async getDailyTxsCount(
