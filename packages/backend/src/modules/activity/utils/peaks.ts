@@ -50,6 +50,15 @@ export function getDayPeaks(
   }
 }
 
+/** The busiest hour of the day, for sources with hours but no minutes */
+export function getDayHourPeak(
+  day: UnixTime,
+  hours: Counts[],
+): Pick<ActivityPeaks, 'peakHourCount' | 'peakHourUopsCount'> {
+  const hour = getPeak(day, hours)
+  return { peakHourCount: hour.count, peakHourUopsCount: hour.uopsCount }
+}
+
 function getPeak(day: UnixTime, periods: Counts[]) {
   const inDay = periods.filter(
     (period) => UnixTime.toStartOf(period.timestamp, 'day') === day,

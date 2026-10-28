@@ -14,7 +14,10 @@ export interface ActivityRecord {
   end: number
 }
 
-/** Only block and slot chains have them */
+/**
+ * Block and slot chains have all of them. Day sources with hours have the
+ * busiest hour only
+ */
 export interface ActivityPeaks {
   /** Of the busiest hour of the day */
   peakHourCount: number
@@ -59,10 +62,17 @@ export class ActivityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async upsertMany(records: ActivityRecord[]): Promise<number> {
+  async upsertMany(
+    records: (ActivityRecord &
+      Partial<Pick<ActivityPeaks, 'peakHourCount' | 'peakHourUopsCount'>>)[],
+  ): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
+    const rows = records.map((record) => ({
+      ...toRow(record),
+      peakHourCount: record.peakHourCount ?? null,
+      peakHourUopsCount: record.peakHourUopsCount ?? null,
+    }))
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
         .insertInto('Activity')
@@ -73,6 +83,8 @@ export class ActivityRepository extends BaseRepository {
             uopsCount: eb.ref('excluded.uopsCount'),
             start: eb.ref('excluded.start'),
             end: eb.ref('excluded.end'),
+            peakHourCount: eb.ref('excluded.peakHourCount'),
+            peakHourUopsCount: eb.ref('excluded.peakHourUopsCount'),
           })),
         )
         .execute()
