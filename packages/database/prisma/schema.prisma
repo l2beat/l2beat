@@ -297,6 +297,26 @@ model DefiTvl {
   @@index([projectId, timestamp(sort: Desc)])
 }
 
+/// Hourly onchain state of a liquid staking token; the exit columns are set only for the protocols they apply to.
+model LiquidStakingSnapshot {
+  configurationId        String   @db.Char(12)
+  projectId              String   @db.VarChar(255)
+  timestamp              DateTime @db.Timestamp(6)
+  blockNumber            Int
+  /// ETH per token, 18 decimals; for Lido per share, i.e. per wstETH.
+  exchangeRate           Decimal  @db.Decimal(80, 0)
+  /// Withdrawal queue counters (Lido, ether.fi).
+  lastRequestId          Int?
+  lastFinalizedRequestId Int?
+  /// ETH that burning the token pays out at once (Rocket Pool), wei.
+  instantExitEth         Decimal? @db.Decimal(80, 0)
+  /// Lock on an onchain redemption (wBETH), seconds.
+  lockTime               Int?
+
+  @@id([configurationId, timestamp])
+  @@index([projectId, timestamp])
+}
+
 model TokenMetadata {
   tokenId      String  @db.VarChar(255)
   projectId    String  @db.VarChar(255)
