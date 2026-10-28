@@ -220,7 +220,7 @@ export const lido: BaseProject = {
       value: 'Oracle-gated',
       secondLine: `${oracleCadence} batches · pausable`,
       sentiment: 'warning',
-      description: `Withdrawal requests are finalized in batches with each oracle report, at the lower of the request and report rate. When the buffer cannot cover the queue, requests wait for validators to exit, which can take days. A ${circuitBreakerCommittee} committee can pause the queue for ${days(circuitBreakerPauseDays)}, and another can extend that indefinitely.`,
+      description: `Each oracle report finalizes a batch of eligible withdrawal requests, at the lower of the request and report rate. When the buffer cannot cover the queue, requests wait for validators to exit, which can take days, and during mass slashing the oracle's bunker mode holds finalization until losses are known. A ${circuitBreakerCommittee} committee can pause the queue for ${days(circuitBreakerPauseDays)}, and another can extend that indefinitely.`,
     },
     upgrades: {
       value: 'Lido DAO',
