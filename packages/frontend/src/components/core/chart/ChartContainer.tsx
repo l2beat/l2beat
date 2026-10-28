@@ -4,27 +4,22 @@ import { Logo } from '~/components/Logo'
 import { useIsNearViewport } from '~/hooks/useIsNearViewport'
 import { cn } from '~/utils/cn'
 import { ignorePointerWhileScrollingClassName } from '~/utils/scrollActivity'
-import {
-  ChartContext,
-  type ChartMeta,
-  type ChartProject,
-} from '../ChartContext'
-import { useChartLegendOnboarding } from '../ChartLegendOnboardingContext'
-import { ChartLoader } from '../ChartLoader'
-import { ChartMilestones } from '../ChartMilestones'
-import { ChartNoDataSourceState } from '../ChartNoDataSourceState'
-import { ChartNoDataState } from '../ChartNoDataState'
-import { ChartProjectLogo } from '../ChartProjectLogo'
-import { ChartSettledSize } from '../ChartSettledSize'
-import { TsChartLegend } from './TsChartLegend'
+import { ChartContext, type ChartMeta, type ChartProject } from './ChartContext'
+import { ChartLegend } from './ChartLegend'
+import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
+import { ChartLoader } from './ChartLoader'
+import { ChartMilestones } from './ChartMilestones'
+import { ChartNoDataSourceState } from './ChartNoDataSourceState'
+import { ChartNoDataState } from './ChartNoDataState'
+import { ChartProjectLogo } from './ChartProjectLogo'
+import { ChartSettledSize } from './ChartSettledSize'
 
 /**
- * The TanStack Charts counterpart of `ChartContainer`: same sizing, settled
- * resizing, loader, empty states, logos and milestones, but the legend is
- * plain DOM under the chart instead of a Recharts slot, so nothing here
- * imports Recharts.
+ * The frame around a chart: sizing, settled resizing, the loader and empty
+ * states, logos, milestones and the legend under the chart. The chart itself
+ * mounts only near the viewport.
  */
-export function TsChartContainer<T extends { timestamp: number }>({
+export function ChartContainer<T extends { timestamp: number }>({
   children,
   meta,
   data,
@@ -93,7 +88,7 @@ export function TsChartContainer<T extends { timestamp: number }>({
               {shouldMountChart ? children : null}
             </div>
             {legend && shouldMountChart && (
-              <TsChartLegend leading={legendLeading} />
+              <ChartLegend leading={legendLeading} />
             )}
           </div>
         </ChartSettledSize>
@@ -102,7 +97,7 @@ export function TsChartContainer<T extends { timestamp: number }>({
             animated={shouldMountChart && !!isLoading}
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
-              '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.ts-legend]:top-[calc(50%-18px)]',
+              '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.chart-legend]:top-[calc(50%-18px)]',
               loaderClassName,
             )}
           />
@@ -119,12 +114,12 @@ export function TsChartContainer<T extends { timestamp: number }>({
           <Logo
             animated={false}
             className={cn(
-              'pointer-events-none absolute right-3 bottom-12 h-8 w-20 opacity-50 group-has-[.ts-legend]:bottom-14',
+              'pointer-events-none absolute right-3 bottom-12 h-8 w-20 opacity-50 group-has-[.chart-legend]:bottom-14',
               !!interactiveLegend &&
                 !interactiveLegend.disableOnboarding &&
                 !hasFinishedOnboardingInitial
-                ? 'bottom-[60px] group-has-[.ts-legend]:bottom-[68px]'
-                : 'bottom-12 group-has-[.ts-legend]:bottom-14',
+                ? 'bottom-[60px] group-has-[.chart-legend]:bottom-[68px]'
+                : 'bottom-12 group-has-[.chart-legend]:bottom-14',
               logoClassName,
             )}
           />
@@ -137,8 +132,8 @@ export function TsChartContainer<T extends { timestamp: number }>({
               !!interactiveLegend &&
                 !interactiveLegend.disableOnboarding &&
                 !hasFinishedOnboardingInitial
-                ? 'bottom-[68px] group-has-[.ts-legend]:bottom-[76px]'
-                : 'bottom-14 group-has-[.ts-legend]:bottom-16',
+                ? 'bottom-[68px] group-has-[.chart-legend]:bottom-[76px]'
+                : 'bottom-14 group-has-[.chart-legend]:bottom-16',
             )}
           />
         )}

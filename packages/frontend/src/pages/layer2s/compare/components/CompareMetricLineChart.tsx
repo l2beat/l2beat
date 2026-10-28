@@ -1,26 +1,21 @@
 import type { ReactNode } from 'react'
 import { useMemo } from 'react'
-import { Line, LineChart } from 'recharts'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import {
+  ChartTooltipWrapper,
+  getTooltipEntries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { CompareProjectEntry } from '~/server/features/layer2s/compare/getCompareProjectEntries'
 import { useCompareSeries } from './CompareSeriesContext'
 
 /**
  * A single compare chart point: a timestamp plus one value per project id.
- * The shape every compare metric chart feeds into recharts.
+ * The shape every compare metric chart feeds into the chart.
  */
 export interface CompareChartPoint {
   timestamp: number
@@ -106,51 +101,37 @@ export function CompareMetricLineChart({
         meta={chartMeta}
         isLoading={isLoading}
         noDataSourceMessage="Please select at least one project"
+        // Fades the other projects' lines when one is hovered.
+        className="[&_[data-ts-key*='-stroke']]:transition-[stroke-opacity] [&_[data-ts-key*='-stroke']]:duration-200 motion-reduce:[&_[data-ts-key*='-stroke']]:transition-none"
       >
-        {/* Without right:1 the chart last point is not hoverable for some reason */}
-        {/* syncMethod "value" matches by timestamp, so charts whose data
-            starts at different times still line up under a synced hover. */}
-        <LineChart
-          responsive
+        {/* syncId matches by timestamp, so charts whose data starts at
+            different times still line up under a synced hover. */}
+        <TimeSeriesChart
           data={data}
-          margin={{ top: 20, right: 1 }}
+          ariaLabel="Compare projects"
           syncId="compare"
-          syncMethod="value"
-        >
-          {projects.map((project) => (
-            <Line
-              key={project.id}
-              dataKey={project.id}
-              stroke={chartMeta[project.id]?.color}
-              strokeOpacity={
-                hoveredProjectId !== undefined &&
-                hoveredProjectId !== project.id
-                  ? 0.2
-                  : 1
-              }
-              className="[&_.recharts-line-curve]:transition-[stroke-opacity] [&_.recharts-line-curve]:duration-200 motion-reduce:[&_.recharts-line-curve]:transition-none"
-              dot={false}
-              isAnimationActive={false}
+          series={projects.map((project) => ({
+            key: project.id,
+            stroke: chartMeta[project.id]?.color,
+            strokeOpacity:
+              hoveredProjectId !== undefined && hoveredProjectId !== project.id
+                ? 0.2
+                : 1,
+          }))}
+          yAxis={{
+            tickCount: 4,
+            format: formatYAxisLabel,
+          }}
+          syncedUntil={syncedUntil}
+          renderTooltip={(row, keys) => (
+            <CustomTooltip
+              row={row}
+              keys={keys}
+              formatValue={formatTooltipValue}
+              renderTimestamp={renderTooltipTimestamp}
             />
-          ))}
-          <ChartCommonComponents
-            data={data}
-            isLoading={isLoading}
-            yAxis={{
-              tickCount: 4,
-              tickFormatter: (value) => formatYAxisLabel(Number(value)),
-            }}
-            syncedUntil={syncedUntil}
-          />
-          <ChartTooltip
-            content={
-              <CustomTooltip
-                formatValue={formatTooltipValue}
-                renderTimestamp={renderTooltipTimestamp}
-              />
-            }
-          />
-        </LineChart>
+          )}
+        />
       </ChartContainer>
     </div>
   )
@@ -159,24 +140,19 @@ export function CompareMetricLineChart({
 const MAX_TOOLTIP_ROWS = 10
 
 function CustomTooltip({
-  payload,
-  label,
+  row,
+  keys,
   formatValue,
   renderTimestamp,
-}: CustomChartTooltipProps & {
+}: {
+  row: CompareChartPoint
+  keys: string[]
   formatValue: (value: number) => string
   renderTimestamp: (label: number) => ReactNode
 }) {
   const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
-
-  const visible = payload.filter(
-    (entry) =>
-      entry.type !== 'none' &&
-      !entry.hide &&
-      entry.value !== null &&
-      entry.value !== undefined,
-  )
+  const label = row.timestamp
+  const visible = getTooltipEntries(row, keys, { skipNull: true })
   if (visible.length === 0) return null
 
   const sorted = [...visible].sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
@@ -191,7 +167,7 @@ function CustomTooltip({
         </div>
         <div className="mt-2 flex flex-col gap-2">
           {shown.map((entry) => {
-            const config = entry.name ? meta[entry.name] : undefined
+            const config = meta[entry.name]
             if (!config) return null
             return (
               <div

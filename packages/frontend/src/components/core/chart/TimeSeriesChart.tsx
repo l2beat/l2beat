@@ -19,14 +19,14 @@ import { scaleLinear } from '@tanstack/charts/scales/linear'
 import { curveMonotoneX, curveStep, curveStepAfter } from 'd3-shape'
 import { type ReactNode, useMemo, useRef } from 'react'
 import { cn } from '~/utils/cn'
-import { tooltipContentVariants } from '../../tooltip/Tooltip'
-import { NoDataPatternDef } from '../defs/NoDataPatternDef'
-import { getTickCondition, getTickFormatter } from '../utils/getXAxisProps'
-import { TsHoverOverlay } from './TsHoverOverlay'
+import { tooltipContentVariants } from '../tooltip/Tooltip'
+import { ChartHoverOverlay } from './ChartHoverOverlay'
+import { NoDataPatternDef } from './defs/NoDataPatternDef'
+import { getTickCondition, getTickFormatter } from './utils/xAxisTicks'
 
 type Value = number | null | undefined
 
-export interface TsSeries<K extends string, T = unknown> {
+export interface ChartSeries<K extends string, T = unknown> {
   key: K
   /** Plotted value; `row[key]` by default. The top edge of a band. */
   value?: (row: T) => Value
@@ -56,7 +56,7 @@ type YDomain =
   | 'auto'
   | ((min: number, max: number) => readonly [number, number])
 
-export interface TsYAxis {
+export interface ChartYAxis {
   format?: (value: number) => string
   unit?: string
   domain?: YDomain
@@ -73,13 +73,13 @@ export interface TsYAxis {
 }
 
 /** A numeric x axis instead of the time axis. */
-export interface TsXAxis {
+export interface ChartXAxis {
   ticks: number[]
   format: (value: number) => string
   domain?: readonly [number, number]
 }
 
-export interface TsReferenceDot {
+export interface ChartReferenceDot {
   x: number
   y: number
   axis?: 'right'
@@ -98,7 +98,7 @@ export interface TsReferenceDot {
   }
 }
 
-export interface TsReferenceArea {
+export interface ChartReferenceArea {
   x1: number
   /** The last row by default. */
   x2?: number
@@ -108,17 +108,17 @@ export interface TsReferenceArea {
 
 interface Props<T, K extends string> {
   data: T[] | undefined
-  series: TsSeries<K, T>[]
+  series: ChartSeries<K, T>[]
   ariaLabel: string
   /** The row's position on the x axis; `row.timestamp` by default. */
   x?: (row: T) => number
-  xAxis?: TsXAxis
-  yAxis?: TsYAxis
-  rightAxis?: TsYAxis
+  xAxis?: ChartXAxis
+  yAxis?: ChartYAxis
+  rightAxis?: ChartYAxis
   margin?: { top?: number; right?: number; bottom?: number; left?: number }
   syncedUntil?: number
-  referenceAreas?: TsReferenceArea[]
-  referenceDots?: TsReferenceDot[]
+  referenceAreas?: ChartReferenceArea[]
+  referenceDots?: ChartReferenceDot[]
   /** Charts with the same id show their hover together, by x value. */
   syncId?: string
   /** Gradient defs referenced by `url(#id)` paints in `series`. */
@@ -143,7 +143,7 @@ const chartClassNames = cn(
 )
 
 const CURVES: Record<
-  NonNullable<TsSeries<string>['curve']>,
+  NonNullable<ChartSeries<string>['curve']>,
   ChartCurve | undefined
 > = {
   linear: undefined,
@@ -152,7 +152,7 @@ const CURVES: Record<
   monotone: d3Curve(curveMonotoneX),
 }
 
-export function TsTimeSeriesChart<T, K extends string>({
+export function TimeSeriesChart<T, K extends string>({
   data,
   series,
   ariaLabel,
@@ -179,7 +179,7 @@ export function TsTimeSeriesChart<T, K extends string>({
           return row !== undefined ? x(row) : undefined
         })()
       : undefined
-  const areas: TsReferenceArea[] = [
+  const areas: ChartReferenceArea[] = [
     ...(lastSyncedX !== undefined
       ? [{ x1: lastSyncedX, fill: 'url(#noDataFill)' }]
       : []),
@@ -216,13 +216,12 @@ export function TsTimeSeriesChart<T, K extends string>({
       visible.filter((s) => s.axis !== 'right'),
       yAxis,
     )
-    const right = rightAxis
-      ? getY(
-          plotted,
-          visible.filter((s) => s.axis === 'right'),
-          rightAxis,
-        )
-      : undefined
+    // An axis without visible series shows no ticks.
+    const rightSeries = visible.filter((s) => s.axis === 'right')
+    const right =
+      rightAxis && rightSeries.length > 0
+        ? getY(plotted, rightSeries, rightAxis)
+        : undefined
 
     const scaleOf = (s: { axis?: 'right' }) =>
       s.axis === 'right' && right ? RIGHT_SCALE : Y_SCALE
@@ -355,12 +354,13 @@ export function TsTimeSeriesChart<T, K extends string>({
     ]
     const xTicks = xAxis
       ? {
-          values: xAxis.ticks,
+          // A label centred on the left edge would be cut off.
+          values: xAxis.ticks.filter((t) => t > xDomain[0]),
           format: (v: number) => axesRef.current.xAxis?.format(v) ?? String(v),
         }
       : getXTicks(rows.map((row) => xRef.current(row)))
 
-    // Bottom: where a Recharts x-axis puts the plot's bottom edge.
+    // Bottom: room for the x axis labels.
     const chartMargin = { top: 20, right: 1, bottom: 25, left: 0, ...margin }
     const plotHeight = (height: number) =>
       height - chartMargin.top - chartMargin.bottom
@@ -368,13 +368,9 @@ export function TsTimeSeriesChart<T, K extends string>({
     // A function of the size, so the y ticks can fit the plot height.
     return defineChart(
       ({ height }) => {
-        const leftTicks = fitTicks(
-          left.ticks,
-          plotHeight(height),
-          yAxis.fontSize ?? 15,
-        )
+        const leftTicks = fitTicks(left, plotHeight(height), yAxis)
         const rightTicks = right
-          ? fitTicks(right.ticks, plotHeight(height), rightAxis?.fontSize ?? 15)
+          ? fitTicks(right, plotHeight(height), rightAxis ?? {})
           : undefined
         return {
           marks: [
@@ -382,7 +378,7 @@ export function TsTimeSeriesChart<T, K extends string>({
             ...fills,
             ...strokes,
             // A mark rather than the axis grid, so it is drawn over the
-            // fills, as Recharts draws its grid.
+            // fills.
             decorative(ruleY(leftTicks, { id: 'y-grid', y: (v) => v })),
             ...dotMarks,
           ],
@@ -428,7 +424,7 @@ export function TsTimeSeriesChart<T, K extends string>({
       },
       {
         // The library's hover host restyles the whole chart on every pointer
-        // move and searches rows linearly; TsHoverOverlay replaces it.
+        // move and searches rows linearly; ChartHoverOverlay replaces it.
         pointer: false,
         keyboard: false,
         tooltip: false,
@@ -459,7 +455,7 @@ export function TsTimeSeriesChart<T, K extends string>({
           sceneRef.current = scene
         }}
       />
-      <TsHoverOverlay
+      <ChartHoverOverlay
         rows={rows}
         x={x}
         dots={visible
@@ -478,14 +474,13 @@ export function TsTimeSeriesChart<T, K extends string>({
   )
 }
 
-export function TsChartTooltipWrapper({ children }: { children: ReactNode }) {
+export function ChartTooltipWrapper({ children }: { children: ReactNode }) {
   return <div className={tooltipContentVariants()}>{children}</div>
 }
 
 /**
- * One entry per visible series, in series order, like the payload Recharts
- * gave tooltips. `skipNull` drops series without a value at the row, as
- * Recharts' default `filterNull` did.
+ * One entry per visible series, in series order. `skipNull` drops series
+ * without a value at the row.
  */
 export function getTooltipEntries<T, K extends string>(
   row: T,
@@ -507,7 +502,7 @@ interface Plotted<T> {
 
 function usePlotted<T, K extends string>(
   rows: T[],
-  visible: TsSeries<K, T>[],
+  visible: ChartSeries<K, T>[],
 ): Plotted<T>[] {
   const key = visible
     .map((s) => `${s.key}:${s.stack ? 's' : ''}:${s.axis ?? ''}`)
@@ -557,7 +552,7 @@ function yScaleOptions(
   y: { domain: [number, number] },
   ticks: number[],
   side: 'left' | 'right',
-  getAxis: () => TsYAxis,
+  getAxis: () => ChartYAxis,
 ) {
   const axis = getAxis()
   return {
@@ -573,7 +568,7 @@ function yScaleOptions(
           return `${format ? format(value) : value}${unit}`
         },
       },
-      // Where Recharts' mirrored axis puts them: 8px in from the edge.
+      // Inside the plot, 8px in from its edge.
       tickLabels: {
         anchor: side === 'left' ? ('start' as const) : ('end' as const),
         dx: side === 'left' ? 8 : -8,
@@ -592,8 +587,8 @@ const Y_TICK_COUNT = 3
 
 function getY<T, K extends string>(
   plotted: Plotted<T>[],
-  series: TsSeries<K, T>[],
-  yAxis: TsYAxis,
+  series: ChartSeries<K, T>[],
+  yAxis: ChartYAxis,
 ): { domain: [number, number]; ticks: number[] } {
   let min = Number.POSITIVE_INFINITY
   let max = Number.NEGATIVE_INFINITY
@@ -606,7 +601,7 @@ function getY<T, K extends string>(
       }
     }
   }
-  if (min > max) return { domain: [0, 1], ticks: yAxis.ticks ?? [0, 1] }
+  if (min > max) return { domain: [0, 1], ticks: [] }
   const count = yAxis.tickCount ?? Y_TICK_COUNT
   const domain = yAxis.domain ?? 'zero'
   const [lo, hi] =
@@ -622,8 +617,8 @@ function getY<T, K extends string>(
       ticks: yAxis.ticks ?? [...(scale.ticks?.(count) ?? [lo, hi])],
     }
   }
-  // Like Recharts: a domain the caller fixed keeps its bounds, the others
-  // grow to nice ticks.
+  // A domain the caller fixed keeps its bounds; the others grow to nice
+  // ticks.
   if (typeof domain === 'function') {
     return {
       domain: [lo, hi],
@@ -635,19 +630,37 @@ function getY<T, K extends string>(
 }
 
 /**
- * Like Recharts, drops the ticks between the ends (labels and grid lines)
- * when their labels would touch.
+ * From the top tick down, keeps each label that clears the last one kept.
+ * Ticks outside the domain are left out.
  */
-function fitTicks(ticks: number[], plotHeight: number, fontSize: number) {
-  if (ticks.length <= 2) return ticks
-  const gap = plotHeight / (ticks.length - 1)
-  if (gap >= fontSize * 2) return ticks
-  return [ticks[0], ticks.at(-1)].filter((tick) => tick !== undefined)
+function fitTicks(
+  y: { domain: [number, number]; ticks: number[] },
+  plotHeight: number,
+  axis: ChartYAxis,
+) {
+  const [lo, hi] = y.domain
+  const scale = (axis.scale ?? scaleLinear)()
+    .domain(y.domain)
+    .range([plotHeight, 0])
+  const minGap = (axis.fontSize ?? 15) * 2
+  const inside = y.ticks.filter((t) => t >= lo && t <= hi)
+  const kept: number[] = []
+  for (const tick of [...inside].reverse()) {
+    const last = kept.at(-1)
+    const position = scale(tick) ?? 0
+    if (
+      last === undefined ||
+      Math.abs(position - (scale(last) ?? 0)) >= minGap
+    ) {
+      kept.push(tick)
+    }
+  }
+  return kept.reverse()
 }
 
 /**
- * Recharts' getTickValuesFixedDomain: nice steps from `min`, then `max`
- * itself as the last tick.
+ * Ticks for a fixed domain: nice steps from `min`, then `max` itself as the
+ * last tick.
  */
 function getFixedDomainTicks(
   min: number,
@@ -666,9 +679,9 @@ function getFixedDomainTicks(
 }
 
 /**
- * Recharts' fixed-count tick algorithm (getNiceTickValues): the step is the
- * rough step rounded up to a multiple of 0.05 (0.1 for steps of 1-10) of its
- * decade, and the domain grows to fit exactly `count` ticks.
+ * `count` nice ticks: the step is the rough step rounded up to a multiple of
+ * 0.05 (0.1 for steps of 1-10) of its decade, and the domain grows to fit
+ * exactly `count` ticks.
  */
 function getNiceTicks(
   min: number,
@@ -693,7 +706,6 @@ function getNiceStep(roughStep: number, integer?: boolean) {
   const decade = 10 ** digitCount
   const scale = digitCount !== 1 ? 0.05 : 0.1
   const step = Math.ceil(roughStep / decade / scale - 1e-9) * scale * decade
-  // Recharts' allowDecimals={false}.
   return integer ? Math.max(1, Math.ceil(step)) : step
 }
 
@@ -712,7 +724,7 @@ function getXTicks(xs: number[]) {
       UnixTime.toStartOf(UnixTime(first), 'day')) /
     UnixTime.DAY
   const isTick = getTickCondition(rangeInDays)
-  // Recharts hides labels that would overflow the plot edges.
+  // Labels near the plot edges would be cut off.
   const edge = (last - first) * 0.03
   return {
     values: xs.filter((t) => isTick(t) && t > first + edge && t < last - edge),

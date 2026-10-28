@@ -1,25 +1,21 @@
 import type { Milestone } from '@l2beat/config'
 import { formatBytes, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart } from 'recharts'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+} from '~/components/core/chart/ChartContext'
+import { useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
-import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import {
+  type ChartSeries,
+  ChartTooltipWrapper,
+  getTooltipEntries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -47,6 +43,9 @@ interface Props {
 }
 
 const hiddenDataKeys = ['projectMax'] as const
+
+type SeriesKey = 'project' | 'projectTarget' | 'projectMax'
+type ChartRow = { timestamp: number } & Record<SeriesKey, number | null>
 
 export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
@@ -91,6 +90,31 @@ export function ProjectDaAbsoluteThroughputChart({
     )
   }, [dataWithConfiguredThroughputs, denominator])
 
+  const series: ChartSeries<SeriesKey, ChartRow>[] = [
+    {
+      key: 'project',
+      fill: `url(#${project.id}-fill)`,
+      stroke: projectChartMeta.project?.color,
+      hidden: !dataKeys.includes('project'),
+    },
+    {
+      key: 'projectTarget',
+      stroke: projectChartMeta.projectTarget?.color,
+      strokeDasharray:
+        projectChartMeta.projectTarget?.indicatorType.strokeDasharray,
+      curve: 'stepAfter',
+      hidden: !dataKeys.includes('projectTarget'),
+    },
+    {
+      key: 'projectMax',
+      stroke: projectChartMeta.projectMax?.color,
+      strokeDasharray:
+        projectChartMeta.projectMax?.indicatorType.strokeDasharray,
+      curve: 'stepAfter',
+      hidden: !dataKeys.includes('projectMax'),
+    },
+  ]
+
   return (
     <ChartContainer
       meta={projectChartMeta}
@@ -103,82 +127,45 @@ export function ProjectDaAbsoluteThroughputChart({
         disableOnboarding: disableLegendOnboarding,
       }}
       milestones={milestones}
+      legend
     >
-      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
-        <defs>
-          {project.id === 'ethereum' && (
+      <TimeSeriesChart
+        data={chartData}
+        series={series}
+        ariaLabel="Data throughput"
+        syncedUntil={syncedUntil}
+        yAxis={{ unit: ` ${unit}`, tickCount: 4 }}
+        defs={
+          project.id === 'ethereum' && (
             <EthereumFillGradientDef id="ethereum-fill" />
-          )}
-          <NoDataPatternDef />
-        </defs>
-        <ChartLegend content={<ChartLegendContent />} />
-        <Area
-          dataKey="project"
-          fill={`url(#${project.id}-fill)`}
-          fillOpacity={1}
-          stroke={projectChartMeta.project?.color}
-          isAnimationActive={false}
-          dot={false}
-          hide={!dataKeys.includes('project')}
-        />
-        <Area
-          dataKey="projectTarget"
-          isAnimationActive={false}
-          fillOpacity={0}
-          stroke={projectChartMeta.projectTarget?.color}
-          strokeDasharray={
-            projectChartMeta.projectTarget?.indicatorType.strokeDasharray
-          }
-          type="stepAfter"
-          dot={false}
-          hide={!dataKeys.includes('projectTarget')}
-        />
-        <Area
-          dataKey="projectMax"
-          isAnimationActive={false}
-          fillOpacity={0}
-          stroke={projectChartMeta.projectMax?.color}
-          strokeDasharray={
-            projectChartMeta.projectMax?.indicatorType.strokeDasharray
-          }
-          type="stepAfter"
-          dot={false}
-          hide={!dataKeys.includes('projectMax')}
-        />
-        <ChartTooltip
-          filterNull={false}
-          content={
-            <ProjectDaThroughputCustomTooltip
-              denominator={denominator}
-              resolution={resolution}
-            />
-          }
-        />
-        <ChartCommonComponents
-          data={chartData}
-          isLoading={isLoading}
-          yAxis={{
-            unit: ` ${unit}`,
-            tickCount: 4,
-          }}
-          syncedUntil={syncedUntil}
-        />
-      </AreaChart>
+          )
+        }
+        renderTooltip={(row, keys) => (
+          <ProjectDaThroughputCustomTooltip
+            row={row}
+            keys={keys}
+            denominator={denominator}
+            resolution={resolution}
+          />
+        )}
+      />
     </ChartContainer>
   )
 }
 
 function ProjectDaThroughputCustomTooltip({
-  payload,
-  label,
+  row,
+  keys,
   denominator,
   resolution,
-}: CustomChartTooltipProps & {
+}: {
+  row: ChartRow
+  keys: SeriesKey[]
   denominator: number
   resolution: ChartResolution
 }) {
   const { meta: config } = useChart()
-  if (!payload || typeof label !== 'number') return null
+  const label = row.timestamp
 
   return (
     <ChartTooltipWrapper>
@@ -187,9 +174,9 @@ function ProjectDaThroughputCustomTooltip({
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
-        {payload.map((entry, index) => {
-          const configEntry = entry.name ? config[entry.name] : undefined
-          if (!configEntry || entry.hide) return null
+        {getTooltipEntries(row, keys).map((entry, index) => {
+          const configEntry = config[entry.name]
+          if (!configEntry) return null
 
           return (
             <div

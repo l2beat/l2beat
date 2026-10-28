@@ -7,17 +7,14 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
+  type ChartMeta,
+  type ChartProject,
   useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+} from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   CyanFillGradientDef,
@@ -37,16 +34,19 @@ import {
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import {
+  type ChartSeries,
+  ChartTooltipWrapper,
   getTooltipEntries,
-  TsChartTooltipWrapper,
-} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import { formatRange } from '~/utils/dates'
-import { ChartStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
 import type { ChartScale } from '../types'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+
+type SeriesKey = 'ethereum' | 'projects'
 
 interface ActivityChartDataPoint {
   timestamp: number
@@ -107,6 +107,26 @@ export function ActivityChart({
   ) satisfies ChartMeta
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
+
+  const series: ChartSeries<SeriesKey, ActivityChartDataPoint>[] = [
+    {
+      key: 'ethereum',
+      stroke: 'url(#strokeEthereum)',
+      fill: 'url(#fillEthereum)',
+      hidden: !dataKeys.includes('ethereum'),
+    },
+    ...(project.id !== ProjectId.ETHEREUM
+      ? [
+          {
+            key: 'projects' as const,
+            stroke: 'url(#strokeProjects)',
+            fill: 'url(#fillProjects)',
+            hidden: !dataKeys.includes('projects'),
+          },
+        ]
+      : []),
+  ]
+
   return (
     <ChartContainer
       data={data}
@@ -122,69 +142,47 @@ export function ActivityChart({
       }
       project={project}
       milestones={milestones}
+      legend
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <ChartLegend
-          content={(props) => <ChartLegendContent payload={props.payload} />}
-        />
-        <ChartStrokeOverFillAreaComponents
-          data={[
-            {
-              dataKey: 'ethereum',
-              stroke: 'url(#strokeEthereum)',
-              fill: 'url(#fillEthereum)',
-              hide: !dataKeys.includes('ethereum'),
-            },
-            ...(project.id !== ProjectId.ETHEREUM
-              ? [
-                  {
-                    dataKey: 'projects',
-                    stroke: 'url(#strokeProjects)',
-                    fill: 'url(#fillProjects)',
-                    hide: !dataKeys.includes('projects'),
-                  },
-                ]
-              : []),
-          ]}
-        />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            scale: scale === 'linear' ? 'auto' : scale,
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            unit: metric === 'tps' ? ' TPS' : ' UOPS',
-            tickCount: tickCount ?? 3,
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartTooltip
-          filterNull={false}
-          content={<ActivityCustomTooltip metric={metric} />}
-        />
-        <defs>
-          {type === 'Rollups' && (
-            <>
-              <PinkFillGradientDef id="fillProjects" />
-              <PinkStrokeGradientDef id="strokeProjects" />
-            </>
-          )}
-          {type === 'ValidiumsAndOptimiums' && (
-            <>
-              <CyanFillGradientDef id="fillProjects" />
-              <CyanStrokeGradientDef id="strokeProjects" />
-            </>
-          )}
-          {type === 'Others' && (
-            <>
-              <YellowFillGradientDef id="fillProjects" />
-              <YellowStrokeGradientDef id="strokeProjects" />
-            </>
-          )}
-          <EthereumFillGradientDef id="fillEthereum" />
-          <EthereumStrokeGradientDef id="strokeEthereum" />
-        </defs>
-      </AreaChart>
+      <TimeSeriesChart
+        data={data}
+        series={series}
+        ariaLabel="Activity"
+        yAxis={{
+          scale: scale === 'linear' ? undefined : scaleSymlog,
+          domain: dataKeys.length === 1 ? 'auto' : undefined,
+          unit: metric === 'tps' ? ' TPS' : ' UOPS',
+          tickCount: tickCount ?? 3,
+        }}
+        syncedUntil={syncedUntil}
+        defs={
+          <>
+            {type === 'Rollups' && (
+              <>
+                <PinkFillGradientDef id="fillProjects" />
+                <PinkStrokeGradientDef id="strokeProjects" />
+              </>
+            )}
+            {type === 'ValidiumsAndOptimiums' && (
+              <>
+                <CyanFillGradientDef id="fillProjects" />
+                <CyanStrokeGradientDef id="strokeProjects" />
+              </>
+            )}
+            {type === 'Others' && (
+              <>
+                <YellowFillGradientDef id="fillProjects" />
+                <YellowStrokeGradientDef id="strokeProjects" />
+              </>
+            )}
+            <EthereumFillGradientDef id="fillEthereum" />
+            <EthereumStrokeGradientDef id="strokeEthereum" />
+          </>
+        }
+        renderTooltip={(row, keys) => (
+          <ActivityCustomTooltip row={row} keys={keys} metric={metric} />
+        )}
+      />
     </ChartContainer>
   )
 }
@@ -209,7 +207,7 @@ export function ActivityCustomTooltip<
   const payload = getTooltipEntries(row, keys, { skipNull })
 
   return (
-    <TsChartTooltipWrapper>
+    <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(timestamp, timestamp + UnixTime.DAY)}
@@ -278,7 +276,7 @@ export function ActivityCustomTooltip<
           })}
         </div>
       </div>
-    </TsChartTooltipWrapper>
+    </ChartTooltipWrapper>
   )
 }
 

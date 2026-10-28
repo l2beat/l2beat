@@ -10,11 +10,10 @@ import { expect, type Page, test } from 'playwright/test'
 const PAGE = '/scaling/summary'
 const PHONE = { width: 390, height: 844 }
 const STEPS = 16
-/** Longer than recharts' 400ms slide from one point to the next. */
+/** How long each position is watched for. */
 const SLIDE_MS = 500
-/** Recharts charts, and TanStack charts with their hover overlay. */
-const CHART = '.recharts-surface, .ts-chart-host'
-const TOOLTIP = '.recharts-tooltip-wrapper, [data-chart-tooltip]'
+const CHART = '.ts-chart-host'
+const TOOLTIP = '[data-chart-tooltip]'
 
 test('chart tooltips stay inside a phone window', async ({ browser }) => {
   const context = await browser.newContext({ viewport: PHONE })

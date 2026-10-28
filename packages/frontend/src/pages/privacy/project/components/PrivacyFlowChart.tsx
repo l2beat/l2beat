@@ -1,26 +1,22 @@
 import type { Milestone } from '@l2beat/config'
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
 import type { ChartScale } from '~/components/chart/types'
-import type {
-  ChartMeta,
-  ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipWrapper,
+  type ChartMeta,
+  type ChartProject,
   useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+} from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import {
+  ChartTooltipWrapper,
+  getTooltipEntries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { PrivacyFlowsChartPoint } from '~/server/features/privacy/getPrivacyFlowsChart'
 import { formatRange } from '~/utils/dates'
@@ -47,6 +43,8 @@ const chartMeta = {
     indicatorType: { shape: 'line' },
   },
 } satisfies ChartMeta
+
+type SeriesKey = keyof typeof chartMeta
 
 export function PrivacyFlowChart({
   data,
@@ -89,78 +87,73 @@ export function PrivacyFlowChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
+      legend
     >
-      <AreaChart
-        responsive
+      <TimeSeriesChart
         data={chartData}
-        // Without right:1 the chart last point is not hoverable for some reason
+        ariaLabel={metric === 'count' ? 'Flows count' : 'Flows value'}
         margin={{ top: 20, right: project ? 0 : 1 }}
-      >
-        <defs>
-          <CustomFillGradientDef
-            id={`privacy-${metric}-deposits-fill`}
-            colors={{
-              primary: 'var(--chart-emerald)',
-              secondary: 'var(--chart-emerald)',
-            }}
-          />
-          <CustomFillGradientDef
-            id={`privacy-${metric}-withdrawals-fill`}
-            colors={{
-              primary: 'var(--chart-pink)',
-              secondary: 'var(--chart-pink)',
-            }}
-          />
-        </defs>
-        <ChartLegend content={<ChartLegendContent />} />
-        <ChartStrokeOverFillAreaComponents
-          data={[
-            {
-              dataKey: 'deposits',
-              stroke: 'var(--chart-emerald)',
-              fill: `url(#privacy-${metric}-deposits-fill)`,
-              hide: !dataKeys.includes('deposits'),
-            },
-            {
-              dataKey: 'withdrawals',
-              stroke: 'var(--chart-pink)',
-              fill: `url(#privacy-${metric}-withdrawals-fill)`,
-              hide: !dataKeys.includes('withdrawals'),
-            },
-          ]}
-        />
-        <ChartTooltip
-          filterNull={false}
-          content={<PrivacyFlowChartTooltip metric={metric} />}
-        />
-        <ChartCommonComponents
-          data={chartData}
-          isLoading={isLoading}
-          yAxis={{
-            scale: scale === 'linear' ? 'auto' : scale,
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            tickCount: 4,
-            tickFormatter: (value) =>
-              metric === 'count'
-                ? formatInteger(Number(value))
-                : formatCurrency(Number(value), 'usd'),
-          }}
-          syncedUntil={syncedUntil}
-        />
-      </AreaChart>
+        series={[
+          {
+            key: 'deposits',
+            stroke: 'var(--chart-emerald)',
+            fill: `url(#privacy-${metric}-deposits-fill)`,
+            hidden: !dataKeys.includes('deposits'),
+          },
+          {
+            key: 'withdrawals',
+            stroke: 'var(--chart-pink)',
+            fill: `url(#privacy-${metric}-withdrawals-fill)`,
+            hidden: !dataKeys.includes('withdrawals'),
+          },
+        ]}
+        yAxis={{
+          scale: scale === 'linear' ? undefined : scaleSymlog,
+          domain: dataKeys.length === 1 ? 'auto' : undefined,
+          tickCount: 4,
+          format: (value) =>
+            metric === 'count'
+              ? formatInteger(value)
+              : formatCurrency(value, 'usd'),
+        }}
+        syncedUntil={syncedUntil}
+        defs={
+          <>
+            <CustomFillGradientDef
+              id={`privacy-${metric}-deposits-fill`}
+              colors={{
+                primary: 'var(--chart-emerald)',
+                secondary: 'var(--chart-emerald)',
+              }}
+            />
+            <CustomFillGradientDef
+              id={`privacy-${metric}-withdrawals-fill`}
+              colors={{
+                primary: 'var(--chart-pink)',
+                secondary: 'var(--chart-pink)',
+              }}
+            />
+          </>
+        }
+        renderTooltip={(row, keys) => (
+          <PrivacyFlowChartTooltip row={row} keys={keys} metric={metric} />
+        )}
+      />
     </ChartContainer>
   )
 }
 
 function PrivacyFlowChartTooltip({
-  payload,
-  label,
+  row,
+  keys,
   metric,
-}: CustomChartTooltipProps & {
+}: {
+  row: { timestamp: number } & Record<SeriesKey, number | null>
+  keys: SeriesKey[]
   metric: 'count' | 'value'
 }) {
   const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
+  const label = row.timestamp
 
   return (
     <ChartTooltipWrapper>
@@ -169,11 +162,7 @@ function PrivacyFlowChartTooltip({
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
-        {payload.map((entry) => {
-          if (entry.name === undefined || entry.hide || entry.type === 'none') {
-            return null
-          }
-
+        {getTooltipEntries(row, keys).map((entry) => {
           const config = meta[entry.name]
           if (!config) return null
 

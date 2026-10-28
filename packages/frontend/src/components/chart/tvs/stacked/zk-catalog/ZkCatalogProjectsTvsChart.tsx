@@ -3,24 +3,22 @@ import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { Area, AreaChart } from 'recharts'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartUnit } from '~/components/chart/types'
-import type {
-  ChartMeta,
-  ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipWrapper,
+  type ChartMeta,
+  type ChartProject,
   useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+} from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import {
+  ChartTooltipWrapper,
+  getTooltipEntries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
@@ -159,61 +157,59 @@ export function ZkCatalogProjectsTvsChart({
         onItemClick: toggleDataKey,
       }}
       project={project}
-    >
-      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
+      legend
+      legendLeading={
         <ChartLegendToggleAll
           showAllSelected={showAllSelected}
           onToggleAll={toggleAllDataKeys}
         />
-        {chartOrderedIds.map((projectId) => (
-          <Area
-            key={projectId}
-            dataKey={projectId}
-            hide={!dataKeys.includes(projectId)}
-            fill={chartMeta[projectId]?.color}
-            fillOpacity={1}
-            strokeWidth={0}
-            stackId={dataKeys.length === 1 ? undefined : 'a'}
-            isAnimationActive={false}
+      }
+    >
+      <TimeSeriesChart
+        data={chartData}
+        ariaLabel="Value secured by project"
+        series={chartOrderedIds.map((projectId) => ({
+          key: projectId,
+          fill: chartMeta[projectId]?.color,
+          stack: dataKeys.length > 1,
+          hidden: !dataKeys.includes(projectId),
+        }))}
+        yAxis={{
+          domain: dataKeys.length === 1 ? 'auto' : undefined,
+          format: (value) => formatCurrency(value, unit),
+          tickCount: 4,
+        }}
+        syncedUntil={data?.syncedUntil}
+        renderTooltip={(row, keys) => (
+          <CustomTooltip
+            row={row}
+            keys={keys}
+            unit={unit}
+            sinceByProjectId={sinceByProjectId}
           />
-        ))}
-        <ChartCommonComponents
-          data={chartData}
-          isLoading={isLoading}
-          yAxis={{
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            tickFormatter: (value: number) => formatCurrency(value, unit),
-            tickCount: 4,
-          }}
-          syncedUntil={data?.syncedUntil}
-        />
-        <ChartTooltip
-          content={
-            <CustomTooltip unit={unit} sinceByProjectId={sinceByProjectId} />
-          }
-          filterNull={false}
-        />
-      </AreaChart>
+        )}
+      />
     </ChartContainer>
   )
 }
 
 function CustomTooltip({
-  payload,
-  label,
+  row,
+  keys,
   unit,
   sinceByProjectId,
-}: CustomChartTooltipProps & {
+}: {
+  row: { timestamp: number }
+  keys: string[]
   unit: ChartUnit
   sinceByProjectId: Map<string, number>
 }) {
   const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
+  const label = row.timestamp
 
-  const actualPayload = [...payload]
+  const actualPayload = getTooltipEntries(row, keys)
     .sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
     .filter((entry) => {
-      if (entry.hide || !entry.name) return false
       const since = sinceByProjectId.get(entry.name)
       return since !== undefined && label >= since
     })
@@ -236,7 +232,6 @@ function CustomTooltip({
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
         {actualPayload.slice(0, 20).map((entry, index) => {
-          if (entry.type === 'none' || !entry.name) return null
           const config = meta[entry.name]
           if (!config) return null
 
@@ -256,17 +251,15 @@ function CustomTooltip({
               </span>
               <div className="flex items-end justify-end gap-1 max-sm:flex-col sm:items-center">
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.value !== null && entry.value !== undefined
+                  {entry.value !== null
                     ? formatCurrency(entry.value, unit)
                     : 'No data'}
                 </span>
-                {entry.value !== null &&
-                  entry.value !== undefined &&
-                  total > 0 && (
-                    <span className="font-medium text-label-value-13 text-secondary sm:text-label-value-15">
-                      ({formatPercent(entry.value / total)})
-                    </span>
-                  )}
+                {entry.value !== null && total > 0 && (
+                  <span className="font-medium text-label-value-13 text-secondary sm:text-label-value-15">
+                    ({formatPercent(entry.value / total)})
+                  </span>
+                )}
               </div>
             </div>
           )

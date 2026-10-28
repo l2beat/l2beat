@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
@@ -25,11 +26,10 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
-import { TsChartContainer } from '~/components/core/chart/tanstack/TsChartContainer'
 import {
-  TsChartTooltipWrapper,
-  TsTimeSeriesChart,
-} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
+  ChartTooltipWrapper,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   type ActivityMetric,
@@ -137,7 +137,7 @@ export function L2RecategorizedActivityChart({
   }, [data, metric])
 
   return (
-    <TsChartContainer
+    <ChartContainer
       meta={chartMeta}
       data={chartData}
       isLoading={isLoading}
@@ -149,7 +149,7 @@ export function L2RecategorizedActivityChart({
       }}
       milestones={milestones}
     >
-      <TsTimeSeriesChart
+      <TimeSeriesChart
         data={chartData}
         ariaLabel="Activity"
         margin={{ top: 20, right: 1 }}
@@ -189,7 +189,7 @@ export function L2RecategorizedActivityChart({
           />
         )}
       />
-    </TsChartContainer>
+    </ChartContainer>
   )
 }
 
@@ -210,7 +210,7 @@ function CustomTooltip({
   const payload = visibleKeys.map((name) => ({ name, value: row[name] }))
 
   return (
-    <TsChartTooltipWrapper>
+    <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(label, label + UnixTime.DAY)}
@@ -279,6 +279,6 @@ function CustomTooltip({
           })}
         </div>
       </div>
-    </TsChartTooltipWrapper>
+    </ChartTooltipWrapper>
   )
 }

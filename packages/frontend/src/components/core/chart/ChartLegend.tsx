@@ -1,16 +1,16 @@
 import { type ReactNode, useRef } from 'react'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import { cn } from '~/utils/cn'
-import { OverflowWrapper } from '../../OverflowWrapper'
-import { useChart } from '../ChartContext'
-import { ChartDataIndicator } from '../ChartDataIndicator'
+import { OverflowWrapper } from '../OverflowWrapper'
+import { useChart } from './ChartContext'
+import { ChartDataIndicator } from './ChartDataIndicator'
 import {
   legendOnboardingHintClassName,
   useChartLegendOnboarding,
-} from '../ChartLegendOnboardingContext'
+} from './ChartLegendOnboardingContext'
 
-/** `ChartLegendContent` without Recharts: items come from the chart meta. */
-export function TsChartLegend({ leading }: { leading?: ReactNode }) {
+/** The legend under a chart; items come from the chart meta, in order. */
+export function ChartLegend({ leading }: { leading?: ReactNode }) {
   const contentRef = useRef<HTMLDivElement>(null)
   const { meta, interactiveLegend } = useChart()
   const {
@@ -27,7 +27,7 @@ export function TsChartLegend({ leading }: { leading?: ReactNode }) {
   return (
     <div
       className={cn(
-        'ts-legend relative pt-1',
+        'chart-legend relative pt-1',
         interactiveLegend &&
           !hasFinishedOnboardingInitial &&
           !interactiveLegend.disableOnboarding &&

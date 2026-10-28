@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { ProjectCostsChart } from '~/components/chart/costs/ProjectCostsChart'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TrackedTxsOutageNotice } from '~/components/TrackedTxsOutageNotice'
 import { env } from '~/env'

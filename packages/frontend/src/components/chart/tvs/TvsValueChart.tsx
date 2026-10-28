@@ -1,25 +1,21 @@
 import type { Milestone } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
-import { Area, AreaChart } from 'recharts'
-import type {
-  ChartMeta,
-  ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipWrapper,
+  type ChartMeta,
+  type ChartProject,
   useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+} from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
+import {
+  ChartTooltipWrapper,
+  getTooltipEntries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 
@@ -58,53 +54,57 @@ export function TvsValueChart({
       isLoading={isLoading}
       project={project}
       milestones={milestones}
+      legend
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <defs>
-          <PinkFillGradientDef id="tvs-value-fill" />
-          <PinkStrokeGradientDef id="tvs-value-stroke" />
-        </defs>
-        <Area
-          dataKey="value"
-          fill="url(#tvs-value-fill)"
-          fillOpacity={1}
-          stroke="url(#tvs-value-stroke)"
-          isAnimationActive={false}
-        />
-        <ChartTooltip filterNull={false} content={<TvsValueChartTooltip />} />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            tickCount: 4,
-            tickFormatter: (value) => formatCurrency(Number(value), 'usd'),
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartLegend content={<ChartLegendContent />} />
-      </AreaChart>
+      <TimeSeriesChart
+        data={data}
+        ariaLabel="Value secured"
+        series={[
+          {
+            key: 'value',
+            fill: 'url(#tvs-value-fill)',
+            stroke: 'url(#tvs-value-stroke)',
+          },
+        ]}
+        yAxis={{
+          tickCount: 4,
+          format: (value) => formatCurrency(value, 'usd'),
+        }}
+        syncedUntil={syncedUntil}
+        defs={
+          <>
+            <PinkFillGradientDef id="tvs-value-fill" />
+            <PinkStrokeGradientDef id="tvs-value-stroke" />
+          </>
+        }
+        renderTooltip={(row, keys) => (
+          <TvsValueChartTooltip row={row} keys={keys} />
+        )}
+      />
     </ChartContainer>
   )
 }
 
-function TvsValueChartTooltip({ payload, label }: CustomChartTooltipProps) {
+function TvsValueChartTooltip({
+  row,
+  keys,
+}: {
+  row: TvsValueChartDataPoint
+  keys: 'value'[]
+}) {
   const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
+  const payload = getTooltipEntries(row, keys)
 
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, {
+        {formatTimestamp(row.timestamp, {
           mode: 'datetime',
         })}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
         {payload.map((entry) => {
-          if (entry.name === undefined || entry.hide || entry.type === 'none') {
-            return null
-          }
-
           const config = meta[entry.name]
           if (!config) return null
 
@@ -123,9 +123,9 @@ function TvsValueChartTooltip({ payload, label }: CustomChartTooltipProps) {
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {entry.value === null || entry.value === undefined
+                {entry.value === null
                   ? 'No data'
-                  : formatCurrency(Number(entry.value), 'usd')}
+                  : formatCurrency(entry.value, 'usd')}
               </span>
             </div>
           )

@@ -2,25 +2,19 @@ import type { Milestone } from '@l2beat/config'
 import { assert, formatBytes, UnixTime } from '@l2beat/shared-pure'
 import pick from 'lodash/pick'
 import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
-import type {
-  ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipWrapper,
+  type ChartProject,
   useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+} from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
-import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import {
+  ChartTooltipWrapper,
+  getTooltipEntries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
 
@@ -31,6 +25,8 @@ const chartMeta = {
     indicatorType: { shape: 'line' as const },
   },
 }
+
+type SeriesKey = keyof typeof chartMeta
 
 interface DataPostedChartDataPoint {
   timestamp: number
@@ -79,48 +75,44 @@ export function DataPostedChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
+      legend
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent />} />
-        <ChartStrokeOverFillAreaComponents
-          data={Object.keys(filteredChartMeta).flatMap((key) => ({
-            dataKey: key,
-            stroke:
-              filteredChartMeta[key as keyof typeof filteredChartMeta]?.color,
-            fill: `url(#${key}-fill)`,
-            hide: !dataKeys.includes(key as keyof typeof filteredChartMeta),
-          }))}
-        />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            tickCount,
-            tickFormatter: (value: number) => formatBytes(value),
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartTooltip
-          content={<DataPostedCustomTooltip resolution={resolution} />}
-        />
-        <defs>
-          <EthereumFillGradientDef id="ethereum-fill" />
-          <NoDataPatternDef />
-        </defs>
-      </AreaChart>
+      <TimeSeriesChart
+        data={data}
+        ariaLabel="Data posted"
+        series={(Object.keys(filteredChartMeta) as SeriesKey[]).map((key) => ({
+          key,
+          stroke: filteredChartMeta[key]?.color,
+          fill: `url(#${key}-fill)`,
+          hidden: !dataKeys.includes(key),
+        }))}
+        yAxis={{ tickCount, format: formatBytes }}
+        syncedUntil={syncedUntil}
+        defs={<EthereumFillGradientDef id="ethereum-fill" />}
+        renderTooltip={(row, keys) => (
+          <DataPostedCustomTooltip
+            row={row}
+            keys={keys}
+            resolution={resolution}
+          />
+        )}
+      />
     </ChartContainer>
   )
 }
 
 function DataPostedCustomTooltip({
-  payload,
-  label: timestamp,
+  row,
+  keys,
   resolution,
-}: CustomChartTooltipProps & {
+}: {
+  row: DataPostedChartDataPoint
+  keys: SeriesKey[]
   resolution: ChartResolution
 }) {
   const { meta } = useChart()
-  if (!payload || typeof timestamp !== 'number') return null
+  const timestamp = row.timestamp
+  const payload = getTooltipEntries(row, keys, { skipNull: true })
 
   return (
     <ChartTooltipWrapper>
@@ -133,7 +125,6 @@ function DataPostedCustomTooltip({
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.name === undefined || entry.type === 'none') return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -152,9 +143,7 @@ function DataPostedCustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value !== null && entry.value !== undefined
-                    ? formatBytes(entry.value)
-                    : 'No data'}
+                  {entry.value !== null ? formatBytes(entry.value) : 'No data'}
                 </span>
               </div>
             )

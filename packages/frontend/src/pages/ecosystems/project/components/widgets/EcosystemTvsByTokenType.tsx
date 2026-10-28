@@ -1,12 +1,8 @@
 import { useMemo } from 'react'
-import { Label, Pie, PieChart } from 'recharts'
 import { assetCategoryTvsChartMeta } from '~/components/chart/tvs/stacked/AssetCategoryTvsChart'
-import type { ChartMeta } from '~/components/core/chart/Chart'
-import {
-  ChartTooltip,
-  SimpleChartContainer,
-} from '~/components/core/chart/Chart'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { DonutChart } from '~/components/core/chart/DonutChart'
 import { PieChartTooltip } from '~/components/core/chart/PieChartTooltip'
 import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
@@ -50,6 +46,16 @@ export function EcosystemTvsByTokenType({
       .filter((data) => data.tvs > 0)
   }, [tvsByTokenType])
 
+  const pieData = useMemo(
+    () =>
+      chartData.map((data) => ({
+        name: data.tokenType,
+        value: data.tvs,
+        fill: data.fill,
+      })),
+    [chartData],
+  )
+
   const totalTvs = chartData.reduce((acc, curr) => acc + curr.tvs, 0)
 
   return (
@@ -86,51 +92,33 @@ export function EcosystemTvsByTokenType({
             })}
           </tbody>
         </table>
-        <SimpleChartContainer meta={chartMeta}>
-          <PieChart
-            responsive
-            className="aspect-square! h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
-          >
-            <ChartTooltip
-              cursor={false}
-              content={<PieChartTooltip />}
-              position={breakpoint === 'xs' ? { x: -44, y: -46 } : undefined}
-            />
-            <Pie
-              data={chartData}
-              dataKey="tvs"
-              nameKey="tokenType"
-              isAnimationActive={false}
-              innerRadius={breakpoint === 'xs' ? 24 : 35}
-              outerRadius={breakpoint === 'xs' ? 58 : 70}
-            >
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                    return (
-                      <text x="50%" y="50%" textAnchor="middle">
-                        <tspan
-                          x="50%"
-                          dy={-1}
-                          className="fill-secondary font-medium text-2xs leading-none"
-                        >
-                          Token
-                        </tspan>
-                        <tspan
-                          x="50%"
-                          dy={12}
-                          className="fill-secondary font-medium text-2xs leading-none"
-                        >
-                          types
-                        </tspan>
-                      </text>
-                    )
-                  }
-                }}
-              />
-            </Pie>
-          </PieChart>
-        </SimpleChartContainer>
+        <DonutChart
+          meta={chartMeta}
+          data={pieData}
+          className="aspect-square h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
+          innerRadius={breakpoint === 'xs' ? 24 : 35}
+          outerRadius={breakpoint === 'xs' ? 58 : 70}
+          tooltipPosition={breakpoint === 'xs' ? { x: -44, y: -46 } : undefined}
+          renderTooltip={(entry) => <PieChartTooltip entry={entry} />}
+          center={
+            <text x="50%" y="50%" textAnchor="middle">
+              <tspan
+                x="50%"
+                dy={-1}
+                className="fill-secondary font-medium text-2xs leading-none"
+              >
+                Token
+              </tspan>
+              <tspan
+                x="50%"
+                dy={12}
+                className="fill-secondary font-medium text-2xs leading-none"
+              >
+                types
+              </tspan>
+            </text>
+          }
+        />
       </div>
     </EcosystemWidget>
   )

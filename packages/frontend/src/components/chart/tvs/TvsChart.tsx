@@ -2,9 +2,9 @@ import { assert, formatCurrency } from '@l2beat/shared-pure'
 import { useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
+  ChartTooltipWrapper,
   getTooltipEntries,
-  TsChartTooltipWrapper,
-} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
+} from '~/components/core/chart/TimeSeriesChart'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartUnit } from '../types'
 
@@ -33,7 +33,7 @@ export function TvsCustomTooltip<
   const payload = getTooltipEntries(row, keys, { skipNull })
 
   return (
-    <TsChartTooltipWrapper>
+    <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col">
         <div className="mb-3 font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, {
@@ -69,6 +69,6 @@ export function TvsCustomTooltip<
           })}
         </div>
       </div>
-    </TsChartTooltipWrapper>
+    </ChartTooltipWrapper>
   )
 }

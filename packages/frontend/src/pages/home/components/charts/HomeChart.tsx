@@ -1,15 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useId, useMemo } from 'react'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { PinkFillGradientDef } from '~/components/core/chart/defs/PinkGradientDef'
-import { TsChartContainer } from '~/components/core/chart/tanstack/TsChartContainer'
 import {
-  TsChartTooltipWrapper,
-  type TsSeries,
-  TsTimeSeriesChart,
-} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
+  type ChartSeries,
+  ChartTooltipWrapper,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange, formatTimestamp } from '~/utils/dates'
 
@@ -80,7 +80,7 @@ export function HomeChart({
   )
 
   const series = useMemo(() => {
-    const result: TsSeries<'value' | 'ethereum'>[] = [
+    const result: ChartSeries<'value' | 'ethereum'>[] = [
       { key: 'value', stroke, fill: `url(#${fillId})` },
     ]
     if (withEthereum) {
@@ -98,13 +98,13 @@ export function HomeChart({
   return (
     <div className="relative h-full min-h-[120px]">
       <div className="absolute inset-0 [&>div]:h-full">
-        <TsChartContainer
+        <ChartContainer
           meta={meta}
           data={data}
           isLoading={isLoading}
           size="small"
         >
-          <TsTimeSeriesChart
+          <TimeSeriesChart
             data={data}
             series={series}
             ariaLabel={tooltipLabel}
@@ -137,7 +137,7 @@ export function HomeChart({
               />
             )}
           />
-        </TsChartContainer>
+        </ChartContainer>
       </div>
     </div>
   )
@@ -163,7 +163,7 @@ function HomeChartTooltip({
   })
   const breakdown = row.tvsBreakdown
   return (
-    <TsChartTooltipWrapper>
+    <ChartTooltipWrapper>
       <div className="flex w-50 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {dayRange
@@ -220,6 +220,6 @@ function HomeChartTooltip({
           )}
         </div>
       </div>
-    </TsChartTooltipWrapper>
+    </ChartTooltipWrapper>
   )
 }

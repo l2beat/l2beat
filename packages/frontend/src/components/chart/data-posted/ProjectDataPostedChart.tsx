@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DataPostedRangeControls } from '~/pages/layer2s/data-posted/DataPostedRangeControls'
 import { useTRPC } from '~/trpc/React'

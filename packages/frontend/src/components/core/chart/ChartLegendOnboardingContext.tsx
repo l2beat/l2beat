@@ -46,8 +46,8 @@ export function ChartLegendOnboardingProvider({
   }, [])
 
   // Done in the DOM rather than React state: a scroll-driven context value
-  // re-rendered every chart on the page, and each chart re-render makes
-  // recharts re-measure itself with forced layouts.
+  // re-rendered every chart on the page, and each chart re-render rebuilds
+  // its scene.
   useEffect(() => {
     if (hasFinishedOnboarding) return
     window.addEventListener('scroll', markHintClosestToViewportCenter, {

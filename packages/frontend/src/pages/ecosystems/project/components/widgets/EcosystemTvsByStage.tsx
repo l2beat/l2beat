@@ -1,12 +1,8 @@
 import type { Stage } from '@l2beat/config'
-import { Label, Pie, PieChart } from 'recharts'
 import { StageBadge } from '~/components/badge/StageBadge'
 import { CssVariables } from '~/components/CssVariables'
-import type { ChartMeta } from '~/components/core/chart/Chart'
-import {
-  ChartTooltip,
-  SimpleChartContainer,
-} from '~/components/core/chart/Chart'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
+import { DonutChart } from '~/components/core/chart/DonutChart'
 import { PieChartTooltip } from '~/components/core/chart/PieChartTooltip'
 import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
@@ -63,23 +59,23 @@ export function EcosystemTvsByStage({
 
   const chartData = [
     {
-      stage: 'stage0',
-      tvs: tvsByStage['Stage 0'].tvs,
+      name: 'stage0',
+      value: tvsByStage['Stage 0'].tvs,
       fill: '#F94A24',
     },
     {
-      stage: 'stage1',
-      tvs: tvsByStage['Stage 1'].tvs,
+      name: 'stage1',
+      value: tvsByStage['Stage 1'].tvs,
       fill: '#FFC61B',
     },
     {
-      stage: 'stage2',
-      tvs: tvsByStage['Stage 2'].tvs,
+      name: 'stage2',
+      value: tvsByStage['Stage 2'].tvs,
       fill: '#125D19',
     },
     {
-      stage: 'notApplicable',
-      tvs: tvsByStage.NotApplicable.tvs,
+      name: 'notApplicable',
+      value: tvsByStage.NotApplicable.tvs,
       fill: 'var(--not-applicable)',
     },
   ]
@@ -131,44 +127,29 @@ export function EcosystemTvsByStage({
             )
           })}
         </div>
-        <SimpleChartContainer meta={chartMeta}>
-          <PieChart
-            responsive
-            className="aspect-square! h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
-          >
-            <ChartTooltip
-              cursor={false}
-              content={<PieChartTooltip className="w-32" />}
-              position={breakpoint === 'xs' ? { x: -22, y: -46 } : undefined}
-            />
-            <Pie
-              className={className}
-              data={chartData}
-              dataKey="tvs"
-              nameKey="stage"
-              isAnimationActive={false}
-              innerRadius={breakpoint === 'xs' ? 24 : 35}
-              outerRadius={breakpoint === 'xs' ? 58 : 70}
-            >
-              <Label
-                content={() => {
-                  return (
-                    <text x="50%" y="50%" textAnchor="middle">
-                      <tspan
-                        x="50%"
-                        y="50%"
-                        className="fill-secondary font-medium text-2xs leading-none"
-                        dy={5}
-                      >
-                        Stages
-                      </tspan>
-                    </text>
-                  )
-                }}
-              />
-            </Pie>
-          </PieChart>
-        </SimpleChartContainer>
+        <DonutChart
+          meta={chartMeta}
+          data={chartData}
+          className="aspect-square h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
+          innerRadius={breakpoint === 'xs' ? 24 : 35}
+          outerRadius={breakpoint === 'xs' ? 58 : 70}
+          tooltipPosition={breakpoint === 'xs' ? { x: -22, y: -46 } : undefined}
+          renderTooltip={(entry) => (
+            <PieChartTooltip entry={entry} className="w-32" />
+          )}
+          center={
+            <text x="50%" y="50%" textAnchor="middle">
+              <tspan
+                x="50%"
+                y="50%"
+                className="fill-secondary font-medium text-2xs leading-none"
+                dy={5}
+              >
+                Stages
+              </tspan>
+            </text>
+          }
+        />
       </div>
     </EcosystemWidget>
   )

@@ -161,10 +161,7 @@ const installProbes = `(() => {
   }
   requestAnimationFrame(loop)
   const observer = new MutationObserver((mutations) => { w.__chartRerenders += mutations.length })
-  for (const svg of document.querySelectorAll('svg.recharts-surface')) {
-    observer.observe(svg, { attributes: true, attributeFilter: ['width'] })
-  }
-  // TanStack charts re-render a resized scene into a new viewBox.
+  // A chart re-renders a resized scene into a new viewBox.
   for (const svg of document.querySelectorAll('svg.ts-chart')) {
     observer.observe(svg, { attributes: true, attributeFilter: ['viewBox'] })
   }

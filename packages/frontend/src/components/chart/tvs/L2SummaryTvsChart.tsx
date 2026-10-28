@@ -2,6 +2,7 @@ import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
@@ -17,11 +18,10 @@ import {
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { TsChartContainer } from '~/components/core/chart/tanstack/TsChartContainer'
 import {
-  TsChartTooltipWrapper,
-  TsTimeSeriesChart,
-} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
+  ChartTooltipWrapper,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
@@ -86,7 +86,7 @@ export function L2SummaryTvsChart({
         unit={unit}
         range={range}
       />
-      <TsChartContainer
+      <ChartContainer
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
@@ -97,7 +97,7 @@ export function L2SummaryTvsChart({
           disableOnboarding: true,
         }}
       >
-        <TsTimeSeriesChart
+        <TimeSeriesChart
           data={chartData}
           ariaLabel="Value secured"
           margin={{ top: 20, right: 1, left: 0 }}
@@ -140,7 +140,7 @@ export function L2SummaryTvsChart({
             <CustomTooltip row={row} visibleKeys={keys} />
           )}
         />
-      </TsChartContainer>
+      </ChartContainer>
     </div>
   )
 }
@@ -162,7 +162,7 @@ function CustomTooltip({
   }, null)
   const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
-    <TsChartTooltipWrapper>
+    <ChartTooltipWrapper>
       <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="font-medium text-label-value-14 text-secondary">
           {isFullDay
@@ -212,7 +212,7 @@ function CustomTooltip({
           })}
         </div>
       </div>
-    </TsChartTooltipWrapper>
+    </ChartTooltipWrapper>
   )
 }
 

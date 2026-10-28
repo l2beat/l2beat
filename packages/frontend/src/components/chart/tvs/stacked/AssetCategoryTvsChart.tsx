@@ -1,14 +1,16 @@
 import type { Milestone } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
-import { Area, AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import omit from 'lodash/omit'
+import { useMemo } from 'react'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type {
+  ChartMeta,
+  ChartProject,
+} from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import type { ChartUnit } from '../../types'
 import { StackedTvsChartTooltip } from './StackedTvsChartTooltip'
 
@@ -66,6 +68,8 @@ export const assetCategoryTvsChartMeta = {
   },
 } satisfies ChartMeta
 
+type SeriesKey = keyof typeof assetCategoryTvsChartMeta
+
 export function AssetCategoryTvsChart({
   data,
   syncedUntil,
@@ -78,13 +82,49 @@ export function AssetCategoryTvsChart({
   project,
   excludeRwaRestrictedTokens,
 }: Props) {
+  const meta = useMemo(
+    () =>
+      excludeRwaRestrictedTokens
+        ? omit(assetCategoryTvsChartMeta, 'rwaRestricted')
+        : assetCategoryTvsChartMeta,
+    [excludeRwaRestrictedTokens],
+  )
+  // Bottom of the stack first. An active dot on the top one of
+  // other/btc/stablecoin, and always on the rest.
+  const seriesKeys: { key: SeriesKey; activeDot?: boolean }[] = [
+    { key: 'rwaPublic' },
+    ...(excludeRwaRestrictedTokens ? [] : [{ key: 'rwaRestricted' as const }]),
+    {
+      key: 'other',
+      activeDot:
+        !dataKeys.includes('ether') &&
+        !dataKeys.includes('stablecoin') &&
+        !dataKeys.includes('btc'),
+    },
+    {
+      key: 'btc',
+      activeDot:
+        !dataKeys.includes('ether') && !dataKeys.includes('stablecoin'),
+    },
+    { key: 'stablecoin', activeDot: !dataKeys.includes('ether') },
+    { key: 'ether' },
+  ]
+  const series: ChartSeries<SeriesKey, TokenCategoryTvsChartDataPoint>[] =
+    seriesKeys.map(({ key, activeDot }) => ({
+      key,
+      fill: assetCategoryTvsChartMeta[key].color,
+      stack: dataKeys.length > 1,
+      activeDot,
+      hidden: !dataKeys.includes(key),
+    }))
+
   // If only one data key is selected we want to change the domain
   // Having it from 0 to MAX does make sense for stacked chart (better comparison)
   // But for single one it should not start from 0
   return (
     <ChartContainer
       data={data}
-      meta={assetCategoryTvsChartMeta}
+      meta={meta}
       isLoading={isLoading}
       milestones={milestones}
       project={project}
@@ -92,95 +132,27 @@ export function AssetCategoryTvsChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
+      legend
     >
-      {/* Without right:1 the chart last point is not hoverable for some reason */}
-      <AreaChart responsive data={data} margin={{ top: 20, right: 1 }}>
-        <ChartLegend content={<ChartLegendContent />} />
-        <Area
-          dataKey="rwaPublic"
-          hide={!dataKeys.includes('rwaPublic')}
-          fill={assetCategoryTvsChartMeta.rwaPublic.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-        />
-        {!excludeRwaRestrictedTokens && (
-          <Area
-            dataKey="rwaRestricted"
-            hide={!dataKeys.includes('rwaRestricted')}
-            fill={assetCategoryTvsChartMeta.rwaRestricted.color}
-            fillOpacity={1}
-            strokeWidth={0}
-            stackId={dataKeys.length === 1 ? undefined : 'a'}
-            isAnimationActive={false}
+      <TimeSeriesChart
+        data={data}
+        series={series}
+        ariaLabel="Value secured by asset category"
+        syncedUntil={syncedUntil}
+        yAxis={{
+          domain: dataKeys.length === 1 ? 'auto' : undefined,
+          format: (value) => formatCurrency(value, unit),
+          tickCount,
+        }}
+        renderTooltip={(row, keys) => (
+          <StackedTvsChartTooltip
+            row={row}
+            keys={keys}
+            unit={unit}
+            meta={assetCategoryTvsChartMeta}
           />
         )}
-        <Area
-          dataKey="other"
-          hide={!dataKeys.includes('other')}
-          fill={assetCategoryTvsChartMeta.other.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-          activeDot={
-            !dataKeys.includes('ether') &&
-            !dataKeys.includes('stablecoin') &&
-            !dataKeys.includes('btc')
-          }
-        />
-        <Area
-          dataKey="btc"
-          hide={!dataKeys.includes('btc')}
-          fill={assetCategoryTvsChartMeta.btc.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-          activeDot={
-            !dataKeys.includes('ether') && !dataKeys.includes('stablecoin')
-          }
-        />
-        <Area
-          dataKey="stablecoin"
-          hide={!dataKeys.includes('stablecoin')}
-          fill={assetCategoryTvsChartMeta.stablecoin.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-          activeDot={!dataKeys.includes('ether')}
-        />
-        <Area
-          dataKey="ether"
-          hide={!dataKeys.includes('ether')}
-          fill={assetCategoryTvsChartMeta.ether.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-        />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            tickFormatter: (value: number) => formatCurrency(value, unit),
-            tickCount,
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartTooltip
-          content={
-            <StackedTvsChartTooltip
-              unit={unit}
-              meta={assetCategoryTvsChartMeta}
-            />
-          }
-          filterNull={false}
-        />
-      </AreaChart>
+      />
     </ChartContainer>
   )
 }

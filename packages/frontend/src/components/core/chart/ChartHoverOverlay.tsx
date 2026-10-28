@@ -36,11 +36,11 @@ const syncListeners = new Map<string, Set<SyncListener>>()
 /**
  * Crosshair, active dots and tooltip for a time series. React renders only
  * when the hovered row changes; moves within a row just translate the
- * tooltip. Like the Recharts charts, the tooltip sits below and right of the
- * pointer (left past the middle of the plot), may leave the chart but not
- * the window, and arrow keys move it between rows.
+ * tooltip. The tooltip sits below and right of the pointer (left past the
+ * middle of the plot), may leave the chart but not the window, and arrow
+ * keys move it between rows.
  */
-export function TsHoverOverlay<T>({
+export function ChartHoverOverlay<T>({
   rows,
   x: getX,
   dots,

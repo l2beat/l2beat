@@ -1,13 +1,13 @@
 import { assert, formatActivityCount, UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
-import { TsChartContainer } from '~/components/core/chart/tanstack/TsChartContainer'
 import {
-  TsChartTooltipWrapper,
-  TsTimeSeriesChart,
-} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
+  ChartTooltipWrapper,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { formatRange } from '~/utils/dates'
 
 interface ActivityRatioChartDataPoint {
@@ -32,7 +32,7 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
     },
   } satisfies ChartMeta
   return (
-    <TsChartContainer
+    <ChartContainer
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
@@ -40,7 +40,7 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
       size="small"
       legend
     >
-      <TsTimeSeriesChart
+      <TimeSeriesChart
         data={data}
         ariaLabel="UOPS/TPS ratio"
         margin={{ top: 20 }}
@@ -59,7 +59,7 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
         defs={<EmeraldFillGradientDef id="fillRatio" />}
         renderTooltip={(row) => <ActivityCustomTooltip row={row} />}
       />
-    </TsChartContainer>
+    </ChartContainer>
   )
 }
 
@@ -69,7 +69,7 @@ function ActivityCustomTooltip({ row }: { row: ActivityRatioChartDataPoint }) {
   const payload = [{ name: 'ratio', value: row.ratio }]
 
   return (
-    <TsChartTooltipWrapper>
+    <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(timestamp, timestamp + UnixTime.DAY)}
@@ -103,6 +103,6 @@ function ActivityCustomTooltip({ row }: { row: ActivityRatioChartDataPoint }) {
           })}
         </div>
       </div>
-    </TsChartTooltipWrapper>
+    </ChartTooltipWrapper>
   )
 }

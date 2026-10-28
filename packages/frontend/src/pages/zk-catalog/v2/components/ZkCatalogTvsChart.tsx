@@ -2,23 +2,17 @@ import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import round from 'lodash/round'
 import { useMemo, useState } from 'react'
-import { Area, AreaChart } from 'recharts'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import {
+  ChartTooltipWrapper,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -146,59 +140,50 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
           dataKeys,
           onItemClick: toggleDataKey,
         }}
-      >
-        {/* Without right:1 the chart last point is not hoverable for some reason */}
-        <AreaChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
+        legend
+        legendLeading={
           <ChartLegendToggleAll
             showAllSelected={showAllSelected}
             onToggleAll={toggleAllDataKeys}
           />
-          {Object.keys(chartMeta).map((id) => (
-            <Area
-              key={id}
-              dataKey={id}
-              stackId="a"
-              hide={!dataKeys.includes(id)}
-              fill={chartMeta[id]?.color}
-              fillOpacity={1}
-              strokeWidth={0}
-              activeDot={false}
-              isAnimationActive={false}
-            />
-          ))}
-          <ChartCommonComponents
-            data={chartData}
-            isLoading={isLoading}
-            yAxis={
-              unit === 'percentage'
+        }
+      >
+        <TimeSeriesChart
+          data={chartData}
+          ariaLabel="Prover adoption"
+          series={Object.keys(chartMeta).map((id) => ({
+            key: id,
+            stack: true,
+            fill: chartMeta[id]?.color,
+            activeDot: false,
+            hidden: !dataKeys.includes(id),
+          }))}
+          yAxis={
+            unit === 'percentage'
+              ? {
+                  unit: '%',
+                  // To avoid showing 100.000001% we specify domain manually
+                  domain: () => [0, 100],
+                }
+              : metric === 'value'
                 ? {
-                    unit: '%',
-                    // To avoid showing 100.000001% we specify domain manually
-                    domain: [0, 100],
-                    allowDataOverflow: true,
+                    tickCount: 4,
+                    format: (value) => formatCurrency(value, 'usd'),
                   }
-                : metric === 'value'
-                  ? {
-                      tickCount: 4,
-                      tickFormatter: (value) =>
-                        formatCurrency(Number(value), 'usd'),
-                    }
-                  : { tickCount: 4, allowDecimals: false }
-            }
-            // Project counts don't depend on TVS sync
-            syncedUntil={metric === 'value' ? data?.syncedUntil : undefined}
-          />
-          <ChartTooltip
-            filterNull={false}
-            content={
-              <CustomTooltip
-                metric={metric}
-                unit={unit}
-                pointsByTimestamp={pointsByTimestamp}
-              />
-            }
-          />
-        </AreaChart>
+                : { tickCount: 4, integer: true }
+          }
+          // Project counts don't depend on TVS sync
+          syncedUntil={metric === 'value' ? data?.syncedUntil : undefined}
+          renderTooltip={(row, keys) => (
+            <CustomTooltip
+              timestamp={row.timestamp}
+              keys={keys}
+              metric={metric}
+              unit={unit}
+              pointsByTimestamp={pointsByTimestamp}
+            />
+          )}
+        />
       </ChartContainer>
       <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
         <RadioGroup
@@ -222,27 +207,26 @@ function getAmount(point: Point, proverId: string, metric: Metric) {
 }
 
 function CustomTooltip({
-  payload,
-  label,
+  timestamp: label,
+  keys,
   metric,
   unit,
   pointsByTimestamp,
-}: CustomChartTooltipProps & {
+}: {
+  timestamp: number
+  keys: string[]
   metric: Metric
   unit: Unit
   pointsByTimestamp: Map<number, Point>
 }) {
   const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
   const point = pointsByTimestamp.get(label)
   if (!point) return null
 
-  const visible = payload
-    .flatMap(({ name, type, hide }) => {
-      const amount = name ? getAmount(point, name, metric) : null
-      return name && amount && type !== 'none' && !hide
-        ? [{ name, amount }]
-        : []
+  const visible = keys
+    .flatMap((name) => {
+      const amount = getAmount(point, name, metric)
+      return amount ? [{ name, amount }] : []
     })
     .sort((a, b) => b.amount - a.amount)
   const total = visible.reduce((acc, curr) => acc + curr.amount, 0)

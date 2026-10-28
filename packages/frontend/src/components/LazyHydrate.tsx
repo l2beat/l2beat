@@ -13,12 +13,12 @@ interface Props {
 const SKIP_WHILE_OFFSCREEN = '[content-visibility:auto]'
 // Skipping implies paint containment, which clips whatever overflows the
 // wrapper: a highlighted card's ring and glow, an open tooltip or popover not
-// rendered through a portal, and a chart's tooltip (Recharts keeps it in the
-// DOM while hidden, so this waits for the chart to be hovered). Containment
+// rendered through a portal, and a chart's tooltip (kept in the DOM while
+// hidden, so this waits for the chart to be hovered). Containment
 // also makes the wrapper a stacking context, so it has to rise itself to
 // cover its neighbours.
 const SHOW_OVERFLOW =
-  'has-[[data-highlighted],[data-radix-popper-content-wrapper],.recharts-wrapper:hover]:[content-visibility:visible] has-[[data-highlighted],[data-radix-popper-content-wrapper],.recharts-wrapper:hover]:relative has-[[data-highlighted],[data-radix-popper-content-wrapper],.recharts-wrapper:hover]:z-10'
+  'has-[[data-highlighted],[data-radix-popper-content-wrapper],.ts-chart-host:hover]:[content-visibility:visible] has-[[data-highlighted],[data-radix-popper-content-wrapper],.ts-chart-host:hover]:relative has-[[data-highlighted],[data-radix-popper-content-wrapper],.ts-chart-host:hover]:z-10'
 // A drag fires resize events every frame; remeasuring waits for the last one.
 const RESIZE_SETTLE_MS = 200
 // React 19 compares props by identity and sets innerHTML whenever this object

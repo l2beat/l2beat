@@ -8,18 +8,18 @@ import {
 } from '@l2beat/shared-pure'
 import isNumber from 'lodash/isNumber'
 import { useMemo } from 'react'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
 } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { TsChartContainer } from '~/components/core/chart/tanstack/TsChartContainer'
 import {
-  TsChartTooltipWrapper,
-  type TsSeries,
-  TsTimeSeriesChart,
-} from '~/components/core/chart/tanstack/TsTimeSeriesChart'
+  type ChartSeries,
+  ChartTooltipWrapper,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/layer2s/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/layer2s/costs/types'
@@ -120,12 +120,12 @@ export function CostsChart({
   const topCostKey = COST_KEYS_BOTTOM_UP.findLast(
     (key) => dataKeys.includes(key) && chartMeta[key],
   )
-  const series: TsSeries<SeriesKey, CostsChartDataPoint>[] = [
+  const series: ChartSeries<SeriesKey, CostsChartDataPoint>[] = [
     ...COST_KEYS_BOTTOM_UP.filter((key) => chartMeta[key]).map((key) => ({
       key,
       fill: chartMeta[key]?.color,
       stack: true,
-      // One dot, on top of the stack, as in the Recharts chart.
+      // One dot, on top of the stack.
       activeDot: key === topCostKey,
       hidden: !dataKeys.includes(key),
     })),
@@ -142,7 +142,7 @@ export function CostsChart({
   ]
 
   return (
-    <TsChartContainer
+    <ChartContainer
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
@@ -154,7 +154,7 @@ export function CostsChart({
       project={project}
       legend
     >
-      <TsTimeSeriesChart
+      <TimeSeriesChart
         data={data}
         series={series}
         ariaLabel="Costs"
@@ -177,7 +177,7 @@ export function CostsChart({
           />
         )}
       />
-    </TsChartContainer>
+    </ChartContainer>
   )
 }
 
@@ -206,7 +206,7 @@ function CustomTooltip({
     null,
   )
   return (
-    <TsChartTooltipWrapper>
+    <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
         <div className="font-medium text-label-value-14 text-secondary">
           {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
@@ -252,7 +252,7 @@ function CustomTooltip({
           })}
         </div>
       </div>
-    </TsChartTooltipWrapper>
+    </ChartTooltipWrapper>
   )
 }
 

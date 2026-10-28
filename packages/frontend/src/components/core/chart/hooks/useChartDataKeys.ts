@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { ChartMeta } from '../Chart'
+import type { ChartMeta } from '../ChartContext'
 
 export function useChartDataKeys<T extends ChartMeta>(
   chartMeta: T,

@@ -1,33 +1,40 @@
 import { assert, formatCurrency } from '@l2beat/shared-pure'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import { ChartTooltipWrapper } from '~/components/core/chart/Chart'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import {
+  ChartTooltipWrapper,
+  getTooltipEntries,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartUnit } from '../../types'
 
-export function StackedTvsChartTooltip({
-  payload,
-  label,
+export function StackedTvsChartTooltip<
+  T extends { timestamp: number },
+  K extends string,
+>({
+  row,
+  keys,
   unit,
   meta,
-}: CustomChartTooltipProps & { unit: ChartUnit; meta: ChartMeta }) {
-  if (!payload || typeof label !== 'number') return null
+}: {
+  row: T
+  /** Visible series, bottom of the stack first. */
+  keys: K[]
+  unit: ChartUnit
+  meta: ChartMeta
+}) {
+  const label = row.timestamp
+  const payload = getTooltipEntries(row, keys)
 
   const total = payload.reduce<number | null>((acc, curr) => {
-    if (curr.value === null || curr.value === undefined || curr.hide) {
+    if (curr.value === null) {
       return acc
     }
-    if (acc === null) {
-      return curr?.value ?? null
-    }
-    return acc + curr.value
+    return (acc ?? 0) + curr.value
   }, null)
-  const actualPayload = [...payload].reverse().filter((entry) => !entry.hide)
+  const actualPayload = [...payload].reverse()
 
   return (
     <ChartTooltipWrapper>
@@ -51,8 +58,7 @@ export function StackedTvsChartTooltip({
         )}
         <div className="mt-2 flex flex-col gap-2">
           {actualPayload.map((entry) => {
-            if (entry.type === 'none') return null
-            const config = meta[entry.name as string]
+            const config = meta[entry.name]
             assert(config, 'Chart meta is missing')
             return (
               <div
@@ -70,17 +76,15 @@ export function StackedTvsChartTooltip({
                 </span>
                 <div className="flex items-end justify-end gap-1 max-sm:flex-col sm:items-center">
                   <span className="whitespace-nowrap font-medium text-label-value-15">
-                    {entry.value !== null && entry.value !== undefined
+                    {entry.value !== null
                       ? formatCurrency(entry.value, unit)
                       : 'No data'}
                   </span>
-                  {entry.value !== null &&
-                    entry.value !== undefined &&
-                    total !== null && (
-                      <span className="font-medium text-label-value-13 text-secondary sm:text-label-value-15">
-                        ({formatPercent(total !== 0 ? entry.value / total : 0)})
-                      </span>
-                    )}
+                  {entry.value !== null && total !== null && (
+                    <span className="font-medium text-label-value-13 text-secondary sm:text-label-value-15">
+                      ({formatPercent(total !== 0 ? entry.value / total : 0)})
+                    </span>
+                  )}
                 </div>
               </div>
             )

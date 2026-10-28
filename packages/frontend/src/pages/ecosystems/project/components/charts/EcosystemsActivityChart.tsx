@@ -1,24 +1,20 @@
 import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import { AreaChart } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
-import type { ChartMeta } from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import {
   EthereumFillGradientDef,
   EthereumStrokeGradientDef,
 } from '~/components/core/chart/defs/EthereumGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import {
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
@@ -40,6 +36,14 @@ import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
 
 const hiddenDataKeys = ['ethereum'] as const
+
+type SeriesKey = 'projects' | 'ethereum'
+
+interface ChartDataPoint {
+  timestamp: number
+  projects: number | null
+  ethereum: number | null
+}
 
 export function EcosystemsActivityChart({
   id,
@@ -91,7 +95,7 @@ export function EcosystemsActivityChart({
     }),
   )
 
-  const chartData = useMemo(
+  const chartData = useMemo<ChartDataPoint[] | undefined>(
     () =>
       data?.data.map(([timestamp, _, __, projectsUops, ethereumUops]) => {
         return {
@@ -102,6 +106,21 @@ export function EcosystemsActivityChart({
       }),
     [data?.data],
   )
+
+  const series: ChartSeries<SeriesKey, ChartDataPoint>[] = [
+    {
+      key: 'ethereum',
+      stroke: 'url(#strokeEthereum)',
+      fill: 'url(#fillEthereum)',
+      hidden: !dataKeys.includes('ethereum'),
+    },
+    {
+      key: 'projects',
+      stroke: 'var(--ecosystem-primary)',
+      fill: 'url(#fillProjects)',
+      hidden: !dataKeys.includes('projects'),
+    },
+  ]
 
   const stats = getStats(chartData, allL2ProjectsUops)
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
@@ -123,52 +142,37 @@ export function EcosystemsActivityChart({
           onItemClick: toggleDataKey,
           disableOnboarding: true,
         }}
+        legend
+        className="h-44! min-h-44!"
       >
-        <AreaChart
-          responsive
+        <TimeSeriesChart
           data={chartData}
-          className="h-44! min-h-44!"
-          // Without right:1 the chart last point is not hoverable for some reason
-          margin={{ top: 20, right: 1 }}
-        >
-          <ChartLegend content={<ChartLegendContent />} />
-          <ChartStrokeOverFillAreaComponents
-            data={[
-              {
-                dataKey: 'ethereum',
-                stroke: 'url(#strokeEthereum)',
-                fill: 'url(#fillEthereum)',
-                hide: !dataKeys.includes('ethereum'),
-              },
-              {
-                dataKey: 'projects',
-                stroke: 'var(--ecosystem-primary)',
-                fill: 'url(#fillProjects)',
-                hide: !dataKeys.includes('projects'),
-              },
-            ]}
-          />
-          <ChartCommonComponents
-            data={chartData}
-            isLoading={isLoading}
-            yAxis={{
-              unit: ' UOPS',
-            }}
-            syncedUntil={data?.syncedUntil}
-          />
-          <ChartTooltip content={<ActivityCustomTooltip metric="uops" />} />
-          <defs>
-            <CustomFillGradientDef
-              id="fillProjects"
-              colors={{
-                primary: 'var(--ecosystem-primary)',
-                secondary: 'var(--ecosystem-secondary)',
-              }}
+          series={series}
+          ariaLabel="Activity"
+          yAxis={{ unit: ' UOPS' }}
+          syncedUntil={data?.syncedUntil}
+          defs={
+            <>
+              <CustomFillGradientDef
+                id="fillProjects"
+                colors={{
+                  primary: 'var(--ecosystem-primary)',
+                  secondary: 'var(--ecosystem-secondary)',
+                }}
+              />
+              <EthereumFillGradientDef id="fillEthereum" />
+              <EthereumStrokeGradientDef id="strokeEthereum" />
+            </>
+          }
+          renderTooltip={(row, keys) => (
+            <ActivityCustomTooltip
+              row={row}
+              keys={keys}
+              metric="uops"
+              skipNull
             />
-            <EthereumFillGradientDef id="fillEthereum" />
-            <EthereumStrokeGradientDef id="strokeEthereum" />
-          </defs>
-        </AreaChart>
+          )}
+        />
       </ChartContainer>
       <div className="mt-2.5 ml-auto w-fit">
         <ActivityChartRangeControls range={range} setRange={setRange} />

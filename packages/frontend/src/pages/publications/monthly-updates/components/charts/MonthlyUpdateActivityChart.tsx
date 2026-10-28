@@ -6,26 +6,17 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import compact from 'lodash/compact'
 import { useId, useMemo } from 'react'
-import { AreaChart } from 'recharts'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+import {
+  ChartTooltipWrapper,
+  getTooltipEntries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
@@ -85,33 +76,29 @@ export function MonthlyUpdateActivityChart({
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
       <Header timeRange={timeRange} stats={stats} />
-      <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
-        <AreaChart
-          responsive
+      <ChartContainer
+        data={chartData}
+        meta={chartMeta}
+        isLoading={isLoading}
+        legend
+        className="h-44! min-h-44!"
+      >
+        <TimeSeriesChart
           data={chartData}
-          className="h-44! min-h-44!"
-          margin={{ top: 20 }}
-        >
-          <ChartLegend content={<ChartLegendContent />} />
-          <ChartStrokeOverFillAreaComponents
-            data={compact([
-              {
-                dataKey: 'projects',
-                stroke: 'var(--project-primary)',
-                fill: `url(#${id})`,
-              },
-            ])}
-          />
-          <ChartCommonComponents
-            data={chartData}
-            isLoading={isLoading}
-            yAxis={{
-              unit: ' UOPS',
-            }}
-            syncedUntil={data?.syncedUntil}
-          />
-          <ChartTooltip filterNull={false} content={<CustomTooltip />} />
-          <defs>
+          ariaLabel="Activity"
+          margin={{ top: 20, right: 0 }}
+          series={[
+            {
+              key: 'projects',
+              stroke: 'var(--project-primary)',
+              fill: `url(#${id})`,
+            },
+          ]}
+          yAxis={{
+            unit: ' UOPS',
+          }}
+          syncedUntil={data?.syncedUntil}
+          defs={
             <CustomFillGradientDef
               id={id}
               colors={{
@@ -119,8 +106,9 @@ export function MonthlyUpdateActivityChart({
                 secondary: 'var(--project-secondary)',
               }}
             />
-          </defs>
-        </AreaChart>
+          }
+          renderTooltip={(row, keys) => <CustomTooltip row={row} keys={keys} />}
+        />
       </ChartContainer>
     </PrimaryCard>
   )
@@ -155,9 +143,15 @@ function Header({
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+function CustomTooltip({
+  row,
+  keys,
+}: {
+  row: { timestamp: number; projects: number | null }
+  keys: 'projects'[]
+}) {
   const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
+  const label = row.timestamp
 
   return (
     <ChartTooltipWrapper>
@@ -165,8 +159,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(label, label + UnixTime.DAY)}
         </div>
-        {payload.map((entry) => {
-          if (entry.name === undefined || entry.type === 'none') return null
+        {getTooltipEntries(row, keys).map((entry) => {
           const config = meta[entry.name]
           assert(config, 'No config')
 

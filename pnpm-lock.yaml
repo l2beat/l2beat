@@ -908,9 +908,6 @@ importers:
       react-dom:
         specifier: 19.0.0
         version: 19.0.0(react@19.0.0)
-      recharts:
-        specifier: ^3.10.1
-        version: 3.10.1(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)(redux@5.0.1)
       satori:
         specifier: ^0.12.2
         version: 0.12.2

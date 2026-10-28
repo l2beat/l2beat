@@ -6,7 +6,7 @@ import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartContr
 import { ProjectTokenChart } from '~/components/chart/tvs/token/ProjectTokenChart'
 import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import { TokenSummaryBox } from '~/components/chart/tvs/token/TokenSummaryBox'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { useTRPC } from '~/trpc/React'
