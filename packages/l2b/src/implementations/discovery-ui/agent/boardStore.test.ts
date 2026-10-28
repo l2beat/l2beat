@@ -107,6 +107,7 @@ describe(BoardStore.name, () => {
     const board = store.open('arbitrum', MULTISIGS)
     expect(board.unsaved).toEqual(true)
     expect(store.markSaved(board.id, 'multisigs')?.unsaved).toEqual(false)
+    expect(store.replace(board.id, MULTISIGS)?.unsaved).toEqual(false)
     expect(store.replace(board.id, ESCROWS)?.unsaved).toEqual(true)
     expect(store.get(board.id)?.savedAs).toEqual('multisigs')
   })
