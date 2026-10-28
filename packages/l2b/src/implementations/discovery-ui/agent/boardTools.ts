@@ -68,7 +68,10 @@ function showBoard(ui: DiscoUi, input: z.infer<typeof boardSchema>): string[] {
     input.project !== undefined &&
     input.project !== existing.project
   ) {
-    throw new ToolError(`Board ${existing.id} is ${existing.project}'s`)
+    throw new ToolError(
+      'The board belongs to another project',
+      `${existing.id} is ${existing.project}'s`,
+    )
   }
   const project = existing?.project ?? projectOrOpen(ui, input.project)
   const resolved = resolveBoardOf(ui.configReader, { project, spec })
