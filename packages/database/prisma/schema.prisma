@@ -343,6 +343,8 @@ model EthereumStakingDaily {
   slot             Int
   /// Sum of every validator's balance.
   totalBalance     Decimal  @db.Decimal(80, 0)
+  /// Validators ever created; each new one before Electra came from a 32 ETH deposit.
+  validatorCount   Int
   /// Deposits waiting to be credited; null before Pectra, when there was no queue.
   pendingDeposits  Decimal? @db.Decimal(80, 0)
   /// Withdrawals paid in the day's blocks.
