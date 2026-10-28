@@ -185,6 +185,28 @@ describe(resolveBoard.name, () => {
     expect(computed.columns).toEqual(['Note'])
   })
 
+  it('names the contracts in an unbound Contract column', () => {
+    const board = resolveBoard(entries, {
+      title: 'Thresholds',
+      blocks: [
+        {
+          type: 'table',
+          rows: ['type:multisig'],
+          columns: [
+            { label: 'Contract' },
+            { label: 'Threshold', field: '$threshold' },
+          ],
+        },
+      ],
+    })
+    const table = board.blocks[0]
+    if (table?.type !== 'table') throw new Error('Expected a table')
+    expect(table.columns).toEqual(['Contract', 'Threshold'])
+    expect(table.rows[0]?.cells[0]).toEqual([
+      { address: COUNCIL, name: 'Council' },
+    ])
+  })
+
   it('lists a contract two selectors match once', () => {
     const board = resolveBoard(entries, {
       title: 'Twice',

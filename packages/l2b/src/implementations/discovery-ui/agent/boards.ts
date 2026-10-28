@@ -301,7 +301,10 @@ const NAME_COLUMN: BoardColumn = { label: 'Contract', property: 'name' }
 // A row of a contract selects it when clicked, so the table always says which
 // contract it is, even when its author only asked for values.
 function columnsOf(table: TableBlock, rows: readonly Row[]): BoardColumn[] {
-  const columns = table.columns ?? []
+  // An unbound Contract column the contract rows leave empty gets their names.
+  const columns = (table.columns ?? []).map((c) =>
+    isUnfilledNameColumn(c, rows) ? NAME_COLUMN : c,
+  )
   if (columns.length === 0) {
     return [NAME_COLUMN]
   }
@@ -311,6 +314,19 @@ function columnsOf(table: TableBlock, rows: readonly Row[]): BoardColumn[] {
   )
   const hasContracts = rows.some((r) => r.address !== undefined)
   return namesRows || !hasContracts ? columns : [NAME_COLUMN, ...columns]
+}
+
+function isUnfilledNameColumn(
+  column: BoardColumn,
+  rows: readonly Row[],
+): boolean {
+  if (column.label !== NAME_COLUMN.label) return false
+  const isBound =
+    column.property !== undefined ||
+    column.field !== undefined ||
+    column.selector !== undefined
+  if (isBound) return false
+  return rows.some((r) => r.address !== undefined && !(column.label in r.cells))
 }
 
 interface Row {
