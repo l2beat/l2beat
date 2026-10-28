@@ -130,6 +130,8 @@
       "critical": {
         "untilTimestamp": 1789547003
       },
+      // route added after the Kailua path retired, not part of BOB's system
+      "ignoreRelatives": ["verifier_8b38038c"],
       "fields": {
         // "verifier0Manual": {
         //   "handler": {
