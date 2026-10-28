@@ -2,6 +2,7 @@
 
 @import "./markdown.css" layer(base);
 @import "./article.css" layer(base);
+@import "./table-scroll.css";
 @import "./sticky-table.css";
 @import "./section-navigation.css";
 

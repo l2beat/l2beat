@@ -7,6 +7,5 @@ export function getTvsSyncWarning(
   if (!syncState || syncState.isSynced) return
   return `No Value Secured data since ${formatTimestamp(syncState.syncedUntil, {
     mode: 'datetime',
-    longMonthName: true,
   })}.`
 }

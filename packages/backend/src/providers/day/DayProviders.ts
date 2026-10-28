@@ -3,7 +3,7 @@ import type {
   StarkexClient,
   VoyagerClient,
 } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../config/chain/ChainApi'
 import { LighterDayProvider } from './LighterDayProvider'
 import { StarkexDayProvider } from './StarkexDayProvider'
@@ -15,13 +15,26 @@ interface DayProvidersClients {
   lighter: LighterClient | undefined
 }
 
-export interface DayProvider {
+export interface DailyCountsProvider {
   getDailyTxsCount(from: number, to: number): Promise<Record<number, number>>
   getDailyUopsCount(from: number, to: number): Promise<Record<number, number>>
 }
 
+/** For sources that count by the hour. Their days are the sums of the hours */
+export interface HourlyCountsProvider {
+  /** Those from `from` to `to` (exclusive) */
+  getHourlyCounts(from: UnixTime, to: UnixTime): Promise<HourlyCount[]>
+}
+
+export interface HourlyCount {
+  timestamp: UnixTime
+  count: number
+  uopsCount: number
+}
+
 export class DayProviders {
-  private providers = new Map<string, DayProvider>()
+  private providers = new Map<string, DailyCountsProvider>()
+  private hourlyProviders = new Map<string, HourlyCountsProvider>()
 
   constructor(chains: ChainApi[], clients: DayProvidersClients) {
     if (clients.starkex) {
@@ -39,13 +52,22 @@ export class DayProviders {
       this.providers.set('starknet', new StarknetDayProvider(clients.voyager))
     }
     if (clients.lighter) {
-      this.providers.set('lighter', new LighterDayProvider(clients.lighter))
+      this.hourlyProviders.set(
+        'lighter',
+        new LighterDayProvider(clients.lighter),
+      )
     }
   }
 
   getDayProvider(chain: string) {
     const provider = this.providers.get(chain)
     assert(provider, `DayProvider not found: ${chain}`)
+    return provider
+  }
+
+  getHourlyProvider(chain: string) {
+    const provider = this.hourlyProviders.get(chain)
+    assert(provider, 'Hourly provider not found', { chain })
     return provider
   }
 }

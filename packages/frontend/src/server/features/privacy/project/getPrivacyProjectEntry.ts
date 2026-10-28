@@ -4,7 +4,7 @@ import type {
   PrivacySummaryValue,
   ProjectRedWarning,
 } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -81,6 +81,7 @@ export interface ProjectPrivacyEntry {
     }
     relayerStat?: PrivacyRelayerStat
   }
+  archivedAt?: UnixTime
   isUnderReview: boolean
   recentUpdatesCount: number
   warnings: {
@@ -379,6 +380,7 @@ export async function getPrivacyProjectEntry(
       deposits: details.summary.deposits,
       relayerStat: details.summary.relayerStat,
     },
+    archivedAt: details.archivedAt,
     isUnderReview: !!details.statuses.reviewStatus,
     recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),
     warnings: {

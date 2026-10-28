@@ -20,10 +20,7 @@ import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
 import type { BaseProject } from '../types'
-import {
-  areContractsDiscoveryDriven,
-  arePermissionsDiscoveryDriven,
-} from '../utils/discoveryDriven'
+import { hasEoaWithUpgradePermissions } from './getEoaRedWarning'
 import { getProjects } from './getProjects'
 import { layer2s, milestonesLayer2s } from './layer2s'
 import { layer3s } from './layer3s'
@@ -1089,17 +1086,21 @@ describe('getProjects', () => {
   })
 
   // New projects are expected to be discovery driven. Read the comment in constants.ts
-  it('all new projects are discovery driven', () => {
+  it('all new projects with discovery are discovery driven', () => {
     const notDiscoveryDriven = projects
-      .filter((p) => p.scalingInfo && p.archivedAt === undefined)
+      .filter((p) => p.discoveryInfo && p.archivedAt === undefined)
       .filter((p) => !NON_DISCOVERY_DRIVEN_PROJECTS.includes(p.id.toString()))
-      .filter(
-        (p) =>
-          !arePermissionsDiscoveryDriven(p.permissions) ||
-          !areContractsDiscoveryDriven(p.contracts),
-      )
+      .filter((p) => !p.discoveryInfo?.isDiscoDriven)
       .map((p) => p.id)
     expect(notDiscoveryDriven).toEqual([])
+  })
+
+  it('every project with discovery shows an EOA upgrade red warning when discovery has one', () => {
+    const missing = projects
+      .filter((p) => p.discoveryInfo && hasEoaWithUpgradePermissions(p.id))
+      .filter((p) => p.statuses?.redWarning === undefined)
+      .map((p) => p.id)
+    expect(missing).toEqual([])
   })
 
   describe('badges', () => {

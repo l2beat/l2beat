@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x60f6e191dfd02f93c8b96b9305182871183cc46a
+
+# Diff at Tue, 27 Oct 2026 11:31:37 GMT:
+
+- id: a1ed7e26
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@de2e3d4ee6aef60add0cf0b261ced3c797f9fb6e block: 1792491551
+- current timestamp: 1792491551
+
+## Description
+
+Mark EtherFiViewer non-critical. It is a read-only helper, so its EOA upgrade admin does not get the red warning.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792491551 (main branch discovery), not current.
+
+```diff
+    contract EtherFiViewer (eth:0x2ecd155405cA52a5ca0e552981fF44A8252FAb81) [etherfi/EtherFiViewer] {
+    +++ description: Stateless read-only aggregator for off-chain interfaces. Holds no funds or permissions.
+      category.name:
+-        "Local Infrastructure"
++        "Non-Critical"
+      category.priority:
+-        5
++        0
+    }
+```
+
+```diff
+    EOA (eth:0xf8a86ea1Ac39EC529814c377Bd484387D395421e) {
+    +++ description: None
+      eoaWithUpgradePermissions:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x0ab304e777774211eb63c10dfd44e9ca642b730f
 
 # Diff at Fri, 16 Oct 2026 05:36:49 GMT:

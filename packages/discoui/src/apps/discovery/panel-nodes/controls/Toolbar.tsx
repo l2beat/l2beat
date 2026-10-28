@@ -5,7 +5,7 @@ export function Toolbar(props: { label: string; children: ReactNode }) {
     <div
       role="toolbar"
       aria-label={props.label}
-      className="pointer-events-auto flex max-w-full select-none flex-wrap items-center justify-center gap-y-1 rounded-xl border border-coffee-600 bg-coffee-900/95 p-1 shadow-[0_24px_56px_-28px_#000000ee] backdrop-blur-xs"
+      className="pointer-events-auto flex max-w-full select-none flex-wrap items-center justify-center gap-y-1 rounded-md border border-coffee-600 bg-coffee-900/95 p-1 shadow-lg backdrop-blur-xs"
     >
       {props.children}
     </div>

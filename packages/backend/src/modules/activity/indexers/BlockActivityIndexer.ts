@@ -2,15 +2,10 @@ import type { Logger } from '@l2beat/backend-tools'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
+import { HOURLY_ACTIVITY_DAYS } from '../utils/hourlyActivity'
 import { continueMinute, getDayPeaks, type MinuteCarry } from '../utils/peaks'
 import { sumPerPeriod } from '../utils/sumPerPeriod'
 import type { BlockActivityIndexerDeps } from './types'
-
-/**
- * Hourly rows serve charts of up to a week, kept with a week of margin. The
- * busiest hour and minute of each day stay on its daily row
- */
-const HOURLY_ACTIVITY_DAYS = 14
 
 export class BlockActivityIndexer extends ManagedChildIndexer {
   /**

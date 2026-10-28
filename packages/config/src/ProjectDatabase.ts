@@ -76,6 +76,7 @@ const schema = {
   discoveryUpdates: 'TEXT',
   ossificationHistory: 'TEXT',
   auditCoverage: 'TEXT',
+  versions: 'TEXT',
 
   archivedAt: 'INTEGER',
   hasTestnet: 'BOOLEAN',

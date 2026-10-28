@@ -13,6 +13,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import type { InteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { InteropEntityPageLayout } from '../components/InteropEntityPageLayout'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import type { InteropSelection } from '../utils/types'
@@ -21,6 +22,7 @@ import { InteropProtocolSummary } from './components/InteropProtocolSummary'
 interface Props extends AppLayoutProps {
   projectEntry: InteropProtocolEntry
   sectionLinks: ProjectSectionLink[]
+  versionLinks?: ProjectVersionLinks
   protocolData: InteropProtocolDashboardData
   apiSelection: InteropSelection
   selectedUpdateId?: string
@@ -30,6 +32,7 @@ interface Props extends AppLayoutProps {
 export function InteropProtocolPage({
   projectEntry,
   sectionLinks,
+  versionLinks,
   apiSelection,
   protocolData,
   selectedUpdateId,
@@ -42,6 +45,7 @@ export function InteropProtocolPage({
         <Content
           projectEntry={projectEntry}
           sectionLinks={sectionLinks}
+          versionLinks={versionLinks}
           apiSelection={apiSelection}
           protocolData={protocolData}
           selectedUpdateId={selectedUpdateId}
@@ -54,12 +58,14 @@ export function InteropProtocolPage({
 function Content({
   projectEntry,
   sectionLinks,
+  versionLinks,
   apiSelection,
   protocolData,
   selectedUpdateId,
 }: {
   projectEntry: InteropProtocolEntry
   sectionLinks: ProjectSectionLink[]
+  versionLinks?: ProjectVersionLinks
   apiSelection: InteropSelection
   protocolData: InteropProtocolDashboardData
   selectedUpdateId?: string
@@ -85,9 +91,10 @@ function Content({
             project={projectEntry}
             section="interop"
             sectionLinks={sectionLinks}
+            versions={versionLinks}
             recentUpdatesCount={projectEntry.header.recentUpdatesCount}
           />
-          <ProjectSummaryBars project={projectEntry} />
+          <ProjectSummaryBars project={projectEntry} versions={versionLinks} />
           {projectEntry.header?.description && (
             <AboutSection
               description={projectEntry.header.description}
@@ -98,6 +105,7 @@ function Content({
           <div className="max-md:hidden">
             <DesktopProjectLinks
               projectLinks={projectEntry.header.links ?? []}
+              discoUiHref={projectEntry.header.discoUiHref}
             />
           </div>
         </>

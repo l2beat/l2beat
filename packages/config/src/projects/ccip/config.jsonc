@@ -200,7 +200,9 @@
       "description": "Role-based timelock that CCIP uses as a fee aggregator, collecting fee tokens withdrawn from its ramps."
     },
     // Circle's SeizureRegistry USDC minter, described in shared-circle. Its UUPS getter reverts when called through the proxy.
+    // Non-critical like USDC itself: it is Circle's issuance, outside CCIP's trust path.
     "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": {
+      "category": "non-critical",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["totalSecondaryMarketBurnedAmount"]
     },
