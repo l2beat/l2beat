@@ -176,6 +176,97 @@ describe('tokenIngestionQueueRouter', () => {
     })
   })
 
+  describe('getConflicts', () => {
+    it('returns the entries in conflict state', async () => {
+      const entries = [
+        queueEntry({ chain: 'base', address: '0x222', state: 'conflict' }),
+      ]
+      const getByStates = mockFn().resolvesTo(entries)
+
+      const caller = createRouter(
+        mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            { getByStates },
+          ),
+        }),
+      )
+
+      const result = await caller.getConflicts()
+
+      expect(result).toEqual(entries)
+      expect(getByStates).toHaveBeenCalledWith(['conflict'])
+    })
+  })
+
+  describe('getEntry', () => {
+    it('returns the entry with its predicted outcome', async () => {
+      const entry = queueEntry({
+        chain: 'base',
+        address: '0x222',
+        state: 'conflict',
+        message: 'symbol mismatch',
+      })
+      const find = mockFn().resolvesTo(entry)
+      const transferIndex = { findInvolving: mockFn().returns([]) }
+      const outcome = {
+        kind: 'pending' as const,
+        operation: 'insert' as const,
+        existing: undefined,
+        abstract: {
+          kind: 'new-coingecko' as const,
+          coingeckoId: 'wrapped-kaspa',
+          symbol: 'wkas',
+        },
+        symbolFallback: 'WKAS',
+        neighborsToEnqueue: [],
+        proof: { kind: 'coingecko' as const },
+      }
+      const plan = mockFn().resolvesTo({
+        address: { chain: entry.chain, address: entry.address },
+        existingDeployedToken: undefined,
+        steps: [],
+        outcome,
+      })
+
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            { find },
+          ),
+        }),
+        processor: mockObject<TokenIngestionProcessor>({
+          getInteropTransferIndex: mockFn().resolvesTo(transferIndex),
+          plan,
+        }),
+      })
+
+      const result = await caller.getEntry({ chain: 'base', address: '0x222' })
+
+      expect(result).toEqual({
+        entry,
+        predictedOutcome: { ...outcome, description: expect.a(String) },
+        deployedTokenExists: false,
+        resolvableSymbolConflict: true,
+      })
+      expect(find).toHaveBeenCalledWith({ chain: 'base', address: '0x222' })
+      expect(plan).toHaveBeenCalledWith(entry, transferIndex)
+    })
+
+    it('returns null for an address that is not queued', async () => {
+      const caller = createRouter(
+        mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            { find: mockFn().resolvesTo(undefined) },
+          ),
+        }),
+      )
+
+      const result = await caller.getEntry({ chain: 'base', address: '0x222' })
+
+      expect(result).toEqual(null)
+    })
+  })
+
   describe('preview', () => {
     it('uses the cached interop transfer index with plan and fetch', async () => {
       const input = { chain: 'ethereum', address: '0x111' }

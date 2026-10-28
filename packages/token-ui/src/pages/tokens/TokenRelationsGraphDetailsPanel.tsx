@@ -3,12 +3,15 @@ import {
   ManualRelationEvidence,
 } from '@l2beat/shared-pure'
 import type { Plan, RouterOutputs } from '@l2beat/token-backend'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   ArrowLeftRightIcon,
   ArrowRightIcon,
   ExternalLinkIcon,
+  EyeIcon,
+  RotateCwIcon,
   TrashIcon,
+  WrenchIcon,
   XIcon,
 } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
@@ -19,10 +22,20 @@ import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import { Separator } from '~/components/core/Separator'
 import { ExplorerLink } from '~/components/ExplorerLink'
+import {
+  IngestionPreviewDialog,
+  PredictedOutcome,
+  useIngestionPreview,
+} from '~/components/IngestionPreviewDialog'
 import { LoadingState } from '~/components/LoadingState'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
+import {
+  ResolveSymbolConflictDialog,
+  type ResolveSymbolConflictTarget,
+} from '~/components/ResolveSymbolConflictDialog'
 import { useTRPC } from '~/react-query/trpc'
 import {
+  CONFLICT_COLOR,
   nodeLabel,
   RELATION_COLORS,
   type RelationGraph,
@@ -49,6 +62,7 @@ export function TokenRelationsGraphDetailsPanel({
   chains,
   selection,
   highlightAnomalies,
+  conflictNodeIds,
   deletedRelationIds,
   onSelectionChange,
   onRelationDeleted,
@@ -58,6 +72,8 @@ export function TokenRelationsGraphDetailsPanel({
   chains: Chain[]
   selection: RelationGraphSelection
   highlightAnomalies: boolean
+  /** Nodes whose ingestion queue entry is in conflict. */
+  conflictNodeIds: ReadonlySet<string>
   deletedRelationIds: ReadonlySet<string>
   onSelectionChange: (selection: RelationGraphSelection) => void
   onRelationDeleted: (relationId: string) => void
@@ -96,6 +112,7 @@ export function TokenRelationsGraphDetailsPanel({
             graph={graph}
             chains={chains}
             highlightAnomalies={highlightAnomalies}
+            isConflict={conflictNodeIds.has(selection.id)}
             deletedRelationIds={deletedRelationIds}
             onRelationClick={(relation) =>
               onSelectionChange({
@@ -123,6 +140,7 @@ function GraphNodeDetails({
   graph,
   chains,
   highlightAnomalies,
+  isConflict,
   deletedRelationIds,
   onRelationClick,
 }: {
@@ -130,6 +148,7 @@ function GraphNodeDetails({
   graph: RelationGraph
   chains: Chain[]
   highlightAnomalies: boolean
+  isConflict: boolean
   deletedRelationIds: ReadonlySet<string>
   onRelationClick: (relation: RelationGraphRelation) => void
 }) {
@@ -166,6 +185,8 @@ function GraphNodeDetails({
         </div>
       </div>
 
+      {isConflict && <IngestionConflictDetails node={node} />}
+
       {isLoading ? (
         <LoadingState className="h-32" />
       ) : error ? (
@@ -192,6 +213,117 @@ function GraphNodeDetails({
         />
       </div>
     </div>
+  )
+}
+
+/**
+ * The conflict's queue entry with the actions the ingestion queue page
+ * offers for it, so a researcher can resolve a conflict while seeing where
+ * the token sits on the graph. Actions target the stored entry, whose
+ * address is normalized, rather than the graph node.
+ */
+function IngestionConflictDetails({ node }: { node: RelationGraphNode }) {
+  const trpc = useTRPC()
+  const queryClient = useQueryClient()
+  const preview = useIngestionPreview()
+  const [resolveTarget, setResolveTarget] = useState<
+    ResolveSymbolConflictTarget | undefined
+  >()
+  const { data, isLoading, error } = useQuery(
+    trpc.tokenIngestionQueue.getEntry.queryOptions(
+      { chain: node.chain, address: node.address },
+      { staleTime: 0 },
+    ),
+  )
+  const retry = useMutation(
+    trpc.tokenIngestionQueue.retry.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          trpc.tokenIngestionQueue.pathFilter(),
+        )
+        toast.success('Queue entry queued for retry')
+      },
+      onError: (error) => toast.error(error.message),
+    }),
+  )
+
+  return (
+    <DetailsSection title="Ingestion conflict">
+      {isLoading ? (
+        <LoadingState className="h-24" />
+      ) : error ? (
+        <ErrorState message={error.message} />
+      ) : !data ? (
+        <div className="text-muted-foreground text-sm">
+          This address is no longer in the ingestion queue.
+        </div>
+      ) : (
+        <>
+          <p
+            className="whitespace-pre-wrap break-words rounded-md border p-3 text-sm"
+            style={{ borderColor: CONFLICT_COLOR }}
+          >
+            {data.entry.message ?? 'No conflict message stored.'}
+          </p>
+          <div className="space-y-1 text-sm">
+            <div className="text-muted-foreground">Will do</div>
+            <PredictedOutcome outcome={data.predictedOutcome} />
+          </div>
+          <DetailRows>
+            <DetailRow label="Queued">
+              {formatUnixTimestamp(data.entry.createdAt)}
+            </DetailRow>
+            <DetailRow label="Last processed">
+              {formatUnixTimestamp(data.entry.updatedAt)}
+            </DetailRow>
+          </DetailRows>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => preview.start(data.entry)}
+            >
+              <EyeIcon />
+              Preview
+            </Button>
+            {data.resolvableSymbolConflict && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  setResolveTarget({
+                    chain: data.entry.chain,
+                    address: data.entry.address,
+                  })
+                }
+              >
+                <WrenchIcon />
+                Resolve
+              </Button>
+            )}
+            <ButtonWithSpinner
+              variant="outline"
+              size="sm"
+              isLoading={retry.isPending}
+              onClick={() =>
+                retry.mutate({
+                  chain: data.entry.chain,
+                  address: data.entry.address,
+                })
+              }
+            >
+              <RotateCwIcon />
+              Retry
+            </ButtonWithSpinner>
+          </div>
+        </>
+      )}
+      <IngestionPreviewDialog state={preview.state} onClose={preview.close} />
+      <ResolveSymbolConflictDialog
+        target={resolveTarget}
+        onClose={() => setResolveTarget(undefined)}
+      />
+    </DetailsSection>
   )
 }
 
