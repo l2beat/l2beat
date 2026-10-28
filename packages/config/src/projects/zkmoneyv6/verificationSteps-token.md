@@ -15,7 +15,7 @@ Each token address must come from its Ethereum portal, rather than the wallet's 
      for portal in \
        0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042 \
        0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8; do
-       token=$(cast call "$portal" 'L2_TOKEN()(bytes32)' --rpc-url "$ETHEREUM_RPC_URL") || return 1
+       token=$(aztec-cast call "$portal" 'L2_TOKEN()(bytes32)' --rpc-url "$ETHEREUM_RPC_URL") || return 1
        if [[ ! $token =~ ^0x[0-9a-fA-F]{64}$ || $token =~ ^0x0{64}$ ]]; then
          echo "Invalid L2 token from portal $portal: $token" >&2
          return 1
