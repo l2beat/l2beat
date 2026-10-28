@@ -107,7 +107,7 @@ export function AgentContextReporter(props: { project: string }) {
   useEffect(() => {
     const leave = () => {
       if (localStorage.getItem(REPORTER_KEY) === TAB_ID) {
-        void putContext({ selected: [], panels: [] })
+        void putContext({ selected: [], panels: [] }, true)
       }
     }
     window.addEventListener('pagehide', leave)
@@ -151,11 +151,12 @@ function readCodeSelection(address: string | undefined) {
 
 // The tab reports again on the next change, so a server that is down misses
 // nothing that matters.
-async function putContext(context: object) {
+// Browsers cap a keepalive body at 64 KiB, which a full report of a large
+// graph passes, so only the small clear sent as the tab closes keeps alive.
+async function putContext(context: object, keepalive = false) {
   const response = await fetch('/api/agent/context', {
     method: 'PUT',
-    // A report sent as the tab closes must outlive the page.
-    keepalive: true,
+    keepalive,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(context),
   }).catch(() => undefined)
