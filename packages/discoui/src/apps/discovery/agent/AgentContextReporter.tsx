@@ -78,6 +78,17 @@ export function AgentContextReporter(props: { project: string }) {
     }
   }, [props.project, response.data, selected, tree, focus, view])
 
+  // Leaving the project page leaves no project on screen, so the agent must
+  // not keep answering about the last one.
+  useEffect(
+    () => () => {
+      if (document.visibilityState === 'visible') {
+        void putContext({ selected: [], panels: [] })
+      }
+    },
+    [],
+  )
+
   return null
 }
 
