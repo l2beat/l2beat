@@ -320,6 +320,57 @@ describe('DiffHistoryParser', () => {
       expect(sections[0]!.body).toInclude('@@ -1 +1 @@')
     })
 
+    it('parses an offchain-changes section with its fenced body', () => {
+      const body = [
+        '```diff',
+        '    leads {',
+        '+     dfhl:a.sol',
+        '    }',
+        '```',
+      ]
+      const md = [
+        '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
+        '',
+        '- current timestamp: 1777994288',
+        '',
+        '## Offchain changes',
+        '',
+        ...body,
+        '',
+      ].join('\n')
+
+      expect(parser.parse(md)[0]!.sections).toEqual([
+        { kind: 'offchain-changes', body: body.join('\n') },
+      ])
+    })
+
+    it('keeps watched and offchain changes of one entry in file order', () => {
+      const md = [
+        '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
+        '',
+        '- current timestamp: 1777994288',
+        '',
+        '## Offchain changes',
+        '',
+        '```diff',
+        '+ offchain',
+        '```',
+        '',
+        '## Watched changes',
+        '',
+        '```diff',
+        '+ watched',
+        '```',
+        '',
+      ].join('\n')
+
+      const sections = parser.parse(md)[0]!.sections
+      expect(sections.map((s) => s.kind)).toEqual([
+        'offchain-changes',
+        'watched-changes',
+      ])
+    })
+
     it('tolerates trailing whitespace in section headings', () => {
       const md = [
         '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
