@@ -74,6 +74,7 @@ export function PrivacyProjectPage({
                   />
                   <ProjectSummaryBars
                     project={{
+                      archivedAt: entry.archivedAt,
                       underReviewStatus: entry.isUnderReview
                         ? 'config'
                         : undefined,

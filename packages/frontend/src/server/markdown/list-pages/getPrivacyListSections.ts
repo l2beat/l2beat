@@ -9,6 +9,7 @@ export async function getPrivacyListSections(): Promise<LinkListSection[]> {
   const projects = await ps.getProjects({
     select: ['privacyInfo'],
     optional: ['display'],
+    whereNot: ['archivedAt'],
   })
   return [
     {

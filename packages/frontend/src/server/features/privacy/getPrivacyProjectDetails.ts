@@ -57,6 +57,7 @@ export interface PrivacyProjectDetails {
   slug: string
   name: string
   shortName?: string
+  archivedAt?: UnixTime
   display: ProjectDisplay
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
@@ -281,6 +282,7 @@ export async function getPrivacyProjectDetails(
     slug: project.slug,
     name: project.name,
     shortName: project.shortName,
+    archivedAt: project.archivedAt,
     display: project.display,
     contracts: project.contracts,
     permissions: project.permissions,
