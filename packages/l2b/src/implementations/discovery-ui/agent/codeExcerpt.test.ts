@@ -128,6 +128,37 @@ describe(excerptAt.name, () => {
     expect(excerpt.isCut).toEqual(true)
   })
 
+  it('stops at the character cap even when a line fills it exactly', () => {
+    const code = `${'a'.repeat(8_000)}\nb = 1;\n${'c'.repeat(9_000)}`
+    const excerpt = excerptAt(code, 0, 1)
+    expect(excerpt.lines).toEqual(['a'.repeat(8_000)])
+    expect(excerpt.isCut).toEqual(true)
+  })
+
+  it('goes on through else and catch', () => {
+    const code = [
+      'if (ok) {',
+      '  a();',
+      '} else if (other) {',
+      '  b();',
+      '} // fallback',
+      'else {',
+      '  c();',
+      '}',
+      'try t.f() returns (uint256 v) {',
+      '  d();',
+      '} catch Error(string memory) {',
+      '  e();',
+      '}',
+      'elsewhere();',
+    ].join('\n')
+    expect(excerptAt(code, 0, 1).lines).toEqual(code.split('\n').slice(0, 8))
+    const tryAt = code.indexOf('try')
+    expect(excerptAt(code, tryAt, 9).lines).toEqual(
+      code.split('\n').slice(8, 13),
+    )
+  })
+
   it('cuts a long block', () => {
     const body = Array.from({ length: 100 }, (_, i) => `  x = ${i};`)
     const code = ['function long() {', ...body, '}'].join('\n')
