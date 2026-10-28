@@ -173,10 +173,12 @@ function SaveForm(props: { initialName: string; onDone: () => void }) {
       >
         Save
       </button>
+      {/* Discarding while the save runs would save a layout it then undoes. */}
       <button
         type="button"
         onClick={props.onDone}
-        className="rounded-sm px-2 py-1 text-coffee-400 hover:bg-coffee-700 hover:text-coffee-200"
+        disabled={busy}
+        className="rounded-sm px-2 py-1 text-coffee-400 hover:bg-coffee-700 hover:text-coffee-200 disabled:opacity-40"
       >
         Cancel
       </button>
