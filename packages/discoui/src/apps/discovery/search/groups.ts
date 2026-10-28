@@ -12,6 +12,7 @@ export interface SearchGroup {
   label: string
   items: SearchItem[]
   total: number
+  countLabel?: string
 }
 
 export interface SearchSources {
@@ -96,16 +97,30 @@ export function buildCodeGroups(
   needleLength: number,
 ): SearchGroup[] {
   const groups: SearchGroup[] = []
+  const matches = buildCodeItems(response, needleLength)
   let budget = GROUP_LIMIT_SCOPED
-  for (const match of buildCodeItems(response, needleLength)) {
+  let shownCount = 0
+  for (const match of matches) {
     if (budget === 0) break
     const items = match.items.slice(0, budget)
     budget -= items.length
+    shownCount++
     groups.push({
       key: match.key,
       label: match.label,
       items,
       total: match.items.length,
+    })
+  }
+  const hidden = matches.slice(shownCount)
+  if (hidden.length > 0) {
+    const hiddenHits = hidden.reduce((sum, m) => sum + m.items.length, 0)
+    groups.push({
+      key: 'more',
+      label: `${hidden.length} more ${hidden.length === 1 ? 'contract' : 'contracts'}, narrow the query`,
+      items: [],
+      total: hiddenHits,
+      countLabel: `${hiddenHits} matches`,
     })
   }
   return groups
@@ -165,7 +180,9 @@ export function toSearchRows(groups: SearchGroup[]): {
       kind: 'label',
       key: `label:${group.key}`,
       label: group.label,
-      count: shown === group.total ? `${shown}` : `${shown} of ${group.total}`,
+      count:
+        group.countLabel ??
+        (shown === group.total ? `${shown}` : `${shown} of ${group.total}`),
     })
     for (const item of group.items) {
       rows.push({ kind: 'item', key: item.key, item, index: items.length })

@@ -1,8 +1,10 @@
 import { expect } from 'earl'
 import type { ApiProjectChain, ApiProjectContract } from '../../../api/types'
 import {
+  buildCodeGroups,
   buildSearchGroups,
   GROUP_LIMIT_MIXED,
+  GROUP_LIMIT_SCOPED,
   type SearchSources,
   toSearchRows,
 } from './groups'
@@ -83,6 +85,39 @@ describe(buildSearchGroups.name, () => {
     expect(groups[0]?.items.map((i) => i.key)).toEqual([
       `contract:eth:${OWNER}`,
     ])
+  })
+})
+
+describe(buildCodeGroups.name, () => {
+  it('summarizes contracts dropped by the row cap', () => {
+    const match = (address: string, hits: number) => ({
+      name: 'C',
+      address,
+      codeLocation: Array.from({ length: hits }, (_, i) => ({
+        line: 'owner',
+        fileName: 'C.sol',
+        index: 0,
+        offset: i,
+      })),
+    })
+    const groups = buildCodeGroups(
+      {
+        matches: [
+          match(`eth:${BRIDGE}`, GROUP_LIMIT_SCOPED),
+          match(`eth:${OWNER}`, 3),
+          match('eth:0x3333333333333333333333333333333333333333', 2),
+        ],
+      },
+      5,
+    )
+
+    expect(groups.map((g) => g.items.length)).toEqual([GROUP_LIMIT_SCOPED, 0])
+    expect(toSearchRows(groups).rows.at(-1)).toEqual(
+      expect.subset({
+        label: '2 more contracts, narrow the query',
+        count: '5 matches',
+      }),
+    )
   })
 })
 
