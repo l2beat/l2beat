@@ -34,6 +34,7 @@ const CommandDialog = ({
   title,
   description,
   onEscapeKeyDown,
+  onOpenAutoFocus,
   fullScreenMobile,
   ...props
 }: DialogProps & {
@@ -41,6 +42,7 @@ const CommandDialog = ({
   description: string
   fullScreenMobile?: boolean
   onEscapeKeyDown?: (event: KeyboardEvent) => void
+  onOpenAutoFocus?: (event: Event) => void
 }) => {
   return (
     <Dialog {...props}>
@@ -54,6 +56,7 @@ const CommandDialog = ({
           !fullScreenMobile && 'max-md:top-1/3',
         )}
         onEscapeKeyDown={onEscapeKeyDown}
+        onOpenAutoFocus={onOpenAutoFocus}
         fullScreenMobile={fullScreenMobile}
       >
         {/* The full-screen input row is sticky because iOS Safari only re-tints

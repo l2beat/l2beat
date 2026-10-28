@@ -9,10 +9,12 @@ export function SearchBarButton({
   label?: string
   className?: string
 }) {
-  const { setOpen } = useSearchBarContext()
+  const { setOpen, preload } = useSearchBarContext()
   return (
     <button
-      onClick={() => setOpen((open) => !open)}
+      onClick={() => setOpen(true)}
+      onPointerEnter={preload}
+      onFocus={preload}
       className={cn(
         'flex h-10 w-72 items-center rounded-lg border border-divider bg-surface-primary p-2.5 text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2',
         className,
@@ -28,10 +30,12 @@ export function SearchBarButton({
 }
 
 export function SmallSearchBarButton() {
-  const { setOpen } = useSearchBarContext()
+  const { setOpen, preload } = useSearchBarContext()
   return (
     <button
-      onClick={() => setOpen((open) => !open)}
+      onClick={() => setOpen(true)}
+      onPointerEnter={preload}
+      onFocus={preload}
       className="flex size-6 items-center justify-center"
     >
       <SearchIcon className="size-6" />

@@ -13,7 +13,6 @@ import {
   CommandList,
 } from '~/components/core/Command'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
-import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { useRouter } from '~/hooks/useRouter'
 import { useTracking } from '~/hooks/useTracking'
@@ -30,18 +29,18 @@ import type { AnySearchBarEntry } from './types'
 
 interface Props {
   recentlyAdded: SearchBarProject[]
+  /** What was typed while this dialog's chunk was loading. */
+  initialValue: string
 }
 
-export function SearchBarDialog({ recentlyAdded }: Props) {
+export function SearchBarDialog({ recentlyAdded, initialValue }: Props) {
   const trpc = useTRPC()
   const inputRef = useRef<HTMLInputElement>(null)
   const { track } = useTracking()
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(initialValue)
   const debouncedValue = useDebouncedValue(value, 200)
   const { open, setOpen } = useSearchBarContext()
   const router = useRouter()
-
-  useGlobalShortcut('/', () => setOpen((open) => !open))
 
   const {
     data: searchResults,
@@ -85,6 +84,16 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
     return groupSearchResults([...(searchResults ?? []), ...filteredPages])
   }, [searchResults, filteredPages, isOffline, isFailed])
 
+  // Radix selects the input's text as it focuses it, so the next key would
+  // replace what was typed while this dialog loaded.
+  const keepsInitialValue = useRef(initialValue !== '')
+  const onOpenAutoFocus = (event: Event) => {
+    if (!keepsInitialValue.current) return
+    keepsInitialValue.current = false
+    event.preventDefault()
+    inputRef.current?.focus()
+  }
+
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
     e?.preventDefault()
     if (value !== '') {
@@ -115,6 +124,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
       open={open}
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
+      onOpenAutoFocus={onOpenAutoFocus}
       fullScreenMobile
     >
       <Command shouldFilter={false} className="rounded-none">
