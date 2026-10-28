@@ -22,8 +22,8 @@ export function HomeKpiTile({
 }: {
   label: string
   /**
-   * Secondary fact shown opposite the label, where the tiles sit side by
-   * side.
+   * Secondary fact after the label, where the tiles sit side by side.
+   * Opposite it, across the gutter, it would read as the next tile's.
    */
   labelAccessory?: ReactNode
   value: string | undefined
@@ -45,14 +45,15 @@ export function HomeKpiTile({
       <div className="flex min-w-0 flex-col">
         <span
           className={cn(
-            'flex min-w-0 items-baseline justify-between gap-x-2',
+            'flex min-w-0 items-baseline gap-x-1.5',
             HOME_TEXT.meta,
           )}
         >
           <span className="truncate">{label}</span>
           {/* Beside a chart the label's column has no room to spare. */}
           {labelAccessory && (
-            <span className="kpi-rows:hidden shrink-0 tabular-nums">
+            <span className="flex kpi-rows:hidden shrink-0 gap-x-1.5 tabular-nums">
+              <span aria-hidden>·</span>
               {labelAccessory}
             </span>
           )}

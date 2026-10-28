@@ -91,7 +91,9 @@ export function HomeProjectChangesSection({
             </span>
           )}
         </div>
-        <p className={cn('max-w-[62%]', HOME_TEXT.body)}>
+        {/* Balanced: in this narrow column a pretty wrap can still leave one
+            word on the second line. */}
+        <p className={cn('max-w-[62%]', HOME_TEXT.body, 'text-balance')}>
           {count > 0
             ? `${count} ${pluralize(count, 'change')} handled in the last 7 days.`
             : 'None handled in the last 7 days.'}
@@ -308,6 +310,8 @@ function Research({ items }: { items: HomeResearchItem[] }) {
                   className={cn(
                     'line-clamp-2 underline-offset-2 group-hover:underline',
                     HOME_TEXT.row,
+                    // The row style's line is its font size, too tight to wrap.
+                    'leading-5',
                   )}
                 >
                   {item.shortTitle ?? item.title}

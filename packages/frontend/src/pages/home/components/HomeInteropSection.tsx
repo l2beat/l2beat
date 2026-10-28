@@ -251,7 +251,12 @@ function Figure({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex min-w-0 flex-col gap-1">
       <span className={cn('truncate', HOME_TEXT.meta)}>{label}</span>
-      <span className={cn('truncate', HOME_TEXT.number)}>{value}</span>
+      {/* On phones, the size the other cards' stacked KPIs take. */}
+      <span
+        className={cn('truncate', HOME_TEXT.number, 'max-sm:text-heading-24')}
+      >
+        {value}
+      </span>
     </div>
   )
 }
@@ -348,8 +353,9 @@ function TopProtocols({
 
 /**
  * The figures in the four corners the graph's ring leaves free: totals top
- * left, routes and the top chain top right, the top token and protocol
- * bottom left, the busiest protocols bottom right.
+ * left, routes and the top chain top right, the top token bottom left, the
+ * busiest protocols bottom right (or, without them, the top protocol beside
+ * the token).
  */
 function CornerStats({
   data,
@@ -419,32 +425,41 @@ function CornerStats({
             </>
           )}
         </Top>
-        <Top
-          label="Top protocol"
-          href={
-            stats.topProtocol && `/interop/protocols/${stats.topProtocol.slug}`
-          }
-          value={
-            stats.topProtocol && formatCurrency(stats.topProtocol.volume, 'usd')
-          }
-        >
-          {stats.topProtocol && (
-            <>
-              <img
-                src={stats.topProtocol.iconUrl}
-                alt=""
-                className={HOME_ICON_CLASS}
-              />
-              <span className={cn('truncate', HOME_TEXT.row)}>
-                {stats.topProtocol.name}
-              </span>
-            </>
-          )}
-        </Top>
+        {/* The busiest protocols' list, opposite, starts with it. */}
+        {protocols.length === 0 && (
+          <Top
+            label="Top protocol"
+            href={
+              stats.topProtocol &&
+              `/interop/protocols/${stats.topProtocol.slug}`
+            }
+            value={
+              stats.topProtocol &&
+              formatCurrency(stats.topProtocol.volume, 'usd')
+            }
+          >
+            {stats.topProtocol && (
+              <>
+                <img
+                  src={stats.topProtocol.iconUrl}
+                  alt=""
+                  className={HOME_ICON_CLASS}
+                />
+                <span className={cn('truncate', HOME_TEXT.row)}>
+                  {stats.topProtocol.name}
+                </span>
+              </>
+            )}
+          </Top>
+        )}
       </div>
       {protocols.length > 0 && (
         <div
-          className={cn(CORNER_CLASS, 'right-0 bottom-0 items-end text-right')}
+          // As close to its list as the other corners' labels to their rows.
+          className={cn(
+            CORNER_CLASS,
+            'right-0 bottom-0 items-end gap-1.5 text-right',
+          )}
         >
           <span className={HOME_TEXT.meta}>Top protocols</span>
           <ol className="flex max-w-full flex-col items-end gap-2">

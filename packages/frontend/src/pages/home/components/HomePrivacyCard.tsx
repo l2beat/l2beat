@@ -102,6 +102,7 @@ export function HomePrivacyCard({
             id: 'tvl',
             header: 'TVL',
             align: 'right',
+            withChange: true,
             cell: (protocol) => (
               <HomeRankedValueWithChange
                 value={protocol.tvl}

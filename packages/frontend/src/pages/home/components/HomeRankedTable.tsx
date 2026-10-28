@@ -39,6 +39,11 @@ export interface HomeRankedTableColumn<T> {
    * it, so the others close up to the table's right edge.
    */
   minTableWidth?: MinTableWidth
+  /**
+   * The cells are `HomeRankedValueWithChange`: the header sits over the
+   * value, not over the change after it.
+   */
+  withChange?: boolean
 }
 
 type MinTableWidth = 360 | 480 | 640
@@ -103,6 +108,7 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
                 HOME_TEXT.meta,
                 alignClass(column.align),
                 column.minTableWidth && HIDE_BELOW[column.minTableWidth],
+                column.withChange && CHANGE_SLOT_PADDING_CLASS,
               )}
             >
               {column.header}
@@ -221,9 +227,16 @@ export function HomeRankedValue({
 }
 
 /**
+ * The change slot's width plus the gap before it, where the change sits
+ * beside the value, so a header can stand clear of it.
+ */
+const CHANGE_SLOT_PADDING_CLASS = '@min-[480px]:pr-[3.625rem]'
+
+/**
  * A value with its 7-day change after it, in one column: the change in the
  * KPIs' small print, in a slot of its own width so the values stay aligned.
- * In a narrow table only the value shows.
+ * In a phone-wide table the change goes under the value, so names keep their
+ * room; in a narrower one only the value shows.
  */
 export function HomeRankedValueWithChange({
   value,
@@ -233,9 +246,9 @@ export function HomeRankedValueWithChange({
   change: number | undefined
 }) {
   return (
-    <span className="flex items-baseline gap-1.5">
+    <span className="flex @max-[480px]:flex-col @max-[480px]:items-end items-baseline @max-[480px]:gap-0.5 gap-1.5">
       <HomeRankedValue value={value} />
-      <span className="flex @max-[360px]:hidden min-w-13 justify-end">
+      <span className="flex @max-[360px]:hidden @min-[480px]:min-w-13 justify-end">
         {change !== undefined && (
           <Tooltip>
             <TooltipTrigger className="flex">

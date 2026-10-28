@@ -134,6 +134,7 @@ export function HomeL2Card({
             id: 'tvs',
             header: 'TVS',
             align: 'right',
+            withChange: true,
             cell: (project) => (
               <HomeRankedValueWithChange
                 value={project.tvs}
