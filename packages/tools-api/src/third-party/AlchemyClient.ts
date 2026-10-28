@@ -1,7 +1,20 @@
 import { v } from '@l2beat/validate'
-import { createPublicClient, http, parseAbi } from 'viem'
+import {
+  BaseError,
+  createPublicClient,
+  ExecutionRevertedError,
+  http,
+  parseAbi,
+} from 'viem'
 import type { Address, Chain } from '../config/types'
 import { JsonRpcClient } from './JsonRpcClient'
+
+export interface AccountInfo {
+  kind: 'eoa' | 'contract' | 'delegated'
+  nonce?: string
+  // EIP-7702 delegation target of a delegated EOA.
+  delegate?: `0x${string}`
+}
 
 export interface BasicTxInfo {
   to: Address
@@ -38,12 +51,55 @@ export class AlchemyClient {
     }
   }
 
-  async hasNoCode(address: `0x${string}`, chain: Chain): Promise<boolean> {
-    const code = await this.client.call(this.url(chain), {
-      method: 'eth_getCode',
-      params: [address, 'latest'],
+  async getAccount(address: `0x${string}`, chain: Chain): Promise<AccountInfo> {
+    const code = HexString.parse(
+      await this.client.call(this.url(chain), {
+        method: 'eth_getCode',
+        params: [address, 'latest'],
+      }),
+    ).toLowerCase()
+    const delegation = /^0xef0100([\da-f]{40})$/.exec(code)
+    if (code !== '0x' && !delegation) return { kind: 'contract' }
+
+    const nonce = BigInt(
+      HexString.parse(
+        await this.client.call(this.url(chain), {
+          method: 'eth_getTransactionCount',
+          params: [address, 'latest'],
+        }),
+      ),
+    ).toString()
+    if (!delegation) return { kind: 'eoa', nonce }
+    return { kind: 'delegated', nonce, delegate: `0x${delegation[1]}` }
+  }
+
+  // Reads every call at one block. A reverted call reads as null.
+  async readState(
+    address: `0x${string}`,
+    calls: `0x${string}`[],
+    chain: Chain,
+  ) {
+    const client = createPublicClient({
+      transport: http(this.url(chain), { timeout: 15_000, retryCount: 1 }),
     })
-    return code === '0x'
+    const blockNumber = await client.getBlockNumber()
+    const results = await Promise.all(
+      calls.map(async (data) => {
+        try {
+          const result = await client.call({ to: address, data, blockNumber })
+          return result.data ?? '0x'
+        } catch (error) {
+          if (
+            error instanceof BaseError &&
+            error.walk((cause) => cause instanceof ExecutionRevertedError)
+          ) {
+            return null
+          }
+          throw error
+        }
+      }),
+    )
+    return { blockNumber: blockNumber.toString(), results }
   }
 
   async getTransaction(
@@ -71,6 +127,8 @@ export class AlchemyClient {
     return `https://${chain.alchemyId}.g.alchemy.com/v2/${this.key}`
   }
 }
+
+const HexString = v.string().check((v) => /^0x[a-f\d]*$/i.test(v))
 
 const TransactionResponse = v.object({
   input: v.string().check((v) => /^0x[a-f\d]*$/i.test(v)),

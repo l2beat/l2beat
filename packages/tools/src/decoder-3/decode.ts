@@ -21,6 +21,11 @@ export interface DecodedValue {
   extra?: `0x${string}`
   chainId?: number
   address?: `0x${string}`
+  note?: { text: string; warning?: boolean }
+  // Bytes that are never calldata, like signature parts.
+  opaque?: boolean
+  // Calldata run with DELEGATECALL, in the context of the caller.
+  delegatecall?: boolean
 }
 
 export function decodeType(

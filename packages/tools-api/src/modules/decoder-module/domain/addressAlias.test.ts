@@ -22,9 +22,9 @@ describe('findAddressAlias', () => {
     })
     const service = new AddressService(
       mockObject<AlchemyClient>({
-        hasNoCode: async (address) => {
+        getAccount: async (address) => {
           lookups.push(`rpc:${address}`)
-          return true
+          return { kind: 'eoa', nonce: '0' }
         },
       }),
       mockObject<EtherscanClient>({
@@ -41,6 +41,7 @@ describe('findAddressAlias', () => {
         abis: { [`eth:${l1}`]: ['function approveHash(bytes32 hash)'] },
         allAbis: [],
         preImages: [],
+        depositChains: {},
       },
       {},
       [chain],

@@ -4,6 +4,7 @@ import {
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { getDepositChains } from './depositChains'
 import type { Address, Chain, DiscoveredConfig } from './types'
 
 export function getDiscoveredConfig(chains: Chain[]): DiscoveredConfig {
@@ -13,11 +14,13 @@ export function getDiscoveredConfig(chains: Chain[]): DiscoveredConfig {
 
   const names: Record<Address, string> = {}
   const abis: Record<Address, string[]> = {}
+  const depositChains: Record<Address, number> = {}
   const allAbis = new Set<string>()
   const preImages = new Set<string>()
 
   for (const project of projects) {
     const discovery = reader.readDiscovery(project)
+    Object.assign(depositChains, getDepositChains(discovery.entries))
 
     for (const abis of Object.values(discovery.abis)) {
       for (const entry of abis) {
@@ -58,5 +61,6 @@ export function getDiscoveredConfig(chains: Chain[]): DiscoveredConfig {
     abis,
     allAbis: [...allAbis],
     preImages: [...preImages],
+    depositChains,
   }
 }

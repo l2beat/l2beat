@@ -1,11 +1,13 @@
 import { getCreate2Address, toFunctionSelector } from 'viem'
 import { type DecodedValue, decodeType } from './decode'
-import { decodePacked, type PackedSchema } from './packed'
-import { OP_PERMISSIONED_GAME_ARGS_SCHEMA } from './packedSchemas'
-import { SAFE_EXEC_ABI } from './safe'
+import { isOpDeposit, OP_DEPOSIT_ABI } from './deposits'
+import { describeEnumArguments } from './enums'
+import { decodeGameArgs } from './packedSchemas'
+import { decodeSafeSignatures, SAFE_EXEC_ABI } from './safe'
 
 const plugins = [
   safeBatchPlugin,
+  opDepositPlugin,
   packedArgumentPlugin,
   multiSendPlugin,
   create2FactoryPlugin,
@@ -27,7 +29,41 @@ function safeBatchPlugin(
   const abi = SAFE_BATCH_ABIS.find(
     (abi) => toFunctionSelector(abi) === data.slice(0, 10).toLowerCase(),
   )
-  if (abi) return decodeType(abi, data, chainId, address)
+  if (!abi) return
+  const decoded = decodeType(abi, data, chainId, address)
+  if (abi === SAFE_EXEC_ABI) describeSafeTransaction(decoded, chainId)
+  return decoded
+}
+
+function opDepositPlugin(
+  data: `0x${string}`,
+  chainId: number,
+  address?: `0x${string}`,
+) {
+  if (!isOpDeposit({ type: 'call', bytes: data, value: '' })) return
+  return decodeType(OP_DEPOSIT_ABI, data, chainId, address)
+}
+
+function describeSafeTransaction(decoded: DecodedValue, chainId: number) {
+  const delegatecall = decoded.members?.some(
+    (member) => member.name === 'operation' && member.value === '1',
+  )
+  decoded.members = decoded.members?.map((member) => {
+    if (member.name === 'data' && delegatecall) {
+      return { ...member, delegatecall: true }
+    }
+    if (member.name === 'operation') {
+      if (member.value === '0') return { ...member, note: { text: 'call' } }
+      if (member.value === '1') {
+        return { ...member, note: { text: 'delegatecall', warning: true } }
+      }
+    }
+    if (member.name === 'signatures') {
+      const signatures = decodeSafeSignatures(member.bytes, chainId)
+      if (signatures) return { ...signatures, name: member.name }
+    }
+    return member
+  })
 }
 
 export function decode(
@@ -51,7 +87,10 @@ export function decode(
       } catch {}
     }
   }
-  if (value) applyCallTargetHeuristic(value)
+  if (value) {
+    applyCallTargetHeuristic(value)
+    describeEnumArguments(value)
+  }
   return value
 }
 
@@ -61,25 +100,23 @@ interface PackedArgumentCodec {
   functionAbi: string
   selector: `0x${string}`
   parameter: string
-  matches: Readonly<Record<string, string>>
-  schema: PackedSchema
+  decode(
+    members: DecodedValue[],
+    encoded: `0x${string}`,
+    chainId: number,
+  ): DecodedValue | undefined
 }
 
 const SET_IMPLEMENTATION_ABI =
   'function setImplementation(uint32 _gameType, address _impl, bytes _args)'
-const OP_PERMISSIONED_DISPUTE_GAME_V2_4_0 =
-  '0xe1dffcbe4e22b813f26d2106d943c102e7cab87e'
 
 const packedArgumentCodecs: PackedArgumentCodec[] = [
   {
     functionAbi: SET_IMPLEMENTATION_ABI,
     selector: toFunctionSelector(SET_IMPLEMENTATION_ABI),
     parameter: 'args',
-    matches: {
-      gameType: '1',
-      impl: OP_PERMISSIONED_DISPUTE_GAME_V2_4_0,
-    },
-    schema: OP_PERMISSIONED_GAME_ARGS_SCHEMA,
+    decode: (members, encoded, chainId) =>
+      decodeGameArgs(members[0]?.value ?? '', encoded, chainId),
   },
 ]
 
@@ -93,19 +130,11 @@ function packedArgumentPlugin(
 
     const decoded = decodeType(codec.functionAbi, data, chainId, address)
     const members = decoded.members ?? []
-    const matches = Object.entries(codec.matches).every(([name, value]) =>
-      members.some(
-        (member) =>
-          member.name === name &&
-          member.value.toLowerCase() === value.toLowerCase(),
-      ),
-    )
-    if (!matches) continue
-
     const parameter = members.find((member) => member.name === codec.parameter)
     if (!parameter || parameter.type !== 'bytes') continue
 
-    const packed = decodePacked(codec.schema, parameter.bytes, chainId)
+    const packed = codec.decode(members, parameter.bytes, chainId)
+    if (!packed) continue
     packed.name = parameter.name
     decoded.members = members.map((member) =>
       member === parameter ? packed : member,
@@ -188,6 +217,7 @@ function multiSendPlugin(
       value: data,
       chainId,
       address: target,
+      ...(Number(operation) === 1 ? { delegatecall: true } : {}),
     })
 
     values.push({

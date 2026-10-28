@@ -34,6 +34,8 @@ export interface DiscoveredConfig {
   abis: Record<Address, string[]>
   allAbis: string[]
   preImages: string[]
+  // OptimismPortal address to the chain id of its L2.
+  depositChains: Record<Address, number>
 }
 
 export type TokenConfig = Record<Address, TokenInfo>

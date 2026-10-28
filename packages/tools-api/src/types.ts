@@ -5,6 +5,7 @@ export type {
   LookupQuery,
   PreimageResult,
   SignatureResult,
+  StateResult,
   TransactionQuery,
   TransactionResult,
 } from './modules/decoder-module/domain/ApiController'
