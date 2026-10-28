@@ -128,6 +128,42 @@ describeDatabase(HourActivityIndexer.name, (db) => {
     ])
   })
 
+  it('syncs only through the last hour Lighter gave, waiting for a late one', async () => {
+    const yesterday = TODAY - UnixTime.DAY
+    const getHourlyStats = mockFn()
+      // Yesterday's last hours are late
+      .resolvesToOnce(HISTORY)
+      .resolvesToOnce([
+        ...HISTORY,
+        stat(TODAY - UnixTime.HOUR, 3, 3),
+        stat(TODAY, 4, 40),
+      ])
+      .resolvesToOnce([
+        ...HISTORY,
+        stat(TODAY - UnixTime.HOUR, 3, 3),
+        stat(TODAY, 4, 40),
+      ])
+    const indexer = createIndexer(db, getHourlyStats)
+
+    const sixAm = toHeight(yesterday + 6 * UnixTime.HOUR)
+    expect(await indexer.update(toHeight(START), toHeight(TODAY))).toEqual(
+      sixAm,
+    )
+    expect(await getSyncedUntil()).toEqual(yesterday + 6 * UnixTime.HOUR)
+
+    const oneAm = toHeight(TODAY + UnixTime.HOUR)
+    expect(await indexer.update(sixAm + 1, oneAm)).toEqual(oneAm)
+    const [day] = await db.activity.getByProjectAndTimeRange(PROJECT, [
+      yesterday,
+      yesterday,
+    ])
+    expect(day?.count).toEqual((HISTORY.at(-1)?.count ?? 0) + 3)
+
+    await expect(indexer.update(oneAm + 1, oneAm + 1)).toBeRejectedWith(
+      'Next hour not published',
+    )
+  })
+
   it('throws when a day has no hours', async () => {
     const indexer = createIndexer(db, mockFn().resolvesTo([stat(TODAY, 4, 40)]))
 

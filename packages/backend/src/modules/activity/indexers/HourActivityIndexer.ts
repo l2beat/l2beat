@@ -38,11 +38,19 @@ export class HourActivityIndexer extends ManagedChildIndexer {
       UnixTime.toStartOf((from - 1) * UnixTime.HOUR, 'day'),
       this.$.minHeight * UnixTime.HOUR,
     )
-    const end = to * UnixTime.HOUR
-
-    const hours = (await this.$.provider.getHourlyCounts(start, end)).map(
-      (hour) => ({ projectId: this.$.projectId, ...hour }),
+    const hours = (
+      await this.$.provider.getHourlyCounts(start, to * UnixTime.HOUR)
+    ).map((hour) => ({ projectId: this.$.projectId, ...hour }))
+    // The source has a row for every hour it has published, so it syncs only
+    // through the last one. A late hour then comes on a later update, even
+    // the last of a day
+    const height = Math.min(
+      to,
+      Math.max(...hours.map((hour) => hour.timestamp)) / UnixTime.HOUR + 1,
     )
+    assert(height >= from, 'Next hour not published')
+    const end = height * UnixTime.HOUR
+
     const days = range(start, end, UnixTime.DAY).map((timestamp) => {
       const inDay = hours.filter(
         (hour) => UnixTime.toStartOf(hour.timestamp, 'day') === timestamp,
@@ -81,7 +89,7 @@ export class HourActivityIndexer extends ManagedChildIndexer {
       )
     })
 
-    return to
+    return height
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
