@@ -11,6 +11,7 @@ import {
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
+  isEthTransferLog,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -89,10 +90,15 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
       : null
     const parsed = parseLogTransferRedeemed(input.log, tokenBridgeAddresses)
     if (!parsed) return
-    const nextLog = input.txLogs.find(
-      // biome-ignore lint/style/noNonNullAssertion: It's there
-      (x) => x.logIndex === input.log.logIndex! + 1,
-    )
+    // Skip EIP-7708 ETH logs: a WETH unwrap logs its ETH payout before its
+    // Withdrawal, which tells us the token.
+    // biome-ignore lint/style/noNonNullAssertion: It's there
+    let nextLogIndex = input.log.logIndex! + 1
+    let nextLog = input.txLogs.find((x) => x.logIndex === nextLogIndex)
+    while (nextLog && isEthTransferLog(nextLog)) {
+      nextLogIndex++
+      nextLog = input.txLogs.find((x) => x.logIndex === nextLogIndex)
+    }
     const transfer = nextLog && parseTransfer(nextLog, null)
 
     const senderAddress = EthereumAddress(
