@@ -20,7 +20,7 @@ import {
 } from './viewStore'
 
 // Matches the server's: tabs declare what they understand when connecting.
-const AGENT_PROTOCOL = 2
+const AGENT_PROTOCOL = 3
 export const AGENT_CONNECTED = 'agent-connected'
 
 // Long enough to read and check the code the agent points at; dismissing the

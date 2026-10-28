@@ -38,7 +38,7 @@ describe(attachBoardRouter.name, () => {
       configReader,
       store: new BoardStore(),
       session: {
-        notify: (event) => {
+        notifyBoard: (event) => {
           events.push(event as BoardEvent)
           return 1
         },

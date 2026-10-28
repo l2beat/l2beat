@@ -20,7 +20,7 @@ const specBodySchema = z.object({ spec: z.unknown() })
 
 export interface Boards {
   configReader: ConfigReader
-  session: Pick<AgentSession<unknown, AgentReceipt>, 'notify'>
+  session: Pick<AgentSession<unknown, AgentReceipt>, 'notifyBoard'>
   store: BoardStore
 }
 
@@ -135,7 +135,7 @@ export function announce(
     boardId: board.id,
     reveal,
   }
-  return boards.session.notify(event)
+  return boards.session.notifyBoard(event)
 }
 
 export function resolveBoardOf(
