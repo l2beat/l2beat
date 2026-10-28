@@ -41,6 +41,7 @@ export function SearchBarContextProvider({
       (error) => {
         console.error(error)
         setOpen(false)
+        setTypedWhileLoading('')
       },
     )
   }, [])
