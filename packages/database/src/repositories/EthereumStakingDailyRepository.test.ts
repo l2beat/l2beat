@@ -39,6 +39,7 @@ function record(day: number): EthereumStakingDailyRecord {
     timestamp: UnixTime(day * UnixTime.DAY),
     slot: day * 7200 - 1,
     totalBalance: 10n ** 25n,
+    validatorCount: 1_000_000,
     pendingDeposits: null,
     withdrawals: 10n ** 21n,
     deposits: 10n ** 20n,
