@@ -73,7 +73,7 @@ function blockOpen(code: string, offset: number): number | undefined {
       parens = Math.max(parens - 1, 0)
     } else if (code[at] === '{' && parens === 0) {
       const close = closingBrace(code, at)
-      if (close === undefined || code[nextCodeChar(code, close + 1)] !== '(') {
+      if (close === undefined || !isCallOptions(code, at, close)) {
         return at
       }
       at = close
@@ -100,12 +100,26 @@ function closingBrace(code: string, open: number): number | undefined {
   return undefined
 }
 
-// Call options keep their parentheses on the same line; a parenthesis on a
-// later line starts the next statement, like a tuple assignment after a block.
+// Call options hold no statement, so no semicolon, and the call's parentheses
+// follow them, on any line. A block holds statements, so a parenthesis after
+// it, like a tuple assignment's, starts the next statement.
+function isCallOptions(code: string, open: number, close: number): boolean {
+  if (code.slice(open, close).includes(';')) {
+    return false
+  }
+  return code[nextCodeChar(code, close + 1)] === '('
+}
+
 function nextCodeChar(code: string, from: number): number {
   let at = from
-  while (at < code.length && ' \t'.includes(code[at] as string)) {
-    at++
+  while (at < code.length) {
+    if (' \t\r\n'.includes(code[at] as string)) {
+      at++
+    } else if (code.startsWith('//', at) || code.startsWith('/*', at)) {
+      at = endOfCommentOrString(code, at) + 1
+    } else {
+      return at
+    }
   }
   return at
 }
