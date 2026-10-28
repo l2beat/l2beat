@@ -79,7 +79,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
         ...PUBLIC_INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: "Private only over Tor, which keeps the user's IP off both sides.",
+          note: "Private only over Tor, which keeps the user's IP out of both the deposit and the requests.",
         },
       },
       sources: [

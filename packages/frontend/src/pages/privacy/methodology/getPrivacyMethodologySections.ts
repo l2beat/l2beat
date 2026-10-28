@@ -54,6 +54,9 @@ export function getPrivacyMethodologySections() {
             `**${PRIVACY_ADVERSARIES[id].label}**: ${FRAMEWORK_ADVERSARY_TEXT[id]}`,
         ),
       ),
+      'A third party ties requests to one user by content, session or timing. Content is what a request names, like an account or a hash. Session is what requests share, like an IP, a Tor circuit, a fingerprint or a login. Timing narrows the candidates to users active at the same moment. The network observer is green only when no third party ties both sides of the promised field by content or session. Timing must leave many candidates.',
+      'Bulk downloads and a local node keep content out of requests. Tor hides the IP, and an app that routes its own traffic can give each step its own session. Only batching, delays and cover traffic hide timing, as a well-built mixnet does.',
+      'Counterparties (e.g. private transfer recipients) also learn what the protocol hands them, such as a received note. We report this under the chain analyst and rate it only when it reaches parties the user never dealt with voluntarily.',
       'The public observer, chain analyst and future adversary see the same public data with increasing ability.',
     ]),
 

@@ -95,7 +95,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        "Each sync sends the user's transparent addresses to lightwalletd outside Tor, tying both the payout fetch and the exit to that user by timing.",
+        "Each sync sends the user's transparent addresses to lightwalletd outside Tor, so lightwalletd can tie the payout fetch and the exit to that user by timing.",
       exposureContinued:
         "Zodl's Tor isolates each 1Click request, payout fetch and transaction, while block sync and these address lookups stay direct.",
       advice:

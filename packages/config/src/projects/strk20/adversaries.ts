@@ -87,9 +87,9 @@ export const strk20Adversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        "No third party gets the account or viewing key, but anyone on the user's network path sees when they deposit and withdraw.",
+        "Every pool request goes through Starknet Holdings' gateway, so AVNU and StarkWare's discovery service get requests from the gateway, not the user's device.",
       exposureContinued:
-        "Bramble sends the account and viewing key only to Starknet Holdings' gateway, which answers over Tor. It runs in Chromium browsers, not Tor Browser.",
+        'Bramble sends the account and viewing key only to that gateway, which answers over Tor. Bramble is released only for Chromium browsers, so it cannot run in Tor Browser.',
       advice:
         'Run Bramble in a Chromium browser whose only route out is a Tor proxy.',
       interior: {
@@ -105,7 +105,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
         },
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only over Tor, which hides the timing of deposits and withdrawals from the network path.',
+          note: 'Private only over Tor, which hides from the network path that the user talks to the gateway.',
         },
       },
       sources: [

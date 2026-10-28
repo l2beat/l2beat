@@ -105,9 +105,9 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       exposureShort:
         "The default RPCs, Alchemy under 0xbow's key with a public node as fallback, see the account at sign-in and can time it against the withdrawal.",
       exposureContinued:
-        "Network services like the LI.FI swap service and Sentry error reporting receive your IP address unless the app is used over Tor or a VPN, while the Tor mode is not compatible with a local Ethereum node. The app confirms a relayed withdrawal from bulk reads, so no request names it, and the pairing rests on timing, which Tor does not hide. The app downloads the pool's events whole from the ASP and matches notes locally. The relayer learns the recipient at quote time. Tor Browser works, but the relayer refuses many Tor exits and the app offers no other relayer.",
+        'The app confirms a relayed withdrawal from bulk reads, so no request names it, and the pairing rests on timing, which Tor does not hide. Tor Browser works but cannot reach a local node. The relayer refuses many Tor exits, and the app offers no other relayer.',
       advice:
-        'Set your own node, served over https, as the endpoint for the chain before signing in. Withdraw in a new Tor Browser session signed in with your account key, so no wallet is connected, and retry on a new circuit when the relayer refuses.',
+        "Set the user's own node, served over https, as the endpoint for the chain before signing in. Withdraw in a new Tor Browser session signed in with the user's account key, so no wallet is connected, and retry on a new circuit when the relayer refuses.",
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -115,7 +115,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         asset: 'private',
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only from an own node, with a new Tor Browser session for the exit.',
+          note: "Private only from the user's own node, with a new Tor Browser session for the exit.",
         },
       },
       sources: [
@@ -126,14 +126,6 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         {
           title: 'Allowlist refuses per-note reads and topic filters',
           url: WEBSITE + 'services/egress-policy.ts#L447-L520',
-        },
-        {
-          title: 'The receive quote carries the recipient',
-          url: WEBSITE + 'services/egress-policy.ts#L606-L617',
-        },
-        {
-          title: 'Tor needs a gateway the user runs',
-          url: WEBSITE + 'config/tor.ts#L1-L50',
         },
       ],
     },

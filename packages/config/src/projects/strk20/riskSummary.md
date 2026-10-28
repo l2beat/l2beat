@@ -14,5 +14,5 @@
 2. the wallet's prover or note discovery service, which receives the viewing key, leaks or keeps it (see privileged insider).
 3. an app driving a shadow account or a swap through the pool links it to the user's main address (see privileged insider).
 4. a first payment to a new contact, a channel opened beside a deposit or a unique amount links activity (see public observer and chain analyst).
-5. Bramble runs without a Tor proxy, so anyone on the user's network path sees when they deposit and withdraw (see network observer).
+5. Bramble cannot run in Tor Browser, so without a hand-set Tor proxy the user's network path can pair its traffic with withdrawals (see network observer).
 6. elliptic-curve cryptography is broken, which opens the auditor key and with it every user's history (see future adversary).

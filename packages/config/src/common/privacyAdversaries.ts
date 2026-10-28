@@ -48,7 +48,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'networkObserver',
       label: 'Network observer',
       description:
-        'Sits between the user and the services and sees traffic only: ISPs, VPNs, Tor exits, public RPCs and relayers. Learns IP addresses, timing, fingerprints and ciphertext. Services the operator runs count as the insider.',
+        'Sits between the user and the services and sees traffic only: ISPs, VPNs, Tor exits, public RPCs and relayers. Ties requests to a user by content, session or timing: what they name, a shared IP or login, and when they arrive. Services the operator runs count as the insider.',
       examples:
         'Infura or Alchemy, a Tornado relayer, a wallet vendor selling telemetry, Google captcha or analytics in the dapp frontend.',
     },
