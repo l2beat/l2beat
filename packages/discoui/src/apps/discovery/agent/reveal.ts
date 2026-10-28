@@ -30,10 +30,12 @@ export function revealItems(
       .map((node) => node.id),
   )
   const parent = cheapestParents(byId, [...roots])
-  const targets = new Set(targetIds)
+  // A contract this tab's graph lacks is reported missing by the view.
+  const present = targetIds.filter((id) => byId.has(id))
+  const targets = new Set(present)
   const unhide = new Map<string, Set<string>>()
   const via = new Set<string>()
-  for (const target of targetIds) {
+  for (const target of present) {
     const isDetached = !roots.has(target) && !parent.has(target)
     const chain = isDetached
       ? cheapestCycle(byId, target)
