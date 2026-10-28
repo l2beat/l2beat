@@ -16,6 +16,7 @@ import { IconCode } from '../../../icons/IconCode'
 import { IconPlus } from '../../../icons/IconPlus'
 import { cn } from '../../../utils/cn'
 import { AGENT_CONNECTED } from '../agent/AgentBridge'
+import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { BoardBlockView } from './BoardBlocks'
 import {
   activateBoard,
@@ -363,9 +364,13 @@ function ActiveBoard(props: {
   listSettled: boolean
 }) {
   const revision = useBoardUiStore((state) => state.revision)
+  // A discovery run reloads the project, and the board binds to it again.
+  const discoveredAt = useQuery(
+    useProjectQueryOptions(props.project),
+  ).dataUpdatedAt
   const [editing, setEditing] = useState(false)
   const board = useQuery({
-    queryKey: ['board', props.summary.id, revision],
+    queryKey: ['board', props.summary.id, revision, discoveredAt],
     queryFn: () => getBoard(props.summary.id),
     enabled: props.listSettled,
     placeholderData: (previous) => previous,
