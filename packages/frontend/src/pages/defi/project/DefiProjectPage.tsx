@@ -19,11 +19,13 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { LiquidStakingProjectSummary } from './components/LiquidStakingProjectSummary'
 
 interface Props extends AppLayoutProps {
   entry: ProjectDefiEntry
   sectionLinks: ProjectSectionLink[]
+  versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
   selectedUpdateId?: string
 }
@@ -31,6 +33,7 @@ interface Props extends AppLayoutProps {
 export function DefiProjectPage({
   entry,
   sectionLinks,
+  versionLinks,
   queryState,
   selectedUpdateId,
   ...props
@@ -64,6 +67,7 @@ export function DefiProjectPage({
                     // DeFi section, so there is no index to link to
                     section={env.CLIENT_SIDE_DEFI_ENABLED ? 'defi' : undefined}
                     sectionLinks={sectionLinks}
+                    versions={versionLinks}
                   />
                   <ProjectSummaryBars
                     project={{
@@ -76,6 +80,7 @@ export function DefiProjectPage({
                         emergencyWarning: entry.warnings.emergency,
                       },
                     }}
+                    versions={versionLinks}
                   />
                   {entry.badges.length > 0 && (
                     <BadgesSection

@@ -183,7 +183,14 @@ function sourcesFor(contracts: ApiProjectContract[]): SearchSources {
     contracts: buildContractSearchables(chains),
     fields: buildFieldSearchables(chains),
     projects: buildProjectSearchables(
-      [{ name: 'bridgeland', addresses: [], contractNames: [] }],
+      [
+        {
+          name: 'bridgeland',
+          category: 'interop',
+          addresses: [],
+          contractNames: [],
+        },
+      ],
       { matchContractNames: false },
     ),
     commands: buildCommandSearchables([
