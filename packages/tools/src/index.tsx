@@ -12,6 +12,8 @@ import { DecoderApp } from './decoder/DecoderApp'
 import { Layout } from './Layout'
 import { MonitorApp } from './monitor/MonitorApp'
 import { SimulatorApp } from './simulator/SimulatorApp'
+import { BlockPage as UopsBlockPage } from './uops/BlockPage'
+import { StatsPage as UopsStatsPage } from './uops/StatsPage'
 
 const queryClient = new QueryClient()
 
@@ -30,6 +32,8 @@ ReactDOM.createRoot(root).render(
             <Route path="/decoder-new" element={<DecoderRedirect />} />
             <Route path="/simulator" element={<SimulatorApp />} />
             <Route path="/monitor" element={<MonitorApp />} />
+            <Route path="/uops" element={<UopsBlockPage />} />
+            <Route path="/uops/stats" element={<UopsStatsPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

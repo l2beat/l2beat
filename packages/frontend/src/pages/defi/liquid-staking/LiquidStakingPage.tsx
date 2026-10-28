@@ -2,6 +2,7 @@ import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TabInfoWithDrawer } from '~/components/TabInfoWithDrawer'
 import { LIQUID_STAKING_DESCRIPTION } from '~/consts/summaryPageDescriptions'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -36,19 +37,21 @@ export function LiquidStakingPage({
           <MainPageHeader description={LIQUID_STAKING_DESCRIPTION}>
             Liquid Staking
           </MainPageHeader>
-          <LiquidStakingCharts
-            projects={chartProjects}
-            defaultRange={defaultChartRange}
-          />
-          <HorizontalSeparator className="my-5" />
-          <h2 className="mb-1 font-bold text-xl md:text-2xl">
-            Risk comparison
-          </h2>
-          <TabInfoWithDrawer
-            title="What are liquid staking tokens?"
-            content="Liquid staking tokens represent ETH staked through a protocol. Holders can trade or use them while the ETH earns rewards. Holding one means trusting the protocol's contracts and the parties that run its validators, report its exchange rate and can upgrade it. The table compares those assumptions."
-          />
-          <LiquidStakingTable entries={entries} />
+          <PrimaryCard className="md:mt-4">
+            <LiquidStakingCharts
+              projects={chartProjects}
+              defaultRange={defaultChartRange}
+            />
+            <HorizontalSeparator className="my-5" />
+            <h2 className="mb-1 font-bold text-xl md:text-2xl">
+              Risk comparison
+            </h2>
+            <TabInfoWithDrawer
+              title="What are liquid staking tokens?"
+              content="Liquid staking tokens represent ETH staked through a protocol. Holders can trade or use them while the ETH earns rewards. Holding one means trusting the protocol's contracts and the parties that run its validators, report its exchange rate and can upgrade it. The table compares those assumptions."
+            />
+            <LiquidStakingTable entries={entries} />
+          </PrimaryCard>
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>
