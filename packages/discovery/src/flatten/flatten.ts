@@ -65,7 +65,7 @@ export function flattenStartingFrom(
       shouldBeInterface,
     )
   }
-  const order = [...collectPragmas(current), ...current]
+  const order = [...collectPragmas(current, rootContract.file), ...current]
 
   const typeMap = buildTypeMap(order)
   const renameMap = buildRenameMap(order)
@@ -375,11 +375,21 @@ function buildTypeMap(
 
 // NOTE(radomski): We want to have all pragrams without the ones that configure
 // the Solidity version. Also the pragrams should be deduplicated.
-function collectPragmas(order: DeclarationFilePair[]): DeclarationFilePair[] {
+//
+// Before 0.8 the ABI coder is chosen per file and defaults to v1, so a v2
+// pragma from a dependency would claim v2 for a root that was compiled with v1.
+function collectPragmas(
+  order: DeclarationFilePair[],
+  rootFile: ParsedFile,
+): DeclarationFilePair[] {
+  const keepDependencyCoders = !isBeforeSolidity08(rootFile)
   const byContent = new Map<string, DeclarationFilePair>()
   for (const { file } of order) {
     for (const n of file.rootASTNode.children) {
       if (n.type !== 'PragmaDirective' || n.name === 'solidity') continue
+      if (file !== rootFile && !keepDependencyCoders && isAbiCoderPragma(n)) {
+        continue
+      }
       const content = `pragma ${n.name} ${n.value};`
       byContent.set(content, {
         file,
@@ -396,6 +406,20 @@ function collectPragmas(order: DeclarationFilePair[]): DeclarationFilePair[] {
     }
   }
   return [...byContent.values()]
+}
+
+function isAbiCoderPragma(pragma: AST.PragmaDirective): boolean {
+  if (pragma.name === 'abicoder') return true
+  return pragma.name === 'experimental' && pragma.value === 'ABIEncoderV2'
+}
+
+function isBeforeSolidity08(file: ParsedFile): boolean {
+  const pragma = file.rootASTNode.children.find(
+    (n): n is AST.PragmaDirective =>
+      n.type === 'PragmaDirective' && n.name === 'solidity',
+  )
+  if (pragma === undefined) return false
+  return ['0.4.', '0.5.', '0.6.', '0.7.'].some((v) => pragma.value.includes(v))
 }
 
 function buildRenameMap(order: DeclarationFilePair[]): Map<string, string> {
