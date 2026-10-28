@@ -49,6 +49,8 @@ export class AcpConnection {
       cwd: options.cwd,
       env: options.env,
       stdio: ['pipe', 'pipe', 'pipe'],
+      // Windows installs npx as npx.cmd, which only a shell runs.
+      shell: process.platform === 'win32',
     })
     this.child.stdout?.setEncoding('utf8')
     this.child.stdout?.on('data', (chunk: string) => this.read(chunk))
