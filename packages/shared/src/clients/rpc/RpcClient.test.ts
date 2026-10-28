@@ -196,6 +196,44 @@ describe(RpcClient.name, () => {
     })
   })
 
+  describe(RpcClient.prototype.getBlockReceipts.name, () => {
+    it('fetches every receipt of a block with its gas fields', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: [
+            { ...mockReceipt, gasUsed: '0x5208', effectiveGasPrice: '0x3' },
+          ],
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlockReceipts(100)
+
+      expect(result).toEqual([
+        { ...parsedMockReceipt, gasUsed: 21_000n, effectiveGasPrice: 3n },
+      ])
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockReceipts',
+          params: ['0x64'],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+
+    it('throws when the block is not there yet', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ result: null }),
+      })
+      const rpc = mockClient({ http })
+
+      await expect(rpc.getBlockReceipts(100)).toBeRejectedWith(
+        NotFoundOnRpcError,
+      )
+    })
+  })
+
   describe(RpcClient.prototype.getBalance.name, () => {
     it('returns balance for given address and block', async () => {
       const http = mockObject<HttpClient>({

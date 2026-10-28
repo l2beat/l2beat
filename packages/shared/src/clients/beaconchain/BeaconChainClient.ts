@@ -63,6 +63,46 @@ export class BeaconChainClient extends ClientCore {
       status ? { status: status.join(',') } : {},
     ).toString()}`
 
+    const { sum, count } = await this.sumStreamed(
+      endpoint,
+      /^data\.\d+\.balance/,
+    )
+    return {
+      // gwei to wei
+      totalStake: sum * 10n ** 9n,
+      numberOfValidators: count,
+    }
+  }
+
+  /** Sum of every validator's balance at a state, in wei. */
+  async getTotalBalance(slot: number): Promise<bigint> {
+    const { sum } = await this.sumStreamed(
+      `eth/v1/beacon/states/${slot}/validator_balances`,
+      /^data\.\d+\.balance/,
+    )
+    return sum * 10n ** 9n
+  }
+
+  /**
+   * Sum of the deposits waiting to be credited at a state, in wei. The queue
+   * exists only since Electra.
+   */
+  async getPendingDepositsAmount(slot: number): Promise<bigint> {
+    const { sum } = await this.sumStreamed(
+      `eth/v1/beacon/states/${slot}/pending_deposits`,
+      /^data\.\d+\.amount/,
+    )
+    return sum * 10n ** 9n
+  }
+
+  /**
+   * Streams a response and sums the integers at the paths matching `filter`,
+   * so a response of hundreds of megabytes is never held in memory.
+   */
+  private async sumStreamed(
+    endpoint: string,
+    filter: RegExp,
+  ): Promise<{ sum: bigint; count: number }> {
     const response = await this.$.http.fetchRaw(
       `${this.$.beaconApiUrl}${endpoint}`,
       { timeout: this.$.timeout },
@@ -74,36 +114,32 @@ export class BeaconChainClient extends ClientCore {
         endpoint,
         response: JSON.stringify(response),
       })
-      throw new Error(
-        `BeaconChain getValidators request failed with status: ${response.status}`,
-      )
+      throw new Error('BeaconChain request failed', {
+        cause: { endpoint, status: response.status },
+      })
     }
 
     if (!response.body) {
-      throw new Error('BeaconChain getValidators response has no body')
+      throw new Error('BeaconChain response has no body', {
+        cause: { endpoint },
+      })
     }
 
     // Native fetch returns a Web stream; stream-chain only accepts Node streams
     const pipeline = chain([
       Readable.fromWeb(response.body),
       parser(),
-      pick({ filter: /^data\.\d+\.balance/ }),
+      pick({ filter }),
       streamValues(),
     ])
 
-    let effectiveBalance = 0n
-    let numberOfValidators = 0
-
+    let sum = 0n
+    let count = 0
     for await (const { value } of pipeline) {
-      // gwei to wei
-      effectiveBalance += BigInt(value) * 10n ** 9n
-      numberOfValidators++
+      sum += BigInt(value)
+      count++
     }
-
-    return {
-      totalStake: effectiveBalance,
-      numberOfValidators,
-    }
+    return { sum, count }
   }
 
   async call(endpoint: string): Promise<unknown> {

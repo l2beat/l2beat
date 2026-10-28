@@ -94,6 +94,8 @@ export const EVMTransactionResponse = z.object({
 
 const EVMTransactionReceipt = z.object({
   blockHash: z.string().optional(),
+  gasUsed: Quantity.decode.optional(),
+  effectiveGasPrice: Quantity.decode.optional(),
   logs: z.array(
     z.object({
       address: z.string(),
@@ -112,6 +114,10 @@ export const EVMTransactionReceiptsResponse = z.array(
   EVMTransactionReceiptResponse,
 )
 
+export const EVMBlockReceiptsResponse = z.object({
+  result: z.union([z.array(EVMTransactionReceipt), z.null()]),
+})
+
 const _EVMBlock = {
   timestamp: Quantity.decode.transform((n) => Number(n)),
   hash: z.string(),
@@ -121,6 +127,11 @@ const _EVMBlock = {
   parentBeaconBlockRoot: z.string().optional(),
   // Avalanche C-Chain after Helicon (ACP-194), see Block.settledHeight
   settledHeight: Quantity.decode.transform((n) => Number(n)).optional(),
+  /** The fee recipient */
+  miner: z.string().optional(),
+  baseFeePerGas: Quantity.decode.optional(),
+  /** Validator withdrawals (EIP-4895), amounts in gwei */
+  withdrawals: z.array(z.object({ amount: Quantity.decode })).optional(),
 }
 export type EVMBlock = z.infer<typeof EVMBlock>
 export const EVMBlock = z.object(_EVMBlock)

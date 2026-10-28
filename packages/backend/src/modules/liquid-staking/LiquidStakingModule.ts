@@ -1,6 +1,9 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import { DailyIndexer } from '../../tools/DailyIndexer'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
+import { EthereumStakingIndexer } from './EthereumStakingIndexer'
 import { LiquidStakingIndexer } from './LiquidStakingIndexer'
 
 export function createLiquidStakingModule({
@@ -16,12 +19,20 @@ export function createLiquidStakingModule({
   }
 
   logger = logger.tag({ feature: 'liquid-staking', module: 'liquid-staking' })
+  const beacon = providers.clients.beacon
+  if (!beacon) {
+    throw new Error('liquid-staking needs ETHEREUM_BEACON_API_URL')
+  }
+
   const { sinceTimestamp, projects } = config.liquidStaking
+  const indexerService = new IndexerService(db)
+  const rpc = providers.clients.getRpcClient('ethereum')
   const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const dailyIndexer = new DailyIndexer(logger, clock)
   const indexer = new LiquidStakingIndexer(
     {
       parents: [hourlyIndexer],
-      indexerService: new IndexerService(db),
+      indexerService,
       configurations: projects.map((project) => ({
         id: project.configurationId,
         minHeight: sinceTimestamp,
@@ -29,7 +40,20 @@ export function createLiquidStakingModule({
         properties: project,
       })),
       db,
-      rpc: providers.clients.getRpcClient('ethereum'),
+      rpc,
+      blockTimestampProvider: providers.blockTimestamp,
+    },
+    logger,
+  )
+  const ethereumStakingIndexer = new EthereumStakingIndexer(
+    {
+      parents: [dailyIndexer],
+      indexerService,
+      // Heights are day ends, so the first stored day is sinceTimestamp.
+      minHeight: sinceTimestamp + UnixTime.DAY,
+      db,
+      rpc,
+      beacon,
       blockTimestampProvider: providers.blockTimestamp,
     },
     logger,
@@ -40,7 +64,9 @@ export function createLiquidStakingModule({
   return {
     start: async () => {
       await hourlyIndexer.start()
+      await dailyIndexer.start()
       await indexer.start()
+      await ethereumStakingIndexer.start()
     },
   }
 }
