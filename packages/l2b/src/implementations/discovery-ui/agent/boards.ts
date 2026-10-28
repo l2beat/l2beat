@@ -202,7 +202,17 @@ function resolveViewBlock(
   binding: Binding,
 ): ResolvedBlock {
   try {
-    const { view } = resolveView(binding.entries, block.view)
+    const { view, matches } = resolveView(binding.entries, block.view)
+    const misses = matches.filter((m) => m.count === 0).map((m) => m.selector)
+    if (misses.length === 0) {
+      return { type: 'view', label: block.label, view }
+    }
+    const problem = `${block.label}: nothing matches ${misses.join(', ')}`
+    binding.problems.add(problem)
+    // Keeping only nothing would hide every contract.
+    if (view.only?.length === 0) {
+      return { type: 'problem', text: problem }
+    }
     return { type: 'view', label: block.label, view }
   } catch (error) {
     if (!(error instanceof AgentRefError)) {
