@@ -35,7 +35,7 @@ export function TokenRelationsGraphPage() {
   const [selection, setSelection] = useState<RelationGraphSelection>()
   const [zoomTarget, setZoomTarget] = useState<{ nodeId: string }>()
   const [highlightAnomalies, setHighlightAnomalies] = useState(false)
-  const [showConflicts, setShowConflicts] = useState(false)
+  const [conflictsSwitchedOn, setConflictsSwitchedOn] = useState(false)
   // Which tokens without relations are displayed. Unlike relation deletion,
   // this filters the payload before the scene is built, so changing it
   // re-runs the whole layout (and re-fits the camera) — hidden tokens must
@@ -98,6 +98,9 @@ export function TokenRelationsGraphPage() {
     graph === undefined
       ? undefined
       : getExistingRelationGraphSelection(graph, selection, deletedRelationIds)
+  // Until the list loads, an empty one would read as "no conflicts", so the
+  // switch highlights nothing before then.
+  const showConflicts = conflictsSwitchedOn && conflictsQuery.data !== undefined
   const conflictNodeIdList = useMemo(
     () =>
       graph === undefined || conflictsQuery.data === undefined
@@ -194,11 +197,14 @@ export function TokenRelationsGraphPage() {
               Highlight anomalies
             </GraphSwitch>
             <GraphSwitch
-              checked={showConflicts}
-              onCheckedChange={setShowConflicts}
+              checked={conflictsSwitchedOn}
+              onCheckedChange={setConflictsSwitchedOn}
               checkedColor={CONFLICT_COLOR}
             >
-              Show conflicts ({conflictsQuery.data?.length ?? '…'})
+              Show conflicts (
+              {conflictsQuery.data?.length ??
+                (conflictsQuery.isError ? 'failed to load' : '…')}
+              )
             </GraphSwitch>
             {showConflicts && graph && (
               <ConflictStepper
