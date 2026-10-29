@@ -32,14 +32,14 @@ function toRow(record: HourlyActivityRecord): Insertable<HourlyActivity> {
 export class HourlyActivityRepository extends BaseRepository {
   /**
    * Adds each record to the hour stored before, as blocks of an hour can come
-   * in more than one batch, and returns the hours as stored after
+   * in more than one batch
    */
-  async addMany(
-    records: HourlyActivityRecord[],
-  ): Promise<HourlyActivityRecord[]> {
-    const stored: HourlyActivityRecord[] = []
-    await this.batch(records.map(toRow), 5_000, async (batch) => {
-      const rows = await this.db
+  async addMany(records: HourlyActivityRecord[]): Promise<number> {
+    if (records.length === 0) return 0
+
+    const rows = records.map(toRow)
+    await this.batch(rows, 5_000, async (batch) => {
+      await this.db
         .insertInto('HourlyActivity')
         .values(batch)
         .onConflict((cb) =>
@@ -48,11 +48,9 @@ export class HourlyActivityRepository extends BaseRepository {
             uopsCount: addToStored('HourlyActivity', 'uopsCount'),
           }),
         )
-        .returningAll()
         .execute()
-      stored.push(...rows.map(toRecord))
     })
-    return stored
+    return records.length
   }
 
   async getByProjectsAndTimeRange(
