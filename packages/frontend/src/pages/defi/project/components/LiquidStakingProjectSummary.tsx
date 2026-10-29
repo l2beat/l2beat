@@ -8,7 +8,10 @@ import type {
   LiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import { formatTimestamp } from '~/utils/dates'
-import { LIQUID_STAKING_METRICS } from '../../liquid-staking/liquidStakingMetrics'
+import {
+  LIQUID_STAKING_METRICS,
+  TVL_TOOLTIP,
+} from '../../liquid-staking/liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../../liquid-staking/liquidStakingRisks'
 
 /** The project's row of the liquid staking table, with its latest yield and cost of exit. */
@@ -22,7 +25,7 @@ export function LiquidStakingProjectSummary({
       <ul className="grid gap-4 md:grid-cols-3">
         <ProjectSummaryStat
           title="TVL"
-          tooltip="Total USD value of assets locked in the protocol."
+          tooltip={TVL_TOOLTIP}
           value={
             summary.totalValueLockedUsd !== undefined ? (
               formatCurrency(summary.totalValueLockedUsd, 'usd')

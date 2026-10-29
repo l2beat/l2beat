@@ -1,6 +1,9 @@
 import type { LiquidStakingSummary } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import { formatDays, formatYield } from './formatLiquidStaking'
 
+/** Shown next to the metrics, in the table and on project pages. */
+export const TVL_TOOLTIP = 'Total USD value of assets locked in the protocol.'
+
 export interface LiquidStakingMetric {
   key: keyof Pick<LiquidStakingSummary, 'yield' | 'costOfExit'>
   title: string

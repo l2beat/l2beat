@@ -257,7 +257,7 @@ export interface BaseProject {
   // defi data
   defiInfo?: ProjectDefiInfo
   /** Only on projects whose DeFi category is "Liquid Staking". */
-  liquidStakingRisks?: ProjectLiquidStakingRisks
+  liquidStaking?: ProjectLiquidStaking
 
   // external dependency data
   externalDependencies?: ProjectExternalDependency[]
@@ -1069,7 +1069,11 @@ export interface ProjectDefiRiskValue extends TableReadyValue {
   description: string
 }
 
-/** The row of the liquid staking risk comparison. */
+export interface ProjectLiquidStaking {
+  /** The row of the liquid staking risk comparison. */
+  risks: ProjectLiquidStakingRisks
+}
+
 export interface ProjectLiquidStakingRisks {
   /** Who can mint, what caps apply, and who routes deposited ETH to validators. */
   minting: ProjectDefiRiskValue

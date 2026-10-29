@@ -196,42 +196,44 @@ export const lido: BaseProject = {
     stETH: discovery.getContract(STETH).address,
     withdrawalQueue: discovery.getContract('WithdrawalQueueERC721').address,
   },
-  liquidStakingRisks: {
-    minting: {
-      value: 'Permissionless',
-      secondLine: `gated by DSM ${dsmQuorum}/${dsmGuardians}`,
-      sentiment: 'good',
-      description: `Anyone can stake ETH for stETH, up to ${stakeLimitEth} ETH; deposits use up that limit and it refills over ${stakeLimitRefill}. Sending deposited ETH to new validators needs ${dsmQuorum} of ${dsmGuardians} guardian signatures, and any one guardian can pause that.`,
-    },
-    operators: {
-      value: 'Hybrid',
-      secondLine: 'no bond; CSM bonded',
-      sentiment: 'neutral',
-      description: `Most stake is run by curated operators who post no bond, so their slashing losses are shared by all holders. ${csm.nodeOperatorsCount} permissionless operators in the Community Staking Module, capped at ${csm.state.stakeShareLimit / 100}% of stake, post a bond that covers their penalties.`,
-    },
-    backing: {
-      value: 'Protocol vault',
-      secondLine: 'creds: protocol',
-      sentiment: 'good',
-      description: `Validators withdraw to a Lido contract set by the protocol, not by operators. Vaults can also mint stETH against their own collateral, capped at ${externalRatioCap}% of supply (${externalLivePercent}% today).`,
-    },
-    oracle: {
-      value: `${oracleQuorum} of ${oracleMembers}`,
-      secondLine: `${oracleCadence} · ≤${maxPositiveRebasePercent}%`,
-      sentiment: 'warning',
-      description: `A ${oracleQuorum}-of-${oracleMembers} oracle committee reports balances ${oracleCadence}, and each report can raise the rate by at most ${maxPositiveRebasePercent}%. If the committee stops, the rate and withdrawals freeze.`,
-    },
-    exit: {
-      value: 'Oracle-gated',
-      secondLine: `${oracleCadence} batches · pausable`,
-      sentiment: 'warning',
-      description: `Each oracle report finalizes a batch of eligible withdrawal requests, at the lower of the request and report rate. When the buffer cannot cover the queue, requests wait for validators to exit, which can take days, and during mass slashing the oracle's bunker mode holds finalization until losses are known. A ${circuitBreakerCommittee} committee can pause the queue for ${days(circuitBreakerPauseDays)}, and another can extend that indefinitely.`,
-    },
-    upgrades: {
-      value: 'Lido DAO',
-      secondLine: `${dgSubmitDays + dgScheduleDays}d min · stETH veto`,
-      sentiment: 'neutral',
-      description: `Code changes go through Dual Governance and take at least ${days(dgSubmitDays + dgScheduleDays)}. Holders locking ${vetoPercent}% of stETH delay a change; at ${rageQuitPercent}% they can exit before it applies. Until ${emergencyEnd}, emergency committees can freeze execution.`,
+  liquidStaking: {
+    risks: {
+      minting: {
+        value: 'Permissionless',
+        secondLine: `gated by DSM ${dsmQuorum}/${dsmGuardians}`,
+        sentiment: 'good',
+        description: `Anyone can stake ETH for stETH, up to ${stakeLimitEth} ETH; deposits use up that limit and it refills over ${stakeLimitRefill}. Sending deposited ETH to new validators needs ${dsmQuorum} of ${dsmGuardians} guardian signatures, and any one guardian can pause that.`,
+      },
+      operators: {
+        value: 'Hybrid',
+        secondLine: 'no bond; CSM bonded',
+        sentiment: 'neutral',
+        description: `Most stake is run by curated operators who post no bond, so their slashing losses are shared by all holders. ${csm.nodeOperatorsCount} permissionless operators in the Community Staking Module, capped at ${csm.state.stakeShareLimit / 100}% of stake, post a bond that covers their penalties.`,
+      },
+      backing: {
+        value: 'Protocol vault',
+        secondLine: 'creds: protocol',
+        sentiment: 'good',
+        description: `Validators withdraw to a Lido contract set by the protocol, not by operators. Vaults can also mint stETH against their own collateral, capped at ${externalRatioCap}% of supply (${externalLivePercent}% today).`,
+      },
+      oracle: {
+        value: `${oracleQuorum} of ${oracleMembers}`,
+        secondLine: `${oracleCadence} · ≤${maxPositiveRebasePercent}%`,
+        sentiment: 'warning',
+        description: `A ${oracleQuorum}-of-${oracleMembers} oracle committee reports balances ${oracleCadence}, and each report can raise the rate by at most ${maxPositiveRebasePercent}%. If the committee stops, the rate and withdrawals freeze.`,
+      },
+      exit: {
+        value: 'Oracle-gated',
+        secondLine: `${oracleCadence} batches · pausable`,
+        sentiment: 'warning',
+        description: `Each oracle report finalizes a batch of eligible withdrawal requests, at the lower of the request and report rate. When the buffer cannot cover the queue, requests wait for validators to exit, which can take days, and during mass slashing the oracle's bunker mode holds finalization until losses are known. A ${circuitBreakerCommittee} committee can pause the queue for ${days(circuitBreakerPauseDays)}, and another can extend that indefinitely.`,
+      },
+      upgrades: {
+        value: 'Lido DAO',
+        secondLine: `${dgSubmitDays + dgScheduleDays}d min · stETH veto`,
+        sentiment: 'neutral',
+        description: `Code changes go through Dual Governance and take at least ${days(dgSubmitDays + dgScheduleDays)}. Holders locking ${vetoPercent}% of stETH delay a change; at ${rageQuitPercent}% they can exit before it applies. Until ${emergencyEnd}, emergency committees can freeze execution.`,
+      },
     },
   },
   externalDependencies: [],

@@ -55,7 +55,7 @@ const schema = {
   interopConfig: 'TEXT',
   privacyInfo: 'TEXT',
   defiInfo: 'TEXT',
-  liquidStakingRisks: 'TEXT',
+  liquidStaking: 'TEXT',
   externalDependencies: 'TEXT',
 
   crops: 'TEXT',

@@ -19,7 +19,7 @@ export async function getLiquidStakingListSections(): Promise<
         description: withFacts(
           firstSentence(p.display.description),
           LIQUID_STAKING_RISKS.map(
-            ({ key, title }) => `${title}: ${p.liquidStakingRisks[key].value}`,
+            ({ key, title }) => `${title}: ${p.liquidStaking.risks[key].value}`,
           ),
         ),
       })),

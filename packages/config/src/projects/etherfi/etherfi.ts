@@ -149,42 +149,44 @@ export const etherfi: BaseProject = {
     weETH: discovery.getContract('weETH').address,
     withdrawRequestNft: discovery.getContract('WithdrawRequestNFT').address,
   },
-  liquidStakingRisks: {
-    minting: {
-      value: 'Permissionless',
-      secondLine: 'gated by ether.fi ops',
-      sentiment: 'good',
-      description: `Anyone can deposit ETH for ${value('eETH', 'symbol')} with no cap or fee; ${value('weETH', 'symbol')} wraps it. Only ether.fi's operations team can send that ETH to validators, which withdraw to protocol EigenPods.`,
-    },
-    operators: {
-      value: 'Whitelisted',
-      secondLine: 'no bond',
-      sentiment: 'warning',
-      description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Stake is also restaked in EigenLayer, where extra slashing can cut principal.`,
-    },
-    backing: {
-      value: 'EigenPods, stETH',
-      secondLine: 'creds: EigenPod',
-      sentiment: 'warning',
-      description: `Validators withdraw to EigenPods, so most ETH sits in EigenLayer, which its own governance can upgrade. ${stethSharePercent} of backing is stETH and ${bufferPercent} is a liquid buffer.`,
-    },
-    oracle: {
-      value: `${oracleQuorum} of ${oracleMembers}`,
-      secondLine: `~${formatSeconds(reportPeriodSeconds)} · ≤${maxPositiveRebase}`,
-      sentiment: 'warning',
-      description: `All ${oracleMembers} oracle members must agree on each report, every ${formatSeconds(reportPeriodSeconds, { fullUnit: true })}. A report can raise the rate by at most ${maxPositiveRebase}. After ${staleOracleWindow} of silence, anyone can submit a report.`,
-    },
-    exit: {
-      value: 'Oracle-gated',
-      secondLine: `every ${formatSeconds(reportPeriodSeconds)} · pausable`,
-      sentiment: 'warning',
-      description: `Withdrawal requests are finalized with oracle reports, at most ${maxFinalizedPerDay} ETH a day. When the liquid buffer cannot cover the queue, requests wait for validators to exit through EigenLayer, which adds its own withdrawal delay. Instant redemption from the buffer costs up to ${maxExitFee}. The ${operationsSafe} Safe can pause all exits.`,
-    },
-    upgrades: {
-      value: '6/10 Safe',
-      secondLine: `${upgradeDelayDays}d · no veto`,
-      sentiment: 'warning',
-      description: `A 6-of-10 Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock tunes parameters within fixed limits. Holders have no veto.`,
+  liquidStaking: {
+    risks: {
+      minting: {
+        value: 'Permissionless',
+        secondLine: 'gated by ether.fi ops',
+        sentiment: 'good',
+        description: `Anyone can deposit ETH for ${value('eETH', 'symbol')} with no cap or fee; ${value('weETH', 'symbol')} wraps it. Only ether.fi's operations team can send that ETH to validators, which withdraw to protocol EigenPods.`,
+      },
+      operators: {
+        value: 'Whitelisted',
+        secondLine: 'no bond',
+        sentiment: 'warning',
+        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Stake is also restaked in EigenLayer, where extra slashing can cut principal.`,
+      },
+      backing: {
+        value: 'EigenPods, stETH',
+        secondLine: 'creds: EigenPod',
+        sentiment: 'warning',
+        description: `Validators withdraw to EigenPods, so most ETH sits in EigenLayer, which its own governance can upgrade. ${stethSharePercent} of backing is stETH and ${bufferPercent} is a liquid buffer.`,
+      },
+      oracle: {
+        value: `${oracleQuorum} of ${oracleMembers}`,
+        secondLine: `~${formatSeconds(reportPeriodSeconds)} · ≤${maxPositiveRebase}`,
+        sentiment: 'warning',
+        description: `All ${oracleMembers} oracle members must agree on each report, every ${formatSeconds(reportPeriodSeconds, { fullUnit: true })}. A report can raise the rate by at most ${maxPositiveRebase}. After ${staleOracleWindow} of silence, anyone can submit a report.`,
+      },
+      exit: {
+        value: 'Oracle-gated',
+        secondLine: `every ${formatSeconds(reportPeriodSeconds)} · pausable`,
+        sentiment: 'warning',
+        description: `Withdrawal requests are finalized with oracle reports, at most ${maxFinalizedPerDay} ETH a day. When the liquid buffer cannot cover the queue, requests wait for validators to exit through EigenLayer, which adds its own withdrawal delay. Instant redemption from the buffer costs up to ${maxExitFee}. The ${operationsSafe} Safe can pause all exits.`,
+      },
+      upgrades: {
+        value: '6/10 Safe',
+        secondLine: `${upgradeDelayDays}d · no veto`,
+        sentiment: 'warning',
+        description: `A 6-of-10 Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock tunes parameters within fixed limits. Holders have no veto.`,
+      },
     },
   },
   externalDependencies: [
