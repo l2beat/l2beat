@@ -58,6 +58,7 @@ export function TokenRelationsGraph({
   selection,
   zoomTarget,
   highlightAnomalies,
+  conflictNodeIds,
   deletedRelationIds,
   onSelectionChange,
 }: {
@@ -65,6 +66,7 @@ export function TokenRelationsGraph({
   selection: RelationGraphSelection | undefined
   zoomTarget: { nodeId: string } | undefined
   highlightAnomalies: boolean
+  conflictNodeIds: ReadonlySet<string> | undefined
   deletedRelationIds: ReadonlySet<string>
   onSelectionChange: (selection: RelationGraphSelection | undefined) => void
 }) {
@@ -90,6 +92,7 @@ export function TokenRelationsGraph({
   // The draw loop reads the latest style inputs through a ref so that the
   // canvas lifecycle effect does not have to re-run on every style change.
   const styleStateRef = useRef({
+    conflictNodeIds,
     deletedRelationIds,
     focus,
     highlightAnomalies,
@@ -102,13 +105,20 @@ export function TokenRelationsGraph({
 
   useEffect(() => {
     styleStateRef.current = {
+      conflictNodeIds,
       deletedRelationIds,
       focus,
       highlightAnomalies,
       selection,
     }
     requestDrawRef.current?.()
-  }, [deletedRelationIds, focus, highlightAnomalies, selection])
+  }, [
+    conflictNodeIds,
+    deletedRelationIds,
+    focus,
+    highlightAnomalies,
+    selection,
+  ])
 
   useEffect(() => {
     // Rebound consts so the narrowed types carry into the closures below.
@@ -235,7 +245,11 @@ export function TokenRelationsGraph({
             : undefined,
       )
       setTooltip(
-        node ? nodeTooltip(node) : link ? linkTooltip(link) : undefined,
+        node
+          ? nodeTooltip(node, styleStateRef.current.conflictNodeIds)
+          : link
+            ? linkTooltip(link)
+            : undefined,
       )
     }
 
@@ -464,7 +478,10 @@ function resolveTheme(canvas: HTMLCanvasElement): RelationGraphTheme {
   }
 }
 
-function nodeTooltip(node: SceneNode) {
+function nodeTooltip(
+  node: SceneNode,
+  conflictNodeIds: ReadonlySet<string> | undefined,
+) {
   const { data } = node
   return [
     `${node.label} on ${data.chain}`,
@@ -474,6 +491,7 @@ function nodeTooltip(node: SceneNode) {
       : data.hasRelations
         ? 'Deployed token exists'
         : 'No observed relations — placed by its abstract token assignment',
+    ...(conflictNodeIds?.has(data.id) ? ['Ingestion conflict'] : []),
   ].join('\n')
 }
 
