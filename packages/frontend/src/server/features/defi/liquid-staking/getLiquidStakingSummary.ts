@@ -2,7 +2,8 @@ import type { Project, ProjectLiquidStakingRisks } from '@l2beat/config'
 import { optionToRange } from '~/utils/range/range'
 import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
 import {
-  getLiquidStakingCharts,
+  getLiquidStakingCostOfExitChart,
+  getLiquidStakingYieldChart,
   type LiquidStakingChartPoint,
   type LiquidStakingCharts,
 } from './getLiquidStakingCharts'
@@ -24,15 +25,17 @@ export async function getLiquidStakingSummary(
   project: Pick<Project<'defiInfo'>, 'id' | 'defiInfo'>,
   risks: ProjectLiquidStakingRisks,
 ): Promise<LiquidStakingSummary> {
-  const [tvlByProject, charts] = await Promise.all([
+  const range = optionToRange('30d')
+  const [tvlByProject, yieldChart, costOfExit] = await Promise.all([
     getTotalValueLockedByProject([project]),
-    getLiquidStakingCharts({ range: optionToRange('30d') }),
+    getLiquidStakingYieldChart({ range }),
+    getLiquidStakingCostOfExitChart({ range }),
   ])
   return buildLiquidStakingSummary(
     project.id,
     risks,
     tvlByProject.get(project.id),
-    charts,
+    { yield: yieldChart, costOfExit },
   )
 }
 
