@@ -95,17 +95,34 @@ describe(sortRows.name, () => {
       addresses(sortRows(rows, { key: 'value', direction: 'asc' }, names)),
     ).toEqual(['0x1', '0x3', '0x2'])
   })
+
+  it('sorts values without a circulating supply after the other values', () => {
+    const rows = [
+      row({ address: '0x1', value: value(10) }),
+      row({ address: '0x2', value: value(1_000, true) }),
+      row({ address: '0x3', value: undefined }),
+      row({ address: '0x4', value: value(30) }),
+    ]
+
+    expect(
+      addresses(sortRows(rows, { key: 'value', direction: 'desc' }, names)),
+    ).toEqual(['0x4', '0x1', '0x2', '0x3'])
+  })
 })
 
 function addresses(rows: Row[]) {
   return rows.map((row) => row.address)
 }
 
-function value(valueUsd: number | undefined): Row['value'] {
+function value(
+  valueUsd: number | undefined,
+  circulatingSupplyUnknown = false,
+): Row['value'] {
   return {
     amount: 1,
     amountSource: 'totalSupply',
     amountGap: undefined,
+    circulatingSupplyUnknown,
     escrowBalance: undefined,
     mintedCopy: undefined,
     priceUsd: valueUsd,
