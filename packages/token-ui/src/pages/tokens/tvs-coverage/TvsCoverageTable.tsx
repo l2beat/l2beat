@@ -65,7 +65,7 @@ export function TvsCoverageTable({
           <SortableHead {...head} label="Token" sortKey="token" />
           <SortableHead
             {...head}
-            className="w-40"
+            className="w-36"
             label="Est. value"
             sortKey="value"
             align="right"
