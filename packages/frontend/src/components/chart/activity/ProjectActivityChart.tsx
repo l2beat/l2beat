@@ -43,28 +43,29 @@ export function ProjectActivityChart({
         type: 'projects',
         projectIds: [project.id],
       },
+      hourly: true,
     }),
   )
 
   const type = getChartType(category)
+  const resolution = chart?.resolution ?? 'day'
 
-  const chartData = useMemo(
-    () =>
-      chart?.data.map(
-        ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
-          const projectMetric = metric === 'tps' ? projectsTx : projectsUops
-          const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
-          return {
-            timestamp,
-            projects:
-              projectMetric !== null ? projectMetric / UnixTime.DAY : null,
-            ethereum:
-              ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
-          }
-        },
-      ),
-    [chart?.data, metric],
-  )
+  const chartData = useMemo(() => {
+    const resolutionSeconds = UnixTime.periodToSeconds(resolution)
+    return chart?.data.map(
+      ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
+        const projectMetric = metric === 'tps' ? projectsTx : projectsUops
+        const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
+        return {
+          timestamp,
+          projects:
+            projectMetric !== null ? projectMetric / resolutionSeconds : null,
+          ethereum:
+            ethereumMetric !== null ? ethereumMetric / resolutionSeconds : null,
+        }
+      },
+    )
+  }, [chart?.data, metric, resolution])
 
   const ratioData = useMemo(() => {
     return chart?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
@@ -78,13 +79,16 @@ export function ProjectActivityChart({
     }))
   }, [chart?.data])
 
-  const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
-  const lastRatio = ratioData?.at(-1)?.ratio
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
         <ProjectChartTimeRange timeRange={timeRange} />
-        <ActivityChartRangeControls range={range} setRange={setRange} />
+        <ActivityChartRangeControls
+          range={range}
+          setRange={setRange}
+          hourlyRanges={chart?.hasHourly === false ? 'disabled' : 'enabled'}
+        />
       </ChartControlsWrapper>
       <div className="mt-4 mb-3">
         <ActivityChart
@@ -97,6 +101,7 @@ export function ProjectActivityChart({
           type={type}
           project={project}
           tickCount={4}
+          resolution={resolution}
         />
       </div>
       <div className="mb-2">
@@ -104,6 +109,7 @@ export function ProjectActivityChart({
           data={ratioData}
           syncedUntil={chart?.syncedUntil}
           isLoading={isLoading}
+          resolution={resolution}
         />
       </div>
 
@@ -125,7 +131,6 @@ export function ProjectActivityChart({
       <ActivityChartStatsPanel
         stats={chart?.stats}
         metric={metric}
-        lastRatio={lastRatio}
         isLoading={isLoading}
       />
     </div>

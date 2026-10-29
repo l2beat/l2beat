@@ -32,10 +32,11 @@ export const activityRouter = router({
       z.object({
         range: ChartRange,
         filter: ActivityProjectFilter,
+        hourly: z.boolean().optional(),
       }),
     )
     .query(({ input }) =>
-      getRecategorisedActivityChart(input.filter, input.range),
+      getRecategorisedActivityChart(input.filter, input.range, input.hourly),
     ),
   chartStats: procedure
     .input(
