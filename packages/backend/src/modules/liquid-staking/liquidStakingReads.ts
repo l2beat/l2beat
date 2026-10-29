@@ -1,4 +1,4 @@
-import type { ProjectLiquidStakingConfig } from '@l2beat/config'
+import type { ProjectLiquidStakingContracts } from '@l2beat/config'
 import type { LiquidStakingSnapshotRecord } from '@l2beat/database'
 import type { CallParameters } from '@l2beat/shared'
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
@@ -42,7 +42,7 @@ const EMPTY_EXIT = {
 
 /** Every getter exists on each implementation live since the start of 2024. */
 export function getLiquidStakingReads(
-  config: ProjectLiquidStakingConfig,
+  config: ProjectLiquidStakingContracts,
 ): LiquidStakingReads {
   switch (config.type) {
     case 'lido':

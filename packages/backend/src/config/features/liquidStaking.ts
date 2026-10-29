@@ -11,15 +11,15 @@ export async function getLiquidStakingConfig(
   ps: ProjectService,
   flags: FeatureFlags,
 ): Promise<LiquidStakingConfig | false> {
-  const projects = (await ps.getProjects({ select: ['liquidStakingConfig'] }))
+  const projects = (await ps.getProjects({ select: ['liquidStaking'] }))
     .filter((project) => flags.isEnabled('liquid-staking', project.id))
     .map((project) => ({
       configurationId: getLiquidStakingConfigurationId(
         project.id,
-        project.liquidStakingConfig,
+        project.liquidStaking.contracts,
       ),
       projectId: project.id,
-      contracts: project.liquidStakingConfig,
+      contracts: project.liquidStaking.contracts,
     }))
 
   if (projects.length === 0) return false

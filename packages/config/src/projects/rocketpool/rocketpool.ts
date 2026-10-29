@@ -183,11 +183,11 @@ export const rocketpool: BaseProject = {
       ),
     ],
   },
-  liquidStakingConfig: {
-    type: 'rocketpool',
-    rETH: discovery.getContract('RocketTokenRETH').address,
-  },
   liquidStaking: {
+    contracts: {
+      type: 'rocketpool',
+      rETH: discovery.getContract('RocketTokenRETH').address,
+    },
     risks: {
       minting: {
         value: 'Permissionless',

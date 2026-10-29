@@ -363,9 +363,7 @@ describe('getProjects', () => {
       .filter(
         (p) =>
           (p.defiInfo?.category === 'Liquid Staking') !==
-            (p.liquidStaking !== undefined) ||
-          (p.defiInfo?.category === 'Liquid Staking') !==
-            (p.liquidStakingConfig !== undefined),
+          (p.liquidStaking !== undefined),
       )
       .map((p) => p.id)
     expect(mismatched).toEqual([])
