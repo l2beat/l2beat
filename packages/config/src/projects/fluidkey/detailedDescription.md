@@ -14,7 +14,7 @@ The user's keys come from a wallet signature and a four-digit PIN. On the web, t
 
 ### App
 
-The web and mobile apps are closed source. The web app reads the chain through Fluidkey's proxy to Alchemy. Outside services see a Google, Apple, email or Farcaster login (Privy), the username (Plausible, and Intercom for support) and app errors (Sentry). Banking and identity checks use Noah, Bridge, Persona and Sumsub. For recovery, two open tools work without the app: the [stealth account kit](https://github.com/fluidkey/fluidkey-stealth-account-kit) creates addresses, and the [recovery app](https://github.com/fluidkey/sara) finds and withdraws the user's funds through any RPC.
+Fluidkey also offers a closed mobile app. The web app reads the chain through Fluidkey's proxy to Alchemy. Outside services see a Google, Apple, email or Farcaster login (Privy), the username (Plausible, and Intercom for support) and app errors (Sentry). Banking and identity checks use Noah, Bridge, Persona and Sumsub. For recovery, two open tools work without the app: the [stealth account kit](https://github.com/fluidkey/fluidkey-stealth-account-kit) creates addresses, and the [recovery app](https://github.com/fluidkey/sara) finds and deploys the user's Safes. Eternal Safe (eternalsafe.eth) then withdraws the funds. The recovery app sends each deployment from the wallet that created the user's keys, which links the two onchain.
 
 ### Special features
 

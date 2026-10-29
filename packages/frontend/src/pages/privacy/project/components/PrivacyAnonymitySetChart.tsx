@@ -8,6 +8,7 @@ import type {
 } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipRows,
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
@@ -137,7 +138,8 @@ function AnonymitySetTooltip({
       <div className="mb-2 font-medium text-label-value-14 text-secondary">
         {formatTitle(row.timestamp)}
       </div>
-      <div className="flex flex-col gap-2">
+      {/* Keyed by point, so each new point opens at its largest sets. */}
+      <ChartTooltipRows key={row.timestamp} className="flex flex-col gap-2">
         {getTooltipEntries(row, keys, { skipNull: true })
           .toSorted((a, b) => b.value - a.value)
           .map((entry) => {
@@ -154,7 +156,7 @@ function AnonymitySetTooltip({
               </ChartTooltipRow>
             )
           })}
-      </div>
+      </ChartTooltipRows>
     </ChartTooltipWrapper>
   )
 }

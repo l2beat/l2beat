@@ -52,11 +52,7 @@ export function StackedTvsChartTooltip<
         )}
         <div className="mt-2 flex flex-col gap-2">
           {actualPayload.map((entry) => (
-            <ChartTooltipRow
-              key={entry.name}
-              name={entry.name}
-              gap="gap-x-1"
-            >
+            <ChartTooltipRow key={entry.name} name={entry.name} gap="gap-x-1">
               <div className="flex items-end justify-end gap-1 max-sm:flex-col sm:items-center">
                 <ChartTooltipValue
                   value={entry.value}

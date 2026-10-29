@@ -224,7 +224,9 @@
       "critical": {
         "sinceTimestamp": 1782901175,
         "untilTimestamp": 1788777107
-      }
+      },
+      // route added after the Kailua path retired, not part of Ronin's system
+      "ignoreRelatives": ["verifier_8b38038c"]
     },
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
       // RISC Zero governance timelock: owner of the RiscZeroVerifierRouter used by

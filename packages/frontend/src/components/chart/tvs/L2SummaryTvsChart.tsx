@@ -162,11 +162,7 @@ function CustomTooltip({
         )}
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => (
-            <ChartTooltipRow
-              key={entry.name}
-              name={entry.name}
-              gap="gap-x-1"
-            >
+            <ChartTooltipRow key={entry.name} name={entry.name} gap="gap-x-1">
               <ChartTooltipValue
                 value={entry.value}
                 format={(value) => formatCurrency(value, 'usd')}

@@ -29,6 +29,12 @@ interface Options {
   place: (anchor: Anchor, tooltip: { width: number; height: number }) => Anchor
   /** The arrow keys go round instead of stopping at the ends. */
   wrap?: boolean
+  /**
+   * The tooltip may not hang below the root: on a phone a tap leaves it over
+   * the next section as the page scrolls, and iOS Safari cuts it off at that
+   * section's edge. Its `ChartTooltipRows` shrink to fit and scroll.
+   */
+  fitHeight?: boolean
   /** The keys that step between items; left and right by default. */
   arrowKeys?: 'leftRight' | 'upDown'
   /** Called when the user selects an item or closes the tooltip. */
@@ -46,6 +52,7 @@ export function useChartTooltip({
   anchorOf,
   place,
   wrap = false,
+  fitHeight = false,
   arrowKeys = 'leftRight',
   onSelect,
 }: Options) {
@@ -59,11 +66,12 @@ export function useChartTooltip({
     const tooltip = tooltipRef.current
     const root = rootRef.current
     if (!tooltip || !root) return
+    const bottom = root.clientHeight
+    if (fitHeight) fitRows(tooltip, bottom)
     const width = tooltip.offsetWidth
-    let { x: left, y: top } = placeRef.current(anchor, {
-      width,
-      height: tooltip.offsetHeight,
-    })
+    const height = tooltip.offsetHeight
+    let { x: left, y: top } = placeRef.current(anchor, { width, height })
+    if (fitHeight) top = Math.min(top, Math.max(0, bottom - height))
     const rootLeft = root.getBoundingClientRect().left
     const max = document.documentElement.clientWidth - TOOLTIP_WINDOW_MARGIN
     if (rootLeft + left + width > max) left = max - width - rootLeft
@@ -165,6 +173,20 @@ export function useChartTooltip({
       style: { visibility: active ? 'visible' : 'hidden' },
     } as const,
   }
+}
+
+/**
+ * Cuts scrolling rows to leave the tooltip no taller than `height`. Touches
+ * reach a tooltip only while its rows scroll; otherwise they go through to
+ * the chart.
+ */
+function fitRows(tooltip: HTMLElement, height: number) {
+  const rows = tooltip.querySelector<HTMLElement>('[data-chart-tooltip-rows]')
+  if (!rows) return
+  const rest = tooltip.offsetHeight - rows.offsetHeight
+  rows.style.maxHeight = `${height - rest}px`
+  tooltip.style.pointerEvents =
+    rows.scrollHeight > rows.clientHeight ? 'auto' : 'none'
 }
 
 /**

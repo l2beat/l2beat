@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react'
+import type { ReactNode, SyntheticEvent } from 'react'
+import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { cn } from '~/utils/cn'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
 import { useChart } from './ChartContext'
@@ -45,6 +46,35 @@ export function sumEntries(entries: readonly TooltipEntry[]): number | null {
     if (value !== null) total = (total ?? 0) + value
   }
   return total
+}
+
+/**
+ * The rows of a tooltip that can grow taller than its chart. A tap leaves a
+ * tooltip in place, so on a touch screen they scroll, below a title that
+ * stays in view, and are cut to fit the chart (see `useChartTooltip`). A
+ * hover tooltip follows the cursor, which never reaches it, so there they
+ * show in full.
+ */
+export function ChartTooltipRows({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  const isTouchScreen =
+    typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches
+  if (!isTouchScreen) return <div className={className}>{children}</div>
+  return (
+    <ScrollWithGradient
+      data-chart-tooltip-rows
+      // Its scrollbar sits in the tooltip's padding, clear of the values.
+      className={cn('-mr-3 overscroll-contain pr-3', className)}
+      {...keepTouchesInTooltip}
+    >
+      {children}
+    </ScrollWithGradient>
+  )
 }
 
 /**
@@ -112,4 +142,15 @@ export function ChartTooltipValue({
 
 function toNumber(value: unknown): number | null {
   return typeof value === 'number' && Number.isFinite(value) ? value : null
+}
+
+/** Scrolling the tooltip must not move the chart's hover beneath it. */
+const stopPropagation = (e: SyntheticEvent) => e.stopPropagation()
+const keepTouchesInTooltip = {
+  onClick: stopPropagation,
+  onPointerDown: stopPropagation,
+  onPointerMove: stopPropagation,
+  onTouchStart: stopPropagation,
+  onTouchMove: stopPropagation,
+  onTouchEnd: stopPropagation,
 }

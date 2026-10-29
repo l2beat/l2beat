@@ -41,11 +41,7 @@ export function TvsCustomTooltip<
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => (
-            <ChartTooltipRow
-              key={entry.name}
-              name={entry.name}
-              gap="gap-x-1"
-            >
+            <ChartTooltipRow key={entry.name} name={entry.name} gap="gap-x-1">
               <ChartTooltipValue
                 value={entry.value}
                 format={(value) => formatCurrency(value, unit)}
