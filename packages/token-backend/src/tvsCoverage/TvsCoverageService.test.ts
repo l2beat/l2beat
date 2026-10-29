@@ -14,31 +14,44 @@ describe(TvsCoverageService.name, () => {
     )
     const service = new TvsCoverageService(build, 1_000, Logger.SILENT)
 
-    expect(service.get()).toEqual(undefined)
+    expect(service.state()).toEqual({
+      snapshot: undefined,
+      building: false,
+      failedAt: undefined,
+    })
     expect(build).toHaveBeenCalledTimes(0)
 
     const first = service.refresh()
     const second = service.refresh()
-    expect(service.isBuilding()).toEqual(true)
+    expect(service.state().building).toEqual(true)
     resolve(built(1))
 
     expect(await first).toEqual(snapshot(1))
     expect(await second).toEqual(snapshot(1))
-    expect(service.get()).toEqual(snapshot(1))
-    expect(service.isBuilding()).toEqual(false)
+    expect(service.state()).toEqual({
+      snapshot: snapshot(1),
+      building: false,
+      failedAt: undefined,
+    })
     expect(build).toHaveBeenCalledTimes(1)
   })
 
-  it('keeps the previous snapshot when a refresh fails', async () => {
+  it('keeps the previous snapshot and reports a failed refresh until one succeeds', async () => {
     const build = mockFn<[], ReturnType<BuildSnapshot>>()
       .resolvesToOnce(built(1))
       .rejectsWithOnce(new Error('rpc down'))
+      .resolvesToOnce(built(2))
     const service = new TvsCoverageService(build, 1_000, Logger.SILENT)
 
     await service.refresh()
     await expect(service.refresh()).toBeRejectedWith('rpc down')
 
-    expect(service.get()).toEqual(snapshot(1))
+    expect(service.state().snapshot).toEqual(snapshot(1))
+    expect(service.state().failedAt).not.toEqual(undefined)
+
+    await service.refresh()
+    expect(service.state().snapshot).toEqual(snapshot(2))
+    expect(service.state().failedAt).toEqual(undefined)
   })
 })
 
