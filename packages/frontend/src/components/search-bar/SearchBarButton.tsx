@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { SearchIcon } from '~/icons/Search'
 import { cn } from '~/utils/cn'
+import { EASE_OUT_QUINT } from '~/utils/easing'
 import { useSearchBarContext } from './SearchBarContext'
 import { SEARCH_BAR_EXAMPLES } from './searchBarExamples'
 
 const EXAMPLE_INTERVAL_MS = 5000
-const EASE_OUT = 'cubic-bezier(0.23, 1, 0.32, 1)'
 
 export function SearchBarButton({ className }: { className?: string }) {
   const { setOpen } = useSearchBarContext()
@@ -73,7 +73,7 @@ function ExampleHint() {
       const exit = element.animate(
         { opacity: 0, transform: 'translateY(-4px)', filter: 'blur(2px)' },
         // Held until the next hint takes over, or the old one flashes back.
-        { duration: 120, easing: EASE_OUT, fill: 'forwards' },
+        { duration: 120, easing: EASE_OUT_QUINT, fill: 'forwards' },
       )
       exit.onfinish = () => {
         element.textContent = SEARCH_BAR_EXAMPLES[index] ?? ''
@@ -82,7 +82,7 @@ function ExampleHint() {
             { opacity: 0, transform: 'translateY(4px)', filter: 'blur(2px)' },
             { opacity: 1, transform: 'none', filter: 'none' },
           ],
-          { duration: 200, easing: EASE_OUT },
+          { duration: 200, easing: EASE_OUT_QUINT },
         )
         exit.cancel()
       }
