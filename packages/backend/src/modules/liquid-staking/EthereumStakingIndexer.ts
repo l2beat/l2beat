@@ -9,7 +9,11 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../tools/uif/ManagedChildIndexer'
-import { type ExecutionDayRpc, readExecutionDay } from './ethereumExecutionDay'
+import {
+  type ExecutionDayRpc,
+  readCreditedDeposits,
+  readExecutionDay,
+} from './ethereumExecutionDay'
 
 /** First slot of Electra (epoch 364032), which added the pending deposit queue. */
 const ELECTRA_SLOT = 364032 * 32
@@ -20,7 +24,7 @@ interface EthereumStakingIndexerDeps
   rpc: ExecutionDayRpc
   beacon: Pick<
     BeaconChainClient,
-    'getValidatorBalances' | 'getPendingDepositsAmount'
+    'getTotalBalance' | 'getPendingDepositsAmount' | 'getDepositIndex'
   >
   blockTimestampProvider: Pick<
     BlockTimestampProvider,
@@ -65,28 +69,42 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
   }
 
   private async readDay(day: UnixTime): Promise<EthereumStakingDailyRecord> {
-    // Day boundaries never fall on a slot start, so this is the slot before.
+    // Day boundaries never fall on a slot start, so these are the slots before.
     const slot = slotAt(day)
-    const [balances, pendingDeposits, fromBlock, nextDayBlock] =
-      await Promise.all([
-        this.$.beacon.getValidatorBalances(slot),
-        slot >= ELECTRA_SLOT
-          ? this.$.beacon.getPendingDepositsAmount(slot)
-          : Promise.resolve(null),
-        this.firstBlockAtOrAfter(day),
-        this.firstBlockAtOrAfter(UnixTime(day + UnixTime.DAY)),
-      ])
-    const execution = await readExecutionDay(
-      this.$.rpc,
+    const nextSlot = slotAt(UnixTime(day + UnixTime.DAY))
+    const [
+      totalBalance,
+      pendingDeposits,
+      depositIndex,
+      nextDepositIndex,
+      previousDayBlock,
       fromBlock,
-      nextDayBlock - 1,
+      nextDayBlock,
+    ] = await Promise.all([
+      this.$.beacon.getTotalBalance(slot),
+      slot >= ELECTRA_SLOT
+        ? this.$.beacon.getPendingDepositsAmount(slot)
+        : Promise.resolve(null),
+      this.$.beacon.getDepositIndex(slot),
+      this.$.beacon.getDepositIndex(nextSlot),
+      this.firstBlockAtOrAfter(UnixTime(day - UnixTime.DAY)),
+      this.firstBlockAtOrAfter(day),
+      this.firstBlockAtOrAfter(UnixTime(day + UnixTime.DAY)),
+    ])
+    const toBlock = nextDayBlock - 1
+    const execution = await readExecutionDay(this.$.rpc, fromBlock, toBlock)
+    const deposits = await readCreditedDeposits(
+      this.$.rpc,
+      { previousDayFrom: previousDayBlock, from: fromBlock, to: toBlock },
+      { start: depositIndex, end: nextDepositIndex },
     )
 
     return {
       timestamp: day,
       slot,
-      ...balances,
+      totalBalance,
       pendingDeposits,
+      deposits,
       ...execution,
     }
   }

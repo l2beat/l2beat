@@ -74,18 +74,13 @@ export class BeaconChainClient extends ClientCore {
     }
   }
 
-  /**
-   * Every validator's balance at a state, summed in wei, and how many
-   * validators the state holds. Exited ones stay, so the count never drops.
-   */
-  async getValidatorBalances(
-    slot: number,
-  ): Promise<{ totalBalance: bigint; validatorCount: number }> {
-    const { sum, count } = await this.sumStreamed(
+  /** Every validator's balance at a state, summed in wei. */
+  async getTotalBalance(slot: number): Promise<bigint> {
+    const { sum } = await this.sumStreamed(
       `eth/v1/beacon/states/${slot}/validator_balances`,
       /^data\.\d+\.balance/,
     )
-    return { totalBalance: sum * 10n ** 9n, validatorCount: count }
+    return sum * 10n ** 9n
   }
 
   /**
@@ -101,13 +96,46 @@ export class BeaconChainClient extends ClientCore {
   }
 
   /**
-   * Streams a response and sums the integers at the paths matching `filter`,
-   * so a response of hundreds of megabytes is never held in memory.
+   * How many deposits from the deposit contract a state has credited. From
+   * Electra it stops at the first new deposit, as those are credited in their
+   * own block. Only the start of the state is read, as the counter comes before
+   * the validators.
    */
+  async getDepositIndex(slot: number): Promise<number> {
+    for await (const value of this.streamMatches(
+      `eth/v2/debug/beacon/states/${slot}`,
+      /^data\.eth1_deposit_index$/,
+    )) {
+      return Number(value)
+    }
+    throw new Error('BeaconChain state has no deposit index', {
+      cause: { slot },
+    })
+  }
+
+  /** Sums the integers at the paths matching `filter`, and counts them. */
   private async sumStreamed(
     endpoint: string,
     filter: RegExp,
   ): Promise<{ sum: bigint; count: number }> {
+    let sum = 0n
+    let count = 0
+    for await (const value of this.streamMatches(endpoint, filter)) {
+      sum += BigInt(value as string)
+      count++
+    }
+    return { sum, count }
+  }
+
+  /**
+   * Streams the values at the paths matching `filter`, so a response of
+   * hundreds of megabytes is never held in memory. Stopping early stops the
+   * download.
+   */
+  private async *streamMatches(
+    endpoint: string,
+    filter: RegExp,
+  ): AsyncGenerator<unknown> {
     const response = await this.$.http.fetchRaw(
       `${this.$.beaconApiUrl}${endpoint}`,
       { timeout: this.$.timeout },
@@ -131,20 +159,16 @@ export class BeaconChainClient extends ClientCore {
     }
 
     // Native fetch returns a Web stream; stream-chain only accepts Node streams
-    const pipeline = chain([
-      Readable.fromWeb(response.body),
-      parser(),
-      pick({ filter }),
-      streamValues(),
-    ])
-
-    let sum = 0n
-    let count = 0
-    for await (const { value } of pipeline) {
-      sum += BigInt(value)
-      count++
+    const source = Readable.fromWeb(response.body)
+    const pipeline = chain([source, parser(), pick({ filter }), streamValues()])
+    try {
+      for await (const { value } of pipeline) {
+        yield value
+      }
+    } finally {
+      pipeline.destroy()
+      source.destroy()
     }
-    return { sum, count }
   }
 
   async call(endpoint: string): Promise<unknown> {

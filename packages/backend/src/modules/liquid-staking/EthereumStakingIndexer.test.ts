@@ -22,7 +22,11 @@ describe(EthereumStakingIndexer.name, () => {
       day + UnixTime.DAY,
     )
 
-    expect(beacon.getValidatorBalances).toHaveBeenOnlyCalledWith(slotAt(day))
+    expect(beacon.getTotalBalance).toHaveBeenOnlyCalledWith(slotAt(day))
+    expect(beacon.getDepositIndex.calls.map((c) => c.args)).toEqual([
+      [slotAt(day)],
+      [slotAt(day + UnixTime.DAY)],
+    ])
     // Before Electra there is no pending deposit queue.
     expect(beacon.getPendingDepositsAmount).not.toHaveBeenCalled()
     // From the first block at or after the day to the last before the next.
@@ -35,7 +39,6 @@ describe(EthereumStakingIndexer.name, () => {
         timestamp: day,
         slot: slotAt(day),
         totalBalance: 100n,
-        validatorCount: 3,
         pendingDeposits: null,
         withdrawals: 0n,
         deposits: 0n,
@@ -74,10 +77,8 @@ function createIndexer() {
     deleteAfter: mockFn().resolvesTo(0),
   })
   const beacon = {
-    getValidatorBalances: mockFn().resolvesTo({
-      totalBalance: 100n,
-      validatorCount: 3,
-    }),
+    getTotalBalance: mockFn().resolvesTo(100n),
+    getDepositIndex: mockFn().resolvesTo(5),
     getPendingDepositsAmount: mockFn().resolvesTo(7n),
   }
   // Empty blocks keep the execution sums at zero; readExecutionDay has its own tests.

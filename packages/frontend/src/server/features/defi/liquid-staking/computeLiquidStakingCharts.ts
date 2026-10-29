@@ -244,24 +244,13 @@ class NetworkSeries {
   private rewardsOn(day: number): number | undefined {
     const start = this.byTimestamp.get(day)
     const end = this.byTimestamp.get(day + DAY)
-    // Across Electra the pending queue appears, which is not a reward.
-    if (
-      !start ||
-      !end ||
-      (start.pendingDeposits === null) !== (end.pendingDeposits === null)
-    ) {
-      return undefined
-    }
+    if (!start || !end) return undefined
+    // A credited deposit sits in a balance or, from Electra, the pending
+    // queue, so counting both keeps it out of the rewards.
     const held = (r: EthereumStakingDailyRecord) =>
       r.totalBalance + (r.pendingDeposits ?? 0n)
-    // From Electra a deposit joins the pending queue in its own block. Before
-    // it, deposits were credited 7-14 hours late, and nearly every one made a
-    // new 32 ETH validator, so the new validators are what the day credited.
-    const deposits =
-      start.pendingDeposits === null
-        ? BigInt(end.validatorCount - start.validatorCount) * 32n * 10n ** 18n
-        : start.deposits
-    const consensus = held(end) - held(start) + start.withdrawals - deposits
+    const consensus =
+      held(end) - held(start) + start.withdrawals - start.deposits
     return toEth(consensus + start.executionRewards)
   }
 }

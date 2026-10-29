@@ -110,23 +110,17 @@ describe(computeLiquidStakingCharts.name, () => {
     )
   })
 
-  it('counts pre-Electra deposits by the validators they created', () => {
-    // Two new validators a day, so 64 ETH credited, whatever the execution
-    // layer logged that day: 10 + 100 - 64 = 46 ETH, plus 5 from proposers.
+  it('keeps balances moved into the pending queue at Electra out of the rewards', () => {
+    // From day 10, 1,000 ETH of balances waits in the new queue instead.
     const network = Array.from({ length: 32 }, (_, i) =>
-      day(START + i * DAY, 1_000_000n + 10n * BigInt(i), null, 2 * i),
+      i < 10
+        ? day(START + i * DAY, 1_000_000n + 10n * BigInt(i), null)
+        : day(START + i * DAY, 999_000n + 10n * BigInt(i), 1_000n),
     )
     expect(present(compute([], [], network).yield[0]?.network)).toBeCloseTo(
-      ((51 * 30) / 1_000_145) * (365 / 30),
+      ((65 * 30) / (1_000_145 - (1_000 * 20) / 30)) * (365 / 30),
       1e-6,
     )
-  })
-
-  it('leaves the network yield empty across the start of the deposit queue', () => {
-    const network = Array.from({ length: 32 }, (_, i) =>
-      day(START + i * DAY, 1_000_000n, i < 10 ? null : 0n),
-    )
-    expect(compute([], [], network).yield[0]?.network).toEqual(null)
   })
 })
 
@@ -193,13 +187,11 @@ function day(
   timestamp: number,
   balanceEth: bigint,
   pendingEth: bigint | null = null,
-  newValidators = 0,
 ): EthereumStakingDailyRecord {
   return {
     timestamp: UnixTime(timestamp),
     slot: 0,
     totalBalance: balanceEth * ETH,
-    validatorCount: 1_000_000 + newValidators,
     pendingDeposits: pendingEth === null ? null : pendingEth * ETH,
     withdrawals: 100n * ETH,
     deposits: 50n * ETH,

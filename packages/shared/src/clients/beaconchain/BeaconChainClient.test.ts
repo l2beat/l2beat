@@ -77,8 +77,8 @@ describe(BeaconChainClient.name, () => {
     })
   })
 
-  describe(BeaconChainClient.prototype.getValidatorBalances.name, () => {
-    it('sums every balance at the slot in wei and counts the validators', async () => {
+  describe(BeaconChainClient.prototype.getTotalBalance.name, () => {
+    it('sums every balance at the slot in wei', async () => {
       const body = JSON.stringify({
         data: [
           { index: '0', balance: '32000000000' },
@@ -99,13 +99,31 @@ describe(BeaconChainClient.name, () => {
           mockClient({
             http: new HttpClient(),
             beaconApiUrl: `${url}/`,
-          }).getValidatorBalances(8103597),
+          }).getTotalBalance(8103597),
       )
 
-      expect(result).toEqual({
-        totalBalance: 2_080_000_000_000_000_000_000n,
-        validatorCount: 3,
-      })
+      expect(result).toEqual(2_080_000_000_000_000_000_000n)
+    })
+  })
+
+  describe(BeaconChainClient.prototype.getDepositIndex.name, () => {
+    it('reads the counter without waiting for the rest of the state', async () => {
+      const result = await withServer(
+        (req, res) => {
+          expect(req.url).toEqual('/eth/v2/debug/beacon/states/8103597')
+          res.setHeader('Content-Type', 'application/json')
+          // The validators never arrive; the read must not wait for them.
+          res.write('{"data":{"slot":"8103597","eth1_deposit_index":"1639287",')
+          res.write('"validators":[')
+        },
+        (url) =>
+          mockClient({
+            http: new HttpClient(),
+            beaconApiUrl: `${url}/`,
+          }).getDepositIndex(8103597),
+      )
+
+      expect(result).toEqual(1639287)
     })
   })
 
