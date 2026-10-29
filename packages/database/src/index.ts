@@ -99,6 +99,7 @@ export {
   type InteropTransferFinancialsFilter,
   type InteropTransferFinancialsStats,
   type InteropTransferRecord,
+  type InteropTransferSupplyChangeRecord,
   type InteropTransfersDetailedStatsRecord,
   type InteropTransfersStatsRecord,
   type InteropTransferTimeRange,

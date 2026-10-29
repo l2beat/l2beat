@@ -202,6 +202,7 @@ function axlUsdc(): Row {
       priceUsd: 1,
       valueUsd: 400_000,
       vaultAsset: undefined,
+      supplyChange: undefined,
     },
     escrowAddresses: [],
     dismissal: {
