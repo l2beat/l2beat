@@ -11,13 +11,14 @@ export interface SavedProject {
   iconUrl: string
 }
 
-interface YourProjects {
+export interface YourProjects {
   pinned: SavedProject[]
   recent: SavedProject[]
 }
 
 export const STORAGE_KEY = 'l2beat-your-projects'
 const CHANGE_EVENT = 'l2beat-your-projects-change'
+/** Unpinned ones; pinned ones are kept on top of these, so they can't crowd them out. */
 const MAX_RECENT = 8
 const EMPTY: YourProjects = { pinned: [], recent: [] }
 
@@ -91,13 +92,28 @@ export function useYourProjects(): YourProjects {
 }
 
 export function recordProjectVisit(project: SavedProject) {
-  write((current) => ({
-    ...current,
-    recent: [
-      project,
-      ...current.recent.filter((p) => p.href !== project.href),
-    ].slice(0, MAX_RECENT),
-  }))
+  write((current) => withVisit(current, project))
+}
+
+/**
+ * Moves the project to the front of the recent ones. Its page carries its
+ * current name and icon, so a pinned entry takes them too: icon URLs are
+ * content-hashed and an old one stops resolving after a deploy.
+ */
+export function withVisit(
+  current: YourProjects,
+  project: SavedProject,
+): YourProjects {
+  const pinnedHrefs = new Set(current.pinned.map((p) => p.href))
+  let unpinnedLeft = MAX_RECENT
+  const recent = [
+    project,
+    ...current.recent.filter((p) => p.href !== project.href),
+  ].filter((p) => pinnedHrefs.has(p.href) || unpinnedLeft-- > 0)
+  return {
+    pinned: current.pinned.map((p) => (p.href === project.href ? project : p)),
+    recent,
+  }
 }
 
 export function usePinnedState(project: SavedProject) {

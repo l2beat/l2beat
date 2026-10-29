@@ -17,6 +17,7 @@ import {
 const RECENT_ROWS = 5
 
 const WRAPPER_CLASS = 'contents'
+const LISTS_ROLE = 'your-projects'
 // React 19 sets innerHTML whenever this object changes identity, which would
 // wipe the prerendered lists before React takes over.
 const KEEP_SERVER_MARKUP = { __html: '' }
@@ -48,11 +49,13 @@ export function NavYourProjects({ onNavigate }: { onNavigate: () => void }) {
         key="prerendered"
         className={WRAPPER_CLASS}
         dangerouslySetInnerHTML={KEEP_SERVER_MARKUP}
+        // Differs from the server's on purpose; React would log it in dev.
+        suppressHydrationWarning
       />
     )
   }
   return (
-    <div key="live" className={WRAPPER_CLASS}>
+    <div key="live" className={WRAPPER_CLASS} data-role={LISTS_ROLE}>
       <YourProjectsLists onNavigate={onNavigate} />
     </div>
   )
@@ -182,16 +185,21 @@ function ProjectRow({
       </a>
       <button
         type="button"
-        onClick={() =>
-          pinned ? unpinProject(project.href) : pinProject(project)
-        }
+        onClick={(event) => {
+          const lists = event.currentTarget.closest(`[data-role=${LISTS_ROLE}]`)
+          if (pinned) unpinProject(project.href)
+          else pinProject(project)
+          focusProjectButton(lists, project.href)
+        }}
+        data-href={project.href}
         aria-label={`${pinned ? 'Unpin' : 'Pin'} ${project.name}`}
         title={pinned ? 'Unpin' : 'Pin'}
         className={cn(
           'flex size-6 shrink-0 items-center justify-center text-secondary hover:text-primary',
-          // Recent rows show it on hover, where there is one.
+          // Recent rows show it on hover, on screens that have one: a
+          // landscape tablet is wide enough for the desktop nav.
           !pinned &&
-            'focus-visible:opacity-100 lg:opacity-0 lg:group-hover/row:opacity-100',
+            'focus-visible:opacity-100 lg:group-hover/row:opacity-100 lg:[@media(hover:hover)]:opacity-0',
         )}
       >
         <PinIcon
@@ -201,6 +209,20 @@ function ProjectRow({
       </button>
     </li>
   )
+}
+
+/**
+ * Pinning moves the row to the other list and unmounts the clicked button,
+ * so a keyboard user would land back at the top of the page. Focus follows
+ * the project to its new row; an unpinned project no longer in the recent
+ * ones has none.
+ */
+function focusProjectButton(lists: Element | null, href: string) {
+  requestAnimationFrame(() => {
+    lists
+      ?.querySelector<HTMLElement>(`button[data-href="${CSS.escape(href)}"]`)
+      ?.focus()
+  })
 }
 
 /**
