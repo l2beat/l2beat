@@ -1,9 +1,13 @@
-import type { ProjectLiquidStakingRisks } from '@l2beat/config'
 import { manifest } from '~/utils/Manifest'
 import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
+import type { LiquidStakingCharts } from './getLiquidStakingCharts'
 import type { LiquidStakingProject } from './getLiquidStakingProjects'
+import {
+  buildLiquidStakingSummary,
+  type LiquidStakingSummary,
+} from './getLiquidStakingSummary'
 
-export interface LiquidStakingEntry {
+export interface LiquidStakingEntry extends LiquidStakingSummary {
   id: string
   slug: string
   name: string
@@ -12,13 +16,15 @@ export interface LiquidStakingEntry {
   href: string
   description: string
   isUnderReview: boolean
-  totalValueLockedUsd?: number
-  risks: ProjectLiquidStakingRisks
 }
 
-/** Sorted by TVL, the projects without one last. */
+/**
+ * Sorted by TVL, the projects without one last. The latest yield and cost of
+ * exit come from `charts`, so the page reads them once.
+ */
 export async function getLiquidStakingEntries(
   projects: LiquidStakingProject[],
+  charts: LiquidStakingCharts,
 ): Promise<LiquidStakingEntry[]> {
   const tvlByProject = await getTotalValueLockedByProject(projects)
 
@@ -33,8 +39,12 @@ export async function getLiquidStakingEntries(
         href: `/defi/projects/${project.slug}`,
         description: project.display.description,
         isUnderReview: !!project.statuses.reviewStatus,
-        totalValueLockedUsd: tvlByProject.get(project.id),
-        risks: project.liquidStakingRisks,
+        ...buildLiquidStakingSummary(
+          project.id,
+          project.liquidStakingRisks,
+          tvlByProject.get(project.id),
+          charts,
+        ),
       }),
     )
     .sort(
