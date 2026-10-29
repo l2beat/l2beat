@@ -1,10 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { assert, type UnixTime } from '@l2beat/shared-pure'
-import { Indexer, RootIndexer } from '@l2beat/uif'
+import { RootIndexer } from '@l2beat/uif'
 import type { Clock } from '../../../tools/Clock'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
-import { waitForTarget } from '../../../tools/waitForData'
+import {
+  retryWhileNotReady,
+  useTipIfStalled,
+} from '../../../tools/dataNotReady'
 
 /**
  * This indexer is almost an exact copy of the Activity's BlockTargetIndexer.
@@ -31,7 +34,7 @@ export class BlockTargetIndexer extends RootIndexer {
         chain: daLayer,
       }),
       {
-        tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        tickRetryStrategy: retryWhileNotReady(),
       },
     )
   }
@@ -51,7 +54,7 @@ export class BlockTargetIndexer extends RootIndexer {
       async () => {
         const timestamp = this.clock.getLastHour()
         this.logger.info('Getting block number for timestamp', { timestamp })
-        const blockNumber = await waitForTarget(
+        const blockNumber = await useTipIfStalled(
           () =>
             this.blockTimestampProvider.getBlockNumberAtOrBefore(
               timestamp,

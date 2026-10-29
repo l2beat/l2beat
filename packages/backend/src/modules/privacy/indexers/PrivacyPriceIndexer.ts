@@ -3,8 +3,11 @@ import type { PrivacyPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { createPrivacyConfigurationId } from '@l2beat/shared'
 import { CoingeckoId } from '@l2beat/shared-pure'
-import { Indexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
+import {
+  keepPublishedHours,
+  retryWhileNotReady,
+} from '../../../tools/dataNotReady'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -13,11 +16,6 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import {
-  allOrCancel,
-  keepPublishedHours,
-  waitForPrices,
-} from '../../../tools/waitForData'
 import type { PrivacyPriceIndexerConfig } from '../types'
 
 export interface PrivacyPriceIndexerDeps
@@ -34,7 +32,7 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
       {
         ...$,
         name: INDEXER_NAMES.PRIVACY_PRICE,
-        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        updateRetryStrategy: retryWhileNotReady(),
       },
       logger,
     )
@@ -64,26 +62,17 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
       configsByPriceId.set(priceId, existing)
     }
 
-    const results = await allOrCancel(
-      Array.from(configsByPriceId.entries()),
-      async ([priceId, configs], signal) => {
+    const results = await Promise.all(
+      Array.from(configsByPriceId.entries()).map(async ([priceId, configs]) => {
         try {
           const prices = await withCoreFeatureRpcMetricsContext(
             'privacy.price',
             {},
             () =>
-              waitForPrices(
-                () =>
-                  this.$.priceProvider.getUsdPriceHistoryHourly(
-                    CoingeckoId(priceId),
-                    from,
-                    adjustedTo,
-                  ),
-                {
-                  logger: this.logger,
-                  priceId,
-                  signal,
-                },
+              this.$.priceProvider.getUsdPriceHistoryHourly(
+                CoingeckoId(priceId),
+                from,
+                adjustedTo,
               ),
           )
 
@@ -115,7 +104,7 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
 
           throw error
         }
-      },
+      }),
     )
 
     const { records, syncedTo } = keepPublishedHours(

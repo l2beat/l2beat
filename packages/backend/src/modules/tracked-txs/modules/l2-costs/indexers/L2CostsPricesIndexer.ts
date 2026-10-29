@@ -2,11 +2,12 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database, L2CostPriceRecord } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import { Indexer } from '@l2beat/uif'
+import { retryWhileNotReady } from '../../../../../tools/dataNotReady'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import { waitForPrices } from '../../../../../tools/waitForData'
 
 export interface L2CostsPricesIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -21,7 +22,16 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
     private readonly $: L2CostsPricesIndexerDeps,
     logger: Logger,
   ) {
-    super({ ...$, name: 'l2_costs_prices' }, logger)
+    super(
+      {
+        ...$,
+        name: 'l2_costs_prices',
+        updateRetryStrategy: retryWhileNotReady(
+          Indexer.getDefaultRetryStrategy(),
+        ),
+      },
+      logger,
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {
@@ -37,10 +47,7 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
       shiftedTo,
     })
 
-    const prices = await waitForPrices(
-      () => this.fetchPrices(unixFrom, shiftedTo),
-      { logger: this.logger, priceId: ETHEREUM_COINGECKO_ID },
-    )
+    const prices = await this.fetchPrices(unixFrom, shiftedTo)
 
     if (prices.length === 0) {
       this.logger.info('Nothing to save in DB')
