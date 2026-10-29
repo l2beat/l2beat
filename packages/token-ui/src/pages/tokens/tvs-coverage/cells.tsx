@@ -12,6 +12,7 @@ import { ExplorerLink } from '~/components/ExplorerLink'
 import { cn } from '~/utils/cn'
 import {
   type Bridge,
+  describeRole,
   describeStatus,
   formatBridgeType,
   formatChain,
@@ -118,9 +119,13 @@ export function ProjectCell({
           {project?.name ?? row.projectId}
         </div>
         {row.side === 'escrow' && (
-          <div className="truncate text-muted-foreground text-xs">
-            Escrow on {formatChain(row.chain)}
-          </div>
+          <WithTooltip
+            content={`The project's own lock-and-mint bridge moved this token on ${formatChain(row.chain)}, so the project's escrows there should hold it.`}
+          >
+            <span className="truncate text-muted-foreground text-xs">
+              Escrow on {formatChain(row.chain)}
+            </span>
+          </WithTooltip>
         )}
       </div>
     </div>
@@ -148,9 +153,25 @@ export function TokenCell({
             {row.symbol ?? row.abstractSymbol ?? 'Unknown'}
           </span>
           {row.role && row.role !== 'unknown' && (
-            <Note>{formatRole(row.role)}</Note>
+            <WithTooltip
+              content={
+                <>
+                  <div>{describeRole(row.role)}</div>
+                  <div className="opacity-75">
+                    From the token DB's relations, which cover every bridge, not
+                    only the project's own.
+                  </div>
+                </>
+              }
+            >
+              <Note>{formatRole(row.role)}</Note>
+            </WithTooltip>
           )}
-          {row.ignored && <Note>ignored</Note>}
+          {row.ignored && (
+            <WithTooltip content="The token DB marks this token as ignored, which also leaves it out of interop financials.">
+              <Note>ignored</Note>
+            </WithTooltip>
+          )}
           {vault && (
             <WithTooltip
               content={

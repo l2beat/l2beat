@@ -259,6 +259,23 @@ export function formatRole(role: NonNullable<Row['role']>): string {
   }
 }
 
+export function describeRole(
+  role: NonNullable<Row['role']>,
+): string | undefined {
+  switch (role) {
+    case 'locked':
+      return 'A lock-and-mint bridge locks this token here and mints copies of it on other chains.'
+    case 'minted':
+      return 'A bridge minted this token here as a copy of one locked on another chain.'
+    case 'burnAndMint':
+      return 'A bridge moves this token by burning it on one chain and minting it on another.'
+    case 'both':
+      return 'Some bridges lock this token here to mint copies elsewhere, and others minted it here from a token locked elsewhere.'
+    case 'unknown':
+      return undefined
+  }
+}
+
 export function formatBridgeType(bridgeType: Bridge['bridgeType']): string {
   switch (bridgeType) {
     case 'lockAndMint':

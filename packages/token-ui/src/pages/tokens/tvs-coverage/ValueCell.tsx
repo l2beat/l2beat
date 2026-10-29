@@ -60,14 +60,18 @@ function AmountTags({ row, value }: { row: Row; value: RowValue }) {
   return (
     <>
       {value.amountSource === 'circulatingSupply' && (
-        <Tag tone="warning" small>
-          capped
-        </Tag>
+        <WithTooltip content="CoinGecko's circulating supply is lower than the token's total supply on this chain, so the value uses the circulating supply.">
+          <Tag tone="warning" small>
+            capped
+          </Tag>
+        </WithTooltip>
       )}
       {value.amountSource === 'mintedSupply' && (
-        <Tag tone="warning" small>
-          minted
-        </Tag>
+        <WithTooltip content="The copy the project's own bridge minted has a larger supply than the listed escrows hold, so the value uses that supply. The rest sits in escrows the TVS config does not list.">
+          <Tag tone="warning" small>
+            minted supply
+          </Tag>
+        </WithTooltip>
       )}
       {value.circulatingSupplyUnknown && (
         <WithTooltip content="CoinGecko has no circulating supply for this token, so the value uses its total supply on the chain, which can include a premint, a treasury or locked tokens. A natively minted token needs a CoinGecko circulating supply before TVS can count it.">
