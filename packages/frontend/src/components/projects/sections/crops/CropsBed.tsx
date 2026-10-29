@@ -107,6 +107,7 @@ function Plant({ entry, index }: { entry: CropEntry; index: number }) {
         sentiment={evaluation.sentiment}
         delay={index * STAGGER}
         width={80}
+        soil="plain"
         className="@max-[519.9px]:[&>svg]:h-[62px] @max-[519.9px]:[&>svg]:w-[53px]"
       />
     </div>

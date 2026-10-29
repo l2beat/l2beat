@@ -61,8 +61,12 @@ export function CropPlant({
   sentiment: CropSentiment
   delay: number
   width?: number
-  /** Off where the plant stands on scenery rather than in a table cell. */
-  soil?: boolean
+  /**
+   * Off where the plant stands on scenery rather than in a table cell.
+   * `plain` where it stands in drawn ground: a mound whatever the rating,
+   * since the outline and dashed soils mark the rating only in a cell.
+   */
+  soil?: boolean | 'plain'
   motion?: PlantMotion
   /** Read out instead of the art. */
   label?: string
@@ -82,7 +86,7 @@ export function CropPlant({
         className="block overflow-visible"
         aria-hidden
       >
-        {soil && <Soil status={status} />}
+        {soil && <Soil status={soil === 'plain' ? 'reviewed' : status} />}
         <Plant delay={delay} motion={motion} />
       </svg>
     </span>
