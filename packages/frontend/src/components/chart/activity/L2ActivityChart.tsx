@@ -7,12 +7,19 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { useIsClient } from '~/hooks/useIsClient'
+import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { useActivityChartRangeContext } from '~/pages/layer2s/activity/components/ActivityChartRangeContext'
 import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2ActivityEntries'
+import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
@@ -64,8 +71,9 @@ export function L2ActivityChart({ milestones, entries }: Props) {
     <div className="flex flex-col">
       <ActivityChartHeader resolution={data?.resolution ?? 'day'} />
       <L2RecategorizedActivityStats entries={entries} />
-      <div className="mt-1 mb-2">
+      <div className="mt-1 mb-2 flex items-center gap-2">
         <ChartTimeRange timeRange={timeRange} />
+        {data && <IncompleteHoursHint data={data} />}
       </div>
       <L2RecategorizedActivityChart
         data={data}
@@ -78,21 +86,6 @@ export function L2ActivityChart({ milestones, entries }: Props) {
           onItemClick: toggleDataKey,
         }}
       />
-      {data && data.withoutHours.length > 0 && (
-        <p className="mt-1 mb-3 text-center font-medium text-secondary text-xs">
-          Hourly data leaves out {formatList(data.withoutHours)}, which report
-          activity per day only.
-        </p>
-      )}
-      {data?.behind.map(({ name, syncedUntil }) => (
-        <p
-          key={name}
-          className="mt-1 mb-3 text-center font-medium text-secondary text-xs"
-        >
-          Hourly data leaves out {name}, which has no data since{' '}
-          {formatTimestamp(syncedUntil, { mode: 'datetime' })}.
-        </p>
-      ))}
       <div className="mb-2">
         <ActivityRatioChart
           data={ratioData}
@@ -145,6 +138,37 @@ function Controls({ scale, setScale, range, setRange }: ControlsProps) {
         hourlyRanges="enabled"
       />
     </ChartControlsWrapper>
+  )
+}
+
+function IncompleteHoursHint({
+  data,
+}: {
+  data: Pick<RecategorisedActivityChartData, 'withoutHours' | 'behind'>
+}) {
+  if (data.withoutHours.length === 0 && data.behind.length === 0) return null
+  return (
+    <Tooltip>
+      <TooltipTrigger className="flex items-center gap-1 font-medium text-secondary text-xs lg:text-sm">
+        <RoundedWarningIcon className="size-3.5" sentiment="warning" />
+        Incomplete data
+      </TooltipTrigger>
+      <TooltipContent className="flex flex-col gap-1">
+        {data.withoutHours.length > 0 && (
+          <p>
+            Leaves out {formatList(data.withoutHours)}, which{' '}
+            {data.withoutHours.length === 1 ? 'reports' : 'report'} activity per
+            day only.
+          </p>
+        )}
+        {data.behind.map(({ name, syncedUntil }) => (
+          <p key={name}>
+            Leaves out {name}, which has no data since{' '}
+            {formatTimestamp(syncedUntil, { mode: 'datetime' })}.
+          </p>
+        ))}
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
