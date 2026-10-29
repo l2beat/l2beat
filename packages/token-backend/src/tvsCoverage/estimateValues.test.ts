@@ -355,6 +355,7 @@ function coverageRow(overrides: Partial<CoverageRow> = {}): CoverageRow {
     volumeUsd: 0,
     transferCount: 0,
     lastSeen: 0,
+    pairedWith: undefined,
     ...overrides,
   }
 }

@@ -81,6 +81,9 @@ export interface CoverageRow extends TokenRef {
   volumeUsd: number
   transferCount: number
   lastSeen: number
+  // On a chain row, the escrow row whose token the project's own bridge locked
+  // to mint this one. The two rows are one gap, seen from both sides.
+  pairedWith: TokenRef | undefined
 }
 
 export interface CoverageInput {
@@ -106,7 +109,7 @@ export class Coverage {
       (project) => new ProjectFormulas(project, this.tokens, input.timestamp),
     )
     this.projects = new Map(projects.map((project) => [project.id, project]))
-    this.rows = collectRows(input.stats, projects, this.relations)
+    const rows = collectRows(input.stats, projects, this.relations)
       .map((row) => toCoverageRow(row, this.tokens, this.relations))
       // A project's own bridge seldom moves what its escrow already holds, so
       // escrow rows are kept at any volume.
@@ -121,6 +124,20 @@ export class Coverage {
           a.projectId.localeCompare(b.projectId) ||
           tokenKey(a).localeCompare(tokenKey(b)),
       )
+    const escrowByCopy = new Map<string, TokenRef>()
+    for (const row of rows) {
+      const copy =
+        row.side === 'escrow' ? this.mintedCopy(row.projectId, row) : undefined
+      if (copy)
+        escrowByCopy.set(`${row.projectId}:${tokenKey(copy)}`, toRef(row))
+    }
+    this.rows = rows.map((row) => ({
+      ...row,
+      pairedWith:
+        row.side === 'chain'
+          ? escrowByCopy.get(`${row.projectId}:${tokenKey(row)}`)
+          : undefined,
+    }))
   }
 
   // Counted directly, or through its counterpart on the project's own bridge.
@@ -359,7 +376,7 @@ function toCoverageRow(
   row: RowDraft,
   tokens: TokenIndex,
   relations: RelationIndex,
-): CoverageRow {
+): Omit<CoverageRow, 'pairedWith'> {
   const { deployedToken, abstractToken } = tokens.get(row.token)
   const edges = relations.edgesOf(row.token)
   const bridges = Array.from(row.bridges.values()).sort(

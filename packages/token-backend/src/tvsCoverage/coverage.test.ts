@@ -329,6 +329,30 @@ describe(Coverage.name, () => {
     ])
   })
 
+  it('pairs an uncounted escrow row with the chain row of its minted copy', () => {
+    const rows = coverage({
+      projects: [{ ...arbitrum, tokens: [] }],
+      stats: [
+        stat({ id: 'arbitrum', tokenChain: 'ethereum', address: L1_USDC }),
+        stat({ id: 'arbitrum', tokenChain: 'arbitrum', address: ARB_USDC_E }),
+      ],
+      deployedTokens,
+      abstractTokens: [usdc],
+      relations: [
+        relation(
+          ['ethereum', L1_USDC],
+          ['arbitrum', ARB_USDC_E],
+          'orbitstack-standardgateway',
+        ),
+      ],
+    })
+
+    expect(rows.map((row) => [row.side, row.status, row.pairedWith])).toEqual([
+      ['chain', 'missing', { chain: 'ethereum', address: L1_USDC }],
+      ['escrow', 'missing', undefined],
+    ])
+  })
+
   it('counts a locked token whose minted copy the project counts', () => {
     const rows = coverage({
       projects: [
@@ -463,6 +487,7 @@ describe(Coverage.name, () => {
       volumeUsd: 12,
       transferCount: 2,
       lastSeen: 20,
+      pairedWith: undefined,
     })
   })
 })
