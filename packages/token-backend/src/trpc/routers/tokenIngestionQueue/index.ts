@@ -7,6 +7,8 @@ import {
   toIngestionTraceView,
 } from '../../../ingestion/formatIngestionTrace'
 import type { IngestionOutcomeView } from '../../../ingestion/IngestionTrace'
+import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
+import type { InteropTransferIndex } from '../../../ingestion/tokenIngestionUtils'
 import { readOnlyProcedure, readWriteProcedure } from '../../procedures'
 import { router } from '../../trpc'
 
@@ -54,22 +56,33 @@ export const tokenIngestionQueueRouter = router({
         await ctx.tokenIngestionProcessor.getInteropTransferIndex()
       const rows: QueuePageRow[] = []
       for (const entry of result.entries) {
-        const trace = await ctx.tokenIngestionProcessor.plan(
-          entry,
-          transferIndex,
+        rows.push(
+          await toQueuePageRow(
+            ctx.tokenIngestionProcessor,
+            entry,
+            transferIndex,
+          ),
         )
-        rows.push({
-          entry,
-          predictedOutcome: toIngestionOutcomeView(trace.outcome),
-          deployedTokenExists: trace.existingDeployedToken !== undefined,
-          resolvableSymbolConflict:
-            entry.state === 'conflict' &&
-            trace.outcome.kind === 'pending' &&
-            trace.outcome.abstract.kind === 'new-coingecko',
-        })
       }
 
       return { rows, totalCount: result.totalCount }
+    }),
+  // Only the stored entries: the relations graph highlights them all, and
+  // plans just the one a researcher opens (`getEntry`).
+  getConflicts: readOnlyProcedure.query(({ ctx }) => {
+    return ctx.tokenDb.tokenIngestionQueue.getByStates(['conflict'])
+  }),
+  getEntry: readOnlyProcedure
+    .input(QueueEntryAddress)
+    .query(async ({ ctx, input }) => {
+      const entry = await ctx.tokenDb.tokenIngestionQueue.find(input)
+      if (entry === undefined) {
+        return null
+      }
+
+      const transferIndex =
+        await ctx.tokenIngestionProcessor.getInteropTransferIndex()
+      return toQueuePageRow(ctx.tokenIngestionProcessor, entry, transferIndex)
     }),
   approve: readWriteProcedure
     .input(QueueEntryAddress)
@@ -138,3 +151,20 @@ export const tokenIngestionQueueRouter = router({
       return toIngestionTraceView(trace)
     }),
 })
+
+async function toQueuePageRow(
+  processor: TokenIngestionProcessor,
+  entry: TokenIngestionQueueRecord,
+  transferIndex: InteropTransferIndex,
+): Promise<QueuePageRow> {
+  const trace = await processor.plan(entry, transferIndex)
+  return {
+    entry,
+    predictedOutcome: toIngestionOutcomeView(trace.outcome),
+    deployedTokenExists: trace.existingDeployedToken !== undefined,
+    resolvableSymbolConflict:
+      entry.state === 'conflict' &&
+      trace.outcome.kind === 'pending' &&
+      trace.outcome.abstract.kind === 'new-coingecko',
+  }
+}

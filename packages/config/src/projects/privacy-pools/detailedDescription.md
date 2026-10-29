@@ -14,7 +14,7 @@ All notes derive from one recovery phrase. The website creates a random one or d
 
 ### App
 
-The ratings assume the website at [v1.privacypools.com](https://v1.privacypools.com), built from [public source](https://github.com/0xbow-io/privacy-pools-website) and hosted by 0xbow. It accepts the user's own RPC endpoint and a sign-in with the recovery phrase alone. It lists Fast Relay and Cloaked Relay, but Cloaked Relay refuses requests from the subdomain, and over Tor Fast Relay answers only some circuits. The site offers no way to submit a withdrawal yourself, while anyone can relay onchain. Accounts from the older 12-word key method send their deposit labels to 0xbow while they migrate.
+0xbow hosts the app, built from public source. It accepts the user's own RPC endpoint and a sign-in with the recovery phrase alone. It lists Fast Relay and Cloaked Relay, but Cloaked Relay refuses requests from the subdomain, and over Tor Fast Relay answers only some circuits. The site offers no way to submit a withdrawal yourself, while anyone can relay onchain. Accounts from the older 12-word key method send their deposit labels to 0xbow while they migrate.
 
 ### Exits
 

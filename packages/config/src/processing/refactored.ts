@@ -73,6 +73,7 @@ import { zcash } from '../projects/zcash/zcash'
 import { zcashNearIntents } from '../projects/zcash-near-intents/zcash-near-intents'
 import { zkapi } from '../projects/zkapi/zkapi'
 import { zkmoney } from '../projects/zkmoney/zkmoney'
+import { zkmoneyv6 } from '../projects/zkmoneyv6/zkmoneyv6'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -160,6 +161,7 @@ export const refactored: BaseProject[] = [
   zcashNearIntents,
   privacyBoost,
   zkmoney,
+  zkmoneyv6,
   zkapi,
   interfold,
 ]
