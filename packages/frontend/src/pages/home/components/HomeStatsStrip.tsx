@@ -150,12 +150,12 @@ function StatTile({ tile }: { tile: Tile }) {
   )
 }
 
-/** A secondary section: a small box with just its name. */
+/** A secondary section: a box with just its name, a row tall for touch. */
 function MoreLink({ item }: { item: MoreItem }) {
   return (
     <a
       href={item.href}
-      className="group flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-divider px-2.5 py-1.5 font-medium text-label-value-15 leading-4 transition-colors duration-200 hover:border-link-stroke"
+      className="group flex h-10 items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-divider px-2.5 font-medium text-label-value-15 leading-4 transition-colors duration-200 hover:border-link-stroke"
     >
       {item.label}
       <ChevronIcon className="-rotate-90 size-2 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />

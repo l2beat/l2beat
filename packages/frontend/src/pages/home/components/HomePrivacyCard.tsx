@@ -77,6 +77,7 @@ export function HomePrivacyCard({
               tooltipLabel="Deposited"
               formatValue={(value) => formatCurrency(value, 'usd')}
               weeklyAverage
+              perDay
             />
           }
         />
@@ -102,6 +103,7 @@ export function HomePrivacyCard({
             id: 'tvl',
             header: 'TVL',
             align: 'right',
+            withChange: true,
             cell: (protocol) => (
               <HomeRankedValueWithChange
                 value={protocol.tvl}

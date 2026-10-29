@@ -325,13 +325,15 @@
   --divider: #3d4358;
 }
 
+/* In the dark, a step up instead: a full-width light block would outshine
+   everything above it. */
 .dark .home-theme .inverted,
 .dark.home-theme .inverted {
-  --primary: #131215;
-  --secondary: #5f6470;
-  --surface-primary: #fafafa;
-  --surface-secondary: #e6e7ec;
-  --divider: #ccd0da;
+  --primary: #fafafa;
+  --secondary: #abb1c1;
+  --surface-primary: #33384b;
+  --surface-secondary: #4a5069;
+  --divider: #4a5069;
 }
 
 @theme inline {

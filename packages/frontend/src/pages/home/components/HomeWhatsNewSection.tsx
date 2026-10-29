@@ -91,7 +91,9 @@ export function HomeProjectChangesSection({
             </span>
           )}
         </div>
-        <p className={cn('max-w-[62%]', HOME_TEXT.body)}>
+        {/* Balanced: in this narrow column a pretty wrap can still leave one
+            word on the second line. */}
+        <p className={cn('max-w-[62%]', HOME_TEXT.body, 'text-balance')}>
           {count > 0
             ? `${count} ${pluralize(count, 'change')} handled in the last 7 days.`
             : 'None handled in the last 7 days.'}
@@ -258,6 +260,7 @@ function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
         >
           <a
             href={project.href}
+            title={project.name}
             className="group flex min-w-0 flex-1 items-center gap-2"
           >
             <img src={project.iconUrl} alt="" className={HOME_ICON_CLASS} />
@@ -269,7 +272,7 @@ function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
             >
               {project.name}
             </span>
-            <span className={cn('shrink-0', HOME_TEXT.meta)}>
+            <span className={cn('shrink-0 pl-1', HOME_TEXT.meta)}>
               {project.category === 'l2' && project.l2Category
                 ? project.l2Category
                 : CATEGORY_LABEL[project.category]}
@@ -308,6 +311,8 @@ function Research({ items }: { items: HomeResearchItem[] }) {
                   className={cn(
                     'line-clamp-2 underline-offset-2 group-hover:underline',
                     HOME_TEXT.row,
+                    // The row style's line is its font size, too tight to wrap.
+                    'leading-5',
                   )}
                 >
                   {item.shortTitle ?? item.title}

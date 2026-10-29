@@ -99,8 +99,9 @@ function Content({
         subtitle="Last 24h"
         link={{ href: '/interop/summary', label: 'Dashboard' }}
       />
-      {/* From lg the section is as tall as the column beside it, so its body
-          is a size container (it never sets the height itself). Roughly
+      {/* From lg the section is as tall as the column beside it; from md to
+          lg it has the whole row, so its body is 480px tall. Either way the
+          body is a size container (it never sets the height itself). Roughly
           square, the graph fills it, the largest square it fits with 48px
           spare at either side, and the figures go in the corners its ring
           leaves free; without that spare they run into the ring where the
@@ -108,8 +109,8 @@ function Content({
           wide, or too narrow for the corners, it stacks as on phones: the
           figures, the graph as a square (smaller when the height runs out, so
           nothing spills), then as many top protocols as the height left holds.
-          Below lg it stacks too, the graph a fixed-size square. */}
-      <div className="relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0 lg:[container:interop-body/size]">
+          Below md it stacks too, the graph a fixed-size square. */}
+      <div className="relative flex min-w-0 flex-col gap-5 md:max-lg:h-[480px] lg:min-h-[480px] lg:flex-1 lg:basis-0 md:[container:interop-body/size]">
         {data && (
           <Stats
             data={data}
@@ -117,7 +118,7 @@ function Content({
             className="interop-corners:hidden"
           />
         )}
-        <div className="pointer-events-none interop-corners:absolute interop-corners:inset-x-12 interop-corners:inset-y-0 flex interop-stacked:aspect-square interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center">
+        <div className="pointer-events-none interop-corners:absolute interop-corners:inset-x-12 interop-corners:inset-y-0 flex interop-stacked:aspect-square interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center [&_text]:stroke-[4px] [&_text]:stroke-surface-primary [&_text]:[paint-order:stroke] [&_text]:[stroke-linejoin:round]">
           <FlowsGraphPanel
             activeChains={graphChains}
             data={data}
@@ -127,7 +128,7 @@ function Content({
             // Chain labels hang below the bubbles; pb keeps them in the
             // section, and on phones px keeps the outer ones off its edges.
             className="pb-6 max-sm:px-2 max-lg:order-none"
-            maxSizeClassName="max-w-[460px] lg:max-w-none"
+            maxSizeClassName="max-w-[460px] md:max-w-none"
           />
         </div>
         {data && (
@@ -152,8 +153,9 @@ const CORNER_PROTOCOLS_COUNT = 3
 
 /**
  * The interop page's general stats: volume, transfers and routes, then the
- * top chain, token and protocol. The busiest protocols are listed apart: under
- * the graph in TopProtocols, or in a corner beside it.
+ * top chain and token. The busiest protocols are listed apart: under the graph
+ * in TopProtocols, or in a corner beside it; the top protocol shows here only
+ * when that list is empty.
  */
 function Stats({
   data,
@@ -213,28 +215,30 @@ function Stats({
           </>
         )}
       </Top>
-      <Top
-        label="Top protocol"
-        href={
-          stats.topProtocol && `/interop/protocols/${stats.topProtocol.slug}`
-        }
-        value={
-          stats.topProtocol && formatCurrency(stats.topProtocol.volume, 'usd')
-        }
-      >
-        {stats.topProtocol && (
-          <>
-            <img
-              src={stats.topProtocol.iconUrl}
-              alt=""
-              className={HOME_ICON_CLASS}
-            />
-            <span className={cn('truncate', HOME_TEXT.row)}>
-              {stats.topProtocol.name}
-            </span>
-          </>
-        )}
-      </Top>
+      {stats.topProtocols.length === 0 && (
+        <Top
+          label="Top protocol"
+          href={
+            stats.topProtocol && `/interop/protocols/${stats.topProtocol.slug}`
+          }
+          value={
+            stats.topProtocol && formatCurrency(stats.topProtocol.volume, 'usd')
+          }
+        >
+          {stats.topProtocol && (
+            <>
+              <img
+                src={stats.topProtocol.iconUrl}
+                alt=""
+                className={HOME_ICON_CLASS}
+              />
+              <span className={cn('truncate', HOME_TEXT.row)}>
+                {stats.topProtocol.name}
+              </span>
+            </>
+          )}
+        </Top>
+      )}
     </div>
   )
 }
@@ -251,7 +255,12 @@ function Figure({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex min-w-0 flex-col gap-1">
       <span className={cn('truncate', HOME_TEXT.meta)}>{label}</span>
-      <span className={cn('truncate', HOME_TEXT.number)}>{value}</span>
+      {/* On phones, the size the other cards' stacked KPIs take. */}
+      <span
+        className={cn('truncate', HOME_TEXT.number, 'max-sm:text-heading-24')}
+      >
+        {value}
+      </span>
     </div>
   )
 }
@@ -309,7 +318,9 @@ function TopProtocols({
           <li
             key={slug}
             className={cn(
-              'flex w-full items-center gap-2',
+              // The ranked tables' gaps, so stacked under them on phones the
+              // icons and names line up.
+              'flex w-full items-center gap-4',
               HOME_ROW_CLASS,
               index >= TOP_PROTOCOLS_COUNT && 'interop-stacked:flex hidden',
             )}
@@ -324,7 +335,7 @@ function TopProtocols({
             </span>
             <a
               href={`/interop/protocols/${slug}`}
-              className="group flex min-w-0 flex-1 items-center gap-1.5"
+              className="group flex min-w-0 flex-1 items-center gap-2"
             >
               <img src={iconUrl} alt="" className={HOME_ICON_CLASS} />
               <span
@@ -348,8 +359,9 @@ function TopProtocols({
 
 /**
  * The figures in the four corners the graph's ring leaves free: totals top
- * left, routes and the top chain top right, the top token and protocol
- * bottom left, the busiest protocols bottom right.
+ * left, routes and the top chain top right, the top token bottom left, the
+ * busiest protocols bottom right (or, without them, the top protocol beside
+ * the token).
  */
 function CornerStats({
   data,
@@ -366,7 +378,7 @@ function CornerStats({
 
   return (
     <div className="pointer-events-none absolute inset-0 interop-corners:block hidden">
-      <div className={cn(CORNER_CLASS, 'top-0 left-0')}>
+      <div className={cn(CORNER_CLASS, 'absolute top-0 left-0')}>
         <Figure
           label="Volume"
           value={formatCurrency(stats.totalVolume, 'usd')}
@@ -376,7 +388,12 @@ function CornerStats({
           value={formatInteger(stats.totalTransferCount)}
         />
       </div>
-      <div className={cn(CORNER_CLASS, 'top-0 right-0 items-end text-right')}>
+      <div
+        className={cn(
+          CORNER_CLASS,
+          'absolute top-0 right-0 items-end text-right',
+        )}
+      >
         <Figure
           label="Active routes"
           value={formatInteger(stats.activeFlows)}
@@ -400,82 +417,98 @@ function CornerStats({
           )}
         </Top>
       </div>
-      <div className={cn(CORNER_CLASS, 'bottom-0 left-0')}>
-        <Top
-          label="Top token"
-          href={stats.topToken && getInteropTokenUrl(stats.topToken)}
-          value={stats.topToken && formatCurrency(stats.topToken.volume, 'usd')}
-        >
-          {stats.topToken && (
-            <>
-              <img
-                src={stats.topToken.iconUrl}
-                alt=""
-                className={HOME_ICON_CLASS}
-              />
-              <span className={cn('truncate', HOME_TEXT.row)}>
-                {stats.topToken.symbol}
-              </span>
-            </>
-          )}
-        </Top>
-        <Top
-          label="Top protocol"
-          href={
-            stats.topProtocol && `/interop/protocols/${stats.topProtocol.slug}`
-          }
-          value={
-            stats.topProtocol && formatCurrency(stats.topProtocol.volume, 'usd')
-          }
-        >
-          {stats.topProtocol && (
-            <>
-              <img
-                src={stats.topProtocol.iconUrl}
-                alt=""
-                className={HOME_ICON_CLASS}
-              />
-              <span className={cn('truncate', HOME_TEXT.row)}>
-                {stats.topProtocol.name}
-              </span>
-            </>
-          )}
-        </Top>
-      </div>
-      {protocols.length > 0 && (
-        <div
-          className={cn(CORNER_CLASS, 'right-0 bottom-0 items-end text-right')}
-        >
-          <span className={HOME_TEXT.meta}>Top protocols</span>
-          <ol className="flex max-w-full flex-col items-end gap-2">
-            {protocols.map(({ slug, name, iconUrl, volume }) => (
-              <li key={slug} className="max-w-full">
-                <a
-                  href={`/interop/protocols/${slug}`}
-                  title={name}
-                  className="group flex min-w-0 items-center gap-2"
-                >
-                  <img src={iconUrl} alt="" className={HOME_ICON_CLASS} />
-                  <span
-                    className={cn(
-                      'truncate underline-offset-2 group-hover:underline',
-                      HOME_TEXT.row,
-                    )}
-                  >
-                    {name}
+      {/* The bottom pair hangs from one line, as the top pair does, so their
+          labels and first rows line up however long the lists. */}
+      <div className="absolute inset-x-0 bottom-0 flex items-start justify-between">
+        <div className={CORNER_CLASS}>
+          <Top
+            label="Top token"
+            href={stats.topToken && getInteropTokenUrl(stats.topToken)}
+            value={
+              stats.topToken && formatCurrency(stats.topToken.volume, 'usd')
+            }
+          >
+            {stats.topToken && (
+              <>
+                <img
+                  src={stats.topToken.iconUrl}
+                  alt=""
+                  className={HOME_ICON_CLASS}
+                />
+                <span className={cn('truncate', HOME_TEXT.row)}>
+                  {stats.topToken.symbol}
+                </span>
+              </>
+            )}
+          </Top>
+          {/* The busiest protocols' list, opposite, starts with it. */}
+          {protocols.length === 0 && (
+            <Top
+              label="Top protocol"
+              href={
+                stats.topProtocol &&
+                `/interop/protocols/${stats.topProtocol.slug}`
+              }
+              value={
+                stats.topProtocol &&
+                formatCurrency(stats.topProtocol.volume, 'usd')
+              }
+            >
+              {stats.topProtocol && (
+                <>
+                  <img
+                    src={stats.topProtocol.iconUrl}
+                    alt=""
+                    className={HOME_ICON_CLASS}
+                  />
+                  <span className={cn('truncate', HOME_TEXT.row)}>
+                    {stats.topProtocol.name}
                   </span>
-                  <span className={cn('shrink-0', HOME_TEXT.value)}>
-                    {formatCurrency(volume, 'usd')}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ol>
+                </>
+              )}
+            </Top>
+          )}
         </div>
-      )}
+        {protocols.length > 0 && (
+          <div
+            // As close to its list as the other corners' labels to their rows.
+            className={cn(
+              CORNER_CLASS,
+              'max-w-[220px] items-end gap-1.5 text-right',
+            )}
+          >
+            <span className={HOME_TEXT.meta}>Top protocols</span>
+            {/* Shared columns line the icons and names up like a table; the
+                figures stand clear of the longest name, as in the tables. */}
+            <ol className="grid max-w-full grid-cols-[auto_minmax(0,1fr)_auto] gap-x-2 gap-y-2 text-left">
+              {protocols.map(({ slug, name, iconUrl, volume }) => (
+                <li key={slug} className="col-span-3 grid grid-cols-subgrid">
+                  <a
+                    href={`/interop/protocols/${slug}`}
+                    title={name}
+                    className="group col-span-3 grid grid-cols-subgrid items-center"
+                  >
+                    <img src={iconUrl} alt="" className={HOME_ICON_CLASS} />
+                    <span
+                      className={cn(
+                        'truncate underline-offset-2 group-hover:underline',
+                        HOME_TEXT.row,
+                      )}
+                    >
+                      {name}
+                    </span>
+                    <span className={cn('pl-4 text-right', HOME_TEXT.value)}>
+                      {formatCurrency(volume, 'usd')}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
 
-const CORNER_CLASS =
-  'pointer-events-auto absolute flex max-w-[180px] flex-col gap-4'
+const CORNER_CLASS = 'pointer-events-auto flex max-w-[180px] flex-col gap-4'

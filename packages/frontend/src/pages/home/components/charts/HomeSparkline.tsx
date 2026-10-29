@@ -42,6 +42,11 @@ interface Props {
    * averages, so the line shows the trend the yearly change describes.
    */
   weeklyAverage?: boolean
+  /**
+   * Amounts per day (deposits, blob data) beside a yearly total: the high and
+   * low say "/day", so the chart's scale does not read as the figure's.
+   */
+  perDay?: boolean
   className?: string
 }
 
@@ -57,6 +62,7 @@ const FILL_HEIGHT_CLASS = cn(
   '[&>div>div:first-child]:h-full! [&>div>div:first-child]:min-h-0!',
   '[&_.recharts-wrapper]:aspect-auto! [&_.recharts-wrapper]:h-full! [&_.recharts-wrapper]:min-h-0!',
   '[&_.recharts-area-curve]:stroke-2!',
+  '[&_.recharts-surface]:overflow-visible!',
   // The chart is a tab stop (arrow keys walk the tooltip), but ChartContainer
   // hides every chart's outline; a sparkline shows it on keyboard focus.
   '[&_.recharts-surface:focus-visible]:outline-2! [&_.recharts-surface:focus-visible]:outline-solid! [&_.recharts-surface:focus-visible]:outline-offset-2!',
@@ -76,6 +82,7 @@ export function HomeSparkline({
   tooltipLabel,
   formatValue,
   weeklyAverage,
+  perDay,
   className,
 }: Props) {
   const data = useMemo(
@@ -109,11 +116,12 @@ export function HomeSparkline({
           <AreaChart
             responsive
             data={data}
-            // Room above and below the plot for the high and low labels, and
-            // on the right for the end dot, which sits on the last point.
+            // Room above and below the plot for the high and low labels. The
+            // plot runs to the right edge, like the figures and tables, and
+            // the end dot on its last point hangs into the card's padding.
             margin={{
               top: LABEL_HEIGHT,
-              right: 6,
+              right: 0,
               bottom: LABEL_HEIGHT,
               left: 0,
             }}
@@ -137,7 +145,7 @@ export function HomeSparkline({
                   zIndex={BEHIND_SERIES}
                   label={
                     <ExtremeLabel
-                      value={formatValue(range[key])}
+                      value={`${formatValue(range[key])}${perDay ? '/day' : ''}`}
                       extreme={key}
                     />
                   }

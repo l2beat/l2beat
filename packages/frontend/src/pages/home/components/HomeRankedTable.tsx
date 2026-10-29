@@ -39,6 +39,11 @@ export interface HomeRankedTableColumn<T> {
    * it, so the others close up to the table's right edge.
    */
   minTableWidth?: MinTableWidth
+  /**
+   * The cells are `HomeRankedValueWithChange`: the header sits over the
+   * value, and the change's period over the change.
+   */
+  withChange?: boolean
 }
 
 type MinTableWidth = 360 | 480 | 640
@@ -84,6 +89,7 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
       getGridColumns(columns, width),
     ]),
   ) as CSSProperties
+  const hasChange = columns.some((column) => column.withChange)
   return (
     // A container: in a narrow card the secondary columns give way, so names
     // keep their room; in a wide one the middle columns move in from the
@@ -106,6 +112,7 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
               )}
             >
               {column.header}
+              {column.withChange && <ChangePeriodHeader />}
             </span>
           ))}
         </div>
@@ -117,6 +124,7 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
               className={cn(
                 'col-span-full grid grid-cols-subgrid items-center',
                 HOME_ROW_CLASS,
+                hasChange && STACKED_CHANGE_ROW_CLASS,
               )}
             >
               <span
@@ -221,9 +229,29 @@ export function HomeRankedValue({
 }
 
 /**
+ * The changes' period, as the KPIs above give theirs ("1y"): over the change
+ * slot where the change sits beside its value, after the value's header where
+ * it goes under the value, and gone with the change in the narrowest tables.
+ */
+function ChangePeriodHeader() {
+  return (
+    <span className="@min-[400px]:ml-1.5 flex @max-[360px]:hidden @min-[400px]:min-w-11 @min-[400px]:justify-end">
+      <span className="@min-[400px]:hidden px-1" aria-hidden>
+        ·
+      </span>
+      7d
+    </span>
+  )
+}
+
+/** Taller rows where a change stacks under its value, so the pair clears the lines. */
+const STACKED_CHANGE_ROW_CLASS = '@min-[360px]:@max-[400px]:h-12'
+
+/**
  * A value with its 7-day change after it, in one column: the change in the
  * KPIs' small print, in a slot of its own width so the values stay aligned.
- * In a narrow table only the value shows.
+ * In a phone-wide table the change goes under the value, so names keep their
+ * room; in a narrower one only the value shows.
  */
 export function HomeRankedValueWithChange({
   value,
@@ -233,9 +261,9 @@ export function HomeRankedValueWithChange({
   change: number | undefined
 }) {
   return (
-    <span className="flex items-baseline gap-1.5">
+    <span className="flex @max-[400px]:flex-col @max-[400px]:items-end items-baseline @max-[400px]:gap-0.5 gap-1.5">
       <HomeRankedValue value={value} />
-      <span className="flex @max-[360px]:hidden min-w-13 justify-end">
+      <span className="flex @max-[360px]:hidden @min-[400px]:min-w-11 justify-end">
         {change !== undefined && (
           <Tooltip>
             <TooltipTrigger className="flex">

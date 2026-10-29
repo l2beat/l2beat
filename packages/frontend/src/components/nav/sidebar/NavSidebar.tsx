@@ -149,7 +149,7 @@ function NavGroupItem({
           >
             {!small && group.icon}
             <span className="whitespace-nowrap">{group.title}</span>
-            <SoonBadge />
+            <SoonBadge className={NAV_SOON_BADGE_CLASS} />
           </div>
         </SidebarGroupItem>
       )}
@@ -235,7 +235,7 @@ function NavCollapsibleItem({
                       className="text-secondary hover:bg-transparent hover:text-secondary aria-disabled:opacity-100"
                     >
                       <span className="leading-tight">{item.title}</span>
-                      <SoonBadge />
+                      <SoonBadge className={NAV_SOON_BADGE_CLASS} />
                     </SidebarGroupSubButton>
                   ) : (
                     <SidebarGroupSubButton
@@ -277,3 +277,6 @@ function NavCollapsibleItem({
     </Collapsible>
   )
 }
+
+/** The badge's own fill is the sidebar's grey in the light theme. */
+const NAV_SOON_BADGE_CLASS = 'bg-surface-primary dark:bg-surface-secondary'

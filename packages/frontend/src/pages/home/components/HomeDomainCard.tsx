@@ -41,7 +41,8 @@ export function HomeDomainCard({
 /**
  * Two KPIs side by side, set apart by space alone; one under the other where
  * the side-by-side tiles would be too narrow (see `kpi-rows`). Stacked, the
- * two share their columns, so both charts start where the wider figure ends.
+ * two share their columns, so both charts start where the wider figure ends,
+ * and at least 6rem in, so they line up across the cards too.
  */
 export function HomeKpiRow({
   className,
@@ -52,7 +53,7 @@ export function HomeKpiRow({
 }) {
   return (
     <div className={cn('@container/kpis min-w-0', className)}>
-      <div className="grid grid-cols-2 kpi-rows:grid-cols-[auto_minmax(0,1fr)] gap-6 lg:gap-x-8">
+      <div className="grid grid-cols-2 kpi-rows:grid-cols-[minmax(6rem,auto)_minmax(0,1fr)] gap-6 lg:gap-x-8">
         {children}
       </div>
     </div>
