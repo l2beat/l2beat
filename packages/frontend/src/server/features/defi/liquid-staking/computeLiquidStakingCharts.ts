@@ -153,8 +153,8 @@ class ProjectSeries {
 }
 
 /**
- * For each hour that added requests, how long until its last request was
- * finalized. Both counters only grow, so one pass finds every answer.
+ * Split each hour's requests by when they finalized. Both counters only
+ * grow, so one pass finds every completed portion's wait.
  */
 export function getQueueWaits(
   snapshots: Pick<
@@ -168,25 +168,26 @@ export function getQueueWaits(
     const previous = snapshots[i - 1]?.lastRequestId
     const current = snapshots[i]
     if (previous == null || current?.lastRequestId == null) continue
-    const requests = current.lastRequestId - previous
-    if (requests <= 0) continue
-
     finalizedAt = Math.max(finalizedAt, i)
-    while (
-      finalizedAt < snapshots.length &&
-      (snapshots[finalizedAt]?.lastFinalizedRequestId ?? -1) <
-        current.lastRequestId
-    ) {
-      finalizedAt++
+    let requestId = previous
+    while (requestId < current.lastRequestId) {
+      const finalized = snapshots[finalizedAt]
+      // Requests still queued have no wait yet; later hours queue behind them.
+      if (finalized === undefined) return waits
+      const last = Math.min(
+        finalized.lastFinalizedRequestId ?? -1,
+        current.lastRequestId,
+      )
+      if (last > requestId) {
+        waits.push({
+          timestamp: current.timestamp,
+          requests: last - requestId,
+          hours: (finalized.timestamp - current.timestamp) / UnixTime.HOUR,
+        })
+        requestId = last
+      }
+      if (requestId < current.lastRequestId) finalizedAt++
     }
-    const finalized = snapshots[finalizedAt]
-    // Requests still queued have no wait yet; later hours queue behind them.
-    if (finalized === undefined) break
-    waits.push({
-      timestamp: current.timestamp,
-      requests,
-      hours: (finalized.timestamp - current.timestamp) / UnixTime.HOUR,
-    })
   }
   return waits
 }

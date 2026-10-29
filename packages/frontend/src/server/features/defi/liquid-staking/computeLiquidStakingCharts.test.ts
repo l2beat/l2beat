@@ -60,6 +60,40 @@ describe(computeLiquidStakingCharts.name, () => {
     )
   })
 
+  it('weights requests from one hour by their separate finalizations', () => {
+    const snapshots = [
+      snapshot('etherfi', DAY_31, 1, {
+        lastRequestId: 10,
+        lastFinalizedRequestId: 10,
+      }),
+      snapshot('etherfi', DAY_31 + HOUR, 1, {
+        lastRequestId: 12,
+        lastFinalizedRequestId: 10,
+      }),
+      snapshot('etherfi', DAY_31 + 2 * HOUR, 1, {
+        lastRequestId: 12,
+        lastFinalizedRequestId: 11,
+      }),
+      snapshot('etherfi', DAY_31 + DAY + HOUR, 1, {
+        lastRequestId: 12,
+        lastFinalizedRequestId: 12,
+      }),
+    ]
+    // The two requests waited 1 and 24 hours.
+    const completed = compute([project('etherfi')], snapshots)
+    expect(present(completed.costOfExit[0]?.projects.etherfi)).toBeCloseTo(
+      (1 + 24) / 2 / 24,
+      1e-6,
+    )
+
+    // The first request counts even while the second is still queued.
+    const partial = compute([project('etherfi')], snapshots.slice(0, -1))
+    expect(present(partial.costOfExit[0]?.projects.etherfi)).toBeCloseTo(
+      1 / 24,
+      1e-6,
+    )
+  })
+
   it('takes the market when it is cheaper than the queue', () => {
     const prices = new Map([
       ['ethereum', dailyPrices(2000)],
