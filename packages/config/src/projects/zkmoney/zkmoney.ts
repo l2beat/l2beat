@@ -283,16 +283,17 @@ const privacyTokens: ProjectPrivacyToken[] = [
 export const zkmoney: BaseProject = {
   id: ProjectId('zkmoney'),
   slug: 'zkmoney',
-  name: 'zk.money',
+  name: 'zk.money v5',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-09-29')),
+  archivedAt: UnixTime(1793003519), // 2026-10-26T08:31:59Z, both portals frozen
   discoveryInfo: getDiscoveryInfo([discovery]),
   // The project starts with the portal. CertManager and NitroValidator were
   // deployed 37 days earlier.
   ossificationHistory: discovery.getOssificationHistory(PORTAL_SINCE),
   statuses: {
     yellowWarning:
-      'Both portals are frozen since Aztec made its v6 rollup canonical, and deposits revert. Balances leave only through refunds. The released wallet refunds into a zk.money deployment on Aztec v6.',
+      'Both portals are frozen since Aztec made its v6 rollup canonical, and deposits revert. Balances leave only through refunds. The released wallet refunds them into zk.money on Aztec v6 or to Ethereum.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -300,7 +301,7 @@ export const zkmoney: BaseProject = {
   },
   display: {
     description:
-      'A shielded ledger on Aztec Network for DAI payments and sUSDS savings, with funds escrowed on Ethereum.',
+      'A shielded ledger on Aztec v5 for DAI payments and sUSDS savings, frozen since Aztec made v6 canonical.',
     detailedDescription: readProjectMarkdown(
       'zkmoney',
       'detailedDescription',
