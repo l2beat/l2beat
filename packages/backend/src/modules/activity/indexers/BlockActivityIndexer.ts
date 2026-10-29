@@ -2,7 +2,6 @@ import type { Logger } from '@l2beat/backend-tools'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { HOURLY_ACTIVITY_DAYS } from '../utils/hourlyActivity'
 import { continueMinute, getDayPeaks, type MinuteCarry } from '../utils/peaks'
 import { sumPerPeriod } from '../utils/sumPerPeriod'
 import type { BlockActivityIndexerDeps } from './types'
@@ -49,9 +48,6 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
       from,
     )
     const days = sumPerPeriod(blocks, 'day')
-    const hourlyCutoff =
-      UnixTime.toStartOf(latestTimestamp, 'hour') -
-      HOURLY_ACTIVITY_DAYS * UnixTime.DAY
 
     this.logger.info('Saving records', { count: days.length })
 
@@ -72,10 +68,6 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
           ...day,
           ...getDayPeaks(day.timestamp, hours, minutes),
         })),
-      )
-      await this.$.db.hourlyActivity.deleteByProjectIdUntil(
-        this.$.projectId,
-        hourlyCutoff,
       )
       await this.$.db.syncMetadata.updateSyncedUntil(
         'activity',

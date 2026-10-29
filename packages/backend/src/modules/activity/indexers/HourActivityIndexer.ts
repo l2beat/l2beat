@@ -4,7 +4,6 @@ import { Indexer } from '@l2beat/uif'
 import range from 'lodash/range'
 import sum from 'lodash/sum'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { HOURLY_ACTIVITY_DAYS } from '../utils/hourlyActivity'
 import { getDayHourPeak } from '../utils/peaks'
 import type { HourActivityIndexerDeps } from './types'
 
@@ -66,8 +65,6 @@ export class HourActivityIndexer extends ManagedChildIndexer {
         ...getDayHourPeak(timestamp, inDay),
       }
     })
-    const hourlyCutoff = end - HOURLY_ACTIVITY_DAYS * UnixTime.DAY
-
     await this.$.db.transaction(async () => {
       await this.$.db.activity.upsertMany(days)
       // addMany adds to stored hours, so the hours synced again go first
@@ -75,13 +72,7 @@ export class HourActivityIndexer extends ManagedChildIndexer {
         this.$.projectId,
         start,
       )
-      await this.$.db.hourlyActivity.addMany(
-        hours.filter((hour) => hour.timestamp >= hourlyCutoff),
-      )
-      await this.$.db.hourlyActivity.deleteByProjectIdUntil(
-        this.$.projectId,
-        hourlyCutoff,
-      )
+      await this.$.db.hourlyActivity.addMany(hours)
       await this.$.db.syncMetadata.updateSyncedUntil(
         'activity',
         [this.$.projectId],

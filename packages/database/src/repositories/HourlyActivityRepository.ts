@@ -82,18 +82,6 @@ export class HourlyActivityRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async deleteByProjectIdUntil(
-    projectId: ProjectId,
-    toExclusive: UnixTime,
-  ): Promise<number> {
-    const result = await this.db
-      .deleteFrom('HourlyActivity')
-      .where('projectId', '=', projectId.toString())
-      .where('timestamp', '<', UnixTime.toDate(toExclusive))
-      .executeTakeFirst()
-    return Number(result.numDeletedRows)
-  }
-
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('HourlyActivity').executeTakeFirst()
     return Number(result.numDeletedRows)

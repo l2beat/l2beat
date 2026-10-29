@@ -41,7 +41,7 @@ model Activity {
   @@id([projectId, timestamp])
 }
 
-/// Activity per hour of block and slot chains, kept for the last two weeks.
+/// Activity per hour of block and slot chains, and of Lighter.
 /// The busiest hour and minute of each day stay on Activity
 model HourlyActivity {
   projectId String   @db.VarChar(255)

@@ -77,7 +77,7 @@ describeDatabase(HourActivityIndexer.name, (db) => {
     expect(await getSyncedUntil()).toEqual(TODAY + 3 * UnixTime.HOUR)
   })
 
-  it('keeps two weeks of hours, and every day', async () => {
+  it('keeps every hour and every day', async () => {
     const indexer = createIndexer(
       db,
       mockFn().resolvesTo([...HISTORY, stat(TODAY, 4, 40)]),
@@ -98,7 +98,7 @@ describeDatabase(HourActivityIndexer.name, (db) => {
       TODAY,
     ])
     expect(hours.map((hour) => hour.count)).toEqual([
-      ...HISTORY.slice(1).map((hour) => hour.count),
+      ...HISTORY.map((hour) => hour.count),
       4,
     ])
   })

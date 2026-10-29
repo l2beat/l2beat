@@ -87,22 +87,6 @@ describe(BlockActivityIndexer.name, () => {
       expect(newSafeHeight).toEqual(3)
     })
 
-    it('keeps two weeks of hours back from the newest block', async () => {
-      const hourlyActivityRepository = mockHourlyActivityRepository()
-      const indexer = createIndexer({
-        blockSource: mockBlockSource([
-          block(START + 30 * UnixTime.DAY + 90, 1, 1, 1),
-        ]),
-        db: mockDatabaseWith({ hourlyActivity: hourlyActivityRepository }),
-      })
-
-      await indexer.update(1, 1)
-
-      expect(
-        hourlyActivityRepository.deleteByProjectIdUntil,
-      ).toHaveBeenOnlyCalledWith(ProjectId('a'), START + 16 * UnixTime.DAY)
-    })
-
     it('continues the peak of a minute split between consecutive batches', async () => {
       const activityRepository = mockActivityRepository()
       const indexer = createIndexer({
@@ -357,7 +341,6 @@ function mockActivityRepository() {
 function mockHourlyActivityRepository() {
   return mockObject<Database['hourlyActivity']>({
     addMany: mockFn(async (records: HourlyActivityRecord[]) => records),
-    deleteByProjectIdUntil: mockFn().resolvesTo(0),
     deleteByProjectIdFrom: mockFn().resolvesTo(0),
   })
 }

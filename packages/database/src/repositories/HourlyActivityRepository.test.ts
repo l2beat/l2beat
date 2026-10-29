@@ -97,31 +97,6 @@ describeDatabase(HourlyActivityRepository.name, (db) => {
     },
   )
 
-  describe(
-    HourlyActivityRepository.prototype.deleteByProjectIdUntil.name,
-    () => {
-      it("deletes the project's hours before the timestamp", async () => {
-        await repository.addMany([
-          record('a', START, 1, 1),
-          record('a', START + 1 * HOUR, 2, 2),
-          record('a', START + 2 * HOUR, 3, 3),
-          record('b', START, 4, 4),
-        ])
-
-        const deleted = await repository.deleteByProjectIdUntil(
-          ProjectId('a'),
-          START + 2 * HOUR,
-        )
-
-        expect(deleted).toEqual(2)
-        expect(await hoursOf('a')).toEqual([
-          record('a', START + 2 * HOUR, 3, 3),
-        ])
-        expect(await hoursOf('b')).toEqual([record('b', START, 4, 4)])
-      })
-    },
-  )
-
   function hoursOf(projectId: string) {
     return repository.getByProjectAndTimeRange(ProjectId(projectId), [
       START,
