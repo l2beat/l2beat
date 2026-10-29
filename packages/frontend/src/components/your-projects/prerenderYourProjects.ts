@@ -60,7 +60,10 @@ export function prerenderYourProjects(
         )
         list.append(row)
       }
-      if (pinned.length > 0) group.querySelector('p')?.remove()
+      // The pinning hint stays gone after a first pin, even once all are unpinned.
+      if (pinned.length > 0 || stored?.hasPinned === true) {
+        group.querySelector('p')?.remove()
+      }
       root.append(group)
     }
   } catch {

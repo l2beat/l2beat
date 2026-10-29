@@ -14,13 +14,15 @@ export interface SavedProject {
 export interface YourProjects {
   pinned: SavedProject[]
   recent: SavedProject[]
+  /** Stays true after the last unpin, so the pinning hint doesn't come back. */
+  hasPinned: boolean
 }
 
 export const STORAGE_KEY = 'l2beat-your-projects'
 const CHANGE_EVENT = 'l2beat-your-projects-change'
 /** Unpinned ones; pinned ones are kept on top of these, so they can't crowd them out. */
 const MAX_RECENT = 8
-const EMPTY: YourProjects = { pinned: [], recent: [] }
+const EMPTY: YourProjects = { pinned: [], recent: [], hasPinned: false }
 
 let cachedRaw: string | null | undefined
 let cached: YourProjects = EMPTY
@@ -49,8 +51,13 @@ function parseYourProjects(raw: string | null): YourProjects {
   try {
     const value: unknown = JSON.parse(raw)
     if (typeof value !== 'object' || value === null) return EMPTY
-    const { pinned, recent } = value as Record<string, unknown>
-    return { pinned: toProjects(pinned), recent: toProjects(recent) }
+    const { pinned, recent, hasPinned } = value as Record<string, unknown>
+    const pinnedProjects = toProjects(pinned)
+    return {
+      pinned: pinnedProjects,
+      recent: toProjects(recent),
+      hasPinned: hasPinned === true || pinnedProjects.length > 0,
+    }
   } catch {
     return EMPTY
   }
@@ -70,7 +77,15 @@ function toProjects(value: unknown): SavedProject[] {
 
 function write(update: (current: YourProjects) => YourProjects) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(update(read())))
+    const current = read()
+    const next = update(current)
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        ...next,
+        hasPinned: current.hasPinned || next.pinned.length > 0,
+      }),
+    )
   } catch {
     return
   }
@@ -111,6 +126,7 @@ export function withVisit(
     ...current.recent.filter((p) => p.href !== project.href),
   ].filter((p) => pinnedHrefs.has(p.href) || unpinnedLeft-- > 0)
   return {
+    ...current,
     pinned: current.pinned.map((p) => (p.href === project.href ? project : p)),
     recent,
   }

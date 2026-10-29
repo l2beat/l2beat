@@ -62,7 +62,7 @@ export function NavYourProjects({ onNavigate }: { onNavigate: () => void }) {
 }
 
 function YourProjectsLists({ onNavigate }: { onNavigate: () => void }) {
-  const { pinned, recent } = useYourProjects()
+  const { pinned, recent, hasPinned } = useYourProjects()
   const pathname = usePathname()
 
   const pinnedHrefs = new Set(pinned.map((project) => project.href))
@@ -88,10 +88,7 @@ function YourProjectsLists({ onNavigate }: { onNavigate: () => void }) {
         </YourProjectsGroup>
       )}
       {recentOnly.length > 0 && (
-        <YourProjectsGroup
-          label="Recently viewed"
-          withPinningHint={pinned.length === 0}
-        >
+        <YourProjectsGroup label="Recently viewed" withPinningHint={!hasPinned}>
           {recentOnly.map((project) => row(project))}
         </YourProjectsGroup>
       )}
