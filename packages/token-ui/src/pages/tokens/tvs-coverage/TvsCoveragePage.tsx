@@ -270,11 +270,11 @@ function TvsGaps({
   const selectedRows = useMemo(
     () =>
       sortRows(
-        snapshot.rows.filter((row) => selectedIds.has(rowId(row))),
+        allRows.filter((row) => selectedIds.has(rowId(row))),
         sort,
         names,
       ),
-    [names, selectedIds, snapshot, sort],
+    [allRows, names, selectedIds, sort],
   )
 
   const showMore = useCallback(
