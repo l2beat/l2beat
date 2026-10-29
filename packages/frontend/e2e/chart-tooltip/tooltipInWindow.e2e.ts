@@ -100,12 +100,14 @@ test('a tapped chart tooltip stays inside its chart on a phone', async ({
   expect(lastRow!.y + lastRow!.height).toBeLessThanOrEqual(bottom)
 
   // Another point opens at its largest sets, not where the last one was left.
-  const title = await tooltip.innerText()
+  // textContent, which is what toHaveText compares, so the wait below
+  // really waits for the new point.
+  const title = await tooltip.textContent()
   await page.touchscreen.tap(
     chartBox!.x + chartBox!.width * 0.95,
     chartBox!.y + chartBox!.height / 2,
   )
-  await expect(tooltip).not.toHaveText(title)
+  await expect(tooltip).not.toHaveText(title ?? '')
   expect(await scroller.evaluate((e) => e.scrollTop)).toBe(0)
   await context.close()
 })
