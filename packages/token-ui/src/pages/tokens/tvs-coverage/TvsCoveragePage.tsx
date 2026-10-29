@@ -185,7 +185,8 @@ function TvsGaps({
             {rows.length.toLocaleString()} rows ·{' '}
             {formatCurrency(totalValue, 'usd')} est. value ·{' '}
             {snapshot.window.days} days of interop data until{' '}
-            {formatSnapshotDay(snapshot.window.to)} · built{' '}
+            {formatSnapshotDay(snapshot.window.to)} · chain rows with at least{' '}
+            {formatCurrency(snapshot.minChainVolumeUsd, 'usd')} volume · built{' '}
             {formatAge(snapshot.generatedAt, now)}
           </CardDescription>
           {snapshot.warnings.length > 0 && (
