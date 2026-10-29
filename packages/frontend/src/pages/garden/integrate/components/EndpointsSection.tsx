@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { CustomLinkIcon } from '~/icons/Outlink'
 import { SectionHeading } from '../../components/SectionHeading'
 import { SproutIcon } from '../../components/SproutIcon'
 import type { CropsApiEndpoint } from '../content'
@@ -28,6 +29,7 @@ export function EndpointsSection({
     <section className="mt-6 md:mt-8">
       <SectionHeading
         title="Endpoints"
+        size="md"
         description={`Static JSON files on ${CROPS_API_URL}, regenerated on every change to the reviews.`}
       />
       <ApiNotes />
@@ -46,12 +48,12 @@ export function EndpointsSection({
 
 function ApiNotes() {
   return (
-    <PrimaryCard className="max-md:mx-4 md:p-8">
-      <ul className="flex flex-col gap-3">
+    <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
+      <ul className="flex max-w-2xl flex-col gap-2.5">
         {API_NOTES.map((note) => (
           <li
             key={note}
-            className="flex gap-3 text-paragraph-14 text-secondary md:text-paragraph-16"
+            className="flex gap-2.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-16"
           >
             <SproutIcon className="mt-1 size-4 shrink-0 text-garden-accent" />
             <span>
@@ -60,7 +62,7 @@ function ApiNotes() {
           </li>
         ))}
       </ul>
-      <p className="mt-4 text-paragraph-14 text-secondary md:text-paragraph-16">
+      <p className="mt-4 max-w-2xl text-pretty text-paragraph-14 text-secondary md:text-paragraph-16">
         Browse the{' '}
         <ExternalLink href={CROPS_API_DOCS_URL}>interactive docs</ExternalLink>{' '}
         or read the{' '}
@@ -80,11 +82,12 @@ function ExternalLink({
   return (
     <a
       href={href}
-      className="underline underline-offset-2"
+      className="font-medium text-link"
       target="_blank"
       rel="noreferrer"
     >
       {children}
+      <CustomLinkIcon className="ml-1 inline-block fill-current align-baseline" />
     </a>
   )
 }
@@ -97,14 +100,19 @@ function EndpointCard({
   example: IntegrateExample
 }) {
   return (
-    <PrimaryCard className="max-md:mx-4 md:p-8">
-      <Code>{endpoint.path}</Code>
-      <h3 className="mt-3 font-bold text-heading-20">{endpoint.summary}</h3>
-      <p className="mt-1 max-w-3xl text-paragraph-14 text-secondary md:text-paragraph-16">
+    <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
+      {/* Out of a line box, so the card opens on the chip's edge like the other cards. */}
+      <div className="flex">
+        <Code>{endpoint.path}</Code>
+      </div>
+      <h3 className="mt-3 font-bold text-heading-18 md:text-heading-20">
+        {endpoint.summary}
+      </h3>
+      <p className="mt-1 max-w-2xl text-pretty text-paragraph-14 text-secondary md:text-paragraph-16">
         <Markup text={endpoint.description} />
       </p>
       {endpoint.params.length > 0 && (
-        <dl className="mt-4 flex flex-col gap-2">
+        <dl className="mt-4 flex flex-col gap-3">
           {endpoint.params.map((param) => (
             <Term key={param.name} name={param.name}>
               {param.description}
@@ -129,10 +137,10 @@ function EndpointCard({
 function Term({ name, children }: { name: string; children: ReactNode }) {
   return (
     <div>
-      <dt className="font-semibold text-paragraph-14">
+      <dt className="text-paragraph-14">
         <Code>{name}</Code>
       </dt>
-      <dd className="text-paragraph-14 text-secondary">{children}</dd>
+      <dd className="mt-1 text-paragraph-14 text-secondary">{children}</dd>
     </div>
   )
 }

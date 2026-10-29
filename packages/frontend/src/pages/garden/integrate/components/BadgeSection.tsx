@@ -29,14 +29,14 @@ const KINDS: {
     kind: 'badge',
     label: 'Badge',
     hint: 'About pages, footers, docs',
-    frame: 'h-[220px]',
+    frame: 'h-[160px] sm:h-[220px]',
     width: 180,
   },
   {
     kind: 'tag',
     label: 'Tag',
     hint: 'Headers, app UIs, next to a connect button',
-    frame: 'h-[120px]',
+    frame: 'h-[88px] sm:h-[120px]',
     width: 220,
   },
   {
@@ -48,11 +48,27 @@ const KINDS: {
   },
 ]
 
-const STYLES: { style: CropsBadgeStyle; label: string; dark: boolean }[] = [
+const STYLES: {
+  style: CropsBadgeStyle
+  label: string
+  /** For the narrow tiles of a phone, where the full label is cut. */
+  shortLabel?: string
+  dark: boolean
+}[] = [
   { style: 'light', label: 'Light', dark: false },
   { style: 'dark', label: 'Dark', dark: true },
-  { style: 'mono-black', label: 'Mono black', dark: false },
-  { style: 'mono-white', label: 'Mono white', dark: true },
+  {
+    style: 'mono-black',
+    label: 'Mono black',
+    shortLabel: 'Black',
+    dark: false,
+  },
+  {
+    style: 'mono-white',
+    label: 'Mono white',
+    shortLabel: 'White',
+    dark: true,
+  },
 ]
 
 const LINK_TITLE = 'Reviewed under the CROPS framework by L2BEAT'
@@ -68,9 +84,10 @@ export function BadgeSection({
     <section className="mt-6 md:mt-8">
       <SectionHeading
         title="Wear the badge"
+        size="md"
         description="If your project is in the attested set, the badge is yours to use. Download the SVG, or copy it as markup that links to the garden."
       />
-      <PrimaryCard className="max-md:mx-4 md:p-8">
+      <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
         <div className="flex flex-col divide-y divide-divider">
           {KINDS.map((kind) => (
             <div key={kind.kind} className="py-6 first:pt-0">
@@ -78,11 +95,9 @@ export function BadgeSection({
                 <h3 className="font-bold text-heading-16 md:text-heading-18">
                   {kind.label}
                 </h3>
-                <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
-                  {kind.hint}
-                </p>
+                <p className="text-paragraph-14 text-secondary">{kind.hint}</p>
               </div>
-              <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+              <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
                 {STYLES.map((style) => {
                   const asset = badges.find(
                     (b) => b.kind === kind.kind && b.style === style.style,
@@ -92,6 +107,7 @@ export function BadgeSection({
                       key={style.style}
                       asset={asset}
                       label={style.label}
+                      shortLabel={style.shortLabel}
                       dark={style.dark}
                       frame={kind.frame}
                       width={kind.width}
@@ -104,26 +120,15 @@ export function BadgeSection({
           ))}
         </div>
 
-        <div className="mt-2 border-divider border-t pt-6">
-          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-            <h3 className="font-bold text-heading-16 md:text-heading-18">
-              Using it fairly
-            </h3>
-            <a
-              href={CROPS_API_DOCS_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="inline-flex items-baseline gap-1 font-medium text-link text-paragraph-14 md:text-paragraph-15"
-            >
-              Check your status in the API docs
-              <CustomLinkIcon className="fill-current" />
-            </a>
-          </div>
-          <ul className="mt-4 flex flex-col gap-3">
+        <div className="border-divider border-t pt-6">
+          <h3 className="font-bold text-heading-16 md:text-heading-18">
+            Using it fairly
+          </h3>
+          <ul className="mt-4 flex max-w-2xl flex-col gap-2.5">
             {BADGE_RULES.map((rule) => (
               <li
                 key={rule}
-                className="flex gap-3 text-paragraph-14 text-secondary md:text-paragraph-16"
+                className="flex gap-2.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-16"
               >
                 <SproutIcon className="mt-1 size-4 shrink-0 text-garden-accent" />
                 <span>
@@ -132,6 +137,17 @@ export function BadgeSection({
               </li>
             ))}
           </ul>
+          <p className="mt-4 text-paragraph-14 md:text-paragraph-16">
+            <a
+              href={CROPS_API_DOCS_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="font-medium text-link"
+            >
+              Check your status in the API docs
+              <CustomLinkIcon className="ml-1 inline-block fill-current align-baseline" />
+            </a>
+          </p>
         </div>
       </PrimaryCard>
     </section>
@@ -141,6 +157,7 @@ export function BadgeSection({
 function BadgeTile({
   asset,
   label,
+  shortLabel,
   dark,
   frame,
   width,
@@ -148,6 +165,7 @@ function BadgeTile({
 }: {
   asset: CropsBadgeAsset
   label: string
+  shortLabel?: string
   dark: boolean
   frame: string
   width: number
@@ -169,17 +187,18 @@ function BadgeTile({
           style={{ width }}
         />
       </div>
-      <div className="flex items-center justify-between gap-2 border-divider border-t bg-surface-secondary py-1.5 pr-1.5 pl-3">
-        <span className="truncate font-semibold text-secondary text-subtitle-12 uppercase tracking-wider">
-          {label}
+      <div className="flex items-center justify-between gap-2 border-divider border-t bg-surface-secondary py-1.5 pr-1.5 pl-2.5 lg:pl-3">
+        <span className="truncate font-semibold text-secondary text-subtitle-12 uppercase tracking-wide lg:tracking-wider">
+          <span className={cn(shortLabel && 'max-sm:hidden')}>{label}</span>
+          {shortLabel && <span className="sm:hidden">{shortLabel}</span>}
         </span>
-        <div className="flex shrink-0 items-center">
+        <div className="flex shrink-0 items-center gap-0.5 lg:gap-0">
           <a
             href={asset.url}
             download={asset.fileName}
             title="Download SVG"
             aria-label={`Download ${asset.fileName}`}
-            className="rounded-md p-1.5 hover:bg-surface-tertiary"
+            className="rounded-md p-1 hover:bg-surface-tertiary lg:p-1.5"
           >
             <DownloadArrowIcon className="size-4 fill-current" />
           </a>
@@ -233,7 +252,7 @@ function CopyMarkupButton({
       onClick={() => void onClick()}
       title="Copy SVG markup"
       aria-label="Copy SVG markup"
-      className="rounded-md p-1.5 hover:bg-surface-tertiary"
+      className="rounded-md p-1 hover:bg-surface-tertiary lg:p-1.5"
     >
       {copied ? (
         <SatisfiedIcon className="size-4 fill-green-700 dark:fill-green-450" />
