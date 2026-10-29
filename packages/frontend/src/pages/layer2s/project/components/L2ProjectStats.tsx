@@ -60,7 +60,7 @@ export function ProjectL2Stats({ project, className }: Props) {
             )}
             <ValueWithPercentageChange
               containerClassName="flex-nowrap"
-              className="!text-base !font-medium !leading-[100%] text-nowrap"
+              className="!text-base !leading-[100%] text-nowrap"
               changeClassName="text-label-value-14 font-bold"
               change={project.header.tvs.breakdown.totalChange}
               changePeriod={project.header.tvs.breakdown.totalChangePeriod}
@@ -89,7 +89,7 @@ export function ProjectL2Stats({ project, className }: Props) {
             containerClassName="flex-nowrap"
             change={project.header.activity.uopsWeeklyChange}
             changePeriod={project.header.activity.uopsWeeklyChangePeriod}
-            className="text-nowrap font-medium! text-base! leading-[100%]!"
+            className="text-nowrap text-base! leading-[100%]!"
             changeClassName="text-label-value-14 font-bold"
           >
             {formatActivityCount(project.header.activity.lastDayUops)}
