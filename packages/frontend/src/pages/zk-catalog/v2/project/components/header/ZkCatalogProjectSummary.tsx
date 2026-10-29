@@ -441,7 +441,7 @@ function TvsStat({
         value ? (
           <span className="mb-0.5 flex items-center gap-2">
             <ValueWithPercentageChange
-              className="!text-base !font-medium !leading-[100%] text-nowrap"
+              className="!text-base !leading-[100%] text-nowrap"
               changeClassName="text-label-value-14 font-bold"
               change={change}
               changePeriod={changePeriod}

@@ -635,6 +635,41 @@ describe('getProjects', () => {
       }
       expect(problems).toEqual([])
     })
+
+    // The page prints these dates and hashes as they are.
+    it('every reference app has valid dates and a full commit hash', () => {
+      // Round-trip, since Date.parse rolls 2026-02-30 over to March.
+      const isDay = (value: string) => {
+        const time = Date.parse(value)
+        return (
+          !Number.isNaN(time) &&
+          new Date(time).toISOString().slice(0, 10) === value
+        )
+      }
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const app = privacyInfo.referenceApp
+        if (!app) continue
+        if (!isDay(app.since)) {
+          problems.push(`${project.id}: since ${app.since}`)
+        }
+        if (app.source && !/^[0-9a-f]{40}$/.test(app.source.commit)) {
+          problems.push(`${project.id}: commit ${app.source.commit}`)
+        }
+        if (app.checked !== undefined && !isDay(app.checked)) {
+          problems.push(`${project.id}: checked ${app.checked}`)
+        }
+        if (app.source && (app.checked !== undefined || app.build)) {
+          problems.push(`${project.id}: an open app pins its commit only`)
+        }
+        for (const checkedApp of app.checkedApps ?? []) {
+          if (checkedApp.checked !== undefined && !isDay(checkedApp.checked)) {
+            problems.push(`${project.id}: ${checkedApp.name} checked`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
   })
 
   describe('contracts', () => {

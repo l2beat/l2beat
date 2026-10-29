@@ -12,7 +12,15 @@ export function ScrollWithGradient({
     const isScrolledToTop = scrollTop === 0
     const isScrolledToBottom =
       Math.round(scrollTop + clientHeight) >= scrollHeight
-    if (isScrolledToTop && isScrolledToBottom) return
+    if (isScrolledToTop && isScrolledToBottom) {
+      // Content that shrank to fit must not keep a fade over its last rows.
+      node.classList.remove(
+        'fade-out-vertical-12',
+        'fade-out-to-bottom-12',
+        'fade-out-to-top-12',
+      )
+      return
+    }
 
     if (!isScrolledToTop && !isScrolledToBottom) {
       node.classList.add('fade-out-vertical-12')

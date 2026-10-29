@@ -1,9 +1,13 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type {
   AbstractTokenRef,
+  IngestionOutcome,
   IngestionOutcomeView,
   IngestionTraceView,
 } from '@l2beat/token-backend'
+import { useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
+import { useTRPC } from '~/react-query/trpc'
 import { diff } from '~/utils/getDiff'
 import { Badge } from './core/Badge'
 import { Button } from './core/Button'
@@ -25,6 +29,51 @@ export interface IngestionPreviewState {
   trace: IngestionTraceView | undefined
   isLoading: boolean
   error: string | undefined
+}
+
+/** Runs the dry-run `preview` for one queue address and holds its result
+ * for `IngestionPreviewDialog`. */
+export function useIngestionPreview() {
+  const trpc = useTRPC()
+  const [state, setState] = useState<IngestionPreviewState | undefined>()
+  const previewMutation = useMutation(
+    trpc.tokenIngestionQueue.preview.mutationOptions({
+      // A response for an address the dialog no longer shows is dropped, so a
+      // slow earlier preview cannot overwrite a newer one.
+      onSuccess: (trace, entry) => {
+        setState((prev) =>
+          isFor(prev, entry) ? { ...prev, trace, isLoading: false } : prev,
+        )
+      },
+      onError: (error, entry) => {
+        setState((prev) =>
+          isFor(prev, entry)
+            ? { ...prev, error: error.message, isLoading: false }
+            : prev,
+        )
+      },
+    }),
+  )
+
+  function start(entry: { chain: string; address: string }) {
+    setState({
+      chain: entry.chain,
+      address: entry.address,
+      trace: undefined,
+      isLoading: true,
+      error: undefined,
+    })
+    previewMutation.mutate({ chain: entry.chain, address: entry.address })
+  }
+
+  return { state, start, close: () => setState(undefined) }
+}
+
+function isFor(
+  state: IngestionPreviewState | undefined,
+  entry: { chain: string; address: string },
+): state is IngestionPreviewState {
+  return state?.chain === entry.chain && state.address === entry.address
 }
 
 export function IngestionPreviewDialog({
@@ -157,5 +206,60 @@ function OutcomeView({ outcome }: { outcome: IngestionOutcomeView }) {
       )
     default:
       assertUnreachable(outcome)
+  }
+}
+
+/** What processing the entry would do now, as the queue's "Will do" column
+ * shows it. */
+export function PredictedOutcome({ outcome }: { outcome: IngestionOutcome }) {
+  switch (outcome.kind) {
+    case 'skip':
+      return (
+        <span>
+          <Badge variant="outline">Skip</Badge>
+          <span className="ml-2 text-muted-foreground text-xs">
+            {outcome.reason}
+          </span>
+        </span>
+      )
+    case 'conflict':
+      return (
+        <span>
+          <ConflictBadge />
+          <span className="ml-2 text-muted-foreground text-xs">
+            {outcome.message}
+          </span>
+        </span>
+      )
+    case 'error':
+      return (
+        <span>
+          <Badge variant="destructive">Error</Badge>
+          <span className="ml-2 text-muted-foreground text-xs">
+            {outcome.message}
+          </span>
+        </span>
+      )
+    case 'noop':
+      return <Badge variant="secondary">No update</Badge>
+    case 'write':
+      return (
+        <Badge>
+          {outcome.deployedToken.type === 'insert' ? 'Add token' : 'Update'}
+        </Badge>
+      )
+    case 'pending':
+      return (
+        <span>
+          <Badge>
+            {outcome.operation === 'insert' ? 'Add token' : 'Update'}
+          </Badge>
+          <span className="ml-2 text-muted-foreground text-xs">
+            {outcome.abstract.kind === 'existing'
+              ? `abstract ${formatAbstractRef(outcome.abstract.token)}`
+              : `abstract from coingecko ${outcome.abstract.coingeckoId} (new)`}
+          </span>
+        </span>
+      )
   }
 }

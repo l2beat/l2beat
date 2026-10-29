@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UnprocessedDepositRefundVerifier",
+  "critical": true,
+  "category": "core",
+  "description": "UltraHonk verifier for refunds of deposits that never reached Aztec before the zk.money portal froze. Its verification key is immutable.",
+  "fields": {
+    // No severity: the verifier is immutable, so the key cannot change on a live system.
+    "verificationKeyHash": {
+      "description": "Circuit verification key hash embedded in the verified Solidity source.",
+      "type": "CODE_CHANGE",
+      // Internal constant without a getter. The template shape binds this value
+      // to the verified circuit.
+      "handler": {
+        "type": "hardcoded",
+        "value": "0x1597ef3e1caf60ec4a7d845d676b580e64933bce926ff8cef4f1a80ac000ccec"
+      }
+    }
+  }
+}

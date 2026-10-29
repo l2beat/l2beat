@@ -106,18 +106,20 @@ export function zamaCwAdversaries(
         ],
       },
       networkObserver: {
-        sentiment: 'warning',
+        sentiment: 'good',
         exposureShort:
-          "Zama's closed-source app sends no amount to third parties today, but our trace of closed code cannot cannot guarantee it.",
+          "No third party sees an amount, and the user's address and decryption requests go only to Zama's servers.",
         exposureContinued:
-          "The app encrypts amounts on the device with Zama's open SDK and reads balances under a key only the device holds. The user's address and decryption requests go to Zama's own servers. Other services see no address or amount.",
+          "The app encrypts amounts on the device with Zama's open SDK and reads balances under a key only the device holds.",
         advice:
           'Reject the analytics prompt, so Google Analytics and Sentry receive nothing.',
-        interior: {
-          ...INTERIOR,
-          amount: 'unverifiable',
-        },
+        interior: INTERIOR,
         sources: [
+          {
+            title:
+              'Served app, build Rh4Nfrd-QpbxA2axbN31u (checked 2026-10-22)',
+            url: 'https://app.zama.org',
+          },
           {
             title: 'Inputs are encrypted on the device',
             url: `${SDK}worker/encrypt.worker.ts#L112-L128`,

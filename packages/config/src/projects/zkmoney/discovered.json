@@ -2250,7 +2250,7 @@
     "zkmoney/SIPAFactory": "0x6015b0def645b353825fa1a4fe67b72d8b62ab9ffd99ace348dae0075d2dfd60",
     "zkmoney/SkyEscrow": "0xb2301ad57dd0b5adc7f9c6cb6f270754ccd0f479ead22d920482093cf95cac58",
     "zkmoney/SkyEscrowFactory": "0x591c6ffcfd8a8ea3f603a1576d3f14b3da012c83171bbda7b313beb10a5106b5",
-    "zkmoney/SkyWithdrawalExecutor": "0x83daa1fe76f9377c13d63a09c01d5b9fa3c7d6b97963b1bb4eda533e74926783",
+    "zkmoney/SkyWithdrawalExecutor": "0xa9b2e44ea9cd8843b9d99851bbc4e372011666afb06cb5354e9b9d391ee94707",
     "zkmoney/SwapEscrow": "0xb67c3531cfb5bc288fa5dd8326d0620b26194674c3e56e478a14214fc7b5ee03",
     "zkmoney/SwapEscrowFactory": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",
     "zkmoney/SwapEscrowFactoryV2": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",

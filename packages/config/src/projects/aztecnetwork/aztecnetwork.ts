@@ -1,6 +1,5 @@
 import {
   ChainSpecificAddress,
-  EthereumAddress,
   formatNumber,
   formatSeconds,
   ProjectId,
@@ -392,7 +391,9 @@ export const aztecnetwork: ScalingProject = {
         daLayer: ProjectId('ethereum'),
         sinceBlock: v5ActivationBlock,
         untilBlock: v6ActivationBlock - 1,
-        inbox: EthereumAddress.ZERO, // Event-only tracking
+        // As for v6, blobs match on the event topic and the inbox only catches direct calls to the
+        // v5 Rollup. The zero address used here before matched every blob sent to it, whoever sent it.
+        inbox: '0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34',
         topics: [
           '0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0', // CheckpointProposed
         ],

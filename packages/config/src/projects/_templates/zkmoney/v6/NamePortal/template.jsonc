@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NamePortal",
+  "category": "core",
+  "description": "Announces a zk.money name on Aztec. Anyone can send an L1->L2 message carrying a named account's name hash and bootstrap key to an Aztec address of their choice. It accepts only accounts deployed by ACCOUNT_FACTORY.",
+  "ignoreRelatives": ["AZTEC_REGISTRY"]
+}

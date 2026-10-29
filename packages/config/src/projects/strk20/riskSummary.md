@@ -14,5 +14,5 @@
 2. the wallet's prover or note discovery service, which receives the viewing key, leaks or keeps it (see privileged insider).
 3. an app driving a shadow account or a swap through the pool links it to the user's main address (see privileged insider).
 4. a first payment to a new contact, a channel opened beside a deposit or a unique amount links activity (see public observer and chain analyst).
-5. a Ready user keeps its default analytics, which report each shield and unshield under one id (see network observer).
+5. Bramble sends CoinGecko every privately held token at each balance check, which can single out holders of rare tokens (see network observer).
 6. elliptic-curve cryptography is broken, which opens the auditor key and with it every user's history (see future adversary).
