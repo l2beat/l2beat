@@ -1,4 +1,10 @@
-import { type Names, type Row, rowId, type Snapshot } from './rows'
+import {
+  hasUnknownTransfers,
+  type Names,
+  type Row,
+  rowId,
+  type Snapshot,
+} from './rows'
 
 const DEFINITIONS = {
   side: {
@@ -23,6 +29,8 @@ const DEFINITIONS = {
     "On a chain row, the escrow row of the same project whose token the project's own bridge locked to mint this one. The two rows are one gap seen from both sides, so count it once.",
   estimate:
     "For chain rows, amount is the token's totalSupply on its chain, or CoinGecko's circulating supply when that is lower. For escrow rows, amount is the larger of escrowBalance (summed over escrowAddresses) and the supply of the copy the project's own bridge minted, which also covers escrows the TVS config does not list. amountSource says which of these was used, and amountUnavailable says why amount is null. circulatingSupplyUnknown is true when CoinGecko gave no circulating supply for the token (it has none, does not list the coin, or could not be read), so a chain row's amount is its whole totalSupply, which may include a premint, a treasury or locked tokens. valueUsd = amount * priceUsd. Estimates exist only for rows that are not counted.",
+  supplyChange:
+    "How the total supply read for the row (the token itself for chain rows, the minted copy for escrow rows) changed since `since`, about 7 days before the snapshot. The earlier supply is read on chain at the last block before `since`. netMintedByBridge is what each interop plugin's transfers of that token on that chain minted minus burned since then. unexplained = amount - the sum of netMintedByBridge: positive values point to native issuance, an untracked bridge, or a minter missing from the interop configs, but also come from recent mints interop has not captured or matched yet; negative values also come from withdrawals interop has not matched yet: it records a withdrawal only when it finalizes on the destination, which for OP stack and Arbitrum comes a week or more after the burn, so their burns within the window are missing. unknownTransfers counts transfers that do not say whether they minted or burned, so the split is incomplete when it is above 0. Null when either supply could not be read, for example when the token did not exist yet at `since`.",
   interop:
     'Volume and transfer counts are summed over the interop window, per bridge, from transfers L2BEAT matched to this token. lastSeen is the end of the last UTC day with a transfer.',
   warnings:
@@ -91,6 +99,14 @@ export function toJsonDump(rows: Row[], snapshot: Snapshot, names: Names) {
               priceCoingeckoId: row.pricing?.coingeckoId ?? null,
               pricedViaCounterpart: row.pricing?.via ?? null,
               erc4626Asset: row.value.vaultAsset ?? null,
+              supplyChange: row.value.supplyChange
+                ? {
+                    ...row.value.supplyChange,
+                    since: iso(row.value.supplyChange.since),
+                    unexplainedUsd:
+                      row.value.supplyChange.unexplainedUsd ?? null,
+                  }
+                : null,
             }
           : null,
         interop: {
@@ -169,6 +185,31 @@ const CSV_COLUMNS: [string, (row: Row, ctx: CsvContext) => unknown][] = [
   ['erc4626_asset', (row) => row.value?.vaultAsset?.address],
   ['erc4626_asset_symbol', (row) => row.value?.vaultAsset?.symbol],
   ['erc4626_asset_counted', (row) => row.value?.vaultAsset?.counted],
+  [
+    'supply_change_since',
+    (row) => row.value?.supplyChange && iso(row.value.supplyChange.since),
+  ],
+  ['supply_change', (row) => row.value?.supplyChange?.amount],
+  [
+    'net_minted_by_bridges',
+    (row) =>
+      row.value?.supplyChange?.netMintedByBridge
+        .map(
+          (bridge) =>
+            `${bridge.plugin} ${bridge.amount} (${bridge.unknownTransfers} unknown transfers)`,
+        )
+        .join('; '),
+  ],
+  ['unexplained_supply_change', (row) => row.value?.supplyChange?.unexplained],
+  [
+    'unexplained_supply_change_usd',
+    (row) => row.value?.supplyChange?.unexplainedUsd,
+  ],
+  [
+    'supply_change_incomplete',
+    (row) =>
+      row.value?.supplyChange && hasUnknownTransfers(row.value.supplyChange),
+  ],
   ['volume_usd', (row) => round(row.volumeUsd)],
   ['transfer_count', (row) => row.transferCount],
   ['last_seen', (row) => iso(row.lastSeen)],

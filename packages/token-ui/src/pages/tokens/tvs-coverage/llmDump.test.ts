@@ -85,6 +85,16 @@ describe(toJsonDump.name, () => {
             symbol: 'USDC',
           },
           erc4626Asset: null,
+          supplyChange: {
+            since: '2027-01-09T08:00:00.000Z',
+            amount: 50_000,
+            netMintedByBridge: [
+              { plugin: 'axelar', amount: 10_000, unknownTransfers: 0 },
+              { plugin: 'hyperlane-merkly', amount: 0, unknownTransfers: 2 },
+            ],
+            unexplained: 40_000,
+            unexplainedUsd: 40_000,
+          },
         },
         interop: {
           volumeUsd: 1234.57,
@@ -138,6 +148,9 @@ describe(toCsvDump.name, () => {
     )
     expect(line).toInclude('0x1 0x2')
     expect(line).toInclude('Axelar (lockAndMint, 1234.57 USD, 12 transfers)')
+    expect(line).toInclude(
+      '2027-01-09T08:00:00.000Z,50000,axelar 10000 (0 unknown transfers); hyperlane-merkly 0 (2 unknown transfers),40000,40000,true',
+    )
     expect(line).toInclude(
       'https://etherscan.io/address/0x6c3ea9036406852006290770bedfcaba0e23a0e8',
     )
@@ -202,7 +215,16 @@ function axlUsdc(): Row {
       priceUsd: 1,
       valueUsd: 400_000,
       vaultAsset: undefined,
-      supplyChange: undefined,
+      supplyChange: {
+        since: 1_800_000_000 - 6 * 86_400,
+        amount: 50_000,
+        netMintedByBridge: [
+          { plugin: 'axelar', amount: 10_000, unknownTransfers: 0 },
+          { plugin: 'hyperlane-merkly', amount: 0, unknownTransfers: 2 },
+        ],
+        unexplained: 40_000,
+        unexplainedUsd: 40_000,
+      },
     },
     escrowAddresses: [],
     dismissal: {

@@ -7,6 +7,7 @@ export type SnapshotRow = Snapshot['rows'][number]
 export type Dismissal = RouterOutputs['tvsCoverage']['dismissals'][number]
 export type Row = SnapshotRow & { dismissal: Dismissal | undefined }
 export type RowValue = NonNullable<Row['value']>
+export type SupplyChange = NonNullable<RowValue['supplyChange']>
 export type Status = Row['status']
 export type Bridge = Row['bridges'][number]
 export type DismissalReason = RouterInputs['tvsCoverage']['dismiss']['reason']
@@ -20,6 +21,7 @@ export type StatusFilter =
   | 'dismissed'
   | 'all'
 export type SideFilter = 'all' | 'chain' | 'escrow'
+export type SupplyFilter = 'all' | 'unexplainedIssuance'
 
 export interface Option<T extends string> {
   value: T
@@ -69,10 +71,24 @@ export const STATUS_FILTERS: Option<StatusFilter>[] = [
   },
 ]
 
+// Supply growth that tracked bridges do not explain.
+export const UNEXPLAINED_ISSUANCE_MIN_SHARE = 0.2
+export const UNEXPLAINED_ISSUANCE_MIN_USD = 100_000
+
+export const SUPPLY_FILTERS: Option<SupplyFilter>[] = [
+  { value: 'all', label: 'Any supply change' },
+  {
+    value: 'unexplainedIssuance',
+    label: 'Unexplained issuance',
+    description: `The supply grew by more than tracked bridges minted, by over ${UNEXPLAINED_ISSUANCE_MIN_SHARE * 100}% of the change and over $${formatAmount(UNEXPLAINED_ISSUANCE_MIN_USD)}.`,
+  },
+]
+
 export interface Filters {
   status: StatusFilter
   project: string
   side: SideFilter
+  supply: SupplyFilter
   seenWithinDays: number | undefined
   minValueUsd: number
   search: string
@@ -155,6 +171,7 @@ export function filterRows(
       matchesStatus(row, filters.status) &&
       (filters.project === 'all' || row.projectId === filters.project) &&
       (filters.side === 'all' || row.side === filters.side) &&
+      (filters.supply === 'all' || hasUnexplainedIssuance(row)) &&
       (filters.seenWithinDays === undefined ||
         row.lastSeen > dataUntil - filters.seenWithinDays * DAY) &&
       (row.value?.valueUsd ?? 0) >= filters.minValueUsd &&
@@ -181,6 +198,21 @@ function matchesStatus(row: Row, filter: StatusFilter): boolean {
     case 'scheduled':
       return row.status === 'scheduled'
   }
+}
+
+export function hasUnexplainedIssuance(row: Row): boolean {
+  const change = row.value?.supplyChange
+  return (
+    change !== undefined &&
+    change.unexplained >
+      UNEXPLAINED_ISSUANCE_MIN_SHARE * Math.abs(change.amount) &&
+    (change.unexplainedUsd ?? 0) > UNEXPLAINED_ISSUANCE_MIN_USD
+  )
+}
+
+// Some of the bridge transfers do not say whether they minted or burned.
+export function hasUnknownTransfers(change: SupplyChange): boolean {
+  return change.netMintedByBridge.some((bridge) => bridge.unknownTransfers > 0)
 }
 
 function searchText(row: Row, names: Names): string {
@@ -353,6 +385,14 @@ export function formatAmount(amount: number): string {
   }).format(amount)
 }
 
+export function formatChange(amount: number): string {
+  return new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    maximumFractionDigits: 2,
+    signDisplay: 'exceptZero',
+  }).format(amount)
+}
+
 export function formatAge(timestamp: number, now: number): string {
   const seconds = Math.max(0, now - timestamp)
   if (seconds < 60 * 60) return `${Math.floor(seconds / 60)} min ago`
@@ -362,7 +402,11 @@ export function formatAge(timestamp: number, now: number): string {
 
 // A daily snapshot at `timestamp` covers the UTC day before it.
 export function formatSnapshotDay(timestamp: number): string {
-  return new Date((timestamp - DAY) * 1000).toLocaleDateString('en-GB', {
+  return formatDay(timestamp - DAY)
+}
+
+export function formatDay(timestamp: number): string {
+  return new Date(timestamp * 1000).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',
     timeZone: 'UTC',
