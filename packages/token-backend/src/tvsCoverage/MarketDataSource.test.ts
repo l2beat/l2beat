@@ -76,10 +76,58 @@ describe(MarketDataSource.name, () => {
     expect(warnings).toEqual(['Reading interop prices failed: timeout'])
   })
 
+  it('retries a failed batch once', async () => {
+    const getCoinsMarketData = mockFn<[string[]], Promise<CoinMarketData[]>>()
+      .rejectsWithOnce(new Error('fetch failed'))
+      .resolvesToOnce([market('a', 3, 100)])
+    const source = new MarketDataSource(
+      database(new Map()),
+      { getCoinsMarketData },
+      Logger.SILENT,
+    )
+    const warnings: string[] = []
+
+    expect(await source.getMarketData(['a'], warnings)).toEqual(
+      new Map([
+        [
+          'a',
+          {
+            priceUsd: 3,
+            circulatingSupply: 100,
+            circulatingSupplyUnknown: false,
+          },
+        ],
+      ]),
+    )
+    expect(warnings).toEqual([])
+  })
+
+  it('treats a coin missing from the CoinGecko response as unknown supply', async () => {
+    const source = new MarketDataSource(
+      database(new Map([[0, 2]])),
+      { getCoinsMarketData: mockFn().resolvesTo([]) },
+      Logger.SILENT,
+    )
+
+    expect(await source.getMarketData(['a'], [])).toEqual(
+      new Map([
+        [
+          'a',
+          {
+            priceUsd: 2,
+            circulatingSupply: undefined,
+            circulatingSupplyUnknown: true,
+          },
+        ],
+      ]),
+    )
+  })
+
   it('falls back to CoinGecko prices and reports a failed batch', async () => {
     const ids = Array.from({ length: 101 }, (_, i) => `id-${i}`)
     const getCoinsMarketData = mockFn<[string[]], Promise<CoinMarketData[]>>()
       .resolvesToOnce([market('id-0', 5, undefined)])
+      .rejectsWithOnce(new Error('429'))
       .rejectsWithOnce(new Error('429'))
     const source = new MarketDataSource(
       database(new Map()),
@@ -90,7 +138,7 @@ describe(MarketDataSource.name, () => {
     const warnings: string[] = []
     const result = await source.getMarketData(ids, warnings)
 
-    expect(getCoinsMarketData).toHaveBeenCalledTimes(2)
+    expect(getCoinsMarketData).toHaveBeenCalledTimes(3)
     expect(result.get('id-0')).toEqual({
       priceUsd: 5,
       circulatingSupply: undefined,
@@ -99,7 +147,7 @@ describe(MarketDataSource.name, () => {
     expect(result.get('id-100')).toEqual({
       priceUsd: undefined,
       circulatingSupply: undefined,
-      circulatingSupplyUnknown: false,
+      circulatingSupplyUnknown: true,
     })
     expect(warnings).toEqual([
       'Reading CoinGecko markets for 1 ids failed: 429',

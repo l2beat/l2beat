@@ -42,7 +42,8 @@ export class MissingRpcError extends Error {
 export interface MarketData {
   priceUsd: number | undefined
   circulatingSupply: number | undefined
-  // CoinGecko lists the coin but does not know its circulating supply.
+  // CoinGecko gave no circulating supply: it does not know one, does not list
+  // the coin, or could not be read.
   circulatingSupplyUnknown: boolean
 }
 
@@ -316,17 +317,18 @@ function toRowValue(
 ): RowValue {
   const { row } = plan
   const own = plan.amount && reads.readAmount(plan.amount)
+  const minted =
+    plan.mintedCopy?.amount && reads.readAmount(plan.mintedCopy.amount)
   const mintedCopy = plan.mintedCopy && {
     chain: plan.mintedCopy.chain,
     address: plan.mintedCopy.address,
     symbol: plan.mintedCopy.symbol,
     decimals: plan.mintedCopy.decimals,
-    supply:
-      plan.mintedCopy.amount && reads.readAmount(plan.mintedCopy.amount).amount,
+    supply: minted?.amount,
   }
   const { amount, amountSource } =
     row.side === 'escrow'
-      ? escrowAmount(own, mintedCopy?.supply)
+      ? escrowAmount(own, minted)
       : supplyAmount(own?.amount, market?.circulatingSupply)
   const priceUsd = market?.priceUsd
   const vault = plan.readsVault
@@ -336,7 +338,8 @@ function toRowValue(
   return {
     amount,
     amountSource,
-    amountGap: amount === undefined ? (plan.gap ?? own?.gap) : undefined,
+    amountGap:
+      amount === undefined ? (own?.gap ?? minted?.gap ?? plan.gap) : undefined,
     circulatingSupplyUnknown:
       amountSource === 'totalSupply' &&
       market?.circulatingSupplyUnknown === true,
@@ -360,14 +363,17 @@ function toRowValue(
 }
 
 // Tokens locked in escrows the TVS config does not list still back the
-// minted copy, so its supply bounds what the project's escrows hold. When an
-// escrow read fails, the larger of the two is unknown.
+// minted copy, so its supply bounds what the project's escrows hold. When
+// either read fails, the larger of the two is unknown.
 function escrowAmount(
   escrows: AmountResult | undefined,
-  mintedSupply: number | undefined,
+  minted: AmountResult | undefined,
 ): { amount: number | undefined; amountSource: AmountSource | undefined } {
-  if (escrows?.gap) return { amount: undefined, amountSource: undefined }
+  if (escrows?.gap || minted?.gap) {
+    return { amount: undefined, amountSource: undefined }
+  }
   const escrowBalance = escrows?.amount
+  const mintedSupply = minted?.amount
   if (
     mintedSupply !== undefined &&
     (escrowBalance === undefined || mintedSupply > escrowBalance)

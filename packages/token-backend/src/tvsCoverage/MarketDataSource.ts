@@ -37,8 +37,7 @@ export class MarketDataSource implements PriceSource {
               recentPrices.get(id) ?? market?.current_price ?? undefined,
             // CoinGecko reports 0 when it does not know the circulating supply.
             circulatingSupply: market?.circulating_supply || undefined,
-            circulatingSupplyUnknown:
-              market !== undefined && !market.circulating_supply,
+            circulatingSupplyUnknown: !market?.circulating_supply,
           },
         ]
       }),
@@ -74,7 +73,9 @@ export class MarketDataSource implements PriceSource {
     }
   }
 
-  // A failed request only leaves its own batch without CoinGecko data.
+  // A failed request only leaves its own batch without CoinGecko data. It is
+  // retried once, because a connection opened during the build's burst of RPC
+  // reads can time out.
   private async getMarkets(
     coingeckoIds: string[],
     warnings: string[],
@@ -82,7 +83,9 @@ export class MarketDataSource implements PriceSource {
     const batches = await Promise.all(
       toBatches(coingeckoIds, MARKETS_BATCH_SIZE).map(async (batch) => {
         try {
-          return await this.coingecko.getCoinsMarketData(batch)
+          return await this.coingecko
+            .getCoinsMarketData(batch)
+            .catch(() => this.coingecko.getCoinsMarketData(batch))
         } catch (error) {
           this.logger.warn('CoinGecko markets request failed', {
             ids: batch.length,

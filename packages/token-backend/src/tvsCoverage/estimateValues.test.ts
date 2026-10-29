@@ -131,6 +131,34 @@ describe(estimateValues.name, () => {
     )
   })
 
+  it('fails an escrow amount when its minted copy cannot be read', async () => {
+    const row = coverageRow({ side: 'escrow', chain: 'ethereum', decimals: 0 })
+    const minted = {
+      chain: 'arbitrum',
+      address: MINTED,
+      symbol: 'USDC.e',
+      decimals: 2,
+    }
+    const reader = fakeReader({ [`balanceOf:${TOKEN}:${ESCROW_A}`]: 0n })
+
+    const listed = await estimateValues(
+      coverage([row], { escrows: [ESCROW_A], minted }),
+      reader,
+      prices({}),
+    )
+    const unlisted = await estimateValues(
+      coverage([row], { escrows: [], minted }),
+      reader,
+      prices({}),
+    )
+
+    for (const { values } of [listed, unlisted]) {
+      expect(values.get(rowKey(row))).toEqual(
+        expect.subset({ amount: undefined, amountGap: 'readFailed' }),
+      )
+    }
+  })
+
   it('reads a call shared by several rows once', async () => {
     const rows = [
       coverageRow({ projectId: 'base' }),
