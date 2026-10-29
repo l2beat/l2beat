@@ -72,14 +72,14 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'bad',
       exposureShort:
-        "Alchemy, under the operator's key, sees the signed-in wallet in the session that submits each withdrawal, pairing them by timing.",
+        "Alchemy, under the operator's key, sees the signed-in wallet in the session that submits each withdrawal, so it can pair them by timing.",
       exposureContinued:
         "The hosted wallet works over Tor but has no RPC setting to leave Alchemy out. Its key core runs in an iframe without network access and reaches only the operator's server and Alchemy through the page. Other third parties get token ids or nothing.",
       interior: {
         ...INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only on a busy pool, since Alchemy times each withdrawal session.',
+          note: 'Private only on a busy pool, since Alchemy sees the wallet in each withdrawal session.',
         },
       },
       sources: [

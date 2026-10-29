@@ -56,6 +56,36 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
     })
   })
 
+  describe(TokenIngestionQueueRepository.prototype.find.name, () => {
+    it('finds an entry regardless of address casing', async () => {
+      await repository.enqueue({ chain: 'ethereum', address: '0xabc' })
+      await repository.markConflict(
+        { chain: 'ethereum', address: '0xabc' },
+        'symbol mismatch',
+      )
+
+      const entry = await repository.find({
+        chain: 'ethereum',
+        address: '0xABC',
+      })
+
+      expect(entry!).toHaveSubset({
+        chain: 'ethereum',
+        address: '0xabc',
+        state: 'conflict',
+        message: 'symbol mismatch',
+      })
+    })
+
+    it('returns undefined for an address that is not queued', async () => {
+      await repository.enqueue({ chain: 'ethereum', address: '0xabc' })
+
+      const entry = await repository.find({ chain: 'base', address: '0xabc' })
+
+      expect(entry).toEqual(undefined)
+    })
+  })
+
   describe(TokenIngestionQueueRepository.prototype.findNextPending.name, () => {
     it('returns the oldest pending entry', async () => {
       const first = { chain: 'ethereum', address: '0x111' }

@@ -51,6 +51,23 @@ export function selectActiveWhatsNewEntry(
   return undefined
 }
 
+/**
+ * The announcement in the nav. The nav always has room for it, so unlike the
+ * floating widget it falls back to the most recent published entry when no
+ * campaign is active.
+ */
+export function selectNavWhatsNewEntry(
+  entries: ChangelogEntry[],
+  now: Date,
+): ChangelogEntry | undefined {
+  return (
+    selectActiveWhatsNewEntry(entries, now) ??
+    sortChangelogEntries(entries).find(
+      (entry) => entry.whatsNew && entry.publishedAt.getTime() <= now.getTime(),
+    )
+  )
+}
+
 export function selectActiveChangelogWhatsNewWidget(
   entries: ChangelogEntry[],
   now: Date,

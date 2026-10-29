@@ -17,6 +17,6 @@
 2. the token owner appoints an observer or upgrades the token (see privileged insider).
 3. a user swaps, since Zama's app and the swap's compliance address see the amount (see privileged insider).
 4. a user keeps the vault form's default of sharing their balance with Merkl (see privileged insider).
-5. Zama changes its closed-source app to leak amounts to itself or to third parties (see privileged insider and network observer).
+5. Zama changes its closed-source app to leak amounts to itself or to third parties (see privileged insider).
 6. public wraps, unwraps and vault batch totals bound a user's balance (see public observer and chain analyst).
 7. elliptic-curve cryptography is broken, which lets anyone impersonate a user to the KMS and decrypt that user's history (see future adversary).

@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import { toRgba } from '~/utils/color'
+import { EASE_OUT_QUINT } from '~/utils/easing'
 
 // thin enough for a whole day of bars to fit a table column
 const BAR_WIDTH = 2
@@ -42,7 +43,7 @@ export function Activity({
       [{ transform: 'none' }, { transform: `translateX(-${BAR_STEP}px)` }],
       {
         duration: SLIDE_MS,
-        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        easing: EASE_OUT_QUINT,
         // held at the end until the bar is dropped, in the same frame
         fill: 'forwards',
       },

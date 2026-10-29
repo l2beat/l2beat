@@ -47,6 +47,26 @@ describe('icons', () => {
     })
   })
 
+  describe('privacy apps', () => {
+    it('every app icon slug has an icon', async () => {
+      const icons = getIcons('../../static/icons')
+      const projects = await ps.getProjects({ select: ['privacyInfo'] })
+
+      for (const project of projects) {
+        const app = project.privacyInfo.referenceApp
+        const slugs = [
+          ...(app?.icon ? [app.icon] : []),
+          ...(app?.checkedApps ?? []).flatMap(
+            (checkedApp) => checkedApp.icon ?? [],
+          ),
+        ]
+        for (const slug of slugs) {
+          expect(icons).toInclude(slug)
+        }
+      }
+    })
+  })
+
   describe('ecosystems', () => {
     it('every ecosystem has an icon', async () => {
       const ecosystems = await ps.getProjects({
