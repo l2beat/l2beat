@@ -7,14 +7,23 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { useIsClient } from '~/hooks/useIsClient'
+import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { useActivityChartRangeContext } from '~/pages/layer2s/activity/components/ActivityChartRangeContext'
 import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
 import { useActivityMetricContext } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2ActivityEntries'
+import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
+import { getActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { useTRPC } from '~/trpc/React'
+import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import type { ChartScale } from '../types'
 import {
@@ -48,11 +57,17 @@ export function L2ActivityChart({ milestones, entries }: Props) {
     projectIds: entries.map((entry) => entry.id),
   }
   const { data, isLoading } = useQuery(
-    trpc.activity.recategorisedChart.queryOptions({ range, filter }),
+    trpc.activity.recategorisedChart.queryOptions({
+      range,
+      filter,
+      hourly: true,
+    }),
   )
-  const { data: changeEvents } = useQuery(
-    trpc.activity.changeEvents.queryOptions({ range, filter }),
-  )
+  const { data: changeEvents } = useQuery({
+    ...trpc.activity.changeEvents.queryOptions({ range, filter }),
+    // Change events compare whole days, so hourly ranges get no pins.
+    enabled: getActivityResolution(range) === 'day',
+  })
   const { metric } = useActivityMetricContext()
 
   const ratioData = useMemo(() => getRatioChartData(data), [data])
@@ -60,17 +75,18 @@ export function L2ActivityChart({ milestones, entries }: Props) {
     () =>
       getChartTimeRangeFromData(
         data?.data.map(([timestamp, ..._]) => ({ timestamp })),
-        { bucket: 'day' },
+        { bucket: data?.resolution ?? 'day' },
       ),
-    [data?.data],
+    [data?.data, data?.resolution],
   )
 
   return (
     <div className="flex flex-col">
-      <ActivityChartHeader />
+      <ActivityChartHeader resolution={data?.resolution ?? 'day'} />
       <L2RecategorizedActivityStats entries={entries} />
-      <div className="mt-1 mb-2">
+      <div className="mt-1 mb-2 flex items-center gap-2">
         <ChartTimeRange timeRange={timeRange} />
+        {data && <IncompleteHoursHint data={data} />}
       </div>
       <L2RecategorizedActivityChart
         data={data}
@@ -93,6 +109,7 @@ export function L2ActivityChart({ milestones, entries }: Props) {
           data={ratioData}
           isLoading={isLoading}
           syncedUntil={data?.syncedUntil}
+          resolution={data?.resolution}
         />
       </div>
       <Controls
@@ -133,7 +150,46 @@ function Controls({ scale, setScale, range, setRange }: ControlsProps) {
           href={getCompareEntryUrl({ metric: 'activity' })}
         />
       </div>
-      <ActivityChartRangeControls range={range} setRange={setRange} />
+      <ActivityChartRangeControls
+        range={range}
+        setRange={setRange}
+        hourlyRanges="enabled"
+      />
     </ChartControlsWrapper>
   )
+}
+
+function IncompleteHoursHint({
+  data,
+}: {
+  data: Pick<RecategorisedActivityChartData, 'withoutHours' | 'behind'>
+}) {
+  if (data.withoutHours.length === 0 && data.behind.length === 0) return null
+  return (
+    <Tooltip>
+      <TooltipTrigger className="flex items-center gap-1 font-medium text-secondary text-xs lg:text-sm">
+        <RoundedWarningIcon className="size-3.5" sentiment="warning" />
+        Incomplete data
+      </TooltipTrigger>
+      <TooltipContent className="flex flex-col gap-1">
+        {data.withoutHours.length > 0 && (
+          <p>
+            Leaves out {formatList(data.withoutHours)}, which{' '}
+            {data.withoutHours.length === 1 ? 'reports' : 'report'} activity per
+            day only.
+          </p>
+        )}
+        {data.behind.map(({ name, syncedUntil }) => (
+          <p key={name}>
+            Leaves out {name}, which has no data since{' '}
+            {formatTimestamp(syncedUntil, { mode: 'datetime' })}.
+          </p>
+        ))}
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+function formatList(items: string[]) {
+  return new Intl.ListFormat('en', { type: 'conjunction' }).format(items)
 }

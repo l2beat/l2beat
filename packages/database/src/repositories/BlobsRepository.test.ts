@@ -106,94 +106,58 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
   })
 
-  describe(BlobsRepository.prototype.getCountPerAddressInbox.name, () => {
-    it('should group by from and to and return counts', async () => {
+  describe(BlobsRepository.prototype.getByTimestampRange.name, () => {
+    it('returns the blobs of the layer in [from, to), with their topics', async () => {
       await repository.deleteAll()
       const base = UnixTime.toStartOf(UnixTime.now(), 'day')
       await repository.insertMany([
-        blob({
-          from: '0xA',
-          to: '0xB',
-          timestamp: base + 1,
-          daLayer: 'ethereum',
-          blockNumber: 10,
-        }),
-        blob({
-          from: '0xA',
-          to: '0xB',
-          timestamp: base + 2,
-          daLayer: 'ethereum',
-          blockNumber: 11,
-        }),
-        blob({
-          from: '0xA',
-          to: '0xC',
-          timestamp: base + 3,
-          daLayer: 'ethereum',
-          blockNumber: 12,
-        }),
-      ])
-
-      const results = await repository.getCountPerAddressInbox(
-        'ethereum',
-        base,
-        base + UnixTime.DAY,
-      )
-
-      expect(results).toEqualUnsorted([
-        { from: '0xA', to: '0xB', count: 2 },
-        { from: '0xA', to: '0xC', count: 1 },
-      ])
-    })
-
-    it('should filter by timestamp range (inclusive start, exclusive end)', async () => {
-      await repository.deleteAll()
-      const base = UnixTime.toStartOf(UnixTime.now(), 'day')
-      await repository.insertMany([
-        blob({
-          from: '0xA',
-          to: '0xB',
-          timestamp: base - 1,
-          daLayer: 'ethereum',
-          blockNumber: 10,
-        }),
+        blob({ from: '0xA', to: '0xB', timestamp: base - 1, blockNumber: 10 }),
         blob({
           from: '0xA',
           to: '0xB',
           timestamp: base,
-          daLayer: 'ethereum',
           blockNumber: 11,
+          topics: ['0xt1'],
         }),
+        blob({ from: '0xA', to: null, timestamp: base + 100, blockNumber: 12 }),
         blob({
           from: '0xA',
           to: '0xB',
-          timestamp: base + 100,
-          daLayer: 'ethereum',
-          blockNumber: 12,
+          timestamp: base + 200,
+          daLayer: 'avail',
+          blockNumber: 13,
         }),
         blob({
           from: '0xA',
           to: '0xB',
           timestamp: base + UnixTime.DAY,
-          daLayer: 'ethereum',
-          blockNumber: 13,
+          blockNumber: 14,
         }),
       ])
 
-      const results = await repository.getCountPerAddressInbox(
+      const results = await repository.getByTimestampRange(
         'ethereum',
         base,
         base + UnixTime.DAY,
       )
 
-      expect(results).toEqual([{ from: '0xA', to: '0xB', count: 2 }])
+      expect(
+        results.map(({ blockNumber, to, topics }) => ({
+          blockNumber,
+          to,
+          topics,
+        })),
+      ).toEqualUnsorted([
+        { blockNumber: 11, to: '0xB', topics: ['0xt1'] },
+        { blockNumber: 12, to: null, topics: null },
+      ])
     })
 
-    it('should return empty array when no data matches', async () => {
+    it('returns an empty array when nothing is in range', async () => {
       await repository.deleteAll()
       const base = UnixTime.toStartOf(UnixTime.now(), 'day')
 
-      const results = await repository.getCountPerAddressInbox(
+      const results = await repository.getByTimestampRange(
         'ethereum',
         base,
         base + UnixTime.DAY,
