@@ -51,10 +51,6 @@ describeDatabase(HourActivityIndexer.name, (db) => {
     expect(await indexer.update(toHeight(START), twoAm)).toEqual(twoAm)
 
     expect(await getToday()).toEqual({ count: 10, uopsCount: 70 })
-    expect(await getTodayPeak()).toEqual({
-      peakHourCount: 6,
-      peakHourUopsCount: 40,
-    })
     expect(await getHoursOfToday()).toEqual([
       { count: 4, uopsCount: 40 },
       { count: 6, uopsCount: 30 },
@@ -65,10 +61,6 @@ describeDatabase(HourActivityIndexer.name, (db) => {
     expect(await indexer.update(twoAm + 1, threeAm)).toEqual(threeAm)
 
     expect(await getToday()).toEqual({ count: 19, uopsCount: 120 })
-    expect(await getTodayPeak()).toEqual({
-      peakHourCount: 8,
-      peakHourUopsCount: 50,
-    })
     expect(await getHoursOfToday()).toEqual([
       { count: 4, uopsCount: 40 },
       { count: 7, uopsCount: 30 },
@@ -93,10 +85,10 @@ describeDatabase(HourActivityIndexer.name, (db) => {
       ...HISTORY.map((hour) => hour.count),
       4,
     ])
-    const hours = await db.hourlyActivity.getByProjectAndTimeRange(PROJECT, [
-      START,
-      TODAY,
-    ])
+    const hours = await db.hourlyActivity.getByProjectsAndTimeRange(
+      [PROJECT],
+      [START, TODAY],
+    )
     expect(hours.map((hour) => hour.count)).toEqual([
       ...HISTORY.slice(1).map((hour) => hour.count),
       4,
@@ -183,20 +175,11 @@ describeDatabase(HourActivityIndexer.name, (db) => {
     return today && { count: today.count, uopsCount: today.uopsCount }
   }
 
-  function getTodayPeak() {
-    return db.activity['db']
-      .selectFrom('Activity')
-      .select(['peakHourCount', 'peakHourUopsCount'])
-      .where('projectId', '=', PROJECT)
-      .where('timestamp', '=', UnixTime.toDate(TODAY))
-      .executeTakeFirst()
-  }
-
   async function getHoursOfToday() {
-    const hours = await db.hourlyActivity.getByProjectAndTimeRange(PROJECT, [
-      TODAY,
-      TODAY + UnixTime.DAY,
-    ])
+    const hours = await db.hourlyActivity.getByProjectsAndTimeRange(
+      [PROJECT],
+      [TODAY, TODAY + UnixTime.DAY],
+    )
     return hours.map((hour) => ({
       count: hour.count,
       uopsCount: hour.uopsCount,
