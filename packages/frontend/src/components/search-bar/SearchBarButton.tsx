@@ -15,7 +15,9 @@ export function SearchBarButton({ className }: { className?: string }) {
       // A fixed name: the hint after "Search" changes every few seconds.
       aria-label="Search"
       className={cn(
-        'flex h-10 w-72 items-center rounded-lg border border-divider bg-surface-primary p-2.5 text-secondary transition-transform duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]',
+        // Never shrinks: squeezed to its content by a full-width neighbour, the
+        // hint runs into the "/" and the button resizes with every hint.
+        'flex h-10 w-72 shrink-0 items-center rounded-lg border border-divider bg-surface-primary p-2.5 text-secondary transition-transform duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]',
         className,
       )}
     >
