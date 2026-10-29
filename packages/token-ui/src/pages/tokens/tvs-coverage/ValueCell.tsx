@@ -74,13 +74,9 @@ function SupplyChangeLine({ row, change }: { row: Row; change: SupplyChange }) {
     (bridge) => bridge.unknownTransfers > 0,
   )
   const copy = row.side === 'escrow' ? row.value?.mintedCopy : undefined
+  const issuance = hasUnexplainedIssuance(row)
   return (
     <div className="flex flex-wrap items-center justify-end gap-1 text-muted-foreground text-xs">
-      {hasUnexplainedIssuance(row) && (
-        <Tag tone="warning" small>
-          unexplained
-        </Tag>
-      )}
       {hasUnknownTransfers(change) && (
         <Tag tone="neutral" small>
           incomplete data
@@ -89,6 +85,12 @@ function SupplyChangeLine({ row, change }: { row: Row; change: SupplyChange }) {
       <WithTooltip
         content={
           <div className="space-y-1">
+            {issuance && (
+              <div>
+                Unexplained issuance: the supply grew more, or fell less, than
+                tracked bridges explain.
+              </div>
+            )}
             {copy && (
               <div>
                 Supply of {copy.symbol ?? shortAddress(copy.address)} on{' '}
@@ -111,7 +113,12 @@ function SupplyChangeLine({ row, change }: { row: Row; change: SupplyChange }) {
           </div>
         }
       >
-        <span>
+        <span
+          className={cn(
+            HOVERABLE_TEXT,
+            issuance && 'text-amber-800 dark:text-amber-200',
+          )}
+        >
           {formatChange(change.amount)} since {formatDay(change.since)}
         </span>
       </WithTooltip>
