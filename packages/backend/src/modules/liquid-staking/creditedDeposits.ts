@@ -19,6 +19,11 @@ const DEPOSIT_EVENT_TOPIC = depositInterface.getEventTopic('DepositEvent')
  */
 const DEPOSIT_REQUESTS_START_INDEX = 2_045_126
 
+/** Blocks in a day at 12-second slots, a step of the search for older deposits. */
+const BLOCKS_PER_DAY = 7200
+/** Days back a queued deposit is looked for before the day fails. */
+const MAX_QUEUE_DAYS = 7
+
 const GWEI = 10n ** 9n
 
 /**
@@ -28,18 +33,27 @@ const GWEI = 10n ** 9n
  */
 export async function readCreditedDeposits(
   rpc: DepositsRpc,
-  blocks: { previousDayFrom: number; from: number; to: number },
+  blocks: { from: number; to: number },
   counter: { start: number; end: number },
 ): Promise<bigint> {
   const today = await readDeposits(rpc, blocks.from, blocks.to)
-  // The queue lags less than a day, so what it took was deposited by yesterday.
-  const yesterday =
-    counter.end > counter.start
-      ? await readDeposits(rpc, blocks.previousDayFrom, blocks.from - 1)
-      : []
-  const queued = [...yesterday, ...today].filter(
-    (d) => d.index >= counter.start && d.index < counter.end,
-  )
+  const isQueued = (d: { index: number }) =>
+    d.index >= counter.start && d.index < counter.end
+  const queued = today.filter(isQueued)
+  // The queue lags 7 to 14 hours, so the rest were deposited by yesterday,
+  // unless eth1 voting stalled; then older days are searched, a day at a time.
+  let end = blocks.from - 1
+  for (
+    let days = 0;
+    queued.length < counter.end - counter.start &&
+    days < MAX_QUEUE_DAYS &&
+    end >= 0;
+    days++
+  ) {
+    const start = Math.max(0, end - BLOCKS_PER_DAY + 1)
+    queued.push(...(await readDeposits(rpc, start, end)).filter(isQueued))
+    end = start - 1
+  }
   if (queued.length !== counter.end - counter.start) {
     throw new Error('Credited deposits not found', {
       cause: { counter, found: queued.length },

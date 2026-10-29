@@ -18,7 +18,8 @@ describe(decodeDeposit.name, () => {
 })
 
 describe(readCreditedDeposits.name, () => {
-  const blocks = { previousDayFrom: 1, from: 100, to: 199 }
+  // Today, and the windows of 7,200 blocks before it.
+  const blocks = { from: 20_000, to: 27_199 }
   const deposits = (byBlock: Record<number, [number, number][]>) =>
     mockFn(async (from: number) =>
       (byBlock[from] ?? []).map(([eth, index]) =>
@@ -28,12 +29,12 @@ describe(readCreditedDeposits.name, () => {
 
   it('takes the queued deposits the counter moved over, made today or yesterday', async () => {
     const getLogs = deposits({
-      1: [
+      12_800: [
         [32, 9],
         [1, 10],
         [31, 11],
       ],
-      100: [
+      20_000: [
         [32, 12],
         [32, 13],
       ],
@@ -47,14 +48,31 @@ describe(readCreditedDeposits.name, () => {
 
     expect(credited).toEqual(64n * ETH)
     expect(getLogs.calls.map((c) => c.args.slice(0, 2))).toEqual([
-      [100, 199],
-      [1, 99],
+      [20_000, 27_199],
+      [12_800, 19_999],
+    ])
+  })
+
+  it('looks further back when the queue lagged more than a day', async () => {
+    const getLogs = deposits({ 5_600: [[32, 10]] })
+
+    const credited = await readCreditedDeposits(
+      { getLogs } as unknown as DepositsRpc,
+      blocks,
+      { start: 10, end: 11 },
+    )
+
+    expect(credited).toEqual(32n * ETH)
+    expect(getLogs.calls.map((c) => c.args.slice(0, 2))).toEqual([
+      [20_000, 27_199],
+      [12_800, 19_999],
+      [5_600, 12_799],
     ])
   })
 
   it("takes the day's deposits from Electra on, as they skip the queue", async () => {
     const getLogs = deposits({
-      100: [
+      20_000: [
         [32, 2_045_200],
         [2048, 2_045_201],
       ],
@@ -71,7 +89,7 @@ describe(readCreditedDeposits.name, () => {
   })
 
   it('fails when a queued deposit is missing', async () => {
-    const getLogs = deposits({ 100: [[32, 12]] })
+    const getLogs = deposits({ 20_000: [[32, 12]] })
 
     await expect(
       readCreditedDeposits({ getLogs } as unknown as DepositsRpc, blocks, {

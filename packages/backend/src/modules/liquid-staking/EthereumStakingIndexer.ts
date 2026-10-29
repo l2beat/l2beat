@@ -92,7 +92,6 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
       pendingDeposits,
       depositIndex,
       nextDepositIndex,
-      previousDayBlock,
       fromBlock,
       nextDayBlock,
     ] = await Promise.all([
@@ -105,7 +104,6 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
         : Promise.resolve(null),
       this.$.beacon.getDepositIndex(slot),
       this.$.beacon.getDepositIndex(nextSlot),
-      this.firstBlockAtOrAfter(UnixTime(day - UnixTime.DAY)),
       this.firstBlockAtOrAfter(day),
       this.firstBlockAtOrAfter(UnixTime(day + UnixTime.DAY)),
     ])
@@ -114,7 +112,7 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
       readExecutionDay(this.$.rpc, fromBlock, toBlock),
       readCreditedDeposits(
         this.$.rpc,
-        { previousDayFrom: previousDayBlock, from: fromBlock, to: toBlock },
+        { from: fromBlock, to: toBlock },
         { start: depositIndex, end: nextDepositIndex },
       ),
     ])

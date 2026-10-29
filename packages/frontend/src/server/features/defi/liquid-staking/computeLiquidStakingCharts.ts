@@ -145,7 +145,10 @@ class ProjectSeries {
 
   private rateAt(timestamp: number): number | undefined {
     const snapshot = this.byTimestamp.get(timestamp)
-    return snapshot && toEth(snapshot.exchangeRate)
+    // A zero rate is a bad read, and would divide the yield by zero.
+    return snapshot && snapshot.exchangeRate > 0n
+      ? toEth(snapshot.exchangeRate)
+      : undefined
   }
 }
 
