@@ -152,14 +152,24 @@ function searchText(row: Row, names: Names): string {
 export function sortRows(rows: Row[], sort: Sort, names: Names): Row[] {
   const sign = sort.direction === 'asc' ? 1 : -1
   return rows
-    .map((row) => ({ row, key: sortValue(row, sort.key, names) }))
+    .map((row) => ({
+      row,
+      key: sortValue(row, sort.key, names),
+      rank: sortRank(row, sort.key),
+    }))
     .sort((a, b) => {
       if (a.key === undefined || b.key === undefined) {
         return Number(a.key === undefined) - Number(b.key === undefined)
       }
-      return sign * compare(a.key, b.key)
+      return a.rank - b.rank || sign * compare(a.key, b.key)
     })
     .map(({ row }) => row)
+}
+
+// A value from a total supply that CoinGecko cannot cap may be mostly a
+// premint, so it goes after values that are not.
+function sortRank(row: Row, key: SortKey): number {
+  return key === 'value' && row.value?.circulatingSupplyUnknown ? 1 : 0
 }
 
 function sortValue(
