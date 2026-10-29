@@ -34,7 +34,7 @@ const Tooltip = ({
   return (
     <TooltipPrimitive.Root open={open} onOpenChange={setOpen} {...props}>
       <TooltipTriggerContextProvider
-        value={{ open, setOpen, contentDescriptionId }}
+        value={{ open: props.open ?? open, setOpen, contentDescriptionId }}
       >
         {children}
       </TooltipTriggerContextProvider>
