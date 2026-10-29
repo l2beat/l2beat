@@ -67,7 +67,10 @@ export function useChartTooltip({
   const rootRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
   const placeRef = useRef(place)
-  placeRef.current = place
+  // Committed renders only; pointer events read it between renders.
+  useLayoutEffect(() => {
+    placeRef.current = place
+  })
 
   function placeTooltip(anchor: Anchor) {
     const tooltip = tooltipRef.current

@@ -82,7 +82,10 @@ export function getExtent(
   return min > max ? undefined : [min, max]
 }
 
-/** Rows where `key` has a value but both neighbours have none. */
+/**
+ * Rows where `key` has a value but neither neighbour has one, so no line
+ * shows it. The first and last rows have one neighbour.
+ */
 export function getIsolatedPoints<T>(
   plotted: readonly Plotted<T>[],
   key: string,
@@ -90,8 +93,8 @@ export function getIsolatedPoints<T>(
   return plotted.filter(
     (point, i) =>
       point.top[key] !== null &&
-      plotted[i - 1]?.top[key] === null &&
-      plotted[i + 1]?.top[key] === null,
+      (plotted[i - 1]?.top[key] ?? null) === null &&
+      (plotted[i + 1]?.top[key] ?? null) === null,
   )
 }
 

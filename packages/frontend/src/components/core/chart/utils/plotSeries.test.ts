@@ -58,13 +58,15 @@ describe(getExtent.name, () => {
 
 describe(getIsolatedPoints.name, () => {
   it('finds values whose neighbours are both missing', () => {
-    const values = [2, null, 3, null, 4, 5, null]
+    const values = [2, null, 3, null, 4, 5, null, 6]
     const plotted = plotRows(
       values.map((v) => ({ v })),
       [{ key: 'v' }],
     )
 
-    // The first value has no row before it, and 4 has a neighbour.
-    expect(getIsolatedPoints(plotted, 'v').map((p) => p.row.v)).toEqual([3])
+    // 4 has a neighbour; the first and last values have one row beside them.
+    expect(getIsolatedPoints(plotted, 'v').map((p) => p.row.v)).toEqual([
+      2, 3, 6,
+    ])
   })
 })
