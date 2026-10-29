@@ -219,6 +219,7 @@ function value(
     priceUsd: valueUsd,
     valueUsd,
     vaultAsset: undefined,
+    supplyChange: undefined,
   }
 }
 

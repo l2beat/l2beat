@@ -14,6 +14,7 @@ import {
   type RowValue,
   rowKey,
 } from './estimateValues'
+import { loadNetMinted, type NetMintedStats } from './supplyChange'
 
 export interface TvsCoverageSnapshot {
   generatedAt: number
@@ -45,7 +46,10 @@ export interface SnapshotStats {
   statuses: Partial<Record<CoverageStatus, number>>
   estimatedRows: number
   chainCalls: number
+  pastSupplyCalls: number
   coingeckoIds: number
+  supplyChanges: number
+  netMinted: NetMintedStats
   warnings: number
   payloadBytes: number
 }
@@ -80,6 +84,7 @@ export async function buildSnapshot(
     tvsProjects,
     chainProjects,
     interopProjects,
+    netMinted,
   ] = await Promise.all([
     deps.db.aggregatedInteropDeployedToken.getSummedByTimestamps(days),
     deps.tokenDb.deployedToken.getAll(),
@@ -92,6 +97,7 @@ export async function buildSnapshot(
     }),
     deps.projectService.getProjects({ select: ['chainConfig'] }),
     deps.projectService.getProjects({ select: ['interopConfig'] }),
+    loadNetMinted(deps.db, generatedAt),
   ])
   const loadMs = Date.now() - startedAt
 
@@ -117,6 +123,7 @@ export async function buildSnapshot(
     coverage,
     deps.createChainReader(chains),
     deps.prices,
+    netMinted.netMinted,
   )
   const estimateMs = Date.now() - estimateStartedAt
 
@@ -171,7 +178,10 @@ export async function buildSnapshot(
       statuses: countBy(snapshot.rows, (row) => row.status),
       estimatedRows: estimates.stats.rows,
       chainCalls: estimates.stats.chainCalls,
+      pastSupplyCalls: estimates.stats.pastSupplyCalls,
       coingeckoIds: estimates.stats.coingeckoIds,
+      supplyChanges: estimates.stats.supplyChanges,
+      netMinted: netMinted.stats,
       warnings: snapshot.warnings.length,
       payloadBytes: Buffer.byteLength(JSON.stringify(snapshot)),
     },
