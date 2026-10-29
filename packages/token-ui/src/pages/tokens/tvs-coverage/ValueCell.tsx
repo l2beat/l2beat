@@ -76,7 +76,7 @@ function AmountTags({ row, value }: { row: Row; value: RowValue }) {
       {value.circulatingSupplyUnknown && (
         <WithTooltip content="CoinGecko has no circulating supply for this token, so the value uses its total supply on the chain, which can include a premint, a treasury or locked tokens. A natively minted token needs a CoinGecko circulating supply before TVS can count it.">
           <Tag tone="warning" small>
-            no circ. supply
+            uncapped
           </Tag>
         </WithTooltip>
       )}
