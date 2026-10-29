@@ -67,6 +67,12 @@ export const mantle: ScalingProject = opStackL2({
       },
     ],
   },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    // first Mantle v2 (Tectonic) block with the L1-info deposit tx
+    adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 61171947 },
+  },
   ossificationHistory: discovery.getOssificationHistory(genesisTimestamp, {
     // OPSuccinctL2OutputOracle verifier set to the SP1 Groth16 gateway (tx 0xf9fc68ef)
     'shared-sp1': UnixTime(1758005207),
