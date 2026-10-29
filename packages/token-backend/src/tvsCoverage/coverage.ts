@@ -228,11 +228,12 @@ class ProjectFormulas {
   }
 
   // A lock-and-mint copy is backed by its locked counterpart, and the other
-  // way round, but only for the project's own bridge: the project escrow does
-  // not hold what a third-party bridge locked.
+  // way round, even when the relation does not say which side is locked. Only
+  // the project's own bridge counts: the project escrow does not hold what a
+  // third-party bridge locked.
   backingEdges(token: TokenRef, relations: RelationIndex): RelationEdge[] {
     return this.ownBridgeEdges(token, relations).filter(
-      (edge) => edge.bridgeType === 'lockAndMint' && edge.role !== 'unknown',
+      (edge) => edge.bridgeType === 'lockAndMint',
     )
   }
 

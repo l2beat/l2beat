@@ -161,6 +161,45 @@ describe(Coverage.name, () => {
     ])
   })
 
+  it('trusts a relation of the project bridge that does not say which side is locked', () => {
+    const route = {
+      ...relation(
+        ['ethereum', L1_USDC],
+        ['arbitrum', ARB_USDC_E],
+        'orbitstack-standardgateway',
+      ),
+      lockedToken: null,
+    }
+    const input = {
+      stats: [
+        stat({ id: 'arbitrum', tokenChain: 'ethereum', address: L1_USDC }),
+      ],
+      deployedTokens,
+      abstractTokens: [usdc],
+      relations: [route],
+    }
+
+    const nativeCounted = coverage({
+      ...input,
+      projects: [
+        { ...arbitrum, tokens: [token(supply('arbitrum', ARB_USDC))] },
+      ],
+    })
+    const copyCounted = coverage({
+      ...input,
+      projects: [
+        { ...arbitrum, tokens: [token(supply('arbitrum', ARB_USDC_E))] },
+      ],
+    })
+
+    expect(summary(nativeCounted)).toEqual([
+      ['arbitrum', 'escrow', `ethereum:${L1_USDC}`, 'sameAssetOnly'],
+    ])
+    expect(summary(copyCounted)).toEqual([
+      ['arbitrum', 'escrow', `ethereum:${L1_USDC}`, 'countedViaCounterpart'],
+    ])
+  })
+
   it("ignores relations of another project's chain that share its plugin", () => {
     const rows = coverage({
       projects: [
