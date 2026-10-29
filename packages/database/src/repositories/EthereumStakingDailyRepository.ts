@@ -11,6 +11,8 @@ export interface EthereumStakingDailyRecord {
   slot: number
   /** Sum of every validator's balance. */
   totalBalance: bigint
+  /** Balance of the validators that earn: the total without those waiting to enter or exited. */
+  activeBalance: bigint
   /** Deposits waiting to be credited; null before Pectra. */
   pendingDeposits: bigint | null
   /** Withdrawals paid in the day's blocks. */
@@ -29,6 +31,7 @@ function toRecord(
     timestamp: UnixTime.fromDate(row.timestamp),
     slot: row.slot,
     totalBalance: BigInt(row.totalBalance),
+    activeBalance: BigInt(row.activeBalance),
     pendingDeposits:
       row.pendingDeposits === null ? null : BigInt(row.pendingDeposits),
     withdrawals: BigInt(row.withdrawals),
@@ -45,6 +48,7 @@ function toRow(
     timestamp: UnixTime.toDate(record.timestamp),
     slot: record.slot,
     totalBalance: record.totalBalance.toString(),
+    activeBalance: record.activeBalance.toString(),
     pendingDeposits: record.pendingDeposits?.toString() ?? null,
     withdrawals: record.withdrawals.toString(),
     deposits: record.deposits.toString(),
@@ -66,6 +70,7 @@ export class EthereumStakingDailyRepository extends BaseRepository {
           cb.column('timestamp').doUpdateSet((eb) => ({
             slot: eb.ref('excluded.slot'),
             totalBalance: eb.ref('excluded.totalBalance'),
+            activeBalance: eb.ref('excluded.activeBalance'),
             pendingDeposits: eb.ref('excluded.pendingDeposits'),
             withdrawals: eb.ref('excluded.withdrawals'),
             deposits: eb.ref('excluded.deposits'),

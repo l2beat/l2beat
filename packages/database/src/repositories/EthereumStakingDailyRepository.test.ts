@@ -19,6 +19,7 @@ describeDatabase(EthereumStakingDailyRepository.name, (db) => {
       ...record(1),
       // 34M ETH in wei does not fit a double.
       totalBalance: 34_000_000_123_456_789_012_345_678n,
+      activeBalance: 33_900_000_123_456_789_012_345_678n,
       pendingDeposits: 7n,
     }
     await repository.upsertMany([updated])
@@ -50,6 +51,7 @@ function record(day: number): EthereumStakingDailyRecord {
     timestamp: UnixTime(day * UnixTime.DAY),
     slot: day * 7200 - 1,
     totalBalance: 10n ** 25n,
+    activeBalance: 10n ** 25n,
     pendingDeposits: null,
     withdrawals: 10n ** 21n,
     deposits: 10n ** 20n,
