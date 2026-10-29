@@ -8,7 +8,7 @@ import type {
   StarknetErrorResponse,
   StarknetEvent,
   StarknetGetBlockResponse,
-  StarknetGetBlockWithTxsResponse,
+  StarknetGetBlockWithReceiptsResponse,
 } from './types'
 
 describe(StarknetClient.name, () => {
@@ -25,13 +25,21 @@ describe(StarknetClient.name, () => {
             data: ['0x1234'],
             hash: '0x1234',
             from: '0x1234',
+            reverted: false,
+          },
+          {
+            type: 'INVOKE',
+            data: ['0x5678'],
+            hash: '0x5678',
+            from: '0x5678',
+            reverted: true,
           },
         ],
       }
 
       const http = mockObject<HttpClient>({
         fetch: async () =>
-          mockStarknetGetBlockWithTxsResponse(mockStarknetBlock),
+          mockStarknetGetBlockWithReceiptsResponse(mockStarknetBlock),
       })
 
       const client = mockClient({ http })
@@ -95,15 +103,15 @@ describe(StarknetClient.name, () => {
   describe(StarknetClient.prototype.getBlockTimestamps.name, () => {
     it('returns timestamps keyed by block number', async () => {
       const client = mockClient({})
-      const getBlockWithTransactions = mockFn()
+      const getBlockHeader = mockFn()
         .returnsOnce({ number: 100, timestamp: 1_000 })
         .returnsOnce({ number: 200, timestamp: 2_000 })
-      client.getBlockWithTransactions = getBlockWithTransactions
+      client.getBlockHeader = getBlockHeader
 
       const result = await client.getBlockTimestamps([100, 200])
 
-      expect(getBlockWithTransactions).toHaveBeenNthCalledWith(1, 100)
-      expect(getBlockWithTransactions).toHaveBeenNthCalledWith(2, 200)
+      expect(getBlockHeader).toHaveBeenNthCalledWith(1, 100)
+      expect(getBlockHeader).toHaveBeenNthCalledWith(2, 200)
       expect(result).toEqual(
         new Map([
           [100, 1_000],
@@ -318,9 +326,9 @@ function mockStarknetEventWithoutIndex(
   }
 }
 
-const mockStarknetGetBlockWithTxsResponse = (
+const mockStarknetGetBlockWithReceiptsResponse = (
   block: Block,
-): StarknetGetBlockWithTxsResponse => ({
+): StarknetGetBlockWithReceiptsResponse => ({
   jsonrpc: '2.0',
   id: 1,
   result: {
@@ -328,10 +336,15 @@ const mockStarknetGetBlockWithTxsResponse = (
     timestamp: block.timestamp,
     block_hash: block.hash,
     transactions: block.transactions.map((tx: Transaction) => ({
-      type: tx.type ?? '',
-      calldata: tx.data ? (tx.data as string[]) : [],
-      transaction_hash: tx.hash ?? '',
-      sender_address: tx.from ?? '',
+      transaction: {
+        type: tx.type ?? '',
+        calldata: tx.data ? (tx.data as string[]) : [],
+        sender_address: tx.from ?? '',
+      },
+      receipt: {
+        transaction_hash: tx.hash ?? '',
+        execution_status: tx.reverted ? 'REVERTED' : 'SUCCEEDED',
+      },
     })),
   },
 })

@@ -8,7 +8,7 @@ import {
   StarknetErrorResponse,
   type StarknetEvent,
   StarknetGetBlockResponse,
-  StarknetGetBlockWithTxsResponse,
+  StarknetGetBlockWithReceiptsResponse,
   StarknetGetEventsResponse,
   type StarknetTransaction,
 } from './types'
@@ -52,12 +52,14 @@ export class StarknetClient extends ClientCore implements BlockClient {
     }
   }
 
+  /** Calls starknet_getBlockWithReceipts, whose receipts say which txs reverted. */
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {
     const params = [{ block_number: blockNumber }]
 
-    const response = await this.query('starknet_getBlockWithTxs', params)
+    const response = await this.query('starknet_getBlockWithReceipts', params)
 
-    const blockResponse = StarknetGetBlockWithTxsResponse.safeParse(response)
+    const blockResponse =
+      StarknetGetBlockWithReceiptsResponse.safeParse(response)
 
     if (!blockResponse.success) {
       throw new Error(`Block ${blockNumber}: Error during parsing`)
@@ -67,11 +69,15 @@ export class StarknetClient extends ClientCore implements BlockClient {
     // with missing transaction_hash. For Paradex, we silently filter these out.
     // For other chains, missing transaction_hash throws an error.
     const validTransactions = blockResponse.data.result.transactions.filter(
-      (t): t is StarknetTransaction & { transaction_hash: string } => {
-        if (!t.transaction_hash && this.$.sourceName !== 'paradex') {
+      (
+        t,
+      ): t is StarknetTransaction & {
+        receipt: { transaction_hash: string }
+      } => {
+        if (!t.receipt.transaction_hash && this.$.sourceName !== 'paradex') {
           throw new Error(`Block ${blockNumber}: Missing transaction hash`)
         }
-        return !!t.transaction_hash
+        return !!t.receipt.transaction_hash
       },
     )
 
@@ -79,11 +85,12 @@ export class StarknetClient extends ClientCore implements BlockClient {
       number: blockResponse.data.result.block_number,
       hash: blockResponse.data.result.block_hash,
       timestamp: blockResponse.data.result.timestamp,
-      transactions: validTransactions.map((t) => ({
-        hash: t.transaction_hash,
-        from: t.sender_address,
-        type: t.type,
-        data: t.calldata,
+      transactions: validTransactions.map(({ transaction, receipt }) => ({
+        hash: receipt.transaction_hash,
+        from: transaction.sender_address,
+        type: transaction.type,
+        data: transaction.calldata,
+        reverted: receipt.execution_status === 'REVERTED',
       })),
       logsBloom: 'UNSUPPORTED',
     }
@@ -93,9 +100,7 @@ export class StarknetClient extends ClientCore implements BlockClient {
     blockNumbers: number[],
   ): Promise<Map<number, number>> {
     const blocks = await Promise.all(
-      blockNumbers.map((blockNumber) =>
-        this.getBlockWithTransactions(blockNumber),
-      ),
+      blockNumbers.map((blockNumber) => this.getBlockHeader(blockNumber)),
     )
     return new Map(blocks.map((block) => [block.number, block.timestamp]))
   }

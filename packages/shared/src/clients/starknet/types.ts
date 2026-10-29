@@ -50,17 +50,22 @@ export type StarknetTransaction = v.infer<typeof StarknetTransaction>
  * and empty string fields. These are filtered out in StarknetClient.
  */
 const StarknetTransaction = v.object({
-  type: v.string(),
-  calldata: v.array(v.string()).optional(),
-  /** Optional to allow parsing Paradex empty transactions (filtered later) */
-  transaction_hash: v.string().optional(),
-  sender_address: v.string().optional(),
+  transaction: v.object({
+    type: v.string(),
+    calldata: v.array(v.string()).optional(),
+    sender_address: v.string().optional(),
+  }),
+  receipt: v.object({
+    /** Optional to allow parsing Paradex empty transactions (filtered later) */
+    transaction_hash: v.string().optional(),
+    execution_status: v.string().optional(),
+  }),
 })
 
-export type StarknetGetBlockWithTxsResponse = v.infer<
-  typeof StarknetGetBlockWithTxsResponse
+export type StarknetGetBlockWithReceiptsResponse = v.infer<
+  typeof StarknetGetBlockWithReceiptsResponse
 >
-export const StarknetGetBlockWithTxsResponse = v.object({
+export const StarknetGetBlockWithReceiptsResponse = v.object({
   jsonrpc: v.literal('2.0'),
   id: v.number().check(Number.isInteger),
   result: v.object({

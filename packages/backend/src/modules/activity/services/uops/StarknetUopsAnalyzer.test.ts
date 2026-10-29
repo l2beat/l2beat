@@ -2,10 +2,10 @@ import type { Block } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { StarknetUopsAnalyzer } from './StarknetUopsAnalyzer'
 
-// Calldata samples at the bottom are real mainnet INVOKEs from 2026-09-20 and
-// 2026-09-22, taken from Dune's starknet.transactions and looked up by hash.
-// Each expected count is the number of calls a user signed, read off the
-// decoded calldata; the comment on each test shows that decoding.
+// Calldata samples at the bottom are real mainnet INVOKEs from 2026-09-20 to
+// 2026-09-24, taken from Dune's starknet.transactions or a mainnet RPC and
+// looked up by hash. Each expected count is read off the decoded calldata;
+// the comment on each test shows that decoding.
 describe(StarknetUopsAnalyzer.name, () => {
   const analyzer = new StarknetUopsAnalyzer()
   const CAIRO_1_BLOCK = 2_000_000
@@ -144,6 +144,26 @@ describe(StarknetUopsAnalyzer.name, () => {
         CAIRO_1_BLOCK,
       )
       expect(result).toEqual(3)
+    })
+
+    it('counts repeats of one entrypoint inside an outside execution once', () => {
+      // relayer -> forwarder.execute_sponsored(account, execute_from_outside_v2, ...)
+      //   account.execute_from_outside_v2
+      //     FocusTree.0x41b033f4a3 x3, moving three tokens to one recipient
+      const result = analyzer.getOperationsCount(
+        FOCUSTREE_REPEATED_CALLS,
+        CAIRO_1_BLOCK,
+      )
+      expect(result).toEqual(1)
+    })
+
+    it('counts a reverted tx as one operation', () => {
+      // The same calldata counts 2 when it succeeds, but a revert undoes both.
+      const result = analyzer.getOperationsCount(
+        { ...RELAYER_BATCH, reverted: true },
+        CAIRO_1_BLOCK,
+      )
+      expect(result).toEqual(1)
     })
 
     it('counts as one a contract that only borrows the outside execution selector', () => {
@@ -480,6 +500,57 @@ const FORWARDER_EXECUTE_PRIVATE_SPONSORED = tx(
     '0x0',
     '0x1',
     '0x3b3986cb9722cdedd9126319e77394ef5f6a09d29952176c24160e8dfcb3ec7',
+  ],
+)
+
+const FOCUSTREE_REPEATED_CALLS = tx(
+  '0x04afae27440ff233507a4471744de92912dc5b5e91a74bc26fb7166c7b01ced7',
+  [
+    '0x1',
+    '0x127021a1b5a52d3174c2ab077c2b043c80369250d29428cee956d76ee51584f',
+    '0x3d82f059acd7c22528fe93d2cd7c941d47411bf7c5525efe7f71eedebd62647',
+    '0x29',
+    '0x4bd9c0e9532ab2ffbd2df8b4a2340b4485124df88aa3f1dafff1231eca60d51',
+    '0x34cc13b274446654ca3233ed2c1620d4c5d1d32fd20b47146a3371064bdc57d',
+    '0x24',
+    '0x127021a1b5a52d3174c2ab077c2b043c80369250d29428cee956d76ee51584f',
+    '0x1a280e2a3255d937f8952e4fa8ac90c567befe468a8a8759d6021a8e9d4d7f0',
+    '0x1',
+    '0x6ab4b544',
+    '0x3',
+    '0x377c2d65debb3978ea81904e7d59740da1f07412e30d01c5ded1c5d6f1ddc43',
+    '0x41b033f4a31df8067c24d1e9b550a2ce75fd4a29e1147af9752174f0e6cb20',
+    '0x4',
+    '0x4bd9c0e9532ab2ffbd2df8b4a2340b4485124df88aa3f1dafff1231eca60d51',
+    '0x579ed214135f8ed807110d417e47171bdbf9f2c82823361e85428e05f00498',
+    '0xfedd2b49e07e4300bbb50a44966419d5',
+    '0x0',
+    '0x377c2d65debb3978ea81904e7d59740da1f07412e30d01c5ded1c5d6f1ddc43',
+    '0x41b033f4a31df8067c24d1e9b550a2ce75fd4a29e1147af9752174f0e6cb20',
+    '0x4',
+    '0x4bd9c0e9532ab2ffbd2df8b4a2340b4485124df88aa3f1dafff1231eca60d51',
+    '0x579ed214135f8ed807110d417e47171bdbf9f2c82823361e85428e05f00498',
+    '0xffe5c077de3c4639953fc7417d7999b4',
+    '0x0',
+    '0x377c2d65debb3978ea81904e7d59740da1f07412e30d01c5ded1c5d6f1ddc43',
+    '0x41b033f4a31df8067c24d1e9b550a2ce75fd4a29e1147af9752174f0e6cb20',
+    '0x4',
+    '0x4bd9c0e9532ab2ffbd2df8b4a2340b4485124df88aa3f1dafff1231eca60d51',
+    '0x579ed214135f8ed807110d417e47171bdbf9f2c82823361e85428e05f00498',
+    '0xd6a9ae9880df4481b46808f039b6edec',
+    '0x0',
+    '0x9',
+    '0x2',
+    '0x0',
+    '0x439c668437c13b44302514417c2d0aec6cea3696d1f0a13e8a838a50516512e',
+    '0x30d86ae847ba443b12614469cf031e3d948144875f63279280b20b874eed4f2',
+    '0x6056826e72663bae111a3c4a75df353bdaae81c9794a8dece8a89c34f615feb',
+    '0x0',
+    '0x301994122fc2009500a0292a0a1e70bef2a95ee10fd88778a9b568162d1cdf2',
+    '0x7deb399ea510f973b9b62a95a0d0a59ccefdf67d4ffb2da075ab647acca6a57',
+    '0x11187bd7ef8109802ea258acf333ce8694e9e6eb7d5bc8ae9a639908688f52f',
+    '0x1',
+    '0x1e8ad5efb5efdbd97f9f5ce49e5efb6279b5e05bb79b488edd836ce614e2ef4',
   ],
 )
 

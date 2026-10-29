@@ -1,6 +1,7 @@
 import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
 import isArray from 'lodash/isArray'
 import sum from 'lodash/sum'
+import uniqBy from 'lodash/uniqBy'
 import type { UopsAnalyzer } from './types'
 
 export class StarknetUopsAnalyzer implements UopsAnalyzer {
@@ -26,6 +27,11 @@ export class StarknetUopsAnalyzer implements UopsAnalyzer {
     if (blockNumber < 3000 || tx.type !== 'INVOKE' || !tx.data) {
       return 1
     }
+    // None of a reverted tx's calls took effect, so it is one attempted
+    // operation however many calls it carried.
+    if (tx.reverted) {
+      return 1
+    }
 
     const calls = decodeExecuteCalldata(tx.data.map(BigInt))
     if (!calls) {
@@ -41,7 +47,14 @@ export class StarknetUopsAnalyzer implements UopsAnalyzer {
 // calls signed by a user is replaced by those calls, recursively.
 function countUserOperations(call: Call): number {
   const wrapped = unwrapCalls(call)
-  return wrapped ? sum(wrapped.map(countUserOperations)) : 1
+  return wrapped ? sum(distinctActions(wrapped).map(countUserOperations)) : 1
+}
+
+// A signed batch that repeats one entrypoint, like an NFT drop's 125 mints,
+// is one action, not 125 user operations. Voyager does not count such
+// batches call by call either.
+function distinctActions(calls: Call[]): Call[] {
+  return uniqBy(calls, (call) => `${call.to}:${call.selector}`)
 }
 
 function unwrapCalls(call: Call): Call[] | undefined {

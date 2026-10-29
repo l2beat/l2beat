@@ -5,4 +5,5 @@ export interface Transaction {
   data?: string | string[]
   type?: string
   value?: bigint
+  reverted?: boolean
 }
