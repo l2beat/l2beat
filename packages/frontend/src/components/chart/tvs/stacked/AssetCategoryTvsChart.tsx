@@ -89,37 +89,24 @@ export function AssetCategoryTvsChart({
         : assetCategoryTvsChartMeta,
     [excludeRwaRestrictedTokens],
   )
-  // Bottom of the stack first. An active dot on the top one of
-  // other/btc/stablecoin, and always on the rest.
+  // Bottom of the stack first. The RWA series get an active dot even below
+  // the top of the stack.
   const seriesKeys: { key: SeriesKey; activeDot?: boolean }[] = [
-    { key: 'rwaPublic' },
-    ...(excludeRwaRestrictedTokens ? [] : [{ key: 'rwaRestricted' as const }]),
-    {
-      key: 'other',
-      activeDot:
-        !dataKeys.includes('ether') &&
-        !dataKeys.includes('stablecoin') &&
-        !dataKeys.includes('btc'),
-    },
-    {
-      key: 'btc',
-      activeDot:
-        !dataKeys.includes('ether') && !dataKeys.includes('stablecoin'),
-    },
-    { key: 'stablecoin', activeDot: !dataKeys.includes('ether') },
+    { key: 'rwaPublic', activeDot: true },
+    ...(excludeRwaRestrictedTokens
+      ? []
+      : [{ key: 'rwaRestricted' as const, activeDot: true }]),
+    { key: 'other' },
+    { key: 'btc' },
+    { key: 'stablecoin' },
     { key: 'ether' },
   ]
-  // Only drawn series count: an excluded one can still be selected.
-  const visibleCount = seriesKeys.filter(({ key }) =>
-    dataKeys.includes(key),
-  ).length
   const series: ChartSeries<SeriesKey, TokenCategoryTvsChartDataPoint>[] =
     seriesKeys.map(({ key, activeDot }) => ({
       key,
       fill: assetCategoryTvsChartMeta[key].color,
-      stack: visibleCount > 1,
+      stack: true,
       activeDot,
-      hidden: !dataKeys.includes(key),
     }))
 
   // If only one data key is selected we want to change the domain
@@ -144,17 +131,12 @@ export function AssetCategoryTvsChart({
         ariaLabel="Value secured by asset category"
         syncedUntil={syncedUntil}
         yAxis={{
-          domain: visibleCount === 1 ? 'auto' : undefined,
+          domain: 'autoIfSingle',
           format: (value) => formatCurrency(value, unit),
           tickCount,
         }}
         renderTooltip={(row, keys) => (
-          <StackedTvsChartTooltip
-            row={row}
-            keys={keys}
-            unit={unit}
-            meta={assetCategoryTvsChartMeta}
-          />
+          <StackedTvsChartTooltip row={row} keys={keys} unit={unit} />
         )}
       />
     </ChartContainer>

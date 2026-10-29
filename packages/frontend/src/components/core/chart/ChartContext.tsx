@@ -20,13 +20,16 @@ export interface ChartProject {
   iconUrl: string
 }
 
+/** Which of the meta's series are selected, and how to toggle one. */
+export interface ChartInteractiveLegend {
+  dataKeys: string[]
+  onItemClick: (dataKey: string) => void
+  disableOnboarding?: boolean
+}
+
 type ChartContextProps = {
   meta: ChartMeta
-  interactiveLegend?: {
-    dataKeys: string[]
-    onItemClick: (dataKey: string) => void
-    disableOnboarding?: boolean
-  }
+  interactiveLegend?: ChartInteractiveLegend
 }
 
 export const ChartContext = React.createContext<ChartContextProps | null>(null)

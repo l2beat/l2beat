@@ -1,6 +1,5 @@
 import type { Milestone } from '@l2beat/config'
 import {
-  assert,
   formatActivityCount,
   formatInteger,
   UnixTime,
@@ -9,28 +8,14 @@ import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
-  CyanFillGradientDef,
-  CyanStrokeGradientDef,
-} from '~/components/core/chart/defs/CyanGradientDef'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/EthereumGradientDef'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
-import {
-  YellowFillGradientDef,
-  YellowStrokeGradientDef,
-} from '~/components/core/chart/defs/YellowGradientDef'
-import {
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
-  TimeSeriesChart,
-} from '~/components/core/chart/TimeSeriesChart'
+} from '~/components/core/chart/ChartTooltip'
+import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   type ActivityMetric,
@@ -72,14 +57,14 @@ export const RECATEGORISED_ACTIVITY_CHART_META = {
   },
 } satisfies ChartMeta
 
-const SERIES_GRADIENT_ID = {
-  rollups: 'rollups',
-  validiumsAndOptimiums: 'validiums-and-optimiums',
-  others: 'others',
-  ethereum: 'ethereum',
+const SERIES_GRADIENTS = {
+  rollups: CHART_GRADIENTS.pink,
+  validiumsAndOptimiums: CHART_GRADIENTS.cyan,
+  others: CHART_GRADIENTS.yellow,
+  ethereum: CHART_GRADIENTS.ethereum,
 } as const
 
-type SeriesKey = keyof typeof SERIES_GRADIENT_ID
+type SeriesKey = keyof typeof SERIES_GRADIENTS
 
 interface Props {
   data: RecategorisedActivityChartData | undefined
@@ -153,40 +138,25 @@ export function L2RecategorizedActivityChart({
       <TimeSeriesChart
         data={chartData}
         ariaLabel="Activity"
-        margin={{ top: 20, right: 1 }}
         series={(
           ['rollups', 'validiumsAndOptimiums', 'others', 'ethereum'] as const
         ).map((key) => ({
           key,
-          stroke: `url(#${SERIES_GRADIENT_ID[key]}-stroke)`,
-          fill: `url(#${SERIES_GRADIENT_ID[key]}-fill)`,
-          hidden: !dataKeys.includes(key),
+          stroke: SERIES_GRADIENTS[key].stroke,
+          fill: SERIES_GRADIENTS[key].fill,
         }))}
         yAxis={{
           scale: scale === 'symlog' ? scaleSymlog : undefined,
-          domain: dataKeys.length === 1 ? 'auto' : undefined,
+          domain: 'autoIfSingle',
           unit: metric === 'uops' ? ' UOPS' : ' TPS',
         }}
         syncedUntil={data?.syncedUntil}
-        defs={
-          <>
-            <PinkFillGradientDef id="rollups-fill" />
-            <PinkStrokeGradientDef id="rollups-stroke" />
-            <CyanFillGradientDef id="validiums-and-optimiums-fill" />
-            <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
-            <YellowFillGradientDef id="others-fill" />
-            <YellowStrokeGradientDef id="others-stroke" />
-            <EthereumFillGradientDef id="ethereum-fill" />
-            <EthereumStrokeGradientDef id="ethereum-stroke" />
-          </>
-        }
         renderTooltip={(row, keys) => (
           <CustomTooltip
             row={row}
             visibleKeys={keys}
             syncedUntil={data?.syncedUntil}
             metric={metric}
-            chartMeta={chartMeta}
           />
         )}
       />
@@ -199,16 +169,14 @@ function CustomTooltip({
   visibleKeys,
   syncedUntil,
   metric,
-  chartMeta,
 }: {
   row: { timestamp: number } & Record<SeriesKey, number | null>
   visibleKeys: SeriesKey[]
   syncedUntil: number | undefined
   metric: ActivityMetric
-  chartMeta: ChartMeta
 }) {
   const label = row.timestamp
-  // Series without a value at this day are left out, as before.
+  // Series without a value at this day are left out.
   const payload = getTooltipEntries(row, visibleKeys, { skipNull: true })
   if (payload.length === 0) return null
 
@@ -221,32 +189,15 @@ function CustomTooltip({
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
-          {payload.map((entry) => {
-            const config = chartMeta[entry.name as keyof typeof chartMeta]
-            assert(config, 'No config')
-
-            return (
-              <div
-                key={entry.name}
-                className="flex w-full items-center justify-between gap-2"
-              >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
-                  </span>
-                </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value !== null
-                    ? formatActivityCount(entry.value)
-                    : 'No data'}
-                </span>
-              </div>
-            )
-          })}
+          {payload.map((entry) => (
+            <ChartTooltipRow key={entry.name} name={entry.name}>
+              <ChartTooltipValue
+                value={entry.value}
+                format={formatActivityCount}
+                className="tabular-nums"
+              />
+            </ChartTooltipRow>
+          ))}
         </div>
 
         <span className="mt-3 text-heading-16">
@@ -254,32 +205,15 @@ function CustomTooltip({
         </span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
-          {payload.map((entry) => {
-            if (entry.value === null) return null
-            const config = chartMeta[entry.name as keyof typeof chartMeta]
-            assert(config, 'No config')
-            return (
-              <div
-                key={entry.name}
-                className="flex w-full items-center justify-between gap-2"
-              >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
-                  </span>
-                </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < label
-                    ? 'No data'
-                    : formatInteger(entry.value * UnixTime.DAY)}
-                </span>
-              </div>
-            )
-          })}
+          {payload.map((entry) => (
+            <ChartTooltipRow key={entry.name} name={entry.name}>
+              <ChartTooltipValue
+                value={syncedUntil && syncedUntil < label ? null : entry.value}
+                format={(value) => formatInteger(value * UnixTime.DAY)}
+                className="tabular-nums"
+              />
+            </ChartTooltipRow>
+          ))}
         </div>
       </div>
     </ChartTooltipWrapper>

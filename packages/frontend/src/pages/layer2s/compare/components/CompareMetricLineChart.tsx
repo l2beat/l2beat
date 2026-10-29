@@ -1,14 +1,15 @@
 import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
-import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import {
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
-  TimeSeriesChart,
-} from '~/components/core/chart/TimeSeriesChart'
+} from '~/components/core/chart/ChartTooltip'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { CompareProjectEntry } from '~/server/features/layer2s/compare/getCompareProjectEntries'
 import { useCompareSeries } from './CompareSeriesContext'
@@ -101,8 +102,6 @@ export function CompareMetricLineChart({
         meta={chartMeta}
         isLoading={isLoading}
         noDataSourceMessage="Please select at least one project"
-        // Fades the other projects' lines when one is hovered.
-        className="[&_[data-ts-key*='-stroke']]:transition-[stroke-opacity] [&_[data-ts-key*='-stroke']]:duration-200 motion-reduce:[&_[data-ts-key*='-stroke']]:transition-none"
       >
         {/* syncId matches by timestamp, so charts whose data starts at
             different times still line up under a synced hover. */}
@@ -113,11 +112,8 @@ export function CompareMetricLineChart({
           series={projects.map((project) => ({
             key: project.id,
             stroke: chartMeta[project.id]?.color,
-            strokeOpacity:
-              hoveredProjectId !== undefined && hoveredProjectId !== project.id
-                ? 0.2
-                : 1,
           }))}
+          highlight={hoveredProjectId}
           yAxis={{
             tickCount: 4,
             format: formatYAxisLabel,
@@ -150,12 +146,11 @@ function CustomTooltip({
   formatValue: (value: number) => string
   renderTimestamp: (label: number) => ReactNode
 }) {
-  const { meta } = useChart()
   const label = row.timestamp
   const visible = getTooltipEntries(row, keys, { skipNull: true })
   if (visible.length === 0) return null
 
-  const sorted = [...visible].sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
+  const sorted = [...visible].sort((a, b) => b.value - a.value)
   const shown = sorted.slice(0, MAX_TOOLTIP_ROWS)
   const hiddenCount = sorted.length - shown.length
 
@@ -167,28 +162,19 @@ function CustomTooltip({
         </div>
         <div className="mt-2 flex flex-col gap-2">
           {shown.map((entry) => {
-            const config = meta[entry.name]
-            if (!config) return null
             return (
-              <div
+              <ChartTooltipRow
                 key={entry.name}
-                className="flex items-center justify-between gap-x-3"
+                name={entry.name}
+                gap="gap-x-3"
+                wrapLabel={false}
               >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="font-medium text-label-value-14">
-                    {config.label}
-                  </span>
-                </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
-                  {entry.value !== null && entry.value !== undefined
-                    ? formatValue(entry.value)
-                    : 'No data'}
-                </span>
-              </div>
+                <ChartTooltipValue
+                  value={entry.value}
+                  format={formatValue}
+                  className="text-primary tabular-nums"
+                />
+              </ChartTooltipRow>
             )
           })}
           {hiddenCount > 0 && (

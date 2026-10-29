@@ -62,21 +62,13 @@ export function BridgeTypeTvsChart({
   toggleDataKey,
   project,
 }: Props) {
-  // Bottom of the stack first, with a dot only on the top visible one.
-  const series: ChartSeries<SeriesKey, BridgeTypeChartDataPoint>[] = [
-    {
-      key: 'external' as const,
-      activeDot:
-        !dataKeys.includes('canonical') && !dataKeys.includes('native'),
-    },
-    { key: 'native' as const, activeDot: !dataKeys.includes('canonical') },
-    { key: 'canonical' as const },
-  ].map(({ key, activeDot }) => ({
+  // Bottom of the stack first.
+  const series: ChartSeries<SeriesKey, BridgeTypeChartDataPoint>[] = (
+    ['external', 'native', 'canonical'] as const
+  ).map((key) => ({
     key,
     fill: bridgeTypeTvsChartMeta[key].color,
-    stack: dataKeys.length > 1,
-    activeDot,
-    hidden: !dataKeys.includes(key),
+    stack: true,
   }))
 
   // If only one data key is selected we want to change the domain
@@ -101,17 +93,12 @@ export function BridgeTypeTvsChart({
         ariaLabel="Value secured by bridge type"
         syncedUntil={syncedUntil}
         yAxis={{
-          domain: dataKeys.length === 1 ? 'auto' : undefined,
+          domain: 'autoIfSingle',
           format: (value) => formatCurrency(value, unit),
           tickCount,
         }}
         renderTooltip={(row, keys) => (
-          <StackedTvsChartTooltip
-            row={row}
-            keys={keys}
-            unit={unit}
-            meta={bridgeTypeTvsChartMeta}
-          />
+          <StackedTvsChartTooltip row={row} keys={keys} unit={unit} />
         )}
       />
     </ChartContainer>

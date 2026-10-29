@@ -1,6 +1,5 @@
 import type { Milestone } from '@l2beat/config'
 import {
-  assert,
   formatBytes,
   formatCurrency,
   formatNumber,
@@ -13,11 +12,16 @@ import type {
   ChartMeta,
   ChartProject,
 } from '~/components/core/chart/ChartContext'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import {
+  ChartTooltipRow,
+  ChartTooltipValue,
+  ChartTooltipWrapper,
+  getTooltipEntries,
+  sumEntries,
+} from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import {
   type ChartSeries,
-  ChartTooltipWrapper,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -117,17 +121,11 @@ export function CostsChart({
 
   const resolution = rangeToResolution(range)
 
-  const topCostKey = COST_KEYS_BOTTOM_UP.findLast(
-    (key) => dataKeys.includes(key) && chartMeta[key],
-  )
   const series: ChartSeries<SeriesKey, CostsChartDataPoint>[] = [
     ...COST_KEYS_BOTTOM_UP.filter((key) => chartMeta[key]).map((key) => ({
       key,
       fill: chartMeta[key]?.color,
       stack: true,
-      // One dot, on top of the stack.
-      activeDot: key === topCostKey,
-      hidden: !dataKeys.includes(key),
     })),
     ...(chartMeta.ethereum
       ? [
@@ -135,7 +133,6 @@ export function CostsChart({
             key: DATA_POSTED_KEY,
             stroke: chartMeta.ethereum.color,
             axis: 'right' as const,
-            hidden: !dataKeys.includes(DATA_POSTED_KEY),
           },
         ]
       : []),
@@ -173,7 +170,6 @@ export function CostsChart({
             keys={keys}
             unit={unit}
             resolution={resolution}
-            chartMeta={chartMeta}
           />
         )}
       />
@@ -186,25 +182,19 @@ function CustomTooltip({
   keys,
   unit,
   resolution,
-  chartMeta,
 }: {
   row: CostsChartDataPoint
   keys: SeriesKey[]
   unit: CostsUnit
   resolution: ChartResolution
-  chartMeta: ChartMeta
 }) {
   const label = row.timestamp
   // Top of the stack first; rows without a value are left out.
-  const actualPayload = [...keys].reverse().flatMap((name) => {
-    const value = row[name]
-    return value !== null && value !== undefined ? [{ name, value }] : []
+  const actualPayload = getTooltipEntries(row, [...keys].reverse(), {
+    skipNull: true,
   })
   const costPayload = actualPayload.filter((p) => !isDataPostedKey(p.name))
-  const total = costPayload.reduce<number | null>(
-    (acc, curr) => (acc ?? 0) + curr.value,
-    null,
-  )
+  const total = sumEntries(costPayload)
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
@@ -225,31 +215,18 @@ function CustomTooltip({
           </>
         )}
         <div className="mt-2 flex flex-col gap-2">
-          {actualPayload.map((entry) => {
-            const config = chartMeta[entry.name as keyof typeof chartMeta]
-            assert(config, 'No config')
-            return (
-              <div
-                key={entry.name}
-                className="flex items-center justify-between gap-x-2"
-              >
-                <span className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
-                  </span>
-                </span>
-                <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {isDataPostedKey(entry.name)
-                    ? formatBytes(entry.value)
-                    : formatCostValue(entry.value, unit, 'total')}
-                </span>
-              </div>
-            )
-          })}
+          {actualPayload.map((entry) => (
+            <ChartTooltipRow key={entry.name} name={entry.name}>
+              <ChartTooltipValue
+                value={entry.value}
+                format={
+                  isDataPostedKey(entry.name)
+                    ? formatBytes
+                    : (value) => formatCostValue(value, unit, 'total')
+                }
+              />
+            </ChartTooltipRow>
+          ))}
         </div>
       </div>
     </ChartTooltipWrapper>

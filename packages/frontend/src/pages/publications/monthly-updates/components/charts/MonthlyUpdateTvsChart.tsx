@@ -1,12 +1,11 @@
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { useId } from 'react'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+import { fillGradient } from '~/components/core/chart/gradients'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -27,7 +26,6 @@ export function MonthlyUpdateTvsChart({
   to: UnixTime
 }) {
   const trpc = useTRPC()
-  const id = useId()
   const { data, isLoading } = useQuery(
     trpc.tvs.chart.queryOptions({
       range: [from, to],
@@ -77,27 +75,21 @@ export function MonthlyUpdateTvsChart({
         <TimeSeriesChart
           data={chartData}
           ariaLabel="Total Value Secured"
-          margin={{ top: 20, right: 0 }}
+          margin={{ right: 0 }}
           series={[
             {
               key: 'value',
               stroke: 'var(--project-primary)',
-              fill: `url(#${id})`,
+              fill: fillGradient(
+                'var(--project-primary)',
+                'var(--project-secondary)',
+              ),
             },
           ]}
           yAxis={{
             format: (value) => formatCurrency(value, 'usd'),
           }}
           syncedUntil={data?.syncedUntil}
-          defs={
-            <CustomFillGradientDef
-              id={id}
-              colors={{
-                primary: 'var(--project-primary)',
-                secondary: 'var(--project-secondary)',
-              }}
-            />
-          }
           renderTooltip={(row, keys) => (
             <TvsCustomTooltip row={row} keys={keys} unit="usd" />
           )}

@@ -1,25 +1,14 @@
 import type { ChartScene } from '@tanstack/charts'
 import {
-  type KeyboardEvent,
   type PointerEvent,
   type ReactNode,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from 'react'
+import { placeBeside, useChartTooltip } from './useChartTooltip'
 
-const TOOLTIP_OFFSET = 16
-/** The least room left between a tooltip and the window's edge. */
-const TOOLTIP_WINDOW_MARGIN = 8
 const ACTIVE_DOT_RADIUS = 3
-
-interface Active {
-  index: number
-  /** Where the tooltip hangs from, in overlay pixels. */
-  x: number
-  y: number
-}
 
 export interface OverlayDot<T> {
   key: string
@@ -74,49 +63,17 @@ export function ChartHoverOverlay<T>({
   syncId?: string
   renderTooltip: (row: T) => ReactNode
 }) {
-  const [active, setActive] = useState<Active | null>(null)
-  const rootRef = useRef<HTMLDivElement>(null)
-  const tooltipRef = useRef<HTMLDivElement>(null)
   const [self] = useState(() => ({}))
-
   const scene = sceneRef.current
-  const row = active ? rows[active.index] : undefined
 
-  function placeTooltip(x: number, y: number) {
-    const tooltip = tooltipRef.current
-    const root = rootRef.current
-    const plot = sceneRef.current?.chart
-    if (!tooltip || !root || !plot) return
-    const rootLeft = root.getBoundingClientRect().left
-    const width = tooltip.offsetWidth
-    const onLeft = x > plot.x + plot.width / 2
-    let left = onLeft ? x - TOOLTIP_OFFSET - width : x + TOOLTIP_OFFSET
-    const max = document.documentElement.clientWidth - TOOLTIP_WINDOW_MARGIN
-    if (rootLeft + left + width > max) left = max - width - rootLeft
-    if (rootLeft + left < TOOLTIP_WINDOW_MARGIN) {
-      left = TOOLTIP_WINDOW_MARGIN - rootLeft
+  function broadcast(index: number | null) {
+    if (!syncId) return
+    const row = index === null ? undefined : rows[index]
+    const value = row === undefined ? null : getX(row)
+    for (const listener of syncListeners.get(syncId) ?? []) {
+      listener(value, self)
     }
-    tooltip.style.transform = `translate(${left}px, ${y + TOOLTIP_OFFSET}px)`
   }
-
-  // A new row means new tooltip content, so it is measured and placed after
-  // React has rendered it, before the frame is painted.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: placeTooltip reads refs
-  useLayoutEffect(() => {
-    if (active) placeTooltip(active.x, active.y)
-  }, [active])
-
-  // A tap leaves a touch tooltip open, and not every browser focuses the
-  // overlay on tap, so blur alone cannot close it.
-  const isActive = active !== null
-  useEffect(() => {
-    if (!isActive) return
-    const closeOutside = (event: globalThis.PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setActive(null)
-    }
-    document.addEventListener('pointerdown', closeOutside)
-    return () => document.removeEventListener('pointerdown', closeOutside)
-  }, [isActive])
 
   const latest = useRef({ rows, getX, dots })
   latest.current = { rows, getX, dots }
@@ -139,6 +96,18 @@ export function ChartHoverOverlay<T>({
     }
   }
 
+  const tooltip = useChartTooltip({
+    count: scene ? rows.length : 0,
+    anchorOf,
+    place: (anchor, size) =>
+      sceneRef.current
+        ? placeBeside(sceneRef.current.chart)(anchor, size)
+        : anchor,
+    onSelect: broadcast,
+  })
+  const { active, setActive } = tooltip
+  const row = active ? rows[active.index] : undefined
+
   // A resize lays the chart out again; an open tooltip (left by a tap or
   // the keyboard) follows its row.
   const activeRef = useRef(active)
@@ -154,6 +123,7 @@ export function ChartHoverOverlay<T>({
       }),
     [sceneRef],
   )
+
   useEffect(() => {
     if (!syncId) return
     const listeners = syncListeners.get(syncId) ?? new Set()
@@ -183,30 +153,7 @@ export function ChartHoverOverlay<T>({
     return () => {
       listeners.delete(listener)
     }
-  }, [syncId, self, sceneRef])
-
-  function broadcast(index: number | null) {
-    if (!syncId) return
-    const row = index === null ? undefined : rows[index]
-    const value = row === undefined ? null : getX(row)
-    for (const listener of syncListeners.get(syncId) ?? []) {
-      listener(value, self)
-    }
-  }
-
-  function activate(index: number, x: number, y: number) {
-    if (index === active?.index) {
-      placeTooltip(x, y)
-      return
-    }
-    setActive({ index, x, y })
-    broadcast(index)
-  }
-
-  function deactivate() {
-    setActive(null)
-    broadcast(null)
-  }
+  }, [syncId, self, sceneRef, setActive])
 
   function onPointerMove(event: PointerEvent<HTMLDivElement>) {
     const invert = sceneRef.current?.scales.x?.invert
@@ -216,35 +163,7 @@ export function ChartHoverOverlay<T>({
     const rect = event.currentTarget.getBoundingClientRect()
     const x = event.clientX - rect.left
     const y = event.clientY - rect.top
-    activate(nearestIndex(rows, getX, Number(invert(x))), x, y)
-  }
-
-  function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    if (event.key === 'Escape' && active) {
-      event.preventDefault()
-      deactivate()
-      return
-    }
-    // Modified arrows are the browser's, e.g. Alt+Left goes back.
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
-      return
-    }
-    if (!sceneRef.current || rows.length === 0) return
-    const last = rows.length - 1
-    let index: number
-    if (event.key === 'Home') index = 0
-    else if (event.key === 'End') index = last
-    else {
-      const step =
-        event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0
-      if (step === 0) return
-      // The first press starts from the end it points away from.
-      const from = active ? active.index : step > 0 ? -1 : rows.length
-      index = Math.min(last, Math.max(0, from + step))
-    }
-    event.preventDefault()
-    const { x, y } = anchorOf(index)
-    activate(index, x, y)
+    tooltip.select(nearestIndex(rows, getX, Number(invert(x))), { x, y })
   }
 
   const xScale = scene?.scales.x
@@ -253,24 +172,13 @@ export function ChartHoverOverlay<T>({
 
   return (
     <div
-      ref={rootRef}
-      role="application"
+      ref={tooltip.rootRef}
+      {...tooltip.interactiveProps}
       // The chart's image already carries the bare name.
       aria-label={`${ariaLabel}: arrow keys show values`}
-      tabIndex={0}
-      data-chart-hover=""
       className="absolute inset-0 outline-none"
       onPointerMove={onPointerMove}
       onPointerDown={onPointerMove}
-      onPointerLeave={(event) => {
-        // A lifted finger also leaves; the tooltip stays until a tap
-        // elsewhere blurs the chart.
-        if (event.pointerType !== 'touch') deactivate()
-      }}
-      // A swipe that turns into a scroll is cancelled, not a tap.
-      onPointerCancel={deactivate}
-      onKeyDown={onKeyDown}
-      onBlur={deactivate}
     >
       {row !== undefined && active && plot && (
         <>
@@ -300,12 +208,7 @@ export function ChartHoverOverlay<T>({
           })}
         </>
       )}
-      <div
-        ref={tooltipRef}
-        data-chart-tooltip=""
-        className="pointer-events-none absolute top-0 left-0 z-110"
-        style={{ visibility: row !== undefined ? 'visible' : 'hidden' }}
-      >
+      <div {...tooltip.tooltipProps}>
         {row !== undefined && renderTooltip(row)}
       </div>
     </div>

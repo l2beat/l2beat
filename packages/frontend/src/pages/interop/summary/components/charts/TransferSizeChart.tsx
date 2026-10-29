@@ -1,21 +1,17 @@
-import { assert, formatCurrency, formatInteger } from '@l2beat/shared-pure'
-import {
-  type KeyboardEvent,
-  type PointerEvent,
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { type PointerEvent, useId, useRef } from 'react'
 import {
   ChartContext,
   type ChartMeta,
-  useChart,
 } from '~/components/core/chart/ChartContext'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { ChartLegend } from '~/components/core/chart/ChartLegend'
+import { ChartTooltipRow } from '~/components/core/chart/ChartTooltip'
+import {
+  type Anchor,
+  TOOLTIP_OFFSET,
+  useChartTooltip,
+} from '~/components/core/chart/useChartTooltip'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { OverflowWrapper } from '~/components/core/OverflowWrapper'
 import { Skeleton } from '~/components/core/Skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { Logo } from '~/components/Logo'
@@ -72,21 +68,11 @@ const AXIS_HEIGHT = 30
 const TICK_OFFSET = 8
 const BAR_SIZE = 10
 const MAX_BAR_SIZE = 24
-const TOOLTIP_OFFSET = 16
-/** The least room left between a tooltip and the window's edge. */
-const TOOLTIP_WINDOW_MARGIN = 8
 
 const gridClassName =
   'stroke-primary/25 dark:stroke-primary/40 [stroke-dasharray:5_5]'
 // The page's y tick overrides, which also restyled the category labels.
 const yTickClassName = 'fill-secondary font-bold! text-subtitle-11'
-
-interface Active {
-  index: number
-  /** Where the tooltip hangs from, in chart pixels. */
-  x: number
-  y: number
-}
 
 export function TransferSizeChart({
   data,
@@ -137,12 +123,25 @@ function TransferSizeBars({
   categoryAxisWidth: number
 }) {
   const clipId = useId()
-  const boxRef = useRef<HTMLDivElement>(null)
   const legendRef = useRef<HTMLDivElement>(null)
-  const tooltipRef = useRef<HTMLDivElement>(null)
-  const box = useResizeObserver({ ref: boxRef })
   const legend = useResizeObserver({ ref: legendRef })
-  const [active, setActive] = useState<Active | null>(null)
+
+  // Its callbacks run on events, after the layout below is computed.
+  const tooltip = useChartTooltip({
+    count: data.length,
+    anchorOf: (index) => {
+      // The band's middle, half way along the value axis.
+      const center = bandStart(index) + band / 2
+      const middle = horizontal
+        ? plot.x + plot.width / 2
+        : plot.y + plot.height / 2
+      return horizontal ? { x: middle, y: center } : { x: center, y: middle }
+    },
+    place: (anchor, size) => placeInPlot(anchor, size, plot, horizontal),
+    arrowKeys: horizontal ? 'upDown' : 'leftRight',
+  })
+  const box = useResizeObserver({ ref: tooltip.rootRef })
+  const { active } = tooltip
 
   const width = Math.round(box.width ?? 0)
   const height = Math.round(box.height ?? 0)
@@ -175,64 +174,6 @@ function TransferSizeBars({
 
   const row = active ? data[active.index] : undefined
 
-  // After every render: the tooltip follows the pointer, so it is measured
-  // and placed once its content is in, before the frame is painted.
-  useLayoutEffect(() => {
-    const tooltip = tooltipRef.current
-    const root = boxRef.current
-    if (!active || !tooltip || !root) return
-    const w = tooltip.offsetWidth
-    const h = tooltip.offsetHeight
-    const onLeft = active.x > plot.x + plot.width / 2
-    const positiveX = active.x + TOOLTIP_OFFSET
-    const negativeX = active.x - w - TOOLTIP_OFFSET
-    const positiveY = active.y + TOOLTIP_OFFSET
-    const negativeY = active.y - h - TOOLTIP_OFFSET
-    let left: number
-    let top: number
-    if (horizontal) {
-      // Free to leave the plot sideways but not up or down.
-      left = onLeft ? negativeX : positiveX
-      top =
-        positiveY + h > plot.y + plot.height
-          ? Math.max(negativeY, plot.y)
-          : Math.max(positiveY, plot.y)
-    } else {
-      // Free to leave the plot up or down but not sideways.
-      if (onLeft) {
-        left =
-          negativeX < plot.x
-            ? Math.max(positiveX, plot.x)
-            : Math.max(negativeX, plot.x)
-      } else {
-        left =
-          positiveX + w > plot.x + plot.width
-            ? Math.max(negativeX, plot.x)
-            : Math.max(positiveX, plot.x)
-      }
-      top = positiveY
-    }
-    // Nor may it leave the window.
-    const rootLeft = root.getBoundingClientRect().left
-    const max = document.documentElement.clientWidth - TOOLTIP_WINDOW_MARGIN
-    if (rootLeft + left + w > max) left = max - w - rootLeft
-    if (rootLeft + left < TOOLTIP_WINDOW_MARGIN) {
-      left = TOOLTIP_WINDOW_MARGIN - rootLeft
-    }
-    tooltip.style.transform = `translate(${left}px, ${top}px)`
-  })
-
-  // A tap leaves a touch tooltip open until a tap elsewhere.
-  const isActive = active !== null
-  useEffect(() => {
-    if (!isActive) return
-    const closeOutside = (event: globalThis.PointerEvent) => {
-      if (!boxRef.current?.contains(event.target as Node)) setActive(null)
-    }
-    document.addEventListener('pointerdown', closeOutside)
-    return () => document.removeEventListener('pointerdown', closeOutside)
-  }, [isActive])
-
   function onPointerMove(event: PointerEvent<SVGSVGElement>) {
     const rect = event.currentTarget.getBoundingClientRect()
     const x = event.clientX - rect.left
@@ -243,43 +184,21 @@ function TransferSizeBars({
       y >= plot.y &&
       y <= plot.y + plot.height
     if (!inPlot || band <= 0) {
-      setActive(null)
+      tooltip.clear()
       return
     }
     const along = horizontal ? y - plot.y : x - plot.x
     const index = Math.min(count - 1, Math.floor(along / band))
+    // The tooltip follows the pointer along the band, centred across it.
     const center = bandStart(index) + band / 2
-    setActive(horizontal ? { index, x, y: center } : { index, x: center, y })
-  }
-
-  function onKeyDown(event: KeyboardEvent<SVGSVGElement>) {
-    // Modified arrows are the browser's, e.g. Alt+Left goes back.
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
-      return
-    }
-    const forward = horizontal ? 'ArrowDown' : 'ArrowRight'
-    const back = horizontal ? 'ArrowUp' : 'ArrowLeft'
-    const step = event.key === forward ? 1 : event.key === back ? -1 : 0
-    if (step === 0 || count === 0 || band <= 0) return
-    event.preventDefault()
-    const from = active ? active.index : step > 0 ? -1 : count
-    const index = Math.min(count - 1, Math.max(0, from + step))
-    const center = bandStart(index) + band / 2
-    const middle = horizontal
-      ? plot.x + plot.width / 2
-      : plot.y + plot.height / 2
-    setActive(
-      horizontal
-        ? { index, x: middle, y: center }
-        : { index, x: center, y: middle },
-    )
+    tooltip.select(index, horizontal ? { x, y: center } : { x: center, y })
   }
 
   const hasSize = width > 0 && height > 0
 
   return (
     <div
-      ref={boxRef}
+      ref={tooltip.rootRef}
       className={cn(
         'relative flex aspect-video size-full select-none justify-center text-xs outline-none md:aspect-auto',
         !horizontal && 'min-h-[250px]!',
@@ -290,18 +209,10 @@ function TransferSizeBars({
           width={width}
           height={height}
           className="absolute inset-0 block outline-none"
-          role="application"
+          {...tooltip.interactiveProps}
           aria-label="Protocol transfer size"
-          tabIndex={0}
-          data-chart-hover=""
-          onKeyDown={onKeyDown}
-          onBlur={() => setActive(null)}
           onPointerMove={onPointerMove}
           onPointerDown={onPointerMove}
-          onPointerLeave={(event) => {
-            if (event.pointerType !== 'touch') setActive(null)
-          }}
-          onPointerCancel={() => setActive(null)}
         >
           <defs>
             <clipPath id={clipId}>
@@ -319,12 +230,12 @@ function TransferSizeBars({
               {...(horizontal
                 ? {
                     x: plot.x + 0.5,
-                    y: active.y - band / 2,
+                    y: bandStart(active.index),
                     width: plot.width - 1,
                     height: band,
                   }
                 : {
-                    x: active.x - band / 2,
+                    x: bandStart(active.index),
                     y: plot.y + 0.5,
                     width: band,
                     height: plot.height - 1,
@@ -472,13 +383,12 @@ function TransferSizeBars({
           ...(horizontal ? { bottom: margin.bottom } : { top: margin.top }),
         }}
       >
-        <Legend verticalAlign={horizontal ? 'bottom' : 'top'} />
+        <ChartLegend
+          align={horizontal ? 'center' : 'start'}
+          className={cn('pt-0', !horizontal && 'pb-4 md:pb-8')}
+        />
       </div>
-      <div
-        ref={tooltipRef}
-        className="pointer-events-none absolute top-0 left-0 z-110"
-        style={{ visibility: row ? 'visible' : 'hidden' }}
-      >
+      <div {...tooltip.tooltipProps}>
         {row && <CustomTooltip row={row} horizontal={horizontal} />}
       </div>
     </div>
@@ -504,41 +414,39 @@ function getBarPosition(band: number, horizontal: boolean) {
   return { offset: gap + (originalSize - size) / 2, size }
 }
 
-/** The chart legend's markup, placed above or below the bars. */
-function Legend({ verticalAlign }: { verticalAlign: 'top' | 'bottom' }) {
-  const contentRef = useRef<HTMLDivElement>(null)
-  const { meta } = useChart()
-  return (
-    <div className={cn('relative', verticalAlign === 'top' && 'pb-4 md:pb-8')}>
-      <div
-        className={cn(
-          'flex w-max max-w-full items-center',
-          verticalAlign === 'bottom' && 'mx-auto',
-        )}
-      >
-        <OverflowWrapper childrenRef={contentRef} className="min-w-0">
-          <div className="flex h-3.5 w-max items-center gap-2" ref={contentRef}>
-            {Object.entries(meta).map(([key, config]) =>
-              config ? (
-                <div
-                  key={key}
-                  className="group/legend-item flex items-center gap-[3px] transition-opacity [&>svg]:text-secondary"
-                >
-                  <ChartDataIndicator
-                    type={config.indicatorType}
-                    backgroundColor={config.color}
-                  />
-                  <span className="text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity">
-                    {config.legendLabel ?? config.label}
-                  </span>
-                </div>
-              ) : null,
-            )}
-          </div>
-        </OverflowWrapper>
-      </div>
-    </div>
-  )
+/**
+ * Beside the anchor like other charts, but the vertical chart's tooltip
+ * stays within the plot sideways and the horizontal one up and down.
+ */
+function placeInPlot(
+  anchor: Anchor,
+  size: { width: number; height: number },
+  plot: { x: number; y: number; width: number; height: number },
+  horizontal: boolean,
+): Anchor {
+  const { width: w, height: h } = size
+  const onLeft = anchor.x > plot.x + plot.width / 2
+  const positiveX = anchor.x + TOOLTIP_OFFSET
+  const negativeX = anchor.x - w - TOOLTIP_OFFSET
+  const positiveY = anchor.y + TOOLTIP_OFFSET
+  const negativeY = anchor.y - h - TOOLTIP_OFFSET
+  if (horizontal) {
+    return {
+      x: onLeft ? negativeX : positiveX,
+      y:
+        positiveY + h > plot.y + plot.height
+          ? Math.max(negativeY, plot.y)
+          : Math.max(positiveY, plot.y),
+    }
+  }
+  const x = onLeft
+    ? negativeX < plot.x
+      ? Math.max(positiveX, plot.x)
+      : Math.max(negativeX, plot.x)
+    : positiveX + w > plot.x + plot.width
+      ? Math.max(negativeX, plot.x)
+      : Math.max(positiveX, plot.x)
+  return { x, y: positiveY }
 }
 
 const percentageToCountKey: Record<
@@ -559,8 +467,6 @@ function CustomTooltip({
   row: TransferSizeDataPoint
   horizontal: boolean
 }) {
-  const { meta } = useChart()
-
   const totalTransfers =
     data.countUnder100 +
     data.count100To1K +
@@ -589,28 +495,19 @@ function CustomTooltip({
           </span>
         </div>
         {orderedBuckets.map((bucket) => {
-          const configEntry = meta[bucket]
-          assert(configEntry, 'No config')
           const count = data[percentageToCountKey[bucket]]
 
           return (
-            <div
+            <ChartTooltipRow
               key={bucket}
-              className="flex items-center justify-between gap-x-6"
+              name={bucket}
+              gap="gap-x-6"
+              wrapLabel={false}
             >
-              <div className="flex items-center gap-1">
-                <ChartDataIndicator
-                  backgroundColor={configEntry.color}
-                  type={configEntry.indicatorType}
-                />
-                <span className="font-medium text-label-value-14">
-                  {configEntry.label}
-                </span>
-              </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
                 {formatInteger(count)} transfers
               </span>
-            </div>
+            </ChartTooltipRow>
           )
         })}
       </div>

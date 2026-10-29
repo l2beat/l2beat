@@ -3,7 +3,6 @@ import { assetCategoryTvsChartMeta } from '~/components/chart/tvs/stacked/AssetC
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { DonutChart } from '~/components/core/chart/DonutChart'
-import { PieChartTooltip } from '~/components/core/chart/PieChartTooltip'
 import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
@@ -36,27 +35,18 @@ export function EcosystemTvsByTokenType({
     ? withoutRwaRestricted
     : withRwaRestricted
 
-  const chartData = useMemo(() => {
-    return tokenTypeOrder
-      .map((tokenType) => ({
-        tokenType,
-        tvs: tvsByTokenType[tokenType],
-        fill: chartMeta[tokenType].color,
-      }))
-      .filter((data) => data.tvs > 0)
-  }, [tvsByTokenType])
-
-  const pieData = useMemo(
+  const chartData = useMemo(
     () =>
-      chartData.map((data) => ({
-        name: data.tokenType,
-        value: data.tvs,
-        fill: data.fill,
-      })),
-    [chartData],
+      tokenTypeOrder
+        .map((tokenType) => ({
+          name: tokenType,
+          value: tvsByTokenType[tokenType],
+        }))
+        .filter((entry) => entry.value > 0),
+    [tvsByTokenType],
   )
 
-  const totalTvs = chartData.reduce((acc, curr) => acc + curr.tvs, 0)
+  const totalTvs = chartData.reduce((acc, curr) => acc + curr.value, 0)
 
   return (
     <EcosystemWidget className={className}>
@@ -72,20 +62,20 @@ export function EcosystemTvsByTokenType({
           <tbody>
             {chartData.map((data) => {
               return (
-                <tr key={data.tokenType}>
+                <tr key={data.name}>
                   <td className="pr-2">
                     <div className="flex items-center gap-2">
                       <ChartDataIndicator
-                        backgroundColor={data.fill}
+                        backgroundColor={chartMeta[data.name].color}
                         type={{ shape: 'square' }}
                       />
                       <div className="font-medium text-xs">
-                        {chartMeta[data.tokenType].label}
+                        {chartMeta[data.name].label}
                       </div>
                     </div>
                   </td>
                   <td className="font-medium text-secondary text-xs">
-                    {formatPercent(data.tvs / totalTvs)}
+                    {formatPercent(data.value / totalTvs)}
                   </td>
                 </tr>
               )
@@ -95,30 +85,12 @@ export function EcosystemTvsByTokenType({
         <DonutChart
           ariaLabel="TVS breakdown by token type"
           meta={chartMeta}
-          data={pieData}
+          data={chartData}
           className="aspect-square h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
           innerRadius={breakpoint === 'xs' ? 24 : 35}
           outerRadius={breakpoint === 'xs' ? 58 : 70}
           tooltipPosition={breakpoint === 'xs' ? { x: -44, y: -46 } : undefined}
-          renderTooltip={(entry) => <PieChartTooltip entry={entry} />}
-          center={
-            <text x="50%" y="50%" textAnchor="middle">
-              <tspan
-                x="50%"
-                dy={-1}
-                className="fill-secondary font-medium text-2xs leading-none"
-              >
-                Token
-              </tspan>
-              <tspan
-                x="50%"
-                dy={12}
-                className="fill-secondary font-medium text-2xs leading-none"
-              >
-                types
-              </tspan>
-            </text>
-          }
+          centerLabel={{ lines: ['Token', 'types'] }}
         />
       </div>
     </EcosystemWidget>

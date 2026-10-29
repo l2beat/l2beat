@@ -2,18 +2,17 @@ import type { Milestone } from '@l2beat/config'
 import { formatInteger } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
-import {
-  type ChartMeta,
-  type ChartProject,
-  useChart,
+import type {
+  ChartMeta,
+  ChartProject,
 } from '~/components/core/chart/ChartContext'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import {
+  ChartTooltipRow,
   ChartTooltipWrapper,
   getTooltipEntries,
-  TimeSeriesChart,
-} from '~/components/core/chart/TimeSeriesChart'
+} from '~/components/core/chart/ChartTooltip'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import type { PrivacyAnonymitySetChartResponse } from '~/server/features/privacy/getPrivacyAnonymitySetChart'
 import { formatTimestamp } from '~/utils/dates'
 
@@ -83,8 +82,6 @@ export function PrivacyAnonymitySetChart(props: Props) {
           curve: 'monotone',
           stroke: meta[item.id]?.color,
           strokeWidth: 2,
-          connectNulls: true,
-          hidden: !dataKeys.includes(item.id),
         }))}
         syncedUntil={props.type === 'history' ? props.syncedUntil : undefined}
         yAxis={{
@@ -135,57 +132,29 @@ function AnonymitySetTooltip({
   keys: string[]
   formatTitle: (label: number) => string
 }) {
-  const { meta } = useChart()
-
   return (
     <ChartTooltipWrapper>
       <div className="mb-2 font-medium text-label-value-14 text-secondary">
         {formatTitle(row.timestamp)}
       </div>
       <div className="flex flex-col gap-2">
-        {sortAnonymitySetTooltipEntries(getTooltipEntries(row, keys)).map(
-          (entry) => {
-            const item = meta[entry.name]
-            if (!item) return null
-
+        {getTooltipEntries(row, keys, { skipNull: true })
+          .toSorted((a, b) => b.value - a.value)
+          .map((entry) => {
             return (
-              <div
+              <ChartTooltipRow
                 key={entry.name}
-                className="flex items-center justify-between gap-x-6"
+                name={entry.name}
+                gap="gap-x-6"
+                wrapLabel={false}
               >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    type={item.indicatorType}
-                    backgroundColor={item.color}
-                  />
-                  <span className="font-medium text-label-value-14">
-                    {item.label}
-                  </span>
-                </div>
                 <span className="font-medium text-label-value-15 tabular-nums">
-                  {formatInteger(Number(entry.value ?? 0))}
+                  {formatInteger(entry.value)}
                 </span>
-              </div>
+              </ChartTooltipRow>
             )
-          },
-        )}
+          })}
       </div>
     </ChartTooltipWrapper>
   )
-}
-
-export function sortAnonymitySetTooltipEntries<T extends { value?: unknown }>(
-  entries: readonly T[],
-): T[] {
-  return entries.toSorted((a, b) => {
-    const aValue = toFiniteNumber(a.value)
-    const bValue = toFiniteNumber(b.value)
-
-    return bValue - aValue
-  })
-}
-
-function toFiniteNumber(value: unknown): number {
-  const numericValue = Number(value ?? 0)
-  return Number.isFinite(numericValue) ? numericValue : Number.NEGATIVE_INFINITY
 }

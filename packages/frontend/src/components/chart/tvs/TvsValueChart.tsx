@@ -1,21 +1,17 @@
 import type { Milestone } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
-import {
-  type ChartMeta,
-  type ChartProject,
-  useChart,
+import type {
+  ChartMeta,
+  ChartProject,
 } from '~/components/core/chart/ChartContext'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
-import {
+  ChartTooltipRow,
   ChartTooltipWrapper,
   getTooltipEntries,
-  TimeSeriesChart,
-} from '~/components/core/chart/TimeSeriesChart'
+} from '~/components/core/chart/ChartTooltip'
+import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 
@@ -62,8 +58,8 @@ export function TvsValueChart({
         series={[
           {
             key: 'value',
-            fill: 'url(#tvs-value-fill)',
-            stroke: 'url(#tvs-value-stroke)',
+            fill: CHART_GRADIENTS.pink.fill,
+            stroke: CHART_GRADIENTS.pink.stroke,
           },
         ]}
         yAxis={{
@@ -71,12 +67,6 @@ export function TvsValueChart({
           format: (value) => formatCurrency(value, 'usd'),
         }}
         syncedUntil={syncedUntil}
-        defs={
-          <>
-            <PinkFillGradientDef id="tvs-value-fill" />
-            <PinkStrokeGradientDef id="tvs-value-stroke" />
-          </>
-        }
         renderTooltip={(row, keys) => (
           <TvsValueChartTooltip row={row} keys={keys} />
         )}
@@ -92,7 +82,6 @@ function TvsValueChartTooltip({
   row: TvsValueChartDataPoint
   keys: 'value'[]
 }) {
-  const { meta } = useChart()
   const payload = getTooltipEntries(row, keys)
 
   return (
@@ -105,29 +94,19 @@ function TvsValueChartTooltip({
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
         {payload.map((entry) => {
-          const config = meta[entry.name]
-          if (!config) return null
-
           return (
-            <div
+            <ChartTooltipRow
               key={entry.name}
-              className="flex items-center justify-between gap-x-6"
+              name={entry.name}
+              gap="gap-x-6"
+              wrapLabel={false}
             >
-              <div className="flex items-center gap-1">
-                <ChartDataIndicator
-                  type={config.indicatorType}
-                  backgroundColor={config.color}
-                />
-                <span className="font-medium text-label-value-14">
-                  {config.label}
-                </span>
-              </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
                 {entry.value === null
                   ? 'No data'
                   : formatCurrency(entry.value, 'usd')}
               </span>
-            </div>
+            </ChartTooltipRow>
           )
         })}
       </div>

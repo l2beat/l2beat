@@ -4,10 +4,12 @@ import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
-  type ChartReferenceDot,
-  type ChartSeries,
   ChartTooltipWrapper,
   getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
+import {
+  type ChartReferenceDot,
+  type ChartSeries,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
 import type {
@@ -120,7 +122,6 @@ export function InclusionDelayChart({
     <ChartContainer
       data={data}
       meta={chartMeta}
-      isLoading={false}
       legend
       legendLeading={
         entityMarkerMode === 'detailed' &&
@@ -150,7 +151,7 @@ export function InclusionDelayChart({
         }}
         yAxis={{
           scale: yAxisScale === 'log' ? scaleLog : undefined,
-          domain: () => yDomain,
+          domain: yDomain,
           ticks:
             yAxisScale === 'log'
               ? getLogDelayTicks(yDomain[0], yDomain[1])
@@ -182,7 +183,6 @@ function InclusionDelayTooltip({
 }) {
   const { meta } = useChart()
   const { censoringFraction } = row
-  const rows = getTooltipEntries(row, keys).filter((entry) => meta[entry.name])
 
   return (
     <ChartTooltipWrapper>
@@ -192,7 +192,7 @@ function InclusionDelayTooltip({
           transaction inclusion delay of
         </div>
         <div className="flex flex-col gap-1">
-          {rows.map((entry) => {
+          {getTooltipEntries(row, keys).map((entry) => {
             const dataKey = entry.name
             const item = meta[dataKey]
             if (!item) return null
@@ -295,11 +295,6 @@ function formatDelayDays(days: number) {
   return formatSeconds(seconds)
 }
 
-function formatTooltipDelay(value: unknown) {
-  if (value === null || value === undefined) return 'no inclusion'
-
-  const days = Number(value)
-  if (!Number.isFinite(days)) return 'no inclusion'
-
-  return formatDelayDays(days)
+function formatTooltipDelay(days: number | null) {
+  return days === null ? 'no inclusion' : formatDelayDays(days)
 }

@@ -3,7 +3,6 @@ import { StageBadge } from '~/components/badge/StageBadge'
 import { CssVariables } from '~/components/CssVariables'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { DonutChart } from '~/components/core/chart/DonutChart'
-import { PieChartTooltip } from '~/components/core/chart/PieChartTooltip'
 import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
@@ -61,22 +60,18 @@ export function EcosystemTvsByStage({
     {
       name: 'stage0',
       value: tvsByStage['Stage 0'].tvs,
-      fill: '#F94A24',
     },
     {
       name: 'stage1',
       value: tvsByStage['Stage 1'].tvs,
-      fill: '#FFC61B',
     },
     {
       name: 'stage2',
       value: tvsByStage['Stage 2'].tvs,
-      fill: '#125D19',
     },
     {
       name: 'notApplicable',
       value: tvsByStage.NotApplicable.tvs,
-      fill: 'var(--not-applicable)',
     },
   ]
   const totalProjects = Object.values(tvsByStage).reduce(
@@ -135,21 +130,8 @@ export function EcosystemTvsByStage({
           innerRadius={breakpoint === 'xs' ? 24 : 35}
           outerRadius={breakpoint === 'xs' ? 58 : 70}
           tooltipPosition={breakpoint === 'xs' ? { x: -22, y: -46 } : undefined}
-          renderTooltip={(entry) => (
-            <PieChartTooltip entry={entry} className="w-32" />
-          )}
-          center={
-            <text x="50%" y="50%" textAnchor="middle">
-              <tspan
-                x="50%"
-                y="50%"
-                className="fill-secondary font-medium text-2xs leading-none"
-                dy={5}
-              >
-                Stages
-              </tspan>
-            </text>
-          }
+          tooltipClassName="w-32"
+          centerLabel={{ lines: ['Stages'] }}
         />
       </div>
     </EcosystemWidget>

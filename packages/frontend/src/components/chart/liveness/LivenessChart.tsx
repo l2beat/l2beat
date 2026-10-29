@@ -5,18 +5,15 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { useMemo } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
 } from '~/components/core/chart/ChartContext'
-import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
-import { PinkStrokeGradientDef } from '~/components/core/chart/defs/PinkGradientDef'
+import { ChartTooltipWrapper } from '~/components/core/chart/ChartTooltip'
+import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import {
-  type ChartReferenceDot,
   type ChartSeries,
-  ChartTooltipWrapper,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -56,58 +53,29 @@ const chartMeta = {
   },
 } satisfies ChartMeta
 
-const getMin = (row: LivenessChartDataPoint) => row.range?.[0]
-const getMax = (row: LivenessChartDataPoint) => row.range?.[1]
+const GAP_STROKE = { stroke: 'var(--secondary)', strokeOpacity: 0.15 }
 
 /**
- * Both edges of the range band are stroked and get an active dot, so the
- * band's bottom edge is a series of its own. The faint `bridge*`
- * series connect the real ones across gaps; they stay out of the legend and
- * the tooltip, which come from the meta and the row.
+ * The range is a band between the minimum and the maximum. Faint lines
+ * bridge both series' gaps, and a lone point gets dots, as no line shows it.
  */
 const SERIES: ChartSeries<string, LivenessChartDataPoint>[] = [
   {
-    key: 'bridgeMax',
-    value: getMax,
-    stroke: 'var(--secondary)',
-    strokeOpacity: 0.15,
-    connectNulls: true,
-    activeDot: false,
-  },
-  {
-    key: 'bridgeMin',
-    value: getMin,
-    stroke: 'var(--secondary)',
-    strokeOpacity: 0.15,
-    connectNulls: true,
-    activeDot: false,
-  },
-  {
     key: 'range',
-    value: getMax,
-    value0: getMin,
-    stroke: 'url(#strokeRange)',
+    value: (row) => row.range?.[1],
+    value0: (row) => row.range?.[0],
+    stroke: CHART_GRADIENTS.pink.stroke,
     fill: 'var(--chart-pink-fill-gradient)',
     fillOpacity: 0.4,
-  },
-  {
-    key: 'rangeMin',
-    value: getMin,
-    stroke: 'url(#strokeRange)',
+    gapStroke: GAP_STROKE,
+    isolatedDots: {},
   },
   {
     key: 'avg',
     stroke: 'var(--chart-pink)',
     strokeDasharray: '5 5',
-  },
-  {
-    key: 'bridgeAvg',
-    value: (row) => row.avg,
-    stroke: 'var(--secondary)',
-    strokeOpacity: 0.15,
-    strokeDasharray: '5 5',
-    connectNulls: true,
-    activeDot: false,
+    gapStroke: GAP_STROKE,
+    isolatedDots: { fillOpacity: 0.25 },
   },
 ]
 
@@ -122,48 +90,6 @@ export function LivenessChart({
   anyAnomalyLive,
   resolution,
 }: Props) {
-  const singleDataPoints = useMemo(() => {
-    return data?.filter((point, i, arr) => {
-      const prevPoint = arr.at(i - 1)
-      const nextPoint = arr.at(i + 1)
-
-      return (
-        prevPoint?.range === null &&
-        nextPoint?.range === null &&
-        point.range !== null
-      )
-    })
-  }, [data])
-
-  const referenceDots = useMemo(
-    () =>
-      (singleDataPoints ?? []).flatMap((point): ChartReferenceDot[] => [
-        {
-          x: point.timestamp,
-          y: point.range?.[0] ?? 0,
-          fill: chartMeta.range.color,
-          stroke: chartMeta.range.color,
-          r: 3,
-        },
-        {
-          x: point.timestamp,
-          y: point.range?.[1] ?? 0,
-          fill: chartMeta.range.color,
-          stroke: chartMeta.range.color,
-          r: 3,
-        },
-        {
-          x: point.timestamp,
-          y: point.avg ?? 0,
-          fill: chartMeta.avg.color,
-          fillOpacity: 0.25,
-          stroke: chartMeta.avg.color,
-          r: 3,
-        },
-      ]),
-    [singleDataPoints],
-  )
-
   return (
     <ChartContainer
       data={data}
@@ -178,23 +104,17 @@ export function LivenessChart({
         series={SERIES}
         ariaLabel="Liveness"
         yAxis={{ format: formatSeconds, domain: 'auto', tickCount }}
-        referenceDots={referenceDots}
         referenceAreas={
           lastValidTimestamp
             ? [
                 {
                   x1: lastValidTimestamp,
-                  fill: anyAnomalyLive ? 'var(--negative)' : 'url(#noDataFill)',
-                  fillOpacity: anyAnomalyLive ? 0.2 : undefined,
+                  ...(anyAnomalyLive
+                    ? { fill: 'var(--negative)', fillOpacity: 0.2 }
+                    : {}),
                 },
               ]
             : undefined
-        }
-        defs={
-          <>
-            <PinkStrokeGradientDef id="strokeRange" />
-            <NoDataPatternDef />
-          </>
         }
         renderTooltip={(row) => (
           <LivenessCustomTooltip

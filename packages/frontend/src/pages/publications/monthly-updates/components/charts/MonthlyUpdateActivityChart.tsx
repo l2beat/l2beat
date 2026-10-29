@@ -6,16 +6,17 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { useId, useMemo } from 'react'
+import { useMemo } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import {
+  ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
-  TimeSeriesChart,
-} from '~/components/core/chart/TimeSeriesChart'
+} from '~/components/core/chart/ChartTooltip'
+import { fillGradient } from '~/components/core/chart/gradients'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -36,7 +37,6 @@ export function MonthlyUpdateActivityChart({
   to: UnixTime
 }) {
   const trpc = useTRPC()
-  const id = useId()
   const { data, isLoading } = useQuery(
     trpc.activity.chart.queryOptions({
       range: [from, to],
@@ -86,27 +86,21 @@ export function MonthlyUpdateActivityChart({
         <TimeSeriesChart
           data={chartData}
           ariaLabel="Activity"
-          margin={{ top: 20, right: 0 }}
+          margin={{ right: 0 }}
           series={[
             {
               key: 'projects',
               stroke: 'var(--project-primary)',
-              fill: `url(#${id})`,
+              fill: fillGradient(
+                'var(--project-primary)',
+                'var(--project-secondary)',
+              ),
             },
           ]}
           yAxis={{
             unit: ' UOPS',
           }}
           syncedUntil={data?.syncedUntil}
-          defs={
-            <CustomFillGradientDef
-              id={id}
-              colors={{
-                primary: 'var(--project-primary)',
-                secondary: 'var(--project-secondary)',
-              }}
-            />
-          }
           renderTooltip={(row, keys) => <CustomTooltip row={row} keys={keys} />}
         />
       </ChartContainer>
@@ -175,11 +169,11 @@ function CustomTooltip({
                     Average UOPS
                   </span>
                 </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value !== null && entry.value !== undefined
-                    ? formatActivityCount(entry.value)
-                    : 'No data'}
-                </span>
+                <ChartTooltipValue
+                  value={entry.value}
+                  format={formatActivityCount}
+                  className="tabular-nums"
+                />
               </div>
               <div className="flex w-full items-center justify-between gap-2">
                 <div className="flex items-center gap-1">
@@ -191,11 +185,11 @@ function CustomTooltip({
                     Operations count
                   </span>
                 </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value !== null && entry.value !== undefined
-                    ? formatInteger(entry.value * UnixTime.DAY)
-                    : 'No data'}
-                </span>
+                <ChartTooltipValue
+                  value={entry.value}
+                  format={(value) => formatInteger(value * UnixTime.DAY)}
+                  className="tabular-nums"
+                />
               </div>
             </div>
           )

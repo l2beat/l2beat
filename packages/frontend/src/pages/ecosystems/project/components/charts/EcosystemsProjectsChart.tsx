@@ -3,11 +3,13 @@ import { useMemo } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import {
-  type ChartSeries,
   ChartTooltipWrapper,
   getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
+import { fillGradient } from '~/components/core/chart/gradients'
+import {
+  type ChartSeries,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -25,7 +27,10 @@ const SERIES: ChartSeries<'projectCount', ChartDataPoint>[] = [
   {
     key: 'projectCount',
     stroke: 'var(--ecosystem-primary)',
-    fill: 'url(#fill)',
+    fill: fillGradient(
+      'var(--ecosystem-primary)',
+      'var(--ecosystem-secondary)',
+    ),
     curve: 'stepAfter',
   },
 ]
@@ -69,7 +74,6 @@ export function EcosystemsProjectsChart({
       <ChartContainer
         meta={chartMeta}
         data={data.chart}
-        isLoading={false}
         logoClassName="bottom-[42px]"
         milestones={ecosystemMilestones}
         className="h-[110px]! min-h-[110px]!"
@@ -80,15 +84,6 @@ export function EcosystemsProjectsChart({
           ariaLabel="Live projects count"
           margin={{ right: 0 }}
           yAxis={{ tickCount: 2 }}
-          defs={
-            <CustomFillGradientDef
-              id="fill"
-              colors={{
-                primary: 'var(--ecosystem-primary)',
-                secondary: 'var(--ecosystem-secondary)',
-              }}
-            />
-          }
           renderTooltip={(row, keys) => <CustomTooltip row={row} keys={keys} />}
         />
       </ChartContainer>

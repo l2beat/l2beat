@@ -31,7 +31,6 @@ export function TopProtocolsByVolumeChart({
     return protocols.map((protocol) => ({
       name: protocol.name,
       value: protocol.volume.value,
-      fill: protocol.color,
     }))
   }, [protocols])
 

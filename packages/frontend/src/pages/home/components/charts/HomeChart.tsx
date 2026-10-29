@@ -1,15 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { useId, useMemo } from 'react'
+import { useMemo } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
-import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
-import { PinkFillGradientDef } from '~/components/core/chart/defs/PinkGradientDef'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
-  type ChartSeries,
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
-  TimeSeriesChart,
-} from '~/components/core/chart/TimeSeriesChart'
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
+import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange, formatTimestamp } from '~/utils/dates'
 
@@ -55,9 +55,6 @@ export function HomeChart({
   tooltipDayRange,
   withEthereum,
 }: Props) {
-  const fillId = useId()
-  const ethereumFillId = useId()
-
   const stroke = STROKE_COLOR[color]
   const meta = useMemo<ChartMeta>(
     () => ({
@@ -79,20 +76,6 @@ export function HomeChart({
     [stroke, tooltipLabel, withEthereum],
   )
 
-  const series = useMemo(() => {
-    const result: ChartSeries<'value' | 'ethereum'>[] = [
-      { key: 'value', stroke, fill: `url(#${fillId})` },
-    ]
-    if (withEthereum) {
-      result.push({
-        key: 'ethereum',
-        stroke: STROKE_COLOR.ethereum,
-        fill: `url(#${ethereumFillId})`,
-      })
-    }
-    return result
-  }, [stroke, fillId, ethereumFillId, withEthereum])
-
   // The chart is absolutely positioned inside the relative wrapper so the
   // rendered svg never contributes to the grid row's height.
   return (
@@ -106,7 +89,18 @@ export function HomeChart({
         >
           <TimeSeriesChart
             data={data}
-            series={series}
+            series={[
+              { key: 'value', stroke, fill: CHART_GRADIENTS[color].fill },
+              ...(withEthereum
+                ? [
+                    {
+                      key: 'ethereum' as const,
+                      stroke: STROKE_COLOR.ethereum,
+                      fill: CHART_GRADIENTS.ethereum.fill,
+                    },
+                  ]
+                : []),
+            ]}
             ariaLabel={tooltipLabel}
             margin={MARGIN}
             syncedUntil={syncedUntil}
@@ -117,17 +111,6 @@ export function HomeChart({
               fontSize: 12,
               fontWeight: 500,
             }}
-            defs={
-              <>
-                {color === 'pink' && <PinkFillGradientDef id={fillId} />}
-                {color === 'ethereum' && (
-                  <EthereumFillGradientDef id={fillId} />
-                )}
-                {withEthereum && (
-                  <EthereumFillGradientDef id={ethereumFillId} />
-                )}
-              </>
-            }
             renderTooltip={(row, keys) => (
               <HomeChartTooltip
                 row={row}
@@ -154,13 +137,8 @@ function HomeChartTooltip({
   formatValue: (value: number) => string
   dayRange?: boolean
 }) {
-  const { meta } = useChart()
   const label = row.timestamp
-  const entries = keys.flatMap((name) => {
-    const config = meta[name]
-    if (!config) return []
-    return { entry: { name, value: row[name] }, config }
-  })
+  const entries = getTooltipEntries(row, keys)
   const breakdown = row.tvsBreakdown
   return (
     <ChartTooltipWrapper>
@@ -171,26 +149,14 @@ function HomeChartTooltip({
             : formatTimestamp(label)}
         </div>
         <div className="flex flex-col gap-2">
-          {entries.map(({ entry, config }) => (
-            <div
-              key={entry.name}
-              className="flex w-full items-center justify-between gap-2"
-            >
-              <div className="flex items-center gap-1">
-                <ChartDataIndicator
-                  backgroundColor={config.color}
-                  type={config.indicatorType}
-                />
-                <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                  {config.label}
-                </span>
-              </div>
-              <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                {entry.value !== null && entry.value !== undefined
-                  ? formatValue(entry.value)
-                  : 'No data'}
-              </span>
-            </div>
+          {entries.map((entry) => (
+            <ChartTooltipRow key={entry.name} name={entry.name}>
+              <ChartTooltipValue
+                value={entry.value}
+                format={formatValue}
+                className="tabular-nums"
+              />
+            </ChartTooltipRow>
           ))}
           {breakdown !== undefined && (
             <>
@@ -209,11 +175,11 @@ function HomeChartTooltip({
                   <span className="w-20 font-medium text-label-value-14 sm:w-fit">
                     {item.label}
                   </span>
-                  <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                    {item.value !== null && item.value !== undefined
-                      ? formatValue(item.value)
-                      : 'No data'}
-                  </span>
+                  <ChartTooltipValue
+                    value={item.value}
+                    format={formatValue}
+                    className="tabular-nums"
+                  />
                 </div>
               ))}
             </>

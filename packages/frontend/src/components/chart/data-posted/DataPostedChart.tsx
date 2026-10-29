@@ -1,20 +1,19 @@
 import type { Milestone } from '@l2beat/config'
-import { assert, formatBytes, UnixTime } from '@l2beat/shared-pure'
-import pick from 'lodash/pick'
-import { useMemo } from 'react'
+import { formatBytes, UnixTime } from '@l2beat/shared-pure'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
-import {
-  type ChartProject,
-  useChart,
+import type {
+  ChartMeta,
+  ChartProject,
 } from '~/components/core/chart/ChartContext'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
-import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import {
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
-  TimeSeriesChart,
-} from '~/components/core/chart/TimeSeriesChart'
+} from '~/components/core/chart/ChartTooltip'
+import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
 
@@ -22,9 +21,12 @@ const chartMeta = {
   ethereum: {
     label: 'Ethereum',
     color: 'var(--chart-ethereum)',
-    indicatorType: { shape: 'line' as const },
+    indicatorType: { shape: 'line' },
   },
-}
+} satisfies ChartMeta
+
+/** The legend and the series are left out while no value is posted. */
+const EMPTY_META: ChartMeta = {}
 
 type SeriesKey = keyof typeof chartMeta
 
@@ -52,16 +54,8 @@ export function DataPostedChart({
   tickCount,
   milestones,
 }: Props) {
-  const filteredChartMeta = useMemo(
-    () =>
-      pick(
-        chartMeta,
-        Object.keys(chartMeta).filter((key) =>
-          data?.some((d) => d[key as keyof DataPostedChartDataPoint] !== null),
-        ),
-      ),
-    [data],
-  )
+  const hasData = data?.some((d) => d.ethereum !== null) ?? false
+  const filteredChartMeta = hasData ? chartMeta : EMPTY_META
   const { dataKeys, toggleDataKey } = useChartDataKeys(filteredChartMeta)
 
   return (
@@ -80,15 +74,19 @@ export function DataPostedChart({
       <TimeSeriesChart
         data={data}
         ariaLabel="Data posted"
-        series={(Object.keys(filteredChartMeta) as SeriesKey[]).map((key) => ({
-          key,
-          stroke: filteredChartMeta[key]?.color,
-          fill: `url(#${key}-fill)`,
-          hidden: !dataKeys.includes(key),
-        }))}
+        series={
+          hasData
+            ? [
+                {
+                  key: 'ethereum',
+                  stroke: chartMeta.ethereum.color,
+                  fill: CHART_GRADIENTS.ethereum.fill,
+                },
+              ]
+            : []
+        }
         yAxis={{ tickCount, format: formatBytes }}
         syncedUntil={syncedUntil}
-        defs={<EthereumFillGradientDef id="ethereum-fill" />}
         renderTooltip={(row, keys) => (
           <DataPostedCustomTooltip
             row={row}
@@ -110,7 +108,6 @@ function DataPostedCustomTooltip({
   keys: SeriesKey[]
   resolution: ChartResolution
 }) {
-  const { meta } = useChart()
   const timestamp = row.timestamp
   const payload = getTooltipEntries(row, keys, { skipNull: true })
 
@@ -124,30 +121,15 @@ function DataPostedCustomTooltip({
           )}
         </div>
         <div className="flex flex-col gap-2">
-          {payload.map((entry) => {
-            const config = meta[entry.name]
-            assert(config, 'No config')
-
-            return (
-              <div
-                key={entry.name}
-                className="flex w-full items-center justify-between gap-2"
-              >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
-                  </span>
-                </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value !== null ? formatBytes(entry.value) : 'No data'}
-                </span>
-              </div>
-            )
-          })}
+          {payload.map((entry) => (
+            <ChartTooltipRow key={entry.name} name={entry.name}>
+              <ChartTooltipValue
+                value={entry.value}
+                format={formatBytes}
+                className="tabular-nums"
+              />
+            </ChartTooltipRow>
+          ))}
         </div>
       </div>
     </ChartTooltipWrapper>

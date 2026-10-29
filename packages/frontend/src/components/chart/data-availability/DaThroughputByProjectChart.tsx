@@ -8,14 +8,15 @@ import type {
   ChartMeta,
   ChartProject,
 } from '~/components/core/chart/ChartContext'
-import { useChart } from '~/components/core/chart/ChartContext'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
+import {
+  ChartTooltipRow,
+  ChartTooltipWrapper,
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import {
   type ChartSeries,
-  ChartTooltipWrapper,
-  getTooltipEntries,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -168,7 +169,6 @@ export function DaThroughputByProjectChart({
       stack: true,
       curve: 'step',
       activeDot: false,
-      hidden: !dataKeys.includes(project),
     }),
   )
 
@@ -222,7 +222,6 @@ function CustomTooltip({
   denominator: number
   resolution: ChartResolution
 }) {
-  const { meta: config } = useChart()
   const label = row.timestamp
   // Hidden series are not in `keys`.
   const actualPayload = getTooltipEntries(row, keys).sort((a, b) => {
@@ -239,32 +238,21 @@ function CustomTooltip({
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
         {actualPayload.slice(0, 20).map((entry, index) => {
-          const configEntry = config[entry.name]
-          if (!configEntry) return null
           const value = entry.value ?? 0
           const valueInBytes = value * mainDenominator
           const { unit, denominator } = getDaDataParams(valueInBytes)
           const formattedValue = (valueInBytes / denominator).toFixed(2)
           return (
-            <div
+            <ChartTooltipRow
               key={index}
-              className="flex items-center justify-between gap-x-6"
+              name={entry.name}
+              gap="gap-x-6"
+              wrapLabel={false}
             >
-              <div className="flex items-center gap-1">
-                <ChartDataIndicator
-                  backgroundColor={configEntry.color}
-                  type={configEntry.indicatorType}
-                />
-                <span className="font-medium text-label-value-14">
-                  {configEntry.label}
-                </span>
-              </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {entry.value !== null && entry.value !== undefined
-                  ? `${formattedValue} ${unit}`
-                  : 'No data'}
+                {entry.value !== null ? `${formattedValue} ${unit}` : 'No data'}
               </span>
-            </div>
+            </ChartTooltipRow>
           )
         })}
         {actualPayload.length > 20 && (

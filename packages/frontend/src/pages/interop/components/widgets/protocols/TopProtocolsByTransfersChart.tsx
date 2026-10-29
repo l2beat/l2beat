@@ -31,7 +31,6 @@ export function TopProtocolsByTransfersChart({
     return protocols.map((protocol) => ({
       name: protocol.name,
       value: protocol.transfers.value,
-      fill: protocol.color,
     }))
   }, [protocols])
 
@@ -47,6 +46,7 @@ export function TopProtocolsByTransfersChart({
       chartData={chartData}
       isLoading={isLoading}
       containerWidth={containerWidth}
+      formatValue={formatInteger}
       center={{
         label: 'Transfers',
         value: formatInteger(totalTransfers),

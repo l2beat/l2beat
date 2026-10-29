@@ -1,60 +1,49 @@
+import { assert, formatCurrency } from '@l2beat/shared-pure'
 import { arc, type PieArcDatum, pie } from 'd3-shape'
-import {
-  type KeyboardEvent,
-  type PointerEvent,
-  type ReactNode,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { type ReactNode, useMemo } from 'react'
 import { cn } from '~/utils/cn'
-import { ChartContext, type ChartMeta } from './ChartContext'
+import { ChartContext, type ChartMeta, useChart } from './ChartContext'
+import { ChartDataIndicator } from './ChartDataIndicator'
+import { ChartTooltipWrapper } from './ChartTooltip'
+import { placeBeside, useChartTooltip } from './useChartTooltip'
 
+/** A slice; its label and color come from the chart meta. */
 export interface DonutChartEntry {
   name: string
   value: number
-  fill: string
 }
 
-const TOOLTIP_OFFSET = 16
-/** The least room left between a tooltip and the window's edge. */
-const TOOLTIP_WINDOW_MARGIN = 8
-
 /**
- * A donut whose first slice starts at 3 o'clock
- * and the slices go counter-clockwise, in data order. Hovering a slice shows
- * the tooltip next to the slice's middle (left of it on the right half), or
- * at `tooltipPosition`, relative to the chart's top-left corner.
+ * A donut whose first slice starts at 3 o'clock and the slices go
+ * counter-clockwise, in data order. Hovering a slice shows the tooltip next
+ * to the slice's middle (left of it on the right half), or at
+ * `tooltipPosition`, relative to the chart's top-left corner.
  */
-export function DonutChart<T extends DonutChartEntry>({
+export function DonutChart({
   meta,
   data,
   innerRadius,
   outerRadius,
-  center,
+  centerLabel,
   className,
   tooltipPosition,
+  tooltipClassName,
+  formatValue = formatUsd,
   ariaLabel,
-  renderTooltip,
 }: {
   meta: ChartMeta
   ariaLabel: string
-  data: T[]
+  data: DonutChartEntry[]
   innerRadius: number
   outerRadius: number
-  /** SVG content drawn over the donut, e.g. `<text x="50%" y="50%">`. */
-  center?: ReactNode
+  centerLabel?: DonutCenterLabel
   /** Sizes the chart; the donut is centred in it. */
   className?: string
   tooltipPosition?: { x: number; y: number }
-  renderTooltip: (entry: T) => ReactNode
+  tooltipClassName?: string
+  /** US dollars by default. */
+  formatValue?: (value: number) => string
 }) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
-  const rootRef = useRef<HTMLDivElement>(null)
-  const tooltipRef = useRef<HTMLDivElement>(null)
-
   const { arcs, path } = useMemo(() => {
     const total = data.reduce((acc, entry) => acc + entry.value, 0)
     // d3 measures clockwise from 12 o'clock; starting at 3 o'clock and going
@@ -62,96 +51,48 @@ export function DonutChart<T extends DonutChartEntry>({
     // the arrow keys cannot land on one the pointer could never hover.
     const arcs =
       total > 0
-        ? pie<T>()
+        ? pie<DonutChartEntry>()
             .value((entry) => entry.value)
             .sort(null)
             .startAngle(Math.PI / 2)
             .endAngle(Math.PI / 2 - 2 * Math.PI)(data)
             .filter((slice) => slice.value > 0)
         : []
-    const path = arc<PieArcDatum<T>>()
+    const path = arc<PieArcDatum<DonutChartEntry>>()
       .innerRadius(innerRadius)
       .outerRadius(outerRadius)
     return { arcs, path }
   }, [data, innerRadius, outerRadius])
 
-  const active = activeIndex !== null ? arcs[activeIndex] : undefined
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: placed for each newly hovered slice
-  useLayoutEffect(() => {
-    const root = rootRef.current
-    const tooltip = tooltipRef.current
-    if (!active || !root || !tooltip) return
-    const width = root.offsetWidth
-    const height = root.offsetHeight
-    let left: number
-    let top: number
-    if (tooltipPosition) {
-      left = tooltipPosition.x
-      top = tooltipPosition.y
-    } else {
-      const [dx, dy] = path.centroid(active)
-      const x = width / 2 + dx
-      const y = height / 2 + dy
-      left =
-        x > width / 2
-          ? x - TOOLTIP_OFFSET - tooltip.offsetWidth
-          : x + TOOLTIP_OFFSET
-      top = y + TOOLTIP_OFFSET
-    }
-    // The tooltip may leave the chart but not the window.
-    const rootLeft = root.getBoundingClientRect().left
-    const max = document.documentElement.clientWidth - TOOLTIP_WINDOW_MARGIN
-    if (rootLeft + left + tooltip.offsetWidth > max) {
-      left = max - tooltip.offsetWidth - rootLeft
-    }
-    if (rootLeft + left < TOOLTIP_WINDOW_MARGIN) {
-      left = TOOLTIP_WINDOW_MARGIN - rootLeft
-    }
-    tooltip.style.transform = `translate(${left}px, ${top}px)`
-  }, [active, path, tooltipPosition?.x, tooltipPosition?.y])
-
-  // A tap leaves a touch tooltip open until a tap elsewhere.
-  const isActive = active !== undefined
-  useEffect(() => {
-    if (!isActive) return
-    const closeOutside = (event: globalThis.PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) {
-        setActiveIndex(null)
-      }
-    }
-    document.addEventListener('pointerdown', closeOutside)
-    return () => document.removeEventListener('pointerdown', closeOutside)
-  }, [isActive])
-
-  function onLeave(event: PointerEvent) {
-    if (event.pointerType !== 'touch') setActiveIndex(null)
+  /** A slice's middle, in the chart's pixels. */
+  function anchorOf(index: number) {
+    const root = tooltip.rootRef.current
+    const slice = arcs[index]
+    if (!root || !slice) return { x: 0, y: 0 }
+    const [dx, dy] = path.centroid(slice)
+    return { x: root.offsetWidth / 2 + dx, y: root.offsetHeight / 2 + dy }
   }
 
-  function onKeyDown(event: KeyboardEvent) {
-    // Modified arrows are the browser's, e.g. Alt+Left goes back.
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
-      return
-    }
-    const step =
-      event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0
-    if (step === 0 || arcs.length === 0) return
-    event.preventDefault()
-    const from = activeIndex ?? (step > 0 ? -1 : 0)
-    setActiveIndex((from + step + arcs.length) % arcs.length)
-  }
+  const tooltip = useChartTooltip({
+    count: arcs.length,
+    anchorOf,
+    place: (anchor, size) =>
+      tooltipPosition ??
+      placeBeside({ x: 0, width: tooltip.rootRef.current?.offsetWidth ?? 0 })(
+        anchor,
+        size,
+      ),
+    wrap: true,
+  })
+  const active = tooltip.active ? arcs[tooltip.active.index] : undefined
 
   return (
     <ChartContext.Provider value={{ meta }}>
       <div
-        ref={rootRef}
-        role="application"
+        ref={tooltip.rootRef}
+        {...tooltip.interactiveProps}
         aria-label={ariaLabel}
-        tabIndex={0}
-        data-chart-hover=""
         className={cn('relative select-none text-xs outline-none', className)}
-        onKeyDown={onKeyDown}
-        onBlur={() => setActiveIndex(null)}
       >
         <svg className="absolute inset-0 size-full" aria-hidden>
           <svg x="50%" y="50%" overflow="visible">
@@ -159,23 +100,110 @@ export function DonutChart<T extends DonutChartEntry>({
               <path
                 key={d.data.name}
                 d={path(d) ?? undefined}
-                fill={d.data.fill}
-                onPointerEnter={() => setActiveIndex(i)}
-                onPointerDown={() => setActiveIndex(i)}
-                onPointerLeave={onLeave}
+                fill={meta[d.data.name]?.color}
+                onPointerEnter={() => tooltip.select(i, anchorOf(i))}
+                onPointerDown={() => tooltip.select(i, anchorOf(i))}
               />
             ))}
           </svg>
-          {center}
+          {centerLabel && <DonutCenter {...centerLabel} />}
         </svg>
-        <div
-          ref={tooltipRef}
-          className="pointer-events-none absolute top-0 left-0 z-110"
-          style={{ visibility: active ? 'visible' : 'hidden' }}
-        >
-          {active && renderTooltip(active.data)}
+        <div {...tooltip.tooltipProps}>
+          {active && (
+            <DonutTooltip
+              entry={active.data}
+              format={formatValue}
+              className={tooltipClassName}
+            />
+          )}
         </div>
       </div>
     </ChartContext.Provider>
   )
+}
+
+function DonutTooltip({
+  entry,
+  format,
+  className,
+}: {
+  entry: DonutChartEntry
+  format: (value: number) => string
+  className?: string
+}) {
+  const config = useChart().meta[entry.name]
+  assert(config, 'Chart meta is missing')
+  return (
+    <ChartTooltipWrapper>
+      <div className={cn('flex flex-col gap-1', className)}>
+        <div className="flex items-center justify-between gap-x-3">
+          <span className="flex items-center gap-1">
+            <ChartDataIndicator
+              backgroundColor={config.color}
+              type={config.indicatorType}
+            />
+            <span className="whitespace-nowrap leading-none sm:w-fit">
+              {config.label}
+            </span>
+          </span>
+          <span className="whitespace-nowrap font-medium leading-none">
+            {format(entry.value)}
+          </span>
+        </div>
+      </div>
+    </ChartTooltipWrapper>
+  )
+}
+
+/** Lines of small text in the hole, or one label over a large value. */
+type DonutCenterLabel =
+  | { lines: string[]; value?: never; compact?: never }
+  | { lines: [string]; value: ReactNode; compact?: boolean }
+
+function DonutCenter({ lines, value, compact }: DonutCenterLabel) {
+  const labelClassName = 'fill-secondary font-medium text-2xs leading-none'
+  if (value !== undefined) {
+    return (
+      <text x="50%" y="50%" textAnchor="middle">
+        <tspan
+          x="50%"
+          y="50%"
+          className={labelClassName}
+          dy={compact ? -9 : -16}
+        >
+          {lines[0]}
+        </tspan>
+        <tspan
+          x="50%"
+          y="50%"
+          className={cn(
+            'fill-primary font-semibold text-2xl leading-none',
+            compact && 'text-lg',
+          )}
+          dy={9}
+        >
+          {value}
+        </tspan>
+      </text>
+    )
+  }
+  // Lines 12px apart, the block centred on the hole.
+  return (
+    <text x="50%" y="50%" textAnchor="middle">
+      {lines.map((line, i) => (
+        <tspan
+          key={line}
+          x="50%"
+          dy={i === 0 ? 5 - (lines.length - 1) * 6 : 12}
+          className={labelClassName}
+        >
+          {line}
+        </tspan>
+      ))}
+    </text>
+  )
+}
+
+function formatUsd(value: number) {
+  return formatCurrency(value, 'usd')
 }

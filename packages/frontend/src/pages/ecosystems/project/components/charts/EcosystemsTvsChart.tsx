@@ -9,7 +9,7 @@ import type { ChartUnit } from '~/components/chart/types'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+import { fillGradient } from '~/components/core/chart/gradients'
 import {
   type ChartSeries,
   TimeSeriesChart,
@@ -36,7 +36,14 @@ import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
 
 const SERIES: ChartSeries<'value', TvsChartDataPoint>[] = [
-  { key: 'value', stroke: 'var(--ecosystem-primary)', fill: 'url(#fill)' },
+  {
+    key: 'value',
+    stroke: 'var(--ecosystem-primary)',
+    fill: fillGradient(
+      'var(--ecosystem-primary)',
+      'var(--ecosystem-secondary)',
+    ),
+  },
 ]
 
 export function EcosystemsTvsChart({
@@ -129,15 +136,6 @@ export function EcosystemsTvsChart({
           ariaLabel="TVS"
           yAxis={{ format: (value) => formatCurrency(value, unit) }}
           syncedUntil={data?.syncedUntil}
-          defs={
-            <CustomFillGradientDef
-              id="fill"
-              colors={{
-                primary: 'var(--ecosystem-primary)',
-                secondary: 'var(--ecosystem-secondary)',
-              }}
-            />
-          }
           renderTooltip={(row, keys) => (
             <TvsCustomTooltip row={row} keys={keys} unit={unit} skipNull />
           )}

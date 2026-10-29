@@ -4,9 +4,14 @@ import { Logo } from '~/components/Logo'
 import { useIsNearViewport } from '~/hooks/useIsNearViewport'
 import { cn } from '~/utils/cn'
 import { ignorePointerWhileScrollingClassName } from '~/utils/scrollActivity'
-import { ChartContext, type ChartMeta, type ChartProject } from './ChartContext'
+import {
+  ChartContext,
+  type ChartInteractiveLegend,
+  type ChartMeta,
+  type ChartProject,
+} from './ChartContext'
 import { ChartLegend } from './ChartLegend'
-import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
+import { useLegendHint } from './ChartLegendOnboardingContext'
 import { ChartLoader } from './ChartLoader'
 import { ChartMilestones } from './ChartMilestones'
 import { ChartNoDataSourceState } from './ChartNoDataSourceState'
@@ -38,11 +43,7 @@ export function ChartContainer<T extends { timestamp: number }>({
   meta: ChartMeta
   children: React.ReactNode
   data: T[] | undefined
-  interactiveLegend?: {
-    dataKeys: string[]
-    onItemClick: (dataKey: string) => void
-    disableOnboarding?: boolean
-  }
+  interactiveLegend?: ChartInteractiveLegend
   legend?: boolean
   /** Rendered before the legend items, e.g. a show/hide-all toggle. */
   legendLeading?: React.ReactNode
@@ -68,7 +69,7 @@ export function ChartContainer<T extends { timestamp: number }>({
     metaKeys.every(
       (key) => interactiveLegend && !interactiveLegend.dataKeys.includes(key),
     )
-  const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
+  const { keepsRoom: keepsHintRoom } = useLegendHint(interactiveLegend)
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div ref={ref} className="group relative">
@@ -119,9 +120,7 @@ export function ChartContainer<T extends { timestamp: number }>({
             animated={false}
             className={cn(
               'pointer-events-none absolute right-3 bottom-12 h-8 w-20 opacity-50 group-has-[.chart-legend]:bottom-14',
-              !!interactiveLegend &&
-                !interactiveLegend.disableOnboarding &&
-                !hasFinishedOnboardingInitial
+              keepsHintRoom
                 ? 'bottom-[60px] group-has-[.chart-legend]:bottom-[68px]'
                 : 'bottom-12 group-has-[.chart-legend]:bottom-14',
               logoClassName,
@@ -133,9 +132,7 @@ export function ChartContainer<T extends { timestamp: number }>({
             project={project}
             className={cn(
               'pointer-events-none absolute left-3 opacity-50',
-              !!interactiveLegend &&
-                !interactiveLegend.disableOnboarding &&
-                !hasFinishedOnboardingInitial
+              keepsHintRoom
                 ? 'bottom-[68px] group-has-[.chart-legend]:bottom-[76px]'
                 : 'bottom-14 group-has-[.chart-legend]:bottom-16',
             )}

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getTickCondition } from './xAxisTicks'
+import { getTickCondition, getTimeTicks } from './xAxisTicks'
 
 describe(getTickCondition.name, () => {
   // Labels are UTC, so ticks must land on UTC dates. West of UTC, a UTC
@@ -68,6 +68,27 @@ describe(getTickCondition.name, () => {
       expect(result).toEqual(ticks)
     })
   }
+})
+
+describe(getTimeTicks.name, () => {
+  it('leaves out ticks whose labels would be cut off at the plot edges', () => {
+    const timestamps = dailyPoints('2026-06-15', '2026-07-14')
+
+    const { values, format } = getTimeTicks(timestamps)
+
+    // 2026-06-15 is a tick day, but it is the first row.
+    expect(values.map(toIsoDate)).toEqual([
+      '2026-06-22',
+      '2026-06-29',
+      '2026-07-06',
+      '2026-07-13',
+    ])
+    expect(format(values[0] ?? 0)).toEqual('22 Jun')
+  })
+
+  it('has no ticks without rows', () => {
+    expect(getTimeTicks([]).values).toEqual([])
+  })
 })
 
 function dailyPoints(from: string, to: string) {

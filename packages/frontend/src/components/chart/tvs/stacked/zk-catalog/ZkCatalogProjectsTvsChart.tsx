@@ -6,19 +6,20 @@ import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartUnit } from '~/components/chart/types'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
-import {
-  type ChartMeta,
-  type ChartProject,
-  useChart,
+import type {
+  ChartMeta,
+  ChartProject,
 } from '~/components/core/chart/ChartContext'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
-import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import {
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
-  TimeSeriesChart,
-} from '~/components/core/chart/TimeSeriesChart'
+  sumEntries,
+} from '~/components/core/chart/ChartTooltip'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
@@ -171,11 +172,12 @@ export function ZkCatalogProjectsTvsChart({
         series={chartOrderedIds.map((projectId) => ({
           key: projectId,
           fill: chartMeta[projectId]?.color,
-          stack: dataKeys.length > 1,
-          hidden: !dataKeys.includes(projectId),
+          stack: true,
+          // Every layer of the stack marks the hovered row.
+          activeDot: true,
         }))}
         yAxis={{
-          domain: dataKeys.length === 1 ? 'auto' : undefined,
+          domain: 'autoIfSingle',
           format: (value) => formatCurrency(value, unit),
           tickCount: 4,
         }}
@@ -204,7 +206,6 @@ function CustomTooltip({
   unit: ChartUnit
   sinceByProjectId: Map<string, number>
 }) {
-  const { meta } = useChart()
   const label = row.timestamp
 
   const actualPayload = getTooltipEntries(row, keys)
@@ -214,9 +215,7 @@ function CustomTooltip({
       return since !== undefined && label >= since
     })
 
-  const total = actualPayload.reduce((acc, entry) => {
-    return acc + (entry.value ?? 0)
-  }, 0)
+  const total = sumEntries(actualPayload) ?? 0
 
   return (
     <ChartTooltipWrapper>
@@ -226,42 +225,31 @@ function CustomTooltip({
       <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
         <span>Total</span>
         <span className="whitespace-nowrap text-primary tabular-nums">
-          {total !== null ? formatCurrency(total, unit) : 'No data'}
+          {formatCurrency(total, unit)}
         </span>
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
         {actualPayload.slice(0, 20).map((entry, index) => {
-          const config = meta[entry.name]
-          if (!config) return null
-
           return (
-            <div
+            <ChartTooltipRow
               key={index}
-              className="flex items-center justify-between gap-x-1"
+              name={entry.name}
+              gap="gap-x-1"
+              wrapLabel={false}
             >
-              <span className="flex items-center gap-1">
-                <ChartDataIndicator
-                  backgroundColor={config.color}
-                  type={config.indicatorType}
-                />
-                <span className="font-medium text-label-value-14">
-                  {config.label}
-                </span>
-              </span>
               <div className="flex items-end justify-end gap-1 max-sm:flex-col sm:items-center">
-                <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.value !== null
-                    ? formatCurrency(entry.value, unit)
-                    : 'No data'}
-                </span>
+                <ChartTooltipValue
+                  value={entry.value}
+                  format={(value) => formatCurrency(value, unit)}
+                />
                 {entry.value !== null && total > 0 && (
                   <span className="font-medium text-label-value-13 text-secondary sm:text-label-value-15">
                     ({formatPercent(entry.value / total)})
                   </span>
                 )}
               </div>
-            </div>
+            </ChartTooltipRow>
           )
         })}
         {actualPayload.length > 20 && (

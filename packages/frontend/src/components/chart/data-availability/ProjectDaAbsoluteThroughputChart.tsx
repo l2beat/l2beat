@@ -6,14 +6,15 @@ import type {
   ChartMeta,
   ChartProject,
 } from '~/components/core/chart/ChartContext'
-import { useChart } from '~/components/core/chart/ChartContext'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
+import {
+  ChartTooltipRow,
+  ChartTooltipWrapper,
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
+import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import {
   type ChartSeries,
-  ChartTooltipWrapper,
-  getTooltipEntries,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -93,9 +94,8 @@ export function ProjectDaAbsoluteThroughputChart({
   const series: ChartSeries<SeriesKey, ChartRow>[] = [
     {
       key: 'project',
-      fill: `url(#${project.id}-fill)`,
+      fill: CHART_GRADIENTS.ethereum.fill,
       stroke: projectChartMeta.project?.color,
-      hidden: !dataKeys.includes('project'),
     },
     {
       key: 'projectTarget',
@@ -103,7 +103,6 @@ export function ProjectDaAbsoluteThroughputChart({
       strokeDasharray:
         projectChartMeta.projectTarget?.indicatorType.strokeDasharray,
       curve: 'stepAfter',
-      hidden: !dataKeys.includes('projectTarget'),
     },
     {
       key: 'projectMax',
@@ -111,7 +110,6 @@ export function ProjectDaAbsoluteThroughputChart({
       strokeDasharray:
         projectChartMeta.projectMax?.indicatorType.strokeDasharray,
       curve: 'stepAfter',
-      hidden: !dataKeys.includes('projectMax'),
     },
   ]
 
@@ -135,11 +133,6 @@ export function ProjectDaAbsoluteThroughputChart({
         ariaLabel="Data throughput"
         syncedUntil={syncedUntil}
         yAxis={{ unit: ` ${unit}`, tickCount: 4 }}
-        defs={
-          project.id === 'ethereum' && (
-            <EthereumFillGradientDef id="ethereum-fill" />
-          )
-        }
         renderTooltip={(row, keys) => (
           <ProjectDaThroughputCustomTooltip
             row={row}
@@ -164,7 +157,6 @@ function ProjectDaThroughputCustomTooltip({
   denominator: number
   resolution: ChartResolution
 }) {
-  const { meta: config } = useChart()
   const label = row.timestamp
 
   return (
@@ -175,39 +167,23 @@ function ProjectDaThroughputCustomTooltip({
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
         {getTooltipEntries(row, keys).map((entry, index) => {
-          const configEntry = config[entry.name]
-          if (!configEntry) return null
-
           return (
-            <div
+            <ChartTooltipRow
               key={index}
-              className="flex items-center justify-between gap-x-6"
+              name={entry.name}
+              gap="gap-x-6"
+              wrapLabel={false}
             >
-              <div className="flex items-center gap-1">
-                <ChartDataIndicator
-                  type={configEntry.indicatorType}
-                  backgroundColor={configEntry.color}
-                />
-                <span className="font-medium text-label-value-14">
-                  {configEntry.label}
-                </span>
-              </div>
-              {(entry.value === null || entry.value === undefined) &&
-              configEntry.label === 'Actual data size' ? (
-                <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  No data
-                </span>
-              ) : entry.value === null &&
-                configEntry.label === 'Max capacity' ? (
-                <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  No cap
-                </span>
-              ) : (
-                <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  {formatBytes((entry.value ?? 0) * denominator)}
-                </span>
-              )}
-            </div>
+              <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                {entry.value !== null
+                  ? formatBytes(entry.value * denominator)
+                  : entry.name === 'project'
+                    ? 'No data'
+                    : entry.name === 'projectMax'
+                      ? 'No cap'
+                      : formatBytes(0)}
+              </span>
+            </ChartTooltipRow>
           )
         })}
       </div>

@@ -1,11 +1,9 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import {
   areaY,
   type ChartCurve,
   type ChartMark,
   defineChart,
   dot,
-  type InferableScaleLike,
   lineY,
   rect,
   ruleY,
@@ -16,12 +14,30 @@ import { decorative } from '@tanstack/charts/mark/decorative'
 import { Chart } from '@tanstack/charts/react'
 import { scaleLinear } from '@tanstack/charts/scales/linear'
 import { curveMonotoneX, curveStep, curveStepAfter } from 'd3-shape'
-import { type ReactNode, useMemo, useRef, useState } from 'react'
+import { type ReactNode, useId, useMemo, useRef, useState } from 'react'
 import { cn } from '~/utils/cn'
-import { tooltipContentVariants } from '../tooltip/Tooltip'
+import { useChart } from './ChartContext'
 import { ChartHoverOverlay, ChartSceneStore } from './ChartHoverOverlay'
 import { NoDataPatternDef } from './defs/NoDataPatternDef'
-import { getTickCondition, getTickFormatter } from './utils/xAxisTicks'
+import {
+  type FillGradient,
+  GradientDef,
+  type StrokeGradient,
+} from './gradients'
+import {
+  getExtent,
+  getIsolatedPoints,
+  getStackedKeys,
+  type Plotted,
+  plotRows,
+} from './utils/plotSeries'
+import { getTimeTicks } from './utils/xAxisTicks'
+import {
+  fitTicks,
+  getYAxisTicks,
+  type YAxisTicks,
+  type YAxisTicksOptions,
+} from './utils/yAxisTicks'
 
 type Value = number | null | undefined
 
@@ -29,45 +45,46 @@ export interface ChartSeries<K extends string, T = unknown> {
   key: K
   /** Plotted value; `row[key]` by default. The top edge of a band. */
   value?: (row: T) => Value
-  /** The bottom edge, for a band between two values. */
+  /**
+   * The bottom edge, for a band between two values. Both edges are stroked
+   * and marked when hovered.
+   */
   value0?: (row: T) => Value
   /** Line paint; omit for a fill-only area. */
-  stroke?: string
+  stroke?: string | StrokeGradient
   strokeWidth?: number
   strokeOpacity?: number
   strokeDasharray?: string
   /** Area paint; omit for a line without fill. */
-  fill?: string
+  fill?: string | FillGradient
   fillOpacity?: number
   curve?: 'linear' | 'step' | 'stepAfter' | 'monotone'
   /** Draw across missing values instead of leaving a gap. */
   connectNulls?: boolean
-  /** Stacked series sit on the ones declared before them. */
+  /** A faint line under the series that bridges its gaps. */
+  gapStroke?: { stroke: string; strokeOpacity: number }
+  /**
+   * A dot, in the series' legend color, at each value whose neighbours are
+   * missing, which no line would show.
+   */
+  isolatedDots?: { fillOpacity?: number }
+  /**
+   * Stacked series sit on the ones declared before them on the same axis;
+   * a lone one is drawn like any other.
+   */
   stack?: boolean
   axis?: 'right'
-  /** Marks the hovered row; true by default. */
+  /**
+   * Marks the hovered row; by default on every series except stacked ones
+   * below the top of their stack.
+   */
   activeDot?: boolean
-  hidden?: boolean
 }
 
-type YDomain =
-  | 'zero'
-  | 'auto'
-  | ((min: number, max: number) => readonly [number, number])
-
-export interface ChartYAxis {
+export interface ChartYAxis extends YAxisTicksOptions {
   format?: (value: number) => string
   unit?: string
-  domain?: YDomain
-  /** Compact linear by default; pass e.g. d3's `scaleSymlog`. */
-  scale?: () => InferableScaleLike<number>
-  /** Fixed ticks instead of computed ones. */
-  ticks?: number[]
-  tickCount?: number
-  /** Whole-number ticks only. */
-  integer?: boolean
   dy?: number
-  fontSize?: number
   fontWeight?: number
 }
 
@@ -97,16 +114,21 @@ export interface ChartReferenceDot {
   }
 }
 
+/** Spans the y axis; without a fill it shows the no-data hatch. */
 export interface ChartReferenceArea {
   x1: number
   /** The last row by default. */
   x2?: number
-  fill: string
+  fill?: string
   fillOpacity?: number
 }
 
 interface Props<T, K extends string> {
   data: T[] | undefined
+  /**
+   * Series in the chart meta are drawn while selected in the interactive
+   * legend; the others always are.
+   */
   series: ChartSeries<K, T>[]
   ariaLabel: string
   /** The row's position on the x axis; `row.timestamp` by default. */
@@ -120,14 +142,15 @@ interface Props<T, K extends string> {
   referenceDots?: ChartReferenceDot[]
   /** Charts with the same id show their hover together, by x value. */
   syncId?: string
-  /** Gradient defs referenced by `url(#id)` paints in `series`. */
-  defs?: ReactNode
+  /** Fades the other series' lines. */
+  highlight?: K
   renderTooltip: (row: T, visibleKeys: K[]) => ReactNode
 }
 
 const SERIES_STROKE_WIDTH = 1.75
+const FADED_STROKE_OPACITY = 0.2
+const ISOLATED_DOT_RADIUS = 3
 const Y_SCALE = 'y'
-// Its tick labels' keys contain "y-tick-label", which the styles match.
 const RIGHT_SCALE = 'right-y'
 
 const chartClassNames = cn(
@@ -138,6 +161,8 @@ const chartClassNames = cn(
   // matched by their scene keys, which are not a documented API.
   '[&_text[data-ts-key^="x-tick-label"]]:fill-secondary',
   '[&_svg]:outline-none',
+  // Only `highlight` changes a line's opacity.
+  '[&_path]:transition-[stroke-opacity] [&_path]:duration-200 motion-reduce:[&_path]:transition-none',
 )
 
 const CURVES: Record<
@@ -163,12 +188,24 @@ export function TimeSeriesChart<T, K extends string>({
   referenceAreas,
   referenceDots,
   syncId,
-  defs,
+  highlight,
   renderTooltip,
 }: Props<T, K>) {
+  const { meta, interactiveLegend } = useChart()
   const rows = data ?? EMPTY
-  const visible = series.filter((s) => !s.hidden)
+  const visible = series.filter(
+    (s) =>
+      !interactiveLegend ||
+      meta[s.key] === undefined ||
+      interactiveLegend.dataKeys.includes(s.key),
+  )
   const plotted = usePlotted(rows, visible)
+  const stacked = getStackedKeys(visible)
+  // An axis without visible series has no scale and shows no ticks.
+  const hasRightAxis = !!rightAxis && visible.some((s) => s.axis === 'right')
+  const scaleOf = (s: { axis?: 'right' }) =>
+    s.axis === 'right' && hasRightAxis ? RIGHT_SCALE : Y_SCALE
+  const ids = useIds()
 
   const lastSyncedX =
     syncedUntil !== undefined
@@ -178,11 +215,20 @@ export function TimeSeriesChart<T, K extends string>({
         })()
       : undefined
   const areas: ChartReferenceArea[] = [
-    ...(lastSyncedX !== undefined
-      ? [{ x1: lastSyncedX, fill: 'url(#noDataFill)' }]
-      : []),
+    ...(lastSyncedX !== undefined ? [{ x1: lastSyncedX }] : []),
     ...(referenceAreas ?? []),
   ]
+  const gradients = visible.flatMap((s) => [
+    ...(typeof s.fill === 'object'
+      ? [{ id: ids.fill(s.key), gradient: s.fill }]
+      : []),
+    ...(typeof s.stroke === 'object'
+      ? [{ id: ids.stroke(s.key), gradient: s.stroke }]
+      : []),
+  ])
+  const isolatedColors = visible.map((s) =>
+    s.isolatedDots ? meta[s.key]?.color : undefined,
+  )
 
   // The hover overlay maps rows to pixels with the last rendered scales.
   const [sceneRef] = useState(() => new ChartSceneStore())
@@ -203,27 +249,35 @@ export function TimeSeriesChart<T, K extends string>({
     margin,
     areas,
     referenceDots,
-    describeFn(yAxis.domain),
-    describeFn(rightAxis?.domain),
+    highlight,
+    isolatedColors,
   ])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: keyed on values, see above
   const definition = useMemo(() => {
     const getX = (point: Plotted<T>) => xRef.current(point.row)
-    const left = getY(
-      plotted,
-      visible.filter((s) => s.axis !== 'right'),
-      yAxis,
-    )
-    // An axis without visible series shows no ticks.
+    const leftSeries = visible.filter((s) => s.axis !== 'right')
     const rightSeries = visible.filter((s) => s.axis === 'right')
+    const left = getYAxisTicks(
+      getExtent(
+        plotted,
+        leftSeries.map((s) => s.key),
+      ),
+      yAxis,
+      leftSeries.length,
+    )
     const right =
-      rightAxis && rightSeries.length > 0
-        ? getY(plotted, rightSeries, rightAxis)
+      rightAxis && hasRightAxis
+        ? getYAxisTicks(
+            getExtent(
+              plotted,
+              rightSeries.map((s) => s.key),
+            ),
+            rightAxis,
+            rightSeries.length,
+          )
         : undefined
 
-    const scaleOf = (s: { axis?: 'right' }) =>
-      s.axis === 'right' && right ? RIGHT_SCALE : Y_SCALE
     const baseOf = (s: { axis?: 'right' }) =>
       (s.axis === 'right' && right ? right : left).domain[0]
 
@@ -238,14 +292,48 @@ export function TimeSeriesChart<T, K extends string>({
     >
     const fills: Mark[] = []
     const strokes: Mark[] = []
-    for (const s of visible) {
-      const source = s.connectNulls
-        ? plotted.filter((p) => p.top[s.key] !== null)
-        : plotted
-      const top = (p: Plotted<T>) => p.top[s.key] ?? null
+    const isolatedDots: Mark[] = []
+    visible.forEach((s, i) => {
       const curve = s.curve ? CURVES[s.curve] : undefined
+      const yScale = scaleOf(s)
+      const top = (p: Plotted<T>) => p.top[s.key] ?? null
+      const edges = [
+        { id: s.key, y: top },
+        ...(s.value0 && s.stroke
+          ? [
+              {
+                id: `${s.key}-bottom`,
+                y: (p: Plotted<T>) => p.bottom[s.key] ?? null,
+              },
+            ]
+          : []),
+      ]
+      const withValue = (y: (p: Plotted<T>) => number | null) =>
+        plotted.filter((p) => y(p) !== null)
+      const line = (
+        id: string,
+        y: (p: Plotted<T>) => number | null,
+        stroke: string,
+        strokeOpacity: number | undefined,
+        source: Plotted<T>[],
+      ) =>
+        decorative(
+          lineY(source, {
+            id,
+            x: getX,
+            y,
+            stroke,
+            strokeWidth: s.strokeWidth ?? SERIES_STROKE_WIDTH,
+            strokeOpacity,
+            strokeDasharray: s.strokeDasharray,
+            curve,
+            yScale,
+          }),
+        )
+
       if (s.fill) {
         const base = baseOf(s)
+        const source = s.connectNulls ? withValue(top) : plotted
         fills.push(
           decorative(
             areaY(source, {
@@ -254,32 +342,66 @@ export function TimeSeriesChart<T, K extends string>({
               y1: (p) =>
                 p.top[s.key] === null ? null : (p.bottom[s.key] ?? base),
               y2: top,
-              fill: s.fill,
+              fill: paint(s.fill, ids.fill(s.key)),
               fillOpacity: s.fillOpacity ?? 1,
               curve,
-              yScale: scaleOf(s),
+              yScale,
             }),
           ),
         )
+      }
+      if (s.gapStroke) {
+        for (const edge of edges) {
+          strokes.push(
+            line(
+              `${edge.id}-gap`,
+              edge.y,
+              s.gapStroke.stroke,
+              s.gapStroke.strokeOpacity,
+              withValue(edge.y),
+            ),
+          )
+        }
       }
       if (s.stroke) {
-        strokes.push(
-          decorative(
-            lineY(source, {
-              id: `${s.key}-stroke`,
-              x: getX,
-              y: top,
-              stroke: s.stroke,
-              strokeWidth: s.strokeWidth ?? SERIES_STROKE_WIDTH,
-              strokeOpacity: s.strokeOpacity,
-              strokeDasharray: s.strokeDasharray,
-              curve,
-              yScale: scaleOf(s),
-            }),
-          ),
-        )
+        const stroke = paint(s.stroke, ids.stroke(s.key))
+        const strokeOpacity =
+          highlight !== undefined && s.key !== highlight
+            ? FADED_STROKE_OPACITY
+            : s.strokeOpacity
+        for (const edge of edges) {
+          strokes.push(
+            line(
+              `${edge.id}-stroke`,
+              edge.y,
+              stroke,
+              strokeOpacity,
+              s.connectNulls ? withValue(edge.y) : plotted,
+            ),
+          )
+        }
       }
-    }
+      const color = isolatedColors[i]
+      if (s.isolatedDots && color) {
+        const points = getIsolatedPoints(plotted, s.key)
+        for (const edge of edges) {
+          isolatedDots.push(
+            decorative(
+              dot(points, {
+                id: `${edge.id}-isolated`,
+                x: getX,
+                y: edge.y,
+                r: ISOLATED_DOT_RADIUS,
+                fill: color,
+                fillOpacity: s.isolatedDots.fillOpacity,
+                stroke: color,
+                yScale,
+              }),
+            ),
+          )
+        }
+      }
+    })
 
     const lastX = rows.length > 0 ? xRef.current(rows.at(-1) as T) : 0
     const areaMarks = areas.map((area, i) =>
@@ -300,7 +422,7 @@ export function TimeSeriesChart<T, K extends string>({
             x2: 'x2',
             y1: 'y1',
             y2: 'y2',
-            fill: area.fill,
+            fill: area.fill ?? `url(#${ids.noData})`,
             fillOpacity: area.fillOpacity,
             inset: 0,
             key: () => `reference-area-${i}`,
@@ -358,7 +480,7 @@ export function TimeSeriesChart<T, K extends string>({
           values: xAxis.ticks.filter((t) => t > xDomain[0]),
           format: (v: number) => axesRef.current.xAxis?.format(v) ?? String(v),
         }
-      : getXTicks(rows.map((row) => xRef.current(row)))
+      : getTimeTicks(rows.map((row) => xRef.current(row)))
 
     // Bottom: room for the x axis labels.
     const chartMargin = { top: 20, right: 1, bottom: 25, left: 0, ...margin }
@@ -387,6 +509,7 @@ export function TimeSeriesChart<T, K extends string>({
                 strokeOpacity: 1,
               }),
             ),
+            ...isolatedDots,
             ...dotMarks,
           ],
           // Scale instances, not factories: a factory's domain is inferred
@@ -439,17 +562,47 @@ export function TimeSeriesChart<T, K extends string>({
     })
   }, [plotted, optionsKey, yAxis.scale, rightAxis?.scale])
 
+  // Within a stack, only its top series marks the hovered row.
+  const stackTops = new Map(
+    visible.filter((s) => stacked.has(s.key)).map((s) => [s.axis, s.key]),
+  )
+  const dots = visible
+    .filter(
+      (s) =>
+        s.activeDot ?? (!stacked.has(s.key) || stackTops.get(s.axis) === s.key),
+    )
+    .flatMap((s) => [
+      {
+        key: s.key,
+        value: (_row: T, index: number) => plotted[index]?.top[s.key],
+        scale: scaleOf(s),
+      },
+      ...(s.value0 && s.stroke
+        ? [
+            {
+              key: `${s.key}-bottom`,
+              value: (_row: T, index: number) => plotted[index]?.bottom[s.key],
+              scale: scaleOf(s),
+            },
+          ]
+        : []),
+    ])
+
   const visibleKeys = visible.map((s) => s.key)
   return (
     <>
-      {/* Chart-sized, so `userSpaceOnUse` stroke gradients span the plot. */}
+      {/* Chart-sized, so stroke gradients across the plot span it. */}
       <svg
         aria-hidden
         className="pointer-events-none absolute inset-0 size-full"
       >
         <defs>
-          {defs}
-          {lastSyncedX !== undefined && <NoDataPatternDef />}
+          {gradients.map(({ id, gradient }) => (
+            <GradientDef key={id} id={id} gradient={gradient} />
+          ))}
+          {areas.some((area) => area.fill === undefined) && (
+            <NoDataPatternDef id={ids.noData} />
+          )}
         </defs>
       </svg>
       <Chart
@@ -468,13 +621,7 @@ export function TimeSeriesChart<T, K extends string>({
       <ChartHoverOverlay
         rows={rows}
         x={x}
-        dots={visible
-          .filter((s) => s.activeDot !== false)
-          .map((s) => ({
-            key: s.key,
-            value: (_row: T, index: number) => plotted[index]?.top[s.key],
-            scale: s.axis === 'right' && rightAxis ? RIGHT_SCALE : Y_SCALE,
-          }))}
+        dots={dots}
         sceneRef={sceneRef}
         ariaLabel={ariaLabel}
         syncId={syncId}
@@ -484,37 +631,7 @@ export function TimeSeriesChart<T, K extends string>({
   )
 }
 
-export function ChartTooltipWrapper({ children }: { children: ReactNode }) {
-  return <div className={tooltipContentVariants()}>{children}</div>
-}
-
-/**
- * One entry per visible series, in series order. `skipNull` drops series
- * without a value at the row.
- */
-export function getTooltipEntries<T, K extends string>(
-  row: T,
-  keys: readonly K[],
-  { skipNull = false }: { skipNull?: boolean } = {},
-): { name: K; value: number | null }[] {
-  return keys.flatMap((name) => {
-    const value = toNumber((row as Record<string, unknown>)[name])
-    return skipNull && value === null ? [] : [{ name, value }]
-  })
-}
-
-/**
- * A row with each visible series' plotted edges, stacking applied. Stacked
- * here rather than with the library's stack layout, because the lines and the
- * hover overlay need the stacked values too, and a missing value must leave a
- * gap instead of being dropped.
- */
-interface Plotted<T> {
-  row: T
-  top: Record<string, number | null>
-  bottom: Record<string, number | null>
-}
-
+/** Plotted rows, recomputed when the rows or the series' shape change. */
 function usePlotted<T, K extends string>(
   rows: T[],
   visible: ChartSeries<K, T>[],
@@ -522,49 +639,33 @@ function usePlotted<T, K extends string>(
   const key = visible
     .map((s) => `${s.key}:${s.stack ? 's' : ''}:${s.axis ?? ''}`)
     .join()
-  const accessorsRef = useRef(visible)
-  accessorsRef.current = visible
+  const seriesRef = useRef(visible)
+  seriesRef.current = visible
   // biome-ignore lint/correctness/useExhaustiveDependencies: keyed on the series shape
-  return useMemo(() => {
-    const series = accessorsRef.current
-    return rows.map((row) => {
-      const top: Record<string, number | null> = {}
-      const bottom: Record<string, number | null> = {}
-      const stackTop: Record<string, number> = {}
-      for (const s of series) {
-        const raw = toNumber(
-          s.value ? s.value(row) : (row as Record<string, unknown>)[s.key],
-        )
-        if (s.stack) {
-          const axis = s.axis ?? 'left'
-          const below = stackTop[axis] ?? 0
-          stackTop[axis] = below + (raw ?? 0)
-          top[s.key] = raw === null ? null : below + raw
-          bottom[s.key] = raw === null ? null : below
-        } else {
-          top[s.key] = raw
-          bottom[s.key] = s.value0 ? toNumber(s.value0(row)) : null
-        }
-      }
-      return { row, top, bottom }
-    })
-  }, [rows, key])
+  return useMemo(() => plotRows(rows, seriesRef.current), [rows, key])
 }
 
-function toNumber(value: unknown): number | null {
-  return typeof value === 'number' && Number.isFinite(value) ? value : null
+/** Document-unique ids for this chart's gradients and hatch. */
+function useIds() {
+  // React's ids contain characters that are awkward inside `url(#…)`.
+  const prefix = `chart${useId().replace(/[^a-zA-Z0-9]/g, '')}`
+  return {
+    fill: (key: string) => `${prefix}-${key}-fill`,
+    stroke: (key: string) => `${prefix}-${key}-stroke`,
+    noData: `${prefix}-no-data`,
+  }
+}
+
+function paint(value: string | FillGradient | StrokeGradient, id: string) {
+  return typeof value === 'string' ? value : `url(#${id})`
 }
 
 function getTimestamp<T>(row: T) {
   return (row as { timestamp: number }).timestamp
 }
 
-function describeFn(value: unknown) {
-  return typeof value === 'function' ? value.toString() : undefined
-}
-
 function yScaleOptions(
-  y: { domain: [number, number] },
+  y: YAxisTicks,
   ticks: number[],
   side: 'left' | 'right',
   getAxis: () => ChartYAxis,
@@ -598,152 +699,3 @@ function yScaleOptions(
 }
 
 const EMPTY: never[] = []
-
-const Y_TICK_COUNT = 3
-
-function getY<T, K extends string>(
-  plotted: Plotted<T>[],
-  series: ChartSeries<K, T>[],
-  yAxis: ChartYAxis,
-): { domain: [number, number]; ticks: number[] } {
-  let min = Number.POSITIVE_INFINITY
-  let max = Number.NEGATIVE_INFINITY
-  for (const point of plotted) {
-    for (const s of series) {
-      for (const value of [point.top[s.key], point.bottom[s.key]]) {
-        if (value === null || value === undefined) continue
-        if (value < min) min = value
-        if (value > max) max = value
-      }
-    }
-  }
-  if (min > max) return { domain: [0, 1], ticks: [] }
-  const count = yAxis.tickCount ?? Y_TICK_COUNT
-  const domain = yAxis.domain ?? 'zero'
-  const [lo, hi] =
-    typeof domain === 'function'
-      ? domain(min, max)
-      : domain === 'auto'
-        ? [min, max]
-        : [Math.min(0, min), max]
-  if (yAxis.scale) {
-    const scale = yAxis.scale().domain([lo, hi])
-    return {
-      domain: scale.domain() as [number, number],
-      ticks: yAxis.ticks ?? [...(scale.ticks?.(count) ?? [lo, hi])],
-    }
-  }
-  // A domain the caller fixed keeps its bounds; the others grow to nice
-  // ticks.
-  if (typeof domain === 'function') {
-    return {
-      domain: [lo, hi],
-      ticks: yAxis.ticks ?? getFixedDomainTicks(lo, hi, count, yAxis.integer),
-    }
-  }
-  const ticks = yAxis.ticks ?? getNiceTicks(lo, hi, count, yAxis.integer)
-  return { domain: [ticks[0] ?? lo, ticks.at(-1) ?? hi], ticks }
-}
-
-/**
- * From the top tick down, keeps each label that clears the last one kept.
- * Ticks outside the domain are left out.
- */
-function fitTicks(
-  y: { domain: [number, number]; ticks: number[] },
-  plotHeight: number,
-  axis: ChartYAxis,
-) {
-  const [lo, hi] = y.domain
-  const scale = (axis.scale ?? scaleLinear)()
-    .domain(y.domain)
-    .range([plotHeight, 0])
-  const minGap = (axis.fontSize ?? 15) * 2
-  const inside = y.ticks.filter((t) => t >= lo && t <= hi)
-  const kept: number[] = []
-  for (const tick of [...inside].reverse()) {
-    const last = kept.at(-1)
-    const position = scale(tick) ?? 0
-    if (
-      last === undefined ||
-      Math.abs(position - (scale(last) ?? 0)) >= minGap
-    ) {
-      kept.push(tick)
-    }
-  }
-  return kept.reverse()
-}
-
-/**
- * Ticks for a fixed domain: nice steps from `min`, then `max` itself as the
- * last tick.
- */
-function getFixedDomainTicks(
-  min: number,
-  max: number,
-  count: number,
-  integer?: boolean,
-) {
-  if (max <= min) return [min]
-  const step = getNiceStep((max - min) / (count - 1), integer)
-  const ticks: number[] = []
-  for (let tick = min; tick < max - step * 1e-9; tick += step) {
-    ticks.push(round(tick))
-  }
-  ticks.push(max)
-  return ticks
-}
-
-/**
- * `count` nice ticks: the step is the rough step rounded up to a multiple of
- * 0.05 (0.1 for steps of 1-10) of its decade, and the domain grows to fit
- * exactly `count` ticks.
- */
-function getNiceTicks(
-  min: number,
-  max: number,
-  count: number,
-  integer?: boolean,
-): number[] {
-  if (max <= min) return [min, min + 1]
-  let step = getNiceStep((max - min) / (count - 1), integer)
-  for (let i = 0; i < 10; i++) {
-    const start = Math.floor(min / step) * step
-    if (start + step * (count - 1) >= max - step * 1e-9) {
-      return Array.from({ length: count }, (_, j) => round(start + j * step))
-    }
-    step = getNiceStep(step * 1.05, integer)
-  }
-  return [min, max]
-}
-
-function getNiceStep(roughStep: number, integer?: boolean) {
-  const digitCount = Math.floor(Math.log10(roughStep)) + 1
-  const decade = 10 ** digitCount
-  const scale = digitCount !== 1 ? 0.05 : 0.1
-  const step = Math.ceil(roughStep / decade / scale - 1e-9) * scale * decade
-  return integer ? Math.max(1, Math.ceil(step)) : step
-}
-
-function round(value: number) {
-  return Number.parseFloat(value.toPrecision(12))
-}
-
-function getXTicks(xs: number[]) {
-  const first = xs[0]
-  const last = xs.at(-1)
-  if (first === undefined || last === undefined) {
-    return { values: [], format: String }
-  }
-  const rangeInDays =
-    (UnixTime.toStartOf(UnixTime(last), 'day') -
-      UnixTime.toStartOf(UnixTime(first), 'day')) /
-    UnixTime.DAY
-  const isTick = getTickCondition(rangeInDays)
-  // Labels near the plot edges would be cut off.
-  const edge = (last - first) * 0.03
-  return {
-    values: xs.filter((t) => isTick(t) && t > first + edge && t < last - edge),
-    format: getTickFormatter(rangeInDays),
-  }
-}

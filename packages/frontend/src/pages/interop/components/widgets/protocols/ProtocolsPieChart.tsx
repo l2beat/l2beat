@@ -1,6 +1,8 @@
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
-import { DonutChart } from '~/components/core/chart/DonutChart'
-import { PieChartTooltip } from '~/components/core/chart/PieChartTooltip'
+import {
+  DonutChart,
+  type DonutChartEntry,
+} from '~/components/core/chart/DonutChart'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useIsClient } from '~/hooks/useIsClient'
 import { cn } from '~/utils/cn'
@@ -11,15 +13,17 @@ export function ProtocolsPieChart({
   center,
   isLoading,
   containerWidth,
+  formatValue,
 }: {
   chartMeta: ChartMeta
-  chartData: { name: string; value: number; fill: string }[]
+  chartData: DonutChartEntry[]
   center: {
     label: string
     value: string | number
   }
   isLoading: boolean
   containerWidth: number | undefined
+  formatValue?: (value: number) => string
 }) {
   const isClient = useIsClient()
   const showSmallerChart = containerWidth && containerWidth < 373
@@ -52,30 +56,12 @@ export function ProtocolsPieChart({
         )}
         innerRadius={showSmallerChart ? 42 : 54}
         outerRadius={showSmallerChart ? 64 : 82}
-        renderTooltip={(entry) => <PieChartTooltip entry={entry} />}
-        center={
-          <text x="50%" y="50%" textAnchor="middle">
-            <tspan
-              x="50%"
-              y="50%"
-              className="fill-secondary font-medium text-2xs leading-none"
-              dy={showSmallerChart ? -9 : -16}
-            >
-              {center.label}
-            </tspan>
-            <tspan
-              x="50%"
-              y="50%"
-              className={cn(
-                'fill-primary font-semibold text-2xl leading-none',
-                showSmallerChart && 'text-lg',
-              )}
-              dy={9}
-            >
-              {center.value}
-            </tspan>
-          </text>
-        }
+        formatValue={formatValue}
+        centerLabel={{
+          lines: [center.label],
+          value: center.value,
+          compact: !!showSmallerChart,
+        }}
       />
     </div>
   )

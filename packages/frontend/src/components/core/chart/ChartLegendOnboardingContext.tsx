@@ -93,6 +93,23 @@ function markHintClosestToViewportCenter() {
   }
 }
 
+/**
+ * For a chart's interactive legend: whether its hint is shown, and whether
+ * room is kept for it, which stays as the page loaded it so nothing jumps
+ * when the hint goes.
+ */
+export function useLegendHint(
+  interactiveLegend: { disableOnboarding?: boolean } | undefined,
+) {
+  const { hasFinishedOnboarding, hasFinishedOnboardingInitial } =
+    useChartLegendOnboarding()
+  const enabled = !!interactiveLegend && !interactiveLegend.disableOnboarding
+  return {
+    showsHint: enabled && !hasFinishedOnboarding,
+    keepsRoom: enabled && !hasFinishedOnboardingInitial,
+  }
+}
+
 export function useChartLegendOnboarding() {
   const context = useContext(ChartLegendOnboardingContext)
   if (context === undefined) {
