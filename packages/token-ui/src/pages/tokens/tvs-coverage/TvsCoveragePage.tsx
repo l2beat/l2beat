@@ -45,6 +45,7 @@ import {
   formatSnapshotDay,
   type Names,
   type Option,
+  rowId,
   type SideFilter,
   type Snapshot,
   type Sort,
@@ -52,7 +53,9 @@ import {
   sortRows,
   sumValue,
 } from './rows'
+import { SelectionToolbar } from './SelectionToolbar'
 import { TvsCoverageTable } from './TvsCoverageTable'
+import { useRowSelection } from './useRowSelection'
 
 const PAGE_SIZE = 50
 const BUILD_POLL_MS = 5_000
@@ -263,6 +266,17 @@ function TvsGaps({
     [allRows, filters, names, snapshot, sort],
   )
 
+  const { ids: selectedIds, selection, clear } = useRowSelection(rows)
+  const selectedRows = useMemo(
+    () =>
+      sortRows(
+        allRows.filter((row) => selectedIds.has(rowId(row))),
+        sort,
+        names,
+      ),
+    [allRows, names, selectedIds, sort],
+  )
+
   const showMore = useCallback(
     () => setVisibleRows((current) => current + PAGE_SIZE),
     [],
@@ -318,18 +332,26 @@ function TvsGaps({
               Last rebuild failed {formatAge(failedAt, now)}
             </span>
           )}
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="ml-auto size-8 self-center"
-            disabled={isRefreshing}
-            aria-label="Rebuild snapshot"
-            title="Rebuild snapshot"
-            onClick={onRefresh}
-          >
-            <RotateCwIcon className={cn(isRefreshing && 'animate-spin')} />
-          </Button>
+          <div className="ml-auto flex items-center gap-2 self-center">
+            <SelectionToolbar
+              rows={selectedRows}
+              snapshot={snapshot}
+              names={names}
+              onClear={clear}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="size-8"
+              disabled={isRefreshing}
+              aria-label="Rebuild snapshot"
+              title="Rebuild snapshot"
+              onClick={onRefresh}
+            >
+              <RotateCwIcon className={cn(isRefreshing && 'animate-spin')} />
+            </Button>
+          </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <FilterSelect
@@ -408,6 +430,7 @@ function TvsGaps({
           onSort={onSort}
           onShowMore={showMore}
           dismissalActions={dismissalActions}
+          selection={selection}
         />
       </CardContent>
     </>
