@@ -55,19 +55,37 @@ export class HourlyActivityRepository extends BaseRepository {
     return stored
   }
 
-  async getByProjectAndTimeRange(
-    projectId: ProjectId,
+  async getByProjectsAndTimeRange(
+    projectIds: ProjectId[],
     [from, to]: [UnixTime, UnixTime],
   ): Promise<HourlyActivityRecord[]> {
+    if (projectIds.length === 0) return []
+
     const rows = await this.db
       .selectFrom('HourlyActivity')
       .selectAll()
-      .where('projectId', '=', projectId.toString())
+      .where(
+        'projectId',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
       .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
       .execute()
     return rows.map(toRecord)
+  }
+
+  /** Projects indexed per day have no hours */
+  async getFirstTimestamp(projectId: ProjectId): Promise<UnixTime | undefined> {
+    const result = await this.db
+      .selectFrom('HourlyActivity')
+      .select((eb) => eb.fn.min('timestamp').as('min_timestamp'))
+      .where('projectId', '=', projectId.toString())
+      .executeTakeFirst()
+    return result?.min_timestamp
+      ? UnixTime.fromDate(result.min_timestamp)
+      : undefined
   }
 
   async deleteByProjectIdFrom(

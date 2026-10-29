@@ -93,10 +93,10 @@ describeDatabase(HourActivityIndexer.name, (db) => {
       ...HISTORY.map((hour) => hour.count),
       4,
     ])
-    const hours = await db.hourlyActivity.getByProjectAndTimeRange(PROJECT, [
-      START,
-      TODAY,
-    ])
+    const hours = await db.hourlyActivity.getByProjectsAndTimeRange(
+      [PROJECT],
+      [START, TODAY],
+    )
     expect(hours.map((hour) => hour.count)).toEqual([
       ...HISTORY.slice(1).map((hour) => hour.count),
       4,
@@ -193,10 +193,10 @@ describeDatabase(HourActivityIndexer.name, (db) => {
   }
 
   async function getHoursOfToday() {
-    const hours = await db.hourlyActivity.getByProjectAndTimeRange(PROJECT, [
-      TODAY,
-      TODAY + UnixTime.DAY,
-    ])
+    const hours = await db.hourlyActivity.getByProjectsAndTimeRange(
+      [PROJECT],
+      [TODAY, TODAY + UnixTime.DAY],
+    )
     return hours.map((hour) => ({
       count: hour.count,
       uopsCount: hour.uopsCount,
