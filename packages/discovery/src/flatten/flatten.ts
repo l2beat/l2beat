@@ -8,6 +8,7 @@ import {
   type FileContent,
   type ParsedFile,
   ParsedFilesManager,
+  type TopLevelDeclaration,
 } from './ParsedFilesManager'
 import { renameIdentifiers } from './renameIdentifier'
 import type { FlattenOptions } from './types'
@@ -76,6 +77,8 @@ export function flattenStartingFrom(
       ? generateInterfaceSourceFromContract(
           declaration,
           typeMap,
+          (namePath) =>
+            resolveStruct(parsedFileManager, { declaration, file }, namePath),
           usedMembers.get(declaration.id),
         )
       : declaration.content
@@ -371,6 +374,65 @@ function buildTypeMap(
     }
   }
   return map
+}
+
+// Resolves a struct type name the way solc does from inside a contract: its
+// own and inherited nested types first, then the file scope
+function resolveStruct(
+  parsedFileManager: ParsedFilesManager,
+  owner: DeclarationFilePair,
+  namePath: string,
+): AST.StructDefinition | undefined {
+  const [head, member] = namePath.split('.') as [string, string | undefined]
+  if (member !== undefined) {
+    const container = parsedFileManager.tryFindDeclaration(head, owner.file)
+    const nested = container && findNestedType(container.declaration, member)
+    return nested?.type === 'StructDefinition' ? nested : undefined
+  }
+
+  const visited = new Set<string>()
+  const stack: DeclarationFilePair[] = [owner]
+  while (stack.length > 0) {
+    const pair = stack.pop() as DeclarationFilePair
+    if (visited.has(pair.declaration.id)) continue
+    visited.add(pair.declaration.id)
+    const nested = findNestedType(pair.declaration, head)
+    if (nested !== undefined) {
+      return nested.type === 'StructDefinition' ? nested : undefined
+    }
+    const ast = pair.declaration.ast as AST.ContractDefinition
+    for (const base of ast.baseContracts) {
+      const resolved = parsedFileManager.tryFindDeclaration(
+        base.baseName.namePath,
+        pair.file,
+      )
+      if (resolved !== undefined) stack.push(resolved)
+    }
+  }
+
+  const topLevel = parsedFileManager.tryFindDeclaration(head, owner.file)
+  return topLevel?.declaration.type === 'struct'
+    ? (topLevel.declaration.ast as AST.StructDefinition)
+    : undefined
+}
+
+function findNestedType(
+  declaration: TopLevelDeclaration,
+  name: string,
+): AST.StructDefinition | AST.EnumDefinition | AST.TypeDefinition | undefined {
+  if (declaration.ast.type !== 'ContractDefinition') return undefined
+  for (const sub of (declaration.ast as AST.ContractDefinition).subNodes) {
+    const node = sub as AST.ASTNode
+    if (
+      (node.type === 'StructDefinition' ||
+        node.type === 'EnumDefinition' ||
+        node.type === 'TypeDefinition') &&
+      node.name === name
+    ) {
+      return node
+    }
+  }
+  return undefined
 }
 
 // NOTE(radomski): We want to have all pragrams without the ones that configure
