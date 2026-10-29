@@ -92,7 +92,8 @@ function SupplyChangeLine({ row, change }: { row: Row; change: SupplyChange }) {
             {copy && (
               <div>
                 Supply of {copy.symbol ?? shortAddress(copy.address)} on{' '}
-                {formatChain(copy.chain)}, the minted copy.
+                {formatChain(copy.chain)}, the minted copy:{' '}
+                {formatOptionalAmount(copy.supply)}.
               </div>
             )}
             <div>{describeSupplyChange(change)}</div>
