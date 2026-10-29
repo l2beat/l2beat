@@ -278,10 +278,25 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
-    referenceClient: {
+    referenceApp: {
       name: 'Tornado Cash classic app',
-      repository: 'https://github.com/tornado-dao/classic-ui',
-      commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',
+      url: 'https://explorer.ens.domains/tornadocash.eth/records',
+      since: '2026-10-13',
+      source: {
+        repository: 'https://github.com/tornado-dao/classic-ui',
+        commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',
+      },
+      checkedApps: [
+        {
+          name: 'Tornado CLI',
+          icon: 'tornado-cash',
+          finding:
+            "With Tor on, its fee checks still reach the RPC directly, so the RPC sees the user's IP next to each deposit and withdrawal.",
+          fix: 'Send the fee checks through the Tor proxy like every other request.',
+          source:
+            'https://github.com/tornado-dao/tornado-cli/blob/662dc0ea769bc72a785c29faa0269c866d34757f/cli.js#L1726',
+        },
+      ],
     },
     trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),

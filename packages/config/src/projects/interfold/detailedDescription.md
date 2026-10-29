@@ -20,7 +20,7 @@ A CRISP vote sets who may vote in one of three ways. It reads voting power from 
 
 ### App
 
-The ratings assume Interfold governance votes through Interfold's [governance app](https://governance.theinterfold.com), which is [open source](https://github.com/theinterfold/the-interfold-governance) and hosted by Interfold. By default it counts a random 99 to 100% of the voter's power, so totals do not match balances exactly. A local build removes the trust in Interfold's hosted copy. The repository ships settings only for Sepolia, so a mainnet build needs to copy its settings from the hosted app's code. A voter can also send the ballot from their own wallet.
+The ratings cover Interfold governance votes. Interfold hosts the app, built from public source. By default it counts a random 99 to 100% of the voter's power, so totals do not match balances exactly. A local build removes the trust in Interfold's hosted copy. The repository ships settings only for Sepolia, so a mainnet build needs to copy its settings from the hosted app's code. A voter can also send the ballot from their own wallet.
 
 ### Ciphernodes
 

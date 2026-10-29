@@ -1,4 +1,4 @@
-Privacy Pools v2 by 0xbow lets you shield ETH, USDC or USDT in one pool, then send, swap, earn Aave yield and withdraw without a visible link to the deposit. Only deposits that 0xbow's association set provider (ASP) approves can be spent privately. Depositors, recipients, amounts and timing at the pool's edges stay public.
+Privacy Pools v2 by 0xbow lets you deposit ETH, USDC or USDT into one pool, then send, swap, earn Aave yield and withdraw without a visible link to the deposit. Only deposits that 0xbow's association set provider (ASP) approves can be spent privately. Depositors, recipients, amounts and timing at the pool's edges stay public.
 
 Users trust 0xbow, which runs the ASP, the only relayer and the website, and a multisig that can upgrade every core contract without delay. The ASP can withhold or revoke approval for any deposit. Exiting is permissionless: a note's owner can ragequit it from the vault, losing their privacy, unless that multisig blocks it.
 
@@ -24,7 +24,7 @@ All keys derive from one signature of the user's wallet. Contract wallets and si
 
 ### App
 
-The ratings assume the website at [privacypools.com](https://privacypools.com), built from [public source](https://github.com/0xbow-io/privacy-pools-website-v2) and hosted by 0xbow. It reads the chain from Alchemy under 0xbow's key unless the user sets an endpoint per chain. It downloads the pool's events whole from the ASP but offers only 0xbow's relayer. Its Tor option requires a user-run Tor gateway and covers only RPC calls. It does not support connecting a local node with Tor enabled. Privacy Pools v2 is deployed on BNB Chain, Citrea, Optimism, Base, Arbitrum and Robinhood Chain, which L2BEAT does not track.
+0xbow hosts the app, built from public source. It reads the chain from Alchemy under 0xbow's key unless the user sets an endpoint per chain. It downloads the pool's events whole from the ASP but offers only 0xbow's relayer. Its Tor option requires a user-run Tor gateway and covers only RPC calls. It does not support connecting a local node with Tor enabled. Privacy Pools v2 is deployed on BNB Chain, Citrea, Optimism, Base, Arbitrum and Robinhood Chain, which L2BEAT does not track.
 
 ### Swaps and yield
 

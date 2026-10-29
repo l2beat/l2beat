@@ -59,7 +59,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The website works in Tor Browser and scans every pool whole, matching notes locally without revealing the user's deposits to third parties.",
       exposureContinued:
-        "The relayer receives amount and asset for a quote and the recipient once the user confirms. The website confirms a relayed withdrawal from bulk reads of new blocks, so no request names its hash. 0xbow's Google Analytics runs without a consent prompt and records the hash of any explorer link the user opens. A wallet sign-in shows the RPC the wallet in the session that waits for the withdrawal, which can pair the two by timing on a quiet pool.",
+        "The relayer receives amount and asset for a quote and the recipient once the user confirms. The website confirms a relayed withdrawal from bulk reads of new blocks, so no request names its hash. 0xbow's Google Analytics runs without a consent prompt and records the hash of any explorer link the user opens. On a quiet pool, the RPC can time a wallet sign-in against the withdrawal the same session waits for.",
       advice:
         "Withdraw in a new Tor Browser session, signed in with the user's recovery phrase so no wallet address is queried. Retry new circuits until Fast Relay answers, and open no explorer links in that session.",
       sources: [

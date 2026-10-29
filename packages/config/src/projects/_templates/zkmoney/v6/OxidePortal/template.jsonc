@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OxidePortal",
+  "critical": true,
+  "category": "core",
+  "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from L2_TOKEN and a signature from a TEE signer registered in the TEE_REGISTRY. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. A refund needs a zk proof against that snapshot and a registered signer's signature.",
+  "ignoreInWatchMode": [
+    "_$cachedAvailable",
+    "_$lastUpdatedTime",
+    "getCurrentAvailable"
+  ],
+  "ignoreRelatives": ["INBOX", "OUTBOX", "REGISTRY", "ROLLUP", "UNDERLYING"],
+  "fields": {
+    "L2_TOKEN": {
+      "description": "zk.money token contract on Aztec whose L2->L1 messages can release funds."
+    },
+    // Pause-like, as privacy-pools `dead`: the freeze switches to the refund mode
+    // that the immutable portal already contains. Deposits stop, exits continue.
+    "_$frozen": {
+      "description": "Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership.",
+      "severity": "MEDIUM"
+    },
+    "REGISTRY": {
+      "description": "Aztec Registry. If its canonical rollup is no longer ROLLUP, anyone can freeze this portal."
+    },
+    "TEE_REGISTRY": {
+      "template": "zkmoney/v6/TeeRegistry"
+    },
+    "FROZEN_NOTES_REFUND_VERIFIER": {
+      "template": "zkmoney/v6/FrozenNotesRefundVerifier"
+    },
+    "FROZEN_DEPOSITS_REFUND_VERIFIER": {
+      "template": "zkmoney/v6/FrozenDepositsRefundVerifier"
+    },
+    "UNPROCESSED_DEPOSIT_REFUND_VERIFIER": {
+      "template": "zkmoney/v6/UnprocessedDepositRefundVerifier"
+    },
+    "GLOBAL_LIMIT": {
+      "description": "Deposit capacity (wei), refilling at RATE per second. Withdrawals and refunds are only limited by TX_AMOUNT_CAP per transaction.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

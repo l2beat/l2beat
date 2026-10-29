@@ -2,15 +2,19 @@ import {
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
-import type { ProjectPrivacyReferenceClient } from '../../types'
+import type { ProjectPrivacyReferenceApp } from '../../types'
 
 // main after v1.2.1 of the web app, the build privacypools.com serves.
-export const REFERENCE_CLIENT: ProjectPrivacyReferenceClient = {
+export const REFERENCE_APP = {
   name: 'privacypools.com',
-  repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
-  commit: '6c292b47a977cd86d506994f1b9a0fc51b9a79db',
-}
-const WEBSITE = `${REFERENCE_CLIENT.repository}/blob/${REFERENCE_CLIENT.commit}/`
+  url: 'https://privacypools.com',
+  since: '2026-10-23',
+  source: {
+    repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
+    commit: '6c292b47a977cd86d506994f1b9a0fc51b9a79db',
+  },
+} satisfies ProjectPrivacyReferenceApp
+const WEBSITE = `${REFERENCE_APP.source.repository}/blob/${REFERENCE_APP.source.commit}/`
 // v1.0.2 of the monorepo: the circuits behind the live verifiers and the SDK the app vendors.
 export const MONOREPO_REPOSITORY =
   'https://github.com/0xbow-io/privacy-pools-v2-monorepo'
@@ -99,11 +103,11 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        "The default RPCs, Alchemy under 0xbow's key with a public node as fallback, see the account at sign-in and can time it against the withdrawal.",
+        "The default RPCs, led by Alchemy under 0xbow's key, see the account at sign-in and can time it against the withdrawal.",
       exposureContinued:
-        "Network services like the LI.FI swap service and Sentry error reporting receive your IP address unless the app is used over Tor or a VPN, while the Tor mode is not compatible with a local Ethereum node. The app confirms a relayed withdrawal from bulk reads, so no request names it, and the pairing rests on timing, which Tor does not hide. The app downloads the pool's events whole from the ASP and matches notes locally. The relayer learns the recipient at quote time. Tor Browser works, but the relayer refuses many Tor exits and the app offers no other relayer.",
+        "Tor does not hide that timing. Tor Browser and the app's Tor option cannot reach a local node, so it also needs a system-wide route.",
       advice:
-        'Set your own node, served over https, as the endpoint for the chain before signing in. Withdraw in a new Tor Browser session signed in with your account key, so no wallet is connected, and retry on a new circuit when the relayer refuses.',
+        'Route all traffic through Tor or NymVPN and set a local node as the endpoint before signing in. Withdraw signed in with the account key instead of a wallet.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -111,7 +115,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         asset: 'private',
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only from an own node, with a new Tor Browser session for the exit.',
+          note: 'Private only with a local node and all traffic through Tor or NymVPN.',
         },
       },
       sources: [
@@ -122,14 +126,6 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         {
           title: 'Allowlist refuses per-note reads and topic filters',
           url: WEBSITE + 'services/egress-policy.ts#L447-L520',
-        },
-        {
-          title: 'The receive quote carries the recipient',
-          url: WEBSITE + 'services/egress-policy.ts#L606-L617',
-        },
-        {
-          title: 'Tor needs a gateway the user runs',
-          url: WEBSITE + 'config/tor.ts#L1-L50',
         },
       ],
     },

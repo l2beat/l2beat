@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "zkmoneyv6",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xCeae64c7211a2208afFc4F396ADD1D46996Cd2A2",
+    "eth:0x7C8c2147d1BB8B83e0a0501097372de170eE702a",
+    "eth:0xd0D8E5C5B128ea7e5f2d461Afd6C669BC0877dF8",
+    "eth:0x70E9c762B02Ec645DF4BC2456271805cba80126c",
+    "eth:0x92270578f3A311B3ced0019a4E15701e7405b4AE",
+    "eth:0x7F890e5DF3B4165D1cE4E9A42e97C44f1d7dCc09",
+    "eth:0x8F4105a55C457D796Adab90d5D9E649861E81625",
+    "eth:0x5ecE3b4EBE7137b1b6f92406dE17d9816D585c1c",
+    "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a"
+  ],
+  "names": {
+    "eth:0x8F4105a55C457D796Adab90d5D9E649861E81625": "SwapEscrowFactory",
+    "eth:0xc953308e66DA19881d8ddD240E6369Db8Ef72Ab9": "SwapEscrow",
+    "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8": "OxidePortal_sUSDS",
+    "eth:0xd0D8E5C5B128ea7e5f2d461Afd6C669BC0877dF8": "PlainWithdrawalExecutor_sUSDS",
+    "eth:0x92270578f3A311B3ced0019a4E15701e7405b4AE": "MigrationExecutor_sUSDS"
+  },
+  "overrides": {
+    "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525": {
+      "fields": {
+        "ensNode": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "0xf605999a299a7229da9f2a3c65acf5cb829ae965cfe467f053e1b97c50b0eec2"
+          }
+        }
+      }
+    }
+  }
+}

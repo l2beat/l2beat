@@ -175,6 +175,7 @@ export type {
 } from './repositories/TokenValueRepository'
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'
 export type { TvsBlockTimestampRecord } from './repositories/TvsBlockTimestampRepository'
+export type { TvsEscrowValueRecord } from './repositories/TvsEscrowValueRepository'
 export type { TvsPriceRecord } from './repositories/TvsPriceRepository'
 export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'
 export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository'
