@@ -52,9 +52,12 @@ export function prerenderYourProjects(
         row.querySelector('img')?.setAttribute('src', project.iconUrl)
         const name = row.querySelector('span')
         if (name) name.textContent = project.name
-        row
-          .querySelector('button')
-          ?.setAttribute('aria-label', `Unpin ${project.name}`)
+        // The template's label is "Pin " or "Unpin ", for an empty name.
+        const button = row.querySelector('button')
+        button?.setAttribute(
+          'aria-label',
+          `${button.getAttribute('aria-label') ?? ''}${project.name}`,
+        )
         list.append(row)
       }
       if (pinned.length > 0) group.querySelector('p')?.remove()

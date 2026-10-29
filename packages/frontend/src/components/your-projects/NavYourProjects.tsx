@@ -2,9 +2,11 @@ import type { ReactNode } from 'react'
 import { useSyncExternalStore } from 'react'
 import { usePathname } from '~/hooks/usePathname'
 import { PinIcon } from '~/icons/Pin'
+import { cn } from '~/utils/cn'
 import { SidebarGroup, SidebarGroupLabel } from '../core/Sidebar'
 import { prerenderYourProjects } from './prerenderYourProjects'
 import {
+  pinProject,
   type SavedProject,
   STORAGE_KEY,
   unpinProject,
@@ -143,8 +145,7 @@ function YourProjectsGroup({
       <ul className="flex flex-col">{children}</ul>
       {withPinningHint && (
         <p className="mt-1 pl-1.5 text-2xs text-secondary leading-snug">
-          Pin a project from its page to keep it here. Saved only in this
-          browser.
+          Pin a project to keep it here. Saved only in this browser.
         </p>
       )}
     </SidebarGroup>
@@ -179,17 +180,25 @@ function ProjectRow({
           {project.name}
         </span>
       </a>
-      {pinned && (
-        <button
-          type="button"
-          onClick={() => unpinProject(project.href)}
-          aria-label={`Unpin ${project.name}`}
-          title="Unpin"
-          className="flex size-6 shrink-0 items-center justify-center text-secondary hover:text-primary"
-        >
-          <PinIcon aria-hidden className="size-3 fill-current" />
-        </button>
-      )}
+      <button
+        type="button"
+        onClick={() =>
+          pinned ? unpinProject(project.href) : pinProject(project)
+        }
+        aria-label={`${pinned ? 'Unpin' : 'Pin'} ${project.name}`}
+        title={pinned ? 'Unpin' : 'Pin'}
+        className={cn(
+          'flex size-6 shrink-0 items-center justify-center text-secondary hover:text-primary',
+          // Recent rows show it on hover, where there is one.
+          !pinned &&
+            'focus-visible:opacity-100 lg:opacity-0 lg:group-hover/row:opacity-100',
+        )}
+      >
+        <PinIcon
+          aria-hidden
+          className={cn('size-3', pinned && 'fill-current')}
+        />
+      </button>
     </li>
   )
 }

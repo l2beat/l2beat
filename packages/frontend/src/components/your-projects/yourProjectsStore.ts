@@ -114,6 +114,15 @@ export function usePinnedState(project: SavedProject) {
   return { isPinned, toggle }
 }
 
+export function pinProject(project: SavedProject) {
+  write((current) => ({
+    ...current,
+    pinned: current.pinned.some((p) => p.href === project.href)
+      ? current.pinned
+      : [...current.pinned, project],
+  }))
+}
+
 export function unpinProject(href: string) {
   write((current) => ({
     ...current,
