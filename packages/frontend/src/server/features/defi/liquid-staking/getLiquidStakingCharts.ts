@@ -13,6 +13,7 @@ export type LiquidStakingChartsParams = v.infer<
   typeof LiquidStakingChartsParams
 >
 
+/** Both charts, for the latest values a page shows next to them. */
 export interface LiquidStakingCharts {
   yield: LiquidStakingYieldPoint[]
   costOfExit: LiquidStakingChartPoint[]
@@ -31,48 +32,52 @@ export interface LiquidStakingYieldPoint extends LiquidStakingChartPoint {
   ethStaked: number | null
 }
 
-/**
- * Yields are annualised fractions over the previous 30 days. Cost of exit is
- * in days of yield, by the cheaper of the queue and the market.
- */
-export async function getLiquidStakingCharts(
+/** Annualised fractions over the previous 30 days. */
+export async function getLiquidStakingYieldChart(
   params: LiquidStakingChartsParams,
-): Promise<LiquidStakingCharts> {
-  const projectIds = (await getLiquidStakingProjects()).map(
-    (project) => project.id,
-  )
+): Promise<LiquidStakingYieldPoint[]> {
+  const projectIds = await getProjectIds()
   if (env.MOCK) {
-    return getMockLiquidStakingCharts(params, projectIds)
-  }
-  // The daily values are not indexed yet.
-  return { yield: [], costOfExit: [] }
-}
-
-function getMockLiquidStakingCharts(
-  params: LiquidStakingChartsParams,
-  projectIds: string[],
-): LiquidStakingCharts {
-  const to = UnixTime.toStartOf(UnixTime(params.range[1]), 'day')
-  const from = params.range[0] ?? to - 1000 * UnixTime.DAY
-  const timestamps = generateTimestamps([from, to], 'day')
-
-  const yields = projectIds.map(() => randomWalk(timestamps.length, 0.03, 0.4))
-  const network = randomWalk(timestamps.length, 0.032, 0.2)
-  const ethStaked = randomWalk(timestamps.length, 34_000_000, 0.05)
-  const costOfExit = projectIds.map(() => randomWalk(timestamps.length, 3, 1))
-
-  return {
-    yield: timestamps.map((timestamp, i) => ({
+    const days = getMockDays(params)
+    const yields = projectIds.map(() => randomWalk(days.length, 0.03, 0.4))
+    const network = randomWalk(days.length, 0.032, 0.2)
+    const ethStaked = randomWalk(days.length, 34_000_000, 0.05)
+    return days.map((timestamp, i) => ({
       timestamp,
       projects: byProject(projectIds, yields, i),
       network: network[i] ?? null,
       ethStaked: ethStaked[i] ?? null,
-    })),
-    costOfExit: timestamps.map((timestamp, i) => ({
+    }))
+  }
+  // The daily values are not indexed yet.
+  return []
+}
+
+/** In days of yield, by the cheaper of the queue and the market. */
+export async function getLiquidStakingCostOfExitChart(
+  params: LiquidStakingChartsParams,
+): Promise<LiquidStakingChartPoint[]> {
+  const projectIds = await getProjectIds()
+  if (env.MOCK) {
+    const days = getMockDays(params)
+    const costOfExit = projectIds.map(() => randomWalk(days.length, 3, 1))
+    return days.map((timestamp, i) => ({
       timestamp,
       projects: byProject(projectIds, costOfExit, i),
-    })),
+    }))
   }
+  // The daily values are not indexed yet.
+  return []
+}
+
+async function getProjectIds() {
+  return (await getLiquidStakingProjects()).map((project) => project.id)
+}
+
+function getMockDays(params: LiquidStakingChartsParams) {
+  const to = UnixTime.toStartOf(UnixTime(params.range[1]), 'day')
+  const from = params.range[0] ?? to - 1000 * UnixTime.DAY
+  return generateTimestamps([from, to], 'day')
 }
 
 function byProject(projectIds: string[], series: number[][], index: number) {

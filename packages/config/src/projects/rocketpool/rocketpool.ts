@@ -183,60 +183,62 @@ export const rocketpool: BaseProject = {
       ),
     ],
   },
-  liquidStakingConfig: {
-    type: 'rocketpool',
-    rETH: discovery.getContract('RocketTokenRETH').address,
-  },
-  liquidStakingRisks: {
-    minting: {
-      value: 'Permissionless',
-      secondLine: 'ungated FIFO queue',
-      sentiment: 'good',
-      description: `Anyone can deposit ETH (minimum ${value('RocketDepositPool', 'minimumDeposit')} ETH, ${percent('RocketDAOProtocolSettingsDeposit', 'getDepositFee')} fee) for ${rethSymbol}. Deposits go to queued validators in order. The ${councilSeatThreshold} security council or RPL governance can switch deposits off.`,
+  liquidStaking: {
+    contracts: {
+      type: 'rocketpool',
+      rETH: discovery.getContract('RocketTokenRETH').address,
     },
-    operators: {
-      value: 'Permissionless',
-      secondLine: 'ETH bond',
-      sentiment: 'good',
-      warning:
-        registrationStatus === 'disabled'
-          ? {
-              value:
-                'Registration of new node operators is currently switched off.',
-              sentiment: 'warning',
-            }
-          : undefined,
-      description: `Anyone can register as an operator (currently ${registrationStatus}). Operators bond part of each validator's ETH, which absorbs losses before holders. The protocol cannot force an operator to exit.`,
-    },
-    backing: {
-      value: 'Minipools',
-      secondLine: 'creds: minipool',
-      sentiment: 'good',
-      description:
-        'Each validator withdraws to its own Rocket Pool contract, fixed when it is funded. Returned ETH is split onchain between the operator and the pool, and the vault and token contracts cannot be upgraded.',
-    },
-    oracle: {
-      value: `${membersNeeded('RocketDAONodeTrusted')} of ${oracleSetSize}`,
-      secondLine: `${balanceCadence} · ≤${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')}`,
-      sentiment: 'warning',
-      description: `${membersNeeded('RocketDAONodeTrusted')} of ${oracleSetSize} oracle DAO members report the rate ${balanceCadence}, moving it at most ${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')} per report. If they stop, the last rate stays in force. The security council can switch reporting off.`,
-    },
-    exit: {
-      value: 'Burn anytime',
-      secondLine: 'instant · no pause',
-      sentiment: 'good',
-      warning: {
-        value:
-          'Pays only from the liquid buffer and reverts when it is empty; there is no forced validator exit.',
-        sentiment: 'warning',
+    risks: {
+      minting: {
+        value: 'Permissionless',
+        secondLine: 'ungated FIFO queue',
+        sentiment: 'good',
+        description: `Anyone can deposit ETH (minimum ${value('RocketDepositPool', 'minimumDeposit')} ETH, ${percent('RocketDAOProtocolSettingsDeposit', 'getDepositFee')} fee) for ${rethSymbol}. Deposits go to queued validators in order. The ${councilSeatThreshold} security council or RPL governance can switch deposits off.`,
       },
-      description: `Anyone can burn ${rethSymbol} for ETH instantly, with no queue or pause. ETH comes only from a liquid buffer (target ${percent('RocketDAOProtocolSettingsNetwork', 'getTargetRethCollateralRate')} of backing); when it is empty, the burn fails.`,
-    },
-    upgrades: {
-      value: `Oracle DAO (${membersNeeded('RocketDAONodeTrusted')}/${oracleSetSize})`,
-      secondLine: `≥${upgradePathDays}d · council veto`,
-      sentiment: 'warning',
-      description: `Only the oracle DAO (${membersNeeded('RocketDAONodeTrusted')}-of-${oracleSetSize} majority) can change the code: ${voteDelay} before voting, then ${upgradeVetoWindow} in which the ${councilSeatThreshold} security council can veto. The vault and token contracts cannot be upgraded.`,
+      operators: {
+        value: 'Permissionless',
+        secondLine: 'ETH bond',
+        sentiment: 'good',
+        warning:
+          registrationStatus === 'disabled'
+            ? {
+                value:
+                  'Registration of new node operators is currently switched off.',
+                sentiment: 'warning',
+              }
+            : undefined,
+        description: `Anyone can register as an operator (currently ${registrationStatus}). Operators bond part of each validator's ETH, which absorbs losses before holders. The protocol cannot force an operator to exit.`,
+      },
+      backing: {
+        value: 'Minipools',
+        secondLine: 'creds: minipool',
+        sentiment: 'good',
+        description:
+          'Each validator withdraws to its own Rocket Pool contract, fixed when it is funded. Returned ETH is split onchain between the operator and the pool, and the vault and token contracts cannot be upgraded.',
+      },
+      oracle: {
+        value: `${membersNeeded('RocketDAONodeTrusted')} of ${oracleSetSize}`,
+        secondLine: `${balanceCadence} · ≤${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')}`,
+        sentiment: 'warning',
+        description: `${membersNeeded('RocketDAONodeTrusted')} of ${oracleSetSize} oracle DAO members report the rate ${balanceCadence}, moving it at most ${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')} per report. If they stop, the last rate stays in force. The security council can switch reporting off.`,
+      },
+      exit: {
+        value: 'Burn anytime',
+        secondLine: 'instant · no pause',
+        sentiment: 'good',
+        warning: {
+          value:
+            'Pays only from the liquid buffer and reverts when it is empty; there is no forced validator exit.',
+          sentiment: 'warning',
+        },
+        description: `Anyone can burn ${rethSymbol} for ETH instantly, with no queue or pause. ETH comes only from a liquid buffer (target ${percent('RocketDAOProtocolSettingsNetwork', 'getTargetRethCollateralRate')} of backing); when it is empty, the burn fails.`,
+      },
+      upgrades: {
+        value: `Oracle DAO (${membersNeeded('RocketDAONodeTrusted')}/${oracleSetSize})`,
+        secondLine: `≥${upgradePathDays}d · council veto`,
+        sentiment: 'warning',
+        description: `Only the oracle DAO (${membersNeeded('RocketDAONodeTrusted')}-of-${oracleSetSize} majority) can change the code: ${voteDelay} before voting, then ${upgradeVetoWindow} in which the ${councilSeatThreshold} security council can veto. The vault and token contracts cannot be upgraded.`,
+      },
     },
   },
   // Declared empty on purpose: the protocol has no bridge, no third-party price
