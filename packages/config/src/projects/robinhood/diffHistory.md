@@ -9,7 +9,7 @@ Generated with discovered.json: 0x5510ca7bdcaa6403810068742f848cc2037bfb3f
 
 ## Description
 
-ArbFilteredTransactionsManager: FilteredTransactionAdded events 6208 → 6228.
+ArbFilteredTransactionsManager: FilteredTransactionAdded events 6208 → 6228, all forced L1 transactions targeting the same frozen wallet holding most of the Green Bull (VLAD) memecoin supply.
 
 ## Watched changes
 
