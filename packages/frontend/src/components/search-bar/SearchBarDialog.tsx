@@ -12,6 +12,7 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/Command'
+import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
@@ -118,16 +119,12 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
       fullScreenMobile
     >
       <Command shouldFilter={false} className="rounded-none">
-        <CommandInput
+        <SearchBarInput
           ref={inputRef}
-          placeholder="Search projects, tokens, protocols or addresses"
           value={value}
           onValueChange={setValue}
-        >
-          <CommandInputActionButton onClick={() => onEscapeKeyDown()}>
-            {value !== '' ? 'Clear' : 'Close'}
-          </CommandInputActionButton>
-        </CommandInput>
+          onAction={() => onEscapeKeyDown()}
+        />
         <CommandList className="max-h-screen supports-[height:100dvh]:max-h-dvh md:h-[270px] md:max-h-[270px]">
           {((value !== debouncedValue && value !== '') || isFetching) && (
             <CommandPrimitive.Loading>
@@ -346,4 +343,40 @@ function entryToLabel(entry: AnySearchBarEntry) {
     default:
       assertUnreachable(entry.kind)
   }
+}
+
+/**
+ * Mounted only while the dialog is open, so the breakpoint listener is too.
+ * The full placeholder would be cut off on phones (below 550px), where
+ * "Close" sits beside it.
+ */
+function SearchBarInput({
+  ref,
+  value,
+  onValueChange,
+  onAction,
+}: {
+  ref: React.Ref<HTMLInputElement>
+  value: string
+  onValueChange: (value: string) => void
+  onAction: () => void
+}) {
+  const breakpoint = useBreakpoint()
+  const isPhone = breakpoint === 'xs'
+  return (
+    <CommandInput
+      ref={ref}
+      placeholder={
+        isPhone
+          ? 'Projects, tokens or addresses'
+          : 'Search projects, tokens, protocols or addresses'
+      }
+      value={value}
+      onValueChange={onValueChange}
+    >
+      <CommandInputActionButton onClick={onAction}>
+        {value !== '' ? 'Clear' : 'Close'}
+      </CommandInputActionButton>
+    </CommandInput>
+  )
 }
