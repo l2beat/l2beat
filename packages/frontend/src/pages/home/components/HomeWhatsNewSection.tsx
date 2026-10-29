@@ -260,6 +260,7 @@ function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
         >
           <a
             href={project.href}
+            title={project.name}
             className="group flex min-w-0 flex-1 items-center gap-2"
           >
             <img src={project.iconUrl} alt="" className={HOME_ICON_CLASS} />
@@ -271,7 +272,7 @@ function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
             >
               {project.name}
             </span>
-            <span className={cn('shrink-0', HOME_TEXT.meta)}>
+            <span className={cn('shrink-0 pl-1', HOME_TEXT.meta)}>
               {project.category === 'l2' && project.l2Category
                 ? project.l2Category
                 : CATEGORY_LABEL[project.category]}

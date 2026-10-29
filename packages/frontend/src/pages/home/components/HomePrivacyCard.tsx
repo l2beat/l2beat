@@ -77,6 +77,7 @@ export function HomePrivacyCard({
               tooltipLabel="Deposited"
               formatValue={(value) => formatCurrency(value, 'usd')}
               weeklyAverage
+              perDay
             />
           }
         />

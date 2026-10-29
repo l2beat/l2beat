@@ -50,7 +50,7 @@ export function HomeMandateBanner({ className }: { className?: string }) {
             className={cn(
               'max-w-[62%]',
               HOME_TEXT.body,
-              'font-medium text-on-accent',
+              'text-balance font-medium text-on-accent',
             )}
           >
             What L2BEAT stands for and how we work.

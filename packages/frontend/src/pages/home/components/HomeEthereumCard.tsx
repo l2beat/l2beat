@@ -72,6 +72,7 @@ export function HomeEthereumCard({
               tooltipLabel="Data posted"
               formatValue={(value) => formatBytes(value)}
               weeklyAverage
+              perDay
               className={HOME_CHART_HEIGHT_CLASS}
             />
           }
