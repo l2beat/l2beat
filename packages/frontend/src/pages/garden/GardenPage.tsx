@@ -27,7 +27,7 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
             description="The four CROPS properties count as a whole: a project is listed only if none is rated bad and it has an ossification score."
           />
           <main>
-            <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-6">
+            <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-5">
               <GardenTable entries={entries} />
             </div>
             <AttestationNotice attestation={attestation} />
