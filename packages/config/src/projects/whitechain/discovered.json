@@ -1,7 +1,7 @@
 {
   "name": "whitechain",
   "timestamp": 1793192557,
-  "configHash": "0x1d66eb0465fb2169d819d1e89326addde891cf65e72ef96d872f898fefc8ed2d",
+  "configHash": "0x2dde4f2654e48b6047b0792d3f2d029a4aec96d5270fbc0b404c9b3b5be69171",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -519,7 +519,7 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "Safe",
+      "name": "Whitechain Multisig 1",
       "address": "eth:0x568440132075d4E1c3E42111EF561636f4956eAd",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -631,7 +631,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "Safe",
+      "name": "Whitechain Multisig 3",
       "address": "eth:0x5918870d5391e0610d7624837cABEd9d4AbEeeE0",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -918,7 +918,7 @@
       ]
     },
     {
-      "name": "Safe",
+      "name": "Whitechain Multisig 2",
       "address": "eth:0x8da4Ce0f49E472fb6F892c779b3E63C7a55B23aF",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1747,7 +1747,7 @@
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 26291399 },
-  "permissionsConfigHash": "0x3c2ccefc99396d8468b56494764cc6a0df05e34687f72242338284bb499f1206",
+  "permissionsConfigHash": "0xba2e857263e2ca432b9e34b2c7177c27738e58aee702068c0245a0d182ff7a0e",
   "permissions": {
     "eth:0x0390F00fD57E771Afa19630B4ad8CE68ddA73506": {
       "directlyReceivedPermissions": [
@@ -1755,6 +1755,16 @@
           "permission": "upgrade",
           "from": "eth:0x35aB61eE5D1C2319d1822A7bE1b6B3FaE98AD886",
           "role": "admin"
+        }
+      ]
+    },
+    "eth:0x077843C51bC1c464899879F77fa02B98ee5A00d9": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1De4f415Dc5bF6e458Cf32d13452c24A35Ec90e3",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".game5Proposer"
         }
       ]
     },

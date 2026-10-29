@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x16ae4e93d7725b02470c61c1ec1e296910136d07
+Generated with discovered.json: 0x72bc39e654d382396eede84fe1d6ec71a1be3cba
 
-# Diff at Wed, 28 Oct 2026 13:04:04 GMT:
+# Diff at Thu, 29 Oct 2026 17:33:43 GMT:
 
 - id: 488ff7a1
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -50,7 +50,7 @@ Initial discovery of Whitechain, an OP Stack L2 on op-contracts v8.0.0 (Upgrade 
 
 ```diff
 +   Status: CREATED
-    contract Safe (eth:0x568440132075d4E1c3E42111EF561636f4956eAd) [GnosisSafe]
+    contract Whitechain Multisig 1 (eth:0x568440132075d4E1c3E42111EF561636f4956eAd) [GnosisSafe]
     +++ description: None
 ```
 
@@ -62,7 +62,7 @@ Initial discovery of Whitechain, an OP Stack L2 on op-contracts v8.0.0 (Upgrade 
 
 ```diff
 +   Status: CREATED
-    contract Safe (eth:0x5918870d5391e0610d7624837cABEd9d4AbEeeE0) [GnosisSafe]
+    contract Whitechain Multisig 3 (eth:0x5918870d5391e0610d7624837cABEd9d4AbEeeE0) [GnosisSafe]
     +++ description: None
 ```
 
@@ -98,7 +98,7 @@ Initial discovery of Whitechain, an OP Stack L2 on op-contracts v8.0.0 (Upgrade 
 
 ```diff
 +   Status: CREATED
-    contract Safe (eth:0x8da4Ce0f49E472fb6F892c779b3E63C7a55B23aF) [GnosisSafe]
+    contract Whitechain Multisig 2 (eth:0x8da4Ce0f49E472fb6F892c779b3E63C7a55B23aF) [GnosisSafe]
     +++ description: None
 ```
 
