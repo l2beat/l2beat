@@ -5,8 +5,8 @@ import {
   formatInteger,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
+import { useMemo, useState } from 'react'
+import { AreaChart, DefaultZIndexes, ZIndexLayer } from 'recharts'
 import {
   ChartContainer,
   ChartLegend,
@@ -36,14 +36,25 @@ import {
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { useDevice } from '~/hooks/useDevice'
 import {
   type ActivityMetric,
   useActivityMetricContext,
 } from '~/pages/layer2s/activity/components/ActivityMetricContext'
+import type {
+  ActivityChangeEvent,
+  ActivityChangeEventsData,
+} from '~/server/features/layer2s/activity/getActivityChangeEvents'
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/layer2s/activity/utils/countPerSecond'
 import { formatRange } from '~/utils/dates'
 import type { ChartScale } from '../types'
+import {
+  ActivityChangePins,
+  ActivityChangeTooltipLine,
+  getEventKey,
+  getVisibleChangeEvents,
+} from './ActivityChangePins'
 
 export const RECATEGORISED_ACTIVITY_CHART_META = {
   rollups: {
@@ -86,6 +97,7 @@ interface Props {
     onItemClick: (dataKey: string) => void
   }
   scale?: ChartScale
+  changeEvents?: ActivityChangeEventsData
 }
 
 export function L2RecategorizedActivityChart({
@@ -95,8 +107,25 @@ export function L2RecategorizedActivityChart({
   scale,
   chartMeta,
   interactiveLegend: { dataKeys, onItemClick },
+  changeEvents,
 }: Props) {
   const { metric } = useActivityMetricContext()
+  const { isDesktop } = useDevice()
+  const [openChangeKey, setOpenChangeKey] = useState<string>()
+  const events = useMemo(
+    () => getVisibleChangeEvents(changeEvents, metric, dataKeys),
+    [changeEvents, metric, dataKeys],
+  )
+  const eventsByTimestamp = useMemo(() => {
+    const result = new Map<number, ActivityChangeEvent[]>()
+    for (const event of events) {
+      result.set(event.timestamp, [
+        ...(result.get(event.timestamp) ?? []),
+        event,
+      ])
+    }
+    return result
+  }, [events])
 
   const chartData = useMemo(() => {
     const getDataPoint = (uops: number | null, tx: number | null) => {
@@ -145,7 +174,20 @@ export function L2RecategorizedActivityChart({
       milestones={milestones}
     >
       {/* Without right:1 the chart last point is not hoverable for some reason */}
-      <AreaChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
+      <AreaChart
+        responsive
+        data={chartData}
+        margin={{ top: 20, right: 1 }}
+        onClick={(state) => {
+          // On touch the pins open the drawer; a tap on the chart only
+          // shows the tooltip.
+          if (!isDesktop || state.activeLabel == null) return
+          const [event] = (
+            eventsByTimestamp.get(Number(state.activeLabel)) ?? []
+          ).sort((a, b) => b.score - a.score)
+          if (event) setOpenChangeKey(getEventKey(event))
+        }}
+      >
         <defs>
           <PinkFillGradientDef id="rollups-fill" />
           <PinkStrokeGradientDef id="rollups-stroke" />
@@ -186,11 +228,20 @@ export function L2RecategorizedActivityChart({
           ]}
         />
         <ChartTooltip
+          // The details popover or drawer replaces the tooltip while open.
+          active={openChangeKey ? false : undefined}
           content={
             <CustomTooltip
               syncedUntil={data?.syncedUntil}
               metric={metric}
               chartMeta={chartMeta}
+              changes={
+                changeEvents && {
+                  eventsByTimestamp,
+                  projects: changeEvents.projects,
+                  showHint: isDesktop,
+                }
+              }
             />
           }
         />
@@ -204,6 +255,21 @@ export function L2RecategorizedActivityChart({
           }}
           syncedUntil={data?.syncedUntil}
         />
+        {changeEvents && (
+          // Above the fills, the cursor and the active dots, so pins stay
+          // visible and take the taps (fills cover them on LOG).
+          <ZIndexLayer zIndex={DefaultZIndexes.activeDot + 1}>
+            <ActivityChangePins
+              events={events}
+              data={changeEvents}
+              chartData={chartData}
+              chartMeta={chartMeta}
+              isDesktop={isDesktop}
+              openKey={openChangeKey}
+              setOpenKey={setOpenChangeKey}
+            />
+          </ZIndexLayer>
+        )}
       </AreaChart>
     </ChartContainer>
   )
@@ -215,12 +281,19 @@ function CustomTooltip({
   syncedUntil,
   metric,
   chartMeta,
+  changes,
 }: CustomChartTooltipProps & {
   syncedUntil: number | undefined
   metric: ActivityMetric
   chartMeta: ChartMeta
+  changes?: {
+    eventsByTimestamp: Map<number, ActivityChangeEvent[]>
+    projects: ActivityChangeEventsData['projects']
+    showHint: boolean
+  }
 }) {
   if (!payload || typeof label !== 'number') return null
+  const eventsThatDay = changes?.eventsByTimestamp.get(label) ?? []
 
   return (
     <ChartTooltipWrapper>
@@ -236,25 +309,33 @@ function CustomTooltip({
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             assert(config, 'No config')
 
+            const event = eventsThatDay.find((e) => e.category === entry.name)
+
             return (
-              <div
-                key={entry.name}
-                className="flex w-full items-center justify-between gap-2"
-              >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
+              <div key={entry.name} className="flex flex-col gap-2">
+                <div className="flex w-full items-center justify-between gap-2">
+                  <div className="flex items-center gap-1">
+                    <ChartDataIndicator
+                      backgroundColor={config.color}
+                      type={config.indicatorType}
+                    />
+                    <span className="w-20 font-medium text-label-value-14 sm:w-fit">
+                      {config.label}
+                    </span>
+                  </div>
+                  <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
+                    {entry.value !== null && entry.value !== undefined
+                      ? formatActivityCount(entry.value)
+                      : 'No data'}
                   </span>
                 </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value !== null && entry.value !== undefined
-                    ? formatActivityCount(entry.value)
-                    : 'No data'}
-                </span>
+                {event && changes && (
+                  <ActivityChangeTooltipLine
+                    event={event}
+                    projects={changes.projects}
+                    showHint={changes.showHint}
+                  />
+                )}
               </div>
             )
           })}
