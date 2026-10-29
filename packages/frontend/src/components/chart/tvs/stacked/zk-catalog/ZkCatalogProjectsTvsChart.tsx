@@ -225,7 +225,7 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+        {formatTimestamp(label, { mode: 'datetime' })}
       </div>
       <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
         <span>Total</span>

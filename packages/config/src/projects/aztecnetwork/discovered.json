@@ -1,7 +1,7 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1792144307,
-  "configHash": "0x2a07d5ddfc0f50f4337e29f9f2d0f359bf69927c75f4c00d01d168ad71b692af",
+  "timestamp": 1793006682,
+  "configHash": "0x7a7222d904a5b55741b6146a7785fbc04646325e6398d95b95c52516ea0e227e",
   "entries": [
     {
       "name": "CoinIssuer",
@@ -66,9 +66,9 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 129,
+        "getCurrentRound": 19,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "getInstance": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "getInstance": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
         "LIFETIME_IN_ROUNDS": 5,
         "QUORUM_SIZE": 600,
@@ -174,8 +174,8 @@
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
         "proposalCount": 6,
-        "totalPowerNow": "626201849320099161943536713",
-        "withdrawalCount": 6317
+        "totalPowerNow": "648513802320099161943536713",
+        "withdrawalCount": 6434
       },
       "fieldMeta": {
         "ASSET": {
@@ -215,11 +215,11 @@
       "sinceBlock": 23786827,
       "values": {
         "$immutable": true,
-        "getCanonicalRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "getCanonicalRollup": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getRewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
-        "getVersion": [0, 2934756905, 4248422647],
-        "numberOfVersions": 3,
+        "getVersion": [0, 2934756905, 4248422647, 2070860440],
+        "numberOfVersions": 4,
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
       },
       "fieldMeta": {
@@ -323,10 +323,10 @@
       "values": {
         "$immutable": true,
         "ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-        "canonicalRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "canonicalRollup": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
         "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
         "registryOwner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "totalEarmarkedBalance": 0
+        "totalEarmarkedBalance": "1798700000000000000000000"
       },
       "fieldMeta": {
         "ASSET": {
@@ -379,6 +379,7 @@
       ],
       "proxyType": "immutable",
       "description": "Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -494,13 +495,13 @@
         "$immutable": true,
         "FEE_ASSET_PORTAL": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
         "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
-        "getInProgress": 107324,
+        "getInProgress": 118928,
         "getState": {
-          "rollingHash": "0xc18e689925e604037b04f99216c4d7fd",
-          "totalMessagesInserted": 3199,
-          "inProgress": 107324
+          "rollingHash": "0xd436455629336fe91b363e875b1a40d1",
+          "totalMessagesInserted": 3489,
+          "inProgress": 118928
         },
-        "getTotalMessagesInserted": 3199,
+        "getTotalMessagesInserted": 3489,
         "LAG": 2,
         "ROLLUP": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "VERSION": 4248422647
@@ -549,6 +550,7 @@
       ],
       "proxyType": "immutable",
       "description": "Collects one signed slashing ballot from the designated proposer in each slot. After the execution delay, anyone can tally the ballots per validator and penalty level, deploy the resulting payload, and ask the Slasher to execute it before the round expires.",
+      "critical": true,
       "ignoreInWatchMode": ["getCurrentRound"],
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
@@ -566,7 +568,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 1013,
+        "getCurrentRound": 1107,
         "INSTANCE": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -666,7 +668,7 @@
       "sinceBlock": 25428902,
       "values": {
         "$immutable": true,
-        "archive": "0x0310103a3369066da5b96d397050b4afa05205de98148857ceeee65c8753680f",
+        "archive": "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7",
         "checkBlob": true,
         "constructorArgs": {
           "_feeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
@@ -738,21 +740,21 @@
           "extensions": []
         },
         "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 3129,
-        "getAvailableValidatorFlushes": 4,
+        "getActiveAttesterCount": 50,
+        "getAvailableValidatorFlushes": 1,
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
-        "getCheckpointReward": "500000000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x0087c7fa98f850c504dfb7988c8a58fe2220663a7dabb0a0e989af33dfdb524a",
-        "getCurrentEpoch": 4054,
-        "getCurrentSampleSeed": "58708386509565762353871922109019288628388600253950723796274095859671333921211",
-        "getCurrentSlot": 129735,
+        "getCheckpointReward": "50000000000000000000",
+        "getCurrentBlobCommitmentsHash": "0x006fab5311570418f58f9761848c7da2280a1c42b03e879a4b2b67adb2191b48",
+        "getCurrentEpoch": 4428,
+        "getCurrentSampleSeed": "6828266137288763035903714894802004860897692884221249648608658651098400260638",
+        "getCurrentSlot": 141713,
         "getEjectionThreshold": "100000000000000000000000",
-        "getEntryQueueFlushSize": 4,
+        "getEntryQueueFlushSize": 1,
         "getEntryQueueLength": 0,
         "getEpochDuration": 32,
         "getEpochProofVerifier": "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC",
         "getEscapeHatch": "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A",
-        "getEthPerFeeAsset": 8272383,
+        "getEthPerFeeAsset": 6896119,
         "getExitDelay": 345600,
         "getFeeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
@@ -770,24 +772,24 @@
         "getLocalEjectionThreshold": "190000000000000000000000",
         "getManaLimit": 150000000,
         "getManaTarget": 75000000,
-        "getNextFlushableEpoch": 4035,
+        "getNextFlushableEpoch": 4402,
         "getOutbox": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
-        "getPendingCheckpointNumber": 107321,
+        "getPendingCheckpointNumber": 118925,
         "getPendingSlasher": {
           "slasher": "eth:0x0000000000000000000000000000000000000000",
           "readyAt": 0
         },
         "getProofSubmissionEpochs": 1,
         "getProtocolContractsHash": "0x2c075866eafc88a1f6f9addc7e337c6e64e45d1cb7fd7c0d612ebcec72aab2ca",
-        "getProvenCheckpointNumber": 107313,
+        "getProvenCheckpointNumber": 118925,
         "getProvingCostPerManaInEth": 12500000,
-        "getProvingCostPerManaInFeeAsset": 1511051893995,
+        "getProvingCostPerManaInFeeAsset": 1812613732449,
         "getRewardBooster": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
         "getRewardConfig": {
           "rewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
           "sequencerBps": 7000,
           "booster": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
-          "checkpointReward": "500000000000000000000"
+          "checkpointReward": "50000000000000000000"
         },
         "getRewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
         "getSlasher": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
@@ -795,7 +797,7 @@
         "getSlotDuration": 72,
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 48,
-        "getTips": { "pending": 107321, "proven": 107313 },
+        "getTips": { "pending": 118925, "proven": 118925 },
         "getVersion": 4248422647,
         "getVkTreeRoot": "0x2b3b6ea4412b9c8f6457a37f91a2870306f8641e07e16a49b68bda6f8bc02892",
         "L1_BLOCK_AT_GENESIS": 25428902,
@@ -973,12 +975,16 @@
         "EJECTION_THRESHOLD": "100000000000000000000000",
         "getBonusInstanceAddress": "eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "getLatestRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "getLatestRollup": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "624656000000000000000000000"
+        "proofOfPossessionGasLimit": 300000,
+        "totalSupply": "646964000000000000000000000"
       },
       "fieldMeta": {
+        "proofOfPossessionGasLimit": {
+          "severity": "MEDIUM",
+          "description": "Gas cap for verifying a new validator's BLS proof of possession. The owner can set it too low for valid keys, which blocks new validator deposits."
+        },
         "ASSET": {
           "description": "ERC20 token staked by validators and used for governance voting power."
         },
@@ -1005,6 +1011,7 @@
       ],
       "proxyType": "immutable",
       "description": "One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -1105,6 +1112,7 @@
       ],
       "proxyType": "immutable",
       "description": "Executes payload actions submitted by the authorized slashing proposer or Governance. Execution is blocked while slashing is disabled or when the vetoer has vetoed the payload; voting and execution-delay rules are enforced by the proposer, while Governance can bypass the proposer.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -1150,6 +1158,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library immutably linked into the Rollup for sequencer and prover reward accounting. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -1179,15 +1188,15 @@
       "sinceTimestamp": 1791316739,
       "sinceBlock": 26135579,
       "values": {
-        "_$cachedAvailable": "49976358785365767040682",
-        "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "_$cachedAvailable": "49994162449153286490395",
+        "_$freezeArchive": "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7",
         "_$freezeCheckpointCount": 0,
-        "_$freezeCheckpointNumber": 0,
-        "_$freezeEpochNumber": 0,
-        "_$frozen": false,
+        "_$freezeCheckpointNumber": 118925,
+        "_$freezeEpochNumber": 4426,
+        "_$frozen": true,
         "_$initialized": true,
         "_$l2Portal": "0x2bb708cb67bbda3ec2c79b842ef5d3b3d55897663d29cac5b5518c2e9af7171b",
-        "_$lastUpdatedTime": 1792097963,
+        "_$lastUpdatedTime": 1792512479,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0xbfdd552587f517a9f18ef6ed588e3bd57a21ac2070fda39ac4612558df3e72c8"
@@ -1272,7 +1281,7 @@
         },
         "getNextMilestoneId": 3,
         "getNextStakerVersion": 1,
-        "getRevoker": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
+        "getRevoker": "eth:0x30F17c3360Dc00B9315b0E8e1253Bc408644a725",
         "getRevokerOperator": "eth:0x0000000000000000000000000000000000000000",
         "getStakerImplementation": [
           "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d"
@@ -1329,15 +1338,15 @@
       "sinceTimestamp": 1790298635,
       "sinceBlock": 26051097,
       "values": {
-        "_$cachedAvailable": "35214877777777777777592",
-        "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "_$cachedAvailable": "49920097558524361119397",
+        "_$freezeArchive": "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7",
         "_$freezeCheckpointCount": 0,
-        "_$freezeCheckpointNumber": 0,
-        "_$freezeEpochNumber": 0,
-        "_$frozen": false,
+        "_$freezeCheckpointNumber": 118925,
+        "_$freezeEpochNumber": 4426,
+        "_$frozen": true,
         "_$initialized": true,
         "_$l2Portal": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
-        "_$lastUpdatedTime": 1792131395,
+        "_$lastUpdatedTime": 1792937099,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0x9c846102f8ac909695f7176cec0f60380ac770286bb9eec459d6152f6e676988"
@@ -1346,7 +1355,7 @@
         "FPC_FUNDING_CUT": "100000000000000000",
         "FROZEN_DEPOSIT_REFUND_VERIFIER": "eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe",
         "FROZEN_NOTES_REFUND_VERIFIER": "eth:0x0694fF404DDA586C73EfCe21f34fe084541BB877",
-        "getCurrentAvailable": "42687099999999999990728",
+        "getCurrentAvailable": "50000000000000000000000",
         "GLOBAL_LIMIT": "50000000000000000000000",
         "INBOX": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
         "L2_PORTAL": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
@@ -1413,6 +1422,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library immutably linked into the Rollup for validator entry, exits, slashing, and Slasher rotation. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -1437,6 +1447,7 @@
       ],
       "proxyType": "immutable",
       "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. Candidates post a bond of 332,000,000 AZTEC and enter the candidate set. For each hatch, the contract snapshots the eligible set and uses RANDAO to select one designated proposer; posting a bond does not grant immediate proposal rights. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any eligible bonded candidates.",
+      "critical": true,
       "ignoreInWatchMode": ["getCurrentHatch"],
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
@@ -1448,7 +1459,7 @@
         "getBondSizeFmt": "332,000,000",
         "getBondToken": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getCandidateCount": 0,
-        "getCurrentHatch": 36,
+        "getCurrentHatch": 39,
         "getFailedHatchPunishment": "9600000000000000000000000",
         "getFailedHatchPunishmentFmt": "9,600,000",
         "getFrequency": 112,
@@ -1468,7 +1479,6 @@
           "description": "The amount deducted from the bond when a candidate exits the candidate set. This is the minimum that a candidate loses of their bond by becoming a candidate and cannot be circumvented."
         },
         "getCandidateCount": {
-          "severity": "HIGH",
           "description": "Hatch proposer candidates who posted the bond."
         },
         "getBondToken": {
@@ -1491,6 +1501,9 @@
         },
         "LAG_IN_EPOCHS_FOR_RANDAO": {
           "description": "The number of epochs to look back from the start of the hatch for a stable RANDAO seed."
+        },
+        "getRollupLagInEpochsForRandao": {
+          "description": "The Rollup's RANDAO lag in epochs. The hatch adds it when reading the Rollup's sample seed, so the seed reflects RANDAO at the hatch's seed epoch."
         },
         "LAG_IN_EPOCHS_FOR_SET_SIZE": {
           "description": "The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."
@@ -2781,11 +2794,11 @@
     "aztecnetwork/AztecTokenPositionRegistry": "0xd5c2d5e3dd1f1826aa87f0a84fc9d6a6b3315c94de35eb55b67897c6062a86fc",
     "aztecnetwork/BaseStaker": "0xbe778bfb27d4d9585c342b646028d3bad68fb26168156c904a48c5b373ec2d57",
     "aztecnetwork/CoinIssuer": "0x6825408743b0c7e46d0cec3f16d4748fae3fb787ca2c2b89640d7d555becde6d",
-    "aztecnetwork/EscapeHatch": "0xc36cbb4ae29d811b032b67a9e8c26ce44b3da19a440e19ae5b0a590807f5f015",
-    "aztecnetwork/FeeJuicePortal": "0x2220ce7bc91c3a23540726e62656d72722d8c8239ab644098879b5af16f4756d",
+    "aztecnetwork/EscapeHatch": "0x278ce5fa658c2670ffee19fc34bc3c5a96c15082eb359044bdcb9a86923105ad",
+    "aztecnetwork/FeeJuicePortal": "0xe9ea6b0106f9528d083d0d76ffc797cce5258fa6cf3671ee16737a2aeeafcb8d",
     "aztecnetwork/Governance": "0x11a37c83761ef56358402fbc3702bdf6337b5338eec472c4121e4231e7add5c8",
     "aztecnetwork/GovernanceProposer": "0x6e8c1a085e1fd1a85a3b2670ef57d2e0a22a7cfdfde4a43d951674f78e74a0bb",
-    "aztecnetwork/GSE": "0x0e4f7a451f9ed261f93dd5d51762a435b0a673d3d45a45b08911307ef4b4cb16",
+    "aztecnetwork/GSE": "0x169aaece0e2547b54f717d122a7c4559464bb9b34b0e7b2137e2cb9897fcab89",
     "aztecnetwork/HonkVerifier_v5": "0xd9e0ec181ed3619401ce092458a17fc7fafd9032bfaedd6fe44017def9f3a77c",
     "aztecnetwork/Inbox": "0x26ded5aebf0bbb78b6882b2137d3ed9f4bf66d3b5f2e9aa69e2caae9f6e55af3",
     "aztecnetwork/Outbox": "0x7580184922415986aca787f016313f146eece507d34e8a9a40486d19dc1e7b6a",
@@ -2793,7 +2806,7 @@
     "aztecnetwork/Registry": "0x437e8a5971b7d95018382a3710bac26bad359cb485d438d82ff20a3ec9d60202",
     "aztecnetwork/RewardBooster": "0x008d6f3c4e0a56a67c2b1321a470ee91733b809719f55133f46b32ca53e99cb5",
     "aztecnetwork/RewardDistributor": "0x5db34519cfa677f6b064e107fb903172733613d58a6c80a2fa34cb92d45c9bbf",
-    "aztecnetwork/RewardExtLib": "0xea2d4759183105169e492c6bd9d5789b841a4bdcc1c2e6de98a51f3f7ad8e0c7",
+    "aztecnetwork/RewardExtLib": "0xa32500c454c2a282c9883133fcb22fb13f1a91a0893a4e3818268c4d7c14a8b1",
     "aztecnetwork/Rollup": "0xb465a9b0d5155487b23b152c4c189047f1ec22a276b71676c7729d4b99b534a7",
     "aztecnetwork/RollupOperationsExtLib": "0x660d5b68ddffc6256478e4e9f1d2a1630668023a810dd7ad50a5921d67011e1f",
     "aztecnetwork/Slasher": "0x9027c14b463ac4037b2f5fa60bcb29e2b638d56894e824453f33fefa07582cde",
@@ -2803,8 +2816,8 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zkmoney/ZkMoneyPortal": "0x4849cf15f068d591a1aa63a22d45dab667cc83726b39e596ca465b8c122c6383"
   },
-  "usedBlockNumbers": { "ethereum": 26204314 },
-  "permissionsConfigHash": "0xd2a08da403b7cf1787a33d3c94dd38ecd0b4699e23785464dc5890d3b1bf67b1",
+  "usedBlockNumbers": { "ethereum": 26275946 },
+  "permissionsConfigHash": "0x5bea0e70b100b146bfecd4ad29eea2c31a7ca69a20934a7cabb3e14d8da610d3",
   "permissions": {
     "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6": {
       "directlyReceivedPermissions": [
@@ -2992,12 +3005,6 @@
         },
         {
           "permission": "interact",
-          "from": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
-          "description": "claim protocol reward funds and direct them to sequencers and provers.",
-          "role": ".canonicalRollup"
-        },
-        {
-          "permission": "interact",
           "from": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
           "description": "insert L2 to L1 message roots that recipients later prove against to consume withdrawals or messages.",
           "role": ".ROLLUP"
@@ -3007,12 +3014,6 @@
           "from": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
           "description": "consume L1 to L2 message tree roots for checkpoint processing.",
           "role": ".ROLLUP"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-          "description": "deposit and withdraw validator stake for its own GSE instance and, while it is the latest Rollup, for the bonus instance; cast all available own-instance and applicable bonus-instance power as yea on qualifying sequencer-signalled proposals.",
-          "role": ".getLatestRollup"
         },
         {
           "permission": "interact",

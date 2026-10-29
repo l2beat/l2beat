@@ -9,7 +9,7 @@ const ENGINE =
 // Railgun names no reference wallet. The cells are rated with RailOxide, the
 // most private released open-source client we found.
 const RAILOXIDE =
-  'https://github.com/triamazikamno/railoxide/blob/8773f4ecb00c6ac7cf164ba1f989eb77dd4b0ec5/'
+  'https://github.com/triamazikamno/railoxide/blob/7981f35afe8fe5a198a450e0cad66d37f159556e/'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: 'private',
@@ -31,12 +31,13 @@ export function railgunAdversaries(upgradeDelay: string) {
         sentiment: 'good',
         exposureShort:
           'Everything inside the pool is hidden, including which shield funds which unshield.',
-        exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to the adapter in cleartext.`,
+        exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to an adapter in cleartext.`,
         advice: S.exitViaRelayer('broadcaster'),
         interior: INTERIOR,
         sources: [
           { contract: 'RailgunSmartWallet', title: 'Shield and unshield' },
           { contract: 'RelayAdapt', title: 'DeFi bundles' },
+          { contract: 'RelayAdapt7702_05ae', title: 'Swap accounts' },
         ],
       },
       chainAnalyst: {
@@ -61,30 +62,38 @@ export function railgunAdversaries(upgradeDelay: string) {
       networkObserver: {
         sentiment: 'good',
         exposureShort:
-          "RailOxide sends all traffic over built-in Tor, broadcaster messages included, and finds the user's notes by decrypting every note locally.",
+          'With a local node as direct endpoint for reads, RailOxide keeps Ethereum reads local and sends the rest over built-in Tor.',
         exposureContinued:
-          "All traffic shares one Tor session, so the public RPCs it picks at random see the user's public addresses, shields and the gas estimate of each private transaction from one exit. The user's own node as its RPC keeps these from third parties.",
+          'By default public RPCs get the reads that name the user, each over its own Tor circuit, so only timing ties them.',
         advice:
-          "Use RailOxide, the wallet these ratings assume, and set the user's own node as its Ethereum RPC.",
+          'Before unlocking, set a local Ethereum node as the direct endpoint for reads, and keep one public endpoint for submissions.',
         interior: {
           ...INTERIOR,
           linkage: {
             verdict: 'atRisk',
-            note: "Private only with the user's own node as RPC, over the default Tor.",
+            note: 'Private only with a local node as the direct endpoint for reads.',
           },
         },
         sources: [
           {
-            title: 'Built-in Tor is the default',
-            url: `${RAILOXIDE}crates/wallet-ops/src/settings/network_chains.rs#L10-L15`,
+            title: 'An endpoint can bypass Tor',
+            url: `${RAILOXIDE}crates/wallet-ops/src/rpc_broker/model.rs#L800-L808`,
           },
           {
-            title: 'Every stream uses one Tor session',
-            url: `${RAILOXIDE}crates/wallet-ops/src/http.rs#L1549-L1559`,
+            title: 'Each request goes only to endpoints whose roles allow it',
+            url: `${RAILOXIDE}crates/wallet-ops/src/rpc_broker/model.rs#L830-L869`,
+          },
+          {
+            title: 'Sensitive reads go over their own isolated route',
+            url: `${RAILOXIDE}crates/wallet-ops/src/public_wallet/balances.rs#L152-L160`,
+          },
+          {
+            title: 'An isolated route never shares a Tor circuit',
+            url: `${RAILOXIDE}crates/wallet-ops/src/http.rs#L844-L857`,
           },
           {
             title: 'A custom RPC list replaces the public pool',
-            url: `${RAILOXIDE}crates/wallet-ops/src/settings/effective.rs#L263-L277`,
+            url: `${RAILOXIDE}crates/wallet-ops/src/settings/effective.rs#L267-L278`,
           },
         ],
       },
@@ -106,7 +115,7 @@ export function railgunAdversaries(upgradeDelay: string) {
           { section: 'upgrades-and-governance' },
           {
             title: 'RailOxide builds PPoIs locally',
-            url: `${RAILOXIDE}crates/wallet-ops/src/poi_contexts.rs#L116-L150`,
+            url: `${RAILOXIDE}crates/wallet-ops/src/poi_contexts.rs#L116-L152`,
           },
         ],
       },
@@ -114,7 +123,7 @@ export function railgunAdversaries(upgradeDelay: string) {
         sentiment: 'warning',
         exposureShort: 'Notes are encrypted with elliptic-curve key exchange.',
         exposureContinued:
-          'Whoever breaks elliptic-curve cryptography decrypts every note sent to a 0zk address that was ever shared, broadcaster fee notes included.',
+          'Whoever breaks elliptic-curve cryptography decrypts every note sent to a 0zk address they know. A user who gives theirs to payers depends on each of them keeping it private.',
         advice:
           "Share the user's 0zk address privately, with a fresh one per counterparty where possible.",
         interior: {

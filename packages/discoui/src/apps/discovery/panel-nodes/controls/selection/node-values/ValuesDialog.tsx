@@ -97,10 +97,8 @@ function ValuesDialogBody({ node }: { node: Node }) {
 
   return (
     <Dialog.Body>
-      <Dialog.Title className="m-0 font-medium text-lg">
-        Values visibility
-      </Dialog.Title>
-      <Dialog.Description className="mb-5 text-sm leading-normal">
+      <Dialog.Title className="m-0">Values visibility</Dialog.Title>
+      <Dialog.Description>
         Each value can be shown on its own row, compressed with the rest of its
         group into one row that still links to every value, or hidden.
       </Dialog.Description>
@@ -158,7 +156,7 @@ function ValuesDialogBody({ node }: { node: Node }) {
             className="w-full"
           />
         </div>
-        <div className="flex max-h-[40vh] flex-col overflow-y-auto border border-coffee-400 bg-coffee-400/10 p-2 text-sm">
+        <div className="flex max-h-[40vh] flex-col overflow-y-auto rounded-sm border border-coffee-700 bg-coffee-800/50 p-2 text-sm">
           {fieldTree.map((field) => (
             <FieldNode
               key={field.type === 'simple' ? field.fullKey : field.property}

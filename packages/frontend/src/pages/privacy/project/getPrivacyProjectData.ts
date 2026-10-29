@@ -2,6 +2,8 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
+import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getPrivacyMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import { getWebPageStructuredData } from '~/ssr/head/structured-data/getWebPageStructuredData'
@@ -58,10 +60,13 @@ function getCachedPrivacyProjectPage(
 
 async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
   const helpers = getSsrHelpers()
-  const [appLayoutProps, details] = await Promise.all([
-    getAppLayoutProps(),
-    getPrivacyProjectDetails(slug),
-  ])
+  const [appLayoutProps, details, sectionLinks, versionLinks] =
+    await Promise.all([
+      getAppLayoutProps(),
+      getPrivacyProjectDetails(slug),
+      getProjectSectionLinks(slug),
+      getProjectVersionLinks(slug, 'privacy'),
+    ])
 
   if (!details) {
     return undefined
@@ -98,6 +103,8 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
     props: {
       ...appLayoutProps,
       entry: projectEntry,
+      sectionLinks,
+      versionLinks,
       queryState: helpers.dehydrate(),
     },
   }

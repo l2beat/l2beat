@@ -36,8 +36,8 @@ describe(renderInteropProtocolMarkdown.name, () => {
       '- Last 24h top path: Ethereum ↔ Arbitrum One ($900.00 K)',
       '- Last 24h avg. transfer time: 1m 30s',
       '- Last 24h avg. transfer value: $1.25 K',
-      '- Last 24h tokens by volume: [USDC](https://l2beat.com/interop/tokens/usdc-id/usdc) ($800.00 K), [WETH](https://l2beat.com/interop/tokens/weth-id/weth) ($500.00 K), [USDT](https://l2beat.com/interop/tokens/usdt-id/usdt) ($100.00 K), and 12 more',
-      '- Last 24h top token: [USDC](https://l2beat.com/interop/tokens/usdc-id/circle/usdc) ($800.00 K volume, 700 transfers)',
+      '- Last 24h tokens by volume: [USDC](https://l2beat.com/tokens/usdc-id/usdc) ($800.00 K), [WETH](https://l2beat.com/tokens/weth-id/weth) ($500.00 K), [USDT](https://l2beat.com/tokens/usdt-id/usdt) ($100.00 K), and 12 more',
+      '- Last 24h top token: [USDC](https://l2beat.com/tokens/usdc-id/circle/usdc) ($800.00 K volume, 700 transfers)',
       '- Last 24h transfer size: Under $100: 600 transfers, $100-$1K: 400 transfers, $1K-$10K: 150 transfers, $10K-$100K: 45 transfers, Over $100K: 5 transfers (min $1.00, average $1.25 K, max $250.00 K)',
       '- Last 24h transfer type distribution: Lock & Mint: $150.00 K, Non-minting: $1.35 M',
       'Across is an intent-based bridge.',
@@ -80,7 +80,7 @@ describe(renderInteropProtocolMarkdown.name, () => {
     expect(summary).toInclude('(min under $0.01, average $1.25 K')
   })
 
-  it('lists the project links', () => {
+  it('lists the project links and the contracts explorer', () => {
     const markdown = renderInteropProtocolMarkdown({
       ...PAGE,
       projectEntry: {
@@ -88,11 +88,14 @@ describe(renderInteropProtocolMarkdown.name, () => {
         header: {
           ...PAGE.projectEntry.header,
           links: [{ name: 'Website', links: ['https://across.to'] }],
+          discoUiHref: 'https://disco.l2beat.com/ui/p/across',
         },
       },
     })
 
-    expect(markdown).toInclude('### Links\n\n- Website: https://across.to')
+    expect(markdown).toInclude(
+      '### Links\n\n- Website: https://across.to\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/across',
+    )
   })
 
   it('reports the average transfer time the way the HTML cell does', () => {

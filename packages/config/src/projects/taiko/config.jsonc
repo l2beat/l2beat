@@ -85,7 +85,27 @@
     // TaikoRisc0Verifier -> RiscZeroVerifierRouter exists since the Shasta TaikoRisc0Verifier deployment (2026-03-04).
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
       // TimelockController (global template): owner of the RiscZeroVerifierRouter, can add/remove verifier routes
-      "critical": { "sinceTimestamp": 1772638115 }
+      "critical": { "sinceTimestamp": 1772638115 },
+      "fields": {
+        // The router emits no event on verifier changes, so its owner's calls
+        // are watched. Route additions are reviewed events on the router.
+        "callsScheduled": {
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "CallScheduled"
+            }
+          }
+        },
+        "callsExecuted": {
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "CallExecuted"
+            }
+          }
+        }
+      }
     },
     // active RISC0 verifier fleet registered in the RiscZeroVerifierRouter (shared risc0/taiko groth16 templates, flagged per-project);
     // permanently estopped entries (0x44c2..., 0x68dC..., 0xDa8f...) and their wrapped verifiers are deliberately not flagged
@@ -112,6 +132,15 @@
     "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": {
       // RiscZeroSetVerifier behind the active estop 0x844D...
       "critical": { "sinceTimestamp": 1772638115 }
+    },
+    // route 0x8b38038c, added to the router by tx 0x5005dff6...
+    "eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50": {
+      // active RiscZeroVerifierEmergencyStop (selector 0x8b38038c)
+      "critical": { "sinceTimestamp": 1793127383 }
+    },
+    "eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e": {
+      // RiscZeroGroth16Verifier v3.1.0 behind the active estop 0x9660...
+      "critical": { "sinceTimestamp": 1793127383 }
     },
     // --- ossification: retired critical contracts (keep their change history; untilTimestamp = time they left the perimeter) ---
     // tier-system era (deleted in diffHistory 167b8dff, 2025-05-28)

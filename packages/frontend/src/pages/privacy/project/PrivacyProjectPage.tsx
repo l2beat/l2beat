@@ -23,18 +23,32 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
-import { getPrivacyAdversaryRosetteValues } from '../adversaries/privacyAdversaryUi'
+import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
+import { cn } from '~/utils/cn'
+import {
+  getPrivacyAdversaryRosetteValues,
+  PRIVACY_ADVERSARIES_SECTION_ID,
+} from '../adversaries/privacyAdversaryUi'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
-import { PrivacyProjectStats } from './components/PrivacyProjectStats'
+import {
+  MOBILE_SUMMARY_ROWS,
+  PrivacyProjectStats,
+} from './components/PrivacyProjectStats'
+import { PrivacyReferenceAppStat } from './components/PrivacyReferenceAppStat'
 
 interface Props extends AppLayoutProps {
   entry: ProjectPrivacyEntry
+  sectionLinks: ProjectSectionLink[]
+  versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
   selectedUpdateId?: string
 }
 
 export function PrivacyProjectPage({
   entry,
+  sectionLinks,
+  versionLinks,
   queryState,
   selectedUpdateId,
   ...props
@@ -65,10 +79,14 @@ export function PrivacyProjectPage({
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader
                     project={entry}
+                    section="privacy"
+                    sectionLinks={sectionLinks}
+                    versions={versionLinks}
                     recentUpdatesCount={entry.recentUpdatesCount}
                   />
                   <ProjectSummaryBars
                     project={{
+                      archivedAt: entry.archivedAt,
                       underReviewStatus: entry.isUnderReview
                         ? 'config'
                         : undefined,
@@ -78,6 +96,7 @@ export function PrivacyProjectPage({
                         emergencyWarning: entry.warnings.emergency,
                       },
                     }}
+                    versions={versionLinks}
                   />
                   {entry.badges && entry.badges.length > 0 && (
                     <BadgesSection
@@ -124,7 +143,7 @@ export function PrivacyProjectPage({
                             relayerStat={entry.summary.relayerStat}
                           />
 
-                          <HorizontalSeparator className="mt-4 max-md:hidden" />
+                          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
                           <PrivacyProjectRiskProfile
                             trustedSetup={entry.trustedSetup}
                             exitWindow={entry.exitWindow}
@@ -132,11 +151,16 @@ export function PrivacyProjectPage({
                             href={entry.href}
                             isUnderReview={entry.isUnderReview}
                             reproducibility={entry.reproducibility}
-                            className="mt-4"
+                            className="md:mt-4"
                           />
 
-                          <HorizontalSeparator className="mt-4 max-md:hidden" />
-                          <div className="mt-6 flex flex-col gap-4 md:mt-4 md:flex-row md:gap-8">
+                          <HorizontalSeparator className="max-md:my-2 md:mt-4" />
+                          <div
+                            className={cn(
+                              'flex flex-col md:mt-4 md:flex-row md:gap-8',
+                              MOBILE_SUMMARY_ROWS,
+                            )}
+                          >
                             <ProjectSummaryStat
                               title="Tracked on"
                               tooltip="Chains on which the protocol deployment is tracked by L2BEAT."
@@ -164,6 +188,12 @@ export function PrivacyProjectPage({
                                     attribute={attribute}
                                   />
                                 ))}
+                              />
+                            )}
+                            {entry.referenceApp && (
+                              <PrivacyReferenceAppStat
+                                app={entry.referenceApp}
+                                href={`#${PRIVACY_ADVERSARIES_SECTION_ID}`}
                               />
                             )}
                           </div>

@@ -98,7 +98,10 @@ export interface ClockConfig {
 }
 
 export interface TvsConfig {
-  readonly projects: (ProjectTvsConfig & { amountSources: string[] })[]
+  readonly projects: (ProjectTvsConfig & {
+    amountSources: string[]
+    storeEscrowValues: boolean
+  })[]
   readonly amounts: AmountConfig[]
   readonly prices: PriceConfig[]
   readonly chains: string[]

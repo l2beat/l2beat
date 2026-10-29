@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xbbb473b351933ee981c858948dc353c0adcf499c
+
+# Diff at Sat, 24 Oct 2026 16:41:07 GMT:
+
+- id: 32471009
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792751394
+- current timestamp: 1792751394
+
+## Description
+
+Starknet `isFinalized` is MEDIUM: a one-way lock.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792751394 (main branch discovery), not current.
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      fieldMeta.isFinalized.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xbc148b1801172a93a4a15f7941cd40ec23caf12e
 
 # Diff at Fri, 23 Oct 2026 10:30:56 GMT:

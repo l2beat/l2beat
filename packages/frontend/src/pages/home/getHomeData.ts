@@ -97,7 +97,7 @@ async function getCachedData(manifest: Manifest) {
     (chain) => ({
       ...chain,
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-      href: getInteropChainHref(chain.id, l2ProjectSlugById),
+      href: getInteropChainHref(chain, l2ProjectSlugById),
     }),
   )
   const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)

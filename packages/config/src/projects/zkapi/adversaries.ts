@@ -3,8 +3,6 @@ import type { PrivacyExposureMap } from '../../types'
 
 const SRC =
   'https://github.com/ethereum/zkapi/blob/045b444ea1b52538d1b40273c7cb6ed09468a052/'
-const DAEMON =
-  'https://github.com/ethereum/zkapi/blob/20aa542ae98e767c0507133fd34b12a56f5ccd3d/crates/zkapi-clientd/src/'
 const OA_CHAT =
   'https://github.com/OpenAnonymity/oa-chat/blob/60ed5be2957d984c70a7299474927becec47b61f/'
 
@@ -72,29 +70,25 @@ export const zkApiAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'good',
       exposureShort:
-        'The app works in Tor Browser, the daemon has a Tor setting with a kill switch, and no third party sees both a deposit and a request.',
+        'The app works in Tor Browser, and no third party sees both a deposit and a request.',
       exposureContinued:
-        "The RPC serving the user's wallet sees the deposit, while requests go to the operator and the provider. The app sends inference through a relay at refraction.network by default, which sees its timing. The hosted app reports feature use to Fathom, a cookieless analytics service.",
+        "The deposit reaches the wallet's RPC, or the app's public RPC when the user funds an address the app shows. The relay at refraction.network carries the app's inference and chain reads by default and sees their timing. Requests go to the operator and the provider, and the hosted app reports feature use to Fathom.",
       advice:
-        'Use the app in Tor Browser, or the daemon with its Tor setting, and send the deposit through a public RPC over Tor.',
+        'Use the app in Tor Browser, and send the deposit through a public RPC over Tor.',
       interior: {
         ...PUBLIC_INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: "Private only over Tor, which keeps the user's IP off both sides.",
+          note: "Private only over Tor, which keeps the user's IP out of both the deposit and the requests.",
         },
       },
       sources: [
-        {
-          title: 'Daemon Tor route has a kill switch',
-          url: `${SRC}zkapi-clientd/docs/CLI_ZKAPI.md#L81-L97`,
-        },
         {
           title: 'App relay on by default, direct fallback',
           url: `${OA_CHAT}chat/services/networkProxy.js#L7-L10`,
         },
         {
-          title: 'Hosted app loads Fathom Analytics (checked 2026-10-10)',
+          title: 'Hosted app loads Fathom Analytics (checked 2026-10-22)',
           url: 'https://chat.openanonymity.ai',
         },
       ],
@@ -111,7 +105,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The operator sees each request's time and budget tier but not its note, and too few active notes cover a top-tier budget to hide among.",
       exposureContinued:
-        "The candidates are the active notes whose balance covers the request's budget tier, which follows the chosen model's price. The daemon reveals the note id to the operator's indexer before each request. The provider can read prompts and responses and link requests under one key.",
+        "The candidates are the active notes whose balance covers the request's budget tier, which follows the chosen model's price. The provider can read prompts and responses and link requests under one key.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -130,10 +124,6 @@ export const zkApiAdversaries = definePrivacyAdversaries({
         {
           title: "OA Chat sets the budget tier from the model's price",
           url: `${OA_CHAT}chat/zkapi/services/zkapiModelBudget.mjs#L6-L14`,
-        },
-        {
-          title: 'Daemon fetches the note path by note id',
-          url: `${DAEMON}indexer.rs#L71-L80`,
         },
         {
           title: 'Provider sees inference content',

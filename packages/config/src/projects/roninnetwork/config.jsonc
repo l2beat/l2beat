@@ -57,11 +57,9 @@
     // Legacy MainchainGateway uses overloaded view methods that the default
     // handler can't probe (need explicit indices/length). Ignore them — the
     // ones we care about (admin, impl, paused, depositCount) come through.
-    // Critical: it holds the funded escrow, and Ronin governs both sides
-    // (MainchainBridgeManager here, RoninBridgeManager as admin of
-    // RoninGatewayV3, same operator set).
+    // Not critical: an external escrow, BridgeOperator signatures release it,
+    // not Ronin's state validation. Its fields are watched state (MEDIUM).
     "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": {
-      "critical": true,
       "description": "Legacy multi-sig-secured Ronin bridge contract holding the L1 side of deposits made before the April 2025 Chainlink CCIP migration. Still custodies residual user balances (ETH backing legacy WETH on Ronin, the deprecated WBTC contract, and dust). Withdrawals authorised by the Ronin BridgeOperator stake-weighted threshold via MainchainBridgeManager.",
       "ignoreMethods": [
         "checkHighTierVoteWeightThreshold",
@@ -73,11 +71,11 @@
         "$admin": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "emergencyPauser": { "severity": "MEDIUM" },
-        "getThreshold": { "severity": "HIGH" },
-        "getHighTierVoteWeightThreshold": { "severity": "HIGH" },
+        "getThreshold": { "severity": "MEDIUM" },
+        "getHighTierVoteWeightThreshold": { "severity": "MEDIUM" },
         // operator weights that validate withdrawal signatures (setContract)
         "bridgeManager": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "handler": {
             "type": "call",
             "method": "getContract",
@@ -94,12 +92,11 @@
     "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": {
       "description": "Governance and proxy-admin contract for the legacy MainchainGateway bridge. Holds the operator/governor set, tallies stake-weighted votes for bridge proposals (operator rotations, threshold changes, withdrawals).",
       "ignoreMethods": ["checkThreshold", "globalProposalRelayed", "round"],
-      // Validates the operator signatures of MainchainGateway withdrawals. Not
-      // HIGH: minimumVoteWeight and getTotalWeight move with the operator set.
-      "critical": true,
+      // Validates the operator signatures of MainchainGateway withdrawals.
+      // minimumVoteWeight and getTotalWeight move with the operator set.
       "fields": {
         "$admin": { "severity": "MEDIUM" },
-        "getThreshold": { "severity": "HIGH" },
+        "getThreshold": { "severity": "MEDIUM" },
         "getBridgeOperators": { "severity": "MEDIUM" },
         "getGovernors": { "severity": "MEDIUM" },
         "getFullBridgeOperatorInfos": { "severity": "MEDIUM" }
@@ -107,7 +104,6 @@
     },
     "eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": {
       "description": "Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency.",
-      "critical": true,
       "fields": {
         "emergency": { "severity": "MEDIUM" },
         // pause-only roles (SENTRY) and their admin
@@ -228,7 +224,9 @@
       "critical": {
         "sinceTimestamp": 1782901175,
         "untilTimestamp": 1788777107
-      }
+      },
+      // route added after the Kailua path retired, not part of Ronin's system
+      "ignoreRelatives": ["verifier_8b38038c"]
     },
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
       // RISC Zero governance timelock: owner of the RiscZeroVerifierRouter used by

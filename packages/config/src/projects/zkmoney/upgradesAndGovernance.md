@@ -2,7 +2,7 @@ Aztec Network's rollup and zk.money's portals and payout contracts are immutable
 
 ### Enclave signers and freeze
 
-Anyone can register a signer with an AWS Nitro attestation up to {{attestationMaxAge}} old. DAI has {{teeSignerCount}} registered signers, and sUSDS has {{susdsTeeSignerCount}}. A change to Aztec's canonical rollup lets anyone freeze the portals permanently, enabling refunds at the last proven checkpoint.
+Anyone can register a signer with an AWS Nitro attestation up to {{attestationMaxAge}} old. DAI has {{teeSignerCount}} registered signers, and sUSDS has {{susdsTeeSignerCount}}. Both portals are frozen permanently, and no party can undo the freeze.
 
 ### Names and services
 

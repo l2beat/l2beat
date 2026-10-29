@@ -1,4 +1,4 @@
-import type { Node } from '../State'
+import type { Field, Node } from '../State'
 
 export interface GraphEdge {
   readonly source: string
@@ -24,6 +24,14 @@ let cachedProjection: GraphProjection | undefined
 export function getGraphProjection(nodes: readonly Node[]): GraphProjection {
   if (nodes === cachedNodes && cachedProjection !== undefined) {
     return cachedProjection
+  }
+  if (cachedNodes !== undefined && cachedProjection !== undefined) {
+    const leafNodes = leavesOfSameGraph(cachedNodes, nodes)
+    if (leafNodes !== undefined) {
+      cachedNodes = nodes
+      cachedProjection = { ...cachedProjection, leafNodes }
+      return cachedProjection
+    }
   }
 
   const { leafNodes, leafIdsByItemId, groupIds, hiddenFieldCount } =
@@ -78,6 +86,50 @@ export function getGraphProjection(nodes: readonly Node[]): GraphProjection {
   cachedNodes = nodes
   cachedProjection = projection
   return projection
+}
+
+// Moving or resizing nodes rebuilds every node they connect to on each
+// mousemove, but leaves the graph itself alone. Returns the next leaves, in
+// indexItems order, when only geometry changed.
+function leavesOfSameGraph(
+  previous: readonly Node[],
+  next: readonly Node[],
+): Node[] | undefined {
+  if (previous.length !== next.length) return undefined
+  const leaves: Node[] = []
+  const stack: [before: Node, after: Node][] = []
+  for (let i = next.length - 1; i >= 0; i--) {
+    stack.push([previous[i] as Node, next[i] as Node])
+  }
+  while (stack.length > 0) {
+    const [before, after] = stack.pop() as [Node, Node]
+    if (!isSameGraphItem(before, after)) return undefined
+    if (after.subnodes.length === 0) {
+      leaves.push(after)
+      continue
+    }
+    for (let i = 0; i < after.subnodes.length; i++) {
+      stack.push([before.subnodes[i] as Node, after.subnodes[i] as Node])
+    }
+  }
+  return leaves
+}
+
+function isSameGraphItem(before: Node, after: Node): boolean {
+  if (before.id !== after.id) return false
+  if (before.isInitial !== after.isInitial) return false
+  if (before.isReachable !== after.isReachable) return false
+  if (before.hiddenFields !== after.hiddenFields) return false
+  if (before.subnodes.length !== after.subnodes.length) return false
+  if (before.fields === after.fields) return true
+  if (before.fields.length !== after.fields.length) return false
+  for (let i = 0; i < after.fields.length; i++) {
+    const beforeField = before.fields[i] as Field
+    const afterField = after.fields[i] as Field
+    if (beforeField.name !== afterField.name) return false
+    if (beforeField.target !== afterField.target) return false
+  }
+  return true
 }
 
 // A node can only be hidden by hiding the values that reference it, so roots

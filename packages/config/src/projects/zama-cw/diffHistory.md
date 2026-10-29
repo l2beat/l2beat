@@ -1,3 +1,523 @@
+Generated with discovered.json: 0x05dc3e97c24bb85006220864b1255c20bd66beee
+
+# Diff at Fri, 23 Oct 2026 12:07:37 GMT:
+
+- id: c10482a4
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@09eddc4e6fa1ed6ed27d777108a2aa65a2432bee block: 1792414872
+- current timestamp: 1792687253
+
+## Description
+
+Encrypted inputs now need 3 of 5 coprocessor signatures on Ethereum (was 1 of 1), and the Gateway priority coprocessor is off, so its 3-of-5 majority applies. Discovery now covers ConfidentialSwap, the vault batcher router and 36 vault batchers. ZamaDeFiDAO, a second Aragon DAO contract, and its 3/6 multisig plugin own all of them. The protocol DAO is now named ZamaDAO and clarified as a contract in all refs (so that people do not assume it is decentralized).
+
+## Watched changes
+
+```diff
+    contract InputVerifier (eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2) [zama/ZamaInputVerifier] {
+    +++ description: Ethereum host-chain verifier for encrypted input attestations produced by the Zama Gateway InputVerification contract. The FHEVMExecutor calls it before accepting user-provided ciphertext handles.
++++ description: Coprocessor signers accepted by InputVerifier. The threshold number of these signers must sign encrypted input bundles for the Gateway InputVerification EIP-712 domain before the FHEVMExecutor accepts the resulting ciphertext handles.
++++ severity: HIGH
+      values.getCoprocessorSigners.1:
++        "eth:0x679953d556e71F62673F38EE4775d6E7CCb23E64"
++++ description: Coprocessor signers accepted by InputVerifier. The threshold number of these signers must sign encrypted input bundles for the Gateway InputVerification EIP-712 domain before the FHEVMExecutor accepts the resulting ciphertext handles.
++++ severity: HIGH
+      values.getCoprocessorSigners.2:
++        "eth:0xF6ee37de6bDaB31597E90ED70448B92073cD9634"
++++ description: Coprocessor signers accepted by InputVerifier. The threshold number of these signers must sign encrypted input bundles for the Gateway InputVerification EIP-712 domain before the FHEVMExecutor accepts the resulting ciphertext handles.
++++ severity: HIGH
+      values.getCoprocessorSigners.3:
++        "eth:0x2e809E897AA8046Ff6e936502b6275F0B8993456"
++++ description: Coprocessor signers accepted by InputVerifier. The threshold number of these signers must sign encrypted input bundles for the Gateway InputVerification EIP-712 domain before the FHEVMExecutor accepts the resulting ciphertext handles.
++++ severity: HIGH
+      values.getCoprocessorSigners.4:
++        "eth:0x68EDabe2F16CcC37cB2Bb05F1D1EDad3e1Eecbd7"
++++ description: Minimum number of configured coprocessor signer signatures required to accept an encrypted input bundle.
++++ severity: HIGH
+      values.getThreshold:
+-        1
++        3
+    }
+```
+
+```diff
+    EOA (eth:0xD87298Dde09403C68fF5c1FFa2aE02704CF930fe) {
+    +++ description: None
+      sourceHashes:
+-        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      proxyType:
+-        "EIP7702 EOA"
++        "EOA"
+      values:
+-        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0xD87298Dde09403C68fF5c1FFa2aE02704CF930fe","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x453a77b4f2a960fc023491780a7e261b19f544175efb54278e7c77c888c70542","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+    EOA (zama:0x0000000000000000000000000000000000000000) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287","description":"finalize encrypted input proof verification or rejection in InputVerification alone while priority mode is active.","role":".gatewayPriorityCoprocessorTxSender"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F","description":"commit ciphertext and SNS ciphertext digests to CiphertextCommits alone while priority mode is active.","role":".gatewayPriorityCoprocessorTxSender"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"zama:0xDE537Be194777A56f8B19d14079E6a78249390ab","description":"finalize coprocessor consensus alone for encrypted input proofs and ciphertext material commitments while priority mode is active.","role":".getPriorityCoprocessorTxSender"}
+    }
+```
+
+```diff
+    EOA (zama:0x373E36A8684A3344E177C5894179845Cbe57AE44) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287","description":"finalize encrypted input proof verification or rejection in InputVerification alone while priority mode is active.","role":".gatewayPriorityCoprocessorTxSender"}
+      receivedPermissions.4:
+-        {"permission":"interact","from":"zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F","description":"commit ciphertext and SNS ciphertext digests to CiphertextCommits alone while priority mode is active.","role":".gatewayPriorityCoprocessorTxSender"}
+      receivedPermissions.6:
+-        {"permission":"interact","from":"zama:0xDE537Be194777A56f8B19d14079E6a78249390ab","description":"finalize coprocessor consensus alone for encrypted input proofs and ciphertext material commitments while priority mode is active.","role":".getPriorityCoprocessorTxSender"}
+    }
+```
+
+```diff
+    contract InputVerification (zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287) [zama/InputVerification_v0_5_0] {
+    +++ description: Gateway contract that receives encrypted input verification requests from registered and enabled host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Since v0.5.0, if GatewayConfig designates a priority coprocessor, that coprocessor's single response finalizes verification or rejection and the attestation carries only its signature. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain.
++++ description: Priority coprocessor transaction sender configured in GatewayConfig, or zero when disabled. While set, this single coprocessor finalizes encrypted input proof verification and rejection on its own and other coprocessor responses cannot finalize.
++++ severity: HIGH
+      values.gatewayPriorityCoprocessorTxSender:
+-        "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"
++        "zama:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract CiphertextCommits (zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F) [zama/CiphertextCommits_v0_5_0] {
+    +++ description: Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material. Digests referencing unregistered or disabled host chains are rejected. Since v0.5.0, if GatewayConfig designates a priority coprocessor, that coprocessor's single submission commits the material on its own.
++++ description: Priority coprocessor transaction sender configured in GatewayConfig, or zero when disabled. While set, this single coprocessor commits ciphertext material on its own and other coprocessor submissions cannot finalize.
++++ severity: HIGH
+      values.gatewayPriorityCoprocessorTxSender:
+-        "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"
++        "zama:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract GatewayConfig (zama:0xDE537Be194777A56f8B19d14079E6a78249390ab) [zama/GatewayConfig_v0_7_0] {
+    +++ description: Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; the owner can create new contexts, retune the thresholds of any live context, and destroy non-current contexts, which immediately invalidates them for decryption. Registered host chains can be disabled, re-enabled, or removed by the owner. Since v0.7.0 the owner can designate a priority coprocessor transaction sender whose single response finalizes coprocessor consensus in InputVerification and CiphertextCommits, making the coprocessor majority threshold inert, and coprocessor set and threshold updates are applied live without pausing InputVerification.
++++ description: Priority coprocessor transaction sender, or zero when priority mode is disabled. While set, a single response from this registered coprocessor finalizes encrypted input proof verification and rejection in InputVerification and ciphertext material commitments in CiphertextCommits; the coprocessor majority threshold is inert and other coprocessors cannot finalize. The owner can set or remove it live, and updateCoprocessors cannot drop the active priority coprocessor or rotate its signer.
++++ severity: HIGH
+      values.getPriorityCoprocessorTxSender:
+-        "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"
++        "zama:0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792414872 (main branch discovery), not current.
+
+```diff
+    contract ZamaDeFiGovCore (eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C) [zama/GovCore] {
+    +++ description: Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.
+      name:
+-        "ZamaGovMemberDAO"
++        "ZamaDeFiGovCore"
+      template:
+-        "zama/ZamaDAO"
++        "zama/GovCore"
+      description:
+-        "Aragon DAO that stores governance state and executes proposal action batches."
++        "Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission."
++++ description: Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.
++++ severity: HIGH
+      values.daoExecutors:
++        ["eth:0x37c8bfa303f173350eefCB6D4a995E68FFbdF3FD"]
++++ description: Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events.
++++ severity: HIGH
+      values.daoRootHolders:
++        ["eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"]
++++ description: Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events.
++++ severity: HIGH
+      values.daoUpgraders:
++        ["eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"]
+      fieldMeta.daoExecutors:
++        {"severity":"HIGH","description":"Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.","type":"PERMISSION"}
+      fieldMeta.daoRootHolders:
++        {"severity":"HIGH","description":"Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events.","type":"PERMISSION"}
+      fieldMeta.daoUpgraders:
++        {"severity":"HIGH","description":"Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events.","type":"PERMISSION"}
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"change multisig plugin settings.","role":".multisigSettingsAdmins"},{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x084fd3a517D6DaE1f8E3E5481b65107fd7e5eEc1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x1B731EC615165094Ec4d695b0a1c8eE31366Cf84","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x2B5eB25dA24dcd00A825487c60401F9736091006","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x2dEAFB36F3B118d434CDE4708e8350eae918724d","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x2FB51a8fe20D9cc830b9CA5251f8d845eb5BAAa7","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"change multisig plugin settings.","role":".multisigSettingsAdmins"},{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins"},{"permission":"interact","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"grant and revoke permissions in this contract.","role":".daoRootHolders"},{"permission":"interact","from":"eth:0x321C9AaB1390100f6e7fE1735a928ec0F16252f0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x324EA89FD3784036673BfE6Ffee2334A088F40Cc","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x3a906d6509EB4171Ee9fC71D083fb1638BaF083D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x43e8f7B280B19637d2A7e3008657282AaF2C0E4b","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x4Ad6368aD783644F1BB780F0A0F00cD77ca06400","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x4f555b54842E609bA62843E0Ab4Ff184A436772e","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x52FfC3Aa2372D42d1cB413C0E36659ffF1e58EC1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x6e05F3bE50c7890Ba10B30e9492b20683d5cC707","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x7320830992a924e6D2f3D3E9A74fbd103E9A20AE","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x737F4558c0cC7C29b56dd13c34B68e967C91E399","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x79e621c35B93329bbB6F06D9635981B9a5f4a255","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x7Afb2CD6D41C379e3d8B46f206346b63A67F4d43","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x807C367dA7B9228643b06390e199E33ccA7Cc533","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x83540Af3adFc4d3133139D57D4BAB17828902F05","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x87356ade88315aed3aC61B42caCC3a263730B1BD","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"grant and revoke market makers and pausers, curate asset pairs and fees, set the maker gateway, reveal per-asset swap volume and unpause.","role":".defaultAdminAC"},{"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"pause intent creation, quoting, settlement and reclaims.","role":".pauserAC"},{"permission":"interact","from":"eth:0x96Cd3Faa7483783Ac2Eb715f6333361500F1eec9","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0x99384d982399a9D890873E402EC04DEE7dad8737","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xA07c00A3b955B805B3Ea76b086f95a3e793715D5","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xAC82e75FBA31122c1FEb575ebc371aA2EF78604D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xae09d50C6B6E91D9FBE50D168eA6567759e930f8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xbEbee65445dAD2F31628ADd14535fd0B3fC915b4","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xd26F1546e7aFD5881F132967637957416802865A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xd2f3f554F995c12e2BfE5E155397cB6272643744","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xD671b562fdecE574da12295D1680F6a7a0af2963","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xe1Bc291CF6fD71173dB73D58f1b25fC371B9Aa6D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xe396FD82a7Aa2F89C16505c1AD46e91F3bc7d3b0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xE7761e3864b077728cafE4E18e9c8C23B6F896D0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xf18Ad9F94a7EA994FdCbC5fD5C5Da326a341d8a8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xFb21951F291E742f24aB4F5c0c11e7BC8864142A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xFc659Fa98AC62970cAe2C594Be32fe4F8b844Ea3","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"interact","from":"eth:0xfD899e481C7349d107005feFb1d19F33923b481A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"},{"permission":"upgrade","from":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C","description":"upgrade this contract's implementation.","role":".daoUpgraders"},{"permission":"upgrade","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"upgrade the implementation.","role":".defaultAdminAC"}]
+    }
+```
+
+```diff
+    EOA (eth:0x6dd470B50BbC1Ec03bf2B13B30c7d864F2025874) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"pause intent creation, quoting, settlement and reclaims.","role":".pauserAC"}
+    }
+```
+
+```diff
+    EOA (eth:0x705380c013c13B4ce62338ab1F012036BAC802b3) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"pause intent creation, quoting, settlement and reclaims.","role":".pauserAC"}
+    }
+```
+
+```diff
+    EOA (eth:0x8edFb885a32C72aF32943D4db13D319181d18CB8) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"pause intent creation, quoting, settlement and reclaims.","role":".pauserAC"}
+    }
+```
+
+```diff
+    EOA (eth:0x9b828219ad863491eb9b5225aE2d133eEDEa9B71) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"decrypt the real order, amounts and minimum output of every swap intent, every quote and every settled amount.","role":".complianceAddress"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"pause intent creation, quoting, settlement and reclaims.","role":".pauserAC"}
+    }
+```
+
+```diff
+    contract ZamaGovCore (eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3) [zama/GovCore] {
+    +++ description: Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.
+      name:
+-        "DAO"
++        "ZamaGovCore"
+      template:
+-        "zama/ZamaDAO"
++        "zama/GovCore"
+      description:
+-        "Aragon DAO that stores governance state and executes proposal action batches."
++        "Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission."
+      fieldMeta.daoExecutors.description:
+-        "Current DAO executor grantees derived from Aragon grant/revoke events."
++        "Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events."
+      fieldMeta.daoRootHolders.description:
+-        "Current DAO root grantees derived from Aragon grant/revoke events."
++        "Current grantees of ROOT_PERMISSION on this contract, reconstructed from grant and revoke events."
+      fieldMeta.daoUpgraders.description:
+-        "Current DAO implementation-upgrade grantees derived from Aragon grant/revoke events."
++        "Current grantees of UPGRADE_DAO_PERMISSION on this contract, reconstructed from grant and revoke events."
+      directlyReceivedPermissions.23.description:
+-        "grant and revoke DAO permissions."
++        "grant and revoke permissions in this contract."
+      directlyReceivedPermissions.61.description:
+-        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
+    }
+```
+
+```diff
+    contract ZamaGovMultisigB (eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.25.description:
+-        "grant and revoke DAO permissions."
++        "grant and revoke permissions in this contract."
+      receivedPermissions.63.description:
+-        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
+      directlyReceivedPermissions.0.description:
+-        "execute arbitrary DAO actions, including calls as wrapper owner and UUPS upgrades."
++        "execute arbitrary calls from this contract."
+    }
+```
+
+```diff
+    contract ZamaGovMultisigA (eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.25.description:
+-        "grant and revoke DAO permissions."
++        "grant and revoke permissions in this contract."
+      receivedPermissions.63.description:
+-        "upgrade the DAO implementation."
++        "upgrade this contract's implementation."
+      directlyReceivedPermissions.0.description:
+-        "execute arbitrary DAO actions, including calls as wrapper owner and UUPS upgrades."
++        "execute arbitrary calls from this contract."
+    }
+```
+
+```diff
+    contract ConfidentialTokenWrappersRegistry (eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0) [zama/ConfidentialTokenWrappersRegistry] {
+    +++ description: Registry for Zama confidential token wrappers.
++++ description: Confidential wrappers the registry lists as valid.
+      values.confidentialTokens:
++        ["eth:0xe978F22157048E5DB8E5d07971376e86671672B2","eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50","eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893","eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc","eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071","eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9","eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1","eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762","eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458","eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2","eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d","eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6","eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f","eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B","eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC","eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c","eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df","eth:0x77F8207ee451441336538bA07a2F425780dED8DB","eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c","eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73","eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273","eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B","eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A","eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30","eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f","eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F"]
+      fieldMeta:
++        {"confidentialTokens":{"description":"Confidential wrappers the registry lists as valid."}}
+    }
+```
+
+```diff
+    EOA (eth:0xf299Cd189498D7d0F0FfACd4DdC94166f614fBBE) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01","description":"pause intent creation, quoting, settlement and reclaims.","role":".pauserAC"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RoxcUSDCDepositBatcher (eth:0x084fd3a517D6DaE1f8E3E5481b65107fd7e5eEc1) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract VaultBatcherConfidentialRouter (eth:0x11c6Acfd368DDFAB97d15649eB8043C0197fac4C) [zama/VaultBatcherConfidentialRouter]
+    +++ description: Ownerless router that splits one confidential deposit or redemption across several vault batchers. It accepts only wrappers listed in the ConfidentialTokenWrappersRegistry.
+```
+
+```diff
++   Status: CREATED
+    contract PendleUSDCDepositBatcher (eth:0x1B731EC615165094Ec4d695b0a1c8eE31366Cf84) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ArmUSDCpRedeemBatcher (eth:0x2B5eB25dA24dcd00A825487c60401F9736091006) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract RoxUSDCyDepositBatcher (eth:0x2dEAFB36F3B118d434CDE4708e8350eae918724d) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract BbqTGBPRedeemBatcher (eth:0x2FB51a8fe20D9cc830b9CA5251f8d845eb5BAAa7) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract BbqUSDCDepositBatcher (eth:0x321C9AaB1390100f6e7fE1735a928ec0F16252f0) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract SteakcUSDCDepositBatcherV1 (eth:0x324EA89FD3784036673BfE6Ffee2334A088F40Cc) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ZamaDeFiMultisig (eth:0x37c8bfa303f173350eefCB6D4a995E68FFbdF3FD) [zama/Multisig]
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+```
+
+```diff
++   Status: CREATED
+    contract SteakcUSDCRedeemBatcher (eth:0x3a906d6509EB4171Ee9fC71D083fb1638BaF083D) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract RoxcUSDCRedeemBatcher (eth:0x43e8f7B280B19637d2A7e3008657282AaF2C0E4b) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract SteakcUSDCRedeemBatcherV2 (eth:0x4Ad6368aD783644F1BB780F0A0F00cD77ca06400) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ArmUSDCsRedeemBatcher (eth:0x4f555b54842E609bA62843E0Ab4Ff184A436772e) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract PAPYRedeemBatcher (eth:0x52FfC3Aa2372D42d1cB413C0E36659ffF1e58EC1) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract SteakcUSDCDepositBatcherV2 (eth:0x6e05F3bE50c7890Ba10B30e9492b20683d5cC707) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ArmUSDTsDepositBatcher (eth:0x7320830992a924e6D2f3D3E9A74fbd103E9A20AE) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract SteakUSDTDepositBatcher (eth:0x737F4558c0cC7C29b56dd13c34B68e967C91E399) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ArmUSDTsRedeemBatcher (eth:0x79e621c35B93329bbB6F06D9635981B9a5f4a255) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract SteakUSDTRedeemBatcher (eth:0x7Afb2CD6D41C379e3d8B46f206346b63A67F4d43) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract BbqUSDCRedeemBatcher (eth:0x807C367dA7B9228643b06390e199E33ccA7Cc533) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ArmcWBTCRedeemBatcher (eth:0x83540Af3adFc4d3133139D57D4BAB17828902F05) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ArmUSDCsDepositBatcher (eth:0x87356ade88315aed3aC61B42caCC3a263730B1BD) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialSwap (eth:0x8Fe22dC7e624c02b1805d41E09741490E1018C01) [zama/ConfidentialSwap]
+    +++ description: Request-for-quote protocol for swaps between confidential tokens. A maker escrows an encrypted intent that hides the real order among candidate orders, whitelisted market makers quote every candidate in a sealed-bid auction, and the revealed winner settles within the settlement window or the maker reclaims the escrow.
+```
+
+```diff
++   Status: CREATED
+    contract SteakcUSDCRedeemBatcherV1 (eth:0x96Cd3Faa7483783Ac2Eb715f6333361500F1eec9) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ArmUSDTpRedeemBatcher (eth:0x99384d982399a9D890873E402EC04DEE7dad8737) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract SteakcUSDCDepositBatcher (eth:0xA07c00A3b955B805B3Ea76b086f95a3e793715D5) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ArmcWBTCDepositBatcher (eth:0xAC82e75FBA31122c1FEb575ebc371aA2EF78604D) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract FAUSDeDepositBatcher (eth:0xae09d50C6B6E91D9FBE50D168eA6567759e930f8) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract FcUSDTDepositBatcher (eth:0xbEbee65445dAD2F31628ADd14535fd0B3fC915b4) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ArmUSDCpDepositBatcher (eth:0xd26F1546e7aFD5881F132967637957416802865A) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract FcUSDTRedeemBatcher (eth:0xd2f3f554F995c12e2BfE5E155397cB6272643744) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract PendleUSDCRedeemBatcher (eth:0xD671b562fdecE574da12295D1680F6a7a0af2963) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    EOA (eth:0xD87298Dde09403C68fF5c1FFa2aE02704CF930fe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BbqUSDTDepositBatcher (eth:0xe1Bc291CF6fD71173dB73D58f1b25fC371B9Aa6D) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract PAPYDepositBatcher (eth:0xe396FD82a7Aa2F89C16505c1AD46e91F3bc7d3b0) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    EOA (eth:0xe6EeB6aD4DC458A7A630a733FBfba49dC08072a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FAUSDeRedeemBatcher (eth:0xE7761e3864b077728cafE4E18e9c8C23B6F896D0) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract RoxUSDCyRedeemBatcher (eth:0xf18Ad9F94a7EA994FdCbC5fD5C5Da326a341d8a8) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract ArmUSDTpDepositBatcher (eth:0xFb21951F291E742f24aB4F5c0c11e7BC8864142A) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract BbqUSDTRedeemBatcher (eth:0xFc659Fa98AC62970cAe2C594Be32fe4F8b844Ea3) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
+```diff
++   Status: CREATED
+    contract BbqTGBPDepositBatcher (eth:0xfD899e481C7349d107005feFb1d19F33923b481A) [zama/VaultBatcherConfidential]
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+```
+
 Generated with discovered.json: 0x83a93eed67f12eaa9146c26c4d146ee88cf7855e
 
 # Diff at Mon, 19 Oct 2026 13:02:56 GMT:

@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xc7bf1335049a73b0c806968b2c0ca03adf407855
+
+# Diff at Tue, 27 Oct 2026 10:12:33 GMT:
+
+- id: b3b77d10
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9c26ea8b890c27fbae965dda096ca8cf2889a30a block: 1792144197
+- current timestamp: 1793095581
+
+## Description
+
+Avail rotated approved relayer for vector da bridge. Also rotated one member of avail ms.
+
+## Watched changes
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) [succinct/SP1Vector] {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.isRelayerApproved:
+-        false
++        true
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
++        "eth:0xbA274d3821F5a2176987a59dAB97Eb9b11A72076"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144197 (main branch discovery), not current.
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) [succinct/SP1Vector] {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.isRelayerApproved:
+-        true
++        false
+      values.relayers.0:
+-        "eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"
++        "eth:0x61AB85BAE30435F43A276D51968D3Fa947093966"
+    }
+```
+
+Generated with discovered.json: 0x07ddb466dafa65c187ed9bfa8b8e83613024a69c
+
+# Diff at Sat, 24 Oct 2026 16:41:06 GMT:
+
+- id: ffe355bc
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1792144197
+- current timestamp: 1792144197
+
+## Description
+
+Diamond `validators` is MEDIUM: it names the ValidatorTimelock, a role holder.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144197 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.validators:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0xfcdf2c09992effa088d8fda5e2e2e9c98ba8b02a
 
 # Diff at Tue, 20 Oct 2026 12:40:06 GMT:

@@ -200,7 +200,7 @@ function HomeChartTooltip({
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {dayRange
             ? formatRange(label, label + UnixTime.DAY)
-            : formatTimestamp(label, { longMonthName: true })}
+            : formatTimestamp(label)}
         </div>
         <div className="flex flex-col gap-2">
           {entries.map(({ entry, config }) => (

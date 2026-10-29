@@ -27,12 +27,6 @@ export function Settings() {
     })
   }, [preferences.highlightOverlapping, setPreferences])
 
-  const toggleUseExperimentalRenderer = useCallback(() => {
-    setPreferences({
-      useExperimentalRenderer: preferences.useExperimentalRenderer !== true,
-    })
-  }, [preferences.useExperimentalRenderer, setPreferences])
-
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -41,66 +35,50 @@ export function Settings() {
         </ToolbarButton>
       </Dialog.Trigger>
       <Dialog.Body>
-        <Dialog.Title className="m-0 font-medium text-lg">
-          Nodes panel settings
-        </Dialog.Title>
-        <Dialog.Description className="mb-5 text-sm leading-normal">
+        <Dialog.Title>Nodes panel settings</Dialog.Title>
+        <Dialog.Description>
           Change how nodes are displayed in this panel.
         </Dialog.Description>
 
         <div className="flex flex-col gap-3">
           <div>
             <div
-              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
+              className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm hover:text-white"
               onClick={toggleEnableDimming}
             >
               <Checkbox checked={preferences.enableDimming} />
               Enable dimming on selection
             </div>
-            <div className="pl-5 font-light text-coffee-400 text-xs">
+            <div className="mt-1 pl-6 text-coffee-300 text-xs leading-4">
               When a node is selected, unrelated nodes fade out so its direct
               connections stand out.
             </div>
           </div>
           <div>
             <div
-              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
+              className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm hover:text-white"
               onClick={toggleHideLargeArrays}
             >
               <Checkbox checked={preferences.hideLargeArrays} />
               Hide large arrays on load
             </div>
-            <div className="pl-5 font-light text-coffee-400 text-xs">
+            <div className="mt-1 pl-6 text-coffee-300 text-xs leading-4">
               Fields containing long arrays are collapsed by default to keep
               nodes compact and the graph readable.
             </div>
           </div>
           <div>
             <div
-              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
+              className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm hover:text-white"
               onClick={toggleHighlightOverlapping}
             >
               <Checkbox checked={preferences.highlightOverlapping !== false} />
               Highlight overlapping nodes
             </div>
-            <div className="pl-5 font-light text-coffee-400 text-xs">
+            <div className="mt-1 pl-6 text-coffee-300 text-xs leading-4">
               Draw an accent outline around nodes whose bounding boxes
               intersect, so a smaller node hidden behind a larger one is still
               visible.
-            </div>
-          </div>
-          <div>
-            <div
-              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
-              onClick={toggleUseExperimentalRenderer}
-            >
-              <Checkbox
-                checked={preferences.useExperimentalRenderer === true}
-              />
-              Use experimental renderer
-            </div>
-            <div className="pl-5 font-light text-coffee-400 text-xs">
-              Faster, but less robust and with minor visual differences.
             </div>
           </div>
         </div>

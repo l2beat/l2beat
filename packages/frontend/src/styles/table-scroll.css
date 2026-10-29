@@ -1,0 +1,102 @@
+/*
+  A table's sideways scroll, as a timeline for what is drawn outside its
+  scroller to follow: the sticky header copy and the edge fade.
+*/
+@utility table-scroll-root {
+  position: relative;
+  timeline-scope: --table-scroll-timeline;
+}
+
+@utility table-scroller {
+  scroll-timeline: --table-scroll-timeline inline;
+}
+
+/*
+  Shades the table's right edge while columns lie beyond it, since a column
+  cut at the edge can look like the last one. It fades out over the last
+  stretch of scroll, as long as it is wide. A table with nothing to scroll has
+  an inactive timeline, so the fade stays hidden; so does a browser without
+  scroll-driven animations.
+
+  The left edge needs none: a reader who scrolled knows the table scrolls, and
+  cells sliding under pinned columns show it too.
+*/
+@utility table-edge-fade {
+  --table-edge-fade-width: --spacing(14);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  width: var(--table-edge-fade-width);
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    to left,
+    var(--color-surface-primary),
+    transparent
+  );
+  animation: table-edge-fade linear both;
+  animation-timeline: --table-scroll-timeline;
+  animation-range: calc(100% - var(--table-edge-fade-width)) 100%;
+}
+
+/*
+  Marks the edge in the header row as well, since the fade shows only over
+  content and the edge can land on a column's empty end. Clicked, it scrolls
+  the table on. It takes the sticky header's measured height and stops where
+  the header stops, so tables without one show the fade alone.
+*/
+@utility table-edge-fade-chevron {
+  display: none;
+
+  [data-sticky-table-ready] > .table-edge-fade > & {
+    position: sticky;
+    top: var(--sticky-table-header-top, 0px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: --spacing(8);
+    height: var(--sticky-table-header-height);
+    margin-bottom: var(--sticky-table-header-bottom-gap);
+    margin-left: auto;
+    /* Level with the labels, above the divider row and the cells' padding */
+    padding-bottom: --spacing(2.5);
+    /* Clears a cut label or sort icon from under it */
+    background: linear-gradient(
+      to left,
+      var(--color-surface-primary) --spacing(5),
+      transparent
+    );
+    pointer-events: auto;
+    /*
+      Faded out it would still take clicks meant for the last column's
+      header, so it goes halfway through the fade, and is never there on a
+      table with nothing to scroll.
+    */
+    visibility: hidden;
+    animation: table-edge-fade-chevron linear both;
+    animation-timeline: --table-scroll-timeline;
+    animation-range: calc(100% - var(--table-edge-fade-width)) 100%;
+  }
+}
+
+@keyframes table-edge-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes table-edge-fade-chevron {
+  from {
+    visibility: visible;
+  }
+  /* Fainter than half, it would take clicks it barely shows it offers */
+  50%,
+  to {
+    visibility: hidden;
+  }
+}

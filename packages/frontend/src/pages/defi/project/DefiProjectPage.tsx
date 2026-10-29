@@ -13,19 +13,26 @@ import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
+import { env } from '~/env'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
+import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 
 interface Props extends AppLayoutProps {
   entry: ProjectDefiEntry
+  sectionLinks: ProjectSectionLink[]
+  versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
   selectedUpdateId?: string
 }
 
 export function DefiProjectPage({
   entry,
+  sectionLinks,
+  versionLinks,
   queryState,
   selectedUpdateId,
   ...props
@@ -53,7 +60,14 @@ export function DefiProjectPage({
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
                 <div className="pt-6 max-md:px-4 lg:pt-4">
-                  <ProjectHeader project={entry} />
+                  <ProjectHeader
+                    project={entry}
+                    // Ossification keeps DeFi project pages up without the
+                    // DeFi section, so there is no index to link to
+                    section={env.CLIENT_SIDE_DEFI_ENABLED ? 'defi' : undefined}
+                    sectionLinks={sectionLinks}
+                    versions={versionLinks}
+                  />
                   <ProjectSummaryBars
                     project={{
                       underReviewStatus: entry.isUnderReview
@@ -65,6 +79,7 @@ export function DefiProjectPage({
                         emergencyWarning: entry.warnings.emergency,
                       },
                     }}
+                    versions={versionLinks}
                   />
                   {entry.badges.length > 0 && (
                     <BadgesSection

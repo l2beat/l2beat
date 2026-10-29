@@ -1,4 +1,4 @@
-import { Logger, type RateLimiter } from '@l2beat/backend-tools'
+import { Logger, type RateLimiter, redactUrl } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { ClientMetricsAggregator } from '../ClientMetricsAggregator'
 import type { HttpClient } from '../http/HttpClient'
@@ -149,8 +149,9 @@ export class BlockIndexerClient {
     const etherscanResponse = EtherscanResponse.safeParse(response)
 
     if (etherscanResponse.success === false) {
-      const message = `Invalid Etherscan response [${JSON.stringify(response)}] for request [${url}].`
-      throw new TypeError(message)
+      throw new TypeError('Invalid Etherscan response', {
+        cause: { url: redactUrl(url), response },
+      })
     }
 
     if (etherscanResponse.data.message === 'NOTOK') {

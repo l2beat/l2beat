@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { memo, type ReactNode } from 'react'
 import type { FieldValue } from '../../../api/types'
 import { AddressDisplay } from './AddressDisplay'
@@ -7,6 +6,7 @@ const EM_DASH = '—'
 
 export interface FieldValueDisplayProps {
   name?: FieldValue
+  index?: number
   topLevel?: boolean
   value: FieldValue
 }
@@ -15,6 +15,7 @@ export interface FieldValueDisplayProps {
 // the fields around them rerender whenever the config or template loads.
 export const FieldValueDisplay = memo(function FieldValueDisplay({
   name,
+  index,
   topLevel,
   value,
 }: FieldValueDisplayProps) {
@@ -47,25 +48,16 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
       )
     }
   } else if (value.type === 'string') {
-    const QUOT_OPEN = '\u201C'
-    const QUOT_CLOSE = '\u201D'
     inlineDisplay = (
-      <p className="wrap-break-word font-serif">
-        <strong
-          className={clsx(
-            'select-none text-coffee-600',
-            topLevel && 'ml-[-6px] inline-block',
-          )}
-        >
-          {QUOT_OPEN}
-        </strong>
+      <p className="wrap-break-word font-mono text-coffee-200 text-xs">
+        <span className="select-none text-coffee-500">"</span>
         {value.value}
-        <strong className="select-none text-coffee-600">{QUOT_CLOSE}</strong>
+        <span className="select-none text-coffee-500">"</span>
       </p>
     )
   } else if (value.type === 'number') {
     inlineDisplay = (
-      <p className="wrap-break-word overflow-hidden font-mono text-aux-orange">
+      <p className="wrap-break-word overflow-hidden font-mono text-aux-orange text-xs">
         {BigInt(value.value)}
       </p>
     )
@@ -78,34 +70,38 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
   } else if (value.type === 'array') {
     if (value.values.length !== 0) {
       blockDisplay = (
-        <ol start={0} className="list-decimal pl-4 marker:text-coffee-600">
+        <ol className="border-coffee-600 border-l pl-3">
           {value.values.map((value, i) => (
-            <FieldValueDisplay key={i} value={value} />
+            <FieldValueDisplay key={i} index={i} value={value} />
           ))}
         </ol>
       )
     } else {
-      inlineDisplay = <span className="text-coffee-600">empty array</span>
+      inlineDisplay = (
+        <span className="font-mono text-coffee-400 text-xs">empty array</span>
+      )
     }
   } else if (value.type === 'object') {
     const entries = value.values
     if (entries.length !== 0) {
       blockDisplay = (
-        <ul className="list-disc pl-4 marker:font-mono marker:text-coffee-600 marker:text-xs">
+        <ul className="border-coffee-600 border-l pl-3">
           {entries.map(([key, value], i) => (
             <FieldValueDisplay key={i} name={key} value={value} />
           ))}
         </ul>
       )
     } else {
-      inlineDisplay = <span className="text-coffee-600">empty object</span>
+      inlineDisplay = (
+        <span className="font-mono text-coffee-400 text-xs">empty object</span>
+      )
     }
   } else if (value.type === 'unknown') {
     inlineDisplay = value.value
   } else if (value.type === 'error') {
     inlineDisplay = `Error: ${value.error}`
   } else if (value.type === 'empty') {
-    inlineDisplay = <span className="text-coffee-600">{EM_DASH}</span>
+    inlineDisplay = <span className="text-coffee-400 text-xs">{EM_DASH}</span>
   }
 
   if (topLevel) {
@@ -117,15 +113,10 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
     )
   }
 
-  const nameNode = name ? (
-    /* Render the field name as a value so it can be, e.g., an address.     *
-     * Use topLevel=true to avoid the surrounding <li>.                     */
-    <FieldValueDisplay value={name} topLevel />
-  ) : null
+  const nameNode = getNameNode(name, index)
 
-  /* ──────────────────────────────── */
   return (
-    <li className="text-sm">
+    <li className="text-xs leading-5">
       {nameNode && (
         <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-2">
           {nameNode}
@@ -137,3 +128,24 @@ export const FieldValueDisplay = memo(function FieldValueDisplay({
     </li>
   )
 })
+
+function getNameNode(name: FieldValue | undefined, index: number | undefined) {
+  if (name?.type === 'string') {
+    return (
+      <span className="font-medium font-mono text-coffee-300 text-xs">
+        {name.value}:
+      </span>
+    )
+  }
+  if (name) {
+    return <FieldValueDisplay value={name} topLevel />
+  }
+  if (index !== undefined) {
+    return (
+      <span className="select-none font-mono text-coffee-400 text-xs tabular-nums">
+        {index}
+      </span>
+    )
+  }
+  return null
+}

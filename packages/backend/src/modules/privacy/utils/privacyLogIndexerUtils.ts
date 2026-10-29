@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import type { BlockProvider, LogsProvider } from '@l2beat/shared'
+import type { BlockProvider, IRpcClient, LogsProvider } from '@l2beat/shared'
 import {
   assert,
   type EthereumAddress,
@@ -8,8 +8,13 @@ import {
   UnixTime,
   unique,
 } from '@l2beat/shared-pure'
+import chunk from 'lodash/chunk'
 import type { Configuration } from '../../../tools/uif/multi/types'
-import type { PrivacyLogTopicFilter } from '../types'
+import type { PrivacyLogTopicFilter, PrivacyRpcContext } from '../types'
+import { ReceiptLogCache } from './ReceiptLogCache'
+
+// Receipt-based extractors make several RPC requests per log.
+const EXTRACTION_BATCH_SIZE = 20
 
 interface PrivacyLogIndexerConfig {
   address: EthereumAddress
@@ -85,6 +90,32 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
   }
 
   return matches
+}
+
+/**
+ * Runs `extract` over the matches a batch at a time, with one context shared
+ * by the whole update, and drops the matches it returns undefined for.
+ */
+export async function extractPrivacyLogMatches<
+  T extends PrivacyLogIndexerConfig,
+  R,
+>(
+  matches: PrivacyLogMatch<T>[],
+  rpc: IRpcClient,
+  extract: (
+    match: PrivacyLogMatch<T>,
+    context: PrivacyRpcContext,
+  ) => Promise<R | undefined>,
+): Promise<R[]> {
+  const context = { rpc, receipts: new ReceiptLogCache(rpc) }
+  const results: R[] = []
+  for (const batch of chunk(matches, EXTRACTION_BATCH_SIZE)) {
+    const extracted = await Promise.all(
+      batch.map((match) => extract(match, context)),
+    )
+    results.push(...extracted.filter((result) => result !== undefined))
+  }
+  return results
 }
 
 function groupByTopicPositions<T extends PrivacyLogIndexerConfig>(

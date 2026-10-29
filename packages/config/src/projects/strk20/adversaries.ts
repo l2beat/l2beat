@@ -9,6 +9,9 @@ const SNP =
 // SDK release PRIVACY-0.14.3-RC.8.
 const SDK =
   'https://github.com/starkware-libs/starknet-privacy/blob/fcc7c90f544ceb08621c32616bde29f1fdcbeb54/sdk/src/'
+// Bramble v0.10.7, whose store build matches a rebuild of this commit.
+const BRAMBLE =
+  'https://github.com/starknet-innovation/bramble/blob/d90222a2653c997a5cf8d8c6433df5ea10c16112/'
 const WALLET_API =
   'https://github.com/starknet-io/types-js/blob/0b483f51f4bc33c7253b209a25136d9d6ec1bc41/src/wallet-api/methods.ts'
 const POOL =
@@ -26,7 +29,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
         "Transfers inside the pool are encrypted, but the first payment to each new contact writes the recipient's address in cleartext.",
       exposureContinued: `${S.entryExitPublic()} The fee payment names the token the user pays it in. DeFi actions name their target contract, and a shadow account shows its funding, calls and positions. A new account must be funded publicly before it can receive privately.`,
       advice:
-        'Submit every pool action through a paymaster and pay its fee in the most common token. Treat the first payment to a new contact, and any DeFi action, as public.',
+        'Submit every pool action through a paymaster. Treat the first payment to a new contact, and any DeFi action, as public.',
       interior: {
         sender: 'private',
         recipient: {
@@ -36,7 +39,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
         amount: 'private',
         asset: {
           verdict: 'atRisk',
-          note: 'The fee payment names the token; DeFi actions name the target contract.',
+          note: 'Bramble pays the relay fee in the token sent when it can price it, so the fee names that token. DeFi actions name the target contract.',
         },
         linkage: 'private',
       },
@@ -58,7 +61,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         'The set of active users is small and split further by token and by fee token.',
       exposureContinued: `A channel opened in the same transaction as a deposit ties the two together, and most withdrawal addresses have also deposited. ${S.walletFingerprint('paymaster')}`,
-      advice: `Open channels in a transaction without a deposit, pay fees in the most common token, and withdraw uneven amounts that match no deposit. ${S.freshExit}`,
+      advice: `Open channels in a transaction without a deposit, and withdraw uneven amounts that match no deposit. ${S.freshExit}`,
       interior: {
         sender: {
           verdict: 'atRisk',
@@ -82,36 +85,38 @@ export const strk20Adversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'warning',
+      sentiment: 'good',
       exposureShort:
-        'Ready and Xverse are closed source, so what they send to third parties is up to their makers and can change at any time.',
+        "Every pool request goes through Starknet Holdings' gateway, so AVNU and StarkWare's discovery service see only the gateway.",
       exposureContinued:
-        'Today both wallets send each action to their own servers for proving and note discovery. The paymaster receives the finished transaction before broadcast.',
-      advice:
-        "Use a client built on the open SDK with the user's own prover and note discovery, and turn on its oblivious relay.",
+        'The gateway answers over Tor, and Bramble runs only in Chromium, not in Tor Browser.',
+      advice: 'Run Bramble with all traffic through Tor or NymVPN.',
       interior: {
-        sender: 'unverifiable',
-        recipient: 'unverifiable',
-        amount: 'unverifiable',
-        asset: 'atRisk',
-        linkage: 'unverifiable',
+        sender: 'private',
+        recipient: {
+          verdict: 'exposed',
+          note: 'Opening a channel writes the recipient address in cleartext; later transfers do not.',
+        },
+        amount: 'private',
+        asset: {
+          verdict: 'atRisk',
+          note: 'Each private balance check sends CoinGecko every privately held token except STRK.',
+        },
+        linkage: {
+          verdict: 'atRisk',
+          note: "Private only over Tor or NymVPN and for common tokens, since CoinGecko's requests single out holders of rare ones.",
+        },
       },
       sources: [
         {
-          title: 'Ready extension (proving and discovery on Ready servers)',
-          url: 'https://chromewebstore.google.com/detail/dlcobpjiigpikoobohmabehhmhfoodbb',
+          title: "Default routes go through the operator's gateway",
+          url: BRAMBLE + 'packages/features/privacy/src/config.ts#L17-L19',
         },
         {
-          title: 'Xverse extension (proving and discovery on Xverse servers)',
-          url: 'https://chromewebstore.google.com/detail/idnnbdplmphpflfnlkomgpfbpcgelopg',
-        },
-        {
-          title: 'The SDK takes prover and discovery endpoints from the client',
-          url: SDK + 'factory.ts#L45-L62',
-        },
-        {
-          title: 'Oblivious relay is an option of the proving client',
-          url: SDK + 'internal/proving-service-provider.ts#L73-L80',
+          title: 'Token prices come from CoinGecko',
+          url:
+            BRAMBLE +
+            'packages/features/portfolio/src/tokens/prices-feed.ts#L22',
         },
       ],
     },
@@ -120,7 +125,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay.",
       exposureContinued:
-        "The wallet's prover receives the user's viewing key with every action, and for most Ready accounts Ready's servers create that key. Apps that drive a shadow account or a swap through the pool get the user's main address from the wallet connection. The holder of the screener key can block any screened depositor.",
+        "Starknet Holdings' gateway gets the account and viewing key at every unlock, and each proof carries the viewing key. Apps that drive a shadow account or a swap through the pool get the user's main address from the wallet connection. The holder of the screener key can block any screened depositor.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -132,6 +137,10 @@ export const strk20Adversaries = definePrivacyAdversaries({
         {
           title: 'Viewing key escrowed to the auditor key onchain',
           url: SNP + 'packages/privacy/src/events.cairo#L5-L13',
+        },
+        {
+          title: "Default routes go through the operator's gateway",
+          url: BRAMBLE + 'packages/features/privacy/src/config.ts#L96-L104',
         },
         {
           title: 'Proving request carries the viewing key',
@@ -151,8 +160,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       exposureShort:
         'The proofs rest only on hashes, the encryption on elliptic curves.',
-      exposureContinued:
-        'Channel keys, note contents and the auditor escrow all use this encryption. Whoever breaks elliptic-curve cryptography recovers the auditor key from its onchain public key, and with it every escrowed viewing key and the whole history.',
+      exposureContinued: `Channel keys, note contents and the auditor escrow all use this encryption. Whoever breaks elliptic-curve cryptography recovers the auditor key from its onchain public key, and with it every escrowed viewing key and the whole history. ${S.walletSignatureAccounts()}`,
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

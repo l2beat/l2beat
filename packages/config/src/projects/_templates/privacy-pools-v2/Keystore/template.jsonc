@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Keystore",
+  "critical": true,
+  "category": "core",
+  "description": "Account registry of Privacy Pools v2: one leaf per account with its nullifying key hash and auth policy, plus an optional X25519 viewing public key.",
+  "ignoreInWatchMode": ["currentRoot"],
+  "ignoreMethods": ["isKnownRoot", "previousRoots", "proxiableUUID"],
+  "fields": {
+    "keystoreRootLiveness": {
+      "description": "Seconds a superseded keystore root stays valid for proofs.",
+      "severity": "MEDIUM"
+    },
+    "maxKeystoreTreeSize": {
+      "description": "Capacity of the keystore tree in accounts.",
+      "severity": "LOW"
+    }
+  }
+}

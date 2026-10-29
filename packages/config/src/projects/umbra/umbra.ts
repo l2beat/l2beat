@@ -113,6 +113,15 @@ export const umbra: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
+    referenceApp: {
+      name: 'Umbra app',
+      url: 'https://app.umbra.cash',
+      since: '2026-09-16',
+      source: {
+        repository: 'https://github.com/ScopeLift/umbra-protocol',
+        commit: '947c4f3b9b89f6cf5d69b2d43d3cffec673da655',
+      },
+    },
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
     anonymitySet: {
@@ -186,10 +195,6 @@ export const umbra: BaseProject = {
       sentiment: 'good',
       points: [
         'A small, immutable, externally audited contract set with no proof system and no trusted setup.',
-        'Umbra Cash main contract is well-ossified: it has been live for a long time without security incidents.',
-      ],
-      missing: [
-        'Stealth addresses rely on elliptic-curve key derivation, so they are not quantum-resistant.',
       ],
     },
   },

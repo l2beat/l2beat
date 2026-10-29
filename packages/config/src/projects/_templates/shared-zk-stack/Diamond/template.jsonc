@@ -73,7 +73,9 @@
         }
       ]
     },
+    // role holder: the ValidatorTimelock and its delay are judged on their own
     "validators": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "zksynceraValidators"
       },

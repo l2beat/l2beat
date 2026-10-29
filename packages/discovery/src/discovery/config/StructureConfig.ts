@@ -53,6 +53,7 @@ export const ManualProxyType = v.enum([
   'call implementation proxy',
   'zkSync Lite proxy',
   'zkLighter proxy',
+  'UpgradeGatekeeper proxy',
   'ZkLink proxy',
   'zkSpace proxy',
   'Eternal Storage proxy',

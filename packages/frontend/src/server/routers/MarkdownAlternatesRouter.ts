@@ -101,7 +101,7 @@ const LIST_PAGE_DOCUMENTS: Record<
     summary:
       'Cross-chain protocols tracked by L2BEAT, with their type and the bridge types they use.',
     notes:
-      'Token pages live at /interop/tokens/{id}/{issuer}/{symbol}, where {id} is case-sensitive and alone identifies the token. Token ids come from the database, so they are not listed here: take them from the token links on the protocol pages.',
+      'Token pages live at /tokens/{id}/{issuer}/{symbol}, where {id} is case-sensitive and alone identifies the token. Token ids come from the database, so they are not listed here: take them from the token links on the protocol pages.',
     getSections: getInteropListSections,
   },
   '/defi/summary': {

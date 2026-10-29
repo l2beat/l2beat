@@ -1,5 +1,6 @@
 import express from 'express'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
+import { isChainProjectSlug } from '~/server/features/chains/getChainProjects'
 
 export function createLegacyPathsRouter() {
   const router = express.Router()
@@ -14,7 +15,11 @@ export function createLegacyPathsRouter() {
     (_req, _res, next) => next('router'),
   )
 
-  router.get('/projects/:name', (req, res) => {
+  router.get('/projects/:name', async (req, res, next) => {
+    if (await isChainProjectSlug(req.params.name)) {
+      next('router')
+      return
+    }
     res.redirect(301, `/layer2s/projects/${req.params.name}`)
   })
 
@@ -79,6 +84,17 @@ export function createLegacyPathsRouter() {
     // or a scheme), so the user-provided remainder cannot redirect off-site.
     if (!target.startsWith('/layer2s/')) {
       res.redirect(301, '/layer2s/summary')
+      return
+    }
+    res.redirect(301, target)
+  })
+
+  router.get('/interop/tokens/*splat', (req, res) => {
+    // Case-insensitive like Express routing, so every matched URL is rewritten.
+    const target = req.originalUrl.replace(/^\/interop\/tokens\//i, '/tokens/')
+    // Same-origin check as in the /scaling redirect above.
+    if (!target.startsWith('/tokens/')) {
+      res.redirect(301, '/tokens')
       return
     }
     res.redirect(301, target)

@@ -20,10 +20,7 @@ import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
 import type { BaseProject } from '../types'
-import {
-  areContractsDiscoveryDriven,
-  arePermissionsDiscoveryDriven,
-} from '../utils/discoveryDriven'
+import { hasEoaWithUpgradePermissions } from './getEoaRedWarning'
 import { getProjects } from './getProjects'
 import { layer2s, milestonesLayer2s } from './layer2s'
 import { layer3s } from './layer3s'
@@ -530,6 +527,88 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
+    // Risk summaries share one layout, so readers can compare projects item by item.
+    it('every risk summary follows the shared layout', () => {
+      const headings = [
+        'Funds can be stolen if',
+        'Funds can be lost if',
+        'Funds can be frozen if',
+        'Use can be stopped if',
+        'Privacy can be lost if',
+      ]
+      const cellNames: Record<string, string> = {
+        publicObserver: 'public observer',
+        chainAnalyst: 'chain analyst',
+        networkObserver: 'network observer',
+        privilegedInsider: 'privileged insider',
+        futureAdversary: 'future adversary',
+      }
+      const sections = [
+        'upgrades-and-governance',
+        'trusted-setups',
+        'contracts',
+        'permissions',
+        'verifiers',
+      ]
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const summary = privacyInfo.riskSummary
+        if (!summary) continue
+
+        const found = [...summary.matchAll(/^## (.+)$/gm)].map((m) => m[1])
+        const order = found.map((heading) => headings.indexOf(heading))
+        if (order.some((i, k) => i === -1 || (k > 0 && i <= order[k - 1]))) {
+          problems.push(`${project.id}: headings ${found.join(' > ')}`)
+        }
+        if (/^## .*\n[ \t]*\n/m.test(summary)) {
+          problems.push(`${project.id}: blank line after a heading`)
+        }
+
+        const pointed = new Set<string>()
+        for (const [, item] of summary.matchAll(/^\d+\. (.+)$/gm)) {
+          if (!item.endsWith('.')) {
+            problems.push(`${project.id}: no final dot: ${item}`)
+          }
+          const words = item
+            .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+            .split(/\s+/).length
+          if (words > 25) {
+            problems.push(`${project.id}: ${words} words: ${item}`)
+          }
+          const see = item.match(/\(see (.+)\)\.$/)?.[1]
+          if (!see) continue
+          const link = see.match(/^\[[^\]]+\]\(#([a-z-]+)\)$/)
+          if (link) {
+            if (!sections.includes(link[1])) {
+              problems.push(`${project.id}: link to missing section ${see}`)
+            }
+            continue
+          }
+          for (const name of see.split(' and ')) {
+            if (!Object.values(cellNames).includes(name)) {
+              problems.push(`${project.id}: unknown pointer ${name}`)
+            }
+            pointed.add(name)
+          }
+        }
+
+        for (const [id, cell] of Object.entries(
+          privacyInfo.adversaries?.cells ?? {},
+        )) {
+          if (cell.sentiment !== 'good' && !pointed.has(cellNames[id])) {
+            problems.push(`${project.id}: no item points at ${cellNames[id]}`)
+          }
+        }
+        if (
+          (project.zkCatalogInfo?.trustedSetups?.length ?? 0) > 0 &&
+          !summary.includes('](#trusted-setups)')
+        ) {
+          problems.push(`${project.id}: trusted setup not linked`)
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
     // The tooltip shows the short description alone, so a second sentence would read as cut off.
     it('every adversary short description is one sentence', () => {
       const problems: string[] = []
@@ -538,6 +617,41 @@ describe('getProjects', () => {
         for (const [adversaryId, cell] of cells) {
           if (/[.!?]\s/.test(cell.exposureShort)) {
             problems.push(`${project.id} ${adversaryId}`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    // The page prints these dates and hashes as they are.
+    it('every reference app has valid dates and a full commit hash', () => {
+      // Round-trip, since Date.parse rolls 2026-02-30 over to March.
+      const isDay = (value: string) => {
+        const time = Date.parse(value)
+        return (
+          !Number.isNaN(time) &&
+          new Date(time).toISOString().slice(0, 10) === value
+        )
+      }
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const app = privacyInfo.referenceApp
+        if (!app) continue
+        if (!isDay(app.since)) {
+          problems.push(`${project.id}: since ${app.since}`)
+        }
+        if (app.source && !/^[0-9a-f]{40}$/.test(app.source.commit)) {
+          problems.push(`${project.id}: commit ${app.source.commit}`)
+        }
+        if (app.checked !== undefined && !isDay(app.checked)) {
+          problems.push(`${project.id}: checked ${app.checked}`)
+        }
+        if (app.source && (app.checked !== undefined || app.build)) {
+          problems.push(`${project.id}: an open app pins its commit only`)
+        }
+        for (const checkedApp of app.checkedApps ?? []) {
+          if (checkedApp.checked !== undefined && !isDay(checkedApp.checked)) {
+            problems.push(`${project.id}: ${checkedApp.name} checked`)
           }
         }
       }
@@ -972,17 +1086,21 @@ describe('getProjects', () => {
   })
 
   // New projects are expected to be discovery driven. Read the comment in constants.ts
-  it('all new projects are discovery driven', () => {
+  it('all new projects with discovery are discovery driven', () => {
     const notDiscoveryDriven = projects
-      .filter((p) => p.scalingInfo && p.archivedAt === undefined)
+      .filter((p) => p.discoveryInfo && p.archivedAt === undefined)
       .filter((p) => !NON_DISCOVERY_DRIVEN_PROJECTS.includes(p.id.toString()))
-      .filter(
-        (p) =>
-          !arePermissionsDiscoveryDriven(p.permissions) ||
-          !areContractsDiscoveryDriven(p.contracts),
-      )
+      .filter((p) => !p.discoveryInfo?.isDiscoDriven)
       .map((p) => p.id)
     expect(notDiscoveryDriven).toEqual([])
+  })
+
+  it('every project with discovery shows an EOA upgrade red warning when discovery has one', () => {
+    const missing = projects
+      .filter((p) => p.discoveryInfo && hasEoaWithUpgradePermissions(p.id))
+      .filter((p) => p.statuses?.redWarning === undefined)
+      .map((p) => p.id)
+    expect(missing).toEqual([])
   })
 
   describe('badges', () => {

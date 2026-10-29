@@ -58,7 +58,6 @@ export function TvsCompareChart({
       formatTooltipValue={(value) => formatCurrency(value, unit)}
       renderTooltipTimestamp={(label) =>
         formatTimestamp(label, {
-          longMonthName: true,
           mode: 'datetime',
         })
       }

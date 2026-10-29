@@ -890,7 +890,7 @@
         "TEE_PROVER_REGISTRY": "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA",
         "version": "0.2.0"
       },
-      "fieldMeta": { "nullified": { "severity": "HIGH" } },
+      "fieldMeta": { "nullified": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228": "TEEVerifier"
       }
@@ -2608,7 +2608,7 @@
         "SP1_VERIFIER": "eth:0xdc32E228636273285Befa5F001dBB5142517C106",
         "version": "0.1.0"
       },
-      "fieldMeta": { "nullified": { "severity": "HIGH" } },
+      "fieldMeta": { "nullified": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xB88D95bDf6972508942d184866890c1834219B75": "ZkVerifier"
       }

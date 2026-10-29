@@ -26,11 +26,11 @@ Losing the note secret and latest signed balance that are saved by the app loses
 
 ### App
 
-The ratings assume OA Chat, a hosted browser app with public source and local build instructions. It fetches the whole note tree and proves in the browser. It relays inference through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build runs code beyond the public main branch, including analytics. zkapi-clientd is a local daemon with an OpenAI-compatible API. It asks the operator's indexer for the user's note path and reuses keys across requests, both of which can harm privacy.
+OA Chat is a hosted browser app with local build instructions. It fetches the whole note tree and proves in the browser. It relays inference and chain reads through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build runs code beyond the [public source](https://github.com/OpenAnonymity/oa-chat), including Google and passkey sign-in, analytics and a looser verifier check.
 
 ### Providers and verifier
 
-OpenRouter and the model provider can read prompts and responses and link requests under one key. Open Anonymity holds the OpenRouter accounts. A verifier running in an attestable Azure confidential container checks that OA's account has provider logging disabled. Its build reproduces from source and matches the attested measurement, see the verification steps. Both clients pin only the verifier's address, so the check only holds when the user verifies it personally.
+OpenRouter and the model provider can read prompts and responses and link requests under one key. Open Anonymity holds the OpenRouter accounts. A verifier running in an attestable Azure confidential container checks that OA's account has provider logging disabled. Its build reproduces from source and matches the attested measurement, see the verification steps. OA Chat pins only the verifier's address, so the check only holds when the user verifies it personally. When the verifier cannot be reached, the hosted app still accepts a key signed by OA's station and shows "Key not verified".
 
 ### Exits
 

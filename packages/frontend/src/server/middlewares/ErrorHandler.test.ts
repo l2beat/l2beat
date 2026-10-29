@@ -5,8 +5,8 @@ import express from 'express'
 import { clientErrorStatus, ErrorHandler } from './ErrorHandler'
 
 const MALFORMED_SCAN_PATHS = [
-  '/interop/tokens/4j9emc/ethena/susde%C0%A7%C0%A2%252527%252522%5C%27%5C%22',
-  '/interop/tokens/4j9emc%C0%A7%C0%A2%252527%252522%5C%27%5C%22/ethena/susde',
+  '/tokens/4j9emc/ethena/susde%C0%A7%C0%A2%252527%252522%5C%27%5C%22',
+  '/tokens/4j9emc%C0%A7%C0%A2%252527%252522%5C%27%5C%22/ethena/susde',
   '/layer2s/projects/adi%C0%A7%C0%A2%252527%252522%5C%27%5C%22/',
   '/layer2s/projects/polygon-pos%C0%A7%C0%A2%252527%252522%5C%27%5C%22?protocols=polygon-pos',
 ]
@@ -76,10 +76,10 @@ describe(clientErrorStatus.name, () => {
 
 async function withServer(test: (baseUrl: string) => Promise<void>) {
   const app = express()
-  app.get('/interop/tokens/:chain/:protocol/:token', (_, res) => {
+  app.get('/tokens/:chain/:protocol/:token', (_, res) => {
     res.status(200).send('ok')
   })
-  app.get('/interop/tokens/:chain/:token', (_, res) => {
+  app.get('/tokens/:chain/:token', (_, res) => {
     res.status(200).send('ok')
   })
   app.get('/layer2s/projects/:project', (_, res) => {

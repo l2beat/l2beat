@@ -68,11 +68,13 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'bad',
+      sentiment: 'warning',
       exposureShort:
-        'The app is closed source with no open alternative, so what it sends to third parties is up to Cloaked and can change at any time.',
+        "No third party sees both the user's account and a receiving address, except the RPC of a payer who looks up the user's name.",
       exposureContinued:
-        "Today's app sends spends, quotes and balance reads to Cloaked's own API. Linking the user's own ENS name reads it through Alchemy under Cloaked's key, and wallet logins go through WalletConnect. A payer who looks up the user's name through a third-party RPC shows it that name and the new address.",
+        "Alchemy, under Cloaked's key, receives the user's own ENS name when one is linked. The app contacts Reown, WalletConnect's maker, on every load with Cloaked's project id only. An email login hands the email to Web3Auth, whose key then derives the user's secrets.",
+      advice:
+        'Share a payment link or a fresh address instead of the name, and log in with a passkey rather than email.',
       sources: [
         {
           title: 'Service providers: RPC, hosting and wallet connection',

@@ -72,14 +72,14 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'bad',
       exposureShort:
-        "The SDK's core is closed source with no open alternative, so what it sends, and where, is up to the operator and can change with any release.",
+        "Alchemy, under the operator's key, sees the signed-in wallet in the session that submits each withdrawal, so it can pair them by timing.",
       exposureContinued:
-        "Today, anyone on the user's network path sees their wallet deposits and app contacts with the operator, and can match both to the chain. The SDK has no Tor or proxy setting, and the operator's server tells it which endpoints to use.",
+        "The hosted wallet works over Tor but has no RPC setting to leave Alchemy out. Its key core runs in an iframe without network access and reaches only the operator's server and Alchemy through the page. Other third parties get token ids or nothing.",
       interior: {
         ...INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only over Tor, which the SDK lacks.',
+          note: 'Private only on a busy pool, since Alchemy sees the wallet in each withdrawal session.',
         },
       },
       sources: [

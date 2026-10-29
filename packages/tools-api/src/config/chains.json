@@ -301,5 +301,18 @@
       "symbol": "ETH",
       "decimals": 18
     }
+  },
+  {
+    "name": "Taiko Alethia",
+    "discoveryName": "taiko",
+    "shortName": "taiko",
+    "chainId": 167000,
+    "etherscanApi": true,
+    "explorerUrl": "https://taikoscan.io",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    }
   }
 ]

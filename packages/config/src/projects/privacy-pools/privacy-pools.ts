@@ -66,7 +66,7 @@ const feeSummary = formatPrivacyPoolsFeeSummary()
 export const privacyPools: BaseProject = {
   id: ProjectId('privacy-pools'),
   slug: 'privacy-pools',
-  name: 'Privacy Pools',
+  name: 'Privacy Pools v1',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-05-12')),
   discoveryInfo: getDiscoveryInfo([discovery]),
@@ -187,6 +187,34 @@ export const privacyPools: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
+    referenceApp: {
+      name: 'v1.privacypools.com',
+      url: 'https://v1.privacypools.com',
+      since: '2026-09-16',
+      source: {
+        repository: 'https://github.com/0xbow-io/privacy-pools-website',
+        commit: '7df411128f7a18a61a77f7a0371bf0b857969e2a',
+      },
+      checkedApps: [
+        {
+          name: 'Cloaked web app',
+          icon: 'cloaked',
+          finding:
+            'Its relay submits both the deposit and the withdrawal, and Cloaked keeps which belong together.',
+          fix: 'Track notes on the device and send withdrawals to a relayer with no tie to the Cloaked account.',
+          source: 'https://clkd.xyz/docs/privacy',
+          checked: '2026-10-27',
+        },
+        {
+          name: 'moneysurfer',
+          finding:
+            'Resumes each sync where its last run stopped, so the RPC can tie the deposit run to the withdrawal run across IPs.',
+          fix: "Start every sync at the pool's deployment block, as v1.privacypools.com does.",
+          source:
+            'https://github.com/microprivacy/moneysurfer/blob/36c0e82e3a6bd5c452806f9b32786208fb8aad55/src/v1/chain.ts#L458-L495',
+        },
+      ],
+    },
     trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),
     relayerTracking: {

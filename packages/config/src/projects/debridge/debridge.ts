@@ -5,6 +5,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -60,6 +61,7 @@ export const debridge: BaseProject = {
   name: 'deBridge',
   shortName: undefined,
   addedAt: UnixTime(1673362295),
+  discoveryInfo: getDiscoveryInfo([discovery]),
   // this is only the debridge messaging and token bridge
   interopConfig: {
     description: `deBridge is a message bridge and lock-and-mint token bridge. Cross-chain submissions are authorized by ECDSA signatures from a fixed validator set (${minConfirmations}-of-${validatorCount} on Ethereum) verified onchain; all core contracts are upgradable by a deBridge multisig without delay.`,

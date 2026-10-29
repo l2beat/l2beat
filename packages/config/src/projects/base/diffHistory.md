@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xb014cd6e694ec54707e4443698ca7526db6719a4
+
+# Diff at Sat, 24 Oct 2026 16:41:04 GMT:
+
+- id: a8812653
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@466c0ed155939c67d1118322a0272a7923e178e7 block: 1791538610
+- current timestamp: 1791538610
+
+## Description
+
+TEEVerifier and ZkVerifier `nullified` is MEDIUM: a one-way kill switch.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791538610 (main branch discovery), not current.
+
+```diff
+    contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [base/TEEVerifier] {
+    +++ description: Stateless verifier of TEE proofs. Recovers an ECDSA signature over the journal and checks that the signer is registered in the eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA with the expected enclave image hash. Can be permanently nullified.
+      fieldMeta.nullified.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ZkVerifier (eth:0xB88D95bDf6972508942d184866890c1834219B75) [base/ZkVerifier] {
+    +++ description: Thin router that forwards SP1 ZK proof verification to the eth:0xdc32E228636273285Befa5F001dBB5142517C106. Can be permanently nullified.
+      fieldMeta.nullified.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xff22924d127c3d6ba9c48fff2b7fc7ee7e1de55c
 
 # Diff at Tue, 20 Oct 2026 12:39:54 GMT:

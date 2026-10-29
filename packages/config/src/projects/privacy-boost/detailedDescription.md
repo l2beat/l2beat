@@ -15,11 +15,11 @@ Deposits become notes whose Poseidon2 commitments enter an onchain Merkle tree, 
 
 ### Keys
 
-The closed SDK can derive the private account's keys from a wallet signature, which links that wallet to the account. The hosted wallet can upload a backup of the private keys to the operator. Accounts approve spends with registered keys or with onchain spend approvals. Both are leaves of an auth Merkle tree in the AuthRegistry contract. Epoch proofs may use a tree root up to {{epochAuthStaleness}} old, so a revoked key or approval stays usable that long.
+The closed SDK can derive the private account's keys from a wallet signature, which links that wallet to the account. The hosted wallet uploads a backup of the private keys to the operator by default, encrypted with a key from one wallet signature, which restores them in any browser. Accounts approve spends with registered keys or with onchain spend approvals. Both are leaves of an auth Merkle tree in the AuthRegistry contract. Epoch proofs may use a tree root up to {{epochAuthStaleness}} old, so a revoked key or approval stays usable that long.
 
 ### App
 
-Apps integrate the Privacy Boost SDK, whose core ships as closed-source WebAssembly and takes its endpoints from the operator's server.
+Apps integrate the Privacy Boost SDK, whose core is closed source. The operator's hosted wallet is the only public app. It runs that core as WebAssembly and reads the chain through Alchemy under the operator's key.
 
 ### Exits
 

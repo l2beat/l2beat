@@ -4,8 +4,9 @@
   "critical": true,
   "description": "Stateless verifier of TEE proofs. Recovers an ECDSA signature over the journal and checks that the signer is registered in the {{TEE_PROVER_REGISTRY}} with the expected enclave image hash. Can be permanently nullified.",
   "fields": {
+    // MEDIUM: a one-way kill switch, the other proof type then resolves alone.
     "nullified": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }
