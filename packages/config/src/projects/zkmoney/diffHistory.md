@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x3a9fcb1983a6f73ddaf3271e870660355d7198d2
+
+# Diff at Tue, 27 Oct 2026 16:38:01 GMT:
+
+- id: 581eef1c
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1793012002
+- current timestamp: 1793012002
+
+## Description
+
+Flattener now keeps file-level using-for directives whose target type is defined in another file. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793012002 (main branch discovery), not current.
+
+```diff
+    contract ZkMoneyPortal_sUSDS (eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      sourceHashes.0:
+-        "0x7020e3729f66f6c8ddada17eeb82b33ae8b7f623c0ffb3bb6c921bf966a7f6a8"
++        "0xd99b45ced6473f41ba909b533b1096d83b7d9633cee20987ca077ce8eb389be6"
+    }
+```
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.
+      sourceHashes.0:
+-        "0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e"
++        "0x4d89fd312c737814de5e81632ef9671e232ec8faa7bbbfbba98e7c9c2787b25b"
+    }
+```
+
 Generated with discovered.json: 0x0aac9bcb51fe859820c16898eabfa572cc05fc0d
 
 # Diff at Mon, 26 Oct 2026 10:54:45 GMT:
