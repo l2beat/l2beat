@@ -8,7 +8,10 @@ import {
   computeLiquidStakingCharts,
   YIELD_WINDOW_DAYS,
 } from './computeLiquidStakingCharts'
-import { getLiquidStakingProjects } from './getLiquidStakingProjects'
+import {
+  getLiquidStakingProjects,
+  type LiquidStakingProject,
+} from './getLiquidStakingProjects'
 
 export const LiquidStakingChartsParams = v.object({
   range: ChartRange,
@@ -26,6 +29,7 @@ const FIRST_DAY =
   UnixTime.fromDate(new Date('2024-01-01T00:00:00Z')) +
   YIELD_WINDOW_DAYS * UnixTime.DAY
 
+/** Both charts, for the latest values a page shows next to them. */
 export interface LiquidStakingCharts {
   yield: LiquidStakingYieldPoint[]
   costOfExit: LiquidStakingChartPoint[]
@@ -44,29 +48,53 @@ export interface LiquidStakingYieldPoint extends LiquidStakingChartPoint {
   ethStaked: number | null
 }
 
-/**
- * Yields are annualised fractions over the previous 30 days. Cost of exit is
- * in days of yield, by the cheaper of the queue and the market.
- */
-export async function getLiquidStakingCharts(
+/** Annualised fractions over the previous 30 days. */
+export async function getLiquidStakingYieldChart(
+  params: LiquidStakingChartsParams,
+): Promise<LiquidStakingYieldPoint[]> {
+  const projects = await getLiquidStakingProjects()
+  const projectIds = projects.map((project) => project.id)
+  if (env.MOCK) {
+    const days = getMockDays(params)
+    const yields = projectIds.map(() => randomWalk(days.length, 0.03, 0.4))
+    const network = randomWalk(days.length, 0.032, 0.2)
+    const ethStaked = randomWalk(days.length, 34_000_000, 0.05)
+    return days.map((timestamp, i) => ({
+      timestamp,
+      projects: byProject(projectIds, yields, i),
+      network: network[i] ?? null,
+      ethStaked: ethStaked[i] ?? null,
+    }))
+  }
+  return (await getCharts(projects, params)).yield
+}
+
+/** In days of yield, by the cheaper of the queue and the market. */
+export async function getLiquidStakingCostOfExitChart(
+  params: LiquidStakingChartsParams,
+): Promise<LiquidStakingChartPoint[]> {
+  const projects = await getLiquidStakingProjects()
+  const projectIds = projects.map((project) => project.id)
+  if (env.MOCK) {
+    const days = getMockDays(params)
+    const costOfExit = projectIds.map(() => randomWalk(days.length, 3, 1))
+    return days.map((timestamp, i) => ({
+      timestamp,
+      projects: byProject(projectIds, costOfExit, i),
+    }))
+  }
+  return (await getCharts(projects, params)).costOfExit
+}
+
+async function getCharts(
+  projects: LiquidStakingProject[],
   params: LiquidStakingChartsParams,
 ): Promise<LiquidStakingCharts> {
-  const projects = await getLiquidStakingProjects()
-  if (env.MOCK) {
-    return getMockLiquidStakingCharts(
-      params,
-      projects.map((project) => project.id),
-    )
-  }
-
   const to = UnixTime.toStartOf(UnixTime(params.range[1]), 'day')
   const from = Math.max(params.range[0] ?? FIRST_DAY, FIRST_DAY)
   // The first day's yields look back a window; its discount, a week.
   const lookback = UnixTime(from - YIELD_WINDOW_DAYS * UnixTime.DAY)
-  const priceIds = [
-    'ethereum',
-    ...projects.map((p) => p.liquidStakingConfig.priceId),
-  ]
+  const priceIds = ['ethereum', ...projects.map((p) => p.liquidStaking.priceId)]
 
   const db = getDb()
   const [snapshots, network, prices] = await Promise.all([
@@ -97,8 +125,8 @@ export async function getLiquidStakingCharts(
     days: generateTimestamps([from, to], 'day'),
     projects: projects.map((p) => ({
       id: p.id,
-      type: p.liquidStakingConfig.contracts.type,
-      priceId: p.liquidStakingConfig.priceId,
+      type: p.liquidStaking.contracts.type,
+      priceId: p.liquidStaking.priceId,
     })),
     snapshots,
     network,
@@ -106,31 +134,10 @@ export async function getLiquidStakingCharts(
   })
 }
 
-function getMockLiquidStakingCharts(
-  params: LiquidStakingChartsParams,
-  projectIds: string[],
-): LiquidStakingCharts {
+function getMockDays(params: LiquidStakingChartsParams) {
   const to = UnixTime.toStartOf(UnixTime(params.range[1]), 'day')
   const from = params.range[0] ?? to - 1000 * UnixTime.DAY
-  const timestamps = generateTimestamps([from, to], 'day')
-
-  const yields = projectIds.map(() => randomWalk(timestamps.length, 0.03, 0.4))
-  const network = randomWalk(timestamps.length, 0.032, 0.2)
-  const ethStaked = randomWalk(timestamps.length, 34_000_000, 0.05)
-  const costOfExit = projectIds.map(() => randomWalk(timestamps.length, 3, 1))
-
-  return {
-    yield: timestamps.map((timestamp, i) => ({
-      timestamp,
-      projects: byProject(projectIds, yields, i),
-      network: network[i] ?? null,
-      ethStaked: ethStaked[i] ?? null,
-    })),
-    costOfExit: timestamps.map((timestamp, i) => ({
-      timestamp,
-      projects: byProject(projectIds, costOfExit, i),
-    })),
-  }
+  return generateTimestamps([from, to], 'day')
 }
 
 function byProject(projectIds: string[], series: number[][], index: number) {

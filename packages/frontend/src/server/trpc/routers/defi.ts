@@ -3,7 +3,8 @@ import {
   getDefiTvlChart,
 } from '~/server/features/defi/getDefiTvlChart'
 import {
-  getLiquidStakingCharts,
+  getLiquidStakingCostOfExitChart,
+  getLiquidStakingYieldChart,
   LiquidStakingChartsParams,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingCharts'
 import { procedure, router } from '../trpc'
@@ -12,7 +13,10 @@ export const defiRouter = router({
   tvlChart: procedure
     .input(DefiTvlChartParams)
     .query(({ input }) => getDefiTvlChart(input)),
-  liquidStakingCharts: procedure
+  liquidStakingYieldChart: procedure
     .input(LiquidStakingChartsParams)
-    .query(({ input }) => getLiquidStakingCharts(input)),
+    .query(({ input }) => getLiquidStakingYieldChart(input)),
+  liquidStakingCostOfExitChart: procedure
+    .input(LiquidStakingChartsParams)
+    .query(({ input }) => getLiquidStakingCostOfExitChart(input)),
 })

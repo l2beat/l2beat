@@ -97,56 +97,56 @@ export const wbeth: BaseProject = {
       ),
     ],
   },
-  liquidStakingConfig: {
+  liquidStaking: {
     priceId: 'wrapped-beacon-eth',
     contracts: {
       type: 'wbeth',
       wBETH: discovery.getContract('wBETH').address,
       unwrapToken: discovery.getContract('UnwrapTokenV1ETH').address,
     },
-  },
-  liquidStakingRisks: {
-    minting: {
-      value: 'Permissionless',
-      secondLine: 'swept by Binance',
-      sentiment: 'bad',
-      warning: {
-        value: `About 99% of ${symbol} was minted by Binance against exchange balances, with no ETH deposited onchain.`,
+    risks: {
+      minting: {
+        value: 'Permissionless',
+        secondLine: 'swept by Binance',
         sentiment: 'bad',
+        warning: {
+          value: `About 99% of ${symbol} was minted by Binance against exchange balances, with no ETH deposited onchain.`,
+          sentiment: 'bad',
+        },
+        description: `Anyone can deposit ETH for ${symbol}, but about 99% of supply was minted by Binance against exchange balances, with no ETH deposited onchain. A Binance key can move deposited ETH to Binance at will.`,
       },
-      description: `Anyone can deposit ETH for ${symbol}, but about 99% of supply was minted by Binance against exchange balances, with no ETH deposited onchain. A Binance key can move deposited ETH to Binance at will.`,
-    },
-    operators: {
-      value: 'Binance',
-      secondLine: 'no bond',
-      sentiment: 'bad',
-      description: `No contract tracks validators, balances or slashing. Binance says its validators back ${symbol}; whether losses pass to holders is Binance's policy, not code.`,
-    },
-    backing: {
-      value: 'Offchain custody',
-      secondLine: 'creds: Binance',
-      sentiment: 'bad',
-      description:
-        'Deposited ETH moves to a Binance wallet. The token contract holds about 0.04% of the ETH its supply represents; the rest is an exchange balance that cannot be checked onchain.',
-    },
-    oracle: {
-      value: '1 of 1',
-      secondLine: `daily · ≤${rateCapPercent}`,
-      sentiment: 'bad',
-      description: `One Binance key writes the rate. Each change, up or down, spends from an allowance of ${rateCapPercent} that refills over ${rateCapInterval}, so one update can move the rate by up to ${rateCapPercent}, and by up to ${rateCapPerIntervalPercent} over ${rateCapInterval}. The owner can switch the oracle and set any rate at once.`,
-    },
-    exit: {
-      value: 'Binance-funded',
-      secondLine: `${lockTimeDays} days · pausable`,
-      sentiment: 'bad',
-      description: `Burned ${symbol} is paid after a ${lockTimeDays}-day lock, only once Binance funds the queue. Binance keys can pause withdrawals or blacklist holders.`,
-    },
-    upgrades: {
-      value: 'Single EOA',
-      secondLine: 'no delay · no veto',
-      sentiment: 'bad',
-      description:
-        'A single key can replace the code of both contracts instantly. There is no multisig, timelock or governance.',
+      operators: {
+        value: 'Binance',
+        secondLine: 'no bond',
+        sentiment: 'bad',
+        description: `No contract tracks validators, balances or slashing. Binance says its validators back ${symbol}; whether losses pass to holders is Binance's policy, not code.`,
+      },
+      backing: {
+        value: 'Offchain custody',
+        secondLine: 'creds: Binance',
+        sentiment: 'bad',
+        description:
+          'Deposited ETH moves to a Binance wallet. The token contract holds about 0.04% of the ETH its supply represents; the rest is an exchange balance that cannot be checked onchain.',
+      },
+      oracle: {
+        value: '1 of 1',
+        secondLine: `daily · ≤${rateCapPercent}`,
+        sentiment: 'bad',
+        description: `One Binance key writes the rate. Each change, up or down, spends from an allowance of ${rateCapPercent} that refills over ${rateCapInterval}, so one update can move the rate by up to ${rateCapPercent}, and by up to ${rateCapPerIntervalPercent} over ${rateCapInterval}. The owner can switch the oracle and set any rate at once.`,
+      },
+      exit: {
+        value: 'Binance-funded',
+        secondLine: `${lockTimeDays} days · pausable`,
+        sentiment: 'bad',
+        description: `Burned ${symbol} is paid after a ${lockTimeDays}-day lock, only once Binance funds the queue. Binance keys can pause withdrawals or blacklist holders.`,
+      },
+      upgrades: {
+        value: 'Single EOA',
+        secondLine: 'no delay · no veto',
+        sentiment: 'bad',
+        description:
+          'A single key can replace the code of both contracts instantly. There is no multisig, timelock or governance.',
+      },
     },
   },
   // The contracts call no bridge, price feed or other protocol; they only call

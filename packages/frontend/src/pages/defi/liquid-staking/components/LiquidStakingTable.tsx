@@ -15,7 +15,7 @@ import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
-import { LIQUID_STAKING_METRICS } from '../liquidStakingMetrics'
+import { LIQUID_STAKING_METRICS, TVL_TOOLTIP } from '../liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquidStakingRisks'
 
 const columnHelper = createColumnHelper<LiquidStakingEntry>()
@@ -65,7 +65,7 @@ const columns = [
     sortUndefined: 'last',
     meta: {
       align: 'right',
-      tooltip: 'Total USD value of assets locked in the protocol.',
+      tooltip: TVL_TOOLTIP,
     },
   }),
   ...LIQUID_STAKING_METRICS.map(({ key, title, tooltip, format }) =>

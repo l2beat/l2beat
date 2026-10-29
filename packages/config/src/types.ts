@@ -257,7 +257,7 @@ export interface BaseProject {
   // defi data
   defiInfo?: ProjectDefiInfo
   /** Only on projects whose DeFi category is "Liquid Staking". */
-  liquidStakingRisks?: ProjectLiquidStakingRisks
+  liquidStaking?: ProjectLiquidStaking
 
   // external dependency data
   externalDependencies?: ProjectExternalDependency[]
@@ -279,7 +279,6 @@ export interface BaseProject {
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
   zkCatalogInfo?: ProjectZkCatalogInfo
-  liquidStakingConfig?: ProjectLiquidStakingConfig
 
   // discovery data
   permissions?: Record<string, ProjectPermissions>
@@ -1069,7 +1068,15 @@ export interface ProjectDefiRiskValue extends TableReadyValue {
   description: string
 }
 
-/** The row of the liquid staking risk comparison. */
+export interface ProjectLiquidStaking {
+  /** CoinGecko id of the token the exchange rate is for, priced by TVS. */
+  priceId: string
+  /** What the liquid staking indexer reads. */
+  contracts: ProjectLiquidStakingContracts
+  /** The row of the liquid staking risk comparison. */
+  risks: ProjectLiquidStakingRisks
+}
+
 export interface ProjectLiquidStakingRisks {
   /** Who can mint, what caps apply, and who routes deposited ETH to validators. */
   minting: ProjectDefiRiskValue
@@ -1898,12 +1905,6 @@ export interface HourActivityConfig {
 }
 
 export type LivenessOverwriteMode = 'no-data'
-
-export interface ProjectLiquidStakingConfig {
-  /** CoinGecko id of the token the exchange rate is for, priced by TVS. */
-  priceId: string
-  contracts: ProjectLiquidStakingContracts
-}
 
 /**
  * The contracts the liquid staking indexer reads every hour: the token's

@@ -358,15 +358,13 @@ describe('getProjects', () => {
     expect(missing).toEqual([])
   })
 
-  it('liquid staking risks and config are set exactly on liquid staking projects', () => {
+  it('liquid staking data is set exactly on liquid staking projects', () => {
     const mismatched = projects
-      .filter((p) => {
-        const isLiquidStaking = p.defiInfo?.category === 'Liquid Staking'
-        return (
-          isLiquidStaking !== (p.liquidStakingRisks !== undefined) ||
-          isLiquidStaking !== (p.liquidStakingConfig !== undefined)
-        )
-      })
+      .filter(
+        (p) =>
+          (p.defiInfo?.category === 'Liquid Staking') !==
+          (p.liquidStaking !== undefined),
+      )
       .map((p) => p.id)
     expect(mismatched).toEqual([])
   })

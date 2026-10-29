@@ -86,8 +86,11 @@ interface ChartProps {
 }
 
 function YieldChart({ projectSeries, defaultRange }: ChartProps) {
+  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = useChartsQuery(range)
+  const { data, isLoading } = useQuery(
+    trpc.defi.liquidStakingYieldChart.queryOptions({ range }),
+  )
 
   const series = useMemo(
     () => [
@@ -103,7 +106,7 @@ function YieldChart({ projectSeries, defaultRange }: ChartProps) {
   )
   const chartData = useMemo<LiquidStakingChartData | undefined>(
     () =>
-      data?.yield.map((point) => ({
+      data?.map((point) => ({
         timestamp: point.timestamp,
         ...point.projects,
         [NETWORK_KEY]: point.network,
@@ -138,12 +141,15 @@ function YieldChart({ projectSeries, defaultRange }: ChartProps) {
 }
 
 function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
+  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = useChartsQuery(range)
+  const { data, isLoading } = useQuery(
+    trpc.defi.liquidStakingCostOfExitChart.queryOptions({ range }),
+  )
 
   const chartData = useMemo<LiquidStakingChartData | undefined>(
     () =>
-      data?.costOfExit.map((point) => ({
+      data?.map((point) => ({
         timestamp: point.timestamp,
         ...point.projects,
       })),
@@ -171,12 +177,6 @@ function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
       />
     </ChartCard>
   )
-}
-
-/** Both charts read one query, so charts on the same range share a request. */
-function useChartsQuery(range: ChartRange) {
-  const trpc = useTRPC()
-  return useQuery(trpc.defi.liquidStakingCharts.queryOptions({ range }))
 }
 
 function ChartCard({
