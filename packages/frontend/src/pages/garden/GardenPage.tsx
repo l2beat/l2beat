@@ -23,8 +23,8 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
       <SideNavLayout backdrop={<GardenBackground />}>
         <div className="flex grow flex-col pb-24">
           <GardenPageHeader
-            title="The Infinite Garden"
-            description="The four CROPS properties count as a whole: a project is listed only if none is rated bad and it has an ossification score."
+            title="The CROPS guide"
+            description="A curated list of distinguished projects that follow the CROPS values: censorship resistance, open source, privacy and security."
           />
           <main>
             <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-6">
