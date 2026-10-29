@@ -40,6 +40,12 @@ export const ORIGIN_RANK: Record<AuditReportOrigin, number> = {
   other: 3,
 }
 
+/**
+ * Where a report stands relative to the project: its own, its stack's, a
+ * library audit, or another project's. A report may belong to a project and a
+ * library collection at once (Safe's audits are in `safe` and `_libs/safe`):
+ * it is own for that project and a library audit for every other.
+ */
 export function reportOrigin(
   reportId: string,
   coverage: ProjectAuditCoverage,
@@ -51,10 +57,7 @@ export function reportOrigin(
   if (stackCollection !== undefined && collections.includes(stackCollection)) {
     return 'stack'
   }
-  if (
-    collections.length > 0 &&
-    collections.every((id) => coverage.collections[id]?.kind === 'library')
-  ) {
+  if (collections.some((id) => coverage.collections[id]?.kind === 'library')) {
     return 'library'
   }
   return 'other'

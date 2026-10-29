@@ -22,8 +22,17 @@ const coverage: ProjectAuditCoverage = {
     optimism: { name: 'OP Mainnet', kind: 'project' },
     arbitrum: { name: 'Arbitrum One', kind: 'project' },
     '_libs/openzeppelin': { name: 'OpenZeppelin', kind: 'library' },
+    safe: { name: 'Safe', kind: 'project' },
+    '_libs/safe': { name: 'Safe', kind: 'library' },
   },
   reports: {
+    safe: {
+      collections: ['_libs/safe', 'safe'],
+      title: 'Safe',
+      auditor: 'D',
+      date: '2024-03-01',
+      document: '_libs/safe/reports/safe.pdf',
+    },
     own: {
       collections: ['unichain'],
       title: 'Own',
@@ -112,6 +121,10 @@ describe('coverageReports', () => {
       expect(reportOrigin('arb', coverage, 'unichain', 'optimism')).toEqual(
         'other',
       )
+      expect(reportOrigin('safe', coverage, 'unichain', 'optimism')).toEqual(
+        'library',
+      )
+      expect(reportOrigin('safe', coverage, 'safe', undefined)).toEqual('own')
     })
   })
 

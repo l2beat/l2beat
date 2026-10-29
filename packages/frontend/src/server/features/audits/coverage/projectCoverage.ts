@@ -77,7 +77,7 @@ export function buildProjectCoverage(
               removed: groupLines(unit.removed ?? []),
             }
           : undefined,
-      notCounted: notCountedReason(unit, coverage),
+      notCounted: notCountedReason(unit, coverage, projectId),
     }
   }
 

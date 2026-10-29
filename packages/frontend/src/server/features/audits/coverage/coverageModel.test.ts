@@ -28,8 +28,16 @@ function coverage(
       p: { name: 'P', kind: 'project' },
       optimism: { name: 'OP Mainnet', kind: 'project' },
       '_libs/openzeppelin': { name: 'OpenZeppelin', kind: 'library' },
+      safe: { name: 'Safe', kind: 'project' },
+      '_libs/safe': { name: 'Safe', kind: 'library' },
     },
     reports: {
+      safe: {
+        collections: ['_libs/safe', 'safe'],
+        title: 'Safe',
+        auditor: 'D',
+        document: '_libs/safe/reports/safe.pdf',
+      },
       own: {
         collections: ['p'],
         title: 'Own',
@@ -130,6 +138,15 @@ describe('coverageModel', () => {
         unitStatus(unit({ status: 'identical', reports: ['own'] }), c, 'p'),
       ).toEqual('identical')
     })
+
+    it('shows a match audited by a project that is also a library as library elsewhere', () => {
+      expect(
+        unitStatus(unit({ status: 'identical', reports: ['safe'] }), c, 'p'),
+      ).toEqual('library')
+      expect(
+        unitStatus(unit({ status: 'identical', reports: ['safe'] }), c, 'safe'),
+      ).toEqual('identical')
+    })
   })
 
   describe(notCountedReason.name, () => {
@@ -137,12 +154,13 @@ describe('coverageModel', () => {
 
     it('leaves out interfaces whatever their status', () => {
       expect(
-        notCountedReason(unit({ kind: 'interface', status: 'none' }), c),
+        notCountedReason(unit({ kind: 'interface', status: 'none' }), c, 'p'),
       ).toEqual('interface')
       expect(
         notCountedReason(
           unit({ kind: 'interface', status: 'identical', reports: ['own'] }),
           c,
+          'p',
         ),
       ).toEqual('interface')
     })
@@ -153,6 +171,7 @@ describe('coverageModel', () => {
           notCountedReason(
             unit({ kind, status: 'differs', reports: ['oz'] }),
             c,
+            'p',
           ),
         ).toEqual('vendor')
       }
@@ -163,17 +182,29 @@ describe('coverageModel', () => {
         notCountedReason(
           unit({ kind: 'library', status: 'identical', reports: ['oz'] }),
           c,
+          'p',
         ),
       ).toEqual(undefined)
       expect(
         notCountedReason(
           unit({ kind: 'library', status: 'differs', reports: ['oz', 'op'] }),
           c,
+          'p',
         ),
       ).toEqual(undefined)
       expect(
-        notCountedReason(unit({ kind: 'library', status: 'none' }), c),
+        notCountedReason(unit({ kind: 'library', status: 'none' }), c, 'p'),
       ).toEqual(undefined)
+    })
+
+    it('leaves out differing code whose audits are a library for other projects', () => {
+      const vendor = unit({
+        kind: 'contract',
+        status: 'differs',
+        reports: ['safe'],
+      })
+      expect(notCountedReason(vendor, c, 'p')).toEqual('vendor')
+      expect(notCountedReason(vendor, c, 'safe')).toEqual(undefined)
     })
   })
 

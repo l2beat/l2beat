@@ -38,14 +38,14 @@ export function selectContracts(coverage: ProjectAuditCoverage): {
 
 /**
  * Status shown for a unit. Identical code is shown as an audited standard
- * library when every report that audited it belongs to library collections
- * only; an audit of any project, the project's own or another, shows it as
- * identical.
+ * library when every report that audited it is a library audit for the
+ * project; an audit by the project itself, or by another project only, shows
+ * it as identical.
  */
 export function unitStatus(
   unit: CoverageUnit,
   coverage: ProjectAuditCoverage,
-  _projectId: string,
+  projectId: string,
 ): AuditUnitStatus {
   switch (unit.status) {
     case 'none':
@@ -53,21 +53,39 @@ export function unitStatus(
     case 'differs':
       return 'differs'
     case 'identical':
-      return auditedInLibrariesOnly(unit, coverage) ? 'library' : 'identical'
+      return auditedByLibrariesOnly(unit, coverage, projectId)
+        ? 'library'
+        : 'identical'
   }
 }
 
-/** Every report that audited the unit belongs to library collections only. */
-export function auditedInLibrariesOnly(
+/**
+ * Every report that audited the unit is a library audit for the project: it
+ * belongs to a library collection and not to the project's own. A report in
+ * both a project and a library collection (Safe's audits are in `safe` and
+ * `_libs/safe`) is a library audit for every other project.
+ */
+export function auditedByLibrariesOnly(
   unit: CoverageUnit,
   coverage: ProjectAuditCoverage,
+  projectId: string,
 ): boolean {
-  const collections = (unit.reports ?? []).flatMap(
-    (id) => coverage.reports[id]?.collections ?? [],
-  )
+  const reports = unit.reports ?? []
   return (
-    collections.length > 0 &&
-    collections.every((id) => coverage.collections[id]?.kind === 'library')
+    reports.length > 0 &&
+    reports.every((id) => isLibraryAudit(id, coverage, projectId))
+  )
+}
+
+function isLibraryAudit(
+  reportId: string,
+  coverage: ProjectAuditCoverage,
+  projectId: string,
+): boolean {
+  const collections = coverage.reports[reportId]?.collections ?? []
+  return (
+    !collections.includes(projectId) &&
+    collections.some((id) => coverage.collections[id]?.kind === 'library')
   )
 }
 
@@ -81,9 +99,13 @@ export function auditedInLibrariesOnly(
 export function notCountedReason(
   unit: CoverageUnit,
   coverage: ProjectAuditCoverage,
+  projectId: string,
 ): AuditNotCountedReason | undefined {
   if (unit.kind === 'interface') return 'interface'
-  if (unit.status === 'differs' && auditedInLibrariesOnly(unit, coverage)) {
+  if (
+    unit.status === 'differs' &&
+    auditedByLibrariesOnly(unit, coverage, projectId)
+  ) {
     return 'vendor'
   }
   return undefined

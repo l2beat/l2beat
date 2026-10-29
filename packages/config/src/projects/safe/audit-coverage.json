@@ -3,38 +3,51 @@
   "project": "safe",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
+    "commit": "c27d18e4909861a1c3a3d19992735946af880921"
   },
   "discoveredAt": 1793093365,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
-    "_libs/safe": { "name": "Safe", "kind": "library" },
-    "arbitrum": { "name": "Arbitrum One", "kind": "project" }
+    "_libs/safe": { "name": "Safe (library)", "kind": "library" },
+    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
+    "safe": { "name": "Safe", "kind": "project" }
   },
   "reports": {
     "ackee-safe-1-4-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Contracts 1.4.0 Security Review",
       "auditor": "Ackee Blockchain",
       "date": "2023-03-28",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
     },
     "ackee-safe-1-5-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account Security Review",
       "auditor": "Ackee Blockchain Security",
       "date": "2025-05-28",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_5_0_Ackee.pdf"
     },
+    "akhunov-audit-results-note": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Gnosis Safe Audit Results",
+      "auditor": "Alexey Akhunov",
+      "document": "_libs/safe/reports/safe-early__docs__alexey_audit.md"
+    },
+    "akhunov-gnosis-safe-2018": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Gnosis Safe Audit Report",
+      "auditor": "Alexey Akhunov",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report.pdf"
+    },
     "certora-safe-1-3-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account v1.3.0 Security Assessment",
       "auditor": "Certora",
       "date": "2026-07-29",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Certora.pdf"
     },
     "certora-safe-1-5-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
       "auditor": "Certora",
       "date": "2025-01-14",
@@ -47,6 +60,13 @@
       "date": "2026-02-16",
       "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-certora.pdf"
     },
+    "certora-safe-library-contracts-1-4-1": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Library Contracts Security Assessment and Formal Verification",
+      "auditor": "Certora",
+      "date": "2024-08-23",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Library_Contracts_Audit_Report_1_4_1.pdf"
+    },
     "contracts__audits__2023-10-v5.0": {
       "collections": ["_libs/openzeppelin"],
       "title": "Contracts 5.0 Release",
@@ -55,35 +75,42 @@
       "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
     },
     "g0-safe-1-1-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe v1.1.0",
       "auditor": "G0 Group",
       "date": "2019-11-11",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_0.pdf"
     },
     "g0-safe-1-1-1": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe v1.1.0 and v1.1.1",
       "auditor": "G0 Group",
       "date": "2019-11-11",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_1.pdf"
     },
     "g0-safe-1-3-0-final": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
       "auditor": "G0 Group",
       "date": "2021-05-01",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
     },
     "g0-safe-1-3-0-initial": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
       "auditor": "G0 Group",
       "date": "2021-04-01",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Initial.pdf"
     },
+    "g0-safe-gas-validation-1-2-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Gnosis Safe Gas Validation Adjustment",
+      "auditor": "G0 Group",
+      "date": "2020-05-04",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_2_0.pdf"
+    },
     "nethermind-safe-1-3-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account v1.3.0 Security Review",
       "auditor": "Nethermind Security",
       "date": "2026-08-17",
@@ -95,6 +122,13 @@
       "auditor": "Nethermind Security",
       "date": "2026-08-17",
       "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-nethermind.pdf"
+    },
+    "runtime-verification-safe-1-0-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Formal Verification Report: GnosisSafe Contract",
+      "auditor": "Runtime Verification",
+      "date": "2019-02-27",
+      "document": "_libs/safe/reports/safe-verification__docs__Gnosis_Safe_Formal_Verification_Report_1_0_0.pdf"
     },
     "trailofbits-governance-token-bridge-2023-06": {
       "collections": ["arbitrum"],
@@ -1947,8 +1981,8 @@
         "timestamp": 1686851699,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 92, "differs": 0, "none": 0 },
-        "lines": { "total": 5076, "covered": 5076 },
+        "units": { "identical": 92, "differs": 7, "none": 0 },
+        "lines": { "total": 6882, "covered": 6876 },
         "changes": [
           {
             "address": "eth:0xfd0732Dc9E303f09fCEf3a7388Ad10A83459Ec99",
@@ -1971,32 +2005,32 @@
         "timestamp": 1696291200,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 92, "differs": 0, "none": 0 },
-        "lines": { "total": 5076, "covered": 5076 },
+        "units": { "identical": 92, "differs": 7, "none": 0 },
+        "lines": { "total": 6882, "covered": 6876 },
         "reports": ["contracts__audits__2023-10-v5.0"]
       },
       {
         "timestamp": 1736812800,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 93, "differs": 0, "none": 0 },
-        "lines": { "total": 5127, "covered": 5127 },
+        "units": { "identical": 93, "differs": 6, "none": 0 },
+        "lines": { "total": 6882, "covered": 6876 },
         "reports": ["certora-safe-1-5-0"]
       },
       {
         "timestamp": 1748390400,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 93, "differs": 0, "none": 0 },
-        "lines": { "total": 5127, "covered": 5127 },
+        "units": { "identical": 93, "differs": 6, "none": 0 },
+        "lines": { "total": 6882, "covered": 6876 },
         "reports": ["ackee-safe-1-5-0"]
       },
       {
         "timestamp": 1750776395,
         "contracts": 10,
         "withoutSource": 0,
-        "units": { "identical": 100, "differs": 0, "none": 0 },
-        "lines": { "total": 5612, "covered": 5612 },
+        "units": { "identical": 100, "differs": 6, "none": 0 },
+        "lines": { "total": 7367, "covered": 7361 },
         "changes": [
           {
             "address": "eth:0x3EfCBb83A4A7AfcB4F68D501E2c2203a38be77f4",
@@ -2014,8 +2048,8 @@
         "timestamp": 1751543195,
         "contracts": 12,
         "withoutSource": 0,
-        "units": { "identical": 135, "differs": 0, "none": 0 },
-        "lines": { "total": 8066, "covered": 8066 },
+        "units": { "identical": 135, "differs": 6, "none": 0 },
+        "lines": { "total": 9821, "covered": 9815 },
         "changes": [
           {
             "address": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
@@ -2033,16 +2067,16 @@
         "timestamp": 1771200000,
         "contracts": 12,
         "withoutSource": 0,
-        "units": { "identical": 135, "differs": 0, "none": 0 },
-        "lines": { "total": 8066, "covered": 8066 },
+        "units": { "identical": 135, "differs": 6, "none": 0 },
+        "lines": { "total": 9821, "covered": 9815 },
         "reports": ["certora-safe-allowance-v1-0-0"]
       },
       {
         "timestamp": 1793093365,
         "contracts": 12,
         "withoutSource": 0,
-        "units": { "identical": 135, "differs": 0, "none": 0 },
-        "lines": { "total": 8066, "covered": 8066 }
+        "units": { "identical": 135, "differs": 6, "none": 0 },
+        "lines": { "total": 9821, "covered": 9815 }
       }
     ],
     "undatedReports": []

@@ -283,6 +283,8 @@ describe(isCounted.name, () => {
     collections: {
       ...index.collections,
       '_libs/oz': { name: 'OpenZeppelin', kind: 'library' },
+      safe: { name: 'Safe', kind: 'project' },
+      '_libs/safe': { name: 'Safe', kind: 'library' },
     },
     reports: {
       ...index.reports,
@@ -293,6 +295,13 @@ describe(isCounted.name, () => {
         date: '2023-01-01',
         document: '_libs/oz/reports/oz.pdf',
       },
+      safe: {
+        collections: ['_libs/safe', 'safe'],
+        title: 'Safe',
+        auditor: 'C',
+        date: '2023-01-01',
+        document: '_libs/safe/reports/safe.pdf',
+      },
     },
   }
 
@@ -301,6 +310,7 @@ describe(isCounted.name, () => {
       isCounted(
         { name: 'I', kind: 'interface', lines: 3, status: 'none' },
         libraries,
+        'p',
       ),
     ).toEqual(false)
   })
@@ -313,10 +323,24 @@ describe(isCounted.name, () => {
       status: 'differs',
       reports: ['oz'],
     }
-    expect(isCounted(unit, libraries)).toEqual(false)
-    expect(isCounted({ ...unit, reports: ['oz', 'first'] }, libraries)).toEqual(
+    expect(isCounted(unit, libraries, 'p')).toEqual(false)
+    expect(
+      isCounted({ ...unit, reports: ['oz', 'first'] }, libraries, 'p'),
+    ).toEqual(true)
+    expect(isCounted({ ...unit, status: 'identical' }, libraries, 'p')).toEqual(
       true,
     )
-    expect(isCounted({ ...unit, status: 'identical' }, libraries)).toEqual(true)
+  })
+
+  it('treats audits of a project that is also a library as library elsewhere', () => {
+    const unit: Unit = {
+      name: 'Safe',
+      kind: 'contract',
+      lines: 10,
+      status: 'differs',
+      reports: ['safe'],
+    }
+    expect(isCounted(unit, libraries, 'p')).toEqual(false)
+    expect(isCounted(unit, libraries, 'safe')).toEqual(true)
   })
 })

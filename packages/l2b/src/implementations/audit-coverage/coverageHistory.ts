@@ -230,7 +230,7 @@ export async function coverageHistoryOfProject(
       }
       members.set(member.address, { member, sources, units })
     }
-    return { point, members, numbers: summarize(members, index) }
+    return { point, members, numbers: summarize(members, index, project) }
   }
 
   const present = (point: HistoryPoint, state: PerimeterState): Evaluated => {
@@ -251,7 +251,7 @@ export async function coverageHistoryOfProject(
       )
       members.set(member.address, { member, sources, units })
     }
-    return { point, members, numbers: summarize(members, index) }
+    return { point, members, numbers: summarize(members, index, project) }
   }
 
   const retained: AuditCoverageHistoryPoint[] = []
@@ -320,6 +320,7 @@ export async function coverageHistoryOfProject(
 function summarize(
   members: Map<ChainSpecificAddress, MemberCode>,
   index: AuditIndex,
+  project: string,
 ): Numbers {
   const numbers: Numbers = {
     contracts: members.size,
@@ -332,7 +333,7 @@ function summarize(
       numbers.withoutSource++
     }
     for (const unit of units) {
-      if (!isCounted(unit, index)) continue
+      if (!isCounted(unit, index, project)) continue
       numbers.units[unit.status]++
       numbers.lines.total += unit.lines
       numbers.lines.covered += coveredLines(unit)
@@ -343,18 +344,27 @@ function summarize(
 
 /**
  * The dashboard's rule, see notCountedReason in the frontend's
- * coverageModel.ts: interfaces, and code that differs from a version audited
- * in library collections only, are listed but not counted.
+ * coverageModel.ts: interfaces, and code that differs from a version whose
+ * every audit is a library audit for the project (in a library collection and
+ * not the project's own), are listed but not counted.
  */
-export function isCounted(unit: Unit, index: AuditIndex): boolean {
+export function isCounted(
+  unit: Unit,
+  index: AuditIndex,
+  project: string,
+): boolean {
   if (unit.kind === 'interface') return false
   if (unit.status !== 'differs') return true
-  const collections = (unit.reports ?? []).flatMap(
-    (id) => index.reports[id]?.collections ?? [],
-  )
+  const reports = unit.reports ?? []
   const libraryOnly =
-    collections.length > 0 &&
-    collections.every((id) => index.collections[id]?.kind === 'library')
+    reports.length > 0 &&
+    reports.every((id) => {
+      const collections = index.reports[id]?.collections ?? []
+      return (
+        !collections.includes(project) &&
+        collections.some((c) => index.collections[c]?.kind === 'library')
+      )
+    })
   return !libraryOnly
 }
 
