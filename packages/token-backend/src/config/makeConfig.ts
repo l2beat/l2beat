@@ -61,10 +61,14 @@ function positiveInteger(
 ): number {
   const value = env.integer(key, fallback)
   if (value < 1) {
-    throw new Error(`Environment variable ${key} must be a positive integer!`)
+    throw new Error('Environment variable must be a positive integer', {
+      cause: { key, value },
+    })
   }
   if (value > max) {
-    throw new Error(`Environment variable ${key} must be at most ${max}!`)
+    throw new Error('Environment variable is too large', {
+      cause: { key, value, max },
+    })
   }
   return value
 }
