@@ -89,8 +89,34 @@ export interface Sort {
 
 const DAY = 24 * 60 * 60
 
-export function rowId(row: Row): string {
+export function rowId(
+  row: Pick<Row, 'projectId' | 'chain' | 'address'>,
+): string {
   return `${row.projectId}:${row.chain}:${row.address}`
+}
+
+// An escrow row and the copy its project's own bridge minted are one gap seen
+// from both sides, so the pair counts once, at its larger value.
+export function sumValue(rows: Row[]): number {
+  const escrowValues = new Map<string, number>()
+  for (const row of rows) {
+    const copy = row.side === 'escrow' ? row.value?.mintedCopy : undefined
+    if (copy) {
+      escrowValues.set(
+        rowId({ projectId: row.projectId, ...copy }),
+        row.value?.valueUsd ?? 0,
+      )
+    }
+  }
+  let total = 0
+  for (const row of rows) {
+    const value = row.value?.valueUsd ?? 0
+    const escrowValue =
+      row.side === 'chain' ? escrowValues.get(rowId(row)) : undefined
+    total +=
+      escrowValue === undefined ? value : Math.max(0, value - escrowValue)
+  }
+  return total
 }
 
 // `dataUntil` is the end of the interop data, which recency is measured from.

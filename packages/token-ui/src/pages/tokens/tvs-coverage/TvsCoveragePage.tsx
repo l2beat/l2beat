@@ -39,6 +39,7 @@ import {
   type Sort,
   STATUS_FILTERS,
   sortRows,
+  sumValue,
 } from './rows'
 import { TvsCoverageTable } from './TvsCoverageTable'
 
@@ -170,10 +171,7 @@ function TvsGaps({
           : defaultDirection(key),
     }))
 
-  const totalValue = rows.reduce(
-    (sum, row) => sum + (row.value?.valueUsd ?? 0),
-    0,
-  )
+  const totalValue = sumValue(rows)
   const now = Math.floor(Date.now() / 1000)
 
   return (
