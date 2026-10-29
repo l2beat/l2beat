@@ -1,4 +1,5 @@
 import type { Database, TokenDatabase } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import { createCallerFactory } from '../../trpc'
@@ -29,6 +30,27 @@ describe(tvsCoverageRouter.name, () => {
       ...key,
       address: ADDRESS,
     })
+  })
+
+  it('lists dismissals for the page to join onto rows', async () => {
+    const record = {
+      projectId: 'base',
+      chain: 'base',
+      address: ADDRESS,
+      reason: 'spam' as const,
+      comment: undefined,
+      dismissedBy: 'dev@l2beat.com',
+      dismissedAt: UnixTime(1),
+    }
+    const caller = createCaller(
+      mockObject<TokenDatabase>({
+        tvsCoverageDismissal: mockObject<TokenDatabase['tvsCoverageDismissal']>(
+          { getAll: mockFn().resolvesTo([record]) },
+        ),
+      }),
+    )
+
+    expect(await caller.dismissals()).toEqual([record])
   })
 })
 
