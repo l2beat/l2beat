@@ -60,7 +60,14 @@ describe(toJsonDump.name, () => {
           relationRole: 'minted',
           ignoredInTokenDb: false,
         },
-        tvs: { status: 'missing', countedVia: null },
+        tvs: {
+          status: 'missing',
+          countedVia: null,
+          pairedWith: {
+            chain: 'ethereum',
+            address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+          },
+        },
         escrowAddresses: null,
         estimate: {
           amount: 400_000,
@@ -169,6 +176,10 @@ function axlUsdc(): Row {
     ignored: false,
     status: 'missing',
     countedVia: undefined,
+    pairedWith: {
+      chain: 'ethereum',
+      address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+    },
     role: 'minted',
     bridges: [
       {
@@ -194,6 +205,9 @@ function axlUsdc(): Row {
     },
     escrowAddresses: [],
     dismissal: {
+      projectId: 'arbitrum',
+      chain: 'arbitrum',
+      address: '0xeb466342c4d449bc9f53a865d5cb90586f405215',
       reason: 'doubleCounted',
       comment: 'Counted by Axelar',
       dismissedBy: 'research@l2beat.com',

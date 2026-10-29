@@ -19,6 +19,8 @@ const DEFINITIONS = {
     missing:
       "The project's TVS config counts neither this token nor any other deployment of its asset.",
   },
+  pairedWith:
+    "On a chain row, the escrow row of the same project whose token the project's own bridge locked to mint this one. The two rows are one gap seen from both sides, so count it once.",
   estimate:
     "For chain rows, amount is the token's totalSupply on its chain, or CoinGecko's circulating supply when that is lower. For escrow rows, amount is the larger of escrowBalance (summed over escrowAddresses) and the supply of the copy the project's own bridge minted, which also covers escrows the TVS config does not list. amountSource says which of these was used, and amountUnavailable says why amount is null. circulatingSupplyUnknown is true when CoinGecko gave no circulating supply for the token (it has none, does not list the coin, or could not be read), so a chain row's amount is its whole totalSupply, which may include a premint, a treasury or locked tokens. valueUsd = amount * priceUsd. Estimates exist only for rows that are not counted.",
   interop:
@@ -66,6 +68,7 @@ export function toJsonDump(rows: Row[], snapshot: Snapshot, names: Names) {
         tvs: {
           status: row.status,
           countedVia: row.countedVia ?? null,
+          pairedWith: row.pairedWith ?? null,
         },
         escrowAddresses: row.side === 'escrow' ? row.escrowAddresses : null,
         estimate: row.value
@@ -134,6 +137,11 @@ const CSV_COLUMNS: [string, (row: Row, ctx: CsvContext) => unknown][] = [
     'counted_via',
     (row) =>
       row.countedVia && `${row.countedVia.chain}:${row.countedVia.address}`,
+  ],
+  [
+    'paired_with',
+    (row) =>
+      row.pairedWith && `${row.pairedWith.chain}:${row.pairedWith.address}`,
   ],
   ['relation_role', (row) => row.role],
   ['amount', (row) => row.value?.amount],
