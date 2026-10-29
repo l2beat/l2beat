@@ -16,9 +16,8 @@ process.env.CLIENT_SIDE_BLOBS_PAGE = 'true'
  */
 const PERF = '**/*-perf/**'
 /**
- * The blobs ratchets each watch or swipe through a few of the chain's slots,
- * 12 seconds apiece, so they take about as long as each other and far longer
- * than the rest. CI shards them, one to a runner
+ * The blobs ratchet watches a few of the chain's slots, 12 seconds apiece, so
+ * it takes far longer than the rest. CI gives it a runner of its own
  */
 const BLOBS_PERF = '**/blobs-perf/**'
 
@@ -41,9 +40,7 @@ export default defineConfig({
     {
       name: 'blobs perf',
       testMatch: `${BLOBS_PERF}/*.e2e.ts`,
-      // so that a shard can take one test of a file, not the whole file
-      fullyParallel: true,
-      // one ratchet at a time, these after the rest
+      // after the rest, so nothing runs beside it
       dependencies: ['perf'],
       workers: 1,
     },
