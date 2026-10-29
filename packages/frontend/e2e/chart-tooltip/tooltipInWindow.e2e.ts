@@ -55,9 +55,9 @@ test('a tapped chart tooltip stays inside its chart on a phone', async ({
     isMobile: true,
   })
   const page = await context.newPage()
-  await page.goto('/privacy/projects/tornado-cash', {
-    waitUntil: 'networkidle',
-  })
+  // Not networkidle: this page's images keep the network busy for seconds,
+  // and every step below waits for what it needs.
+  await page.goto('/privacy/projects/tornado-cash', { waitUntil: 'load' })
   const section = page.locator('#privacy-anonymity-set')
   // Charts mount only once they near the viewport.
   await section.evaluate((e) => e.scrollIntoView({ block: 'end' }))
