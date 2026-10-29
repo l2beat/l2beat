@@ -12,7 +12,7 @@ Users trust the NEAR Intents operator, which holds the Ethereum funds in a custo
 
 ### App
 
-The ratings assume [Zodl](https://zodl.com), formerly Zashi, with its built-in Tor on. Zodl syncs from public lightwalletd servers, which serve the Zcash chain to light wallets, zec.rocks by default. Tor carries swap requests, payout fetches and transactions, each on its own circuit. Block sync and lookups of the account's transparent addresses stay direct, so the server can tie the isolated requests to the account by timing. Other wallets may leak more: the NEAR Intents web app pays only transparent Zcash addresses, which adds a public shielding step.
+Zodl, formerly Zashi, is rated with its built-in Tor on. It syncs from public lightwalletd servers, which serve the Zcash chain to light wallets, zec.rocks by default. Tor carries swap requests, payout fetches and transactions, each on its own circuit. Block sync and lookups of the account's transparent addresses stay direct, so the server can tie the isolated requests to the account by timing.
 
 ### Custody
 

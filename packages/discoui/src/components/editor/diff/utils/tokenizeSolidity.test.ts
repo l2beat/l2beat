@@ -23,6 +23,22 @@ describe('tokenizeSolidity', () => {
     ])
   })
 
+  it('keeps increments and decrements whole', () => {
+    expect(stripPositions(tokenizeSolidity('a+++b--'))).toEqual([
+      structural('a', 1, 1),
+      structural('++', 1, 1),
+      structural('+', 1, 1),
+      structural('b', 1, 1),
+      structural('--', 1, 1),
+    ])
+  })
+
+  it('tells apart operators that differ only in spacing around ++', () => {
+    const left = stripPositions(tokenizeSolidity('a++ + b'))
+    const right = stripPositions(tokenizeSolidity('a + ++b'))
+    expect(left).not.toEqual(right)
+  })
+
   it('whitespace between tokens does not change the token stream', () => {
     const tight = tokenizeSolidity('a&&b')
     const loose = tokenizeSolidity('a  &&\t b')
@@ -32,6 +48,18 @@ describe('tokenizeSolidity', () => {
   it('line comment runs to end of line, excluding the newline', () => {
     const tokens = tokenizeSolidity('// hello\nx')
     expect(tokens).toEqual([comment('// hello', 1, 1), structural('x', 2, 2)])
+  })
+
+  it('line comment ends at a lone carriage return, as in solc', () => {
+    const tokens = tokenizeSolidity('// hello\rx')
+    expect(tokens).toEqual([comment('// hello', 1, 1), structural('x', 1, 1)])
+  })
+
+  it('skips a vertical tab or form feed that ends a line comment', () => {
+    for (const terminator of ['\v', '\f']) {
+      const tokens = tokenizeSolidity(`// hello${terminator}x`)
+      expect(tokens).toEqual([comment('// hello', 1, 1), structural('x', 1, 1)])
+    }
   })
 
   it('block comment can span multiple lines', () => {

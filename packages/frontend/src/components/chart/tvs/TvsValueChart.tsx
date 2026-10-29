@@ -88,7 +88,6 @@ function TvsValueChartTooltip({ payload, label }: CustomChartTooltipProps) {
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
         {formatTimestamp(label, {
-          longMonthName: true,
           mode: 'datetime',
         })}
       </div>

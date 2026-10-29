@@ -30,16 +30,20 @@ export async function extractZkMoneyWithdrawalRelayer(
 
   const receipt = await context.receipts.get(portalEvent.transactionHash)
   const { before, after } = findOperationWindow(receipt, portalEvent)
-  // The executor transfers the principal first, followed by a non-zero tip.
+  // The executor transfers its fee first, if it charges one, then the
+  // principal, followed by a non-zero tip.
   const outgoing = parseTransfers(before, params.tokenAddress).filter(
     (transfer) => transfer.from === params.executorAddress,
   )
-  const [principal, tip] = outgoing
+  const [fee, ...payout] =
+    params.feeBeneficiary === undefined ? [undefined, ...outgoing] : outgoing
+  const [principal, tip] = payout
   if (
-    (outgoing.length !== 1 && outgoing.length !== 2) ||
+    (payout.length !== 1 && payout.length !== 2) ||
+    fee?.to !== params.feeBeneficiary ||
     principal === undefined ||
     principal.to === EthereumAddress.ZERO ||
-    principal.amount + (tip?.amount ?? 0n) !==
+    (fee?.amount ?? 0n) + principal.amount + (tip?.amount ?? 0n) !==
       BigInt(args.executionAmount.toString())
   )
     return undefined

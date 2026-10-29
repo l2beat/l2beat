@@ -47474,7 +47474,8 @@
       "implementationNames": {
         "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": "ERC1967Proxy",
         "eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC": "SeizureRegistry"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0xA69d606205419F67a46d772c66cf685971d5ceed",
@@ -65648,8 +65649,7 @@
           "from": "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd",
           "role": "admin"
         }
-      ],
-      "eoaWithUpgradePermissions": true
+      ]
     },
     "eth:0x17D8a409fE2ceF2d3808bcB61F14aBEFfc28876e": {
       "receivedPermissions": [

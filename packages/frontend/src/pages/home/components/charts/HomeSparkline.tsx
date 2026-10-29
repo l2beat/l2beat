@@ -317,7 +317,7 @@ function SparklineTooltip({
         <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {weeklyAverage
             ? formatRange(label, label + 6 * UnixTime.DAY)
-            : formatTimestamp(label, { longMonthName: true })}
+            : formatTimestamp(label)}
         </div>
         {rows.map((row, index) => (
           <div key={row.id}>

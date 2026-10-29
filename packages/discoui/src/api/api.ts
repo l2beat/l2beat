@@ -334,9 +334,13 @@ export async function createShape(
   }
 }
 
-export function getFlatSource(
-  address: string,
-): Promise<{ name: string; sources: Record<string, string> }> {
+export interface FlatSource {
+  kind: 'eoa' | 'unverified' | 'non-solidity' | 'flat'
+  name: string
+  sources: Record<string, string>
+}
+
+export function getFlatSource(address: string): Promise<FlatSource> {
   return fetchJson(`/api/flat-sources/${address.toLowerCase()}`)
 }
 

@@ -8,6 +8,7 @@ describe('getInlineDiff', () => {
       deletions: 1,
       additions: 1,
       changes: [{ left: [2, 2], right: [2, 2] }],
+      verdict: 'different',
     }
     expect(getInlineDiff(diff, 'a\nb\nc', 'a\nB\nc')).toEqual(
       ['```diff', ' a', '-b', '+B', '```'].join('\n'),
@@ -19,6 +20,7 @@ describe('getInlineDiff', () => {
       deletions: 0,
       additions: 1,
       changes: [{ left: [1, 0], right: [2, 2] }],
+      verdict: 'different',
     }
     expect(getInlineDiff(diff, 'a\nc', 'a\nb\nc')).toEqual(
       ['```diff', ' a', '+b', '```'].join('\n'),
@@ -30,6 +32,7 @@ describe('getInlineDiff', () => {
       deletions: 1,
       additions: 0,
       changes: [{ left: [2, 2], right: [1, 0] }],
+      verdict: 'different',
     }
     expect(getInlineDiff(diff, 'a\nb\nc', 'a\nc')).toEqual(
       ['```diff', ' a', '-b', '```'].join('\n'),

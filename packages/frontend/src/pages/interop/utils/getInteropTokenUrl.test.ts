@@ -31,7 +31,7 @@ describe(getInteropTokenUrl.name, () => {
       symbol: 'USDC',
     })
 
-    expect(result).toEqual('/interop/tokens/usdc01/circle/usdc')
+    expect(result).toEqual('/tokens/usdc01/circle/usdc')
   })
 
   it('skips the issuer segment when the issuer is unknown', () => {
@@ -41,7 +41,7 @@ describe(getInteropTokenUrl.name, () => {
       symbol: 'ETH',
     })
 
-    expect(result).toEqual('/interop/tokens/eth001/eth')
+    expect(result).toEqual('/tokens/eth001/eth')
   })
 
   it('slugifies segments that are not URL friendly', () => {
@@ -51,7 +51,7 @@ describe(getInteropTokenUrl.name, () => {
       symbol: 'USDC.e',
     })
 
-    expect(result).toEqual('/interop/tokens/usdce1/circle-co/usdc-e')
+    expect(result).toEqual('/tokens/usdce1/circle-co/usdc-e')
   })
 
   it('folds accented characters down to ASCII', () => {
@@ -61,7 +61,7 @@ describe(getInteropTokenUrl.name, () => {
       symbol: 'USD₮ 0',
     })
 
-    expect(result).toEqual('/interop/tokens/usdt01/tether-to/usd-0')
+    expect(result).toEqual('/tokens/usdt01/tether-to/usd-0')
   })
 
   it('falls back to the id alone when no segment survives slugification', () => {
@@ -71,6 +71,6 @@ describe(getInteropTokenUrl.name, () => {
       symbol: '屎壳郎',
     })
 
-    expect(result).toEqual('/interop/tokens/bBIepa')
+    expect(result).toEqual('/tokens/bBIepa')
   })
 })

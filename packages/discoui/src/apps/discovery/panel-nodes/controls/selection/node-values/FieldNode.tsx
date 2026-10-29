@@ -58,7 +58,7 @@ export function FieldNode({
         <div className={cn(state === 'off' && 'text-coffee-400')}>
           {field.property}
         </div>
-        <div className="mb-1 w-full border-coffee-200/50 border-b border-dashed" />
+        <div className="mb-1 w-full border-coffee-700 border-b border-dashed" />
         {control}
       </div>
     )
@@ -77,11 +77,11 @@ export function FieldNode({
         >
           {field.property}
         </div>
-        <div className="mb-1 w-full border-coffee-200/50 border-b border-dashed" />
+        <div className="mb-1 w-full border-coffee-700 border-b border-dashed" />
         {control}
       </div>
       {!isCollapsed && (
-        <div className="ml-1 flex flex-col border-coffee-200/50 border-l pl-2">
+        <div className="ml-1 flex flex-col border-coffee-600 border-l pl-2">
           {field.value.map((child) => (
             <FieldNode
               key={child.property}

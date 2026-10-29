@@ -3,6 +3,7 @@ import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DefiIcon } from '~/icons/pages/Defi'
 import { L2Icon } from '~/icons/pages/L2'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
+import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import type { SvgIconProps } from '~/icons/SvgIcon'
 import type { ProjectSection } from '~/server/features/projects/getProjectSectionLinks'
@@ -16,4 +17,5 @@ export const PROJECT_SECTIONS: Record<
   zkCatalog: { label: 'ZK Catalog', href: '/zk-catalog', icon: ZkCatalogIcon },
   privacy: { label: 'Privacy', href: '/privacy', icon: PrivacyIcon },
   defi: { label: 'DeFi', href: '/defi', icon: DefiIcon },
+  tokens: { label: 'Tokens', href: '/tokens', icon: TokensIcon },
 }

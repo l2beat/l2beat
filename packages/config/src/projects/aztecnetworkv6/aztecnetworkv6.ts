@@ -300,11 +300,11 @@ export const aztecnetworkv6: ScalingProject = {
     BADGES.Other.Governance,
   ],
   display: {
-    name: 'Aztec Network',
-    shortName: 'Aztec',
+    name: 'Aztec Network v6',
+    shortName: 'Aztec v6',
     slug: 'aztecnetworkv6',
     description:
-      'Aztec Network is a privacy-preserving ZK rollup that uses the AztecVM and Noir to support private and public smart contracts on Ethereum. This is its v6 deployment, which started from a new genesis.',
+      'Aztec Network v6 is a privacy-preserving ZK rollup that uses the AztecVM and Noir to support private and public smart contracts on Ethereum. It started from a new genesis.',
     purposes: ['Universal', 'Privacy'],
     links: {
       websites: ['https://aztec.network/', 'https://aztec.network/noir'],
@@ -366,7 +366,9 @@ export const aztecnetworkv6: ScalingProject = {
         sinceBlock: v6ActivationBlock,
         // Proposers batch through Multicall3, so blobs match on the event
         // topic. The inbox only catches direct calls to the v6 Rollup. While v5
-        // runs, its blobs carry the same topic and count here.
+        // runs, its blobs carry the same topic and count here. Reverted
+        // proposals emit no event and proposers' blob self-sends have neither,
+        // so both go unattributed.
         // TODO: match on the emitting contract once the backend supports it.
         inbox: rollupAddress,
         topics: [

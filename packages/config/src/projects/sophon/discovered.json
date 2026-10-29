@@ -1,6 +1,6 @@
 {
   "name": "sophon",
-  "timestamp": 1792750913,
+  "timestamp": 1793095594,
   "configHash": "0x46970e39aa456aadca06617d044b80040ccef9f242d5f52a429ea033bcf6debe",
   "entries": [
     {
@@ -113,9 +113,9 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 918,
-        "latestBlock": 3628544,
-        "relayers": ["eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"],
+        "latestAuthoritySetId": 922,
+        "latestBlock": 3645824,
+        "relayers": ["eth:0x61AB85BAE30435F43A276D51968D3Fa947093966"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "timelocks": ["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
@@ -361,8 +361,8 @@
           ]
         ],
         "$upgradeCount": 13,
-        "baseTokenGasPriceMultiplierDenominator": 138909,
-        "baseTokenGasPriceMultiplierNominator": 200000000000,
+        "baseTokenGasPriceMultiplierDenominator": 605703,
+        "baseTokenGasPriceMultiplierNominator": 1000000000000,
         "facetAddresses": [
           "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253",
           "eth:0x1666124221622eb6154306Ea9BA87043e8be88B2",
@@ -495,12 +495,12 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 39768,
-        "getTotalBatchesExecuted": 39760,
-        "getTotalBatchesVerified": 39768,
-        "getTotalBlocksCommitted": 39768,
-        "getTotalBlocksExecuted": 39760,
-        "getTotalBlocksVerified": 39768,
+        "getTotalBatchesCommitted": 39798,
+        "getTotalBatchesExecuted": 39790,
+        "getTotalBatchesVerified": 39798,
+        "getTotalBlocksCommitted": 39798,
+        "getTotalBlocksExecuted": 39790,
+        "getTotalBlocksVerified": 39798,
         "getTotalPriorityTxs": 10212,
         "getTransactionFilterer": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
@@ -919,17 +919,17 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x61AB85BAE30435F43A276D51968D3Fa947093966",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x70a4F624A4E62C539abf0002634377b646612b1C",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -954,7 +954,7 @@
           "eth:0x70a4F624A4E62C539abf0002634377b646612b1C",
           "eth:0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A",
           "eth:0xAD379D3275a18bd4BB741C3b291a3778D51c3304",
-          "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+          "eth:0xbA274d3821F5a2176987a59dAB97Eb9b11A72076",
           "eth:0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5",
           "eth:0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2",
           "eth:0x50d0667992467421f3B359C8138928C0157cB444"
@@ -964,7 +964,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 20,
+        "nonce": 23,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1063,6 +1063,11 @@
     },
     {
       "address": "eth:0xB1e2974E81922c1d5923dB4580292fB9954E9E05",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xbA274d3821F5a2176987a59dAB97Eb9b11A72076",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2164,10 +2169,10 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f",
     "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c",
-    "succinct/SP1Vector": "0x726d693de65ff63629181e9a27ee8342d7521ac412c6676152f27dd13bb195ad"
+    "succinct/SP1Vector": "0xb0b0cb272e90f4226a72e4042c4f44f5a47b06b0b538226f9c162ff12b8397bc"
   },
-  "usedBlockNumbers": { "ethereum": 26254695 },
-  "permissionsConfigHash": "0x69ef2970db91d98d170edf468e144828f2dffbb25d7cc43ee6588594167a7b98",
+  "usedBlockNumbers": { "ethereum": 26283337 },
+  "permissionsConfigHash": "0x2587e9bf4c1d0d6cbba8cc1bfee84dbb5a5c94f67b15196db26ff29f70006b95",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b",
     "shared-zk-stack": "0x5c5ff23838fc7b5156f4cf75b1dd2efc5d47beb9f0b3f7434d20690afdbf2fd0"
@@ -2380,7 +2385,7 @@
         }
       ]
     },
-    "eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35": {
+    "eth:0x61AB85BAE30435F43A276D51968D3Fa947093966": {
       "receivedPermissions": [
         {
           "permission": "interact",

@@ -8,6 +8,7 @@ export type ProjectSection =
   | 'zkCatalog'
   | 'privacy'
   | 'defi'
+  | 'tokens'
 
 export interface ProjectSectionLink {
   section: ProjectSection

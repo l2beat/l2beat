@@ -5,6 +5,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -68,6 +69,7 @@ export const basesolbridge: BaseProject = {
   name: 'Base Solana Bridge',
   shortName: undefined,
   addedAt: UnixTime(1787816042),
+  discoveryInfo: getDiscoveryInfo([discovery]),
   interopConfig: {
     description: `Base's native lock-and-mint token and message bridge between Base and Solana. Messages from Solana are verified on Base solely by signatures: ${baseThreshold}-of-${baseValidatorCount} Base validators plus ${partnerThreshold}-of-${partnerSignerCount} partner signers managed by Chainlink's CCIP governance. The bridge escrow, all wrapped tokens and all Twin accounts are upgradable by a single EOA without delay.`,
     detailedDescription: readProjectMarkdown(

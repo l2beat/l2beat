@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x55fb22d1a48034b31f496676f069667a41cd1973
+
+# Diff at Tue, 27 Oct 2026 11:31:36 GMT:
+
+- id: b959183c
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@de2e3d4ee6aef60add0cf0b261ced3c797f9fb6e block: 1791379312
+- current timestamp: 1791379312
+
+## Description
+
+Mark Circle's SeizureRegistry USDC minter non-critical, like USDC itself. It is outside CCIP's trust path, so its EOA upgrade admin does not get the red warning.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791379312 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x162aB6063C172013F03F55D10e8531F3436E31B5) {
+    +++ description: None
+      eoaWithUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract SeizureRegistry (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
 Generated with discovered.json: 0x38e39eb355d781bda3e3bc3b604347a311cf8427
 
 # Diff at Wed, 07 Oct 2026 13:28:50 GMT:

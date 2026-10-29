@@ -179,12 +179,16 @@ export function initTvsModule({
         valueService,
         dbStorage,
         project: project.projectId,
+        storeEscrowValues: project.storeEscrowValues,
         maxTimestampsToProcessAtOnce: 500,
         parents: [priceIndexer, ...amountSources],
         indexerService,
         configurations: tokensWithRanges.map((t) => {
           return {
-            id: TokenValueIndexer.idToConfigurationId(t),
+            id: TokenValueIndexer.idToConfigurationId(
+              t,
+              project.storeEscrowValues,
+            ),
             minHeight: t.sinceTimestamp,
             maxHeight: t.untilTimestamp ?? null,
             properties: t,

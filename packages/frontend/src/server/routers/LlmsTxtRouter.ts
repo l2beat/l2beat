@@ -134,12 +134,6 @@ const PAGE_SECTIONS: LinkListSection[] = [
           'Value secured by each layer 2, split into native, canonically bridged and externally bridged tokens, with 7- and 30-day changes.',
       },
       {
-        name: 'TVS breakdown',
-        path: staticPagePath('/layer2s/tvs/breakdown'),
-        description:
-          'Every token counted in TVS across all projects, with amount, USD value, category and bridging source.',
-      },
-      {
         name: 'Activity',
         path: staticPagePath('/layer2s/activity'),
         description:
@@ -362,9 +356,9 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
     },
     {
       name: 'Interop token',
-      path: '/interop/tokens/{slug}.md',
+      path: '/tokens/{slug}.md',
       description:
-        'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the case-sensitive token id, the segment right after /interop/tokens/ in a token page URL; interop protocol pages link their top token.',
+        'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the case-sensitive token id, the segment right after /tokens/ in a token page URL; interop protocol pages link their top token.',
     },
     {
       name: 'DeFi project',

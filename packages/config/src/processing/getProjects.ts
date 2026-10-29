@@ -20,20 +20,23 @@ import { resolveGarden } from '../crops/resolveCrops'
 import { loadAuditCoverage } from '../discovery/loadAuditCoverage'
 import { loadDiscoveryUpdates } from '../discovery/loadDiscoveryUpdates'
 import type {
-  Bridge,
   Layer2TxConfig,
   ProjectScalingRiskView,
   ScalingProject,
 } from '../internalTypes'
+import { versionGroups } from '../projects/versions'
 import { asArray, emptyArrayToUndefined } from '../templates/utils'
 import {
   type BaseProject,
+  type ProjectContracts,
   type ProjectCostsInfo,
   type ProjectDiscoveryInfo,
   type ProjectLivenessInfo,
+  type ProjectPermissions,
   type ProjectRiskView,
   type ProjectScalingCategory,
   ProjectTvsConfigSchema,
+  type ProjectVersionSibling,
   type TvsToken,
 } from '../types'
 import {
@@ -76,6 +79,7 @@ function buildProjects(): BaseProject[] {
     .map(withDiscoveryUpdates)
     .map(withAuditCoverage)
     .map(withGarden)
+    .map(withVersions)
 }
 
 function withDiscoveryUpdates(project: BaseProject): BaseProject {
@@ -95,6 +99,44 @@ function withGarden(project: BaseProject): BaseProject {
         garden: resolveGarden({ ...project, crops: project.crops }),
       }
     : project
+}
+
+function withVersions(
+  project: BaseProject,
+  _: number,
+  projects: BaseProject[],
+): BaseProject {
+  const group = versionGroups.find((g) =>
+    g.versions.some((v) => v.project === project.id),
+  )
+  const own = group?.versions.find((v) => v.project === project.id)
+  if (!group || !own) {
+    return project
+  }
+  const siblings = group.versions.flatMap((v): ProjectVersionSibling[] => {
+    const sibling = projects.find((p) => p.id === v.project)
+    if (!sibling) {
+      return []
+    }
+    return [
+      {
+        id: sibling.id,
+        slug: sibling.slug,
+        name: sibling.name,
+        label: v.label,
+        isLatest: sibling.id === group.latest,
+        archivedAt: sibling.archivedAt,
+      },
+    ]
+  })
+  return {
+    ...project,
+    versions: {
+      group: { id: group.id, name: group.name },
+      label: own.label,
+      siblings,
+    },
+  }
 }
 
 function layer2Or3ToProject(p: ScalingProject): BaseProject {
@@ -380,9 +422,11 @@ function toBackendTrackedTxParams(
   }
 }
 
-export function adjustDiscoveryInfo(
-  project: ScalingProject | Bridge,
-): ProjectDiscoveryInfo {
+export function adjustDiscoveryInfo(project: {
+  discoveryInfo: ProjectDiscoveryInfo
+  contracts?: ProjectContracts
+  permissions?: Record<string, ProjectPermissions>
+}): ProjectDiscoveryInfo {
   const contractsDiscoDriven = areContractsDiscoveryDriven(project.contracts)
   const permissionsDiscoDriven = arePermissionsDiscoveryDriven(
     project.permissions,

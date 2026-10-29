@@ -31,7 +31,7 @@ export function ContractConfigDialog() {
             <Tabs.Trigger value="template">Template</Tabs.Trigger>
           </Tabs.List>
           <Tabs.Content value="config">
-            <div className="space-y-2">
+            <div className="space-y-3">
               <ConfigRow headline="Category">
                 <CategorySelect
                   category={models.configModel.category}
@@ -49,7 +49,7 @@ export function ContractConfigDialog() {
             </div>
           </Tabs.Content>
           <Tabs.Content value="template">
-            <div className="space-y-2">
+            <div className="space-y-3">
               {models.templateModel.hasTemplate ? (
                 <>
                   <ConfigRow headline="Category">
@@ -91,7 +91,7 @@ export function ConfigRow({
 }) {
   return (
     <div className="space-y-1">
-      <h4 className="text-coffee-200 text-sm">{headline}</h4>
+      <h4 className="font-medium text-coffee-200 text-xs">{headline}</h4>
       {children}
     </div>
   )

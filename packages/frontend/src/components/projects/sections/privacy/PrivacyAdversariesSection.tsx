@@ -23,18 +23,22 @@ import {
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
+import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
 import { RiskBanner } from '../../RiskBanner'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
+import { PrivacyReferenceApps } from './PrivacyReferenceApps'
 
 export interface PrivacyAdversariesSectionProps extends ProjectSectionProps {
   /** Sources already resolved to urls, see resolvePrivacySources. */
   adversaries: ProjectPrivacyAdversaries
+  referenceApp?: PrivacyReferenceApp
 }
 
 export function PrivacyAdversariesSection({
   adversaries,
+  referenceApp,
   ...sectionProps
 }: PrivacyAdversariesSectionProps) {
   const baseline = adversaries.cells.publicObserver
@@ -53,6 +57,7 @@ export function PrivacyAdversariesSection({
         <span className="font-medium">What the protocol promises: </span>
         {adversaries.promise.text}
       </p>
+      {referenceApp && <PrivacyReferenceApps app={referenceApp} />}
       <p className="mt-2 text-paragraph-13 text-secondary md:text-paragraph-14">
         {PRIVACY_ADVERSARIES_TOOLTIP} Fields marked{' '}
         <span className="font-medium">at risk</span> stay private only under the

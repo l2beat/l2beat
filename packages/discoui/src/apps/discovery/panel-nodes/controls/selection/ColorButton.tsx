@@ -79,7 +79,7 @@ export function ColorButton() {
         side="top"
         align="center"
         sideOffset={10}
-        className="w-max max-w-[calc(100vw-2rem)] border-coffee-600 p-3"
+        className="w-max max-w-[calc(100vw-2rem)] border-coffee-600 p-2.5"
       >
         <ColorPicker
           selectedCount={selected.length}
@@ -104,9 +104,9 @@ function ColorPicker({
 }: ColorPickerProps) {
   return (
     <div>
-      <div className="mb-3 border-coffee-600/70 border-b pb-2">
+      <div className="mb-2.5 border-coffee-600/70 border-b pb-2">
         <div className="font-medium text-coffee-100 text-sm">Node color</div>
-        <div className="text-[11px] text-coffee-300 leading-tight">
+        <div className="text-coffee-300 text-xs leading-4">
           {selectedCount} selected
           {' · '}
           {describeSelectionColor(selectionColorState)}
@@ -127,7 +127,7 @@ function ColorPicker({
               aria-pressed={active}
               onClick={() => onColorChange(option.id)}
               className={cn(
-                'flex items-center justify-center rounded-lg border border-coffee-600 bg-coffee-800 p-2 transition-colors',
+                'flex h-8 items-center justify-center rounded-sm border border-coffee-600 bg-coffee-800 px-2 transition-colors',
                 active
                   ? 'border-autumn-300 bg-coffee-700'
                   : 'hover:bg-coffee-700',
@@ -148,7 +148,7 @@ function ColorPicker({
           )
         })}
       </div>
-      <div className="mt-2 text-[11px] text-coffee-300 leading-tight">
+      <div className="mt-2 text-coffee-300 text-xs leading-4">
         The first swatch resets selected nodes to their automatic chain color.
       </div>
     </div>

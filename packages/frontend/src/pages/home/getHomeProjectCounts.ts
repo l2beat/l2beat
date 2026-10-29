@@ -13,6 +13,7 @@ export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
     }),
     ps.getProjects({
       where: ['privacyInfo'],
+      whereNot: ['archivedAt'],
     }),
   ])
 

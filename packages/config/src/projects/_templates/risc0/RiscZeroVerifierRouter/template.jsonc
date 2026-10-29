@@ -64,6 +64,14 @@
         "method": "function verifiers(bytes4) view returns (address)",
         "args": ["0x242f9d5b"]
       }
+    },
+    "verifier_8b38038c": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes4) view returns (address)",
+        "args": ["0x8b38038c"]
+      }
     }
   }
 }
