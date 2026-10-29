@@ -97,7 +97,8 @@ export function ChartHoverOverlay<T>({
   }
 
   const tooltip = useChartTooltip({
-    count: scene ? rows.length : 0,
+    // Not gated on the scene: it is published after this first renders.
+    count: rows.length,
     anchorOf,
     place: (anchor, size) =>
       sceneRef.current
