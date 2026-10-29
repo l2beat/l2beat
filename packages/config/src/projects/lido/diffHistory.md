@@ -13,7 +13,6 @@ Dual Governance proposal 15 (executed 2026-10-23) added staking module 5, "Commu
 StakingRouter: the curated Node Operators Registry (module 1) stake share limit and priority exit threshold 100% → 0.
 CircuitBreaker: CommunityStakingModuleCommittee registered as pauser of five of the new contracts (CSModule, Accounting, FeeOracle, Verifier, Ejector).
 TriggerableWithdrawalsGateway and Burner: new Ejector and Accounting granted their roles.
-lido/StakingRouter template: per-module getters read over `getStakingModuleIds`, which brings module 5 into the watched values.
 
 ## Watched changes
 
