@@ -57,14 +57,12 @@ function ExampleHint() {
 
   useEffect(() => {
     const element = ref.current
-    if (
-      !element ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
-      return
-    }
+    if (!element) return
+    // Read on every tick: the preference can change while the page is open.
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     let index = 0
     const interval = setInterval(() => {
+      if (reducedMotion.matches) return
       index = (index + 1) % SEARCH_BAR_EXAMPLES.length
       element.textContent = SEARCH_BAR_EXAMPLES[index] ?? ''
       element.animate(
