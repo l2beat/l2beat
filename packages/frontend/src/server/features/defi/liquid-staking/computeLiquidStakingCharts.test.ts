@@ -145,8 +145,6 @@ describe(computeLiquidStakingStats.name, () => {
 
     const annualYield = 0.01 * (365 / 30)
     expect(present(stats?.yield)).toBeCloseTo(annualYield, 1e-6)
-    expect(stats?.queueWait).toEqual(40)
-    expect(present(stats?.marketDiscount)).toBeCloseTo(0.001, 1e-6)
     expect(present(stats?.costOfExit)).toBeCloseTo(
       (0.001 * 365) / annualYield,
       1e-6,

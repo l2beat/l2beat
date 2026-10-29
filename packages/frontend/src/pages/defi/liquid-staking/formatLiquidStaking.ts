@@ -1,4 +1,4 @@
-/** A fraction as a percentage, e.g. 0.0312 → "3.12%". */
+/** An annualised fraction as a percentage, e.g. 0.0312 → "3.12%". */
 export function formatYield(value: number, decimals = 2): string {
   return `${(value * 100).toFixed(decimals)}%`
 }

@@ -19,12 +19,7 @@ export interface LiquidStakingEntry {
   stats: LiquidStakingStats
 }
 
-const NO_STATS: LiquidStakingStats = {
-  yield: null,
-  costOfExit: null,
-  queueWait: null,
-  marketDiscount: null,
-}
+const NO_STATS: LiquidStakingStats = { yield: null, costOfExit: null }
 
 /** Sorted by TVL, the projects without one last. */
 export async function getLiquidStakingEntries(

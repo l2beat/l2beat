@@ -77,14 +77,6 @@ const columns = [
     tooltip:
       'Days of yield a holder gives up to exit, by the cheaper of waiting for a protocol withdrawal and selling at the market discount.',
   }),
-  statColumn('queueWait', 'Queue wait', formatDays, {
-    tooltip:
-      "How long a protocol withdrawal takes: for Lido and ether.fi, the average wait of the latest day's requests; Rocket Pool pays out at once while its deposit pool holds ETH; for wBETH, the operator-set lock time.",
-  }),
-  statColumn('marketDiscount', 'Market discount', formatYield, {
-    tooltip:
-      'How far below its ETH backing the token trades, as a 7-day median of market prices. Negative at a premium.',
-  }),
   ...LIQUID_STAKING_RISKS.map(({ key, title, tooltip }) =>
     columnHelper.accessor((entry) => entry.risks[key], {
       id: key,
@@ -102,8 +94,6 @@ const columns = [
 const STAT_COLUMNS = [
   'yield',
   'costOfExit',
-  'queueWait',
-  'marketDiscount',
 ] as const satisfies (keyof LiquidStakingStats)[]
 
 function statColumn(

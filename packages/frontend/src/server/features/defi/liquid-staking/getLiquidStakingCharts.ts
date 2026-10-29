@@ -75,7 +75,7 @@ export async function getLiquidStakingCharts(
 /** How far back the stats look for a day that has each value. */
 const STATS_DAYS = 7
 
-/** Each project's latest yield, cost of exit and its parts, by project id. */
+/** Each project's latest yield and cost of exit, by project id. */
 export async function getLiquidStakingStats(
   projects: LiquidStakingProject[],
 ): Promise<Map<string, LiquidStakingStats>> {
@@ -166,17 +166,9 @@ function getMockLiquidStakingCharts(
 }
 
 function getMockStats(): LiquidStakingStats {
-  const discount = (Math.random() - 0.3) * 0.004
-  const queueWait = Math.random() * 6
-  const annualYield = 0.025 + Math.random() * 0.01
   return {
-    yield: annualYield,
-    costOfExit: Math.min(
-      queueWait,
-      (Math.max(0, discount) * 365) / annualYield,
-    ),
-    queueWait,
-    marketDiscount: discount,
+    yield: 0.025 + Math.random() * 0.01,
+    costOfExit: Math.random() * 6,
   }
 }
 
