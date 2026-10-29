@@ -9,7 +9,7 @@ Generated with discovered.json: 0x1bbde280017ede3d92bdfdb89bb29c7d5515e106
 
 ## Description
 
-Dual Governance proposal 15 (executed 2026-10-23) added staking module 5, "Community Staking 0x02": a second CSModule for 0x02 (compounding) validators with its own Accounting, FeeOracle, FeeDistributor, HashConsensus (same oracle committee), ParametersRegistry, Verifier, Ejector, ExitPenalties, ValidatorStrikes and PermissionlessGate, stake share limit 0.01%.
+Dual Governance proposal 15 (executed 2026-10-23) added staking module 5, "Community Staking 0x02": a second CSModule for 0x02 (compounding) validators with its own Accounting, FeeOracle, FeeDistributor, HashConsensus (same oracle committee), ParametersRegistry, Verifier, Ejector, ExitPenalties, ValidatorStrikes and PermissionlessGate, stake share limit 0.01%, priority exit threshold 2.4%, module fee 2%, treasury fee 8%.
 StakingRouter: the curated Node Operators Registry (module 1) stake share limit and priority exit threshold 100% → 0.
 CircuitBreaker: CommunityStakingModuleCommittee registered as pauser of five of the new contracts (CSModule, Accounting, FeeOracle, Verifier, Ejector).
 TriggerableWithdrawalsGateway and Burner: new Ejector and Accounting granted their roles.
