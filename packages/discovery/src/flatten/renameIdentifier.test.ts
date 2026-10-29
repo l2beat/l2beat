@@ -94,6 +94,51 @@ describe(renameIdentifiers.name, () => {
     expect(result).toEqual('Constant constant t_1 = Constant.wrap(1);')
   })
 
+  it('renames functions and libraries in a using list', () => {
+    const src = [
+      'using {',
+      '\tlt as <,',
+      '\tSafeERC20.safeTransfer',
+      '} for IERC20 global;',
+    ].join('\r\n')
+    const result = renameIdentifiers(src, [
+      { from: 'lt', to: 'lt_1' },
+      { from: 'SafeERC20', to: 'SafeERC20_1' },
+      { from: 'IERC20', to: 'IERC20_1' },
+    ])
+    expect(result).toEqual(
+      [
+        'using {',
+        '\tlt_1 as <,',
+        '\tSafeERC20_1.safeTransfer',
+        '} for IERC20_1 global;',
+      ].join('\r\n'),
+    )
+  })
+
+  it('renames using list entries separated by comments', () => {
+    const src = [
+      'using {',
+      '    M.inc, /* decrement, too */ M.dec,',
+      '    // addition',
+      '    add as + // with a comma, here',
+      '} for uint256 global;',
+    ].join('\n')
+    const result = renameIdentifiers(src, [
+      { from: 'M', to: 'M_1' },
+      { from: 'add', to: 'add_1' },
+    ])
+    expect(result).toEqual(
+      [
+        'using {',
+        '    M_1.inc, /* decrement, too */ M_1.dec,',
+        '    // addition',
+        '    add_1 as + // with a comma, here',
+        '} for uint256 global;',
+      ].join('\n'),
+    )
+  })
+
   it('renames across a struct definition', () => {
     const src = [
       'contract Foo {',

@@ -1,3 +1,124 @@
+Generated with discovered.json: 0x380de8bf7719806a94521574aec471e393180542
+
+# Diff at Tue, 27 Oct 2026 16:31:39 GMT:
+
+- id: d5ce46db
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1792491537
+- current timestamp: 1792491537
+
+## Description
+
+Flattener now renames free functions inside using { ... } lists, so each list points at its own file's function. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792491537 (main branch discovery), not current.
+
+```diff
+    contract Escrow (eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c) [lido/Escrow] {
+    +++ description: Dual Governance escrow in which holders lock stETH, wstETH or unstETH to build veto support. It can be irreversibly converted into a Rage Quit escrow that withdraws the locked position as ETH.
+      sourceHashes.0:
+-        "0x85169eeeb90741916e4da1279a6d46ed3fd567fda961aafb0abec62df1e732da"
++        "0x1c057484fbe43610390a20a79ee17ce640bd72ebca23b5d9327926338563564e"
+      sourceHashes.1:
+-        "0x85169eeeb90741916e4da1279a6d46ed3fd567fda961aafb0abec62df1e732da"
++        "0x1c057484fbe43610390a20a79ee17ce640bd72ebca23b5d9327926338563564e"
+    }
+```
+
+```diff
+    contract TiebreakerBuildersSubcommittee (eth:0x3D3ba54D54bbFF40F2Dfa2A8e27bD4dE3dab2951) [lido/TiebreakerSubCommittee] {
+    +++ description: A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.
+      sourceHashes.0:
+-        "0x95d0e17e9221fb7f3746842c42c025956bbf749f08ff3d1fd875a851d626ae0d"
++        "0x682eb86d27569d05b9969051761e08fcb9040b3030a55d7a7507a9a0325bef0a"
+    }
+```
+
+```diff
+    contract ImmutableDualGovernanceConfigProvider (eth:0xa1692Af6FDfdD1030E4E9c4Bc429986FA64CB5EF) [lido/ImmutableDualGovernanceConfigProvider] {
+    +++ description: Immutable Dual Governance timing and veto-threshold configuration. Replacing the provider in DualGovernance is the only way to change these parameters.
+      sourceHashes.0:
+-        "0x6151c0a96e6e5adc39e3767e937b87ae08fcaada0d2cc13da149e0c88dced6f2"
++        "0xf3dcc9c578fa34b09c56c2b8c93ee4663d7799be5dbf85627975e1f7038c308e"
+    }
+```
+
+```diff
+    contract TiebreakerEthereumEcosystemSubcommittee (eth:0xBF048f2111497B6Df5E062811f5fC422804D4baE) [lido/TiebreakerSubCommittee] {
+    +++ description: A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.
+      sourceHashes.0:
+-        "0x95d0e17e9221fb7f3746842c42c025956bbf749f08ff3d1fd875a851d626ae0d"
++        "0x682eb86d27569d05b9969051761e08fcb9040b3030a55d7a7507a9a0325bef0a"
+    }
+```
+
+```diff
+    contract DualGovernance (eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E) [lido/DualGovernance] {
+    +++ description: Lido Dual Governance state machine. Registered proposers submit calls through an associated executor, while stETH, wstETH and unstETH holders can lock assets in an escrow to delay or stop governance execution and enter Rage Quit.
+      sourceHashes.0:
+-        "0x8923bda086d38da489840dcd7157b305452170106195da75c6d2cbd9db31473a"
++        "0xf4baaa5bc37c8030062c68c89c6101f05d98f661cefa31da7f483555c99b0a98"
+    }
+```
+
+```diff
+    contract Community Staking Module Verifier (eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3) [lido/CSVerifier] {
+    +++ description: Permissionless beacon-state proof verifier for a Community Staking Module. Valid proofs report validator balances, withdrawals and slashing to the connected module.
+      sourceHashes.0:
+-        "0x6e4dbf3b712fa927cfc7fc9b111470e00aa741968c6bfde30f25b932645e252a"
++        "0x72ca49dc232a73eb06a2b5d7e5b60c1f64b456fdb1ba8ba5bf7dcd01753ef493"
+    }
+```
+
+```diff
+    contract EmergencyProtectedTimelock (eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316) [lido/EmergencyProtectedTimelock] {
+    +++ description: Timelock used by Dual Governance. Governance submits and schedules batches, anyone may execute a ready batch, and time-bounded emergency committees can activate emergency mode and execute already submitted proposals without the ordinary schedule delay.
+      sourceHashes.0:
+-        "0x333a362970e417c078fe05b3b5f38c151802bcfc03662168777531f5f90ed873"
++        "0x82154ecac469b6885b54890285d86a6f226f464bcbd5b72cbec1a95bb586cc76"
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) [lido/CSModule] {
+    +++ description: Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.
+      sourceHashes.1:
+-        "0x19666aa54a37d52558d2c5a2354e67ce7f975afd7cfa437feb6ef96489092bb8"
++        "0xea7dbf301f2c6396dda21bdb9fede89dc76490dbdba56f62155f932e685caad6"
+    }
+```
+
+```diff
+    contract TiebreakerNodeOperatorsSubcommittee (eth:0xDBfa0B8A15a503f25224fcA5F84a3853230A715C) [lido/TiebreakerSubCommittee] {
+    +++ description: A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.
+      sourceHashes.0:
+-        "0x95d0e17e9221fb7f3746842c42c025956bbf749f08ff3d1fd875a851d626ae0d"
++        "0x682eb86d27569d05b9969051761e08fcb9040b3030a55d7a7507a9a0325bef0a"
+    }
+```
+
+```diff
+    contract TiebreakerCoreCommittee (eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5) [lido/TiebreakerCoreCommittee] {
+    +++ description: Top-level Dual Governance tiebreaker committee. Its members reach quorum to schedule a delayed governance proposal or resume a paused sealable contract when Dual Governance is tied.
+      sourceHashes.0:
+-        "0x122392d68a27a9890f459ce792791c30d7f2ba96b42f47c924ab87d8b45c8817"
++        "0xd3c27e7a20d3db17c659c433b111eff30d0324b3eb901756c54595e2cee7fe0b"
+    }
+```
+
+```diff
+    contract Community Staking Module Verifier (eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba) [lido/CSVerifier] {
+    +++ description: Permissionless beacon-state proof verifier for a Community Staking Module. Valid proofs report validator balances, withdrawals and slashing to the connected module.
+      sourceHashes.0:
+-        "0x6e4dbf3b712fa927cfc7fc9b111470e00aa741968c6bfde30f25b932645e252a"
++        "0x72ca49dc232a73eb06a2b5d7e5b60c1f64b456fdb1ba8ba5bf7dcd01753ef493"
+    }
+```
+
 Generated with discovered.json: 0x1a35f8b31c31bd1d307ccd1a14a945d87b7510a7
 
 # Diff at Tue, 20 Oct 2026 10:19:11 GMT:
