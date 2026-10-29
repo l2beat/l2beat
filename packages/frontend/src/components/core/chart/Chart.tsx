@@ -281,7 +281,8 @@ function ChartTooltipRows({
   return (
     <ScrollWithGradient
       data-chart-tooltip-rows
-      className={cn('overscroll-contain', className)}
+      // Its scrollbar sits in the tooltip's padding, clear of the values.
+      className={cn('-mr-3 overscroll-contain pr-3', className)}
       {...keepTouchesInTooltip}
     >
       {children}
