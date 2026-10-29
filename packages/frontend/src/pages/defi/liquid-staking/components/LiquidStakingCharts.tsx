@@ -19,6 +19,7 @@ import { useTRPC } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
 import { formatDays, formatYield } from '../formatLiquidStaking'
+import { COST_OF_EXIT_METRIC, YIELD_METRIC } from '../liquidStakingMetrics'
 import {
   type LiquidStakingChartBackground,
   type LiquidStakingChartData,
@@ -116,7 +117,7 @@ function YieldChart({ projectSeries, defaultRange }: ChartProps) {
       name="liquid-staking-yield"
       title="Rate-implied yield"
       info={[
-        "What a holder earned, net of protocol fees: the annualised change of each token's exchange rate over the previous 30 days.",
+        YIELD_METRIC.tooltip,
         'Network average is the return of active Ethereum validators before any protocol fee: consensus rewards plus what proposers earn from blocks, over their balance, for the same 30 days. Validators waiting to enter, or exited and not yet withdrawn, earn nothing and are left out.',
         'The shaded area is the ETH held by active validators (right axis): rewards per validator shrink as the square root of the total stake, so the yield falls as the stake grows.',
       ].join(' ')}
@@ -154,7 +155,7 @@ function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
       name="liquid-staking-cost-of-exit"
       title="Cost of exit"
       info={[
-        'How many days of staking yield a holder gives up to exit, by the cheaper route: waiting for a protocol withdrawal, which earns nothing while queued, or selling at the market discount.',
+        COST_OF_EXIT_METRIC.tooltip,
         'The discount is a 7-day median of market prices. For wBETH the wait is the operator-set lock time.',
       ].join(' ')}
       range={range}

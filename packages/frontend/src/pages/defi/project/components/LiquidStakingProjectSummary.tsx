@@ -8,10 +8,7 @@ import type {
   LiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import { formatTimestamp } from '~/utils/dates'
-import {
-  formatDays,
-  formatYield,
-} from '../../liquid-staking/formatLiquidStaking'
+import { LIQUID_STAKING_METRICS } from '../../liquid-staking/liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../../liquid-staking/liquidStakingRisks'
 
 /** The project's row of the liquid staking table, with its latest yield and cost of exit. */
@@ -34,30 +31,17 @@ export function LiquidStakingProjectSummary({
             )
           }
         />
-        <ProjectSummaryStat
-          title="Yield"
-          tooltip={withDate(
-            "The annualised change of the token's exchange rate over the previous 30 days, net of protocol fees.",
-            summary.yield,
-          )}
-          value={
-            summary.yield ? formatYield(summary.yield.value) : <NoDataBadge />
-          }
-        />
-        <ProjectSummaryStat
-          title="Cost of exit"
-          tooltip={withDate(
-            'Days of staking yield an exit costs, by the cheaper route: waiting for a protocol withdrawal or selling at the market discount.',
-            summary.costOfExit,
-          )}
-          value={
-            summary.costOfExit ? (
-              formatDays(summary.costOfExit.value)
-            ) : (
-              <NoDataBadge />
-            )
-          }
-        />
+        {LIQUID_STAKING_METRICS.map(({ key, title, tooltip, format }) => {
+          const latest = summary[key]
+          return (
+            <ProjectSummaryStat
+              key={key}
+              title={title}
+              tooltip={withDate(tooltip, latest)}
+              value={latest ? format(latest.value) : <NoDataBadge />}
+            />
+          )
+        })}
       </ul>
       <HorizontalSeparator className="my-4 max-md:hidden" />
       <ul className="grid gap-4 max-md:mt-4 md:grid-cols-3 lg:grid-cols-6">

@@ -69,15 +69,17 @@ async function getCachedData() {
   const helpers = getSsrHelpers()
   const defaultChartRange = optionToRange('1y')
 
-  const [appLayoutProps, entries] = await Promise.all([
+  const [appLayoutProps, projects, charts] = await Promise.all([
     getAppLayoutProps(),
-    getLiquidStakingProjects().then(getLiquidStakingEntries),
-    helpers.queryClient.prefetchQuery(
+    getLiquidStakingProjects(),
+    // Also fills the query cache, so the charts hydrate without a request.
+    helpers.queryClient.fetchQuery(
       helpers.trpc.defi.liquidStakingCharts.queryOptions({
         range: defaultChartRange,
       }),
     ),
   ])
+  const entries = await getLiquidStakingEntries(projects, charts)
 
   return {
     appLayoutProps,
