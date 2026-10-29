@@ -26,7 +26,7 @@ export function GardenCropsSection({
           href={GARDEN_PATH}
           className="inline-flex items-center gap-1 font-medium text-label-value-14 text-link"
         >
-          See The Infinite Garden
+          See the CROPS guide
           <CustomLinkIcon className="fill-current" />
         </a>
       }
