@@ -16,7 +16,7 @@ interface YourProjects {
   recent: SavedProject[]
 }
 
-const STORAGE_KEY = 'l2beat-your-projects'
+export const STORAGE_KEY = 'l2beat-your-projects'
 const CHANGE_EVENT = 'l2beat-your-projects-change'
 const MAX_RECENT = 8
 const EMPTY: YourProjects = { pinned: [], recent: [] }

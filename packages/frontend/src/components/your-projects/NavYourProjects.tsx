@@ -1,9 +1,12 @@
+import type { ReactNode } from 'react'
+import { useSyncExternalStore } from 'react'
 import { usePathname } from '~/hooks/usePathname'
 import { PinIcon } from '~/icons/Pin'
-import { cn } from '~/utils/cn'
 import { SidebarGroup, SidebarGroupLabel } from '../core/Sidebar'
+import { prerenderYourProjects } from './prerenderYourProjects'
 import {
   type SavedProject,
+  STORAGE_KEY,
   unpinProject,
   useYourProjects,
 } from './yourProjectsStore'
@@ -11,12 +14,49 @@ import {
 /** Recent rows, so the announcement under them keeps its room. */
 const RECENT_ROWS = 5
 
+const WRAPPER_CLASS = 'contents'
+// React 19 sets innerHTML whenever this object changes identity, which would
+// wipe the prerendered lists before React takes over.
+const KEEP_SERVER_MARKUP = { __html: '' }
+
 /**
  * Under the nav's sections: the projects the visitor pinned, then the ones
  * they opened last, all kept in the browser only. Nothing shows until there
  * are some.
+ *
+ * The lists live in localStorage and pages are cached at the edge, so the
+ * server can't render them. An inline script draws them from the server's
+ * row templates before the first paint, and React keeps that markup while it
+ * hydrates, then swaps in its own. Without it the lists would pop in on every
+ * page load.
  */
 export function NavYourProjects({ onNavigate }: { onNavigate: () => void }) {
+  const isHydrated = useIsHydrated()
+
+  if (typeof window === 'undefined') {
+    return (
+      <div key="prerendered" className={WRAPPER_CLASS}>
+        <PrerenderTemplates />
+      </div>
+    )
+  }
+  if (!isHydrated) {
+    return (
+      <div
+        key="prerendered"
+        className={WRAPPER_CLASS}
+        dangerouslySetInnerHTML={KEEP_SERVER_MARKUP}
+      />
+    )
+  }
+  return (
+    <div key="live" className={WRAPPER_CLASS}>
+      <YourProjectsLists onNavigate={onNavigate} />
+    </div>
+  )
+}
+
+function YourProjectsLists({ onNavigate }: { onNavigate: () => void }) {
   const { pinned, recent } = useYourProjects()
   const pathname = usePathname()
 
@@ -38,28 +78,76 @@ export function NavYourProjects({ onNavigate }: { onNavigate: () => void }) {
   return (
     <>
       {pinned.length > 0 && (
-        <SidebarGroup className="mt-5">
-          <SidebarGroupLabel>Pinned</SidebarGroupLabel>
-          <ul className="flex flex-col">
-            {pinned.map((project) => row(project, true))}
-          </ul>
-        </SidebarGroup>
+        <YourProjectsGroup label="Pinned">
+          {pinned.map((project) => row(project, true))}
+        </YourProjectsGroup>
       )}
       {recentOnly.length > 0 && (
-        <SidebarGroup className="mt-5">
-          <SidebarGroupLabel>Recently viewed</SidebarGroupLabel>
-          <ul className="flex flex-col">
-            {recentOnly.map((project) => row(project))}
-          </ul>
-          {pinned.length === 0 && (
-            <p className="mt-1 pl-1.5 text-2xs text-secondary leading-snug">
-              Pin a project from its page to keep it here. Saved only in this
-              browser.
-            </p>
-          )}
-        </SidebarGroup>
+        <YourProjectsGroup
+          label="Recently viewed"
+          withPinningHint={pinned.length === 0}
+        >
+          {recentOnly.map((project) => row(project))}
+        </YourProjectsGroup>
       )}
     </>
+  )
+}
+
+/**
+ * One group per list, each holding a single placeholder row. The script
+ * clones the row per project, so the markup has one source: the components
+ * React renders later.
+ */
+function PrerenderTemplates() {
+  const placeholder: SavedProject = { href: '#', name: '', iconUrl: 'data:,' }
+  const script = `(${prerenderYourProjects.toString()})(document.currentScript.parentElement, ${JSON.stringify(STORAGE_KEY)}, ${RECENT_ROWS})`
+  return (
+    <>
+      <template data-list="pinned">
+        <YourProjectsGroup label="Pinned">
+          <ProjectRow
+            project={placeholder}
+            isActive={false}
+            onNavigate={() => {}}
+            pinned
+          />
+        </YourProjectsGroup>
+      </template>
+      <template data-list="recent">
+        <YourProjectsGroup label="Recently viewed" withPinningHint>
+          <ProjectRow
+            project={placeholder}
+            isActive={false}
+            onNavigate={() => {}}
+          />
+        </YourProjectsGroup>
+      </template>
+      <script dangerouslySetInnerHTML={{ __html: script }} />
+    </>
+  )
+}
+
+function YourProjectsGroup({
+  label,
+  withPinningHint,
+  children,
+}: {
+  label: string
+  withPinningHint?: boolean
+  children: ReactNode
+}) {
+  return (
+    <SidebarGroup className="mt-5">
+      <SidebarGroupLabel>{label}</SidebarGroupLabel>
+      <ul className="flex flex-col">{children}</ul>
+      {withPinningHint && (
+        <p className="mt-1 pl-1.5 text-2xs text-secondary leading-snug">
+          Pin a project from its page to keep it here. Saved only in this
+          browser.
+        </p>
+      )}
+    </SidebarGroup>
   )
 }
 
@@ -79,10 +167,8 @@ function ProjectRow({
       <a
         href={project.href}
         onClick={onNavigate}
-        className={cn(
-          'flex min-w-0 flex-1 items-center gap-2 pl-1.5 text-sm',
-          isActive ? 'text-brand' : 'hover:text-primary',
-        )}
+        data-active={isActive}
+        className="flex min-w-0 flex-1 items-center gap-2 pl-1.5 text-sm hover:text-primary data-[active=true]:text-brand"
       >
         <img
           src={project.iconUrl}
@@ -106,4 +192,20 @@ function ProjectRow({
       )}
     </li>
   )
+}
+
+/**
+ * False while React hydrates the server markup, true afterwards and on any
+ * later mount, such as the mobile nav opening.
+ */
+function useIsHydrated() {
+  return useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false,
+  )
+}
+
+function subscribeToNothing() {
+  return () => {}
 }
