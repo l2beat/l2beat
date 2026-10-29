@@ -19,7 +19,12 @@ const DEPOSIT_EVENT_TOPIC = depositInterface.getEventTopic('DepositEvent')
  */
 const DEPOSIT_REQUESTS_START_INDEX = 2_045_126
 
-/** Blocks in a day at 12-second slots, a step of the search for older deposits. */
+/**
+ * Blocks in a day at 12-second slots. The search for older deposits reads a
+ * day per call rather than its whole range: it stops at the day that has them,
+ * almost always yesterday, and each call stays under QuickNode's 10,000-block
+ * cap, whose HTTP 413 the legacy RpcClient throws on instead of splitting.
+ */
 const BLOCKS_PER_DAY = 7200
 /** Days back a queued deposit is looked for before the day fails. */
 const MAX_QUEUE_DAYS = 7
