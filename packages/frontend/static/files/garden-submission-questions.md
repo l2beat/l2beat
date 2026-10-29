@@ -1,7 +1,7 @@
 # Submit your protocol for a CROPS review
 
 Answer what applies and publish as a forum post. The criteria for each
-property are listed on https://l2beat.com/crops-guide.
+property are listed on https://l2beat.com/crops.
 
 ---
 
