@@ -1,6 +1,5 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TabInfoWithDrawer } from '~/components/TabInfoWithDrawer'
@@ -37,12 +36,11 @@ export function LiquidStakingPage({
           <MainPageHeader description={LIQUID_STAKING_DESCRIPTION}>
             Liquid Staking
           </MainPageHeader>
-          <PrimaryCard className="md:mt-4">
-            <LiquidStakingCharts
-              projects={chartProjects}
-              defaultRange={defaultChartRange}
-            />
-            <HorizontalSeparator className="my-5" />
+          <LiquidStakingCharts
+            projects={chartProjects}
+            defaultRange={defaultChartRange}
+          />
+          <PrimaryCard className="mt-4">
             <h2 className="mb-1 font-bold text-xl md:text-2xl">
               Risk comparison
             </h2>

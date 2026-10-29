@@ -7,7 +7,6 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
@@ -104,8 +103,8 @@ export function LiquidStakingTable({
   })
 
   return (
-    <PrimaryCard className="mt-4">
+    <div className="mt-4">
       <BasicTable table={table} />
-    </PrimaryCard>
+    </div>
   )
 }
