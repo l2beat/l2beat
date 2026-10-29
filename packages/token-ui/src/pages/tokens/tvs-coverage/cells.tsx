@@ -1,10 +1,5 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import {
-  ArrowDownIcon,
-  ArrowUpDownIcon,
-  ArrowUpIcon,
-  InfoIcon,
-} from 'lucide-react'
+import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { Badge } from '~/components/core/Badge'
 import { TableHead } from '~/components/core/Table'
@@ -78,29 +73,24 @@ export function Tag({
   )
 }
 
-// The info icon marks what can be hovered; pass `hint={false}` when the
-// trigger already has an icon of its own.
+// Hoverable text is underlined with dots, like the frontend's
+// MetricWithTooltip. Tags and icons only change the cursor.
+export const HOVERABLE_TEXT =
+  'underline decoration-dotted decoration-muted-foreground/60 underline-offset-2'
+
 export function WithTooltip({
   content,
-  hint = true,
   children,
 }: {
   content: ReactNode
-  hint?: boolean
   children: ReactNode
 }) {
   if (!content) return children
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <span className="inline-flex items-center gap-0.5" tabIndex={0}>
+        <span className="inline-flex cursor-help" tabIndex={0}>
           {children}
-          {hint && (
-            <InfoIcon
-              aria-hidden
-              className="size-3 shrink-0 text-muted-foreground/70"
-            />
-          )}
         </span>
       </TooltipTrigger>
       <TooltipContent className="max-w-80 text-left">{content}</TooltipContent>
@@ -137,7 +127,12 @@ export function ProjectCell({
           <WithTooltip
             content={`The project's own lock-and-mint bridge moved this token on ${formatChain(row.chain)}, so the project's escrows there should hold it.`}
           >
-            <span className="truncate text-muted-foreground text-xs">
+            <span
+              className={cn(
+                'truncate text-muted-foreground text-xs',
+                HOVERABLE_TEXT,
+              )}
+            >
               Escrow on {formatChain(row.chain)}
             </span>
           </WithTooltip>
@@ -179,12 +174,12 @@ export function TokenCell({
                 </>
               }
             >
-              <Note>{formatRole(row.role)}</Note>
+              <Note className={HOVERABLE_TEXT}>{formatRole(row.role)}</Note>
             </WithTooltip>
           )}
           {row.ignored && (
             <WithTooltip content="The token DB marks this token as ignored, which also leaves it out of interop financials.">
-              <Note>ignored</Note>
+              <Note className={HOVERABLE_TEXT}>ignored</Note>
             </WithTooltip>
           )}
           {vault && (
@@ -322,9 +317,17 @@ export function SortableHead({
   )
 }
 
-export function Note({ children }: { children: ReactNode }) {
+export function Note({
+  className,
+  children,
+}: {
+  className?: string
+  children: ReactNode
+}) {
   return (
-    <span className="shrink-0 text-muted-foreground text-xs">{children}</span>
+    <span className={cn('shrink-0 text-muted-foreground text-xs', className)}>
+      {children}
+    </span>
   )
 }
 

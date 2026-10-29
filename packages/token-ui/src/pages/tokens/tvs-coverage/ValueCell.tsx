@@ -1,6 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
-import { Tag, WithTooltip } from './cells'
+import { cn } from '~/utils/cn'
+import { HOVERABLE_TEXT, Tag, WithTooltip } from './cells'
 import {
   formatAmount,
   formatChain,
@@ -36,7 +37,7 @@ export function ValueCell({ row }: { row: Row }) {
         <WithTooltip
           content={`Price ${formatCurrency(value.priceUsd ?? 0, 'usd')} from ${row.pricing?.coingeckoId}`}
         >
-          <span className="font-medium">
+          <span className={cn('font-medium', HOVERABLE_TEXT)}>
             {formatCurrency(value.valueUsd, 'usd')}
           </span>
         </WithTooltip>
@@ -44,7 +45,7 @@ export function ValueCell({ row }: { row: Row }) {
       <div className="flex flex-wrap items-center justify-end gap-1 text-muted-foreground text-xs">
         <AmountTags row={row} value={value} />
         <WithTooltip content={<AmountDetails row={row} value={value} />}>
-          <span>
+          <span className={HOVERABLE_TEXT}>
             {row.side === 'escrow' && value.amount === 0
               ? 'none in escrows'
               : formatAmount(value.amount)}
@@ -181,7 +182,9 @@ function Muted({
 }) {
   return (
     <WithTooltip content={tooltip}>
-      <span className="text-muted-foreground text-xs">{children}</span>
+      <span className={cn('text-muted-foreground text-xs', HOVERABLE_TEXT)}>
+        {children}
+      </span>
     </WithTooltip>
   )
 }
