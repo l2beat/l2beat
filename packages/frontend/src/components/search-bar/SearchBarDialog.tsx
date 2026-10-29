@@ -101,7 +101,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
     track('searchBarProjectSelected', {
       name: item.name,
     })
-    // Clear after the dialog's close animation (duration-200) so the input
+    // Clear after the dialog's close animation (100ms) so the input
     // doesn't visibly reset and flash the "Recently added" list mid-close.
     setTimeout(() => setValue(''), 200)
   }
