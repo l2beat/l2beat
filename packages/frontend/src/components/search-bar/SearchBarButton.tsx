@@ -15,7 +15,9 @@ export function SearchBarButton({ className }: { className?: string }) {
       // A fixed name: the hint after "Search" changes every few seconds.
       aria-label="Search"
       className={cn(
-        'flex h-10 w-72 items-center rounded-lg border border-divider bg-surface-primary p-2.5 text-secondary transition-transform duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]',
+        // A size container, so the hint can't widen it: beside a full-width
+        // column it shrinks to min-w-60, and the hint drops its example.
+        '@container/search flex h-10 w-72 min-w-60 items-center rounded-lg border border-divider bg-surface-primary p-2.5 text-secondary transition-transform duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]',
         className,
       )}
     >
@@ -76,7 +78,12 @@ function ExampleHint() {
         { duration: 120, easing: EASE_OUT_QUINT, fill: 'forwards' },
       )
       exit.onfinish = () => {
-        element.textContent = SEARCH_BAR_EXAMPLES[index] ?? ''
+        const [full, short] = element.children
+        const example = SEARCH_BAR_EXAMPLES[index]
+        if (full && short && example) {
+          full.textContent = example.full
+          short.textContent = example.short
+        }
         element.animate(
           [
             { opacity: 0, transform: 'translateY(4px)', filter: 'blur(2px)' },
@@ -95,7 +102,13 @@ function ExampleHint() {
 
   return (
     <span ref={ref} className="truncate font-normal text-secondary/80">
-      {SEARCH_BAR_EXAMPLES[0]}
+      {/* 16rem: the longest full hint, with room before the "/" */}
+      <span className="@max-[16rem]/search:hidden">
+        {SEARCH_BAR_EXAMPLES[0]?.full}
+      </span>
+      <span className="@min-[16rem]/search:hidden">
+        {SEARCH_BAR_EXAMPLES[0]?.short}
+      </span>
     </span>
   )
 }
