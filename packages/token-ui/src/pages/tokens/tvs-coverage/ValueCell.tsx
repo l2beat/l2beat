@@ -29,12 +29,13 @@ export function ValueCell({ row }: { row: Row }) {
   if (!value) return null
   if (value.amount === undefined) {
     return (
-      <div className="flex flex-col items-end">
+      <div className="flex flex-wrap items-center justify-end gap-1 text-muted-foreground text-xs">
+        <IncompleteDataTag change={value.supplyChange} />
         <Muted tooltip={describeAmountGap(row, value)}>
           {AMOUNT_GAP_LABELS[value.amountGap ?? 'readFailed']}
         </Muted>
         {value.supplyChange && (
-          <SupplyChangeLine row={row} change={value.supplyChange} />
+          <SupplyChangeAmount row={row} change={value.supplyChange} />
         )}
       </div>
     )
@@ -54,6 +55,7 @@ export function ValueCell({ row }: { row: Row }) {
       )}
       <div className="flex flex-wrap items-center justify-end gap-1 text-muted-foreground text-xs">
         <AmountTags row={row} value={value} />
+        <IncompleteDataTag change={value.supplyChange} />
         <WithTooltip content={<AmountDetails row={row} value={value} />}>
           <span className={HOVERABLE_TEXT}>
             {row.side === 'escrow' && value.amount === 0
@@ -61,68 +63,74 @@ export function ValueCell({ row }: { row: Row }) {
               : formatAmount(value.amount)}
           </span>
         </WithTooltip>
+        {value.supplyChange && (
+          <SupplyChangeAmount row={row} change={value.supplyChange} />
+        )}
       </div>
-      {value.supplyChange && (
-        <SupplyChangeLine row={row} change={value.supplyChange} />
-      )}
     </div>
   )
 }
 
-function SupplyChangeLine({ row, change }: { row: Row; change: SupplyChange }) {
+function IncompleteDataTag({ change }: { change: SupplyChange | undefined }) {
+  if (!change || !hasUnknownTransfers(change)) return null
+  return (
+    <Tag tone="neutral" small>
+      incomplete data
+    </Tag>
+  )
+}
+
+function SupplyChangeAmount({
+  row,
+  change,
+}: {
+  row: Row
+  change: SupplyChange
+}) {
   const unknown = change.netMintedByBridge.filter(
     (bridge) => bridge.unknownTransfers > 0,
   )
   const copy = row.side === 'escrow' ? row.value?.mintedCopy : undefined
   const issuance = hasUnexplainedIssuance(row)
   return (
-    <div className="flex flex-wrap items-center justify-end gap-1 text-muted-foreground text-xs">
-      {hasUnknownTransfers(change) && (
-        <Tag tone="neutral" small>
-          incomplete data
-        </Tag>
-      )}
-      <WithTooltip
-        content={
-          <div className="space-y-1">
-            {issuance && (
-              <div>
-                Unexplained issuance: the supply grew more, or fell less, than
-                tracked bridges explain.
-              </div>
-            )}
-            {copy && (
-              <div>
-                Supply of {copy.symbol ?? shortAddress(copy.address)} on{' '}
-                {formatChain(copy.chain)}, the minted copy:{' '}
-                {formatOptionalAmount(copy.supply)}.
-              </div>
-            )}
-            <div>{describeSupplyChange(change)}</div>
-            {unknown.length > 0 && (
-              <div>
-                Transfers that do not say whether they minted or burned:{' '}
-                {unknown
-                  .map(
-                    (bridge) => `${bridge.plugin} ${bridge.unknownTransfers}`,
-                  )
-                  .join(', ')}
-                .
-              </div>
-            )}
-          </div>
-        }
-      >
-        <span
-          className={cn(
-            HOVERABLE_TEXT,
-            issuance && 'text-amber-800 dark:text-amber-200',
+    <WithTooltip
+      content={
+        <div className="space-y-1">
+          {issuance && (
+            <div>
+              Unexplained issuance: the supply grew more, or fell less, than
+              tracked bridges explain.
+            </div>
           )}
-        >
-          {formatChange(change.amount)} since {formatDay(change.since)}
-        </span>
-      </WithTooltip>
-    </div>
+          {copy && (
+            <div>
+              Supply of {copy.symbol ?? shortAddress(copy.address)} on{' '}
+              {formatChain(copy.chain)}, the minted copy:{' '}
+              {formatOptionalAmount(copy.supply)}.
+            </div>
+          )}
+          <div>{describeSupplyChange(change)}</div>
+          {unknown.length > 0 && (
+            <div>
+              Transfers that do not say whether they minted or burned:{' '}
+              {unknown
+                .map((bridge) => `${bridge.plugin} ${bridge.unknownTransfers}`)
+                .join(', ')}
+              .
+            </div>
+          )}
+        </div>
+      }
+    >
+      <span
+        className={cn(
+          HOVERABLE_TEXT,
+          issuance && 'text-amber-800 dark:text-amber-200',
+        )}
+      >
+        ({formatChange(change.amount)})
+      </span>
+    </WithTooltip>
   )
 }
 
