@@ -12,6 +12,13 @@ import {
   CardTitle,
 } from '~/components/core/Card'
 import { Checkbox } from '~/components/core/Checkbox'
+import {
+  Empty,
+  EmptyContent,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '~/components/core/Empty'
 import { Input } from '~/components/core/Input'
 import { Label } from '~/components/core/Label'
 import {
@@ -21,6 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/Select'
+import { Spinner } from '~/components/core/Spinner'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useTRPC } from '~/react-query/trpc'
@@ -44,6 +52,7 @@ import {
 import { TvsCoverageTable } from './TvsCoverageTable'
 
 const PAGE_SIZE = 50
+const BUILD_POLL_MS = 5_000
 
 const SIDE_FILTERS: Option<SideFilter>[] = [
   { value: 'all', label: 'Chain + escrow' },
@@ -74,21 +83,21 @@ export function TvsCoveragePage() {
     trpc.tvsCoverage.get.queryOptions(undefined, {
       staleTime: 5 * 60 * 1000,
       refetchOnWindowFocus: false,
+      // Builds run in the background, so the page polls until one finishes.
+      refetchInterval: (query) =>
+        query.state.data?.building ? BUILD_POLL_MS : false,
     }),
   )
-  const invalidate = () =>
-    queryClient.invalidateQueries(trpc.tvsCoverage.get.queryFilter())
   const refresh = useMutation(
     trpc.tvsCoverage.refresh.mutationOptions({
-      onSuccess: async () => {
-        await invalidate()
-        toast.success('Snapshot rebuilt')
-      },
+      onSuccess: () =>
+        queryClient.invalidateQueries(trpc.tvsCoverage.get.queryFilter()),
       onError: (error) => {
-        toast.error(error.message || 'Failed to rebuild the snapshot')
+        toast.error(error.message || 'Failed to start a rebuild')
       },
     }),
   )
+  const isBuilding = refresh.isPending || (data?.building ?? false)
 
   return (
     <AppLayout className="min-w-0">
@@ -99,10 +108,17 @@ export function TvsCoveragePage() {
           <div className="grid h-full place-items-center p-4 text-center text-destructive text-sm">
             {error.message}
           </div>
-        ) : data ? (
+        ) : data?.snapshot ? (
           <TvsGaps
-            snapshot={data}
-            isRefreshing={refresh.isPending}
+            snapshot={data.snapshot}
+            failedAt={data.failedAt}
+            isRefreshing={isBuilding}
+            onRefresh={() => refresh.mutate()}
+          />
+        ) : data ? (
+          <NoSnapshot
+            failedAt={data.failedAt}
+            isBuilding={isBuilding}
             onRefresh={() => refresh.mutate()}
           />
         ) : null}
@@ -111,12 +127,52 @@ export function TvsCoveragePage() {
   )
 }
 
+function NoSnapshot({
+  failedAt,
+  isBuilding,
+  onRefresh,
+}: {
+  failedAt: number | undefined
+  isBuilding: boolean
+  onRefresh: () => void
+}) {
+  const now = Math.floor(Date.now() / 1000)
+  return (
+    <Empty className="h-full">
+      <EmptyHeader>
+        {isBuilding && (
+          <EmptyMedia variant="icon">
+            <Spinner />
+          </EmptyMedia>
+        )}
+        <EmptyTitle>
+          {isBuilding ? 'Building the first snapshot' : 'No snapshot yet'}
+        </EmptyTitle>
+      </EmptyHeader>
+      <EmptyContent className="text-muted-foreground">
+        {isBuilding
+          ? 'This can take a few minutes. The page updates when it is ready.'
+          : failedAt !== undefined
+            ? `The last build failed ${formatAge(failedAt, now)}. The token-backend logs have the error.`
+            : 'No build has finished yet.'}
+        {!isBuilding && (
+          <Button type="button" variant="outline" onClick={onRefresh}>
+            Build now
+          </Button>
+        )}
+      </EmptyContent>
+    </Empty>
+  )
+}
+
 function TvsGaps({
   snapshot,
+  failedAt,
   isRefreshing,
   onRefresh,
 }: {
   snapshot: Snapshot
+  failedAt: number | undefined
   isRefreshing: boolean
   onRefresh: () => void
 }) {
@@ -200,6 +256,12 @@ function TvsGaps({
                   : `${snapshot.warnings.length} warnings`}
               </span>
             </WithTooltip>
+          )}
+          {failedAt !== undefined && (
+            <span className="flex items-center gap-1 text-amber-700 text-xs dark:text-amber-300">
+              <TriangleAlertIcon className="size-3.5" />
+              Last rebuild failed {formatAge(failedAt, now)}
+            </span>
           )}
           <Button
             type="button"
