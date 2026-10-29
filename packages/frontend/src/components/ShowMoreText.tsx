@@ -28,19 +28,20 @@ export function ShowMoreText({
   const [expanded, setExpanded] = useState(false)
   const [isOverflowing, setIsOverflowing] = useState(false)
   const contentRef = useRef<HTMLDivElement>(null)
-  const { isDesktop } = useDevice()
+  const { isMobile } = useDevice()
 
   const handleResize = useCallback(() => {
     if (contentRef.current) {
       const { scrollHeight, offsetHeight, clientWidth, scrollWidth } =
         contentRef.current
-      if (isDesktop) {
-        setIsOverflowing(scrollWidth > clientWidth)
-      } else {
+      // Matches the classes below: two lines under `md`, one line from it.
+      if (isMobile) {
         setIsOverflowing(scrollHeight > offsetHeight)
+      } else {
+        setIsOverflowing(scrollWidth > clientWidth)
       }
     }
-  }, [isDesktop])
+  }, [isMobile])
 
   useEffect(() => {
     handleResize()
