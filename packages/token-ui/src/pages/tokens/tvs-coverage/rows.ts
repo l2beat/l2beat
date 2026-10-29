@@ -3,7 +3,9 @@ import type { RouterInputs, RouterOutputs } from '@l2beat/token-backend'
 export type Snapshot = NonNullable<
   RouterOutputs['tvsCoverage']['get']['snapshot']
 >
-export type Row = Snapshot['rows'][number]
+export type SnapshotRow = Snapshot['rows'][number]
+export type Dismissal = RouterOutputs['tvsCoverage']['dismissals'][number]
+export type Row = SnapshotRow & { dismissal: Dismissal | undefined }
 export type RowValue = NonNullable<Row['value']>
 export type Status = Row['status']
 export type Bridge = Row['bridges'][number]
@@ -102,6 +104,24 @@ export function rowId(
   row: Pick<Row, 'projectId' | 'chain' | 'address'>,
 ): string {
   return `${row.projectId}:${row.chain}:${row.address}`
+}
+
+// A dismissed gap that the project starts counting is no longer a gap, so it
+// leaves the dismissed list. The dismissal shows again if counting stops.
+export function attachDismissals(
+  rows: SnapshotRow[],
+  dismissals: Dismissal[],
+): Row[] {
+  const byRow = new Map(
+    dismissals.map((dismissal) => [rowId(dismissal), dismissal]),
+  )
+  return rows.map((row) => ({
+    ...row,
+    dismissal:
+      row.status === 'counted' || row.status === 'countedViaCounterpart'
+        ? undefined
+        : byRow.get(rowId(row)),
+  }))
 }
 
 // A chain row paired with an escrow row is the same gap seen from the other

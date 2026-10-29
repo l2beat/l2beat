@@ -36,6 +36,8 @@ import { cn } from '~/utils/cn'
 import { WithTooltip } from './cells'
 import type { DismissalActions } from './DismissalCell'
 import {
+  attachDismissals,
+  type Dismissal,
   defaultDirection,
   type Filters,
   filterRows,
@@ -100,18 +102,25 @@ export function TvsCoveragePage() {
   )
   const isBuilding = refresh.isPending || (data?.building ?? false)
 
+  const dismissals = useQuery(
+    trpc.tvsCoverage.dismissals.queryOptions(undefined, {
+      refetchOnWindowFocus: false,
+    }),
+  )
+  const invalidateDismissals = () =>
+    queryClient.invalidateQueries(trpc.tvsCoverage.dismissals.queryFilter())
   const onDecisionError = (error: { message: string }) => {
     toast.error(error.message || 'Failed to save the decision')
   }
   const dismiss = useMutation(
     trpc.tvsCoverage.dismiss.mutationOptions({
-      onSuccess: invalidate,
+      onSuccess: invalidateDismissals,
       onError: onDecisionError,
     }),
   )
   const restore = useMutation(
     trpc.tvsCoverage.restore.mutationOptions({
-      onSuccess: invalidate,
+      onSuccess: invalidateDismissals,
       onError: onDecisionError,
     }),
   )
@@ -119,23 +128,18 @@ export function TvsCoveragePage() {
   return (
     <AppLayout className="min-w-0">
       <Card className="flex h-[calc(100vh-16px)] flex-col">
-        {isLoading ? (
+        {isLoading || dismissals.isLoading ? (
           <LoadingState className="h-full" />
-        ) : isError ? (
+        ) : isError || dismissals.isError ? (
           <div className="grid h-full place-items-center p-4 text-center text-destructive text-sm">
-            {error.message}
+            {(error ?? dismissals.error)?.message}
           </div>
         ) : data?.snapshot ? (
           <TvsGaps
             snapshot={data.snapshot}
+            dismissals={dismissals.data ?? []}
             failedAt={data.failedAt}
             isRefreshing={isBuilding}
-            onRefresh={() => refresh.mutate()}
-          />
-        ) : data ? (
-          <NoSnapshot
-            failedAt={data.failedAt}
-            isBuilding={isBuilding}
             onRefresh={() => refresh.mutate()}
             dismissalActions={{
               dismiss: (row, reason, comment, onDismissed) =>
@@ -157,6 +161,12 @@ export function TvsCoveragePage() {
                 }),
               isPending: dismiss.isPending || restore.isPending,
             }}
+          />
+        ) : data ? (
+          <NoSnapshot
+            failedAt={data.failedAt}
+            isBuilding={isBuilding}
+            onRefresh={() => refresh.mutate()}
           />
         ) : null}
       </Card>
@@ -204,12 +214,14 @@ function NoSnapshot({
 
 function TvsGaps({
   snapshot,
+  dismissals,
   failedAt,
   isRefreshing,
   onRefresh,
   dismissalActions,
 }: {
   snapshot: Snapshot
+  dismissals: Dismissal[]
   failedAt: number | undefined
   isRefreshing: boolean
   onRefresh: () => void
@@ -237,14 +249,18 @@ function TvsGaps({
         .map((project) => ({ value: project.id, label: project.name })),
     ]
   }, [snapshot])
+  const allRows = useMemo(
+    () => attachDismissals(snapshot.rows, dismissals),
+    [dismissals, snapshot],
+  )
   const rows = useMemo(
     () =>
       sortRows(
-        filterRows(snapshot.rows, filters, names, snapshot.window.to),
+        filterRows(allRows, filters, names, snapshot.window.to),
         sort,
         names,
       ),
-    [filters, names, snapshot, sort],
+    [allRows, filters, names, snapshot, sort],
   )
 
   const showMore = useCallback(

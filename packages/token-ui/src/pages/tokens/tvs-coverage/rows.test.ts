@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import {
+  attachDismissals,
   type Filters,
   filterRows,
   type Names,
@@ -21,6 +22,9 @@ const filters: Filters = {
   showIgnored: true,
 }
 const DISMISSAL: Row['dismissal'] = {
+  projectId: 'base',
+  chain: 'base',
+  address: '0x2',
   reason: 'spam',
   comment: undefined,
   dismissedBy: 'a@l2beat.com',
@@ -160,6 +164,40 @@ describe(sumValue.name, () => {
 
     expect(sumValue([escrow, copy, other])).toEqual(105)
     expect(sumValue([copy, other])).toEqual(85)
+  })
+})
+
+describe(attachDismissals.name, () => {
+  it('attaches a dismissal to the row of the same project and token, unless the project counts it', () => {
+    const dismissal = {
+      projectId: 'base',
+      chain: 'base',
+      address: '0xabc',
+      reason: 'spam' as const,
+      comment: undefined,
+      dismissedBy: 'researcher@l2beat.com',
+      dismissedAt: 100,
+    }
+
+    const result = attachDismissals(
+      [
+        row({ address: '0xabc' }),
+        row({ projectId: 'ink', address: '0xabc' }),
+        row({ address: '0xdef' }),
+      ],
+      [dismissal, { ...dismissal, address: '0xdef' }],
+    )
+    const counted = attachDismissals(
+      [row({ address: '0xabc', status: 'counted' })],
+      [dismissal],
+    )
+
+    expect(result.map((row) => row.dismissal)).toEqual([
+      dismissal,
+      undefined,
+      { ...dismissal, address: '0xdef' },
+    ])
+    expect(counted[0]?.dismissal).toEqual(undefined)
   })
 })
 
