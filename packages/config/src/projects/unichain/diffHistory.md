@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xac8882000be2dda7afac4d3a8df51b081f1581e8
+Generated with discovered.json: 0x99df4644937c7f4892199d2cdd0503c88538b0a8
 
-# Diff at Wed, 28 Oct 2026 14:13:22 GMT:
+# Diff at Thu, 29 Oct 2026 11:17:39 GMT:
 
 - id: ee800e59
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -50,16 +50,50 @@ L1Splitter: L1 recipient changed and minimum withdrawal 10 → 3 ETH, set by Uni
 
 ```diff
     contract L1Splitter (unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) [unichain/L1Splitter] {
-    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0xFb9d55c1846D1d442B277F6f87Da319156941401).
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xFb9d55c1846D1d442B277F6f87Da319156941401).
       description:
--        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15)."
-+        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0xFb9d55c1846D1d442B277F6f87Da319156941401)."
+-        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15)."
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xFb9d55c1846D1d442B277F6f87Da319156941401)."
       values.l1Recipient:
--        "unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15"
-+        "unichain:0xFb9d55c1846D1d442B277F6f87Da319156941401"
+-        "eth:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15"
++        "eth:0xFb9d55c1846D1d442B277F6f87Da319156941401"
       values.minWithdrawalAmount:
 -        "10000000000000000000"
 +        "3000000000000000000"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792587967 (main branch discovery), not current.
+
+```diff
+    contract L1Splitter (unichain:0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002) [unichain/L1Splitter] {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa).
+      description:
+-        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa)."
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa)."
+      values.l1Recipient:
+-        "unichain:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa"
++        "eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L1Splitter (unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) [unichain/L1Splitter] {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15).
+      description:
+-        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15)."
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15)."
+      values.l1Recipient:
+-        "unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15"
++        "eth:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
     }
 ```
 
