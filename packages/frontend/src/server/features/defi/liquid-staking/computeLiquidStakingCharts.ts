@@ -70,6 +70,51 @@ export function computeLiquidStakingCharts(
   }
 }
 
+export interface LiquidStakingStats {
+  yield: number | null
+  costOfExit: number | null
+  /** Days a protocol withdrawal takes. */
+  queueWait: number | null
+  /** Below the ETH backing, as a fraction; negative at a premium. */
+  marketDiscount: number | null
+}
+
+/**
+ * Each project's latest value of what the charts show, by project id. Each
+ * value comes from the latest day that has one.
+ */
+export function computeLiquidStakingStats(
+  inputs: LiquidStakingChartInputs,
+): Map<string, LiquidStakingStats> {
+  const newestFirst = [...inputs.days].reverse()
+  const latest = (value: (day: number) => number | null) => {
+    for (const day of newestFirst) {
+      const result = value(day)
+      if (result !== null) return result
+    }
+    return null
+  }
+
+  return new Map(
+    inputs.projects.map((project) => {
+      const series = new ProjectSeries(
+        project,
+        inputs.snapshots.filter((s) => s.projectId === project.id),
+        inputs.prices,
+      )
+      return [
+        project.id,
+        {
+          yield: latest((day) => series.yieldAt(day)),
+          costOfExit: latest((day) => series.costOfExitAt(day)),
+          queueWait: latest((day) => series.queueDaysAt(day)),
+          marketDiscount: latest((day) => series.discountMedianAt(day)),
+        },
+      ]
+    }),
+  )
+}
+
 class ProjectSeries {
   private readonly byTimestamp: Map<number, LiquidStakingSnapshotRecord>
   /** Request day → the request-weighted wait of its requests, in days. */
@@ -101,7 +146,7 @@ class ProjectSeries {
   }
 
   /** A queued exit earns nothing while it waits, so it costs the wait. */
-  private queueDaysAt(day: number): number | null {
+  queueDaysAt(day: number): number | null {
     switch (this.project.type) {
       case 'lido':
       case 'etherfi':
@@ -122,16 +167,19 @@ class ProjectSeries {
   private marketDaysAt(day: number): number | null {
     const annualYield = this.yieldAt(day)
     if (annualYield === null || annualYield <= 0) return null
+    const discount = this.discountMedianAt(day)
+    if (discount === null) return null
+    // A token at a premium exits for free.
+    return (Math.max(0, discount) * 365) / annualYield
+  }
 
+  discountMedianAt(day: number): number | null {
     const discounts: number[] = []
     for (let i = 0; i < DISCOUNT_WINDOW_DAYS; i++) {
       const discount = this.discountAt(day - i * DAY)
       if (discount !== undefined) discounts.push(discount)
     }
-    const discount = median(discounts)
-    if (discount === undefined) return null
-    // A token at a premium exits for free.
-    return (Math.max(0, discount) * 365) / annualYield
+    return median(discounts) ?? null
   }
 
   /** How far below its ETH backing the token trades. */

@@ -6,6 +6,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
   computeLiquidStakingCharts,
+  computeLiquidStakingStats,
   getQueueWaits,
   type LiquidStakingChartProject,
 } from './computeLiquidStakingCharts'
@@ -119,6 +120,35 @@ describe(computeLiquidStakingCharts.name, () => {
     )
     expect(present(compute([], [], network).yield[0]?.network)).toBeCloseTo(
       ((65 * 30) / (999_145 - (1_000 * 20) / 30)) * (365 / 30),
+      1e-6,
+    )
+  })
+})
+
+describe(computeLiquidStakingStats.name, () => {
+  it('takes each value from the latest day that has one', () => {
+    // The last day has no snapshot yet, so the rate-based values come from
+    // the day before.
+    const stats = computeLiquidStakingStats({
+      days: [UnixTime(DAY_31), UnixTime(DAY_31 + DAY)],
+      projects: [project('wbeth')],
+      snapshots: [
+        snapshot('wbeth', START + DAY, 1.0),
+        snapshot('wbeth', DAY_31, 1.01, { lockTime: 40 * DAY }),
+      ],
+      network: [],
+      prices: new Map([
+        ['ethereum', dailyPrices(2000)],
+        ['wrapped-beacon-eth', dailyPrices(2000 * 1.01 * 0.999)],
+      ]),
+    }).get('wbeth')
+
+    const annualYield = 0.01 * (365 / 30)
+    expect(present(stats?.yield)).toBeCloseTo(annualYield, 1e-6)
+    expect(stats?.queueWait).toEqual(40)
+    expect(present(stats?.marketDiscount)).toBeCloseTo(0.001, 1e-6)
+    expect(present(stats?.costOfExit)).toBeCloseTo(
+      (0.001 * 365) / annualYield,
       1e-6,
     )
   })

@@ -1,6 +1,8 @@
 import type { ProjectLiquidStakingRisks } from '@l2beat/config'
 import { manifest } from '~/utils/Manifest'
 import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
+import type { LiquidStakingStats } from './computeLiquidStakingCharts'
+import { getLiquidStakingStats } from './getLiquidStakingCharts'
 import type { LiquidStakingProject } from './getLiquidStakingProjects'
 
 export interface LiquidStakingEntry {
@@ -14,13 +16,24 @@ export interface LiquidStakingEntry {
   isUnderReview: boolean
   totalValueLockedUsd?: number
   risks: ProjectLiquidStakingRisks
+  stats: LiquidStakingStats
+}
+
+const NO_STATS: LiquidStakingStats = {
+  yield: null,
+  costOfExit: null,
+  queueWait: null,
+  marketDiscount: null,
 }
 
 /** Sorted by TVL, the projects without one last. */
 export async function getLiquidStakingEntries(
   projects: LiquidStakingProject[],
 ): Promise<LiquidStakingEntry[]> {
-  const tvlByProject = await getTotalValueLockedByProject(projects)
+  const [tvlByProject, statsByProject] = await Promise.all([
+    getTotalValueLockedByProject(projects),
+    getLiquidStakingStats(projects),
+  ])
 
   return projects
     .map(
@@ -35,6 +48,7 @@ export async function getLiquidStakingEntries(
         isUnderReview: !!project.statuses.reviewStatus,
         totalValueLockedUsd: tvlByProject.get(project.id),
         risks: project.liquidStakingRisks,
+        stats: statsByProject.get(project.id) ?? NO_STATS,
       }),
     )
     .sort(
