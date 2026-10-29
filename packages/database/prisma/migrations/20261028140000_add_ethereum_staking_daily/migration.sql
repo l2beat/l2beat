@@ -3,6 +3,7 @@ CREATE TABLE "EthereumStakingDaily" (
     "timestamp" TIMESTAMP(6) NOT NULL,
     "slot" INTEGER NOT NULL,
     "totalBalance" DECIMAL(80,0) NOT NULL,
+    "activeBalance" DECIMAL(80,0) NOT NULL,
     "pendingDeposits" DECIMAL(80,0),
     "withdrawals" DECIMAL(80,0) NOT NULL,
     "deposits" DECIMAL(80,0) NOT NULL,

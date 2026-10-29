@@ -343,6 +343,8 @@ model EthereumStakingDaily {
   slot             Int
   /// Sum of every validator's balance.
   totalBalance     Decimal  @db.Decimal(80, 0)
+  /// Balance of the validators that earn: the total without those waiting to enter or exited.
+  activeBalance    Decimal  @db.Decimal(80, 0)
   /// Deposits waiting to be credited; null before Pectra, when there was no queue.
   pendingDeposits  Decimal? @db.Decimal(80, 0)
   /// Withdrawals paid in the day's blocks.
