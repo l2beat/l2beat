@@ -197,19 +197,23 @@ function ChartCard({
   timeRange: [number, number] | undefined
   children: ReactNode
 }) {
+  // The date range changes width with the range and while loading, so it gets
+  // a line of its own at a fixed height; otherwise it would decide whether the
+  // controls wrap, and the card would change height on every switch. Whether
+  // the controls sit beside the title follows the card's width, not its title,
+  // so both cards always match. Phones show the controls as a compact select.
   return (
-    <PrimaryCard>
-      <div className="flex items-center gap-2">
-        <h2 className="font-bold text-lg md:text-xl">{title}</h2>
-        <Tooltip>
-          <TooltipTrigger>
-            <InfoIcon className="size-3.5" />
-          </TooltipTrigger>
-          <TooltipContent>{info}</TooltipContent>
-        </Tooltip>
-      </div>
-      <ChartControlsWrapper className="mt-1 mb-4 flex-wrap items-center">
-        <ChartTimeRange timeRange={timeRange} />
+    <PrimaryCard className="@container">
+      <ChartControlsWrapper className="items-center md:@max-lg:flex-col md:@max-lg:items-start">
+        <div className="flex items-center gap-2">
+          <h2 className="font-bold text-lg md:text-xl">{title}</h2>
+          <Tooltip>
+            <TooltipTrigger>
+              <InfoIcon className="size-3.5" />
+            </TooltipTrigger>
+            <TooltipContent>{info}</TooltipContent>
+          </Tooltip>
+        </div>
         <ChartRangeControls
           name={name}
           value={range}
@@ -217,6 +221,9 @@ function ChartCard({
           options={RANGE_OPTIONS}
         />
       </ChartControlsWrapper>
+      <div className="mt-1 mb-4 flex h-5 items-center lg:h-6">
+        <ChartTimeRange timeRange={timeRange} />
+      </div>
       {children}
     </PrimaryCard>
   )
