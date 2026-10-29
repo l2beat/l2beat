@@ -66,6 +66,7 @@ describe(toJsonDump.name, () => {
           amount: 400_000,
           amountSource: 'totalSupply',
           amountUnavailable: null,
+          circulatingSupplyUnknown: false,
           escrowBalance: null,
           mintedCopy: null,
           priceUsd: 1,
@@ -183,6 +184,7 @@ function axlUsdc(): Row {
     value: {
       amount: 400_000,
       amountGap: undefined,
+      circulatingSupplyUnknown: false,
       amountSource: 'totalSupply',
       escrowBalance: undefined,
       mintedCopy: undefined,
