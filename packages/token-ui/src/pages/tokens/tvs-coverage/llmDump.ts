@@ -3,7 +3,7 @@ import { type Names, type Row, rowId, type Snapshot } from './rows'
 const DEFINITIONS = {
   side: {
     chain:
-      "The token is deployed on the project's own chain and was seen in interop transfers there.",
+      "The token is deployed on the project's own chain and was seen in interop transfers there. Only tokens with at least interopWindow.minChainVolumeUsd of volume in the window are included.",
     escrow:
       "The token is on another chain and was moved by the project's own lock-and-mint bridge, so it is expected to sit in the project's escrows.",
   },
@@ -38,6 +38,7 @@ export function toJsonDump(rows: Row[], snapshot: Snapshot, names: Names) {
         days: snapshot.window.days,
         from: iso(snapshot.window.from),
         to: iso(snapshot.window.to),
+        minChainVolumeUsd: snapshot.minChainVolumeUsd,
       },
       warnings: snapshot.warnings,
       definitions: DEFINITIONS,
