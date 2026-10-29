@@ -22,7 +22,6 @@ import {
   useActivityMetricContext,
 } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
-import { countPerSecond } from '~/server/features/layer2s/activity/utils/countPerSecond'
 import { formatRange } from '~/utils/dates'
 import type { ChartScale } from '../types'
 
@@ -88,12 +87,11 @@ export function L2RecategorizedActivityChart({
 }: Props) {
   const { metric } = useActivityMetricContext()
 
+  const resolutionSeconds = UnixTime.periodToSeconds(data?.resolution ?? 'day')
   const chartData = useMemo(() => {
     const getDataPoint = (uops: number | null, tx: number | null) => {
-      if (metric === 'uops') {
-        return uops !== null ? countPerSecond(uops) : null
-      }
-      return tx !== null ? countPerSecond(tx) : null
+      const count = metric === 'uops' ? uops : tx
+      return count !== null ? count / resolutionSeconds : null
     }
 
     return data?.data.map(
@@ -120,7 +118,7 @@ export function L2RecategorizedActivityChart({
         }
       },
     )
-  }, [data, metric])
+  }, [data, metric, resolutionSeconds])
 
   return (
     <ChartContainer
@@ -156,6 +154,7 @@ export function L2RecategorizedActivityChart({
             row={row}
             visibleKeys={keys}
             syncedUntil={data?.syncedUntil}
+            resolutionSeconds={resolutionSeconds}
             metric={metric}
           />
         )}
@@ -168,15 +167,17 @@ function CustomTooltip({
   row,
   visibleKeys,
   syncedUntil,
+  resolutionSeconds,
   metric,
 }: {
   row: { timestamp: number } & Record<SeriesKey, number | null>
   visibleKeys: SeriesKey[]
   syncedUntil: number | undefined
+  resolutionSeconds: number
   metric: ActivityMetric
 }) {
   const label = row.timestamp
-  // Series without a value at this day are left out.
+  // Series without a value at this point are left out.
   const payload = getTooltipEntries(row, visibleKeys, { skipNull: true })
   if (payload.length === 0) return null
 
@@ -184,7 +185,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(label, label + UnixTime.DAY)}
+          {formatRange(label, label + resolutionSeconds)}
         </div>
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />
@@ -209,7 +210,7 @@ function CustomTooltip({
             <ChartTooltipRow key={entry.name} name={entry.name}>
               <ChartTooltipValue
                 value={syncedUntil && syncedUntil < label ? null : entry.value}
-                format={(value) => formatInteger(value * UnixTime.DAY)}
+                format={(value) => formatInteger(value * resolutionSeconds)}
                 className="tabular-nums"
               />
             </ChartTooltipRow>

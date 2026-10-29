@@ -9,6 +9,7 @@ import {
 } from '~/components/core/chart/ChartTooltip'
 import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
 
 interface ActivityRatioChartDataPoint {
@@ -19,10 +20,16 @@ interface ActivityRatioChartDataPoint {
 interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
   syncedUntil: number | undefined
+  resolution?: ActivityResolution
   isLoading: boolean
 }
 
-export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
+export function ActivityRatioChart({
+  data,
+  isLoading,
+  syncedUntil,
+  resolution = 'day',
+}: Props) {
   const chartMeta = {
     ratio: {
       label: 'UOPS/TPS Ratio',
@@ -57,20 +64,31 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
           headroom: 0.1,
         }}
         syncedUntil={syncedUntil}
-        renderTooltip={(row) => <ActivityCustomTooltip row={row} />}
+        renderTooltip={(row) => (
+          <ActivityCustomTooltip row={row} resolution={resolution} />
+        )}
       />
     </ChartContainer>
   )
 }
 
-function ActivityCustomTooltip({ row }: { row: ActivityRatioChartDataPoint }) {
+function ActivityCustomTooltip({
+  row,
+  resolution,
+}: {
+  row: ActivityRatioChartDataPoint
+  resolution: ActivityResolution
+}) {
   const timestamp = row.timestamp
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(timestamp, timestamp + UnixTime.DAY)}
+          {formatRange(
+            timestamp,
+            timestamp + UnixTime.periodToSeconds(resolution),
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <ChartTooltipRow name="ratio">

@@ -70,7 +70,6 @@ export function EthereumActivityChart({
   }, [chart?.data])
 
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
-  const lastRatio = ratioData?.at(-1)?.ratio
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
@@ -116,7 +115,6 @@ export function EthereumActivityChart({
       <ActivityChartStatsPanel
         stats={chart?.stats}
         metric={metric}
-        lastRatio={lastRatio}
         isLoading={isLoading}
       />
     </div>

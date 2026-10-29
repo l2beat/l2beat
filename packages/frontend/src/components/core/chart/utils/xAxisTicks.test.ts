@@ -86,6 +86,25 @@ describe(getTimeTicks.name, () => {
     expect(format(values[0] ?? 0)).toEqual('22 Jun')
   })
 
+  it('labels a day of hourly rows every 4 hours', () => {
+    const start = UnixTime.fromDate(new Date('2026-10-28T13:00:00Z'))
+    const hours = Array.from(
+      { length: 25 },
+      (_, i) => start + i * UnixTime.HOUR,
+    )
+
+    const { values } = getTimeTicks(hours)
+
+    expect(values.map((t) => new Date(t * 1000).toISOString())).toEqual([
+      '2026-10-28T16:00:00.000Z',
+      '2026-10-28T20:00:00.000Z',
+      '2026-10-29T00:00:00.000Z',
+      '2026-10-29T04:00:00.000Z',
+      '2026-10-29T08:00:00.000Z',
+      '2026-10-29T12:00:00.000Z',
+    ])
+  })
+
   it('has no ticks without rows', () => {
     expect(getTimeTicks([]).values).toEqual([])
   })

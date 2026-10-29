@@ -27,6 +27,7 @@ import {
 } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
+import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
 import type { ChartScale } from '../types'
 
@@ -50,6 +51,7 @@ interface Props {
   type: ActivityChartType
   project: ChartProject
   tickCount?: number
+  resolution?: ActivityResolution
 }
 
 export function ActivityChart({
@@ -62,6 +64,7 @@ export function ActivityChart({
   metric,
   project,
   tickCount,
+  resolution = 'day',
 }: Props) {
   const chartMeta = useMemo(
     () => ({
@@ -141,7 +144,12 @@ export function ActivityChart({
         }}
         syncedUntil={syncedUntil}
         renderTooltip={(row, keys) => (
-          <ActivityCustomTooltip row={row} keys={keys} metric={metric} />
+          <ActivityCustomTooltip
+            row={row}
+            keys={keys}
+            metric={metric}
+            resolution={resolution}
+          />
         )}
       />
     </ChartContainer>
@@ -156,21 +164,24 @@ export function ActivityCustomTooltip<
   keys,
   metric,
   skipNull,
+  resolution = 'day',
 }: {
   row: T
   keys: K[]
   metric: ActivityMetric
   /** Leave out series without a value, instead of showing "No data". */
   skipNull?: boolean
+  resolution?: ActivityResolution
 }) {
   const timestamp = row.timestamp
+  const resolutionSeconds = UnixTime.periodToSeconds(resolution)
   const payload = getTooltipEntries(row, keys, { skipNull })
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(timestamp, timestamp + UnixTime.DAY)}
+          {formatRange(timestamp, timestamp + resolutionSeconds)}
         </div>
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />
@@ -195,7 +206,7 @@ export function ActivityCustomTooltip<
             <ChartTooltipRow key={entry.name} name={entry.name}>
               <ChartTooltipValue
                 value={entry.value}
-                format={(value) => formatInteger(value * UnixTime.DAY)}
+                format={(value) => formatInteger(value * resolutionSeconds)}
                 className="tabular-nums"
               />
             </ChartTooltipRow>

@@ -59,20 +59,26 @@ export function PlantLegendSection() {
         description="The shape and color of each icon show how a project does on a property."
         size="md"
       />
-      <PrimaryCard className="md:p-8">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+      <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
+        <div className="grid gap-6 sm:grid-cols-2 min-[1024px]:grid-cols-5">
           {PLANTS.map((plant, index) => (
-            <article key={plant.title} className="flex flex-col gap-2">
+            <article
+              key={plant.title}
+              className="flex items-start gap-4 sm:flex-col sm:gap-3"
+            >
+              {/* Pulled back so the soil lines up with the text: 12 px from the centred phone slot, 7 px from the bare plant. */}
               <CropPlant
-                className="h-10"
+                className="max-sm:-ml-3 sm:-ml-[7px] h-14 shrink-0 max-sm:w-14 max-sm:justify-center"
                 sentiment={plant.sentiment}
                 status={plant.status}
                 delay={index * 0.05}
               />
-              <h3 className="mt-1 font-bold text-heading-16">{plant.title}</h3>
-              <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
-                {plant.description}
-              </p>
+              <div>
+                <h3 className="font-bold text-heading-16">{plant.title}</h3>
+                <p className="mt-2 text-pretty text-paragraph-14 text-secondary">
+                  {plant.description}
+                </p>
+              </div>
             </article>
           ))}
         </div>
