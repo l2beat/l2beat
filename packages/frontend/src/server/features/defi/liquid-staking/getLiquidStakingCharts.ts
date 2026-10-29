@@ -110,7 +110,7 @@ function getMockLiquidStakingCharts(
   params: LiquidStakingChartsParams,
   projectIds: string[],
 ): LiquidStakingCharts {
-  const to = UnixTime.toStartOf(UnixTime.now(), 'day')
+  const to = UnixTime.toStartOf(UnixTime(params.range[1]), 'day')
   const from = params.range[0] ?? to - 1000 * UnixTime.DAY
   const timestamps = generateTimestamps([from, to], 'day')
 
