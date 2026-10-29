@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { LiquidStakingSnapshot } from '../kysely/generated/types'
 
@@ -81,6 +81,26 @@ export class LiquidStakingSnapshotRepository extends BaseRepository {
       .where('projectId', 'in', projectIds)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  /** Oldest first, only the snapshots that start a UTC day. */
+  async getDayStartsByProjectsInRange(
+    projectIds: string[],
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<LiquidStakingSnapshotRecord[]> {
+    if (projectIds.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('LiquidStakingSnapshot')
+      .selectAll()
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .where(sql<boolean>`date_trunc('day', timestamp) = timestamp`)
       .orderBy('timestamp', 'asc')
       .execute()
     return rows.map(toRecord)

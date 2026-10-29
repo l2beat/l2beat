@@ -6,13 +6,13 @@ import type {
 import { UnixTime } from '@l2beat/shared-pure'
 import type {
   LiquidStakingChartPoint,
-  LiquidStakingCharts,
+  LiquidStakingYieldPoint,
 } from './getLiquidStakingCharts'
 
 /** Yields and the network line are measured over this many days. */
 export const YIELD_WINDOW_DAYS = 30
 /** The market discount is a median over this many days, to smooth out spikes. */
-export const DISCOUNT_WINDOW_DAYS = 7
+const DISCOUNT_WINDOW_DAYS = 7
 
 export interface LiquidStakingChartToken {
   id: string
@@ -20,14 +20,22 @@ export interface LiquidStakingChartToken {
   priceId: string
 }
 
-export interface LiquidStakingChartInputs {
+export interface YieldChartInputs {
+  /** The chart's days, oldest first. */
+  days: UnixTime[]
+  projectIds: string[]
+  /** The snapshots that start a day, from YIELD_WINDOW_DAYS before the first. */
+  snapshots: LiquidStakingSnapshotRecord[]
+  /** Daily, oldest first, from YIELD_WINDOW_DAYS before the first day. */
+  network: EthereumStakingDailyRecord[]
+}
+
+export interface CostOfExitChartInputs {
   /** The chart's days, oldest first. */
   days: UnixTime[]
   projects: LiquidStakingChartToken[]
   /** Hourly, oldest first, from YIELD_WINDOW_DAYS before the first day. */
   snapshots: LiquidStakingSnapshotRecord[]
-  /** Daily, oldest first, from YIELD_WINDOW_DAYS before the first day. */
-  network: EthereumStakingDailyRecord[]
   /** USD price by price id, then by day. */
   prices: Map<string, Map<number, number>>
 }
@@ -35,42 +43,80 @@ export interface LiquidStakingChartInputs {
 const DAY = UnixTime.DAY
 const YEAR_OVER_WINDOW = 365 / YIELD_WINDOW_DAYS
 
-export function computeLiquidStakingCharts(
-  inputs: LiquidStakingChartInputs,
-): LiquidStakingCharts {
+export function computeYieldChart(
+  inputs: YieldChartInputs,
+): LiquidStakingYieldPoint[] {
+  const rates = new Map(
+    inputs.projectIds.map((id) => [
+      id,
+      new ExchangeRates(inputs.snapshots.filter((s) => s.projectId === id)),
+    ]),
+  )
+  const network = new NetworkSeries(inputs.network)
+
+  return inputs.days.map((day) => ({
+    timestamp: day,
+    projects: Object.fromEntries(
+      inputs.projectIds.map((id) => [id, rates.get(id)?.yieldAt(day) ?? null]),
+    ),
+    network: network.yieldAt(day),
+    ethStaked: network.ethStakedAt(day),
+  }))
+}
+
+export function computeCostOfExitChart(
+  inputs: CostOfExitChartInputs,
+): LiquidStakingChartPoint[] {
   const byProject = new Map(
     inputs.projects.map((project) => [
       project.id,
-      new ProjectSeries(
+      new ExitCostSeries(
         project,
         inputs.snapshots.filter((s) => s.projectId === project.id),
         inputs.prices,
       ),
     ]),
   )
-  const network = new NetworkSeries(inputs.network)
 
-  return {
-    yield: inputs.days.map((day) => ({
-      timestamp: day,
-      projects: perProject(inputs.projects, (p) =>
-        byProject.get(p.id)?.yieldAt(day),
-      ),
-      network: network.yieldAt(day),
-      ethStaked: network.ethStakedAt(day),
-    })),
-    costOfExit: inputs.days.map(
-      (day): LiquidStakingChartPoint => ({
-        timestamp: day,
-        projects: perProject(inputs.projects, (p) =>
-          byProject.get(p.id)?.costOfExitAt(day),
-        ),
-      }),
+  return inputs.days.map((day) => ({
+    timestamp: day,
+    projects: Object.fromEntries(
+      inputs.projects.map((p) => [
+        p.id,
+        byProject.get(p.id)?.costOfExitAt(day) ?? null,
+      ]),
     ),
+  }))
+}
+
+/** A token's exchange rate, by snapshot time. */
+class ExchangeRates {
+  private readonly byTimestamp: Map<number, bigint>
+
+  constructor(snapshots: LiquidStakingSnapshotRecord[]) {
+    this.byTimestamp = new Map(
+      snapshots.map((s) => [s.timestamp, s.exchangeRate]),
+    )
+  }
+
+  /** Annualised change of the exchange rate over the window, not compounded. */
+  yieldAt(day: number): number | null {
+    const now = this.at(day)
+    const before = this.at(day - YIELD_WINDOW_DAYS * DAY)
+    if (now === undefined || before === undefined) return null
+    return (now / before - 1) * YEAR_OVER_WINDOW
+  }
+
+  /** ETH per token. */
+  at(timestamp: number): number | undefined {
+    const rate = this.byTimestamp.get(timestamp)
+    // A zero rate is a bad read, and would divide the yield by zero.
+    return rate !== undefined && rate > 0n ? toEth(rate) : undefined
   }
 }
 
-class ProjectSeries {
+class ExitCostSeries {
+  private readonly rates: ExchangeRates
   private readonly byTimestamp: Map<number, LiquidStakingSnapshotRecord>
   /** Request day → the request-weighted wait of its requests, in days. */
   private readonly queueWaitDays: Map<number, number>
@@ -80,16 +126,9 @@ class ProjectSeries {
     snapshots: LiquidStakingSnapshotRecord[],
     private readonly prices: Map<string, Map<number, number>>,
   ) {
+    this.rates = new ExchangeRates(snapshots)
     this.byTimestamp = new Map(snapshots.map((s) => [s.timestamp, s]))
     this.queueWaitDays = averageWaitByDay(getQueueWaits(snapshots))
-  }
-
-  /** Annualised change of the exchange rate over the window, not compounded. */
-  yieldAt(day: number): number | null {
-    const now = this.rateAt(day)
-    const before = this.rateAt(day - YIELD_WINDOW_DAYS * DAY)
-    if (now === undefined || before === undefined) return null
-    return (now / before - 1) * YEAR_OVER_WINDOW
   }
 
   /** Days of yield an exit costs, by the cheaper of the queue and the market. */
@@ -120,7 +159,7 @@ class ProjectSeries {
 
   /** Selling at a discount costs the days of yield the discount equals. */
   private marketDaysAt(day: number): number | null {
-    const annualYield = this.yieldAt(day)
+    const annualYield = this.rates.yieldAt(day)
     if (annualYield === null || annualYield <= 0) return null
 
     const discounts: number[] = []
@@ -136,19 +175,11 @@ class ProjectSeries {
 
   /** How far below its ETH backing the token trades. */
   private discountAt(day: number): number | undefined {
-    const rate = this.rateAt(day)
+    const rate = this.rates.at(day)
     const tokenUsd = this.prices.get(this.project.priceId)?.get(day)
     const ethUsd = this.prices.get('ethereum')?.get(day)
     if (rate === undefined || tokenUsd === undefined || !ethUsd) return
     return 1 - tokenUsd / (rate * ethUsd)
-  }
-
-  private rateAt(timestamp: number): number | undefined {
-    const snapshot = this.byTimestamp.get(timestamp)
-    // A zero rate is a bad read, and would divide the yield by zero.
-    return snapshot && snapshot.exchangeRate > 0n
-      ? toEth(snapshot.exchangeRate)
-      : undefined
   }
 }
 
@@ -257,13 +288,6 @@ class NetworkSeries {
       held(end) - held(start) + start.withdrawals - start.deposits
     return toEth(consensus + start.executionRewards)
   }
-}
-
-function perProject(
-  projects: LiquidStakingChartToken[],
-  value: (project: LiquidStakingChartToken) => number | null | undefined,
-): Record<string, number | null> {
-  return Object.fromEntries(projects.map((p) => [p.id, value(p) ?? null]))
 }
 
 function median(values: number[]): number | undefined {

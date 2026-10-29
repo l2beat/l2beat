@@ -5,13 +5,11 @@ import { getDb } from '~/server/database'
 import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import {
-  computeLiquidStakingCharts,
+  computeCostOfExitChart,
+  computeYieldChart,
   YIELD_WINDOW_DAYS,
 } from './computeLiquidStakingCharts'
-import {
-  getLiquidStakingProjects,
-  type LiquidStakingProject,
-} from './getLiquidStakingProjects'
+import { getLiquidStakingProjects } from './getLiquidStakingProjects'
 
 export const LiquidStakingChartsParams = v.object({
   range: ChartRange,
@@ -66,7 +64,22 @@ export async function getLiquidStakingYieldChart(
       ethStaked: ethStaked[i] ?? null,
     }))
   }
-  return (await getCharts(projects, params)).yield
+  const { from, to, lookback } = getDays(params)
+  const db = getDb()
+  const [snapshots, network] = await Promise.all([
+    db.liquidStakingSnapshot.getDayStartsByProjectsInRange(
+      projectIds,
+      lookback,
+      to,
+    ),
+    db.ethereumStakingDaily.getInRange(lookback, to),
+  ])
+  return computeYieldChart({
+    days: generateTimestamps([from, to], 'day'),
+    projectIds,
+    snapshots,
+    network,
+  })
 }
 
 /** In days of yield, by the cheaper of the queue and the market. */
@@ -83,21 +96,10 @@ export async function getLiquidStakingCostOfExitChart(
       projects: byProject(projectIds, costOfExit, i),
     }))
   }
-  return (await getCharts(projects, params)).costOfExit
-}
-
-async function getCharts(
-  projects: LiquidStakingProject[],
-  params: LiquidStakingChartsParams,
-): Promise<LiquidStakingCharts> {
-  const to = UnixTime.toStartOf(UnixTime(params.range[1]), 'day')
-  const from = Math.max(params.range[0] ?? FIRST_DAY, FIRST_DAY)
-  // The first day's yields look back a window; its discount, a week.
-  const lookback = UnixTime(from - YIELD_WINDOW_DAYS * UnixTime.DAY)
+  const { from, to, lookback } = getDays(params)
   const priceIds = ['ethereum', ...projects.map((p) => p.liquidStaking.priceId)]
-
   const db = getDb()
-  const [snapshots, network, prices] = await Promise.all([
+  const [snapshots, prices] = await Promise.all([
     db.liquidStakingSnapshot.getByProjectsInRange(
       projects.map((p) => p.id),
       lookback,
@@ -105,7 +107,6 @@ async function getCharts(
       // finalized, even when that came after the end.
       UnixTime.now(),
     ),
-    db.ethereumStakingDaily.getInRange(lookback, to),
     Promise.all(
       priceIds.map(async (priceId) => {
         const records = await db.tvsPrice.getPricesInRangeByPriceId(
@@ -120,8 +121,7 @@ async function getCharts(
       }),
     ),
   ])
-
-  return computeLiquidStakingCharts({
+  return computeCostOfExitChart({
     days: generateTimestamps([from, to], 'day'),
     projects: projects.map((p) => ({
       id: p.id,
@@ -129,9 +129,19 @@ async function getCharts(
       priceId: p.liquidStaking.priceId,
     })),
     snapshots,
-    network,
     prices: new Map(prices),
   })
+}
+
+/**
+ * The chart's first and last day, and how far back the first day's values
+ * look: its yield a window, its discount a week.
+ */
+function getDays(params: LiquidStakingChartsParams) {
+  const to = UnixTime.toStartOf(UnixTime(params.range[1]), 'day')
+  const from = UnixTime(Math.max(params.range[0] ?? FIRST_DAY, FIRST_DAY))
+  const lookback = UnixTime(from - YIELD_WINDOW_DAYS * UnixTime.DAY)
+  return { from, to, lookback }
 }
 
 function getMockDays(params: LiquidStakingChartsParams) {

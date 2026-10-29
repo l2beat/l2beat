@@ -5,7 +5,8 @@ import type {
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
-  computeLiquidStakingCharts,
+  computeCostOfExitChart,
+  computeYieldChart,
   getQueueWaits,
   type LiquidStakingChartToken,
 } from './computeLiquidStakingCharts'
@@ -16,7 +17,7 @@ const ETH = 10n ** 18n
 const START = UnixTime.fromDate(new Date('2025-01-01T00:00:00Z'))
 const DAY_31 = START + 31 * DAY
 
-describe(computeLiquidStakingCharts.name, () => {
+describe(computeYieldChart.name, () => {
   it('annualises the 30-day rate change without compounding', () => {
     const charts = compute(
       [project('lido')],
@@ -28,6 +29,38 @@ describe(computeLiquidStakingCharts.name, () => {
     )
   })
 
+  it('derives the network yield from balances, flows and execution rewards', () => {
+    // After Electra: each day the balance grows by 10 ETH while 100 ETH
+    // leaves and 50 ETH is deposited, so consensus rewards are 60 ETH;
+    // proposers add 5 ETH.
+    const network = Array.from({ length: 32 }, (_, i) =>
+      day(START + i * DAY, 1_000_000n + 10n * BigInt(i), 0n),
+    )
+    const charts = compute([], [], network)
+    const point = charts.yield[0]
+    expect(present(point?.ethStaked)).toBeCloseTo(999_310, 1e-6)
+    // 65 ETH a day over an average active stake of 999,145 ETH.
+    expect(present(point?.network)).toBeCloseTo(
+      ((65 * 30) / 999_145) * (365 / 30),
+      1e-6,
+    )
+  })
+
+  it('keeps balances moved into the pending queue at Electra out of the rewards', () => {
+    // From day 10, 1,000 ETH of balances waits in the new queue instead.
+    const network = Array.from({ length: 32 }, (_, i) =>
+      i < 10
+        ? day(START + i * DAY, 1_000_000n + 10n * BigInt(i), null)
+        : day(START + i * DAY, 999_000n + 10n * BigInt(i), 1_000n),
+    )
+    expect(present(compute([], [], network).yield[0]?.network)).toBeCloseTo(
+      ((65 * 30) / (999_145 - (1_000 * 20) / 30)) * (365 / 30),
+      1e-6,
+    )
+  })
+})
+
+describe(computeCostOfExitChart.name, () => {
   it('takes the queue wait of the day’s requests, weighted by count', () => {
     // 2 requests in the hour to 01:00, 1 in the hour to 02:00; all three
     // finalized at 05:00, so they waited 4 and 3 hours.
@@ -126,36 +159,6 @@ describe(computeLiquidStakingCharts.name, () => {
     )
     expect(charts.costOfExit[0]?.projects.rocketpool).toEqual(0)
   })
-
-  it('derives the network yield from balances, flows and execution rewards', () => {
-    // After Electra: each day the balance grows by 10 ETH while 100 ETH
-    // leaves and 50 ETH is deposited, so consensus rewards are 60 ETH;
-    // proposers add 5 ETH.
-    const network = Array.from({ length: 32 }, (_, i) =>
-      day(START + i * DAY, 1_000_000n + 10n * BigInt(i), 0n),
-    )
-    const charts = compute([], [], network)
-    const point = charts.yield[0]
-    expect(present(point?.ethStaked)).toBeCloseTo(999_310, 1e-6)
-    // 65 ETH a day over an average active stake of 999,145 ETH.
-    expect(present(point?.network)).toBeCloseTo(
-      ((65 * 30) / 999_145) * (365 / 30),
-      1e-6,
-    )
-  })
-
-  it('keeps balances moved into the pending queue at Electra out of the rewards', () => {
-    // From day 10, 1,000 ETH of balances waits in the new queue instead.
-    const network = Array.from({ length: 32 }, (_, i) =>
-      i < 10
-        ? day(START + i * DAY, 1_000_000n + 10n * BigInt(i), null)
-        : day(START + i * DAY, 999_000n + 10n * BigInt(i), 1_000n),
-    )
-    expect(present(compute([], [], network).yield[0]?.network)).toBeCloseTo(
-      ((65 * 30) / (999_145 - (1_000 * 20) / 30)) * (365 / 30),
-      1e-6,
-    )
-  })
 })
 
 describe(getQueueWaits.name, () => {
@@ -176,13 +179,16 @@ function compute(
   network: EthereumStakingDailyRecord[] = [],
   prices = new Map<string, Map<number, number>>(),
 ) {
-  return computeLiquidStakingCharts({
-    days: [UnixTime(DAY_31)],
-    projects,
-    snapshots,
-    network,
-    prices,
-  })
+  const days = [UnixTime(DAY_31)]
+  return {
+    yield: computeYieldChart({
+      days,
+      projectIds: projects.map((p) => p.id),
+      snapshots,
+      network,
+    }),
+    costOfExit: computeCostOfExitChart({ days, projects, snapshots, prices }),
+  }
 }
 
 function project(
