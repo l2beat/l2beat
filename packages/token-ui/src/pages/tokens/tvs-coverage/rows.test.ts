@@ -113,23 +113,18 @@ describe(sortRows.name, () => {
 })
 
 describe(sumValue.name, () => {
-  it('counts an escrow row and its minted copy once, at the larger value', () => {
+  it('counts a chain row and the escrow row it is paired with once, at the larger value', () => {
     const escrow = row({
       side: 'escrow',
       chain: 'ethereum',
       address: '0x1',
-      value: {
-        ...value(100),
-        mintedCopy: {
-          chain: 'base',
-          address: '0x2',
-          symbol: 'USDC.e',
-          decimals: 6,
-          supply: 100,
-        },
-      },
+      value: value(100),
     })
-    const copy = row({ address: '0x2', value: value(80) })
+    const copy = row({
+      address: '0x2',
+      value: value(80),
+      pairedWith: { chain: 'ethereum', address: '0x1' },
+    })
     const other = row({ address: '0x3', value: value(5) })
 
     expect(sumValue([escrow, copy, other])).toEqual(105)
@@ -182,6 +177,7 @@ function row(overrides: Partial<Row>): Row {
     lastSeen: NOW,
     value: value(1),
     escrowAddresses: [],
+    pairedWith: undefined,
     ...overrides,
   }
 }

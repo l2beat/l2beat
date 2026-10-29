@@ -1,6 +1,8 @@
 import type { RouterOutputs } from '@l2beat/token-backend'
 
-export type Snapshot = RouterOutputs['tvsCoverage']['get']
+export type Snapshot = NonNullable<
+  RouterOutputs['tvsCoverage']['get']['snapshot']
+>
 export type Row = Snapshot['rows'][number]
 export type RowValue = NonNullable<Row['value']>
 export type Status = Row['status']
@@ -95,26 +97,19 @@ export function rowId(
   return `${row.projectId}:${row.chain}:${row.address}`
 }
 
-// An escrow row and the copy its project's own bridge minted are one gap seen
-// from both sides, so the pair counts once, at its larger value.
+// A chain row paired with an escrow row is the same gap seen from the other
+// side, so the pair counts once, at its larger value.
 export function sumValue(rows: Row[]): number {
-  const escrowValues = new Map<string, number>()
-  for (const row of rows) {
-    const copy = row.side === 'escrow' ? row.value?.mintedCopy : undefined
-    if (copy) {
-      escrowValues.set(
-        rowId({ projectId: row.projectId, ...copy }),
-        row.value?.valueUsd ?? 0,
-      )
-    }
-  }
+  const values = new Map(
+    rows.map((row) => [rowId(row), row.value?.valueUsd ?? 0]),
+  )
   let total = 0
   for (const row of rows) {
     const value = row.value?.valueUsd ?? 0
-    const escrowValue =
-      row.side === 'chain' ? escrowValues.get(rowId(row)) : undefined
-    total +=
-      escrowValue === undefined ? value : Math.max(0, value - escrowValue)
+    const paired =
+      row.pairedWith &&
+      values.get(rowId({ projectId: row.projectId, ...row.pairedWith }))
+    total += paired === undefined ? value : Math.max(0, value - paired)
   }
   return total
 }
