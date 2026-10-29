@@ -460,7 +460,7 @@ describe(renderProjectSection.name, () => {
       '### Censorship resistance\n\nBad\n\n**What is missing**\n\n- No forced transactions.',
       "### Open source\n\nGood\n\n**What's good**\n\n- License: [MIT License](https://mit)\n- Code is public.",
       '### Privacy\n\nNot reviewed',
-      '[See the CROPS guide](https://l2beat.com/crops-guide).',
+      '[See the CROPS guide](https://l2beat.com/crops).',
     )
   })
 
