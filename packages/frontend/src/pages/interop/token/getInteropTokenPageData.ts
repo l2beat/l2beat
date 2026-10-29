@@ -45,7 +45,7 @@ export async function getInteropTokenPageData(
         // issuer/symbol URL to keep a single canonical address per token.
         url: getInteropTokenUrl(data.token) ?? req.originalUrl,
         openGraph: {
-          image: `/interop/tokens/${data.token.slug}/opengraph-image.png`,
+          image: `/tokens/${data.token.slug}/opengraph-image.png`,
           dynamic: true,
         },
       }),

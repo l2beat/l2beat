@@ -20,10 +20,7 @@ import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
 import type { BaseProject } from '../types'
-import {
-  areContractsDiscoveryDriven,
-  arePermissionsDiscoveryDriven,
-} from '../utils/discoveryDriven'
+import { hasEoaWithUpgradePermissions } from './getEoaRedWarning'
 import { getProjects } from './getProjects'
 import { layer2s, milestonesLayer2s } from './layer2s'
 import { layer3s } from './layer3s'
@@ -625,6 +622,41 @@ describe('getProjects', () => {
       }
       expect(problems).toEqual([])
     })
+
+    // The page prints these dates and hashes as they are.
+    it('every reference app has valid dates and a full commit hash', () => {
+      // Round-trip, since Date.parse rolls 2026-02-30 over to March.
+      const isDay = (value: string) => {
+        const time = Date.parse(value)
+        return (
+          !Number.isNaN(time) &&
+          new Date(time).toISOString().slice(0, 10) === value
+        )
+      }
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const app = privacyInfo.referenceApp
+        if (!app) continue
+        if (!isDay(app.since)) {
+          problems.push(`${project.id}: since ${app.since}`)
+        }
+        if (app.source && !/^[0-9a-f]{40}$/.test(app.source.commit)) {
+          problems.push(`${project.id}: commit ${app.source.commit}`)
+        }
+        if (app.checked !== undefined && !isDay(app.checked)) {
+          problems.push(`${project.id}: checked ${app.checked}`)
+        }
+        if (app.source && (app.checked !== undefined || app.build)) {
+          problems.push(`${project.id}: an open app pins its commit only`)
+        }
+        for (const checkedApp of app.checkedApps ?? []) {
+          if (checkedApp.checked !== undefined && !isDay(checkedApp.checked)) {
+            problems.push(`${project.id}: ${checkedApp.name} checked`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
   })
 
   describe('contracts', () => {
@@ -1054,17 +1086,21 @@ describe('getProjects', () => {
   })
 
   // New projects are expected to be discovery driven. Read the comment in constants.ts
-  it('all new projects are discovery driven', () => {
+  it('all new projects with discovery are discovery driven', () => {
     const notDiscoveryDriven = projects
-      .filter((p) => p.scalingInfo && p.archivedAt === undefined)
+      .filter((p) => p.discoveryInfo && p.archivedAt === undefined)
       .filter((p) => !NON_DISCOVERY_DRIVEN_PROJECTS.includes(p.id.toString()))
-      .filter(
-        (p) =>
-          !arePermissionsDiscoveryDriven(p.permissions) ||
-          !areContractsDiscoveryDriven(p.contracts),
-      )
+      .filter((p) => !p.discoveryInfo?.isDiscoDriven)
       .map((p) => p.id)
     expect(notDiscoveryDriven).toEqual([])
+  })
+
+  it('every project with discovery shows an EOA upgrade red warning when discovery has one', () => {
+    const missing = projects
+      .filter((p) => p.discoveryInfo && hasEoaWithUpgradePermissions(p.id))
+      .filter((p) => p.statuses?.redWarning === undefined)
+      .map((p) => p.id)
+    expect(missing).toEqual([])
   })
 
   describe('badges', () => {

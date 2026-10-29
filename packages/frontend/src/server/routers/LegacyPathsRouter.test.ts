@@ -21,6 +21,13 @@ describe(createLegacyPathsRouter.name, () => {
     ['/projects/arbitrum.md', '/layer2s/projects/arbitrum.md'],
     // Renamed since: MigratedProjectsRouter takes it on to the current slug.
     ['/projects/zksync2', '/layer2s/projects/zksync2'],
+    ['/interop/tokens/9HN5PN/circle/usdc', '/tokens/9HN5PN/circle/usdc'],
+    ['/interop/tokens/9HN5PN/circle/usdc.md', '/tokens/9HN5PN/circle/usdc.md'],
+    [
+      '/interop/tokens/9HN5PN/opengraph-image.png',
+      '/tokens/9HN5PN/opengraph-image.png',
+    ],
+    ['/Interop/Tokens/9HN5PN', '/tokens/9HN5PN'],
   ] as const) {
     it(`redirects ${from} to ${to}`, async () => {
       const response = await fetchFromRouter(createLegacyPathsRouter(), from, {

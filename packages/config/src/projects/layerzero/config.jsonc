@@ -20,8 +20,13 @@
     }
   },
   "overrides": {
+    // Holds no role in the endpoint or the message libraries: delivery is
+    // permissionless and its fee is quoted and paid in the sender's own
+    // transaction, so an upgrade can stall delivery or misprice fees but not
+    // forge messages or move escrowed funds.
     "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": {
-      "description": "Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source."
+      "description": "Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source.",
+      "category": "non-critical"
     },
     "eth:0x1a44076050125825900e736c501f859c50fE728c": {
       "fields": {

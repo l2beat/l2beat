@@ -23,10 +23,10 @@ export async function getIntegrateCropsData(
       metadata: getMetadata(manifest, {
         name: 'Integrate CROPS',
         description:
-          'Pull the CROPS evaluations from The Infinite Garden into your own app.',
+          'Pull the CROPS evaluations from the CROPS guide into your own app.',
         url,
         openGraph: {
-          image: '/meta-images/the-infinite-garden/opengraph-image.png',
+          image: '/meta-images/the-crops-guide/opengraph-image.png',
         },
       }),
     },

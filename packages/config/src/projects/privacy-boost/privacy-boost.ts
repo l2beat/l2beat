@@ -346,6 +346,12 @@ export const privacyBoost: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceApp: {
+      name: 'Privacy Boost wallet',
+      url: 'https://app.privacyboost.io',
+      since: '2026-10-13',
+      checked: '2026-10-22',
+    },
     tokens: privacyTokens,
     trackedOn: ['base'],
     anonymitySet: { type: 'too-small' },

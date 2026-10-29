@@ -58,12 +58,16 @@ describe(TokenValueIndexer.name, () => {
           configurations: configs,
           db: mockDatabase({
             tvsTokenValue: tvsTokenValueRepository,
+            tvsEscrowValue: mockObject<Database['tvsEscrowValue']>({
+              upsertMany: mockFn().resolvesTo(0),
+            }),
             syncMetadata: syncMetadataRepository,
           }),
           syncOptimizer,
           dbStorage,
           valueService,
           project,
+          storeEscrowValues: false,
           maxTimestampsToProcessAtOnce: 10,
           parents: [],
           indexerService: mockObject<IndexerService>({}),
@@ -111,6 +115,70 @@ describe(TokenValueIndexer.name, () => {
       )
     })
 
+    it('saves escrow values under the configuration id of their token', async () => {
+      const timestamp = UnixTime(150)
+      const project = 'test-project'
+      const token = createPooledToken('pooled')
+      const configs = [config(token)]
+      const escrowValue = {
+        tokenId: token.id,
+        projectId: project,
+        timestamp,
+        chain: 'ethereum',
+        escrowAddress: '0x1111111111111111111111111111111111111111',
+        amount: 1,
+        value: 10,
+      }
+
+      const tvsEscrowValueRepository = mockObject<Database['tvsEscrowValue']>({
+        upsertMany: mockFn().resolvesTo(1),
+      })
+
+      const indexer = new TokenValueIndexer(
+        {
+          configurations: configs,
+          db: mockDatabase({
+            tvsTokenValue: mockObject<Database['tvsTokenValue']>({
+              upsertMany: mockFn().resolvesTo(1),
+            }),
+            tvsEscrowValue: tvsEscrowValueRepository,
+            syncMetadata: mockObject<Database['syncMetadata']>({
+              updateSyncedUntil: mockFn().resolvesTo(undefined),
+            }),
+          }),
+          syncOptimizer: mockObject<SyncOptimizer>({
+            getTimestampsToSync: mockFn().returnsOnce([timestamp]),
+          }),
+          dbStorage: mockObject<DBStorage>({
+            preloadPrices: mockFn().resolvesTo(undefined),
+            preloadAmounts: mockFn().resolvesTo(undefined),
+          }),
+          valueService: mockObject<ValueService>({
+            calculate: mockFn().resolvesTo([
+              { ...value(timestamp, project, token.id, 2), priceUsd: 10 },
+            ]),
+            calculateEscrowValues: mockFn().resolvesTo([escrowValue]),
+          }),
+          project,
+          storeEscrowValues: true,
+          maxTimestampsToProcessAtOnce: 10,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      const updateFn = await indexer.multiUpdate(100, 300, configs)
+      await updateFn()
+
+      expect(tvsEscrowValueRepository.upsertMany).toHaveBeenOnlyCalledWith([
+        {
+          ...escrowValue,
+          configurationId: TokenValueIndexer.idToConfigurationId(token, true),
+        },
+      ])
+    })
+
     it('returns to value if no timestamps to sync', async () => {
       const from = 100
       const to = 300
@@ -132,6 +200,7 @@ describe(TokenValueIndexer.name, () => {
           dbStorage: mockObject<DBStorage>({}),
           valueService: mockObject<ValueService>({}),
           project,
+          storeEscrowValues: false,
           maxTimestampsToProcessAtOnce: 10,
           parents: [],
           indexerService: mockObject<IndexerService>({}),
@@ -156,6 +225,9 @@ describe(TokenValueIndexer.name, () => {
       const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
         deleteByConfigInTimeRange: mockFn().returns(1),
       })
+      const tvsEscrowValueRepository = mockObject<Database['tvsEscrowValue']>({
+        deleteByConfigInTimeRange: mockFn().returns(1),
+      })
 
       const mockToken = createMockToken('token-1')
       const configs = [config(mockToken)]
@@ -165,11 +237,13 @@ describe(TokenValueIndexer.name, () => {
           configurations: configs,
           db: mockDatabase({
             tvsTokenValue: tvsTokenValueRepository,
+            tvsEscrowValue: tvsEscrowValueRepository,
           }),
           syncOptimizer: mockObject<SyncOptimizer>({}),
           dbStorage: mockObject<DBStorage>({}),
           valueService: mockObject<ValueService>({}),
           project: 'test-project',
+          storeEscrowValues: false,
           maxTimestampsToProcessAtOnce: 10,
           parents: [],
           indexerService: mockObject<IndexerService>({}),
@@ -203,6 +277,14 @@ describe(TokenValueIndexer.name, () => {
 
       expect(
         tvsTokenValueRepository.deleteByConfigInTimeRange,
+      ).toHaveBeenNthCalledWith(
+        2,
+        removalConfigs[1].id,
+        UnixTime(removalConfigs[1].range[0]),
+        UnixTime(removalConfigs[1].range[1]),
+      )
+      expect(
+        tvsEscrowValueRepository.deleteByConfigInTimeRange,
       ).toHaveBeenNthCalledWith(
         2,
         removalConfigs[1].id,
@@ -270,9 +352,23 @@ describe(TokenValueIndexer.name, () => {
         isAssociated: true,
       }
 
-      const configId = TokenValueIndexer.idToConfigurationId(token)
+      const configId = TokenValueIndexer.idToConfigurationId(token, false)
 
       expect(configId).toEqual('c4b862cc3e9e')
+    })
+
+    // A new id makes the indexer wipe the token's values and recompute its
+    // history, which is how escrow values get backfilled.
+    it('changes only for tokens that store escrow values', () => {
+      const pooled = createPooledToken('pooled')
+      const single = createMockToken('single')
+
+      expect(TokenValueIndexer.idToConfigurationId(pooled, true)).not.toEqual(
+        TokenValueIndexer.idToConfigurationId(pooled, false),
+      )
+      expect(TokenValueIndexer.idToConfigurationId(single, true)).toEqual(
+        TokenValueIndexer.idToConfigurationId(single, false),
+      )
     })
   })
 
@@ -293,6 +389,29 @@ describe(TokenValueIndexer.name, () => {
       category: 'other',
       source: 'canonical',
       isAssociated: true,
+    }
+  }
+
+  function createPooledToken(id: string): TvsToken {
+    const pool = (escrowAddress: string) =>
+      ({
+        type: 'balanceOfEscrow',
+        address: 'native',
+        escrowAddress: EthereumAddress(escrowAddress),
+        sinceTimestamp: 0,
+        decimals: 18,
+        chain: 'ethereum',
+      }) as const
+    return {
+      ...createMockToken(id),
+      amount: {
+        type: 'calculation',
+        operator: 'sum',
+        arguments: [
+          pool('0x1111111111111111111111111111111111111111'),
+          pool('0x2222222222222222222222222222222222222222'),
+        ],
+      },
     }
   }
 
@@ -336,7 +455,7 @@ function record(
 ) {
   return {
     ...value(timestamp, projectId, token.id, amount),
-    configurationId: TokenValueIndexer.idToConfigurationId(token),
+    configurationId: TokenValueIndexer.idToConfigurationId(token, false),
     priceUsd,
   }
 }

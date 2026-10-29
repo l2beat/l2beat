@@ -1,7 +1,7 @@
 {
   "name": "debridge",
   "timestamp": 1791789484,
-  "configHash": "0xf623caf1841be9de1569c1749d09114708247664b52ba3be0740f6a1875f4e17",
+  "configHash": "0x0faff601e3b63eca9fa1f7cbeda9c498555b2264179f2575a214e113c406901d",
   "entries": [
     {
       "address": "eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0",
@@ -552,7 +552,8 @@
       "implementationNames": {
         "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc": "TransparentUpgradeableProxy",
         "eth:0x4F2f3d3949B37A944A10Bf3C5355d0c827BbaF68": "FeeTreasury"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x6f572a24c5C009fC8C844Fab5352edf79F132FBD",

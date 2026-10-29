@@ -24,25 +24,17 @@ model DaBeatStats {
 }
 
 model Activity {
-  projectId           String   @db.VarChar(255)
-  timestamp           DateTime @db.Timestamp(6)
-  count               Int
-  uopsCount           Int?
-  start               Int      @default(0)
-  end                 Int      @default(0)
-  /// Of the busiest hour of the day. Only block and slot chains have peaks,
-  /// and only since HourlyActivity was added
-  peakHourCount       Int?
-  peakHourUopsCount   Int?
-  /// Of the busiest UTC minute of the day
-  peakMinuteCount     Int?
-  peakMinuteUopsCount Int?
+  projectId String   @db.VarChar(255)
+  timestamp DateTime @db.Timestamp(6)
+  count     Int
+  uopsCount Int?
+  start     Int      @default(0)
+  end       Int      @default(0)
 
   @@id([projectId, timestamp])
 }
 
-/// Activity per hour of block and slot chains, kept for the last two weeks.
-/// The busiest hour and minute of each day stay on Activity
+/// Activity per hour, kept for the last two weeks for the 1D and 7D charts
 model HourlyActivity {
   projectId String   @db.VarChar(255)
   timestamp DateTime @db.Timestamp(6)
@@ -282,6 +274,24 @@ model TokenValue {
   @@index([tokenId])
   @@index([projectId, tokenId, timestamp(sort: Desc)])
   @@index([projectId, timestamp, tokenId, valueForProject, valueForSummary])
+}
+
+/// Value of each escrow balance a TVS token sums, for tokens whose project
+/// shows value per escrow (privacy buckets). Written with TokenValue.
+model TvsEscrowValue {
+  timestamp       DateTime @db.Timestamp(6)
+  /// TokenValue configurationId of the token the escrow belongs to.
+  configurationId String   @db.Char(12)
+  projectId       String   @db.VarChar(255)
+  tokenId         String   @db.VarChar(255)
+  chain           String   @db.VarChar(255)
+  escrowAddress   String   @db.VarChar(255)
+  amount          Float    @db.Real
+  value           Float    @db.Real
+
+  @@id([timestamp, configurationId, chain, escrowAddress])
+  @@index([configurationId])
+  @@index([projectId, timestamp])
 }
 
 model DefiTvl {

@@ -47,6 +47,23 @@ export const cloaked: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
+    referenceApp: {
+      name: 'Cloaked web app',
+      url: 'https://app.clkd.xyz',
+      since: '2026-09-16',
+      checked: '2026-10-22',
+      checkedApps: [
+        {
+          name: 'Cloaked browser extension',
+          icon: 'cloaked',
+          finding:
+            "Tells Cloaked's server each website that asks to connect, with the address it gets, and the server lists each address's websites after its first transaction.",
+          fix: 'Keep the list of connected websites on the device and leave the website out of API calls.',
+          source: 'https://clkd.xyz/docs/api-reference',
+          checked: '2026-10-27',
+        },
+      ],
+    },
     trackedOn: ['ethereum'],
     // Cloaked balances live in arbitrary one-time EOAs and cannot be
     // attributed using public chain data. Its Privacy Pools integration uses

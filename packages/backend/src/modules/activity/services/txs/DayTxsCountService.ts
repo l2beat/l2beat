@@ -1,10 +1,10 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
-import type { DayProvider } from '../../../../providers/day/DayProviders'
+import type { DailyCountsProvider } from '../../../../providers/day/DayProviders'
 
 interface Dependencies {
-  provider: DayProvider
+  provider: DailyCountsProvider
   projectId: ProjectId
 }
 

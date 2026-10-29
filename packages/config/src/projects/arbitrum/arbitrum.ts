@@ -378,6 +378,12 @@ export const arbitrum: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    // first Nitro block with the ArbitrumInternalTx; classic blocks have none
+    adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 22207818 },
+  },
   ossificationHistory: discovery.getOssificationHistory(chainStart),
   upgradesAndGovernance: {
     content: getNitroGovernance(

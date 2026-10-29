@@ -12,6 +12,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipRows,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -66,8 +67,7 @@ export function PrivacyAnonymitySetChart(props: Props) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(meta)
   const formatTooltipTitle =
     props.type === 'history'
-      ? (timestamp: number) =>
-          formatTimestamp(timestamp, { longMonthName: true })
+      ? (timestamp: number) => formatTimestamp(timestamp)
       : (days: number) => `${days}-day ${props.durationLabel}`
 
   return (
@@ -151,7 +151,8 @@ function AnonymitySetTooltip({
       <div className="mb-2 font-medium text-label-value-14 text-secondary">
         {formatTitle(label)}
       </div>
-      <div className="flex flex-col gap-2">
+      {/* Keyed by point, so each new point opens at its largest sets. */}
+      <ChartTooltipRows key={label} className="flex flex-col gap-2">
         {sortAnonymitySetTooltipEntries(payload).map((entry) => {
           if (
             typeof entry.dataKey !== 'string' ||
@@ -183,7 +184,7 @@ function AnonymitySetTooltip({
             </div>
           )
         })}
-      </div>
+      </ChartTooltipRows>
     </ChartTooltipWrapper>
   )
 }

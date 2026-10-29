@@ -33,7 +33,7 @@ export function StackedTvsChartTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-46 flex-col sm:w-66!">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+          {formatTimestamp(label, { mode: 'datetime' })}
         </div>
         {actualPayload.length > 1 && (
           <>

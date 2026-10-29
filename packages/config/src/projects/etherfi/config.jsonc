@@ -50,6 +50,10 @@
     "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479": "MembershipNFT"
   },
   "overrides": {
+    // A read-only helper: no contract references it and it holds no funds.
+    "eth:0x2ecd155405cA52a5ca0e552981fF44A8252FAb81": {
+      "category": "non-critical"
+    },
     // Boundary cuts: ether.fi fields pointing into external protocols (Lido,
     // EigenLayer, LayerZero, Curve, Chainlink) or enumerating thousands of
     // per-validator node clones. The boundary contracts stay in scope; the

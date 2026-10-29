@@ -13,6 +13,7 @@ import { useTRPC } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InteropEntityPageLayout } from '../components/InteropEntityPageLayout'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
+import { getInteropTokenPagePath } from '../utils/getInteropTokenUrl'
 import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
@@ -121,8 +122,10 @@ function Content({
           name: token.symbol,
           slug: token.slug,
           icon: token.iconUrl,
+          // Reachable by id alone too; one pin per token, not per URL.
+          href: getInteropTokenPagePath(token),
         }}
-        section="interop"
+        section="tokens"
         secondLine={
           token.issuer ? (
             <>

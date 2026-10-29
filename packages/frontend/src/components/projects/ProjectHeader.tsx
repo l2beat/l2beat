@@ -4,15 +4,20 @@ import type {
   ProjectSection,
   ProjectSectionLink,
 } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { cn } from '~/utils/cn'
 import { LiveIndicator } from '../LiveIndicator'
 import { SearchBarButton } from '../search-bar/SearchBarButton'
+import { PinProjectButton } from '../your-projects/PinProjectButton'
+import { ProjectVersionSwitcher } from './ProjectVersionSwitcher'
 import { PROJECT_SECTIONS } from './projectSections'
 
 interface Project {
   name: string
   slug: string
   icon: string
+  /** The page's canonical path, when more than one URL shows it. */
+  href?: string
 }
 
 interface Props {
@@ -21,6 +26,8 @@ interface Props {
   section?: ProjectSection
   /** The project's page in each section; the ones besides `section` show as "Also in" links */
   sectionLinks?: ProjectSectionLink[]
+  /** Shows the group name as the title, with the version as a switcher */
+  versions?: ProjectVersionLinks
   ongoingAnomaly?: 'single' | 'multiple'
   recentUpdatesCount?: number
   secondLine?: ReactNode
@@ -32,6 +39,7 @@ export function ProjectHeader({
   project,
   section,
   sectionLinks,
+  versions,
   ongoingAnomaly,
   recentUpdatesCount,
   secondLine,
@@ -53,8 +61,9 @@ export function ProjectHeader({
         )}
         <div
           className={cn(
-            'flex w-full flex-wrap gap-x-4 gap-y-3 max-md:flex-col md:items-center',
-            (!!ongoingAnomaly || !!recentUpdatesCount) && 'max-md:mb-4',
+            'flex w-full flex-wrap gap-x-4 gap-y-3 max-md:mb-4 max-md:flex-col md:items-center',
+            // The version chip already ends the title in a pill
+            versions && 'gap-x-2',
           )}
         >
           <h1 className="project-title-timeline flex items-center justify-start gap-3">
@@ -67,9 +76,18 @@ export function ProjectHeader({
               />
             )}
             <div className="flex flex-col">
-              <span className="text-heading-28 leading-none!">
-                {project.name}
-              </span>
+              {versions ? (
+                <span className="flex items-center gap-2">
+                  <span className="text-heading-28 leading-none!">
+                    {versions.groupName}
+                  </span>
+                  <ProjectVersionSwitcher versions={versions} />
+                </span>
+              ) : (
+                <span className="text-heading-28 leading-none!">
+                  {project.name}
+                </span>
+              )}
               {secondLine && (
                 <span className="font-bold text-label-value-15 text-secondary">
                   {secondLine}
@@ -78,6 +96,11 @@ export function ProjectHeader({
             </div>
           </h1>
           <div className="flex flex-wrap gap-1.5 md:items-center">
+            <PinProjectButton
+              name={project.name}
+              iconUrl={project.icon}
+              href={project.href}
+            />
             {!!ongoingAnomaly && (
               <a
                 href={livenessSectionHref}
@@ -108,7 +131,7 @@ export function ProjectHeader({
           </div>
         </div>
       </div>
-      <SearchBarButton className="max-lg:hidden" label="Search projects" />
+      <SearchBarButton className="max-lg:hidden" />
     </div>
   )
 }

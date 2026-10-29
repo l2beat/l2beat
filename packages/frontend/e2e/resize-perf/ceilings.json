@@ -3,14 +3,6 @@
     "layouts": 174,
     "chartRerenders": 8
   },
-  "/scaling/summary": {
-    "layouts": 208,
-    "chartRerenders": 2
-  },
-  "/scaling/projects/arbitrum": {
-    "layouts": 102,
-    "chartRerenders": 4
-  },
   "/scaling/projects/base": {
     "layouts": 97,
     "chartRerenders": 4

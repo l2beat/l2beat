@@ -4,7 +4,7 @@ import type {
   PrivacySummaryValue,
   ProjectRedWarning,
 } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -32,6 +32,10 @@ import {
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import type { PrivacyRelayerStat } from '../types'
+import {
+  getPrivacyReferenceApp,
+  type PrivacyReferenceApp,
+} from '../utils/getPrivacyReferenceApp'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
@@ -65,6 +69,7 @@ export interface ProjectPrivacyEntry {
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
   reproducibility: PrivacySummaryValue
+  referenceApp?: PrivacyReferenceApp
   summary: {
     totalValueLockedUsd: number | undefined
     totalValueLockedChange7d: number | undefined
@@ -76,6 +81,7 @@ export interface ProjectPrivacyEntry {
     }
     relayerStat?: PrivacyRelayerStat
   }
+  archivedAt?: UnixTime
   isUnderReview: boolean
   recentUpdatesCount: number
   warnings: {
@@ -132,6 +138,8 @@ export async function getPrivacyProjectEntry(
     },
   }
   const icon = manifest.getUrl(`/icons/${details.slug}.png`)
+  const referenceApp =
+    details.referenceApp && getPrivacyReferenceApp(details.referenceApp, icon)
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
@@ -332,6 +340,7 @@ export async function getPrivacyProjectEntry(
       title: 'Privacy',
       isUnderReview: !!details.statuses.reviewStatus,
       adversaries: resolvePrivacySources(details.adversaries, sections),
+      referenceApp,
     },
   })
 
@@ -360,6 +369,7 @@ export async function getPrivacyProjectEntry(
       getPrivacyTrustedSetup(details.trustedSetups),
     ),
     reproducibility: details.reproducibility,
+    referenceApp,
     summary: {
       totalValueLockedUsd: details.hasTvl
         ? tvs.projects[details.id]?.breakdown.total
@@ -370,6 +380,7 @@ export async function getPrivacyProjectEntry(
       deposits: details.summary.deposits,
       relayerStat: details.summary.relayerStat,
     },
+    archivedAt: details.archivedAt,
     isUnderReview: !!details.statuses.reviewStatus,
     recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),
     warnings: {

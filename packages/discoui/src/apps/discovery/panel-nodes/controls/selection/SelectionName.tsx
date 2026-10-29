@@ -20,7 +20,7 @@ export function SelectionName() {
   return (
     <span
       title={text}
-      className="w-32 truncate px-2 font-medium text-coffee-200 text-xs"
+      className="@lg:w-40 w-28 truncate px-2 font-medium text-coffee-200 text-xs"
     >
       {text}
     </span>
@@ -58,7 +58,7 @@ function GroupNameInput({ id, name }: { id: string; name: string }) {
           event.currentTarget.blur()
         }
       }}
-      className="h-8 w-32 rounded-lg border border-coffee-600 bg-coffee-800 px-2 font-medium text-coffee-200 text-xs outline-hidden focus:border-autumn-300"
+      className="h-7 w-28 rounded-sm border border-coffee-600 bg-coffee-800 px-2 font-medium text-coffee-200 text-xs outline-hidden focus:border-autumn-300"
     />
   )
 }

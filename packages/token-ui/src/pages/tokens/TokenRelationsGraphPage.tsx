@@ -1,11 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
-import { useDeferredValue, useEffect, useMemo, useState } from 'react'
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import {
+  type ReactNode,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
+import { Link } from 'react-router'
+import { Button } from '~/components/core/Button'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useTRPC } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import {
+  CONFLICT_COLOR,
   filterTokensWithoutRelations,
+  getConflictNodeIds,
   getExistingRelationGraphSelection,
   NODE_COLORS,
   RELATION_COLORS,
@@ -24,6 +35,7 @@ export function TokenRelationsGraphPage() {
   const [selection, setSelection] = useState<RelationGraphSelection>()
   const [zoomTarget, setZoomTarget] = useState<{ nodeId: string }>()
   const [highlightAnomalies, setHighlightAnomalies] = useState(false)
+  const [conflictsSwitchedOn, setConflictsSwitchedOn] = useState(false)
   // Which tokens without relations are displayed. Unlike relation deletion,
   // this filters the payload before the scene is built, so changing it
   // re-runs the whole layout (and re-fits the camera) — hidden tokens must
@@ -62,6 +74,14 @@ export function TokenRelationsGraphPage() {
     }),
   )
   const chainsQuery = useQuery(trpc.chains.getAll.queryOptions())
+  // Unlike the graph, the conflicts only restyle nodes, so they can follow
+  // the queue: ingestion runs and retries change them while the page is open.
+  const conflictsQuery = useQuery(
+    trpc.tokenIngestionQueue.getConflicts.queryOptions(undefined, {
+      staleTime: 0,
+      refetchInterval: 30_000,
+    }),
+  )
   const fullGraph = graphQuery.data
   const graph = useMemo(
     () =>
@@ -78,6 +98,20 @@ export function TokenRelationsGraphPage() {
     graph === undefined
       ? undefined
       : getExistingRelationGraphSelection(graph, selection, deletedRelationIds)
+  // Until the list loads, an empty one would read as "no conflicts", so the
+  // switch highlights nothing before then.
+  const showConflicts = conflictsSwitchedOn && conflictsQuery.data !== undefined
+  const conflictNodeIdList = useMemo(
+    () =>
+      graph === undefined || conflictsQuery.data === undefined
+        ? []
+        : getConflictNodeIds(graph, conflictsQuery.data),
+    [graph, conflictsQuery.data],
+  )
+  const conflictNodeIds = useMemo(
+    () => new Set(conflictNodeIdList),
+    [conflictNodeIdList],
+  )
   const graphZoomTarget =
     graph !== undefined &&
     zoomTarget !== undefined &&
@@ -88,6 +122,23 @@ export function TokenRelationsGraphPage() {
   function selectSearchResult(node: RelationGraphNode) {
     setSelection({ type: 'node', id: node.id })
     setZoomTarget({ nodeId: node.id })
+  }
+
+  const selectedConflictIndex =
+    selection?.type === 'node' ? conflictNodeIdList.indexOf(selection.id) : -1
+
+  function stepConflict(step: 1 | -1) {
+    const count = conflictNodeIdList.length
+    const next =
+      selectedConflictIndex === -1
+        ? step === 1
+          ? 0
+          : count - 1
+        : (selectedConflictIndex + step + count) % count
+    const nodeId = conflictNodeIdList[next]
+    if (nodeId === undefined) return
+    setSelection({ type: 'node', id: nodeId })
+    setZoomTarget({ nodeId })
   }
 
   function changeSelection(selection: RelationGraphSelection | undefined) {
@@ -138,10 +189,31 @@ export function TokenRelationsGraphPage() {
               disabled={isRelayouting}
               onChange={setWithoutRelationsMode}
             />
-            <AnomalySwitch
+            <GraphSwitch
               checked={highlightAnomalies}
               onCheckedChange={setHighlightAnomalies}
-            />
+              checkedColor="var(--destructive)"
+            >
+              Highlight anomalies
+            </GraphSwitch>
+            <GraphSwitch
+              checked={conflictsSwitchedOn}
+              onCheckedChange={setConflictsSwitchedOn}
+              checkedColor={CONFLICT_COLOR}
+            >
+              Show conflicts (
+              {conflictsQuery.data?.length ??
+                (conflictsQuery.isError ? 'failed to load' : '…')}
+              )
+            </GraphSwitch>
+            {showConflicts && graph && (
+              <ConflictStepper
+                selectedIndex={selectedConflictIndex}
+                graphCount={conflictNodeIdList.length}
+                totalCount={conflictsQuery.data?.length ?? 0}
+                onStep={stepConflict}
+              />
+            )}
           </div>
         </div>
         <div className="relative min-h-0 flex-1 overflow-hidden rounded-md border bg-background">
@@ -162,6 +234,11 @@ export function TokenRelationsGraphPage() {
                 selection={graphSelection}
                 zoomTarget={graphZoomTarget}
                 highlightAnomalies={highlightAnomalies}
+                conflictNodeIds={
+                  showConflicts && conflictNodeIds.size > 0
+                    ? conflictNodeIds
+                    : undefined
+                }
                 deletedRelationIds={deletedRelationIds}
                 onSelectionChange={changeSelection}
               />
@@ -176,6 +253,7 @@ export function TokenRelationsGraphPage() {
               chains={chainsQuery.data ?? []}
               selection={graphSelection}
               highlightAnomalies={highlightAnomalies}
+              conflictNodeIds={conflictNodeIds}
               deletedRelationIds={deletedRelationIds}
               onSelectionChange={changeSelection}
               onRelationDeleted={markRelationDeleted}
@@ -301,12 +379,16 @@ function TokensWithoutRelationsPicker({
   )
 }
 
-function AnomalySwitch({
+function GraphSwitch({
   checked,
   onCheckedChange,
+  checkedColor,
+  children,
 }: {
   checked: boolean
   onCheckedChange: (checked: boolean) => void
+  checkedColor: string
+  children: ReactNode
 }) {
   return (
     <button
@@ -319,8 +401,9 @@ function AnomalySwitch({
       <span
         className={cn(
           'relative inline-block h-5 w-9 shrink-0 rounded-full transition-colors',
-          checked ? 'bg-destructive' : 'bg-muted-foreground/35',
+          !checked && 'bg-muted-foreground/35',
         )}
+        style={checked ? { background: checkedColor } : undefined}
       >
         <span
           className={cn(
@@ -329,8 +412,67 @@ function AnomalySwitch({
           )}
         />
       </span>
-      Highlight anomalies
+      {children}
     </button>
+  )
+}
+
+/**
+ * Steps the selection through the conflicts on the graph, zooming to each.
+ * Conflicts whose address no displayed relation touches have no node to
+ * step to; they are counted and left to the ingestion queue page.
+ */
+function ConflictStepper({
+  selectedIndex,
+  graphCount,
+  totalCount,
+  onStep,
+}: {
+  selectedIndex: number
+  graphCount: number
+  totalCount: number
+  onStep: (step: 1 | -1) => void
+}) {
+  const offGraphCount = totalCount - graphCount
+  return (
+    <div className="inline-flex items-center gap-1.5">
+      <Button
+        variant="outline"
+        size="icon"
+        className="size-7"
+        aria-label="Previous conflict"
+        disabled={graphCount === 0}
+        onClick={() => onStep(-1)}
+      >
+        <ChevronLeftIcon />
+      </Button>
+      <span className="min-w-20 text-center text-muted-foreground tabular-nums">
+        {graphCount === 0
+          ? 'None on graph'
+          : selectedIndex === -1
+            ? `${graphCount} on graph`
+            : `${selectedIndex + 1} of ${graphCount}`}
+      </span>
+      <Button
+        variant="outline"
+        size="icon"
+        className="size-7"
+        aria-label="Next conflict"
+        disabled={graphCount === 0}
+        onClick={() => onStep(1)}
+      >
+        <ChevronRightIcon />
+      </Button>
+      {offGraphCount > 0 && (
+        <Link
+          to="/tokens/ingestion-queue"
+          title="These addresses are in no relation shown on this graph"
+          className="text-muted-foreground underline hover:text-foreground"
+        >
+          {offGraphCount} not on graph
+        </Link>
+      )}
+    </div>
   )
 }
 

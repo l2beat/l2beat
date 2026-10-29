@@ -266,7 +266,7 @@ function DesignControl({
       control = (
         <Choice
           name="privacyPoolConnection"
-          label="The client connects through"
+          label="The app connects through"
           value={design.publicRpc}
           options={[
             [false, 'Tor and a relayer'],

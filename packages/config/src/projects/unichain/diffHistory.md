@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x4f419e254c06e339b7bc14cac5cde4cf3b4fdc5c
+
+# Diff at Tue, 27 Oct 2026 11:57:32 GMT:
+
+- id: 5e0910ed
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@de2e3d4ee6aef60add0cf0b261ced3c797f9fb6e block: 1792587967
+- current timestamp: 1792587967
+
+## Description
+
+Discover the OperatorFeeVault predeploy, so changes to its recipient, withdrawal network and minimum withdrawal show up in diffs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792587967 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.28:
++        {"permission":"upgrade","from":"unichain:0x420000000000000000000000000000000000001b","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (unichain:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      directlyReceivedPermissions.14:
++        {"permission":"upgrade","from":"unichain:0x420000000000000000000000000000000000001b","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OperatorFeeVault (unichain:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault]
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+```
+
 Generated with discovered.json: 0xb573653535562c9a7aa02bcef1d3233e02725688
 
 # Diff at Wed, 21 Oct 2026 13:50:19 GMT:

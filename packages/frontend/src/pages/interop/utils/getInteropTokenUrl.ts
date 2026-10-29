@@ -1,7 +1,7 @@
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
 
 /**
- * Builds `/interop/tokens/{id}/{issuer}/{symbol}`. The issuer and symbol
+ * Builds `/tokens/{id}/{issuer}/{symbol}`. The issuer and symbol
  * segments are decorative - the page is resolved by id alone, so links that
  * carry stale segments still land on the right token.
  */
@@ -19,7 +19,7 @@ export function getInteropTokenUrl(token: {
     .map(slugify)
     .filter((segment) => segment !== '')
 
-  return ['/interop/tokens', token.id, ...suffix].join('/')
+  return ['/tokens', token.id, ...suffix].join('/')
 }
 
 /** Tokens without a readable URL are still reachable by id alone. */
@@ -28,7 +28,7 @@ export function getInteropTokenPagePath(token: {
   symbol: string
   issuer: string | null
 }): string {
-  return getInteropTokenUrl(token) ?? `/interop/tokens/${token.id}`
+  return getInteropTokenUrl(token) ?? `/tokens/${token.id}`
 }
 
 function slugify(value: string): string {

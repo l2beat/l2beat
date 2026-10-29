@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xfdc5d1592884603eb33552024c6c3b2c94985a89
+
+# Diff at Tue, 27 Oct 2026 11:31:39 GMT:
+
+- id: 3a25b6b8
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@de2e3d4ee6aef60add0cf0b261ced3c797f9fb6e block: 1791789484
+- current timestamp: 1791789484
+
+## Description
+
+Mark FeeTreasury non-critical. It holds only protocol fees from the intent contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789484 (main branch discovery), not current.
+
+```diff
+    contract FeeTreasury (eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc) [debridge/FeeTreasury] {
+    +++ description: Holds fees collected by deBridge intent contracts. Authorized collectors can withdraw native tokens and ERC20 tokens to any recipient.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
 Generated with discovered.json: 0x0050f50266e726acb522fd7ea0fbf0c8328ad201
 
 # Diff at Fri, 16 Oct 2026 05:36:48 GMT:

@@ -67,7 +67,7 @@ export function interfoldAdversaries(
       networkObserver: {
         sentiment: 'good',
         exposureShort:
-          'The ballot leaves the browser only as ciphertext with its proof, traffic shows at most that the user sent a ballot.',
+          'The ballot leaves the browser only as ciphertext with its proof, so traffic shows at most that the user sent a ballot.',
         exposureContinued:
           "The app sends ballots to the CRISP server and reads the chain through it, falling back to an RPC proxy on Interfold's host.",
         sources: [

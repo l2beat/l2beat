@@ -34,7 +34,7 @@ const Tooltip = ({
   return (
     <TooltipPrimitive.Root open={open} onOpenChange={setOpen} {...props}>
       <TooltipTriggerContextProvider
-        value={{ open, setOpen, contentDescriptionId }}
+        value={{ open: props.open ?? open, setOpen, contentDescriptionId }}
       >
         {children}
       </TooltipTriggerContextProvider>
@@ -51,12 +51,10 @@ const TooltipTrigger = ({
 }) => {
   const localRef = useRef(null)
   const { isDesktop } = useDevice()
-  const { setOpen, contentDescriptionId } = useTooltipTriggerContext()
-  // Omitted rather than undefined: an explicit undefined would override the
-  // id Radix sets while the tooltip is open.
-  const describedBy = contentDescriptionId
-    ? { 'aria-describedby': contentDescriptionId }
-    : {}
+  const { open, setOpen, contentDescriptionId } = useTooltipTriggerContext()
+  // While open, Radix adds the id of its own copy of the same content, so the
+  // HTML copy would make screen readers read it twice.
+  const describedBy = open ? undefined : contentDescriptionId
 
   if (props.disabled) {
     return props.children
@@ -64,7 +62,13 @@ const TooltipTrigger = ({
 
   // Tooltips do not work on mobile by default
   if (disabledOnMobile) {
-    return <TooltipPrimitive.Trigger ref={ref} {...describedBy} {...props} />
+    return (
+      <TooltipPrimitive.Trigger
+        ref={ref}
+        aria-describedby={describedBy}
+        {...props}
+      />
+    )
   }
 
   const onClick = !isDesktop
@@ -79,7 +83,7 @@ const TooltipTrigger = ({
       ref={mergeRefs(ref, localRef)}
       onClick={onClick}
       data-role="tooltip-trigger"
-      {...describedBy}
+      aria-describedby={describedBy}
       {...props}
     />
   )

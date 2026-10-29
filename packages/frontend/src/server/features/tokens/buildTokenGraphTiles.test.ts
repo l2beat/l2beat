@@ -106,7 +106,7 @@ describe(toTokenGraphTile.name, () => {
       symbol: 'USDC',
       issuer: 'circle',
       iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
-      href: '/interop/tokens/usdc01/circle/usdc',
+      href: '/tokens/usdc01/circle/usdc',
       volume: 500,
       deploymentsCount: 3,
       chainsCount: 3,

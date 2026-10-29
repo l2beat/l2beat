@@ -48,7 +48,8 @@
       "implementationNames": {
         "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": "OptimizedTransparentUpgradeableProxy",
         "eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0": ""
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "EndpointV2",
@@ -1442,8 +1443,7 @@
           "from": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
           "role": ".owner"
         }
-      ],
-      "eoaWithUpgradePermissions": true
+      ]
     },
     "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478": {
       "receivedPermissions": [

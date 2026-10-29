@@ -141,7 +141,7 @@ function tokenEntry({ name }: { name: string }) {
     type: 'token' as const,
     category: 'tokens' as const,
     name,
-    href: `/interop/tokens/${name.toLowerCase()}`,
+    href: `/tokens/${name.toLowerCase()}`,
   }
 }
 

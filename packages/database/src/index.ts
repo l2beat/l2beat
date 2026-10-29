@@ -11,7 +11,6 @@ export type {
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
 export type {
-  ActivityPeaks,
   ActivityRecord,
   ActivityTotals,
 } from './repositories/ActivityRepository'
@@ -31,7 +30,7 @@ export {
   AppStatePair,
   type AppStateRecord,
 } from './repositories/AppStateRepository'
-export type { BlobPairCount, BlobRecord } from './repositories/BlobsRepository'
+export type { BlobRecord } from './repositories/BlobsRepository'
 export type {
   ChainApi,
   ChainRecord,
@@ -175,6 +174,7 @@ export type {
 } from './repositories/TokenValueRepository'
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'
 export type { TvsBlockTimestampRecord } from './repositories/TvsBlockTimestampRepository'
+export type { TvsEscrowValueRecord } from './repositories/TvsEscrowValueRepository'
 export type { TvsPriceRecord } from './repositories/TvsPriceRepository'
 export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'
 export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository'
