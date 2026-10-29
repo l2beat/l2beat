@@ -18,9 +18,11 @@ const duration = (contract: string, key: string): string =>
     fullUnit: true,
   })
 
-// The oracle contract's rate limit: each whitelisted caller may move the
-// exchange rate by at most `amount` (1e18 scale, cumulative absolute change)
-// per `interval`, refilling linearly. Rendered as a percentage of one ETH.
+// The oracle contract's rate limit: each change of the exchange rate, up or
+// down, spends from the caller's allowance of `amount` (1e18 scale), which
+// refills linearly over `interval`. So one update moves the rate by at most
+// `amount`, and an interval by at most twice that. Rendered as a percentage
+// of one ETH.
 const callerLimits = discovery.getContractValue<
   { caller: string; amount: string; interval: number }[]
 >('ExchangeRateUpdater', 'callerLimits')
@@ -30,9 +32,10 @@ assert(
   rateCap !== undefined && callerLimits.length === 1,
   'wbeth: ExchangeRateUpdater has more than one caller, update the oracle risk',
 )
-const rateCapPercent = `${Number.parseFloat(
-  (Number(BigInt(rateCap.amount)) / 1e16).toFixed(4),
-)}%`
+const percentOfEth = (wei: bigint) =>
+  `${Number.parseFloat((Number(wei) / 1e16).toFixed(4))}%`
+const rateCapPercent = percentOfEth(BigInt(rateCap.amount))
+const rateCapPerIntervalPercent = percentOfEth(2n * BigInt(rateCap.amount))
 const rateCapInterval = formatSeconds(rateCap.interval, { fullUnit: true })
 const symbol = value('wBETH', 'symbol')
 const lockTimeDays =
@@ -125,9 +128,9 @@ export const wbeth: BaseProject = {
     },
     oracle: {
       value: '1 of 1',
-      secondLine: `daily · ≤${rateCapPercent}/${rateCap.interval === 365 * 86400 ? 'yr' : rateCapInterval}`,
+      secondLine: `daily · ≤${rateCapPercent}`,
       sentiment: 'bad',
-      description: `One Binance key writes the rate, with no cap per update and at most ${rateCapPercent} over ${rateCapInterval}. The owner can switch the oracle and set any rate at once.`,
+      description: `One Binance key writes the rate. Each change, up or down, spends from an allowance of ${rateCapPercent} that refills over ${rateCapInterval}, so one update can move the rate by up to ${rateCapPercent}, and by up to ${rateCapPerIntervalPercent} over ${rateCapInterval}. The owner can switch the oracle and set any rate at once.`,
     },
     exit: {
       value: 'Binance-funded',
