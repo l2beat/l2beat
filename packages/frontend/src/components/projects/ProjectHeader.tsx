@@ -131,7 +131,7 @@ export function ProjectHeader({
           </div>
         </div>
       </div>
-      <SearchBarButton className="max-lg:hidden" label="Search projects" />
+      <SearchBarButton className="max-lg:hidden" />
     </div>
   )
 }
