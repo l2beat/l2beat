@@ -31,7 +31,7 @@ export {
   AppStatePair,
   type AppStateRecord,
 } from './repositories/AppStateRepository'
-export type { BlobPairCount, BlobRecord } from './repositories/BlobsRepository'
+export type { BlobRecord } from './repositories/BlobsRepository'
 export type {
   ChainApi,
   ChainRecord,

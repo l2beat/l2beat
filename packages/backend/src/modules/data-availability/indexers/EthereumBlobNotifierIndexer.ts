@@ -8,7 +8,7 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import { matchEthereumProject } from '../services/matchEthereumConfigs'
+import { matchEthereumConfigs } from '../services/matchEthereumConfigs'
 
 interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
@@ -75,34 +75,41 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
     const todayStart = UnixTime.toStartOf(to, 'day')
     const yesterdayStart = todayStart - UnixTime.DAY
 
-    const pairs = await this.$.db.blobs.getCountPerAddressInbox(
+    const blobs = await this.$.db.blobs.getByTimestampRange(
       'ethereum',
       yesterdayStart,
       todayStart,
     )
 
-    const unmatchedPairs: UnmatchedBlobPair[] = []
-
-    for (const pair of pairs) {
-      if (pair.count < COUNT_THRESHOLD) continue
-
-      const isMatched = this.$.configurations.some((config) =>
-        matchEthereumProject(
-          {
-            inbox: pair.to ?? '',
-            sequencer: pair.from,
-            topics: [],
-          },
-          config,
-        ),
+    // Each blob is matched the way the DA indexer attributes it - with the
+    // topics of its transaction and the configs in force at its block - so
+    // projects tracked by event (e.g. Aztec proposers posting through
+    // Multicall3) are not reported. Only the unmatched ones are counted per pair.
+    const unmatched = new Map<string, UnmatchedBlobPair>()
+    for (const blob of blobs) {
+      const matched = matchEthereumConfigs(
+        this.$.configurations,
+        blob.blockNumber,
+        {
+          inbox: blob.to ?? '',
+          sequencer: blob.from,
+          topics: blob.topics ?? [],
+        },
       )
+      if (matched.length > 0) continue
 
-      if (!isMatched) {
-        unmatchedPairs.push(pair)
+      const key = `${blob.from}:${blob.to}`
+      const pair = unmatched.get(key)
+      if (pair) {
+        pair.count++
+      } else {
+        unmatched.set(key, { from: blob.from, to: blob.to, count: 1 })
       }
     }
 
-    return unmatchedPairs
+    return [...unmatched.values()].filter(
+      (pair) => pair.count >= COUNT_THRESHOLD,
+    )
   }
 
   formatDiscordMessages(pairs: UnmatchedBlobPair[], to: number): string[] {

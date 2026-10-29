@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { EthereumDaTrackingConfig } from '@l2beat/config'
-import type { BlobPairCount, Database } from '@l2beat/database'
+import type { BlobRecord, Database } from '@l2beat/database'
 import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -24,7 +24,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       const result = await indexer.update(0, midnight)
 
       expect(result).toEqual(midnight)
-      expect(blobsRepository.getCountPerAddressInbox).not.toHaveBeenCalled()
+      expect(blobsRepository.getByTimestampRange).not.toHaveBeenCalled()
       expect(discordClient.sendMessage).not.toHaveBeenCalled()
     })
 
@@ -32,7 +32,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       const discordClient = mockDiscordClient()
       const indexer = createIndexer({
         blobsRepository: mockBlobsRepository([
-          { from: '0xSeq', to: '0xInbox', count: 200 },
+          ...blobs('0xSeq', '0xInbox', 200),
         ]),
         discordClient,
         configurations: [config({ inbox: '0xInbox' })],
@@ -50,7 +50,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       const discordClient = mockDiscordClient()
       const indexer = createIndexer({
         blobsRepository: mockBlobsRepository([
-          { from: '0xUnknown', to: '0xUnknownInbox', count: 150 },
+          ...blobs('0xUnknown', '0xUnknownInbox', 150),
         ]),
         discordClient,
         configurations: [config({ inbox: '0xOther' })],
@@ -68,7 +68,7 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       const discordClient = mockDiscordClient(new Error('Discord API error'))
       const indexer = createIndexer({
         blobsRepository: mockBlobsRepository([
-          { from: '0xUnknown', to: '0xUnknownInbox', count: 150 },
+          ...blobs('0xUnknown', '0xUnknownInbox', 150),
         ]),
         discordClient,
       })
@@ -84,8 +84,8 @@ describe(EthereumBlobNotifierIndexer.name, () => {
   describe(EthereumBlobNotifierIndexer.prototype.getUnmatchedPairs.name, () => {
     it('filters pairs below 100 blobs', async () => {
       const blobsRepository = mockBlobsRepository([
-        { from: '0xA', to: '0xB', count: 99 },
-        { from: '0xC', to: '0xD', count: 100 },
+        ...blobs('0xA', '0xB', 99),
+        ...blobs('0xC', '0xD', 100),
       ])
       const indexer = createIndexer({ blobsRepository })
       const oneAm =
@@ -98,8 +98,8 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
     it('excludes pairs that match a config by inbox', async () => {
       const blobsRepository = mockBlobsRepository([
-        { from: '0xA', to: '0xMatchedInbox', count: 200 },
-        { from: '0xB', to: '0xUnmatched', count: 200 },
+        ...blobs('0xA', '0xMatchedInbox', 200),
+        ...blobs('0xB', '0xUnmatched', 200),
       ])
       const indexer = createIndexer({
         blobsRepository,
@@ -115,8 +115,8 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
     it('excludes pairs that match a config by inbox and sequencer', async () => {
       const blobsRepository = mockBlobsRepository([
-        { from: '0xSeq1', to: '0xInbox', count: 200 },
-        { from: '0xSeq2', to: '0xInbox', count: 200 },
+        ...blobs('0xSeq1', '0xInbox', 200),
+        ...blobs('0xSeq2', '0xInbox', 200),
       ])
       const indexer = createIndexer({
         blobsRepository,
@@ -130,10 +130,50 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       expect(result).toEqual([{ from: '0xSeq2', to: '0xInbox', count: 200 }])
     })
 
+    it('excludes blobs that match a config by event topic', async () => {
+      const blobsRepository = mockBlobsRepository([
+        ...blobs('0xProposer', '0xMulticall', 150, {
+          topics: ['0xcheckpoint'],
+        }),
+        ...blobs('0xProposer', '0xProposer', 120),
+      ])
+      const indexer = createIndexer({
+        blobsRepository,
+        configurations: [
+          config({ inbox: '0xRollup', topics: ['0xCHECKPOINT'] }),
+        ],
+      })
+      const oneAm =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
+
+      const result = await indexer.getUnmatchedPairs(oneAm)
+
+      expect(result).toEqual([
+        { from: '0xProposer', to: '0xProposer', count: 120 },
+      ])
+    })
+
+    it('only matches configs in force at the block of the blob', async () => {
+      const blobsRepository = mockBlobsRepository([
+        ...blobs('0xSeq', '0xInbox', 100, { blockNumber: 200 }),
+        ...blobs('0xSeq', '0xInbox', 100, { blockNumber: 300 }),
+      ])
+      const indexer = createIndexer({
+        blobsRepository,
+        configurations: [config({ inbox: '0xInbox', untilBlock: 250 })],
+      })
+      const oneAm =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
+
+      const result = await indexer.getUnmatchedPairs(oneAm)
+
+      expect(result).toEqual([{ from: '0xSeq', to: '0xInbox', count: 100 }])
+    })
+
     it('returns empty when no pairs have 100+ blobs', async () => {
       const blobsRepository = mockBlobsRepository([
-        { from: '0xA', to: '0xB', count: 50 },
-        { from: '0xC', to: '0xD', count: 99 },
+        ...blobs('0xA', '0xB', 50),
+        ...blobs('0xC', '0xD', 99),
       ])
       const indexer = createIndexer({ blobsRepository })
       const oneAm =
@@ -216,10 +256,28 @@ function config(
   }
 }
 
-function mockBlobsRepository(pairs: BlobPairCount[]) {
+function mockBlobsRepository(records: BlobRecord[]) {
   return mockObject<Database['blobs']>({
-    getCountPerAddressInbox: mockFn().resolvesTo(pairs),
+    getByTimestampRange: mockFn().resolvesTo(records),
   })
+}
+
+function blobs(
+  from: string,
+  to: string,
+  count: number,
+  opts: { blockNumber?: number; topics?: string[] } = {},
+): BlobRecord[] {
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    blockNumber: opts.blockNumber ?? 100,
+    timestamp: UnixTime(0),
+    daLayer: 'ethereum',
+    from,
+    to,
+    topics: opts.topics ?? null,
+    size: null,
+  }))
 }
 
 function mockDiscordClient(sendError?: Error) {
