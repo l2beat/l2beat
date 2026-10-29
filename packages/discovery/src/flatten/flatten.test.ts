@@ -764,6 +764,92 @@ describe('flatten', () => {
     )
   })
 
+  it('keeps only the root file ABI coder before Solidity 0.8', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      pragma solidity ^0.7.6;
+      import { Lib } from "./Lib.sol";
+      contract Root {
+          function f() public pure returns (uint256) { return Lib.g(); }
+      }
+    `,
+    )
+    const libFile = sol(
+      'Lib.sol',
+      `
+      pragma solidity ^0.7.6;
+      pragma abicoder v2;
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, libFile],
+      [],
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+
+      contract Root {
+          function f() public pure returns (uint256) { return Lib.g(); }
+      }
+    `),
+    )
+  })
+
+  it('keeps dependency ABI coder pragmas from Solidity 0.8', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      pragma solidity ^0.8.0;
+      import { Lib } from "./Lib.sol";
+      contract Root {
+          function f() public pure returns (uint256) { return Lib.g(); }
+      }
+    `,
+    )
+    const libFile = sol(
+      'Lib.sol',
+      `
+      pragma solidity ^0.8.0;
+      pragma experimental ABIEncoderV2;
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, libFile],
+      [],
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      pragma experimental ABIEncoderV2;
+
+      library Lib {
+          function g() internal pure returns (uint256) { return 1; }
+      }
+
+      contract Root {
+          function f() public pure returns (uint256) { return Lib.g(); }
+      }
+    `),
+    )
+  })
+
   it('inheritance namespacing', () => {
     const rootFile = sol(
       'Root.sol',
