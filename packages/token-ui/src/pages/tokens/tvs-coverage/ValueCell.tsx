@@ -42,19 +42,21 @@ export function ValueCell({ row }: { row: Row }) {
   }
   return (
     <div className="flex flex-col items-end">
-      {value.valueUsd === undefined ? (
-        <Muted tooltip={describeMissingPrice(row)}>no price</Muted>
-      ) : (
-        <WithTooltip
-          content={`Price ${formatCurrency(value.priceUsd ?? 0, 'usd')} from ${row.pricing?.coingeckoId}`}
-        >
-          <span className={cn('font-medium', HOVERABLE_TEXT)}>
-            {formatCurrency(value.valueUsd, 'usd')}
-          </span>
-        </WithTooltip>
-      )}
-      <div className="flex flex-wrap items-center justify-end gap-1 text-muted-foreground text-xs">
+      <div className="flex flex-wrap items-center justify-end gap-1">
         <AmountTags row={row} value={value} />
+        {value.valueUsd === undefined ? (
+          <Muted tooltip={describeMissingPrice(row)}>no price</Muted>
+        ) : (
+          <WithTooltip
+            content={`Price ${formatCurrency(value.priceUsd ?? 0, 'usd')} from ${row.pricing?.coingeckoId}`}
+          >
+            <span className={cn('font-medium', HOVERABLE_TEXT)}>
+              {formatCurrency(value.valueUsd, 'usd')}
+            </span>
+          </WithTooltip>
+        )}
+      </div>
+      <div className="flex flex-wrap items-center justify-end gap-1 text-muted-foreground text-xs">
         <IncompleteDataTag change={value.supplyChange} />
         <WithTooltip content={<AmountDetails row={row} value={value} />}>
           <span className={HOVERABLE_TEXT}>
