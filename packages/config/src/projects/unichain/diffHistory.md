@@ -10,7 +10,8 @@ Generated with discovered.json: 0x99df4644937c7f4892199d2cdd0503c88538b0a8
 ## Description
 
 SystemConfig: owner moved from Unichain Multisig 2 to the OpFoundationUpgradeSafe.
-L1Splitter: L1 recipient changed and minimum withdrawal 10 → 3 ETH, set by Unichain Multisig 2 through an L1→L2 message.
+L1Splitter: L1 recipient changed; minimum withdrawal 10 → 3 ETH.
+L1Splitter template: `l1Recipient` now recorded as an Ethereum address.
 
 ## Watched changes
 
