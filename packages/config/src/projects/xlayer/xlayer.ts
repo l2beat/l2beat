@@ -321,6 +321,12 @@ export const xlayer: ScalingProject = agglayer({
       },
     ],
   },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    // first OP Stack block with the L1-info deposit tx; CDK blocks have none
+    adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 42810022 },
+  },
   milestones: [
     {
       title: 'OP Succinct Lite dispute game activated',

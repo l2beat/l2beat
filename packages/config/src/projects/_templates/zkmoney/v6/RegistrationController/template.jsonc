@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RegistrationController",
+  "category": "core",
+  "description": "Completes paid name registrations from blessed registration addresses: deploys the user's L1 account, claims the name, writes the user record, optionally announces the name on Aztec through the NAME_PORTAL, and installs the user's first passkey. Fees above the relayer fee go to an allowlisted beneficiary.",
+  "ignoreMethods": ["usedTermsNonces"],
+  "ignoreRelatives": ["beneficiaries", "ENTRY_POINT", "FEE_TOKEN"],
+  "fields": {
+    "ACCOUNT_FACTORY": {
+      "description": "Immutable factory and account implementation used to deploy users’ L1 passkey accounts.",
+      "template": "zkmoney/OxideAccountFactory"
+    },
+    "beneficiaries": {
+      "description": "Allowlisted fee recipients. The NameRegistry owner can append entries, none can be removed.",
+      "handler": {
+        "type": "array",
+        "length": "{{ nextBeneficiaryId }}"
+      }
+    }
+  }
+}

@@ -16,7 +16,7 @@ The tokens follow [ERC-7984](https://eips.ethereum.org/EIPS/eip-7984) and use fu
 
 ### App
 
-The ratings assume the closed source [Zama app](https://app.zama.org). Before every write it checks the address with Zama's screening service, which refuses fresh addresses. A client built on Zama's open SDK needs a Zama [API key](https://docs.zama.org/protocol/sdk/guides/relayer-api-keys) or a [self-run relayer](https://github.com/zama-ai/fhevm/blob/4bf50a083e65f0a53997292ca5848010faf98b79/relayer/docs/SELF_HOSTING.md). The vault deposit form shares the user's vault balance with Merkl for extra rewards, [on by default, opt-out available](https://www.zama.org/post/confidential-rewards-with-merkl-are-now-available-to-claim).
+Before every write, the app checks the address with Zama's screening service, which refuses fresh addresses. A client built on Zama's open SDK needs a Zama [API key](https://docs.zama.org/protocol/sdk/guides/relayer-api-keys) or a [self-run relayer](https://github.com/zama-ai/fhevm/blob/4bf50a083e65f0a53997292ca5848010faf98b79/relayer/docs/SELF_HOSTING.md). The vault deposit form shares the user's vault balance with Merkl for extra rewards, [on by default, opt-out available](https://www.zama.org/post/confidential-rewards-with-merkl-are-now-available-to-claim).
 
 ### Yield vaults
 

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositSIPA",
+  "critical": true,
+  "category": "core",
+  "description": "Implementation of zk.money deposit addresses. Anyone can sweep a funded clone, which swaps USDC or USDT to DAI, pays the fees its ForwardingTable lists and deposits the rest into the portal that table names for the token, for the recipient fixed in the clone's address. The recipient's account can recover any funds from the clone.",
+  "ignoreMethods": [
+    "forwardingTable",
+    "intentHash",
+    "recoveryCommitment",
+    "resweepable",
+    "rollupVersion",
+    "swept"
+  ]
+}

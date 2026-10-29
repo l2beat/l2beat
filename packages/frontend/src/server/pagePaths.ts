@@ -98,7 +98,7 @@ async function getDynamicPages(): Promise<Page[]> {
     }),
     ps.getProjects({ select: ['zkCatalogInfo'] }),
     ps.getProjects({ where: ['ecosystemConfig'] }),
-    ps.getProjects({ where: ['privacyInfo'] }),
+    ps.getProjects({ where: ['privacyInfo'], whereNot: ['archivedAt'] }),
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps.getProjects({ where: ['defiInfo'] })
       : Promise.resolve([]),

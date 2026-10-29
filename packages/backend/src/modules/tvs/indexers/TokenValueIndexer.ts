@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
-import type { TokenValueRecord } from '@l2beat/database'
+import type { TokenValueRecord, TvsEscrowValueRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
@@ -19,6 +19,7 @@ import {
   extractPricesAndAmounts,
   generateConfigurationId,
 } from '../tools/extractPricesAndAmounts'
+import { getSummedEscrowBalances } from '../tools/getSummedEscrowBalances'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 interface TokenValueIndexerDeps
@@ -27,6 +28,8 @@ interface TokenValueIndexerDeps
   dbStorage: DBStorage
   valueService: ValueService
   project: string
+  /** Also store the value of each escrow balance a token sums. */
+  storeEscrowValues: boolean
   maxTimestampsToProcessAtOnce: number
 }
 
@@ -90,16 +93,37 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
       timestamps,
     )
 
-    const records: TokenValueRecord[] = tvs.map((t) => {
-      const token = configurations.find((c) => c.properties.id === t.tokenId)
-      assert(token, `${t.tokenId}: no token found`)
-      return {
-        ...t,
-        configurationId: TokenValueIndexer.idToConfigurationId(
-          token.properties,
+    const configurationIds = new Map<string, string>(
+      configurations.map((c) => [
+        c.properties.id,
+        TokenValueIndexer.idToConfigurationId(
+          c.properties,
+          this.$.storeEscrowValues,
         ),
-      }
-    })
+      ]),
+    )
+    const toConfigurationId = (tokenId: string) => {
+      const configurationId = configurationIds.get(tokenId)
+      assert(configurationId, `${tokenId}: no token found`)
+      return configurationId
+    }
+
+    const records: TokenValueRecord[] = tvs.map((t) => ({
+      ...t,
+      configurationId: toConfigurationId(t.tokenId),
+    }))
+
+    const escrowRecords: TvsEscrowValueRecord[] = this.$.storeEscrowValues
+      ? (
+          await this.$.valueService.calculateEscrowValues(
+            {
+              projectId: this.$.project,
+              tokens: configurations.map((c) => c.properties),
+            },
+            timestamps,
+          )
+        ).map((e) => ({ ...e, configurationId: toConfigurationId(e.tokenId) }))
+      : []
 
     return async () => {
       const syncedUntil = timestamps[timestamps.length - 1]
@@ -110,6 +134,7 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
           syncedUntil,
         )
         await this.$.db.tvsTokenValue.upsertMany(records)
+        await this.$.db.tvsEscrowValue.upsertMany(escrowRecords)
       })
       this.logger.info('Saved token values into DB', {
         timestamps: timestamps.length,
@@ -121,9 +146,9 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
   }
 
   override async wipeData(configurations: WipeRemovalConfiguration[]) {
-    const deletedRecords = await this.$.db.tvsTokenValue.deleteByConfigIds(
-      configurations.map((c) => c.id),
-    )
+    const ids = configurations.map((c) => c.id)
+    const deletedRecords = await this.$.db.tvsTokenValue.deleteByConfigIds(ids)
+    await this.$.db.tvsEscrowValue.deleteByConfigIds(ids)
     if (deletedRecords > 0) {
       this.logger.info('Wiped records for configurations', {
         configurations: configurations.length,
@@ -141,6 +166,11 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
           from,
           to,
         )
+      await this.$.db.tvsEscrowValue.deleteByConfigInTimeRange(
+        configuration.id,
+        from,
+        to,
+      )
 
       if (deletedRecords > 0) {
         this.logger.info('Trimmed records for configuration', {
@@ -153,8 +183,18 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
     }
   }
 
-  static idToConfigurationId = (token: TvsToken) => {
+  /**
+   * Opting a token into escrow values changes its id, so the indexer wipes
+   * and recomputes its history from stored amounts and prices, filling the
+   * escrow values on the way.
+   */
+  static idToConfigurationId = (
+    token: TvsToken,
+    storeEscrowValues: boolean,
+  ) => {
     const { amounts, prices } = extractPricesAndAmounts([token])
+    const hasEscrowValues =
+      storeEscrowValues && getSummedEscrowBalances(token).length > 0
 
     return generateConfigurationId([
       token.id,
@@ -163,6 +203,7 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
       String(token.isAssociated),
       ...amounts.map((a) => createAmountConfig(a).id),
       ...prices.map((p) => createPriceConfigId(p.id)),
+      ...(hasEscrowValues ? ['escrowValues'] : []),
     ])
   }
 }

@@ -55,6 +55,24 @@ describeDatabase(ActivityRepository.name, (db) => {
         record('a', START + 1 * UnixTime.DAY, 2, 2, 4, 5),
       ])
     })
+
+    it('replaces the busiest hour, without a busiest minute', async () => {
+      await repository.upsertMany([
+        { ...record('a', START), peakHourCount: 10, peakHourUopsCount: 12 },
+      ])
+      await repository.upsertMany([
+        { ...record('a', START), peakHourCount: 8, peakHourUopsCount: null },
+      ])
+
+      expect(await getPeaks()).toEqual([
+        {
+          peakHourCount: 8,
+          peakHourUopsCount: null,
+          peakMinuteCount: null,
+          peakMinuteUopsCount: null,
+        },
+      ])
+    })
   })
 
   describe(ActivityRepository.prototype.addMany.name, () => {

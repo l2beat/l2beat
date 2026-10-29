@@ -10,6 +10,7 @@ import { expect } from 'earl'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { PrivacyAsset } from '~/server/features/privacy/types'
+import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { renderPrivacyProjectMarkdown } from './renderPrivacyProjectMarkdown'
 
 // Method: render one hand-built privacy project entry (the same shape the
@@ -39,6 +40,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       '- Active Relayers 30D: 7',
       '- Tracked on: Ethereum, BNB Smart Chain',
       '- Attributes: ZK, Fixed amounts',
+      '- Reference app: Classic app (most private of 2 checked)',
       'Tornado Cash is a non-custodial mixer.',
     )
   })
@@ -215,6 +217,37 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     it('states the promise before the adversaries', () => {
       expect(privacy()).toMatchRegex(
         /^\n\*\*What the protocol promises:\*\* Hides which deposit funds which withdrawal\.\n/,
+      )
+    })
+
+    it('lists the reference app, then each checked app with its finding and fix', () => {
+      expect(privacy()).toInclude(
+        '**Apps**\n\n- **[Classic app](https://tornado.example)** (Reference): The ratings assume this app, since 2026-10-13 · Source [17c54da](https://github.com/tornado-dao/classic-ui/tree/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4)\n- **Mirror app** (Leaks more): Reads every note through a hosted indexer. Fix: Scan notes locally. · [Source (checked 2026-10-22)](https://mirror.example)\n\n[How we pick the reference](https://l2beat.com/publications/privacy-methodology#reference-app)',
+      )
+    })
+
+    it('pins a closed reference app by its build and the day it was traced', () => {
+      const { source: _, ...closedApp } = REFERENCE_APP
+      const markdown = renderPrivacyProjectMarkdown({
+        ...ENTRY,
+        sections: SECTIONS.map((section) =>
+          section.type === 'PrivacyAdversariesSection'
+            ? {
+                ...section,
+                props: {
+                  ...section.props,
+                  referenceApp: {
+                    ...closedApp,
+                    build: '99da543',
+                    checked: '2026-10-22',
+                  },
+                },
+              }
+            : section,
+        ),
+      })
+      expect(getSection(markdown, 'Privacy')).toInclude(
+        '(Reference): The ratings assume this app, since 2026-10-13 · Closed source, build 99da543, checked 2026-10-22',
       )
     })
 
@@ -477,6 +510,27 @@ const ETH: PrivacyAsset = {
   ],
 }
 
+const REFERENCE_APP: PrivacyReferenceApp = {
+  name: 'Classic app',
+  url: 'https://tornado.example',
+  since: '2026-10-13',
+  iconUrl: '/icons/tornado-cash.png',
+  source: {
+    repository: 'https://github.com/tornado-dao/classic-ui',
+    commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',
+  },
+  checkedApps: [
+    {
+      name: 'Mirror app',
+      iconUrl: '/images/token-placeholder.png',
+      finding: 'Reads every note through a hosted indexer.',
+      fix: 'Scan notes locally.',
+      source: 'https://mirror.example',
+      checked: '2026-10-22',
+    },
+  ],
+}
+
 const SECTIONS: ProjectDetailsSection[] = [
   {
     type: 'PrivacyAdversariesSection',
@@ -484,6 +538,7 @@ const SECTIONS: ProjectDetailsSection[] = [
       id: 'privacy-adversaries',
       title: 'Privacy',
       adversaries: ADVERSARIES,
+      referenceApp: REFERENCE_APP,
     },
   },
   chartSection('TvsValueSection', 'privacy-tvl', 'Value Locked'),
@@ -559,6 +614,7 @@ const ENTRY: ProjectPrivacyEntry = {
     sentiment: 'good',
     description: 'The client can be built locally.',
   },
+  referenceApp: REFERENCE_APP,
   summary: {
     totalValueLockedUsd: 412_000_000,
     totalValueLockedChange7d: 0.015,
