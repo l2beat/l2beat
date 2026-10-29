@@ -27,7 +27,7 @@ export function GardenBackground() {
   )
 }
 
-function Sun({ className }: { className?: string }) {
+export function Sun({ className }: { className?: string }) {
   const rays = Array.from({ length: 8 }, (_, i) => i * 45)
   return (
     <svg
@@ -64,7 +64,7 @@ function Sun({ className }: { className?: string }) {
   )
 }
 
-function Moon({ className }: { className?: string }) {
+export function Moon({ className }: { className?: string }) {
   return (
     <svg
       width={112}
