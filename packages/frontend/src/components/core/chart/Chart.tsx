@@ -323,10 +323,12 @@ function useKeepTooltipInPlace(ref: React.RefObject<HTMLDivElement | null>) {
     )
     const chart = wrapper?.offsetParent
     if (!wrapper || !chart) return
-    // The legend stays clear, so its items can still be tapped.
+    // A legend below the plot stays clear, so its items can still be tapped.
+    const legend = chart.querySelector<HTMLElement>('.recharts-legend-wrapper')
     const bottom =
-      chart.querySelector<HTMLElement>('.recharts-legend-wrapper')?.offsetTop ??
-      chart.clientHeight
+      legend && legend.offsetTop > chart.clientHeight / 2
+        ? legend.offsetTop
+        : chart.clientHeight
     const scroller = ref.current?.querySelector<HTMLElement>(
       '[data-chart-tooltip-rows]',
     )
