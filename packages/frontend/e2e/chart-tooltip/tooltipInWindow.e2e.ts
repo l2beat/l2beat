@@ -41,12 +41,17 @@ test('chart tooltips stay inside a phone window', async ({ browser }) => {
  * Below a chart lies the next section. A tooltip hanging over it stays there
  * after a tap while the page scrolls, and iOS Safari cuts it off at that
  * section's edge. The anonymity sets chart has the most series on the site,
- * so a tap halfway down it opens the tallest tooltip with the least room.
+ * so a tap halfway down it opens the tallest tooltip with the least room:
+ * every row must still be in it, scrolled to rather than left out.
  */
 test('a tapped chart tooltip stays inside its chart on a phone', async ({
   browser,
 }) => {
-  const context = await browser.newContext({ viewport: PHONE, hasTouch: true })
+  const context = await browser.newContext({
+    viewport: PHONE,
+    hasTouch: true,
+    isMobile: true,
+  })
   const page = await context.newPage()
   await page.goto('/privacy/projects/tornado-cash', {
     waitUntil: 'networkidle',
@@ -72,10 +77,20 @@ test('a tapped chart tooltip stays inside its chart on a phone', async ({
     chart.boundingBox(),
     tooltip.boundingBox(),
   ])
+  const chartBottom = chartBox!.y + chartBox!.height
   expect(tooltipBox!.y).toBeGreaterThanOrEqual(chartBox!.y)
-  expect(tooltipBox!.y + tooltipBox!.height).toBeLessThanOrEqual(
-    chartBox!.y + chartBox!.height,
-  )
+  expect(tooltipBox!.y + tooltipBox!.height).toBeLessThanOrEqual(chartBottom)
+
+  const lines = await chart.locator('.recharts-line').count()
+  const rows = tooltip.locator('[class*="justify-between"]')
+  await expect(rows).toHaveCount(lines)
+  // Scroll to the last row.
+  const scroller = tooltip.locator('.overflow-y-auto')
+  await scroller.evaluate((e) => {
+    e.scrollTop = e.scrollHeight
+  })
+  const lastRow = await rows.last().boundingBox()
+  expect(lastRow!.y + lastRow!.height).toBeLessThanOrEqual(chartBottom)
   await context.close()
 })
 

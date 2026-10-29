@@ -12,6 +12,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipRows,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -34,10 +35,6 @@ const COLORS = [
   'var(--chart-yellow-lime)',
   'var(--chart-stacked-purple)',
 ]
-
-// Pools have twenty-odd series, more rows than fit a phone's chart; the
-// tooltip leaves out the smallest sets.
-const MAX_TOOLTIP_ROWS = 10
 
 type Series = PrivacyAnonymitySetChartResponse['series'][number]
 type Point = [number, ...number[]]
@@ -149,47 +146,44 @@ function AnonymitySetTooltip({
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
 
-  const rows = sortAnonymitySetTooltipEntries(payload).flatMap((entry) => {
-    if (
-      typeof entry.dataKey !== 'string' ||
-      entry.hide ||
-      entry.type === 'none'
-    ) {
-      return []
-    }
-    const item = meta[entry.dataKey]
-    return item ? [{ key: entry.dataKey, item, value: entry.value }] : []
-  })
-  const hiddenCount = rows.length - MAX_TOOLTIP_ROWS
-
   return (
     <ChartTooltipWrapper>
       <div className="mb-2 font-medium text-label-value-14 text-secondary">
         {formatTitle(label)}
       </div>
-      <div className="flex flex-col gap-2">
-        {rows.slice(0, MAX_TOOLTIP_ROWS).map(({ key, item, value }) => (
-          <div key={key} className="flex items-center justify-between gap-x-6">
-            <div className="flex items-center gap-1">
-              <ChartDataIndicator
-                type={item.indicatorType}
-                backgroundColor={item.color}
-              />
-              <span className="font-medium text-label-value-14">
-                {item.label}
+      <ChartTooltipRows className="flex flex-col gap-2">
+        {sortAnonymitySetTooltipEntries(payload).map((entry) => {
+          if (
+            typeof entry.dataKey !== 'string' ||
+            entry.hide ||
+            entry.type === 'none'
+          ) {
+            return null
+          }
+          const item = meta[entry.dataKey]
+          if (!item) return null
+
+          return (
+            <div
+              key={entry.dataKey}
+              className="flex items-center justify-between gap-x-6"
+            >
+              <div className="flex items-center gap-1">
+                <ChartDataIndicator
+                  type={item.indicatorType}
+                  backgroundColor={item.color}
+                />
+                <span className="font-medium text-label-value-14">
+                  {item.label}
+                </span>
+              </div>
+              <span className="font-medium text-label-value-15 tabular-nums">
+                {formatInteger(Number(entry.value ?? 0))}
               </span>
             </div>
-            <span className="font-medium text-label-value-15 tabular-nums">
-              {formatInteger(Number(value ?? 0))}
-            </span>
-          </div>
-        ))}
-        {hiddenCount > 0 && (
-          <div className="font-medium text-label-value-14 text-secondary">
-            +{hiddenCount} more
-          </div>
-        )}
-      </div>
+          )
+        })}
+      </ChartTooltipRows>
     </ChartTooltipWrapper>
   )
 }
