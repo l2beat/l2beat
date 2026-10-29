@@ -61,11 +61,14 @@ export function ShowMoreText({
           </button>
         </div>
       ) : (
-        <div className="relative">
+        // The padding leaves room for the button. It sits out here so the
+        // measured box is exactly the one the text is cut in, whether or not
+        // a browser counts padding in `scrollWidth`.
+        <div className="relative md:pr-[75px]">
           <div
             ref={contentRef}
             className={cn(
-              'md:truncate md:pr-[75px]',
+              'md:truncate',
               'line-clamp-2 md:line-clamp-none',
               textClassName,
             )}
