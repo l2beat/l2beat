@@ -15,13 +15,17 @@ import {
 export function PinProjectButton({
   name,
   iconUrl,
+  href: canonicalHref,
   className,
 }: {
   name: string
   iconUrl: string
+  /** Keys the saved project; without it, the current path. */
+  href?: string
   className?: string
 }) {
-  const href = usePathname()
+  const pathname = usePathname()
+  const href = canonicalHref ?? pathname
   const project = useMemo<SavedProject>(
     () => ({ href, name, iconUrl }),
     [href, name, iconUrl],

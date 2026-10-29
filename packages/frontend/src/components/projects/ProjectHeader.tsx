@@ -16,6 +16,8 @@ interface Project {
   name: string
   slug: string
   icon: string
+  /** The page's canonical path, when more than one URL shows it. */
+  href?: string
 }
 
 interface Props {
@@ -94,7 +96,11 @@ export function ProjectHeader({
             </div>
           </h1>
           <div className="flex flex-wrap gap-1.5 md:items-center">
-            <PinProjectButton name={project.name} iconUrl={project.icon} />
+            <PinProjectButton
+              name={project.name}
+              iconUrl={project.icon}
+              href={project.href}
+            />
             {!!ongoingAnomaly && (
               <a
                 href={livenessSectionHref}

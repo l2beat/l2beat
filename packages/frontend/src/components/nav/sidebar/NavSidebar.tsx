@@ -65,8 +65,7 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        {/* The home page has its own garden banner. */}
-        {env.CLIENT_SIDE_GARDEN_ENABLED && pathname !== '/' && (
+        {env.CLIENT_SIDE_GARDEN_ENABLED && (
           <SidebarGroup className="mb-2">
             <CropsMiniBanner
               isActive={pathname.startsWith(GARDEN_PATH)}
