@@ -39,6 +39,11 @@ interface Options {
   arrowKeys?: 'leftRight' | 'upDown'
   /** Called when the user selects an item or closes the tooltip. */
   onSelect?: (index: number | null) => void
+  /**
+   * Charts that show their hover together: a tap on one of them selects a
+   * row in this one too, so it does not close this tooltip.
+   */
+  syncId?: string
 }
 
 /**
@@ -55,6 +60,7 @@ export function useChartTooltip({
   fitHeight = false,
   arrowKeys = 'leftRight',
   onSelect,
+  syncId,
 }: Options) {
   const [active, setActive] = useState<ActiveItem | null>(null)
   const rootRef = useRef<HTMLDivElement>(null)
@@ -94,11 +100,19 @@ export function useChartTooltip({
   useEffect(() => {
     if (!isActive) return
     const closeOutside = (event: globalThis.PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setActive(null)
+      const target = event.target as Element
+      if (rootRef.current?.contains(target)) return
+      if (
+        syncId &&
+        target.closest?.(`[data-chart-sync="${CSS.escape(syncId)}"]`)
+      ) {
+        return
+      }
+      setActive(null)
     }
     document.addEventListener('pointerdown', closeOutside)
     return () => document.removeEventListener('pointerdown', closeOutside)
-  }, [isActive])
+  }, [isActive, syncId])
 
   function select(index: number, anchor: Anchor) {
     if (index === active?.index) {
@@ -156,6 +170,7 @@ export function useChartTooltip({
       role: 'application',
       tabIndex: 0,
       'data-chart-hover': '',
+      'data-chart-sync': syncId,
       onKeyDown,
       onBlur: clear,
       onPointerLeave: (event: PointerEvent) => {

@@ -105,6 +105,7 @@ export function ChartHoverOverlay<T>({
         ? placeBeside(sceneRef.current.chart)(anchor, size)
         : anchor,
     onSelect: broadcast,
+    syncId,
     fitHeight: true,
   })
   const { active, setActive } = tooltip
