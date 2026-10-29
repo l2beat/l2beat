@@ -5,8 +5,13 @@ import { HOVERABLE_TEXT, Tag, WithTooltip } from './cells'
 import {
   formatAmount,
   formatChain,
+  formatChange,
+  formatDay,
+  hasUnexplainedIssuance,
+  hasUnknownTransfers,
   type Row,
   type RowValue,
+  type SupplyChange,
   shortAddress,
 } from './rows'
 
@@ -24,9 +29,14 @@ export function ValueCell({ row }: { row: Row }) {
   if (!value) return null
   if (value.amount === undefined) {
     return (
-      <Muted tooltip={describeAmountGap(row, value)}>
-        {AMOUNT_GAP_LABELS[value.amountGap ?? 'readFailed']}
-      </Muted>
+      <div className="flex flex-col items-end">
+        <Muted tooltip={describeAmountGap(row, value)}>
+          {AMOUNT_GAP_LABELS[value.amountGap ?? 'readFailed']}
+        </Muted>
+        {value.supplyChange && (
+          <SupplyChangeLine row={row} change={value.supplyChange} />
+        )}
+      </div>
     )
   }
   return (
@@ -52,8 +62,75 @@ export function ValueCell({ row }: { row: Row }) {
           </span>
         </WithTooltip>
       </div>
+      {value.supplyChange && (
+        <SupplyChangeLine row={row} change={value.supplyChange} />
+      )}
     </div>
   )
+}
+
+function SupplyChangeLine({ row, change }: { row: Row; change: SupplyChange }) {
+  const unknown = change.netMintedByBridge.filter(
+    (bridge) => bridge.unknownTransfers > 0,
+  )
+  const copy = row.side === 'escrow' ? row.value?.mintedCopy : undefined
+  return (
+    <div className="flex flex-wrap items-center justify-end gap-1 text-muted-foreground text-xs">
+      {hasUnexplainedIssuance(row) && (
+        <Tag tone="warning" small>
+          unexplained
+        </Tag>
+      )}
+      {hasUnknownTransfers(change) && (
+        <Tag tone="neutral" small>
+          incomplete data
+        </Tag>
+      )}
+      <WithTooltip
+        content={
+          <div className="space-y-1">
+            {copy && (
+              <div>
+                Supply of {copy.symbol ?? shortAddress(copy.address)} on{' '}
+                {formatChain(copy.chain)}, the minted copy.
+              </div>
+            )}
+            <div>{describeSupplyChange(change)}</div>
+            {unknown.length > 0 && (
+              <div>
+                Transfers that do not say whether they minted or burned:{' '}
+                {unknown
+                  .map(
+                    (bridge) => `${bridge.plugin} ${bridge.unknownTransfers}`,
+                  )
+                  .join(', ')}
+                .
+              </div>
+            )}
+          </div>
+        }
+      >
+        <span>
+          {formatChange(change.amount)} since {formatDay(change.since)}
+        </span>
+      </WithTooltip>
+    </div>
+  )
+}
+
+// e.g. "+50M since 21 Oct: bridges minted 10M (cctp-v2 +8M), +40M unexplained"
+function describeSupplyChange(change: SupplyChange): string {
+  const bridges = change.netMintedByBridge.filter(
+    (bridge) => bridge.amount !== 0,
+  )
+  const netMinted = bridges.reduce((sum, bridge) => sum + bridge.amount, 0)
+  const byBridges =
+    bridges.length === 0
+      ? 'tracked bridges minted and burned nothing'
+      : `bridges ${netMinted < 0 ? 'burned' : 'minted'} ${formatAmount(Math.abs(netMinted))} (${bridges
+          .map((bridge) => `${bridge.plugin} ${formatChange(bridge.amount)}`)
+          .join(', ')})`
+  return `${formatChange(change.amount)} since ${formatDay(change.since)}: ${byBridges}, ${formatChange(change.unexplained)} unexplained`
 }
 
 function AmountTags({ row, value }: { row: Row; value: RowValue }) {
