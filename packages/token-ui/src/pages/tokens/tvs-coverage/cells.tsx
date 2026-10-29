@@ -1,5 +1,10 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from 'lucide-react'
+import {
+  ArrowDownIcon,
+  ArrowUpDownIcon,
+  ArrowUpIcon,
+  InfoIcon,
+} from 'lucide-react'
 import type { ReactNode } from 'react'
 import { Badge } from '~/components/core/Badge'
 import { TableHead } from '~/components/core/Table'
@@ -73,19 +78,29 @@ export function Tag({
   )
 }
 
+// The info icon marks what can be hovered; pass `hint={false}` when the
+// trigger already has an icon of its own.
 export function WithTooltip({
   content,
+  hint = true,
   children,
 }: {
   content: ReactNode
+  hint?: boolean
   children: ReactNode
 }) {
   if (!content) return children
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <span className="inline-flex" tabIndex={0}>
+        <span className="inline-flex items-center gap-0.5" tabIndex={0}>
           {children}
+          {hint && (
+            <InfoIcon
+              aria-hidden
+              className="size-3 shrink-0 text-muted-foreground/70"
+            />
+          )}
         </span>
       </TooltipTrigger>
       <TooltipContent className="max-w-80 text-left">{content}</TooltipContent>

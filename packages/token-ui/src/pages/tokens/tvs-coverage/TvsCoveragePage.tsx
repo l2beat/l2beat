@@ -191,6 +191,7 @@ function TvsGaps({
           </CardDescription>
           {snapshot.warnings.length > 0 && (
             <WithTooltip
+              hint={false}
               content={snapshot.warnings.map((warning) => (
                 <div key={warning}>{warning}</div>
               ))}
