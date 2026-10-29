@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableHead,
   TableHeader,
   TableRow,
 } from '~/components/core/Table'
@@ -15,6 +16,11 @@ import {
   TokenCell,
 } from './cells'
 import {
+  DismissalAction,
+  type DismissalActions,
+  DismissedBadge,
+} from './DismissalCell'
+import {
   formatSnapshotDay,
   type Row,
   rowId,
@@ -24,7 +30,7 @@ import {
 } from './rows'
 import { ValueCell } from './ValueCell'
 
-const COLUMNS = 7
+const COLUMNS = 8
 
 export function TvsCoverageTable({
   rows,
@@ -33,6 +39,7 @@ export function TvsCoverageTable({
   sort,
   onSort,
   onShowMore,
+  dismissalActions,
 }: {
   rows: Row[]
   totalRows: number
@@ -40,6 +47,7 @@ export function TvsCoverageTable({
   sort: Sort
   onSort: (key: SortKey) => void
   onShowMore: () => void
+  dismissalActions: DismissalActions
 }) {
   const projects = new Map(snapshot.projects.map((p) => [p.id, p]))
   const bridges = new Map(snapshot.bridges.map((b) => [b.id, b]))
@@ -95,6 +103,7 @@ export function TvsCoverageTable({
             label="Last seen"
             sortKey="lastSeen"
           />
+          <TableHead className="w-10" />
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -128,13 +137,24 @@ export function TvsCoverageTable({
               </div>
             </TableCell>
             <TableCell className="pl-4">
-              <StatusBadge row={row} />
+              {row.dismissal ? (
+                <DismissedBadge dismissal={row.dismissal} />
+              ) : (
+                <StatusBadge row={row} />
+              )}
             </TableCell>
             <TableCell>
               <BridgeIconStack bridges={row.bridges} bridgeInfo={bridgeInfo} />
             </TableCell>
             <TableCell className="text-muted-foreground text-xs">
               {formatSnapshotDay(row.lastSeen)}
+            </TableCell>
+            <TableCell className="px-0 text-right">
+              <DismissalAction
+                row={row}
+                name={projects.get(row.projectId)?.name ?? row.projectId}
+                actions={dismissalActions}
+              />
             </TableCell>
           </TableRow>
         ))}

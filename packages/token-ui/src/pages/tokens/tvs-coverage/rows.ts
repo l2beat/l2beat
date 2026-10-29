@@ -1,12 +1,15 @@
-import type { RouterOutputs } from '@l2beat/token-backend'
+import type { RouterInputs, RouterOutputs } from '@l2beat/token-backend'
 
 export type Snapshot = NonNullable<
   RouterOutputs['tvsCoverage']['get']['snapshot']
 >
-export type Row = Snapshot['rows'][number]
+export type SnapshotRow = Snapshot['rows'][number]
+export type Dismissal = RouterOutputs['tvsCoverage']['dismissals'][number]
+export type Row = SnapshotRow & { dismissal: Dismissal | undefined }
 export type RowValue = NonNullable<Row['value']>
 export type Status = Row['status']
 export type Bridge = Row['bridges'][number]
+export type DismissalReason = RouterInputs['tvsCoverage']['dismiss']['reason']
 
 export type StatusFilter =
   | 'missing'
@@ -14,6 +17,7 @@ export type StatusFilter =
   | 'unpriced'
   | 'counted'
   | 'scheduled'
+  | 'dismissed'
   | 'all'
 export type SideFilter = 'all' | 'chain' | 'escrow'
 
@@ -54,9 +58,14 @@ export const STATUS_FILTERS: Option<StatusFilter>[] = [
       "Counted directly, or through its locked counterpart in the project's escrow.",
   },
   {
+    value: 'dismissed',
+    label: 'Dismissed',
+    description: 'Marked by research as not worth counting.',
+  },
+  {
     value: 'all',
     label: 'All',
-    description: 'Every row, including counted ones.',
+    description: 'Every row, including counted and dismissed ones.',
   },
 ]
 
@@ -95,6 +104,24 @@ export function rowId(
   row: Pick<Row, 'projectId' | 'chain' | 'address'>,
 ): string {
   return `${row.projectId}:${row.chain}:${row.address}`
+}
+
+// A dismissed gap that the project starts counting is no longer a gap, so it
+// leaves the dismissed list. The dismissal shows again if counting stops.
+export function attachDismissals(
+  rows: SnapshotRow[],
+  dismissals: Dismissal[],
+): Row[] {
+  const byRow = new Map(
+    dismissals.map((dismissal) => [rowId(dismissal), dismissal]),
+  )
+  return rows.map((row) => ({
+    ...row,
+    dismissal:
+      row.status === 'counted' || row.status === 'countedViaCounterpart'
+        ? undefined
+        : byRow.get(rowId(row)),
+  }))
 }
 
 // A chain row paired with an escrow row is the same gap seen from the other
@@ -137,6 +164,8 @@ export function filterRows(
 
 function matchesStatus(row: Row, filter: StatusFilter): boolean {
   if (filter === 'all') return true
+  if (filter === 'dismissed') return row.dismissal !== undefined
+  if (row.dismissal) return false
   switch (filter) {
     case 'missing':
       return row.status === 'missing'
@@ -208,7 +237,7 @@ function sortValue(
     case 'volume':
       return row.volumeUsd
     case 'status':
-      return formatStatus(row.status)
+      return row.dismissal ? 'Dismissed' : formatStatus(row.status)
     case 'bridges':
       return row.bridges.map((bridge) => names.bridge(bridge.id)).join(', ')
     case 'lastSeen':
@@ -263,6 +292,13 @@ export function describeStatus(row: Row): string | undefined {
     default:
       return undefined
   }
+}
+
+export const DISMISSAL_REASON_LABELS: Record<DismissalReason, string> = {
+  notRelevant: 'Not relevant',
+  spam: 'Spam',
+  doubleCounted: 'Double counted',
+  other: 'Other',
 }
 
 export function formatRole(role: NonNullable<Row['role']>): string {

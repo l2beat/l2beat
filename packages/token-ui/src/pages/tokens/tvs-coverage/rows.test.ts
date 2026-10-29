@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import {
+  attachDismissals,
   type Filters,
   filterRows,
   type Names,
@@ -19,6 +20,15 @@ const filters: Filters = {
   minValueUsd: 0,
   search: '',
   showIgnored: true,
+}
+const DISMISSAL: Row['dismissal'] = {
+  projectId: 'base',
+  chain: 'base',
+  address: '0x2',
+  reason: 'spam',
+  comment: undefined,
+  dismissedBy: 'a@l2beat.com',
+  dismissedAt: 1,
 }
 
 describe(filterRows.name, () => {
@@ -54,6 +64,19 @@ describe(filterRows.name, () => {
     expect(pick('review')).toEqual(['0x2'])
     expect(pick('unpriced')).toEqual(['0x3'])
     expect(pick('counted')).toEqual(['0x4', '0x5'])
+  })
+
+  it('shows dismissed rows only under the dismissed and all filters', () => {
+    const rows = [
+      row({ address: '0x1' }),
+      row({ address: '0x2', dismissal: DISMISSAL }),
+    ]
+
+    const pick = (status: Filters['status']) =>
+      addresses(filterRows(rows, { ...filters, status }, names, NOW))
+    expect(pick('missing')).toEqual(['0x1'])
+    expect(pick('dismissed')).toEqual(['0x2'])
+    expect(pick('all')).toEqual(['0x1', '0x2'])
   })
 
   it('filters by side, recency, value and search', () => {
@@ -110,6 +133,18 @@ describe(sortRows.name, () => {
       addresses(sortRows(rows, { key: 'value', direction: 'desc' }, names)),
     ).toEqual(['0x4', '0x1', '0x2', '0x3'])
   })
+
+  it('sorts dismissed rows by status as dismissed', () => {
+    const rows = [
+      row({ address: '0x1', status: 'missing' }),
+      row({ address: '0x2', status: 'missing', dismissal: DISMISSAL }),
+      row({ address: '0x3', status: 'counted' }),
+    ]
+
+    expect(
+      addresses(sortRows(rows, { key: 'status', direction: 'asc' }, names)),
+    ).toEqual(['0x3', '0x2', '0x1'])
+  })
 })
 
 describe(sumValue.name, () => {
@@ -129,6 +164,40 @@ describe(sumValue.name, () => {
 
     expect(sumValue([escrow, copy, other])).toEqual(105)
     expect(sumValue([copy, other])).toEqual(85)
+  })
+})
+
+describe(attachDismissals.name, () => {
+  it('attaches a dismissal to the row of the same project and token, unless the project counts it', () => {
+    const dismissal = {
+      projectId: 'base',
+      chain: 'base',
+      address: '0xabc',
+      reason: 'spam' as const,
+      comment: undefined,
+      dismissedBy: 'researcher@l2beat.com',
+      dismissedAt: 100,
+    }
+
+    const result = attachDismissals(
+      [
+        row({ address: '0xabc' }),
+        row({ projectId: 'ink', address: '0xabc' }),
+        row({ address: '0xdef' }),
+      ],
+      [dismissal, { ...dismissal, address: '0xdef' }],
+    )
+    const counted = attachDismissals(
+      [row({ address: '0xabc', status: 'counted' })],
+      [dismissal],
+    )
+
+    expect(result.map((row) => row.dismissal)).toEqual([
+      dismissal,
+      undefined,
+      { ...dismissal, address: '0xdef' },
+    ])
+    expect(counted[0]?.dismissal).toEqual(undefined)
   })
 })
 
@@ -178,6 +247,7 @@ function row(overrides: Partial<Row>): Row {
     value: value(1),
     escrowAddresses: [],
     pairedWith: undefined,
+    dismissal: undefined,
     ...overrides,
   }
 }
