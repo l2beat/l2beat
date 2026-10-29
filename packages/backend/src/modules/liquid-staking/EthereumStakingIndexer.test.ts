@@ -39,6 +39,7 @@ describe(EthereumStakingIndexer.name, () => {
         timestamp: day,
         slot: slotAt(day),
         totalBalance: 100n,
+        activeBalance: 90n,
         pendingDeposits: null,
         withdrawals: 0n,
         deposits: 0n,
@@ -78,6 +79,7 @@ function createIndexer() {
   })
   const beacon = {
     getTotalBalance: mockFn().resolvesTo(100n),
+    getInactiveBalance: mockFn().resolvesTo(10n),
     getDepositIndex: mockFn().resolvesTo(5),
     getPendingDepositsAmount: mockFn().resolvesTo(7n),
   }

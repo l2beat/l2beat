@@ -106,6 +106,34 @@ describe(BeaconChainClient.name, () => {
     })
   })
 
+  describe(BeaconChainClient.prototype.getInactiveBalance.name, () => {
+    it('sums the balances of validators waiting to enter or exited, in wei', async () => {
+      const body = JSON.stringify({
+        data: [
+          { index: '7', balance: '32000000000', status: 'pending_queued' },
+          { index: '8', balance: '1000000000', status: 'withdrawal_possible' },
+        ],
+      })
+
+      const result = await withServer(
+        (req, res) => {
+          expect(req.url).toEqual(
+            '/eth/v1/beacon/states/8103597/validators?status=pending_initialized,pending_queued,exited_unslashed,exited_slashed,withdrawal_possible',
+          )
+          res.setHeader('Content-Type', 'application/json')
+          res.end(body)
+        },
+        (url) =>
+          mockClient({
+            http: new HttpClient(),
+            beaconApiUrl: `${url}/`,
+          }).getInactiveBalance(8103597),
+      )
+
+      expect(result).toEqual(33_000_000_000_000_000_000n)
+    })
+  })
+
   describe(BeaconChainClient.prototype.getDepositIndex.name, () => {
     it('reads the counter without waiting for the rest of the state', async () => {
       const result = await withServer(

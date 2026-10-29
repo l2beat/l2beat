@@ -102,10 +102,10 @@ describe(computeLiquidStakingCharts.name, () => {
     )
     const charts = compute([], [], network)
     const point = charts.yield[0]
-    expect(present(point?.ethStaked)).toBeCloseTo(1_000_310, 1e-6)
-    // 65 ETH a day over an average stake of 1,000,145 ETH.
+    expect(present(point?.ethStaked)).toBeCloseTo(999_310, 1e-6)
+    // 65 ETH a day over an average active stake of 999,145 ETH.
     expect(present(point?.network)).toBeCloseTo(
-      ((65 * 30) / 1_000_145) * (365 / 30),
+      ((65 * 30) / 999_145) * (365 / 30),
       1e-6,
     )
   })
@@ -118,7 +118,7 @@ describe(computeLiquidStakingCharts.name, () => {
         : day(START + i * DAY, 999_000n + 10n * BigInt(i), 1_000n),
     )
     expect(present(compute([], [], network).yield[0]?.network)).toBeCloseTo(
-      ((65 * 30) / (1_000_145 - (1_000 * 20) / 30)) * (365 / 30),
+      ((65 * 30) / (999_145 - (1_000 * 20) / 30)) * (365 / 30),
       1e-6,
     )
   })
@@ -192,6 +192,8 @@ function day(
     timestamp: UnixTime(timestamp),
     slot: 0,
     totalBalance: balanceEth * ETH,
+    // 1,000 ETH of it waits to enter or has exited, and earns nothing.
+    activeBalance: (balanceEth - 1_000n) * ETH,
     pendingDeposits: pendingEth === null ? null : pendingEth * ETH,
     withdrawals: 100n * ETH,
     deposits: 50n * ETH,

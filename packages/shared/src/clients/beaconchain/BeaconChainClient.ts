@@ -84,6 +84,26 @@ export class BeaconChainClient extends ClientCore {
   }
 
   /**
+   * Balance of the validators that earn nothing: those waiting to enter, and
+   * those exited but not yet withdrawn, in wei. Withdrawn ones hold nothing,
+   * and listing them would be most of the state.
+   */
+  async getInactiveBalance(slot: number): Promise<bigint> {
+    const status = [
+      'pending_initialized',
+      'pending_queued',
+      'exited_unslashed',
+      'exited_slashed',
+      'withdrawal_possible',
+    ].join(',')
+    const { sum } = await this.sumStreamed(
+      `eth/v1/beacon/states/${slot}/validators?status=${status}`,
+      /^data\.\d+\.balance$/,
+    )
+    return sum * 10n ** 9n
+  }
+
+  /**
    * Sum of the deposits waiting to be credited at a state, in wei. The queue
    * exists only since Electra.
    */

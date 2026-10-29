@@ -217,7 +217,7 @@ class NetworkSeries {
 
   ethStakedAt(day: number): number | null {
     const record = this.byTimestamp.get(day)
-    return record ? toEth(record.totalBalance) : null
+    return record ? toEth(record.activeBalance) : null
   }
 
   /**
@@ -232,7 +232,7 @@ class NetworkSeries {
       const record = this.byTimestamp.get(day - i * DAY)
       if (reward === undefined || record === undefined) return null
       rewards += reward
-      stake += toEth(record.totalBalance)
+      stake += toEth(record.activeBalance)
     }
     return (rewards / (stake / YIELD_WINDOW_DAYS)) * YEAR_OVER_WINDOW
   }
