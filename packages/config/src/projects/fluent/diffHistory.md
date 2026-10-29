@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x60f27aeff17f530bbf1321fc44deaa4c7cb2606a
+
+# Diff at Tue, 27 Oct 2026 16:27:09 GMT:
+
+- id: e0db543c
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1792751506
+- current timestamp: 1792751506
+
+## Description
+
+Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792751506 (main branch discovery), not current.
+
+```diff
+    contract ERC20TokenFactory (eth:0xF6d49E874Cb64b8ee56D6F99BD340134B30AB225) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x45b490e7750475c1972ebf94ceb72dc1ba853862cfeb57ccdca8c329c87e29d2"
++        "0xe08e520a09a3a6d0f45f328d1a6fce54e9bc3f4714c501fd4b8dd3877e144142"
+    }
+```
+
+```diff
+    contract ERC20Gateway (eth:0xFD4C62647A34FF6d6802092F5fbe176099223B61) [fluent/ERC20Gateway] {
+    +++ description: L1 entry point for ERC-20 deposits into Fluent. Custodies ERC-20 tokens directly on L1 and emits the corresponding bridge message; on the L2 side the canonical pegged token is minted via the ERC20TokenFactory. UUPS-upgradeable; upgrades are gated by the contract owner.
+      sourceHashes.1:
+-        "0x75765e6ca5a359f6ea9c2c65faa01bb0fd2d6e5c3c171b1b016161b01542ea27"
++        "0xcdfc5e39c72221b6c82946c620b4231785b6fa983765ebdbb6c79a3cfe277da7"
+    }
+```
+
 Generated with discovered.json: 0xd112149cf6472fafbea92d8d540fc481f0c52172
 
 # Diff at Fri, 23 Oct 2026 10:32:48 GMT:

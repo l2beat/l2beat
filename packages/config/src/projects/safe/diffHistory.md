@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xd913d4859be57bb369f0e3310c704faca4638612
+
+# Diff at Tue, 27 Oct 2026 16:27:20 GMT:
+
+- id: ac1a3a42
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1793093365
+- current timestamp: 1793093365
+
+## Description
+
+Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793093365 (main branch discovery), not current.
+
+```diff
+    contract SafeProxyFactory_v1_5_0 (eth:0x14F2982D601c9458F93bd70B218933A6f8165e7b) [safe/SafeProxyFactory] {
+    +++ description: Deploys Safe accounts as proxies and, when given setup data, sets them up in the same transaction. A proxy deployed without it can be set up by anyone, and the first to do so chooses its owners. The factory has no owner and no control over the accounts it created.
+      sourceHashes.0:
+-        "0xbf5b822276748072c1b653477b64b6ba78dd14e285da7654dc87f67558abc79c"
++        "0xbe86d75990ab0732d2aeca28a5211d4b6c81553f3ed1b806ac61e38f1f8cceac"
+    }
+```
+
+```diff
+    contract SafeProxyFactory_v1_4_1 (eth:0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67) [safe/SafeProxyFactory] {
+    +++ description: Deploys Safe accounts as proxies and, when given setup data, sets them up in the same transaction. A proxy deployed without it can be set up by anyone, and the first to do so chooses its owners. The factory has no owner and no control over the accounts it created.
+      sourceHashes.0:
+-        "0xfda4d35a812abea3459a31690c18bb447cf8a61398f614756032e400b165f794"
++        "0xd1722bc63e50c32b4bfd037f78d9e35004dacadc810b73f66d235d98479511f4"
+    }
+```
+
 Generated with discovered.json: 0xeb208cf289f634f8e8317b31091d2edf2b8c60ce
 
 # Diff at Tue, 27 Oct 2026 09:30:48 GMT:

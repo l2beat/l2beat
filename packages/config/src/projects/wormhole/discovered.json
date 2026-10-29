@@ -67,7 +67,7 @@
       "template": "wormhole/TokenBridge",
       "sourceHashes": [
         "0x7576cd5bf86b934451cc67ed4b42d74b94ea9ecd6e990ec3dca27d9d339c35cd",
-        "0x694d7e12e343544cde20da708d139637b87150808347040bf2ca863629f1bb19"
+        "0x928bec4b4b171c8fddc6b57132c2bd4eb3bf152b72e43600f4f3ec89f215c6f2"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Wormhole Token Bridge on Ethereum. It escrows Ethereum-native tokens and mints or burns wrapped assets such as WSOL after Wormhole Core verifies Guardian-signed VAAs. WSOL has no Ethereum-side escrow because it is a wrapped asset on Ethereum.",
