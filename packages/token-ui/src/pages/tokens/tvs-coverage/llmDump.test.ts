@@ -9,6 +9,7 @@ const names: Names = {
 const snapshot = {
   generatedAt: 1_800_000_000,
   window: { days: 90, from: 1_792_224_000, to: 1_800_000_000 },
+  minChainVolumeUsd: 10_000,
   projects: [
     { id: 'arbitrum', name: 'Arbitrum One', iconUrl: '', chain: 'arbitrum' },
   ],
@@ -30,6 +31,7 @@ describe(toJsonDump.name, () => {
       days: 90,
       from: '2026-10-17T08:00:00.000Z',
       to: '2027-01-15T08:00:00.000Z',
+      minChainVolumeUsd: 10_000,
     })
     expect(dump.warnings).toEqual(snapshot.warnings)
     expect(Object.keys(dump.definitions.status)).toEqual([
