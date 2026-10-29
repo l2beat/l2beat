@@ -1110,11 +1110,10 @@ export interface ProjectPrivacyInfo {
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
   /**
-   * The released open-source client the adversary ratings assume, at the
-   * commit they were reviewed against. `l2b client-drift` lists what changed
-   * upstream since. Absent for closed clients and for reviews that pin none.
+   * The most private released app found for the protocol, which the adversary
+   * ratings assume. The project page lists it above the other apps checked.
    */
-  referenceClient?: ProjectPrivacyReferenceClient
+  referenceApp?: ProjectPrivacyReferenceApp
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
   anonymitySet?:
@@ -1167,12 +1166,53 @@ export type PrivacyAnonymitySetRegistrationSource = {
   extractor: 'umbraStealthKeyChanged'
 }
 
-export interface ProjectPrivacyReferenceClient {
+export interface ProjectPrivacyReferenceApp {
   name: string
-  /** GitHub repository, e.g. https://github.com/owner/repo */
-  repository: string
-  /** Full commit hash. Adversary sources into the repository pin it. */
-  commit: string
+  /** Icon slug under /icons. Defaults to the project's icon, for apps its team builds. */
+  icon?: string
+  /** Where users get the app: its website, release page or repository. */
+  url: string
+  /** Day the ratings first assumed this app, YYYY-MM-DD. */
+  since: string
+  /** Release the review covers, without a leading v. Absent for hosted apps. */
+  version?: string
+  /**
+   * Source at the reviewed commit, absent for closed apps. An app counts as
+   * open only when its released build reproduces from this commit.
+   * `l2b client-drift` lists what changed upstream since.
+   */
+  source?: {
+    /** GitHub repository, e.g. https://github.com/owner/repo */
+    repository: string
+    /** Full commit hash. Adversary sources into the repository pin it. */
+    commit: string
+  }
+  /**
+   * Served build the review traced, e.g. a deployment or bundle id. For a
+   * closed hosted app without a release version.
+   */
+  build?: string
+  /** Day the review traced the closed app, YYYY-MM-DD. Absent when untraced. */
+  checked?: string
+  /**
+   * Other released apps for the protocol, checked but not rated. Each one
+   * leaks more than the reference app, which its finding shows.
+   */
+  checkedApps?: ProjectPrivacyCheckedApp[]
+}
+
+export interface ProjectPrivacyCheckedApp {
+  name: string
+  /** Icon slug under /icons, e.g. "railway" for /icons/railway.png. Absent when the app has no logo. */
+  icon?: string
+  /** The traced behaviour that leaks more, as one sentence. */
+  finding: string
+  /** What the app changes to match the reference app on this finding, as one sentence. */
+  fix?: string
+  /** Proves the finding: pinned code, or the app itself when it is closed. */
+  source: string
+  /** Day the finding was checked, YYYY-MM-DD. Set when `source` is the app itself. */
+  checked?: string
 }
 
 export type ProjectPrivacyRelayerTracking =
