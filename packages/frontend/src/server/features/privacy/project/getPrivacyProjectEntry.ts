@@ -33,6 +33,10 @@ import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getPr
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import type { PrivacyRelayerStat } from '../types'
 import {
+  getPrivacyReferenceApp,
+  type PrivacyReferenceApp,
+} from '../utils/getPrivacyReferenceApp'
+import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
@@ -65,6 +69,7 @@ export interface ProjectPrivacyEntry {
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
   reproducibility: PrivacySummaryValue
+  referenceApp?: PrivacyReferenceApp
   summary: {
     totalValueLockedUsd: number | undefined
     totalValueLockedChange7d: number | undefined
@@ -133,6 +138,8 @@ export async function getPrivacyProjectEntry(
     },
   }
   const icon = manifest.getUrl(`/icons/${details.slug}.png`)
+  const referenceApp =
+    details.referenceApp && getPrivacyReferenceApp(details.referenceApp, icon)
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
@@ -333,6 +340,7 @@ export async function getPrivacyProjectEntry(
       title: 'Privacy',
       isUnderReview: !!details.statuses.reviewStatus,
       adversaries: resolvePrivacySources(details.adversaries, sections),
+      referenceApp,
     },
   })
 
@@ -361,6 +369,7 @@ export async function getPrivacyProjectEntry(
       getPrivacyTrustedSetup(details.trustedSetups),
     ),
     reproducibility: details.reproducibility,
+    referenceApp,
     summary: {
       totalValueLockedUsd: details.hasTvl
         ? tvs.projects[details.id]?.breakdown.total

@@ -538,6 +538,22 @@ colors and does not draw anomalies red. An anomaly switch changes conflicting
 edges to red and mutes other edges to gray, so anomaly inspection does not
 compete with the default bridge-mechanism view.
 
+A conflicts switch shows where the tokens stuck in the ingestion queue's
+`conflict` state (see [Automatic token
+ingestion](automatic_token_ingestion.md)) sit on the graph, so a researcher
+can see how a token would land before resolving its conflict, instead of
+resolving it on the queue page and then checking the graph. It rings each
+conflict's node in violet — distinct from the anomaly red, so both can be on
+at once — fades the other nodes, and keeps the conflict's own edges visible.
+Arrows next to the switch step through the conflicts, selecting and zooming
+to each. A conflict whose address no displayed relation touches has no node,
+so it is only counted, with a link to the queue page. The conflict list holds
+only the stored queue entries and refetches while the page is open; it only
+restyles nodes, so unlike the graph payload it never re-runs the layout.
+Selecting a conflict's node adds an ingestion conflict section to the details
+panel: the stored message, what processing would do now (planned on demand
+for that one entry), and the queue page's Preview, Resolve and Retry actions.
+
 The initial graph query reads only relation identity fields, `lockedToken`,
 and the minimal endpoint display data. It deliberately excludes full
 deployed/abstract token records and the transfer evidence JSON; dedicated

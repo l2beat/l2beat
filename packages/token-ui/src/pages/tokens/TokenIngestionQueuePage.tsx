@@ -1,4 +1,3 @@
-import type { IngestionOutcome } from '@l2beat/token-backend'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   CheckIcon,
@@ -45,9 +44,9 @@ import {
 import { ExplorerLink } from '~/components/ExplorerLink'
 import {
   ConflictBadge,
-  formatAbstractRef,
   IngestionPreviewDialog,
-  type IngestionPreviewState,
+  PredictedOutcome,
+  useIngestionPreview,
 } from '~/components/IngestionPreviewDialog'
 import { LoadingState } from '~/components/LoadingState'
 import { MultiSelectCombobox } from '~/components/MultiSelectCombobox'
@@ -65,7 +64,7 @@ export function TokenIngestionQueuePage() {
   const queryClient = useQueryClient()
   const [approvingKey, setApprovingKey] = useState<string | undefined>()
   const [retryingKey, setRetryingKey] = useState<string | undefined>()
-  const [preview, setPreview] = useState<IngestionPreviewState | undefined>()
+  const preview = useIngestionPreview()
   const [resolveTarget, setResolveTarget] = useState<
     ResolveSymbolConflictTarget | undefined
   >()
@@ -161,32 +160,6 @@ export function TokenIngestionQueuePage() {
       onError: (error) => toast.error(error.message),
     }),
   )
-  const previewMutation = useMutation(
-    trpc.tokenIngestionQueue.preview.mutationOptions({
-      onSuccess: (trace) => {
-        setPreview((prev) =>
-          prev ? { ...prev, trace, isLoading: false } : prev,
-        )
-      },
-      onError: (error) => {
-        setPreview((prev) =>
-          prev ? { ...prev, error: error.message, isLoading: false } : prev,
-        )
-      },
-    }),
-  )
-
-  function startPreview(entry: { chain: string; address: string }) {
-    setPreview({
-      chain: entry.chain,
-      address: entry.address,
-      trace: undefined,
-      isLoading: true,
-      error: undefined,
-    })
-    previewMutation.mutate({ chain: entry.chain, address: entry.address })
-  }
-
   function approveAllOnPage() {
     if (stagedEntries.length === 0) {
       return
@@ -391,12 +364,7 @@ export function TokenIngestionQueuePage() {
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() =>
-                                startPreview({
-                                  chain: entry.chain,
-                                  address: entry.address,
-                                })
-                              }
+                              onClick={() => preview.start(entry)}
                             >
                               <EyeIcon />
                               Preview
@@ -468,10 +436,7 @@ export function TokenIngestionQueuePage() {
           )}
         </CardContent>
       </Card>
-      <IngestionPreviewDialog
-        state={preview}
-        onClose={() => setPreview(undefined)}
-      />
+      <IngestionPreviewDialog state={preview.state} onClose={preview.close} />
       <ResolveSymbolConflictDialog
         target={resolveTarget}
         onClose={() => setResolveTarget(undefined)}
@@ -520,57 +485,4 @@ function formatQueueRange(page: number, totalCount: number) {
   const start = (page - 1) * PAGE_SIZE + 1
   const end = Math.min(page * PAGE_SIZE, totalCount)
   return `Showing ${start}-${end} of ${totalCount} entries`
-}
-
-function PredictedOutcome({ outcome }: { outcome: IngestionOutcome }) {
-  switch (outcome.kind) {
-    case 'skip':
-      return (
-        <span>
-          <Badge variant="outline">Skip</Badge>
-          <span className="ml-2 text-muted-foreground text-xs">
-            {outcome.reason}
-          </span>
-        </span>
-      )
-    case 'conflict':
-      return (
-        <span>
-          <ConflictBadge />
-          <span className="ml-2 text-muted-foreground text-xs">
-            {outcome.message}
-          </span>
-        </span>
-      )
-    case 'error':
-      return (
-        <span>
-          <Badge variant="destructive">Error</Badge>
-          <span className="ml-2 text-muted-foreground text-xs">
-            {outcome.message}
-          </span>
-        </span>
-      )
-    case 'noop':
-      return <Badge variant="secondary">No update</Badge>
-    case 'write':
-      return (
-        <Badge>
-          {outcome.deployedToken.type === 'insert' ? 'Add token' : 'Update'}
-        </Badge>
-      )
-    case 'pending':
-      return (
-        <span>
-          <Badge>
-            {outcome.operation === 'insert' ? 'Add token' : 'Update'}
-          </Badge>
-          <span className="ml-2 text-muted-foreground text-xs">
-            {outcome.abstract.kind === 'existing'
-              ? `abstract ${formatAbstractRef(outcome.abstract.token)}`
-              : `abstract from coingecko ${outcome.abstract.coingeckoId} (new)`}
-          </span>
-        </span>
-      )
-  }
 }

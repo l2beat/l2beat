@@ -33,7 +33,7 @@ export function ProjectSummaryStat(props: ProjectSummaryStatProps) {
         props.className,
       )}
     >
-      <div className="flex flex-row gap-1.5">
+      <div className="flex flex-row items-center gap-1.5">
         {props.titleAsChild ? (
           <Slot className="text-nowrap font-medium text-paragraph-12 text-secondary">
             {props.title}

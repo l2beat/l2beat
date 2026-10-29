@@ -127,12 +127,12 @@ export async function getGardenData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        name: 'The Infinite Garden',
+        name: 'The CROPS guide',
         description:
-          'How projects rate on the four CROPS properties: censorship resistance, open source, privacy, and security.',
+          'A curated list of distinguished projects that follow the CROPS values: censorship resistance, open source, privacy and security.',
         url,
         openGraph: {
-          image: '/meta-images/the-infinite-garden/opengraph-image.png',
+          image: '/meta-images/the-crops-guide/opengraph-image.png',
         },
       }),
     },
