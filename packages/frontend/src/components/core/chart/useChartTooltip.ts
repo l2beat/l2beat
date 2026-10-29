@@ -40,8 +40,9 @@ interface Options {
   /** Called when the user selects an item or closes the tooltip. */
   onSelect?: (index: number | null) => void
   /**
-   * Charts that show their hover together: a tap on one of them selects a
-   * row in this one too, so it does not close this tooltip.
+   * Charts that show their hover together: a tap on, or focus moving to,
+   * one of them selects a row in this one too, so it does not close this
+   * tooltip.
    */
   syncId?: string
 }
@@ -94,21 +95,23 @@ export function useChartTooltip({
     if (active) placeTooltip(active)
   }, [active])
 
+  /** Inside this chart or one it shows its hover with. */
+  function isOwn(target: EventTarget | null) {
+    if (!(target instanceof Element)) return false
+    if (rootRef.current?.contains(target)) return true
+    return (
+      !!syncId && !!target.closest(`[data-chart-sync="${CSS.escape(syncId)}"]`)
+    )
+  }
+
   // Not every browser focuses on tap, so blur alone cannot close a touch
   // tooltip.
   const isActive = active !== null
+  // biome-ignore lint/correctness/useExhaustiveDependencies: isOwn reads a ref and syncId
   useEffect(() => {
     if (!isActive) return
     const closeOutside = (event: globalThis.PointerEvent) => {
-      const target = event.target as Element
-      if (rootRef.current?.contains(target)) return
-      if (
-        syncId &&
-        target.closest?.(`[data-chart-sync="${CSS.escape(syncId)}"]`)
-      ) {
-        return
-      }
-      setActive(null)
+      if (!isOwn(event.target)) setActive(null)
     }
     document.addEventListener('pointerdown', closeOutside)
     return () => document.removeEventListener('pointerdown', closeOutside)
@@ -172,7 +175,9 @@ export function useChartTooltip({
       'data-chart-hover': '',
       'data-chart-sync': syncId,
       onKeyDown,
-      onBlur: clear,
+      onBlur: (event: { relatedTarget: EventTarget | null }) => {
+        if (!isOwn(event.relatedTarget)) clear()
+      },
       onPointerLeave: (event: PointerEvent) => {
         // A lifted finger also leaves; its tooltip stays until a tap
         // elsewhere.
