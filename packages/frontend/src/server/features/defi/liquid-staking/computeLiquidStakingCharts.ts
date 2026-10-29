@@ -70,45 +70,6 @@ export function computeLiquidStakingCharts(
   }
 }
 
-export interface LiquidStakingStats {
-  yield: number | null
-  costOfExit: number | null
-}
-
-/**
- * Each project's latest value of what the charts show, by project id. Each
- * value comes from the latest day that has one.
- */
-export function computeLiquidStakingStats(
-  inputs: LiquidStakingChartInputs,
-): Map<string, LiquidStakingStats> {
-  const newestFirst = [...inputs.days].reverse()
-  const latest = (value: (day: number) => number | null) => {
-    for (const day of newestFirst) {
-      const result = value(day)
-      if (result !== null) return result
-    }
-    return null
-  }
-
-  return new Map(
-    inputs.projects.map((project) => {
-      const series = new ProjectSeries(
-        project,
-        inputs.snapshots.filter((s) => s.projectId === project.id),
-        inputs.prices,
-      )
-      return [
-        project.id,
-        {
-          yield: latest((day) => series.yieldAt(day)),
-          costOfExit: latest((day) => series.costOfExitAt(day)),
-        },
-      ]
-    }),
-  )
-}
-
 class ProjectSeries {
   private readonly byTimestamp: Map<number, LiquidStakingSnapshotRecord>
   /** Request day → the request-weighted wait of its requests, in days. */

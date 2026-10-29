@@ -6,15 +6,9 @@ import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import {
   computeLiquidStakingCharts,
-  computeLiquidStakingStats,
-  type LiquidStakingChartInputs,
-  type LiquidStakingStats,
   YIELD_WINDOW_DAYS,
 } from './computeLiquidStakingCharts'
-import {
-  getLiquidStakingProjects,
-  type LiquidStakingProject,
-} from './getLiquidStakingProjects'
+import { getLiquidStakingProjects } from './getLiquidStakingProjects'
 
 export const LiquidStakingChartsParams = v.object({
   range: ChartRange,
@@ -67,32 +61,6 @@ export async function getLiquidStakingCharts(
 
   const to = UnixTime.toStartOf(UnixTime(params.range[1]), 'day')
   const from = Math.max(params.range[0] ?? FIRST_DAY, FIRST_DAY)
-  return computeLiquidStakingCharts(
-    await getInputs(projects, UnixTime(from), to),
-  )
-}
-
-/** How far back the stats look for a day that has each value. */
-const STATS_DAYS = 7
-
-/** Each project's latest yield and cost of exit, by project id. */
-export async function getLiquidStakingStats(
-  projects: LiquidStakingProject[],
-): Promise<Map<string, LiquidStakingStats>> {
-  if (env.MOCK) {
-    return new Map(projects.map((project) => [project.id, getMockStats()]))
-  }
-  const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  return computeLiquidStakingStats(
-    await getInputs(projects, UnixTime(to - STATS_DAYS * UnixTime.DAY), to),
-  )
-}
-
-async function getInputs(
-  projects: LiquidStakingProject[],
-  from: UnixTime,
-  to: UnixTime,
-): Promise<LiquidStakingChartInputs> {
   // The first day's yields look back a window; its discount, a week.
   const lookback = UnixTime(from - YIELD_WINDOW_DAYS * UnixTime.DAY)
   const priceIds = [
@@ -125,7 +93,7 @@ async function getInputs(
     ),
   ])
 
-  return {
+  return computeLiquidStakingCharts({
     days: generateTimestamps([from, to], 'day'),
     projects: projects.map((p) => ({
       id: p.id,
@@ -135,7 +103,7 @@ async function getInputs(
     snapshots,
     network,
     prices: new Map(prices),
-  }
+  })
 }
 
 function getMockLiquidStakingCharts(
@@ -162,13 +130,6 @@ function getMockLiquidStakingCharts(
       timestamp,
       projects: byProject(projectIds, costOfExit, i),
     })),
-  }
-}
-
-function getMockStats(): LiquidStakingStats {
-  return {
-    yield: 0.025 + Math.random() * 0.01,
-    costOfExit: Math.random() * 6,
   }
 }
 
