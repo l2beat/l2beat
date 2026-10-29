@@ -63,7 +63,6 @@ export class CoingeckoClient {
       vs_currency: 'usd',
       ids: ids.join(','),
       per_page: ids.length.toString(),
-      sparkline: 'false',
     })
 
     const response = await this.fetch(url)

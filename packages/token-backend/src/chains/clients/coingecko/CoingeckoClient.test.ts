@@ -101,7 +101,7 @@ describe(CoingeckoClient.name, () => {
       { id: 'missing-supply', circulating_supply: null },
     ])
     expect(fetch.calls[0]?.args[0]).toEqual(
-      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=usd-coin%2Cmissing-supply&per_page=2&sparkline=false',
+      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=usd-coin%2Cmissing-supply&per_page=2',
     )
     expect(fetch.calls[0]?.args[1]).toEqual({ headers: {} })
   })
