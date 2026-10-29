@@ -5,7 +5,7 @@ import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import { formatUtcDateTime } from '~/server/markdown/renderSectionParts'
 import { getUnderReviewText } from '~/utils/project/underReview'
-import { formatDays, formatYield } from '../liquid-staking/formatLiquidStaking'
+import { LIQUID_STAKING_METRICS } from '../liquid-staking/liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquid-staking/liquidStakingRisks'
 
 /**
@@ -62,14 +62,15 @@ function getFacts(
 function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
   if (!summary) return []
   return compact([
-    summary.yield && {
-      label: 'Yield',
-      value: `${formatYield(summary.yield.value)} (annualised change of the exchange rate over the 30 days to ${formatUtcDateTime(UnixTime(summary.yield.timestamp))})`,
-    },
-    summary.costOfExit && {
-      label: 'Cost of exit',
-      value: `${formatDays(summary.costOfExit.value)} of yield (by the cheaper of the queue and the market, on ${formatUtcDateTime(UnixTime(summary.costOfExit.timestamp))})`,
-    },
+    ...LIQUID_STAKING_METRICS.map(({ key, title, tooltip, format }) => {
+      const latest = summary[key]
+      return (
+        latest && {
+          label: title,
+          value: `${format(latest.value)} (on ${formatUtcDateTime(UnixTime(latest.timestamp))}). ${tooltip}`,
+        }
+      )
+    }),
     ...LIQUID_STAKING_RISKS.map(({ key, title }) => {
       const risk = summary.risks[key]
       return {
