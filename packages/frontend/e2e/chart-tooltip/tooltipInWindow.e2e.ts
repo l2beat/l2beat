@@ -73,13 +73,15 @@ test('a tapped chart tooltip stays inside its chart on a phone', async ({
     )
     await expect(tooltip).toBeVisible({ timeout: 500 })
   }).toPass()
-  const [chartBox, tooltipBox] = await Promise.all([
+  const [chartBox, tooltipBox, legendBox] = await Promise.all([
     chart.boundingBox(),
     tooltip.boundingBox(),
+    chart.locator('.recharts-legend-wrapper').boundingBox(),
   ])
-  const chartBottom = chartBox!.y + chartBox!.height
+  // The legend below the plot stays clear, so its items can still be tapped.
+  const bottom = legendBox!.y
   expect(tooltipBox!.y).toBeGreaterThanOrEqual(chartBox!.y)
-  expect(tooltipBox!.y + tooltipBox!.height).toBeLessThanOrEqual(chartBottom)
+  expect(tooltipBox!.y + tooltipBox!.height).toBeLessThanOrEqual(bottom)
 
   const lines = await chart.locator('.recharts-line').count()
   const rows = tooltip.locator('[class*="justify-between"]')
@@ -90,7 +92,7 @@ test('a tapped chart tooltip stays inside its chart on a phone', async ({
     e.scrollTop = e.scrollHeight
   })
   const lastRow = await rows.last().boundingBox()
-  expect(lastRow!.y + lastRow!.height).toBeLessThanOrEqual(chartBottom)
+  expect(lastRow!.y + lastRow!.height).toBeLessThanOrEqual(bottom)
   await context.close()
 })
 

@@ -322,12 +322,16 @@ function useKeepTooltipInPlace(ref: React.RefObject<HTMLDivElement | null>) {
     )
     const chart = wrapper?.offsetParent
     if (!wrapper || !chart) return
+    // The legend stays clear, so its items can still be tapped.
+    const bottom =
+      chart.querySelector<HTMLElement>('.recharts-legend-wrapper')?.offsetTop ??
+      chart.clientHeight
     const scroller = ref.current?.querySelector<HTMLElement>(
       '[data-chart-tooltip-rows]',
     )
     if (scroller) {
       const rest = wrapper.offsetHeight - scroller.offsetHeight
-      scroller.style.maxHeight = `${chart.clientHeight - rest}px`
+      scroller.style.maxHeight = `${bottom - rest}px`
       // recharts lets every touch through its tooltip to the chart; one that
       // scrolls has to catch them.
       wrapper.style.pointerEvents =
@@ -345,10 +349,7 @@ function useKeepTooltipInPlace(ref: React.RefObject<HTMLDivElement | null>) {
     if (left + shift < TOOLTIP_WINDOW_MARGIN) {
       shift = TOOLTIP_WINDOW_MARGIN - left
     }
-    const top = Math.min(
-      y,
-      Math.max(0, chart.clientHeight - wrapper.offsetHeight),
-    )
+    const top = Math.min(y, Math.max(0, bottom - wrapper.offsetHeight))
     if (shift !== 0 || top !== y) {
       wrapper.style.transform = `translate(${x + shift}px, ${top}px)`
     }
