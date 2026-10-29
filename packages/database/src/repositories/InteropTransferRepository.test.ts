@@ -1863,6 +1863,124 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     },
   )
 
+  describe(
+    InteropTransferRepository.prototype.getSupplyChangesSince.name,
+    () => {
+      const ETH_USDC = Address32.from(EthereumAddress.random())
+      const ARB_USDC = Address32.from(EthereumAddress.random())
+      const BASE_USDC = Address32.from(EthereumAddress.random())
+
+      function supplyTransfer(
+        transferId: string,
+        overrides: Partial<InteropTransferRecord>,
+      ): InteropTransferRecord {
+        return {
+          ...transfer('plugin', transferId, 'transfer', UnixTime(1_000)),
+          srcChain: 'ethereum',
+          srcTokenAddress: ETH_USDC,
+          srcValueUsd: 10,
+          dstChain: 'arbitrum',
+          dstTokenAddress: ARB_USDC,
+          dstValueUsd: 10,
+          ...overrides,
+        }
+      }
+
+      it('nets what each plugin minted and burned per chain and token', async () => {
+        await repository.insertMany([
+          supplyTransfer('deposit', {
+            plugin: 'arbitrum-canonical',
+            bridgeType: 'lockAndMint',
+            srcRawAmount: 100n,
+            srcWasBurned: false,
+            dstRawAmount: 100n,
+            dstWasMinted: true,
+          }),
+          supplyTransfer('withdrawal', {
+            plugin: 'arbitrum-canonical',
+            bridgeType: 'lockAndMint',
+            srcChain: 'arbitrum',
+            srcTokenAddress: ARB_USDC,
+            srcRawAmount: 30n,
+            srcWasBurned: true,
+            dstChain: 'ethereum',
+            dstTokenAddress: ETH_USDC,
+            dstRawAmount: 30n,
+            dstWasMinted: false,
+          }),
+          supplyTransfer('cctp', {
+            plugin: 'cctp',
+            bridgeType: 'burnAndMint',
+            srcChain: 'base',
+            srcTokenAddress: BASE_USDC,
+            srcRawAmount: 7n,
+            srcWasBurned: true,
+            dstRawAmount: 7n,
+            dstWasMinted: true,
+          }),
+        ])
+
+        const changes = await repository.getSupplyChangesSince(UnixTime(1_000))
+
+        expect(changes).toEqualUnsorted([
+          change('arbitrum-canonical', 'arbitrum', ARB_USDC, 70n, 2),
+          change('arbitrum-canonical', 'ethereum', ETH_USDC, 0n, 2),
+          change('cctp', 'arbitrum', ARB_USDC, 7n, 1),
+          change('cctp', 'base', BASE_USDC, -7n, 1),
+        ])
+      })
+
+      it('counts sides that do not say whether they minted or burned', async () => {
+        await repository.insertMany([
+          supplyTransfer('noFlags', {
+            srcWasBurned: undefined,
+            dstWasMinted: undefined,
+          }),
+          supplyTransfer('noAmount', {
+            dstRawAmount: undefined,
+            dstWasMinted: true,
+          }),
+        ])
+
+        const changes = await repository.getSupplyChangesSince(UnixTime(1_000))
+
+        expect(changes).toEqualUnsorted([
+          {
+            ...change('plugin', 'arbitrum', ARB_USDC, 0n, 2),
+            unknownCount: 2,
+            unknownValueUsd: 20,
+          },
+          {
+            ...change('plugin', 'ethereum', ETH_USDC, 0n, 2),
+            unknownCount: 1,
+            unknownValueUsd: 10,
+          },
+        ])
+      })
+
+      it('counts a side from its own time, or the transfer time without one', async () => {
+        await repository.insertMany([
+          supplyTransfer('burnedBefore', {
+            timestamp: UnixTime(2_000),
+            srcChain: 'arbitrum',
+            srcTokenAddress: ARB_USDC,
+            srcTime: UnixTime(500),
+            srcRawAmount: 5n,
+            srcWasBurned: true,
+            dstChain: 'ethereum',
+            dstTokenAddress: ETH_USDC,
+            dstTime: undefined,
+          }),
+          supplyTransfer('before', { timestamp: UnixTime(999) }),
+        ])
+
+        const changes = await repository.getSupplyChangesSince(UnixTime(1_000))
+
+        expect(changes).toEqual([change('plugin', 'ethereum', ETH_USDC, 0n, 1)])
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.getExistingItems.name, () => {
     it('returns rows that match the requested src/dst pairs', async () => {
       const t1 = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
@@ -2223,6 +2341,25 @@ describe('InteropTransferRepository toRecord', () => {
     )
   })
 })
+
+function change(
+  plugin: string,
+  chain: string,
+  tokenAddress: string,
+  netMinted: bigint,
+  transferCount: number,
+) {
+  return {
+    plugin,
+    chain,
+    tokenAddress,
+    netMinted,
+    transferCount,
+    unknownCount: 0,
+    valueUsd: 10 * transferCount,
+    unknownValueUsd: 0,
+  }
+}
 
 function financialTransfer(
   transferId: string,

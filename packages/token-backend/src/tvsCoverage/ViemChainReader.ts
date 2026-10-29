@@ -1,5 +1,6 @@
 import type { ChainRecord } from '@l2beat/database'
-import { toBatches } from '@l2beat/shared-pure'
+import { getBlockNumberAtOrBefore } from '@l2beat/shared'
+import { toBatches, UnixTime } from '@l2beat/shared-pure'
 import {
   type Address,
   BaseError,
@@ -52,12 +53,17 @@ export class ViemChainReader implements ChainReader {
     chain: string,
     calls: ChainCall[],
     warnings: string[],
+    before?: UnixTime,
   ): Promise<ChainCallResult[]> {
     const { client, retryClient } = await this.connect(chain)
+    const blockNumber =
+      before === undefined
+        ? undefined
+        : await getBlockBefore(retryClient, before)
     let failed = 0
     const read = async (call: ChainCall): Promise<ChainCallResult> => {
       try {
-        return await readCall(client, call)
+        return await readCall(client, call, blockNumber)
       } catch (error) {
         // Without Multicall3 the first read went through `retryClient`, so its
         // error already tells a revert from an RPC failure.
@@ -67,7 +73,7 @@ export class ViemChainReader implements ChainReader {
         }
       }
       try {
-        return await readCall(retryClient, call)
+        return await readCall(retryClient, call, blockNumber)
       } catch (error) {
         if (!isContractFailure(error)) failed++
         return undefined
@@ -78,8 +84,9 @@ export class ViemChainReader implements ChainReader {
       results.push(...(await Promise.all(chunk.map(read))))
     }
     if (failed > 0) {
+      const at = blockNumber === undefined ? '' : ` at block ${blockNumber}`
       warnings.push(
-        `Reading ${chain}: ${failed} of ${calls.length} calls failed`,
+        `Reading ${chain}${at}: ${failed} of ${calls.length} calls failed`,
       )
     }
     return results
@@ -92,16 +99,13 @@ export class ViemChainReader implements ChainReader {
     const rpc = chain?.apis?.find((api) => api.type === 'rpc')
     if (!chain || !rpc) throw new MissingRpcError(name)
 
-    // Also fails the whole chain early when its RPC is unreachable. viem's
-    // message includes the RPC URL, which can carry an API key.
+    // Also fails the whole chain early when its RPC is unreachable.
     const multicallCode = await createPublicClient({
       transport: http(rpc.url, { timeout: RPC_TIMEOUT_MS, retryCount: 1 }),
     })
       .getCode({ address: MULTICALL3 })
       .catch((error: unknown) => {
-        throw new Error('RPC request failed', {
-          cause: error instanceof BaseError ? error.shortMessage : undefined,
-        })
+        throw rpcError(error)
       })
     const hasMulticall3 = multicallCode !== undefined
 
@@ -132,11 +136,44 @@ export class ViemChainReader implements ChainReader {
   }
 }
 
+// The last block before `timestamp`, so its state has everything earlier
+// and nothing from `timestamp` on.
+async function getBlockBefore(
+  client: PublicClient,
+  timestamp: UnixTime,
+): Promise<bigint> {
+  try {
+    const latest = await client.getBlockNumber()
+    const block = await getBlockNumberAtOrBefore(
+      UnixTime(timestamp - 1),
+      0,
+      Number(latest),
+      async (blockNumber) => {
+        const block = await client.getBlock({
+          blockNumber: BigInt(blockNumber),
+        })
+        return { timestamp: Number(block.timestamp) }
+      },
+    )
+    return BigInt(block)
+  } catch (error) {
+    throw rpcError(error)
+  }
+}
+
+// viem's message includes the RPC URL, which can carry an API key.
+function rpcError(error: unknown): Error {
+  return new Error('RPC request failed', {
+    cause: error instanceof BaseError ? error.shortMessage : undefined,
+  })
+}
+
 // Rejects when the call fails, except a vault probe, which yields undefined
 // for a token that is not a vault.
 function readCall(
   client: PublicClient,
   call: ChainCall,
+  blockNumber: bigint | undefined,
 ): Promise<ChainCallResult> {
   const token = call.token as Address
   switch (call.type) {
@@ -145,26 +182,29 @@ function readCall(
         address: token,
         abi: erc20Abi,
         functionName: 'totalSupply',
+        blockNumber,
       })
     case 'decimals':
       return client.readContract({
         address: token,
         abi: erc20Abi,
         functionName: 'decimals',
+        blockNumber,
       })
     case 'balanceOf': {
       const holder = call.holder as Address
       return call.token === 'native'
-        ? client.getBalance({ address: holder })
+        ? client.getBalance({ address: holder, blockNumber })
         : client.readContract({
             address: token,
             abi: erc20Abi,
             functionName: 'balanceOf',
             args: [holder],
+            blockNumber,
           })
     }
     case 'vaultAsset':
-      return readVaultAsset(client, token)
+      return readVaultAsset(client, token, blockNumber)
   }
 }
 
@@ -172,6 +212,7 @@ function readCall(
 async function readVaultAsset(
   client: PublicClient,
   vault: Address,
+  blockNumber: bigint | undefined,
 ): Promise<VaultAsset | undefined> {
   const [asset, totalAssets] = await Promise.all([
     orUndefined(
@@ -179,6 +220,7 @@ async function readVaultAsset(
         address: vault,
         abi: erc4626Abi,
         functionName: 'asset',
+        blockNumber,
       }),
     ),
     orUndefined(
@@ -186,6 +228,7 @@ async function readVaultAsset(
         address: vault,
         abi: erc4626Abi,
         functionName: 'totalAssets',
+        blockNumber,
       }),
     ),
   ])
@@ -197,6 +240,7 @@ async function readVaultAsset(
       address: asset,
       abi: erc20Abi,
       functionName: 'symbol',
+      blockNumber,
     }),
   )
   return { address: asset.toLowerCase(), symbol: symbol || undefined }
