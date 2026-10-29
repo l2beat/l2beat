@@ -13,6 +13,7 @@ import {
 
 const BUILDER = '0x1111111111111111111111111111111111111111'
 const USER = '0x2222222222222222222222222222222222222222'
+const OTHER = '0x3333333333333333333333333333333333333333'
 const ETH = 10n ** 18n
 
 describe(getBuilderPayment.name, () => {
@@ -20,6 +21,14 @@ describe(getBuilderPayment.name, () => {
     expect(
       getBuilderPayment(block([tx(USER, 5n), tx(BUILDER.toUpperCase(), ETH)])),
     ).toEqual(ETH)
+  })
+
+  it('adds the earlier payments to the same proposer', () => {
+    expect(
+      getBuilderPayment(
+        block([tx(BUILDER, 2n), tx(BUILDER, 3n, OTHER), tx(BUILDER, ETH)]),
+      ),
+    ).toEqual(ETH + 2n)
   })
 
   it('is absent when someone else sent the last transaction', () => {

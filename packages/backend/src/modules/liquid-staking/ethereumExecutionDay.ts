@@ -101,22 +101,31 @@ export function getDirectTransfers(
 }
 
 /**
- * A builder that keeps the fees pays the proposer in the block's last
- * transaction, sent from the fee recipient.
+ * A builder that keeps the fees pays the proposer from the fee recipient, in
+ * the block's last transaction and sometimes in earlier ones too.
  */
 export function getBuilderPayment(
   block: Pick<EVMBlockWithTransactions, 'miner' | 'transactions'>,
 ): bigint | undefined {
   const last = block.transactions.at(-1)
+  const builder = block.miner?.toLowerCase()
+  const proposer = last?.to?.toLowerCase()
   if (
     last === undefined ||
-    block.miner === undefined ||
-    last.from.toLowerCase() !== block.miner.toLowerCase() ||
+    builder === undefined ||
+    proposer === undefined ||
+    last.from.toLowerCase() !== builder ||
     !last.value
   ) {
     return undefined
   }
-  return last.value
+  return block.transactions.reduce(
+    (sum, tx) =>
+      tx.from.toLowerCase() === builder && tx.to?.toLowerCase() === proposer
+        ? sum + (tx.value ?? 0n)
+        : sum,
+    0n,
+  )
 }
 
 /** Without a builder payment, the fee recipient is the proposer and keeps the tips. */
