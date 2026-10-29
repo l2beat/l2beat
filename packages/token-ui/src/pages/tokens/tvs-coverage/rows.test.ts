@@ -4,7 +4,9 @@ import {
   filterRows,
   type Names,
   type Row,
+  type RowValue,
   sortRows,
+  sumValue,
 } from './rows'
 
 const NOW = 100 * 24 * 60 * 60
@@ -110,6 +112,31 @@ describe(sortRows.name, () => {
   })
 })
 
+describe(sumValue.name, () => {
+  it('counts an escrow row and its minted copy once, at the larger value', () => {
+    const escrow = row({
+      side: 'escrow',
+      chain: 'ethereum',
+      address: '0x1',
+      value: {
+        ...value(100),
+        mintedCopy: {
+          chain: 'base',
+          address: '0x2',
+          symbol: 'USDC.e',
+          decimals: 6,
+          supply: 100,
+        },
+      },
+    })
+    const copy = row({ address: '0x2', value: value(80) })
+    const other = row({ address: '0x3', value: value(5) })
+
+    expect(sumValue([escrow, copy, other])).toEqual(105)
+    expect(sumValue([copy, other])).toEqual(85)
+  })
+})
+
 function addresses(rows: Row[]) {
   return rows.map((row) => row.address)
 }
@@ -117,7 +144,7 @@ function addresses(rows: Row[]) {
 function value(
   valueUsd: number | undefined,
   circulatingSupplyUnknown = false,
-): Row['value'] {
+): RowValue {
   return {
     amount: 1,
     amountSource: 'totalSupply',
