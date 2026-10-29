@@ -80,7 +80,7 @@ export const SUPPLY_FILTERS: Option<SupplyFilter>[] = [
   {
     value: 'unexplainedIssuance',
     label: 'Unexplained issuance',
-    description: `The supply grew by more than tracked bridges minted, by over ${UNEXPLAINED_ISSUANCE_MIN_SHARE * 100}% of the change and over $${formatAmount(UNEXPLAINED_ISSUANCE_MIN_USD)}.`,
+    description: `The supply grew more, or fell less, than tracked bridges explain, by over ${UNEXPLAINED_ISSUANCE_MIN_SHARE * 100}% of the change and over $${formatAmount(UNEXPLAINED_ISSUANCE_MIN_USD)}.`,
   },
 ]
 
