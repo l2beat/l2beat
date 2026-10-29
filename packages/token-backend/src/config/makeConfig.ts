@@ -42,6 +42,10 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
         MAX_TIMER_DELAY_MS,
       ),
       windowDays: positiveInteger(env, 'TVS_COVERAGE_WINDOW_DAYS', 90),
+      minChainVolumeUsd: env.integer(
+        'TVS_COVERAGE_MIN_CHAIN_VOLUME_USD',
+        10_000,
+      ),
     },
   }
 }

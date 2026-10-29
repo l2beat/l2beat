@@ -45,6 +45,7 @@ function snapshot(generatedAt: number): TvsCoverageSnapshot {
   return {
     generatedAt,
     window: { days: 30, from: 0, to: generatedAt },
+    minChainVolumeUsd: 0,
     projects: [],
     chains: [],
     bridges: [],

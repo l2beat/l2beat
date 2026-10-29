@@ -37,6 +37,7 @@ export interface TvsCoverageConfig {
   enabled: boolean
   intervalMs: number
   windowDays: number
+  minChainVolumeUsd: number
 }
 
 export interface TokenIngestionConfig {

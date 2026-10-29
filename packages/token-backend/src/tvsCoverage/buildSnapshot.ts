@@ -19,6 +19,8 @@ export interface TvsCoverageSnapshot {
   generatedAt: number
   // The interop data: `days` daily snapshots covering `from` until `to`.
   window: { days: number; from: number; to: number }
+  // Chain rows with less interop volume in the window are left out.
+  minChainVolumeUsd: number
   projects: {
     id: string
     name: string
@@ -58,7 +60,7 @@ export interface SnapshotDeps {
 
 export async function buildSnapshot(
   deps: SnapshotDeps,
-  windowDays: number,
+  options: { windowDays: number; minChainVolumeUsd: number },
 ): Promise<{ snapshot: TvsCoverageSnapshot; stats: SnapshotStats }> {
   const startedAt = Date.now()
   const generatedAt = UnixTime.now()
@@ -66,7 +68,7 @@ export async function buildSnapshot(
     await deps.db.interopAggregateStatus.getPromotedMidnightTimestampsSince(
       UnixTime(
         UnixTime.toStartOf(generatedAt, 'day') -
-          (windowDays - 1) * UnixTime.DAY,
+          (options.windowDays - 1) * UnixTime.DAY,
       ),
     )
   const [
@@ -108,6 +110,7 @@ export async function buildSnapshot(
     abstractTokens,
     relations,
     timestamp: generatedAt,
+    minChainVolumeUsd: options.minChainVolumeUsd,
   })
   const estimateStartedAt = Date.now()
   const estimates = await estimateValues(
@@ -128,6 +131,7 @@ export async function buildSnapshot(
       from: firstDay - UnixTime.DAY,
       to: days.at(-1) ?? generatedAt,
     },
+    minChainVolumeUsd: options.minChainVolumeUsd,
     projects: tvsProjects.map((project) => ({
       id: project.id,
       name: project.name,

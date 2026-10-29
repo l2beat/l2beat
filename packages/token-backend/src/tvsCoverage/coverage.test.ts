@@ -257,6 +257,39 @@ describe(Coverage.name, () => {
     ])
   })
 
+  it('leaves out chain rows below the minimum volume, but not escrow rows', () => {
+    const dai = '0x6b175474e89094c44da98b954eedeac495271d0f'
+    const rows = coverage({
+      projects: [arbitrum],
+      stats: [
+        stat({
+          id: 'cctp',
+          tokenChain: 'arbitrum',
+          address: ARB_USDC,
+          volume: 5,
+        }),
+        stat({
+          id: 'across',
+          tokenChain: 'arbitrum',
+          address: ARB_USDC_E,
+          volume: 4,
+        }),
+        stat({
+          id: 'arbitrum',
+          tokenChain: 'ethereum',
+          address: dai,
+          volume: 1,
+        }),
+      ],
+      minChainVolumeUsd: 5,
+    })
+
+    expect(summary(rows)).toEqual([
+      ['arbitrum', 'chain', `arbitrum:${ARB_USDC}`, 'missing'],
+      ['arbitrum', 'escrow', `ethereum:${dai}`, 'missing'],
+    ])
+  })
+
   it('counts a locked token whose minted copy the project counts', () => {
     const rows = coverage({
       projects: [
@@ -425,6 +458,7 @@ describe('Coverage lookups', () => {
       abstractTokens: [],
       relations: [],
       timestamp: NOW,
+      minChainVolumeUsd: 0,
     })
 
     expect(
@@ -460,6 +494,7 @@ describe('Coverage lookups', () => {
       abstractTokens: [],
       relations: [],
       timestamp: NOW,
+      minChainVolumeUsd: 0,
     })
 
     expect(result.escrowAddresses('arbitrum', 'ethereum')).toEqual([
@@ -498,6 +533,7 @@ describe('Coverage lookups', () => {
         ),
       ],
       timestamp: NOW,
+      minChainVolumeUsd: 0,
     }).rows
 
     expect(rows.map((row) => [row.address, row.pricing])).toEqual([
@@ -526,6 +562,7 @@ describe('Coverage lookups', () => {
         ),
       ],
       timestamp: NOW,
+      minChainVolumeUsd: 0,
     })
 
     expect(
@@ -555,6 +592,7 @@ describe('Coverage lookups', () => {
         ),
       ],
       timestamp: NOW,
+      minChainVolumeUsd: 0,
     })
 
     expect(
@@ -577,6 +615,7 @@ describe('Coverage lookups', () => {
         ),
       ],
       timestamp: NOW,
+      minChainVolumeUsd: 0,
     })
 
     expect(
@@ -599,11 +638,13 @@ function coverage(input: {
   deployedTokens?: DeployedTokenRecord[]
   abstractTokens?: AbstractTokenRecord[]
   relations?: TokenRelationRoute[]
+  minChainVolumeUsd?: number
 }): CoverageRow[] {
   return new Coverage({
     deployedTokens: [],
     abstractTokens: [],
     relations: [],
+    minChainVolumeUsd: 0,
     ...input,
     timestamp: NOW,
   }).rows

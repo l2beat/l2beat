@@ -90,6 +90,7 @@ export interface CoverageInput {
   abstractTokens: AbstractTokenRecord[]
   relations: TokenRelationRoute[]
   timestamp: number
+  minChainVolumeUsd: number
 }
 
 export class Coverage {
@@ -107,6 +108,12 @@ export class Coverage {
     this.projects = new Map(projects.map((project) => [project.id, project]))
     this.rows = collectRows(input.stats, projects, this.relations)
       .map((row) => toCoverageRow(row, this.tokens, this.relations))
+      // A project's own bridge seldom moves what its escrow already holds, so
+      // escrow rows are kept at any volume.
+      .filter(
+        (row) =>
+          row.side === 'escrow' || row.volumeUsd >= input.minChainVolumeUsd,
+      )
       .sort(
         (a, b) =>
           b.volumeUsd - a.volumeUsd ||

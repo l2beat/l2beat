@@ -50,7 +50,7 @@ function main() {
       prices: new MarketDataSource(db, coingeckoClient, logger),
     }
     tvsCoverageService = new TvsCoverageService(
-      () => buildSnapshot(snapshotDeps, config.tvsCoverage.windowDays),
+      () => buildSnapshot(snapshotDeps, config.tvsCoverage),
       config.tvsCoverage.intervalMs,
       logger,
     )
