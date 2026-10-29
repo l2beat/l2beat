@@ -20,7 +20,7 @@ const DEFINITIONS = {
       "The project's TVS config counts neither this token nor any other deployment of its asset.",
   },
   estimate:
-    "For chain rows, amount is the token's totalSupply on its chain, or CoinGecko's circulating supply when that is lower. For escrow rows, amount is the larger of escrowBalance (summed over escrowAddresses) and the supply of the copy the project's own bridge minted, which also covers escrows the TVS config does not list. amountSource says which of these was used, and amountUnavailable says why amount is null. valueUsd = amount * priceUsd. Estimates exist only for rows that are not counted.",
+    "For chain rows, amount is the token's totalSupply on its chain, or CoinGecko's circulating supply when that is lower. For escrow rows, amount is the larger of escrowBalance (summed over escrowAddresses) and the supply of the copy the project's own bridge minted, which also covers escrows the TVS config does not list. amountSource says which of these was used, and amountUnavailable says why amount is null. circulatingSupplyUnknown is true when CoinGecko has no circulating supply for the token, so a chain row's amount is its whole totalSupply, which may include a premint, a treasury or locked tokens. valueUsd = amount * priceUsd. Estimates exist only for rows that are not counted.",
   interop:
     'Volume and transfer counts are summed over the interop window, per bridge, from transfers L2BEAT matched to this token. lastSeen is the end of the last UTC day with a transfer.',
   warnings:
@@ -73,6 +73,7 @@ export function toJsonDump(rows: Row[], snapshot: Snapshot, names: Names) {
               amount: row.value.amount ?? null,
               amountSource: row.value.amountSource ?? null,
               amountUnavailable: row.value.amountGap ?? null,
+              circulatingSupplyUnknown: row.value.circulatingSupplyUnknown,
               escrowBalance: row.value.escrowBalance ?? null,
               mintedCopy: row.value.mintedCopy
                 ? {
@@ -138,6 +139,7 @@ const CSV_COLUMNS: [string, (row: Row, ctx: CsvContext) => unknown][] = [
   ['amount', (row) => row.value?.amount],
   ['amount_source', (row) => row.value?.amountSource],
   ['amount_unavailable', (row) => row.value?.amountGap],
+  ['circulating_supply_unknown', (row) => row.value?.circulatingSupplyUnknown],
   ['escrow_balance', (row) => row.value?.escrowBalance],
   [
     'minted_copy',
