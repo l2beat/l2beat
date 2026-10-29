@@ -25,19 +25,52 @@ describe(estimateValues.name, () => {
     const { values } = await estimateValues(
       coverage([row]),
       reader,
-      prices({ 'usd-coin': { priceUsd: 2, circulatingSupply: 3 } }),
+      prices({
+        'usd-coin': {
+          priceUsd: 2,
+          circulatingSupply: 3,
+          circulatingSupplyUnknown: false,
+        },
+      }),
     )
 
     expect(values.get(rowKey(row))).toEqual({
       amount: 3,
       amountSource: 'circulatingSupply',
       amountGap: undefined,
+      circulatingSupplyUnknown: false,
       escrowBalance: undefined,
       mintedCopy: undefined,
       priceUsd: 2,
       valueUsd: 6,
       vaultAsset: undefined,
     })
+  })
+
+  it('flags a total supply when CoinGecko does not know the circulating supply', async () => {
+    const row = coverageRow({ decimals: 0 })
+    const reader = fakeReader({ [`totalSupply:${TOKEN}`]: 10n })
+
+    const { values } = await estimateValues(
+      coverage([row]),
+      reader,
+      prices({
+        'usd-coin': {
+          priceUsd: 1,
+          circulatingSupply: undefined,
+          circulatingSupplyUnknown: true,
+        },
+      }),
+    )
+
+    expect(values.get(rowKey(row))).toEqual(
+      expect.subset({
+        amount: 10,
+        amountSource: 'totalSupply',
+        circulatingSupplyUnknown: true,
+        valueUsd: 10,
+      }),
+    )
   })
 
   it('values an escrow token by its balance in every project escrow', async () => {
@@ -50,13 +83,20 @@ describe(estimateValues.name, () => {
     const { values } = await estimateValues(
       coverage([row], { escrows: [ESCROW_A, ESCROW_B] }),
       reader,
-      prices({ 'usd-coin': { priceUsd: 10, circulatingSupply: 1 } }),
+      prices({
+        'usd-coin': {
+          priceUsd: 10,
+          circulatingSupply: 1,
+          circulatingSupplyUnknown: false,
+        },
+      }),
     )
 
     expect(values.get(rowKey(row))).toEqual({
       amount: 5,
       amountSource: 'escrowBalance',
       amountGap: undefined,
+      circulatingSupplyUnknown: false,
       escrowBalance: 5,
       mintedCopy: undefined,
       priceUsd: 10,
@@ -128,7 +168,13 @@ describe(estimateValues.name, () => {
         },
       }),
       reader,
-      prices({ 'usd-coin': { priceUsd: 1, circulatingSupply: undefined } }),
+      prices({
+        'usd-coin': {
+          priceUsd: 1,
+          circulatingSupply: undefined,
+          circulatingSupplyUnknown: false,
+        },
+      }),
     )
 
     expect(reader.read).toHaveBeenCalledWith(
@@ -140,6 +186,7 @@ describe(estimateValues.name, () => {
       amount: 9,
       amountSource: 'mintedSupply',
       amountGap: undefined,
+      circulatingSupplyUnknown: false,
       escrowBalance: 0,
       mintedCopy: {
         chain: 'arbitrum',
@@ -243,7 +290,13 @@ describe(estimateValues.name, () => {
     const { values, warnings } = await estimateValues(
       coverage([failing, working]),
       reader,
-      prices({ 'usd-coin': { priceUsd: 1, circulatingSupply: undefined } }),
+      prices({
+        'usd-coin': {
+          priceUsd: 1,
+          circulatingSupply: undefined,
+          circulatingSupplyUnknown: false,
+        },
+      }),
     )
 
     expect(warnings).toEqual(['Reading failing failed: timeout'])

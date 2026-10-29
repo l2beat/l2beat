@@ -28,15 +28,20 @@ export class MarketDataSource implements PriceSource {
       this.getMarkets(coingeckoIds, warnings),
     ])
     return new Map(
-      coingeckoIds.map((id) => [
-        id,
-        {
-          priceUsd:
-            recentPrices.get(id) ?? markets.get(id)?.current_price ?? undefined,
-          // CoinGecko reports 0 when it does not know the circulating supply.
-          circulatingSupply: markets.get(id)?.circulating_supply || undefined,
-        },
-      ]),
+      coingeckoIds.map((id) => {
+        const market = markets.get(id)
+        return [
+          id,
+          {
+            priceUsd:
+              recentPrices.get(id) ?? market?.current_price ?? undefined,
+            // CoinGecko reports 0 when it does not know the circulating supply.
+            circulatingSupply: market?.circulating_supply || undefined,
+            circulatingSupplyUnknown:
+              market !== undefined && !market.circulating_supply,
+          },
+        ]
+      }),
     )
   }
 

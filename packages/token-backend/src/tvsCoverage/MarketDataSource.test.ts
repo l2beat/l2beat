@@ -13,7 +13,16 @@ describe(MarketDataSource.name, () => {
     )
 
     expect(await source.getMarketData(['a'], [])).toEqual(
-      new Map([['a', { priceUsd: 2, circulatingSupply: 100 }]]),
+      new Map([
+        [
+          'a',
+          {
+            priceUsd: 2,
+            circulatingSupply: 100,
+            circulatingSupplyUnknown: false,
+          },
+        ],
+      ]),
     )
   })
 
@@ -25,7 +34,16 @@ describe(MarketDataSource.name, () => {
     )
 
     expect(await source.getMarketData(['a'], [])).toEqual(
-      new Map([['a', { priceUsd: 3, circulatingSupply: undefined }]]),
+      new Map([
+        [
+          'a',
+          {
+            priceUsd: 3,
+            circulatingSupply: undefined,
+            circulatingSupplyUnknown: true,
+          },
+        ],
+      ]),
     )
   })
 
@@ -44,7 +62,16 @@ describe(MarketDataSource.name, () => {
     const warnings: string[] = []
 
     expect(await source.getMarketData(['a'], warnings)).toEqual(
-      new Map([['a', { priceUsd: 3, circulatingSupply: 100 }]]),
+      new Map([
+        [
+          'a',
+          {
+            priceUsd: 3,
+            circulatingSupply: 100,
+            circulatingSupplyUnknown: false,
+          },
+        ],
+      ]),
     )
     expect(warnings).toEqual(['Reading interop prices failed: timeout'])
   })
@@ -67,10 +94,12 @@ describe(MarketDataSource.name, () => {
     expect(result.get('id-0')).toEqual({
       priceUsd: 5,
       circulatingSupply: undefined,
+      circulatingSupplyUnknown: true,
     })
     expect(result.get('id-100')).toEqual({
       priceUsd: undefined,
       circulatingSupply: undefined,
+      circulatingSupplyUnknown: false,
     })
     expect(warnings).toEqual([
       'Reading CoinGecko markets for 1 ids failed: 429',

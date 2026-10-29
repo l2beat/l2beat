@@ -42,6 +42,8 @@ export class MissingRpcError extends Error {
 export interface MarketData {
   priceUsd: number | undefined
   circulatingSupply: number | undefined
+  // CoinGecko lists the coin but does not know its circulating supply.
+  circulatingSupplyUnknown: boolean
 }
 
 export interface PriceSource {
@@ -68,6 +70,9 @@ export interface RowValue {
   amount: number | undefined
   amountSource: AmountSource | undefined
   amountGap: AmountGap | undefined
+  // The amount is the total supply because CoinGecko has no circulating
+  // supply to cap it with, e.g. a native token's premint or treasury.
+  circulatingSupplyUnknown: boolean
   escrowBalance: number | undefined
   mintedCopy: (MintedCopy & { supply: number | undefined }) | undefined
   priceUsd: number | undefined
@@ -332,6 +337,9 @@ function toRowValue(
     amount,
     amountSource,
     amountGap: amount === undefined ? (plan.gap ?? own?.gap) : undefined,
+    circulatingSupplyUnknown:
+      amountSource === 'totalSupply' &&
+      market?.circulatingSupplyUnknown === true,
     escrowBalance: row.side === 'escrow' ? own?.amount : undefined,
     mintedCopy,
     priceUsd,
