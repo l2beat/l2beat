@@ -1,4 +1,5 @@
 import type { ChainRecord } from '@l2beat/database'
+import { toBatches } from '@l2beat/shared-pure'
 import {
   type Address,
   BaseError,
@@ -24,6 +25,9 @@ const MULTICALL3: Address = '0xcA11bde05977b3631167028862bE2a173976CA11'
 const MULTICALL_BATCH_BYTES = 4_096
 const RPC_BATCH_SIZE = 100
 const RPC_TIMEOUT_MS = 15_000
+// A chain's calls go out this many at a time, so its RPC sees a few requests
+// at once instead of all of them.
+const CALLS_PER_CHUNK = 200
 
 const erc4626Abi = parseAbi([
   'function asset() view returns (address)',
@@ -32,11 +36,11 @@ const erc4626Abi = parseAbi([
 
 // Reads each call on its own and leaves batching to viem: concurrent calls go
 // out as Multicall3 aggregates where Multicall3 is deployed, and as JSON-RPC
-// batches where it is not. A failed aggregate or batch fails every call in it,
-// and inside an aggregate an RPC failure looks like a revert, so a failed call
-// is read once more outside Multicall3. Only failures that are not the
-// contract's own are reported. Vault probes are not retried: most tokens are
-// not vaults.
+// batches where it is not. A failed aggregate fails every call in it, and
+// inside an aggregate an RPC failure looks like a revert, so a call that fails
+// there is read once more outside Multicall3. Only failures that are not the
+// contract's own are reported. Vault probes never fail: most tokens are not
+// vaults.
 export class ViemChainReader implements ChainReader {
   private readonly chains: Map<string, ChainRecord>
 
@@ -50,23 +54,29 @@ export class ViemChainReader implements ChainReader {
     warnings: string[],
   ): Promise<ChainCallResult[]> {
     const { client, retryClient } = await this.connect(chain)
-    const firstResults = await Promise.all(
-      calls.map((call) => readCall(client, call).catch(() => undefined)),
-    )
     let failed = 0
-    const results = await Promise.all(
-      calls.map(async (call, i) => {
-        if (firstResults[i] !== undefined || call.type === 'vaultAsset') {
-          return firstResults[i]
-        }
-        try {
-          return await readCall(retryClient, call)
-        } catch (error) {
+    const read = async (call: ChainCall): Promise<ChainCallResult> => {
+      try {
+        return await readCall(client, call)
+      } catch (error) {
+        // Without Multicall3 the first read went through `retryClient`, so its
+        // error already tells a revert from an RPC failure.
+        if (client === retryClient) {
           if (!isContractFailure(error)) failed++
           return undefined
         }
-      }),
-    )
+      }
+      try {
+        return await readCall(retryClient, call)
+      } catch (error) {
+        if (!isContractFailure(error)) failed++
+        return undefined
+      }
+    }
+    const results: ChainCallResult[] = []
+    for (const chunk of toBatches(calls, CALLS_PER_CHUNK)) {
+      results.push(...(await Promise.all(chunk.map(read))))
+    }
     if (failed > 0) {
       warnings.push(
         `Reading ${chain}: ${failed} of ${calls.length} calls failed`,
