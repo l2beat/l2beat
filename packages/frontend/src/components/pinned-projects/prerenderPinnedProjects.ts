@@ -1,10 +1,10 @@
 /**
  * Draws the nav's "Pinned" and "Recently viewed" lists from localStorage,
- * using the row templates NavYourProjects renders on the server. It runs as
+ * using the row templates NavPinnedProjects renders on the server. It runs as
  * an inline script, through `toString()`, so it must not reference anything
  * outside its own body.
  */
-export function prerenderYourProjects(
+export function prerenderPinnedProjects(
   root: HTMLElement,
   storageKey: string,
   recentRows: number,

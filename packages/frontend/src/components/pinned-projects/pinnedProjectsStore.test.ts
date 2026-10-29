@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { type SavedProject, withVisit } from './yourProjectsStore'
+import { type SavedProject, withVisit } from './pinnedProjectsStore'
 
 // withVisit is the whole of what a page visit does to the stored lists, so
 // it is tested on plain values, without localStorage.
