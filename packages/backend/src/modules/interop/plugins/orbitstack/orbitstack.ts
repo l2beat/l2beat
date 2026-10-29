@@ -15,7 +15,9 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  type TxToCapture,
 } from '../types'
+import { deriveEthDeposit } from './deriveEthDeposit'
 
 // ABI for decoding submitRetryable calldata (L2 sequencer internal call)
 const SUBMIT_RETRYABLE_SELECTOR = '0xc9f95d32'
@@ -49,6 +51,10 @@ export const parseInboxMessageDelivered = createEventParser(
 
 // L1MessageType_submitRetryableTx = 9
 const L1_MESSAGE_TYPE_SUBMIT_RETRYABLE_TX = 9
+// L1MessageType_ethDeposit = 12
+const L1_MESSAGE_TYPE_ETH_DEPOSIT = 12
+// ArbitrumDepositTxType = 0x64, normalized to decimal by toInteropTransaction
+const ARBITRUM_DEPOSIT_TX_TYPE = '100'
 
 // Offset of data.length in the packed retryable ticket message (8 * 32 bytes)
 // Fields: to, l2CallValue, deposit, maxSubmissionCost, excessFeeRefundAddress,
@@ -65,34 +71,42 @@ function getIsEthOnlyFromInbox(
     return undefined
   }
 
-  // Find InboxMessageDelivered with matching messageNum
+  const packedData = findInboxMessageData(
+    txLogs,
+    inboxAddress,
+    messageDelivered.messageIndex,
+  )
+  // For retryable tickets, we always expect to find the InboxMessageDelivered event
+  assert(
+    packedData !== undefined,
+    'InboxMessageDelivered event not found for retryable ticket',
+  )
+  assert(
+    typeof packedData === 'string' && packedData.startsWith('0x'),
+    'InboxMessageDelivered data is not a valid hex string',
+  )
+  // Extract data.length from packed retryable ticket params.
+  // Position in hex string: skip "0x" (2 chars) + offset in bytes * 2 (hex encoding)
+  const dataLengthStart = 2 + RETRYABLE_DATA_LENGTH_OFFSET * 2
+  assert(
+    packedData.length >= dataLengthStart + 64,
+    'InboxMessageDelivered packed data too short',
+  )
+
+  const dataLengthHex = packedData.slice(dataLengthStart, dataLengthStart + 64)
+  return BigInt('0x' + dataLengthHex) === 0n
+}
+
+function findInboxMessageData(
+  txLogs: LogToCapture['txLogs'],
+  inboxAddress: EthereumAddress,
+  messageIndex: bigint,
+): string | undefined {
   for (const log of txLogs) {
     if (EthereumAddress(log.address) !== inboxAddress) continue
     const parsed = parseInboxMessageDelivered(log, [inboxAddress])
-    if (parsed?.messageNum !== messageDelivered.messageIndex) continue
-
-    // Found it - extract data.length from packed retryable ticket params
-    const packedData = parsed.data
-    assert(
-      typeof packedData === 'string' && packedData.startsWith('0x'),
-      'InboxMessageDelivered data is not a valid hex string',
-    )
-    // Position in hex string: skip "0x" (2 chars) + offset in bytes * 2 (hex encoding)
-    const dataLengthStart = 2 + RETRYABLE_DATA_LENGTH_OFFSET * 2
-    assert(
-      packedData.length >= dataLengthStart + 64,
-      'InboxMessageDelivered packed data too short',
-    )
-
-    const dataLengthHex = packedData.slice(
-      dataLengthStart,
-      dataLengthStart + 64,
-    )
-    return BigInt('0x' + dataLengthHex) === 0n
+    if (parsed?.messageNum === messageIndex) return parsed.data
   }
-
-  // For retryable tickets, we always expect to find the InboxMessageDelivered event
-  assert(false, 'InboxMessageDelivered event not found for retryable ticket')
 }
 
 // L2 -> L1 (Withdrawal) event types
@@ -113,7 +127,10 @@ export const MessageDelivered = createInteropEventType<{
   chain: string
   messageNum: string
   txValue: bigint
-  isEthOnly?: boolean // true if ETH sent with no calldata (createRetryableTicket with empty data)
+  isEthOnly?: boolean // true if ETH sent with no calldata (createRetryableTicket with empty data, or depositEth)
+  // Only for depositEth messages, whose L2 tx has no logs and is matched by hash
+  l2TxHash?: string
+  depositValue?: bigint
 }>('orbitstack.MessageDelivered')
 
 export const RedeemScheduled = createInteropEventType<{
@@ -123,9 +140,17 @@ export const RedeemScheduled = createInteropEventType<{
   ethAmount?: bigint
 }>('orbitstack.RedeemScheduled')
 
+// L2 tx (ArbitrumDepositTx) crediting a depositEth message. It emits no logs.
+export const EthDepositTx = createInteropEventType<{
+  chain: string
+  l2TxHash: string
+  value: bigint
+}>('orbitstack.EthDepositTx')
+
 export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
   {
     chain: 'arbitrum',
+    chainId: 42161,
     // L2 -> L1 (Withdrawals)
     arbsys: EthereumAddress('0x0000000000000000000000000000000000000064'),
     outbox: EthereumAddress('0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840'),
@@ -203,6 +228,7 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
   },
   {
     chain: 'robinhood',
+    chainId: 4663,
     // L2 -> L1 (Withdrawals)
     arbsys: EthereumAddress('0x0000000000000000000000000000000000000064'),
     outbox: EthereumAddress('0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9'),
@@ -235,6 +261,25 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
 
 export class OrbitStackPlugin implements InteropPlugin {
   readonly name = 'orbitstack'
+
+  captureTx(input: TxToCapture) {
+    if (
+      input.tx.kind !== 'canonical' ||
+      input.tx.type !== ARBITRUM_DEPOSIT_TX_TYPE
+    ) {
+      return
+    }
+    const network = ORBITSTACK_NETWORKS.find((n) => n.chain === input.chain)
+    if (!network) return
+
+    return [
+      EthDepositTx.createTx(input, {
+        chain: network.chain,
+        l2TxHash: input.tx.hash,
+        value: input.tx.value,
+      }),
+    ]
+  }
 
   capture(input: LogToCapture) {
     if (input.tx.kind !== 'canonical') {
@@ -273,6 +318,34 @@ export class OrbitStackPlugin implements InteropPlugin {
             networkForBridge.sequencerInbox
           ) {
             return
+          }
+
+          if (messageDelivered.kind === L1_MESSAGE_TYPE_ETH_DEPOSIT) {
+            const messageData = findInboxMessageData(
+              input.txLogs,
+              networkForBridge.inbox,
+              messageDelivered.messageIndex,
+            )
+            const deposit =
+              messageData &&
+              deriveEthDeposit({
+                chainId: networkForBridge.chainId,
+                messageIndex: messageDelivered.messageIndex,
+                sender: messageDelivered.sender,
+                messageData,
+              })
+            if (deposit) {
+              return [
+                MessageDelivered.create(input, {
+                  chain: networkForBridge.chain,
+                  messageNum: messageDelivered.messageIndex.toString(),
+                  txValue: input.tx.value ?? 0n,
+                  isEthOnly: true,
+                  l2TxHash: deposit.l2TxHash,
+                  depositValue: deposit.value,
+                }),
+              ]
+            }
           }
 
           // Check if this is an ETH-only deposit by parsing InboxMessageDelivered event
@@ -342,7 +415,7 @@ export class OrbitStackPlugin implements InteropPlugin {
     }
   }
 
-  matchTypes = [OutBoxTransactionExecuted, RedeemScheduled]
+  matchTypes = [OutBoxTransactionExecuted, RedeemScheduled, EthDepositTx]
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L2 -> L1 (Withdrawal) matching
     if (OutBoxTransactionExecuted.checkType(event)) {
@@ -405,6 +478,40 @@ export class OrbitStackPlugin implements InteropPlugin {
             srcWasBurned: false,
             dstEvent: event,
             dstAmount: event.args.ethAmount,
+            dstTokenAddress: Address32.NATIVE,
+            dstWasMinted: true,
+          }),
+        )
+      }
+
+      return results
+    }
+
+    // L1 -> L2 depositEth matching
+    if (EthDepositTx.checkType(event)) {
+      const messageDelivered = db.find(MessageDelivered, {
+        chain: event.args.chain,
+        l2TxHash: event.args.l2TxHash,
+      })
+      if (!messageDelivered) return
+
+      const results: MatchResult = [
+        Result.Message('orbitstack.L1ToL2Message', {
+          app: 'orbitstack-eth',
+          srcEvent: messageDelivered,
+          dstEvent: event,
+        }),
+      ]
+
+      if (messageDelivered.args.depositValue) {
+        results.push(
+          Result.Transfer('orbitstack.L1ToL2Transfer', {
+            srcEvent: messageDelivered,
+            srcAmount: messageDelivered.args.depositValue,
+            srcTokenAddress: Address32.NATIVE,
+            srcWasBurned: false,
+            dstEvent: event,
+            dstAmount: event.args.value,
             dstTokenAddress: Address32.NATIVE,
             dstWasMinted: true,
           }),
