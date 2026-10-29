@@ -358,12 +358,12 @@ describe('getProjects', () => {
     expect(missing).toEqual([])
   })
 
-  it('liquid staking risks are set exactly on liquid staking projects', () => {
+  it('liquid staking data is set exactly on liquid staking projects', () => {
     const mismatched = projects
       .filter(
         (p) =>
           (p.defiInfo?.category === 'Liquid Staking') !==
-          (p.liquidStakingRisks !== undefined),
+          (p.liquidStaking !== undefined),
       )
       .map((p) => p.id)
     expect(mismatched).toEqual([])
