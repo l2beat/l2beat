@@ -6,6 +6,7 @@ import {
   type Names,
   type Row,
   type RowValue,
+  type SupplyChange,
   sortRows,
   sumValue,
 } from './rows'
@@ -16,6 +17,7 @@ const filters: Filters = {
   status: 'all',
   project: 'all',
   side: 'all',
+  supply: 'all',
   seenWithinDays: undefined,
   minValueUsd: 0,
   search: '',
@@ -102,6 +104,32 @@ describe(filterRows.name, () => {
     expect(
       addresses(filterRows(rows, { ...filters, search: 'WSTETH' }, names, NOW)),
     ).toEqual(['0x3'])
+  })
+
+  it('finds unexplained issuance above a share of the change and a value', () => {
+    const withChange = (address: string, change: SupplyChange) =>
+      row({ address, value: { ...value(1), supplyChange: change } })
+    const rows = [
+      withChange('0x1', supplyChange(50e6, 40e6, 40e6)),
+      withChange('0x2', supplyChange(-1e6, 2e6, 2e6)),
+      withChange('0x3', supplyChange(50e6, 5e6, 5e6)),
+      withChange('0x4', supplyChange(1e6, 1e6, 50_000)),
+      withChange('0x5', supplyChange(1e6, 1e6, undefined)),
+      withChange('0x6', supplyChange(-50e6, -40e6, -40e6)),
+      row({ address: '0x7' }),
+    ]
+
+    expect(
+      addresses(
+        filterRows(
+          rows,
+          { ...filters, supply: 'unexplainedIssuance' },
+          names,
+          NOW,
+        ),
+      ),
+    ).toEqual(['0x1', '0x2'])
+    expect(filterRows(rows, filters, names, NOW)).toHaveLength(7)
   })
 })
 
@@ -220,6 +248,20 @@ function value(
     valueUsd,
     vaultAsset: undefined,
     supplyChange: undefined,
+  }
+}
+
+function supplyChange(
+  amount: number,
+  unexplained: number,
+  unexplainedUsd: number | undefined,
+): SupplyChange {
+  return {
+    since: NOW,
+    amount,
+    netMintedByBridge: [],
+    unexplained,
+    unexplainedUsd,
   }
 }
 

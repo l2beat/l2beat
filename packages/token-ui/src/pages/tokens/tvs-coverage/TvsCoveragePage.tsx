@@ -50,6 +50,7 @@ import {
   type Snapshot,
   type Sort,
   STATUS_FILTERS,
+  SUPPLY_FILTERS,
   sortRows,
   sumValue,
 } from './rows'
@@ -76,6 +77,7 @@ const INITIAL_FILTERS: Filters = {
   status: 'missing',
   project: 'all',
   side: 'all',
+  supply: 'all',
   seenWithinDays: undefined,
   minValueUsd: 0,
   search: '',
@@ -381,6 +383,12 @@ function TvsGaps({
               })
             }
             options={SEEN_FILTERS}
+          />
+          <FilterSelect
+            label="Supply change"
+            value={filters.supply}
+            onChange={(supply) => update({ supply })}
+            options={SUPPLY_FILTERS}
           />
           <Input
             type="number"
