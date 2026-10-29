@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { EthereumDaTrackingConfig } from '@l2beat/config'
-import type { Database } from '@l2beat/database'
+import type { BlobRecord, Database } from '@l2beat/database'
 import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
 import { pluralize, UnixTime } from '@l2beat/shared-pure'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
@@ -81,22 +81,9 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
       todayStart,
     )
 
-    // Each blob is matched the way the DA indexer attributes it - with the
-    // topics of its transaction and the configs in force at its block - so
-    // projects tracked by event (e.g. Aztec proposers posting through
-    // Multicall3) are not reported. Only the unmatched ones are counted per pair.
     const unmatched = new Map<string, UnmatchedBlobPair>()
     for (const blob of blobs) {
-      const matched = matchEthereumConfigs(
-        this.$.configurations,
-        blob.blockNumber,
-        {
-          inbox: blob.to ?? '',
-          sequencer: blob.from,
-          topics: blob.topics ?? [],
-        },
-      )
-      if (matched.length > 0) continue
+      if (this.isAttributed(blob)) continue
 
       const key = `${blob.from}:${blob.to}`
       const pair = unmatched.get(key)
@@ -110,6 +97,23 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
     return [...unmatched.values()].filter(
       (pair) => pair.count >= COUNT_THRESHOLD,
     )
+  }
+
+  /**
+   * The DA indexer's match, so projects tracked by event, like Aztec posting
+   * through Multicall3, are not reported
+   */
+  private isAttributed(blob: BlobRecord): boolean {
+    const configs = matchEthereumConfigs(
+      this.$.configurations,
+      blob.blockNumber,
+      {
+        inbox: blob.to ?? '',
+        sequencer: blob.from,
+        topics: blob.topics ?? [],
+      },
+    )
+    return configs.length > 0
   }
 
   formatDiscordMessages(pairs: UnmatchedBlobPair[], to: number): string[] {

@@ -170,6 +170,26 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       expect(result).toEqual([{ from: '0xSeq', to: '0xInbox', count: 100 }])
     })
 
+    // 100 blobs in the pair, one matched: a threshold on the total would report it
+    it('applies the threshold to the unmatched blobs of a pair', async () => {
+      const blobsRepository = mockBlobsRepository([
+        ...blobs('0xProposer', '0xMulticall', 1, { topics: ['0xcheckpoint'] }),
+        ...blobs('0xProposer', '0xMulticall', 99),
+      ])
+      const indexer = createIndexer({
+        blobsRepository,
+        configurations: [
+          config({ inbox: '0xRollup', topics: ['0xCHECKPOINT'] }),
+        ],
+      })
+      const oneAm =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
+
+      const result = await indexer.getUnmatchedPairs(oneAm)
+
+      expect(result).toEqual([])
+    })
+
     it('returns empty when no pairs have 100+ blobs', async () => {
       const blobsRepository = mockBlobsRepository([
         ...blobs('0xA', '0xB', 50),
