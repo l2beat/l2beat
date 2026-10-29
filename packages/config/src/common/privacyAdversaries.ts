@@ -48,7 +48,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'networkObserver',
       label: 'Network observer',
       description:
-        'Sits between the user and the services and sees traffic only: ISPs, VPNs, Tor exits, public RPCs and relayers. Learns IP addresses, timing, fingerprints and ciphertext. Services the operator runs count as the insider.',
+        'Sits between the user and the services and sees traffic only: ISPs, VPNs, Tor exits, public RPCs and relayers. Ties requests to a user by content, session or timing: what they name, a shared IP or login, and when they arrive. Services the operator runs count as the insider.',
       examples:
         'Infura or Alchemy, a Tornado relayer, a wallet vendor selling telemetry, Google captcha or analytics in the dapp frontend.',
     },
@@ -56,7 +56,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'privilegedInsider',
       label: 'Privileged insider',
       description:
-        'Holds an operator role, custodies funds, receives keys or plaintext by design, or delivers the client: upgrade admin, custodian, view key holder, enclave operator, association set provider, hosted prover, registry, frontend host.',
+        'Holds an operator role, custodies funds, receives keys or plaintext by design, or delivers the app: upgrade admin, custodian, view key holder, enclave operator, association set provider, hosted prover, registry, frontend host.',
       examples:
         'A compliance backdoor key, a DAO with an upgrade key, a KMS committee, an ASP operator, a custodial bridge.',
     },
@@ -248,12 +248,12 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
   // Privileged insider
   /** Open clients served from a hosted frontend. */
   localBuild:
-    'Run an inspected local build of the client instead of the hosted frontend.',
+    'Run an inspected local build of the app instead of the hosted frontend.',
   /** Stealth addresses handed out by an operator. */
   operatorViewingKey: (operator: string) =>
     `${operator} holds the viewing key, so it can regenerate every address and tie its activity to the user's account.`,
   localClientSpendingKeys: (operator: string) =>
-    `Verify address derivations and transactions with an inspected local client. This protects the user's spending keys but does not remove ${operator}'s view.`,
+    `Verify address derivations and transactions with an inspected local app. This protects the user's spending keys but does not remove ${operator}'s view.`,
 
   // Future adversary
   /** Stealth addresses without onchain announcements. */

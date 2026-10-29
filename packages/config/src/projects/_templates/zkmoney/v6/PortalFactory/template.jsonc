@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PortalFactory",
+  "category": "core",
+  "description": "Deploys OxidePortals that share its TEE_REGISTRY and refund verifiers. Each portal is a separate escrow for one token and one L2 token contract, and nothing in a deployed portal refers back to the factory.",
+  "ignoreRelatives": ["REGISTRY"],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "deploy new OxidePortals for any token, L2 token contract and deposit and transaction caps. They share this factory's TeeRegistry and refund verifiers."
+        }
+      ]
+    }
+  }
+}

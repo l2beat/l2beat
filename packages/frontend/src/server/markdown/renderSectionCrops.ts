@@ -24,7 +24,7 @@ export function renderGardenCropsSection(
   return joinBlocks([
     `${gardenVerdictText(listing)} ${goodCount} of ${entries.length} rated good.`,
     ...entries.map((entry) => renderCrop(entry, level)),
-    `${link('See The Infinite Garden', GARDEN_PATH)}.`,
+    `${link('See the CROPS guide', GARDEN_PATH)}.`,
   ])
 }
 

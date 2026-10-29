@@ -1,10 +1,11 @@
 import { cva } from 'class-variance-authority'
-import { SidebarProvider } from '~/components/core/Sidebar'
+import { SidebarProvider, useSidebar } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
 import { NavSidebar } from '~/components/nav/sidebar/NavSidebar'
 import { TopBanner } from '~/components/TopBanner'
 import { useWhatsNewContext } from '~/components/whats-new/WhatsNewContext'
+import type { WhatsNewWidget } from '~/components/whats-new/WhatsNewWidget'
 import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCloseable'
 import { navGroups } from '~/consts/navGroups'
 import { navSecondaryLinks } from '~/consts/navSecondaryLinks'
@@ -60,7 +61,7 @@ const footerVariants = cva(undefined, {
     variant: {
       default: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
       wide: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
-      home: 'md:px-8 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6',
+      home: 'max-md:border-t-0 md:px-12 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6',
     },
   },
 })
@@ -70,7 +71,7 @@ const footerInnerVariants = cva(undefined, {
     variant: {
       default: 'max-w-[1142px]',
       wide: 'max-w-[1142px]',
-      home: 'max-w-none',
+      home: 'max-w-none max-lg:[&>p]:ml-0',
     },
   },
 })
@@ -102,11 +103,7 @@ export function SideNavLayout({
           logoLink="/"
           sideLinks={navSecondaryLinks}
         />
-        <NavSidebar
-          logoLink="/"
-          groups={navGroups}
-          sideLinks={navSecondaryLinks}
-        />
+        <NavSidebar logoLink="/" groups={navGroups} />
         <div
           className={cn(
             contentWrapperVariants({ variant }),
@@ -118,7 +115,7 @@ export function SideNavLayout({
           </div>
           <div className={contentAreaVariants({ variant })}>
             {children}
-            {whatsNew && <WhatsNewWidgetCloseable whatsNew={whatsNew} />}
+            {whatsNew && <FloatingWhatsNew whatsNew={whatsNew} />}
           </div>
           <Footer
             className={footerVariants({ variant })}
@@ -127,5 +124,21 @@ export function SideNavLayout({
         </div>
       </div>
     </SidebarProvider>
+  )
+}
+
+/**
+ * The announcement in a corner, below lg; from lg the nav shows it itself.
+ * Not while the mobile menu is open: the menu is a hair see-through (see
+ * Sidebar), and a bright card under it shows.
+ */
+function FloatingWhatsNew({ whatsNew }: { whatsNew: WhatsNewWidget }) {
+  const { openMobile } = useSidebar()
+  // Hidden rather than unmounted, so closing the menu does not replay its
+  // entrance.
+  return (
+    <div className={cn('lg:hidden', openMobile && 'hidden')}>
+      <WhatsNewWidgetCloseable whatsNew={whatsNew} />
+    </div>
   )
 }
