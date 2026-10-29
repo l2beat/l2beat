@@ -27,7 +27,7 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
             description="A curated list of distinguished projects that follow the CROPS values: censorship resistance, open source, privacy and security."
           />
           <main>
-            <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-6">
+            <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-5">
               <GardenTable entries={entries} />
             </div>
             <AttestationNotice attestation={attestation} />
