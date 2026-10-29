@@ -17,33 +17,33 @@ describeDatabase(HourlyActivityRepository.name, (db) => {
   })
 
   describe(HourlyActivityRepository.prototype.addMany.name, () => {
-    it('adds the counts to stored hours and returns their totals', async () => {
+    it('adds the counts to stored hours', async () => {
       await repository.addMany([record('a', START, 10, 12)])
 
-      const totals = await repository.addMany([
+      await repository.addMany([
         record('a', START, 5, 6),
         record('a', START + HOUR, 3, 3),
       ])
 
-      const expected = [
-        record('a', START, 15, 18),
-        record('a', START + HOUR, 3, 3),
-      ]
-      expect(totals).toEqualUnsorted(expected)
       expect(
         await repository.getByProjectsAndTimeRange(
           [ProjectId('a')],
           [START, START + HOUR],
         ),
-      ).toEqual(expected)
+      ).toEqual([record('a', START, 15, 18), record('a', START + HOUR, 3, 3)])
     })
 
     it('keeps uops empty for a chain without them', async () => {
       await repository.addMany([record('a', START, 10, null)])
 
-      const totals = await repository.addMany([record('a', START, 5, null)])
+      await repository.addMany([record('a', START, 5, null)])
 
-      expect(totals).toEqual([record('a', START, 15, null)])
+      expect(
+        await repository.getByProjectsAndTimeRange(
+          [ProjectId('a')],
+          [START, START],
+        ),
+      ).toEqual([record('a', START, 15, null)])
     })
   })
 

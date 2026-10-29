@@ -5,7 +5,6 @@ import range from 'lodash/range'
 import sum from 'lodash/sum'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { HOURLY_ACTIVITY_DAYS } from '../utils/hourlyActivity'
-import { getDayHourPeak } from '../utils/peaks'
 import type { HourActivityIndexerDeps } from './types'
 
 /**
@@ -63,7 +62,6 @@ export class HourActivityIndexer extends ManagedChildIndexer {
         uopsCount: sum(inDay.map((hour) => hour.uopsCount)),
         start: timestamp,
         end: timestamp + UnixTime.DAY - 1,
-        ...getDayHourPeak(timestamp, inDay),
       }
     })
     const hourlyCutoff = end - HOURLY_ACTIVITY_DAYS * UnixTime.DAY
