@@ -179,11 +179,11 @@ export function anonymitySetCoverageNote(
 export function gardenVerdictText(listing: GardenListing) {
   switch (listing) {
     case 'listed':
-      return 'Listed in The Infinite Garden.'
+      return 'Listed in the CROPS guide.'
     case 'ratedBad':
-      return 'Not listed in The Infinite Garden: a property is rated bad.'
+      return 'Not listed in the CROPS guide: a property is rated bad.'
     case 'noOssificationScore':
-      return 'Not listed in The Infinite Garden yet: it has no ossification score.'
+      return 'Not listed in the CROPS guide yet: it has no ossification score.'
   }
 }
 
