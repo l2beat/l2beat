@@ -2,11 +2,14 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { SlotActivityConfig } from '@l2beat/config'
 import type { SlotTimestampProvider } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { Indexer, RootIndexer } from '@l2beat/uif'
+import { RootIndexer } from '@l2beat/uif'
 import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
-import { waitForTarget } from '../../../tools/waitForData'
+import {
+  retryWhileNotReady,
+  useTipIfStalled,
+} from '../../../tools/dataNotReady'
 
 export class SlotTargetIndexer extends RootIndexer {
   constructor(
@@ -25,7 +28,7 @@ export class SlotTargetIndexer extends RootIndexer {
         chain: config.chainName,
       }),
       {
-        tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        tickRetryStrategy: retryWhileNotReady(),
       },
     )
   }
@@ -52,7 +55,7 @@ export class SlotTargetIndexer extends RootIndexer {
           'SlotTargetIndexer should only be used for slot activity',
         )
 
-        const slotNumber = await waitForTarget(
+        const slotNumber = await useTipIfStalled(
           () =>
             this.slotTimestampProvider.getSlotNumberAtOrBefore(
               timestamp,

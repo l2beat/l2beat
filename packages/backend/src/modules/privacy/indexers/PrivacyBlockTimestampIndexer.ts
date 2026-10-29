@@ -3,8 +3,11 @@ import type { Database } from '@l2beat/database'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { createPrivacyConfigurationId } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { Indexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
+import {
+  retryWhileNotReady,
+  useTipIfStalled,
+} from '../../../tools/dataNotReady'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -13,7 +16,6 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { waitForTarget } from '../../../tools/waitForData'
 import type { PrivacyBlockTimestampConfig } from '../types'
 
 interface PrivacyBlockTimestampIndexerDeps
@@ -45,7 +47,7 @@ export class PrivacyBlockTimestampIndexer extends ManagedMultiIndexer<PrivacyBlo
           tag: $.configurations[0].properties.chain,
           chain: $.configurations[0].properties.chain,
         },
-        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        updateRetryStrategy: retryWhileNotReady(),
       },
       logger,
     )
@@ -74,7 +76,7 @@ export class PrivacyBlockTimestampIndexer extends ManagedMultiIndexer<PrivacyBlo
       'privacy.blockTimestamp',
       { chain: configurations[0].properties.chain },
       () =>
-        waitForTarget(
+        useTipIfStalled(
           () =>
             this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
               timestamp,

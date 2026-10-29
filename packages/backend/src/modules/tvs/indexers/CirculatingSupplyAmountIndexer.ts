@@ -1,9 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { CirculatingSupplyAmountFormula } from '@l2beat/config'
 import type { TvsAmountRecord } from '@l2beat/database'
-import type { CirculatingSupplyProvider } from '@l2beat/shared'
+import {
+  type CirculatingSupplyProvider,
+  DataNotReadyError,
+} from '@l2beat/shared'
 import { CoingeckoId } from '@l2beat/shared-pure'
-import { Indexer } from '@l2beat/uif'
+import {
+  keepPublishedHours,
+  retryWhileNotReady,
+} from '../../../tools/dataNotReady'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -12,11 +18,6 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import {
-  allOrCancel,
-  keepPublishedHours,
-  waitForPrices,
-} from '../../../tools/waitForData'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 export interface CirculatingSupplyAmountIndexerDeps
@@ -37,7 +38,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
       {
         ...$,
         name: INDEXER_NAMES.TVS_CIRCULATING_SUPPLY,
-        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        updateRetryStrategy: retryWhileNotReady(),
       },
       logger,
     )
@@ -65,22 +66,14 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
       configurations: configurations.length,
     })
 
-    const results = await allOrCancel(
-      configurations,
-      async (configuration, signal) => {
+    const results = await Promise.all(
+      configurations.map(async (configuration) => {
         try {
-          const supplies = await waitForPrices(
-            () =>
-              this.$.circulatingSupplyProvider.getCirculatingSupplies(
-                CoingeckoId(configuration.properties.apiId),
-                { from: from, to: adjustedTo },
-              ),
-            {
-              logger: this.logger,
-              priceId: configuration.properties.apiId,
-              signal,
-            },
-          )
+          const supplies =
+            await this.$.circulatingSupplyProvider.getCirculatingSupplies(
+              CoingeckoId(configuration.properties.apiId),
+              { from: from, to: adjustedTo },
+            )
 
           // defense in depth: a non-finite value would crash the BigInt
           // conversion below and halt the whole indexer
@@ -126,6 +119,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
             )
             return { records: [], lastHour: adjustedTo }
           }
+          if (error instanceof DataNotReadyError) throw error
           this.logger.error(
             `Error fetching circulating supply for ${configuration.properties.apiId}`,
             {
@@ -136,7 +130,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
 
           throw error
         }
-      },
+      }),
     )
 
     const { records, syncedTo } = keepPublishedHours(

@@ -2,7 +2,10 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { Indexer } from '@l2beat/uif'
+import {
+  keepPublishedHours,
+  retryWhileNotReady,
+} from '../../../tools/dataNotReady'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -11,11 +14,6 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import {
-  allOrCancel,
-  keepPublishedHours,
-  waitForPrices,
-} from '../../../tools/waitForData'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { PriceConfig } from '../types'
 
@@ -34,7 +32,7 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       {
         ...$,
         name: INDEXER_NAMES.TVS_PRICE,
-        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        updateRetryStrategy: retryWhileNotReady(),
       },
       logger,
     )
@@ -62,22 +60,13 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       configurations: configurations.length,
     })
 
-    const results = await allOrCancel(
-      configurations,
-      async (configuration, signal) => {
+    const results = await Promise.all(
+      configurations.map(async (configuration) => {
         try {
-          const prices = await waitForPrices(
-            () =>
-              this.$.priceProvider.getUsdPriceHistoryHourly(
-                CoingeckoId(configuration.properties.priceId),
-                UnixTime(from),
-                adjustedTo,
-              ),
-            {
-              logger: this.logger,
-              priceId: configuration.properties.priceId,
-              signal,
-            },
+          const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
+            CoingeckoId(configuration.properties.priceId),
+            UnixTime(from),
+            adjustedTo,
           )
           const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
             configurationId: configuration.id,
@@ -111,7 +100,7 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
 
           throw error
         }
-      },
+      }),
     )
 
     const { records, syncedTo } = keepPublishedHours(

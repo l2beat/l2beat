@@ -1,8 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { Indexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
+import {
+  retryWhileNotReady,
+  useTipIfStalled,
+} from '../../../tools/dataNotReady'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -11,7 +14,6 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { waitForTarget } from '../../../tools/waitForData'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { BlockTimestampConfig } from '../types'
 
@@ -44,7 +46,7 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
           tag: $.configurations[0].properties.chainName,
           chain: $.configurations[0].properties.chainName,
         },
-        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        updateRetryStrategy: retryWhileNotReady(),
       },
       logger,
     )
@@ -73,7 +75,7 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
           timestamp: timestamp,
         })
 
-        const blockNumber = await waitForTarget(
+        const blockNumber = await useTipIfStalled(
           () =>
             this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
               timestamp,

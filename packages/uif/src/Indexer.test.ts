@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { install } from '@sinonjs/fake-timers'
-import { expect, mockFn } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 
 import { Indexer } from './Indexer'
 import { ChildIndexer } from './indexers/ChildIndexer'
 import { RootIndexer } from './indexers/RootIndexer'
-import type { RetryStrategy } from './Retries'
+import { Retries, type RetryStrategy } from './Retries'
 import type { IndexerAction } from './reducer/types/IndexerAction'
 
 describe(Indexer.name, () => {
@@ -199,6 +199,51 @@ describe(Indexer.name, () => {
       await child.finishUpdate(1)
       expect(updateClear).toHaveBeenCalledTimes(1)
       expect(child.getState().status).toEqual('idle')
+      clock.uninstall()
+    })
+
+    it('logs an expected wait as info and retries at its interval', async () => {
+      const clock = install({ shouldAdvanceTime: true, advanceTimeDelta: 1 })
+      const notReady = new Error('not ready')
+      const root = new TestRootIndexer(0, '', {
+        tickRetryStrategy: Retries.withExpectedWait({
+          isExpected: (error) => error === notReady,
+          intervalMs: 1000,
+          otherwise: Retries.exponentialBackOff({
+            initialTimeoutMs: 1000,
+            maxAttempts: 1,
+          }),
+        }),
+      })
+      const logger = mockObject<Logger>({
+        info: mockFn().returns(undefined),
+        error: mockFn().returns(undefined),
+        critical: mockFn().returns(undefined),
+        debug: mockFn().returns(undefined),
+        trace: mockFn().returns(undefined),
+      })
+      Reflect.set(root, 'logger', logger)
+
+      await root.start()
+
+      await root.doTick(1)
+      await root.finishTick(notReady)
+      await clock.tickAsync(1000)
+      await root.finishTick(notReady)
+      await clock.tickAsync(1000)
+      expect(root.getState().status).toEqual('ticking')
+      await root.finishTick(1)
+
+      expect(logger.info).toHaveBeenCalledWith('Data not ready, waiting', {
+        error: notReady,
+        attempt: 2,
+      })
+      expect(logger.info).toHaveBeenCalledWith('Data ready after wait', {
+        attempts: 2,
+      })
+      expect(logger.error).not.toHaveBeenCalled()
+      expect(logger.critical).not.toHaveBeenCalled()
+
       clock.uninstall()
     })
 

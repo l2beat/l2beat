@@ -4,7 +4,6 @@ import { DataNotReadyError, type PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
-import { withFakeTimers } from '../../../test/withFakeTimers'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
@@ -183,14 +182,14 @@ describe(TvsPriceIndexer.name, () => {
       )
     })
 
-    it('waits while CoinGecko has not published the first hour', async () => {
+    it('throws while CoinGecko has not published the first hour', async () => {
       const from = UnixTime.HOUR
 
       const priceProvider = mockObject<PriceProvider>({
         getAdjustedTo: mockFn().returnsOnce(from),
-        getUsdPriceHistoryHourly: mockFn()
-          .rejectsWithOnce(new DataNotReadyError('Not published'))
-          .resolvesToOnce(points(from)),
+        getUsdPriceHistoryHourly: mockFn().rejectsWithOnce(
+          new DataNotReadyError('Not published'),
+        ),
       })
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
         upsertMany: mockFn().returnsOnce(undefined),
@@ -208,15 +207,10 @@ describe(TvsPriceIndexer.name, () => {
         Logger.SILENT,
       )
 
-      const updateFn = await withFakeTimers(() =>
+      await expect(
         indexer.multiUpdate(from, from, [config('config-1', 'ethereum')]),
-      )
-
-      expect(await updateFn()).toEqual(from)
-      expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenCalledTimes(2)
-      expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([
-        record('config-1', 'ethereum', from),
-      ])
+      ).toBeRejectedWith(DataNotReadyError)
+      expect(tvsPriceRepository.upsertMany).not.toHaveBeenCalled()
     })
 
     it('returns to value if no timestamps to sync', async () => {
