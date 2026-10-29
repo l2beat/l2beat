@@ -11,9 +11,11 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
+import { LIQUID_STAKING_METRICS } from '../liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquidStakingRisks'
 
 const columnHelper = createColumnHelper<LiquidStakingEntry>()
@@ -66,6 +68,22 @@ const columns = [
       tooltip: 'Total USD value of assets locked in the protocol.',
     },
   }),
+  ...LIQUID_STAKING_METRICS.map(({ key, title, tooltip, format }) =>
+    columnHelper.accessor((entry) => entry[key]?.value, {
+      id: key,
+      header: title,
+      cell: (ctx) => {
+        const value = ctx.getValue()
+        return value === undefined ? (
+          <NoDataBadge />
+        ) : (
+          <span className="font-medium text-sm">{format(value)}</span>
+        )
+      },
+      sortUndefined: 'last',
+      meta: { align: 'right', tooltip },
+    }),
+  ),
   ...LIQUID_STAKING_RISKS.map(({ key, title, tooltip }) =>
     columnHelper.accessor((entry) => entry.risks[key], {
       id: key,
@@ -78,6 +96,11 @@ const columns = [
     }),
   ),
 ]
+
+/** The chart values start hidden; the column controls show them. */
+const HIDDEN_METRICS = Object.fromEntries(
+  LIQUID_STAKING_METRICS.map(({ key }) => [key, false]),
+)
 
 const initialSorting: SortingState = [{ id: 'totalValueLockedUsd', desc: true }]
 
@@ -99,11 +122,13 @@ export function LiquidStakingTable({
         left: ['#', 'logo'],
       },
     },
+    initialState: { columnVisibility: HIDDEN_METRICS },
     onSortingChange: setSorting,
   })
 
   return (
     <div className="mt-4">
+      <ColumnsControls columns={table.getAllColumns()} />
       <BasicTable table={table} />
     </div>
   )

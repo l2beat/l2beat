@@ -4,6 +4,7 @@ import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
 import {
   getLiquidStakingCharts,
   type LiquidStakingChartPoint,
+  type LiquidStakingCharts,
 } from './getLiquidStakingCharts'
 
 export interface LiquidStakingSummary {
@@ -27,12 +28,26 @@ export async function getLiquidStakingSummary(
     getTotalValueLockedByProject([project]),
     getLiquidStakingCharts({ range: optionToRange('30d') }),
   ])
+  return buildLiquidStakingSummary(
+    project.id,
+    risks,
+    tvlByProject.get(project.id),
+    charts,
+  )
+}
 
+/** A project's risks and TVL, with its latest values from the charts. */
+export function buildLiquidStakingSummary(
+  projectId: string,
+  risks: ProjectLiquidStakingRisks,
+  totalValueLockedUsd: number | undefined,
+  charts: LiquidStakingCharts,
+): LiquidStakingSummary {
   return {
     risks,
-    totalValueLockedUsd: tvlByProject.get(project.id),
-    yield: getLatestValue(charts.yield, project.id),
-    costOfExit: getLatestValue(charts.costOfExit, project.id),
+    totalValueLockedUsd,
+    yield: getLatestValue(charts.yield, projectId),
+    costOfExit: getLatestValue(charts.costOfExit, projectId),
   }
 }
 
