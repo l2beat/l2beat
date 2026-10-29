@@ -87,12 +87,18 @@ describeDatabase(HourlyActivityRepository.name, (db) => {
     },
   )
 
-  describe(HourlyActivityRepository.prototype.checkIfExists.name, () => {
-    it('is true only for a project with hours', async () => {
-      await repository.addMany([record('a', START, 1, 1)])
+  describe(HourlyActivityRepository.prototype.getFirstTimestamp.name, () => {
+    it("returns the project's first hour, or nothing without hours", async () => {
+      await repository.addMany([
+        record('a', START + HOUR, 2, 2),
+        record('a', START, 1, 1),
+        record('b', START - HOUR, 3, 3),
+      ])
 
-      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(true)
-      expect(await repository.checkIfExists(ProjectId('b'))).toEqual(false)
+      expect(await repository.getFirstTimestamp(ProjectId('a'))).toEqual(START)
+      expect(await repository.getFirstTimestamp(ProjectId('c'))).toEqual(
+        undefined,
+      )
     })
   })
 

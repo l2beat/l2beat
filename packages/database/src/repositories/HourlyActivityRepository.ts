@@ -77,14 +77,15 @@ export class HourlyActivityRepository extends BaseRepository {
   }
 
   /** Projects indexed per day have no hours */
-  async checkIfExists(projectId: ProjectId): Promise<boolean> {
-    const row = await this.db
+  async getFirstTimestamp(projectId: ProjectId): Promise<UnixTime | undefined> {
+    const result = await this.db
       .selectFrom('HourlyActivity')
-      .select('projectId')
+      .select((eb) => eb.fn.min('timestamp').as('min_timestamp'))
       .where('projectId', '=', projectId.toString())
-      .limit(1)
       .executeTakeFirst()
-    return row !== undefined
+    return result?.min_timestamp
+      ? UnixTime.fromDate(result.min_timestamp)
+      : undefined
   }
 
   async deleteByProjectIdFrom(

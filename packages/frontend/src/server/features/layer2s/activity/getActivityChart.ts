@@ -70,9 +70,9 @@ export async function getActivityChart({
   const projectId = projects.length === 2 ? projects[0] : undefined
   const adjustedRange = await getFullySyncedActivityRange(range)
 
-  const [hasHourly, maxCounts, activityTotals, syncInfo] = await Promise.all([
+  const [firstHourly, maxCounts, activityTotals, syncInfo] = await Promise.all([
     hourly && projectId
-      ? db.hourlyActivity.checkIfExists(projectId)
+      ? db.hourlyActivity.getFirstTimestamp(projectId)
       : undefined,
     projectId ? db.activity.getMaxCountsForProject(projectId) : undefined,
     projectId
@@ -81,6 +81,7 @@ export async function getActivityChart({
     // A single project is synced until the last day we have data for
     projectId ? getActivitySyncInfo(projectId, adjustedRange[1]) : undefined,
   ])
+  const hasHourly = hourly && projectId ? firstHourly !== undefined : undefined
   const resolution =
     hourly && hasHourly !== false ? getActivityResolution(range) : 'day'
 
@@ -167,10 +168,12 @@ export async function getActivityChart({
     projectId ? { waitFor: [projectId, ProjectId.ETHEREUM] } : undefined,
   )
   const lastHour = window.end
-  // Hourly data can start after the range does
-  const firstHour = hourlyEntries.find((e) =>
-    projectId ? e.projectId === projectId : e.projectId !== ProjectId.ETHEREUM,
-  )?.timestamp
+  // Hourly data can start after the range does. A project's own chart starts
+  // with its hours, even if it had no blocks in the first of them
+  const firstHour =
+    firstHourly !== undefined
+      ? Math.max(window.start, firstHourly)
+      : hourlyEntries.find((e) => e.projectId !== ProjectId.ETHEREUM)?.timestamp
   return {
     data:
       firstHour === undefined
