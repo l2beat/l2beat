@@ -25,7 +25,7 @@ export interface OssificationSeriesProject {
 }
 
 /**
- * Canonical TVS, or DefiLlama TVL for DeFi projects tracked there, from the
+ * TVS, or DefiLlama TVL for DeFi projects tracked there, from the
  * last sample at or before `since` (so the value at `since` can be
  * interpolated) to the latest synced one. Null when the project has neither.
  */
@@ -80,13 +80,13 @@ export async function getOssificationSeries(
       excludeRwaRestrictedTokens: true,
     },
   )
-  // Canonical only: unlike TVS elsewhere, customCanonical (canonical with
-  // additional trust assumptions) is deliberately left out.
+  // Every source: a bug in the L2 program pinned on L1 reaches native and
+  // external tokens too, not only the escrows.
   return {
     source,
     points: rows.map((row) => ({
       timestamp: row.timestamp,
-      value: row.canonical,
+      value: row.value,
     })),
   }
 }

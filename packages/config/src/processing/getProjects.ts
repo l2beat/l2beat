@@ -16,6 +16,7 @@ import {
   formatChallengePeriod,
   formatExecutionDelay,
 } from '../common/formatDelays'
+import { REASON_FOR_BEING_OTHER } from '../common/reasonsForBeingOther'
 import { resolveGarden } from '../crops/resolveCrops'
 import { loadAuditCoverage } from '../discovery/loadAuditCoverage'
 import { loadDiscoveryUpdates } from '../discovery/loadDiscoveryUpdates'
@@ -238,7 +239,9 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       p.type === 'layer2' ? p.config.trackedTxs : undefined,
     ),
     chainConfig: p.chainConfig,
-    ossificationHistory: p.ossificationHistory,
+    // Without working proofs the proposer decides the state, so the age of
+    // the code says nothing about the safety of funds.
+    ossificationHistory: hasNoProofs(p) ? undefined : p.ossificationHistory,
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
     ecosystemInfo: p.ecosystemInfo,
@@ -311,6 +314,14 @@ function getProcessedRiskView(
       secondLine,
     },
   }
+}
+
+function hasNoProofs(p: ScalingProject): boolean {
+  return (
+    p.reasonsForBeingOther?.some(
+      (r) => r.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
+    ) ?? false
+  )
 }
 
 function getLivenessInfo(p: ScalingProject): ProjectLivenessInfo | undefined {
