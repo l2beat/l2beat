@@ -5,9 +5,14 @@ import { router } from '../../trpc'
 
 export function tvsCoverageRouter(service: TvsCoverageService | undefined) {
   return router({
-    get: readOnlyProcedure.query(() => enabled(service).get()),
-    refresh: readWriteProcedure.mutation(async () => {
-      await enabled(service).refresh()
+    get: readOnlyProcedure.query(() => {
+      const coverage = enabled(service)
+      return { snapshot: coverage.get(), building: coverage.isBuilding() }
+    }),
+    // A build can take minutes, so this starts one and returns. The page polls
+    // `get` while `building` is true.
+    refresh: readWriteProcedure.mutation(() => {
+      enabled(service).refreshInBackground()
     }),
   })
 }

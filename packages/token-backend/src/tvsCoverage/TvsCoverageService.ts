@@ -36,8 +36,13 @@ export class TvsCoverageService {
     this.intervalHandle = undefined
   }
 
-  async get(): Promise<TvsCoverageSnapshot> {
-    return this.latest ?? (await this.refresh())
+  // Reads never build: until the first build succeeds there is no snapshot.
+  get(): TvsCoverageSnapshot | undefined {
+    return this.latest
+  }
+
+  isBuilding(): boolean {
+    return this.building !== undefined
   }
 
   // Concurrent callers share one build, and a failed build keeps the
@@ -55,7 +60,7 @@ export class TvsCoverageService {
     return this.building
   }
 
-  private refreshInBackground() {
+  refreshInBackground() {
     this.refresh().catch((error: unknown) => {
       this.logger.error('Snapshot build failed', error)
     })
