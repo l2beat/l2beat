@@ -83,6 +83,8 @@
   --negative: #d70000;
   --brand: #9621bf;
   --selection-brand-share: 30%;
+  /* The nav's current page. */
+  --nav-active: var(--brand);
   --background: #e6e7ec;
   --surface-primary: #fafafa;
   --surface-primary-hover: #e6ecef;
@@ -490,6 +492,7 @@
   --color-warning: var(--warning);
   --color-negative: var(--negative);
   --color-brand: var(--brand);
+  --color-nav-active: var(--nav-active);
   --color-background: var(--background);
   --color-surface-primary: var(--surface-primary);
   --color-surface-primary-hover: var(--surface-primary-hover);
