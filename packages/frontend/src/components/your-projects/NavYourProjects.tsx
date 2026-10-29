@@ -214,14 +214,16 @@ function ProjectRow({
 /**
  * Pinning moves the row to the other list and unmounts the clicked button,
  * so a keyboard user would land back at the top of the page. Focus follows
- * the project to its new row; an unpinned project no longer in the recent
- * ones has none.
+ * the project to its new row. An unpinned project past the recent rows
+ * shown has none, so focus goes to the first row left.
  */
 function focusProjectButton(lists: Element | null, href: string) {
   requestAnimationFrame(() => {
-    lists
-      ?.querySelector<HTMLElement>(`button[data-href="${CSS.escape(href)}"]`)
-      ?.focus()
+    const button =
+      lists?.querySelector<HTMLElement>(
+        `button[data-href="${CSS.escape(href)}"]`,
+      ) ?? lists?.querySelector<HTMLElement>('button[data-href]')
+    button?.focus()
   })
 }
 
