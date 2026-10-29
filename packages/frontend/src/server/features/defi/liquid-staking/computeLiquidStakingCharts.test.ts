@@ -7,7 +7,7 @@ import { expect } from 'earl'
 import {
   computeLiquidStakingCharts,
   getQueueWaits,
-  type LiquidStakingChartProject,
+  type LiquidStakingChartToken,
 } from './computeLiquidStakingCharts'
 
 const DAY = UnixTime.DAY
@@ -137,7 +137,7 @@ describe(getQueueWaits.name, () => {
 })
 
 function compute(
-  projects: LiquidStakingChartProject[],
+  projects: LiquidStakingChartToken[],
   snapshots: LiquidStakingSnapshotRecord[],
   network: EthereumStakingDailyRecord[] = [],
   prices = new Map<string, Map<number, number>>(),
@@ -152,8 +152,8 @@ function compute(
 }
 
 function project(
-  type: LiquidStakingChartProject['type'],
-): LiquidStakingChartProject {
+  type: LiquidStakingChartToken['type'],
+): LiquidStakingChartToken {
   const priceIds = {
     lido: 'wrapped-steth',
     rocketpool: 'rocket-pool-eth',

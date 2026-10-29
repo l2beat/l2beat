@@ -10,22 +10,33 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../tools/uif/ManagedChildIndexer'
 import {
-  type ExecutionDayRpc,
+  type DepositsRpc,
+  ELECTRA_SLOT,
   readCreditedDeposits,
-  readExecutionDay,
-} from './ethereumExecutionDay'
+} from './creditedDeposits'
+import { type ExecutionDayRpc, readExecutionDay } from './ethereumExecutionDay'
 
-/** First slot of Electra (epoch 364032), which added the pending deposit queue. */
-const ELECTRA_SLOT = 364032 * 32
+/**
+ * Validators that earn nothing: those waiting to enter, and those exited but
+ * not yet withdrawn. Withdrawn ones hold nothing, and listing them would be
+ * most of the state.
+ */
+const INACTIVE_STATUSES = [
+  'pending_initialized',
+  'pending_queued',
+  'exited_unslashed',
+  'exited_slashed',
+  'withdrawal_possible',
+]
 
 interface EthereumStakingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
-  rpc: ExecutionDayRpc
+  rpc: ExecutionDayRpc & DepositsRpc
   beacon: Pick<
     BeaconChainClient,
     | 'getTotalBalance'
-    | 'getInactiveBalance'
+    | 'getValidatorsInfo'
     | 'getPendingDepositsAmount'
     | 'getDepositIndex'
   >
@@ -86,7 +97,9 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
       nextDayBlock,
     ] = await Promise.all([
       this.$.beacon.getTotalBalance(slot),
-      this.$.beacon.getInactiveBalance(slot),
+      this.$.beacon
+        .getValidatorsInfo({ stateId: slot, status: INACTIVE_STATUSES })
+        .then((validators) => validators.totalStake),
       slot >= ELECTRA_SLOT
         ? this.$.beacon.getPendingDepositsAmount(slot)
         : Promise.resolve(null),
@@ -97,12 +110,14 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
       this.firstBlockAtOrAfter(UnixTime(day + UnixTime.DAY)),
     ])
     const toBlock = nextDayBlock - 1
-    const execution = await readExecutionDay(this.$.rpc, fromBlock, toBlock)
-    const deposits = await readCreditedDeposits(
-      this.$.rpc,
-      { previousDayFrom: previousDayBlock, from: fromBlock, to: toBlock },
-      { start: depositIndex, end: nextDepositIndex },
-    )
+    const [execution, deposits] = await Promise.all([
+      readExecutionDay(this.$.rpc, fromBlock, toBlock),
+      readCreditedDeposits(
+        this.$.rpc,
+        { previousDayFrom: previousDayBlock, from: fromBlock, to: toBlock },
+        { start: depositIndex, end: nextDepositIndex },
+      ),
+    ])
 
     return {
       timestamp: day,

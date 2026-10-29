@@ -14,7 +14,7 @@ export const YIELD_WINDOW_DAYS = 30
 /** The market discount is a median over this many days, to smooth out spikes. */
 export const DISCOUNT_WINDOW_DAYS = 7
 
-export interface LiquidStakingChartProject {
+export interface LiquidStakingChartToken {
   id: string
   type: ProjectLiquidStakingContracts['type']
   priceId: string
@@ -23,7 +23,7 @@ export interface LiquidStakingChartProject {
 export interface LiquidStakingChartInputs {
   /** The chart's days, oldest first. */
   days: UnixTime[]
-  projects: LiquidStakingChartProject[]
+  projects: LiquidStakingChartToken[]
   /** Hourly, oldest first, from YIELD_WINDOW_DAYS before the first day. */
   snapshots: LiquidStakingSnapshotRecord[]
   /** Daily, oldest first, from YIELD_WINDOW_DAYS before the first day. */
@@ -76,7 +76,7 @@ class ProjectSeries {
   private readonly queueWaitDays: Map<number, number>
 
   constructor(
-    private readonly project: LiquidStakingChartProject,
+    private readonly project: LiquidStakingChartToken,
     snapshots: LiquidStakingSnapshotRecord[],
     private readonly prices: Map<string, Map<number, number>>,
   ) {
@@ -256,8 +256,8 @@ class NetworkSeries {
 }
 
 function perProject(
-  projects: LiquidStakingChartProject[],
-  value: (project: LiquidStakingChartProject) => number | null | undefined,
+  projects: LiquidStakingChartToken[],
+  value: (project: LiquidStakingChartToken) => number | null | undefined,
 ): Record<string, number | null> {
   return Object.fromEntries(projects.map((p) => [p.id, value(p) ?? null]))
 }

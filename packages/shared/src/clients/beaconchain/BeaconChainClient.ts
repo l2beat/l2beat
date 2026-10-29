@@ -55,13 +55,13 @@ export class BeaconChainClient extends ClientCore {
       | 'genesis'
       | 'finalized'
       | 'justified'
-      | 'slot'
+      | number
       | `0x${string}`
     status?: string[]
   }) {
-    const endpoint = `eth/v1/beacon/states/${stateId}/validators?${new URLSearchParams(
-      status ? { status: status.join(',') } : {},
-    ).toString()}`
+    // Commas unencoded, as the beacon API lists several statuses.
+    const query = status ? `?status=${status.join(',')}` : ''
+    const endpoint = `eth/v1/beacon/states/${stateId}/validators${query}`
 
     const { sum, count } = await this.sumStreamed(
       endpoint,
@@ -79,26 +79,6 @@ export class BeaconChainClient extends ClientCore {
     const { sum } = await this.sumStreamed(
       `eth/v1/beacon/states/${slot}/validator_balances`,
       /^data\.\d+\.balance/,
-    )
-    return sum * 10n ** 9n
-  }
-
-  /**
-   * Balance of the validators that earn nothing: those waiting to enter, and
-   * those exited but not yet withdrawn, in wei. Withdrawn ones hold nothing,
-   * and listing them would be most of the state.
-   */
-  async getInactiveBalance(slot: number): Promise<bigint> {
-    const status = [
-      'pending_initialized',
-      'pending_queued',
-      'exited_unslashed',
-      'exited_slashed',
-      'withdrawal_possible',
-    ].join(',')
-    const { sum } = await this.sumStreamed(
-      `eth/v1/beacon/states/${slot}/validators?status=${status}`,
-      /^data\.\d+\.balance$/,
     )
     return sum * 10n ** 9n
   }

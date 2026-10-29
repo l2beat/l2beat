@@ -79,7 +79,10 @@ function createIndexer() {
   })
   const beacon = {
     getTotalBalance: mockFn().resolvesTo(100n),
-    getInactiveBalance: mockFn().resolvesTo(10n),
+    getValidatorsInfo: mockFn().resolvesTo({
+      totalStake: 10n,
+      numberOfValidators: 1,
+    }),
     getDepositIndex: mockFn().resolvesTo(5),
     getPendingDepositsAmount: mockFn().resolvesTo(7n),
   }
