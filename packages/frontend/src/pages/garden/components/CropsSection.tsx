@@ -74,7 +74,7 @@ function CropCard({
       <div className="mt-5 grid gap-6 md:grid-cols-2 md:gap-8">
         <div>
           <h4 className="font-semibold text-paragraph-14 text-secondary">
-            The minimum
+            What we look for
           </h4>
           <ul className="mt-3 flex flex-col gap-2.5">
             {criteria.minimums.map((minimum) => (
@@ -92,7 +92,7 @@ function CropCard({
         </div>
         <div>
           <h4 className="font-semibold text-paragraph-14 text-secondary">
-            What pulls it down
+            What lowers the rating
           </h4>
           <ul className="mt-3 flex flex-col gap-2.5">
             {criteria.pullsDown.map((pullDown) => (
@@ -122,14 +122,14 @@ function Minimum({
   text: string
   reference: CropCriteria['reference']
 }) {
-  const [before, after] = text.split(REFERENCE_SLOT)
+  const [before = '', after] = text.split(REFERENCE_SLOT)
   if (after === undefined || !reference) {
-    return before
+    return <Emphasis text={before} />
   }
   const isExternal = reference.href.startsWith('http')
   return (
     <>
-      {before}
+      <Emphasis text={before} />
       <a
         href={reference.href}
         {...(isExternal && { target: '_blank', rel: 'noreferrer noopener' })}
@@ -140,8 +140,21 @@ function Minimum({
           <CustomLinkIcon className="ml-1 inline-block fill-current align-baseline" />
         )}
       </a>
-      {after}
+      <Emphasis text={after} />
     </>
+  )
+}
+
+/** Renders `**bold**` spans, e.g. a lead-in like "**Passes the walkaway test:**". */
+function Emphasis({ text }: { text: string }) {
+  return text.split(/\*\*(.+?)\*\*/).map((part, i) =>
+    i % 2 === 1 ? (
+      <strong key={i} className="font-semibold">
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
   )
 }
 
