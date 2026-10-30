@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x7bb1cb537b36c7f49a9abd32f53be741fcd04718
+
+# Diff at Tue, 27 Oct 2026 16:27:24 GMT:
+
+- id: 64bb23df
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1792751305
+- current timestamp: 1792751305
+
+## Description
+
+Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792751305 (main branch discovery), not current.
+
+```diff
+    contract L1NativeTokenVault (eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) [shared-zk-stack/L1NativeTokenVault] {
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+      sourceHashes.1:
+-        "0x24e6f0744dc55f40116debb6c11e8bdd7821fdb1869630b1f31918c8420b7423"
++        "0x66664a6173e9232a63e193befac5f89376d562042470a8a57605ef98b8550fa7"
+    }
+```
+
 Generated with discovered.json: 0xab06571f493c120aa3ace82b9451c3d799fe6278
 
 # Diff at Fri, 23 Oct 2026 10:29:35 GMT:

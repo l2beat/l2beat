@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x471e8f1166827c752149c7365b67b0c4c9ab133d
+
+# Diff at Tue, 27 Oct 2026 16:42:49 GMT:
+
+- id: 3a0d1650
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99ab191ff082c75a90c4be7dca6b21148b8577ad block: 1772614819
+- current timestamp: 1772614819
+
+## Description
+
+Flattener now keeps contracts whose bytecode is read with type(C).creationCode instead of turning them into interfaces. Only source hashes and flat files change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772614819 (main branch discovery), not current.
+
+```diff
+    contract AxelarGatewayProxyMultisig (eth:0x4F4495243837681061C4743b74B3eEdf548D56A5) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x59e958a0783ea169acb1f9451299a6eeecdfa1db1257cafe5c948a919117c2fc"
++        "0x822a5c606e9714df1be7958cc596ec9a0032cdf3678cb174f99339501ec7889e"
+    }
+```
+
 Generated with discovered.json: 0x592b8afa42693c331b3b14873425aafc148e6bb4
 
 # Diff at Fri, 16 Oct 2026 05:36:50 GMT:
