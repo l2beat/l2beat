@@ -7,9 +7,7 @@ import {
 } from '../homeStyles'
 import { HomeCard } from './HomeCard'
 
-// TODO: point at the mandate once it is published; About Us, with our
-// mission, stands in until then.
-const MANDATE_HREF = '/about-us'
+const MANDATE_HREF = '/mandate'
 
 /**
  * Beside CROPS from md; on phones between Ethereum and Interop.
