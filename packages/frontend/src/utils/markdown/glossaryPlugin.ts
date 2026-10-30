@@ -30,7 +30,7 @@ export function linkGlossaryTerms(
     const ignoredOffsets = getIgnoredAndLinkOffsets(sourceText)
     const isWithinIgnoredOffset = (position: number) =>
       ignoredOffsets.some(
-        (link) => position >= link.start && position <= link.end,
+        (link) => position >= link.start && position < link.end,
       )
     const isIgnored = (start: number, end: number) =>
       sourceText.at(start - 1) === ignoreDelimiter &&
@@ -203,8 +203,9 @@ function escapeRegExp(string: string) {
 function getIgnoredAndLinkOffsets(text: string) {
   const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g
   const backtickPattern = /`([^`]*)`/g
-  // Autolinks (<https://…>) and inline HTML tags
-  const angleBracketPattern = /<[^\s<>][^<>]*>/g
+  // Autolinks (<https://…>) and inline HTML tags, whose quoted attributes may
+  // contain >
+  const angleBracketPattern = /<[^\s<>](?:[^<>"']|"[^"]*"|'[^']*')*>/g
 
   return [linkPattern, backtickPattern, angleBracketPattern].flatMap(
     (pattern) =>

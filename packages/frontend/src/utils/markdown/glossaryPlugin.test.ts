@@ -77,6 +77,21 @@ describe(linkGlossaryTerms.name, () => {
     expect(output).toEqual(input)
   })
 
+  it('should not replace terms in HTML attributes that contain >', () => {
+    const input = '<abbr title="a > blob">x</abbr>'
+    const output = linkTerms(input)
+    expect(output).toEqual(input)
+  })
+
+  it('should replace terms right after an HTML tag', () => {
+    const output = linkTerms('<span>Blob</span>')
+    expect(output).toEqual(
+      `<span>[Blob](/glossary#blob?description=${encodeURIComponent(
+        'Blob description',
+      )})</span>`,
+    )
+  })
+
   it('should ignore linking terms wrapped with delimiters', () => {
     const input = ':Data availability: is spicy. Also Blob is not spicy.'
     const output = linkTerms(input)
