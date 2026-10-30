@@ -10,7 +10,7 @@ The **clock** starts from the newest critical change and falls back to the **gen
 
 - **Ossification score (0 to 100):** the share of recorded code-bug exploits whose exploited code was younger than the clock, from the `ossification-dataset`. 0 while any critical contract is unverified.
 - **Critical changes per year:** over the last 3 years, or since the genesis.
-- **Battle-tested exposure:** the value secured, summed over the time on the clock, in USD·years. It counts every token on the chain, since a bug in the L2 program pinned on L1 reaches native and external tokens too.
+- **Battle-tested exposure:** the value secured, summed over the time on the clock, in USD·years.
 - **Contract age:** per contract, not scored. It runs from its last critical change, its deployment or its entry into the perimeter, whichever is latest.
 
 ## What resets the clock
