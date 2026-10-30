@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import express from 'express'
+import { loadOpengraphKit } from '~/components/opengraph-image/heartbeat/render'
 import { generateExternalPublicationThumbnails } from './projects/generateExternalPublicationThumbnails'
 import { generateGovernanceReviewOgImages } from './projects/generateGovernanceReviewOgImages'
 import { generateMainPageOgImages } from './projects/generateMainPageOgImages'
@@ -14,33 +15,21 @@ async function main() {
   app.use(express.static(path.join(__dirname, '../../static')))
   const server = app.listen(6464)
 
-  const [robotoMedium, robotoBold, montserratBold, ptSerifBold] =
-    await Promise.all([
-      readFile(
-        path.join(__dirname, '../../static/fonts/roboto/roboto-latin-500.ttf'),
+  const [kit, montserratBold, ptSerifBold] = await Promise.all([
+    loadOpengraphKit(path.join(__dirname, '../../static')),
+    readFile(
+      path.join(
+        __dirname,
+        '../../static/fonts/montserrat/montserrat-latin-700.ttf',
       ),
-      readFile(
-        path.join(__dirname, '../../static/fonts/roboto/roboto-latin-700.ttf'),
-      ),
-      readFile(
-        path.join(
-          __dirname,
-          '../../static/fonts/montserrat/montserrat-latin-700.ttf',
-        ),
-      ),
-      readFile(
-        path.join(__dirname, '../../static/fonts/pt-serif/pt-serif-700.ttf'),
-      ),
-    ])
+    ),
+    readFile(
+      path.join(__dirname, '../../static/fonts/pt-serif/pt-serif-700.ttf'),
+    ),
+  ])
 
-  await generateMainPageOgImages(ogImageSize, {
-    robotoMedium,
-    robotoBold,
-  })
-  await generateProjectOgImages(ogImageSize, {
-    robotoMedium,
-    robotoBold,
-  })
+  await generateMainPageOgImages(kit)
+  await generateProjectOgImages(kit)
   await generateMonthlyUpdateOgImages(ogImageSize, {
     montserratBold,
   })
