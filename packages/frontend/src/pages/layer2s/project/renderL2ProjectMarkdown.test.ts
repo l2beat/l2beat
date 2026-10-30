@@ -120,6 +120,27 @@ describe(renderL2ProjectMarkdown.name, () => {
     )
   })
 
+  it('names the privacy projects that run on the project', () => {
+    const summary = getSection(
+      renderL2ProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          privacyProjects: [
+            {
+              id: 'fluidkey',
+              name: 'Fluidkey',
+              iconUrl: '/icons/fluidkey.png',
+            },
+          ],
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude('- Chain ID: 42161\n- Privacy projects: Fluidkey')
+  })
+
   it('explains why a project is listed in Others, with each consequence', () => {
     const summary = getSection(
       renderL2ProjectMarkdown({
@@ -1061,6 +1082,7 @@ const ENTRY: ProjectL2Entry = {
     category: 'Optimistic Rollup',
     purposes: ['Universal'],
     gasTokens: ['ETH'],
+    privacyProjects: [],
     tvs: {
       breakdown: {
         total: 15_200_000_000,
