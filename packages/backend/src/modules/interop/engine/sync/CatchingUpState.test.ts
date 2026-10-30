@@ -75,6 +75,51 @@ describe(CatchingUpState.name, () => {
       )
     })
 
+    it('drops recaptured events at or before the resync timestamp', async () => {
+      const kept = mockObject<InteropEvent>({
+        ctx: {
+          chain: CHAIN,
+          timestamp: UnixTime(5),
+          txHash: '0x5',
+          logIndex: 0,
+        },
+      })
+      const recaptured = mockObject<InteropEvent>({
+        ctx: {
+          chain: CHAIN,
+          timestamp: UnixTime(6),
+          txHash: '0x6',
+          logIndex: 0,
+        },
+      })
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+
+      const syncer = createSyncer({
+        latestBlockNumber: 10n,
+        getResyncState: mockFn().resolvesTo({
+          resyncFrom: UnixTime(5),
+          wipeRequired: false,
+        }),
+        buildLogQuery: mockFn().returns(makeNonEmptyLogQuery()),
+        getLogs: mockFn().resolvesTo([
+          makeRpcLog({ txHash: '0x5', blockNumber: 5n, blockTimestamp: 5n }),
+          makeRpcLog({ txHash: '0x6', blockNumber: 6n, blockTimestamp: 6n }),
+        ]),
+        captureLog: mockFn().returnsOnce([kept]).returnsOnce([recaptured]),
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      await state.catchUp()
+
+      expect(saveProducedInteropEvents).toHaveBeenOnlyCalledWith([recaptured], {
+        fromBlock: 5n,
+        fromTimestamp: UnixTime(5),
+        toBlock: 10n,
+        toTimestamp: UnixTime(10),
+      })
+    })
+
     it('waits for wipe when resync is requested and wipeRequired is set', async () => {
       const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
 
