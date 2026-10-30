@@ -7,9 +7,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { FundingSourcesSection } from './components/FundingSourcesSection'
-import { PartnersSection } from './components/PartnersSection'
 import { QrCodeSection } from './components/QrCodeSection'
-import type { Partners } from './getDonateData'
 
 export const DONATE_ADDRESS = '0x41626BA92c0C2a1aD38fC83920300434082B1870'
 const GITCOIN_ROUND_URL =
@@ -17,7 +15,6 @@ const GITCOIN_ROUND_URL =
 export const LAST_UPDATED = 'October 2025'
 
 interface Props extends AppLayoutProps {
-  partners: Partners | undefined
   gitcoinOption: boolean
   qrCodeUrl: string
 }
@@ -47,7 +44,6 @@ export function DonatePage(props: Props) {
       <SideNavLayout>
         <MainPageHeader>Donate</MainPageHeader>
         <Header networks={networks} qrCodeUrl={props.qrCodeUrl} />
-        {props.partners && <PartnersSection partners={props.partners} />}
         <FundingSourcesSection />
       </SideNavLayout>
     </AppLayout>
@@ -134,7 +130,7 @@ export const fundingSources = [
     source: 'Partnership Fund',
     tier: 'Significant',
     description:
-      'A grant-based funding initiative where projects contribute financially to L2BEAT’s operations. Partners are listed above',
+      'A grant-based funding initiative where projects contribute financially to L2BEAT’s operations. Partners: Arbitrum, ZKsync, Optimism, Polygon, EigenLayer, Cartesi, Nethermind',
   },
   {
     source: 'Ethereum Foundation',
