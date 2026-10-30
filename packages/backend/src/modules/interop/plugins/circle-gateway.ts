@@ -3,7 +3,7 @@ Circle Gateway plugin
 Note - here the transfer of USDC is via burn/mint, but mint on DST happens before burn on SRC.
 */
 
-import { Address32 } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV2Config } from './cctp/cctp.config'
 import {
@@ -17,6 +17,15 @@ import {
   type MatchResult,
   Result,
 } from './types'
+
+// https://developers.circle.com/gateway/references/contract-addresses
+// Same addresses on every supported chain
+const GATEWAY_WALLET = EthereumAddress(
+  '0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE',
+)
+const GATEWAY_MINTER = EthereumAddress(
+  '0x2222222d7164433c4C09B0b0D809a9b52C04C205',
+)
 
 const parseAttestationUsed = createEventParser(
   'event AttestationUsed(address indexed token, address indexed recipient, bytes32 indexed transferSpecHash, uint32 sourceDomain, bytes32 sourceDepositor, bytes32 sourceSigner, uint256 value)',
@@ -52,7 +61,7 @@ export class CircleGatewayPlugIn implements InteropPlugin {
     const network = networks.find((n) => n.chain === input.chain)
     if (!network) return
 
-    const gatewayBurned = parseGatewayBurned(input.log, null)
+    const gatewayBurned = parseGatewayBurned(input.log, [GATEWAY_WALLET])
     if (gatewayBurned)
       return [
         GatewayBurned.create(input, {
@@ -67,7 +76,7 @@ export class CircleGatewayPlugIn implements InteropPlugin {
         }),
       ]
 
-    const attestationUsed = parseAttestationUsed(input.log, null)
+    const attestationUsed = parseAttestationUsed(input.log, [GATEWAY_MINTER])
     if (attestationUsed)
       return [
         AttestationUsed.create(input, {
