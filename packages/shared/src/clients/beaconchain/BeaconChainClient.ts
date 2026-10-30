@@ -7,11 +7,7 @@ import { pick } from 'stream-json/filters/Pick'
 import { streamValues } from 'stream-json/streamers/StreamValues'
 
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import {
-  BeaconChainError,
-  type Blob as BlobSchema,
-  BlockSidecarSchema,
-} from './types'
+import { BeaconChainError, type Blob as BlobSchema, BlobsSchema } from './types'
 
 export type BeaconChainBlob = v.infer<typeof BlobSchema>
 
@@ -26,24 +22,45 @@ export class BeaconChainClient extends ClientCore {
     super({ ...$ })
   }
 
-  async getBlockSidecar(blockId: string): Promise<BeaconChainBlob[]> {
-    const endpoint = `eth/v1/beacon/blob_sidecars/${blockId}`
+  /** In the block's order, which need not be that of `versionedHashes` */
+  async getBlobs(
+    blockId: string,
+    versionedHashes: string[],
+  ): Promise<BeaconChainBlob[]> {
+    // Without the param the endpoint answers every blob of the block
+    if (versionedHashes.length === 0) return []
+
+    // The spec forbids repeating a hash, which a tx may do
+    const query = [...new Set(versionedHashes)]
+      .map((hash) => `versioned_hashes=${hash}`)
+      .join('&')
+    const endpoint = `eth/v1/beacon/blobs/${blockId}?${query}`
 
     const response = await this.call(endpoint)
-    const parsed = BlockSidecarSchema.safeParse(response)
+    const parsed = BlobsSchema.safeParse(response)
 
     if (!parsed.success) {
       this.$.logger.warn('Invalid response', {
         endpoint,
         response: JSON.stringify(response),
       })
-      throw new Error(`Block: ${blockId}: Error during sidecar parsing`)
+      throw new Error('Invalid blobs response', { cause: { blockId } })
     }
 
-    return parsed.data.data.map((blob) => ({
-      kzg_commitment: blob.kzg_commitment,
-      data: blob.blob,
-    }))
+    // A beacon block without these blobs answers an empty list, not an error.
+    // A blob posted twice in the block may come back twice, so count distinct
+    // blobs: one per hash found
+    if (new Set(parsed.data.data).size < new Set(versionedHashes).size) {
+      throw new Error('Beacon node answered fewer blobs than asked for', {
+        cause: {
+          blockId,
+          requested: versionedHashes.length,
+          received: parsed.data.data.length,
+        },
+      })
+    }
+
+    return parsed.data.data.map((data) => ({ data }))
   }
 
   async getValidatorsInfo({

@@ -1,6 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { utils } from 'ethers'
 import type { BeaconChainClient, RpcClient } from '../../clients'
 import { EthereumDaProvider } from './EthereumDaProvider'
 import type { EthereumBlob } from './types'
@@ -359,29 +358,13 @@ describe(EthereumDaProvider.name, () => {
   describe(
     EthereumDaProvider.prototype.getBlobsByVersionedHashesAndBlockNumber.name,
     () => {
-      it('should return blobs for given versioned hashes', async () => {
-        const kzgCommitment1 = generateKzgCommitment()
-        const kzgCommitment2 = generateKzgCommitment()
-        const versionedHash1 =
-          '0x01' + utils.sha256(kzgCommitment1).substring(4)
-
+      it('asks the beacon block after the given block for the hashes', async () => {
         const mockRpcClient = mockObject<RpcClient>({
           getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
         })
-
         const mockBeaconChainClient = mockObject<BeaconChainClient>({
-          getBlockSidecar: mockFn().resolvesTo([
-            {
-              kzg_commitment: kzgCommitment1,
-              data: 'blob1',
-            },
-            {
-              kzg_commitment: kzgCommitment2,
-              data: 'blob2',
-            },
-          ]),
+          getBlobs: mockFn().resolvesTo([{ data: 'blob1' }]),
         })
-
         const provider = new EthereumDaProvider(
           mockBeaconChainClient,
           mockRpcClient,
@@ -389,51 +372,18 @@ describe(EthereumDaProvider.name, () => {
         )
 
         const result = await provider.getBlobsByVersionedHashesAndBlockNumber(
-          [versionedHash1],
+          ['0x01aa'],
           1,
         )
 
-        expect(result).toEqual([
-          {
-            kzg_commitment: kzgCommitment1,
-            data: 'blob1',
-          },
-        ])
-      })
-
-      it('should return empty array for no versioned hashes', async () => {
-        const kzgCommitment1 = generateKzgCommitment()
-        const kzgCommitment2 = generateKzgCommitment()
-
-        const mockRpcClient = mockObject<RpcClient>({
-          getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
-        })
-
-        const mockBeaconChainClient = mockObject<BeaconChainClient>({
-          getBlockSidecar: mockFn().resolvesTo([
-            {
-              kzg_commitment: kzgCommitment1,
-              data: 'blob1',
-            },
-            {
-              kzg_commitment: kzgCommitment2,
-              data: 'blob2',
-            },
-          ]),
-        })
-
-        const provider = new EthereumDaProvider(
-          mockBeaconChainClient,
-          mockRpcClient,
-          'ethereum',
+        expect(mockRpcClient.getBlockParentBeaconRoot).toHaveBeenOnlyCalledWith(
+          2,
         )
-
-        const result = await provider.getBlobsByVersionedHashesAndBlockNumber(
-          [],
-          1,
+        expect(mockBeaconChainClient.getBlobs).toHaveBeenOnlyCalledWith(
+          'blockId',
+          ['0x01aa'],
         )
-
-        expect(result).toEqual([])
+        expect(result).toEqual([{ data: 'blob1' }])
       })
     },
   )
@@ -470,9 +420,7 @@ describe(EthereumDaProvider.name, () => {
         }),
       })
 
-      const mockBeaconChainClient = mockObject<BeaconChainClient>({
-        getBlockSidecar: mockFn().resolvesTo([]),
-      })
+      const mockBeaconChainClient = mockObject<BeaconChainClient>()
 
       const provider = new EthereumDaProvider(
         mockBeaconChainClient,
@@ -485,39 +433,17 @@ describe(EthereumDaProvider.name, () => {
     })
 
     it('should return blobs for type 3 transaction', async () => {
-      const kzgCommitment1 = generateKzgCommitment()
-      const kzgCommitment2 = generateKzgCommitment()
-      const versionedHash1 = '0x01' + utils.sha256(kzgCommitment1).substring(4)
-      const versionedHash2 = '0x01' + utils.sha256(kzgCommitment2).substring(4)
-      const blob1 = {
-        kzg_commitment: kzgCommitment1,
-        data: 'blob1',
-      }
-      const blob2 = {
-        kzg_commitment: kzgCommitment2,
-        data: 'blob2',
-      }
-
       const mockRpcClient = mockObject<RpcClient>({
         getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
         getTransaction: mockFn().returns({
           type: '0x3',
           blockNumber: 1,
-          blobVersionedHashes: [versionedHash1, versionedHash2],
+          blobVersionedHashes: ['0x01aa', '0x01bb'],
         }),
       })
-
       const mockBeaconChainClient = mockObject<BeaconChainClient>({
-        getBlockSidecar: mockFn().resolvesTo([
-          blob1,
-          blob2,
-          {
-            kzg_commitment: generateKzgCommitment(),
-            data: 'blob3',
-          },
-        ]),
+        getBlobs: mockFn().resolvesTo([{ data: 'blob1' }, { data: 'blob2' }]),
       })
-
       const provider = new EthereumDaProvider(
         mockBeaconChainClient,
         mockRpcClient,
@@ -525,7 +451,13 @@ describe(EthereumDaProvider.name, () => {
       )
 
       const result = await provider.getRelevantBlobs('txHash')
-      expect(result).toEqual([blob1, blob2])
+
+      expect(mockRpcClient.getBlockParentBeaconRoot).toHaveBeenOnlyCalledWith(2)
+      expect(mockBeaconChainClient.getBlobs).toHaveBeenOnlyCalledWith(
+        'blockId',
+        ['0x01aa', '0x01bb'],
+      )
+      expect(result).toEqual([{ data: 'blob1' }, { data: 'blob2' }])
     })
 
     it('should throw on missing blobVersionedHashes', async () => {
@@ -575,14 +507,5 @@ function providerAnswering(answers: {
     mockObject<BeaconChainClient>(),
     rpc,
     'ethereum',
-  )
-}
-
-function generateKzgCommitment(): string {
-  return (
-    '0x' +
-    Array.from({ length: 96 }, () =>
-      Math.floor(Math.random() * 16).toString(16),
-    ).join('')
   )
 }
