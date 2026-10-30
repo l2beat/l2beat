@@ -1,6 +1,8 @@
 import type { ConfigReader } from '@l2beat/discovery'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
+import { attachBoardRouter } from './boardRouter'
+import { BoardStore } from './boardStore'
 import { attachChatRouter } from './chat/router'
 import { projectSchema } from './entries'
 import { attachMcpRouter } from './mcp'
@@ -55,7 +57,9 @@ export function attachAgentRouter(
 ) {
   const session = new AgentSession<AgentContext, AgentReceipt>()
   attachChatRouter(app, cwd, () => session.context)
-  attachMcpRouter(app, { configReader, session })
+  const boards = new BoardStore()
+  attachMcpRouter(app, { configReader, session, boards })
+  attachBoardRouter(app, { configReader, session, store: boards })
 
   app.get('/api/agent/events', (req, res) => session.connect(req, res))
 

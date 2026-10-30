@@ -149,14 +149,15 @@ export function createDiscoveryUiApp({
   const flatSourceClient = new FlatSourceClient()
   const diffoveryController = new DiffoveryController(flatSourceClient)
 
-  // A tab reports its whole graph to the agent routes, past the parser's
-  // 100kb default, which every other route keeps. The agent routes change
-  // what the researcher sees, so they refuse other machines, even a page that
-  // rebinds its domain to this one, before reading a body that large.
+  // A tab reports its whole graph to the agent routes, and a board can carry
+  // hundreds of rows, both past the parser's 100kb default, which every other
+  // route keeps. These routes change what the researcher sees, so they refuse
+  // other machines, even a page that rebinds its domain to this one, before
+  // reading a body that large.
   if (!readonly) {
     app.use(
-      '/api/agent',
-      localOnly('DiscoUI agent routes answer only locally'),
+      ['/api/agent', '/api/boards', '/api/projects/:project/boards'],
+      localOnly('DiscoUI agent and board routes answer only locally'),
       express.json({ limit: '16mb' }),
     )
   }

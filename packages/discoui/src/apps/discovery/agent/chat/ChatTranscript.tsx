@@ -1,9 +1,18 @@
+import { useQuery } from '@tanstack/react-query'
 import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router'
 import { toast } from 'sonner'
 import { Markdown } from '../../../../components/Markdown'
 import { IconChevronRight } from '../../../../icons/IconChevronRight'
 import { IconSparkle } from '../../../../icons/IconSparkle'
 import { cn } from '../../../../utils/cn'
+import { useDockingStore } from '../../multi-view/store'
+import {
+  activateBoard,
+  confirmLeavingDraft,
+  listBoards,
+  useBoardUiStore,
+} from '../../panel-board/boardApi'
 import {
   type ActivityStep,
   type ChatBlock,
@@ -12,7 +21,7 @@ import {
 } from './chatState'
 import { answerPermission, providerName, useChatStore } from './chatStore'
 import { ProviderMark } from './ProviderMark'
-import { describeTool } from './toolLabels'
+import { builtBoardId, describeTool } from './toolLabels'
 
 // Rendering follows the stream a few words at a time. Items keep their
 // identity until they change, so only the block that grows renders again.
@@ -197,6 +206,10 @@ function ToolStep(props: { step: Extract<ChatItem, { kind: 'tool' }> }) {
   const { step } = props
   const [open, setOpen] = useState(false)
   const { label, inDiscoUi, verbatim } = describeTool(step.title, step.dryRun)
+  const boardId =
+    step.status === 'completed'
+      ? builtBoardId(step.title, step.output)
+      : undefined
   return (
     <li className="flex flex-wrap items-center gap-x-2">
       <button
@@ -219,12 +232,40 @@ function ToolStep(props: { step: Extract<ChatItem, { kind: 'tool' }> }) {
           {label}
         </span>
       </button>
+      {boardId !== undefined && <OpenBoardButton boardId={boardId} />}
       {open && (
         <pre className="mt-1 mb-1 max-h-60 basis-full overflow-auto whitespace-pre-wrap rounded-md bg-coffee-800 px-2.5 py-2 font-mono text-[11px] text-coffee-400 leading-relaxed">
           {stripFence(step.output)}
         </pre>
       )}
     </li>
+  )
+}
+
+// A board the researcher scrolled past is one click away. A closed one is
+// gone from the open boards, so it has no button.
+function OpenBoardButton(props: { boardId: string }) {
+  const { project } = useParams()
+  const revision = useBoardUiStore((state) => state.revision)
+  const list = useQuery({
+    queryKey: ['boards', project, revision],
+    queryFn: () => listBoards(project as string),
+    enabled: project !== undefined,
+  })
+  const isOpen = list.data?.open.some((b) => b.id === props.boardId)
+  if (project === undefined || isOpen !== true) return null
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        if (!confirmLeavingDraft()) return
+        useDockingStore.getState().ensureLeaf('board')
+        activateBoard(project, props.boardId)
+      }}
+      className="shrink-0 text-[11px] text-aux-blue hover:underline"
+    >
+      Open
+    </button>
   )
 }
 
