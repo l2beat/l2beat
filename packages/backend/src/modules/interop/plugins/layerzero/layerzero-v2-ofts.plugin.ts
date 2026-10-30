@@ -3,6 +3,8 @@ import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   findBestTransferLog,
   findBestTransferLogByExactAmount,
+  findParsedAfter,
+  findParsedBefore,
 } from '../logScan'
 import { getBestEffortBridgeTypeFromPartialSupplyAction } from '../partialSupplyActionBridgeType'
 import {
@@ -140,6 +142,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
     const network = networks.find((x) => x.chain === input.chain)
     if (!network) return
     assert(network.endpointV2, 'We capture only chains with endpoints')
+    const endpoint = network.endpointV2
 
     const oftSentRaw =
       parseOFTSent(input.log, null) || parseRareOFTSent(input.log, null)
@@ -156,28 +159,31 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               amountReceivedLD: oftSentRaw.amountLD, // fallback
             }
 
-      // try preceding log but fallback to any log in the same tx
-      let packetSentLog = input.txLogs.find(
+      // Other logs can sit between PacketSent and OFTSent (e.g. SafeReceived
+      // for a fee refund), so in batched sends the packet is found by guid.
+      const sent = findParsedBefore(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! - 1,
+        input.log.logIndex!,
+        (log) => {
+          const packetSent = parsePacketSent(log, [endpoint])
+          if (!packetSent) return
+          const packet = decodePacket(packetSent.encodedPayload)
+          if (!packet) return
+          const guid = createLayerZeroGuid(
+            packet.header.nonce,
+            packet.header.srcEid,
+            packet.header.sender,
+            packet.header.dstEid,
+            packet.header.receiver,
+          )
+          if (guid !== oftSentRaw.guid) return
+          return { guid, dstEid: packet.header.dstEid }
+        },
       )
-      if (!packetSentLog) return
-      let packetSent = parsePacketSent(packetSentLog, [network.endpointV2])
-      if (!packetSent)
-        packetSentLog = input.txLogs.find((l) => parsePacketSent(l, null))
-      if (!packetSentLog) return
-      packetSent = parsePacketSent(packetSentLog, [network.endpointV2])
-      if (!packetSent) return
-      const packet = decodePacket(packetSent.encodedPayload)
-      if (!packet) return
-      const guid = createLayerZeroGuid(
-        packet.header.nonce,
-        packet.header.srcEid,
-        packet.header.sender,
-        packet.header.dstEid,
-        packet.header.receiver,
-      )
-      const $dstChain = findChain(networks, (x) => x.eid, packet.header.dstEid)
+      if (!sent) return
+      const guid = sent.guid
+      const $dstChain = findChain(networks, (x) => x.eid, sent.dstEid)
 
       const matchingTransferData = findOFTSentTransferData(
         input.txLogs,
@@ -202,15 +208,15 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
 
     const oftReceived = parseOFTReceived(input.log, null)
     if (oftReceived) {
-      const nextLog = input.txLogs.find(
+      // Other logs can sit between OFTReceived and PacketDelivered (e.g.
+      // ComposeSent), so the delivery is found by guid.
+      const delivered = findParsedAfter(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! + 1,
-      )
-      if (nextLog) {
-        const packetDelivered = parsePacketDelivered(nextLog, [
-          network.endpointV2,
-        ])
-        if (packetDelivered) {
+        input.log.logIndex!,
+        (log) => {
+          const packetDelivered = parsePacketDelivered(log, [endpoint])
+          if (!packetDelivered) return
           const guid = createLayerZeroGuid(
             packetDelivered.origin.nonce,
             packetDelivered.origin.srcEid,
@@ -218,35 +224,34 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             network.eid,
             packetDelivered.receiver,
           )
-          const $srcChain = findChain(
-            networks,
-            (x) => x.eid,
-            packetDelivered.origin.srcEid,
-          )
+          if (guid !== oftReceived.guid) return
+          return { guid, srcEid: packetDelivered.origin.srcEid }
+        },
+      )
+      if (!delivered) return
+      const $srcChain = findChain(networks, (x) => x.eid, delivered.srcEid)
 
-          const transferMatch = findBestTransferLogByExactAmount(
-            input.txLogs,
-            oftReceived.amountReceivedLD,
-            // biome-ignore lint/style/noNonNullAssertion: It's there
-            input.log.logIndex!,
-            (log) => parseTransfer(log, null),
-          )
+      const transferMatch = findBestTransferLogByExactAmount(
+        input.txLogs,
+        oftReceived.amountReceivedLD,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (log) => parseTransfer(log, null),
+      )
 
-          return [
-            OFTReceivedPacketDelivered.create(input, {
-              $srcChain,
-              guid,
-              amountReceivedLD: oftReceived.amountReceivedLD,
-              oappAddress: Address32.from(input.log.address),
-              dstTokenAddress: transferMatch.transfer?.logAddress,
-              dstAmount: oftReceived.amountReceivedLD,
-              minted: transferMatch.transfer
-                ? transferMatch.transfer.from === Address32.ZERO
-                : undefined,
-            }),
-          ]
-        }
-      }
+      return [
+        OFTReceivedPacketDelivered.create(input, {
+          $srcChain,
+          guid: delivered.guid,
+          amountReceivedLD: oftReceived.amountReceivedLD,
+          oappAddress: Address32.from(input.log.address),
+          dstTokenAddress: transferMatch.transfer?.logAddress,
+          dstAmount: oftReceived.amountReceivedLD,
+          minted: transferMatch.transfer
+            ? transferMatch.transfer.from === Address32.ZERO
+            : undefined,
+        }),
+      ]
     }
   }
 

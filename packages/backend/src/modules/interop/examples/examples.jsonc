@@ -6260,6 +6260,59 @@
       ]
     }
   },
+  "oftbatched": {
+    "description": "OFT sends and receives with other logs between the OFT event and the endpoint event",
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x8319fa1496424f1519791d883f3cc041da3d2d3dbe9a5f1fa28d379eb672d1b4" // Safe batch of 8 USDe sends, SafeReceived between each PacketSent and OFTSent
+      },
+      {
+        "chain": "base",
+        "tx": "0x9e44c70b94e421be592682277c8de82d1ca6e09a51882874ee652dc60a718556" // receive of the batch's base send
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x49ad701f958d0a2386e0907748383865ca5bf8348cf332413982eaeb5e019af9" // tron -> eth USDT, ComposeSent between OFTReceived and PacketDelivered
+      }
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "oftv2.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "337534000000000000000000"
+          },
+          "dst": { "event": { "ctx": { "chain": "base" } } }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "src": { "tokenAmount": "556855000000000000000000" },
+          "dst": { "chain": "plasma" }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "src": { "tokenAmount": "10068000000000000000000" },
+          "dst": { "chain": "xlayer" }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "src": { "tokenAmount": "247397000000000000000000" },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "src": { "chain": "tron" },
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "29970513112"
+          }
+        }
+      ]
+    }
+  },
   "cctp-debug": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],
     // should be 4 cctpv1 message and 2 cctpv2 matched transfers and some stray events around.
