@@ -419,19 +419,6 @@ export const ethereum: BaseProject = {
         ],
       },
       {
-        // OP Stack, chainId 1875 (SystemConfig.l2ChainId); Whitechain's L1Block reports this batcher
-        projectId: ProjectId('whitechain'),
-        name: 'Whitechain',
-        daTrackingConfig: [
-          {
-            type: 'ethereum',
-            inbox: '0x00aaa63a0af768749a569dfda5fead3438091ba1',
-            sequencers: ['0x681fcc4272c14f70203ea655b1eaf9a20557a473'],
-            sinceBlock: 26274467,
-          },
-        ],
-      },
-      {
         // Post-quantum OP Stack fork, chainId 42069000. bb84.com lists the OptimismPortalHash
         // 0x83226921d6afb31f706b7840bca12655396f136c, whose deployer funded this batcher.
         projectId: ProjectId('bb84'),

@@ -1619,8 +1619,8 @@
     {
       "id": "9e3cbc59a9dd",
       "config": {
-        "daLayer": "ethereum",
         "type": "ethereum",
+        "daLayer": "ethereum",
         "inbox": "0x00aaa63a0af768749a569dfda5fead3438091ba1",
         "sequencers": ["0x681fcc4272c14f70203ea655b1eaf9a20557a473"],
         "sinceBlock": 26274467
