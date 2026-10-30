@@ -16,14 +16,20 @@ import { useIsClient } from '~/hooks/useIsClient'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { useActivityChartRangeContext } from '~/pages/layer2s/activity/components/ActivityChartRangeContext'
 import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
+import { useActivityMetricContext } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2ActivityEntries'
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
+import { getActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import type { ChartScale } from '../types'
+import {
+  ActivityChangeEventsList,
+  getVisibleChangeEvents,
+} from './ActivityChangePins'
 import { ActivityChartHeader } from './ActivityChartHeader'
 import { ActivityRatioChart } from './ActivityRatioChart'
 import {
@@ -46,16 +52,23 @@ export function L2ActivityChart({ milestones, entries }: Props) {
     RECATEGORISED_ACTIVITY_CHART_META,
   )
 
+  const filter = {
+    type: 'projects' as const,
+    projectIds: entries.map((entry) => entry.id),
+  }
   const { data, isLoading } = useQuery(
     trpc.activity.recategorisedChart.queryOptions({
       range,
-      filter: {
-        type: 'projects',
-        projectIds: entries.map((entry) => entry.id),
-      },
+      filter,
       hourly: true,
     }),
   )
+  const { data: changeEvents } = useQuery({
+    ...trpc.activity.changeEvents.queryOptions({ range, filter }),
+    // Change events compare whole days, so hourly ranges get no pins.
+    enabled: getActivityResolution(range) === 'day',
+  })
+  const { metric } = useActivityMetricContext()
 
   const ratioData = useMemo(() => getRatioChartData(data), [data])
   const timeRange = useMemo(
@@ -85,6 +98,11 @@ export function L2ActivityChart({ milestones, entries }: Props) {
           dataKeys,
           onItemClick: toggleDataKey,
         }}
+        changeEvents={changeEvents}
+      />
+      <ActivityChangeEventsList
+        events={getVisibleChangeEvents(changeEvents, metric, dataKeys)}
+        projects={changeEvents?.projects ?? {}}
       />
       <div className="mb-2">
         <ActivityRatioChart
