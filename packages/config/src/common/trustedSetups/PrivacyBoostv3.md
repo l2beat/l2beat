@@ -9,12 +9,13 @@ It uses the `ppot_0080` files from the public
 These contain 61 participant contributions and one public randomness beacon.
 Contribution 0078 resumes from 0058 after a fork, so the included IDs are
 0001–0058 and 0078–0080, rather than the first 80 contributions.
-Phase 2 is a gnark-native MPC ceremony. At the time of writing, the round record still marks the round as
-in preparation, and neither the public verification bundle nor the bundle digests have been published,
-so the number of participants and contributions could not be checked.
+Phase 2 is a gnark-native MPC ceremony finalized on 23 September 2026. The published
+round record reports 16 participants and 192 accepted contributions, with 16
+contributions per circuit. It publishes the public verification bundle and its
+archive, manifest and bundle-root digests.
 
 - Phase 1 ceremony and fork: <https://github.com/privacy-ethereum/perpetualpowersoftau/blob/b077232729db7c9eb65b63c4aaaa0ac4a1b0bba2/README.md#note-on-chain-fork>.
 - Ceremony repository and contributor tooling: [https://github.com/sunnyside-io/privacy-boost-ceremony](https://github.com/sunnyside-io/privacy-boost-ceremony)
-- Round record: [rounds/2026-03.md](https://github.com/sunnyside-io/privacy-boost-ceremony/blob/26122120d04f04f0abe59a7119b9c9a12e7c209a/rounds/2026-03.md)
+- Round record and published counts: [rounds/2026-03.md](https://github.com/sunnyside-io/privacy-boost-ceremony/blob/e1e5a01d9bc4ce5b0917d6302aa4d294b6539894/rounds/2026-03.md)
 - Contributor release: [ceremony/v0.0.5](https://github.com/sunnyside-io/privacy-boost-ceremony/releases/tag/ceremony%2Fv0.0.5)
 - Offline verification procedure: [https://github.com/sunnyside-io/privacy-boost-ceremony/blob/main/PUBLIC_VERIFICATION.md](https://github.com/sunnyside-io/privacy-boost-ceremony/blob/main/PUBLIC_VERIFICATION.md)

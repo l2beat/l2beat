@@ -1033,6 +1033,18 @@ export interface TrustedSetup {
   participantCount?: number
   /** Participant-generated updates, excluding beacons. Contributors may repeat. */
   contributionCount?: number
+  phases?: {
+    phase1?: TrustedSetupPhase
+    phase2?: TrustedSetupPhase
+  }
+}
+
+export interface TrustedSetupPhase {
+  /** Omit when the phase exists but its count is unknown. */
+  count?: number | { min: number; max: number }
+  /** Contributions need not identify distinct participants. */
+  unit: 'participants' | 'contributions'
+  description?: string
 }
 
 // #endregion

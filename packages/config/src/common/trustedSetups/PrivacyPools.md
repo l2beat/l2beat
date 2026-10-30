@@ -6,7 +6,7 @@ They contain 61 participant contributions and one public randomness beacon, for 
 transcript records. The contribution IDs are 0001–0058 and 0078–0080: contribution
 0078 resumes from 0058 after a fork, so 0080 is an identifier rather than a count.
 
-Phase 2 of the ceremony was publicly announced, open to anonymous and identified participants, and concluded in March 2025. It contains 514 contributions to the Withdraw circuit and 513 participants to the Ragequit circuit.
+Phase 2 of the ceremony was publicly announced, open to anonymous and identified participants, and concluded in March 2025. It contains 514 contributions to the Withdraw circuit and 513 to the Ragequit circuit.
 The finalized zKeys were published for independent verification, and the ceremony code and UI were open-sourced.
 
 - Phase 1 ceremony: <https://github.com/privacy-ethereum/perpetualpowersoftau>.
