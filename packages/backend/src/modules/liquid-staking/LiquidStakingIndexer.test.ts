@@ -24,6 +24,7 @@ describe(LiquidStakingIndexer.name, () => {
   const rocketpool: LiquidStakingProjectConfig = {
     configurationId: 'aaaaaaaaaaaa',
     projectId: ProjectId('rocketpool'),
+    sinceTimestamp: start,
     contracts: {
       type: 'rocketpool',
       rETH: ChainSpecificAddress(
@@ -34,6 +35,7 @@ describe(LiquidStakingIndexer.name, () => {
   const wbeth: LiquidStakingProjectConfig = {
     configurationId: 'bbbbbbbbbbbb',
     projectId: ProjectId('wbeth'),
+    sinceTimestamp: start,
     contracts: {
       type: 'wbeth',
       wBETH: ChainSpecificAddress(

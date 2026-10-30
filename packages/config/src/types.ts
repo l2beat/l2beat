@@ -1053,6 +1053,8 @@ export interface ProjectDefiInfo {
 }
 
 export interface ProjectLiquidStaking {
+  /** When the token launched, if after 2024-01-01, where the indexer starts. */
+  sinceTimestamp?: UnixTime
   /** What the liquid staking indexer reads. */
   contracts: ProjectLiquidStakingContracts
 }

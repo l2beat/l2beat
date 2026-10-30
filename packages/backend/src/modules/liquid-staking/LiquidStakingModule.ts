@@ -29,21 +29,28 @@ export function createLiquidStakingModule({
   const rpc = providers.clients.getRpcClient('ethereum')
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const dailyIndexer = new DailyIndexer(logger, clock)
-  const indexer = new LiquidStakingIndexer(
-    {
-      parents: [hourlyIndexer],
-      indexerService,
-      configurations: projects.map((project) => ({
-        id: project.configurationId,
-        minHeight: sinceTimestamp,
-        maxHeight: null,
-        properties: project,
-      })),
-      db,
-      rpc,
-      blockTimestampProvider: providers.blockTimestamp,
-    },
-    logger,
+  // One indexer per project, so a project whose reads fail stalls alone.
+  const indexers = projects.map(
+    (project) =>
+      new LiquidStakingIndexer(
+        {
+          parents: [hourlyIndexer],
+          indexerService,
+          configurations: [
+            {
+              id: project.configurationId,
+              minHeight: project.sinceTimestamp,
+              maxHeight: null,
+              properties: project,
+            },
+          ],
+          tags: { tag: project.projectId, project: project.projectId },
+          db,
+          rpc,
+          blockTimestampProvider: providers.blockTimestamp,
+        },
+        logger,
+      ),
   )
   const ethereumStakingIndexer = new EthereumStakingIndexer(
     {
@@ -65,7 +72,9 @@ export function createLiquidStakingModule({
     start: async () => {
       await hourlyIndexer.start()
       await dailyIndexer.start()
-      await indexer.start()
+      for (const indexer of indexers) {
+        await indexer.start()
+      }
       await ethereumStakingIndexer.start()
     },
   }

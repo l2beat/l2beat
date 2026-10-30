@@ -29,8 +29,8 @@ interface LiquidStakingIndexerDeps
 }
 
 /**
- * Reads every project's token state at the last Ethereum block at or before
- * each full hour, in one multicall per hour.
+ * Reads a project's token state at the last Ethereum block at or before each
+ * full hour, in one multicall per hour.
  */
 export class LiquidStakingIndexer extends ManagedMultiIndexer<LiquidStakingProjectConfig> {
   constructor(
