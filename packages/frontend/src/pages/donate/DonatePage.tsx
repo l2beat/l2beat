@@ -130,7 +130,7 @@ export const fundingSources = [
     source: 'Partnership Fund',
     tier: 'Significant',
     description:
-      'A grant-based funding initiative where projects contribute financially to L2BEAT’s operations. Partners: Arbitrum, ZKsync, Optimism, Polygon, EigenLayer, Cartesi, Nethermind',
+      'A grant-based funding initiative where projects contribute financially to L2BEAT’s operations. Past partners: Arbitrum, ZKsync, Optimism, Polygon, EigenLayer, Cartesi, Nethermind',
   },
   {
     source: 'Ethereum Foundation',
