@@ -1102,6 +1102,14 @@ export interface ProjectPrivacyInfo {
    * for its icon.
    */
   trackedOn: string[]
+  /**
+   * Scaling projects the protocol runs on, linked both ways between their
+   * project pages. Unlike trackedOn, which names the chains where L2BEAT
+   * counts the metrics, this names where the protocol lives: zk.money counts
+   * on Ethereum but runs on Aztec. Must list every trackedOn chain that has a
+   * scaling project.
+   */
+  scalingProjects?: ProjectId[]
   tokens: ProjectPrivacyToken[]
   /**
    * A project tracks relayers either through onchain events or through

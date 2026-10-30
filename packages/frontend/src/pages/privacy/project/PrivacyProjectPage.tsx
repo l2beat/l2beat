@@ -171,6 +171,18 @@ export function PrivacyProjectPage({
                                 />
                               }
                             />
+                            {entry.scalingProjects.length > 0 && (
+                              <ProjectSummaryStat
+                                title="Runs on"
+                                tooltip="Scaling projects the protocol runs on."
+                                value={
+                                  <ProjectIconList
+                                    projects={entry.scalingProjects}
+                                    title={`${entry.name} runs on`}
+                                  />
+                                }
+                              />
+                            )}
                             {entry.attributes.length > 0 && (
                               <ProjectSummaryStat
                                 title="Attributes"

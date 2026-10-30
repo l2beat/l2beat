@@ -14,6 +14,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TypeInfo } from '~/components/table/cells/TypeInfo'
@@ -160,6 +161,19 @@ export function ProjectL2Stats({ project, className }: Props) {
         key="chain-id"
         title="Chain ID"
         value={project.header.chainId}
+      />
+    ) : undefined,
+    project.header.privacyProjects.length > 0 ? (
+      <ProjectSummaryStat
+        key="privacy-projects"
+        title="Privacy projects"
+        tooltip="Privacy projects that run on this project."
+        value={
+          <ProjectIconList
+            projects={project.header.privacyProjects}
+            title="Privacy projects"
+          />
+        }
       />
     ) : undefined,
   ])

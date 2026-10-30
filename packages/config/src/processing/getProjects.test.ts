@@ -423,6 +423,35 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
+    it('every project lists the scaling projects it runs on', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const scalingProjects = privacyInfo.scalingProjects ?? []
+        if (new Set(scalingProjects).size !== scalingProjects.length) {
+          problems.push(`${project.id}: duplicate scalingProjects`)
+        }
+        for (const id of scalingProjects) {
+          const scaling = projects.find((p) => p.id === id)
+          if (!scaling?.scalingInfo || id === project.id) {
+            problems.push(`${project.id}: ${id} is not another scaling project`)
+          }
+        }
+        for (const chain of privacyInfo.trackedOn) {
+          const chainProject = projects.find(
+            (p) => p.chainConfig?.name === chain,
+          )
+          if (
+            chainProject?.scalingInfo &&
+            chainProject.id !== project.id &&
+            !scalingProjects.includes(chainProject.id)
+          ) {
+            problems.push(`${project.id}: scalingProjects misses ${chain}`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
     it('every project has at most one zk catalog trusted setup entry', () => {
       const invalid = privacyProjects
         .filter(({ project }) => {

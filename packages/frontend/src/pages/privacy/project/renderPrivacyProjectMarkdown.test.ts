@@ -45,6 +45,27 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     )
   })
 
+  it('names the scaling projects the protocol runs on', () => {
+    const summary = getSection(
+      renderPrivacyProjectMarkdown({
+        ...ENTRY,
+        scalingProjects: [
+          {
+            id: 'aztecnetwork',
+            name: 'Aztec Network',
+            iconUrl: '/icons/aztecnetwork.png',
+          },
+        ],
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Tracked on: Ethereum, BNB Smart Chain',
+      '- Runs on: Aztec Network',
+    )
+  })
+
   it('says the metrics are not tracked, like the HTML stats block', () => {
     const summary = getSection(
       renderPrivacyProjectMarkdown({
@@ -596,6 +617,7 @@ const ENTRY: ProjectPrivacyEntry = {
     { id: 'ethereum', name: 'Ethereum', iconUrl: '/icons/ethereum.png' },
     { id: 'bsc', name: 'BNB Smart Chain', iconUrl: '/icons/bsc.png' },
   ],
+  scalingProjects: [],
   exitWindow: {
     value: 'Infinite',
     sentiment: 'good',

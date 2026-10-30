@@ -61,6 +61,13 @@ export const fluidkey: BaseProject = {
       'polygonpos',
       'gnosis',
     ],
+    scalingProjects: [
+      ProjectId('base'),
+      ProjectId('arbitrum'),
+      ProjectId('optimism'),
+      ProjectId('polygon-pos'),
+      ProjectId('gnosis'),
+    ],
     // Balances live in individual stealth Safes. Earn-module events identify
     // only a subset of accounts, not a complete set of Fluidkey balances.
     tokens: [],
