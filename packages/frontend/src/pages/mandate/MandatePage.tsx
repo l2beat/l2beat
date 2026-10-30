@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { Logo } from '~/components/Logo'
-import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -8,18 +7,18 @@ import { cn } from '~/utils/cn'
 import { MANDATE, type MandateSource } from './mandateText'
 
 /**
- * The mandate as a declaration: the belief opens it in pink, the argument and
- * the four things we do follow on a white sheet, and the pledge closes it in
- * ink, signed with the heartbeat and sealed with the heart, like the charter on
- * the home page's mandate card.
+ * The mandate as a declaration: the belief opens it beside the heart, the
+ * argument and the four things we do follow on a white sheet, and the pledge
+ * closes it in ink, signed with the heartbeat and sealed with the heart, like
+ * the charter on the home page's mandate card. No page header or search bar:
+ * the belief is the page's title.
  */
 export function MandatePage(props: AppLayoutProps) {
   return (
     <AppLayout {...props}>
-      {/* Home's colours: ink text, white sheets, pink links and the block. */}
+      {/* Home's colours: ink text, white sheets and pink links. */}
       <div className="home-theme contents">
         <SideNavLayout childrenWrapperClassName="max-md:bg-surface-primary">
-          <MainPageHeader>Mandate</MainPageHeader>
           <main className="flex flex-col gap-4 max-md:gap-0">
             <Belief />
             {/* From lg the sources sit beside the argument, in the room its
@@ -53,27 +52,28 @@ const BODY = 'text-[18px] leading-[1.65] md:text-[20px] md:leading-[1.6]'
 
 function Belief() {
   return (
-    <section
+    // On the page's own ground, no card: the one thing on the page not on a
+    // sheet.
+    <header
       className={cn(
         INSET,
-        'flex items-center gap-10 bg-accent pt-12 pb-14 text-on-accent max-sm:flex-col-reverse max-sm:items-start md:rounded-xl md:pt-20 md:pb-24',
+        'flex items-center gap-10 pt-10 pb-14 max-sm:flex-col-reverse max-sm:items-start md:pt-16 md:pb-20 lg:pt-20',
       )}
     >
-      <p
+      <h1
         className={cn(
           DISPLAY,
           'max-w-[17ch] flex-1 text-[38px] leading-[1.04] md:text-[52px] xl:text-[68px]',
         )}
       >
         {MANDATE.belief}
-      </p>
+      </h1>
       <Logo
         small
-        inverse
         animated={false}
         className="mt-0 h-16 w-auto shrink-0 sm:h-40 lg:h-52 xl:h-64"
       />
-    </section>
+    </header>
   )
 }
 
@@ -201,11 +201,11 @@ function Verbs({ className }: { className?: string }) {
 
 function Pledge() {
   return (
-    // .inverted: ink in light mode, a step up from the sheet in dark.
+    // .home-inverted: ink in light mode, a step up from the sheet in dark.
     <section
       className={cn(
         INSET,
-        'inverted bg-surface-primary pt-12 pb-10 text-primary md:rounded-xl md:pt-16 md:pb-12',
+        'home-inverted bg-surface-primary pt-12 pb-10 text-primary md:rounded-xl md:pt-16 md:pb-12',
       )}
     >
       <p className="max-w-[44rem]">
