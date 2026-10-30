@@ -17,7 +17,7 @@ export async function getMandateData(
         description: 'What ETHBEAT does and why.',
         url,
         openGraph: {
-          image: '/meta-images/about-us/opengraph-image.png',
+          image: '/meta-images/mandate/opengraph-image.png',
         },
       }),
     },

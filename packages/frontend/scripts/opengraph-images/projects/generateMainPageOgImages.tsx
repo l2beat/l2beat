@@ -53,6 +53,7 @@ const mainPages: MainPage[] = [
   { path: 'publications', title: 'Publications' },
   { path: 'glossary', title: 'Glossary' },
   { path: 'about-us', title: 'About us' },
+  { path: 'mandate', title: 'Our mandate' },
   { path: 'changelog', title: 'Changelog' },
   { path: 'donate', title: 'Donate' },
   { path: 'faq', title: 'FAQ' },
