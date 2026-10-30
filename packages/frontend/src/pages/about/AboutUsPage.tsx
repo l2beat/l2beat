@@ -12,7 +12,7 @@ export function AboutUsPage(props: AppLayoutProps) {
         <MainPageHeader>About Us</MainPageHeader>
         <PrimaryCard>
           <p className="mb-6 font-bold text-xl">
-            Learn about L2BEAT and its mission
+            Learn about ETHBEAT and its mission
           </p>
           <Details />
           <MoreAboutUs />
@@ -31,7 +31,7 @@ function Details() {
           transparency.
         </p>
         <p>
-          What sets L2BEAT apart is our unwavering commitment to delivering
+          What sets ETHBEAT apart is our unwavering commitment to delivering
           accurate and reliable information. We strive to be an impartial and
           independent watchdog that acts in the best interest of users and the
           broader ecosystem while always remaining credibly neutral and faithful

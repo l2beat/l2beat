@@ -8,7 +8,7 @@ import {
 const l2beat = {
   '@type': 'Organization' as const,
   '@id': 'https://l2beat.com/#organization',
-  name: 'L2BEAT',
+  name: 'ETHBEAT',
   url: 'https://l2beat.com',
   logo: 'https://l2beat.com/logo.png',
 }
@@ -101,7 +101,7 @@ describe(getL2ProjectTvsBreakdownStructuredData.name, () => {
       {
         url: 'https://l2beat.com/layer2s/projects/arbitrum/tvs-breakdown',
         description:
-          "See a detailed breakdown of Arbitrum One's TVS on L2BEAT.",
+          "See a detailed breakdown of Arbitrum One's TVS on ETHBEAT.",
         image: 'https://l2beat.com/og.png',
       },
       { name: 'Arbitrum One', slug: 'arbitrum', archivedAt: undefined },
@@ -112,7 +112,7 @@ describe(getL2ProjectTvsBreakdownStructuredData.name, () => {
       '@id': 'https://l2beat.com/layer2s/projects/arbitrum/tvs-breakdown',
       url: 'https://l2beat.com/layer2s/projects/arbitrum/tvs-breakdown',
       name: 'Arbitrum One TVS Breakdown',
-      description: "See a detailed breakdown of Arbitrum One's TVS on L2BEAT.",
+      description: "See a detailed breakdown of Arbitrum One's TVS on ETHBEAT.",
       isAccessibleForFree: true,
       creator: l2beat,
       distribution: [

@@ -72,7 +72,7 @@ describe(renderContractsSection.name, () => {
     )
 
     expect(markdown).toInclude(
-      "Explore these contracts and permissions in Disco, L2BEAT's contract explorer: https://disco.l2beat.com/ui/p/blobstream",
+      "Explore these contracts and permissions in Disco, ETHBEAT's contract explorer: https://disco.l2beat.com/ui/p/blobstream",
     )
   })
 

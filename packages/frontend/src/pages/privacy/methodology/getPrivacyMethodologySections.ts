@@ -86,7 +86,7 @@ export function getPrivacyMethodologySections() {
       `<h2 id="${PRIVACY_REFERENCE_APP_ANCHOR}">Reference app</h2>`,
       'Each project names a reference app, the most private released app we found for the protocol. The ratings assume this app. Other apps we checked appear below it, each with one sourced finding that shows it leaks more.',
       'An app takes the spot when it leaks less to the five adversaries. Only released builds count.',
-      `App teams can propose their app in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the L2BEAT forum.`,
+      `App teams can propose their app in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the ETHBEAT forum.`,
     ]),
 
     categories: joinBlocks([
@@ -104,7 +104,7 @@ export function getPrivacyMethodologySections() {
         `**Walkaway test**: ${COLUMNS.walkawayTest}`,
         `**Reproducibility**: ${COLUMNS.reproducibility}`,
       ]),
-      `Feedback on the framework is welcome in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the L2BEAT forum.`,
+      `Feedback on the framework is welcome in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the ETHBEAT forum.`,
     ]),
   }
 }

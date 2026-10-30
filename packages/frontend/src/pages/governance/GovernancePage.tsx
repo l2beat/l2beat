@@ -64,7 +64,7 @@ function Header({
       <div className="flex w-full items-center justify-between gap-5">
         <div className="flex flex-col gap-6">
           <p className="text-paragraph-18">
-            By delegating your governance votes to L2BEAT, you&apos;re
+            By delegating your governance votes to ETHBEAT, you&apos;re
             supporting our mission to protect the interests of the Ethereum
             community and uphold our shared values. Together, we can lead the L2
             ecosystem towards a safer, more secure decentralized future.

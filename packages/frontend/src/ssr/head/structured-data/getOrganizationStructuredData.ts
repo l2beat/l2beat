@@ -6,7 +6,7 @@ import { env } from '~/env'
 export const L2BEAT_ORGANIZATION = {
   '@type': 'Organization' as const,
   '@id': toProductionUrl('/#organization'),
-  name: 'L2BEAT',
+  name: 'ETHBEAT',
   url: toProductionUrl(''),
   logo: toProductionUrl('/logo.png'),
 }
@@ -17,7 +17,7 @@ export function getOrganizationStructuredData() {
     ...L2BEAT_ORGANIZATION,
     ...(alternateName ? { alternateName } : {}),
     description:
-      'L2BEAT is an independent, public goods research organization that analyzes and compares Ethereum layer 2 scaling solutions, data availability layers, bridges, and other ecosystem projects, focusing on their risks, security, and trust assumptions.',
+      'ETHBEAT is an independent, public goods research organization that analyzes and compares Ethereum layer 2 scaling solutions, data availability layers, bridges, and other ecosystem projects, focusing on their risks, security, and trust assumptions.',
     sameAs: [
       externalLinks.x,
       externalLinks.github,

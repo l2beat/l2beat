@@ -12,7 +12,7 @@ export function Header<T extends { id: string }>({
       <PrimaryCard className="relative z-10 w-full md:rounded-b-none md:pb-0">
         <div className="space-y-4">
           <p className="font-bold text-lg leading-[150%]">
-            Explore the L2BEAT Glossary, your comprehensive resource for
+            Explore the ETHBEAT Glossary, your comprehensive resource for
             understanding the terms and concepts of the L2 ecosystem. Find here
             all essential definitions and insights.
           </p>

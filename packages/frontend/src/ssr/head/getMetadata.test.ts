@@ -18,18 +18,18 @@ describe(getMetadata.name, () => {
         openGraph,
       })
 
-      expect(metadata.title).toEqual('FAQ - L2BEAT')
+      expect(metadata.title).toEqual('FAQ - ETHBEAT')
     })
 
     it('can say more than the name, which still names the breadcrumb', () => {
       const metadata = getMetadata(manifest, {
         name: 'Railgun',
-        title: 'Railgun - Privacy - L2BEAT',
+        title: 'Railgun - Privacy - ETHBEAT',
         url: '/privacy/projects/railgun',
         openGraph,
       })
 
-      expect(metadata.title).toEqual('Railgun - Privacy - L2BEAT')
+      expect(metadata.title).toEqual('Railgun - Privacy - ETHBEAT')
       expect(getBreadcrumbItems(metadata)).toEqual([
         crumb(1, 'Home', 'https://l2beat.com/'),
         crumb(2, 'Privacy', 'https://l2beat.com/privacy/summary'),
@@ -85,7 +85,7 @@ describe(getMetadata.name, () => {
     it('names the page and its parents when the caller provides them', () => {
       const metadata = getMetadata(manifest, {
         name: 'TVS Breakdown',
-        title: 'Arbitrum One | TVS Breakdown - L2BEAT',
+        title: 'Arbitrum One | TVS Breakdown - ETHBEAT',
         url: '/layer2s/projects/arbitrum/tvs-breakdown',
         openGraph,
         breadcrumbParents: [
@@ -111,7 +111,7 @@ describe(getMetadata.name, () => {
 
     it('is omitted on the home page, which has nothing above it', () => {
       const metadata = getMetadata(manifest, {
-        title: 'L2BEAT',
+        title: 'ETHBEAT',
         url: '/',
         openGraph,
       })

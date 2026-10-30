@@ -48,10 +48,10 @@ describe(createLlmsTxtRouter.name, () => {
     expect(response.headers.get('vary')).toEqual('Accept')
   })
 
-  it('opens with the L2BEAT title and a one-paragraph summary', async () => {
+  it('opens with the ETHBEAT title and a one-paragraph summary', async () => {
     const body = await getLlmsTxt()
 
-    expect(body).toMatchRegex(/^# L2BEAT\n\n> \S.+\n\n/)
+    expect(body).toMatchRegex(/^# ETHBEAT\n\n> \S.+\n\n/)
   })
 
   it('links the main sections of the site', async () => {
@@ -124,7 +124,7 @@ describe(createLlmsTxtRouter.name, () => {
     const body = await getLlmsTxt()
     const [notes] = body.split('\n## ')
 
-    expect(notes ?? '').toInclude('When to use L2BEAT:')
+    expect(notes ?? '').toInclude('When to use ETHBEAT:')
   })
 
   // The edge cache caveat applies to every page, not to one entry.

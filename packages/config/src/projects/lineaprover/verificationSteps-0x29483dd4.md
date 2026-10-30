@@ -15,7 +15,7 @@ git clone https://github.com/Consensys/linea-monorepo.git
 cd linea-monorepo
 git checkout b90a3c0b6735ba39dc19356628c09c03e42c016d
 ```
-4. Download trusted setup files (132 GiB) from the L2BEAT hosting server into the `prover/prover-assets/kzgsrs` dir:
+4. Download trusted setup files (132 GiB) from the ETHBEAT hosting server into the `prover/prover-assets/kzgsrs` dir:
 ```
 cd prover/prover-assets/kzgsrs
 wget -r -np -nH --cut-dirs=1 -R "index.html*" https://trusted-setup-hosting.l2beat.com/files/

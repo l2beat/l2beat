@@ -13,9 +13,9 @@ import type {
   StructuredDataPage,
 } from './structured-data/StructuredData'
 
-export const SITE_TITLE = 'L2BEAT - The state of the layer two ecosystem'
+export const SITE_TITLE = 'ETHBEAT - The state of the layer two ecosystem'
 const SITE_DESCRIPTION =
-  'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.'
+  'ETHBEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.'
 
 type OpenGraph = {
   type: 'article' | 'website'
@@ -76,7 +76,7 @@ export function getMetadata(
   // Production, whatever host rendered the page
   const canonicalUrl = toProductionUrl(strippedPath)
   return {
-    title: title ?? (name ? `${name} - L2BEAT` : SITE_TITLE),
+    title: title ?? (name ? `${name} - ETHBEAT` : SITE_TITLE),
     description,
     url: baseUrl + strippedPath,
     openGraph: {

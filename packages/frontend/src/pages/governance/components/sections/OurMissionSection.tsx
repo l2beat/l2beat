@@ -10,7 +10,7 @@ export function OurMissionSection({ className }: Props) {
     <GovernanceCard mobileFull className={className}>
       <div className="text-heading-24 md:text-heading-32">Our mission</div>
       <div className="mt-6 text-paragraph-16 md:text-paragraph-15">
-        At L2BEAT we believe that crypto is the new infrastructure for the
+        At ETHBEAT we believe that crypto is the new infrastructure for the
         future financial system. As such, we believe that in order for it to be
         successful, it needs to be:
         <ul className="mt-2 ml-6 list-disc text-paragraph-16 md:text-paragraph-15">

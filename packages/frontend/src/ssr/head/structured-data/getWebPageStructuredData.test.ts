@@ -24,7 +24,7 @@ describe(getWebPageStructuredData.name, () => {
       publisher: {
         '@type': 'Organization',
         '@id': 'https://l2beat.com/#organization',
-        name: 'L2BEAT',
+        name: 'ETHBEAT',
         url: 'https://l2beat.com',
         logo: 'https://l2beat.com/logo.png',
       },

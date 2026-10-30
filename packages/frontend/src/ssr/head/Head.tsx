@@ -110,7 +110,7 @@ function OpengraphMeta({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
-      <meta property="og:site_name" content="L2BEAT" />
+      <meta property="og:site_name" content="ETHBEAT" />
       {<meta property="og:type" content={opengraph.type} />}
       <meta property="og:image" content={opengraph.image} />
       <meta property="og:image:width" content={size.width.toString()} />

@@ -17,7 +17,7 @@ export async function getFaqData(
       metadata: getMetadata(manifest, {
         name: 'FAQ',
         description:
-          'Frequently Asked Questions about L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+          'Frequently Asked Questions about ETHBEAT - an analytics and research website about Ethereum layer 2 scaling.',
         url,
         openGraph: {
           image: '/meta-images/faq/opengraph-image.png',

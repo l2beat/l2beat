@@ -30,7 +30,7 @@ export async function getL2RiskData(
       metadata: getMetadata(manifest, {
         name: 'Risk Analysis',
         description:
-          'Understand the risks of Ethereum scaling solutions using L2BEAT’s assessments.',
+          'Understand the risks of Ethereum scaling solutions using ETHBEAT’s assessments.',
         url: req.originalUrl,
         openGraph: {
           image: '/meta-images/layer2s/risks/overview/opengraph-image.png',

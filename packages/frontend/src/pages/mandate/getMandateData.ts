@@ -19,7 +19,7 @@ export async function getMandateData(
       manifest,
       metadata: getMetadata(manifest, {
         name: 'Mandate',
-        description: 'What L2BEAT does and why.',
+        description: 'What ETHBEAT does and why.',
         url,
         openGraph: {
           image: '/meta-images/about-us/opengraph-image.png',

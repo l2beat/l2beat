@@ -22,7 +22,7 @@ export function Logo({
       viewBox={`0 0 ${small ? '36' : '88'} 36`}
       fill="none"
       role="img"
-      aria-label="L2BEAT logo"
+      aria-label="ETHBEAT logo"
       {...props}
     >
       {/* The beat scales around the icon's bbox centre (18.71, 18). Using an SVG

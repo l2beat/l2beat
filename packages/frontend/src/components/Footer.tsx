@@ -78,7 +78,7 @@ export function Footer({ className, columnClassName }: Props) {
             </li>
           )}
         </ul>
-        <p className="font-normal leading-6">Copyright {currentYear} L2BEAT</p>
+        <p className="font-normal leading-6">Copyright {currentYear} ETHBEAT</p>
       </div>
     </footer>
   )

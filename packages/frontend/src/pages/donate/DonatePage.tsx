@@ -84,7 +84,7 @@ function DonationDescription() {
   return (
     <div className="space-y-4 text-primary">
       <p className="font-bold text-xl">
-        Thank you for supporting L2BEAT&apos;s mission to bring education and
+        Thank you for supporting ETHBEAT&apos;s mission to bring education and
         transparency to the blockchain space.
       </p>
       <p className="font-normal text-base">
@@ -130,7 +130,7 @@ export const fundingSources = [
     source: 'Partnership Fund',
     tier: 'Significant',
     description:
-      'A grant-based funding initiative where projects contribute financially to L2BEAT’s operations. Past partners: Arbitrum, ZKsync, Optimism, Polygon, EigenLayer, Cartesi, Nethermind',
+      'A grant-based funding initiative where projects contribute financially to ETHBEAT’s operations. Past partners: Arbitrum, ZKsync, Optimism, Polygon, EigenLayer, Cartesi, Nethermind',
   },
   {
     source: 'Ethereum Foundation',

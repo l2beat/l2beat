@@ -79,7 +79,7 @@ export async function getHomeData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'L2BEAT',
+        title: 'ETHBEAT',
         description:
           'Track the Ethereum ecosystem in one view: Layer 2s, privacy protocols, Ethereum and its interoperability flows, projects evaluated across the CROPS framework, and our latest research.',
         url: req.originalUrl,

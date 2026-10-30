@@ -7,7 +7,7 @@ export interface ZkCatalogAttester {
 export const ZK_CATALOG_ATTESTERS = {
   L2BEAT: {
     id: 'l2beat',
-    name: 'L2BEAT',
+    name: 'ETHBEAT',
     link: 'https://l2beat.com',
   },
 } as const satisfies Record<string, ZkCatalogAttester>

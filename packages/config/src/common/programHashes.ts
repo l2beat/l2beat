@@ -2519,13 +2519,13 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...WASM_MODULE_ROOT('Apechain'),
     verificationStatus: 'notVerified', // Apechain has closed challengers, so I think it doesn't make sense to mark them red for non reproducible program
     verificationSteps:
-      'The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
+      'The sources for this program are located in a private repository, shared with ETHBEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
   },
   '0x2dc824fed99dcdf659f2523ad68d1ec70bd5f08e3c533996be3a2d2b19813e83': {
     ...WASM_MODULE_ROOT('Apechain'),
     verificationStatus: 'unsuccessful',
     verificationSteps:
-      'The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
+      'The sources for this program are located in a private repository, shared with ETHBEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
   },
   '0x2c9a9d645ae56304c483709fc710a58a0935ed43893179fe4b275e1400503ea7': {
     ...WASM_MODULE_ROOT('Syndicate'),

@@ -50,7 +50,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader
-          description="A running list of product and content updates shipped on L2BEAT."
+          description="A running list of product and content updates shipped on ETHBEAT."
           hideDescriptionOnMobile
         >
           Changelog

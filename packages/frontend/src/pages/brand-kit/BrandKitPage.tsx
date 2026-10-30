@@ -24,7 +24,7 @@ export function BrandKitPage(props: AppLayoutProps) {
           />
           <LogoSection
             title="Symbol"
-            description="Use the symbol only when the full logo is too large or when L2BEAT is
+            description="Use the symbol only when the full logo is too large or when ETHBEAT is
           already identified in context."
             lightSvgHref="/brand-kit/symbol-light.svg"
             darkSvgHref="/brand-kit/symbol-dark.svg"
@@ -69,7 +69,7 @@ function LogoSection({
           <img
             src={lightSvgHref}
             className="h-20 w-auto"
-            alt="L2BEAT"
+            alt="ETHBEAT"
             loading="lazy"
           />
         </LogoPreviewCard>
@@ -81,7 +81,7 @@ function LogoSection({
           <img
             src={darkSvgHref}
             className="h-20 w-auto"
-            alt="L2BEAT"
+            alt="ETHBEAT"
             loading="lazy"
           />
         </LogoPreviewCard>
@@ -121,10 +121,10 @@ function NameSection() {
       <div className="text-paragraph-15 md:text-paragraph-16">
         <p>
           The name should always be written in uppercase as{' '}
-          <strong>L2BEAT</strong>.
+          <strong>ETHBEAT</strong>.
         </p>
         <div className="flex items-center gap-2">
-          <SatisfiedIcon className="size-5" /> L2BEAT
+          <SatisfiedIcon className="size-5" /> ETHBEAT
         </div>
         <div className="flex items-center gap-2">
           <MissingIcon className="size-5" /> L2 BEAT, L2Beat, L2beat, L2-beat,

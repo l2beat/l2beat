@@ -79,7 +79,7 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
       manifest,
       metadata: getMetadata(manifest, {
         name: details.name,
-        title: `${details.name} Privacy Review & Risks - L2BEAT`,
+        title: `${details.name} Privacy Review & Risks - ETHBEAT`,
         description: getPrivacyMetadataDescription({
           name: details.name,
           category: details.category.label,
