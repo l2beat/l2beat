@@ -66,24 +66,29 @@ const Transaction = v.object({
   chainId: v.number().optional(),
 })
 
+const DateString = v
+  .string()
+  .check((value) => !Number.isNaN(Date.parse(value)), 'Invalid date')
+
+const RelayV3Request = v.object({
+  id: v.string(),
+  status: v.union([v.string(), v.null()]).optional(),
+  data: v.object({
+    inTxs: v.array(Transaction).optional(),
+    outTxs: v.array(Transaction).optional(),
+    route: v.union([Route, v.null()]).optional(),
+  }),
+  createdAt: DateString,
+  updatedAt: DateString,
+})
+
+// Records are validated one by one, see `parseRequests`.
 const RelayV3Response = v.object({
-  requests: v.array(
-    v.object({
-      id: v.string(),
-      status: v.union([v.string(), v.null()]).optional(),
-      data: v.object({
-        inTxs: v.array(Transaction).optional(),
-        outTxs: v.array(Transaction).optional(),
-        route: v.union([Route, v.null()]).optional(),
-      }),
-      createdAt: v.string(),
-      updatedAt: v.string(),
-    }),
-  ),
+  requests: v.array(v.unknown()),
   continuation: v.string().optional(),
 })
 
-type RelayV3Request = v.infer<typeof RelayV3Response>['requests'][number]
+type RelayV3Request = v.infer<typeof RelayV3Request>
 type RelayV3Transaction = v.infer<typeof Transaction>
 
 export type RelayCurrencyAmount = v.infer<typeof CurrencyAmount>
@@ -162,12 +167,50 @@ export class RelayApiClient {
     const url = `${API_URL}/requests/v3?${new URLSearchParams(queryParams)}`
     const data = await this.fetchWithRetry(url)
     const parsed = RelayV3Response.parse(data)
-    this.warnOnIncompleteActualData(parsed.requests)
+    const requests = this.parseRequests(parsed.requests)
+    this.warnOnIncompleteActualData(requests)
 
     return {
-      requests: parsed.requests.map(normalizeRequest),
+      requests: requests.map(normalizeRequest),
       continuation: parsed.continuation,
     }
+  }
+
+  /**
+   * A malformed record fails the same way on every attempt, so throwing would
+   * make the indexer retry its window forever and halt all Relay ingestion.
+   * The cursor belongs to the page, not to the records, so skipping them
+   * keeps pagination intact.
+   */
+  private parseRequests(items: unknown[]): RelayV3Request[] {
+    const requests: RelayV3Request[] = []
+    const samples: { id: unknown; path: string; message: string }[] = []
+    let skipped = 0
+
+    for (const item of items) {
+      const result = RelayV3Request.safeParse(item)
+      if (result.success) {
+        requests.push(result.data)
+        continue
+      }
+      skipped++
+      if (samples.length < 3) {
+        samples.push({
+          id: (item as { id?: unknown } | null)?.id,
+          path: result.path,
+          message: result.message,
+        })
+      }
+    }
+
+    if (skipped > 0) {
+      this.logger.error('Skipping malformed Relay requests', {
+        requests: items.length,
+        skipped,
+        samples,
+      })
+    }
+    return requests
   }
 
   async getAllRequests(
