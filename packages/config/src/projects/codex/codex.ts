@@ -14,7 +14,19 @@ export const codex: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1793361600), // 2026-10-30T12:00:00Z
   discovery,
-  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20953494 })],
+  daTracking: [
+    // Previously tracked as a sovereign project in ethereum.ts with lowercase
+    // addresses; kept verbatim so its configuration id (and indexed data) survives.
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 20953494,
+      untilBlock: 26305598,
+      inbox: '0x8c12f051c161c2cda736f3b3fa1c4bdd35b7922c',
+      sequencers: ['0xb5bd290ef8ef3840cb866c7a8b7cc9e45fde3ab9'],
+    },
+    getOpStackDaTracking(discovery, { sinceBlock: 26305598 }),
+  ],
   genesisTimestamp: UnixTime(1728898067),
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Payments'],
