@@ -115,14 +115,6 @@
                 "type": "balanceOfEscrow",
                 "address": "native",
                 "chain": "whitechain",
-                "escrowAddress": "0x45C7CDB638079730F0314b322289883585C79aa6",
-                "decimals": 18,
-                "sinceTimestamp": 1792983863
-              },
-              {
-                "type": "balanceOfEscrow",
-                "address": "native",
-                "chain": "whitechain",
                 "escrowAddress": "0x98f3d189f107a555602191e6a4dF4009f28b0A87",
                 "decimals": 18,
                 "sinceTimestamp": 1792983863
