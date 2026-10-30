@@ -23,7 +23,7 @@ We started in 2021 to track a handful of rollups, and the name said exactly that
 - **Badges.** CROPS badges keep loading from their old URLs and now show the new name. A badge pasted as inline markup keeps its old text until you copy the markup again.
 - **Open source.** The code and every project config stay at [github.com/l2beat/l2beat](https://github.com/l2beat/l2beat).
 - **Forum, Disco and tools.** **[TBD: confirm whether forum.l2beat.com, disco.l2beat.com and tools.l2beat.com move.]**
-- **Social accounts.** On X we are now [@ethbeat_org](https://x.com/ethbeat_org). **[TBD: YouTube, LinkedIn and Medium.]**
+- **Social accounts.** On X we are now [@ethbeat_org](https://x.com/ethbeat_org). Our other accounts will follow.
 
 ## Old and new URLs
 
