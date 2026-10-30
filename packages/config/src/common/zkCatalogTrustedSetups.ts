@@ -72,19 +72,19 @@ export const TRUSTED_SETUPS = {
   PolygonZkEVM: {
     id: 'PolygonZkEVM',
     name: 'Polygon zkEVM',
-    participantCount: 55,
+    participantCount: 54,
     risk: 'yellow',
     shortDescription:
-      'Trusted setup for KZG commitments over BN254 curve used by Polygon zkEVM, includes 55 participants. Is a subset of Perpetual Powers of Tau ceremony.',
+      'Trusted setup for KZG commitments over BN254 curve used by Polygon zkEVM. It uses 54 Perpetual Powers of Tau participant contributions followed by a public randomness beacon.',
     longDescription: readMarkdown('common/trustedSetups/PolygonZkEVM.md'),
   },
   Risc0: {
     id: 'Risc0',
     name: 'Risc0 Groth16',
-    participantCount: 55,
+    participantCount: 54,
     risk: 'yellow',
     shortDescription:
-      'Circuit-specific trusted setup for Risc0 final wrap Groth16 onchain verifier. It was built on top of 55 phase 1 contributions, and reached 238 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
+      'Circuit-specific trusted setup for Risc0 final wrap Groth16 onchain verifier. Phase 1 used 54 participant contributions and a public randomness beacon, and phase 2 reached 238 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/Risc0.md'),
   },
   Halo2KZG: {
@@ -99,10 +99,10 @@ export const TRUSTED_SETUPS = {
   Zircuit: {
     id: 'Zircuit',
     name: 'Zircuit',
-    participantCount: 129,
+    participantCount: 105,
     risk: 'yellow',
     shortDescription:
-      'Trusted setup for KZG commitments over BN254 curve run by Zircuit team for their proving system. Zircuit ceremony took 85th contribution to pptau ceremony and added another 44 contributions, totalling to 129 participants.',
+      'Trusted setup for KZG commitments over BN254 curve run by the Zircuit team. It inherits 66 Perpetual Powers of Tau participant contributions and adds 39 participant contributions and 5 public randomness updates, for 105 participant contributions in total.',
     longDescription: readMarkdown('common/trustedSetups/Zircuit.md'),
   },
   Loopring: {
@@ -127,18 +127,18 @@ export const TRUSTED_SETUPS = {
     id: 'PrivacyPools',
     name: 'Privacy Pools v1',
     risk: 'yellow',
-    participantCount: 80,
+    participantCount: 61,
     shortDescription:
-      'Trusted setup for two Groth16 Privacy Pools circuits. It was built on top of 80 phase 1 contributions, with 513 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
+      'Trusted setup for two Groth16 Privacy Pools circuits. Phase 1 used 61 participant contributions and a public randomness beacon, with 513 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyPools.md'),
   },
   PrivacyPoolsV2: {
     id: 'PrivacyPoolsV2',
     name: 'Privacy Pools v2',
     risk: 'yellow',
-    participantCount: 80,
+    participantCount: 61,
     shortDescription:
-      'Trusted setup for the 27 Groth16 Privacy Pools v2 circuits. It was built on top of 80 phase 1 contributions, with 500 phase 2 contributions per circuit from 597 participants and a RANDAO beacon. Proving system could be broken if either phase 1 or 2 is compromised.',
+      'Trusted setup for the 27 Groth16 Privacy Pools v2 circuits. Phase 1 used 61 participant contributions and a public randomness beacon. Phase 2 had 500 contributions per circuit from 597 participants and a RANDAO beacon. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyPoolsV2.md'),
   },
   PrivacyBoostv1: {
@@ -147,7 +147,7 @@ export const TRUSTED_SETUPS = {
     risk: 'red',
     participantCount: 23,
     shortDescription:
-      'Circuit-specific trusted setup for the 18 Groth16 Privacy Boost circuits. It was built on top of 80 Perpetual Powers of Tau phase 1 contributions, with a publicly announced phase 2 that drew 23 to 25 participants depending on the circuit. The proving system could be broken if either phase 1 or 2 is compromised.',
+      'Circuit-specific trusted setup for the 18 Groth16 Privacy Boost circuits. Phase 1 used 61 Perpetual Powers of Tau participant contributions and a public randomness beacon, with a publicly announced phase 2 that drew 23 to 25 participants depending on the circuit. The proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyBoost.md'),
   },
   PrivacyBoostv2: {
@@ -156,7 +156,7 @@ export const TRUSTED_SETUPS = {
     risk: 'red',
     participantCount: 23,
     shortDescription:
-      'Circuit-specific trusted setup for the 21 Groth16 Privacy Boost circuits deployed in September 2026. It was built on top of 80 Perpetual Powers of Tau phase 1 contributions, with a publicly announced phase 2 that drew 26 participants and 23 to 25 contributions per circuit. The proving system could be broken if either phase 1 or 2 is compromised.',
+      'Circuit-specific trusted setup for the 21 Groth16 Privacy Boost circuits deployed in September 2026. Phase 1 used 61 Perpetual Powers of Tau participant contributions and a public randomness beacon, with a publicly announced phase 2 that drew 26 participants and 23 to 25 contributions per circuit. The proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyBoostv2.md'),
   },
   PrivacyBoostv3: {
@@ -164,16 +164,16 @@ export const TRUSTED_SETUPS = {
     name: 'Privacy Boost v3',
     risk: 'red',
     shortDescription:
-      'Circuit-specific trusted setup for the 12 Groth16 Privacy Boost epoch, forced withdrawal and gift claim circuits deployed in late September 2026. It was built on top of 80 Perpetual Powers of Tau phase 1 contributions, with a publicly announced phase 2 whose transcript and participant list have not yet been published. The proving system could be broken if either phase 1 or 2 is compromised.',
+      'Circuit-specific trusted setup for the 12 Groth16 Privacy Boost epoch, forced withdrawal and gift claim circuits deployed in late September 2026. Phase 1 used 61 Perpetual Powers of Tau participant contributions and a public randomness beacon, with a publicly announced phase 2 whose transcript and participant list have not yet been published. The proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyBoostv3.md'),
   },
   Railgun: {
     id: 'Railgun',
     name: 'Railgun',
     risk: 'yellow',
-    participantCount: 55,
+    participantCount: 54,
     shortDescription:
-      'Circuit-specific trusted setup for 54 Groth16 Railgun circuits over BN254. It was built on top of 55 phase 1 contributions, with 304 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
+      'Circuit-specific trusted setup for 54 Groth16 Railgun circuits over BN254. Phase 1 used 54 participant contributions and a public randomness beacon, with 304 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/Railgun.md'),
   },
 } as const satisfies Record<string, TrustedSetup>
