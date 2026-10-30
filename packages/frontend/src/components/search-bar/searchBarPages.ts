@@ -134,9 +134,9 @@ export const searchBarPages = withIndex([
     ? [
         {
           category: 'defi' as const,
-          name: 'DeFi',
-          href: '/defi/summary',
-          tags: ['pages', 'defi'],
+          name: 'Liquid Staking',
+          href: '/defi/liquid-staking',
+          tags: ['pages', 'defi', 'liquid', 'staking', 'lst'],
         },
       ]
     : []),

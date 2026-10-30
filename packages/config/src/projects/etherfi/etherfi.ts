@@ -5,6 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { discoveredDefiToken } from '../../templates/defiTokens'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
@@ -50,6 +51,44 @@ const reportWaitDelay = formatSeconds(
   ) * 12,
   { fullUnit: true },
 )
+
+// 18-decimals wei string -> whole ETH with thousands separators.
+const wholeEth = (contract: string, key: string): string =>
+  (
+    BigInt(discovery.getContractValue<string>(contract, key)) /
+    10n ** 18n
+  ).toLocaleString('en-US')
+const pooled = BigInt(value('LiquidityPool', 'getTotalPooledEther'))
+const inLp = BigInt(value('LiquidityPool', 'totalValueInLp'))
+const bufferPercent = `${(Number((inLp * 10000n) / pooled) / 100).toFixed(2)}%`
+const stethSharePercent = `${(
+  Number(
+    (BigInt(value('EtherFiRestaker', 'getTotalPooledEther')) * 10000n) / pooled,
+  ) / 100
+).toFixed(1)}%`
+const OPERATIONS_SAFE = 'eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC'
+const operationsSafe = discovery.getMultisigStats(OPERATIONS_SAFE)
+const reportPeriodSeconds =
+  discovery.getContractValue<number>('EtherFiOracle', 'reportPeriodSlot') * 12
+const maxNegativeRebaseBps = value(
+  'EtherFiAdmin',
+  'effectiveMaxNegativeRebaseBps',
+)
+const staleOracleWindow = formatSeconds(
+  discovery.getContractValue<number>(
+    'EtherFiAdmin',
+    'staleOracleReportBlockWindow',
+  ) * 12,
+  { fullUnit: true },
+)
+const maxFinalizedPerDay = wholeEth(
+  'EtherFiAdmin',
+  'maxFinalizedWithdrawalAmountPerDay',
+)
+const upgradeDelayDays =
+  discovery.getContractValue<number>(UPGRADE_TIMELOCK, 'getMinDelay') / 86400
+const operatingDelayDays =
+  discovery.getContractValue<number>(OPERATING_TIMELOCK, 'getMinDelay') / 86400
 
 export const etherfi: BaseProject = {
   id: ProjectId('etherfi'),
@@ -97,6 +136,18 @@ export const etherfi: BaseProject = {
   defiInfo: {
     category: 'Liquid Staking',
     tvl: { source: 'l2beat' },
+    tokens: [
+      discoveredDefiToken(
+        discovery,
+        'eETH',
+        'Rebasing receipt for pooled and restaked ETH: balances follow the oracle report.',
+      ),
+      discoveredDefiToken(
+        discovery,
+        'weETH',
+        'Non-rebasing wrapper of eETH: a fixed amount whose ETH value rises with rewards.',
+      ),
+    ],
   },
   liquidStaking: {
     contracts: {
@@ -133,6 +184,44 @@ export const etherfi: BaseProject = {
         { type: 'uniswapV3', fee: 100 },
         { type: 'uniswapV3', fee: 500 },
       ],
+    },
+    risks: {
+      minting: {
+        value: 'Permissionless',
+        secondLine: 'gated by ether.fi ops',
+        sentiment: 'good',
+        description: `Anyone can deposit ETH for ${value('eETH', 'symbol')} with no cap or fee; ${value('weETH', 'symbol')} wraps it. Only ether.fi's operations team can send that ETH to validators, which withdraw to protocol EigenPods.`,
+      },
+      operators: {
+        value: 'Whitelisted',
+        secondLine: 'no bond',
+        sentiment: 'warning',
+        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Stake is also restaked in EigenLayer, where extra slashing can cut principal.`,
+      },
+      backing: {
+        value: 'EigenPods, stETH',
+        secondLine: 'creds: EigenPod',
+        sentiment: 'warning',
+        description: `Validators withdraw to EigenPods, so most ETH sits in EigenLayer, which its own governance can upgrade. ${stethSharePercent} of backing is stETH and ${bufferPercent} is a liquid buffer.`,
+      },
+      oracle: {
+        value: `${oracleQuorum} of ${oracleMembers}`,
+        secondLine: `~${formatSeconds(reportPeriodSeconds)} · ≤${maxPositiveRebase}`,
+        sentiment: 'warning',
+        description: `All ${oracleMembers} oracle members must agree on each report, every ${formatSeconds(reportPeriodSeconds, { fullUnit: true })}. A report can raise the rate by at most ${maxPositiveRebase}. After ${staleOracleWindow} of silence, anyone can submit a report.`,
+      },
+      exit: {
+        value: 'Oracle-gated',
+        secondLine: `every ${formatSeconds(reportPeriodSeconds)} · pausable`,
+        sentiment: 'warning',
+        description: `Withdrawal requests are finalized with oracle reports, at most ${maxFinalizedPerDay} ETH a day. When the liquid buffer cannot cover the queue, requests wait for validators to exit through EigenLayer, which adds its own withdrawal delay. Instant redemption from the buffer costs up to ${maxExitFee}. The ${operationsSafe} Safe can pause all exits.`,
+      },
+      upgrades: {
+        value: '6/10 Safe',
+        secondLine: `${upgradeDelayDays}d · no veto`,
+        sentiment: 'warning',
+        description: `A 6-of-10 Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock tunes parameters within fixed limits. Holders have no veto.`,
+      },
     },
   },
   externalDependencies: [

@@ -1560,7 +1560,6 @@
   "static/meta-images/defi/projects/chainlink/opengraph-image.png": "a0fe4a358f1bdf3013d242aa5198c799",
   "static/meta-images/defi/projects/liquityv2/opengraph-image.png": "8824e5cddaf5cb1d5b43dec10105d7d9",
   "static/meta-images/defi/projects/uniswapv3/opengraph-image.png": "48b522cd4aa44ab5b36a1cddd1aea5a3",
-  "static/meta-images/defi/summary/opengraph-image.png": "bd424fff91abdfef251690a6ad89620f",
   "static/meta-images/defi/projects/frankencoin/opengraph-image.png": "c305797856053172f14c5169150d211a",
   "static/meta-images/defi/projects/uniswapv4/opengraph-image.png": "e67b36c7e04ff49dd4242b8595c6a811",
   "static/icons/privacy-boost.png": "556d9480cba16abc6fe7fe04a0dce9bc",
@@ -1649,5 +1648,6 @@
   "static/icons/offmarket.png": "42974c89e80597554adcbef6000438f8",
   "static/icons/zkmoneyv6.png": "83815b31996360de33269c48d66cd7be",
   "static/meta-images/privacy/projects/zkmoneyv6/opengraph-image.png": "68778daf5fc3a579429a6e489b37a4f2",
-  "static/meta-images/the-crops-guide/opengraph-image.png": "beb94aa615fb44067cd51e2afe55bb98"
+  "static/meta-images/the-crops-guide/opengraph-image.png": "beb94aa615fb44067cd51e2afe55bb98",
+  "static/meta-images/defi/liquid-staking/opengraph-image.png": "4baf608ac3d6b36bda5623acff2a439d"
 }

@@ -3,6 +3,7 @@ import type { NavGroup, NavLink } from '~/components/nav/types'
 import { env } from '~/env'
 import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
+import { DefiIcon } from '~/icons/pages/Defi'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
@@ -156,6 +157,16 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/tokens',
     icon: (
       <TokensIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
+    ),
+  },
+  env.CLIENT_SIDE_DEFI_ENABLED && {
+    type: 'single',
+    section: 'more',
+    title: 'Liquid Staking',
+    match: 'defi',
+    href: '/defi/liquid-staking',
+    icon: (
+      <DefiIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
   },
   env.CLIENT_SIDE_BLOBS_PAGE && {
