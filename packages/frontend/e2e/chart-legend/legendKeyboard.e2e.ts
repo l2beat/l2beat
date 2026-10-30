@@ -44,6 +44,8 @@ for (const { name, page: path, legend, finishesOnboarding } of CASES) {
 
     await page.keyboard.press('Enter')
     await expect(item).toHaveAttribute('aria-pressed', 'false')
+    // a hidden series dims its swatch and label, not the focus outline
+    await expect(item).toHaveCSS('opacity', '1')
     await expect(chart.locator(SERIES)).toHaveCount(shown - 1)
     expect(await finishedOnboarding(page)).toBe(finishesOnboarding)
 
