@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { type SavedProject, withVisit } from './yourProjectsStore'
+import { type SavedProject, withVisit } from './pinnedProjectsStore'
 
 // withVisit is the whole of what a page visit does to the stored lists, so
 // it is tested on plain values, without localStorage.
@@ -9,7 +9,7 @@ describe(withVisit.name, () => {
     const recent = range(8).map((i) => project(`recent-${i}`))
 
     // Visiting every pinned project used to push the unpinned ones out.
-    const after = pinned.reduce(withVisit, { pinned, recent })
+    const after = pinned.reduce(withVisit, { pinned, recent, hasPinned: true })
 
     expect(after.recent.filter((p) => p.href.startsWith('/recent'))).toEqual(
       recent,
@@ -19,7 +19,10 @@ describe(withVisit.name, () => {
   it('drops the oldest unpinned project past eight', () => {
     const recent = range(8).map((i) => project(`recent-${i}`))
 
-    const after = withVisit({ pinned: [], recent }, project('new'))
+    const after = withVisit(
+      { pinned: [], recent, hasPinned: false },
+      project('new'),
+    )
 
     expect(after.recent.map((p) => p.href)).toEqual([
       '/new',
@@ -30,7 +33,7 @@ describe(withVisit.name, () => {
   it('moves a revisited project to the front without duplicating it', () => {
     const [a, b] = [project('a'), project('b')]
 
-    const after = withVisit({ pinned: [], recent: [a, b] }, b)
+    const after = withVisit({ pinned: [], recent: [a, b], hasPinned: false }, b)
 
     expect(after.recent).toEqual([b, a])
   })
@@ -39,7 +42,10 @@ describe(withVisit.name, () => {
     const old = project('a')
     const renamed = { ...old, name: 'A renamed', iconUrl: '/icons/a.new.png' }
 
-    const after = withVisit({ pinned: [old], recent: [] }, renamed)
+    const after = withVisit(
+      { pinned: [old], recent: [], hasPinned: true },
+      renamed,
+    )
 
     expect(after.pinned).toEqual([renamed])
   })

@@ -7,8 +7,8 @@ import type {
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { cn } from '~/utils/cn'
 import { LiveIndicator } from '../LiveIndicator'
+import { PinProjectButton } from '../pinned-projects/PinProjectButton'
 import { SearchBarButton } from '../search-bar/SearchBarButton'
-import { PinProjectButton } from '../your-projects/PinProjectButton'
 import { ProjectVersionSwitcher } from './ProjectVersionSwitcher'
 import { PROJECT_SECTIONS } from './projectSections'
 

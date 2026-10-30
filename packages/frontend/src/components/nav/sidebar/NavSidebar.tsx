@@ -29,9 +29,9 @@ import {
 } from '../../core/Sidebar'
 import { DarkThemeToggle } from '../../DarkThemeToggle'
 import { Logo } from '../../Logo'
+import { NavPinnedProjects } from '../../pinned-projects/NavPinnedProjects'
 import { SocialLinks } from '../../SocialLinks'
 import { NavWhatsNew } from '../../whats-new/NavWhatsNew'
-import { NavYourProjects } from '../../your-projects/NavYourProjects'
 import { MobileNavTriggerClose } from '../mobile/MobileNavTrigger'
 import type { NavGroup } from '../types'
 
@@ -98,7 +98,7 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
               />
             ))}
         </div>
-        <NavYourProjects onNavigate={closeMobileSidebar} />
+        <NavPinnedProjects onNavigate={closeMobileSidebar} />
         {/* In the mobile menu, the end of the list. */}
         <NavWhatsNew onNavigate={closeMobileSidebar} className="lg:hidden" />
       </SidebarContent>
