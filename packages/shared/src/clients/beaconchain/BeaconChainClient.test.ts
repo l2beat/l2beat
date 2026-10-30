@@ -106,24 +106,29 @@ describe(BeaconChainClient.name, () => {
     })
   })
 
-  describe(BeaconChainClient.prototype.getDepositIndex.name, () => {
+  describe(BeaconChainClient.prototype.getForkAndDepositIndex.name, () => {
     it('reads the counter without waiting for the rest of the state', async () => {
       const result = await withServer(
         (req, res) => {
           expect(req.url).toEqual('/eth/v2/debug/beacon/states/8103597')
           res.setHeader('Content-Type', 'application/json')
           // The validators never arrive; the read must not wait for them.
-          res.write('{"data":{"slot":"8103597","eth1_deposit_index":"1639287",')
+          res.write(
+            '{"data":{"slot":"8103597","fork":{"previous_version":"0x03000000","current_version":"0x03000000","epoch":"194048"},"eth1_deposit_index":"1639287",',
+          )
           res.write('"validators":[')
         },
         (url) =>
           mockClient({
             http: new HttpClient(),
             beaconApiUrl: `${url}/`,
-          }).getDepositIndex(8103597),
+          }).getForkAndDepositIndex(8103597),
       )
 
-      expect(result).toEqual(1639287)
+      expect(result).toEqual({
+        forkVersion: '0x03000000',
+        depositIndex: 1639287,
+      })
     })
   })
 

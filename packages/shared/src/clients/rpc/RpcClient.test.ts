@@ -160,7 +160,7 @@ describe(RpcClient.name, () => {
   })
 
   describe(RpcClient.prototype.getTransactionReceipt.name, () => {
-    it('keeps the block hash', async () => {
+    it('keeps the block hash and status', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: { ...mockReceipt, blockHash: '0xabcdef', status: '0x1' },
@@ -170,7 +170,11 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getTransactionReceipt('0xabcd')
 
-      expect(result).toEqual({ ...parsedMockReceipt, blockHash: '0xabcdef' })
+      expect(result).toEqual({
+        ...parsedMockReceipt,
+        blockHash: '0xabcdef',
+        status: 1,
+      })
     })
 
     it('accepts a null effective gas price, as zetachain returns', async () => {

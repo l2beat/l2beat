@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import type { EVMBlockWithTransactions } from '@l2beat/shared'
 import { expect, mockFn } from 'earl'
 import {
@@ -44,8 +45,18 @@ describe(getDirectTransfers.name, () => {
     expect(
       getDirectTransfers(
         block([tx(USER, 3n, BUILDER), tx(USER, 5n), tx(BUILDER, 7n, BUILDER)]),
+        [{ status: 1 }, { status: 1 }, { status: 1 }],
       ),
     ).toEqual(3n)
+  })
+
+  it('skips reverted transactions, which move no ETH', () => {
+    expect(
+      getDirectTransfers(
+        block([tx(USER, 3n, BUILDER), tx(OTHER, 5n, BUILDER)]),
+        [{ status: 0 }, { status: 1 }],
+      ),
+    ).toEqual(5n)
   })
 })
 
@@ -65,22 +76,26 @@ describe(readExecutionDay.name, () => {
     const rpc = {
       getBlockWithTransactions: mockFn(async (n: number) =>
         n === 101
-          ? block([tx(USER, 1n)], [3_000_000_000n])
+          ? block([tx(USER, 1n), tx(OTHER, 4n, BUILDER)], [3_000_000_000n])
           : block([tx(BUILDER, ETH)], [1_000_000_000n]),
       ),
       getBlockReceipts: mockFn().resolvesTo([
-        { gasUsed: 21_000n, effectiveGasPrice: 12n, logs: [] },
+        { gasUsed: 21_000n, effectiveGasPrice: 12n, status: 1, logs: [] },
+        { gasUsed: 21_000n, effectiveGasPrice: 10n, status: 1, logs: [] },
       ]),
     } as unknown as ExecutionDayRpc & {
       getBlockReceipts: ReturnType<typeof mockFn>
     }
 
-    const day = await readExecutionDay(rpc, 100, 102)
+    const day = await readExecutionDay(rpc, Logger.SILENT, 100, 102)
 
     expect(day).toEqual({
       withdrawals: 5n * 10n ** 18n,
-      executionRewards: 2n * ETH + 42_000n,
+      builderPayments: 2n * ETH,
+      priorityFees: 42_000n,
+      directTransfers: 4n,
       blockCount: 3,
+      builderBlockCount: 2,
     })
     expect(rpc.getBlockReceipts).toHaveBeenOnlyCalledWith(101)
   })

@@ -42,6 +42,8 @@ export interface Receipt {
   blockHash?: string
   gasUsed?: bigint
   effectiveGasPrice?: bigint
+  /** 1 on success, 0 on revert; absent before Byzantium. */
+  status?: number
   logs: ReceiptLog[]
 }
 
@@ -444,6 +446,7 @@ function toReceipt(receipt: RpcReceipt): Receipt {
     ...(receipt.effectiveGasPrice != null && {
       effectiveGasPrice: receipt.effectiveGasPrice,
     }),
+    ...(receipt.status !== undefined && { status: Number(receipt.status) }),
     logs: receipt.logs.map((log) => {
       // Only pending logs lack an index, and a receipt implies a mined transaction.
       assert(
