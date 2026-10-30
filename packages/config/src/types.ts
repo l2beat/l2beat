@@ -1029,7 +1029,10 @@ export interface TrustedSetup {
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
+  /** Participant total, distinct from the number of contributed updates. */
   participantCount?: number
+  /** Participant-generated updates, excluding beacons. Contributors may repeat. */
+  contributionCount?: number
 }
 
 // #endregion

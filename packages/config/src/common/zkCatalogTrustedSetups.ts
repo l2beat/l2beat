@@ -72,7 +72,7 @@ export const TRUSTED_SETUPS = {
   PolygonZkEVM: {
     id: 'PolygonZkEVM',
     name: 'Polygon zkEVM',
-    participantCount: 54,
+    contributionCount: 54,
     risk: 'yellow',
     shortDescription:
       'Trusted setup for KZG commitments over BN254 curve used by Polygon zkEVM. It uses 54 Perpetual Powers of Tau participant contributions followed by a public randomness beacon.',
@@ -81,7 +81,7 @@ export const TRUSTED_SETUPS = {
   Risc0: {
     id: 'Risc0',
     name: 'Risc0 Groth16',
-    participantCount: 54,
+    contributionCount: 54,
     risk: 'yellow',
     shortDescription:
       'Circuit-specific trusted setup for Risc0 final wrap Groth16 onchain verifier. Phase 1 used 54 participant contributions and a public randomness beacon, and phase 2 reached 238 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
@@ -90,7 +90,7 @@ export const TRUSTED_SETUPS = {
   Halo2KZG: {
     id: 'Halo2KZG',
     name: 'Halo2 KZG over BN254',
-    participantCount: 71,
+    contributionCount: 71,
     risk: 'yellow',
     shortDescription:
       'Trusted setup for KZG commitments managed by Halo2 team on the base of the first 71 contributions to the Perpetual Powers of Tau contributions.',
@@ -99,7 +99,7 @@ export const TRUSTED_SETUPS = {
   Zircuit: {
     id: 'Zircuit',
     name: 'Zircuit',
-    participantCount: 105,
+    contributionCount: 105,
     risk: 'yellow',
     shortDescription:
       'Trusted setup for KZG commitments over BN254 curve run by the Zircuit team. It inherits 66 Perpetual Powers of Tau participant contributions and adds 39 participant contributions and 5 public randomness updates, for 105 participant contributions in total.',
@@ -118,7 +118,7 @@ export const TRUSTED_SETUPS = {
     id: 'TornadoCash',
     name: 'Tornado Cash',
     risk: 'yellow',
-    participantCount: 30,
+    contributionCount: 30,
     shortDescription:
       'Circuit-specific trusted setup for Groth16 Tornado Cash circuits. It was built on top of 30 phase 1 contributions, and reached 1114 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/TornadoCash.md'),
@@ -127,7 +127,7 @@ export const TRUSTED_SETUPS = {
     id: 'PrivacyPools',
     name: 'Privacy Pools v1',
     risk: 'yellow',
-    participantCount: 61,
+    contributionCount: 61,
     shortDescription:
       'Trusted setup for two Groth16 Privacy Pools circuits. Phase 1 used 61 participant contributions and a public randomness beacon, with 513 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyPools.md'),
@@ -136,7 +136,7 @@ export const TRUSTED_SETUPS = {
     id: 'PrivacyPoolsV2',
     name: 'Privacy Pools v2',
     risk: 'yellow',
-    participantCount: 61,
+    contributionCount: 61,
     shortDescription:
       'Trusted setup for the 27 Groth16 Privacy Pools v2 circuits. Phase 1 used 61 participant contributions and a public randomness beacon. Phase 2 had 500 contributions per circuit from 597 participants and a RANDAO beacon. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyPoolsV2.md'),
@@ -171,7 +171,7 @@ export const TRUSTED_SETUPS = {
     id: 'Railgun',
     name: 'Railgun',
     risk: 'yellow',
-    participantCount: 54,
+    contributionCount: 54,
     shortDescription:
       'Circuit-specific trusted setup for 54 Groth16 Railgun circuits over BN254. Phase 1 used 54 participant contributions and a public randomness beacon, with 304 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/Railgun.md'),
