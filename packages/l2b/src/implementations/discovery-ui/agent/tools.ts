@@ -18,7 +18,13 @@ import { AgentRefError, resolveRef } from './resolveRef'
 import type { AgentContext, AgentReceipt } from './router'
 import { SELECTOR_HELP, SelectorResolver } from './selectors'
 import type { AgentSession } from './session'
-import { AgentCodeError, agentShowSchema, namesOf, resolveStep } from './steps'
+import {
+  AgentCodeError,
+  type AgentStep,
+  agentShowSchema,
+  namesOf,
+  resolveStep,
+} from './steps'
 import {
   type AgentViewRequest,
   agentViewSchema,
@@ -117,9 +123,12 @@ export const AGENT_TOOLS: AgentTool[] = [
   tool({
     name: 'show',
     description:
-      'Points at your answer in every open DiscoUI tab. Each step draws paths, selects a contract and opens its code at a snippet; several steps make a tour the researcher pages through, three to six read best for "how does this work". Contracts are names (Bridge), chain:Name (arb1:L2Timelock) when a name repeats across chains, or chain:0x addresses. A step: {"note": "1-3 sentences", "paths"?: [["Council", "ProxyAdmin", "Bridge"]] each holder first, "nodes"?: ["Escrow"] shown on their own, "select"?: "Bridge" defaults to the code contract or the first shown, "code"?: {"ref": "ProxyAdmin", "find": "function upgrade("} where a function header opens its implementation}.',
+      'Points at your answer in every open DiscoUI tab. Each step draws paths, selects a contract and opens its code at a snippet; several steps make a tour the researcher pages through, three to six read best for "how does this work". Contracts are names (Bridge), chain:Name (arb1:L2Timelock) when a name repeats across chains, or chain:0x addresses. A step: {"note": "1-3 sentences", "paths"?: [["Council", "ProxyAdmin", "Bridge"]] each holder first, "nodes"?: ["Escrow"] shown on their own, "select"?: "Bridge" defaults to the code contract or the first shown, "code"?: {"ref": "ProxyAdmin", "find": "function upgrade("} where a function header opens its implementation}. The result prints the code each step opens. dryRun prints it without showing anything: read the code first, then show notes that say what it does.',
     input: agentShowSchema,
-    argumentHelp: projectArgument,
+    argumentHelp: {
+      ...projectArgument,
+      dryRun: 'print the code the steps open without showing them',
+    },
     readOnly: false,
     run: (input, ui) => show(ui, input),
   }),
@@ -329,20 +338,32 @@ function permissions(
 function show(ui: DiscoUi, input: z.infer<typeof agentShowSchema>): string[] {
   const project = projectOrOpen(ui, input.project)
   const entries = readProjectEntries(ui.configReader, project)
-  const steps = input.steps.map((step) =>
+  const resolved = input.steps.map((step) =>
     resolveStep(ui.configReader, project, entries, step),
   )
+  const steps = resolved.map(({ step }) => step)
   const names = namesOf(entries, steps)
-  const tabs = ui.session.show({ type: 'show', project, steps, names })
   const lines = [
-    tabs === 0
-      ? `No DiscoUI tab is open. Stored: it appears when the researcher opens ${project} in DiscoUI.`
-      : `Shown in ${tabsLabel(tabs)}: ${project}`,
+    input.dryRun === true
+      ? `Not shown, the code these steps open in ${project}:`
+      : showSteps(ui, project, steps, names),
   ]
-  for (const [index, step] of steps.entries()) {
-    printStep(lines, index, steps.length, step, names)
+  for (const [index, { step, excerpt }] of resolved.entries()) {
+    printStep(lines, index, steps.length, step, excerpt, names)
   }
   return lines
+}
+
+function showSteps(
+  ui: DiscoUi,
+  project: string,
+  steps: AgentStep[],
+  names: ReturnType<typeof namesOf>,
+): string {
+  const tabs = ui.session.show({ type: 'show', project, steps, names })
+  return tabs === 0
+    ? `No DiscoUI tab is open. Stored: it appears when the researcher opens ${project} in DiscoUI.`
+    : `Shown in ${tabsLabel(tabs)}: ${project}`
 }
 
 async function controlMap(
