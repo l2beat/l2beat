@@ -45,18 +45,28 @@ export function ChartLegend({
         )}
       >
         {leading}
-        <OverflowWrapper childrenRef={contentRef} className="min-w-0">
+        {/* the padding keeps a focused item clear of the 30px edge fades */}
+        <OverflowWrapper
+          childrenRef={contentRef}
+          className="min-w-0"
+          childrenClassName="scroll-px-[30px]"
+        >
           <div className="flex h-3.5 w-max items-center gap-2" ref={contentRef}>
             {items.map(({ key, config }) => {
               const isHidden =
                 interactiveLegend && !interactiveLegend.dataKeys.includes(key)
+              const Item = interactiveLegend ? 'button' : 'div'
               return (
-                <div
+                <Item
                   key={key}
+                  type={interactiveLegend ? 'button' : undefined}
+                  aria-pressed={interactiveLegend ? !isHidden : undefined}
                   className={cn(
-                    'group/legend-item flex items-center gap-[3px] transition-opacity [&>svg]:text-secondary',
-                    interactiveLegend && 'cursor-pointer select-none',
-                    isHidden && 'opacity-50',
+                    'group/legend-item flex items-center gap-[3px] *:transition-opacity [&>svg]:text-secondary',
+                    interactiveLegend &&
+                      'focus-visible:-outline-offset-1 cursor-pointer select-none rounded-xs focus-visible:outline-1 focus-visible:outline-brand',
+                    // dims the content only, so the focus outline keeps its contrast
+                    isHidden && '*:opacity-50',
                   )}
                   onClick={
                     interactiveLegend
@@ -66,6 +76,16 @@ export function ChartLegend({
                             setHasFinishedOnboarding(true)
                           }
                         }
+                      : undefined
+                  }
+                  // Chrome leaves a partly visible item where it is on focus
+                  onFocus={
+                    interactiveLegend
+                      ? (e) =>
+                          e.currentTarget.scrollIntoView({
+                            block: 'nearest',
+                            inline: 'nearest',
+                          })
                       : undefined
                   }
                 >
@@ -84,7 +104,7 @@ export function ChartLegend({
                   >
                     {config.legendLabel ?? config.label}
                   </span>
-                </div>
+                </Item>
               )
             })}
           </div>
