@@ -244,10 +244,56 @@ export const zksync2: ScalingProject = zkStackL2({
         '**Yes** — Guardian membership is changed via Protocol Governor proposal, but Guardians may explicitly veto proposals affecting the Guardian body itself (Schedule 4 §5.2). Token holders have no unconditional onchain removal path.',
     },
     upgrades: {
-      'Normal upgrade path': `ZIP submission on L2 → ${formatSeconds(protVotingDelayS)} voting delay → ${formatSeconds(protVotingPeriodS)} vote (late quorum +${formatSeconds(protLateQuorumExtensionS)}) → L2→L1 message to the ProtocolUpgradeHandler → ${formatSeconds(legalVetoStandardS)} Guardian offchain-veto window (extendable to ${formatSeconds(legalVetoExtendedS)} by ${guardiansExtendThreshold}/${guardiansMemberCount}) → ≤${formatSeconds(upgradeWaitOrExpireS)} risk review, SC approval (${scApprovalThreshold}/${scMemberCount}) short-circuits to → ${formatSeconds(upgradeDelayPeriodS)} timelock → permissionless execution on Ethereum. Fastest ≈ **${fastestNormalUpgradeD} days** from submission; Guardian-fallback path ≈ **${guardianFallbackUpgradeD} days**.`,
+      'Normal upgrade path': {
+        steps: [
+          { description: 'ZIP submission on L2' },
+          {
+            description: `${formatSeconds(protVotingDelayS)} voting delay`,
+            isWait: true,
+          },
+          {
+            description: `${formatSeconds(protVotingPeriodS)} vote (late quorum +${formatSeconds(protLateQuorumExtensionS)})`,
+          },
+          { description: 'L2→L1 message to the ProtocolUpgradeHandler' },
+          {
+            description: `${formatSeconds(legalVetoStandardS)} Guardian offchain-veto window (extendable to ${formatSeconds(legalVetoExtendedS)} by ${guardiansExtendThreshold}/${guardiansMemberCount})`,
+            isWait: true,
+          },
+          {
+            description: `≤${formatSeconds(upgradeWaitOrExpireS)} risk review, which SC approval (${scApprovalThreshold}/${scMemberCount}) short-circuits`,
+            isWait: true,
+          },
+          {
+            description: `${formatSeconds(upgradeDelayPeriodS)} timelock`,
+            isWait: true,
+          },
+          { description: 'Permissionless execution on Ethereum' },
+        ],
+        note: `Fastest ≈ **${fastestNormalUpgradeD} days** from submission; Guardian-fallback path ≈ **${guardianFallbackUpgradeD} days**.`,
+      },
       'Emergency upgrade path': `**${scMainThreshold}/${scMemberCount} SC + ${guardiansMainThreshold}/${guardiansMemberCount} Guardians + ${zkFoundationStats} ZKsync Foundation, instant**.`,
       'Exit window': `**~${exitWindowD} days** after the vote closes when the SC approves promptly (${formatSeconds(legalVetoStandardS)} veto window + ${formatSeconds(upgradeDelayPeriodS)} timelock). **0** for emergency upgrades.`,
-      'Token Program path': `Grants or modifies capped ZK minting/burning rights. TPPs via Token Governor: ${formatSeconds(tokenVotingDelayS)} delay → ${formatSeconds(tokenVotingPeriodS)} vote (late quorum +${formatSeconds(tokenLateQuorumExtensionS)}) → ${formatSeconds(tokenTlDelayS)} timelock → permissionless execution on Era, ≈ **${tppWallClockD} days**.`,
+      'Token Program path': {
+        steps: [
+          {
+            description:
+              'Token Program Proposal (TPP) submitted to the Token Governor',
+          },
+          {
+            description: `${formatSeconds(tokenVotingDelayS)} delay`,
+            isWait: true,
+          },
+          {
+            description: `${formatSeconds(tokenVotingPeriodS)} vote (late quorum +${formatSeconds(tokenLateQuorumExtensionS)})`,
+          },
+          {
+            description: `${formatSeconds(tokenTlDelayS)} timelock`,
+            isWait: true,
+          },
+          { description: 'Permissionless execution on Era' },
+        ],
+        note: `Grants or modifies capped ZK minting/burning rights. Total ≈ **${tppWallClockD} days**.`,
+      },
       'GovOps path': `GAPs via GovOps Governor: same ${formatSeconds(tokenVotingDelayS)} + ${formatSeconds(tokenVotingPeriodS)} + ${formatSeconds(tokenTlDelayS)} schedule, but advisory only, implementation is left to the proposer or named parties.`,
     },
     tokenGovernance: {

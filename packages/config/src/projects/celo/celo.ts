@@ -160,7 +160,22 @@ export const celo: ScalingProject = opStackL2({
         'DAO can override SC?': `**No — the Council administers itself.** Seats are changed by the Council Safe calling itself, so ${celoCouncilThreshold} of the ${celoCouncilSize} sitting members decide who joins or leaves. CELO governance ratified the inaugural cohort by vote but holds no standing power, because the \`Governance\` contract reaches Celo core contracts and the Community Fund rather than the Ethereum-side rollup contracts.`,
       },
       upgrades: {
-        'Normal upgrade path': `A task is published in the public [celo-superchain-ops](https://github.com/celo-org/celo-superchain-ops) repo → **${celoCouncilStats} Security Council approval** → **${cLabsStats} cLabs approval** → execution through the ${celoOwnerStats} \`CeloProxyAdminOwner\`. Task files carry a nonce per signing layer, including a \`grand_child\` entry for the nested Safe inside the Council. No timelock at any step.`,
+        'Normal upgrade path': {
+          steps: [
+            {
+              description:
+                'A task is published in the public [celo-superchain-ops](https://github.com/celo-org/celo-superchain-ops) repo',
+            },
+            {
+              description: `**${celoCouncilStats} Security Council approval**`,
+            },
+            { description: `**${cLabsStats} cLabs approval**` },
+            {
+              description: `Execution through the ${celoOwnerStats} \`CeloProxyAdminOwner\``,
+            },
+          ],
+          note: 'Task files carry a nonce per signing layer, including a `grand_child` entry for the nested Safe inside the Council. No timelock at any step.',
+        },
         'Emergency upgrade path': `**No separate path** — the normal path executes as soon as both halves have signed, so there is no lower emergency threshold. The fast levers are pauses, and neither belongs to the Security Council: the ${cLabsStats} \`Celo cLabs Multisig\` is the \`CeloSuperchainConfig\` guardian and can pause Celo withdrawals alone, while the shared \`SuperchainConfig\` guardian resolves to the ${opCouncilStats} \`Optimism Security Council\`, which can pause the whole Superchain including Celo without any Celo party consenting. Pauses lapse after ${pauseExpiry}. Celo can reassign its own guardian but cannot remove Optimism's, since the shared config is upgradable only by the ${superchainOwnerStats} \`SuperchainProxyAdminOwner\`.`,
         'Exit window': `**None** — nothing separates the second approval from the upgrade taking effect, so users get no notice and cannot withdraw ahead of an unwanted change. Routine changes run through the same gate: rotating the OP Succinct verification keys is a \`DisputeGameFactory.setImplementation\` call and needs the full ${celoOwnerStats}.`,
         'Proof-system levers': `Beyond upgrades, whoever controls the proof system controls withdrawals. \`AccessManager\` is cLabs-owned and currently allowlists ${proposerCount} proposers and ${challengerCount} challengers (5 independent plus one cLabs). A game can be challenged for ${maxChallengeDuration}, and if no proposal lands for ${fallbackTimeout} the system falls back to permissionless proposing.`,

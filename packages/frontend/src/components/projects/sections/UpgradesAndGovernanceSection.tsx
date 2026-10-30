@@ -1,4 +1,4 @@
-import type { ProjectGovernanceInfo } from '@l2beat/config'
+import type { ProjectGovernanceInfo, ProjectUpgradePath } from '@l2beat/config'
 import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
@@ -12,11 +12,6 @@ import {
 import { ProjectSection } from './ProjectSection'
 import { PAST_UPGRADES_DESCRIPTION } from './sectionCopy'
 import type { ProjectSectionProps } from './types'
-import {
-  isWaitingStep,
-  parseUpgradePath,
-  type UpgradePath,
-} from './upgradePath'
 
 export interface UpgradesAndGovernanceSectionProps extends ProjectSectionProps {
   diagram?: DiagramParams
@@ -74,18 +69,19 @@ function GovernanceInfo({
 }: {
   governanceInfo: ProjectGovernanceInfo
 }) {
-  const sections = GOVERNANCE_INFO_SECTIONS.map((section) => ({
-    ...section,
-    entries: Object.entries(governanceInfo[section.key] ?? {}),
-  })).filter((section) => section.entries.length > 0)
+  const sections = GOVERNANCE_INFO_SECTIONS.filter(
+    (section) => Object.keys(governanceInfo[section.key] ?? {}).length > 0,
+  )
 
   return sections.map((section) => (
     <div key={section.key} className="mt-6 md:mt-8">
       <h3 className="mb-3 text-heading-18">{section.title}</h3>
       {section.key === 'upgrades' ? (
-        <UpgradesInfo entries={section.entries} />
+        <UpgradesInfo upgrades={governanceInfo.upgrades ?? {}} />
       ) : (
-        <GovernanceInfoList entries={section.entries} />
+        <GovernanceInfoList
+          entries={Object.entries(governanceInfo[section.key] ?? {})}
+        />
       )}
     </div>
   ))
@@ -113,17 +109,20 @@ function GovernanceInfoList({ entries }: { entries: [string, string][] }) {
   )
 }
 
-function UpgradesInfo({ entries }: { entries: [string, string][] }) {
+function UpgradesInfo({
+  upgrades,
+}: {
+  upgrades: NonNullable<ProjectGovernanceInfo['upgrades']>
+}) {
   return (
     <div className="space-y-4">
-      {entries.map(([name, description]) => {
-        const path = parseUpgradePath(description)
-        return path ? (
-          <UpgradePathTimeline key={name} name={name} path={path} />
+      {Object.entries(upgrades).map(([name, value]) =>
+        typeof value === 'string' ? (
+          <UpgradeCallout key={name} name={name} description={value} />
         ) : (
-          <UpgradeCallout key={name} name={name} description={description} />
-        )
-      })}
+          <UpgradePathTimeline key={name} name={name} path={value} />
+        ),
+      )}
     </div>
   )
 }
@@ -133,7 +132,7 @@ function UpgradePathTimeline({
   path,
 }: {
   name: string
-  path: UpgradePath
+  path: ProjectUpgradePath
 }) {
   return (
     <div>
@@ -141,34 +140,31 @@ function UpgradePathTimeline({
         {name}
       </p>
       <ol>
-        {path.steps.map((step, i) => {
-          const isWaiting = isWaitingStep(step)
-          return (
-            <li
-              key={i}
-              className="relative flex gap-2 pb-3.5 text-paragraph-14 last:pb-0 md:text-paragraph-15"
-            >
-              {/* Runs from this dot's center to the next one's, behind both dots, so it never leaves a gap. */}
-              {i < path.steps.length - 1 && (
-                <span className="-bottom-[0.5lh] absolute top-[0.5lh] left-[9px] w-0.5 bg-divider" />
-              )}
-              {/* One line tall, so the dot sits on the first line's center at any font size. */}
-              <span className="relative flex h-[1lh] w-5 shrink-0 items-center justify-center">
-                <span
-                  className={cn(
-                    'size-2.5 rounded-full',
-                    isWaiting
-                      ? 'border-2 border-secondary bg-surface-primary'
-                      : 'bg-brand',
-                  )}
-                />
-              </span>
-              <Markdown inline className={cn(isWaiting && 'text-secondary')}>
-                {step}
-              </Markdown>
-            </li>
-          )
-        })}
+        {path.steps.map((step, i) => (
+          <li
+            key={i}
+            className="relative flex gap-2 pb-3.5 text-paragraph-14 last:pb-0 md:text-paragraph-15"
+          >
+            {/* Runs from this dot's center to the next one's, behind both dots, so it never leaves a gap. */}
+            {i < path.steps.length - 1 && (
+              <span className="-bottom-[0.5lh] absolute top-[0.5lh] left-[9px] w-0.5 bg-divider" />
+            )}
+            {/* One line tall, so the dot sits on the first line's center at any font size. */}
+            <span className="relative flex h-[1lh] w-5 shrink-0 items-center justify-center">
+              <span
+                className={cn(
+                  'size-2.5 rounded-full',
+                  step.isWait
+                    ? 'border-2 border-secondary bg-surface-primary'
+                    : 'bg-brand',
+                )}
+              />
+            </span>
+            <Markdown inline className={cn(step.isWait && 'text-secondary')}>
+              {step.description}
+            </Markdown>
+          </li>
+        ))}
       </ol>
       {path.note && (
         <Markdown className="mt-1 pl-7 text-paragraph-14 text-secondary">

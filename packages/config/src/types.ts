@@ -751,8 +751,21 @@ export interface ProjectScalingDa {
 export interface ProjectGovernanceInfo {
   securityCouncil?: Record<string, string>
   guardians?: Record<string, string>
-  upgrades?: Record<string, string>
+  upgrades?: Record<string, string | ProjectUpgradePath>
   tokenGovernance?: Record<string, string>
+}
+
+/** An upgrade path spelled out step by step, so pages can draw it as a timeline. */
+export interface ProjectUpgradePath {
+  steps: ProjectUpgradePathStep[]
+  /** Remarks about the path as a whole, such as its total duration. */
+  note?: string
+}
+
+export interface ProjectUpgradePathStep {
+  description: string
+  /** A stretch where nobody acts (timelock, veto window, delay), drawn apart from the steps where someone does. */
+  isWait?: boolean
 }
 
 export interface ProjectScalingTechnology {
