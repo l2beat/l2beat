@@ -1877,7 +1877,7 @@ export type LivenessOverwriteMode = 'no-data'
  * The contracts the liquid staking indexer reads every hour: the token's
  * exchange rate, plus whatever decides how fast a holder can exit.
  */
-export type ProjectLiquidStakingContracts =
+export type ProjectLiquidStakingContracts = (
   | {
       type: 'lido'
       stETH: ChainSpecificAddress
@@ -1894,12 +1894,51 @@ export type ProjectLiquidStakingContracts =
       weETH: ChainSpecificAddress
       /** Its request counters give the queue wait. */
       withdrawRequestNft: ChainSpecificAddress
+      /** Pays out at once, for a fee, up to a rate-limited amount. */
+      redemptionManager: ChainSpecificAddress
     }
   | {
       type: 'wbeth'
       wBETH: ChainSpecificAddress
-      /** Its lock time is the wait for an onchain redemption. */
+      /**
+       * Its lock time, and its request and allocation counters, give the wait
+       * for an onchain redemption.
+       */
       unwrapToken: ChainSpecificAddress
+    }
+) & {
+  /**
+   * Pools quoted for selling 100 tokens (stETH for Lido); the best quote is
+   * the market exit. A pool that doesn't exist yet gives no quote.
+   */
+  marketQuotes: ProjectLiquidStakingMarketQuote[]
+}
+
+/** A pool selling the token for ETH or WETH. */
+export type ProjectLiquidStakingMarketQuote =
+  | {
+      type: 'curve'
+      pool: ChainSpecificAddress
+      /** Coin indexes of the token sold and of ETH or WETH. */
+      i: number
+      j: number
+    }
+  | {
+      /** Quoted by Uniswap's QuoterV2, against WETH. */
+      type: 'uniswapV3'
+      /** The pool's fee tier, in hundredths of a basis point. */
+      fee: number
+    }
+  | {
+      /** Quoted by BalancerQueries, against WETH. */
+      type: 'balancerV2'
+      poolId: string
+    }
+  | {
+      type: 'fluid'
+      pool: ChainSpecificAddress
+      /** Whether the token sold is the pool's token0. */
+      swap0to1: boolean
     }
 
 export interface ProjectLivenessInfo {

@@ -150,6 +150,15 @@ export const rocketpool: BaseProject = {
     contracts: {
       type: 'rocketpool',
       rETH: discovery.getContract('RocketTokenRETH').address,
+      // Balancer's pool was the deepest until it was drained in 2025-11.
+      marketQuotes: [
+        {
+          type: 'balancerV2',
+          poolId:
+            '0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112',
+        },
+        { type: 'uniswapV3', fee: 100 },
+      ],
     },
   },
   // Declared empty on purpose: the protocol has no bridge, no third-party price

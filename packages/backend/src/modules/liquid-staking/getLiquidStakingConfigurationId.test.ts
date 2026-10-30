@@ -15,9 +15,11 @@ describe(getLiquidStakingConfigurationId.name, () => {
         type: 'wbeth',
         wBETH,
         unwrapToken,
+        marketQuotes: [],
       }),
     ).toEqual(
       getLiquidStakingConfigurationId(ProjectId('wbeth'), {
+        marketQuotes: [],
         unwrapToken,
         wBETH,
         type: 'wbeth',
