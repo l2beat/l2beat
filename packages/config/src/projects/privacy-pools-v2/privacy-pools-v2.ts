@@ -122,7 +122,7 @@ export const privacyPoolsV2: BaseProject = {
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning:
-      'Privacy Pools v2 opened to the public on 2026-10-20 after a capped beta. We are still early, so the ratings rest on the design and ignore the small anonymity set.',
+      'Privacy Pools v2 opened to the public on 2026-10-20 after a capped beta. We are still early, so the ratings rest on the design and ignore the small anonymity set. Aave froze the reserves behind every pool asset on 2026-10-29, so new deposits fail until it unfreezes them. Sends and withdrawals still work.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
