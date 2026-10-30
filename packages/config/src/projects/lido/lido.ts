@@ -1,4 +1,9 @@
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -126,6 +131,24 @@ export const lido: BaseProject = {
   defiInfo: {
     category: 'Liquid Staking',
     tvl: { source: 'l2beat' },
+  },
+  liquidStaking: {
+    contracts: {
+      type: 'lido',
+      stETH: discovery.getContract(STETH).address,
+      withdrawalQueue: discovery.getContract('WithdrawalQueueERC721').address,
+      // The stETH/ETH pool: the deepest for the whole period.
+      marketQuotes: [
+        {
+          type: 'curve',
+          pool: ChainSpecificAddress(
+            'eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022',
+          ),
+          i: 1,
+          j: 0,
+        },
+      ],
+    },
   },
   externalDependencies: [],
   permissions: discovery.getDiscoveredPermissions(),

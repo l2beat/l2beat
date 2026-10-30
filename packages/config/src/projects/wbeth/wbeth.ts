@@ -79,6 +79,16 @@ export const wbeth: BaseProject = {
     category: 'Liquid Staking',
     tvl: { source: 'l2beat' },
   },
+  liquidStaking: {
+    contracts: {
+      type: 'wbeth',
+      wBETH: discovery.getContract('wBETH').address,
+      unwrapToken: discovery.getContract('UnwrapTokenV1ETH').address,
+      // Its pools were never deep, and have been empty since 2026; Binance
+      // redeems off-chain.
+      marketQuotes: [],
+    },
+  },
   // The contracts call no bridge, price feed or other protocol; they only call
   // each other. Binance's off-chain custody and validator operation are trust
   // assumptions covered in the permissions and description above.
