@@ -338,7 +338,34 @@ export const railgun: BaseProject = {
       content: readProjectMarkdown('railgun', 'upgradesAndGovernance'),
       governanceInfo: {
         upgrades: {
-          'Normal upgrade path': `Create a proposal with an IPFS link and onchain calldata in the [Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) → collect **${formatNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** sponsorship within ${formatSeconds(sponsorWindow)} → wait ${formatSeconds(votingStartOffset)} → cast Yay votes within ${formatSeconds(votingYayEndOffset)} and Nay votes within ${formatSeconds(votingNayEndOffset)} → pass with a simple majority and **${formatNumber(Number(quorum / 10n ** 18n))} RAIL** quorum → wait ${formatSeconds(executionStartOffset)} → permissionless execution through the Delegator within ${formatSeconds(executionEndOffset)}.`,
+          'Normal upgrade path': {
+            steps: [
+              {
+                description:
+                  'Create a proposal with an IPFS link and onchain calldata in the [Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC)',
+              },
+              {
+                description: `Collect **${formatNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** sponsorship within ${formatSeconds(sponsorWindow)}`,
+              },
+              {
+                description: `Wait ${formatSeconds(votingStartOffset)}`,
+                isWait: true,
+              },
+              {
+                description: `Cast Yay votes within ${formatSeconds(votingYayEndOffset)} and Nay votes within ${formatSeconds(votingNayEndOffset)}`,
+              },
+              {
+                description: `Pass with a simple majority and **${formatNumber(Number(quorum / 10n ** 18n))} RAIL** quorum`,
+              },
+              {
+                description: `Wait ${formatSeconds(executionStartOffset)}`,
+                isWait: true,
+              },
+              {
+                description: `Permissionless execution through the Delegator within ${formatSeconds(executionEndOffset)}`,
+              },
+            ],
+          },
           'Exit window': `**${formatSeconds(executionStartOffset)}** — a passed proposal must wait this long before it can be executed, giving users time to unshield funds.`,
         },
         tokenGovernance: {

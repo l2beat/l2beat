@@ -1,6 +1,6 @@
 {
   "name": "edgechain",
-  "timestamp": 1791533705,
+  "timestamp": 1793196526,
   "configHash": "0x2780c5d06615788113c5a323ad4ef6df557fed7b8a7bed7cf234a924b6fc247e",
   "entries": [
     {
@@ -68,10 +68,13 @@
         "challenges": [],
         "confirmPeriodBlocks": 50400,
         "genesisAssertionHash": "0x75c2df1d9a6f98d1de62c8fc955f91b87f16fefa2fafe4d6b52118fc30e1c278",
-        "getValidators": ["arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8"],
+        "getValidators": [
+          "arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8",
+          "arb1:0x4F12e3d982C3308039761298E4582a91Fd9C4209"
+        ],
         "inbox": "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
         "isPostBoLD": true,
-        "latestConfirmed": "0xc378e922107a1fcfd73e2b36b4cd7cead4be8de473ad45458eb6698ef5e13603",
+        "latestConfirmed": "0xee63f18e029f6ad6492969e3dcc8a776da8b7fc28831b2075d1d6c687275a764",
         "loserStakeEscrow": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
@@ -316,13 +319,18 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 140736,
+        "nonce": 142397,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836": "GnosisSafeProxy",
         "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       }
+    },
+    {
+      "address": "arb1:0x4F12e3d982C3308039761298E4582a91Fd9C4209",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProverMemory",
@@ -342,6 +350,11 @@
       "implementationNames": {
         "arb1:0x583F8BA007580c83EFB4B02C66694096cD5c56d1": "OneStepProverMemory"
       }
+    },
+    {
+      "address": "arb1:0x5e65E7ED796e12dDFBD82829AD64BC76c87c7A88",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProofEntry",
@@ -418,7 +431,7 @@
         "allowedOutboxList": [
           "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764"
         ],
-        "delayedMessageCount": 173179,
+        "delayedMessageCount": 178172,
         "inboxHistory": [
           "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
           "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD"
@@ -426,8 +439,8 @@
         "outboxHistory": ["arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764"],
         "rollup": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
         "sequencerInbox": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
-        "sequencerMessageCount": 156554,
-        "sequencerReportedSubMessageCount": 829819
+        "sequencerMessageCount": 161547,
+        "sequencerReportedSubMessageCount": 842803
       },
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
@@ -542,6 +555,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "arb1:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Outbox",
       "address": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
       "type": "Contract",
@@ -642,7 +660,8 @@
             "adminRole": "ADMIN_ROLE",
             "members": [
               "arb1:0x871e290d5447b958131F6d44f915F10032436ee6",
-              "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"
+              "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
+              "arb1:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7"
             ]
           }
         },
@@ -651,7 +670,8 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": [
           "arb1:0x871e290d5447b958131F6d44f915F10032436ee6",
-          "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"
+          "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
+          "arb1:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7"
         ],
         "transactionFilteringPrecompile": "edge:0x0000000000000000000000000000000000000074"
       },
@@ -786,9 +806,12 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 156554,
+        "batchCount": 161547,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
-        "batchPosters": ["arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83"],
+        "batchPosters": [
+          "arb1:0x5e65E7ED796e12dDFBD82829AD64BC76c87c7A88",
+          "arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83"
+        ],
         "bridge": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "buffer": {
@@ -801,11 +824,8 @@
         },
         "dacKeyset": {
           "requiredSignatures": 2,
-          "membersCount": 5,
+          "membersCount": 2,
           "blsSignatures": [
-            "YA10Tx0VOmY6ZaRDft0hy9Jp3KTNup+mJYlWIyySLr7CZ6ZWlfIhMVv15OXej5a+NhmH1xFFxZLR5uMgYkA+uKIDRuFYmRrAHzlBMCfnytPl68fV4yTolBaNmGb1uO/1cgjO0nnOrgADTYh1jMmZu0y87DtvsdDYr2u+hFEo1StVGlZhfd5qg0+zWEXEDrBD2BGxapx2BBj9nPt+1SlH0HDq29nHnfyiOKM0B5nAoXbBne4QdxfkKlS0XW9X2ikeJwwLvXivK+EazbtWLS+e6XgFG6pKbxzdG5+iGNBYQLC3DPb6Q1Weabl99gsebWoVPBfS3hdeoHTTq5fnpHI0iDdiM7i9t6LqMM5vmDgLMgi/w3yxOVyBSwpjn7Wt+3NkLw==",
-            "YAPs5RkU8pYUUt68mNKAJNIZ03qrn8DMCY1KU4KCnh5eiJaQ+K0TfcWpBTgOMyoCcBgCN15WdyFdFswj2Z0w/UYzFKBYo3lrudeovLSeRULZ+xHv96dUjnwJvtQkJEKZdxCmrdC/Xits0gGGxfbFEhB6Ywv/sKpgz7MVQcB+/by/l3DNvR+VuYpr8qm/0kNjFRYH9OULZM51D/N3uyni4aolb/NCeZJFQ9ni2jeNfvoiU7Vo5M6H3c43k+1VZJfEZhjvz9TlJbp3rg3Fmo2UBOWKkH3R4P3jcgo357B23LMoyHsdRcyoOCjYw2tZqOH1tBeaedvgFTu5d/r4l5aTMA6Hu31mkDbz0Jk1DPy2WpwBjmAMOtT/wLYAbEbGYrs7mg==",
-            "YAca1+a2vM6xO7/Z5qHD0swdq+vsGAierMiGew+GQAQBT3zZW7Z/LDorJtr5b6dq5wmeJFNPoGnF9kgGElWkG9lyL4vtU4Jr65YmgEOE28MecNaEtXfZM48s1RunXX04FhgJdHujSzQYkc3xxQdpIdJdVzglSXP/I9o/y1BmQFVlNQOzKFP+1HNFpephWb0WEhQsakr0KMn46QK10lD5euEeQXOKBo8srablM6v/ESP3K6QkmJtu1LD0hxW0rz83/hRYMTB2/9hMKhgQ1Nm/0veou49hv3AY3gCx85ZcSs0cLms/sp1NovNPybkQhxkTMRRz9FdXlXpgVVs/jW1KzbLs00/0wxitGfvIFrNiSkGgnPGAVqS9uCgYaX6Y+KREuA==",
             "YA8PdhR9G6EFhblLWymAJ931fvjjb4tOk4a377DXogOfYChxbQETJT3GBYtAvIMmlRUujXEY4uCXjmv5toOcVoDkU4w1wYSvoK3r441hwJw7pG+R+aeGUINtROsxI9sqwhiafKADPPdxLy80mUTK5oIaPztF7RG2WhKMFNK7Ebjsrn4si90qAKRIt7sfneEO4wdeuC5erBen3tLJ7lE32uCi13sEJZYU7UKfr2cwoDQSZyvYePb2KX9U3bHhTpXBbwGKg2pIUGZ5g5GiOuV42wdbfqMjrsOZiLuMbgyYfVl3OOUpDUPGZyupZdGvkzk0rhGY/O/dF1Pv+BCcuX9qUCldfrFYiAvWqYcny+5xKXSQLSlU9cBdTePXy/dotyR7vA==",
             "YBP6/hdXzakIwPZ68/ORUMDJcuhMwQr/C9anzOd5pbWBokbORN1nrEGAOJMmRfLLtRdcABs+DNEopeD4JnwdzbB5e3pHjqqhJvFJzPQ+Rvvo3uPhbECR/Ptf0Umd35mD+AQPB0rLQbAngxs8tNUnS6IllQIW/FeEGm3LwjZ32m+D08Vh5rgqMKWOpGk/Op4sIhGP3Ishpq6yC/kd+GVSDj+vc30oOuNzVtsuAGMTTy8SmlNR47eVX9eMW9bEWIk65QCAaO4T5EqH5IWNKmWZI0Q0yGSHgvslmUZHApw2vIXn0rrzc5DwyUcgn3XZz2H5vhUXvV95qFARTQ9V7SDIXr134ixoaAmhEHqeav9vhlVZE13e9ghd5iNr6BZQn7SrpQ=="
           ]
@@ -817,7 +837,7 @@
         "HEADER_LENGTH": 40,
         "isDelayBufferable": true,
         "isUsingFeeToken": false,
-        "keySetUpdates": 2,
+        "keySetUpdates": 3,
         "maxDataSize": 104857,
         "maxTimeVariation": {
           "delayBlocks": 28800,
@@ -829,8 +849,8 @@
         "reader4844": "arb1:0x0000000000000000000000000000000000000000",
         "rollup": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
         "sequencerVersion": "0x88",
-        "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 173178,
+        "setIsBatchPosterCount": 2,
+        "totalDelayedMessagesRead": 178171,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -982,7 +1002,10 @@
       "description": "ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered.",
       "values": {
         "$immutable": true,
-        "chainOwners": ["edge:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"],
+        "chainOwners": [
+          "edge:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
+          "edge:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7"
+        ],
         "filteredTransactionsAdded": 0,
         "filteredTransactionsDeleted": 0,
         "transactionFilterers": []
@@ -1000,6 +1023,11 @@
           "href": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
         }
       ]
+    },
+    {
+      "address": "edge:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "edge:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
@@ -1840,8 +1868,8 @@
     "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "arbitrum": 513140286, "edgechain": 829819 },
-  "permissionsConfigHash": "0xce0c67dab1680c92df5715f7f700ee20c3fa7f1dd415a132807fd7da14dcdd2f",
+  "usedBlockNumbers": { "arbitrum": 519068811, "edgechain": 842803 },
+  "permissionsConfigHash": "0xd9fea370121e497adecda8c3be5142a979fa13fdd93ab13b046f22e40f98f124",
   "permissions": {
     "arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8": {
       "receivedPermissions": [
@@ -1869,6 +1897,26 @@
           "from": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer"
+        }
+      ]
+    },
+    "arb1:0x4F12e3d982C3308039761298E4582a91Fd9C4209": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".getValidators"
+        }
+      ]
+    },
+    "arb1:0x5e65E7ED796e12dDFBD82829AD64BC76c87c7A88": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
         }
       ]
     },
@@ -2030,6 +2078,116 @@
         }
       ]
     },
+    "arb1:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
+          "via": [
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x107695630130919cb040B095b9b20511D6e211bB",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xedC476079a899382ff54790e943315bcBb3de7f7",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
+          "role": ".executors"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
     "arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83": {
       "receivedPermissions": [
         {
@@ -2169,6 +2327,16 @@
         }
       ],
       "eoaWithUpgradePermissions": true
+    },
+    "edge:0x967e4fa8876b4aB87E793E954a47b34794c1E1a7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "edge:0x0000000000000000000000000000000000000074",
+          "description": "ArbOS chain owner: can change any ArbOS chain parameter, add chain owners and add transaction filterers, which can forcibly fail any transaction, including force-included ones.",
+          "role": ".chainOwners"
+        }
+      ]
     },
     "edge:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28": {
       "receivedPermissions": [

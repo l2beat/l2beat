@@ -394,6 +394,14 @@ export const ethereum: BaseProject = {
             inbox: '0x07f9e14feb43a6262141bfb598c09b678fd00163',
             sequencers: ['0x4261d69f840cc550945def48e5f477737118d546'],
             sinceBlock: 26135813,
+            untilBlock: 26293833, // superseded by the inbox-only entry below
+          },
+          {
+            // EEZPostBatcher takes batches from anyone with a valid proof, and
+            // EEZ runs more than one batcher, so the inbox alone identifies them
+            type: 'ethereum',
+            inbox: '0x07f9e14feb43a6262141bfb598c09b678fd00163',
+            sinceBlock: 26293834,
           },
         ],
       },

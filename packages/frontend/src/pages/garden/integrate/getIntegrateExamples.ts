@@ -4,6 +4,7 @@ import {
   type OssificationHistory,
 } from '@l2beat/shared/frontend'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { ps } from '~/server/projects'
 import { CROPS_API_URL, type CropsApiEndpointKey } from './content'
@@ -38,9 +39,6 @@ export interface ExampleProject {
       }
     | undefined
 }
-
-/** API responses link to production whatever host served them. */
-const L2BEAT_ORIGIN = 'https://l2beat.com'
 
 const ETHEREUM_CHAIN_ID = 1
 
@@ -149,7 +147,7 @@ function toApiProject(
     id: project.id,
     slug: project.slug,
     name: project.name,
-    href: path ? `${L2BEAT_ORIGIN}${path}` : null,
+    href: path ? `${PRODUCTION_ORIGIN}${path}` : null,
     crops,
     inGarden: listing === 'listed',
     attestation:

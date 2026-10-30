@@ -6,24 +6,24 @@
   "ignoreMethods": [
     "depositQueuePointers",
     "exitDeadlineThreshold",
+    "getKeysForTopUp",
     "getNodeOperator",
     "getNodeOperatorBalance",
     "getNodeOperatorIsActive",
     "getNodeOperatorManagementProperties",
     "getNodeOperatorNonWithdrawnKeys",
     "getNodeOperatorOwner",
-    "getNodeOperatorSummary"
+    "getNodeOperatorSummary",
+    "getTopUpQueueItem"
   ],
   "ignoreInWatchMode": [
     "getActiveNodeOperatorsCount",
     "getDepositableValidatorsCount",
-    "getKeysForTopUp",
     "getNodeOperatorDepositInfoToUpdateCount",
     "getNodeOperatorsCount",
     "getNonce",
     "getStakingModuleSummary",
     "getTopUpQueue",
-    "getTopUpQueueItem",
     "getTopUpQueueLength",
     "getTotalModuleStake"
   ],

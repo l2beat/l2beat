@@ -1,3 +1,86 @@
+Generated with discovered.json: 0xd4d2e0bdddcb88d6302e4c86657c0fdeaa3a0862
+
+# Diff at Fri, 30 Oct 2026 06:29:39 GMT:
+
+- id: 3918603b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3d1218cb07020fc721784bb6efe8b6c3307f13db block: 1791452652
+- current timestamp: 1791452652
+
+## Description
+
+Legacy L2 bridge and bridged token beacon on ZKsync Era tracked as critical.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791452652 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20Bridge (eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) [N/A] {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+      values.l2Bridge:
+-        "eth:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102"
++        "zksync:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102"
+      values.l2TokenBeacon:
+-        "eth:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6"
++        "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"zksync"}}]
+    }
+```
+
+```diff
+    external contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: None
+      directlyReceivedPermissions.9:
++        {"permission":"interact","from":"zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6","description":"change the beacon implementation.","role":".owner"}
+    }
+```
+
+```diff
+    external contract (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"interact","from":"zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6","description":"change the beacon implementation.","role":".owner","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"zksync:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102","role":"admin","via":[{"address":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
+    external contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      directlyReceivedPermissions.0:
++        {"permission":"upgrade","from":"zksync:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102","role":"admin"}
+      name:
++        "ZkTokenProxyAdmin"
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-zk-stack"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BridgedStandardERC20 (zksync:0x05b00ef3489E21E57b3e93a72bc9F59c57bB199b) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2SharedBridgeLegacy (zksync:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102) [N/A]
+    +++ description: Legacy L2 bridge of ZKsync Era. Deploys the bridged tokens of legacy deposits as beacon proxies of the l2TokenBeacon.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6) [global/UpgradeableBeacon]
+    +++ description: A beacon with an upgradeable implementation currently set as zksync:0x05b00ef3489E21E57b3e93a72bc9F59c57bB199b. Beacon proxy contracts pointing to this beacon will all use its implementation.
+```
+
 Generated with discovered.json: 0x9548ca9d62854b1cfc7fe4c0dfd1fa26c9c45677
 
 # Diff at Sat, 24 Oct 2026 16:41:09 GMT:

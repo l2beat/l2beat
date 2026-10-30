@@ -14,10 +14,8 @@ import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import {
-  WALK_AWAY_NOT_PASSED_PROJECTS,
-  WALK_AWAY_PASSED_PROJECTS,
-} from '~/consts/walkAwayProjects'
+import type { WalkAwayVerdict } from '~/consts/walkAwayProjects'
+import { getWalkAwayVerdict } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
@@ -144,6 +142,7 @@ export interface ProjectL2Entry {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
   stageConfig: ProjectScalingStage
+  walkAway: WalkAwayVerdict | undefined
   discoUiHref: string | undefined
 }
 
@@ -339,6 +338,7 @@ export async function getL2ProjectEntry(
       project.scalingInfo.type === 'Other'
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
+    walkAway: getWalkAwayVerdict(project),
     discoUiHref: project.discoveryInfo?.hasDiscoUi
       ? `https://disco.l2beat.com/ui/p/${project.id}`
       : undefined,
@@ -625,11 +625,7 @@ export async function getL2ProjectEntry(
             : undefined,
         scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
         emergencyWarning: project.statuses.emergencyWarning,
-        walkAway: WALK_AWAY_PASSED_PROJECTS.includes(project.id)
-          ? 'passed'
-          : WALK_AWAY_NOT_PASSED_PROJECTS.includes(project.id)
-            ? 'not-passed'
-            : undefined,
+        walkAway: common.walkAway,
       },
     })
   }

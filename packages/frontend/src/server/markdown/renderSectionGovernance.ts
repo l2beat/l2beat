@@ -1,4 +1,4 @@
-import type { ProjectGovernanceInfo } from '@l2beat/config'
+import type { ProjectGovernanceInfo, ProjectUpgradePath } from '@l2beat/config'
 import { GOVERNANCE_INFO_SECTIONS } from '~/components/projects/sections/governanceInfoSections'
 import type { PastUpgradesData } from '~/components/projects/sections/PastUpgradesDialog'
 import { PAST_UPGRADES_DESCRIPTION } from '~/components/projects/sections/sectionCopy'
@@ -35,7 +35,12 @@ function renderGovernanceProfile(
     'Governance profile',
     joinBlocks(
       GOVERNANCE_INFO_SECTIONS.map(({ key, title }) => {
-        const rows = Object.entries(governanceInfo?.[key] ?? {})
+        const rows = Object.entries(governanceInfo?.[key] ?? {}).map(
+          ([name, value]): [string, string] => [
+            name,
+            typeof value === 'string' ? value : formatUpgradePath(value),
+          ],
+        )
         return subsection(
           level + 1,
           title,
@@ -44,6 +49,12 @@ function renderGovernanceProfile(
       }),
     ),
   )
+}
+
+/** The HTML draws the path as a timeline; a table cell gets it as one line. */
+function formatUpgradePath(path: ProjectUpgradePath) {
+  const steps = path.steps.map((step) => step.description).join(' → ')
+  return path.note ? `${steps}. ${path.note}` : `${steps}.`
 }
 
 /** The HTML shows the stats and hides the upgrade list behind a "View past upgrades" dialog; here both are spelled out, newest first as in the dialog. */

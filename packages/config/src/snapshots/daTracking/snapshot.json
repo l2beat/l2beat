@@ -418,13 +418,23 @@
       }
     },
     {
+      "id": "3231d3c5bc18",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x07f9e14feb43a6262141bfb598c09b678fd00163",
+        "sinceBlock": 26293834
+      }
+    },
+    {
       "id": "47b27b1cce3d",
       "config": {
         "daLayer": "ethereum",
         "type": "ethereum",
         "inbox": "0x07f9e14feb43a6262141bfb598c09b678fd00163",
         "sequencers": ["0x4261d69f840cc550945def48e5f477737118d546"],
-        "sinceBlock": 26135813
+        "sinceBlock": 26135813,
+        "untilBlock": 26293833
       }
     }
   ],

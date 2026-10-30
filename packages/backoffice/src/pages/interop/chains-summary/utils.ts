@@ -1,11 +1,10 @@
+import { PRODUCTION_FRONTEND_URL } from '~/api/frontend'
 import type {
   ChainsSummaryBackendChain,
   ChainsSummaryFrontendChain,
   ChainsSummaryRow,
   EnvironmentChainSummaryData,
 } from './types'
-
-const PRODUCTION_FRONTEND_URL = 'https://l2beat.com'
 
 export function getChainsSummaryRows(input: {
   productionBackend: ChainsSummaryBackendChain[] | undefined
