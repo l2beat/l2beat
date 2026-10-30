@@ -10212,5 +10212,24 @@
       "source": "native",
       "supply": "totalSupply"
     }
+  ],
+  "codex": [
+    {
+      // Circle-issued native USDC, moved crosschain through CCTP.
+      "symbol": "USDC",
+      "address": "0xd996633a415985DBd7D6D12f4A4343E31f5037cf",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1742236935
+    }
   ]
 }

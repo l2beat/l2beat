@@ -1,0 +1,59 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "doma",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "doma-DPX",
+      "priceId": "dopex",
+      "symbol": "DPX",
+      "name": "Dopex Governance Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16652/large/DPX_%281%29.png?1696516213",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81",
+        "chain": "ethereum",
+        "escrowAddress": "0xbaedB5B6Da67F96b4125F17dD92F618696494bd3",
+        "decimals": 18,
+        "sinceTimestamp": 1757968751,
+        "untilTimestamp": 1776211200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "doma-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x14Ea6ADD7fA61001bD2e38100BFdF2cD710E44D9",
+            "decimals": 18,
+            "sinceTimestamp": 1757968751
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xbaedB5B6Da67F96b4125F17dD92F618696494bd3",
+            "decimals": 18,
+            "sinceTimestamp": 1757968751
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}
