@@ -70,6 +70,13 @@ describe(linkGlossaryTerms.name, () => {
     expect(output).toEqual(input)
   })
 
+  it('should not replace terms within autolinks or HTML tags', () => {
+    const input =
+      'List: <https://github.com/org/repo/blob/main/README.md>. <a href="https://example.com/blob">here</a>'
+    const output = linkTerms(input)
+    expect(output).toEqual(input)
+  })
+
   it('should ignore linking terms wrapped with delimiters', () => {
     const input = ':Data availability: is spicy. Also Blob is not spicy.'
     const output = linkTerms(input)

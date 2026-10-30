@@ -203,16 +203,14 @@ function escapeRegExp(string: string) {
 function getIgnoredAndLinkOffsets(text: string) {
   const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g
   const backtickPattern = /`([^`]*)`/g
+  // Autolinks (<https://…>) and inline HTML tags
+  const angleBracketPattern = /<[^\s<>][^<>]*>/g
 
-  const linkOffsets = [...text.matchAll(linkPattern)].map((match) => ({
-    start: match.index,
-    end: match.index + match[0].length,
-  }))
-
-  const backtickOffsets = [...text.matchAll(backtickPattern)].map((match) => ({
-    start: match.index,
-    end: match.index + match[0].length,
-  }))
-
-  return linkOffsets.concat(backtickOffsets)
+  return [linkPattern, backtickPattern, angleBracketPattern].flatMap(
+    (pattern) =>
+      [...text.matchAll(pattern)].map((match) => ({
+        start: match.index,
+        end: match.index + match[0].length,
+      })),
+  )
 }
