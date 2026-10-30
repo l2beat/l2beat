@@ -5078,6 +5078,65 @@
       ]
     }
   },
+  "orbitstack-depositeth": {
+    "description": "ETH deposits via Inbox.depositEth, credited on L2 by a deposit tx with no logs",
+    "txs": [
+      // ethereum -> arbitrum (~36.4 ETH)
+      {
+        "chain": "ethereum",
+        "tx": "0xf3773c0a76f4f5dfaed3ae16eb9cb84a09adf16f4c3558e3a8868a231717dc26"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9c1fca27d65b585a331ceb28a277ce964726481acffbeaa0e0cd3ddc1616a289"
+      },
+      // ethereum -> robinhood (~0.1 ETH)
+      {
+        "chain": "ethereum",
+        "tx": "0x199598b23d0c401f44318bdfd7eaf000ceb5eb821d1fbb79bb878278f5424ce6"
+      },
+      {
+        "chain": "robinhood",
+        "tx": "0x4945f9d407e6f91ac0923bc8041efc9f3fe1911a7b5097c0800eccada08bff1a"
+      }
+    ],
+    "expects": {
+      "events": [
+        "orbitstack.MessageDelivered",
+        "orbitstack.EthDepositTx",
+        "orbitstack.MessageDelivered",
+        "orbitstack.EthDepositTx"
+      ],
+      "messages": [
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" }
+      ],
+      "transfers": [
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "36437225294834113060",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "36437225294834113060",
+            "financials": { "symbol": "ETH" }
+          }
+        },
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "99846227349264786",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "99846227349264786",
+            "financials": { "symbol": "ETH" }
+          }
+        }
+      ]
+    }
+  },
   "orbitstack-contract-deposit": {
     "description": "ETH deposits via contract (tx.value != callvalue)",
     "txs": [
