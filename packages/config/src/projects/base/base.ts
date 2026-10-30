@@ -425,7 +425,24 @@ export const base: ScalingProject = opStackL2({
         'Who can override the Council?': `**Nobody — it administers itself.** Seats are changed by the Council Safe calling itself, so ${securityCouncilThreshold} of the ${securityCouncilSize} sitting members decide who joins or leaves. There is no token, DAO or veto body. The ${governanceStats} blocks both ways: neither side can upgrade alone. Below ${securityCouncilThreshold} available signers upgrades stall, and there is no liveness module handing control to a fallback.`,
       },
       upgrades: {
-        'Normal upgrade path': `Task published in [base/contract-deployments](https://github.com/base/contract-deployments) → **${securityCouncilStats} Security Council approval** → **${coordinatorStats} Coordinator Multisig approval** → execution through the ${governanceStats} \`Base Governance Multisig\`. No timelock, and no Safe carries a delay module. Beryl verifier-hash update, June 2026: Council approved 22 Jun, Coinbase 23 Jun, executed 43 minutes later.`,
+        'Normal upgrade path': {
+          steps: [
+            {
+              description:
+                'Task published in [base/contract-deployments](https://github.com/base/contract-deployments)',
+            },
+            {
+              description: `**${securityCouncilStats} Security Council approval**`,
+            },
+            {
+              description: `**${coordinatorStats} Coordinator Multisig approval**`,
+            },
+            {
+              description: `Execution through the ${governanceStats} \`Base Governance Multisig\``,
+            },
+          ],
+          note: 'No timelock, and no Safe carries a delay module. Beryl verifier-hash update, June 2026: Council approved 22 Jun, Coinbase 23 Jun, executed 43 minutes later.',
+        },
         'Emergency upgrade path': `**None** — the normal path executes as soon as both Safes sign, so there is no lower emergency threshold. The fastest lever is a pause: the ${incidentResponderStats} \`Base Multisig 1\` can pause withdrawals alone as Incident Responder, but only once per identifier, since the pause expires after ${pauseExpiry} and it cannot pause again until the Guardian unpauses. The Guardian is the ${governanceStats} \`Base Governance Multisig\` itself, which can also blacklist dispute games, set the respected game type and retire all in-flight games.`,
         'Exit window':
           '**None** — nothing separates the second signature from the upgrade taking effect, so users cannot withdraw ahead of an unwanted change. Tasks are published before signing and Base targets six hard forks a year, but neither is enforced onchain.',

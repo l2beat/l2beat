@@ -173,6 +173,15 @@ describe(renderProjectSection.name, () => {
         content: 'The DAO upgrades.',
         governanceInfo: {
           securityCouncil: { Threshold: '9/12' },
+          upgrades: {
+            'Normal upgrade path': {
+              steps: [
+                { description: 'Vote' },
+                { description: 'Timelock (3d)', isWait: true },
+              ],
+              note: 'About 10 days.',
+            },
+          },
           tokenGovernance: { Token: 'ARB' },
         },
         pastUpgrades: {
@@ -184,7 +193,7 @@ describe(renderProjectSection.name, () => {
 
     expect(markdown).toInclude(
       '![A diagram](https://l2beat.com/images/diagram.png)\n\nThe DAO upgrades.',
-      '### Governance profile\n\n#### Security Council\n\n| Property | Value |\n| --- | --- |\n| Threshold | 9/12 |\n\n#### Token governance',
+      '### Governance profile\n\n#### Security Council\n\n| Property | Value |\n| --- | --- |\n| Threshold | 9/12 |\n\n#### Upgrades\n\n| Property | Value |\n| --- | --- |\n| Normal upgrade path | Vote → Timelock (3d). About 10 days. |\n\n#### Token governance',
       '### Past upgrades',
       '- Count of upgrades: No upgrades\n- Last upgrade: N/A\n- Avg upgrade interval: N/A',
     )
