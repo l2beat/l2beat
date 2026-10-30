@@ -104,5 +104,6 @@ const ENTRY: ProjectL2Entry = {
     message: undefined,
     summary: [],
   },
+  walkAway: undefined,
   discoUiHref: undefined,
 }

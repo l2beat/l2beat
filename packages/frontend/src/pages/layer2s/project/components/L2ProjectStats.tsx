@@ -18,10 +18,6 @@ import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import {
-  WALK_AWAY_NOT_PASSED_PROJECTS,
-  WALK_AWAY_PASSED_PROJECTS,
-} from '~/consts/walkAwayProjects'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { cn } from '~/utils/cn'
@@ -111,13 +107,7 @@ export function ProjectL2Stats({ project, className }: Props) {
               stageConfig={project.stageConfig}
               isAppchain={project.isAppchain}
               emergencyWarning={project.header.emergencyWarning}
-              walkAway={
-                WALK_AWAY_PASSED_PROJECTS.includes(project.id)
-                  ? 'passed'
-                  : WALK_AWAY_NOT_PASSED_PROJECTS.includes(project.id)
-                    ? 'not-passed'
-                    : undefined
-              }
+              walkAway={project.walkAway}
             />
           </a>
         }
