@@ -31,7 +31,7 @@ export function MandatePage(props: AppLayoutProps) {
               )}
             >
               <Argument />
-              <Sources className="max-lg:order-last max-lg:mt-16 lg:col-start-2 lg:row-start-1 lg:pt-1.5" />
+              <Sources className="max-lg:order-last max-lg:mt-16 md:max-lg:mt-24 lg:col-start-2 lg:row-start-1 lg:pt-1.5" />
               <Verbs className="lg:col-span-2" />
             </PrimaryCard>
             <Pledge />
@@ -48,22 +48,29 @@ const INSET = 'px-5 md:px-12 lg:px-16'
 const SHEET = cn(INSET, 'py-12 md:py-16')
 // Inter Bold at −3%, the brand's headline setting.
 const DISPLAY = 'font-inter font-bold tracking-[-0.03em]'
-const BODY = 'text-[18px] leading-[1.65] md:text-[20px] md:leading-[1.6]'
+// About 60 characters a line at every width, the sheet's columns included.
+const BODY =
+  'max-w-[36rem] text-pretty text-[18px] leading-[1.65] md:text-[20px] md:leading-[1.6]'
+// The verbs and the pledge: one step below the belief.
+const STATEMENT = cn(
+  DISPLAY,
+  'text-[28px] leading-[1.1] md:text-[36px] lg:text-[40px] xl:text-[44px]',
+)
 
 function Belief() {
   return (
     // On the page's own ground, no card: the one thing on the page not on a
-    // sheet.
+    // sheet. Short enough that the argument starts on a laptop's first screen.
     <header
       className={cn(
         INSET,
-        'flex items-center gap-10 pt-10 pb-14 max-sm:flex-col-reverse max-sm:items-start md:pt-16 md:pb-20 lg:pt-20',
+        'flex items-center gap-6 pt-8 pb-6 max-sm:flex-col-reverse max-sm:items-start sm:justify-between sm:gap-10 md:pt-12 md:pb-12 lg:pt-14',
       )}
     >
       <h1
         className={cn(
           DISPLAY,
-          'max-w-[17ch] flex-1 text-[38px] leading-[1.04] md:text-[52px] xl:text-[68px]',
+          'max-w-[20ch] flex-1 text-balance text-[36px] leading-[1.04] md:text-[48px] lg:text-[52px] xl:text-[60px]',
         )}
       >
         {MANDATE.belief}
@@ -71,7 +78,7 @@ function Belief() {
       <Logo
         small
         animated={false}
-        className="mt-0 h-16 w-auto shrink-0 sm:h-40 lg:h-52 xl:h-64"
+        className="mt-0 h-14 w-auto shrink-0 sm:h-32 lg:h-44 xl:h-48"
       />
     </header>
   )
@@ -156,13 +163,13 @@ function SourceList({
         <li
           key={source.href}
           id={`source-${first + i}`}
-          className="scroll-mt-6 pl-1"
+          className="scroll-mt-6 text-pretty pl-1"
         >
           <a
             href={source.href}
             target="_blank"
             rel="noreferrer"
-            className="text-primary underline decoration-divider underline-offset-[0.25em] transition-colors hover:decoration-current"
+            className="text-primary underline decoration-primary/30 underline-offset-[0.25em] transition-colors hover:decoration-current"
           >
             {source.title}
           </a>
@@ -181,14 +188,10 @@ function Verbs({ className }: { className?: string }) {
       {MANDATE.verbs.map((verb) => (
         <section
           key={verb.name}
-          className="grid gap-x-16 gap-y-3 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
+          className="grid gap-x-16 gap-y-3 lg:not-last:min-h-36 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-baseline"
         >
-          <h2
-            className={cn(DISPLAY, 'text-[34px] leading-none md:text-[48px]')}
-          >
-            {verb.name}
-          </h2>
-          <p className={cn(BODY, 'lg:pt-1')}>
+          <h2 className={STATEMENT}>{verb.name}</h2>
+          <p className={BODY}>
             {verb.before}
             <strong className="font-semibold">{verb.verb}</strong>
             {verb.after}
@@ -205,16 +208,11 @@ function Pledge() {
     <section
       className={cn(
         INSET,
-        'home-inverted bg-surface-primary pt-12 pb-10 text-primary md:rounded-xl md:pt-16 md:pb-12',
+        'home-inverted bg-surface-primary pt-12 pb-10 text-primary md:mb-4 md:rounded-xl md:pt-16 md:pb-16',
       )}
     >
       <p className="max-w-[44rem]">
-        <span
-          className={cn(
-            DISPLAY,
-            'block text-[30px] leading-[1.1] md:text-[44px]',
-          )}
-        >
+        <span className={cn(STATEMENT, 'block text-balance')}>
           {MANDATE.promise.pledge}
         </span>{' '}
         <span className={cn(BODY, 'mt-6 block text-primary/80 md:mt-8')}>
