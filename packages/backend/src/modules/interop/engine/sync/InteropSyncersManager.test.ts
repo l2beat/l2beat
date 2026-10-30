@@ -278,7 +278,7 @@ describe(InteropSyncersManager.name, () => {
       const processNewestBlock = mockFn().resolvesTo(undefined)
       manager.processNewestBlock = processNewestBlock
 
-      const processor = manager.getBlockProcessor('ethereum')
+      const processor = manager.getBlockProcessor('ethereum', Promise.resolve())
       const block = makeBlock(7)
       const logs: Log[] = []
 
@@ -286,6 +286,35 @@ describe(InteropSyncersManager.name, () => {
 
       expect(processor.chain).toEqual('ethereum')
       expect(processNewestBlock).toHaveBeenCalledWith('ethereum', block, logs)
+    })
+
+    it('waits until ready before processing', async () => {
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+      })
+
+      const processNewestBlock = mockFn().resolvesTo(undefined)
+      manager.processNewestBlock = processNewestBlock
+
+      const ready = deferred<void>()
+      const processor = manager.getBlockProcessor('ethereum', ready.promise)
+      const block = makeBlock(7)
+      const logs: Log[] = []
+
+      const processing = processor.processBlock(block, logs)
+      await new Promise<void>((resolve) => setImmediate(resolve))
+
+      expect(processNewestBlock).not.toHaveBeenCalled()
+
+      ready.resolve()
+      await processing
+
+      expect(processNewestBlock).toHaveBeenOnlyCalledWith(
+        'ethereum',
+        block,
+        logs,
+      )
     })
   })
 
