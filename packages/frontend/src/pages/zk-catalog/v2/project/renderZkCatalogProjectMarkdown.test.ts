@@ -175,7 +175,7 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
     )
 
     expect(trustedSetups).toInclude(
-      '### SP1 Groth16 setup\n\n- Risk: red (highest risk)\n- Proof systems: Gnark (Groth16)\n\nRun among 7 contributors.\n\n#### Artifacts\n\nDownload the transcript.',
+      '### SP1 Groth16 setup\n\n- Risk: red (highest risk)\n- Proof systems: Gnark (Groth16)\n- Phase 1: 54 contributions\n- Phase 2: 7 participants\n\nRun among 7 contributors.\n\n#### Artifacts\n\nDownload the transcript.',
     )
   })
 
@@ -285,6 +285,10 @@ const SECTIONS: ProjectDetailsSection[] = [
         {
           name: 'SP1 Groth16 setup',
           risk: 'red',
+          phases: {
+            phase1: { count: 54, unit: 'contributions' },
+            phase2: { count: 7, unit: 'participants' },
+          },
           description:
             'Run among 7 contributors.\n\n## Artifacts\n\nDownload the transcript.',
           proofSystems: [GROTH16],
