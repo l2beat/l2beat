@@ -919,7 +919,10 @@
   --garden-sprout: #3f6b3a;
 }
 
-/* Referenced from inline styles in CropPlant, CropsBed and the page backdrops. */
+/* Referenced from inline styles in CropPlant, CropsBed and the page backdrops.
+   The entrances end at rest and fill backwards, never both: a held end
+   transform keeps Chrome's layer at the raster scale it caught mid-grow, so
+   the art stays blurry. */
 @keyframes garden-grow {
   0% {
     transform: scaleY(0.02);
