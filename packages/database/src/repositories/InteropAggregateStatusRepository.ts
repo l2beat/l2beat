@@ -182,6 +182,25 @@ export class InteropAggregateStatusRepository extends BaseRepository {
       : undefined
   }
 
+  /**
+   * Promoted snapshots taken at midnight UTC, from `from` on. Each covers the
+   * 24 hours before it, so they tile the range without overlap, and daily
+   * retention keeps them as the first snapshot of their day.
+   */
+  async getPromotedMidnightTimestampsSince(
+    from: UnixTime,
+  ): Promise<UnixTime[]> {
+    const rows = await this.db
+      .selectFrom('InteropAggregateStatus')
+      .select('timestamp')
+      .where('status', '=', 'promoted')
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where(sql<boolean>`timestamp = date_trunc('day', timestamp)`)
+      .orderBy('timestamp')
+      .execute()
+    return rows.map((row) => UnixTime.fromDate(row.timestamp))
+  }
+
   async getByTimestamp(
     timestamp: UnixTime,
   ): Promise<InteropAggregateStatusRecord | undefined> {
