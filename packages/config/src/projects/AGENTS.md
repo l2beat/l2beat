@@ -24,7 +24,9 @@ Run `l2b` from `packages/config`. Its `.env` holds RPC keys: never read or print
 
 ## Work in DiscoUI with the researcher
 
-When the researcher has DiscoUI open (`l2b ui`), read what they look at, point at your answer there, and change their graph when they ask. DiscoUI serves these tools over MCP at `http://localhost:2021/api/agent/mcp`: add the server (`claude mcp add --transport http discoui <url>` or `codex mcp add discoui --url <url>`), or run the same tools from a shell: `l2b ui-agent <tool>`, with `control-map` for `control_map` and `--help` for the flags.
+When the researcher has DiscoUI open (`l2b ui`), read what they look at, point at your answer there, and change their graph when they ask. DiscoUI serves these tools over MCP at `http://localhost:2021/api/agent/mcp`, and its AI panel connects them for you. Elsewhere, add the server (`claude mcp add --transport http discoui <url>` or `codex mcp add discoui --url <url>`), or run the same tools from a shell: `l2b ui-agent <tool>`, with `control-map` for `control_map` and `--help` for the flags.
+
+When you run inside DiscoUI's AI panel, the researcher sees only DiscoUI and your reply. Show them things through DiscoUI with these tools; unless they ask for one, don't make a file, report or page thinking they will open it. Everything else is yours: read `discovered.json` and the `.flat` sources, use `rg` and `jq`, write throwaway scripts to check a claim.
 
 DiscoUI shows each source behind a 12-line Flattener note, so a line in DiscoUI is 12 more than the same line in the `.flat` file. `show` reports DiscoUI's line; when you cite one you found with `rg`, add 12, or point at it with `show` instead.
 

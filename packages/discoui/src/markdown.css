@@ -142,3 +142,55 @@
 .mdc-diff-meta {
   @apply text-coffee-400;
 }
+
+/* The AI panel: agent answers read as prose next to the graph. */
+.mdc.mdc-chat {
+  @apply bg-transparent p-0 text-[13px] text-coffee-200 leading-relaxed;
+}
+
+.mdc-chat p,
+.mdc-chat ul,
+.mdc-chat ol,
+.mdc-chat pre {
+  @apply mb-2.5;
+}
+
+.mdc-chat li {
+  @apply ml-1 pl-0.5;
+}
+
+.mdc-chat li + li {
+  @apply mt-1;
+}
+
+.mdc-chat ol li::marker,
+.mdc-chat ul li::marker {
+  @apply text-coffee-400;
+}
+
+.mdc-chat strong {
+  @apply font-semibold text-white;
+}
+
+.mdc-chat code {
+  @apply rounded-sm bg-coffee-700/60 px-1 py-px text-[12px] text-coffee-200;
+}
+
+.mdc-chat pre {
+  @apply rounded-md border border-coffee-700 bg-coffee-800 px-3 py-2 text-[12px];
+}
+
+.mdc-chat pre code {
+  @apply text-coffee-200;
+}
+
+.mdc-chat h1,
+.mdc-chat h2,
+.mdc-chat h3 {
+  @apply mt-3 mb-1.5 font-bold text-[13px] text-white;
+}
+
+/* The panel is narrow: a wide table scrolls instead of being cut off. */
+.mdc-chat table {
+  @apply mb-2.5 block max-w-full overflow-x-auto;
+}
