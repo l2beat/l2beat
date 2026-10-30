@@ -15,8 +15,10 @@
     "topNominees"
   ],
   "fields": {
+    // MEDIUM: the election schedule (with votingDelay and votingPeriod) times
+    // who fills the seats, not what the council can do.
     "fullWeightDuration": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "nomineeElectionGovernor": {
       "severity": "HIGH"
@@ -25,10 +27,10 @@
       "severity": "HIGH"
     },
     "votingPeriod": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "votingDelay": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "proposalThreshold": {
       "severity": "HIGH"
@@ -37,10 +39,10 @@
       "severity": "HIGH"
     },
     "owner": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

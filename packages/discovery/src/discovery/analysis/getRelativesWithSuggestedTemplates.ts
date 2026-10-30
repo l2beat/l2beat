@@ -12,13 +12,7 @@ export function getRelativesWithSuggestedTemplates(
   fields?: { [field: string]: StructureContractField },
 ): AddressesWithTemplates {
   const result: AddressesWithTemplates = {}
-  if (ignoredFields === true) {
-    return result
-  }
-  for (const param of parameters) {
-    if (param.ignoreRelative || ignoredFields?.includes(param.field)) {
-      continue
-    }
+  for (const param of getFollowedParameters(parameters, ignoredFields)) {
     const addresses = toAddressArray(param.value).filter(
       (address) => !ignoredAddresses?.includes(address),
     )
@@ -34,4 +28,16 @@ export function getRelativesWithSuggestedTemplates(
   }
 
   return result
+}
+
+export function getFollowedParameters(
+  parameters: HandlerResult[],
+  ignoredFields?: string[] | true,
+): HandlerResult[] {
+  if (ignoredFields === true) {
+    return []
+  }
+  return parameters.filter(
+    (param) => !param.ignoreRelative && !ignoredFields?.includes(param.field),
+  )
 }

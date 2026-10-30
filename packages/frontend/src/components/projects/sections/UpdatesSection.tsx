@@ -9,6 +9,7 @@ import { type MouseEvent, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { CopyButton } from '~/components/CopyButton'
 import { Skeleton } from '~/components/core/Skeleton'
+import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { DiffBody } from '~/components/discovery/DiffBody'
 import { Markdown } from '~/components/markdown/Markdown'
 import {
@@ -25,7 +26,6 @@ import { ChevronIcon } from '~/icons/Chevron'
 import type { ProjectOssificationView } from '~/server/features/projects/ossification/getProjectOssification'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import { formatTimestamp } from '~/utils/dates'
 import { OssificationDetails } from './ossification/OssificationDetails'
 import { ProjectSection } from './ProjectSection'
 import { SubsectionHeading } from './Subsection'
@@ -226,7 +226,11 @@ export function UpdateCard({
           <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1">
             <div className="flex shrink-0 items-center gap-1">
               <span className="font-medium text-primary leading-snug">
-                {formatUpdateDate(update)}
+                {update.timestamp === null ? (
+                  update.date
+                ) : (
+                  <UtcDateTime timestamp={update.timestamp} />
+                )}
               </span>
               <CopyButton
                 toCopy={() =>
@@ -325,17 +329,6 @@ function SectionsSkeleton() {
       <Skeleton className="h-4 w-5/6" />
     </div>
   )
-}
-
-function formatUpdateDate(update: ProjectDiscoveryUpdateSummary): string {
-  if (update.timestamp === null) {
-    return update.date
-  }
-
-  return formatTimestamp(update.timestamp, {
-    longMonthName: true,
-    mode: 'datetime',
-  })
 }
 
 function plainText(markdown: string): string {

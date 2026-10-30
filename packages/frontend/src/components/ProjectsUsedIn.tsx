@@ -1,9 +1,5 @@
 import type { UsedInProject } from '@l2beat/config'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
+import { cn } from '~/utils/cn'
 import { ProjectIconList } from './ProjectIconList'
 
 export interface UsedInProjectWithIcon extends UsedInProject {
@@ -13,7 +9,7 @@ export interface UsedInProjectWithIcon extends UsedInProject {
 interface Props {
   usedIn: UsedInProjectWithIcon[]
   className?: string
-  noL2ClassName?: string
+  emptyClassName?: string
   maxProjects?: number
   noLink?: boolean
 }
@@ -21,18 +17,15 @@ interface Props {
 export function ProjectsUsedIn({
   usedIn,
   className,
-  noL2ClassName,
+  emptyClassName,
   maxProjects = 5,
   noLink,
 }: Props) {
   if (usedIn.length === 0) {
     return (
-      <Tooltip>
-        <TooltipTrigger className={noL2ClassName}>No L2 😔</TooltipTrigger>
-        <TooltipContent>
-          There are no scaling projects listed on L2BEAT that use this solution.
-        </TooltipContent>
-      </Tooltip>
+      <span className={cn('text-secondary', emptyClassName)}>
+        Not used by any listed project
+      </span>
     )
   }
 

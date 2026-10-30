@@ -71,9 +71,9 @@ describe(createInteropRouter.name, () => {
 
   describe('token pages', () => {
     for (const path of [
-      '/interop/tokens/usdc01.md',
-      '/interop/tokens/usdc01/usdc.md',
-      '/interop/tokens/usdc01/circle/usdc.md',
+      '/tokens/usdc01.md',
+      '/tokens/usdc01/usdc.md',
+      '/tokens/usdc01/circle/usdc.md',
     ]) {
       it(`serves the token page as markdown on ${path}`, async () => {
         const response = await fetchFromRouter(createRouter(), path)
@@ -89,7 +89,7 @@ describe(createInteropRouter.name, () => {
     it('answers 404 in markdown for a token that does not exist', async () => {
       const response = await fetchFromRouter(
         createRouter(),
-        '/interop/tokens/unknown.md',
+        '/tokens/unknown.md',
       )
 
       expect(response.status).toEqual(404)
@@ -101,7 +101,7 @@ describe(createInteropRouter.name, () => {
     it('serves markdown on the page URL when Accept prefers it', async () => {
       const response = await fetchFromRouter(
         createRouter(),
-        '/interop/tokens/usdc01/circle/usdc',
+        '/tokens/usdc01/circle/usdc',
         { headers: { Accept: 'text/markdown' } },
       )
 
@@ -112,10 +112,7 @@ describe(createInteropRouter.name, () => {
     })
 
     it('serves HTML on the page URL to browsers', async () => {
-      for (const path of [
-        '/interop/tokens/usdc01',
-        '/interop/tokens/usdc01/circle/usdc',
-      ]) {
+      for (const path of ['/tokens/usdc01', '/tokens/usdc01/circle/usdc']) {
         const response = await fetchFromRouter(createRouter(), path, {
           headers: { Accept: 'text/html,*/*;q=0.8' },
         })
@@ -175,8 +172,10 @@ const TOKEN_PAGE: InteropTokenPage & { apiSelection: { from: []; to: [] } } = {
     issuer: 'circle',
     iconUrl: null,
     category: 'stablecoin',
+    isPriceUnreliable: false,
   },
   tokenEntry: { sections: [], deploymentsCount: 0 },
   tokenData: null,
+  lastSyncedAt: undefined,
   apiSelection: { from: [], to: [] },
 }

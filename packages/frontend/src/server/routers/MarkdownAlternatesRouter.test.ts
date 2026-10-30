@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import { LIST_PAGES_WITH_MARKDOWN } from '~/utils/getMarkdownAlternatePath'
@@ -102,18 +103,91 @@ describe(createMarkdownAlternatesRouter.name, () => {
     expect(served.toSorted()).toEqual(registered.toSorted())
   })
 
-  // The HTML ZK catalog hides archived provers and has no archived view.
-  it('lists exactly the active proving systems of the ZK catalog', async () => {
-    const active = await ps.getProjects({
+  // The HTML ZK catalog hides archived provers and has no archived view, so
+  // this index is where they stay findable, apart from the active ones.
+  it('lists active and archived proving systems in separate sections', async () => {
+    const projects = await ps.getProjects({
       where: ['zkCatalogInfo'],
-      whereNot: ['archivedAt'],
+      optional: ['archivedAt'],
+    })
+    const pathsOf = (archived: boolean) =>
+      projects
+        .filter((p) => !!p.archivedAt === archived)
+        .map((p) => `/zk-catalog/${p.slug}`)
+        .toSorted()
+
+    const sections = await getSectionPaths('/zk-catalog.md')
+
+    expect(pathsOf(true).length).toBeGreaterThan(0)
+    expect(sections).toEqual({
+      'Proving systems (/zk-catalog/{slug})': pathsOf(false),
+      'Archived proving systems (/zk-catalog/{slug})': pathsOf(true),
+    })
+  })
+
+  // Archived L2s and L3s have only an HTML page, so this index keeps them
+  // findable in markdown, apart from the active ones.
+  it('lists active and archived scaling projects in separate sections', async () => {
+    const projects = await ps.getProjects({
+      select: ['scalingInfo'],
+      optional: ['archivedAt'],
+    })
+    const pathsOf = (layer: string, archived: boolean) =>
+      projects
+        .filter(
+          (p) => p.scalingInfo.layer === layer && !!p.archivedAt === archived,
+        )
+        .map((p) => `/layer2s/projects/${p.slug}`)
+        .toSorted()
+
+    const { 'Ecosystems (/ecosystems/{slug})': _, ...sections } =
+      await getSectionPaths('/layer2s/summary.md')
+
+    expect(pathsOf('layer2', true).length).toBeGreaterThan(0)
+    expect(pathsOf('layer3', true).length).toBeGreaterThan(0)
+    expect(sections).toEqual({
+      'Layer 2s (/layer2s/projects/{slug})': pathsOf('layer2', false),
+      'Layer 3s (/layer2s/projects/{slug})': pathsOf('layer3', false),
+      'Archived Layer 2s (/layer2s/projects/{slug})': pathsOf('layer2', true),
+      'Archived Layer 3s (/layer2s/projects/{slug})': pathsOf('layer3', true),
+    })
+  })
+
+  describe('ossification', () => {
+    const originalMock = env.MOCK
+
+    // Mock mode serves the value series without a database.
+    before(() => {
+      env.MOCK = true
     })
 
-    const paths = await getLinkPaths('/zk-catalog.md')
+    after(() => {
+      env.MOCK = originalMock
+    })
 
-    expect(paths.toSorted()).toEqual(
-      active.map((p) => `/zk-catalog/${p.slug}`).toSorted(),
-    )
+    // The HTML page lists active projects with an ossification history that
+    // have a project page: scaling, privacy or DeFi.
+    it('lists exactly the projects of the ossification page', async () => {
+      const projects = await ps.getProjects({
+        where: ['ossificationHistory'],
+        whereNot: ['archivedAt'],
+        optional: ['scalingInfo', 'privacyInfo', 'defiInfo'],
+      })
+      const expected = projects.flatMap((p) =>
+        p.scalingInfo
+          ? [`/layer2s/projects/${p.slug}`]
+          : p.privacyInfo
+            ? [`/privacy/projects/${p.slug}`]
+            : p.defiInfo
+              ? [`/defi/projects/${p.slug}`]
+              : [],
+      )
+
+      const paths = await getLinkPaths('/ossification.md')
+
+      expect(expected.length).toBeGreaterThan(0)
+      expect(paths.toSorted()).toEqual(expected.toSorted())
+    })
   })
 })
 
@@ -122,5 +196,20 @@ async function getLinkPaths(path: MarkdownAlternatePath): Promise<string[]> {
   const sections = (await alternate?.getSections()) ?? []
   return sections.flatMap((section) =>
     section.links.flatMap((link) => ('path' in link ? [link.path] : [])),
+  )
+}
+
+async function getSectionPaths(
+  path: MarkdownAlternatePath,
+): Promise<Record<string, string[]>> {
+  const alternate = MARKDOWN_ALTERNATES.find((a) => a.path === path)
+  const sections = (await alternate?.getSections()) ?? []
+  return Object.fromEntries(
+    sections.map((section) => [
+      section.heading,
+      section.links
+        .flatMap((link) => ('path' in link ? [link.path] : []))
+        .toSorted(),
+    ]),
   )
 }

@@ -75,7 +75,7 @@
     },
     "getEpochProofVerifier": {
       "description": "The verifier contract used for epoch proof verification.",
-      "template": "aztecnetwork/HonkVerifier"
+      "template": "aztecnetwork/HonkVerifier_v5"
     },
     "getFeeAsset": {
       "description": "The ERC20 token used to pay L2 fees.",

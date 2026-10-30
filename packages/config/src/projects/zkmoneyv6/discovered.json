@@ -1,0 +1,2240 @@
+{
+  "name": "zkmoneyv6",
+  "timestamp": 1793184565,
+  "configHash": "0xd80a9cf67c2cfb583c26883d787174606d797b54cf6ce2131ada6f7f801180b8",
+  "entries": [
+    {
+      "address": "eth:0x04Ffc6aD66934937737DD5Fea303bd0903B7625e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "NitroValidator",
+      "address": "eth:0x13114c5C847a414D20755DBc2eCbe00cc98039DF",
+      "type": "Contract",
+      "template": "zkmoney/NitroValidator",
+      "sourceHashes": [
+        "0xfe7df464470411c84b703e1910a603981ab8c629b47581ba6d0dc7f6234d512d"
+      ],
+      "proxyType": "immutable",
+      "description": "Validates AWS Nitro enclave attestations against the certificate chain verified by the CertManager.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793015567,
+      "sinceBlock": 26276682,
+      "values": {
+        "$immutable": true,
+        "ATTESTATION_DIGEST": "0x501a3a7a4e0cf54b03f2488098bdd59bc1c2e8d741a300d6b25926d531733fef",
+        "ATTESTATION_TBS_PREFIX": "0x63ce814bd924c1ef12c43686e4cbf48ed1639a78387b0570c23ca921e8ce071c",
+        "CABUNDLE_KEY": "0x8a8cb7aa1da17ada103546ae6b4e13ccc2fafa17adf5f93925e0a0a4e5681a6a",
+        "CERTIFICATE_KEY": "0x925cec779426f44d8d555e01d2683a3a765ce2fa7562ca7352aeb09dfc57ea6a",
+        "certManager": "eth:0xe3DDDf3D4B624F49B4CeB81807338CCa14f5dd86",
+        "DIGEST_KEY": "0x682a7e258d80bd2421d3103cbe71e3e3b82138116756b97b8256f061dc2f11fb",
+        "MODULE_ID_KEY": "0x8ce577cf664c36ba5130242bf5790c2675e9f4e6986a842b607821bee25372ee",
+        "NONCE_KEY": "0x7ab1577440dd7bedf920cb6de2f9fc6bf7ba98c78c85a3fa1f8311aac95e1759",
+        "PCRS_KEY": "0x61585f8bc67a4b6d5891a4639a074964ac66fc2241dc0b36c157dc101325367a",
+        "PUBLIC_KEY_KEY": "0xc7b28019ccfdbd30ffc65951d94bb85c9e2b8434111a000b5afd533ce65f57a4",
+        "TIMESTAMP_KEY": "0x4ebf727c48eac2c66272456b06a885c5cc03e54d140f63b63b6fd10c1227958e",
+        "USER_DATA_KEY": "0x5e4ea5393e4327b3014bc32f2264336b0d1ee84a4cfd197c8ad7e1e16829a16a"
+      },
+      "implementationNames": {
+        "eth:0x13114c5C847a414D20755DBc2eCbe00cc98039DF": "NitroValidator"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "NamePortal",
+      "address": "eth:0x158161B257f9bAD34C12Dd8D52638424b216c3a2",
+      "type": "Contract",
+      "template": "zkmoney/v6/NamePortal",
+      "sourceHashes": [
+        "0x99235f98c5c84d34d61b0f81747bf38628ac5658e412241f49003b39d82e94d6"
+      ],
+      "proxyType": "immutable",
+      "description": "Announces a zk.money name on Aztec. Anyone can send an L1->L2 message carrying a named account's name hash and bootstrap key to an Aztec address of their choice. It accepts only accounts deployed by ACCOUNT_FACTORY.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793021339,
+      "sinceBlock": 26277163,
+      "values": {
+        "$immutable": true,
+        "ACCOUNT_FACTORY": "eth:0x187d19EccBf2909AD3d71B798A8704D950b9C3ee",
+        "AZTEC_REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+        "NAME_REGISTRY": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a"
+      },
+      "implementationNames": {
+        "eth:0x158161B257f9bAD34C12Dd8D52638424b216c3a2": "NamePortal"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "SIPAFactory",
+      "address": "eth:0x186C20F0F294378E1DecA7419c667e44c73E992C",
+      "type": "Contract",
+      "template": "zkmoney/v6/SIPAFactory",
+      "sourceHashes": [
+        "0x3369db2e33b51dc27ac73bb09dff565a2282ce56e0872fe2f0d2772eb37bd59b"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys zk.money deposit addresses (SIPAs) as deterministic clones. A clone counts as blessed when its implementation was blessed and its ForwardingTable approved. Each clone's code and table are fixed in its address. New deposit addresses, from the wallet or the Resolver, clone the current implementation for their intent.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793021291,
+      "sinceBlock": 26277159,
+      "values": {
+        "$immutable": true,
+        "approvedTables": ["eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C"],
+        "blessedImplementations": [
+          {
+            "implementation": "eth:0xBFe3dE3C4466cbC5803A756847208c69B3BAe401",
+            "intent": 1
+          },
+          {
+            "implementation": "eth:0x96A52ed47Af73423D4b8a920913e5c1ceFdC1319",
+            "intent": 2
+          },
+          {
+            "implementation": "eth:0x5180f0659D021368CDF5c4499967B9A329C775A0",
+            "intent": 3
+          }
+        ],
+        "depositImplementation": "eth:0xBFe3dE3C4466cbC5803A756847208c69B3BAe401",
+        "owner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+        "registrationImplementation": "eth:0x96A52ed47Af73423D4b8a920913e5c1ceFdC1319",
+        "userOpImplementation": "eth:0x5180f0659D021368CDF5c4499967B9A329C775A0"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "depositImplementation": {
+          "severity": "HIGH",
+          "description": "Implementation cloned by new deposit addresses."
+        },
+        "registrationImplementation": {
+          "severity": "HIGH",
+          "description": "Implementation cloned by new name registration addresses."
+        },
+        "userOpImplementation": {
+          "severity": "HIGH",
+          "description": "Implementation cloned by new deposit addresses that run an ERC-4337 user operation."
+        },
+        "blessedImplementations": {
+          "description": "Blessed implementations per intent (1 = Deposit, 2 = Registration, 3 = UserOp). Clones of any of them count as blessed."
+        },
+        "approvedTables": {
+          "severity": "MEDIUM",
+          "description": "ForwardingTables that blessed deposit addresses may use."
+        }
+      },
+      "implementationNames": {
+        "eth:0x186C20F0F294378E1DecA7419c667e44c73E992C": "SIPAFactory"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "OxideAccountFactory",
+      "address": "eth:0x187d19EccBf2909AD3d71B798A8704D950b9C3ee",
+      "type": "Contract",
+      "template": "zkmoney/OxideAccountFactory",
+      "sourceHashes": [
+        "0x5ec639f072b78a7591569d234f52e9de7904d629ba10a3d8b9e2dcddcd4c745d"
+      ],
+      "proxyType": "immutable",
+      "description": "Permissionless factory for deterministic L1 accounts. The implementation is immutable and there is no administrator.",
+      "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+      "sinceTimestamp": 1790298455,
+      "sinceBlock": 26051082,
+      "values": {
+        "$immutable": true,
+        "implementation": "eth:0xdA0D7cD0f49cE7b1D04bf03eE56374a8981c2844"
+      },
+      "implementationNames": {
+        "eth:0x187d19EccBf2909AD3d71B798A8704D950b9C3ee": "OxideAccountFactory"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "ResolverVerifier",
+      "address": "eth:0x1E63715af06Bb12331f6A319b46253713e4d0206",
+      "type": "Contract",
+      "template": "zkmoney/ResolverVerifier",
+      "sourceHashes": [
+        "0x4037936aa34f65195d0dc7ef3c98cc82e4f969470558a15ede8590867175baf2"
+      ],
+      "proxyType": "immutable",
+      "description": "UltraHonk verifier for the zk.money resolver circuit with a hardcoded verification key. The Resolver uses it to check that a resolver operator's answer matches the user's registered keys and L2 address.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793021891,
+      "sinceBlock": 26277209,
+      "values": {
+        "$immutable": true,
+        "$libraries": [
+          "eth:0xCEBD4589238699fcD7FEA8F89f05AE35F4D7E8c4",
+          "eth:0x428Fa81B22AAF7C9acb9c73D114894886E3F7d4d"
+        ],
+        "verificationKeyHash": "0x279d6dad93155d6c03ddd050359fb4675a66c08812b5306f6dfc9754e42827b7"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "description": "Circuit verification key hash embedded in the verified Solidity source.",
+          "type": "CODE_CHANGE"
+        },
+        "$libraries": {
+          "description": "Runtime libraries immutably linked into this verifier.",
+          "type": "CODE_CHANGE"
+        }
+      },
+      "implementationNames": {
+        "eth:0x1E63715af06Bb12331f6A319b46253713e4d0206": "HonkVerifier"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "OxidePortal_sUSDS",
+      "address": "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8",
+      "type": "Contract",
+      "template": "zkmoney/v6/OxidePortal",
+      "sourceHashes": [
+        "0x2d039009f3d4cf4e141ab791feedf9c04fd3e43e9ce7ff05b7be56126e218af5"
+      ],
+      "proxyType": "immutable",
+      "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from L2_TOKEN and a signature from a TEE signer registered in the TEE_REGISTRY. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. A refund needs a zk proof against that snapshot and a registered signer's signature.",
+      "critical": true,
+      "ignoreInWatchMode": [
+        "_$cachedAvailable",
+        "_$lastUpdatedTime",
+        "getCurrentAvailable"
+      ],
+      "deployerAddress": "eth:0xF20076E445e159B17fF3aaAAC567dc4b2e45FB8c",
+      "sinceTimestamp": 1793018447,
+      "sinceBlock": 26276922,
+      "values": {
+        "_$cachedAvailable": "99999053482787899218107",
+        "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "_$freezeCheckpointCount": 0,
+        "_$freezeCheckpointNumber": 0,
+        "_$freezeEpochNumber": 0,
+        "_$frozen": false,
+        "_$lastUpdatedTime": 1793174387,
+        "$immutable": true,
+        "FROZEN_DEPOSITS_REFUND_VERIFIER": "eth:0xa460C3130D1701a94f76d1122362C0D127f1C6A3",
+        "FROZEN_NOTES_REFUND_VERIFIER": "eth:0x880F3C8356A930522896A7c539157D4c87F95377",
+        "getCurrentAvailable": "100000000000000000000000",
+        "GLOBAL_LIMIT": "100000000000000000000000",
+        "INBOX": "eth:0x603B06cEcC1d537Aad83f1d46651e32014c5B6aD",
+        "L2_TOKEN": "0x2905e147613fbf166db8a599524724b1fedce4d97caaf55a9d9b174ba2dc18ac",
+        "OUTBOX": "eth:0xFD2a12658A82d7156DA56c7A8d49A69fC966c8D1",
+        "RATE": "1157407407407407407",
+        "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+        "ROLLUP": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
+        "ROLLUP_VERSION": 2070860440,
+        "TEE_REGISTRY": "eth:0x8b705C3519169F29850D156574ec377B686bd9CD",
+        "TX_AMOUNT_CAP": "5166000000000000000000",
+        "UNDERLYING": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "UNPROCESSED_DEPOSIT_REFUND_VERIFIER": "eth:0xF15780eB45c49a7cB4FB0BF178D3DaF0F1D68c8a"
+      },
+      "fieldMeta": {
+        "L2_TOKEN": {
+          "description": "zk.money token contract on Aztec whose L2->L1 messages can release funds."
+        },
+        "_$frozen": {
+          "severity": "MEDIUM",
+          "description": "Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership."
+        },
+        "REGISTRY": {
+          "description": "Aztec Registry. If its canonical rollup is no longer ROLLUP, anyone can freeze this portal."
+        },
+        "GLOBAL_LIMIT": {
+          "description": "Deposit capacity (wei), refilling at RATE per second. Withdrawals and refunds are only limited by TX_AMOUNT_CAP per transaction.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8": "OxidePortal"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "ZKTranscriptLib",
+      "address": "eth:0x428Fa81B22AAF7C9acb9c73D114894886E3F7d4d",
+      "type": "Contract",
+      "template": "zkmoney/ResolverVerifierLibrary",
+      "sourceHashes": [
+        "0x608ffafa2dbec7cdd253ebe199e43765948e017a6bfcc141acfbed57e95394d8"
+      ],
+      "proxyType": "immutable",
+      "description": "Runtime library immutably linked into the zk.money resolver verifier. It evaluates circuit constraints or derives Fiat-Shamir challenges for zero-knowledge UltraHonk proofs.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793021531,
+      "sinceBlock": 26277179,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x428Fa81B22AAF7C9acb9c73D114894886E3F7d4d": "ZKTranscriptLib"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "RegistrationController",
+      "address": "eth:0x45F626E2a4D63232677C96B163ac46e20514a915",
+      "type": "Contract",
+      "template": "zkmoney/v6/RegistrationController",
+      "sourceHashes": [
+        "0x39f857dd5f4e1a8a065973bd27dc24aceb65dfb3929bc0989f9a999ea221ccae"
+      ],
+      "proxyType": "immutable",
+      "description": "Completes paid name registrations from blessed registration addresses: deploys the user's L1 account, claims the name, writes the user record, optionally announces the name on Aztec through the NAME_PORTAL, and installs the user's first passkey. Fees above the relayer fee go to an allowlisted beneficiary.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793021819,
+      "sinceBlock": 26277203,
+      "values": {
+        "$immutable": true,
+        "ACCOUNT_FACTORY": "eth:0x187d19EccBf2909AD3d71B798A8704D950b9C3ee",
+        "beneficiaries": [
+          "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+          "eth:0x88ef976262BF715a3B0D24146fC3bb1B18464e61"
+        ],
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Oxide RegistrationController",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x45F626E2a4D63232677C96B163ac46e20514a915",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "ENTRY_POINT": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
+        "FEE_TOKEN": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "NAME_PORTAL": "eth:0x158161B257f9bAD34C12Dd8D52638424b216c3a2",
+        "NAME_REGISTRY": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
+        "nextBeneficiaryId": 2,
+        "R1_INSTALL_CALL_GAS_BASE": 390000,
+        "R1_INSTALL_CALL_GAS_PER_WORD": 145000,
+        "R1_INSTALL_VERIFICATION_GAS": 155000,
+        "REGISTRATION_FEE": "5000000000000000000",
+        "REGISTRATION_MIN": "9500000000000000000",
+        "SIPA_FACTORY": "eth:0x186C20F0F294378E1DecA7419c667e44c73E992C"
+      },
+      "fieldMeta": {
+        "ACCOUNT_FACTORY": {
+          "description": "Immutable factory and account implementation used to deploy users’ L1 passkey accounts."
+        },
+        "beneficiaries": {
+          "description": "Allowlisted fee recipients. The NameRegistry owner can append entries, none can be removed."
+        }
+      },
+      "implementationNames": {
+        "eth:0x45F626E2a4D63232677C96B163ac46e20514a915": "RegistrationController"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "UserOpSIPA",
+      "address": "eth:0x5180f0659D021368CDF5c4499967B9A329C775A0",
+      "type": "Contract",
+      "template": "zkmoney/v6/UserOpSIPA",
+      "sourceHashes": [
+        "0x7f0245d02572bcde1dea028603deb3de7c116680a2c8915d29072105c1e8dcf8"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation of zk.money deposit addresses that carry an operation of the user's L1 account. Sweeping a funded clone executes the account operation fixed in the clone's address through the ERC-4337 EntryPoint, with the user's signature, then pays the listed fees and deposits the rest into the portal its ForwardingTable names. The recipient's account can recover any funds from the clone.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793021603,
+      "sinceBlock": 26277185,
+      "values": {
+        "$immutable": true,
+        "ENTRY_POINT": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
+        "INTENT": 3
+      },
+      "implementationNames": {
+        "eth:0x5180f0659D021368CDF5c4499967B9A329C775A0": "UserOpSIPA"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "OperationExecutor",
+      "address": "eth:0x5ecE3b4EBE7137b1b6f92406dE17d9816D585c1c",
+      "type": "Contract",
+      "template": "zkmoney/OperationExecutor",
+      "sourceHashes": [
+        "0x37951947292f98cb2e0d8e7f0ed54cfae10a62185fb2436fe251346ee75b6601"
+      ],
+      "proxyType": "immutable",
+      "description": "Permissionless helper that executes a call and forwards the resulting token payout to the caller. Used by finalizers to collect fees and subsidies.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793015831,
+      "sinceBlock": 26276704,
+      "values": {
+        "$immutable": true,
+        "executionContext": {
+          "direct": false,
+          "startedEmpty": false,
+          "payoutToken": "eth:0x0000000000000000000000000000000000000000",
+          "headGas": 0
+        }
+      },
+      "implementationNames": {
+        "eth:0x5ecE3b4EBE7137b1b6f92406dE17d9816D585c1c": "OperationExecutor"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "MigrationExecutor",
+      "address": "eth:0x70E9c762B02Ec645DF4BC2456271805cba80126c",
+      "type": "Contract",
+      "template": "zkmoney/v6/MigrationExecutor",
+      "sourceHashes": [
+        "0xe20e6296e1d49c2157cfa25e713437c43c74cbeb5637ef5a81754a315f10eb02"
+      ],
+      "proxyType": "immutable",
+      "description": "Payout contract that moves refunds from the frozen SOURCE_PORTAL into DESTINATION_PORTAL. Only SOURCE_PORTAL can call it. It deposits the refund, minus the relayer tip committed in the refund, into DESTINATION_PORTAL for the recipient commitment the refund names.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793019359,
+      "sinceBlock": 26276998,
+      "values": {
+        "$immutable": true,
+        "ASSET": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "DESTINATION_PORTAL": "eth:0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042",
+        "PAYOUT_TOKEN": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "SOURCE_PORTAL": "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449",
+        "SUBSIDY": "eth:0x2988ce414CA04787E081634793a3c09041829ABf"
+      },
+      "fieldMeta": {
+        "SUBSIDY": {
+          "description": "Pays relayers of migrations from operator funds."
+        }
+      },
+      "implementationNames": {
+        "eth:0x70E9c762B02Ec645DF4BC2456271805cba80126c": "MigrationExecutor"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x768001056E4d89fd45Bf74Df3d91809F9BEb1ee1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PlainWithdrawalExecutor",
+      "address": "eth:0x7C8c2147d1BB8B83e0a0501097372de170eE702a",
+      "type": "Contract",
+      "template": "zkmoney/v6/PlainWithdrawalExecutor",
+      "sourceHashes": [
+        "0x557fd23f0fa02460a25d8aaf0bf6c04e809f799d3defe2fae4ddd084dee51e2a"
+      ],
+      "proxyType": "immutable",
+      "description": "Default payout contract for withdrawals and refunds. Only the PORTAL can call it. It pays the recipient and relayer tip committed on Aztec. An ordinary withdrawal first pays FEE to BENEFICIARY, while refunds pay no fee.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793018015,
+      "sinceBlock": 26276886,
+      "values": {
+        "$immutable": true,
+        "ASSET": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "BENEFICIARY": "eth:0x88ef976262BF715a3B0D24146fC3bb1B18464e61",
+        "FEE": "100000000000000000",
+        "PORTAL": "eth:0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042",
+        "SUBSIDY": "eth:0xa53659a22e3d5b55d2301691A97f42ff663199D6"
+      },
+      "fieldMeta": {
+        "FEE": {
+          "description": "Fee in ASSET (wei) taken from each ordinary withdrawal."
+        },
+        "SUBSIDY": {
+          "description": "Pays relayers of this executor's payouts from operator funds."
+        }
+      },
+      "implementationNames": {
+        "eth:0x7C8c2147d1BB8B83e0a0501097372de170eE702a": "PlainWithdrawalExecutor"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "SkyEscrowFactory",
+      "address": "eth:0x7F890e5DF3B4165D1cE4E9A42e97C44f1d7dCc09",
+      "type": "Contract",
+      "template": "zkmoney/SkyEscrowFactory",
+      "sourceHashes": [
+        "0x8e5cc9dc91a8476a4998d78267201e01bbab0558c02e85e9d719b6dd47744b87"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys deterministic escrows for moving funds between the DAI and sUSDS portals. Anyone can execute a funded escrow. Its implementation and routes are immutable.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793019191,
+      "sinceBlock": 26276984,
+      "values": {
+        "$immutable": true,
+        "DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "DAI_PORTAL": "eth:0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042",
+        "IMPLEMENTATION": "eth:0xB61D97Faf96ec8de617aAF54F4764d01cfd25b8b",
+        "SKY_EXECUTOR": "eth:0xFE0B2B24cca52D1680103E258985A5aCA33742d5",
+        "SUSDS": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "SUSDS_PORTAL": "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8"
+      },
+      "implementationNames": {
+        "eth:0x7F890e5DF3B4165D1cE4E9A42e97C44f1d7dCc09": "SkyEscrowFactory"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "FrozenNotesRefundVerifier",
+      "address": "eth:0x880F3C8356A930522896A7c539157D4c87F95377",
+      "type": "Contract",
+      "template": "zkmoney/v6/FrozenNotesRefundVerifier",
+      "sourceHashes": [
+        "0x548185f9efc19f851980ec0328bd9cf4e8e7bd7faa823bda8aec68ccde700fc3"
+      ],
+      "proxyType": "immutable",
+      "description": "UltraHonk verifier for refunds of notes that were unspent when the zk.money portal froze. Its verification key is immutable.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793015531,
+      "sinceBlock": 26276679,
+      "values": {
+        "$immutable": true,
+        "verificationKeyHash": "0x2249c28908d7fb322c39421e6c030c96dddbd364163e5b41f378a21953a58135"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "description": "Circuit verification key hash embedded in the verified Solidity source.",
+          "type": "CODE_CHANGE"
+        }
+      },
+      "implementationNames": {
+        "eth:0x880F3C8356A930522896A7c539157D4c87F95377": "HonkVerifier"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "TeeRegistry",
+      "address": "eth:0x8b705C3519169F29850D156574ec377B686bd9CD",
+      "type": "Contract",
+      "template": "zkmoney/v6/TeeRegistry",
+      "sourceHashes": [
+        "0xa29b758bc432026497c37814e23e844064c0cc3000403cc0d634d6902d9563fa"
+      ],
+      "proxyType": "immutable",
+      "description": "Registry of the TEE signers that the zk.money portals accept for withdrawals and refunds. Anyone can register a signer with an AWS Nitro attestation of the enclave image PCR0_HASH that is at most TEE_ATTESTATION_MAX_AGE seconds old. Registration also sends an L1->L2 message to L2_RECIPIENT, whose inclusion the zk.money contracts on Aztec prove to accept the signer there. Registrations are permanent, and the approved image cannot change.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793015603,
+      "sinceBlock": 26276685,
+      "values": {
+        "$immutable": true,
+        "INBOX": "eth:0x603B06cEcC1d537Aad83f1d46651e32014c5B6aD",
+        "L2_RECIPIENT": "0x0051394c8803771853ce44a49dcb2aff8e9d9d5aada7cbc786473ad8e957d6f3",
+        "PCR0_HASH": "0xf8c74ed4c30d08100cf653c802123b07a6880f3e2601e23d6bfd498d9db0423a",
+        "ROLLUP_VERSION": 2070860440,
+        "TEE_ATTESTATION_MAX_AGE": 3600,
+        "TEE_CERT_MANAGER": "eth:0xe3DDDf3D4B624F49B4CeB81807338CCa14f5dd86",
+        "TEE_NITRO_VALIDATOR": "eth:0x13114c5C847a414D20755DBc2eCbe00cc98039DF",
+        "teeSigners": [
+          "eth:0x04Ffc6aD66934937737DD5Fea303bd0903B7625e",
+          "eth:0xCb88D07F5d30837d3dE8a10fCDb7bA8aBb3fbeC6"
+        ]
+      },
+      "fieldMeta": {
+        "PCR0_HASH": {
+          "description": "keccak256 of the PCR0 measurement of the only AWS Nitro enclave image whose attestations can register signers."
+        },
+        "L2_RECIPIENT": {
+          "description": "Aztec address that signer registration messages are sent to."
+        },
+        "teeSigners": {
+          "description": "Registered TEE signers. Registrations are permanent."
+        }
+      },
+      "implementationNames": {
+        "eth:0x8b705C3519169F29850D156574ec377B686bd9CD": "TeeRegistry"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SwapEscrowFactory",
+      "address": "eth:0x8F4105a55C457D796Adab90d5D9E649861E81625",
+      "type": "Contract",
+      "template": "zkmoney/SwapEscrowFactoryV2",
+      "sourceHashes": [
+        "0x8cc38eb3f14962815539d579e0033e17ff91e90c4985a7306f43146e750af181"
+      ],
+      "proxyType": "immutable",
+      "description": "Swap-on-withdraw: a withdrawal can pay DAI to a SwapEscrowV2 clone whose route, recipient, gas share and tip are fixed in its address. Anyone can deploy and execute a funded clone to pay USDC, USDT, ETH or DAI to the recipient.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793100251,
+      "sinceBlock": 26283725,
+      "values": {
+        "$immutable": true,
+        "DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "IMPLEMENTATION": "eth:0xc953308e66DA19881d8ddD240E6369Db8Ef72Ab9"
+      },
+      "implementationNames": {
+        "eth:0x8F4105a55C457D796Adab90d5D9E649861E81625": "SwapEscrowFactory"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "MigrationExecutor_sUSDS",
+      "address": "eth:0x92270578f3A311B3ced0019a4E15701e7405b4AE",
+      "type": "Contract",
+      "template": "zkmoney/v6/MigrationExecutor",
+      "sourceHashes": [
+        "0xe20e6296e1d49c2157cfa25e713437c43c74cbeb5637ef5a81754a315f10eb02"
+      ],
+      "proxyType": "immutable",
+      "description": "Payout contract that moves refunds from the frozen SOURCE_PORTAL into DESTINATION_PORTAL. Only SOURCE_PORTAL can call it. It deposits the refund, minus the relayer tip committed in the refund, into DESTINATION_PORTAL for the recipient commitment the refund names.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793019539,
+      "sinceBlock": 26277013,
+      "values": {
+        "$immutable": true,
+        "ASSET": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "DESTINATION_PORTAL": "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8",
+        "PAYOUT_TOKEN": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "SOURCE_PORTAL": "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
+        "SUBSIDY": "eth:0x1CDdB370320AF73dD871f28193Ff394D11e38453"
+      },
+      "fieldMeta": {
+        "SUBSIDY": {
+          "description": "Pays relayers of migrations from operator funds."
+        }
+      },
+      "implementationNames": {
+        "eth:0x92270578f3A311B3ced0019a4E15701e7405b4AE": "MigrationExecutor"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "RegistrationSIPA",
+      "address": "eth:0x96A52ed47Af73423D4b8a920913e5c1ceFdC1319",
+      "type": "Contract",
+      "template": "zkmoney/v6/RegistrationSIPA",
+      "sourceHashes": [
+        "0x81098092c2a870fb7e6279307b64c9f0ab5f0825fe4836220f45fd386897180f"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation of zk.money registration addresses. Sweeping a funded clone registers the name through the current RegistrationController of the NameRegistry, pays the committed and listed fees and deposits the rest into the portal its ForwardingTable names. The recipient's account can recover any funds from the clone.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793021399,
+      "sinceBlock": 26277168,
+      "values": {
+        "$immutable": true,
+        "INTENT": 2,
+        "NAME_REGISTRY": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a"
+      },
+      "implementationNames": {
+        "eth:0x96A52ed47Af73423D4b8a920913e5c1ceFdC1319": "RegistrationSIPA"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "FrozenDepositsRefundVerifier",
+      "address": "eth:0xa460C3130D1701a94f76d1122362C0D127f1C6A3",
+      "type": "Contract",
+      "template": "zkmoney/v6/FrozenDepositsRefundVerifier",
+      "sourceHashes": [
+        "0x8b474ade271d50ce657dc9992d426db5fd8eea042803080355cb2291be45432b"
+      ],
+      "proxyType": "immutable",
+      "description": "UltraHonk verifier for refunds of deposits that reached Aztec but were unspent when the zk.money portal froze. Its verification key is immutable.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793015531,
+      "sinceBlock": 26276679,
+      "values": {
+        "$immutable": true,
+        "verificationKeyHash": "0x2710bacfccd5568bb732fc67370c3ce2ac817002ea02a099baa47ea42586544f"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "description": "Circuit verification key hash embedded in the verified Solidity source.",
+          "type": "CODE_CHANGE"
+        }
+      },
+      "implementationNames": {
+        "eth:0xa460C3130D1701a94f76d1122362C0D127f1C6A3": "HonkVerifier"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "NameRegistry",
+      "address": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
+      "type": "Contract",
+      "template": "zkmoney/NameRegistry",
+      "sourceHashes": [
+        "0x68542c65f8a9bb647439b69059420e315db6590ae0ac86fe589ff0c75ebba272"
+      ],
+      "proxyType": "immutable",
+      "description": "Registry of zk.money names. It points to the RegistrationController and the AccountMetadataRegistry, which together decide where payments to a zk.money name resolve to.",
+      "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+      "sinceTimestamp": 1790298419,
+      "sinceBlock": 26051079,
+      "values": {
+        "$immutable": true,
+        "accountMetadataRegistry": "eth:0xDA79Bae4485c40291363D885Aae5B543d2D0Efa9",
+        "domainOwner": "eth:0x768001056E4d89fd45Bf74Df3d91809F9BEb1ee1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Oxide NameRegistry",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "owner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+        "registrationController": "eth:0x45F626E2a4D63232677C96B163ac46e20514a915",
+        "resolver": "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "domainOwner": { "severity": "MEDIUM" },
+        "registrationController": { "severity": "HIGH" },
+        "accountMetadataRegistry": { "severity": "HIGH" },
+        "resolver": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a": "NameRegistry"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "SkyEscrow",
+      "address": "eth:0xB61D97Faf96ec8de617aAF54F4764d01cfd25b8b",
+      "type": "Contract",
+      "template": "zkmoney/SkyEscrow",
+      "sourceHashes": [
+        "0xbee839239457d0805bc9c87f1a40412f8d596b13258e499456e526c28c72f9e0"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation for savings conversion escrows. Each clone fixes the route, deposit commitment, relayer tip and recovery commitment in its address. It converts DAI into sUSDS or redeposits DAI after a savings withdrawal. The recovery account can reclaim stranded tokens, including shares taken without redemption.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793019191,
+      "sinceBlock": 26276984,
+      "values": {
+        "$immutable": true,
+        "DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "DAI_PORTAL": "eth:0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042",
+        "DAI_USDS": "eth:0x3225737a9Bbb6473CB4a45b7244ACa2BeFdB276A",
+        "FACTORY": "eth:0x7F890e5DF3B4165D1cE4E9A42e97C44f1d7dCc09",
+        "REFERRAL_CODE": 2014,
+        "ROUTE_STAKE": 0,
+        "ROUTE_UNSTAKE": 1,
+        "SKY_EXECUTOR": "eth:0xFE0B2B24cca52D1680103E258985A5aCA33742d5",
+        "SUSDS": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "SUSDS_PORTAL": "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8",
+        "USDS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+        "WITHDRAW_IN_SHARES_TYPEHASH": "0xfd2e9745785c8f68bd6ab5b124ff529d97e3c470a0d4e7e33c2cdbe48e8fdb3a"
+      },
+      "implementationNames": {
+        "eth:0xB61D97Faf96ec8de617aAF54F4764d01cfd25b8b": "SkyEscrow"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "DepositSIPA",
+      "address": "eth:0xBFe3dE3C4466cbC5803A756847208c69B3BAe401",
+      "type": "Contract",
+      "template": "zkmoney/v6/DepositSIPA",
+      "sourceHashes": [
+        "0x53b4469d59472a86285da196c2e9315df903b89c1ade8e0bef2a811f291b7283"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation of zk.money deposit addresses. Anyone can sweep a funded clone, which swaps USDC or USDT to DAI, pays the fees its ForwardingTable lists and deposits the rest into the portal that table names for the token, for the recipient fixed in the clone's address. The recipient's account can recover any funds from the clone.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793021231,
+      "sinceBlock": 26277154,
+      "values": { "$immutable": true, "INTENT": 1 },
+      "implementationNames": {
+        "eth:0xBFe3dE3C4466cbC5803A756847208c69B3BAe401": "DepositSIPA"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Resolver",
+      "address": "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525",
+      "type": "Contract",
+      "template": "zkmoney/Resolver",
+      "sourceHashes": [
+        "0xacb21e7554de4912eee4a513ea0059cd54b2fe3cd45e4d3745e2ae406b4f717f"
+      ],
+      "proxyType": "immutable",
+      "description": "ENS resolver for zk.money names. It returns a deposit address derived from a resolver operator's answer, which must come with a zk proof that it matches the user's registered keys and L2 address in the AccountMetadataRegistry.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793022083,
+      "sinceBlock": 26277225,
+      "values": {
+        "$immutable": true,
+        "ensNode": "0xf605999a299a7229da9f2a3c65acf5cb829ae965cfe467f053e1b97c50b0eec2",
+        "ensNodeOwner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+        "ensResolver": "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525",
+        "NAME_REGISTRY": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
+        "SIPA_FACTORY": "eth:0x186C20F0F294378E1DecA7419c667e44c73E992C",
+        "VERIFIER": "eth:0x1E63715af06Bb12331f6A319b46253713e4d0206"
+      },
+      "fieldMeta": {
+        "ensNode": { "description": "ENS node monitored for this deployment." },
+        "ensNodeOwner": {
+          "severity": "MEDIUM",
+          "description": "Owner of zk.money in the ENS registry. The DNS domain holder can reclaim this DNS name in ENS with a DNSSEC proof."
+        },
+        "ensResolver": {
+          "severity": "HIGH",
+          "description": "Resolver set for zk.money in the ENS registry."
+        }
+      },
+      "implementationNames": {
+        "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525": "Resolver"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "SwapEscrow",
+      "address": "eth:0xc953308e66DA19881d8ddD240E6369Db8Ef72Ab9",
+      "type": "Contract",
+      "template": "zkmoney/SwapEscrowV2",
+      "sourceHashes": [
+        "0x2c097ddba4b27589eb6339e943891f12c2e742756c5cc6815ad5d54cd26fe9d5"
+      ],
+      "proxyType": "immutable",
+      "description": "SwapEscrowV2 implementation. A clone swaps via the Curve 3pool (and Uniswap for ETH) with a slippage bound of 100 bps for stablecoins and 200 bps against the Chainlink ETH/USD price for ETH. It can first swap a capped share of the DAI to ETH for the recipient's gas. If the swap cannot execute, only the recovery key committed in the clone's address can move the funds.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793100251,
+      "sinceBlock": 26283725,
+      "values": {
+        "$immutable": true,
+        "BPS_DENOMINATOR": 10000,
+        "DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "DAI_WETH_PAIR": "eth:0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
+        "ETH_MAX_SLIPPAGE_BPS": 200,
+        "ETH_USD_FEED": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+        "FACTORY": "eth:0x8F4105a55C457D796Adab90d5D9E649861E81625",
+        "MAX_DAI_FOR_GAS": "50000000000000000000",
+        "MAX_PRICE_AGE": 3900,
+        "ROUTE_DAI": 3,
+        "ROUTE_ETH": 2,
+        "ROUTE_USDC": 0,
+        "ROUTE_USDT": 1,
+        "STABLE_MAX_SLIPPAGE_BPS": 100,
+        "THREE_POOL": "eth:0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+        "UNISWAP_UNIVERSAL_ROUTER": "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af",
+        "USDC": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "USDT": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "implementationNames": {
+        "eth:0xc953308e66DA19881d8ddD240E6369Db8Ef72Ab9": "SwapEscrow"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xCb88D07F5d30837d3dE8a10fCDb7bA8aBb3fbeC6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "OxidePortal",
+      "address": "eth:0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042",
+      "type": "Contract",
+      "template": "zkmoney/v6/OxidePortal",
+      "sourceHashes": [
+        "0x2d039009f3d4cf4e141ab791feedf9c04fd3e43e9ce7ff05b7be56126e218af5"
+      ],
+      "proxyType": "immutable",
+      "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from L2_TOKEN and a signature from a TEE signer registered in the TEE_REGISTRY. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. A refund needs a zk proof against that snapshot and a registered signer's signature.",
+      "critical": true,
+      "ignoreInWatchMode": [
+        "_$cachedAvailable",
+        "_$lastUpdatedTime",
+        "getCurrentAvailable"
+      ],
+      "deployerAddress": "eth:0xF20076E445e159B17fF3aaAAC567dc4b2e45FB8c",
+      "sinceTimestamp": 1793015927,
+      "sinceBlock": 26276712,
+      "values": {
+        "_$cachedAvailable": "99992401381985583850247",
+        "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "_$freezeCheckpointCount": 0,
+        "_$freezeCheckpointNumber": 0,
+        "_$freezeEpochNumber": 0,
+        "_$frozen": false,
+        "_$lastUpdatedTime": 1793182907,
+        "$immutable": true,
+        "FROZEN_DEPOSITS_REFUND_VERIFIER": "eth:0xa460C3130D1701a94f76d1122362C0D127f1C6A3",
+        "FROZEN_NOTES_REFUND_VERIFIER": "eth:0x880F3C8356A930522896A7c539157D4c87F95377",
+        "getCurrentAvailable": "100000000000000000000000",
+        "GLOBAL_LIMIT": "100000000000000000000000",
+        "INBOX": "eth:0x603B06cEcC1d537Aad83f1d46651e32014c5B6aD",
+        "L2_TOKEN": "0x11d2bed21a36289fd6f6a6af93a546b5be7115caf957f0f700f42d56e25fe0a3",
+        "OUTBOX": "eth:0xFD2a12658A82d7156DA56c7A8d49A69fC966c8D1",
+        "RATE": "1157407407407407407",
+        "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+        "ROLLUP": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
+        "ROLLUP_VERSION": 2070860440,
+        "TEE_REGISTRY": "eth:0x8b705C3519169F29850D156574ec377B686bd9CD",
+        "TX_AMOUNT_CAP": "5166000000000000000000",
+        "UNDERLYING": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "UNPROCESSED_DEPOSIT_REFUND_VERIFIER": "eth:0xF15780eB45c49a7cB4FB0BF178D3DaF0F1D68c8a"
+      },
+      "fieldMeta": {
+        "L2_TOKEN": {
+          "description": "zk.money token contract on Aztec whose L2->L1 messages can release funds."
+        },
+        "_$frozen": {
+          "severity": "MEDIUM",
+          "description": "Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership."
+        },
+        "REGISTRY": {
+          "description": "Aztec Registry. If its canonical rollup is no longer ROLLUP, anyone can freeze this portal."
+        },
+        "GLOBAL_LIMIT": {
+          "description": "Deposit capacity (wei), refilling at RATE per second. Withdrawals and refunds are only limited by TX_AMOUNT_CAP per transaction.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "eth:0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042": "OxidePortal"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "PortalFactory",
+      "address": "eth:0xCeae64c7211a2208afFc4F396ADD1D46996Cd2A2",
+      "type": "Contract",
+      "template": "zkmoney/v6/PortalFactory",
+      "sourceHashes": [
+        "0x81a4e194bf469cf8462b79af746e60bc54ff7c8cf8a4f19bb976e92e32055eb8"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys OxidePortals that share its TEE_REGISTRY and refund verifiers. Each portal is a separate escrow for one token and one L2 token contract, and nothing in a deployed portal refers back to the factory.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793015651,
+      "sinceBlock": 26276689,
+      "values": {
+        "$immutable": true,
+        "FROZEN_DEPOSITS_REFUND_VERIFIER": "eth:0xa460C3130D1701a94f76d1122362C0D127f1C6A3",
+        "FROZEN_NOTES_REFUND_VERIFIER": "eth:0x880F3C8356A930522896A7c539157D4c87F95377",
+        "owner": "eth:0xF20076E445e159B17fF3aaAAC567dc4b2e45FB8c",
+        "pendingL2Token": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "PORTAL_SALT": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+        "ROLLUP_VERSION": 2070860440,
+        "TEE_REGISTRY": "eth:0x8b705C3519169F29850D156574ec377B686bd9CD",
+        "UNPROCESSED_DEPOSIT_REFUND_VERIFIER": "eth:0xF15780eB45c49a7cB4FB0BF178D3DaF0F1D68c8a"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "eth:0xCeae64c7211a2208afFc4F396ADD1D46996Cd2A2": "PortalFactory"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "RelationsLib",
+      "address": "eth:0xCEBD4589238699fcD7FEA8F89f05AE35F4D7E8c4",
+      "type": "Contract",
+      "template": "zkmoney/ResolverVerifierLibrary",
+      "sourceHashes": [
+        "0x017e9069df063e1170d13ae9d49ca3f3ad737d4ca9db5ec30562e21faed3d334"
+      ],
+      "proxyType": "immutable",
+      "description": "Runtime library immutably linked into the zk.money resolver verifier. It evaluates circuit constraints or derives Fiat-Shamir challenges for zero-knowledge UltraHonk proofs.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793021459,
+      "sinceBlock": 26277173,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xCEBD4589238699fcD7FEA8F89f05AE35F4D7E8c4": "RelationsLib"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "PlainWithdrawalExecutor_sUSDS",
+      "address": "eth:0xd0D8E5C5B128ea7e5f2d461Afd6C669BC0877dF8",
+      "type": "Contract",
+      "template": "zkmoney/v6/PlainWithdrawalExecutor",
+      "sourceHashes": [
+        "0x557fd23f0fa02460a25d8aaf0bf6c04e809f799d3defe2fae4ddd084dee51e2a"
+      ],
+      "proxyType": "immutable",
+      "description": "Default payout contract for withdrawals and refunds. Only the PORTAL can call it. It pays the recipient and relayer tip committed on Aztec. An ordinary withdrawal first pays FEE to BENEFICIARY, while refunds pay no fee.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793018723,
+      "sinceBlock": 26276945,
+      "values": {
+        "$immutable": true,
+        "ASSET": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "BENEFICIARY": "eth:0x4A311A8DAC3ab9553722e615472F70459B09dE27",
+        "FEE": "100000000000000000",
+        "PORTAL": "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8",
+        "SUBSIDY": "eth:0xfb249879D3C72e9CC7BB497e1e94b7FbC6b92d54"
+      },
+      "fieldMeta": {
+        "FEE": {
+          "description": "Fee in ASSET (wei) taken from each ordinary withdrawal."
+        },
+        "SUBSIDY": {
+          "description": "Pays relayers of this executor's payouts from operator funds."
+        }
+      },
+      "implementationNames": {
+        "eth:0xd0D8E5C5B128ea7e5f2d461Afd6C669BC0877dF8": "PlainWithdrawalExecutor"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "OxideAccount",
+      "address": "eth:0xdA0D7cD0f49cE7b1D04bf03eE56374a8981c2844",
+      "type": "Contract",
+      "template": "zkmoney/OxideAccount",
+      "sourceHashes": [
+        "0x3eeaf7f45896a2760f4482031e22ddd0ef25a16f54ebd6d292b0144dd414313f"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable implementation of users' L1 accounts. The bootstrap key authorizes the first passkey. Once a passkey is installed, only the user's passkeys can authorize operations and manage keys. The last passkey cannot be removed. Deposit recovery checks signatures against this account.",
+      "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+      "sinceTimestamp": 1790298455,
+      "sinceBlock": 26051082,
+      "values": {
+        "$immutable": true,
+        "authKeyCount": 0,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "OxideAccount",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xdA0D7cD0f49cE7b1D04bf03eE56374a8981c2844",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
+        "getAuthKeys": [],
+        "getNonce": 0
+      },
+      "implementationNames": {
+        "eth:0xdA0D7cD0f49cE7b1D04bf03eE56374a8981c2844": "OxideAccount"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "AccountMetadataRegistry",
+      "address": "eth:0xDA79Bae4485c40291363D885Aae5B543d2D0Efa9",
+      "type": "Contract",
+      "template": "zkmoney/AccountMetadataRegistry",
+      "sourceHashes": [
+        "0xdc9231a30b44a9d01aa35806722a247758733da4e301c05bbec2dc7f4c2af2de"
+      ],
+      "proxyType": "immutable",
+      "description": "Stores user records (Aztec L2 address, keys, chosen resolver operator) and resolver operator entries. User records can be written by the user or by the RegistrationController. Anyone can register as a resolver operator.",
+      "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+      "sinceTimestamp": 1790298431,
+      "sinceBlock": 26051080,
+      "values": {
+        "$immutable": true,
+        "NAME_REGISTRY": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
+        "resolverOperators": {
+          "eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664": [
+            [
+              "78424701733732488215665087776877938889254215889323330557684387640730288987814",
+              "91380317572347884033234557058971661735677496832042332515746246346312091580181"
+            ],
+            "0x1847cc9b9248ca3a57e3c90c91188c2c41262b860b6be229966d843956f00ae7",
+            "https://rop-v6.v6-prod.oxide.zk.money/{sender}/{data}.json",
+            "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C"
+          ]
+        }
+      },
+      "fieldMeta": {
+        "resolverOperators": {
+          "severity": "MEDIUM",
+          "description": "Registered resolver operators with their latest entry (public key, L2 address, gateway URL, portal)."
+        }
+      },
+      "implementationNames": {
+        "eth:0xDA79Bae4485c40291363D885Aae5B543d2D0Efa9": "AccountMetadataRegistry"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "CertManager",
+      "address": "eth:0xe3DDDf3D4B624F49B4CeB81807338CCa14f5dd86",
+      "type": "Contract",
+      "template": "zkmoney/CertManager",
+      "sourceHashes": [
+        "0x01e2178412d93dd18d4897bc5710f1650d38bef2711d6b73cd2bb7d613d3173d"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifies and caches AWS Nitro attestation certificates. The only trust anchor is the hardcoded AWS Nitro root certificate.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793015531,
+      "sinceBlock": 26276679,
+      "values": {
+        "$immutable": true,
+        "BASIC_CONSTRAINTS_OID": "0x6351d72a43cb42fb9a2531a28608c278c89629f8f025b5f5dc705f3fe45e950a",
+        "CERT_ALGO_OID": "0x53ce037f0dfaa43ef13b095f04e68a6b5e3f1519a01a3203a1e6440ba915b87e",
+        "EC_PUB_KEY_OID": "0xb60fee1fd85f867dd7c8d16884a49a20287ebe4c0fb49294e9825988aa8e42b4",
+        "KEY_USAGE_OID": "0x45529d8772b07ebd6d507a1680da791f4a2192882bf89d518801579f7a5167d2",
+        "ROOT_CA_CERT_HASH": "0x311d96fcd5c5e0ccf72ef548e2ea7d4c0cd53ad7c4cc49e67471aed41d61f185",
+        "ROOT_CA_CERT_MAX_PATH_LEN": -1,
+        "ROOT_CA_CERT_NOT_AFTER": 2519044085,
+        "ROOT_CA_CERT_PUB_KEY": "0xfc0254eba608c1f36870e29ada90be46383292736e894bfff672d989444b5051e534a4b1f6dbe3c0bc581a32b7b176070ede12d69a3fea211b66e752cf7dd1dd095f6f1370f4170843d9dc100121e4cf63012809664487c9796284304dc53ff4",
+        "ROOT_CA_CERT_SUBJECT_HASH": "0x3c3e2e5f1dd14dee5db88341ba71521e939afdb7881aa24c9f1e1c007a2fa8b6",
+        "SECP_384_R1_OID": "0xbd74344bb507daeb9ed315bc535f24a236ccab72c5cd6945fb0efe5c037e2097"
+      },
+      "implementationNames": {
+        "eth:0xe3DDDf3D4B624F49B4CeB81807338CCa14f5dd86": "CertManager"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "UnprocessedDepositRefundVerifier",
+      "address": "eth:0xF15780eB45c49a7cB4FB0BF178D3DaF0F1D68c8a",
+      "type": "Contract",
+      "template": "zkmoney/v6/UnprocessedDepositRefundVerifier",
+      "sourceHashes": [
+        "0xcfacecd08ff16303f5000fccf609cf80c51363678d1b1acd51d9476de9cfdc89"
+      ],
+      "proxyType": "immutable",
+      "description": "UltraHonk verifier for refunds of deposits that never reached Aztec before the zk.money portal froze. Its verification key is immutable.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793015531,
+      "sinceBlock": 26276679,
+      "values": {
+        "$immutable": true,
+        "verificationKeyHash": "0x1597ef3e1caf60ec4a7d845d676b580e64933bce926ff8cef4f1a80ac000ccec"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "description": "Circuit verification key hash embedded in the verified Solidity source.",
+          "type": "CODE_CHANGE"
+        }
+      },
+      "implementationNames": {
+        "eth:0xF15780eB45c49a7cB4FB0BF178D3DaF0F1D68c8a": "HonkVerifier"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xF20076E445e159B17fF3aaAAC567dc4b2e45FB8c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SkyWithdrawalExecutor",
+      "address": "eth:0xFE0B2B24cca52D1680103E258985A5aCA33742d5",
+      "type": "Contract",
+      "template": "zkmoney/SkyWithdrawalExecutor",
+      "sourceHashes": [
+        "0xad09955b53632057eff79d4c147b8084e491bf520200a51d925ea708626f5fb3"
+      ],
+      "proxyType": "immutable",
+      "description": "Payout contract for sUSDS withdrawals and refunds. Only the PORTAL can execute a payout. It normally redeems sUSDS into USDS and converts USDS to DAI before paying the committed recipient and relayer tip. The recipient can complete an ordinary withdrawal in sUSDS shares through withdrawInShares, bypassing redemption.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793019119,
+      "sinceBlock": 26276978,
+      "values": {
+        "$immutable": true,
+        "ASSET": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "DAI_USDS": "eth:0x3225737a9Bbb6473CB4a45b7244ACa2BeFdB276A",
+        "PORTAL": "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8",
+        "SUBSIDY": "eth:0xaCB0900f218D5c4d0590dC82bab0FdFaA2459f35",
+        "SUSDS": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "USDS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+      },
+      "implementationNames": {
+        "eth:0xFE0B2B24cca52D1680103E258985A5aCA33742d5": "SkyWithdrawalExecutor"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "ForwardingTable",
+      "address": "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C",
+      "type": "Contract",
+      "template": "zkmoney/v6/ForwardingTable",
+      "sourceHashes": [
+        "0x9e04d453cfe7a39ca610afb88b7f872ee2b5706824a54500efc9a00e3ad8f49d"
+      ],
+      "proxyType": "immutable",
+      "description": "Routing table of zk.money deposit addresses. For each listed token it names the portal that deposit addresses using this table sweep into, and per intent the fee for the beneficiary and the tip for the sweeper. Rows and intents can only be added, never changed or removed.",
+      "critical": true,
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793019251,
+      "sinceBlock": 26276989,
+      "values": {
+        "_$beneficiary": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+        "$immutable": true,
+        "addedIntents": [],
+        "owner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+        "ROLLUP_VERSION": 2070860440,
+        "rows": [
+          {
+            "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "portal": "eth:0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042",
+            "intents": [
+              [1, "150000000000000000", "250000000000000000"],
+              [2, 0, "500000000000000000"]
+            ]
+          },
+          {
+            "token": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+            "portal": "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8",
+            "intents": [[1, 0, "250000000000000000"]]
+          }
+        ]
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "_$beneficiary": {
+          "severity": "MEDIUM",
+          "description": "Receives the beneficiary fee of each sweep through this table."
+        },
+        "rows": {
+          "severity": "MEDIUM",
+          "description": "Listed tokens with the portal their deposits sweep into and the fees per intent (1 = Deposit, 2 = Registration, 3 = UserOp)."
+        },
+        "addedIntents": {
+          "severity": "MEDIUM",
+          "description": "Fees per intent added to listed tokens after their row."
+        }
+      },
+      "implementationNames": {
+        "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C": "ForwardingTable"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    }
+  ],
+  "abis": {
+    "eth:0x13114c5C847a414D20755DBc2eCbe00cc98039DF": [
+      "constructor(address _certManager)",
+      "event AttestationHashStaged(bytes32 indexed attestationTbsKeccak)",
+      "event AttestationSignatureVerified(bytes32 indexed attestationTbsKeccak, bytes32 indexed leafCertHash)",
+      "function ATTESTATION_DIGEST() view returns (bytes32)",
+      "function ATTESTATION_TBS_PREFIX() view returns (bytes32)",
+      "function CABUNDLE_KEY() view returns (bytes32)",
+      "function CERTIFICATE_KEY() view returns (bytes32)",
+      "function DIGEST_KEY() view returns (bytes32)",
+      "function MODULE_ID_KEY() view returns (bytes32)",
+      "function NONCE_KEY() view returns (bytes32)",
+      "function PCRS_KEY() view returns (bytes32)",
+      "function PUBLIC_KEY_KEY() view returns (bytes32)",
+      "function TIMESTAMP_KEY() view returns (bytes32)",
+      "function USER_DATA_KEY() view returns (bytes32)",
+      "function attestationSha384(bytes32 attestationTbsKeccak) view returns (bytes sha384Hash)",
+      "function certManager() view returns (address)",
+      "function decodeAttestationTbs(bytes attestation) pure returns (bytes attestationTbs, bytes signature)",
+      "function validateAttestation(bytes attestationTbs, bytes signature) returns (tuple(uint256 moduleID, uint64 timestamp, uint256 digest, uint256[] pcrs, uint256 cert, uint256[] cabundle, uint256 publicKey, uint256 userData, uint256 nonce))",
+      "function verifiedAttestationLeaf(bytes32 attestationTbsKeccak) view returns (bytes32 leafCertHash)",
+      "function verifyAttestationHash(bytes attestationTbs) returns (bytes32 attestationTbsKeccak)",
+      "function verifyAttestationSignature(bytes32 attestationTbsKeccak, bytes signature, bytes32 leafCertHash)"
+    ],
+    "eth:0x158161B257f9bAD34C12Dd8D52638424b216c3a2": [
+      "constructor(address nameRegistry, address aztecRegistry, address accountFactory)",
+      "error NamePortal__NameNotFound(address user)",
+      "error NamePortal__NotFactoryAccount(address user)",
+      "error NamePortal__ZeroAccountFactory()",
+      "error NamePortal__ZeroAztecRegistry()",
+      "error NamePortal__ZeroNameRegistry()",
+      "error NamePortal__ZeroRecipient()",
+      "event NameNotified(address indexed user, bytes32 indexed nameHash, bytes32 indexed l2Recipient, uint256 rollupVersion, bytes32 key, uint256 index)",
+      "function ACCOUNT_FACTORY() view returns (address)",
+      "function AZTEC_REGISTRY() view returns (address)",
+      "function NAME_REGISTRY() view returns (address)",
+      "function notify(address user, bytes32 l2Recipient, uint256 rollupVersion) returns (bytes32 key, uint256 index)"
+    ],
+    "eth:0x186C20F0F294378E1DecA7419c667e44c73E992C": [
+      "constructor(address owner)",
+      "error CloneArgumentsTooLong()",
+      "error Create2EmptyBytecode()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SIPAFactory__RecoveryCommitmentTooLarge(bytes32 recoveryCommitment)",
+      "error SIPAFactory__ZeroImplementation()",
+      "error SIPAFactory__ZeroTable()",
+      "event ImplementationBlessed(address indexed implementation, uint8 indexed intent)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TableBlessed(address indexed table)",
+      "function approvedTable(address table) view returns (bool approved)",
+      "function blessImplementation(address implementation)",
+      "function blessTable(address table)",
+      "function cloneImplementation(address clone) view returns (address implementation)",
+      "function deploySIPA(address implementation, bytes32 intentHash, bytes32 recoveryCommitment, uint256 rollupVersion, bool resweepable, address table) returns (address)",
+      "function implementationFor(uint8 intent) view returns (address implementation)",
+      "function intentOf(address implementation) view returns (uint8 intent)",
+      "function isBlessed(address caller) view returns (bool)",
+      "function owner() view returns (address)",
+      "function predictSIPA(address implementation, bytes32 intentHash, bytes32 recoveryCommitment, uint256 rollupVersion, bool resweepable, address table) view returns (address)",
+      "function renounceOwnership()",
+      "function sipaIntentOf(address caller) view returns (uint8)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x187d19EccBf2909AD3d71B798A8704D950b9C3ee": [
+      "constructor()",
+      "error CloneArgumentsTooLong()",
+      "error Create2EmptyBytecode()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error OxideAccountFactory__InvalidBootstrapOwner()",
+      "event AccountDeployed(address indexed bootstrap, address account)",
+      "function deploy(address bootstrap) returns (address account)",
+      "function implementation() view returns (address)",
+      "function predictAccountAddress(address bootstrap) view returns (address)"
+    ],
+    "eth:0x1E63715af06Bb12331f6A319b46253713e4d0206": [
+      "error ConsistencyCheckFailed()",
+      "error GeminiChallengeInSubgroup()",
+      "error InvertOfZero()",
+      "error NotPowerOfTwo()",
+      "error PointAtInfinity()",
+      "error ProofLengthWrongWithLogN(uint256 logN, uint256 actualLength, uint256 expectedLength)",
+      "error PublicInputsLengthWrong()",
+      "error ShpleminiFailed()",
+      "error SumcheckFailed()",
+      "error ValueGeFieldOrder()",
+      "error ValueGeGroupOrder()",
+      "error ValueGeLimbMax()",
+      "function verify(bytes proof, bytes32[] publicInputs) view returns (bool verified)"
+    ],
+    "eth:0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8": [
+      "constructor(address _teeRegistry, address _underlying, address _registry, uint256 _rollupVersion, tuple(address frozenNotes, address frozenDeposits, address unprocessedDeposit) _verifiers, uint128 _txAmountCap, uint256 _rate, uint256 _globalLimit)",
+      "error Caps__GlobalLimitSurpassed()",
+      "error Caps__TxLimitSurpassed()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error MerkleLib__InvalidIndexForPathLength()",
+      "error MerkleLib__InvalidRoot(bytes32 expected, bytes32 actual, bytes32 leaf, uint256 leafIndex)",
+      "error OxidePortal__AlreadyFrozen()",
+      "error OxidePortal__AmountTooLarge()",
+      "error OxidePortal__CheckpointPastFreeze()",
+      "error OxidePortal__EmptyFrozenDepositsRefundNullifiers()",
+      "error OxidePortal__EmptyFrozenNotesRefundNullifiers()",
+      "error OxidePortal__EpochPastFreeze()",
+      "error OxidePortal__FrozenPortal()",
+      "error OxidePortal__InvalidFrozenDepositsRefundProof()",
+      "error OxidePortal__InvalidFrozenNotesRefundProof()",
+      "error OxidePortal__InvalidProver()",
+      "error OxidePortal__InvalidUnprocessedDepositRefundProof()",
+      "error OxidePortal__InvalidUserPayload()",
+      "error OxidePortal__InvalidWithdrawalExecutor()",
+      "error OxidePortal__NotFrozen()",
+      "error OxidePortal__ProofDepthPastFreeze()",
+      "error OxidePortal__ProverTipExceedsAmount()",
+      "error OxidePortal__RefundNullifierAlreadySpent(bytes32 nullifier)",
+      "error OxidePortal__RollupStillCanonical()",
+      "error OxidePortal__TooManyFrozenDepositsRefundNullifiers(uint256 count)",
+      "error OxidePortal__TooManyFrozenNotesRefundNullifiers(uint256 count)",
+      "error OxidePortal__UnknownCheckpoint()",
+      "error OxidePortal__UnknownDepositMessage(bytes32 messageHash)",
+      "error OxidePortal__UnprovenCheckpoint()",
+      "error OxidePortal__UnregisteredTEE()",
+      "error OxidePortal__WithdrawalAlreadyClaimed()",
+      "error OxidePortal__WithdrawalProverClaimAlreadyMade(bytes32 withdrawalId)",
+      "error OxidePortal__ZeroAmount()",
+      "error OxidePortal__ZeroRecipientCommitment()",
+      "error OxidePortal__ZeroRefundNullifier()",
+      "error ProverClaim__CheckpointEpochMismatch(uint256 checkpointNumber, uint256 epochNumber)",
+      "error ProverClaim__CheckpointNotEpochBoundary(uint256 checkpointNumber, uint256 epochNumber)",
+      "error ProverClaim__ClaimAlreadyTracked(address portal, uint256 epochNumber, uint256 leafId)",
+      "error ProverClaim__LeafIndexOutOfBounds(uint256 leafIndex, uint256 pathLength)",
+      "error ProverClaim__NotFirstProver(uint256 checkpointNumber, address firstProver)",
+      "error ProverClaim__PathTooLong(uint256 pathLength)",
+      "error ProverClaim__PathTooShort(uint256 pathLength, uint256 minimumPathLength)",
+      "error ProverClaim__ProofLengthBelowMessageCheckpoint(uint256 proofLength, uint256 messageCheckpointPosition)",
+      "error ProverClaim__UnprovenEpoch(uint256 epochNumber)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event Deposit(bytes32 indexed recipientCommitment, uint256 amount, bytes32 key, uint256 index)",
+      "event Frozen(uint256 indexed checkpointNumber, uint256 indexed epochNumber, bytes32 archive, uint256 freezeCheckpointCount)",
+      "event TipReleased(address indexed to, uint256 amount)",
+      "event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)",
+      "function $cachedAvailable() view returns (uint256)",
+      "function $claimed(uint256 epoch, uint256 leafId) view returns (bool claimed)",
+      "function $depositMessageIndex(bytes32 messageHash) view returns (uint256 indexPlusOne)",
+      "function $freezeArchive() view returns (bytes32)",
+      "function $freezeCheckpointCount() view returns (uint256)",
+      "function $freezeCheckpointNumber() view returns (uint256)",
+      "function $freezeEpochNumber() view returns (uint256)",
+      "function $frozen() view returns (bool)",
+      "function $isRefundNullifierSpent(bytes32 nullifier) view returns (bool spent)",
+      "function $isWithdrawalProverClaimSpent(bytes32 withdrawalId) view returns (bool spent)",
+      "function $isWithdrawalSpent(bytes32 withdrawalId) view returns (bool spent)",
+      "function $lastUpdatedTime() view returns (uint256)",
+      "function FROZEN_DEPOSITS_REFUND_VERIFIER() view returns (address)",
+      "function FROZEN_NOTES_REFUND_VERIFIER() view returns (address)",
+      "function GLOBAL_LIMIT() view returns (uint256)",
+      "function INBOX() view returns (address)",
+      "function L2_TOKEN() view returns (bytes32)",
+      "function OUTBOX() view returns (address)",
+      "function RATE() view returns (uint256)",
+      "function REGISTRY() view returns (address)",
+      "function ROLLUP() view returns (address)",
+      "function ROLLUP_VERSION() view returns (uint256)",
+      "function TEE_REGISTRY() view returns (address)",
+      "function TX_AMOUNT_CAP() view returns (uint128)",
+      "function UNDERLYING() view returns (address)",
+      "function UNPROCESSED_DEPOSIT_REFUND_VERIFIER() view returns (address)",
+      "function claimProverTips(address _proverSubsidy, tuple(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) args, tuple(uint256 epochNumber, uint256 messageLeafIndex, bytes32[] path, uint256 proofLength, uint256 checkpointNumber) proof)[] _claims) returns (uint256 totalSubsidy)",
+      "function deposit(bytes32 _recipientCommitment, uint256 _amount) returns (bytes32 key, uint256 index, uint256 creditedAmount)",
+      "function freeze()",
+      "function getCurrentAvailable() view returns (uint256)",
+      "function refundFrozenDeposits(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32[] nullifiers, bytes proof, bytes teeSignature) _args)",
+      "function refundFrozenNotes(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32[] nullifiers, bytes proof, bytes teeSignature) _args)",
+      "function refundUnprocessedDeposit(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32 siloedNullifier, bytes32 messageHash, uint256 messageLeafIndex, bytes proof, bytes teeSignature) _args)",
+      "function withdraw(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, bytes userPayload, bytes relayerPayload, uint256 epochNumber, uint256 numCheckpointsInEpoch, uint256 leafIndex, bytes32[] path, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) _args)"
+    ],
+    "eth:0x428Fa81B22AAF7C9acb9c73D114894886E3F7d4d": [
+      "error ValueGeFieldOrder()",
+      "function generateTranscript(tuple(uint256[8] pairingPointObject, tuple(uint256 x, uint256 y) geminiMaskingPoly, tuple(uint256 x, uint256 y) w1, tuple(uint256 x, uint256 y) w2, tuple(uint256 x, uint256 y) w3, tuple(uint256 x, uint256 y) w4, tuple(uint256 x, uint256 y) lookupReadCounts, tuple(uint256 x, uint256 y) lookupReadTags, tuple(uint256 x, uint256 y) lookupInverses, tuple(uint256 x, uint256 y) zPerm, tuple(uint256 x, uint256 y)[3] libraCommitments, uint256 libraSum, uint256[9][25] sumcheckUnivariates, uint256 libraEvaluation, uint256[42] sumcheckEvaluations, tuple(uint256 x, uint256 y)[24] geminiFoldComms, uint256[25] geminiAEvaluations, uint256[4] libraPolyEvals, tuple(uint256 x, uint256 y) shplonkQ, tuple(uint256 x, uint256 y) kzgQuotient) proof, bytes32[] publicInputs, uint256 vkHash, uint256 publicInputsSize, uint256 logN) pure returns (tuple(tuple(uint256 eta, uint256 beta, uint256 gamma, uint256 publicInputsDelta) relationParameters, uint256[28] alphas, uint256[25] gateChallenges, uint256 libraChallenge, uint256[25] sumCheckUChallenges, uint256 rho, uint256 geminiR, uint256 shplonkNu, uint256 shplonkZ, uint256 publicInputsDelta) t)"
+    ],
+    "eth:0x45F626E2a4D63232677C96B163ac46e20514a915": [
+      "constructor(address nameRegistry, address sipaFactory, address accountFactory, address namePortal, address feeToken, uint256 registrationMin, uint256 registrationFee, address initialBeneficiary)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error InvalidShortString()",
+      "error RegistrationController__AccountMismatch(address account, address owner)",
+      "error RegistrationController__BalanceBelowFloor(uint256 balance, uint256 required)",
+      "error RegistrationController__BeneficiaryNotAllowlisted(address beneficiary)",
+      "error RegistrationController__CallerNotSIPA(address caller)",
+      "error RegistrationController__FeeBelowRelayerFee(uint256 fee, uint256 relayerFee)",
+      "error RegistrationController__FeeMismatch(uint256 fee, uint256 expected)",
+      "error RegistrationController__FeeTokenMismatch(address token, address feeToken)",
+      "error RegistrationController__InvalidConsent(address owner)",
+      "error RegistrationController__InvalidTermsSignature()",
+      "error RegistrationController__NotRegistryOwner()",
+      "error RegistrationController__R1KeyNotInstalled()",
+      "error RegistrationController__RegistrationDataMismatch()",
+      "error RegistrationController__TermsExpired()",
+      "error RegistrationController__TermsNonceAlreadyUsed()",
+      "error RegistrationController__ZeroAccountFactory()",
+      "error RegistrationController__ZeroBeneficiary()",
+      "error RegistrationController__ZeroFeeToken()",
+      "error RegistrationController__ZeroNamePortal()",
+      "error RegistrationController__ZeroNameRegistry()",
+      "error RegistrationController__ZeroSIPAFactory()",
+      "error StringTooLong(string str)",
+      "event BeneficiaryAdded(uint256 indexed beneficiaryId, address indexed beneficiary)",
+      "event EIP712DomainChanged()",
+      "event TermsApplied(address indexed owner, bytes32 indexed nameHash, uint256 fee, uint256 minDeposit, uint256 nonce, uint256 deadline)",
+      "function ACCOUNT_FACTORY() view returns (address)",
+      "function ENTRY_POINT() view returns (address)",
+      "function FEE_TOKEN() view returns (address)",
+      "function NAME_PORTAL() view returns (address)",
+      "function NAME_REGISTRY() view returns (address)",
+      "function R1_INSTALL_CALL_GAS_BASE() view returns (uint256)",
+      "function R1_INSTALL_CALL_GAS_PER_WORD() view returns (uint256)",
+      "function R1_INSTALL_VERIFICATION_GAS() view returns (uint256)",
+      "function REGISTRATION_FEE() view returns (uint256)",
+      "function REGISTRATION_MIN() view returns (uint256)",
+      "function SIPA_FACTORY() view returns (address)",
+      "function addBeneficiary(address beneficiary) returns (uint256 beneficiaryId)",
+      "function beneficiaries(uint256) view returns (address)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function isBeneficiary(address) view returns (bool)",
+      "function metadataStateHash(address owner) view returns (bytes32)",
+      "function nextBeneficiaryId() view returns (uint256)",
+      "function register(address token, uint256 balance, bytes registrationData, bytes proofs)",
+      "function usedTermsNonces(uint256) view returns (bool)"
+    ],
+    "eth:0x5180f0659D021368CDF5c4499967B9A329C775A0": [
+      "error SIPA__AlreadySwept()",
+      "error SIPA__EmptyBalance()",
+      "error SIPA__EthTransferFailed()",
+      "error SIPA__FeeBelowSweepTip(uint256 fee, uint256 sweepTip)",
+      "error SIPA__IntentDataMismatch()",
+      "error SIPA__InvalidSignature()",
+      "error SIPA__NonceAlreadyUsed()",
+      "error SIPA__NotClone()",
+      "error SIPA__RecoveryCommitmentMismatch()",
+      "error SIPA__RollupVersionMismatch()",
+      "error SIPA__SweepBelowCharges(uint256 balance, uint256 charges)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SafeERC20FailedOperation(address token)",
+      "error UserOpSIPA__ConditionReverted()",
+      "error UserOpSIPA__ConditionTargetHasNoCode()",
+      "error UserOpSIPA__NonceNotReached()",
+      "error UserOpSIPA__PostconditionFailed()",
+      "error UserOpSIPA__PreconditionFailed()",
+      "error UserOpSIPA__Resweepable()",
+      "event Recovered(address indexed token, address indexed target, uint256 amount)",
+      "event Sweep(uint256 index, uint256 amount)",
+      "function ENTRY_POINT() view returns (address)",
+      "function INTENT() pure returns (uint8)",
+      "function forwardingTable() view returns (address)",
+      "function intentHash() view returns (bytes32)",
+      "function recoverERC20(bytes32 sharedSecretSalt, address account, bytes signature, address target, address token, bytes32 nonce)",
+      "function recoverETH(bytes32 sharedSecretSalt, address account, bytes signature, address target, bytes32 nonce)",
+      "function recoveryCommitment() view returns (bytes32)",
+      "function resweepable() view returns (bool)",
+      "function rollupVersion() view returns (uint256)",
+      "function route(address token) view returns (address portal_, uint256 sweepTip, uint256 beneficiaryFee)",
+      "function sweep(address token, address relayer, bytes intentData, bytes proofs)",
+      "function swept() view returns (bool)",
+      "function usedNonces(bytes32 nonce) view returns (bool used)"
+    ],
+    "eth:0x5ecE3b4EBE7137b1b6f92406dE17d9816D585c1c": [
+      "error AddressEmptyCode(address target)",
+      "error FailedCall()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error OperationExecutor__InsufficientPayout(uint256 payout, uint256 minPayout)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "function execute(address _target, bytes _data, address _payoutToken, uint256 _minPayout, uint256 _gasToCover, uint256 _tokenWeiPerEth) returns (uint256 payout)",
+      "function executionContext() view returns (tuple(bool direct, bool startedEmpty, address payoutToken, uint256 headGas))"
+    ],
+    "eth:0x70E9c762B02Ec645DF4BC2456271805cba80126c": [
+      "constructor(address _sourcePortal, address _destinationPortal, address _payoutToken, address _subsidyOwner, bytes32 _operationExecutorCodeHash, address _priceFeed)",
+      "error MigrationExecutor__InvalidRelayerPayload()",
+      "error MigrationExecutor__InvalidUserPayload()",
+      "error MigrationExecutor__NothingToMigrate()",
+      "error MigrationExecutor__PortalWithoutCode(address portal)",
+      "error MigrationExecutor__RelayerTipExceedsAmount()",
+      "error MigrationExecutor__SamePortal()",
+      "error MigrationExecutor__TipNotInPayoutToken()",
+      "error MigrationExecutor__UnauthorizedCaller()",
+      "error MigrationExecutor__UnderlyingMismatch()",
+      "error MigrationExecutor__ZeroRecipientCommitment()",
+      "error MigrationExecutor__ZeroTipRecipient()",
+      "error SafeERC20FailedOperation(address token)",
+      "event Migrated(uint8 flow, bytes32 indexed recipientCommitment, uint256 migrated, address tipRecipient, uint256 relayerTip)",
+      "function ASSET() view returns (address)",
+      "function DESTINATION_PORTAL() view returns (address)",
+      "function PAYOUT_TOKEN() view returns (address)",
+      "function SOURCE_PORTAL() view returns (address)",
+      "function SUBSIDY() view returns (address)",
+      "function execute(uint8 _flow, uint256 _amount, bytes _userPayload, bytes _relayerPayload)"
+    ],
+    "eth:0x7C8c2147d1BB8B83e0a0501097372de170eE702a": [
+      "constructor(address _portal, uint256 _fee, address _feeBeneficiary, address _subsidyOwner, address _priceFeed)",
+      "error FeeChargingExecutorBase__AmountNotAboveFee()",
+      "error FeeChargingExecutorBase__InvalidPortal()",
+      "error FeeChargingExecutorBase__UnauthorizedCaller()",
+      "error FeeChargingExecutorBase__ZeroBeneficiary()",
+      "error PlainWithdrawalExecutor__InvalidRelayerPayload()",
+      "error PlainWithdrawalExecutor__InvalidUserPayload()",
+      "error PlainWithdrawalExecutor__RelayerTipExceedsAmount()",
+      "error PlainWithdrawalExecutor__ZeroRecipient()",
+      "error PlainWithdrawalExecutor__ZeroTipRecipient()",
+      "error SafeERC20FailedOperation(address token)",
+      "function ASSET() view returns (address)",
+      "function BENEFICIARY() view returns (address)",
+      "function FEE() view returns (uint256)",
+      "function PORTAL() view returns (address)",
+      "function SUBSIDY() view returns (address)",
+      "function execute(uint8 _flow, uint256 _amount, bytes _userPayload, bytes _relayerPayload)"
+    ],
+    "eth:0x7F890e5DF3B4165D1cE4E9A42e97C44f1d7dCc09": [
+      "constructor(tuple(address dai, address usds, address sUsds, address daiUsds) _route, address _daiPortal, address _sUsdsPortal, address _skyExecutor)",
+      "error CloneArgumentsTooLong()",
+      "error Create2EmptyBytecode()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "event EscrowExecuted(address indexed escrow, address tipRecipient)",
+      "function DAI() view returns (address)",
+      "function DAI_PORTAL() view returns (address)",
+      "function IMPLEMENTATION() view returns (address)",
+      "function SKY_EXECUTOR() view returns (address)",
+      "function SUSDS() view returns (address)",
+      "function SUSDS_PORTAL() view returns (address)",
+      "function deploy(tuple(uint8 route, bytes32 recipientCommitment, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) returns (address escrow)",
+      "function deployAndExecute(tuple(uint8 route, bytes32 recipientCommitment, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) returns (address escrow)",
+      "function predictEscrowAddress(tuple(uint8 route, bytes32 recipientCommitment, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) view returns (address)"
+    ],
+    "eth:0x880F3C8356A930522896A7c539157D4c87F95377": [
+      "constructor()",
+      "function verify(bytes, bytes32[]) view returns (bool)"
+    ],
+    "eth:0x8b705C3519169F29850D156574ec377B686bd9CD": [
+      "constructor(bytes32 _pcr0Hash, address _certManager, address _nitroValidator, address _registry, uint256 _rollupVersion, bytes32 _l2Recipient)",
+      "error TEERegistration__AlreadyRegistered()",
+      "error TEERegistration__DebugModeTEEPcr0Hash()",
+      "error TEERegistration__InvalidTEERegistrationUserData()",
+      "error TEERegistration__MissingTEEPcr0()",
+      "error TEERegistration__OffCurveTEEPubKey()",
+      "error TEERegistration__StaleTEEAttestation()",
+      "error TEERegistration__UnapprovedTEEPcr0(bytes32 pcr0Hash)",
+      "error TEERegistration__ZeroTEE()",
+      "error TEERegistration__ZeroTEEPcr0Hash()",
+      "error TeeRegistry__CertManagerMismatch()",
+      "error TeeRegistry__ZeroCertManager()",
+      "error TeeRegistry__ZeroInbox()",
+      "error TeeRegistry__ZeroL2Recipient()",
+      "error TeeRegistry__ZeroNitroValidator()",
+      "event TEEAdded(address indexed tee, bytes32 pubKeyX, bytes32 pubKeyY, bytes32 encPubKeyX, bytes32 encPubKeyY, bytes32 messageKey, uint256 index)",
+      "event TEEAttestationHashStaged(bytes32 indexed attestationTbsKeccak)",
+      "event TEEAttestationSigVerified(bytes32 indexed attestationTbsKeccak, bytes32 indexed leafCertHash)",
+      "event TEECACertVerified(bytes32 indexed certHash, bytes32 indexed parentCertHash)",
+      "event TEEClientCertVerified(bytes32 indexed certHash, bytes32 indexed parentCertHash)",
+      "function $registrationMessages(address tee) view returns (bytes32 key, uint256 index)",
+      "function $teeKeys(address tee) view returns (bytes32 pubKeyX, bytes32 pubKeyY, bytes32 encPubKeyX, bytes32 encPubKeyY)",
+      "function INBOX() view returns (address)",
+      "function L2_RECIPIENT() view returns (bytes32)",
+      "function PCR0_HASH() view returns (bytes32)",
+      "function ROLLUP_VERSION() view returns (uint256)",
+      "function TEE_ATTESTATION_MAX_AGE() view returns (uint256)",
+      "function TEE_CERT_MANAGER() view returns (address)",
+      "function TEE_NITRO_VALIDATOR() view returns (address)",
+      "function isTeeRegistered(address _tee) view returns (bool)",
+      "function registerTee(bytes _attestationTbs, bytes _signature, bytes32 _teePubKeyX, bytes32 _teePubKeyY, bytes32 _encPubKeyX, bytes32 _encPubKeyY) returns (bytes32 key, uint256 index)",
+      "function verifyTeeAttestationHash(bytes _attestationTbs) returns (bytes32 attestationTbsKeccak)",
+      "function verifyTeeAttestationSig(bytes32 _attestationTbsKeccak, bytes _signature, bytes32 _leafCertHash)",
+      "function verifyTeeCACert(bytes _cert, bytes32 _parentCertHash) returns (bytes32 certHash)",
+      "function verifyTeeClientCert(bytes _cert, bytes32 _parentCertHash) returns (bytes32 certHash)"
+    ],
+    "eth:0x8F4105a55C457D796Adab90d5D9E649861E81625": [
+      "constructor(address _dai, address _usdc, address _usdt, address _weth, address _router, address _threePool, address _ethUsdFeed, address _daiWethPair)",
+      "error CloneArgumentsTooLong()",
+      "error Create2EmptyBytecode()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "event EscrowExecuted(address indexed escrow, address tipRecipient)",
+      "function DAI() view returns (address)",
+      "function IMPLEMENTATION() view returns (address)",
+      "function deploy(tuple(uint8 route, address recipient, uint256 daiForGas, uint256 minEthForGas, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) returns (address escrow)",
+      "function deployAndExecute(tuple(uint8 route, address recipient, uint256 daiForGas, uint256 minEthForGas, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) returns (address escrow)",
+      "function predictEscrowAddress(tuple(uint8 route, address recipient, uint256 daiForGas, uint256 minEthForGas, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) view returns (address)"
+    ],
+    "eth:0x92270578f3A311B3ced0019a4E15701e7405b4AE": [
+      "constructor(address _sourcePortal, address _destinationPortal, address _payoutToken, address _subsidyOwner, bytes32 _operationExecutorCodeHash, address _priceFeed)",
+      "error MigrationExecutor__InvalidRelayerPayload()",
+      "error MigrationExecutor__InvalidUserPayload()",
+      "error MigrationExecutor__NothingToMigrate()",
+      "error MigrationExecutor__PortalWithoutCode(address portal)",
+      "error MigrationExecutor__RelayerTipExceedsAmount()",
+      "error MigrationExecutor__SamePortal()",
+      "error MigrationExecutor__TipNotInPayoutToken()",
+      "error MigrationExecutor__UnauthorizedCaller()",
+      "error MigrationExecutor__UnderlyingMismatch()",
+      "error MigrationExecutor__ZeroRecipientCommitment()",
+      "error MigrationExecutor__ZeroTipRecipient()",
+      "error SafeERC20FailedOperation(address token)",
+      "event Migrated(uint8 flow, bytes32 indexed recipientCommitment, uint256 migrated, address tipRecipient, uint256 relayerTip)",
+      "function ASSET() view returns (address)",
+      "function DESTINATION_PORTAL() view returns (address)",
+      "function PAYOUT_TOKEN() view returns (address)",
+      "function SOURCE_PORTAL() view returns (address)",
+      "function SUBSIDY() view returns (address)",
+      "function execute(uint8 _flow, uint256 _amount, bytes _userPayload, bytes _relayerPayload)"
+    ],
+    "eth:0x96A52ed47Af73423D4b8a920913e5c1ceFdC1319": [
+      "constructor(address nameRegistry)",
+      "error RegistrationSIPA__BalanceBelowBeneficiaryFee(uint256 balance, uint256 beneficiaryFee)",
+      "error RegistrationSIPA__ZeroNameRegistry()",
+      "error SIPA__AlreadySwept()",
+      "error SIPA__EmptyBalance()",
+      "error SIPA__EthTransferFailed()",
+      "error SIPA__FeeBelowSweepTip(uint256 fee, uint256 sweepTip)",
+      "error SIPA__IntentDataMismatch()",
+      "error SIPA__InvalidSignature()",
+      "error SIPA__NonceAlreadyUsed()",
+      "error SIPA__NotClone()",
+      "error SIPA__RecoveryCommitmentMismatch()",
+      "error SIPA__RollupVersionMismatch()",
+      "error SIPA__SweepBelowCharges(uint256 balance, uint256 charges)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SafeERC20FailedOperation(address token)",
+      "event Recovered(address indexed token, address indexed target, uint256 amount)",
+      "event Sweep(uint256 index, uint256 amount)",
+      "function INTENT() pure returns (uint8)",
+      "function NAME_REGISTRY() view returns (address)",
+      "function forwardingTable() view returns (address)",
+      "function intentHash() view returns (bytes32)",
+      "function recoverERC20(bytes32 sharedSecretSalt, address account, bytes signature, address target, address token, bytes32 nonce)",
+      "function recoverETH(bytes32 sharedSecretSalt, address account, bytes signature, address target, bytes32 nonce)",
+      "function recoveryCommitment() view returns (bytes32)",
+      "function resweepable() view returns (bool)",
+      "function rollupVersion() view returns (uint256)",
+      "function route(address token) view returns (address portal_, uint256 sweepTip, uint256 beneficiaryFee)",
+      "function sweep(address token, address relayer, bytes intentData, bytes proofs)",
+      "function swept() view returns (bool)",
+      "function usedNonces(bytes32 nonce) view returns (bool used)"
+    ],
+    "eth:0xa460C3130D1701a94f76d1122362C0D127f1C6A3": [
+      "constructor()",
+      "function verify(bytes, bytes32[]) view returns (bool)"
+    ],
+    "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a": [
+      "constructor(address _owner, address _domainOwner)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error InvalidShortString()",
+      "error NameRegistry__CallerNotRegistrationController(address caller)",
+      "error NameRegistry__DomainAuthExpired()",
+      "error NameRegistry__DomainNonceAlreadyUsed()",
+      "error NameRegistry__EmptyNameHash()",
+      "error NameRegistry__InvalidDomainSignature()",
+      "error NameRegistry__NameAlreadyRegistered()",
+      "error NameRegistry__NameNotFound()",
+      "error NameRegistry__OwnerAlreadyHasName()",
+      "error NameRegistry__ZeroAccountMetadataRegistry()",
+      "error NameRegistry__ZeroOwner()",
+      "error NameRegistry__ZeroRegistrationController()",
+      "error NameRegistry__ZeroResolver()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error StringTooLong(string str)",
+      "event AccountMetadataRegistryUpdated(address oldRegistry, address newRegistry)",
+      "event DomainOwnerUpdated(address oldDomainOwner, address newDomainOwner)",
+      "event EIP712DomainChanged()",
+      "event NameChanged(address indexed owner, bytes32 indexed oldNameHash, bytes32 indexed newNameHash)",
+      "event NameClaimed(address indexed owner, bytes32 indexed nameHash, uint256 nonce, uint256 deadline, bytes signature)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RegistrationControllerUpdated(address indexed oldController, address indexed newController)",
+      "event ResolverUpdated(address oldResolver, address newResolver)",
+      "function accountMetadataRegistry() view returns (address)",
+      "function changeName(address owner, bytes32 newNameHash, tuple(uint256 nonce, uint256 deadline, bytes signature) domainAuth)",
+      "function claimName(bytes32 nameHash, address owner, tuple(uint256 nonce, uint256 deadline, bytes signature) domainAuth)",
+      "function domainOwner() view returns (address)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function nameOf(address) view returns (bytes32)",
+      "function owner() view returns (address)",
+      "function ownerOf(bytes32) view returns (address)",
+      "function registrationController() view returns (address)",
+      "function renounceOwnership()",
+      "function resolver() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateAccountMetadataRegistry(address registry)",
+      "function updateDomainOwner(address newDomainOwner)",
+      "function updateRegistrationController(address controller)",
+      "function updateResolver(address newResolver)",
+      "function usedDomainOwnerNonces(uint256) view returns (bool)"
+    ],
+    "eth:0xB61D97Faf96ec8de617aAF54F4764d01cfd25b8b": [
+      "constructor(tuple(address dai, address usds, address sUsds, address daiUsds) _route, address _daiPortal, address _sUsdsPortal, address _skyExecutor)",
+      "error EscrowBase__EmptyBalance()",
+      "error EscrowBase__EthTransferFailed()",
+      "error EscrowBase__NonceAlreadyUsed()",
+      "error EscrowBase__NotClone()",
+      "error EscrowBase__NotFactory()",
+      "error RecoveryAuthLib__InvalidSignature()",
+      "error RecoveryAuthLib__RecoveryCommitmentMismatch()",
+      "error RecoveryAuthLib__RecoveryExpired(uint256 deadline)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SkyEscrow__DaiPortalUnderlyingMismatch()",
+      "error SkyEscrow__ExecutorAssetMismatch()",
+      "error SkyEscrow__ExecutorPortalMismatch()",
+      "error SkyEscrow__NothingToMove()",
+      "error SkyEscrow__SUsdsPortalUnderlyingMismatch()",
+      "error SkyEscrow__UnknownRoute(uint8 route)",
+      "error SkyEscrow__ZeroSkyRoute()",
+      "event EscrowRecovered(address indexed token, address indexed target, uint256 amount)",
+      "event SkyEscrowExecuted(uint8 indexed route, address indexed tipRecipient, uint256 daiAmount, uint256 deposited)",
+      "event SkyEscrowWithdrawnInShares(bytes32 indexed withdrawalId, uint256 shares)",
+      "function DAI() view returns (address)",
+      "function DAI_PORTAL() view returns (address)",
+      "function DAI_USDS() view returns (address)",
+      "function FACTORY() view returns (address)",
+      "function REFERRAL_CODE() view returns (uint16)",
+      "function ROUTE_STAKE() view returns (uint8)",
+      "function ROUTE_UNSTAKE() view returns (uint8)",
+      "function SKY_EXECUTOR() view returns (address)",
+      "function SUSDS() view returns (address)",
+      "function SUSDS_PORTAL() view returns (address)",
+      "function USDS() view returns (address)",
+      "function WITHDRAW_IN_SHARES_TYPEHASH() view returns (bytes32)",
+      "function execute(address _tipRecipient)",
+      "function nonce() view returns (bytes32)",
+      "function recipientCommitment() view returns (bytes32)",
+      "function recoverERC20(bytes32 _recoverySalt, address _account, bytes _signature, address _target, address _token, bytes32 _nonce, uint256 _deadline)",
+      "function recoverETH(bytes32 _recoverySalt, address _account, bytes _signature, address _target, bytes32 _nonce, uint256 _deadline)",
+      "function recoveryCommitment() view returns (bytes32)",
+      "function relayerTip() view returns (uint256)",
+      "function route() view returns (uint8)",
+      "function usedNonces(bytes32 nonce) view returns (bool used)",
+      "function withdrawInShares(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, bytes userPayload, bytes relayerPayload, uint256 epochNumber, uint256 numCheckpointsInEpoch, uint256 leafIndex, bytes32[] path, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) _withdrawArgs, bytes32 _recoverySalt, address _account, bytes _signature, bytes32 _nonce, uint256 _deadline)",
+      "function withdrawInSharesDigest(bytes32 _withdrawalId, bytes32 _nonce, uint256 _deadline) view returns (bytes32)"
+    ],
+    "eth:0xBFe3dE3C4466cbC5803A756847208c69B3BAe401": [
+      "error SIPA__AlreadySwept()",
+      "error SIPA__EmptyBalance()",
+      "error SIPA__EthTransferFailed()",
+      "error SIPA__FeeBelowSweepTip(uint256 fee, uint256 sweepTip)",
+      "error SIPA__IntentDataMismatch()",
+      "error SIPA__InvalidSignature()",
+      "error SIPA__NonceAlreadyUsed()",
+      "error SIPA__NotClone()",
+      "error SIPA__RecoveryCommitmentMismatch()",
+      "error SIPA__RollupVersionMismatch()",
+      "error SIPA__SweepBelowCharges(uint256 balance, uint256 charges)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SafeERC20FailedOperation(address token)",
+      "event Recovered(address indexed token, address indexed target, uint256 amount)",
+      "event Sweep(uint256 index, uint256 amount)",
+      "function INTENT() pure returns (uint8)",
+      "function forwardingTable() view returns (address)",
+      "function intentHash() view returns (bytes32)",
+      "function recoverERC20(bytes32 sharedSecretSalt, address account, bytes signature, address target, address token, bytes32 nonce)",
+      "function recoverETH(bytes32 sharedSecretSalt, address account, bytes signature, address target, bytes32 nonce)",
+      "function recoveryCommitment() view returns (bytes32)",
+      "function resweepable() view returns (bool)",
+      "function rollupVersion() view returns (uint256)",
+      "function route(address token) view returns (address portal_, uint256 sweepTip, uint256 beneficiaryFee)",
+      "function sweep(address token, address relayer, bytes intentData, bytes proofs)",
+      "function swept() view returns (bool)",
+      "function usedNonces(bytes32 nonce) view returns (bool used)"
+    ],
+    "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525": [
+      "constructor(address _nameRegistry, address _sipaFactory, address _verifier)",
+      "error OffchainLookup(address sender, string[] urls, bytes callData, bytes4 callbackFunction, bytes extraData)",
+      "error Resolver__InvalidProof()",
+      "error Resolver__MalformedResolveData()",
+      "error Resolver__NoDepositImplementation()",
+      "error Resolver__ResolverOperatorRecordMismatch()",
+      "error Resolver__RollupVersionMismatch(uint256 resolverOperatorVersion, uint256 userVersion)",
+      "error Resolver__SIPAMismatch(address expected, address actual)",
+      "error Resolver__StaleProof(uint32 proofDay, uint32 currentDay)",
+      "error Resolver__TableNotApproved(address table)",
+      "error Resolver__UnsupportedResolverFunction(bytes4 selector)",
+      "error Resolver__UserNotFound()",
+      "error Resolver__UserRecordMismatch()",
+      "function NAME_REGISTRY() view returns (address)",
+      "function SIPA_FACTORY() view returns (address)",
+      "function VERIFIER() view returns (address)",
+      "function resolve(bytes name, bytes data) view returns (bytes)",
+      "function resolveWithProof(bytes response, bytes extraData) view returns (bytes)",
+      "function supportsInterface(bytes4 interfaceID) pure returns (bool)"
+    ],
+    "eth:0xc953308e66DA19881d8ddD240E6369Db8Ef72Ab9": [
+      "constructor(address _dai, address _usdc, address _usdt, address _weth, address _router, address _threePool, address _ethUsdFeed, address _daiWethPair)",
+      "error EscrowBase__EmptyBalance()",
+      "error EscrowBase__EthTransferFailed()",
+      "error EscrowBase__NonceAlreadyUsed()",
+      "error EscrowBase__NotClone()",
+      "error EscrowBase__NotFactory()",
+      "error EthUsdMinOut__InvalidPrice(int256 answer)",
+      "error EthUsdMinOut__StalePrice(uint256 updatedAt)",
+      "error InvalidReserves()",
+      "error RecoveryAuthLib__InvalidSignature()",
+      "error RecoveryAuthLib__RecoveryCommitmentMismatch()",
+      "error RecoveryAuthLib__RecoveryExpired(uint256 deadline)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SwapEscrow__DaiForGasExceedsBalanceAfterTip(uint256 daiForGas, uint256 balanceAfterTip)",
+      "error SwapEscrow__DaiForGasExceedsMax(uint256 daiForGas)",
+      "error SwapEscrow__DaiForGasOnEthRoute()",
+      "error SwapEscrow__EthForGasBelowMin(uint256 ethOut, uint256 minEthForGas)",
+      "error SwapEscrow__EthNotFromWeth()",
+      "error SwapEscrow__FeedWithoutCode()",
+      "error SwapEscrow__UnknownRoute(uint8 route)",
+      "event EscrowRecovered(address indexed token, address indexed target, uint256 amount)",
+      "function BPS_DENOMINATOR() view returns (uint256)",
+      "function DAI() view returns (address)",
+      "function DAI_WETH_PAIR() view returns (address)",
+      "function ETH_MAX_SLIPPAGE_BPS() view returns (uint256)",
+      "function ETH_USD_FEED() view returns (address)",
+      "function FACTORY() view returns (address)",
+      "function MAX_DAI_FOR_GAS() view returns (uint256)",
+      "function MAX_PRICE_AGE() view returns (uint256)",
+      "function ROUTE_DAI() view returns (uint8)",
+      "function ROUTE_ETH() view returns (uint8)",
+      "function ROUTE_USDC() view returns (uint8)",
+      "function ROUTE_USDT() view returns (uint8)",
+      "function STABLE_MAX_SLIPPAGE_BPS() view returns (uint256)",
+      "function THREE_POOL() view returns (address)",
+      "function UNISWAP_UNIVERSAL_ROUTER() view returns (address)",
+      "function USDC() view returns (address)",
+      "function USDT() view returns (address)",
+      "function WETH() view returns (address)",
+      "function daiForGas() view returns (uint256)",
+      "function execute(address _tipRecipient)",
+      "function minEthForGas() view returns (uint256)",
+      "function nonce() view returns (bytes32)",
+      "function recipient() view returns (address)",
+      "function recoverERC20(bytes32 _recoverySalt, address _account, bytes _signature, address _target, address _token, bytes32 _nonce, uint256 _deadline)",
+      "function recoverETH(bytes32 _recoverySalt, address _account, bytes _signature, address _target, bytes32 _nonce, uint256 _deadline)",
+      "function recoveryCommitment() view returns (bytes32)",
+      "function relayerTip() view returns (uint256)",
+      "function route() view returns (uint8)",
+      "function usedNonces(bytes32 nonce) view returns (bool used)"
+    ],
+    "eth:0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042": [
+      "constructor(address _teeRegistry, address _underlying, address _registry, uint256 _rollupVersion, tuple(address frozenNotes, address frozenDeposits, address unprocessedDeposit) _verifiers, uint128 _txAmountCap, uint256 _rate, uint256 _globalLimit)",
+      "error Caps__GlobalLimitSurpassed()",
+      "error Caps__TxLimitSurpassed()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error MerkleLib__InvalidIndexForPathLength()",
+      "error MerkleLib__InvalidRoot(bytes32 expected, bytes32 actual, bytes32 leaf, uint256 leafIndex)",
+      "error OxidePortal__AlreadyFrozen()",
+      "error OxidePortal__AmountTooLarge()",
+      "error OxidePortal__CheckpointPastFreeze()",
+      "error OxidePortal__EmptyFrozenDepositsRefundNullifiers()",
+      "error OxidePortal__EmptyFrozenNotesRefundNullifiers()",
+      "error OxidePortal__EpochPastFreeze()",
+      "error OxidePortal__FrozenPortal()",
+      "error OxidePortal__InvalidFrozenDepositsRefundProof()",
+      "error OxidePortal__InvalidFrozenNotesRefundProof()",
+      "error OxidePortal__InvalidProver()",
+      "error OxidePortal__InvalidUnprocessedDepositRefundProof()",
+      "error OxidePortal__InvalidUserPayload()",
+      "error OxidePortal__InvalidWithdrawalExecutor()",
+      "error OxidePortal__NotFrozen()",
+      "error OxidePortal__ProofDepthPastFreeze()",
+      "error OxidePortal__ProverTipExceedsAmount()",
+      "error OxidePortal__RefundNullifierAlreadySpent(bytes32 nullifier)",
+      "error OxidePortal__RollupStillCanonical()",
+      "error OxidePortal__TooManyFrozenDepositsRefundNullifiers(uint256 count)",
+      "error OxidePortal__TooManyFrozenNotesRefundNullifiers(uint256 count)",
+      "error OxidePortal__UnknownCheckpoint()",
+      "error OxidePortal__UnknownDepositMessage(bytes32 messageHash)",
+      "error OxidePortal__UnprovenCheckpoint()",
+      "error OxidePortal__UnregisteredTEE()",
+      "error OxidePortal__WithdrawalAlreadyClaimed()",
+      "error OxidePortal__WithdrawalProverClaimAlreadyMade(bytes32 withdrawalId)",
+      "error OxidePortal__ZeroAmount()",
+      "error OxidePortal__ZeroRecipientCommitment()",
+      "error OxidePortal__ZeroRefundNullifier()",
+      "error ProverClaim__CheckpointEpochMismatch(uint256 checkpointNumber, uint256 epochNumber)",
+      "error ProverClaim__CheckpointNotEpochBoundary(uint256 checkpointNumber, uint256 epochNumber)",
+      "error ProverClaim__ClaimAlreadyTracked(address portal, uint256 epochNumber, uint256 leafId)",
+      "error ProverClaim__LeafIndexOutOfBounds(uint256 leafIndex, uint256 pathLength)",
+      "error ProverClaim__NotFirstProver(uint256 checkpointNumber, address firstProver)",
+      "error ProverClaim__PathTooLong(uint256 pathLength)",
+      "error ProverClaim__PathTooShort(uint256 pathLength, uint256 minimumPathLength)",
+      "error ProverClaim__ProofLengthBelowMessageCheckpoint(uint256 proofLength, uint256 messageCheckpointPosition)",
+      "error ProverClaim__UnprovenEpoch(uint256 epochNumber)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event Deposit(bytes32 indexed recipientCommitment, uint256 amount, bytes32 key, uint256 index)",
+      "event Frozen(uint256 indexed checkpointNumber, uint256 indexed epochNumber, bytes32 archive, uint256 freezeCheckpointCount)",
+      "event TipReleased(address indexed to, uint256 amount)",
+      "event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)",
+      "function $cachedAvailable() view returns (uint256)",
+      "function $claimed(uint256 epoch, uint256 leafId) view returns (bool claimed)",
+      "function $depositMessageIndex(bytes32 messageHash) view returns (uint256 indexPlusOne)",
+      "function $freezeArchive() view returns (bytes32)",
+      "function $freezeCheckpointCount() view returns (uint256)",
+      "function $freezeCheckpointNumber() view returns (uint256)",
+      "function $freezeEpochNumber() view returns (uint256)",
+      "function $frozen() view returns (bool)",
+      "function $isRefundNullifierSpent(bytes32 nullifier) view returns (bool spent)",
+      "function $isWithdrawalProverClaimSpent(bytes32 withdrawalId) view returns (bool spent)",
+      "function $isWithdrawalSpent(bytes32 withdrawalId) view returns (bool spent)",
+      "function $lastUpdatedTime() view returns (uint256)",
+      "function FROZEN_DEPOSITS_REFUND_VERIFIER() view returns (address)",
+      "function FROZEN_NOTES_REFUND_VERIFIER() view returns (address)",
+      "function GLOBAL_LIMIT() view returns (uint256)",
+      "function INBOX() view returns (address)",
+      "function L2_TOKEN() view returns (bytes32)",
+      "function OUTBOX() view returns (address)",
+      "function RATE() view returns (uint256)",
+      "function REGISTRY() view returns (address)",
+      "function ROLLUP() view returns (address)",
+      "function ROLLUP_VERSION() view returns (uint256)",
+      "function TEE_REGISTRY() view returns (address)",
+      "function TX_AMOUNT_CAP() view returns (uint128)",
+      "function UNDERLYING() view returns (address)",
+      "function UNPROCESSED_DEPOSIT_REFUND_VERIFIER() view returns (address)",
+      "function claimProverTips(address _proverSubsidy, tuple(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) args, tuple(uint256 epochNumber, uint256 messageLeafIndex, bytes32[] path, uint256 proofLength, uint256 checkpointNumber) proof)[] _claims) returns (uint256 totalSubsidy)",
+      "function deposit(bytes32 _recipientCommitment, uint256 _amount) returns (bytes32 key, uint256 index, uint256 creditedAmount)",
+      "function freeze()",
+      "function getCurrentAvailable() view returns (uint256)",
+      "function refundFrozenDeposits(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32[] nullifiers, bytes proof, bytes teeSignature) _args)",
+      "function refundFrozenNotes(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32[] nullifiers, bytes proof, bytes teeSignature) _args)",
+      "function refundUnprocessedDeposit(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32 siloedNullifier, bytes32 messageHash, uint256 messageLeafIndex, bytes proof, bytes teeSignature) _args)",
+      "function withdraw(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, bytes userPayload, bytes relayerPayload, uint256 epochNumber, uint256 numCheckpointsInEpoch, uint256 leafIndex, bytes32[] path, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) _args)"
+    ],
+    "eth:0xCeae64c7211a2208afFc4F396ADD1D46996Cd2A2": [
+      "constructor(address _owner, address _teeRegistry, address _registry, uint256 _rollupVersion, tuple(address frozenNotes, address frozenDeposits, address unprocessedDeposit) _verifiers)",
+      "error Create2EmptyBytecode()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PortalFactory__RollupVersionMismatch()",
+      "error PortalFactory__ZeroL2Token()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PortalDeployed(address indexed portal, address indexed underlying, bytes32 l2Token, tuple(uint128 txAmountCap, uint256 rate, uint256 globalLimit) caps)",
+      "function FROZEN_DEPOSITS_REFUND_VERIFIER() view returns (address)",
+      "function FROZEN_NOTES_REFUND_VERIFIER() view returns (address)",
+      "function PORTAL_SALT() view returns (bytes32)",
+      "function REGISTRY() view returns (address)",
+      "function ROLLUP_VERSION() view returns (uint256)",
+      "function TEE_REGISTRY() view returns (address)",
+      "function UNPROCESSED_DEPOSIT_REFUND_VERIFIER() view returns (address)",
+      "function deployPortal(address _underlying, bytes32 _l2Token, tuple(uint128 txAmountCap, uint256 rate, uint256 globalLimit) _caps) returns (address portal)",
+      "function owner() view returns (address)",
+      "function pendingL2Token() view returns (bytes32)",
+      "function predictPortalAddress(address _underlying, tuple(uint128 txAmountCap, uint256 rate, uint256 globalLimit) _caps) view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xCEBD4589238699fcD7FEA8F89f05AE35F4D7E8c4": [
+      "error ValueGeFieldOrder()",
+      "function accumulateRelationEvaluations(uint256[41] purportedEvaluations, tuple(uint256 eta, uint256 beta, uint256 gamma, uint256 publicInputsDelta) rp, uint256[28] subrelationChallenges, uint256 powPartialEval) pure returns (uint256 accumulator)"
+    ],
+    "eth:0xd0D8E5C5B128ea7e5f2d461Afd6C669BC0877dF8": [
+      "constructor(address _portal, uint256 _fee, address _feeBeneficiary, address _subsidyOwner, address _priceFeed)",
+      "error FeeChargingExecutorBase__AmountNotAboveFee()",
+      "error FeeChargingExecutorBase__InvalidPortal()",
+      "error FeeChargingExecutorBase__UnauthorizedCaller()",
+      "error FeeChargingExecutorBase__ZeroBeneficiary()",
+      "error PlainWithdrawalExecutor__InvalidRelayerPayload()",
+      "error PlainWithdrawalExecutor__InvalidUserPayload()",
+      "error PlainWithdrawalExecutor__RelayerTipExceedsAmount()",
+      "error PlainWithdrawalExecutor__ZeroRecipient()",
+      "error PlainWithdrawalExecutor__ZeroTipRecipient()",
+      "error SafeERC20FailedOperation(address token)",
+      "function ASSET() view returns (address)",
+      "function BENEFICIARY() view returns (address)",
+      "function FEE() view returns (uint256)",
+      "function PORTAL() view returns (address)",
+      "function SUBSIDY() view returns (address)",
+      "function execute(uint8 _flow, uint256 _amount, bytes _userPayload, bytes _relayerPayload)"
+    ],
+    "eth:0xdA0D7cD0f49cE7b1D04bf03eE56374a8981c2844": [
+      "constructor()",
+      "error AccountUnauthorized(address sender)",
+      "error ERC7579DecodingError()",
+      "error ERC7579UnsupportedExecType(bytes1 execType)",
+      "error FailedCall()",
+      "error InvalidShortString()",
+      "error OutOfRangeAccess()",
+      "error OxideAccount__AuthKeyIndexOutOfBounds()",
+      "error OxideAccount__AuthKeyMismatch()",
+      "error OxideAccount__CannotRemoveLastKey()",
+      "error OxideAccount__InvalidR1Key()",
+      "error OxideAccount__NotClone()",
+      "error StringTooLong(string str)",
+      "error UnsupportedExecutionMode()",
+      "event AuthKeyAdded(uint256 indexed index, tuple(bytes32 qx, bytes32 qy) key, bytes metadata)",
+      "event AuthKeyRemoved(uint256 indexed index, tuple(bytes32 qx, bytes32 qy) key)",
+      "event DataChanged(bytes32 indexed key, bytes value)",
+      "event EIP712DomainChanged()",
+      "event ERC7579TryExecuteFail(uint256 batchExecutionIndex, bytes returndata)",
+      "function addAuthKey(tuple(bytes32 qx, bytes32 qy) key, bytes metadata)",
+      "function authKeyCount() view returns (uint256)",
+      "function bootstrapOwner() view returns (address)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function entryPoint() pure returns (address)",
+      "function execute(bytes32 mode, bytes executionData) payable",
+      "function getAuthKey(uint256 index) view returns (tuple(tuple(bytes32 qx, bytes32 qy) key, bytes metadata))",
+      "function getAuthKeys() view returns (tuple(tuple(bytes32 qx, bytes32 qy) key, bytes metadata)[])",
+      "function getData(bytes32 key) view returns (bytes)",
+      "function getNonce(uint192 key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4 result)",
+      "function removeAuthKey(uint256 index, tuple(bytes32 qx, bytes32 qy) expectedKey)",
+      "function setData(bytes32 key, bytes value)",
+      "function supportsExecutionMode(bytes32 mode) view returns (bool result)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) returns (uint256)"
+    ],
+    "eth:0xDA79Bae4485c40291363D885Aae5B543d2D0Efa9": [
+      "constructor(address nameRegistry)",
+      "error AccountMetadataRegistry__EmptyOxidePortal()",
+      "error AccountMetadataRegistry__EmptyResolverOperatorL2Address()",
+      "error AccountMetadataRegistry__EmptyResolverOperatorURL()",
+      "error AccountMetadataRegistry__InvalidPublicKey()",
+      "error AccountMetadataRegistry__ResolverOperatorNotFound(address resolverOperator)",
+      "error AccountMetadataRegistry__Unauthorized(address caller, address user)",
+      "error AccountMetadataRegistry__UserRecordNotFound(address user)",
+      "error AccountMetadataRegistry__ZeroNameRegistry()",
+      "event ResolverOperatorUpdated(address indexed resolverOperator, tuple(tuple(uint256 x, uint256 y) publicKey, bytes32 l2Address, string url, address oxidePortal) entry)",
+      "event UserRecordUpdated(address indexed user, tuple(bytes32 l2Address, uint256 rollupVersion, tuple(uint256 x, uint256 y) publicKey, address resolverOperator) record)",
+      "function NAME_REGISTRY() view returns (address)",
+      "function getResolverOperator(address resolverOperator) view returns (tuple(tuple(uint256 x, uint256 y) publicKey, bytes32 l2Address, string url, address oxidePortal))",
+      "function getUserRecord(address user) view returns (tuple(bytes32 l2Address, uint256 rollupVersion, tuple(uint256 x, uint256 y) publicKey, address resolverOperator))",
+      "function hasUserRecord(address user) view returns (bool)",
+      "function resolverOperators(address) view returns (tuple(uint256 x, uint256 y) publicKey, bytes32 l2Address, string url, address oxidePortal)",
+      "function setResolverOperator(tuple(tuple(uint256 x, uint256 y) publicKey, bytes32 l2Address, string url, address oxidePortal) entry)",
+      "function setUserRecord(address user, tuple(bytes32 l2Address, uint256 rollupVersion, tuple(uint256 x, uint256 y) publicKey, address resolverOperator) record)",
+      "function updateL2Address(address user, bytes32 l2Address, uint256 rollupVersion)",
+      "function updatePublicKey(address user, tuple(uint256 x, uint256 y) publicKey)",
+      "function updateUserResolverOperator(address user, address resolverOperator)",
+      "function userRecords(address) view returns (bytes32 l2Address, uint256 rollupVersion, tuple(uint256 x, uint256 y) publicKey, address resolverOperator)"
+    ],
+    "eth:0xe3DDDf3D4B624F49B4CeB81807338CCa14f5dd86": [
+      "constructor()",
+      "event CertVerified(bytes32 indexed certHash)",
+      "function BASIC_CONSTRAINTS_OID() view returns (bytes32)",
+      "function CERT_ALGO_OID() view returns (bytes32)",
+      "function EC_PUB_KEY_OID() view returns (bytes32)",
+      "function KEY_USAGE_OID() view returns (bytes32)",
+      "function ROOT_CA_CERT_HASH() view returns (bytes32)",
+      "function ROOT_CA_CERT_MAX_PATH_LEN() view returns (int64)",
+      "function ROOT_CA_CERT_NOT_AFTER() view returns (uint64)",
+      "function ROOT_CA_CERT_PUB_KEY() view returns (bytes)",
+      "function ROOT_CA_CERT_SUBJECT_HASH() view returns (bytes32)",
+      "function SECP_384_R1_OID() view returns (bytes32)",
+      "function getVerified(bytes32 certHash) view returns (tuple(bool ca, uint64 notAfter, int64 maxPathLen, bytes32 subjectHash, bytes pubKey))",
+      "function verified(bytes32) view returns (bytes)",
+      "function verifyCACert(bytes cert, bytes32 parentCertHash) returns (bytes32)",
+      "function verifyClientCert(bytes cert, bytes32 parentCertHash) returns (tuple(bool ca, uint64 notAfter, int64 maxPathLen, bytes32 subjectHash, bytes pubKey))"
+    ],
+    "eth:0xF15780eB45c49a7cB4FB0BF178D3DaF0F1D68c8a": [
+      "constructor()",
+      "function verify(bytes, bytes32[]) view returns (bool)"
+    ],
+    "eth:0xFE0B2B24cca52D1680103E258985A5aCA33742d5": [
+      "constructor(address _portal, tuple(address dai, address usds, address sUsds, address daiUsds) _route, address _subsidyOwner, address _priceFeed)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SkyWithdrawalExecutor__CallerNotRecipient()",
+      "error SkyWithdrawalExecutor__InvalidPortal()",
+      "error SkyWithdrawalExecutor__InvalidRelayerPayload()",
+      "error SkyWithdrawalExecutor__InvalidUserPayload()",
+      "error SkyWithdrawalExecutor__NotThisExecutor()",
+      "error SkyWithdrawalExecutor__PortalUnderlyingMismatch()",
+      "error SkyWithdrawalExecutor__RelayerTipExceedsAmount()",
+      "error SkyWithdrawalExecutor__SharesSettlementInProgress()",
+      "error SkyWithdrawalExecutor__UnauthorizedCaller()",
+      "error SkyWithdrawalExecutor__ZeroRecipient()",
+      "error SkyWithdrawalExecutor__ZeroSkyRoute()",
+      "error SkyWithdrawalExecutor__ZeroTipRecipient()",
+      "event SharesSettlement(uint8 indexed flow, address indexed recipient, uint256 shares)",
+      "function ASSET() view returns (address)",
+      "function DAI_USDS() view returns (address)",
+      "function PORTAL() view returns (address)",
+      "function SUBSIDY() view returns (address)",
+      "function SUSDS() view returns (address)",
+      "function USDS() view returns (address)",
+      "function execute(uint8 _flow, uint256 _amount, bytes _userPayload, bytes _relayerPayload)",
+      "function withdrawInShares(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, bytes userPayload, bytes relayerPayload, uint256 epochNumber, uint256 numCheckpointsInEpoch, uint256 leafIndex, bytes32[] path, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) _args)"
+    ],
+    "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C": [
+      "constructor(tuple(address owner, uint256 rollupVersion, address beneficiary, tuple(address token, address portal, tuple(uint8 intent, uint128 beneficiaryFee, uint128 sweepTip)[] intents)[] rows) _args)",
+      "error ForwardingTable__IntentAlreadyListed(address token, uint8 intent)",
+      "error ForwardingTable__IntentNotListed(address token, uint8 intent)",
+      "error ForwardingTable__NoIntents()",
+      "error ForwardingTable__NoneIntent()",
+      "error ForwardingTable__RollupVersionMismatch(uint256 portalVersion, uint256 tableVersion)",
+      "error ForwardingTable__TokenAlreadyListed(address token)",
+      "error ForwardingTable__TokenNotListed(address token)",
+      "error ForwardingTable__TokenNotPortalUnderlying(address token, address underlying)",
+      "error ForwardingTable__ZeroBeneficiary()",
+      "error ForwardingTable__ZeroPortal()",
+      "error ForwardingTable__ZeroSweepTip()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event BeneficiaryUpdated(address indexed previous, address indexed current)",
+      "event IntentsAdded(address indexed token, tuple(uint8 intent, uint128 beneficiaryFee, uint128 sweepTip)[] intents)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RowAdded(address indexed token, address indexed portal, tuple(uint8 intent, uint128 beneficiaryFee, uint128 sweepTip)[] intents)",
+      "function $beneficiary() view returns (address)",
+      "function $rows(address token) view returns (address portal)",
+      "function ROLLUP_VERSION() view returns (uint256)",
+      "function addIntents(address _token, tuple(uint8 intent, uint128 beneficiaryFee, uint128 sweepTip)[] _intents)",
+      "function addRow(address _token, address _portal, tuple(uint8 intent, uint128 beneficiaryFee, uint128 sweepTip)[] _intents)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function rowFor(address _token, uint8 _intent) view returns (address portal, address beneficiary, uint128 beneficiaryFee, uint128 sweepTip)",
+      "function setBeneficiary(address _beneficiary)",
+      "function transferOwnership(address newOwner)"
+    ]
+  },
+  "usedTemplates": {
+    "zkmoney/AccountMetadataRegistry": "0xbd58d851c278643cf250b8213c12f9c2b09cd629c1c821c6c4a77def07ef96fa",
+    "zkmoney/CertManager": "0x822d2acc75d36493652f5e4413f27419c31d34a52d413d0939ab39fa4a882c68",
+    "zkmoney/NameRegistry": "0xed9599e7437a4393c20c08ef698d0988b19f41790eb0d8e43b5906dcff92f39b",
+    "zkmoney/NitroValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "zkmoney/OperationExecutor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "zkmoney/OxideAccount": "0x1f1e8032b3c9ffe720d9da775c6550d9b715e7f93127cf74763edc1844e5d46c",
+    "zkmoney/OxideAccountFactory": "0x60424d9a287a8f7dd55505a3b0153a40208f7163a3214b14e6eb598888af3738",
+    "zkmoney/Resolver": "0x6790115424b1b8c56fc5c61350379125aa65af648b7310613899444d807bd97c",
+    "zkmoney/ResolverVerifier": "0xcee04109bf45a1b2acf6cf24b80b2517a6493fa892389be1ea9b75f7ae20a7ca",
+    "zkmoney/ResolverVerifierLibrary": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "zkmoney/SkyEscrow": "0xb2301ad57dd0b5adc7f9c6cb6f270754ccd0f479ead22d920482093cf95cac58",
+    "zkmoney/SkyEscrowFactory": "0x591c6ffcfd8a8ea3f603a1576d3f14b3da012c83171bbda7b313beb10a5106b5",
+    "zkmoney/SkyWithdrawalExecutor": "0xa9b2e44ea9cd8843b9d99851bbc4e372011666afb06cb5354e9b9d391ee94707",
+    "zkmoney/SwapEscrowFactoryV2": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",
+    "zkmoney/SwapEscrowV2": "0x84cc242a76dad9bb39d117b773e1d6d5aa9175466c4c41d63c1d181ab30b41cc",
+    "zkmoney/v6/DepositSIPA": "0x3fd8e9865b619085d7554a73acb4bca89e060fcbfe1bf56bc749b9db7d07100b",
+    "zkmoney/v6/ForwardingTable": "0x9216366b231f5045f8559e85bad93464099a4f5fdbe32ae82a88c56010b570c1",
+    "zkmoney/v6/FrozenDepositsRefundVerifier": "0xcd6b5c72e46197d4f6c321e85994f3ec7158aa2469e0e692cf87b2fde037ca62",
+    "zkmoney/v6/FrozenNotesRefundVerifier": "0x5930755c4ddd0870fe4c835a237c59046fefbcdf7e14897e42136dbeede28722",
+    "zkmoney/v6/MigrationExecutor": "0xc8706e4f9eda557a3e4261fcec4d957be85d7071fdd3fff8872400a2017464dd",
+    "zkmoney/v6/NamePortal": "0x9b51fea41ae8d5c0b7074af9de7eaab20138526fef06990a149400699b451197",
+    "zkmoney/v6/OxidePortal": "0xc9f4f58ed25afad57e5cf29e60c45f2d87f4a95b2c408d125b2a600d1bef7cf3",
+    "zkmoney/v6/PlainWithdrawalExecutor": "0x5aa1c243f12fc7fa0fd4a54d9eb43953e5f71d24687ce67229ab66503d2bf7e1",
+    "zkmoney/v6/PortalFactory": "0x7872df8455d05ae8c0fcef7273968b3e57aeac8dad842f7b0658ff7bc7084c80",
+    "zkmoney/v6/RegistrationController": "0x9a884730561dc6df41fc65d717980e2496db72d0bd2268eb3d878590ebfe3fc9",
+    "zkmoney/v6/RegistrationSIPA": "0x3fd8e9865b619085d7554a73acb4bca89e060fcbfe1bf56bc749b9db7d07100b",
+    "zkmoney/v6/SIPAFactory": "0x5ab5fb499d5252609f6c3be98dc710a1d15fe45212cc946c8de33fad1787bcb5",
+    "zkmoney/v6/TeeRegistry": "0x7a011be8cd8665b8d86a9a45dfc4363db3e336b5738889d0dc670a8cd3abe3cc",
+    "zkmoney/v6/UnprocessedDepositRefundVerifier": "0x7597d2213cb07f1cfca0eab680b611acc813f6c9e7849accbff64abd84fd7f0d",
+    "zkmoney/v6/UserOpSIPA": "0xd2c68e7858153cdb3b7db447ee96d8da53d3eb8e68e1f66fb3a24eb53d6cc67c"
+  },
+  "usedBlockNumbers": { "ethereum": 26290733 },
+  "permissionsConfigHash": "0xbd241bafbb1fb3f4d6032ae69967ba9755a25f9e4f0269a58e585ccc7cd203bc",
+  "permissions": {
+    "eth:0x04Ffc6aD66934937737DD5Fea303bd0903B7625e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8b705C3519169F29850D156574ec377B686bd9CD",
+          "description": "co-sign withdrawals and refunds. Without a signature from a registered TEE signer, no funds can leave the portals that use this registry.",
+          "role": ".teeSigners"
+        }
+      ]
+    },
+    "eth:0x768001056E4d89fd45Bf74Df3d91809F9BEb1ee1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
+          "description": "authorize or refuse every name claim and sign custom registration fees.",
+          "role": ".domainOwner"
+        }
+      ]
+    },
+    "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x186C20F0F294378E1DecA7419c667e44c73E992C",
+          "description": "bless deposit address implementations and approve ForwardingTables. A newly blessed implementation for an intent decides the code of every new deposit address for that intent. Earlier blessings are never revoked.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
+          "description": "replace the RegistrationController and the AccountMetadataRegistry, and change the domainOwner. A new RegistrationController can reassign names and rewrite any user record, and a new AccountMetadataRegistry decides where future payments to zk.money names resolve to.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525",
+          "description": "replace this Resolver as the ENS resolver of zk.money names, which decides the addresses that payments to these names resolve to.",
+          "role": ".ensNodeOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C",
+          "description": "add rows for unlisted tokens, add fees for unlisted intents, and change the beneficiary of deposit-address fees. A new row can route an unlisted token to any contract that reports that token as UNDERLYING and the table's ROLLUP_VERSION.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xCb88D07F5d30837d3dE8a10fCDb7bA8aBb3fbeC6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8b705C3519169F29850D156574ec377B686bd9CD",
+          "description": "co-sign withdrawals and refunds. Without a signature from a registered TEE signer, no funds can leave the portals that use this registry.",
+          "role": ".teeSigners"
+        }
+      ]
+    },
+    "eth:0xF20076E445e159B17fF3aaAAC567dc4b2e45FB8c": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xCeae64c7211a2208afFc4F396ADD1D46996Cd2A2",
+          "description": "deploy new OxidePortals for any token, L2 token contract and deposit and transaction caps. They share this factory's TeeRegistry and refund verifiers.",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
+}

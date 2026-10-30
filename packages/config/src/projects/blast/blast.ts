@@ -72,7 +72,7 @@ export const blast: ScalingProject = opStackL2({
           },
           {
             title: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
-            url: 'https://etherscan.io/address/0x1C90963D451316E3DBFdD5A30354EE56C29016EB#code',
+            url: 'https://etherscan.io/address/0x550893B7041E91A090e7d03Cf437029Fe0f68ABc#code',
           },
         ],
         risks: [EXITS.RISK_REHYPOTHECATED_ASSETS, EXITS.RISK_LACK_OF_LIQUIDITY],

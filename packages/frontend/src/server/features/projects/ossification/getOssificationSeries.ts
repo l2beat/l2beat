@@ -2,7 +2,7 @@ import type { ProjectDefiInfo, TvsToken } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getTvsTargetTimestamp } from '~/server/features/layer2s/tvs/utils/getTvsTargetTimestamp'
+import { getLatestTvsTimestamp } from '~/server/features/layer2s/tvs/utils/getLatestTvsTimestamp'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import type { ValuePoint } from './normalizeSeries'
 
@@ -25,7 +25,7 @@ export interface OssificationSeriesProject {
 }
 
 /**
- * Canonical TVS, or DefiLlama TVL for DeFi projects tracked there, from the
+ * TVS, or DefiLlama TVL for DeFi projects tracked there, from the
  * last sample at or before `since` (so the value at `since` can be
  * interpolated) to the latest synced one. Null when the project has neither.
  */
@@ -63,8 +63,7 @@ export async function getOssificationSeries(
     }
   }
 
-  // The hour after the target is usually only partially synced.
-  const to = getTvsTargetTimestamp()
+  const to = await getLatestTvsTimestamp()
   // min() keeps a clock younger than the target on its preceding synced value.
   const start =
     (await db.tvsTokenValue.getMaxTimestampAtOrBeforeForProjects(
@@ -81,13 +80,13 @@ export async function getOssificationSeries(
       excludeRwaRestrictedTokens: true,
     },
   )
-  // Canonical only: unlike TVS elsewhere, customCanonical (canonical with
-  // additional trust assumptions) is deliberately left out.
+  // Every source: a bug in the L2 program pinned on L1 reaches native and
+  // external tokens too, not only the escrows.
   return {
     source,
     points: rows.map((row) => ({
       timestamp: row.timestamp,
-      value: row.canonical,
+      value: row.value,
     })),
   }
 }

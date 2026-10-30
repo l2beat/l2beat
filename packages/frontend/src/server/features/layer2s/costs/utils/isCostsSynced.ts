@@ -22,6 +22,5 @@ export function getCostsSyncWarning(
   }
   return `No costs data since ${formatTimestamp(syncedUntil, {
     mode: 'datetime',
-    longMonthName: true,
   })}.`
 }

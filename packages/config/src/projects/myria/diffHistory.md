@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x2bbcc7a1bd8f07ed11c2cb8b1250e34c9384c3ef
+
+# Diff at Fri, 16 Oct 2026 05:36:51 GMT:
+
+- id: fc90c7c9
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1779099631
+- current timestamp: 1779099631
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779099631 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (eth:0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7) [starkex/StarkExchange] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x0daba7601bf39b79e8be61ca74b3f9dbe88b2409
 
 # Diff at Mon, 07 Sep 2026 08:37:53 GMT:

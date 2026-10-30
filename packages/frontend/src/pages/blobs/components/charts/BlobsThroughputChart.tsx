@@ -73,7 +73,6 @@ export function BlobsThroughputChart({
           milestones={milestones}
           syncedUntil={total.data?.syncedUntil}
           resolution={resolution}
-          dataGap={undefined}
           hideProjectLogo
           disableLegendOnboarding
         />

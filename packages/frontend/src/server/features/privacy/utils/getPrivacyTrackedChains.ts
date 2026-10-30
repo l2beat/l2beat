@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { manifest } from '~/utils/Manifest'
 import {
@@ -18,7 +19,10 @@ export function getPrivacyTrackedChains(
     const project = projects.find((p) => p.chainConfig.name === chainName)
     if (!project) return []
     const hasPage =
-      project.scalingInfo || project.privacyInfo || project.defiInfo
+      project.id === ProjectId.ETHEREUM ||
+      project.scalingInfo ||
+      project.privacyInfo ||
+      project.defiInfo
     return [
       {
         id: chainName,

@@ -12,6 +12,7 @@
   ],
   "ignoreInWatchMode": ["userFundsInYieldProvidersTotal"],
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "userFundsInYieldProvidersTotal": {
       "description": "User ETH principal currently deployed into yield providers (staked), excluding accrued yield. Together with the rollup and YieldManager balances it forms the total system balance used for the reserve thresholds."
     },
@@ -114,6 +115,7 @@
       ]
     },
     "yieldStakingManagerAC": {
+      "severity": "MEDIUM",
       "description": "Logically this combines several roles: SET_YIELD_PROVIDER_ROLE, SET_L2_YIELD_RECIPIENT_ROLE, WITHDRAWAL_RESERVE_SETTER_ROLE. Currently they are shared by the same address, if this changes the permissions must be modified.",
       "handler": {
         "type": "accessControl",

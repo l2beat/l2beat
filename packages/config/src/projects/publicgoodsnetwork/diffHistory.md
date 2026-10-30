@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x8541b97f67cbb6335ba88e847c719ac77b13235a
+
+# Diff at Fri, 16 Oct 2026 09:37:49 GMT:
+
+- id: 26edcc27
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1768984467
+- current timestamp: 1768984467
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984467 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (eth:0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) [opstack/OptimismPortal_PGN_withdraw] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      fieldMeta:
++        {"guardian":{"severity":"MEDIUM"},"GUARDIAN":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b) [opstack/L1StandardBridge_PGN_withdraw] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      fieldMeta:
++        {"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x3390a7b809d8ec7de614c1fe4cc6ee09af8ac66c
 
 # Diff at Wed, 23 Sep 2026 05:48:37 GMT:

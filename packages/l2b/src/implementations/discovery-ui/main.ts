@@ -1,3 +1,4 @@
+import { ProjectService } from '@l2beat/config'
 import {
   ConfigHealthService,
   ConfigReader,
@@ -20,6 +21,7 @@ import { DiffoveryController } from './diffovery/DiffoveryController'
 import { FlatSourceClient } from './diffovery/FlatSourceClient'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
+import { buildAddressUsage, readUsageSources } from './getAddressUsage'
 import {
   getCodeFromDisk,
   getCodeFromEtherscan,
@@ -31,13 +33,17 @@ import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { getTvl } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
+import { attachModulesRouter } from './modules'
 import { ProviderCache } from './ProviderCache'
+import { renderProjectPage } from './renderProjectPage'
 import { searchCode } from './searchCode'
 import { TvlCache } from './TvlCache'
 import {
   attachTemplateRouter,
   listTemplateFilesSchema,
 } from './templates/router'
+import { RemoteWorkspaces } from './xref/RemoteWorkspaces'
+import { attachXrefRouter, diskWorkspace } from './xref/router'
 
 const safeStringSchema = z
   .string()
@@ -105,6 +111,8 @@ const diffHistoryQuerySchema = z.object({
   limit: positiveIntFromString.optional(),
 })
 
+const REMOTE_WORKSPACE_CAPACITY = 4
+
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const port = process.env.PORT ?? 2021
   const app = createDiscoveryUiApp({ readonly })
@@ -123,13 +131,14 @@ export function createDiscoveryUiApp({
 }): Express {
   const app = express()
 
-  const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
+  const STATIC_ROOT = join(__dirname, '../../../../discoui/build')
 
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
   const configWriter = new ConfigWriter(configReader, paths.discovery)
   const templateService = new TemplateService(paths.discovery)
   const configHealthService = new ConfigHealthService()
+  const projectService = new ProjectService()
 
   const providerCache = new ProviderCache()
   const tvlCache = new TvlCache()
@@ -144,8 +153,8 @@ export function createDiscoveryUiApp({
     res.status(200).send('OK')
   })
 
-  app.get('/api/projects', (_req, res) => {
-    const response = getProjects(configReader)
+  app.get('/api/projects', async (_req, res) => {
+    const response = await getProjects(configReader, projectService)
     res.json(response)
   })
 
@@ -301,10 +310,24 @@ export function createDiscoveryUiApp({
   attachDiffoveryRouter(app, diffoveryController)
   attachLayoutRouter(app, configReader, readonly)
 
+  if (readonly) {
+    const remoteWorkspaces = new RemoteWorkspaces(
+      configReader,
+      flatSourceClient,
+      REMOTE_WORKSPACE_CAPACITY,
+    )
+    attachXrefRouter(app, (project) => remoteWorkspaces.get(project))
+  } else {
+    attachXrefRouter(app, async (project) =>
+      diskWorkspace(configReader, project),
+    )
+  }
+
   if (!readonly) {
     attachAnalyzeRouter(app, configReader)
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
+    attachModulesRouter(app, configReader, templateService, paths.discovery)
 
     app.get('/api/config/health', (_, res) => {
       const response = getConfigHealth(
@@ -313,6 +336,10 @@ export function createDiscoveryUiApp({
         configHealthService,
       )
       res.json(response)
+    })
+
+    app.get('/api/address-usage', (_req, res) => {
+      res.json(buildAddressUsage(readUsageSources(configReader)))
     })
 
     app.get('/api/handlers', (_req, res) => {
@@ -425,6 +452,13 @@ export function createDiscoveryUiApp({
       }
     })
   }
+
+  app.get('/ui/p/:project', (req, res) => {
+    const indexHtml = readFileSync(join(STATIC_ROOT, 'index.html'), 'utf-8')
+    res
+      .type('html')
+      .send(renderProjectPage(configReader, indexHtml, req.params))
+  })
 
   app.get('/{*splat}', (_req, res) => {
     res.sendFile('index.html', { root: STATIC_ROOT })

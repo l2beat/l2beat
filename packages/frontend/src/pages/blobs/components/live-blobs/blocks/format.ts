@@ -33,7 +33,7 @@ export function formatRate(value: number): string {
 export function describeWindow(slots: number) {
   const minutes = Math.floor((slots * SLOT_SECONDS) / 60)
   if (minutes < 60) return `Last ${Math.max(1, minutes)} min`
-  return `Last ${Math.floor(minutes / 60)} h`
+  return `Last ${Math.floor(minutes / 60)}h`
 }
 
 const SIZE_UNITS = ['KiB', 'MiB', 'GiB', 'TiB'] as const
@@ -50,7 +50,10 @@ export function formatKib(kib: number): string {
   return `${value.toFixed(decimals)} ${SIZE_UNITS[unit]}`
 }
 
-const CLOCK = new Intl.DateTimeFormat(undefined, {
+// UTC, 24-hour, as every other time on the site, whatever the device's zone and locale
+const CLOCK = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'UTC',
+  hourCycle: 'h23',
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',
@@ -58,5 +61,5 @@ const CLOCK = new Intl.DateTimeFormat(undefined, {
 
 /** With seconds: slots are 12 s, so minutes alone repeat */
 export function formatClock(unixSeconds: number): string {
-  return CLOCK.format(unixSeconds * 1000)
+  return `${CLOCK.format(unixSeconds * 1000)} UTC`
 }

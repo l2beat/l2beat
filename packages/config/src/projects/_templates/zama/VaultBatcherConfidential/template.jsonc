@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.",
+  "category": "core",
+  "ignoreMethods": [
+    "batchCallbackDeadline",
+    "batchCreatedAt",
+    "batchDispatchedAt",
+    "batchMaxSlippageBps",
+    "batchMinBatchAge",
+    "batchState",
+    "exchangeRate",
+    "totalDeposits",
+    "unwrapRequestId"
+  ],
+  "ignoreInWatchMode": ["currentBatchId"],
+  "ignoreRelatives": ["vault"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit."
+        }
+      ]
+    },
+    "minBatchAge": {
+      "description": "Seconds a batch must stay open before anyone can dispatch it."
+    }
+  }
+}

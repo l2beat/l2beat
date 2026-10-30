@@ -48,10 +48,27 @@
       ]
     },
     "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": {
-      "ignoreInWatchMode": ["totalSupply"]
+      "ignoreInWatchMode": ["totalSupply"],
+      "fields": {
+        "aliasedL1Bridge": {
+          "edit": [
+            "if",
+            ["=", "facet:0x5F3fbA30A786C0643699b92234d74A71E958D19F"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
     },
     "facet:0x4200000000000000000000000000000000000016": {
       "ignoreInWatchMode": ["messageNonce"]
+    }
+  },
+  "types": {
+    "FacetAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": {
+        "prefix": "facet"
+      }
     }
   }
 }

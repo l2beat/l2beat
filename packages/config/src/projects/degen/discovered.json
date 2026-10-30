@@ -106,7 +106,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "base:0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7": "TransparentUpgradeableProxy",
@@ -273,7 +273,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "maxTimeVariation": {
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -373,7 +373,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "base:0x766DD3A13d17C6D175975C89225bde89F052dBc4": "TransparentUpgradeableProxy",
@@ -490,8 +490,9 @@
         "executors": ["base:0x871e290d5447b958131F6d44f915F10032436ee6"]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "base:0xaA3A7A2ec2477A61082E1C41a2c6710587917028": "TransparentUpgradeableProxy",
@@ -788,8 +789,9 @@
         "rollup": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "base:0xe63ddb12FBb6211a73F12a4367b10dA0834B82da": "TransparentUpgradeableProxy",
@@ -865,10 +867,11 @@
         "sequencerReportedSubMessageCount": 26979490
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "allowedOutboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Can make calls as the bridge, steal all funds."
         },
         "outboxHistory": {
@@ -876,7 +879,7 @@
           "description": "All Outboxes that were ever set as allowed in the bridge."
         },
         "allowedDelayedInboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
         },
         "inboxHistory": {
@@ -917,6 +920,7 @@
         "$immutable": true,
         "owner": "base:0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "base:0xFB48D385Fa3da33762B350e1d705b9E46054E677": "ProxyAdmin"
       }

@@ -18,6 +18,27 @@
       "category": "stablecoin"
     },
     {
+      // Privacy Pools v2 share over Aave v3 aEthUSDC; not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "ppUSDC",
+      "address": "0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Privacy Pools v2 share over Aave v3 aEthUSDT; not listed on CoinGecko, priced with its USDT underlying
+      "symbol": "ppUSDT",
+      "address": "0xA4cF419558Ef36CC6FfB666195684dC963910426",
+      "coingeckoId": "tether",
+      "category": "stablecoin"
+    },
+    {
+      // Privacy Pools v2 share over Aave v3 aEthWETH; not listed on CoinGecko, priced with ETH
+      "symbol": "ppETH",
+      "address": "0x66051920D25af4E3596A8a46309F4D045F9D83B7",
+      "coingeckoId": "ethereum",
+      "category": "ether"
+    },
+    {
       // Steakhouse Confidential Prime USDC vault; not listed on CoinGecko, priced with its USDC underlying
       "symbol": "steakcUSDC",
       "address": "0xbEEF00A59B577423653A1526c7009bdE103F542B",
@@ -4888,6 +4909,7 @@
       "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
       "category": "btc",
       "source": "external",
+      "coingeckoId": "wrapped-bitcoin",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -5879,6 +5901,7 @@
       "symbol": "wBTC",
       "category": "btc",
       "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
+      "coingeckoId": "wrapped-bitcoin",
       "source": "canonical",
       "supply": "zero"
     },
@@ -6088,6 +6111,7 @@
     {
       "symbol": "USDT",
       "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
+      "coingeckoId": "tether",
       "category": "stablecoin",
       "source": "canonical",
       "supply": "zero"
@@ -9568,6 +9592,7 @@
     {
       "symbol": "USDC.e",
       "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
+      "coingeckoId": "usd-coin",
       "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",

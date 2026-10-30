@@ -6,17 +6,14 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
-  CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
-  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -49,11 +46,6 @@ const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
   ),
 )
 
-const forceBatchTimeout = discovery.getContractValue<number>(
-  'ZKFairValidium',
-  'forceBatchTimeout',
-)
-
 const membersCountDAC = discovery.getContractValue<number>(
   'ZKFairValidiumDAC',
   'getAmountOfMembers',
@@ -64,24 +56,10 @@ const requiredSignaturesDAC = discovery.getContractValue<number>(
   'requiredAmountOfSignatures',
 )
 
-const nonEmergencyUpgradeText = `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
-  trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-)}.`
-
-const exitWindowRisk = {
-  ...RISK_VIEW.EXIT_WINDOW(
-    0,
-    trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-  ),
-  regular: {
-    value: upgradeDelayString,
-    sentiment: 'warning',
-    description: nonEmergencyUpgradeText,
-  },
-} as const
+const nonEmergencyUpgradeText = `Non-emergency validium upgrades require a ${upgradeDelayString} timelock. Emergency upgrades bypass that delay. The token bridge has separate administrative controls.`
 
 const timelockUpgrades = {
-  upgradableBy: [{ name: 'ZKFairAdmin', delay: exitWindowRisk.value }],
+  upgradableBy: [{ name: 'ZKFairAdmin', delay: upgradeDelayString }],
   upgradeConsiderations: nonEmergencyUpgradeText,
 }
 
@@ -125,11 +103,12 @@ export const zkfair: ScalingProject = {
     slug: 'zkfair',
     purposes: ['Universal'],
     redWarning: {
-      text: 'The canonical bridge escrow was upgraded to an unverified implementation and user funds were moved to [an EOA, then deposited to AAVE](https://etherscan.io/tx/0x0f1ca15e92757dc08e1ac62ef5cfc45a37735c589c655f521f0fd99fb0d5a5d2). They were subsequently withdrawn and [moved to a new contract](https://etherscan.io/tx/0x59304b6420a556c303b4fbcc0608c14d57d06b7aa13366f3851b3be3d6e167ed). Related [tweet by the ZKFair team](https://x.com/ZKFCommunity/status/1910329561105252694).',
+      text: 'Bridge withdrawals require a signature from one configured address. An administrator can withdraw all escrow funds directly. Validium proofs constrain neither path.',
     },
     warning:
-      'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
-    description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',
+      'Forced transactions are disabled. The validium contracts use a data availability committee, and the token bridge uses separate signature validation.',
+    description:
+      'ZKFair uses Polygon CDK for validium state proofs and a separate signature-authorized bridge for asset transfers.',
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://zkfair.io/'],
@@ -204,20 +183,15 @@ export const zkfair: ScalingProject = {
     mode: DA_MODES.STATE_DIFFS,
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
       membersCount,
       requiredSignatures,
     }),
-    exitWindow: exitWindowRisk,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
     sequencerFailure: SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
-      description:
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
-        ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
-    },
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   stage: {
     stage: 'NotApplicable',
@@ -225,7 +199,34 @@ export const zkfair: ScalingProject = {
   stateValidation: {
     categories: [
       {
-        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        title: 'No state validation',
+        description:
+          'The token bridge accepts an EIP-712 signature recovering to its configured address. It checks no source-chain proof or threshold of distinct signers. A used source-domain nonce prevents replay. The escrow also accepts unrestricted withdrawals instructed by the bridge administration.',
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'the bridge signing key authorizes an arbitrary token release.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the bridge withdrawal authority sends escrow funds to itself.',
+          },
+        ],
+        references: [
+          {
+            title: 'TokenBridge - verify, executeProposals and adminWithdraw',
+            url: 'https://etherscan.io/address/0xB66bbf236CE102A1De692f2A034b9dB245986671#code',
+          },
+          {
+            title: 'ERC20Handler - executeProposal and withdraw',
+            url: 'https://etherscan.io/address/0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e#code',
+          },
+        ],
+      },
+      {
+        title: 'Validity proofs',
+        description:
+          'ZKFairValidium verifies proofs of state transitions using an Fflonk verifier. Its verified state and exit roots do not authorize releases from the current token escrow.',
         references: [
           {
             title:
@@ -281,14 +282,20 @@ export const zkfair: ScalingProject = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR_MESSAGING('zk'),
+        name: 'Signature-authorized withdrawal',
+        description:
+          'Users depend on the bridge signing address to authorize withdrawals. Anyone can submit its valid signature and proposal to release tokens from the escrow. A validium proof cannot replace the signature.',
+        risks: [
+          {
+            category: 'Funds can be frozen if',
+            text: 'the bridge signing address stops authorizing withdrawals or the administration pauses the token bridge.',
+          },
+        ],
         references: [
-          // unverified
-          // {
-          //   title:
-          //     'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
-          //   url: 'https://etherscan.io/address/0xEb80283EBc508CF6AaC5E054118954a2BD7fA006#code#F19#L315',
-          // },
+          {
+            title: 'TokenBridge - executeProposal and executeProposals',
+            url: 'https://etherscan.io/address/0xB66bbf236CE102A1De692f2A034b9dB245986671#code',
+          },
         ],
       },
     ],
@@ -296,6 +303,27 @@ export const zkfair: ScalingProject = {
   permissions: {
     ethereum: {
       actors: [
+        discovery.getPermissionDetails(
+          'Bridge signing address',
+          discovery.getPermissionedAccounts('TokenBridge', '_MPCAddress'),
+          'Its ECDSA signature can authorize arbitrary releases from the current token escrow. The contract enforces no threshold of distinct signers.',
+        ),
+        discovery.getPermissionDetails(
+          'Bridge permissions administrator',
+          discovery.getPermissionedAccounts(
+            'AccessControlSegregator',
+            'grantAccessAccount',
+          ),
+          'Can replace every per-function bridge authority, including withdrawal and access-control replacement authorities, without delay.',
+        ),
+        discovery.getPermissionDetails(
+          'Bridge withdrawal authority',
+          discovery.getPermissionedAccounts(
+            'AccessControlSegregator',
+            'withdrawAccount',
+          ),
+          'Can withdraw all escrow funds directly through the token bridge, without a validium proof or bridge signature.',
+        ),
         discovery.getPermissionDetails(
           'Sequencer',
           discovery.getPermissionedAccounts(
@@ -318,7 +346,7 @@ export const zkfair: ScalingProject = {
         ),
         discovery.getMultisigPermission(
           'ZKFairOwner',
-          'The ZkFair Owner is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
+          'The ZkFair Owner is a multisig that can be used to trigger the emergency state which restricts advancing system state and removes the upgradeability delay.',
         ),
         discovery.getPermissionDetails(
           'DAC members',
@@ -353,8 +381,12 @@ export const zkfair: ScalingProject = {
           ],
         }),
         discovery.getContractDetails('Bridge', {
-          description: 'The current escrow contract for user funds.',
+          description:
+            'ERC20Handler escrow holding ERC20 tokens and ETH. Only TokenBridge can release or withdraw funds. Validium proofs do not constrain these releases.',
         }),
+        discovery.getContractDetails('TokenBridge'),
+        discovery.getContractDetails('AccessControlSegregator'),
+        discovery.getContractDetails('FeeHandlerRouter'),
         discovery.getContractDetails('OldBridge', {
           description:
             'Deprecated! Was the escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer ERC20 assets. To transfer funds a user initiated transaction on both sides is required.',
@@ -379,7 +411,12 @@ export const zkfair: ScalingProject = {
         }),
       ],
     },
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: 'the bridge administration changes withdrawal permissions or asset routes without delay.',
+      },
+    ],
   },
   milestones: [
     {

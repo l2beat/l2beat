@@ -39,6 +39,7 @@ export interface InteropProtocolEntry {
     detailedDescription?: string
     badges?: BadgeWithParams[]
     links?: ProjectLink[]
+    discoUiHref?: string
     hostChain?: string
   }
   sections: ProjectDetailsSection[]
@@ -47,7 +48,7 @@ export interface InteropProtocolEntry {
 export async function getInteropProtocolEntry(
   project: Project<
     'interopConfig',
-    'display' | 'statuses' | 'discoveryUpdates'
+    'display' | 'statuses' | 'discoveryUpdates' | 'discoveryInfo'
   >,
   apiSelection: InteropSelection,
   interopChains: InteropChainWithIcon[],
@@ -67,7 +68,19 @@ export async function getInteropProtocolEntry(
     links: project.display?.links
       ? getProjectLinks(project.display.links)
       : undefined,
+    discoUiHref: project.discoveryInfo?.hasDiscoUi
+      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      : undefined,
   }
+  const discoUi = header.discoUiHref
+    ? {
+        href: header.discoUiHref,
+        images: {
+          desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
+          mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
+        },
+      }
+    : undefined
 
   const sections: ProjectDetailsSection[] = []
 
@@ -128,6 +141,20 @@ export async function getInteropProtocolEntry(
     })
   }
 
+  const milestones = project.interopConfig.milestones ?? []
+  if (milestones.length > 0) {
+    sections.push({
+      type: 'MilestonesAndIncidentsSection',
+      props: {
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
+        milestones: milestones.toSorted(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+        ),
+      },
+    })
+  }
+
   const updatesSection = await getUpdatesSection(
     helpers,
     project.id,
@@ -168,6 +195,7 @@ export async function getInteropProtocolEntry(
           ...permissionsSection,
           id: 'permissions',
           title: 'Permissions',
+          discoUi,
         },
       })
     }
@@ -193,6 +221,7 @@ export async function getInteropProtocolEntry(
           ...contractsSection,
           id: 'contracts',
           title: 'Smart contracts',
+          discoUi,
         },
       })
     }

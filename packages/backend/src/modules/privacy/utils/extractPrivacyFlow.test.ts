@@ -1,11 +1,18 @@
-import type { PrivacyAnonymitySetDepositSource } from '@l2beat/config'
+import {
+  type PrivacyAnonymitySetDepositSource,
+  ProjectService,
+} from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
-import type { PrivacyFlowIndexerConfig, PrivacyRpcLog } from '../types'
+import type {
+  EvmPrivacyAnonymitySetSource,
+  PrivacyFlowIndexerConfig,
+  PrivacyRpcLog,
+} from '../types'
 import { FUNDING_PARAMS } from '../zkmoney/test/fixtures'
 import { erc20Interface } from './erc20'
-import { extractPrivacyAnonymitySetDeposit } from './extractPrivacyAnonymitySetDeposit'
+import { extractPrivacyAnonymitySetMember } from './extractPrivacyAnonymitySetMember'
 import { extractPrivacyFlow } from './extractPrivacyFlow'
 
 const privacyPoolsInterface = new utils.Interface([
@@ -23,9 +30,8 @@ const umbraInterface = new utils.Interface([
   'event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)',
 ])
 
-const zamaInterface = new utils.Interface([
-  'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
-  'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
+const umbraRegistryInterface = new utils.Interface([
+  'event StealthKeyChanged(address indexed registrant, uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)',
 ])
 
 const zkMoneyInterface = new utils.Interface([
@@ -310,6 +316,94 @@ describe(extractPrivacyFlow.name, () => {
     })
   })
 
+  describe('privacyPoolsV2Value', () => {
+    const iface = new utils.Interface([
+      'event Deposited(uint256 outputCommitment, address indexed asset, uint256 depositedValue, address indexed caller)',
+      'event Transacted(uint256[] outputCommitments, uint256[] nullifierHashes, address indexed asset, uint256 withdrawnValue, address indexed caller)',
+      'event Ragequit(address indexed ragequitter, address indexed asset, uint256 value, uint256 commitment, uint256 nullifierHash, uint256 label)',
+    ])
+    const params = { tokenAddress: TOKEN_ADDRESS }
+
+    it('extracts a deposit of the configured asset', () => {
+      const log = encodeLog(iface, 'Deposited', [
+        1,
+        TOKEN_ADDRESS,
+        500n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 500n })
+    })
+
+    it('extracts the withdrawn value of a transact', () => {
+      const log = encodeLog(iface, 'Transacted', [
+        [1, 2],
+        [3],
+        TOKEN_ADDRESS,
+        700n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 700n })
+    })
+
+    it('extracts a ragequit', () => {
+      const log = encodeLog(iface, 'Ragequit', [
+        ADDRESS,
+        TOKEN_ADDRESS,
+        900n,
+        1,
+        2,
+        3,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 900n })
+    })
+
+    it('ignores another asset of the same vault', () => {
+      const log = encodeLog(iface, 'Deposited', [
+        1,
+        OTHER_TOKEN_ADDRESS,
+        500n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual(undefined)
+    })
+
+    it('ignores a pure private transfer, which withdraws nothing', () => {
+      const log = encodeLog(iface, 'Transacted', [
+        [1],
+        [2],
+        EthereumAddress.ZERO,
+        0n,
+        ADDRESS,
+      ])
+      expect(
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'privacyPoolsV2Value', params },
+          log,
+        ),
+      ).toEqual(undefined)
+    })
+  })
+
   describe('railgunShield', () => {
     const config: PrivacyFlowIndexerConfig = {
       ...baseFlowConfig,
@@ -562,51 +656,9 @@ describe(extractPrivacyFlow.name, () => {
       ).toEqual({ count: 1, amount: 7n })
     })
   })
-
-  describe('zamaWrap', () => {
-    it('extracts roundedAmount from Wrap event', () => {
-      const config: PrivacyFlowIndexerConfig = {
-        ...baseFlowConfig,
-        event: 'Wrap',
-        extractor: 'zamaWrap',
-        params: {},
-      }
-      const log = encodeLog(zamaInterface, 'Wrap', [
-        EthereumAddress.random().toString(),
-        123_456n,
-        '0x' + '11'.repeat(32),
-      ])
-
-      const result = extractPrivacyFlow(config, log)
-
-      expect(result).toEqual({ count: 1, amount: 123_456n })
-    })
-  })
-
-  describe('zamaUnwrap', () => {
-    it('extracts cleartextAmount multiplied by wrapper rate', () => {
-      const config: PrivacyFlowIndexerConfig = {
-        ...baseFlowConfig,
-        direction: 'withdrawal',
-        event: 'UnwrapFinalized',
-        extractor: 'zamaUnwrap',
-        params: { rate: '10' },
-      }
-      const log = encodeLog(zamaInterface, 'UnwrapFinalized', [
-        EthereumAddress.random().toString(),
-        '0x' + '22'.repeat(32),
-        '0x' + '33'.repeat(32),
-        987n,
-      ])
-
-      const result = extractPrivacyFlow(config, log)
-
-      expect(result).toEqual({ count: 1, amount: 9_870n })
-    })
-  })
 })
 
-describe(extractPrivacyAnonymitySetDeposit.name, () => {
+describe(extractPrivacyAnonymitySetMember.name, () => {
   it('uses the event depositor for Privacy Pools deposits', () => {
     const source = {
       event: 'Deposited',
@@ -622,7 +674,7 @@ describe(extractPrivacyAnonymitySetDeposit.name, () => {
       4n,
     ])
 
-    expect(extractPrivacyAnonymitySetDeposit(source, log)).toEqual({
+    expect(extractPrivacyAnonymitySetMember(source, log)).toEqual({
       amount: 12_345n,
       origin: { type: 'event', sender: depositor },
     })
@@ -641,9 +693,26 @@ describe(extractPrivacyAnonymitySetDeposit.name, () => {
       2n,
     ])
 
-    expect(() => extractPrivacyAnonymitySetDeposit(source, log)).toThrow(
+    expect(() => extractPrivacyAnonymitySetMember(source, log)).toThrow(
       'Privacy Pools deposit is missing depositor',
     )
+  })
+
+  it('requests the transaction sender for Privacy Pools v2 deposits', () => {
+    const iface = new utils.Interface([
+      'event Deposited(uint256 outputCommitment, address indexed asset, uint256 depositedValue, address indexed caller)',
+    ])
+    const log = encodeLog(iface, 'Deposited', [1, TOKEN_ADDRESS, 500n, ADDRESS])
+    expect(
+      extractPrivacyAnonymitySetMember(
+        {
+          event: log.topics[0]!,
+          extractor: 'privacyPoolsV2Value',
+          params: { tokenAddress: TOKEN_ADDRESS },
+        },
+        log,
+      ),
+    ).toEqual({ amount: 500n, origin: { type: 'transaction' } })
   })
 
   it('requests the transaction sender for fixed deposits', () => {
@@ -654,11 +723,64 @@ describe(extractPrivacyAnonymitySetDeposit.name, () => {
     } satisfies PrivacyAnonymitySetDepositSource
 
     expect(
-      extractPrivacyAnonymitySetDeposit(source, {
+      extractPrivacyAnonymitySetMember(source, {
         address: ADDRESS.toString(),
         data: '0x',
         topics: [],
       }),
     ).toEqual({ amount: 100n, origin: { type: 'transaction' } })
+  })
+
+  it('drops zero-value deposits', () => {
+    const source = {
+      event: 'Deposited',
+      extractor: 'privacyPoolsValue',
+      params: {},
+    } satisfies PrivacyAnonymitySetDepositSource
+    const log = encodeLog(privacyPoolsInterface, 'Deposited', [
+      EthereumAddress.random().toString(),
+      1n,
+      2n,
+      0n,
+      4n,
+    ])
+
+    expect(extractPrivacyAnonymitySetMember(source, log)).toEqual(undefined)
+  })
+
+  it('credits an Umbra key registration to its registrant with amount 0', () => {
+    const source = {
+      event: 'StealthKeyChanged',
+      extractor: 'umbraStealthKeyChanged',
+      params: {},
+    } satisfies EvmPrivacyAnonymitySetSource
+    const registrant = EthereumAddress.random()
+    const log = encodeLog(umbraRegistryInterface, 'StealthKeyChanged', [
+      registrant.toString(),
+      2n,
+      3n,
+      2n,
+      5n,
+    ])
+
+    expect(extractPrivacyAnonymitySetMember(source, log)).toEqual({
+      amount: 0n,
+      origin: { type: 'event', sender: registrant },
+    })
+  })
+
+  it('parses the event that Umbra key registrations are configured with', async () => {
+    const umbra = await new ProjectService().getProject({
+      slug: 'umbra',
+      select: ['privacyInfo'],
+    })
+    const anonymitySet = umbra?.privacyInfo.anonymitySet
+    if (anonymitySet?.type !== 'key-registrations') {
+      throw new Error('Umbra should track key registrations')
+    }
+
+    expect(anonymitySet.event).toEqual(
+      umbraRegistryInterface.getEventTopic('StealthKeyChanged'),
+    )
   })
 })

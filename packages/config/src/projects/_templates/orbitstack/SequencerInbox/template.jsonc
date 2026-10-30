@@ -23,7 +23,7 @@
       "severity": "HIGH"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "maxTimeVariation": {
       "severity": "HIGH",

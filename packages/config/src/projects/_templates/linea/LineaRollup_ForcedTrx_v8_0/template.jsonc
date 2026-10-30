@@ -24,6 +24,7 @@
     "getRequiredForcedTransactionFields"
   ],
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "forcedTransactionFeeInWei": {
       "severity": "HIGH"
     },
@@ -58,6 +59,7 @@
       }
     },
     "defaultAdminAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
@@ -69,7 +71,16 @@
         }
       ]
     },
+    // role holder: the verifier setter can register a new verifier
+    "verifierSetters": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "VERIFIER_SETTER_ROLE"
+      }
+    },
     "ethStakerAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "YIELD_PROVIDER_STAKING_ROLE"
@@ -108,6 +119,7 @@
       ]
     },
     "yieldManagerSetterAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "SET_YIELD_MANAGER_ROLE"
@@ -299,7 +311,7 @@
       }
     },
     "limitInWei": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
     },
     "pauseDuration_fmt": {

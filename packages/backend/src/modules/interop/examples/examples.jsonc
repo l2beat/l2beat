@@ -4517,10 +4517,25 @@
         "tx": "0x4ceca5feb2bb493b2aa06fe3ae2c2fd502ca379afacffad2b156f857b9d4dbb5"
       }
     ],
-    "messages": [
-      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
-    ],
-    "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
+    "expects": {
+      "messages": [
+        { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "opstack-standardbridge.L2ToL1Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000a0ff877e3d4f3a108b1b3d5eb3e4369301d2b2d7",
+            "wasBurned": true
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000dfa208bb0b811cfbb5fa3ea98ec37aa86180e668",
+            "wasMinted": false
+          }
+        }
+      ]
+    }
   },
   "opstack-standardbridge-ethereum-base-eth": {
     "tags": ["opstack"],
@@ -4553,10 +4568,91 @@
         "tx": "0xbfc1ae0118272ff738280f1f80751153ac556e4979a82953f2d2103b914edcac"
       }
     ],
-    "messages": [
-      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+    "expects": {
+      "messages": [
+        { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "opstack-standardbridge.L1ToL2Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "tokenAddress": "0x0000000000000000000000000bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+            "wasBurned": false
+          },
+          "dst": {
+            "tokenAddress": "0x0000000000000000000000009eaf8c1e34f05a589eda6bafdf391cf6ad3cb239",
+            "wasMinted": true
+          }
+        }
+      ]
+    }
+  },
+  "opstack-standardbridge-ethereum-base-native-usdc": {
+    "tags": ["opstack"],
+    "description": "ethereum -> base (native USDC, escrowed on both sides)",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x1b480a5ed57e25467f798bd6ce7b12be86b0bd9526adc1ae3c264f17fcf1706b"
+      },
+      {
+        "chain": "base",
+        "tx": "0xacff51527910de2c5176a9a3f586eff195f5ef725c4c053b4ec33c3b3c281806"
+      }
     ],
-    "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
+    "expects": {
+      "messages": [
+        { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "opstack-standardbridge.L1ToL2Transfer",
+          "bridgeType": "nonMinting",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "wasBurned": false
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "wasMinted": false
+          }
+        }
+      ]
+    }
+  },
+  "opstack-standardbridge-base-ethereum-native-usdc": {
+    "tags": ["opstack"],
+    "description": "base -> ethereum (native USDC, escrowed on both sides)",
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x0845d0ef94ce0a00490ace60fcfc6f2ba6b995e2af23d04f0d7d8ee44da24e1b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x5486bb2e08d43b1d349f3e174b40649e8337554ef601665bf327dbc25521cd55"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "opstack-standardbridge.L2ToL1Transfer",
+          "bridgeType": "nonMinting",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "wasBurned": false
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "wasMinted": false
+          }
+        }
+      ]
+    }
   },
   "opstack-standardbridge-unichain-eth": {
     "tags": ["opstack"],

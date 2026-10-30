@@ -167,8 +167,8 @@ export class PrivacyFlowEventRepository extends BaseRepository {
   }
 
   /**
-   * Skips zero-amount deposits, as the anonymity set indexer does, so this
-   * count and PrivacyAnonymitySetEvent cover the same deposits.
+   * Skips zero-amount deposits, which the anonymity set extractor drops too,
+   * so this count and the deposits in PrivacyAnonymitySetEvent match.
    */
   async getNonZeroDepositCount(
     projectId: string,

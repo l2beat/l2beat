@@ -51,27 +51,19 @@
           "severity": "MEDIUM",
           "description": "Blocks deposit, mutualClose and initiateEscapeWithdrawal. Challenge, finalizeEscapeWithdrawal and claimExpired are unaffected."
         },
-        "proofAdapter": { "severity": "HIGH" },
         "stateSigningKeyX": {
-          "severity": "HIGH",
           "description": "X coordinate of the Baby-JubJub public key whose signatures authorize non-genesis offchain balance states. The signing key holder controls settlement availability."
         },
-        "stateSigningKeyY": { "severity": "HIGH" },
         "clearanceSigningKeyX": {
-          "severity": "HIGH",
           "description": "X coordinate of the Baby-JubJub public key whose signature permits immediate cooperative closure. A delayed escape needs no clearance."
         },
-        "clearanceSigningKeyY": { "severity": "HIGH" },
         "noteTtl": {
-          "severity": "HIGH",
           "description": "Seconds added to deposit time before rounding expiry up to an EXPIRY_BUCKET boundary. After expiry anyone can sweep an active note to the treasury."
         },
         "challengePeriod": {
-          "severity": "HIGH",
           "description": "Seconds during which any valid request proof sharing the escape's nullifier cancels it, served or not."
         },
         "requestChargeCap": {
-          "severity": "HIGH",
           "description": "Request cap in gwei, enforced by the client and the authorization service only."
         },
         "nativeAssetWeiPerUnit": {
@@ -129,6 +121,7 @@
       ],
       "proxyType": "immutable",
       "description": "Linked Poseidon hash library used by the vault for active-note leaves and Merkle updates. Its BN254 parameters must agree with the request and withdrawal circuits.",
+      "critical": true,
       "deployerAddress": "eth:0xc2768Bf1d837f38E99150D3892648AE1e9e280Cf",
       "sinceTimestamp": 1786505999,
       "sinceBlock": 25736293,
@@ -219,7 +212,7 @@
   "usedTemplates": {
     "zkapi/Bn254Poseidon": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "zkapi/Groth16ProofAdapter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "zkapi/ZkApiVault": "0xa362880fd60313173bd112d78b2c4fd73176ba90f2aed5829d71a27929ad60e8"
+    "zkapi/ZkApiVault": "0x4ab3118d4ca7d02cf2582aa2e1615065159a6d2ac8823750cd1531a45348fcf8"
   },
   "usedBlockNumbers": { "ethereum": 26140275 },
   "permissionsConfigHash": "0x12a82f707c0127556e68ed70f7d6290975d19f7c44229ab18781cfb9eec31357",

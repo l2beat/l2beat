@@ -23,7 +23,8 @@
     "eth:0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45", // SwapRouter02
     "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af", // UniversalRouter
     "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3", // Permit2
-    // Governance
+    // Governance. Not critical: it only enables fee tiers and sets the bounded
+    // protocol fee share of the immutable core, never LP principal.
     "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984", // UNI token
     "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3", // GovernorBravoDelegator
     "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC", // Timelock

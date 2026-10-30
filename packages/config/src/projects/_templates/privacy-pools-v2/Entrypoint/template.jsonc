@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Entrypoint",
+  "critical": true,
+  "category": "core",
+  "description": "Deposit gate of Privacy Pools v2. It checks each deposit against its asset's configuration and keeps the vetting fee.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "poolVault": {
+      "severity": "HIGH"
+    },
+    "assetConfigs": {
+      "description": "Per-asset configuration: enabled, minimum deposit, vetting fee in basis points and the maximum relayer fee per withdrawal.",
+      "severity": "MEDIUM",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": "_config",
+        "set": { "event": "AssetConfigurationSet" },
+        "groupBy": "_asset",
+        "ignoreRelative": true
+      }
+    }
+  }
+}

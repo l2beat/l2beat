@@ -315,12 +315,16 @@ const SECTIONS: ProjectDetailsSection[] = [
                 {
                   address: '0x1111111111111111111111111111111111111111',
                   url: 'https://etherscan.io/address/0x1111111111111111111111111111111111111111#code',
+                  chainId: 'ethereum',
                   chain: 'Ethereum',
+                  chainIcon: '/icons/ethereum.png',
                   projectsUsedIn: [KATANA],
                 },
                 {
                   address: '0x2222222222222222222222222222222222222222',
+                  chainId: 'arbitrum',
                   chain: 'Arbitrum One',
+                  chainIcon: '/icons/arbitrum.png',
                   projectsUsedIn: [],
                 },
               ],

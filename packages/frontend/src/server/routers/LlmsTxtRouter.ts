@@ -1,5 +1,6 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
+import { env } from '~/env'
 import {
   type LinkListSection,
   type MarkdownLink,
@@ -48,7 +49,7 @@ export function createLlmsTxtRouter() {
 const LLMS_TXT = {
   title: 'L2BEAT',
   summary:
-    'L2BEAT is an independent analytics and research website about Ethereum scaling. It tracks layer 2s and layer 3s, data availability layers, interoperability protocols, privacy protocols and zero-knowledge proving systems, assessing their risks, maturity stages, value secured, activity, liveness and costs. Risk assessments are backed by on-chain contract discovery and all project data is open source.',
+    'L2BEAT is an independent analytics and research website about Ethereum scaling and privacy. It tracks layer 2s and layer 3s, data availability layers, interoperability protocols and zero-knowledge proving systems, assessing their risks, maturity stages, value secured, activity, liveness and costs. It also reviews privacy protocols on Ethereum and its layer 2s: what each one hides and from whom, anonymity sets, trusted setups and exit windows. Risk assessments are backed by on-chain contract discovery and all project data is open source.',
   notes: [
     'Important notes:',
     '',
@@ -65,7 +66,8 @@ const LLMS_TXT = {
     '- To get current or historical total value secured, activity, liveness or cost figures for a layer 2, via the pages or the JSON API.',
     '- To check where a layer 2 posts its data and how secure that data availability layer and its bridge are.',
     '- To look up which proving system, stack or ecosystem a project uses, or the definitions behind L2BEAT terms.',
-    '- Not for token prices, exchange data, wallet balances or anything outside Ethereum scaling and its infrastructure.',
+    '- To review or compare privacy protocols on Ethereum (privacy pools, shielded pools and ledgers, stealth addresses, confidential tokens): what each one hides and from which adversary, anonymity set sizes, trusted setups and exit windows. Start from /privacy/summary.md, then /privacy/projects/{slug}.md for one protocol.',
+    '- Not for token prices, exchange data, wallet balances or anything outside Ethereum scaling, privacy and their infrastructure.',
   ].join('\n'),
 }
 
@@ -130,12 +132,6 @@ const PAGE_SECTIONS: LinkListSection[] = [
         path: staticPagePath('/layer2s/tvs'),
         description:
           'Value secured by each layer 2, split into native, canonically bridged and externally bridged tokens, with 7- and 30-day changes.',
-      },
-      {
-        name: 'TVS breakdown',
-        path: staticPagePath('/layer2s/tvs/breakdown'),
-        description:
-          'Every token counted in TVS across all projects, with amount, USD value, category and bridging source.',
       },
       {
         name: 'Activity',
@@ -223,20 +219,25 @@ const PAGE_SECTIONS: LinkListSection[] = [
     ],
   },
   {
-    heading: 'Other trackers',
+    heading: 'Privacy',
     links: [
-      {
-        name: 'Privacy',
-        path: staticPagePath('/privacy/summary'),
-        description:
-          'Privacy protocols on Ethereum and its layer 2s, with what they hide, anonymity set sizes and trust assumptions.',
-      },
       {
         name: 'All privacy protocols',
         path: markdownAlternate('/privacy/summary.md'),
         description:
-          'Markdown list of every tracked privacy protocol with category, exit window and page URL.',
+          'Markdown list of every tracked privacy protocol with category, exit window and page URL, to compare them or pick one to review.',
       },
+      {
+        name: 'Summary',
+        path: staticPagePath('/privacy/summary'),
+        description:
+          'Reviews and comparison of privacy protocols on Ethereum and its layer 2s: what each one hides, anonymity set sizes and trust assumptions.',
+      },
+    ],
+  },
+  {
+    heading: 'Other trackers',
+    links: [
       {
         name: 'ZK catalog',
         path: staticPagePath('/zk-catalog'),
@@ -254,6 +255,22 @@ const PAGE_SECTIONS: LinkListSection[] = [
         path: markdownAlternate('/defi/summary.md'),
         description:
           'Markdown list of every tracked DeFi protocol with category and page URL; the HTML page adds value locked.',
+      },
+      ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
+        ? [
+            {
+              name: 'Ossification',
+              path: '/ossification' as const,
+              description:
+                'How battle-tested the critical contracts of each layer 2, layer 3, privacy and DeFi project are: the share of recorded exploits whose code was younger, value secured since the last critical change, critical changes per year and exit window.',
+            },
+          ]
+        : []),
+      {
+        name: 'All ossification projects',
+        path: markdownAlternate('/ossification.md'),
+        description:
+          'Markdown list of every project on the ossification page with its score, clock start, battle-tested exposure, critical changes per year, exit window and page URL.',
       },
       {
         name: 'Governance',
@@ -314,10 +331,16 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
         'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts.',
     },
     {
+      name: 'Ethereum',
+      path: '/projects/ethereum.md',
+      description:
+        'Ethereum as the data availability layer of the scaling projects: economic security, validators, blob throughput, risks and technology.',
+    },
+    {
       name: 'Privacy protocol',
       path: '/privacy/projects/{slug}.md',
       description:
-        'One privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
+        'Full review of one privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
     },
     {
       name: 'Interop protocol',
@@ -333,9 +356,9 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
     },
     {
       name: 'Interop token',
-      path: '/interop/tokens/{slug}.md',
+      path: '/tokens/{slug}.md',
       description:
-        'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the case-sensitive token id, the segment right after /interop/tokens/ in a token page URL; interop protocol pages link their top token.',
+        'One token across bridges as markdown: past-day volume, transfers and top path, the protocols moving it, and its onchain deployments with minting bridges. {slug} is the case-sensitive token id, the segment right after /tokens/ in a token page URL; interop protocol pages link their top token.',
     },
     {
       name: 'DeFi project',

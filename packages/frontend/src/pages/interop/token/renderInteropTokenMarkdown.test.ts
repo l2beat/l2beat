@@ -18,7 +18,7 @@ import {
 describe(renderInteropTokenMarkdown.name, () => {
   it('opens with the token symbol and a link to the canonical HTML page', () => {
     expect(renderInteropTokenMarkdown(PAGE)).toMatchRegex(
-      /^# USDC\n\nMarkdown version of https:\/\/l2beat\.com\/interop\/tokens\/usdc01\/circle\/usdc\n\n/,
+      /^# USDC\n\nMarkdown version of https:\/\/l2beat\.com\/tokens\/usdc01\/circle\/usdc\n\n/,
     )
   })
 
@@ -58,7 +58,7 @@ describe(renderInteropTokenMarkdown.name, () => {
       getSection(renderInteropTokenMarkdown(PAGE), 'Volume and flows'),
     ).toInclude(
       '### Top routes by volume (last 24h)\n\n- Hyperliquid → Arbitrum One: $3.00 M\n- Polygon PoS → Ethereum: $2.00 M',
-      'https://l2beat.com/interop/tokens/usdc01/circle/usdc#interop-volume',
+      'https://l2beat.com/tokens/usdc01/circle/usdc#interop-volume',
     )
   })
 
@@ -66,7 +66,7 @@ describe(renderInteropTokenMarkdown.name, () => {
     const markdown = renderInteropTokenMarkdown(PAGE)
 
     expect(getSection(markdown, 'Transfers')).toInclude(
-      'https://l2beat.com/interop/tokens/usdc01/circle/usdc#interop-transfers',
+      'https://l2beat.com/tokens/usdc01/circle/usdc#interop-transfers',
     )
   })
 
@@ -168,11 +168,11 @@ describe(renderInteropTokenMarkdown.name, () => {
     )
   })
 
-  it('warns instead of giving statistics when the token has no transfers', () => {
+  it('warns instead of giving statistics when the token has no aggregates', () => {
     const markdown = renderInteropTokenMarkdown({ ...PAGE, tokenData: null })
 
     expect(getSection(markdown, 'Summary')).toInclude(
-      '**Warning:** No transfers of this token were found in the past 24 hours',
+      '**Warning:** Data for the token is not synced. Please check again later.',
       '- Issued by: Circle\n- Category: stablecoin\n- Deployments: 4',
     )
     expect(markdown).not.toInclude('## Top protocols')
@@ -386,6 +386,7 @@ const PAGE: InteropTokenPage = {
     issuer: 'circle',
     iconUrl: null,
     category: 'stablecoin',
+    isPriceUnreliable: false,
   },
   tokenEntry: {
     deploymentsCount: 4,
@@ -397,6 +398,8 @@ const PAGE: InteropTokenPage = {
           title: 'Volume and flows',
           tokenId: 'usdc01',
           interopChains: [],
+          isPriceUnreliable: false,
+          snapshotTimestamp: undefined,
         },
       },
       {
@@ -423,4 +426,5 @@ const PAGE: InteropTokenPage = {
     ],
   },
   tokenData: TOKEN_DATA,
+  lastSyncedAt: undefined,
 }

@@ -9,7 +9,7 @@ const ENGINE =
 // Railgun names no reference wallet. The cells are rated with RailOxide, the
 // most private released open-source client we found.
 const RAILOXIDE =
-  'https://github.com/triamazikamno/railoxide/blob/8773f4ecb00c6ac7cf164ba1f989eb77dd4b0ec5/'
+  'https://github.com/triamazikamno/railoxide/blob/7981f35afe8fe5a198a450e0cad66d37f159556e/'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: 'private',
@@ -31,12 +31,13 @@ export function railgunAdversaries(upgradeDelay: string) {
         sentiment: 'good',
         exposureShort:
           'Everything inside the pool is hidden, including which shield funds which unshield.',
-        exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to the adapter in cleartext.`,
+        exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to an adapter in cleartext.`,
         advice: S.exitViaRelayer('broadcaster'),
         interior: INTERIOR,
         sources: [
           { contract: 'RailgunSmartWallet', title: 'Shield and unshield' },
           { contract: 'RelayAdapt', title: 'DeFi bundles' },
+          { contract: 'RelayAdapt7702_05ae', title: 'Swap accounts' },
         ],
       },
       chainAnalyst: {
@@ -61,24 +62,38 @@ export function railgunAdversaries(upgradeDelay: string) {
       networkObserver: {
         sentiment: 'good',
         exposureShort:
-          'RailOxide sends all traffic over built-in Tor, broadcaster messages included, and finds your notes by decrypting every note locally.',
+          'With a local node as direct endpoint for reads, RailOxide keeps Ethereum reads local and sends the rest over built-in Tor.',
+        exposureContinued:
+          'By default public RPCs get the reads that name the user, each over its own Tor circuit, so only timing ties them.',
         advice:
-          'Use RailOxide, the wallet these ratings assume, and read the chain from your own node.',
+          'Before unlocking, set a local Ethereum node as the direct endpoint for reads, and keep one public endpoint for submissions.',
         interior: {
           ...INTERIOR,
           linkage: {
             verdict: 'atRisk',
-            note: 'Private only over Tor, which RailOxide uses by default.',
+            note: 'Private only with a local node as the direct endpoint for reads.',
           },
         },
         sources: [
           {
-            title: 'RailOxide privacy model',
-            url: `${RAILOXIDE}docs/privacy-model.md`,
+            title: 'An endpoint can bypass Tor',
+            url: `${RAILOXIDE}crates/wallet-ops/src/rpc_broker/model.rs#L800-L808`,
           },
           {
-            title: 'Built-in Tor is the default',
-            url: `${RAILOXIDE}crates/wallet-ops/src/settings/network_chains.rs#L10-L15`,
+            title: 'Each request goes only to endpoints whose roles allow it',
+            url: `${RAILOXIDE}crates/wallet-ops/src/rpc_broker/model.rs#L830-L869`,
+          },
+          {
+            title: 'Sensitive reads go over their own isolated route',
+            url: `${RAILOXIDE}crates/wallet-ops/src/public_wallet/balances.rs#L152-L160`,
+          },
+          {
+            title: 'An isolated route never shares a Tor circuit',
+            url: `${RAILOXIDE}crates/wallet-ops/src/http.rs#L844-L857`,
+          },
+          {
+            title: 'A custom RPC list replaces the public pool',
+            url: `${RAILOXIDE}crates/wallet-ops/src/settings/effective.rs#L267-L278`,
           },
         ],
       },
@@ -86,9 +101,9 @@ export function railgunAdversaries(upgradeDelay: string) {
         sentiment: 'good',
         exposureShort: `Only the user holds viewing keys, and DAO upgrades wait ${upgradeDelay}.`,
         exposureContinued:
-          'PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists, so the notes you spend stay on your device.',
+          "PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists. After each transaction it sends the PPoI node only that transaction's new notes with their proofs.",
         advice:
-          'Watch governance proposals and unshield before an upgrade you reject executes.',
+          'Watch governance proposals and unshield before an upgrade the user rejects executes.',
         interior: {
           ...INTERIOR,
           linkage: {
@@ -100,7 +115,7 @@ export function railgunAdversaries(upgradeDelay: string) {
           { section: 'upgrades-and-governance' },
           {
             title: 'RailOxide builds PPoIs locally',
-            url: `${RAILOXIDE}crates/wallet-ops/src/poi_contexts.rs#L116-L150`,
+            url: `${RAILOXIDE}crates/wallet-ops/src/poi_contexts.rs#L116-L152`,
           },
         ],
       },
@@ -108,9 +123,9 @@ export function railgunAdversaries(upgradeDelay: string) {
         sentiment: 'warning',
         exposureShort: 'Notes are encrypted with elliptic-curve key exchange.',
         exposureContinued:
-          'Whoever breaks elliptic-curve cryptography decrypts every note sent to a 0zk address that was ever shared, broadcaster fee notes included.',
+          'Whoever breaks elliptic-curve cryptography decrypts every note sent to a 0zk address they know. A user who gives theirs to payers depends on each of them keeping it private.',
         advice:
-          'Share your 0zk address privately, with a fresh one per counterparty where you can.',
+          "Share the user's 0zk address privately, with a fresh one per counterparty where possible.",
         interior: {
           sender: 'atRisk',
           recipient: 'atRisk',
@@ -118,7 +133,7 @@ export function railgunAdversaries(upgradeDelay: string) {
           asset: 'atRisk',
           linkage: {
             verdict: 'atRisk',
-            note: 'Private only while your 0zk address stays unshared.',
+            note: "Private only while the user's 0zk address stays unshared.",
           },
         },
         sources: [

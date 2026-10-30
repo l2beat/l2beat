@@ -216,6 +216,7 @@
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0xde794bEc196832474f2F218135bFd0f7cA7fb038",
         "batchInbox": "eth:0xfF00000000000000000000000000000000000254",
+        "enabledFeatures": [],
         "gasLimit": 30000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
@@ -260,10 +261,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x504D56cf68f791B45E3A2e895B0e1562f3431328": "Proxy",
@@ -289,6 +296,7 @@
         "$immutable": true,
         "owner": "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f": "AddressManager"
       },
@@ -422,7 +430,11 @@
         "systemConfig": "eth:0x504D56cf68f791B45E3A2e895B0e1562f3431328",
         "version": "2.5.0"
       },
-      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15": "Proxy",
         "eth:0x1606beCd26316B935B2dFE31D57C1C0B39f4f52f": "OptimismPortal"
@@ -447,6 +459,7 @@
         "isUpgrading": false,
         "owner": "eth:0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3": "ProxyAdmin"
       }
@@ -907,7 +920,7 @@
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal": "0x9965c29a37e54bf5eb2175e2aee7d367fb11669af9b1e358af2c30fd8c9e47b8",
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 20413034 },
   "permissionsConfigHash": "0x82287e8764cadc9d2a0cf9d05e516a80b4fa6e0162a628408ef2a8343a514f77",

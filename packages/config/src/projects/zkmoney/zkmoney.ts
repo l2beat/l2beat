@@ -40,6 +40,15 @@ assert(
 )
 const PORTAL_SINCE = UnixTime(portal.sinceTimestamp)
 const portalAddress = ChainSpecificAddress.address(portal.address)
+const susdsPortal = discovery.getContract('ZkMoneyPortal_sUSDS')
+const susdsUnderlying = getTokenByAddress(
+  ChainSpecificAddress.address(
+    discovery.getContractValue<ChainSpecificAddress>(
+      susdsPortal.address,
+      'UNDERLYING',
+    ),
+  ).toString(),
+)
 
 const underlyingAddress = ChainSpecificAddress.address(
   discovery.getContractValue<ChainSpecificAddress>(
@@ -49,30 +58,34 @@ const underlyingAddress = ChainSpecificAddress.address(
 )
 const underlying = getTokenByAddress(underlyingAddress.toString())
 
-const approvedPcr0Hashes = discovery.getContractValue<string[]>(
-  'ZkMoneyPortal',
-  'approvedPcr0Hashes',
-)
 const teeSigners = discovery.getContractValue<ChainSpecificAddress[]>(
   'ZkMoneyPortal',
   'teeSigners',
 )
-const portalOwner = discovery.getContractValue<ChainSpecificAddress>(
-  'ZkMoneyPortal',
-  'owner',
-)
-assert(
-  ChainSpecificAddress.address(portalOwner) === EthereumAddress.ZERO,
-  'ZkMoneyPortal ownership is no longer renounced, review the project texts',
-)
-assert(
-  approvedPcr0Hashes.length === 1,
-  'ZkMoneyPortal approves more than one enclave image, review the project texts',
-)
-assert(
-  !discovery.getContractValue<boolean>('ZkMoneyPortal', '_$frozen'),
-  'ZkMoneyPortal is frozen, review the exit and recovery descriptions',
-)
+for (const name of ['ZkMoneyPortal', 'ZkMoneyPortal_sUSDS']) {
+  const owner = discovery.getContractValue<ChainSpecificAddress>(name, 'owner')
+  assert(
+    ChainSpecificAddress.address(owner) === EthereumAddress.ZERO,
+    'zk.money portal ownership is no longer renounced, review the project texts',
+    { portal: name },
+  )
+  assert(
+    discovery.getContractValue<string[]>(name, 'approvedPcr0Hashes').length ===
+      1,
+    'zk.money portal approves more than one enclave image, review the project texts',
+    { portal: name },
+  )
+  assert(
+    discovery.getContractValue<boolean>(name, '_$frozen') &&
+      discovery.getContractValue<number>(name, '_$freezeCheckpointNumber') ===
+        discovery.getContractValue<number>(
+          'ZkMoneyPortal',
+          '_$freezeCheckpointNumber',
+        ),
+    'zk.money portals no longer share one freeze checkpoint, review the exit texts',
+    { portal: name },
+  )
+}
 const resolverOperators = discovery.getContractValue<
   Record<string, ContractValue>
 >('AccountMetadataRegistry', 'resolverOperators')
@@ -91,6 +104,14 @@ const depositLimit = discovery.getContractValueBigInt(
   'GLOBAL_LIMIT',
 )
 const depositRate = discovery.getContractValueBigInt('ZkMoneyPortal', 'RATE')
+const susdsDepositLimit = discovery.getContractValueBigInt(
+  susdsPortal.address,
+  'GLOBAL_LIMIT',
+)
+const susdsDepositRate = discovery.getContractValueBigInt(
+  susdsPortal.address,
+  'RATE',
+)
 const depositRefillTime = formatSeconds(Number(depositLimit / depositRate), {
   fullUnit: true,
 })
@@ -122,29 +143,52 @@ assert(
   ),
   'ZkMoneyPortal source changed, recheck TX_AMOUNT_CAP',
 )
+assert(
+  susdsPortal.sourceHashes?.includes(
+    '0x7020e3729f66f6c8ddada17eeb82b33ae8b7f623c0ffb3bb6c921bf966a7f6a8',
+  ),
+  'ZkMoneyPortal_sUSDS source changed, recheck TX_AMOUNT_CAP',
+)
 const transactionAmountCap = 2_583n * 10n ** BigInt(underlying.decimals)
 
-function formatDai(amount: bigint): string {
-  const value = Number(utils.formatUnits(amount, underlying.decimals))
+function formatToken(
+  amount: bigint,
+  token: ReturnType<typeof getTokenByAddress> = underlying,
+): string {
+  const value = Number(utils.formatUnits(amount, token.decimals))
   const digits = value.toLocaleString('en-US', {
-    maximumFractionDigits: underlying.decimals,
+    maximumFractionDigits: token.decimals,
   })
-  return `${digits} ${underlying.symbol}`
+  return `${digits} ${token.symbol}`
 }
 
 const descriptionValues = {
-  transactionAmountCap: formatDai(transactionAmountCap),
-  fpcFundingCut: formatDai(fpcFundingCut),
-  depositLimit: formatDai(depositLimit),
+  transactionAmountCap: formatToken(transactionAmountCap),
+  fpcFundingCut: formatToken(fpcFundingCut),
+  depositLimit: formatToken(depositLimit),
   depositRefillTime,
-  depositFee: formatDai(depositFee),
-  registrationSweepFee: formatDai(registrationSweepFee),
-  registrationFee: formatDai(registrationFee),
+  depositFee: formatToken(depositFee),
+  registrationSweepFee: formatToken(registrationSweepFee),
+  registrationFee: formatToken(registrationFee),
+  susdsTransactionAmountCap: formatToken(transactionAmountCap, susdsUnderlying),
+  susdsFpcFundingCut: formatToken(
+    discovery.getContractValueBigInt(susdsPortal.address, 'FPC_FUNDING_CUT'),
+    susdsUnderlying,
+  ),
+  susdsDepositLimit: formatToken(susdsDepositLimit, susdsUnderlying),
+  susdsDepositRefillTime: formatSeconds(
+    Number(susdsDepositLimit / susdsDepositRate),
+    { fullUnit: true },
+  ),
 }
 
 const governanceValues = {
   attestationMaxAge,
   teeSignerCount: teeSigners.length,
+  susdsTeeSignerCount: discovery.getContractValue<ChainSpecificAddress[]>(
+    susdsPortal.address,
+    'teeSigners',
+  ).length,
 }
 
 const factory = discovery.getContract('SIPAFactory')
@@ -239,15 +283,17 @@ const privacyTokens: ProjectPrivacyToken[] = [
 export const zkmoney: BaseProject = {
   id: ProjectId('zkmoney'),
   slug: 'zkmoney',
-  name: 'zk.money',
+  name: 'zk.money v5',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-09-29')),
+  archivedAt: UnixTime(1793003519), // 2026-10-26T08:31:59Z, both portals frozen
   discoveryInfo: getDiscoveryInfo([discovery]),
   // The project starts with the portal. CertManager and NitroValidator were
   // deployed 37 days earlier.
   ossificationHistory: discovery.getOssificationHistory(PORTAL_SINCE),
   statuses: {
-    yellowWarning: undefined,
+    yellowWarning:
+      'Both portals are frozen since Aztec made its v6 rollup canonical, and deposits revert. Balances leave only through refunds. The released wallet refunds them into zk.money on Aztec v6 or to Ethereum.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -255,7 +301,7 @@ export const zkmoney: BaseProject = {
   },
   display: {
     description:
-      'A private DAI wallet on Aztec Network, with funds escrowed on Ethereum.',
+      'A shielded ledger on Aztec v5 for DAI payments and sUSDS savings, frozen since Aztec made v6 canonical.',
     detailedDescription: readProjectMarkdown(
       'zkmoney',
       'detailedDescription',
@@ -271,6 +317,17 @@ export const zkmoney: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      // ZkMoneyPortal deployed 2026-09-25 (tx 0xcfbf21f3…).
+      title: 'zk.money relaunches on Aztec',
+      url: 'https://decrypt.co/379621/ethereum-privacy-aztec-brings-back-zk-money',
+      date: '2026-09-29T00:00:00Z',
+      description:
+        'Aztec Labs relaunches zk.money as a private DAI wallet on the Aztec network.',
+      type: 'general',
+    },
+  ],
   escrows: [
     {
       address: portalAddress,
@@ -278,6 +335,10 @@ export const zkmoney: BaseProject = {
       sinceTimestamp: PORTAL_SINCE,
       tokens: [underlying.symbol],
     },
+    discovery.getEscrowDetails({
+      address: susdsPortal.address,
+      tokens: [susdsUnderlying.symbol],
+    }),
   ],
   tvsInfo: {
     associatedTokens: [],
@@ -285,6 +346,16 @@ export const zkmoney: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceApp: {
+      name: 'zk.money Desktop',
+      url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.5.0',
+      since: '2026-10-05',
+      version: '0.5.0',
+      source: {
+        repository: 'https://github.com/aztec-labs-eng/zkmoney-public',
+        commit: '00e54087526d6d89f1755958eb027e077184cd9a',
+      },
+    },
     anonymitySet: { type: 'partially-attributed' },
     relayerTracking: {
       type: 'onchainEvents',
@@ -314,17 +385,16 @@ export const zkmoney: BaseProject = {
       walkawayTest: {
         passed: false,
         reason:
-          'Withdrawals and refunds need a live enclave running the approved image on AWS Nitro. The released wallets also depend on zk.money services, so independent operation needs a modified desktop build.',
+          'Withdrawals and refunds need a live AWS Nitro enclave running the approved image. The approved sUSDS image is absent from the documented public downloads. The assessed wallet requires modification to replace zk.money services.',
       },
     },
-    // Recheck the hosted wallet's [boot] commit before publication. On
-    // 2026-10-08 it was d5c0a1a7221c0ccc273fd412080de461c3cc79f1,
-    // which is absent from the public source at 68425f9c.
+    // Hosted wallet build on 2026-10-22: 8ba50bc, absent from the public
+    // mirror at 00e54087. The DAI privacy reference is Desktop v0.5.0.
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The contract, desktop wallet, enclave and circuit sources are public. The deployed refund and resolver verifiers match the published circuits. The approved enclave binary remains unreproduced. The resolver service, frozen-chain snapshot service and hosted wallet release source are unpublished. Verification instructions cover the refund and resolver circuits and the Aztec token pinned by the Ethereum portal.',
+        'The Ethereum contracts, desktop wallet, DAI enclave and circuit sources are public. The refund and resolver verifiers match the published circuits. The complete enclave image build, resolver service and frozen-chain snapshot service are unpublished, and so are the sUSDS enclave image and its source. The hosted wallet runs a build absent from the public source. Verification instructions cover the refund and resolver circuits and the DAI and sUSDS tokens pinned by their Ethereum portals.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
@@ -350,6 +420,9 @@ export const zkmoney: BaseProject = {
       discovery.getContract('FrozenNotesRefundVerifier').address,
       discovery.getContract('FrozenDepositRefundVerifier').address,
       discovery.getContract('UnprocessedDepositRefundVerifier').address,
+      discovery.getContract('FrozenNotesRefundVerifier_sUSDS').address,
+      discovery.getContract('FrozenDepositRefundVerifier_sUSDS').address,
+      discovery.getContract('UnprocessedDepositRefundVerifier_sUSDS').address,
       discovery.getContract('ResolverVerifier').address,
     ],
   },

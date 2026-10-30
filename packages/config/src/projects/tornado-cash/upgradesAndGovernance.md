@@ -1,7 +1,1 @@
-Tornado cash has a TORN DAO, which does not have the authority to upgrade or modify existing pools in any way. However it controls a significant portion of the Tornado cash protocol and periphery, including:
-
-1. **Default router for deposits and withdrawals and the official registry of supported pools**. Malicious upgrades of these components could lead to users losing deposited tokens.  
-2. **Standard UI IPFS hash registered on ENS** ([link](https://app.ens.domains/tornadocash.eth)). Malicious upgrades of these components could lead to users losing deposited tokens.  
-3. **TORN token itself**. Malicious upgrades of the token could lead to token transfers being frozen.  
-4. **Registered relayers**. Malicious upgrades of these components could remove all registered relayers, disrupting user-relayer coordination and complicating private withdrawals.
-
+TORN holders govern through the Governance contract, after a vote and a timelock. They cannot change the pools. They control the InstanceRegistry the router reads its pool list from, the RelayerRegistry, the FeeManager, the TORN token and the IPFS hash of the app on tornadocash.eth. A malicious registry upgrade could steal tokens users approved to the router. A malicious app could steal the notes of users who load it. Removing relayers from the registry hides them from the app, while the pools still accept any relayer.

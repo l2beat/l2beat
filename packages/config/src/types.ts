@@ -9,6 +9,7 @@ import {
   EthereumAddress,
   isDateOnly,
   type KnownInteropBridgeType,
+  type OssificationBand,
   type ProjectId,
   TokenId,
   type TrackedTxsConfigSubtype,
@@ -17,7 +18,7 @@ import {
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 import type { ZkCatalogTagType } from './common/zkCatalogTags'
-import type { OsiLicenseId } from './crops/osiLicenses'
+import type { OsiLicense, OsiLicenseId } from './crops/osiLicenses'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -261,6 +262,8 @@ export interface BaseProject {
 
   // crops data
   crops?: ProjectCrops
+  /** Built from `crops` when config builds, see `ProjectGarden`. */
+  garden?: ProjectGarden
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -286,9 +289,31 @@ export interface BaseProject {
   ossificationHistory?: OssificationHistory
   auditCoverage?: ProjectAuditCoverage
 
+  /** For projects that ship each version as new contracts, with its own
+   *  page. Built from `projects/versions.ts` when config builds. */
+  versions?: ProjectVersions
+
   // tags
   archivedAt?: UnixTime
   hasTestnet?: true
+}
+
+export interface ProjectVersions {
+  group: { id: string; name: string }
+  /** This project's label within the group, e.g. "v2". */
+  label: string
+  /** Every version in the group, this project included, in display order. */
+  siblings: ProjectVersionSibling[]
+}
+
+export interface ProjectVersionSibling {
+  id: ProjectId
+  slug: string
+  name: string
+  label: string
+  /** The version to show by default. */
+  isLatest: boolean
+  archivedAt?: UnixTime
 }
 
 // #region common data
@@ -342,7 +367,6 @@ export interface Badge {
 export type BadgeAction =
   | BadgeScalingFilterAction
   | BadgeSelfScalingFilterAction
-  | BadgePublicDaHighlightAction
   | BadgeselfDaHighlightAction
 
 // Move to scaling/summary with given filterId and value
@@ -358,13 +382,7 @@ export type BadgeSelfScalingFilterAction = {
   id: BadgeFilterId
 }
 
-// Move to data-availability/summary and highlight project with given slug
-export type BadgePublicDaHighlightAction = {
-  type: 'publicDaHighlight'
-  slug: string
-}
-
-// Move to data-availability/summary and highlight project with the same slug as the project
+// Move to layer2s/risk/data-availability and highlight the project
 export type BadgeselfDaHighlightAction = {
   type: 'selfDaHighlight'
 }
@@ -825,7 +843,6 @@ export interface ProjectDaLayer {
   throughput?: DaLayerThroughput[]
   /** The time it takes to finalize the data. @unit seconds */
   finality?: number
-  dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
   /** Config for getting the number of validators. Type: `static` means the number is fixed. Type: `dynamic` means we need to fetch it (has to be implemented in BE). */
   validators?: DaValidators
@@ -890,11 +907,6 @@ export interface DaLayerThroughput {
   sinceTimestamp: number
 }
 
-export interface DataAvailabilitySampling {
-  erasureCodingScheme: '1D Reed-Solomon' | '2D Reed-Solomon'
-  erasureCodingProof: 'Validity proofs' | 'Fraud proofs' | 'None'
-}
-
 export interface DaEconomicSecurity {
   token: {
     symbol: string
@@ -919,14 +931,6 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
-  relayerType?: TableReadyValue<'Permissioned' | 'SelfRelay'>
-  validationType?: DaBridgeValidationType
-}
-
-type DaBridgeValidationType = TableReadyValue<
-  'Validity Proof' | 'BLS Signature'
-> & {
-  zkCatalogId?: ProjectId
 }
 
 export interface DaBridgeRisks {
@@ -1038,6 +1042,7 @@ export type ProjectDefiCategory =
   | 'Oracle'
   | 'Stablecoin'
   | 'Prediction market'
+  | 'Multisig'
 
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
@@ -1139,6 +1144,11 @@ export interface ProjectPrivacyInfo {
    * mixing kinds within one project is not representable.
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
+  /**
+   * The most private released app found for the protocol, which the adversary
+   * ratings assume. The project page lists it above the other apps checked.
+   */
+  referenceApp?: ProjectPrivacyReferenceApp
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
   anonymitySet?:
@@ -1153,6 +1163,7 @@ export interface ProjectPrivacyInfo {
     | { type: 'partially-attributed' }
     /** Too few users to matter, so exact tracking is not set up. */
     | { type: 'too-small' }
+    | ProjectPrivacyKeyRegistrationsAnonymitySet
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
@@ -1174,6 +1185,71 @@ export interface ProjectPrivacyInfo {
   zkCatalogId?: ProjectId
 }
 
+/**
+ * Stealth-address protocols have no pool, so their anonymity set counts the
+ * addresses that registered keys in a registry, in place of bucket sets.
+ */
+export type ProjectPrivacyKeyRegistrationsAnonymitySet = {
+  type: 'key-registrations'
+  registry: ChainSpecificAddress
+  sinceTimestamp: UnixTime
+} & PrivacyAnonymitySetRegistrationSource
+
+export type PrivacyAnonymitySetRegistrationSource = {
+  event: string
+  /** StealthKeyChanged: the registrant is the indexed event arg. */
+  extractor: 'umbraStealthKeyChanged'
+}
+
+export interface ProjectPrivacyReferenceApp {
+  name: string
+  /** Icon slug under /icons. Defaults to the project's icon, for apps its team builds. */
+  icon?: string
+  /** Where users get the app: its website, release page or repository. */
+  url: string
+  /** Day the ratings first assumed this app, YYYY-MM-DD. */
+  since: string
+  /** Release the review covers, without a leading v. Absent for hosted apps. */
+  version?: string
+  /**
+   * Source at the reviewed commit, absent for closed apps. An app counts as
+   * open only when its released build reproduces from this commit.
+   * `l2b client-drift` lists what changed upstream since.
+   */
+  source?: {
+    /** GitHub repository, e.g. https://github.com/owner/repo */
+    repository: string
+    /** Full commit hash. Adversary sources into the repository pin it. */
+    commit: string
+  }
+  /**
+   * Served build the review traced, e.g. a deployment or bundle id. For a
+   * closed hosted app without a release version.
+   */
+  build?: string
+  /** Day the review traced the closed app, YYYY-MM-DD. Absent when untraced. */
+  checked?: string
+  /**
+   * Other released apps for the protocol, checked but not rated. Each one
+   * leaks more than the reference app, which its finding shows.
+   */
+  checkedApps?: ProjectPrivacyCheckedApp[]
+}
+
+export interface ProjectPrivacyCheckedApp {
+  name: string
+  /** Icon slug under /icons, e.g. "railway" for /icons/railway.png. Absent when the app has no logo. */
+  icon?: string
+  /** The traced behaviour that leaks more, as one sentence. */
+  finding: string
+  /** What the app changes to match the reference app on this finding, as one sentence. */
+  fix?: string
+  /** Proves the finding: pinned code, or the app itself when it is closed. */
+  source: string
+  /** Day the finding was checked, YYYY-MM-DD. Set when `source` is the app itself. */
+  checked?: string
+}
+
 export type ProjectPrivacyRelayerTracking =
   | {
       type: 'onchainEvents'
@@ -1188,7 +1264,14 @@ export type ProjectPrivacyOnchainRelayerSource = {
 } & PrivacyRelayerExtractorConfig
 
 export type PrivacyRelayerExtractorConfig =
-  | { extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal' }
+  | {
+      extractor:
+        | 'privacyPoolsWithdrawalRelayed'
+        // Privacy Pools v2, from the vault: the fee recipient of a paid
+        // processor's payout, or the sender of a withdrawal without one.
+        | 'privacyPoolsV2Withdrawal'
+        | 'tornadoCashWithdrawal'
+    }
   | {
       extractor: 'zkMoneyWithdrawalRelayer'
       params: ZkMoneyWithdrawalRelayerParams
@@ -1214,6 +1297,18 @@ export type ZkMoneyFundingParams = ZkMoneyDepositParams & {
    * before a scan starts count as untraceable until the SIPA is emptied.
    */
   historyFromBlock: number
+  /**
+   * Executors that redeposit refunds from an earlier deployment. Each of their
+   * deposits joins as its own member, keyed by its recipient commitment, since
+   * the refund names no funder.
+   */
+  migrationExecutors?: EthereumAddress[]
+  /**
+   * Factories whose escrows move funds between the project's own portals. A
+   * deposit by one of their escrows joins no member, since its mover already
+   * holds funds in the project.
+   */
+  internalEscrowFactories?: EthereumAddress[]
 }
 
 /** Identifies withdrawal finalizers and excludes observable self-finalizations. */
@@ -1222,6 +1317,8 @@ export type ZkMoneyWithdrawalRelayerParams = {
   executorAddress: EthereumAddress
   /** Helper that forwards fees to its caller, so the payout is followed through it. */
   operationExecutor: EthereumAddress
+  /** Receives the fixed fee the executor pays before the principal, if it charges one. */
+  feeBeneficiary?: EthereumAddress
 }
 
 /** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
@@ -1256,6 +1353,7 @@ export type PrivacyCategoryId =
   | 'shieldedLedger'
   | 'stealthAddress'
   | 'confidentialAmounts'
+  | 'secretBallot'
 
 export interface PrivacyCategory {
   id: PrivacyCategoryId
@@ -1510,6 +1608,7 @@ export type PrivacyAnonymitySetDepositSource = {
     extractor:
       | 'fixedAmount'
       | 'privacyPoolsValue'
+      | 'privacyPoolsV2Value'
       | 'railgunShield'
       | 'strk20Deposit'
       | 'zkMoneyDeposit'
@@ -1551,6 +1650,19 @@ export type PrivacyFlowExtractorConfig =
       params: Record<string, never>
     }
   | {
+      /**
+       * Privacy Pools v2 PoolVault events Deposited, Transacted and Ragequit,
+       * which all index the asset and carry its amount. Only logs of
+       * `tokenAddress` count, so one multi-asset vault serves one bucket per
+       * asset. A relayed private transfer pays its fee as a Transacted
+       * payout, which the flow indexer drops after reading the transaction.
+       */
+      extractor: 'privacyPoolsV2Value'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
       extractor: 'railgunShield'
       params: {
         tokenAddress: EthereumAddress
@@ -1566,16 +1678,6 @@ export type PrivacyFlowExtractorConfig =
       extractor: 'umbraAmount'
       params: {
         tokenAddress: EthereumAddress
-      }
-    }
-  | {
-      extractor: 'zamaWrap'
-      params: Record<string, never>
-    }
-  | {
-      extractor: 'zamaUnwrap'
-      params: {
-        rate: string
       }
     }
   | {
@@ -1667,6 +1769,44 @@ export interface ProjectCrops {
   security: ProjectCropEvaluation
 }
 
+/** `neutral` is never declared in config: it is what an ungraded crop resolves to. */
+export type CropSentiment = ProjectCropSentiment | 'neutral'
+
+/** An evaluation with every optional field resolved to a concrete value. */
+export interface ResolvedCropEvaluation {
+  sentiment: CropSentiment
+  status: ProjectCropStatus
+  /** Only on the open source crop, once the license is confirmed. */
+  license?: OsiLicense
+  points: string[]
+  missing: string[]
+  additionalConsiderations: string[]
+  notReviewed: string[]
+}
+
+export type ResolvedCrops = Record<keyof ProjectCrops, ResolvedCropEvaluation>
+
+/** Whether a reviewed project is listed in the garden, and if not, why. */
+export type GardenListing = 'listed' | 'ratedBad' | 'noOssificationScore'
+
+/** `crops` as shown: every default filled in, Security capped, and whether the garden lists the project. */
+export interface GardenVerdict {
+  crops: ResolvedCrops
+  listing: GardenListing
+}
+
+/**
+ * What the site and the CROPS API show for a reviewed project. Security is
+ * capped by the ossification score, which moves with time while the config
+ * build is cached, so there is a verdict per band: read the one for the band
+ * measured now (`measureOssificationBand`).
+ */
+export interface ProjectGarden {
+  /** The l2beat.com page to link, or null when the project has none. */
+  path: string | null
+  verdicts: Record<OssificationBand, GardenVerdict>
+}
+
 // #endregion
 
 // #region feature configs
@@ -1718,6 +1858,7 @@ export interface ElasticChainEscrow {
 export type ProjectActivityConfig =
   | BlockActivityConfig
   | DayActivityConfig
+  | HourActivityConfig
   | SlotActivityConfig
 
 export interface BlockActivityConfig {
@@ -1746,6 +1887,14 @@ export interface DayActivityConfig {
   dataSource: string
   resyncLastDays?: number
   batchSize?: number
+}
+
+/** For APIs that count by the hour. Synced each hour, like block chains */
+export interface HourActivityConfig {
+  type: 'hour'
+  sinceTimestamp: UnixTime
+  /** Source of the data, will be displayed in the UI */
+  dataSource: string
 }
 
 export type LivenessOverwriteMode = 'no-data'
@@ -1777,24 +1926,10 @@ export interface ProjectCostsInfo {
 export interface SovereignProjectDaTrackingConfig {
   projectId: ProjectId
   name: string
-  daTrackingConfig: (
-    | Omit<EthereumDaTrackingConfig, 'daLayer'>
-    | Omit<CelestiaDaTrackingConfig, 'daLayer'>
-    | Omit<AvailDaTrackingConfig, 'daLayer'>
-    | Omit<EigenDaTrackingConfig, 'daLayer'>
-  )[]
+  daTrackingConfig: Omit<EthereumDaTrackingConfig, 'daLayer'>[]
 }
 
-export type ProjectDaTrackingConfig =
-  | BlockDaTrackingConfig
-  | TimestampDaTrackingConfig
-
-export type BlockDaTrackingConfig =
-  | EthereumDaTrackingConfig
-  | CelestiaDaTrackingConfig
-  | AvailDaTrackingConfig
-
-export type TimestampDaTrackingConfig = EigenDaTrackingConfig
+export type ProjectDaTrackingConfig = EthereumDaTrackingConfig
 
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
@@ -1804,30 +1939,6 @@ export interface EthereumDaTrackingConfig {
   topics?: string[]
   sinceBlock: number
   untilBlock?: number
-}
-
-export interface CelestiaDaTrackingConfig {
-  type: 'celestia'
-  daLayer: ProjectId
-  namespace: string
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export interface AvailDaTrackingConfig {
-  type: 'avail'
-  daLayer: ProjectId
-  appIds: string[]
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export interface EigenDaTrackingConfig {
-  type: 'eigen-da'
-  daLayer: ProjectId
-  customerId: string
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
 }
 
 export interface ProjectEcosystemInfo {
@@ -2133,6 +2244,9 @@ interface InteropConfigBase {
   /** Permissions displayed on the interop project page. For canonical bridges,
    * this is intentionally a different (narrower) set than the chain page. */
   permissions?: Record<string, ProjectPermissions>
+  /** Milestones displayed on the interop project page. For canonical bridges,
+   * these are separate from the chain's milestones. */
+  milestones?: Milestone[]
 }
 
 export type InteropConfig =

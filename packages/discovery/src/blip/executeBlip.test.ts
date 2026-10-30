@@ -1221,6 +1221,14 @@ describe(executeBlip.name, () => {
     })
   })
 
+  describe('if operations', () => {
+    it('keeps the value when the condition fails and there is no else', () => {
+      expect(
+        executeBlip(['a', 'b'], ['map', ['if', ['=', 'a'], 'first']]),
+      ).toEqual(['first', 'b'])
+    })
+  })
+
   describe('map_keys operations', () => {
     it('applies filter to each key of an object', () => {
       const input = { a: 1, b: 2 }

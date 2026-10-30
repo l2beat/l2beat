@@ -1,6 +1,6 @@
 {
   "name": "ethereal",
-  "timestamp": 1783426843,
+  "timestamp": 1792661561,
   "configHash": "0xe8c4faf4f5d0e4ad4b62055708756836926dbd16e9c9961cdc03681c4f19ba22",
   "entries": [
     {
@@ -40,7 +40,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 6755,
+        "batchCount": 9239,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -80,14 +80,14 @@
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 167,
+        "totalDelayedMessagesRead": 251,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "maxTimeVariation": {
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -255,7 +255,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06": "TransparentUpgradeableProxy",
@@ -319,7 +319,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F": "TransparentUpgradeableProxy",
@@ -422,7 +422,7 @@
         "getValidators": ["arb1:0x80e046764185e776100A4f59079C2B00327f279A"],
         "inbox": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
         "isPostBoLD": true,
-        "latestConfirmed": "0x26acca2d779dcc86ee888a5c5c2a2dafe867f7cab46e334b38fb6e25ca39d242",
+        "latestConfirmed": "0xaeaa8ad91c26a73f663f425d57860c4ba986938bbeb7f1ead9eb0e89072f7c24",
         "loserStakeEscrow": "arb1:0x80e046764185e776100A4f59079C2B00327f279A",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
@@ -451,9 +451,12 @@
         "baseStake": { "severity": "HIGH" },
         "validatorAfkBlocks": { "severity": "HIGH" },
         "challengeGracePeriodBlocks": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "getValidators": { "severity": "LOW" },
+        "challengeManager": { "severity": "HIGH" },
+        "validatorWhitelistDisabled": { "severity": "HIGH" },
         "anyTrustFastConfirmer": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "minimumAssertionPeriod": {
           "severity": "HIGH",
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
@@ -552,6 +555,7 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb1:0x9402c42dB162d5a0927c032136f40Cc9C71853F2",
           "arb1:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "arb1:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
@@ -567,8 +571,8 @@
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 139,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 174,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -583,6 +587,11 @@
     },
     {
       "address": "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x9402c42dB162d5a0927c032136f40Cc9C71853F2",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -649,8 +658,9 @@
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492": "TransparentUpgradeableProxy",
@@ -702,7 +712,7 @@
         "challengePeriodBlocks": { "severity": "HIGH" },
         "oneStepProofEntry": { "severity": "HIGH" },
         "assertionChain": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0xA4444d9536595d35967206b86067a90aD053e1EF": "TransparentUpgradeableProxy",
@@ -755,6 +765,7 @@
         "$immutable": true,
         "owner": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2": "ProxyAdmin"
       }
@@ -809,7 +820,7 @@
           "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
           "arb1:0x3515ad5D3D904Cb2731A7d6E5DB9f35D6CAFEB14"
         ],
-        "delayedMessageCount": 167,
+        "delayedMessageCount": 251,
         "inboxHistory": [
           "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
           "arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F"
@@ -822,14 +833,15 @@
         ],
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 6755,
-        "sequencerReportedSubMessageCount": 5338872
+        "sequencerMessageCount": 9239,
+        "sequencerReportedSubMessageCount": 5650109
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "allowedOutboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Can make calls as the bridge, steal all funds."
         },
         "outboxHistory": {
@@ -837,7 +849,7 @@
           "description": "All Outboxes that were ever set as allowed in the bridge."
         },
         "allowedDelayedInboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
         },
         "inboxHistory": {
@@ -897,8 +909,9 @@
         "executors": ["arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3": "TransparentUpgradeableProxy",
@@ -942,6 +955,24 @@
       "proxyType": "EOA"
     },
     {
+      "name": "ExchangeConfig",
+      "address": "ethereal:0x0f17d8468c49d6C80E4ee10Cc87a767085A4B9A8",
+      "type": "Contract",
+      "template": "ethereal/ExchangeGatewayRegistryContracts",
+      "sourceHashes": [
+        "0x1151744b67c95f9a5bafd0f166d09a6a5c374390970662b32174dbe1b21fefba"
+      ],
+      "proxyType": "immutable",
+      "description": "Auxiliary contract of the ExchangeGateway.",
+      "deployerAddress": "ethereal:0x39C647fdd8524c69be3E05A754bD63E02b019D75",
+      "sinceTimestamp": 1787643155,
+      "sinceBlock": 5597394,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "ethereal:0x0f17d8468c49d6C80E4ee10Cc87a767085A4B9A8": "ExchangeConfig"
+      }
+    },
+    {
       "name": "SafeL2",
       "address": "ethereal:0x14Fb412e1B692Cfc8C56ec285169e8bF27A7a351",
       "type": "Contract",
@@ -970,7 +1001,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 10,
+        "nonce": 13,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1017,7 +1048,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 10 (50%)",
-        "nonce": 17,
+        "nonce": 19,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1062,7 +1093,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 136,
+        "nonce": 145,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1071,48 +1102,12 @@
       }
     },
     {
-      "name": "PerpEngine",
-      "address": "ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8",
-      "type": "Contract",
-      "template": "ethereal/ExchangeGatewayRegistryContracts",
-      "sourceHashes": [
-        "0xf4bcc9541f9421e3bbdd03a5a256bf9f7ab28d0e6998a3485d9e6166620a6f6c"
-      ],
-      "proxyType": "immutable",
-      "description": "Auxiliary contract of the ExchangeGateway.",
-      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
-      "sinceTimestamp": 1781832855,
-      "sinceBlock": 5130844,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8": "PerpEngine"
-      }
-    },
-    {
-      "name": "Liquidation",
-      "address": "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1",
-      "type": "Contract",
-      "template": "ethereal/ExchangeGatewayRegistryContracts",
-      "sourceHashes": [
-        "0x9cee872c7e0a49b46aa8f9658d16530e50e5989aa34cecea6e4fd75968589123"
-      ],
-      "proxyType": "immutable",
-      "description": "Auxiliary contract of the ExchangeGateway.",
-      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
-      "sinceTimestamp": 1776326201,
-      "sinceBlock": 4258775,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1": "Liquidation"
-      }
-    },
-    {
       "name": "CollateralManager",
       "address": "ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA",
       "type": "Contract",
       "template": "ethereal/ExchangeGatewayRegistryContracts",
       "sourceHashes": [
-        "0x7e9156bdbe2b0f1e2fca8925f034693bdf5abaae1b868270c2a4f44956e1ea6a"
+        "0x78583307d6ee104deeacfc05854f42b8e5262cbd2faffb3e165c1078e44ac4ce"
       ],
       "proxyType": "immutable",
       "description": "Auxiliary contract of the ExchangeGateway.",
@@ -1135,32 +1130,14 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ActionHandler",
-      "address": "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96",
+      "name": "Deleverage",
+      "address": "ethereal:0x719256070f9Ec31DFa8df58791FDB80602e431A4",
       "type": "Contract",
-      "template": "ethereal/ExchangeGatewayRegistryContracts",
-      "sourceHashes": [
-        "0x92593ae99a9bb91cca005c4db1025ad553c96de856d66c0ee21e2ad15daf1634"
-      ],
+      "unverified": true,
       "proxyType": "immutable",
-      "description": "Auxiliary contract of the ExchangeGateway.",
-      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
-      "sinceTimestamp": 1776326201,
-      "sinceBlock": 4258774,
-      "values": {
-        "$immutable": true,
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "Ethereal",
-          "version": "1",
-          "chainId": 5064014,
-          "verifyingContract": "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        }
-      },
+      "values": { "$immutable": true },
       "implementationNames": {
-        "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96": "ActionHandler"
+        "ethereal:0x719256070f9Ec31DFa8df58791FDB80602e431A4": ""
       }
     },
     {
@@ -1169,7 +1146,7 @@
       "type": "Contract",
       "template": "layerzero/OrbitNativeOFTAdapter",
       "sourceHashes": [
-        "0xdc7fa9200a150735467f7b832663c27d5df9487fe7a30b8b8abc3d3e833081ff"
+        "0x7a71d39ddb79529955d66cf5907e1b5f505eed9105f5fc34e2fe0f5ccb6cdbf9"
       ],
       "proxyType": "immutable",
       "description": "An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precompile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.",
@@ -1265,8 +1242,8 @@
       "type": "Contract",
       "template": "ethereal/ExchangeGateway",
       "sourceHashes": [
-        "0x824c9fa3c6d16c698f949d86f6b383cee854f6ab6073b6356acadc9f7e88d705",
-        "0xb5045a4ff694fdc0973c7f5b6a61bc6178a601b89c90fc21faff429e9867bbfd"
+        "0xa3a188e65fc0885e5fb907ee0794b5ca81470d468b3876a16374f366c9abd1c7",
+        "0x257d096bf5ac9fdaf12878201a59495ffd6d23ef22ef189af700f8ce0e6606d0"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.",
@@ -1275,7 +1252,7 @@
       "sinceBlock": 18533,
       "values": {
         "$admin": "ethereal:0x14Fb412e1B692Cfc8C56ec285169e8bF27A7a351",
-        "$implementation": "ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0",
+        "$implementation": "ethereal:0x4cd414a3C1d17d8D9ecea6B7628Da790Dc733966",
         "$pastUpgrades": [
           [
             "2025-10-15T13:20:26.000Z",
@@ -1291,9 +1268,14 @@
             "2026-06-19T01:34:15.000Z",
             "0x7e8bc19dd02c63ae22cba5f88603c784cbcd2bd6230e11491b2b80d601ee4967",
             ["ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0"]
+          ],
+          [
+            "2026-08-25T07:32:37.000Z",
+            "0x2d1b8baf01d457411e490189171293c21d1db20eb690cb9182496091306512e0",
+            ["ethereal:0x4cd414a3C1d17d8D9ecea6B7628Da790Dc733966"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "eip712Domain": {
           "fields": "0x0f",
           "name": "Ethereal",
@@ -1328,20 +1310,20 @@
           "ethereal:0xFD65878abf4cc5D4219bBBa10009885511626cad"
         ],
         "registry": {
-          "0x414354494f4e5f48414e444c4552000000000000000000000000000000000000": "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96",
+          "0x414354494f4e5f48414e444c4552000000000000000000000000000000000000": "ethereal:0xfC25F9d15cbfEe81d8238Eb2fD7D3f16a6b2f469",
           "0x434f4c4c41544552414c5f4d414e414745520000000000000000000000000000": "ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA",
-          "0x45584348414e47455f434f4e4649470000000000000000000000000000000000": "ethereal:0xC199cC890F61B847bec9cec4212C35b759A9fD38",
-          "0x4c49515549444154494f4e000000000000000000000000000000000000000000": "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1",
-          "0x504552505f454e47494e45000000000000000000000000000000000000000000": "ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8",
-          "0x44454c4556455241474500000000000000000000000000000000000000000000": "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B"
+          "0x45584348414e47455f434f4e4649470000000000000000000000000000000000": "ethereal:0x0f17d8468c49d6C80E4ee10Cc87a767085A4B9A8",
+          "0x4c49515549444154494f4e000000000000000000000000000000000000000000": "ethereal:0xEB9a61e37A28828E84D97e1487D66b444800a280",
+          "0x504552505f454e47494e45000000000000000000000000000000000000000000": "ethereal:0xD540F47F214dC7D6D244E62A6aE7e06B586Ef44A",
+          "0x44454c4556455241474500000000000000000000000000000000000000000000": "ethereal:0x719256070f9Ec31DFa8df58791FDB80602e431A4"
         },
         "REVOKE_LINKED_SIGNER_ABI_PARAM": "0x5265766f6b654c696e6b65645369676e657228616464726573732073656e6465722c61646472657373207369676e65722c62797465733332207375626163636f756e742c75696e743634206e6f6e63652c75696e743634207369676e6564417429",
         "TRADE_ORDER_ABI_PARAM": "0x54726164654f7264657228616464726573732073656e6465722c62797465733332207375626163636f756e742c75696e74313238207175616e746974792c75696e743132382070726963652c626f6f6c207265647563654f6e6c792c75696e743820736964652c75696e743820656e67696e65547970652c75696e7433322070726f6475637449642c75696e743634206e6f6e63652c75696e743634207369676e6564417429"
       },
       "fieldMeta": { "isEmergencyPaused": { "severity": "HIGH" } },
       "implementationNames": {
-        "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc": "EtherealProxy",
-        "ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0": "ExchangeGateway"
+        "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc": "ERC1967Proxy",
+        "ethereal:0x4cd414a3C1d17d8D9ecea6B7628Da790Dc733966": "ExchangeGateway"
       }
     },
     {
@@ -1355,27 +1337,27 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ExchangeConfig",
-      "address": "ethereal:0xC199cC890F61B847bec9cec4212C35b759A9fD38",
-      "type": "Contract",
-      "template": "ethereal/ExchangeGatewayRegistryContracts",
-      "sourceHashes": [
-        "0x2eb254b441530c0a6a36c063566a20b1b99f95ee5d7100456468373d3d97e905"
-      ],
-      "proxyType": "immutable",
-      "description": "Auxiliary contract of the ExchangeGateway.",
-      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
-      "sinceTimestamp": 1760534426,
-      "sinceBlock": 18535,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "ethereal:0xC199cC890F61B847bec9cec4212C35b759A9fD38": "ExchangeConfig"
-      }
-    },
-    {
       "address": "ethereal:0xcE7a6c96B0a351081a6053e6C95FA616555f3fb9",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PerpEngine",
+      "address": "ethereal:0xD540F47F214dC7D6D244E62A6aE7e06B586Ef44A",
+      "type": "Contract",
+      "template": "ethereal/ExchangeGatewayRegistryContracts",
+      "sourceHashes": [
+        "0x6dd397561021a2e9859466c0cbfc2ab39a4dca414fe03db0fd31feb88f573041"
+      ],
+      "proxyType": "immutable",
+      "description": "Auxiliary contract of the ExchangeGateway.",
+      "deployerAddress": "ethereal:0x39C647fdd8524c69be3E05A754bD63E02b019D75",
+      "sinceTimestamp": 1787643156,
+      "sinceBlock": 5597395,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "ethereal:0xD540F47F214dC7D6D244E62A6aE7e06B586Ef44A": "PerpEngine"
+      }
     },
     {
       "address": "ethereal:0xE3F95F2e1aDEC092337FB5D93C1fE87558658b11",
@@ -1393,27 +1375,49 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Deleverage",
-      "address": "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B",
+      "name": "Liquidation",
+      "address": "ethereal:0xEB9a61e37A28828E84D97e1487D66b444800a280",
       "type": "Contract",
-      "template": "ethereal/ExchangeGatewayRegistryContracts",
-      "sourceHashes": [
-        "0x8c1e8d72f479be706a4a4e2347f8720df282d156fe80278400864c17c67e2490"
-      ],
+      "unverified": true,
       "proxyType": "immutable",
-      "description": "Auxiliary contract of the ExchangeGateway.",
-      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
-      "sinceTimestamp": 1776326201,
-      "sinceBlock": 4258776,
       "values": { "$immutable": true },
       "implementationNames": {
-        "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B": "Deleverage"
+        "ethereal:0xEB9a61e37A28828E84D97e1487D66b444800a280": ""
       }
     },
     {
       "address": "ethereal:0xF3D11F9829Fdb9F61a7d987CCAa858054E80Eb33",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ActionHandler",
+      "address": "ethereal:0xfC25F9d15cbfEe81d8238Eb2fD7D3f16a6b2f469",
+      "type": "Contract",
+      "template": "ethereal/ExchangeGatewayRegistryContracts",
+      "sourceHashes": [
+        "0xedc63bc2d79bc70134bc12ecda1f5c2c881f01c8fdaea2969e0c8207adc0fcea"
+      ],
+      "proxyType": "immutable",
+      "description": "Auxiliary contract of the ExchangeGateway.",
+      "deployerAddress": "ethereal:0x39C647fdd8524c69be3E05A754bD63E02b019D75",
+      "sinceTimestamp": 1787643155,
+      "sinceBlock": 5597393,
+      "values": {
+        "$immutable": true,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Ethereal",
+          "version": "1",
+          "chainId": 5064014,
+          "verifyingContract": "ethereal:0xfC25F9d15cbfEe81d8238Eb2fD7D3f16a6b2f469",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        }
+      },
+      "implementationNames": {
+        "ethereal:0xfC25F9d15cbfEe81d8238Eb2fD7D3f16a6b2f469": "ActionHandler"
+      }
     },
     {
       "address": "ethereal:0xFD65878abf4cc5D4219bBBa10009885511626cad",
@@ -2175,6 +2179,53 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "ethereal:0x0f17d8468c49d6C80E4ee10Cc87a767085A4B9A8": [
+      "error InvalidParameter(bytes32 parameter, bytes32 reason)",
+      "error LiquidatorIsDeleveraging(uint64 id)",
+      "error PendingDepositFound(address sender, bytes32 subaccount, address token, uint256 amount)",
+      "error TokenRemoveProtected(bytes32 tokenName)",
+      "event ActionExpiryBufferUpdated(uint8 indexed action, uint64 buffer)",
+      "event ClaimerUpdated(address indexed claimer, bool granted)",
+      "event DelegateDepositMaxBatchSizeUpdated(uint16 delegateDepositMaxBatchSize)",
+      "event DelegateDepositorUpdated(address indexed account, bool granted)",
+      "event EmergencyPauserUpdated(address indexed pauser, bool enabled)",
+      "event FeeCollectorUpdated(address indexed account, bytes32 indexed subaccount)",
+      "event FeeScheduleAdded(uint32 indexed id)",
+      "event FeeScheduleUpdated(uint32 indexed id)",
+      "event LiquidatorUpdated(address indexed account, bytes32 indexed subaccount)",
+      "event LzEndpointIdUpdated(uint32 indexed lzEndpointId)",
+      "event PythLazerUpdated(address pythLazer, uint64 maxAge)",
+      "event RescueDelayUpdated(uint64 rescueDelay)",
+      "event SequencerAdded(address indexed sequencer)",
+      "event SequencerPausedUpdated(address indexed sequencer, bool paused)",
+      "event SequencerRemoved(address indexed sequencer)",
+      "event TokenAdded(bytes32 indexed tokenName, address tokenAddress)",
+      "event TokenPromoted(bytes32 indexed tokenName, address tokenAddress)",
+      "event TokenRemoved(bytes32 indexed tokenName, address tokenAddress)",
+      "event TokenUpdated(bytes32 indexed tokenName, address tokenAddress)",
+      "function addClaimer(address claimer)",
+      "function addDelegateDepositor(address delegateDepositor)",
+      "function addEmergencyPauser(address pauser)",
+      "function addFeeSchedule(tuple(uint32 makerFee, uint32 takerFee) params) returns (uint32)",
+      "function addSequencer(address account)",
+      "function addToken(bytes32 tokenName, address tokenAddress, address oftAddress)",
+      "function promoteToken(bytes32 tokenName, address tokenAddress, address oftAddress)",
+      "function removeClaimer(address claimer)",
+      "function removeDelegateDepositor(address delegateDepositor)",
+      "function removeEmergencyPauser(address pauser)",
+      "function removeSequencer(address account)",
+      "function removeToken(bytes32 tokenName)",
+      "function updateActionExpiryBuffer(uint8 action, uint64 buffer)",
+      "function updateDelegateDepositMaxBatchSize(uint16 delegateDepositMaxBatchSize)",
+      "function updateFeeCollector(address account, bytes32 subaccount)",
+      "function updateFeeSchedule(tuple(uint32 id, uint32 makerFee, uint32 takerFee) params)",
+      "function updateLiquidator(address account, bytes32 subaccount)",
+      "function updateLzEndpointId(uint32 updatedLzEndpointId)",
+      "function updatePythLazer(address updatedContract, uint64 updatedMaxAge)",
+      "function updateRescueDelay(uint64 rescueDelay)",
+      "function updateSequencerPaused(address account, bool paused)",
+      "function updateToken(tuple(bytes32 tokenName, uint256 depositCapacity, uint256 minDeposit, uint128 depositFee, uint128 withdrawFee, bool depositEnabled, bool withdrawEnabled) params)"
+    ],
     "ethereal:0x14Fb412e1B692Cfc8C56ec285169e8bF27A7a351": [
       "constructor(address _singleton)"
     ],
@@ -2258,263 +2309,7 @@
       "function verifyUpdate(bytes update) payable returns (bytes payload, address signer)",
       "function version() pure returns (string)"
     ],
-    "ethereal:0x58a16791037dF85CCbc3A65DE5a8401Fd04C8aC8": [
-      "constructor(address _singleton)"
-    ],
-    "ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8": [
-      "error ExcludedAccount(uint64 id, address account)",
-      "error InvalidFillNotional(uint64 id, uint128 externalValue, uint128 internalValue, uint128 tolerance)",
-      "error InvalidFillQuantity(uint64 id, uint128 fillQuantity, uint128 calculatedFillQuantity)",
-      "error InvalidMatchZeroQuantity(uint64 id, uint128 makerFillableQty, uint128 takerFillableQty)",
-      "error InvalidNonIncreasingId(uint64 id, uint32 currentId, uint32 lastId)",
-      "error InvalidNonce(uint64 id, uint64 nonce)",
-      "error InvalidOrderPrice(uint64 id, uint256 price)",
-      "error InvalidOrderPriceNotCrossed(uint64 id, uint256 makerPrice, uint256 takerPrice)",
-      "error InvalidOrderProduct(uint64 id, uint32 makerProductId, uint32 takerProductId)",
-      "error InvalidOrderQuantity(uint64 id, uint128 quantity)",
-      "error InvalidOrderSameSide(uint64 id, uint8 side)",
-      "error InvalidOrderZeroPrice(uint64 id)",
-      "error InvalidParameter(bytes32 parameter, bytes32 reason)",
-      "error InvalidRealizePnlCostDelta(uint64 id, address account, bytes32 subaccount, uint32 productId, int128 positionSize, int128 costDelta)",
-      "error InvalidRealizePnlNegativeCost(uint64 id, address account, bytes32 subaccount, uint32 productId, uint128 currentCost, int128 costDelta)",
-      "error InvalidRealizedPnl(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
-      "error InvalidReduceOnlyFill(uint64 id, int128 positionSize, int128 sizeDelta)",
-      "error InvalidReduceOnlyFillQuantity(uint64 id, uint128 fillQuantity, uint128 maxFillableQuantity)",
-      "error InvalidSigner(uint64 id, address signer)",
-      "error PositionNotFound(uint64 id, address account, bytes32 subaccount, uint32 productId)",
-      "error ProductIdMismatch(uint64 id, uint32 expectedId, uint32 actualId)",
-      "error ProductNotFound(uint64 id, uint32 productId, uint8 engineType)",
-      "error ProductStatusViolation(uint64 id, uint32 productId, uint8 engineType, uint8 status)",
-      "error RealizeFundingProductsMismatch(uint64 id, address account, bytes32 subaccount, uint128 openPositions, uint128 products)",
-      "error SubaccountNotFound(uint64 id, address sender, bytes32 subaccount)",
-      "event FeeAccrued(address indexed account, bytes32 indexed subaccount, address token, uint256 feeAmount, uint256 balance, uint64 messageIdx)",
-      "event PerpFillNotionalMismatch(uint64 id, uint128 externalValue, uint128 internalValue, uint128 tolerance)",
-      "event PerpFundingRealized(address indexed account, bytes32 indexed subaccount, uint32[] productIds, int256 realizedFundingUsd, uint64 messageIdx)",
-      "event PerpOrderMatched(uint32 indexed productId, address indexed maker, address indexed taker, bytes32 makerSubaccount, bytes32 takerSubaccount, uint8 makerSide, uint8 takerSide, uint128 fillQuantity, uint128 price, uint64 messageIdx)",
-      "event PerpPnlRealized(address indexed account, bytes32 indexed subaccount, uint32 indexed productId, int128 costDelta, uint64 messageIdx)",
-      "event PerpProductFundingUpdated(uint32 indexed productId, int256 fundingUsd, int256 cumulativeFundingUsd, uint64 messageIdx)",
-      "event PerpProductRegistered(uint32 indexed productId, bytes32 baseTokenName, bytes32 quoteTokenName)",
-      "event PerpProductUpdated(uint32 indexed productId)",
-      "event PerpRealizedPnlMismatch(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
-      "function executeMatch(uint64 id, tuple(tuple(address sender, bytes32 subaccount, uint128 quantity, uint128 price, bool reduceOnly, uint8 side, uint8 engineType, uint32 productId, uint64 nonce, uint64 signedAt) maker, tuple(address sender, bytes32 subaccount, uint128 quantity, uint128 price, bool reduceOnly, uint8 side, uint8 engineType, uint32 productId, uint64 nonce, uint64 signedAt) taker, bytes makerSignature, bytes takerSignature, uint128 makerFee, uint128 takerFee, int128 makerRealizedPnl, int128 takerRealizedPnl, uint128 fillQuantity, uint128 fillNotional, uint64 messageIdx) action, tuple(bytes32 maker, bytes32 taker) digests) payable",
-      "function realizeFunding(uint64 id, address account, bytes32 subaccount, uint32[] productIds, uint64 messageIdx) payable",
-      "function realizePnl(uint64 id, address account, bytes32 subaccount, uint32 productId, int128 costDelta, uint64 messageIdx) payable",
-      "function register(tuple(bytes32 baseTokenName, bytes32 quoteTokenName, uint8 status, uint16 maxLeverage, uint32 feeScheduleId, uint32 pythFeedId, uint128 tickSize, uint128 maxQuantity, uint128 lotSize, uint128 maxOpenInterestUsd, uint128 maxPositionNotionalUsd) params) returns (uint32)",
-      "function update(tuple(uint32 id, uint32 pythFeedId, uint8 status, uint16 maxLeverage, uint128 maxQuantity, uint128 maxOpenInterestUsd, uint128 maxPositionNotionalUsd) params)",
-      "function updateFunding(uint64 id, uint32 productId, int128 fundingDeltaUsd, uint64 messageIdx) payable"
-    ],
-    "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1": [
-      "error InvalidCost(uint64 id, uint128 cost)",
-      "error InvalidEngineType(uint64 id, uint8 engineType)",
-      "error InvalidLiquidationBalanceTransfer(uint64 id, int128 externalValue, int256 internalValue, uint256 tolerance)",
-      "error InvalidLiquidatorCounterparty(uint64 id, address account, bytes32 subaccount)",
-      "error InvalidRealizedPnl(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
-      "error LiquidateAboveMaintenanceMargin(uint64 id, address account, bytes32 subaccount, int256 remainingMargin, uint256 requiredMaintenanceMargin)",
-      "error LiquidateEmptyProducts(uint64 id, address account, bytes32 subaccount)",
-      "error LiquidateProductsMismatch(uint64 id, uint128 openPositions, uint128 products)",
-      "error LiquidateSizeNotNetZero(uint64 id, address account, bytes32 subaccount, uint32 productId, int128 sizeDelta, int128 netSize)",
-      "error LiquidateZeroAccount(uint64 id)",
-      "error LiquidateZeroSubaccount(uint64 id, address account)",
-      "error LiquidatorInsufficientBalance(uint64 id, address liquidatorAccount, bytes32 liquidatorSubaccount, address token, uint256 balance, int256 delta)",
-      "error LiquidatorIsDeleveraging(uint64 id)",
-      "error PriceFeedInvalidProperty(uint64 id, uint8 property)",
-      "error PriceFeedsTooMany(uint64 id, uint256 length)",
-      "error PriceInvalidExponent(uint64 id, int16 exponent)",
-      "error PriceInvalidFeedId(uint64 id, uint32 priceFeedId, uint32 productFeedId)",
-      "error PriceTooOld(uint64 id, uint64 priceTimestamp, uint64 timestamp)",
-      "error ProductStatusViolation(uint64 id, uint32 productId, uint8 engineType, uint8 status)",
-      "event LiquidationBalanceTransferMismatch(uint64 id, int128 externalValue, int256 internalValue, uint256 tolerance)",
-      "event LiquidationMarginCheckMismatch(uint64 id, uint256 maintenanceMargin, int256 equity, uint256 tolerance)",
-      "event LiquidatorRealizedPnlMismatch(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
-      "event PositionLiquidated(uint32 indexed productId, address indexed liquidatedAccount, bytes32 indexed liquidatedSubaccount, uint8 engineType, int128 size, uint64 messageIdx)",
-      "function liquidateSubaccount(uint64 id, bytes actionData) payable"
-    ],
-    "ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA": [
-      "error DepositCapacityExceeded(uint256 capacity, uint256 amount)",
-      "error DepositInsufficient(uint256 amount)",
-      "error DepositOnBehalfBatchSizeExceeded(uint256 maxBatchSize)",
-      "error ExcludedAccount(uint64 id, address account)",
-      "error InsufficientBalance(uint64 id, address account, bytes32 subaccount, address token, uint256 amount, uint256 balance)",
-      "error InvalidDepositOnBehalf(address sender, address account, bytes32 subaccount, bytes32 reason)",
-      "error InvalidDepositToken(address token)",
-      "error InvalidSignature(uint64 id, address sender, address signer, bytes signature)",
-      "error PendingDepositFound(address sender, bytes32 subaccount, address token, uint256 amount)",
-      "error RescueTooEarly(uint256 rescueReadyTimestamp)",
-      "error SignerDepositUnauthorized(address account)",
-      "error TokenDepositPaused(address token)",
-      "error WithdrawNotFound()",
-      "error WithdrawOftFailed(address account, bytes32 withdrawDigest)",
-      "error WithdrawOftInsufficientFees(address account, bytes32 withdrawDigest, uint256 fee)",
-      "error ZeroAddress()",
-      "error ZeroAmount()",
-      "error ZeroLength()",
-      "event AccountReferred(address indexed account, bytes32 referralCode)",
-      "event DepositInitiated(address indexed sender, bytes32 indexed subaccount, address token, uint256 amount, uint128 fee)",
-      "event FeeAccrued(address indexed account, bytes32 indexed subaccount, address token, uint256 feeAmount, uint256 balance, uint64 messageIdx)",
-      "event FeesClaimed(address indexed account, bytes32 indexed subaccount, address token, uint256 amount)",
-      "event FundsRescued(address indexed account, bytes32 withdrawDigest)",
-      "event WithdrawFinalized(address indexed account, bytes32 indexed withdrawDigest, address token, uint256 amount, uint128 fee, uint64 finalizedTimestamp, bytes32 destinationAddress, uint32 destinationEndpointId)",
-      "function claimFees(address feeToken, uint256 amount)",
-      "function deposit(bytes32 subaccount, address depositToken, uint256 amount, bytes32 referralCode)",
-      "function depositOnBehalf(tuple(address account, bytes32 subaccount, bytes32 tokenName, uint256 amount)[] deposits, bytes32 referralCode) payable",
-      "function depositUsd(bytes32 subaccount, bytes32 referralCode) payable",
-      "function finalizeWithdraw(address account, bytes32 withdrawDigest) payable",
-      "function rescueFunds(address account, bytes32 withdrawDigest) payable"
-    ],
-    "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96": [
-      "error ActionAlreadyProcessed(uint64 id, uint64 previousId, uint64 lastCompleteId)",
-      "error ActionExpired(uint64 id, uint256 blockTime, uint64 signedAt, uint64 buffer)",
-      "error DelegationFailed()",
-      "error EmptyActions()",
-      "error ExcludedAccount(uint64 id, address account)",
-      "error FeeNotCoveredByBalance(uint64 id, address account, bytes32 subaccount, address token, uint256 amount, uint128 fee)",
-      "error InsufficientBalance(uint64 id, address account, bytes32 subaccount, address token, uint256 amount, uint256 balance)",
-      "error InvalidAction(uint64 id, uint8 actionType)",
-      "error InvalidActionEncoding(uint64 id, uint8 actionType)",
-      "error InvalidActionEncodingHeader(uint256 length)",
-      "error InvalidEngineType(uint64 id, uint8 engineType)",
-      "error InvalidNonce(uint64 id, uint64 nonce)",
-      "error InvalidSignature(uint64 id, address sender, address signer, bytes signature)",
-      "error InvalidSigner(uint64 id, address signer)",
-      "error PendingDepositMismatch(uint64 id, address account, bytes32 subaccount, address token, uint256 amount)",
-      "error PendingDepositNotFound(uint64 id, address account, bytes32 subaccount)",
-      "error PendingRevokeNotFound(address sender, bytes32 subaccount, address signer)",
-      "error SignerNotFound(uint64 id, address sender, bytes32 subaccount, address signer)",
-      "error SubaccountNotFound(uint64 id, address sender, bytes32 subaccount)",
-      "error TokenWithdrawPaused(uint64 id, address token)",
-      "event ActionsProcessed(uint64 firstActionId, uint64 lastActionId, uint256 length)",
-      "event DepositFinalized(address indexed sender, bytes32 indexed subaccount, address token, uint256 amount, uint128 fee, uint256 balance, bytes32 initiatedTxHash, uint32 initiatedLogIdx, uint64 messageIdx)",
-      "event FeeAccrued(address indexed account, bytes32 indexed subaccount, address token, uint256 feeAmount, uint256 balance, uint64 messageIdx)",
-      "event SignerLinkRejected(address indexed sender, bytes32 indexed subaccount, address indexed signer, uint64 rejectedTimestamp, uint64 messageIdx)",
-      "event SignerLinked(address indexed sender, bytes32 indexed subaccount, address indexed signer, uint64 linkedTimestamp, uint64 messageIdx)",
-      "event SignerRevokeRejected(address indexed sender, bytes32 indexed subaccount, address indexed signer, uint64 rejectedTimestamp, uint64 messageIdx)",
-      "event SignerRevoked(address indexed sender, bytes32 indexed subaccount, address indexed signer, uint64 revokedTimestamp, uint64 messageIdx)",
-      "event WithdrawInitiated(address indexed account, bytes32 indexed subaccount, bytes32 indexed withdrawDigest, address token, uint256 amount, uint128 fee, uint64 initiatedTimestamp, uint64 messageIdx)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function finalizeRevokeLinkedSigner(tuple(address sender, address signer, bytes32 subaccount, uint64 nonce, uint64 signedAt) message)",
-      "function processActions(bytes[] actions) payable"
-    ],
-    "ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3": [
-      "constructor(uint8 _localDecimals, address _lzEndpoint, address _delegate)",
-      "error CreditFailed(address to, uint256 amountLD, bytes revertData)",
-      "error IncorrectMessageValue(uint256 provided, uint256 required)",
-      "error InvalidDelegate()",
-      "error InvalidEndpointCall()",
-      "error InvalidLocalDecimals()",
-      "error InvalidOptions(bytes options)",
-      "error LzTokenUnavailable()",
-      "error NoPeer(uint32 eid)",
-      "error NotEnoughNative(uint256 msgValue)",
-      "error OnlyEndpoint(address addr)",
-      "error OnlyPeer(uint32 eid, bytes32 sender)",
-      "error OnlySelf()",
-      "error SimulationResult(bytes result)",
-      "error SlippageExceeded(uint256 amountLD, uint256 minAmountLD)",
-      "event EnforcedOptionSet(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
-      "event MsgInspectorSet(address inspector)",
-      "event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)",
-      "event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PeerSet(uint32 eid, bytes32 peer)",
-      "event PreCrimeSet(address preCrimeAddress)",
-      "function SEND() view returns (uint16)",
-      "function SEND_AND_CALL() view returns (uint16)",
-      "function allowInitializePath(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin) view returns (bool)",
-      "function approvalRequired() pure returns (bool)",
-      "function arbNativeTokenManager() view returns (address)",
-      "function combineOptions(uint32 _eid, uint16 _msgType, bytes _extraOptions) view returns (bytes)",
-      "function composeMsgSender() view returns (address sender)",
-      "function decimalConversionRate() view returns (uint256)",
-      "function endpoint() view returns (address)",
-      "function enforcedOptions(uint32 eid, uint16 msgType) view returns (bytes enforcedOption)",
-      "function isPeer(uint32 _eid, bytes32 _peer) view returns (bool)",
-      "function lzReceive(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
-      "function lzReceiveAndRevert(tuple(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, uint32 dstEid, address receiver, bytes32 guid, uint256 value, address executor, bytes message, bytes extraData)[] _packets) payable",
-      "function lzReceiveSimulate(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
-      "function msgInspector() view returns (address)",
-      "function nextNonce(uint32, bytes32) view returns (uint64 nonce)",
-      "function oApp() view returns (address)",
-      "function oAppVersion() pure returns (uint64 senderVersion, uint64 receiverVersion)",
-      "function oftVersion() pure returns (bytes4 interfaceId, uint64 version)",
-      "function owner() view returns (address)",
-      "function peers(uint32 eid) view returns (bytes32 peer)",
-      "function preCrime() view returns (address)",
-      "function quoteOFT(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam) view returns (tuple(uint256 minAmountLD, uint256 maxAmountLD) oftLimit, tuple(int256 feeAmountLD, string description)[] oftFeeDetails, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
-      "function quoteSend(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, bool _payInLzToken) view returns (tuple(uint256 nativeFee, uint256 lzTokenFee) msgFee)",
-      "function renounceOwnership()",
-      "function send(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, tuple(uint256 nativeFee, uint256 lzTokenFee) _fee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) msgReceipt, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
-      "function setDelegate(address _delegate)",
-      "function setEnforcedOptions(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
-      "function setMsgInspector(address _msgInspector)",
-      "function setPeer(uint32 _eid, bytes32 _peer)",
-      "function setPreCrime(address _preCrime)",
-      "function sharedDecimals() pure returns (uint8)",
-      "function token() pure returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
-    "ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481": [
-      "constructor(address implementation, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc": [
-      "constructor(address _logic, bytes _data)",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "ethereal:0xC199cC890F61B847bec9cec4212C35b759A9fD38": [
-      "error InvalidParameter(bytes32 parameter, bytes32 reason)",
-      "error PendingDepositFound(address sender, bytes32 subaccount, address token, uint256 amount)",
-      "error TokenRemoveProtected(bytes32 tokenName)",
-      "event ActionExpiryBufferUpdated(uint8 indexed action, uint64 buffer)",
-      "event ClaimerUpdated(address indexed claimer, bool granted)",
-      "event DelegateDepositMaxBatchSizeUpdated(uint16 delegateDepositMaxBatchSize)",
-      "event DelegateDepositorUpdated(address indexed account, bool granted)",
-      "event EmergencyPauserUpdated(address indexed pauser, bool enabled)",
-      "event FeeCollectorUpdated(address indexed account, bytes32 indexed subaccount)",
-      "event FeeScheduleAdded(uint32 indexed id)",
-      "event FeeScheduleUpdated(uint32 indexed id)",
-      "event LiquidatorUpdated(address indexed account, bytes32 indexed subaccount)",
-      "event LzEndpointIdUpdated(uint32 indexed lzEndpointId)",
-      "event PythLazerUpdated(address pythLazer, uint64 maxAge)",
-      "event RescueDelayUpdated(uint64 rescueDelay)",
-      "event SequencerAdded(address indexed sequencer)",
-      "event SequencerPausedUpdated(address indexed sequencer, bool paused)",
-      "event SequencerRemoved(address indexed sequencer)",
-      "event TokenAdded(bytes32 indexed tokenName, address tokenAddress)",
-      "event TokenPromoted(bytes32 indexed tokenName, address tokenAddress)",
-      "event TokenRemoved(bytes32 indexed tokenName, address tokenAddress)",
-      "event TokenUpdated(bytes32 indexed tokenName, address tokenAddress)",
-      "function addClaimer(address claimer)",
-      "function addDelegateDepositor(address delegateDepositor)",
-      "function addEmergencyPauser(address pauser)",
-      "function addFeeSchedule(tuple(uint32 makerFee, uint32 takerFee) params) returns (uint32)",
-      "function addSequencer(address account)",
-      "function addToken(bytes32 tokenName, address tokenAddress, address oftAddress)",
-      "function promoteToken(bytes32 tokenName, address tokenAddress, address oftAddress)",
-      "function removeClaimer(address claimer)",
-      "function removeDelegateDepositor(address delegateDepositor)",
-      "function removeEmergencyPauser(address pauser)",
-      "function removeSequencer(address account)",
-      "function removeToken(bytes32 tokenName)",
-      "function updateActionExpiryBuffer(uint8 action, uint64 buffer)",
-      "function updateDelegateDepositMaxBatchSize(uint16 delegateDepositMaxBatchSize)",
-      "function updateFeeCollector(address account, bytes32 subaccount)",
-      "function updateFeeSchedule(tuple(uint32 id, uint32 makerFee, uint32 takerFee) params)",
-      "function updateLiquidator(address account, bytes32 subaccount)",
-      "function updateLzEndpointId(uint32 updatedLzEndpointId)",
-      "function updatePythLazer(address updatedContract, uint64 updatedMaxAge)",
-      "function updateRescueDelay(uint64 rescueDelay)",
-      "function updateSequencerPaused(address account, bool paused)",
-      "function updateToken(tuple(bytes32 tokenName, uint256 depositCapacity, uint256 minDeposit, uint128 depositFee, uint128 withdrawFee, bool depositEnabled, bool withdrawEnabled) params)"
-    ],
-    "ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0": [
+    "ethereal:0x4cd414a3C1d17d8D9ecea6B7628Da790Dc733966": [
       "constructor()",
       "error AlreadyInitialized()",
       "error DelegationFailed()",
@@ -2584,6 +2379,7 @@
       "function cancelOwnershipHandover() payable",
       "function claimFees(address feeToken, uint256 amount)",
       "function completeOwnershipHandover(address pendingOwner) payable",
+      "function delistPerpProduct(uint32 productId)",
       "function deposit(bytes32 subaccount, address depositToken, uint256 amount, bytes32 referralCode)",
       "function depositOnBehalf(tuple(address account, bytes32 subaccount, bytes32 tokenName, uint256 amount)[] params, bytes32 referralCode) payable",
       "function depositUsd(bytes32 subaccount, bytes32 referralCode) payable",
@@ -2613,7 +2409,7 @@
       "function getFeeSchedule(uint32 feeScheduleId) pure returns (tuple(bool isRegistered, uint32 makerFee, uint32 takerFee))",
       "function getLiquidator() view returns (address liquidatorAccount, bytes32 liquidatorSubaccount)",
       "function getPerpPosition(address sender, bytes32 subaccount, uint32 productId) view returns (tuple(int128 size, uint128 cost, int128 lastFundingUsd))",
-      "function getPerpProduct(uint32 productId) view returns (tuple(uint32 id, uint32 feeScheduleId, uint8 status, uint16 maxLeverage, uint32 pythFeedId, int128 cumulativeFundingUsd, bytes32 baseTokenName, bytes32 quoteTokenName, uint128 maxQuantity, uint128 tickSize, uint128 lotSize, uint128 openInterest, uint128 maxOpenInterestUsd, uint128 maxPositionNotionalUsd))",
+      "function getPerpProduct(uint32 productId) view returns (tuple(uint32 id, uint32 feeScheduleId, uint8 status, uint16 maxLeverage, uint32 pythFeedId, int128 cumulativeFundingUsd, bytes32 baseTokenName, bytes32 quoteTokenName, uint128 maxQuantity, uint128 tickSize, uint128 lotSize, uint128 openInterest, uint128 maxOpenInterestUsd, uint128 maxPositionNotionalUsd, uint128 delistExpiryPrice, bool delistInvoked, uint64 delistMessageIdx))",
       "function getToken(bytes32 tokenName) pure returns (tuple(address tokenAddress, bool depositEnabled, bool withdrawEnabled, bool removeProtected, uint256 depositCapacity, uint256 minDeposit, uint128 withdrawFee, uint128 depositFee, address oftAddress))",
       "function initialize()",
       "function isClaimer(address claimer) view returns (bool)",
@@ -2651,33 +2447,209 @@
       "function updateToken(tuple(bytes32 tokenName, uint256 depositCapacity, uint256 minDeposit, uint128 depositFee, uint128 withdrawFee, bool depositEnabled, bool withdrawEnabled) params)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B": [
-      "error DeleverageEmptyProducts(uint64 id)",
-      "error DeleverageInconsistentPrices(uint64 id, uint32 productId, uint128 previousPrice, uint128 currentPrice, uint32 tolerance)",
-      "error DeleverageInvalidProductIndex(uint64 id, address account, bytes32 subaccount, uint32 productIndex, uint32 numProducts)",
-      "error DeleverageLiquidatorNotBankrupt(uint64 id, int256 equity)",
-      "error DeleverageLiquidatorPositionsMismatch(uint64 id, address liquidatorAccount, bytes32 liquidatorSubaccount, uint128 openPositions, uint128 products)",
-      "error DeleverageMessageIndexMismatch(uint64 id, uint64 expected, uint64 actual)",
-      "error DeleverageNotReducing(uint64 id, address account, bytes32 subaccount, uint32 productId, int128 oldSize, int128 newSize)",
-      "error DeleveragePythUpdateCountMismatch(uint64 id, uint256 provided, uint256 expected)",
-      "error DeleverageUnexpectedMatches(uint64 id, address liquidatorAccount, bytes32 liquidatorSubaccount, uint32 productId)",
-      "error InvalidLiquidatorCounterparty(uint64 id, address account, bytes32 subaccount)",
+    "ethereal:0x58a16791037dF85CCbc3A65DE5a8401Fd04C8aC8": [
+      "constructor(address _singleton)"
+    ],
+    "ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA": [
+      "error DepositCapacityExceeded(uint256 capacity, uint256 amount)",
+      "error DepositInsufficient(uint256 amount)",
+      "error DepositOnBehalfBatchSizeExceeded(uint256 maxBatchSize)",
+      "error ExcludedAccount(uint64 id, address account)",
+      "error InsufficientBalance(uint64 id, address account, bytes32 subaccount, address token, uint256 amount, uint256 balance)",
+      "error InvalidDepositOnBehalf(address sender, address account, bytes32 subaccount, bytes32 reason)",
+      "error InvalidDepositToken(address token)",
+      "error InvalidSignature(uint64 id, address sender, address signer, bytes signature)",
+      "error PendingDepositFound(address sender, bytes32 subaccount, address token, uint256 amount)",
+      "error RescueTooEarly(uint256 rescueReadyTimestamp)",
+      "error SignerDepositUnauthorized(address account)",
+      "error TokenDepositPaused(address token)",
+      "error WithdrawNotFound()",
+      "error WithdrawOftFailed(address account, bytes32 withdrawDigest)",
+      "error WithdrawOftInsufficientFees(address account, bytes32 withdrawDigest, uint256 fee)",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "error ZeroLength()",
+      "event AccountReferred(address indexed account, bytes32 referralCode)",
+      "event DepositInitiated(address indexed sender, bytes32 indexed subaccount, address token, uint256 amount, uint128 fee)",
+      "event FeeAccrued(address indexed account, bytes32 indexed subaccount, address token, uint256 feeAmount, uint256 balance, uint64 messageIdx)",
+      "event FeesClaimed(address indexed account, bytes32 indexed subaccount, address token, uint256 amount)",
+      "event FundsRescued(address indexed account, bytes32 withdrawDigest)",
+      "event WithdrawFinalized(address indexed account, bytes32 indexed withdrawDigest, address token, uint256 amount, uint128 fee, uint64 finalizedTimestamp, bytes32 destinationAddress, uint32 destinationEndpointId)",
+      "function claimFees(address feeToken, uint256 amount)",
+      "function deposit(bytes32 subaccount, address depositToken, uint256 amount, bytes32 referralCode)",
+      "function depositOnBehalf(tuple(address account, bytes32 subaccount, bytes32 tokenName, uint256 amount)[] deposits, bytes32 referralCode) payable",
+      "function depositUsd(bytes32 subaccount, bytes32 referralCode) payable",
+      "function finalizeWithdraw(address account, bytes32 withdrawDigest) payable",
+      "function rescueFunds(address account, bytes32 withdrawDigest) payable"
+    ],
+    "ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3": [
+      "constructor(uint8 _localDecimals, address _lzEndpoint, address _delegate)",
+      "error CreditFailed(address to, uint256 amountLD, bytes revertData)",
+      "error IncorrectMessageValue(uint256 provided, uint256 required)",
+      "error InvalidDelegate()",
+      "error InvalidEndpointCall()",
+      "error InvalidLocalDecimals()",
+      "error InvalidOptions(bytes options)",
+      "error LzTokenUnavailable()",
+      "error NoPeer(uint32 eid)",
+      "error NotEnoughNative(uint256 msgValue)",
+      "error OnlyEndpoint(address addr)",
+      "error OnlyPeer(uint32 eid, bytes32 sender)",
+      "error OnlySelf()",
+      "error SimulationResult(bytes result)",
+      "error SlippageExceeded(uint256 amountLD, uint256 minAmountLD)",
+      "event EnforcedOptionSet(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
+      "event MsgInspectorSet(address inspector)",
+      "event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)",
+      "event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PeerSet(uint32 eid, bytes32 peer)",
+      "event PreCrimeSet(address preCrimeAddress)",
+      "function SEND() view returns (uint16)",
+      "function SEND_AND_CALL() view returns (uint16)",
+      "function allowInitializePath(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin) view returns (bool)",
+      "function approvalRequired() pure returns (bool)",
+      "function arbNativeTokenManager() view returns (address)",
+      "function combineOptions(uint32 _eid, uint16 _msgType, bytes _extraOptions) view returns (bytes)",
+      "function composeMsgSender() view returns (address sender)",
+      "function decimalConversionRate() view returns (uint256)",
+      "function endpoint() view returns (address)",
+      "function enforcedOptions(uint32 eid, uint16 msgType) view returns (bytes enforcedOption)",
+      "function isPeer(uint32 _eid, bytes32 _peer) view returns (bool)",
+      "function lzReceive(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
+      "function lzReceiveAndRevert(tuple(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, uint32 dstEid, address receiver, bytes32 guid, uint256 value, address executor, bytes message, bytes extraData)[] _packets) payable",
+      "function lzReceiveSimulate(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
+      "function msgInspector() view returns (address)",
+      "function nextNonce(uint32, bytes32) view returns (uint64 nonce)",
+      "function oApp() view returns (address)",
+      "function oAppVersion() pure returns (uint64 senderVersion, uint64 receiverVersion)",
+      "function oftVersion() pure returns (bytes4 interfaceId, uint64 version)",
+      "function owner() view returns (address)",
+      "function peers(uint32 eid) view returns (bytes32 peer)",
+      "function preCrime() view returns (address)",
+      "function quoteOFT(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam) view returns (tuple(uint256 minAmountLD, uint256 maxAmountLD) oftLimit, tuple(int256 feeAmountLD, string description)[] oftFeeDetails, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
+      "function quoteSend(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, bool _payInLzToken) view returns (tuple(uint256 nativeFee, uint256 lzTokenFee) msgFee)",
+      "function renounceOwnership()",
+      "function send(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, tuple(uint256 nativeFee, uint256 lzTokenFee) _fee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) msgReceipt, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
+      "function setDelegate(address _delegate)",
+      "function setEnforcedOptions(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
+      "function setMsgInspector(address _msgInspector)",
+      "function setPeer(uint32 _eid, bytes32 _peer)",
+      "function setPreCrime(address _preCrime)",
+      "function sharedDecimals() pure returns (uint8)",
+      "function token() pure returns (address)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "ethereal:0xD540F47F214dC7D6D244E62A6aE7e06B586Ef44A": [
+      "error DelistAlreadyInitiated(uint64 id, uint32 productId, uint64 delistMessageIdx)",
+      "error DelistMessageIdxMismatch(uint64 id, uint32 productId, uint64 messageIdx, uint64 expectedMessageIdx)",
+      "error DelistNotInitiated(uint64 id, uint32 productId)",
+      "error DelistNotInvoked(uint64 id, uint32 productId)",
+      "error DelistOpenInterestRemaining(uint64 id, uint32 productId, uint128 openInterest)",
+      "error ExcludedAccount(uint64 id, address account)",
+      "error InvalidFillNotional(uint64 id, uint128 externalValue, uint128 internalValue, uint128 tolerance)",
+      "error InvalidFillQuantity(uint64 id, uint128 fillQuantity, uint128 calculatedFillQuantity)",
+      "error InvalidMatchZeroQuantity(uint64 id, uint128 makerFillableQty, uint128 takerFillableQty)",
       "error InvalidNonIncreasingId(uint64 id, uint32 currentId, uint32 lastId)",
+      "error InvalidNonce(uint64 id, uint64 nonce)",
+      "error InvalidOrderPrice(uint64 id, uint256 price)",
+      "error InvalidOrderPriceNotCrossed(uint64 id, uint256 makerPrice, uint256 takerPrice)",
+      "error InvalidOrderProduct(uint64 id, uint32 makerProductId, uint32 takerProductId)",
+      "error InvalidOrderQuantity(uint64 id, uint128 quantity)",
+      "error InvalidOrderSameSide(uint64 id, uint8 side)",
+      "error InvalidOrderZeroPrice(uint64 id)",
       "error InvalidParameter(bytes32 parameter, bytes32 reason)",
+      "error InvalidRealizePnlCostDelta(uint64 id, address account, bytes32 subaccount, uint32 productId, int128 positionSize, int128 costDelta)",
+      "error InvalidRealizePnlNegativeCost(uint64 id, address account, bytes32 subaccount, uint32 productId, uint128 currentCost, int128 costDelta)",
       "error InvalidRealizedPnl(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
-      "error LiquidatorInsufficientBalance(uint64 id, address liquidatorAccount, bytes32 liquidatorSubaccount, address token, uint256 balance, int256 delta)",
+      "error InvalidReduceOnlyFill(uint64 id, int128 positionSize, int128 sizeDelta)",
+      "error InvalidReduceOnlyFillQuantity(uint64 id, uint128 fillQuantity, uint128 maxFillableQuantity)",
+      "error InvalidSigner(uint64 id, address signer)",
+      "error PositionNotFound(uint64 id, address account, bytes32 subaccount, uint32 productId)",
       "error PriceFeedInvalidProperty(uint64 id, uint8 property)",
       "error PriceFeedsTooMany(uint64 id, uint256 length)",
       "error PriceInvalidExponent(uint64 id, int16 exponent)",
       "error PriceInvalidFeedId(uint64 id, uint32 priceFeedId, uint32 productFeedId)",
       "error PriceTooOld(uint64 id, uint64 priceTimestamp, uint64 timestamp)",
+      "error PriceZero(uint64 id)",
+      "error ProductIdMismatch(uint64 id, uint32 expectedId, uint32 actualId)",
+      "error ProductNotFound(uint64 id, uint32 productId, uint8 engineType)",
       "error ProductStatusViolation(uint64 id, uint32 productId, uint8 engineType, uint8 status)",
-      "event DeleverageLiquidatorBankruptcyCheckMismatch(uint64 id, int256 equity, uint256 tolerance)",
-      "event DeleveragePriceInconsistency(uint64 id, uint32 productId, uint128 previousPrice, uint128 currentPrice, uint256 tolerance)",
-      "event DeleverageUserRealizedPnlMismatch(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
-      "event LiquidatorRealizedPnlMismatch(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
-      "event PositionDeleveraged(uint32 indexed productId, address indexed account, bytes32 indexed subaccount, int128 sizeDelta, int128 realizedPnl, uint64 messageIdx)",
-      "function deleverageLiquidator(uint64 id, bytes actionData) payable"
+      "error RealizeFundingProductsMismatch(uint64 id, address account, bytes32 subaccount, uint128 openPositions, uint128 products)",
+      "error SubaccountNotFound(uint64 id, address sender, bytes32 subaccount)",
+      "error ZeroMessageIdx(uint64 id)",
+      "event FeeAccrued(address indexed account, bytes32 indexed subaccount, address token, uint256 feeAmount, uint256 balance, uint64 messageIdx)",
+      "event PerpFillNotionalMismatch(uint64 id, uint128 externalValue, uint128 internalValue, uint128 tolerance)",
+      "event PerpFundingRealized(address indexed account, bytes32 indexed subaccount, uint32[] productIds, int256 realizedFundingUsd, uint64 messageIdx)",
+      "event PerpOrderMatched(uint32 indexed productId, address indexed maker, address indexed taker, bytes32 makerSubaccount, bytes32 takerSubaccount, uint8 makerSide, uint8 takerSide, uint128 fillQuantity, uint128 price, uint64 messageIdx)",
+      "event PerpPnlRealized(address indexed account, bytes32 indexed subaccount, uint32 indexed productId, int128 costDelta, uint64 messageIdx)",
+      "event PerpProductDelistFinalized(uint32 indexed productId, uint256 expiryPrice, uint64 messageIdx)",
+      "event PerpProductDelistInitiated(uint32 indexed productId, uint256 expiryPrice, uint64 messageIdx)",
+      "event PerpProductDelistInvoked(uint32 indexed productId)",
+      "event PerpProductDelistPositionSettlement(address indexed account, bytes32 indexed subaccount, uint32 indexed productId, int128 size, int128 realizedPnl, uint64 messageIdx)",
+      "event PerpProductFundingUpdated(uint32 indexed productId, int256 fundingUsd, int256 cumulativeFundingUsd, uint64 messageIdx)",
+      "event PerpProductRegistered(uint32 indexed productId, bytes32 baseTokenName, bytes32 quoteTokenName)",
+      "event PerpProductUpdated(uint32 indexed productId)",
+      "event PerpRealizedPnlMismatch(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
+      "function delist(uint32 productId)",
+      "function executeMatch(uint64 id, tuple(tuple(address sender, bytes32 subaccount, uint128 quantity, uint128 price, bool reduceOnly, uint8 side, uint8 engineType, uint32 productId, uint64 nonce, uint64 signedAt) maker, tuple(address sender, bytes32 subaccount, uint128 quantity, uint128 price, bool reduceOnly, uint8 side, uint8 engineType, uint32 productId, uint64 nonce, uint64 signedAt) taker, bytes makerSignature, bytes takerSignature, uint128 makerFee, uint128 takerFee, int128 makerRealizedPnl, int128 takerRealizedPnl, uint128 fillQuantity, uint128 fillNotional, uint64 messageIdx) action, tuple(bytes32 maker, bytes32 taker) digests) payable",
+      "function finalizeDelist(uint64 id, tuple(uint32 productId, uint64 messageIdx) action) payable",
+      "function initiateDelist(uint64 id, tuple(uint32 productId, uint64 messageIdx, uint64 pythFee, bytes pythPriceUpdate) action) payable",
+      "function realizeFunding(uint64 id, address account, bytes32 subaccount, uint32[] productIds, uint64 messageIdx) payable",
+      "function realizePnl(uint64 id, address account, bytes32 subaccount, uint32 productId, int128 costDelta, uint64 messageIdx) payable",
+      "function register(tuple(bytes32 baseTokenName, bytes32 quoteTokenName, uint8 status, uint16 maxLeverage, uint32 feeScheduleId, uint32 pythFeedId, uint128 tickSize, uint128 maxQuantity, uint128 lotSize, uint128 maxOpenInterestUsd, uint128 maxPositionNotionalUsd) params) returns (uint32)",
+      "function settleDelistPosition(uint64 id, tuple(address account, bytes32 subaccount, uint32 productId, int128 realizedPnl, uint64 messageIdx) action) payable",
+      "function update(tuple(uint32 id, uint32 pythFeedId, uint8 status, uint16 maxLeverage, uint128 maxQuantity, uint128 maxOpenInterestUsd, uint128 maxPositionNotionalUsd) params)",
+      "function updateFunding(uint64 id, uint32 productId, int128 fundingDeltaUsd, uint64 messageIdx) payable"
+    ],
+    "ethereal:0xfC25F9d15cbfEe81d8238Eb2fD7D3f16a6b2f469": [
+      "error ActionAlreadyProcessed(uint64 id, uint64 previousId, uint64 lastCompleteId)",
+      "error ActionExpired(uint64 id, uint256 blockTime, uint64 signedAt, uint64 buffer)",
+      "error DelegationFailed()",
+      "error EmptyActions()",
+      "error ExcludedAccount(uint64 id, address account)",
+      "error FeeNotCoveredByBalance(uint64 id, address account, bytes32 subaccount, address token, uint256 amount, uint128 fee)",
+      "error InsufficientBalance(uint64 id, address account, bytes32 subaccount, address token, uint256 amount, uint256 balance)",
+      "error InvalidAction(uint64 id, uint8 actionType)",
+      "error InvalidActionEncoding(uint64 id, uint8 actionType)",
+      "error InvalidActionEncodingHeader(uint256 length)",
+      "error InvalidEngineType(uint64 id, uint8 engineType)",
+      "error InvalidNonce(uint64 id, uint64 nonce)",
+      "error InvalidSignature(uint64 id, address sender, address signer, bytes signature)",
+      "error InvalidSigner(uint64 id, address signer)",
+      "error PendingDepositMismatch(uint64 id, address account, bytes32 subaccount, address token, uint256 amount)",
+      "error PendingDepositNotFound(uint64 id, address account, bytes32 subaccount)",
+      "error PendingRevokeNotFound(address sender, bytes32 subaccount, address signer)",
+      "error SignerNotFound(uint64 id, address sender, bytes32 subaccount, address signer)",
+      "error SubaccountNotFound(uint64 id, address sender, bytes32 subaccount)",
+      "error TokenWithdrawPaused(uint64 id, address token)",
+      "event ActionsProcessed(uint64 firstActionId, uint64 lastActionId, uint256 length)",
+      "event DepositFinalized(address indexed sender, bytes32 indexed subaccount, address token, uint256 amount, uint128 fee, uint256 balance, bytes32 initiatedTxHash, uint32 initiatedLogIdx, uint64 messageIdx)",
+      "event FeeAccrued(address indexed account, bytes32 indexed subaccount, address token, uint256 feeAmount, uint256 balance, uint64 messageIdx)",
+      "event SignerLinkRejected(address indexed sender, bytes32 indexed subaccount, address indexed signer, uint64 rejectedTimestamp, uint64 messageIdx)",
+      "event SignerLinked(address indexed sender, bytes32 indexed subaccount, address indexed signer, uint64 linkedTimestamp, uint64 messageIdx)",
+      "event SignerRevokeRejected(address indexed sender, bytes32 indexed subaccount, address indexed signer, uint64 rejectedTimestamp, uint64 messageIdx)",
+      "event SignerRevoked(address indexed sender, bytes32 indexed subaccount, address indexed signer, uint64 revokedTimestamp, uint64 messageIdx)",
+      "event WithdrawInitiated(address indexed account, bytes32 indexed subaccount, bytes32 indexed withdrawDigest, address token, uint256 amount, uint128 fee, uint64 initiatedTimestamp, uint64 messageIdx)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function finalizeRevokeLinkedSigner(tuple(address sender, address signer, bytes32 subaccount, uint64 nonce, uint64 signedAt) message)",
+      "function processActions(bytes[] actions) payable"
     ]
   },
   "usedTemplates": {
@@ -2687,7 +2659,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "layerzero/OrbitNativeOFTAdapter": "0x910d4dbc62ab1d4375020ae6c121c0114f3316b914330fbcfa4c3aa22b405a92",
-    "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
+    "orbitstack/Bridge": "0x92449059d26bdd4d20bc883e72eba2fcfa1f5c8e0e4d279bae4d0e1fbec6a2e7",
     "orbitstack/EdgeChallengeManager": "0xeaaa590ceeab252a14ceeb88a8d39ce03a969fdb64c2861704b072e3f885a748",
     "orbitstack/ERC20MigrationOutbox": "0x2e019bd2ffb1e3859ef2431c6cac18a0ea4a537fe192098f7598bc539b3bc689",
     "orbitstack/Inbox": "0x2ef8ae6338e1c68033f26b7ee0d8639f2f7f14e155442e53a9e7eca3bf0b27cc",
@@ -2696,14 +2668,14 @@
     "orbitstack/OneStepProverHostIo": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/Outbox": "0xcd1388fa7046469178a9f3a8fc23db0f37c9d4ba90a3e02f702bea5e6396af03",
+    "orbitstack/Outbox": "0xd86f8d49c3e4b3d566c849db6a9c98da4aa341ea5e037697ed99cd4f21837e7b",
     "orbitstack/RollupEventInbox": "0x4dc4c522a20e3a47a8ee3f421365820efc114453c7d3dbe378e7eecbae4782a7",
-    "orbitstack/RollupProxyBoLD": "0x407f302b5f7da60a295d65384e306bc867718deec6f095d3b4876474e2f50e15",
+    "orbitstack/RollupProxyBoLD": "0x009e68c43361deb42db402ecdcfa53a64be18ee341013be167072e2e3963e805",
     "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "arbitrum": 481341792, "ethereal": 5339100 },
-  "permissionsConfigHash": "0xdd73c942a5a0978c295271fca544a2a4a80d68be72c732ede6d8eb9a702a951f",
+  "usedBlockNumbers": { "arbitrum": 517185793, "ethereal": 5650112 },
+  "permissionsConfigHash": "0x5785b83baf4d0e79bf8b54116ba921766aae9a7e7c42258907cddac451c48f96",
   "permissions": {
     "arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3": {
       "receivedPermissions": [

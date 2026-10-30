@@ -1,37 +1,4 @@
 {
-  "170889": [
-    {
-      "id": "dc83c4b90647",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["18"]
-      }
-    }
-  ],
-  "0x84e96bb748abb8a16c28ecc": [
-    {
-      "id": "318cb6ce5b8b",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["10"]
-      }
-    }
-  ],
-  "527d69c3": [
-    {
-      "id": "ba28e866fe8e",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["25"]
-      }
-    }
-  ],
   "abstract": [
     {
       "id": "277c1f08ed30",
@@ -98,16 +65,6 @@
   ],
   "aevo": [
     {
-      "id": "22bdf46cb00a",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=",
-        "sinceBlock": 0,
-        "untilBlock": 3538077
-      }
-    },
-    {
       "id": "50220521c4e9",
       "config": {
         "type": "ethereum",
@@ -116,25 +73,17 @@
         "sequencers": ["0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d"],
         "sinceBlock": 16858818
       }
-    },
-    {
-      "id": "c7f9dcc291d2",
-      "config": {
-        "type": "eigen-da",
-        "customerId": "0x2dc71dbd1cf713e70f939346317bf93a2e62cfee",
-        "daLayer": "eigenda",
-        "sinceTimestamp": 1753437600
-      }
     }
   ],
-  "alchemy-production": [
+  "aligned": [
     {
-      "id": "f8bd5e57d72c",
+      "id": "ac808fc139f1",
       "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 1753833600,
-        "customerId": "0x3ba8c28a0209dea4d0502031f83d09a17a389fb0"
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xd0696d3eeebffcab2d1b358805efaa005a9a8bc0",
+        "sequencers": ["0x57628fe929016c30463473349dcdd592ea27c8b3"],
+        "sinceBlock": 24242603
       }
     }
   ],
@@ -147,61 +96,6 @@
         "inbox": "0x00c2bdb995acf5a2b3db3b9340861b4d564c3c72",
         "sequencers": ["0x03e78a186ebde2c14ad9220d2605fa0a22d7bbf5"],
         "sinceBlock": 23945310
-      }
-    }
-  ],
-  "altlayer": [
-    {
-      "id": "c7e0fd43ca7f",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 0,
-        "customerId": "0x4fdbd273b8d2c1c429a7e3078063c49528aa8264"
-      }
-    }
-  ],
-  "altlayer-2": [
-    {
-      "id": "42fe3a8bc92f",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 0,
-        "customerId": "0x1359fbd4b9bc9441a90436719426157526742c9a"
-      }
-    }
-  ],
-  "altlayer-cyber": [
-    {
-      "id": "3f3602df41c1",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 0,
-        "customerId": "35.167.254.127"
-      }
-    }
-  ],
-  "ancient": [
-    {
-      "id": "a3be402c9fca",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADE4vVvVyRsg="
-      }
-    }
-  ],
-  "antonio": [
-    {
-      "id": "7bfa73ca443c",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["23"]
       }
     }
   ],
@@ -245,61 +139,32 @@
       }
     }
   ],
-  "art-peace": [
-    {
-      "id": "4f301127be05",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["35"]
-      }
-    }
-  ],
-  "avail-main": [
-    {
-      "id": "cfc04769ab1c",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["0"]
-      }
-    }
-  ],
-  "azeazeqsdhfgkjkk": [
-    {
-      "id": "be2895d872d6",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["14"]
-      }
-    }
-  ],
   "aztecnetwork": [
     {
-      "id": "7926e2fc5a89",
+      "id": "c9c003c796d7",
       "config": {
         "type": "ethereum",
         "daLayer": "ethereum",
         "sinceBlock": 25533241,
-        "inbox": "0x0000000000000000000000000000000000000000",
+        "untilBlock": 26275527,
+        "inbox": "0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "topics": [
           "0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0"
         ]
       }
     }
   ],
-  "b3": [
+  "aztecnetworkv6": [
     {
-      "id": "c1602abf682d",
+      "id": "79f1c9de1bf4",
       "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqMAivUaAM="
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 26275528,
+        "inbox": "0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
+        "topics": [
+          "0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0"
+        ]
       }
     }
   ],
@@ -315,14 +180,15 @@
       }
     }
   ],
-  "battle-for-blockchain": [
+  "bb84": [
     {
-      "id": "f93c143823f1",
+      "id": "8a5a5f27b4f0",
       "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5047670,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAKzFLTn1xOipecg="
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xff00000000000000000000000000000042069000",
+        "sequencers": ["0x3e8252e3390e6d5c1bdc3c006ac0fb07b34c590d"],
+        "sinceBlock": 26092211
       }
     }
   ],
@@ -338,18 +204,45 @@
       }
     }
   ],
-  "bling": [
+  "blobkit": [
     {
-      "id": "92c6fe63c620",
+      "id": "b1a15baff1da",
       "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["12"]
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x0000000000000000000000000000000000000000",
+        "sequencers": [
+          "0x2edecb91091324e0138ebbbaed48ce1b2a050428",
+          "0x3884fc14e604548f8ed962d566de48e7519eab78",
+          "0xf3cb1f974362483838de05ff868cf04d4cc16de8"
+        ],
+        "sinceBlock": 23134693
       }
     }
   ],
   "bob": [
+    {
+      "id": "29e9cdf51dea",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x9937033cc967eed9d753e31c77d2f146d002ae53",
+        "sequencers": ["0x7cb1022d30b9860c36b243e7b181a1d46f618c69"],
+        "sinceBlock": 25029159,
+        "untilBlock": 25986618
+      }
+    },
+    {
+      "id": "5866a29ecb97",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x0fbc22b052f4745bc9f80760d2d47e4993f36746",
+        "sequencers": ["0x7cb1022d30b9860c36b243e7b181a1d46f618c69"],
+        "sinceBlock": 22940885,
+        "untilBlock": 22987605
+      }
+    },
     {
       "id": "67159dd176aa",
       "config": {
@@ -358,6 +251,72 @@
         "inbox": "0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83",
         "sequencers": ["0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11"],
         "sinceBlock": 19634330
+      }
+    },
+    {
+      "id": "7ae2c88146e4",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x220c56bcb401001e5d218604c143d38da107fc4a",
+        "sequencers": ["0x7cb1022d30b9860c36b243e7b181a1d46f618c69"],
+        "sinceBlock": 23929991,
+        "untilBlock": 23940152
+      }
+    },
+    {
+      "id": "a6fe8889db80",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x6f27a23fc28c18eb2c268bfe1d575e051ad94420",
+        "sequencers": ["0x7cb1022d30b9860c36b243e7b181a1d46f618c69"],
+        "sinceBlock": 23943854,
+        "untilBlock": 24531025
+      }
+    },
+    {
+      "id": "cf8d5b56aefb",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x72284bbb177b13db6f7b703846eedfb24914b764",
+        "sequencers": ["0x7cb1022d30b9860c36b243e7b181a1d46f618c69"],
+        "sinceBlock": 22991167,
+        "untilBlock": 23266673
+      }
+    },
+    {
+      "id": "d214dd9b7665",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x9b3e1661bccaf907893b71e4016c01513ae9263c",
+        "sequencers": ["0x7cb1022d30b9860c36b243e7b181a1d46f618c69"],
+        "sinceBlock": 24585400,
+        "untilBlock": 25021343
+      }
+    },
+    {
+      "id": "e10477f130d4",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xe99af5f4c60e06beb3827f4ffdd06e88c55fb895",
+        "sequencers": ["0x7cb1022d30b9860c36b243e7b181a1d46f618c69"],
+        "sinceBlock": 24537231,
+        "untilBlock": 24576453
+      }
+    },
+    {
+      "id": "f48602274813",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x0e4152204995877df34bd26d6dab78baf9393ae2",
+        "sequencers": ["0x7cb1022d30b9860c36b243e7b181a1d46f618c69"],
+        "sinceBlock": 23277312,
+        "untilBlock": 23924561
       }
     }
   ],
@@ -384,46 +343,6 @@
       }
     }
   ],
-  "bullet": [
-    {
-      "id": "10fa01449fd7",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 10183821,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAGJsdGJhdGNoLXQ="
-      }
-    },
-    {
-      "id": "5c366a7c0a51",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 10168980,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAGJsdGJhdGNoLWw="
-      }
-    },
-    {
-      "id": "b1411081b4fa",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 10456208,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAGJsdGJhdGNoLXo="
-      }
-    }
-  ],
-  "camp": [
-    {
-      "id": "00be395010a6",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 6459709,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAAAAeQ="
-      }
-    }
-  ],
   "celo": [
     {
       "id": "7c329e9319ea",
@@ -433,37 +352,6 @@
         "inbox": "0xff00000000000000000000000000000000042220",
         "sequencers": ["0x0cd08c7f7A96AA9635f761b49216B9eA74C5cA60"],
         "sinceBlock": 22038831
-      }
-    },
-    {
-      "id": "d7534d04c245",
-      "config": {
-        "type": "eigen-da",
-        "customerId": "0xecf08b0a4f196e06e9aece95d5dd724bc121f09c",
-        "daLayer": "eigenda",
-        "sinceTimestamp": 1741806000
-      }
-    }
-  ],
-  "civitia": [
-    {
-      "id": "73be28c3fbaa",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 4492300,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAEwLOhV+kOUlUq4="
-      }
-    }
-  ],
-  "clique": [
-    {
-      "id": "d6028e9615e0",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 3161819,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAARQV7t6sd4A="
       }
     }
   ],
@@ -476,39 +364,6 @@
         "inbox": "0x8c12f051c161c2cda736f3b3fa1c4bdd35b7922c",
         "sequencers": ["0xb5bd290ef8ef3840cb866c7a8b7cc9e45fde3ab9"],
         "sinceBlock": 20953494
-      }
-    }
-  ],
-  "conduit": [
-    {
-      "id": "0e12a4598e33",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 0,
-        "customerId": "0x8dc6f0bd2ce3c40d633f5541e21e7574598f7c75"
-      }
-    }
-  ],
-  "conduit-2": [
-    {
-      "id": "9b293cd2e4d8",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 1719266400,
-        "customerId": "34.145.120.220"
-      }
-    }
-  ],
-  "conduit-3": [
-    {
-      "id": "c988d5341c99",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 1719262800,
-        "customerId": "34.168.104.248"
       }
     }
   ],
@@ -538,37 +393,6 @@
       }
     }
   ],
-  "crestal": [
-    {
-      "id": "21dc3b98a724",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["16"]
-      }
-    },
-    {
-      "id": "89d8398a1ace",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 1728399600,
-        "customerId": "0x2659d4555e482ec4131a493def0770a922c75de3"
-      }
-    }
-  ],
-  "dans-awesome-app": [
-    {
-      "id": "258ece60d579",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["29"]
-      }
-    }
-  ],
   "dbk": [
     {
       "id": "0be222b43a67",
@@ -578,70 +402,6 @@
         "inbox": "0xFF00000000000000000000000000000020240603",
         "sequencers": ["0x7aB7da0C3117D7Dfe0ABfAA8d8D33883f8477C74"],
         "sinceBlock": 20015025
-      }
-    }
-  ],
-  "dragonft": [
-    {
-      "id": "3d11dac766ac",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["21"]
-      }
-    }
-  ],
-  "echelon": [
-    {
-      "id": "601354221be6",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5659637,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAItyY42OaTC/skE="
-      }
-    }
-  ],
-  "echos": [
-    {
-      "id": "c4682102bddf",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 3161819,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA/cZMN1XLG8="
-      }
-    }
-  ],
-  "eclipse": [
-    {
-      "id": "630dbcf6c9c5",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGVjbGlwc2U="
-      }
-    }
-  ],
-  "eden": [
-    {
-      "id": "62eb20f5e97e",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 9413424,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAoxK5AW18ozObY="
-      }
-    },
-    {
-      "id": "fcb367b41b8e",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 9409947,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAORr5sRrVhwIjmU="
       }
     }
   ],
@@ -658,24 +418,35 @@
       }
     },
     {
+      "id": "3231d3c5bc18",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x07f9e14feb43a6262141bfb598c09b678fd00163",
+        "sinceBlock": 26293834
+      }
+    },
+    {
       "id": "47b27b1cce3d",
       "config": {
         "daLayer": "ethereum",
         "type": "ethereum",
         "inbox": "0x07f9e14feb43a6262141bfb598c09b678fd00163",
         "sequencers": ["0x4261d69f840cc550945def48e5f477737118d546"],
-        "sinceBlock": 26135813
+        "sinceBlock": 26135813,
+        "untilBlock": 26293833
       }
     }
   ],
-  "embr-fun": [
+  "ephemeral-entropy": [
     {
-      "id": "86f0b7d8e667",
+      "id": "2456d0c6d06a",
       "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5954601,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMbONmnisjTDz4I="
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x1c67a27ea8ec8fe25d45e0b15719a2b7a8a64e2a",
+        "sequencers": ["0x1c67a27ea8ec8fe25d45e0b15719a2b7a8a64e2a"],
+        "sinceBlock": 25906368
       }
     }
   ],
@@ -703,17 +474,6 @@
       }
     }
   ],
-  "flame": [
-    {
-      "id": "9090bf154b79",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 3161819,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAL2dxfeNrJ+tg6Y="
-      }
-    }
-  ],
   "fluent": [
     {
       "id": "0509edb4f45e",
@@ -726,17 +486,6 @@
       }
     }
   ],
-  "flynet": [
-    {
-      "id": "ef648acaf8f9",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5188001,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAACyPE7Ql9zwA="
-      }
-    }
-  ],
   "forknet": [
     {
       "id": "fa508c38e45a",
@@ -744,54 +493,13 @@
         "type": "ethereum",
         "daLayer": "ethereum",
         "sinceBlock": 23281847,
+        "untilBlock": 26158243,
         "inbox": "0x003FBC27c32dBE174A7BB1EfdD49da79C6Ea1774",
         "sequencers": ["0x8839E742fd56ebC0d31d11DD5A2cA25aA61c54DA"]
       }
     }
   ],
-  "form": [
-    {
-      "id": "70a7244f9daf",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 2943925,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpR3bjJQT0="
-      }
-    }
-  ],
-  "forma": [
-    {
-      "id": "c27254593410",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 3161819,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAKKnitomrCy/HoY="
-      }
-    }
-  ],
-  "foundation-network": [
-    {
-      "id": "27a6c76de4df",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 3667737,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAN/xAxpagCrjLVQ="
-      }
-    }
-  ],
   "fuel": [
-    {
-      "id": "0e8ec8be6a50",
-      "config": {
-        "type": "eigen-da",
-        "customerId": "0xea0337efc12e98ab118948da570c07691e8e4b37",
-        "daLayer": "eigenda",
-        "sinceTimestamp": 1751526000
-      }
-    },
     {
       "id": "9f8a5f377b9d",
       "config": {
@@ -801,28 +509,6 @@
         "inbox": "0xEA0337EFC12e98AB118948dA570C07691E8E4b37",
         "sequencers": ["0xEA0337EFC12e98AB118948dA570C07691E8E4b37"],
         "untilBlock": 22837254
-      }
-    }
-  ],
-  "fuse-l2": [
-    {
-      "id": "c14af5db5ed3",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["22"]
-      }
-    }
-  ],
-  "galxegravity": [
-    {
-      "id": "2b42cc2008b7",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 5169794,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAABH1QsY4w6WU="
       }
     }
   ],
@@ -850,14 +536,23 @@
       }
     }
   ],
-  "ham": [
+  "gwei-blogposts": [
     {
-      "id": "b82f9418c0a1",
+      "id": "1ec920a86fd0",
       "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpeLVvrm6k="
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x73849f6f2785ba7fd2f41b5b4573b75554417981",
+        "sinceBlock": 26268082
+      }
+    },
+    {
+      "id": "73f62d325ff9",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xb29ae0ba5baff7ec36ebcf1682c99810956e3075",
+        "sinceBlock": 26264016
       }
     }
   ],
@@ -906,17 +601,6 @@
       }
     }
   ],
-  "hello-world": [
-    {
-      "id": "03cb1ce906bd",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["13"]
-      }
-    }
-  ],
   "hemi": [
     {
       "id": "58512485ccc1",
@@ -926,59 +610,6 @@
         "inbox": "0xfF00000000000000000000000000000000043111",
         "sequencers": ["0x65115C6D23274E0A29A63B69130eFe901Aa52e7A"],
         "sinceBlock": 20711665
-      }
-    }
-  ],
-  "hibachi": [
-    {
-      "id": "7bbe2b7034e0",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5979823,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAABoaWJhY2hpLXM="
-      }
-    },
-    {
-      "id": "dfefb8bddfee",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5981133,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhpYmFjaGk="
-      }
-    }
-  ],
-  "hypr": [
-    {
-      "id": "44b9bc7dd0a3",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE="
-      }
-    }
-  ],
-  "inertia": [
-    {
-      "id": "ad5b898564ce",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5941532,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAEg2If2QGyq4ZRQ="
-      }
-    }
-  ],
-  "ing": [
-    {
-      "id": "a48ebe34cd2d",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5945453,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAALdhUSKgKHU0Zx0="
       }
     }
   ],
@@ -1005,28 +636,6 @@
       }
     }
   ],
-  "intergaze": [
-    {
-      "id": "ed77885c2e6e",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5748411,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAIoZCJNLh1XvOZA="
-      }
-    }
-  ],
-  "jjjtkekznfnxkeke": [
-    {
-      "id": "f07735e6b99a",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["15"]
-      }
-    }
-  ],
   "jovay": [
     {
       "id": "9ea1663e15d1",
@@ -1042,18 +651,6 @@
       }
     }
   ],
-  "karak": [
-    {
-      "id": "58ba5e59c8fb",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=",
-        "untilBlock": 14058896
-      }
-    }
-  ],
   "katana": [
     {
       "id": "fd1ddbe839bf",
@@ -1066,17 +663,6 @@
       }
     }
   ],
-  "kayabey": [
-    {
-      "id": "7962eb892835",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["27"]
-      }
-    }
-  ],
   "kinto": [
     {
       "id": "1f217b82174a",
@@ -1086,17 +672,6 @@
         "inbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
         "sequencers": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "sinceBlock": 18788587
-      }
-    }
-  ],
-  "kms": [
-    {
-      "id": "1706339c8d6d",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["28"]
       }
     }
   ],
@@ -1136,61 +711,6 @@
         "inbox": "0xfF00000000000000000000000000000000056026",
         "sequencers": ["0xDeC273BF31AD79ad00D619c52662f724176A12Fb"],
         "sinceBlock": 19674409
-      }
-    }
-  ],
-  "layer-n": [
-    {
-      "id": "39a00a57a183",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 0,
-        "customerId": "0xd697219f32129f4544a554be015386fac9445507"
-      }
-    }
-  ],
-  "lc85p": [
-    {
-      "id": "b3b69706b7f9",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["20"]
-      }
-    }
-  ],
-  "lens": [
-    {
-      "id": "146173cd630d",
-      "config": {
-        "type": "avail",
-        "daLayer": "avail",
-        "sinceBlock": 1180000,
-        "appIds": ["26"]
-      }
-    }
-  ],
-  "lens-historical-data": [
-    {
-      "id": "c47e42af271b",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["39"]
-      }
-    }
-  ],
-  "leouarz-test-app": [
-    {
-      "id": "2a12c49274e4",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["11"]
       }
     }
   ],
@@ -1281,15 +801,6 @@
   ],
   "lyra": [
     {
-      "id": "43f8068a2801",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw="
-      }
-    },
-    {
       "id": "98d4c99c5825",
       "config": {
         "type": "ethereum",
@@ -1297,17 +808,6 @@
         "inbox": "0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50",
         "sequencers": ["0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e"],
         "sinceBlock": 25974565
-      }
-    }
-  ],
-  "mantapacific": [
-    {
-      "id": "b90581385a42",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAIZiad33fbxA7Z0="
       }
     }
   ],
@@ -1321,48 +821,40 @@
         "sequencers": ["0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"],
         "sinceBlock": 19434945
       }
-    },
-    {
-      "id": "7f14496fac2c",
-      "config": {
-        "type": "eigen-da",
-        "customerId": "0x24f0a3716805e8973bf48eb908d6d4a2f34af785",
-        "daLayer": "eigenda",
-        "sinceTimestamp": 1738821600,
-        "untilTimestamp": 1776322715
-      }
     }
   ],
-  "mantle-testnet": [
+  "mayachain": [
     {
-      "id": "312cd499f594",
+      "id": "dc709f59188a",
       "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 0,
-        "customerId": "0xc16267ecb2297f8a98fce214686e80697da91198"
-      }
-    }
-  ],
-  "matter-labs-wonderfi": [
-    {
-      "id": "bf74be61c3cc",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 0,
-        "customerId": "0xdaf4b26d608d58f53ab6f0758a12de01296ce5bf"
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x3263a42bd298e801c21aa58d00000b4deabbfbc8",
+        "sequencers": ["0x97fb2a92ae74f8a754bed2ef70c0f5b5c387edd3"],
+        "sinceBlock": 26198135
       }
     }
   ],
   "megaeth": [
     {
-      "id": "5e5ebd8a4160",
+      "id": "6b3537520bbb",
       "config": {
-        "type": "eigen-da",
-        "daLayer": "eigenda",
-        "sinceTimestamp": 1762995600,
-        "customerId": "0x42b5ea5238752cc6f70d93fa4249feae480a0b39"
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xe4e456c64b9b0de5fe8a90d809180ca71534d623",
+        "sequencers": ["0x6644d495d22b0d25e904098d61520c95befc8ec5"],
+        "sinceBlock": 23888698,
+        "untilBlock": 25050480
+      }
+    },
+    {
+      "id": "be9c29346d84",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x01853F268B170D4A15D0c3AE905757b5Ec8375f3",
+        "sequencers": ["0x6644D495D22b0d25e904098d61520C95bEFc8EC5"],
+        "sinceBlock": 25050829
       }
     }
   ],
@@ -1387,17 +879,6 @@
         "sinceBlock": 22472728,
         "inbox": "0xFf00000000000000000000000000000000001088",
         "sequencers": ["0xaE4d46bD9117Cb017C5185844699c51107cB28a9"]
-      }
-    }
-  ],
-  "milkyway": [
-    {
-      "id": "758d445f83b3",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5298640,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAB2AZsEwLd1LLHk="
       }
     }
   ],
@@ -1434,17 +915,6 @@
         "inbox": "0x24E59d9d3Bd73ccC28Dc54062AF7EF7bFF58Bd67",
         "sequencers": ["0x99199a22125034c808ff20f377d91187E8050F2E"],
         "sinceBlock": 18586931
-      }
-    }
-  ],
-  "molten": [
-    {
-      "id": "b5fc73ce5c1f",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 5305699,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpNR57blEA="
       }
     }
   ],
@@ -1500,17 +970,6 @@
       }
     }
   ],
-  "nillion": [
-    {
-      "id": "01b093f1c953",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 8976650,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBOFuc8Ges="
-      }
-    }
-  ],
   "nova": [
     {
       "id": "46a41bde9d8d",
@@ -1526,47 +985,41 @@
       }
     }
   ],
-  "ody-playground": [
+  "octant": [
     {
-      "id": "217cd407d2a3",
+      "id": "5e3bc7bb9aa8",
       "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["40"]
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x5c6dda7e609e2db55cf84ca4f49280f927d79f6e",
+        "sinceBlock": 25296201
       }
-    }
-  ],
-  "odysphere": [
+    },
     {
-      "id": "902083415953",
+      "id": "7b068bc4a91d",
       "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["32"]
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x6e04b3430309802092e43e4079f1e50e704fa6e5",
+        "sinceBlock": 25337862
       }
-    }
-  ],
-  "onchain": [
+    },
     {
-      "id": "c3984a860980",
+      "id": "7e5f1530904f",
       "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 3161819,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAABNfLrOLSCTY="
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xc664a5a1fe0f73d43fc24561118e0b1c92874ad1",
+        "sinceBlock": 25236963
       }
-    }
-  ],
-  "openledger": [
+    },
     {
-      "id": "cd44aefc747e",
+      "id": "d903e5d198ef",
       "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 1752044400,
-        "customerId": "0xe16fabeb99a6c098e4d7b4d442df0c827d5a6d26"
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x917682e054687226e24d4fcd7861fc81109f4ab4",
+        "sinceBlock": 26149744
       }
     }
   ],
@@ -1579,6 +1032,18 @@
         "inbox": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
         "sequencers": ["0x1c841ed065149e32e4c43e3b10ecd71f1fed1db7"],
         "sinceBlock": 21712806
+      }
+    }
+  ],
+  "opstack-1679": [
+    {
+      "id": "515c4f35e339",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xff00000000000000000000000000000000042069",
+        "sequencers": ["0x5df930bfa5daa2919d8f2a954a4f346a3b2cf8c2"],
+        "sinceBlock": 23445405
       }
     }
   ],
@@ -1678,17 +1143,6 @@
       }
     }
   ],
-  "orderly": [
-    {
-      "id": "89362db2d62d",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU="
-      }
-    }
-  ],
   "paradex": [
     {
       "id": "d86796359f38",
@@ -1724,17 +1178,6 @@
       }
     }
   ],
-  "pepeunchained": [
-    {
-      "id": "465561f40619",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 21314461,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADzZzvipmzP4="
-      }
-    }
-  ],
   "pepeunchained2": [
     {
       "id": "2ca3d522aba4",
@@ -1757,17 +1200,6 @@
       }
     }
   ],
-  "perennial": [
-    {
-      "id": "168ea0a4f7bc",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 3886561,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAaToZYrE0tA="
-      }
-    }
-  ],
   "phala": [
     {
       "id": "db0bcd35e1a3",
@@ -1780,28 +1212,6 @@
       }
     }
   ],
-  "plumenetwork": [
-    {
-      "id": "248db65e169b",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 5757261,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADQSAB6M6v+s="
-      }
-    }
-  ],
-  "polymer": [
-    {
-      "id": "3bf339aeaac4",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 1731974400,
-        "customerId": "0xf33f8cfea5857ebf248520cf6bc33640680ff83b"
-      }
-    }
-  ],
   "polynomial": [
     {
       "id": "1c2186c0a255",
@@ -1811,17 +1221,6 @@
         "inbox": "0x0bd57e83B5E0f9eCD84d559bB58e1EcFEEdD2565",
         "sequencers": ["0x67a44CE38627F46F20b1293960559eD85Dd194F1"],
         "sinceBlock": 20062740
-      }
-    }
-  ],
-  "powerloom": [
-    {
-      "id": "2db7784e7e83",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 1754438400,
-        "customerId": "0x00efb491755397ab8727ab45c4aef5fdcd3ecef8"
       }
     }
   ],
@@ -1861,182 +1260,6 @@
       }
     }
   ],
-  "rari": [
-    {
-      "id": "6de44962ca49",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U="
-      }
-    }
-  ],
-  "rave": [
-    {
-      "id": "96ddd600f43a",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5645296,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAF45zaUciayEPXE="
-      }
-    }
-  ],
-  "relay-chain": [
-    {
-      "id": "f33832f0dd62",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 9272873,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAHJlbGF5LWRhdGE="
-      }
-    }
-  ],
-  "rena": [
-    {
-      "id": "84e9db3e62d8",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5775045,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMxohfftlR5t59s="
-      }
-    }
-  ],
-  "reserved-1": [
-    {
-      "id": "b7af7b5d509f",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["1"]
-      }
-    }
-  ],
-  "reserved-2": [
-    {
-      "id": "2eacac769cca",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["2"]
-      }
-    }
-  ],
-  "reserved-3": [
-    {
-      "id": "887a028ceedc",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["3"]
-      }
-    }
-  ],
-  "reserved-4": [
-    {
-      "id": "8f0ff8558503",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["4"]
-      }
-    }
-  ],
-  "reserved-5": [
-    {
-      "id": "679a241666af",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["5"]
-      }
-    }
-  ],
-  "reserved-6": [
-    {
-      "id": "9c461252000c",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["6"]
-      }
-    }
-  ],
-  "reserved-7": [
-    {
-      "id": "4946810739d0",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["7"]
-      }
-    }
-  ],
-  "reserved-8": [
-    {
-      "id": "9acb9ccb8d5b",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["8"]
-      }
-    }
-  ],
-  "reserved-9": [
-    {
-      "id": "e05f5c22c959",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["9"]
-      }
-    }
-  ],
-  "rise": [
-    {
-      "id": "2ad868bdc77b",
-      "config": {
-        "type": "eigen-da",
-        "daLayer": "eigenda",
-        "sinceTimestamp": 1767607200,
-        "customerId": "0x78d5974216f751eb328018f003067f77e8be2fc4"
-      }
-    }
-  ],
-  "rivalz-network": [
-    {
-      "id": "f03e66278478",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 4932528,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAMJ/xGlNMdE="
-      }
-    }
-  ],
-  "river": [
-    {
-      "id": "757f17e1aac0",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 4071540,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4Sor8Q7yCoU="
-      }
-    }
-  ],
   "robinhood": [
     {
       "id": "0fece1229ccf",
@@ -2064,17 +1287,6 @@
       }
     }
   ],
-  "se-avail": [
-    {
-      "id": "b1b4b5547ed6",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["24"]
-      }
-    }
-  ],
   "settlus": [
     {
       "id": "21b59864e4d8",
@@ -2084,16 +1296,6 @@
         "sinceBlock": 21890837,
         "inbox": "0x003E40D3125591bD722aB1bB880c78e4D74d0977",
         "sequencers": ["0xD0b4c3aC8A50B6F1B3949ADaf55Cc9805620EB57"]
-      }
-    },
-    {
-      "id": "f22125c047be",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 9779673,
-        "untilBlock": 13618693,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPs="
       }
     }
   ],
@@ -2106,17 +1308,6 @@
         "inbox": "0xfF00000000000000000000000000000000000360",
         "sequencers": ["0xF7ca543d652E38692fD12f989eb55b5327eC9A20"],
         "sinceBlock": 20369958
-      }
-    }
-  ],
-  "skate-mainnet": [
-    {
-      "id": "e59b45d74f29",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["19"]
       }
     }
   ],
@@ -2146,24 +1337,6 @@
   ],
   "soon": [
     {
-      "id": "31905255c4ff",
-      "config": {
-        "type": "eigen-da",
-        "customerId": "0x52ebeea8a7dcaaa17ee398b9f9b01dfa64db63ae",
-        "daLayer": "eigenda",
-        "sinceTimestamp": 1735822800
-      }
-    },
-    {
-      "id": "3718f22abb41",
-      "config": {
-        "type": "eigen-da",
-        "daLayer": "eigenda",
-        "sinceTimestamp": 1786951919,
-        "customerId": "0xcb3a6380c666ff97f474e11fd41519c320b7a276"
-      }
-    },
-    {
       "id": "3d7624c4d4f5",
       "config": {
         "type": "ethereum",
@@ -2174,48 +1347,6 @@
           "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
           "0x267576444F8504B23B98F2b3C0e31bB32eB6Eb7a"
         ]
-      }
-    },
-    {
-      "id": "aded832161bb",
-      "config": {
-        "type": "eigen-da",
-        "daLayer": "eigenda",
-        "sinceTimestamp": 1753412400,
-        "customerId": "0x420ad2641f22bf6f180c52d0b0566e7ec701c45a"
-      }
-    }
-  ],
-  "soon-base": [
-    {
-      "id": "2b950ea35981",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 1748934000,
-        "customerId": "0xa11b7dea1592011c0055c62efb9566a845493003"
-      }
-    }
-  ],
-  "sophon": [
-    {
-      "id": "9186999c5d28",
-      "config": {
-        "type": "avail",
-        "daLayer": "avail",
-        "sinceBlock": 0,
-        "appIds": ["17", "36", "37", "38"]
-      }
-    }
-  ],
-  "stack": [
-    {
-      "id": "54ab1a5e2265",
-      "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 0,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADtb2kYRqm8M="
       }
     }
   ],
@@ -2255,17 +1386,6 @@
         "inbox": "0x8612014a343089F1ddBACfD42baf4Afbf9133593",
         "sequencers": ["0xa9B074B27DE97f492F8F07fD7C213400E4ca5391"],
         "sinceBlock": 20737483
-      }
-    }
-  ],
-  "svmbnb-mainnet": [
-    {
-      "id": "e153ce6719c5",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["31"]
       }
     }
   ],
@@ -2393,6 +1513,18 @@
       }
     }
   ],
+  "tarball-blobs": [
+    {
+      "id": "77f734d176ef",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x0000000000000000000000000000000000000000",
+        "sequencers": ["0x6defc1def6abb1c39cbc722024985291ff6f9fb7"],
+        "sinceBlock": 26086572
+      }
+    }
+  ],
   "tea": [
     {
       "id": "c25334d148fe",
@@ -2457,15 +1589,6 @@
           "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"
         ]
       }
-    },
-    {
-      "id": "cfd04b0ba930",
-      "config": {
-        "daLayer": "eigenda",
-        "type": "eigen-da",
-        "sinceTimestamp": 0,
-        "customerId": "0x96561d11f55f99f7cda780b77e524195bde1dcde"
-      }
     }
   ],
   "unichain": [
@@ -2477,28 +1600,6 @@
         "inbox": "0xFf00000000000000000000000000000000000130",
         "sequencers": ["0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd"],
         "sinceBlock": 21116363
-      }
-    }
-  ],
-  "up-or-down": [
-    {
-      "id": "dfd6b67b572b",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["30"]
-      }
-    }
-  ],
-  "uwu": [
-    {
-      "id": "542a6578450b",
-      "config": {
-        "daLayer": "avail",
-        "type": "avail",
-        "sinceBlock": 0,
-        "appIds": ["33"]
       }
     }
   ],
@@ -2514,14 +1615,15 @@
       }
     }
   ],
-  "winr": [
+  "whitechain": [
     {
-      "id": "a86b5a735710",
+      "id": "9e3cbc59a9dd",
       "config": {
-        "type": "celestia",
-        "daLayer": "celestia",
-        "sinceBlock": 5390709,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAACFo9Sza5FZw="
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x00aaa63a0af768749a569dfda5fead3438091ba1",
+        "sequencers": ["0x681fcc4272c14f70203ea655b1eaf9a20557a473"],
+        "sinceBlock": 26274467
       }
     }
   ],
@@ -2557,48 +1659,6 @@
         "untilBlock": 24081293,
         "inbox": "0x002bdE9b0c0857AEE2cFFDea6b8723eAF5989449",
         "sequencers": ["0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d"]
-      }
-    }
-  ],
-  "xo-market": [
-    {
-      "id": "20bfd13b336e",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 8383370,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAEjr00EdZDGvoMU="
-      }
-    },
-    {
-      "id": "2d5b3ecce77e",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 8164261,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAACnGTcXcpKRnenc="
-      }
-    }
-  ],
-  "yominet": [
-    {
-      "id": "56ff6827ca3f",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5966190,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAFjh+OUc/ORU/0o="
-      }
-    }
-  ],
-  "zaar": [
-    {
-      "id": "362237198e44",
-      "config": {
-        "daLayer": "celestia",
-        "type": "celestia",
-        "sinceBlock": 5587852,
-        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAM8NBxiaOQwFwQc="
       }
     }
   ],
@@ -2774,6 +1834,18 @@
         "inbox": "0xa7980e38722dbe6238f221da65e1143d22161a71",
         "sequencers": ["0xa5ee2f9e0cd1862f245d13fa9428a707fb942cf6"],
         "sinceBlock": 25962259
+      }
+    }
+  ],
+  "zksyncos-886229927": [
+    {
+      "id": "241392fb0284",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xa7980e38722dbe6238f221da65e1143d22161a71",
+        "sequencers": ["0x31ae186902650fecde18497bf7b1cd2e096bc88f"],
+        "sinceBlock": 26177122
       }
     }
   ],

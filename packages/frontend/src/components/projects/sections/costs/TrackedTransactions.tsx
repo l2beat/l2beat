@@ -12,10 +12,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { ChevronIcon } from '~/icons/Chevron'
 import { InfoIcon } from '~/icons/Info'
-import { formatTimestamp } from '~/utils/dates'
 import type {
   TrackedTransaction,
   TrackedTransactionsByType,
@@ -175,17 +175,12 @@ function TransactionDetails({
           ) : null}
         </div>
         <p className="text-2xs text-secondary max-md:mt-0.5 md:text-xs">
-          {formatTimestamp(transaction.sinceTimestamp, {
-            mode: 'datetime',
-            longMonthName: false,
-          })}{' '}
-          -{' '}
-          {transaction.untilTimestamp
-            ? formatTimestamp(transaction.untilTimestamp, {
-                mode: 'datetime',
-                longMonthName: false,
-              })
-            : 'Now'}
+          <UtcDateTime timestamp={transaction.sinceTimestamp} /> -{' '}
+          {transaction.untilTimestamp ? (
+            <UtcDateTime timestamp={transaction.untilTimestamp} />
+          ) : (
+            'Now'
+          )}
         </p>
       </div>
 

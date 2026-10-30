@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OffchainResolver",
+  "description": "Immutable ENS CCIP-Read resolver used by Cloaked. Every query redirects to a configurable API gateway and accepts the returned ENS record if it is unexpired and signed by the configurable signer. It does not verify that a returned payment address was derived for the named recipient.",
+  "category": "core",
+  "fields": {
+    "gateways": {
+      "description": "URLs used for offchain ENS resolution. The owner can replace the complete list immediately."
+    },
+    "owner": {
+      "description": "Owner of the resolver.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the accepted signer and gateway URLs immediately, or transfer resolver ownership."
+        }
+      ]
+    },
+    "signer": {
+      "description": "Address whose signatures authenticate offchain ENS answers.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign arbitrary offchain ENS answers, including payment addresses accepted by the resolver."
+        }
+      ]
+    }
+  }
+}

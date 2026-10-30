@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x1a35f8b31c31bd1d307ccd1a14a945d87b7510a7
+
+# Diff at Tue, 20 Oct 2026 10:19:11 GMT:
+
+- id: 061d9b11
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1791380927
+- current timestamp: 1792491537
+
+## Description
+
+StakingVault (VaultHub index 3): Beacon Chain deposits auto-paused by the VaultHub on 2026-10-17 after an oracle report raised unsettled Lido fees to `1.0325 ETH` (threshold `1 ETH`).
+
+## Watched changes
+
+```diff
+    contract StakingVault (eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711) [lido/StakingVault] {
+    +++ description: An isolated staking position that holds ETH for validators with 0x02 withdrawal credentials. The owner controls funds and validator operations, the depositor performs Beacon Chain deposits, and the node operator can force validator exits. Vaults normally use a beacon implementation but can irreversibly pin their current implementation.
+      values.beaconChainDepositsPaused:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x786a4aa2b68f41cae56af073d3257f2eefe2aaf1
+
+# Diff at Fri, 16 Oct 2026 05:36:50 GMT:
+
+- id: bbce6733
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791380927
+- current timestamp: 1791380927
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791380927 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x06A56487494aa080deC7Bf69128EdA9225784553. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x95da12fd6cb9beac7fa6366a0d2ed1ccd6a92ece
 
 # Diff at Wed, 07 Oct 2026 13:53:19 GMT:

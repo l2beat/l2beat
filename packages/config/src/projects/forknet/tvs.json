@@ -17,7 +17,8 @@
         "address": "0xFe88e3E9BD8eC1B76CD7d6aAf630F1C6E6041fA1",
         "chain": "forknet",
         "decimals": 18,
-        "sinceTimestamp": 1756893611
+        "sinceTimestamp": 1756893611,
+        "untilTimestamp": 1791590400
       }
     },
     {
@@ -37,7 +38,8 @@
             "type": "const",
             "value": "340282366920938463463374607431768211455",
             "decimals": 18,
-            "sinceTimestamp": 1756893611
+            "sinceTimestamp": 1756893611,
+            "untilTimestamp": 1791590400
           },
           {
             "type": "balanceOfEscrow",
@@ -45,7 +47,8 @@
             "decimals": 18,
             "address": "native",
             "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-            "sinceTimestamp": 1756893611
+            "sinceTimestamp": 1756893611,
+            "untilTimestamp": 1791590400
           }
         ]
       },
@@ -66,7 +69,8 @@
         "address": "0xb24e3035d1FCBC0E43CF3143C3Fd92E53df2009b",
         "chain": "forknet",
         "decimals": 18,
-        "sinceTimestamp": 1756893611
+        "sinceTimestamp": 1756893611,
+        "untilTimestamp": 1791590400
       }
     },
     {
@@ -84,7 +88,8 @@
         "address": "0xdEC51100A464D05865952F8E041b3FD3357A32D3",
         "chain": "forknet",
         "decimals": 18,
-        "sinceTimestamp": 1756893611
+        "sinceTimestamp": 1756893611,
+        "untilTimestamp": 1791590400
       }
     },
     {
@@ -102,7 +107,8 @@
         "address": "0x17BFF452dae47e07CeA877Ff0E1aba17eB62b0aB",
         "chain": "forknet",
         "decimals": 18,
-        "sinceTimestamp": 1756893611
+        "sinceTimestamp": 1756893611,
+        "untilTimestamp": 1791590400
       }
     },
     {
@@ -120,7 +126,8 @@
         "address": "0xfd415D011FfaA8e6f17fa753CdB080d1dE266784",
         "chain": "forknet",
         "decimals": 6,
-        "sinceTimestamp": 1756893611
+        "sinceTimestamp": 1756893611,
+        "untilTimestamp": 1791590400
       }
     },
     {
@@ -138,7 +145,8 @@
         "address": "0xf44e3BCB7A2461CC08185E127B324f2486a74E20",
         "chain": "forknet",
         "decimals": 6,
-        "sinceTimestamp": 1756893611
+        "sinceTimestamp": 1756893611,
+        "untilTimestamp": 1791590400
       }
     },
     {
@@ -156,7 +164,8 @@
         "address": "0xB33e43A3F276e8e75792b941bccC996EcB2c0bBD",
         "chain": "forknet",
         "decimals": 8,
-        "sinceTimestamp": 1756893611
+        "sinceTimestamp": 1756893611,
+        "untilTimestamp": 1791590400
       }
     },
     {
@@ -174,7 +183,8 @@
         "address": "0x815955d051C6262C16c720b19D735426254Bec5B",
         "chain": "forknet",
         "decimals": 18,
-        "sinceTimestamp": 1756893611
+        "sinceTimestamp": 1756893611,
+        "untilTimestamp": 1791590400
       }
     },
     {
@@ -192,7 +202,8 @@
         "address": "0x1c188CA40e63a5c5864A9C0Be9fAaB8308d932Cf",
         "chain": "forknet",
         "decimals": 6,
-        "sinceTimestamp": 1756893611
+        "sinceTimestamp": 1756893611,
+        "untilTimestamp": 1791590400
       }
     }
   ]

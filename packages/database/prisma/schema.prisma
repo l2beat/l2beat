@@ -34,6 +34,16 @@ model Activity {
   @@id([projectId, timestamp])
 }
 
+/// Activity per hour, kept for the last two weeks for the 1D and 7D charts
+model HourlyActivity {
+  projectId String   @db.VarChar(255)
+  timestamp DateTime @db.Timestamp(6)
+  count     Int
+  uopsCount Int?
+
+  @@id([projectId, timestamp])
+}
+
 model AggregatedL2Cost {
   timestamp      DateTime @db.Timestamp(6)
   projectId      String   @db.VarChar(255)
@@ -264,6 +274,24 @@ model TokenValue {
   @@index([tokenId])
   @@index([projectId, tokenId, timestamp(sort: Desc)])
   @@index([projectId, timestamp, tokenId, valueForProject, valueForSummary])
+}
+
+/// Value of each escrow balance a TVS token sums, for tokens whose project
+/// shows value per escrow (privacy buckets). Written with TokenValue.
+model TvsEscrowValue {
+  timestamp       DateTime @db.Timestamp(6)
+  /// TokenValue configurationId of the token the escrow belongs to.
+  configurationId String   @db.Char(12)
+  projectId       String   @db.VarChar(255)
+  tokenId         String   @db.VarChar(255)
+  chain           String   @db.VarChar(255)
+  escrowAddress   String   @db.VarChar(255)
+  amount          Float    @db.Real
+  value           Float    @db.Real
+
+  @@id([timestamp, configurationId, chain, escrowAddress])
+  @@index([configurationId])
+  @@index([projectId, timestamp])
 }
 
 model DefiTvl {
@@ -561,6 +589,28 @@ model InteropTransfer {
   @@index([dstAbstractTokenId, timestamp(sort: Desc)])
 }
 
+/// The current CROPS attestation, as the backend last read it from EAS, with the
+/// source it was read from. Holds at most one row, which the backend replaces.
+model CropAttestation {
+  network     String   @db.VarChar(255)
+  chainId     Int
+  eas         String   @db.VarChar(42)
+  explorer    String   @db.VarChar(255)
+  schemaUid   String   @db.VarChar(66)
+  schema      String   @db.VarChar(255)
+  attester    String   @db.VarChar(42)
+  uid         String   @db.VarChar(66)
+  revision    Int
+  reviewedAt  DateTime @db.Timestamp(6)
+  projectIds  String[] @db.VarChar(255)
+  txHash      String   @db.VarChar(66)
+  blockNumber Int
+  /// When the backend last read it, so a stalled read is visible
+  updatedAt   DateTime @db.Timestamp(6)
+
+  @@id([uid])
+}
+
 model EcosystemToken {
   projectId                 String   @db.VarChar(255)
   coingeckoId               String   @db.VarChar(255)
@@ -732,28 +782,32 @@ model InteropPluginSyncedRange {
 }
 
 model AggregatedInteropTransfer {
-  timestamp                  DateTime @db.Timestamp(6)
-  id                         String   @db.VarChar(255)
-  bridgeType                 String   @default("unknown") @db.VarChar(255)
-  srcChain                   String   @db.VarChar(255)
-  dstChain                   String   @db.VarChar(255)
+  timestamp                  DateTime  @db.Timestamp(6)
+  id                         String    @db.VarChar(255)
+  bridgeType                 String    @default("unknown") @db.VarChar(255)
+  srcChain                   String    @db.VarChar(255)
+  dstChain                   String    @db.VarChar(255)
   transferTypeStats          Json?
   transferCount              Int
-  transfersWithDurationCount Int      @default(0)
-  identifiedCount            Int      @default(0)
+  transfersWithDurationCount Int       @default(0)
+  identifiedCount            Int       @default(0)
   totalDurationSum           Int
-  srcValueUsd                Float?   @db.Real
-  dstValueUsd                Float?   @db.Real
-  minTransferValueUsd        Float?   @db.Real
-  maxTransferValueUsd        Float?   @db.Real
-  avgValueInFlight           Float?   @db.Real
-  mintedValueUsd             Float?   @db.Real
-  burnedValueUsd             Float?   @db.Real
-  countUnder100              Int      @default(0)
-  count100To1K               Int      @default(0)
-  count1KTo10K               Int      @default(0)
-  count10KTo100K             Int      @default(0)
-  countOver100K              Int      @default(0)
+  srcValueUsd                Float?    @db.Real
+  dstValueUsd                Float?    @db.Real
+  minTransferValueUsd        Float?    @db.Real
+  maxTransferValueUsd        Float?    @db.Real
+  avgValueInFlight           Float?    @db.Real
+  mintedValueUsd             Float?    @db.Real
+  burnedValueUsd             Float?    @db.Real
+  countUnder100              Int       @default(0)
+  count100To1K               Int       @default(0)
+  count1KTo10K               Int       @default(0)
+  count10KTo100K             Int       @default(0)
+  countOver100K              Int       @default(0)
+  // Set when the lane was copied from an older snapshot because its syncers lagged
+  carriedFrom                DateTime? @db.Timestamp(6)
+  // Computed while the lane's syncers lagged, so it undercounts and must not be carried forward
+  isPartial                  Boolean   @default(false)
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])

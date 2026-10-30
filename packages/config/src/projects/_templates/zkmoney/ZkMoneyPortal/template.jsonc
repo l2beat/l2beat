@@ -3,7 +3,7 @@
   "displayName": "ZkMoneyPortal",
   "critical": true,
   "category": "core",
-  "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds that need a zk proof and a TEE signature. L2 transfers are not disabled but do not change refundable ownership.",
+  "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.",
   "ignoreMethods": ["$firstProver"],
   "ignoreInWatchMode": [
     "_$cachedAvailable",
@@ -12,8 +12,7 @@
   ],
   "ignoreRelatives": ["INBOX", "OUTBOX", "REGISTRY", "ROLLUP", "UNDERLYING"],
   "fields": {
-    // Role holder (spec). The deployer renounced 64 minutes after deployment,
-    // before the first deposit, so it can no longer change.
+    // Role holder (spec). Ownership cannot change after renunciation.
     "owner": {
       "severity": "MEDIUM",
       "permissions": [
@@ -29,7 +28,9 @@
       "handler": {
         "type": "event",
         "select": "pcr0Hash",
-        "add": { "event": "TEEPcr0Approved" }
+        "add": {
+          "event": "TEEPcr0Approved"
+        }
       }
     },
     "teeSigners": {
@@ -37,7 +38,9 @@
       "handler": {
         "type": "event",
         "select": "tee",
-        "add": { "event": "TEEAdded" }
+        "add": {
+          "event": "TEEAdded"
+        }
       },
       "permissions": [
         {
@@ -66,13 +69,13 @@
       "template": "zkmoney/NitroValidator"
     },
     "FROZEN_NOTES_REFUND_VERIFIER": {
-      "template": "zkmoney/HonkVerifier"
+      "template": "zkmoney/FrozenNotesRefundVerifier"
     },
     "FROZEN_DEPOSIT_REFUND_VERIFIER": {
-      "template": "zkmoney/HonkVerifier"
+      "template": "zkmoney/FrozenDepositRefundVerifier"
     },
     "UNPROCESSED_DEPOSIT_REFUND_VERIFIER": {
-      "template": "zkmoney/HonkVerifier"
+      "template": "zkmoney/UnprocessedDepositRefundVerifier"
     },
     "FPC_FUNDER": {
       "description": "Receives FPC_FUNDING_CUT from every deposit and withdrawal to fund Aztec fees for zk.money users.",

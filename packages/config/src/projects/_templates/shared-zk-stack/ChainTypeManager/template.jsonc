@@ -19,7 +19,7 @@
   ], // ignore validatorTimelock because it needs chain-specific config
   "fields": {
     "owner": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -28,7 +28,7 @@
       ]
     },
     "admin": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

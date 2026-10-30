@@ -1,6 +1,27 @@
 {
   "events": [
     {
+      "timestamp": 1681412261,
+      "type": "code",
+      "contract": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+      "transaction": "0x32150b91d7589ab15d95fb941d67c5e2e1c3016e83a389947f2dbbe6f31d05e0",
+      "reason": "Changed the implementation used by the tokens of the legacy L2 bridge (beacon Upgraded event at block 1428345), in the protocol upgrade that also upgraded the L2SharedBridgeLegacy. The beacon has no $pastUpgrades."
+    },
+    {
+      "timestamp": 1681572599,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x59aa901cc4f365ed5f1a801288f143a4bf5d79eb42e9e669200135ec1eb13a22",
+      "reason": "Matter Labs Multisig, then the Era Diamond governor, went from 3 of 7 to 4 of 7 signers (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1692181524,
+      "type": "code",
+      "contract": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+      "transaction": "0x29ab7707e8c256c40807ccf81e0fcf2a55112239cc7d2541fbe9b2d30f7da142",
+      "reason": "Changed the implementation used by the tokens of the legacy L2 bridge (beacon Upgraded event at block 11376577), in the protocol upgrade that also upgraded the L2SharedBridgeLegacy. The beacon has no $pastUpgrades."
+    },
+    {
       "timestamp": 1695403367,
       "type": "code",
       "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -33,6 +54,13 @@
       "reason": "Protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 17 -> 18, the verifier, and the bootloader and default account bytecode hashes (read at blocks 18715387/18715388). Dates the state changes of diffHistory entry cdbb5dce at their upgrade instead of counting them four days later as a separate change."
     },
     {
+      "timestamp": 1701722717,
+      "type": "code",
+      "contract": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+      "transaction": "0xc9c18f7c7ff7ec5d6687764c6cb5c3c3df236b7b60479231a0a2b298d5448ab6",
+      "reason": "Changed the implementation used by the tokens of the legacy L2 bridge (beacon Upgraded event at block 20674229), in the protocol upgrade that also upgraded the L2SharedBridgeLegacy. The beacon has no $pastUpgrades."
+    },
+    {
       "timestamp": 1703156615,
       "type": "state",
       "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -49,12 +77,26 @@
       "reason": "Protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 18 -> 19 and the bootloader and default account bytecode hashes (read at blocks 18834056/18834057). Dates the state changes of diffHistory entry 54f097de at their upgrade instead of counting them 19 days later as a separate change."
     },
     {
+      "timestamp": 1703243739,
+      "type": "code",
+      "contract": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+      "transaction": "0xe6ad88da2be45c00ff571f331256a560d8b85f30e052d3c96bbdcc8126ea7ebf",
+      "reason": "Changed the implementation used by the tokens of the legacy L2 bridge (beacon Upgraded event at block 22133915), in the protocol upgrade that also upgraded the L2SharedBridgeLegacy. The beacon has no $pastUpgrades."
+    },
+    {
       "timestamp": 1707143447,
       "type": "code",
       "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
       "transaction": "0x937dd21a05142c02159170dafb1bbaaa145ae7bd2c29bf512534fbec9ff801ab",
       "updateId": "2f064657",
       "reason": "Protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 19 -> 20, the verifier, and the bootloader and default account bytecode hashes (read at blocks 19162676/19162677). Dates the state changes of diffHistory entry 2f064657 at their upgrade."
+    },
+    {
+      "timestamp": 1707389404,
+      "type": "code",
+      "contract": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+      "transaction": "0xd0de8cafef06961279daec130c1546643748971287f8c32dd8f62af8b95315b4",
+      "reason": "Changed the implementation used by the tokens of the legacy L2 bridge (beacon Upgraded event at block 26071420), in the protocol upgrade that also upgraded the L2SharedBridgeLegacy. The beacon has no $pastUpgrades."
     },
     {
       "timestamp": 1710167531,
@@ -97,6 +139,27 @@
       "reason": "v24.2 protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 0.24.1 -> 0.24.2 (read at blocks 20468744/20468745). Dates the protocol version change of diffHistory entry 2ed0a950 at its upgrade."
     },
     {
+      "timestamp": 1736352987,
+      "type": "code",
+      "contract": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+      "transaction": "0x67c539415a1208ffb16a050f62e6edef3410ffcfd022f763a3a7e334f294a54f",
+      "reason": "Changed the implementation used by the tokens of the legacy L2 bridge (beacon Upgraded event at block 53202434), in the protocol upgrade that also upgraded the L2SharedBridgeLegacy. The beacon has no $pastUpgrades."
+    },
+    {
+      "timestamp": 1741764383,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x0a7e6ae7bdb680aef0261b21078159725b4cdb88146cf75a82838c0884c80e65",
+      "reason": "Matter Labs Multisig, which acts as Era chain admin through the EraChainAdminProxy, went from 4 of 7 to 5 of 8 signers (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1741777999,
+      "type": "code",
+      "contract": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+      "transaction": "0xaad81df6a9a5f6542a73cb62451bcd4b0e22ecf40214bc83fc6141ae0a6357d6",
+      "reason": "Changed the implementation used by the tokens of the legacy L2 bridge to the current BridgedStandardERC20 0x05b0…199b (beacon Upgraded event at block 57535732), in the protocol upgrade that also upgraded the L2SharedBridgeLegacy. The beacon has no $pastUpgrades."
+    },
+    {
       "timestamp": 1744719383,
       "type": "state",
       "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -111,14 +174,6 @@
       "transaction": "0x623f5a56f03cffc61976f063804b7aefb38dda0d0aa11a4d9af0369e967d5b1c",
       "updateId": "0dff75a3",
       "reason": "Matter Labs Multisig, via the EraChainAdminProxy, replaced the Era Diamond's TransactionFilterer 0xC8Cc…7C78 with 0x62F3…FA4f (NewTransactionFilterer event, bisected to block 22296155)."
-    },
-    {
-      "timestamp": 1745497499,
-      "type": "state",
-      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
-      "transaction": "0x1ea454b64ef579e7377d66bb8784c0c0554ef93fe903e425c0a8b6b3233e40aa",
-      "updateId": "bff2a528",
-      "reason": "Matter Labs Multisig, via the EraChainAdminProxy, removed the Era Diamond's TransactionFilterer (0x62F3…FA4f -> zero address) (NewTransactionFilterer event, bisected to block 22338850)."
     },
     {
       "timestamp": 1746446579,
@@ -159,6 +214,22 @@
       "transaction": "0xc886eef19b7182bda72883f0d6b6536e8c07fa399a0c66f7f50d4e66d592e674",
       "updateId": "af5012ae",
       "reason": "Changed the EraMultisigValidator execution threshold from zero to three approvals, enabling validator multisig gating."
+    },
+    {
+      "timestamp": 1782830483,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x7242d8cba18a9e6487e807d6f7833b96ac1c3a35519d242077c6c2483e84ea5d",
+      "reason": "Matter Labs Multisig, which acts as Era chain admin through the EraChainAdminProxy, went from 5 of 8 to 4 of 7 signers (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1791391799,
+      "type": "state",
+      "contract": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+      "transaction": "0x91c65b4e1f2415b7da5290bb144f0e97c0d735999dd01fbd093a172c38483c97",
+      "updateId": "11f5e2d6",
+      "reason": "Matter Labs Multisig, via the EraChainAdminProxy, raised Era's execution delay on the ValidatorTimelock from 3h to 1d (ZIP-17), dating diffHistory entry 11f5e2d6 at block 26141812."
     }
-  ]
+  ],
+  "ignoredUpdates": ["bff2a528"]
 }

@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "timestamp": 1791452652,
-  "configHash": "0x4b5abe5d9b1c75dd3fb4c374a75e4a2ac6558bcb98eae68e27664842f37efa7a",
+  "configHash": "0x641a05acc7d17964d8382a6c582a345b09f982d4e176784332a91a093d03b804",
   "entries": [
     {
       "name": "ProxyAdmin",
@@ -20,6 +20,7 @@
         "$immutable": true,
         "owner": "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB": "ProxyAdmin"
       }
@@ -148,6 +149,7 @@
         }
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "executionDelay": {
           "severity": "HIGH",
           "description": "Ecosystem-wide minimum execution delay (in seconds), set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
@@ -156,8 +158,9 @@
           "severity": "HIGH",
           "description": "Ecosystem-wide minimum execution delay, set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
         },
-        "executionDelayEra": { "severity": "MEDIUM" },
-        "executionDelayEra_fmt": { "severity": "MEDIUM" }
+        "upgraderVTL": { "severity": "MEDIUM" },
+        "executionDelayEra": { "severity": "HIGH" },
+        "executionDelayEra_fmt": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": "TransparentUpgradeableProxy",
@@ -681,7 +684,8 @@
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
         },
-        "getAdmin": { "severity": "HIGH" },
+        "getAdmin": { "severity": "MEDIUM" },
+        "validators": { "severity": "MEDIUM" },
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
@@ -867,14 +871,17 @@
         "L1_ASSET_ROUTER": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
         "L1_NATIVE_TOKEN_VAULT": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
         "L1_NULLIFIER": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-        "l2Bridge": "eth:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
-        "l2TokenBeacon": "eth:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+        "l2Bridge": "zksync:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
+        "l2TokenBeacon": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
         "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019"
       },
       "implementationNames": {
         "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": "TransparentUpgradeableProxy",
         "eth:0x6ed98623e0B51be68748aB5091Aa891Adb883e13": "L1ERC20Bridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "zksync" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1131,6 +1138,7 @@
       },
       "fieldMeta": {
         "executionDelay": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "executionDelay_fmt": { "severity": "HIGH" },
         "threshold": { "severity": "HIGH" },
         "$threshold": { "severity": "HIGH" }
@@ -1164,6 +1172,157 @@
       "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "BridgedStandardERC20",
+      "address": "zksync:0x05b00ef3489E21E57b3e93a72bc9F59c57bB199b",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x0016b7cbc3bd41f4e1444a02fba63f779bf92ff98ebb12bf2eebcc95f0d87485"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "zksync:0x0000000000000000000000000000000000008007",
+      "sinceTimestamp": 1741777999,
+      "sinceBlock": 57535732,
+      "values": {
+        "$immutable": true,
+        "assetId": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "decimals": 0,
+        "DOMAIN_SEPARATOR": "0x2ec155b9f76cc552c9964b671d950e724e7fbf6f6e52efe1886acd0a0030d51c",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "",
+          "version": "",
+          "chainId": 324,
+          "verifyingContract": "zksync:0x05b00ef3489E21E57b3e93a72bc9F59c57bB199b",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "l1Address": "zksync:0x0000000000000000000000000000000000000000",
+        "l2Bridge": "zksync:0x0000000000000000000000000000000000000000",
+        "name": "",
+        "nativeTokenVault": "zksync:0x0000000000000000000000000000000000000000",
+        "originToken": "zksync:0x0000000000000000000000000000000000000000",
+        "symbol": "",
+        "totalSupply": 0
+      },
+      "implementationNames": {
+        "zksync:0x05b00ef3489E21E57b3e93a72bc9F59c57bB199b": "BridgedStandardERC20"
+      }
+    },
+    {
+      "name": "L2SharedBridgeLegacy",
+      "address": "zksync:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x63b0dab3148aa637444d7c03444d63c027fe250f275509c6a27c8677194f8043"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Legacy L2 bridge of ZKsync Era. Deploys the bridged tokens of legacy deposits as beacon proxies of the l2TokenBeacon.",
+      "critical": true,
+      "deployerAddress": "zksync:0x0000000000000000000000000000000000008007",
+      "sinceTimestamp": 1761131425,
+      "sinceBlock": 65397656,
+      "values": {
+        "$admin": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+        "$implementation": "zksync:0xcC87D9E8525bC40Afc11e79f637e1570D7E5bA46",
+        "$pastUpgrades": [
+          [
+            "2023-02-14T14:22:22.000Z",
+            "0xec06ab90e8cbada2b205874567504ceed9e005df452a997472823a8b59cb30ec",
+            ["zksync:0x6d7a34EB3055549866A227Df64E954B142D97430"]
+          ],
+          [
+            "2023-03-23T22:30:24.000Z",
+            "0xf33d7e5613eeb9e01ef54ce891229b3ca27cd1efbd1eb867c7cbf70ebe8656f6",
+            ["zksync:0x249099548900B1B57B2af48519CbbAD341332F92"]
+          ],
+          [
+            "2023-04-13T18:57:40.000Z",
+            "0x44489f2666517910616fb797a7075ab914c1703b844502d944a764acab2631de",
+            ["zksync:0xE385116558101657985d46a24aC3de1be80B8a6d"]
+          ],
+          [
+            "2023-08-16T10:25:24.000Z",
+            "0xae2a0807faa7ef807b380d6103d92647f4c9081e00168b957298e048e7fb5728",
+            ["zksync:0x825774c61Bb67b58455a6a0d96D6c6E9dc8B5812"]
+          ],
+          [
+            "2023-12-04T20:45:16.000Z",
+            "0xa2a14927e311b5e802713dc98073c9e64042a441198d656a072dac7ea12a8748",
+            ["zksync:0x1Bb6b57F90620f6fda14Fcd1660197713D46A5Cc"]
+          ],
+          [
+            "2023-12-22T11:15:39.000Z",
+            "0x934cc3b33febd1dfd796a228dd77f4b34740ef6469661721dca9e3d2bd554440",
+            ["zksync:0x924c0E6CAd37F708ABfEc777Ef93CB6CBe490f0A"]
+          ],
+          [
+            "2024-02-08T10:50:04.000Z",
+            "0x803a1afd61fb7d31b64837ad6f6de2cf777abb7d91f1cb939b50f1cb48700c4a",
+            ["zksync:0x4F87aC9Ab720bB47073A236b42C245Fe30E225d5"]
+          ],
+          [
+            "2024-06-06T13:17:18.000Z",
+            "0x81b056b50bbdb66d761147dc77ddca939735c3ab780273b45faf206fea6288a1",
+            ["zksync:0x470AFAaCcE2acDaefcC662419B74C79d76c914ae"]
+          ],
+          [
+            "2025-01-08T16:16:27.000Z",
+            "0xe0b3e57a735334139c1f8b53fe06b16b714feeaf24b131567b316a26e183b6e6",
+            ["zksync:0x36A2608a1202a499ecC6063513F51754d718Ac4f"]
+          ],
+          [
+            "2025-03-12T11:13:19.000Z",
+            "0xaad81df6a9a5f6542a73cb62451bcd4b0e22ecf40214bc83fc6141ae0a6357d6",
+            ["zksync:0xcC87D9E8525bC40Afc11e79f637e1570D7E5bA46"]
+          ]
+        ],
+        "$upgradeCount": 10,
+        "l1Bridge": "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+        "l1SharedBridge": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+        "l2TokenBeacon": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6"
+      },
+      "implementationNames": {
+        "zksync:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102": "TransparentUpgradeableProxy",
+        "zksync:0xcC87D9E8525bC40Afc11e79f637e1570D7E5bA46": "L2SharedBridgeLegacy"
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
+    },
+    {
+      "name": "UpgradeableBeacon",
+      "address": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+      "type": "Contract",
+      "template": "global/UpgradeableBeacon",
+      "sourceHashes": [
+        "0x00ec02964a63af2bae64273fd7236be3bdda2093b2f8d7131e260893b54e1efa"
+      ],
+      "proxyType": "immutable",
+      "description": "A beacon with an upgradeable implementation currently set as zksync:0x05b00ef3489E21E57b3e93a72bc9F59c57bB199b. Beacon proxy contracts pointing to this beacon will all use its implementation.",
+      "critical": true,
+      "deployerAddress": "zksync:0x689a1966931eB4Bb6fB81430E6ce0A03aABDf174",
+      "sinceTimestamp": 1676384542,
+      "sinceBlock": 1,
+      "values": {
+        "$immutable": true,
+        "implementation": "zksync:0x05b00ef3489E21E57b3e93a72bc9F59c57bB199b",
+        "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
+      },
+      "implementationNames": {
+        "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6": "UpgradeableBeacon"
+      }
+    },
+    {
+      "name": "ZkTokenProxyAdmin",
+      "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     }
   ],
   "abis": {
@@ -1731,21 +1890,108 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "zksync:0x05b00ef3489E21E57b3e93a72bc9F59c57bB199b": [
+      "constructor()",
+      "error NonSequentialVersion()",
+      "error Unauthorized(address caller)",
+      "error UnsupportedEncodingVersion()",
+      "error ZeroAddress()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event BridgeBurn(address indexed account, uint256 amount)",
+      "event BridgeInitialize(address indexed l1Token, string name, string symbol, uint8 decimals)",
+      "event BridgeMint(address indexed account, uint256 amount)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint8 version)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Upgraded(address indexed implementation)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function assetId() view returns (bytes32)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function bridgeBurn(address _from, uint256 _amount)",
+      "function bridgeInitialize(bytes32 _assetId, address _originToken, bytes _data)",
+      "function bridgeMint(address _to, uint256 _amount)",
+      "function decimals() view returns (uint8)",
+      "function decodeString(bytes _input) pure returns (string result)",
+      "function decodeUint8(bytes _input) pure returns (uint8 result)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function l1Address() view returns (address)",
+      "function l2Bridge() view returns (address)",
+      "function name() view returns (string)",
+      "function nativeTokenVault() view returns (address)",
+      "function nonces(address owner) view returns (uint256)",
+      "function originToken() view returns (address)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function reinitializeToken(tuple(bool ignoreName, bool ignoreSymbol, bool ignoreDecimals) _availableGetters, string _newName, string _newSymbol, uint8 _version)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
+    ],
+    "zksync:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6": [
+      "constructor(address implementation_)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function implementation() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)"
+    ],
+    "zksync:0xcC87D9E8525bC40Afc11e79f637e1570D7E5bA46": [
+      "constructor()",
+      "error AmountMustBeGreaterThanZero()",
+      "error DeployFailed()",
+      "error EmptyBytes32()",
+      "error InvalidCaller(address)",
+      "error U32CastOverflow()",
+      "error Unauthorized(address caller)",
+      "error ZeroAddress()",
+      "event FinalizeDeposit(address indexed l1Sender, address indexed l2Receiver, address indexed l2Token, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "function deployBeaconProxy(bytes32 salt) returns (address proxy)",
+      "function finalizeDeposit(address _l1Sender, address _l2Receiver, address _l1Token, uint256 _amount, bytes _data)",
+      "function initialize(address _l1SharedBridge, bytes32 _l2TokenProxyBytecodeHash, address _aliasedOwner)",
+      "function l1Bridge() view returns (address)",
+      "function l1SharedBridge() view returns (address)",
+      "function l1TokenAddress(address l2TokenAddress) view returns (address l1TokenAddress)",
+      "function l2TokenAddress(address _l1Token) view returns (address)",
+      "function l2TokenBeacon() view returns (address)",
+      "function sendMessageToL1(bytes _message) returns (bytes32)",
+      "function withdraw(address _l1Receiver, address _l2Token, uint256 _amount)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
     "shared-zk-stack/Diamond": "0xf8ceb7cc4613a5afb74ab717732cca35ae7826aaa6ba9643d656020bdb3cec08",
     "shared-zk-stack/DualVerifier": "0x9378cf0ffe4ba30c57c7c2d9c7eefefc31c62efe9c6be4c177a9fbc3fedd4970",
     "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0xd384a9c9e6643cddbc13f8e706f8c2ad62ec8f9e6dbef85bcdf7eb8853fd6239",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ValidatorTimelock_v31": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
+    "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f"
   },
-  "usedBlockNumbers": { "ethereum": 26146863 },
-  "permissionsConfigHash": "0xdba055c063d7c0d740e9770a9ee8c46527b2e484090f77dc017292a129086846",
+  "usedBlockNumbers": { "ethereum": 26146863, "zksync2": 72383321 },
+  "permissionsConfigHash": "0x4dba722d3633d07e7f8cff8223899aeb589176266a4c8e2b26b0e53b1134b1f7",
   "modelledAgainst": {
-    "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"
+    "shared-zk-stack": "0x5c5ff23838fc7b5156f4cf75b1dd2efc5d47beb9f0b3f7434d20690afdbf2fd0"
   },
   "permissions": {
     "eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB": {
@@ -1947,6 +2193,18 @@
           "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
           "description": "one of its 3/3 signers.",
           "role": ".GUARDIANS"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+          "role": ".VETO_GUARDIAN"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+          "role": ".VETO_GUARDIAN"
         }
       ]
     },
@@ -2017,6 +2275,11 @@
           "role": ".owner"
         },
         {
+          "permission": "act",
+          "from": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+          "role": ".owner"
+        },
+        {
           "permission": "interact",
           "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
@@ -2051,6 +2314,18 @@
           "from": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
           "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+          "description": "change the beacon implementation.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "control all roles in the ZkToken access control, including the minter roles.",
+          "role": ".DefaultAdmin"
         }
       ]
     },
@@ -2106,6 +2381,24 @@
           "from": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
           "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+          "description": "change the beacon implementation.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "control all roles in the ZkToken access control, including the minter roles.",
+          "role": ".DefaultAdmin",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
@@ -2208,6 +2501,24 @@
             { "address": "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" },
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "zksync:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
+          "role": "admin",
+          "via": [
+            { "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "role": "admin",
+          "via": [
+            { "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -2265,6 +2576,12 @@
           "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
           "description": "one of its 3/3 signers.",
           "role": ".ZK_FOUNDATION_SAFE"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
+          "role": ".PROPOSE_GUARDIAN"
         }
       ]
     },
@@ -2291,22 +2608,6 @@
           "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
-        }
-      ]
-    },
-    "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
-          "role": ".VETO_GUARDIAN"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
-          "role": ".VETO_GUARDIAN"
         }
       ]
     },
@@ -2354,31 +2655,6 @@
           "permission": "act",
           "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "role": ".Executor"
-        }
-      ]
-    },
-    "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "description": "control all roles in the ZkToken access control, including the minter roles.",
-          "role": ".DefaultAdmin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "role": "admin",
-          "via": [
-            { "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
-          "role": ".owner"
         }
       ]
     },
@@ -2437,18 +2713,13 @@
         }
       ]
     },
-    "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
-          "role": ".PROPOSE_GUARDIAN"
-        }
-      ]
-    },
     "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": {
       "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "zksync:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
+          "role": "admin"
+        },
         {
           "permission": "upgrade",
           "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",

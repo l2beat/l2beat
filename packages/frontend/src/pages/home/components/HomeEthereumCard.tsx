@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { HomeChart } from './charts/HomeChart'
@@ -58,7 +59,7 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
   return (
     <HomeCard className="flex h-full flex-col pb-4 xl:py-4">
       <div className="flex flex-col gap-2.5">
-        <HomeCardHeader title="Ethereum" />
+        <HomeCardHeader title="Ethereum" href={ETHEREUM_PROJECT_PATH} />
         <EconomicSecurityLine value={economicSecurity} />
       </div>
       <HorizontalSeparator className="my-3" />

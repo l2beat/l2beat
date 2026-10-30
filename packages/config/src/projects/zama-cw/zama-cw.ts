@@ -121,21 +121,51 @@ const coprocessorSignerCount = discovery.getContractValue<string[]>(
   'InputVerifier',
   'getCoprocessorSigners',
 ).length
+const gatewayCoprocessorCount = discovery.getContractValue<string[]>(
+  'GatewayConfig',
+  'getCoprocessorTxSenders',
+).length
 const priorityCoprocessorTxSender =
   discovery.getContractValue<ChainSpecificAddress>(
     'GatewayConfig',
     'getPriorityCoprocessorTxSender',
   )
-const priorityCoprocessorMode =
+// The texts describe the coprocessors as a threshold set. A priority
+// coprocessor finalizes Gateway results alone: describe it if one is set.
+assert(
   ChainSpecificAddress.address(priorityCoprocessorTxSender) ===
-  EthereumAddress.ZERO
-    ? 'off'
-    : 'on'
+    EthereumAddress.ZERO,
+  'A priority coprocessor is set: update the coprocessor texts.',
+)
+// The description names the five coprocessor operators of the protocol
+// registry. Update the names if the signer set changes.
+assert(
+  coprocessorSignerCount === 5 && gatewayCoprocessorCount === 5,
+  'Coprocessor set changed: update the operator names in the description.',
+)
 // Shamir sharing of degree t: t + 1 operators reconstruct the FHE key.
 const kmsKeyThreshold =
   discovery.getContractValue<number>('ProtocolConfig', 'getMpcThreshold') + 1
 const multisigAStats = discovery.getMultisigStats('ZamaGovMultisigA')
 const multisigBStats = discovery.getMultisigStats('ZamaGovMultisigB')
+const defiMultisigStats = discovery.getMultisigStats('ZamaDeFiMultisig')
+// Batchers of retired generations carry a V1 or V2 suffix and stay paused.
+const batcherMinAges = discovery
+  .getContracts()
+  .filter(
+    (contract) =>
+      contract.template === 'zama/VaultBatcherConfidential' &&
+      !/V\d$/.test(contract.name ?? ''),
+  )
+  .map((batcher) =>
+    discovery.getContractValue<number>(batcher.address, 'minBatchAge'),
+  )
+assert(
+  batcherMinAges.length > 0 &&
+    batcherMinAges.every((age) => age === batcherMinAges[0]),
+  'Vault batchers differ in minimum batch age: update the vaults text.',
+)
+const minBatchAgeHours = Math.round(batcherMinAges[0] / 3600)
 const gatewaySafeStats = discovery.getMultisigStats('SafeL2')
 const aclPauserCount = discovery.getContractValue<string[]>(
   'PauserSet',
@@ -232,14 +262,14 @@ export const zamaCw: BaseProject = {
   },
   display: {
     description:
-      'Zama Confidential Tokens is an app that wraps ERC-20 assets into confidential tokens and hides balances and transfer amounts using Zama FHEVM on Ethereum.',
+      'Confidential amounts for ERC-20 tokens on Ethereum: wrappers that encrypt balances and transfer amounts with FHE, decrypted by a committee of KMS operators.',
     detailedDescription: readProjectMarkdown('zama-cw', 'detailedDescription', {
       kmsThreshold,
       kmsSignerCount,
       kmsKeyThreshold,
       coprocessorThreshold,
       coprocessorSignerCount,
-      priorityCoprocessorMode,
+      minBatchAgeHours,
       inputPrice,
       decryptionPrice,
     }),
@@ -250,6 +280,65 @@ export const zamaCw: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      title: 'Zama Protocol live on Ethereum',
+      url: 'https://cryptoast.fr/?p=199633',
+      date: '2025-12-30T00:00:00Z',
+      description:
+        'Zama launches its mainnet with a first confidential stablecoin transfer, in cUSDT.',
+      type: 'general',
+    },
+    {
+      // ACL 0xcA2E…ffb6: Paused by 0x9436…d827 at 14:17:59 UTC (tx
+      // 0x1fe5bf2c…), Unpaused by 0xb6d6…1ef3 at 15:41:47 UTC (tx
+      // 0x2a4de4df…). No public explanation found.
+      title: 'ACL paused, every token halted',
+      url: 'https://etherscan.io/tx/0x1fe5bf2c4c59b4c0034167e8eea979e3a8fa700d590c73ca7587712bb43359b2',
+      date: '2026-01-06T00:00:00Z',
+      description:
+        'A pauser halts the ACL, and with it every confidential token, for 84 minutes.',
+      type: 'incident',
+    },
+    {
+      // USDC Blacklisted(ConfidentialUSDCWrapper 0xe978…72B2) at 2026-05-30
+      // 01:08 UTC, UnBlacklisted 2026-06-01 18:58 UTC. Zama: a temporary
+      // restraining order (N.D. Cal., Overnight Finance dispute, Zama not a
+      // party) targeted one deposit of about $12.5M, over 99% of the wrapper.
+      // The deposit had passed Zama's sanctions screening. The court lifted
+      // the order at its June 1 review. Press names the case Newton AC/DC Fund
+      // v. Ermilov.
+      title: 'Circle freezes the cUSDC escrow',
+      url: 'https://www.zama.org/post/the-freeze-on-zamas-cusdc-contract-has-been-lifted-and-all-systems-are-back-to-normal',
+      date: '2026-05-30T00:00:00Z',
+      description:
+        'A court order makes Circle blacklist the cUSDC wrapper for almost three days, blocking every unwrap.',
+      type: 'incident',
+    },
+    {
+      // ConfidentialSwap proxy deployed 2026-09-12 (block 25960480, tx
+      // 0xa698f4d5…). Current vault batchers deployed 2026-09-14 from block
+      // 25976034, the first Steakhouse batcher on 2026-06-22.
+      title: 'Confidential vaults and swaps launch',
+      url: 'https://www.zama.org/post/confidential-defi-at-scale',
+      date: '2026-09-15T00:00:00Z',
+      description:
+        'Confidential deposits expand to 16 Morpho vaults, and swaps between confidential tokens go live.',
+      type: 'general',
+    },
+    {
+      // InputVerifier signers 1 -> 5, threshold 1 -> 3, executed through
+      // ZamaGovMultisigB at block 26247156. The Gateway majority rose to 3 of
+      // 5 on 2026-10-12 and its priority coprocessor was switched off after
+      // 2026-10-19.
+      title: 'Inputs need 3 of 5 coprocessors',
+      url: 'https://etherscan.io/tx/0xa34128b9039f5050e18ff0e6131e7ae5e174dcc61da00679dc462494ae204660',
+      date: '2026-10-22T00:00:00Z',
+      description:
+        'Encrypted inputs need signatures from 3 of 5 coprocessors instead of one.',
+      type: 'general',
+    },
+  ],
   escrows: trackedWrappers.map(
     ({ wrapper, wrapperSinceTimestamp, underlyingToken }) => ({
       address: ChainSpecificAddress.address(wrapper.address),
@@ -264,6 +353,44 @@ export const zamaCw: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.confidentialAmounts,
+    referenceApp: {
+      name: 'Zama app',
+      url: 'https://app.zama.org',
+      since: '2026-10-09',
+      // Next.js build id of the served app, read from its chunks.
+      build: 'Rh4Nfrd-QpbxA2axbN31u',
+      checked: '2026-10-22',
+      checkedApps: [
+        {
+          name: 'Zerion',
+          icon: 'zerion',
+          finding:
+            "Decrypts the user's confidential balances on Zerion's servers, so Zerion sees every amount the user reveals.",
+          fix: 'Decrypt balances on the device under a key only the device holds.',
+          source:
+            'https://github.com/zeriontech/zerion-wallet-extension/blob/dc9be458cd0e08be170058ba256bd4144e362f0a/docs/adr/0007-signed-permits-live-in-storage-session.md#L5',
+        },
+        {
+          name: 'Bron',
+          icon: 'bron',
+          finding:
+            "Ties the wallet to the user's name and email in a Bron account, which its store listing says Bron shares with other companies.",
+          fix: 'Let users create and use a wallet without giving a name or email.',
+          source:
+            'https://play.google.com/store/apps/datasafety?id=org.bron.mobile',
+          checked: '2026-10-27',
+        },
+        {
+          name: 'cToken',
+          icon: 'ctoken',
+          finding:
+            "Reads the user's address through Alchemy and PublicNode straight from the browser, so both see it with the user's IP.",
+          fix: "Read the chain through the app's own server, as the Zama app does.",
+          source: 'https://ct-7984-chriswilder.netlify.app',
+          checked: '2026-10-27',
+        },
+      ],
+    },
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
     anonymitySet: {
@@ -276,10 +403,10 @@ export const zamaCw: BaseProject = {
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The governance multisigs upgrade the contracts instantly, before users can leave.',
+        "Zama's governance multisigs can upgrade every contract instantly.",
       walkawayTest: {
         passed: false,
-        reason: `Every unwrap needs a decryption signed by ${kmsThreshold} of ${kmsSignerCount} KMS operators, and every input needs Zama's coprocessor.`,
+        reason: `Every unwrap needs a decryption signed by ${kmsThreshold} of ${kmsSignerCount} KMS operators, and every input needs ${coprocessorThreshold} of ${coprocessorSignerCount} coprocessors.`,
       },
     },
     reproducibility: {
@@ -295,11 +422,10 @@ export const zamaCw: BaseProject = {
       {
         ...PRIVACY_ATTRIBUTES.defi,
         description:
-          'Interop with DeFi vaults from within the confidential token.',
+          'Deposits into Morpho vaults and swaps between confidential tokens, with encrypted amounts.',
       },
     ],
     adversaries: zamaCwAdversaries(kmsKeyThreshold, kmsSignerCount),
-    quantumResistant: true,
     riskSummary: readProjectMarkdown('zama-cw', 'riskSummary', {
       kmsSignerCount,
       kmsKeyThreshold,
@@ -310,6 +436,7 @@ export const zamaCw: BaseProject = {
       content: readProjectMarkdown('zama-cw', 'upgradesAndGovernance', {
         multisigAStats,
         multisigBStats,
+        defiMultisigStats,
         gatewaySafeStats,
         aclPauserCount,
         gatewayPauserCount,

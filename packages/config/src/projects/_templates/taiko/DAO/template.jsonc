@@ -10,6 +10,7 @@
   "ignoreMethods": ["proxiableUUID"],
   "ignoreRelatives": ["permsGranted", "permsRevoked"],
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "permsGranted": {
       "severity": "HIGH",
       "handler": {

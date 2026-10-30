@@ -26,6 +26,7 @@
         "$immutable": true,
         "owner": "eth:0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e": "AddressManager"
       },
@@ -254,10 +255,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9": "Proxy",
@@ -450,6 +457,10 @@
         "SYSTEM_CONFIG": "eth:0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
         "version": "1.7.0"
       },
+      "fieldMeta": {
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0xb26Fd985c5959bBB382BAFdD0b879E149e48116c": "Proxy",
         "eth:0x75A2AAc09C8A51Bdde7303B06F1aD2fFFcCf8c09": "OptimismPortal"
@@ -484,6 +495,7 @@
         "isUpgrading": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4": "ProxyAdmin"
       }
@@ -515,6 +527,7 @@
         "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
         "version": "1.2.0"
       },
+      "fieldMeta": { "$admin": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b": "L1ChugSplashProxy",
         "eth:0xF5328094aE48F975CF588f361DDCC749F706aAF0": "L1StandardBridge"

@@ -4,7 +4,7 @@ import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori'
 import { TokenOpengraphImage } from '~/components/opengraph-image/Token'
 import {
-  getActiveInteropAbstractTokens,
+  findInteropAbstractToken,
   type InteropAbstractToken,
 } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
@@ -34,8 +34,7 @@ export function getInteropTokenOgImage(
 async function renderInteropTokenOgImage(
   slug: string,
 ): Promise<Buffer | undefined> {
-  const tokens = await getActiveInteropAbstractTokens()
-  const token = tokens.find((token) => token.id === slug)
+  const token = await findInteropAbstractToken(slug)
   if (!token) return undefined
 
   const assets = await getStaticAssets()

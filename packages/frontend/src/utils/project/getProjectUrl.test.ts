@@ -1,4 +1,10 @@
-import type { InteropConfig, ProjectScalingInfo } from '@l2beat/config'
+import type {
+  InteropConfig,
+  ProjectDaBridge,
+  ProjectDaLayer,
+  ProjectScalingInfo,
+} from '@l2beat/config'
+import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { getProjectUrl } from './getProjectUrl'
 
@@ -9,6 +15,7 @@ describe(getProjectUrl.name, () => {
     expect(
       getProjectUrl({
         ...NO_PAGE,
+        id: ProjectId('ccip'),
         slug: 'ccip',
         interopConfig: INTEROP_CONFIG,
       }),
@@ -19,11 +26,35 @@ describe(getProjectUrl.name, () => {
     expect(
       getProjectUrl({
         ...NO_PAGE,
+        id: ProjectId('gnosis'),
         slug: 'gnosis',
         scalingInfo: {} as ProjectScalingInfo,
         interopConfig: INTEROP_CONFIG,
       }),
     ).toEqual('/layer2s/projects/gnosis')
+  })
+
+  it('links Ethereum, a DA layer and bridge, to its own page', () => {
+    expect(
+      getProjectUrl({
+        ...NO_PAGE,
+        id: ProjectId.ETHEREUM,
+        slug: 'ethereum',
+        daLayer: {} as ProjectDaLayer,
+        daBridge: {} as ProjectDaBridge,
+      }),
+    ).toEqual('/projects/ethereum')
+  })
+
+  it('leaves other DA layers without a page', () => {
+    expect(
+      getProjectUrl({
+        ...NO_PAGE,
+        id: ProjectId('celestia'),
+        slug: 'celestia',
+        daLayer: {} as ProjectDaLayer,
+      }),
+    ).toEqual(undefined)
   })
 })
 

@@ -24,30 +24,23 @@
       "severity": "MEDIUM",
       "description": "Blocks deposit, mutualClose and initiateEscapeWithdrawal. Challenge, finalizeEscapeWithdrawal and claimExpired are unaffected."
     },
+    // No severity on the immutable fields below: they cannot change on a live vault.
     "proofAdapter": {
-      "severity": "HIGH",
       "template": "zkapi/Groth16ProofAdapter"
     },
     "stateSigningKeyX": {
-      "severity": "HIGH",
       "description": "X coordinate of the Baby-JubJub public key whose signatures authorize non-genesis offchain balance states. The signing key holder controls settlement availability."
     },
-    "stateSigningKeyY": { "severity": "HIGH" },
     "clearanceSigningKeyX": {
-      "severity": "HIGH",
       "description": "X coordinate of the Baby-JubJub public key whose signature permits immediate cooperative closure. A delayed escape needs no clearance."
     },
-    "clearanceSigningKeyY": { "severity": "HIGH" },
     "noteTtl": {
-      "severity": "HIGH",
       "description": "Seconds added to deposit time before rounding expiry up to an EXPIRY_BUCKET boundary. After expiry anyone can sweep an active note to the treasury."
     },
     "challengePeriod": {
-      "severity": "HIGH",
       "description": "Seconds during which any valid request proof sharing the escape's nullifier cancels it, served or not."
     },
     "requestChargeCap": {
-      "severity": "HIGH",
       "description": "Request cap in gwei, enforced by the client and the authorization service only."
     },
     "nativeAssetWeiPerUnit": {

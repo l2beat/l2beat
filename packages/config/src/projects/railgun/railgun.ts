@@ -172,17 +172,30 @@ export const railgun: BaseProject = {
   },
   display: {
     description:
-      'An onchain privacy system for Ethereum based on encrypted UTXO-style private balances and zk-proven DeFi interactions.',
+      'A shielded ledger on Ethereum for ERC-20 tokens, with private transfers and DeFi calls, run by no operator and governed by RAIL stakers.',
     detailedDescription: readProjectMarkdown('railgun', 'detailedDescription', {
       shieldFee: formatBasisPoints(shieldFee),
       unshieldFee: formatBasisPoints(unshieldFee),
       nftFee,
+      executionDelay: formatSeconds(executionStartOffset, { fullUnit: true }),
     }),
     links: {
       websites: ['https://railgun.org'],
     },
     badges: [],
   },
+  milestones: [
+    {
+      // ProxyUpgrade and ProxyUnpause in tx 0x2bd98cd1…, implementation
+      // RailgunLogic 0xbcfa4de7…
+      title: 'Current pool goes live on Ethereum',
+      url: 'https://etherscan.io/tx/0x2bd98cd135e2eaf7b7239bb4951a043f655629b5d0f0ca12334ce05718512361',
+      date: '2022-05-08T00:00:00Z',
+      description:
+        "The proxy that holds today's pool is unpaused with the RailgunLogic implementation.",
+      type: 'general',
+    },
+  ],
   escrows: TRACKED_TOKENS.map((token) => ({
     address: ChainSpecificAddress.address(railgunCore.address),
     chain: ChainSpecificAddress.longChain(railgunCore.address),
@@ -237,6 +250,56 @@ export const railgun: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceApp: {
+      name: 'RailOxide',
+      icon: 'railoxide',
+      url: 'https://github.com/triamazikamno/railoxide',
+      since: '2026-10-08',
+      version: '0.2.0-beta.10',
+      source: {
+        repository: 'https://github.com/triamazikamno/railoxide',
+        commit: '7981f35afe8fe5a198a450e0cad66d37f159556e',
+      },
+      checkedApps: [
+        {
+          name: 'Railway',
+          icon: 'railway',
+          finding:
+            "Asks a PPoI node about the user's notes in batches without Tor, so the node can tie them together and to the user's IP.",
+          fix: 'Build PPoI from a local copy of the lists, as RailOxide does.',
+          source:
+            'https://github.com/Railgun-Community/wallet/blob/5c9d04c844879b8377d91775052e88c836b48730/src/services/poi/wallet-poi-node-interface.ts#L140-L176',
+        },
+        {
+          name: 'Anon Wallet',
+          icon: 'anon-wallet',
+          finding:
+            "Sends the user's public and 0zk addresses to Anon's server at setup, even without a username, so Anon can link them.",
+          fix: "Create wallets without registering the user's addresses with Anon's server.",
+          source:
+            'https://chromewebstore.google.com/detail/anon-wallet-private-evm-w/gnkbgepgknkbhnnbaihklcfkjhbclajk',
+          checked: '2026-10-27',
+        },
+        {
+          name: 'Terminal Wallet',
+          icon: 'terminal-wallet',
+          finding:
+            "Asks a PPoI node about the user's notes in batches without Tor, so the node can tie them together and to the user's IP.",
+          fix: 'Build PPoI from a local copy of the lists, as RailOxide does.',
+          source:
+            'https://github.com/Terminal-Wallet/terminal-wallet-cli/blob/503d322dda11da81b47178bbd514dc258825a2bc/src/railgun/engine/engine.ts#L144-L155',
+        },
+        {
+          name: 'Faceless',
+          icon: 'faceless',
+          finding:
+            "Asks a PPoI node about the user's notes in batches, so the node can tie them together.",
+          fix: 'Build PPoI from a local copy of the lists, as RailOxide does.',
+          source: 'https://facelessprivacy.eth.limo',
+          checked: '2026-10-27',
+        },
+      ],
+    },
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
     relayerTracking: {

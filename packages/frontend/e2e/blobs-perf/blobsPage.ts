@@ -1,4 +1,4 @@
-import type { Browser, CDPSession } from 'playwright/test'
+import type { Browser, CDPSession, Page } from 'playwright/test'
 
 /**
  * What the /blobs ratchets share: the page opened at the belt once it is
@@ -8,21 +8,15 @@ import type { Browser, CDPSession } from 'playwright/test'
 export const SLOT_MS = 12_000
 const GENESIS_MS = 1606824023_000
 
-/**
- * /blobs scrolled to the belt, as a visitor watches it, once it is live.
- * With `touch`, a phone's: a finger, not a mouse
- */
+/** /blobs scrolled to the belt, as a visitor watches it, once it is live */
 export async function openBlobs(
   browser: Browser,
   width: number,
   height: number,
-  { touch = false } = {},
 ) {
   const context = await browser.newContext({
     viewport: { width, height },
     deviceScaleFactor: 2,
-    hasTouch: touch,
-    isMobile: touch,
   })
   const page = await context.newPage()
   await page.addInitScript(countBeltPaints)
@@ -30,6 +24,7 @@ export async function openBlobs(
   await cdp.send('Performance.enable')
   await page.goto('/blobs', { waitUntil: 'load' })
   await page.addStyleTag({ content: STOP_LIVE_PING })
+  await page.evaluate(PAUSE_SVG_ANIMATIONS)
   await page.locator('canvas[role=img]').scrollIntoViewIfNeeded()
   // the status itself, as it has a short and a long wording, one per width
   await page.getByRole('status').filter({ hasText: 'Live' }).waitFor()
@@ -40,6 +35,32 @@ export async function openBlobs(
 export function untilNextSlotMs() {
   const intoSlot = (Date.now() - GENESIS_MS) % SLOT_MS
   return SLOT_MS - intoSlot
+}
+
+export function currentSlot() {
+  return Math.floor((Date.now() - GENESIS_MS) / SLOT_MS)
+}
+
+/**
+ * How many rows of the posters table the block of each slot washed as it
+ * landed: one per poster in it, the unattributed sharing one. 0 for a slot
+ * that was missed or has left the belt
+ */
+export async function rowsLandedBySlot(
+  page: Page,
+): Promise<Map<number, number>> {
+  const response = await page.request.get(
+    `/api/trpc/da.liveBlobs?input=${encodeURIComponent('{}')}`,
+  )
+  const { blocks } = (await response.json()).result.data as {
+    blocks: { slot: number; batches?: { projectId?: string }[] }[]
+  }
+  return new Map(
+    blocks.map((block) => [
+      block.slot,
+      new Set((block.batches ?? []).map((batch) => batch.projectId)).size,
+    ]),
+  )
 }
 
 export interface TraceEvent {
@@ -96,6 +117,13 @@ export function lowerOf(existing: number | undefined, measured: number) {
 // thread, so the LIVE dot's ping would restyle and paint every frame and hide
 // any other per-frame cost; a browser with a GPU runs it on the compositor
 const STOP_LIVE_PING = '.animate-ping { animation: none !important; }'
+
+// The logo in the navbar beats for a second every five, laying out every frame
+// of it, at a phase the slots know nothing of: a watch meets one beat or two,
+// and its layouts would swing by 60 or so with it
+const PAUSE_SVG_ANIMATIONS = `document
+  .querySelectorAll('svg')
+  .forEach((svg) => svg.pauseAnimations())`
 
 // The belt clears its canvas once for every frame it paints; the mark puts
 // that frame on the trace's clock

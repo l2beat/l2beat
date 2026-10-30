@@ -5,6 +5,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -16,6 +17,7 @@ export const layerzero: BaseProject = {
   name: 'LayerZero',
   shortName: undefined,
   addedAt: UnixTime(1769421770),
+  discoveryInfo: getDiscoveryInfo([discovery]),
   interopConfig: {
     description:
       'LayerZero OFT (omnichain fungible token) is a multichain token framework built on the modular, highly customizable LayerZero messaging protocol. While it theoretically supports any form of validation, ~100% of messages are validated by multisig-like smart contracts called DVNs ("Decentralized" Validator Networks). The protocol supports a vast set of EVM and non-EVM destinations.',

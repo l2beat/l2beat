@@ -13,8 +13,9 @@ export function CropsSection() {
   return (
     <section className="mt-8 md:mt-12">
       <SectionHeading
-        title="The four crops"
-        description="Each crop is judged on its own. Here are the criteria."
+        title="The four properties"
+        description="What we look for in each property. This is guidance, not a checklist: the rating is our judgment and can weigh things that are not listed here."
+        size="md"
       />
       <div className="flex flex-col gap-4 md:gap-6">
         {CROP_COLUMNS.map((column, index) => (
@@ -40,37 +41,40 @@ function CropCard({
   index: number
 }) {
   return (
-    <PrimaryCard className="md:p-8">
+    <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
       <div className="flex items-start gap-4 md:gap-5">
-        <CropBadge
-          status="reviewed"
-          sentiment="good"
-          delay={index * 0.12}
-          label={column.label}
-        >
-          <p className="font-medium text-base text-crop-good-ink">
-            {column.label}
-          </p>
-          <p className="mt-1.5">{criteria.summary}</p>
-        </CropBadge>
+        {/* The badge centres the plant in its box; pulled back, the soil lines up with the text below. */}
+        <div className="-ml-3">
+          <CropBadge
+            status="reviewed"
+            sentiment="good"
+            delay={index * 0.12}
+            label={column.label}
+          >
+            <p className="font-medium text-base text-crop-good-ink">
+              {column.label}
+            </p>
+            <p className="mt-1.5">{criteria.summary}</p>
+          </CropBadge>
+        </div>
         <div>
-          <h3 className="font-bold text-heading-20 md:text-heading-24">
+          <h3 className="font-bold text-heading-18 md:text-heading-20">
             {column.label}
           </h3>
-          <p className="mt-1 font-medium text-garden-accent text-paragraph-14 md:text-paragraph-16">
+          <p className="mt-1 text-pretty font-medium text-garden-accent text-paragraph-14 md:text-balance md:text-paragraph-16">
             {criteria.question}
           </p>
         </div>
       </div>
       {column.note && (
-        <p className="mt-4 text-paragraph-14 text-secondary md:text-paragraph-15">
+        <p className="mt-4 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15">
           {column.note}
         </p>
       )}
       <div className="mt-5 grid gap-6 md:grid-cols-2 md:gap-8">
         <div>
-          <h4 className="font-semibold text-subtitle-12 uppercase tracking-wider">
-            The minimum
+          <h4 className="font-semibold text-paragraph-14 text-secondary">
+            What we look for
           </h4>
           <ul className="mt-3 flex flex-col gap-2.5">
             {criteria.minimums.map((minimum) => (
@@ -87,8 +91,8 @@ function CropCard({
           </ul>
         </div>
         <div>
-          <h4 className="font-semibold text-subtitle-12 uppercase tracking-wider">
-            What pulls it down
+          <h4 className="font-semibold text-paragraph-14 text-secondary">
+            What lowers the rating
           </h4>
           <ul className="mt-3 flex flex-col gap-2.5">
             {criteria.pullsDown.map((pullDown) => (
@@ -98,7 +102,7 @@ function CropCard({
               >
                 <span
                   aria-hidden
-                  className="mt-[9px] h-[2px] w-2.5 shrink-0 rounded-full bg-crop-warning"
+                  className="mx-[3px] mt-[9px] h-[2px] w-2.5 shrink-0 rounded-full bg-crop-warning"
                 />
                 {pullDown}
               </li>
@@ -118,24 +122,39 @@ function Minimum({
   text: string
   reference: CropCriteria['reference']
 }) {
-  const [before, after] = text.split(REFERENCE_SLOT)
+  const [before = '', after] = text.split(REFERENCE_SLOT)
   if (after === undefined || !reference) {
-    return before
+    return <Emphasis text={before} />
   }
+  const isExternal = reference.href.startsWith('http')
   return (
     <>
-      {before}
+      <Emphasis text={before} />
       <a
         href={reference.href}
-        target="_blank"
-        rel="noreferrer noopener"
-        className="inline-flex items-baseline gap-1 font-medium text-link"
+        {...(isExternal && { target: '_blank', rel: 'noreferrer noopener' })}
+        className="font-medium text-link"
       >
         {reference.label}
-        <CustomLinkIcon className="fill-current" />
+        {isExternal && (
+          <CustomLinkIcon className="ml-1 inline-block fill-current align-baseline" />
+        )}
       </a>
-      {after}
+      <Emphasis text={after} />
     </>
+  )
+}
+
+/** Renders `**bold**` spans, e.g. a lead-in like "**Passes the walkaway test:**". */
+function Emphasis({ text }: { text: string }) {
+  return text.split(/\*\*(.+?)\*\*/).map((part, i) =>
+    i % 2 === 1 ? (
+      <strong key={i} className="font-semibold">
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
   )
 }
 

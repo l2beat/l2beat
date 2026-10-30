@@ -10,6 +10,7 @@ import {
   EthereumAddress,
   notUndefined,
   type ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { expect } from 'earl'
@@ -19,12 +20,9 @@ import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
 import type { BaseProject } from '../types'
-import {
-  areContractsDiscoveryDriven,
-  arePermissionsDiscoveryDriven,
-} from '../utils/discoveryDriven'
+import { hasEoaWithUpgradePermissions } from './getEoaRedWarning'
 import { getProjects } from './getProjects'
-import { layer2s } from './layer2s'
+import { layer2s, milestonesLayer2s } from './layer2s'
 import { layer3s } from './layer3s'
 
 describe('getProjects', () => {
@@ -43,14 +41,6 @@ describe('getProjects', () => {
         problems.push(`${project.id}: duplicate id`)
       }
       ids.add(project.id)
-      if (project.slug === 'near') {
-        // This project is an exception.
-        // It should most likely be merged with its duplicate
-        // Right now it only works because refactored projects are resolved
-        // first when querying by slug
-        continue
-      }
-
       if (slugs.has(project.slug)) {
         problems.push(`${project.id}: duplicate slug ${project.slug}`)
       }
@@ -203,13 +193,7 @@ describe('getProjects', () => {
   })
 
   describe('daLayer', () => {
-    const SUPPORTED_ECONOMIC_SECURITY_PROJECTS = [
-      'ethereum',
-      'celestia',
-      'avail',
-      'near-da',
-      'espresso',
-    ]
+    const SUPPORTED_ECONOMIC_SECURITY_PROJECTS = ['ethereum']
 
     it('every economicSecurity is supported in BE code', () => {
       const unsupported = projects
@@ -219,13 +203,7 @@ describe('getProjects', () => {
       expect(unsupported).toEqual([])
     })
 
-    const SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS = [
-      'ethereum',
-      'celestia',
-      'avail',
-      'near-da',
-      'espresso',
-    ]
+    const SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS = ['ethereum']
 
     it('every dynamic type validators is supported in BE code', () => {
       const unsupported = projects
@@ -489,14 +467,28 @@ describe('getProjects', () => {
           }
         }
 
-        // Every state but partially-attributed means the set is not tracked.
-        const state = privacyInfo.anonymitySet?.type
-        if (state === 'partially-attributed') {
+        // Partially attributed sets are tracked through buckets. Every other
+        // state replaces them: key registrations are tracked through a
+        // registry, and the remaining states are not tracked at all.
+        const anonymitySet = privacyInfo.anonymitySet
+        if (anonymitySet?.type === 'partially-attributed') {
           if (configuredBuckets === 0) {
-            problems.push(`${project.id}: ${state} without buckets`)
+            problems.push(`${project.id}: ${anonymitySet.type} without buckets`)
           }
-        } else if (state !== undefined && configuredBuckets !== 0) {
-          problems.push(`${project.id}: ${state} with buckets`)
+        } else if (anonymitySet !== undefined && configuredBuckets !== 0) {
+          problems.push(`${project.id}: ${anonymitySet.type} with buckets`)
+        }
+
+        if (anonymitySet?.type === 'key-registrations') {
+          const contracts = Object.values(project.contracts?.addresses ?? {})
+            .flat()
+            .map((contract) => contract.address)
+          if (!contracts.includes(anonymitySet.registry)) {
+            problems.push(`${project.id}: registry is not a project contract`)
+          }
+          if (anonymitySet.sinceTimestamp <= 0) {
+            problems.push(`${project.id}: non-positive registry sinceTimestamp`)
+          }
         }
       }
       expect(problems).toEqual([])
@@ -535,6 +527,88 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
+    // Risk summaries share one layout, so readers can compare projects item by item.
+    it('every risk summary follows the shared layout', () => {
+      const headings = [
+        'Funds can be stolen if',
+        'Funds can be lost if',
+        'Funds can be frozen if',
+        'Use can be stopped if',
+        'Privacy can be lost if',
+      ]
+      const cellNames: Record<string, string> = {
+        publicObserver: 'public observer',
+        chainAnalyst: 'chain analyst',
+        networkObserver: 'network observer',
+        privilegedInsider: 'privileged insider',
+        futureAdversary: 'future adversary',
+      }
+      const sections = [
+        'upgrades-and-governance',
+        'trusted-setups',
+        'contracts',
+        'permissions',
+        'verifiers',
+      ]
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const summary = privacyInfo.riskSummary
+        if (!summary) continue
+
+        const found = [...summary.matchAll(/^## (.+)$/gm)].map((m) => m[1])
+        const order = found.map((heading) => headings.indexOf(heading))
+        if (order.some((i, k) => i === -1 || (k > 0 && i <= order[k - 1]))) {
+          problems.push(`${project.id}: headings ${found.join(' > ')}`)
+        }
+        if (/^## .*\n[ \t]*\n/m.test(summary)) {
+          problems.push(`${project.id}: blank line after a heading`)
+        }
+
+        const pointed = new Set<string>()
+        for (const [, item] of summary.matchAll(/^\d+\. (.+)$/gm)) {
+          if (!item.endsWith('.')) {
+            problems.push(`${project.id}: no final dot: ${item}`)
+          }
+          const words = item
+            .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+            .split(/\s+/).length
+          if (words > 25) {
+            problems.push(`${project.id}: ${words} words: ${item}`)
+          }
+          const see = item.match(/\(see (.+)\)\.$/)?.[1]
+          if (!see) continue
+          const link = see.match(/^\[[^\]]+\]\(#([a-z-]+)\)$/)
+          if (link) {
+            if (!sections.includes(link[1])) {
+              problems.push(`${project.id}: link to missing section ${see}`)
+            }
+            continue
+          }
+          for (const name of see.split(' and ')) {
+            if (!Object.values(cellNames).includes(name)) {
+              problems.push(`${project.id}: unknown pointer ${name}`)
+            }
+            pointed.add(name)
+          }
+        }
+
+        for (const [id, cell] of Object.entries(
+          privacyInfo.adversaries?.cells ?? {},
+        )) {
+          if (cell.sentiment !== 'good' && !pointed.has(cellNames[id])) {
+            problems.push(`${project.id}: no item points at ${cellNames[id]}`)
+          }
+        }
+        if (
+          (project.zkCatalogInfo?.trustedSetups?.length ?? 0) > 0 &&
+          !summary.includes('](#trusted-setups)')
+        ) {
+          problems.push(`${project.id}: trusted setup not linked`)
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
     // The tooltip shows the short description alone, so a second sentence would read as cut off.
     it('every adversary short description is one sentence', () => {
       const problems: string[] = []
@@ -543,6 +617,41 @@ describe('getProjects', () => {
         for (const [adversaryId, cell] of cells) {
           if (/[.!?]\s/.test(cell.exposureShort)) {
             problems.push(`${project.id} ${adversaryId}`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    // The page prints these dates and hashes as they are.
+    it('every reference app has valid dates and a full commit hash', () => {
+      // Round-trip, since Date.parse rolls 2026-02-30 over to March.
+      const isDay = (value: string) => {
+        const time = Date.parse(value)
+        return (
+          !Number.isNaN(time) &&
+          new Date(time).toISOString().slice(0, 10) === value
+        )
+      }
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const app = privacyInfo.referenceApp
+        if (!app) continue
+        if (!isDay(app.since)) {
+          problems.push(`${project.id}: since ${app.since}`)
+        }
+        if (app.source && !/^[0-9a-f]{40}$/.test(app.source.commit)) {
+          problems.push(`${project.id}: commit ${app.source.commit}`)
+        }
+        if (app.checked !== undefined && !isDay(app.checked)) {
+          problems.push(`${project.id}: checked ${app.checked}`)
+        }
+        if (app.source && (app.checked !== undefined || app.build)) {
+          problems.push(`${project.id}: an open app pins its commit only`)
+        }
+        for (const checkedApp of app.checkedApps ?? []) {
+          if (checkedApp.checked !== undefined && !isDay(checkedApp.checked)) {
+            problems.push(`${project.id}: ${checkedApp.name} checked`)
           }
         }
       }
@@ -626,6 +735,67 @@ describe('getProjects', () => {
           .filter((r) => !isRiskCorrectlyFormatted(r))
           .map((r) => `${p.id}: ${r.text}`),
       )
+      expect(invalid).toEqual([])
+    })
+  })
+
+  describe('milestones', () => {
+    const allMilestones = [
+      ...milestonesLayer2s.map((milestone) => ({
+        label: `${milestone.title} (main page)`,
+        milestone,
+      })),
+      ...projects.flatMap((p) =>
+        [...(p.milestones ?? []), ...(p.interopConfig?.milestones ?? [])].map(
+          (milestone) => ({
+            label: `${milestone.title} (${p.id})`,
+            milestone,
+          }),
+        ),
+      ),
+    ]
+
+    it('name is no longer than 50 characters', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => milestone.title.length > 50)
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('description ends with a dot', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => milestone.description !== undefined)
+        .filter(({ milestone }) => !milestone.description?.endsWith('.'))
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('description is no longer than 100 characters', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => (milestone.description?.length ?? 0) > 100)
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('date is full day', () => {
+      const invalid = allMilestones
+        .filter(
+          ({ milestone }) =>
+            !UnixTime.isFull(
+              UnixTime.fromDate(new Date(milestone.date)),
+              'day',
+            ),
+        )
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('date is correct', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) =>
+          Number.isNaN(new Date(milestone.date).getTime()),
+        )
+        .map(({ label }) => label)
       expect(invalid).toEqual([])
     })
   })
@@ -871,17 +1041,11 @@ describe('getProjects', () => {
       (p.daTrackingConfig ?? []).map((config) => ({ projectId: p.id, config })),
     )
 
-    // All new projects should have non-zero sinceBlock/sinceTimestamp - it will make sync more efficient
-    it('every project has non-zero sinceBlock/sinceTimestamp', () => {
+    // All new projects should have non-zero sinceBlock - it will make sync more efficient
+    it('every project has non-zero sinceBlock', () => {
       const invalid = trackingConfigs
         .filter(({ projectId }) => !excluded.has(projectId))
-        .filter(({ config }) =>
-          config.type === 'ethereum' ||
-          config.type === 'avail' ||
-          config.type === 'celestia'
-            ? config.sinceBlock <= 0
-            : config.sinceTimestamp <= 0,
-        )
+        .filter(({ config }) => config.sinceBlock <= 0)
         .map(({ projectId }) => projectId)
       expect(invalid).toEqual([])
     })
@@ -890,34 +1054,16 @@ describe('getProjects', () => {
     // so a chain-prefixed address (e.g. 'eth:0x...') silently matches nothing
     it('every ethereum inbox and sequencer is a plain unprefixed address', () => {
       const invalid = trackingConfigs.flatMap(({ projectId, config }) =>
-        config.type === 'ethereum'
-          ? [config.inbox, ...(config.sequencers ?? [])]
-              .filter((a) => EthereumAddress.tryParse(a) === undefined)
-              .map((a) => `${projectId} ${a}`)
-          : [],
+        [config.inbox, ...(config.sequencers ?? [])]
+          .filter((a) => EthereumAddress.tryParse(a) === undefined)
+          .map((a) => `${projectId} ${a}`),
       )
       expect(invalid).toEqual([])
     })
 
-    it('every appId is unique for Avail projects', () => {
-      const appIds = new Map<string, string>()
-      const duplicates: string[] = []
-      for (const { projectId, config } of trackingConfigs) {
-        if (config.type !== 'avail') continue
-        for (const appId of config.appIds) {
-          const owner = appIds.get(appId)
-          if (owner !== undefined) {
-            duplicates.push(`${appId} [${projectId}, ${owner}]`)
-          }
-          appIds.set(appId, projectId)
-        }
-      }
-      expect(duplicates).toEqual([])
-    })
-
-    // A project that posts blobs without an ethereum tracking config shows up
-    // as an unknown blob sender on the Ethereum DA page (e.g. Nova after its
-    // switch to blobs, Fluent since launch).
+    // A project that posts blobs without a tracking config shows up as an
+    // unknown blob sender on the blobs page (e.g. Nova after its switch to
+    // blobs, Fluent since launch).
     it('every live project with Ethereum blobs DA has ethereum tracking', () => {
       const missing = projects
         // L3s inherit the label from their host chain, which posts for them
@@ -933,40 +1079,28 @@ describe('getProjects', () => {
               da.layer.secondLine?.includes('Blobs'),
           ),
         )
-        .filter(
-          (p) => !(p.daTrackingConfig ?? []).some((c) => c.type === 'ethereum'),
-        )
+        .filter((p) => (p.daTrackingConfig ?? []).length === 0)
         .map((p) => p.id)
       expect(missing).toEqual([])
-    })
-
-    it('every namespace is unique for Celestia projects', () => {
-      const namespaces = new Map<string, string>()
-      const duplicates: string[] = []
-      for (const { projectId, config } of trackingConfigs) {
-        if (config.type !== 'celestia') continue
-        const owner = namespaces.get(config.namespace)
-        if (owner !== undefined) {
-          duplicates.push(`${config.namespace} [${projectId}, ${owner}]`)
-        }
-        namespaces.set(config.namespace, projectId)
-      }
-      expect(duplicates).toEqual([])
     })
   })
 
   // New projects are expected to be discovery driven. Read the comment in constants.ts
-  it('all new projects are discovery driven', () => {
+  it('all new projects with discovery are discovery driven', () => {
     const notDiscoveryDriven = projects
-      .filter((p) => p.scalingInfo && p.archivedAt === undefined)
+      .filter((p) => p.discoveryInfo && p.archivedAt === undefined)
       .filter((p) => !NON_DISCOVERY_DRIVEN_PROJECTS.includes(p.id.toString()))
-      .filter(
-        (p) =>
-          !arePermissionsDiscoveryDriven(p.permissions) ||
-          !areContractsDiscoveryDriven(p.contracts),
-      )
+      .filter((p) => !p.discoveryInfo?.isDiscoDriven)
       .map((p) => p.id)
     expect(notDiscoveryDriven).toEqual([])
+  })
+
+  it('every project with discovery shows an EOA upgrade red warning when discovery has one', () => {
+    const missing = projects
+      .filter((p) => p.discoveryInfo && hasEoaWithUpgradePermissions(p.id))
+      .filter((p) => p.statuses?.redWarning === undefined)
+      .map((p) => p.id)
+    expect(missing).toEqual([])
   })
 
   describe('badges', () => {

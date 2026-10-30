@@ -1,0 +1,457 @@
+import { useEffect } from 'react'
+import { useParams } from 'react-router'
+import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
+import { ActionNeededState } from '../../../components/ActionNeededState'
+import { AddressIcon } from '../../../components/AddressIcon'
+import { ErrorState } from '../../../components/ErrorState'
+import { LoadingState } from '../../../components/LoadingState'
+import { IS_READONLY } from '../../../config/readonly'
+import { IconShape } from '../../../icons/IconShape'
+import { useConfigModels } from '../hooks/useConfigModels'
+import { useModelUtils } from '../hooks/useModelUtils'
+import { useProjectData } from '../hooks/useProjectData'
+import { usePanelStore } from '../store/panel-store'
+import { UsageDisplay } from '../usage/UsageDisplay'
+import { AbiDisplay } from './AbiDisplay'
+import { AddressDisplay } from './AddressDisplay'
+import { ContractConfigDialog } from './contract-config-dialog/ContractConfigDialog'
+import { FieldDisplay } from './Field'
+import { FieldTag } from './FieldTag'
+import { Folder } from './Folder'
+import { TemplateDialog } from './template-dialog/TemplateDialog'
+
+export function ValuesPanel() {
+  const { project } = useParams()
+  if (!project) {
+    throw new Error('Cannot use component outside of project page!')
+  }
+
+  const { selected, isError, isPending } = useProjectData()
+
+  if (isPending) {
+    return <LoadingState />
+  }
+  if (isError) {
+    return <ErrorState />
+  }
+
+  return (
+    <div className="h-full w-full">
+      {!selected && <ActionNeededState message="Select a contract" />}
+      {selected && (
+        <Display
+          project={project}
+          selected={selected}
+          blockNumber={selected.blockNumber}
+          sourceProject={selected.sourceProject}
+        />
+      )}
+    </div>
+  )
+}
+
+function Display({
+  project,
+  blockNumber,
+  selected,
+  sourceProject,
+}: {
+  project: string
+  selected: ApiProjectContract | ApiAddressEntry
+  blockNumber: number
+  sourceProject: string
+}) {
+  const { configModel, templateModel, canModify } = useConfigModels()
+  const revealedField = usePanelStore((s) => s.revealedField)
+  const canModifyTemplate = canModify && templateModel.hasTemplate
+  const templateIgnoredMethods = templateModel.ignoreMethods ?? []
+  const configIgnoredMethods = configModel.ignoreMethods ?? []
+  const ignoredMethods = [
+    ...new Set(configIgnoredMethods.concat(templateIgnoredMethods)),
+  ]
+  const chain = selected.chain
+
+  const addresses = getAddressesToCopy(selected)
+
+  const templateDialog = addresses && canAddShape(selected) && !IS_READONLY && (
+    <TemplateDialog.Root
+      key={`${project}-${selected.address}`}
+      project={project}
+      selectedName={selected.name}
+    >
+      <TemplateDialog.Trigger>
+        <IconShape />
+      </TemplateDialog.Trigger>
+      <TemplateDialog.Body
+        addresses={addresses}
+        project={project}
+        chain={chain}
+        blockNumber={blockNumber}
+      />
+    </TemplateDialog.Root>
+  )
+
+  const contractConfigDialog = canModify && <ContractConfigDialog />
+
+  const fieldsFromSelected = 'fields' in selected ? selected.fields : []
+  const ignoredMethodsSet = new Set(ignoredMethods)
+  const fields = fieldsFromSelected.filter(
+    (field) => !ignoredMethodsSet.has(field.name),
+  )
+  const isRevealingField =
+    revealedField?.address === selected.address &&
+    fields.some((field) => field.name === revealedField.name)
+  const isRevealingIgnoredField =
+    revealedField?.address === selected.address &&
+    ignoredMethodsSet.has(revealedField.name)
+  const revealField = usePanelStore((s) => s.revealField)
+  useEffect(() => {
+    if (isRevealingIgnoredField) revealField(undefined)
+  }, [isRevealingIgnoredField, revealField])
+  const ignoredFieldNames = [
+    ...fieldsFromSelected
+      .filter((field) => ignoredMethodsSet.has(field.name))
+      .map((field) => field.name),
+    ...ignoredMethods.filter(
+      (method) => !fieldsFromSelected.find((field) => field.name === method),
+    ),
+  ]
+  const ignoredFields = ignoredFieldNames.map((name) => ({
+    name,
+    inTemplate: templateIgnoredMethods.includes(name),
+    inConfig: configIgnoredMethods.includes(name),
+  }))
+
+  return (
+    <>
+      <div id={selected.address} className="@container px-3 pt-2 pb-2">
+        <div className="mb-1 flex items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-1.5 font-semibold text-base text-coffee-100 leading-6">
+            <AddressIcon className="shrink-0" type={selected.type} />
+            <span className="min-w-0 break-words">
+              {selected.name ?? 'Unknown'}
+            </span>
+            {selected.type === 'Unverified' && (
+              <span className="shrink-0 text-aux-red">(Unverified)</span>
+            )}
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            {templateDialog}
+            {contractConfigDialog}
+          </div>
+        </div>
+        <WithHeadline headline="Address">
+          <AddressDisplay
+            simplified
+            value={{
+              type: 'address',
+              address: selected.address,
+              addressType: selected.type,
+            }}
+          />
+        </WithHeadline>
+        {!IS_READONLY && (
+          <WithHeadline headline="Used in">
+            <UsageDisplay
+              address={selected.address}
+              openedProject={project}
+              sourceProject={sourceProject}
+            />
+          </WithHeadline>
+        )}
+        {'proxyType' in selected && selected.proxyType && (
+          <WithHeadline headline="Proxy Type">
+            <p className="text-aux-cyan">{selected.proxyType}</p>
+          </WithHeadline>
+        )}
+        {'template' in selected && selected.template && (
+          <>
+            <WithHeadline headline="Template">
+              <div className="flex flex-col gap-0.5 text-aux-orange">
+                <span className="inline font-bold">{selected.template.id}</span>
+              </div>
+            </WithHeadline>
+            {selected.template.shape && (
+              <WithHeadline headline="Shape">
+                <div className="flex flex-col gap-0.5 text-aux-orange">
+                  <span className="flex items-center gap-1">
+                    {selected.template.shape.name}
+                    {selected.template.shape.hasCriteria && (
+                      <Badge>+ Criteria</Badge>
+                    )}
+                  </span>
+                </div>
+              </WithHeadline>
+            )}
+          </>
+        )}
+
+        {selected.roles.length > 0 && (
+          <div>
+            <WithHeadline headline="Roles">
+              <div className="flex gap-1">
+                {selected.roles.map((role) => (
+                  <p key={role} className="text-aux-teal">
+                    {role}
+                  </p>
+                ))}
+              </div>
+            </WithHeadline>
+          </div>
+        )}
+
+        <Description />
+        {selected.isReachable && (
+          <WithHeadline headline="Reachable">
+            <p className="text-aux-teal">Yes</p>
+          </WithHeadline>
+        )}
+        {!selected.isReachable && (
+          <WithHeadline headline="Reachable">
+            <p className="text-coffee-200/40">No</p>
+          </WithHeadline>
+        )}
+        <Category />
+      </div>
+      {'implementationNames' in selected && selected.implementationNames && (
+        <Folder title="Implementation names" collapsed={true}>
+          <div className="overflow-x-auto bg-coffee-900 px-3 py-1.5 font-mono text-xs">
+            {Object.entries(selected.implementationNames).map(
+              ([key, value]) => (
+                <div key={key} className="flex items-center gap-2 leading-5">
+                  <span className="text-coffee-400">{key}:</span>
+                  <span className="text-aux-cyan">{value}</span>
+                </div>
+              ),
+            )}
+          </div>
+        </Folder>
+      )}
+
+      {selected.referencedBy.length > 0 && (
+        <Folder title={`Referenced by (${selected.referencedBy.length})`}>
+          <ol className="overflow-x-auto bg-coffee-900">
+            {selected.referencedBy.map((value) => (
+              <li
+                key={value.address}
+                className="flex min-h-7 flex-wrap items-center gap-x-2 gap-y-1 border-coffee-800 border-b py-1 pr-3 pl-8 last:border-b-0"
+              >
+                <div className="-ml-5">
+                  <AddressDisplay value={value} />
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {value.fieldNames.map((fieldName, i) => (
+                    <span
+                      key={i}
+                      className="rounded-sm bg-coffee-800 px-1.5 font-mono text-coffee-300 text-xs leading-5"
+                    >
+                      {fieldName}
+                    </span>
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </Folder>
+      )}
+      {fields.length > 0 && (
+        <Folder title={`Fields (${fields.length})`} expand={isRevealingField}>
+          <ol>
+            {fields.map((field) => (
+              <FieldDisplay
+                key={field.name}
+                field={field}
+                address={selected.address}
+              />
+            ))}
+          </ol>
+        </Folder>
+      )}
+      {ignoredFields.length > 0 && (
+        <Folder
+          title={`Ignored methods (${ignoredFields.length})`}
+          collapsed
+          expand={isRevealingIgnoredField}
+        >
+          <div className="flex flex-wrap items-center gap-1 bg-coffee-900 px-4 py-2 text-2xs">
+            {ignoredFields.flatMap((field) => [
+              field.inTemplate && (
+                <FieldTag
+                  key={`${field.name}:template`}
+                  source="template"
+                  onRemoveClick={
+                    canModifyTemplate
+                      ? () => templateModel.toggleIgnoreMethods(field.name)
+                      : undefined
+                  }
+                >
+                  {field.name}
+                </FieldTag>
+              ),
+              field.inConfig && (
+                <FieldTag
+                  key={`${field.name}:config`}
+                  source="config"
+                  onRemoveClick={
+                    canModify
+                      ? () => configModel.toggleIgnoreMethods(field.name)
+                      : undefined
+                  }
+                >
+                  {field.name}
+                </FieldTag>
+              ),
+            ])}
+          </div>
+        </Folder>
+      )}
+      {'abis' in selected && selected.abis.length > 0 && (
+        <Folder title="ABI" collapsed>
+          <AbiDisplay abis={selected.abis} />
+        </Folder>
+      )}
+    </>
+  )
+}
+
+function getAddressesToCopy(selected: ApiProjectContract | ApiAddressEntry) {
+  const addresses = findAddressToCopy(selected)
+
+  if (!addresses) {
+    return
+  }
+  // biome-ignore lint/style/noNonNullAssertion: it's there
+  return addresses.map((a) => a.split(':')[1]!)
+}
+
+function findAddressToCopy(
+  selected: ApiProjectContract | ApiAddressEntry,
+): string[] {
+  const hasFields = 'fields' in selected && selected.fields.length > 0
+
+  if (!hasFields) {
+    return [selected.address]
+  }
+
+  const implementations = selected.fields.find(
+    (field) => field.name === '$implementation',
+  )
+
+  if (!implementations) {
+    return [selected.address]
+  }
+
+  if (implementations.value.type === 'address') {
+    return [implementations.value.address]
+  }
+
+  if (implementations.value.type === 'array') {
+    // diamonds
+    return implementations.value.values
+      .filter((v) => v.type === 'address')
+      .map((v) => v.address)
+  }
+
+  return [selected.address]
+}
+
+function canAddShape(selected: ApiProjectContract | ApiAddressEntry) {
+  if (
+    selected.type === 'Unverified' &&
+    'proxyType' in selected &&
+    selected.proxyType !== 'immutable'
+  ) {
+    return true
+  }
+
+  return (
+    selected.type !== 'Unverified' &&
+    selected.type !== 'Unknown' &&
+    selected.type !== 'EOA'
+  )
+}
+
+function Badge(props: { children: React.ReactNode }) {
+  return (
+    <span
+      className={
+        'flex max-w-fit items-center justify-center gap-1 rounded-md bg-aux-yellow/10 px-1 py-0.5 text-aux-yellow text-xs'
+      }
+    >
+      {props.children}
+    </span>
+  )
+}
+
+function WithHeadline(props: { headline: string; children: React.ReactNode }) {
+  return (
+    <div className="grid @[480px]:grid-cols-[104px_minmax(0,1fr)] grid-cols-1 items-baseline gap-x-3 py-0.5">
+      <span className="text-coffee-300 text-xs">{props.headline}</span>
+      <div className="min-w-0 overflow-x-auto font-mono text-xs leading-[18px]">
+        {props.children}
+      </div>
+    </div>
+  )
+}
+
+function Category() {
+  const { configModel, templateModel, isPending } = useConfigModels()
+  const category = configModel.category ?? templateModel.category
+
+  if (isPending) {
+    return (
+      <WithHeadline headline="Category">
+        <SkeletonLine />
+      </WithHeadline>
+    )
+  }
+
+  if (!category) {
+    return null
+  }
+
+  return (
+    <WithHeadline headline="Category">
+      <div className="flex items-center gap-1">
+        {configModel.category && (
+          <FieldTag source="config">{configModel.category}</FieldTag>
+        )}
+        {templateModel.category && (
+          <FieldTag source="template">{templateModel.category}</FieldTag>
+        )}
+      </div>
+    </WithHeadline>
+  )
+}
+
+function Description() {
+  const { configModel, templateModel, isPending } = useConfigModels()
+  const { interpolateDescription } = useModelUtils()
+  const description = configModel.description ?? templateModel.description
+
+  if (isPending) {
+    return (
+      <WithHeadline headline="Description">
+        <SkeletonLine />
+      </WithHeadline>
+    )
+  }
+
+  if (!description) {
+    return null
+  }
+
+  return (
+    <WithHeadline headline="Description">
+      <p className="font-sans text-[13px] text-coffee-200 leading-[18px]">
+        {interpolateDescription(description)}
+      </p>
+    </WithHeadline>
+  )
+}
+
+function SkeletonLine() {
+  return (
+    <div className="h-3 w-full animate-breath rounded-sm bg-coffee-400/50" />
+  )
+}

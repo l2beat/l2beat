@@ -1,4 +1,4 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Logger, RateLimiter, redactUrl } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import {
   assert,
@@ -236,8 +236,9 @@ export class BlockscoutClient implements IEtherscanClient {
     const blockscoutResponse = tryParseBlockscoutResponse(response)
 
     if (!blockscoutResponse) {
-      const message = `Invalid Blockscout response [${JSON.stringify(response)}] for request [${url}].`
-      throw new TypeError(message)
+      throw new TypeError('Invalid Blockscout response', {
+        cause: { url: redactUrl(url), response },
+      })
     }
 
     if (blockscoutResponse.message !== 'OK') {

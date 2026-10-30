@@ -11,7 +11,8 @@ import {
   createAmountConfig,
   createPriceConfigId,
 } from '../tools/extractPricesAndAmounts'
-import type { ProjectTvsConfig, TokenValue } from '../types'
+import { getSummedEscrowBalances } from '../tools/getSummedEscrowBalances'
+import type { EscrowValue, ProjectTvsConfig, TokenValue } from '../types'
 
 export class ValueService {
   private logger: Logger
@@ -82,6 +83,36 @@ export class ValueService {
     }
 
     return [...result.values()].flat()
+  }
+
+  /** Value of each escrow balance a token sums, priced like the token. */
+  async calculateEscrowValues(
+    config: ProjectTvsConfig,
+    timestamps: UnixTime[],
+  ): Promise<EscrowValue[]> {
+    const values: EscrowValue[] = []
+    for (const timestamp of timestamps) {
+      for (const token of config.tokens) {
+        for (const escrow of getSummedEscrowBalances(token)) {
+          const amount = await this.executeFormula(token.id, escrow, timestamp)
+          const { value } = await this.executeValueFormula(
+            token.id,
+            { type: 'value', amount: escrow, priceId: token.priceId },
+            timestamp,
+          )
+          values.push({
+            tokenId: token.id,
+            projectId: config.projectId,
+            timestamp,
+            chain: escrow.chain,
+            escrowAddress: escrow.escrowAddress,
+            amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
+            value: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
+          })
+        }
+      }
+    }
+    return values
   }
 
   private async executeAmountFormula(

@@ -68,6 +68,9 @@ describe(createLlmsTxtRouter.name, () => {
       'https://l2beat.com/interop/summary',
       'https://l2beat.com/privacy/summary',
       'https://l2beat.com/zk-catalog',
+      ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
+        ? ['https://l2beat.com/ossification']
+        : []),
       'https://l2beat.com/governance',
       'https://l2beat.com/glossary',
       'https://l2beat.com/faq',
@@ -95,10 +98,11 @@ describe(createLlmsTxtRouter.name, () => {
 
     expect(urls).toEqual([
       'https://l2beat.com/layer2s/projects/{slug}.md',
+      'https://l2beat.com/projects/ethereum.md',
       'https://l2beat.com/privacy/projects/{slug}.md',
       'https://l2beat.com/interop/protocols/{slug}.md',
       'https://l2beat.com/zk-catalog/{slug}.md',
-      'https://l2beat.com/interop/tokens/{slug}.md',
+      'https://l2beat.com/tokens/{slug}.md',
       ...(env.CLIENT_SIDE_DEFI_ENABLED
         ? ['https://l2beat.com/defi/projects/{slug}.md']
         : []),

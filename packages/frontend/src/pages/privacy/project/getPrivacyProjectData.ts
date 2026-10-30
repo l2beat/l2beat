@@ -2,8 +2,11 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
+import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getPrivacyMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
+import { getWebPageStructuredData } from '~/ssr/head/structured-data/getWebPageStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -57,10 +60,13 @@ function getCachedPrivacyProjectPage(
 
 async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
   const helpers = getSsrHelpers()
-  const [appLayoutProps, details] = await Promise.all([
-    getAppLayoutProps(),
-    getPrivacyProjectDetails(slug),
-  ])
+  const [appLayoutProps, details, sectionLinks, versionLinks] =
+    await Promise.all([
+      getAppLayoutProps(),
+      getPrivacyProjectDetails(slug),
+      getProjectSectionLinks(slug),
+      getProjectVersionLinks(slug, 'privacy'),
+    ])
 
   if (!details) {
     return undefined
@@ -73,11 +79,12 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
       manifest,
       metadata: getMetadata(manifest, {
         name: details.name,
-        title: `${details.name} - Privacy Dashboard - L2BEAT`,
+        title: `${details.name} Privacy Review & Risks - L2BEAT`,
         description: getPrivacyMetadataDescription({
           name: details.name,
           category: details.category.label,
           description: details.display.description,
+          promise: details.adversaries.promise.text,
         }),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
@@ -85,11 +92,19 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
         openGraph: {
           image: `/meta-images/privacy/projects/${details.slug}/opengraph-image.png`,
         },
+        structuredData: (page) => [
+          getWebPageStructuredData(page, {
+            name: `${details.name} privacy review`,
+            about: details.name,
+          }),
+        ],
       }),
     },
     props: {
       ...appLayoutProps,
       entry: projectEntry,
+      sectionLinks,
+      versionLinks,
       queryState: helpers.dehydrate(),
     },
   }

@@ -139,10 +139,12 @@ export async function makeConfig(
     ),
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
-    daBeat:
-      flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env, flags)),
+    daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, flags)),
     ecosystems:
       flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
+    cropAttestations: flags.isEnabled('crop-attestations') && {
+      githubToken: env.optionalString('GITHUB_TOKEN'),
+    },
     chainConfig: await getChainConfig(ps, env),
     beaconApi: {
       url: env.optionalString(['ETHEREUM_BEACON_API_URL']),

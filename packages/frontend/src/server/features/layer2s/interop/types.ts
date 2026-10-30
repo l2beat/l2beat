@@ -126,6 +126,8 @@ export type InteropTokenParams = v.infer<typeof InteropTokenParams>
 export const InteropTokenParams = v.object({
   tokenId: v.string(),
   ...InteropSelectionInputShape,
+  /** Pins the data to the promoted snapshot the rest of a page shows; otherwise the latest is used. */
+  snapshotTimestamp: v.number().optional(),
 })
 
 export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>
@@ -205,6 +207,8 @@ export const InteropFlowsParams = v.object({
   chains: v.array(v.string()),
   protocolIds: v.array(v.string()),
   tokenId: v.string().optional(),
+  /** Pins the flows to the promoted snapshot the rest of a page shows; otherwise the latest is used. */
+  snapshotTimestamp: v.number().optional(),
 })
 
 export type InteropProtocolsByVolumeParams = v.infer<
@@ -247,6 +251,12 @@ export type InteropProtocolTransferDetailsItem = {
 export type InteropProtocolTransfersResponse = {
   items: InteropProtocolTransferDetailsItem[]
   nextCursor: InteropProtocolTransfersCursor | undefined
+  /**
+   * Set, with no items, when the selection includes a lane carried over from
+   * an older snapshot: its count covers that snapshot's window, not the one
+   * the transfers would be listed from. The oldest such snapshot.
+   */
+  carriedFrom?: number
 }
 
 export type AggregatedInteropTransferWithTokens =

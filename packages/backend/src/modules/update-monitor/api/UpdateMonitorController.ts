@@ -81,7 +81,13 @@ export class UpdateMonitorController {
 
     const ps = new ProjectService()
     this.projectConfigs = await ps.getProjects({
-      optional: ['scalingInfo', 'daLayer', 'privacyInfo', 'defiInfo'],
+      optional: [
+        'scalingInfo',
+        'daLayer',
+        'privacyInfo',
+        'defiInfo',
+        'interopConfig',
+      ],
     })
 
     return this.projectConfigs

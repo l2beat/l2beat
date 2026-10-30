@@ -23,7 +23,7 @@
   },
   "fields": {
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "respectedGameType": {
       // inconsequential here: the dispute-game withdrawal path carries no assets

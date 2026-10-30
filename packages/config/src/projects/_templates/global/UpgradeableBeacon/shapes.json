@@ -14,5 +14,11 @@
     "address": "base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6",
     "chain": "base",
     "blockNumber": 50511351
+  },
+  "UpgradeableBeacon_zksync": {
+    "hash": "0x00ec02964a63af2bae64273fd7236be3bdda2093b2f8d7131e260893b54e1efa",
+    "address": "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+    "chain": "zksync2",
+    "blockNumber": 72688187
   }
 }

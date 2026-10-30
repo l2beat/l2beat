@@ -1,17 +1,6 @@
-import type {
-  ChainConfig,
-  Formula,
-  Project,
-  ProjectContract,
-  TvsToken,
-} from '@l2beat/config'
+import type { ChainConfig, Project, TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
-import {
-  assertUnreachable,
-  ChainSpecificAddress,
-  TokenId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { TokenId, UnixTime } from '@l2beat/shared-pure'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import { env } from '~/env'
 import { categoryToLabel } from '~/pages/layer2s/project/tvs-breakdown/components/tables/categoryToLabel'
@@ -21,20 +10,18 @@ import {
   calculatePercentageChange,
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
-import { formatTimestamp } from '~/utils/dates'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { getLatestTvsTimestamp } from '../utils/getLatestTvsTimestamp'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
 import { sourceToLabel } from '../utils/sourceToLabel'
+import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
 import {
-  type Address,
-  extractAddressesFromTokenConfig,
-} from './extractAddressesFromTokenConfig'
-
-type AddressData = {
-  address: string
-  url?: string
-  name?: string
-}
+  type AddressData,
+  type FormulaWithMeta,
+  getSyncStatus,
+  processAddresses,
+  withExplorerUrl,
+} from './tokenEntryHelpers'
 
 export interface ProjectTvsBreakdownTokenEntry extends FilterableEntry {
   id: TvsToken['id']
@@ -76,19 +63,23 @@ export async function getProjectTokensEntries(
   }
 
   const db = getDb()
-  const targetTimestamp = getTvsTargetTimestamp()
-  const sevenDaysAgoTargetTimestamp = targetTimestamp - 7 * UnixTime.DAY
+  const latestTimestamp = await getLatestTvsTimestamp()
 
-  const [projects, tokenValues, sevenDaysAgoTokenValues] = await Promise.all([
+  const [projects, tokenValues] = await Promise.all([
     ps.getProjects({
       select: ['chainConfig'],
     }),
-    db.tvsTokenValue.getByProjectAtOrBefore(project.id, targetTimestamp),
-    db.tvsTokenValue.getByProjectAtOrBefore(
-      project.id,
-      sevenDaysAgoTargetTimestamp,
-    ),
+    db.tvsTokenValue.getByProjectAtOrBefore(project.id, latestTimestamp),
   ])
+  // The 7d changes need values exactly seven days apart, so count back from
+  // each value's own hour, not the latest
+  const sevenDaysAgoTokenValues = await db.tvsTokenValue.getAtOrBefore(
+    tokenValues.map((x) => ({
+      projectId: x.projectId,
+      tokenId: x.tokenId,
+      timestamp: x.timestamp - 7 * UnixTime.DAY,
+    })),
+  )
 
   const chains = projects.map((x) => x.chainConfig)
   const tokenValuesMap = new Map(
@@ -103,7 +94,7 @@ export async function getProjectTokensEntries(
     tokenValuesMap,
     sevenDaysAgoTokenValuesMap,
     chains,
-    targetTimestamp,
+    getTvsTargetTimestamp(),
   )
 
   return entries
@@ -205,152 +196,6 @@ function getEntries(
   return breakdown.sort(
     (a, b) => b.valueForProject.value - a.valueForProject.value,
   )
-}
-
-// Ik its ugly but it works and is type safe
-type FormulaWithMeta =
-  | (Extract<Formula, { type: 'balanceOfEscrow' | 'starknetBalanceOf' }> & {
-      addressMeta: AddressData
-      escrowAddressMeta: AddressData
-    })
-  | (Omit<Extract<Formula, { type: 'calculation' }>, 'arguments'> & {
-      arguments: FormulaWithMeta[]
-    })
-  | (Omit<Extract<Formula, { type: 'balanceOfEscrows' }>, 'escrowAddresses'> & {
-      addressMeta: AddressData
-      escrowCount: number
-    })
-  | (Extract<
-      Formula,
-      {
-        type: 'circulatingSupply' | 'totalSupply' | 'starknetTotalSupply'
-      }
-    > & {
-      addressMeta: AddressData
-    })
-  | (Omit<Extract<Formula, { type: 'value' }>, 'amount'> & {
-      amount: FormulaWithMeta
-    })
-  | Extract<Formula, { type: 'const' }>
-
-function withExplorerUrl(
-  formula: Formula,
-  chains: ChainConfig[],
-  projectContracts: Record<string, ProjectContract[]> | undefined,
-): FormulaWithMeta {
-  switch (formula.type) {
-    case 'balanceOfEscrow':
-    case 'starknetBalanceOf': {
-      return {
-        ...formula,
-        escrowAddressMeta: processAddress(
-          {
-            address: formula.escrowAddress,
-            chain: formula.chain,
-          },
-          chains,
-          projectContracts,
-        ),
-        addressMeta: processAddress(
-          {
-            address: formula.address,
-            chain: formula.chain,
-          },
-          chains,
-          projectContracts,
-        ),
-      }
-    }
-    case 'calculation':
-      return {
-        ...formula,
-        arguments: formula.arguments.map((arg) =>
-          withExplorerUrl(arg, chains, projectContracts),
-        ),
-      }
-    case 'balanceOfEscrows': {
-      const { escrowAddresses, ...rest } = formula
-      return {
-        ...rest,
-        escrowCount: escrowAddresses.length,
-        addressMeta: processAddress(
-          {
-            address: formula.address,
-            chain: formula.chain,
-          },
-          chains,
-          projectContracts,
-        ),
-      }
-    }
-    case 'circulatingSupply':
-    case 'totalSupply':
-    case 'starknetTotalSupply': {
-      return {
-        ...formula,
-        addressMeta: processAddress(
-          {
-            address: formula.address,
-            chain: formula.chain,
-          },
-          chains,
-          projectContracts,
-        ),
-      }
-    }
-    case 'value':
-      return {
-        ...formula,
-        amount: withExplorerUrl(formula.amount, chains, projectContracts),
-      }
-    case 'const':
-      return formula
-    default:
-      assertUnreachable(formula)
-  }
-}
-
-function processAddresses(
-  addresses: Address[],
-  chains: ChainConfig[],
-  projectContracts: Record<string, ProjectContract[]> | undefined,
-): AddressData | 'multiple' | undefined {
-  if (addresses.length > 1) {
-    return 'multiple'
-  }
-  if (addresses.length === 1 && addresses[0]) {
-    const address = addresses[0]
-    return processAddress(address, chains, projectContracts)
-  }
-  return undefined
-}
-
-function processAddress(
-  address: Address,
-  chains: ChainConfig[],
-  projectContracts: Record<string, ProjectContract[]> | undefined,
-): AddressData {
-  const contractName = projectContracts?.[address.chain]?.find(
-    (c) =>
-      ChainSpecificAddress.address(c.address).toLowerCase() ===
-      address.address.toLowerCase(),
-  )?.name
-  const explorer = chains.find((c) => c.name === address.chain)?.explorerUrl
-
-  return {
-    address: address.address,
-    url: explorer ? `${explorer}/address/${address.address}` : undefined,
-    name: contractName,
-  }
-}
-
-function getSyncStatus(valueTimestamp: UnixTime, targetTimestamp: UnixTime) {
-  if (valueTimestamp < targetTimestamp) {
-    return `No token data since ${formatTimestamp(valueTimestamp, {
-      mode: 'datetime',
-      longMonthName: true,
-    })}.`
-  }
 }
 
 async function getMockTvsBreakdownForProjectData(

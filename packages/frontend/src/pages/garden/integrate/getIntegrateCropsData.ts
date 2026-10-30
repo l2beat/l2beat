@@ -3,6 +3,7 @@ import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMet
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getCropsBadgeAssets } from './badges'
 import { CROPS_API_ENDPOINTS } from './content'
 import { getIntegrateExamples } from './getIntegrateExamples'
 
@@ -10,9 +11,11 @@ export async function getIntegrateCropsData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
+  // One read, so the examples and the attestation section show the same one.
+  const attestations = await getAttestationsMeta()
   const [appLayoutProps, examples] = await Promise.all([
     getAppLayoutProps(),
-    getIntegrateExamples(),
+    getIntegrateExamples(attestations),
   ])
   return {
     head: {
@@ -20,10 +23,10 @@ export async function getIntegrateCropsData(
       metadata: getMetadata(manifest, {
         name: 'Integrate CROPS',
         description:
-          'Pull the CROPS evaluations from The Infinite Garden into your own app.',
+          'Pull the CROPS evaluations from the CROPS guide into your own app.',
         url,
         openGraph: {
-          image: '/meta-images/the-infinite-garden/opengraph-image.png',
+          image: '/meta-images/the-crops-guide/opengraph-image.png',
         },
       }),
     },
@@ -31,7 +34,8 @@ export async function getIntegrateCropsData(
       page: 'IntegrateCropsPage',
       props: {
         ...appLayoutProps,
-        attestations: getAttestationsMeta(),
+        attestations,
+        badges: getCropsBadgeAssets(manifest),
         endpoints: CROPS_API_ENDPOINTS,
         examples,
       },

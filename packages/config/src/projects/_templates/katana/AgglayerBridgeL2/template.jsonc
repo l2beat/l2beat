@@ -27,7 +27,7 @@
       "severity": "HIGH"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     // Role holders below (Katana Foundation Engineering Safe): swapping one actor for
     // another is identity, not mechanism. Mechanism changes (e.g. the EOA-to-multisig

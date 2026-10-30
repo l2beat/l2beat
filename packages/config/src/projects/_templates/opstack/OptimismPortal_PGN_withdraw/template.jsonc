@@ -7,6 +7,7 @@
   "ignoreInWatchMode": ["params"],
   "fields": {
     "guardian": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -15,6 +16,7 @@
       ]
     },
     "GUARDIAN": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

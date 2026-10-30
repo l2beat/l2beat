@@ -11,13 +11,20 @@ interface Props {
 }
 
 const SKIP_WHILE_OFFSCREEN = '[content-visibility:auto]'
-// Skipping implies paint containment, which clips a highlighted card's ring
-// and glow to the wrapper; containment also makes the wrapper a stacking
-// context, so it has to rise itself for the glow to cover its neighbours.
-const SHOW_HIGHLIGHT_OVERFLOW =
-  'has-data-highlighted:[content-visibility:visible] has-data-highlighted:relative has-data-highlighted:z-10'
+// Skipping implies paint containment, which clips whatever overflows the
+// wrapper: a highlighted card's ring and glow, an open tooltip or popover not
+// rendered through a portal, and a chart's tooltip (Recharts keeps it in the
+// DOM while hidden, so this waits for the chart to be hovered). Containment
+// also makes the wrapper a stacking context, so it has to rise itself to
+// cover its neighbours.
+const SHOW_OVERFLOW =
+  'has-[[data-highlighted],[data-radix-popper-content-wrapper],.recharts-wrapper:hover]:[content-visibility:visible] has-[[data-highlighted],[data-radix-popper-content-wrapper],.recharts-wrapper:hover]:relative has-[[data-highlighted],[data-radix-popper-content-wrapper],.recharts-wrapper:hover]:z-10'
 // A drag fires resize events every frame; remeasuring waits for the last one.
 const RESIZE_SETTLE_MS = 200
+// React 19 compares props by identity and sets innerHTML whenever this object
+// changes, so a fresh one per render would wipe the server markup on any
+// re-render before the section mounts.
+const KEEP_SERVER_MARKUP = { __html: '' }
 
 /**
  * Keeps the server-rendered markup in place and mounts the React tree only
@@ -28,10 +35,8 @@ const RESIZE_SETTLE_MS = 200
  * The same wrapper lets the browser skip style and layout of the contents
  * while they are off screen (`content-visibility: auto`), which is most of
  * what a long page pays on every resize step and scroll. The class goes on
- * after the first paint, and by hand rather than through a render: the
- * browser has then remembered each wrapper's real height so fragment
- * navigation on load lands where it did, and re-rendering this wrapper
- * before it hydrates would wipe the server markup.
+ * after the first paint, once the browser has remembered each wrapper's real
+ * height, so fragment navigation on load lands where it did.
  *
  * Not a Suspense boundary on purpose: React client-renders a boundary it has
  * not hydrated yet as soon as any context above it changes, and next-themes
@@ -47,7 +52,7 @@ export function LazyHydrate({ children, eager = false, className }: Props) {
   const wrapperClassName = cn(
     className,
     '[contain-intrinsic-size:auto_800px] [contain:layout]',
-    SHOW_HIGHLIGHT_OVERFLOW,
+    SHOW_OVERFLOW,
   )
 
   const ref = useCallback(
@@ -75,7 +80,7 @@ export function LazyHydrate({ children, eager = false, className }: Props) {
       ref={ref}
       className={wrapperClassName}
       suppressHydrationWarning
-      dangerouslySetInnerHTML={{ __html: '' }}
+      dangerouslySetInnerHTML={KEEP_SERVER_MARKUP}
     />
   )
 }

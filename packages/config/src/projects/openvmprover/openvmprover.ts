@@ -39,8 +39,7 @@ export const openvmprover: BaseProject = {
   },
   milestones: [
     {
-      title:
-        '[Disclosed vulnerability] Plonky3 final polynomial degree check vulnerability',
+      title: 'Plonky3 final polynomial degree check bug',
       url: 'https://forum.scroll.io/t/security-council-report-scroll-mainnet-emergency-upgrade-on-2025-05-26/810',
       date: '2025-05-26T00:00:00Z',
       description:
@@ -94,28 +93,6 @@ export const openvmprover: BaseProject = {
         verificationSteps: readProjectMarkdown(
           'openvmprover',
           'verificationSteps-0x00dfb685',
-        ),
-        description:
-          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
-      },
-      {
-        hash: '0x6a74f16c472ea2698ee461daf35ffb62faaef6280d40390961daa181bc805663',
-        name: 'OpenVM v1.6.0 PostFeynman',
-        sourceLink: 'https://github.com/openvm-org/openvm/tree/v1.6.0',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x96cbcC4333E172927fDa8B631C716d43E2FBA01C',
-            ),
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'openvmprover',
-          'verificationSteps-0x6a74f16c',
         ),
         description:
           'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',

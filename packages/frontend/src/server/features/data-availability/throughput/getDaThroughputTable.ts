@@ -9,7 +9,6 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
 type LargestPoster = Omit<DataAvailabilityRecord, 'configurationId'> & {
@@ -32,12 +31,10 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day')
   const [values, maxHistoricalRecords, daLayers] = await Promise.all([
     db.dataAvailability.getByDaLayersAndTimeRange(
-      THROUGHPUT_ENABLED_DA_LAYERS,
+      ['ethereum'],
       [lastDay - 7 * UnixTime.DAY, lastDay],
     ),
-    db.dataAvailability.getMaxHistoricalRecordByDaLayer(
-      THROUGHPUT_ENABLED_DA_LAYERS,
-    ),
+    db.dataAvailability.getMaxHistoricalRecordByDaLayer(['ethereum']),
     ps.getProjects({
       ids: daLayerIds.map(ProjectId),
       select: ['daLayer'],
@@ -243,10 +240,7 @@ function getMockDaThroughputTableData(
             daLayerId,
             {
               syncedUntil:
-                daLayerId === 'avail'
-                  ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
-                  : UnixTime.toStartOf(UnixTime.now(), 'day') -
-                    1 * UnixTime.DAY,
+                UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY,
               pastDayData: {
                 largestPoster: {
                   name: 'Base',
@@ -290,10 +284,7 @@ function getMockDaThroughputTableData(
                 avgThroughputPerSecond: 100000,
               },
               syncedUntil:
-                daLayerId === 'avail'
-                  ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
-                  : UnixTime.toStartOf(UnixTime.now(), 'day') -
-                    1 * UnixTime.DAY,
+                UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY,
               maxThroughputPerSecond: 400000,
               maxRegistered: {
                 value: 390000,

@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Bridge",
+  "critical": true,
+  "description": "Routes token deposits and releases to asset handlers. Releases require an EIP-712 signature recovering to the configured signing address. The contract checks no source-chain proof or signer threshold. Per-function authorities can withdraw escrow funds, remap handlers and replace access control.",
+  "ignoreMethods": ["isProposalExecuted"],
+  "fields": {
+    "paused": { "severity": "MEDIUM" },
+    "_MPCAddress": {
+      "description": "Address accepted by the ECDSA signature check. It is set once and cannot subsequently be replaced through endKeygen.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "authorize arbitrary token releases by signing bridge proposals."
+        }
+      ]
+    },
+    "_accessControl": {
+      "severity": "HIGH",
+      "description": "Contract defining authority for each administrative function, including unrestricted escrow withdrawals."
+    },
+    "_feeHandler": {
+      "description": "Configurable contract collecting deposit fees."
+    }
+  }
+}

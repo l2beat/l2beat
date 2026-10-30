@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FluidkeyEarnModule",
+  "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+  "category": "core",
+  "ignoreRelatives": ["wrappedNative", "NATIVE_TOKEN"],
+  "fields": {
+    "owner": {
+      "description": "Owner of the earn module.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe."
+        }
+      ]
+    },
+    "authorizedRelayers": {
+      "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers.",
+      "handler": {
+        "type": "event",
+        "add": {
+          "event": "AddAuthorizedRelayer"
+        },
+        "remove": {
+          "event": "RemoveAuthorizedRelayer"
+        },
+        "select": "relayer"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers."
+        }
+      ]
+    }
+  }
+}

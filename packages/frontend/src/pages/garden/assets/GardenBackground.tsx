@@ -7,8 +7,8 @@ export function GardenBackground() {
     <PageBackdrop name="garden">
       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-garden-sky to-transparent" />
       <Stars />
-      <Sun className="absolute top-10 right-14 max-md:top-6 max-md:right-6 max-md:scale-75 dark:hidden" />
-      <Moon className="absolute top-10 right-14 hidden max-md:top-6 max-md:right-6 max-md:scale-75 dark:block" />
+      <Sun className="absolute top-10 right-14 max-md:top-6 max-md:right-6 max-md:scale-75 max-md:opacity-60 dark:hidden" />
+      <Moon className="absolute top-10 right-14 hidden max-md:top-6 max-md:right-6 max-md:scale-75 max-md:opacity-60 dark:block" />
       <svg
         className="absolute bottom-0 left-0 h-36 w-full"
         viewBox="0 0 1200 160"
@@ -27,7 +27,7 @@ export function GardenBackground() {
   )
 }
 
-function Sun({ className }: { className?: string }) {
+export function Sun({ className }: { className?: string }) {
   const rays = Array.from({ length: 8 }, (_, i) => i * 45)
   return (
     <svg
@@ -64,7 +64,7 @@ function Sun({ className }: { className?: string }) {
   )
 }
 
-function Moon({ className }: { className?: string }) {
+export function Moon({ className }: { className?: string }) {
   return (
     <svg
       width={112}
@@ -72,7 +72,7 @@ function Moon({ className }: { className?: string }) {
       viewBox="0 0 112 112"
       className={cn('overflow-visible text-garden-moon', className)}
     >
-      <circle cx="56" cy="56" r="52" className="fill-garden-moon/10" />
+      <circle cx="56" cy="56" r="52" className="fill-garden-moon/5" />
       <path
         d="M52.93 34.22 A22 22 0 1 0 76.58 63.78 A19 19 0 1 1 52.93 34.22 Z"
         fill="currentColor"
@@ -81,16 +81,12 @@ function Moon({ className }: { className?: string }) {
   )
 }
 
+// Stars keep to the nav gutter and the moon's corner: over text a star reads as a stray dot.
+// Without the nav there is no gutter, and on phones text runs under the moon's left star.
 const STARS = [
-  { left: '4%', top: 28, size: 2 },
-  { left: '11%', top: 96, size: 1.5 },
-  { left: '19%', top: 44, size: 1.5 },
-  { left: '27%', top: 132, size: 2 },
-  { left: '36%', top: 20, size: 1.5 },
-  { left: '44%', top: 84, size: 2 },
-  { left: '53%', top: 36, size: 1.5 },
-  { left: '61%', top: 120, size: 1.5 },
-  { left: '69%', top: 56, size: 2 },
+  { left: '4%', top: 28, size: 2, className: 'max-lg:hidden' },
+  { left: '11%', top: 96, size: 1.5, className: 'max-lg:hidden' },
+  { left: '69%', top: 56, size: 2, className: 'max-md:hidden' },
   { left: '77%', top: 16, size: 1.5 },
   { left: '84%', top: 148, size: 1.5 },
   { left: '96%', top: 104, size: 2 },
@@ -102,7 +98,10 @@ function Stars() {
       {STARS.map((star) => (
         <span
           key={star.left}
-          className="absolute rounded-full bg-garden-moon/70"
+          className={cn(
+            'absolute rounded-full bg-garden-moon/45',
+            star.className,
+          )}
           style={{
             left: star.left,
             top: star.top,

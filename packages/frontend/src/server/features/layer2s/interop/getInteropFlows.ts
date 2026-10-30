@@ -6,6 +6,7 @@ import { manifest } from '~/utils/Manifest'
 import { INTEROP_PAIR_SEPARATOR } from './consts'
 import type { AverageDuration, InteropFlowsParams, TokenData } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import { getPromotedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 import {
   getAverageDuration,
   getDurationSplit,
@@ -100,6 +101,9 @@ export async function getInteropFlows(
     return getMockInteropFlows()
   }
 
+  const snapshotTimestamp = await getPromotedInteropSnapshotTimestamp(
+    params.snapshotTimestamp,
+  )
   const { records } = await getLatestAggregatedInteropTransferWithTokens({
     selection: {
       from: params.chains,
@@ -107,6 +111,7 @@ export async function getInteropFlows(
     },
     protocolIds: params.protocolIds,
     anchorChain: params.anchorChain,
+    snapshotTimestamp,
   })
   const scopedRecords = params.tokenId
     ? scopeRecordsToToken(records, params.tokenId)

@@ -427,7 +427,7 @@ describe(renderProjectSection.name, () => {
       props: {
         id: 'crops',
         title: 'Crops',
-        inGarden: false,
+        listing: 'ratedBad',
         crops: {
           censorshipResistance: {
             ...crop,
@@ -447,20 +447,25 @@ describe(renderProjectSection.name, () => {
           privacy: { ...crop, status: 'notReviewed', sentiment: 'neutral' },
           security: crop,
         },
+        ossification: [
+          'Score: 99 of 100.',
+          'No critical change since 2020 May 18.',
+        ],
       },
     })
 
     expect(markdown).toInclude(
-      'Not in the garden yet. 2 of 4 in bloom.',
+      'Not listed in the CROPS guide: a property is rated bad. 2 of 4 rated good.',
+      '### Security\n\nGood\n\n**Ossification**\n\n- Score: 99 of 100.\n- No critical change since 2020 May 18.',
       '### Censorship resistance\n\nBad\n\n**What is missing**\n\n- No forced transactions.',
       "### Open source\n\nGood\n\n**What's good**\n\n- License: [MIT License](https://mit)\n- Code is public.",
       '### Privacy\n\nNot reviewed',
-      '[See the whole garden](https://l2beat.com/garden).',
+      '[See the CROPS guide](https://l2beat.com/crops).',
     )
   })
 
-  it('names the DA layers a project posts to, or posted to once it stopped', () => {
-    const dataPosted = (currentDaLayers: { name: string; logo: string }[]) =>
+  it('names the DA layers a project posts to, or posted to once it stopped, linking those with a page', () => {
+    const dataPosted = (currentDaLayers: (typeof ETHEREUM)[]) =>
       render({
         type: 'DataPostedSection',
         props: {
@@ -476,10 +481,10 @@ describe(renderProjectSection.name, () => {
       })
 
     expect(dataPosted([ETHEREUM])).toInclude(
-      'The project currently posts data to Ethereum; previously it posted to Celestia.',
+      'The project currently posts data to [Ethereum](https://l2beat.com/projects/ethereum); previously it posted to Celestia.',
     )
     expect(dataPosted([])).toInclude(
-      'The project no longer posts data; previously it posted to Celestia.',
+      'We no longer track where the project posts data; previously it posted to Celestia.',
     )
   })
 
@@ -667,11 +672,13 @@ const GROTH16 = {
 const ETHEREUM = {
   name: 'Ethereum',
   logo: '/icons/ethereum.png',
+  href: '/projects/ethereum',
 }
 
 const CELESTIA = {
   name: 'Celestia',
   logo: '/icons/celestia.png',
+  href: undefined,
 }
 
 const CHART_PROJECT = {

@@ -48,7 +48,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'networkObserver',
       label: 'Network observer',
       description:
-        'Sits between the user and the services and sees traffic only: ISPs, VPNs, Tor exits, public RPCs and relayers. Learns IP addresses, timing, fingerprints and ciphertext. Services the operator runs count as the insider.',
+        'Sits between the user and the services and sees traffic only: ISPs, VPNs, Tor exits, public RPCs and relayers. Ties requests to a user by content, session or timing: what they name, a shared IP or login, and when they arrive. Services the operator runs count as the insider.',
       examples:
         'Infura or Alchemy, a Tornado relayer, a wallet vendor selling telemetry, Google captcha or analytics in the dapp frontend.',
     },
@@ -56,7 +56,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'privilegedInsider',
       label: 'Privileged insider',
       description:
-        'Holds an operator role, custodies funds, receives keys or plaintext by design, or delivers the client: upgrade admin, custodian, view key holder, enclave operator, association set provider, hosted prover, registry, frontend host.',
+        'Holds an operator role, custodies funds, receives keys or plaintext by design, or delivers the app: upgrade admin, custodian, view key holder, enclave operator, association set provider, hosted prover, registry, frontend host.',
       examples:
         'A compliance backdoor key, a DAO with an upgrade key, a KMS committee, an ASP operator, a custodial bridge.',
     },
@@ -64,7 +64,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'futureAdversary',
       label: 'Future adversary',
       description:
-        'Harvest now, decrypt later. Holds every byte ever written onchain plus any retained logs, and breaks all public-key cryptography, by quantum computer or new mathematics: elliptic curves, pairings, RSA, lattices and isogenies. Hashes, Poseidon included, and symmetric ciphers survive.',
+        'Harvest now, decrypt later. Holds every byte ever published and runs the known quantum attacks: elliptic curves, pairings and RSA fall. Hashes, symmetric ciphers and post-quantum schemes stand until an attack on them is known.',
       examples:
         'An intelligence agency archiving chain data today, then anyone once a break is public.',
     },
@@ -227,52 +227,42 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
     `${entryExit} show address, token and amount.`,
   /** Pools. `relayer` is the project's word for it. */
   exitViaRelayer: (relayer: string) =>
-    `Exit through a ${relayer}, so no wallet of yours pays gas for the receiving address.`,
+    `Exit through a ${relayer}, so none of the user's wallets pay gas for the receiving address.`,
   /** Stealth addresses handed out by an operator: the rest of the promise. */
   stealthPromiseTail:
     'The payer knows the address it was given; sender, asset, amount and where the funds go next are public.',
   /** Stealth addresses: receive hygiene. `separate` is the client's way to keep balances apart. */
   freshReceive: (separate: string) =>
-    `Generate a fresh address for each receive, ${separate}, and send to destinations with no public link to you.`,
+    `Generate a fresh address for each receive, ${separate}, and send to destinations with no public link to the user.`,
 
   // Chain analyst
   /** Pools: the self-paid alternative to a relayer. */
   walletFingerprint: (relayer: string) =>
-    `Paying gas from your own wallet instead of a ${relayer} exposes that wallet's fingerprint, its account implementation and fee habits, even from a fresh address.`,
+    `Paying gas from the user's wallet instead of a ${relayer} exposes its fingerprint, account implementation and fee habits, even from a fresh address.`,
   largeAnonymitySet: 'Use a pool with a large anonymity set.',
   commonAmounts: 'Withdraw common amounts rather than everything at once.',
   /** Pools: hygiene every pool needs on top of its specifics. */
   freshExit:
     'Wait before exiting and pick a different time of day than the deposit. Exit to a fresh address every time and spend from it with a different wallet than the one that deposited.',
 
-  // Network observer
-  /** Open clients with an RPC setting and a relayer. */
-  ownNodeAndTor: (relayer: string) =>
-    `Read the chain from your own node, send through a public RPC over Tor, and use a popular ${relayer}. If you settle for a VPN instead of Tor, pick one you trust: it hides your IP from the ${relayer} but sees it itself.`,
-
   // Privileged insider
   /** Open clients served from a hosted frontend. */
   localBuild:
-    'Run an inspected local build of the client instead of the hosted frontend.',
+    'Run an inspected local build of the app instead of the hosted frontend.',
   /** Stealth addresses handed out by an operator. */
   operatorViewingKey: (operator: string) =>
-    `${operator} holds the viewing key, so it can regenerate every address and tie its activity to your account.`,
+    `${operator} holds the viewing key, so it can regenerate every address and tie its activity to the user's account.`,
   localClientSpendingKeys: (operator: string) =>
-    `Verify address derivations and transactions with an inspected local client. This protects your spending keys but does not remove ${operator}'s view.`,
+    `Verify address derivations and transactions with an inspected local app. This protects the user's spending keys but does not remove ${operator}'s view.`,
 
   // Future adversary
   /** Stealth addresses without onchain announcements. */
   noAnnouncement:
     'No announcement is published, so address derivations cannot be replayed from the chain alone.',
-  /** Follows `noAnnouncement` when the operator holds the viewing key. */
-  operatorViewingKeyRegardless: (operator: string) =>
-    `The viewing key held by ${operator} exposes the history regardless.`,
   /** Account keys derived from a wallet signature. `extra` names what else is needed, e.g. a PIN. */
   walletSignatureAccounts: (extra?: string) =>
     `Accounts created from a wallet signature reduce to that wallet's key${extra ? ` ${extra}` : ''}.`,
   /** `alternative` is the client's own option, e.g. "from a seed phrase". */
   notWalletSignature: (alternative: string) =>
-    `Create your account ${alternative}, not from a wallet signature.`,
-  permanentlyDisclosed: (what: string) =>
-    `Treat ${what} as permanently disclosed.`,
+    `Create the user's account ${alternative}, not from a wallet signature.`,
 } as const

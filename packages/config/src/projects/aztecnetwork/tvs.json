@@ -46,6 +46,32 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "aztecnetwork-sUSDS",
+      "priceId": "susds",
+      "symbol": "sUSDS",
+      "name": "Savings USDS",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "chain": "ethereum",
+        "escrowAddress": "0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
+        "decimals": 18,
+        "sinceTimestamp": 1791316739
+      },
+      "category": "stablecoin",
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1790759557,
-  "configHash": "0x91f649f667ff3a97e0efd73985b1ea11ff2750e8a5f73efdcd73b9c49cd64dff",
+  "timestamp": 1793006682,
+  "configHash": "0x7a7222d904a5b55741b6146a7785fbc04646325e6398d95b95c52516ea0e227e",
   "entries": [
     {
       "name": "CoinIssuer",
@@ -36,6 +36,11 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "eth:0x05406F53174EC1bFE5C94aF253CdD62A4adF2F29",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GovernanceProposer",
       "address": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
       "type": "Contract",
@@ -61,9 +66,9 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 110,
+        "getCurrentRound": 19,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "getInstance": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "getInstance": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
         "LIFETIME_IN_ROUNDS": 5,
         "QUORUM_SIZE": 600,
@@ -106,16 +111,26 @@
       "name": "HonkVerifier",
       "address": "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC",
       "type": "Contract",
-      "template": "aztecnetwork/HonkVerifier",
+      "template": "aztecnetwork/HonkVerifier_v5",
       "sourceHashes": [
         "0x571cb1ad009254f2861d4e9f714fd96b9650ac98914a54037baa51a782d166b3"
       ],
       "proxyType": "immutable",
-      "description": "ZK proof verification contract.",
+      "description": "UltraHonk verifier for Aztec v5 epoch proofs with an immutable verification key.",
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "verificationKeyHash": "0x2f0ca3e610369fc41f7fb8a69995a96428fbf69d7dffd2b576e63ba4d9511ee1"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "severity": "HIGH",
+          "description": "Root-rollup circuit verification key hash embedded in the verified Solidity source.",
+          "type": "CODE_CHANGE"
+        }
+      },
       "implementationNames": {
         "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC": "HonkVerifier"
       },
@@ -158,9 +173,9 @@
         },
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
-        "proposalCount": 5,
-        "totalPowerNow": "611193841005889423113555405",
-        "withdrawalCount": 6173
+        "proposalCount": 6,
+        "totalPowerNow": "648513802320099161943536713",
+        "withdrawalCount": 6434
       },
       "fieldMeta": {
         "ASSET": {
@@ -200,11 +215,11 @@
       "sinceBlock": 23786827,
       "values": {
         "$immutable": true,
-        "getCanonicalRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "getCanonicalRollup": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getRewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
-        "getVersion": [0, 2934756905, 4248422647],
-        "numberOfVersions": 3,
+        "getVersion": [0, 2934756905, 4248422647, 2070860440],
+        "numberOfVersions": 4,
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
       },
       "fieldMeta": {
@@ -229,6 +244,11 @@
         "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298": "Registry"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0x367eD02480809f5020234181B61D9069a08974dD",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "RewardBooster",
@@ -303,10 +323,10 @@
       "values": {
         "$immutable": true,
         "ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-        "canonicalRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "canonicalRollup": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
         "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
         "registryOwner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "totalEarmarkedBalance": 0
+        "totalEarmarkedBalance": "1798700000000000000000000"
       },
       "fieldMeta": {
         "ASSET": {
@@ -359,6 +379,7 @@
       ],
       "proxyType": "immutable",
       "description": "Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -379,6 +400,11 @@
         "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7": "Outbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0x5F03984126AdFDb72B2823b553988Ccebe1F781e",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProtocolTreasury",
@@ -469,13 +495,13 @@
         "$immutable": true,
         "FEE_ASSET_PORTAL": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
         "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
-        "getInProgress": 89118,
+        "getInProgress": 118928,
         "getState": {
-          "rollingHash": "0x818f7e12f728802878911bad8da4f588",
-          "totalMessagesInserted": 1898,
-          "inProgress": 89118
+          "rollingHash": "0xd436455629336fe91b363e875b1a40d1",
+          "totalMessagesInserted": 3489,
+          "inProgress": 118928
         },
-        "getTotalMessagesInserted": 1898,
+        "getTotalMessagesInserted": 3489,
         "LAG": 2,
         "ROLLUP": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "VERSION": 4248422647
@@ -524,6 +550,7 @@
       ],
       "proxyType": "immutable",
       "description": "Collects one signed slashing ballot from the designated proposer in each slot. After the execution delay, anyone can tally the ballots per validator and penalty level, deploy the resulting payload, and ask the Slasher to execute it before the round expires.",
+      "critical": true,
       "ignoreInWatchMode": ["getCurrentRound"],
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
@@ -541,7 +568,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 863,
+        "getCurrentRound": 1107,
         "INSTANCE": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -641,7 +668,7 @@
       "sinceBlock": 25428902,
       "values": {
         "$immutable": true,
-        "archive": "0x1e30992c91aa86bee30fed79e6cbaeabe3ccc8725d4add6d0c61416558e8323d",
+        "archive": "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7",
         "checkBlob": true,
         "constructorArgs": {
           "_feeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
@@ -713,21 +740,21 @@
           "extensions": []
         },
         "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 3053,
-        "getAvailableValidatorFlushes": 4,
+        "getActiveAttesterCount": 50,
+        "getAvailableValidatorFlushes": 1,
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
-        "getCheckpointReward": "500000000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x00c10ff7552534b04a078f9ed588aa23cd11816247d2c486c8dedd84ac58667e",
-        "getCurrentEpoch": 3453,
-        "getCurrentSampleSeed": "35518618805786535680905412795344291901543919079554698384219981302082598055729",
-        "getCurrentSlot": 110503,
+        "getCheckpointReward": "50000000000000000000",
+        "getCurrentBlobCommitmentsHash": "0x006fab5311570418f58f9761848c7da2280a1c42b03e879a4b2b67adb2191b48",
+        "getCurrentEpoch": 4428,
+        "getCurrentSampleSeed": "6828266137288763035903714894802004860897692884221249648608658651098400260638",
+        "getCurrentSlot": 141713,
         "getEjectionThreshold": "100000000000000000000000",
-        "getEntryQueueFlushSize": 4,
+        "getEntryQueueFlushSize": 1,
         "getEntryQueueLength": 0,
         "getEpochDuration": 32,
         "getEpochProofVerifier": "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC",
         "getEscapeHatch": "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A",
-        "getEthPerFeeAsset": 6408479,
+        "getEthPerFeeAsset": 6896119,
         "getExitDelay": 345600,
         "getFeeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
@@ -745,24 +772,24 @@
         "getLocalEjectionThreshold": "190000000000000000000000",
         "getManaLimit": 150000000,
         "getManaTarget": 75000000,
-        "getNextFlushableEpoch": 3429,
+        "getNextFlushableEpoch": 4402,
         "getOutbox": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
-        "getPendingCheckpointNumber": 89115,
+        "getPendingCheckpointNumber": 118925,
         "getPendingSlasher": {
           "slasher": "eth:0x0000000000000000000000000000000000000000",
           "readyAt": 0
         },
         "getProofSubmissionEpochs": 1,
         "getProtocolContractsHash": "0x2c075866eafc88a1f6f9addc7e337c6e64e45d1cb7fd7c0d612ebcec72aab2ca",
-        "getProvenCheckpointNumber": 89109,
+        "getProvenCheckpointNumber": 118925,
         "getProvingCostPerManaInEth": 12500000,
-        "getProvingCostPerManaInFeeAsset": 1950540838162,
+        "getProvingCostPerManaInFeeAsset": 1812613732449,
         "getRewardBooster": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
         "getRewardConfig": {
           "rewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
           "sequencerBps": 7000,
           "booster": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
-          "checkpointReward": "500000000000000000000"
+          "checkpointReward": "50000000000000000000"
         },
         "getRewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
         "getSlasher": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
@@ -770,7 +797,7 @@
         "getSlotDuration": 72,
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 48,
-        "getTips": { "pending": 89115, "proven": 89109 },
+        "getTips": { "pending": 118925, "proven": 118925 },
         "getVersion": 4248422647,
         "getVkTreeRoot": "0x2b3b6ea4412b9c8f6457a37f91a2870306f8641e07e16a49b68bda6f8bc02892",
         "L1_BLOCK_AT_GENESIS": 25428902,
@@ -948,12 +975,16 @@
         "EJECTION_THRESHOLD": "100000000000000000000000",
         "getBonusInstanceAddress": "eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "getLatestRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "getLatestRollup": "eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f",
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "609460000000000000000000000"
+        "proofOfPossessionGasLimit": 300000,
+        "totalSupply": "646964000000000000000000000"
       },
       "fieldMeta": {
+        "proofOfPossessionGasLimit": {
+          "severity": "MEDIUM",
+          "description": "Gas cap for verifying a new validator's BLS proof of possession. The owner can set it too low for valid keys, which blocks new validator deposits."
+        },
         "ASSET": {
           "description": "ERC20 token staked by validators and used for governance voting power."
         },
@@ -980,6 +1011,7 @@
       ],
       "proxyType": "immutable",
       "description": "One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -1080,6 +1112,7 @@
       ],
       "proxyType": "immutable",
       "description": "Executes payload actions submitted by the authorized slashing proposer or Governance. Execution is blocked while slashing is disabled or when the vetoer has vetoed the payload; voting and execution-delay rules are enforced by the proposer, while Governance can bypass the proposer.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -1125,12 +1158,103 @@
       ],
       "proxyType": "immutable",
       "description": "Library immutably linked into the Rollup for sequencer and prover reward accounting. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0xD6E890c615d6f99681a00771C20ed04516288898": "RewardExtLib"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "ZkMoneyPortal_sUSDS",
+      "address": "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
+      "type": "Contract",
+      "template": "zkmoney/ZkMoneyPortal",
+      "sourceHashes": [
+        "0x7020e3729f66f6c8ddada17eeb82b33ae8b7f623c0ffb3bb6c921bf966a7f6a8"
+      ],
+      "proxyType": "immutable",
+      "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.",
+      "critical": true,
+      "ignoreInWatchMode": [
+        "_$cachedAvailable",
+        "_$lastUpdatedTime",
+        "getCurrentAvailable"
+      ],
+      "deployerAddress": "eth:0xa3533FD3dAC685D54df722B970772b54128a717C",
+      "sinceTimestamp": 1791316739,
+      "sinceBlock": 26135579,
+      "values": {
+        "_$cachedAvailable": "49994162449153286490395",
+        "_$freezeArchive": "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7",
+        "_$freezeCheckpointCount": 0,
+        "_$freezeCheckpointNumber": 118925,
+        "_$freezeEpochNumber": 4426,
+        "_$frozen": true,
+        "_$initialized": true,
+        "_$l2Portal": "0x2bb708cb67bbda3ec2c79b842ef5d3b3d55897663d29cac5b5518c2e9af7171b",
+        "_$lastUpdatedTime": 1792512479,
+        "$immutable": true,
+        "approvedPcr0Hashes": [
+          "0xbfdd552587f517a9f18ef6ed588e3bd57a21ac2070fda39ac4612558df3e72c8"
+        ],
+        "FPC_FUNDER": "eth:0x37cD81C39Bf276ea7e1c6a416A254f688c70eAFb",
+        "FPC_FUNDING_CUT": 0,
+        "FROZEN_DEPOSIT_REFUND_VERIFIER": "eth:0x2E0C30821b9fcCf1CDB47F4e3a3A993593344522",
+        "FROZEN_NOTES_REFUND_VERIFIER": "eth:0xd24a49321878AB82E46992ab853A11903882abf2",
+        "getCurrentAvailable": "50000000000000000000000",
+        "GLOBAL_LIMIT": "50000000000000000000000",
+        "INBOX": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
+        "L2_PORTAL": "0x2bb708cb67bbda3ec2c79b842ef5d3b3d55897663d29cac5b5518c2e9af7171b",
+        "OUTBOX": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "RATE": "578703703703703703",
+        "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+        "ROLLUP": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "ROLLUP_VERSION": 4248422647,
+        "TEE_ATTESTATION_MAX_AGE": 3600,
+        "TEE_CERT_MANAGER": "eth:0xdfe52FD98aa0Cc8Ce7778a2b00ac7B7Dc9595875",
+        "TEE_NITRO_VALIDATOR": "eth:0x0119bC52a09Ac6e7998378BadC16D0e9A866Be56",
+        "teeSigners": [
+          "eth:0x367eD02480809f5020234181B61D9069a08974dD",
+          "eth:0x5F03984126AdFDb72B2823b553988Ccebe1F781e",
+          "eth:0x05406F53174EC1bFE5C94aF253CdD62A4adF2F29"
+        ],
+        "UNDERLYING": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "UNPROCESSED_DEPOSIT_REFUND_VERIFIER": "eth:0x8ACcBa3958cEF8E30b255c70A4C16CD2D14fb787"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "approvedPcr0Hashes": {
+          "severity": "HIGH",
+          "description": "Hashes of the AWS Nitro enclave images (PCR0) whose attestations can register TEE signers."
+        },
+        "teeSigners": {
+          "description": "Registered TEE signers. Registrations are permanent."
+        },
+        "_$l2Portal": {
+          "description": "zk.money token contract on Aztec whose L2->L1 messages can release funds."
+        },
+        "_$frozen": {
+          "severity": "MEDIUM",
+          "description": "Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership."
+        },
+        "REGISTRY": {
+          "description": "Aztec Registry. If its canonical rollup is no longer ROLLUP, anyone can freeze this portal."
+        },
+        "FPC_FUNDER": {
+          "description": "Receives FPC_FUNDING_CUT from every deposit and withdrawal to fund Aztec fees for zk.money users."
+        },
+        "GLOBAL_LIMIT": {
+          "description": "Deposit capacity (wei), refilling at RATE per second. Withdrawals are only limited by a hardcoded per-transaction cap.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f": "OxidePortal"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1157,7 +1281,7 @@
         },
         "getNextMilestoneId": 3,
         "getNextStakerVersion": 1,
-        "getRevoker": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
+        "getRevoker": "eth:0x30F17c3360Dc00B9315b0E8e1253Bc408644a725",
         "getRevokerOperator": "eth:0x0000000000000000000000000000000000000000",
         "getStakerImplementation": [
           "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d"
@@ -1203,7 +1327,7 @@
         "0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e"
       ],
       "proxyType": "immutable",
-      "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds that need a zk proof and a TEE signature. L2 transfers are not disabled but do not change refundable ownership.",
+      "description": "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint.",
       "critical": true,
       "ignoreInWatchMode": [
         "_$cachedAvailable",
@@ -1214,15 +1338,15 @@
       "sinceTimestamp": 1790298635,
       "sinceBlock": 26051097,
       "values": {
-        "_$cachedAvailable": "49994487527849187076802",
-        "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "_$cachedAvailable": "49920097558524361119397",
+        "_$freezeArchive": "0x103a50a830507b89a1c34cafa4060a839d437f85df3c63e0e8e6b3f832c545d7",
         "_$freezeCheckpointCount": 0,
-        "_$freezeCheckpointNumber": 0,
-        "_$freezeEpochNumber": 0,
-        "_$frozen": false,
+        "_$freezeCheckpointNumber": 118925,
+        "_$freezeEpochNumber": 4426,
+        "_$frozen": true,
         "_$initialized": true,
         "_$l2Portal": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
-        "_$lastUpdatedTime": 1790759147,
+        "_$lastUpdatedTime": 1792937099,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0x9c846102f8ac909695f7176cec0f60380ac770286bb9eec459d6152f6e676988"
@@ -1298,6 +1422,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library immutably linked into the Rollup for validator entry, exits, slashing, and Slasher rotation. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "critical": true,
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -1322,6 +1447,7 @@
       ],
       "proxyType": "immutable",
       "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. Candidates post a bond of 332,000,000 AZTEC and enter the candidate set. For each hatch, the contract snapshots the eligible set and uses RANDAO to select one designated proposer; posting a bond does not grant immediate proposal rights. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any eligible bonded candidates.",
+      "critical": true,
       "ignoreInWatchMode": ["getCurrentHatch"],
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
@@ -1333,7 +1459,7 @@
         "getBondSizeFmt": "332,000,000",
         "getBondToken": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getCandidateCount": 0,
-        "getCurrentHatch": 30,
+        "getCurrentHatch": 39,
         "getFailedHatchPunishment": "9600000000000000000000000",
         "getFailedHatchPunishmentFmt": "9,600,000",
         "getFrequency": 112,
@@ -1353,7 +1479,6 @@
           "description": "The amount deducted from the bond when a candidate exits the candidate set. This is the minimum that a candidate loses of their bond by becoming a candidate and cannot be circumvented."
         },
         "getCandidateCount": {
-          "severity": "HIGH",
           "description": "Hatch proposer candidates who posted the bond."
         },
         "getBondToken": {
@@ -1376,6 +1501,9 @@
         },
         "LAG_IN_EPOCHS_FOR_RANDAO": {
           "description": "The number of epochs to look back from the start of the hatch for a stable RANDAO seed."
+        },
+        "getRollupLagInEpochsForRandao": {
+          "description": "The Rollup's RANDAO lag in epochs. The hatch adds it when reading the Rollup's sample seed, so the seed reflects RANDAO at the hatch's seed epoch."
         },
         "LAG_IN_EPOCHS_FOR_SET_SIZE": {
           "description": "The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."
@@ -2208,6 +2336,142 @@
       "function getSpecificProverRewardsForEpoch(uint256 _epoch, address _prover) view returns (uint256)",
       "function summedMinFee(tuple(uint256 congestionCost, uint256 congestionMultiplier, uint256 sequencerCost, uint256 proverCost) _components) pure returns (uint256)"
     ],
+    "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f": [
+      "constructor(address _owner, tuple(address funder, uint256 cut) _fpcFunding, address _certManager, address _nitroValidator, address _underlying, address _registry, uint256 _rollupVersion, tuple(address frozenNotes, address frozenDeposit, address unprocessedDeposit) _verifiers, uint256 _rate, uint256 _globalLimit)",
+      "error Caps__GlobalLimitSurpassed()",
+      "error Caps__TxLimitSurpassed()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error MerkleLib__InvalidIndexForPathLength()",
+      "error MerkleLib__InvalidRoot(bytes32 expected, bytes32 actual, bytes32 leaf, uint256 leafIndex)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error OxidePortal__AlreadyFrozen()",
+      "error OxidePortal__AlreadyInitialized()",
+      "error OxidePortal__AmountNotAboveFpcFundingCut()",
+      "error OxidePortal__AmountTooLarge()",
+      "error OxidePortal__CheckpointAlreadyProven(uint256 checkpointNumber, uint256 provenCheckpointNumber)",
+      "error OxidePortal__CheckpointNotJustProven(uint256 checkpointNumber, uint256 provenCheckpointNumber)",
+      "error OxidePortal__CheckpointPastFreeze()",
+      "error OxidePortal__EmptyFrozenNotesRefundNullifiers()",
+      "error OxidePortal__EpochPastFreeze()",
+      "error OxidePortal__FirstProverAlreadyRecorded(uint256 checkpointNumber, address existingFirstProver)",
+      "error OxidePortal__FirstProverNotPrepared(uint256 checkpointNumber, address prover)",
+      "error OxidePortal__FrozenPortal()",
+      "error OxidePortal__InvalidFrozenDepositRefundProof()",
+      "error OxidePortal__InvalidFrozenNotesRefundProof()",
+      "error OxidePortal__InvalidProofLengthForCheckpoint(uint256 checkpointNumber, uint256 proofLength)",
+      "error OxidePortal__InvalidProver()",
+      "error OxidePortal__InvalidUnprocessedDepositRefundProof()",
+      "error OxidePortal__InvalidUserPayload()",
+      "error OxidePortal__InvalidWithdrawalExecutor()",
+      "error OxidePortal__NotFrozen()",
+      "error OxidePortal__ProofDepthPastFreeze()",
+      "error OxidePortal__ProverDidNotSubmit(address prover, uint256 epochNumber, uint256 proofLength)",
+      "error OxidePortal__ProverTipExceedsAmount()",
+      "error OxidePortal__RefundNullifierAlreadySpent(bytes32 nullifier)",
+      "error OxidePortal__RollupStillCanonical()",
+      "error OxidePortal__TooManyFrozenNotesRefundNullifiers(uint256 count)",
+      "error OxidePortal__Uninitialized()",
+      "error OxidePortal__UnknownCheckpoint()",
+      "error OxidePortal__UnprovenCheckpoint()",
+      "error OxidePortal__UnregisteredTEE()",
+      "error OxidePortal__WithdrawalAlreadyClaimed()",
+      "error OxidePortal__WithdrawalProverClaimAlreadyMade(bytes32 withdrawalId)",
+      "error OxidePortal__ZeroL2Portal()",
+      "error OxidePortal__ZeroRecipientCommitment()",
+      "error OxidePortal__ZeroRefundNullifier()",
+      "error ProverClaim__CheckpointEpochMismatch(uint256 checkpointNumber, uint256 epochNumber)",
+      "error ProverClaim__CheckpointNotEpochBoundary(uint256 checkpointNumber, uint256 epochNumber)",
+      "error ProverClaim__ClaimAlreadyTracked(address portal, uint256 epochNumber, uint256 leafId)",
+      "error ProverClaim__LeafIndexOutOfBounds(uint256 leafIndex, uint256 pathLength)",
+      "error ProverClaim__NoFirstProverInRange(uint256 messageCheckpointNumber, uint256 proofCheckpointNumber)",
+      "error ProverClaim__NotFirstProver(uint256 checkpointNumber, address firstProver)",
+      "error ProverClaim__PathTooLong(uint256 pathLength)",
+      "error ProverClaim__PathTooShort(uint256 pathLength, uint256 minimumPathLength)",
+      "error ProverClaim__ProofCheckpointNotInEpoch(uint256 proofCheckpointNumber, uint256 epochNumber)",
+      "error ProverClaim__ProofLengthBelowMessageCheckpoint(uint256 proofLength, uint256 messageCheckpointPosition)",
+      "error ProverClaim__UnprovenEpoch(uint256 epochNumber)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error TEERegistration__AlreadyRegistered()",
+      "error TEERegistration__DebugModeTEEPcr0Hash()",
+      "error TEERegistration__InvalidTEERegistrationUserData()",
+      "error TEERegistration__MissingTEEPcr0()",
+      "error TEERegistration__OffCurveTEEPubKey()",
+      "error TEERegistration__StaleTEEAttestation()",
+      "error TEERegistration__UnapprovedTEEPcr0(bytes32 pcr0Hash)",
+      "error TEERegistration__ZeroTEE()",
+      "error TEERegistration__ZeroTEEPcr0Hash()",
+      "event Deposit(bytes32 indexed recipientCommitment, uint256 amount, bytes32 key, uint256 index)",
+      "event FirstProverRecorded(uint256 indexed checkpointNumber, address indexed prover)",
+      "event Frozen(uint256 indexed checkpointNumber, uint256 indexed epochNumber, bytes32 archive, uint256 freezeCheckpointCount)",
+      "event Initialized(bytes32 l2Portal)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TEEAdded(address indexed tee, bytes32 pubKeyX, bytes32 pubKeyY, bytes32 encPubKeyX, bytes32 encPubKeyY, bytes32 messageKey, uint256 index)",
+      "event TEEAttestationHashStaged(bytes32 indexed attestationTbsKeccak)",
+      "event TEEAttestationSigVerified(bytes32 indexed attestationTbsKeccak, bytes32 indexed leafCertHash)",
+      "event TEECACertVerified(bytes32 indexed certHash, bytes32 indexed parentCertHash)",
+      "event TEEClientCertVerified(bytes32 indexed certHash, bytes32 indexed parentCertHash)",
+      "event TEEPcr0Approved(bytes32 indexed pcr0Hash)",
+      "event TipReleased(address indexed to, uint256 amount)",
+      "event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)",
+      "function $approvedTeePcr0(bytes32 pcr0Hash) view returns (bool approved)",
+      "function $cachedAvailable() view returns (uint256)",
+      "function $claimed(uint256 epoch, uint256 leafId) view returns (bool claimed)",
+      "function $firstProver(uint256 checkpointNumber) view returns (address prover)",
+      "function $freezeArchive() view returns (bytes32)",
+      "function $freezeCheckpointCount() view returns (uint256)",
+      "function $freezeCheckpointNumber() view returns (uint256)",
+      "function $freezeEpochNumber() view returns (uint256)",
+      "function $frozen() view returns (bool)",
+      "function $initialized() view returns (bool)",
+      "function $isRefundNullifierSpent(bytes32 nullifier) view returns (bool spent)",
+      "function $isWithdrawalProverClaimSpent(bytes32 withdrawalId) view returns (bool spent)",
+      "function $isWithdrawalSpent(bytes32 withdrawalId) view returns (bool spent)",
+      "function $l2Portal() view returns (bytes32)",
+      "function $lastUpdatedTime() view returns (uint256)",
+      "function $teeBindings(address tee) view returns (bytes32 pcr0Hash, tuple(bytes32 pubKeyX, bytes32 pubKeyY, bytes32 encPubKeyX, bytes32 encPubKeyY) keys)",
+      "function FPC_FUNDER() view returns (address)",
+      "function FPC_FUNDING_CUT() view returns (uint256)",
+      "function FROZEN_DEPOSIT_REFUND_VERIFIER() view returns (address)",
+      "function FROZEN_NOTES_REFUND_VERIFIER() view returns (address)",
+      "function GLOBAL_LIMIT() view returns (uint256)",
+      "function INBOX() view returns (address)",
+      "function L2_PORTAL() view returns (bytes32)",
+      "function OUTBOX() view returns (address)",
+      "function RATE() view returns (uint256)",
+      "function REGISTRY() view returns (address)",
+      "function ROLLUP() view returns (address)",
+      "function ROLLUP_VERSION() view returns (uint256)",
+      "function TEE_ATTESTATION_MAX_AGE() view returns (uint256)",
+      "function TEE_CERT_MANAGER() view returns (address)",
+      "function TEE_NITRO_VALIDATOR() view returns (address)",
+      "function UNDERLYING() view returns (address)",
+      "function UNPROCESSED_DEPOSIT_REFUND_VERIFIER() view returns (address)",
+      "function approveTeePcr0(bytes32 _pcr0Hash)",
+      "function claimProverTips(address _proverSubsidy, tuple(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) args, tuple(uint256 epochNumber, uint256 messageLeafIndex, bytes32[] path, uint256 proofLength, uint256 checkpointNumber) proof)[] _claims) returns (uint256 totalSubsidy)",
+      "function deposit(bytes32 _recipientCommitment, uint256 _amount) returns (bytes32 key, uint256 index, uint256 creditedAmount)",
+      "function freeze()",
+      "function getCurrentAvailable() view returns (uint256)",
+      "function initialize(bytes32 _l2Portal)",
+      "function isTeeActive(address _tee) view returns (bool)",
+      "function owner() view returns (address)",
+      "function prepareFirstProver(uint256 _checkpointNumber, address _prover)",
+      "function recordFirstProver(uint256 _checkpointNumber, uint256 _proofLength, address _prover)",
+      "function refundFrozenDeposit(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32 siloedNullifier, bytes proof, bytes teeSignature) _args)",
+      "function refundFrozenNotes(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32[] nullifiers, bytes proof, bytes teeSignature) _args)",
+      "function refundUnprocessedDeposit(tuple(address executor, bytes userPayload, bytes relayerPayload, uint256 amount, bytes32 siloedNullifier, bytes32 messageHash, uint256 messageLeafIndex, bytes32[] inboxSiblingPath, bytes proof, bytes teeSignature) _args)",
+      "function registerTee(bytes _attestationTbs, bytes _signature, bytes32 _teePubKeyX, bytes32 _teePubKeyY, bytes32 _encPubKeyX, bytes32 _encPubKeyY) returns (bytes32 key, uint256 index)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function verifyTeeAttestationHash(bytes _attestationTbs) returns (bytes32 attestationTbsKeccak)",
+      "function verifyTeeAttestationSig(bytes32 _attestationTbsKeccak, bytes _signature, bytes32 _leafCertHash)",
+      "function verifyTeeCACert(bytes _cert, bytes32 _parentCertHash) returns (bytes32 certHash)",
+      "function verifyTeeClientCert(bytes _cert, bytes32 _parentCertHash) returns (bytes32 certHash)",
+      "function withdraw(tuple(tuple(address executor, bytes32 userPayloadHash, uint256 amount, uint256 proverTip, uint256 randomness) content, bytes userPayload, bytes relayerPayload, uint256 epochNumber, uint256 numCheckpointsInEpoch, uint256 leafIndex, bytes32[] path, uint256 checkpointNumber, bytes32 withdrawalId, bytes teeSignature) _args)"
+    ],
     "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80": [
       "constructor(address __owner, uint256 _unlockCliffDuration, uint256 _unlockLockDuration)",
       "error InvalidExecuteAllowedAt(uint256 newExecuteAllowedAt, uint256 currentExecuteAllowedAt)",
@@ -2530,30 +2794,30 @@
     "aztecnetwork/AztecTokenPositionRegistry": "0xd5c2d5e3dd1f1826aa87f0a84fc9d6a6b3315c94de35eb55b67897c6062a86fc",
     "aztecnetwork/BaseStaker": "0xbe778bfb27d4d9585c342b646028d3bad68fb26168156c904a48c5b373ec2d57",
     "aztecnetwork/CoinIssuer": "0x6825408743b0c7e46d0cec3f16d4748fae3fb787ca2c2b89640d7d555becde6d",
-    "aztecnetwork/EscapeHatch": "0xc36cbb4ae29d811b032b67a9e8c26ce44b3da19a440e19ae5b0a590807f5f015",
-    "aztecnetwork/FeeJuicePortal": "0x2220ce7bc91c3a23540726e62656d72722d8c8239ab644098879b5af16f4756d",
+    "aztecnetwork/EscapeHatch": "0x278ce5fa658c2670ffee19fc34bc3c5a96c15082eb359044bdcb9a86923105ad",
+    "aztecnetwork/FeeJuicePortal": "0xe9ea6b0106f9528d083d0d76ffc797cce5258fa6cf3671ee16737a2aeeafcb8d",
     "aztecnetwork/Governance": "0x11a37c83761ef56358402fbc3702bdf6337b5338eec472c4121e4231e7add5c8",
     "aztecnetwork/GovernanceProposer": "0x6e8c1a085e1fd1a85a3b2670ef57d2e0a22a7cfdfde4a43d951674f78e74a0bb",
-    "aztecnetwork/GSE": "0x0e4f7a451f9ed261f93dd5d51762a435b0a673d3d45a45b08911307ef4b4cb16",
-    "aztecnetwork/HonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/GSE": "0x169aaece0e2547b54f717d122a7c4559464bb9b34b0e7b2137e2cb9897fcab89",
+    "aztecnetwork/HonkVerifier_v5": "0xd9e0ec181ed3619401ce092458a17fc7fafd9032bfaedd6fe44017def9f3a77c",
     "aztecnetwork/Inbox": "0x26ded5aebf0bbb78b6882b2137d3ed9f4bf66d3b5f2e9aa69e2caae9f6e55af3",
     "aztecnetwork/Outbox": "0x7580184922415986aca787f016313f146eece507d34e8a9a40486d19dc1e7b6a",
     "aztecnetwork/ProtocolTreasury": "0x71da2f0f489ca7ecd5a6726664e7577c5bbe1f7b1f44035f7317f6e484cb9b63",
     "aztecnetwork/Registry": "0x437e8a5971b7d95018382a3710bac26bad359cb485d438d82ff20a3ec9d60202",
     "aztecnetwork/RewardBooster": "0x008d6f3c4e0a56a67c2b1321a470ee91733b809719f55133f46b32ca53e99cb5",
     "aztecnetwork/RewardDistributor": "0x5db34519cfa677f6b064e107fb903172733613d58a6c80a2fa34cb92d45c9bbf",
-    "aztecnetwork/RewardExtLib": "0xea2d4759183105169e492c6bd9d5789b841a4bdcc1c2e6de98a51f3f7ad8e0c7",
-    "aztecnetwork/Rollup": "0x91a75ed550b37d29bc4bcddc5f612e317f62775dee8c8664414dc3f2f719d5e9",
+    "aztecnetwork/RewardExtLib": "0xa32500c454c2a282c9883133fcb22fb13f1a91a0893a4e3818268c4d7c14a8b1",
+    "aztecnetwork/Rollup": "0xb465a9b0d5155487b23b152c4c189047f1ec22a276b71676c7729d4b99b534a7",
     "aztecnetwork/RollupOperationsExtLib": "0x660d5b68ddffc6256478e4e9f1d2a1630668023a810dd7ad50a5921d67011e1f",
     "aztecnetwork/Slasher": "0x9027c14b463ac4037b2f5fa60bcb29e2b638d56894e824453f33fefa07582cde",
     "aztecnetwork/SlashingProposer": "0x70b79a36c61b6cf4228961c38942c4583a1cea12fff8b55c4566c5961d001891",
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
     "aztecnetwork/ValidatorOperationsExtLib": "0x85a15d05fdc1ce926a97e31cd9f09ae813b449a9982a9e5a8d7bf37cc56a95f5",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "zkmoney/ZkMoneyPortal": "0x4973bd1af550f7408763624fe569c4ab1c2aa189ffd34a28b01592af94832c40"
+    "zkmoney/ZkMoneyPortal": "0x4849cf15f068d591a1aa63a22d45dab667cc83726b39e596ca465b8c122c6383"
   },
-  "usedBlockNumbers": { "ethereum": 26089320 },
-  "permissionsConfigHash": "0xc01b338cf32010fd523cf91d23900a08c5bbc82f36f0f242a90e4138138a501a",
+  "usedBlockNumbers": { "ethereum": 26275946 },
+  "permissionsConfigHash": "0x5bea0e70b100b146bfecd4ad29eea2c31a7ca69a20934a7cabb3e14d8da610d3",
   "permissions": {
     "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6": {
       "directlyReceivedPermissions": [
@@ -2562,6 +2826,16 @@
           "from": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
           "description": "mint AZTEC only through the CoinIssuer's capped issuance function. The CoinIssuer exposes no path to transfer or renounce ownership of the AZTEC token.",
           "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x05406F53174EC1bFE5C94aF253CdD62A4adF2F29": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
+          "description": "co-sign withdrawals and refunds. Without a signature from a registered TEE signer, no funds can leave the portal.",
+          "role": ".teeSigners"
         }
       ]
     },
@@ -2658,6 +2932,26 @@
         }
       ]
     },
+    "eth:0x367eD02480809f5020234181B61D9069a08974dD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
+          "description": "co-sign withdrawals and refunds. Without a signature from a registered TEE signer, no funds can leave the portal.",
+          "role": ".teeSigners"
+        }
+      ]
+    },
+    "eth:0x5F03984126AdFDb72B2823b553988Ccebe1F781e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
+          "description": "co-sign withdrawals and refunds. Without a signature from a registered TEE signer, no funds can leave the portal.",
+          "role": ".teeSigners"
+        }
+      ]
+    },
     "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a": {
       "directlyReceivedPermissions": [
         {
@@ -2711,12 +3005,6 @@
         },
         {
           "permission": "interact",
-          "from": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
-          "description": "claim protocol reward funds and direct them to sequencers and provers.",
-          "role": ".canonicalRollup"
-        },
-        {
-          "permission": "interact",
           "from": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
           "description": "insert L2 to L1 message roots that recipients later prove against to consume withdrawals or messages.",
           "role": ".ROLLUP"
@@ -2726,12 +3014,6 @@
           "from": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
           "description": "consume L1 to L2 message tree roots for checkpoint processing.",
           "role": ".ROLLUP"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-          "description": "deposit and withdraw validator stake for its own GSE instance and, while it is the latest Rollup, for the bonus instance; cast all available own-instance and applicable bonus-instance power as yea on qualifying sequencer-signalled proposals.",
-          "role": ".getLatestRollup"
         },
         {
           "permission": "interact",

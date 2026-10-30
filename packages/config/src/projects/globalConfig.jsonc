@@ -167,6 +167,8 @@
     "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": "Avail Multisig 1",
     "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": "Avail Multisig 2",
     "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d": "Vector",
+    "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": "ArbitrumBlobstream",
+    "arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997": "BlobstreamMultisig",
     "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "Gnosis Bridge Multisig",
     "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": "Hashi Multisig",
     "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d": "Alchemy Multisig 1",

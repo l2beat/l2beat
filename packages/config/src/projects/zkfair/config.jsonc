@@ -17,9 +17,44 @@
     "eth:0x0110B1B231aA3b96a94c900eb3056297526AB725": "ZKFairAdmin",
     "eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F": "BridgeAdminMultiSig",
     "eth:0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88": "ZKFairOwner",
+    "eth:0xB66bbf236CE102A1De692f2A034b9dB245986671": "TokenBridge",
     "eth:0x997CfB0838544f68E59f877EDc905001456F125b": "ZKFairValidiumDAC"
   },
   "overrides": {
+    "eth:0xB66bbf236CE102A1De692f2A034b9dB245986671": {
+      // The current escrow adopted this bridge when funds were moved to ERC20Handler.
+      "critical": { "sinceTimestamp": 1744292087 },
+      "fields": {
+        "usdcHandler": {
+          "severity": "HIGH",
+          "description": "Handler holding USDC for resource ID zero.",
+          "handler": {
+            "type": "call",
+            "method": "function _resourceIDToHandlerAddress(bytes32) view returns (address)",
+            "args": [
+              "0x0000000000000000000000000000000000000000000000000000000000000000"
+            ]
+          }
+        },
+        "ethHandler": {
+          "severity": "HIGH",
+          "description": "Handler holding ETH for resource ID one.",
+          "handler": {
+            "type": "call",
+            "method": "function _resourceIDToHandlerAddress(bytes32) view returns (address)",
+            "args": [
+              "0x0000000000000000000000000000000000000000000000000000000000000001"
+            ]
+          }
+        }
+      }
+    },
+    "eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e": {
+      "critical": { "sinceTimestamp": 1744292087 }
+    },
+    "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512": {
+      "critical": { "sinceTimestamp": 1744292087 }
+    },
     "eth:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5": {
       "ignoreMethods": [
         "checkStateRootInsidePrime",

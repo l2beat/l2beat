@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import type {
   LiveBlobs,
   Pulse,
@@ -17,9 +18,9 @@ import {
   WINDOW_SLOTS,
 } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { cn } from '~/utils/cn'
+import { EASE_OUT_QUINT } from '~/utils/easing'
 import { PulseSkeleton } from './blocks/BeltFrame'
 import { formatClock } from './blocks/format'
-import { usePrefersReducedMotion } from './hooks'
 import { earliestView } from './lookBack'
 import type { BlockLimits } from './model'
 
@@ -109,7 +110,7 @@ function BlobPulse({
     if (reducedMotion) return
     slidingRef.current?.animate(
       [{ transform: `translateX(${BAR_STEP}px)` }, { transform: 'none' }],
-      { duration: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+      { duration: 700, easing: EASE_OUT_QUINT },
     )
   }, [pulse.firstBucket, reducedMotion])
 
@@ -363,7 +364,7 @@ const PulseBar = memo(function PulseBar({
     if (!grow || !ref.current) return
     ref.current.animate(
       [{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }],
-      { duration: 500, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' },
+      { duration: 500, easing: EASE_OUT_QUINT },
     )
   }, [])
   return (

@@ -220,7 +220,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { mode: 'date', longMonthName: true })}
+          {formatTimestamp(label)}
         </div>
         <div className="mt-2 flex flex-col gap-2">
           {[...lines]

@@ -74,11 +74,11 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        'Built-in Tor sends every call over one shared circuit for up to ten minutes, so only separate app sessions keep the legs apart.',
+        'Moralis, Etherscan and PublicNode look up every Ethereum wallet the app opens, so built-in Tor keeps the legs apart only in separate app sessions.',
       exposureContinued:
-        'Moralis receives every Ethereum wallet the app opens, so deposit and exit wallets kept in the app pair up whenever both open close together.',
+        "Token logos load outside Tor, so a token with a remote logo shows Moralis the user's IP beside the wallet.",
       advice:
-        'Turn on built-in Tor and restart the app, since the Ethereum client keeps the connection it started with. After the entry, delete the deposit wallet from Cake and restart, so later sessions only see the exit wallet.',
+        'Turn on built-in Tor, restart the app and add no tokens with remote logos. After the entry, delete the deposit wallet from Cake and restart before the exit.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -112,20 +112,20 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       exposureShort:
-        'Each swap service custodies its leg and can hold the funds until you pass identity checks, and identities on both legs link them.',
+        'Each swap service custodies its leg and can hold the funds until the user passes identity checks, and identities on both legs link them.',
       exposureContinued:
-        'The entry service knows the XMR output it paid you, and the exit service sees the rings of the transaction that pays it. Together they find that output in the rings behind the exit, and self-transfers only widen the search.',
+        'The entry service knows the XMR output it paid the user, and the exit service sees the rings of the transaction that pays it. Together they find that output in the rings behind the exit, and self-transfers only widen the search.',
       interior: {
         sender: {
           verdict: 'atRisk',
-          note: "Rings that reference the service's payout output point to the spend of your XMR.",
+          note: "Rings that reference the service's payout output point to the spend of the user's XMR.",
         },
         recipient: 'private',
         amount: 'private',
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'A service can hold either leg until you identify yourself.',
+          note: 'A service can hold either leg until the user provides identification.',
         },
       },
       sources: [
@@ -146,12 +146,12 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       exposureShort:
         'Whoever breaks elliptic-curve cryptography recovers every Monero output key from public chain data, so every ring shows its real spend.',
       exposureContinued:
-        "A known address also yields its view key, and anyone learns a service's address by starting a trade. Your XMR can then be followed from the entry service to the exit service, where amounts and timing pair it with both Ethereum legs.",
+        "A known address also yields its view key, and anyone learns a service's address by starting a trade. The user's XMR can then be followed from the entry service to the exit service, where amounts and timing pair it with both Ethereum legs.",
       interior: {
         sender: 'exposed',
         recipient: {
           verdict: 'atRisk',
-          note: 'Readable for outputs to known addresses, and the services know yours.',
+          note: "Readable for outputs to known addresses, and the services know the user's address.",
         },
         amount: {
           verdict: 'atRisk',

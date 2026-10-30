@@ -24,7 +24,7 @@ export type DataPostedChartWithProjectsRangesDataParams = v.infer<
 
 export type DetailedDataPostedChartWithProjectsRangesDataPoint = [
   timestamp: number,
-  /** Bytes posted per day per project, summed across DA layers. */
+  /** Bytes posted to Ethereum per day per project. */
   projects: Record<string, number | null>,
 ]
 
@@ -37,8 +37,7 @@ export type DetailedDataPostedChartWithProjectsRangesData = {
 /**
  * @returns data-posted chart data split by project id and timestamp,
  * mirroring the shape of `getDetailedActivityChartWithProjectsRanges`.
- * Each series sums the project's bytes across every DA layer it posts to,
- * so projects on different layers are comparable on one chart.
+ * Each series counts only bytes posted to Ethereum.
  */
 export async function getDetailedDataPostedChartWithProjectsRanges({
   range,

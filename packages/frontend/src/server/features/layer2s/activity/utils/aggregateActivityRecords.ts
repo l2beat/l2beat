@@ -3,7 +3,10 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 
 export function aggregateActivityRecords(
-  entries: ActivityRecord[],
+  entries: Pick<
+    ActivityRecord,
+    'projectId' | 'timestamp' | 'count' | 'uopsCount'
+  >[],
   options?: {
     forEthereum?: boolean
     startTimestamp?: UnixTime
@@ -21,9 +24,9 @@ export function aggregateActivityRecords(
     return undefined
   }
 
-  const startIndex = entries.findIndex((e) => e.timestamp === startTimestamp)
+  const fromStart = entries.filter((e) => e.timestamp >= startTimestamp)
 
-  const aggregatedEntries = entries.slice(startIndex).reduce(
+  const aggregatedEntries = fromStart.reduce(
     (acc, entry) => {
       const timestamp = entry.timestamp
       const isEthereum = entry.projectId === ProjectId.ETHEREUM

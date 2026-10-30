@@ -6,6 +6,8 @@ import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
 import { DayTargetIndexer } from './indexers/DayTargetIndexer'
+import { HourActivityIndexer } from './indexers/HourActivityIndexer'
+import { HourTargetIndexer } from './indexers/HourTargetIndexer'
 import { SlotTargetIndexer } from './indexers/SlotTargetIndexer'
 import type { ActivityIndexer } from './indexers/types'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
@@ -58,7 +60,7 @@ export function initActivityModule({
         )
 
         const provider = providers.activityBlock.getProvider(project.chainName)
-        const txsCountService = new BlockTxsCountService(
+        const blockSource = new BlockTxsCountService(
           {
             provider,
             projectId: project.id,
@@ -73,7 +75,7 @@ export function initActivityModule({
             batchSize: project.activityConfig.batchSize ?? 100,
             minHeight: project.activityConfig.startBlock ?? 1,
             parents: [blockTargetIndexer],
-            txsCountService,
+            blockSource,
             indexerService,
             db: database,
           },
@@ -109,7 +111,7 @@ export function initActivityModule({
         )
 
         const provider = providers.svmBlock.getBlockProvider(project.chainName)
-        const txsCountService = new SlotTxsCountService(
+        const blockSource = new SlotTxsCountService(
           {
             provider,
             projectId: project.id,
@@ -123,7 +125,7 @@ export function initActivityModule({
             batchSize: project.activityConfig.batchSize ?? 100,
             minHeight: project.activityConfig.startSlot ?? 1,
             parents: [slotTargetIndexer],
-            txsCountService,
+            blockSource,
             indexerService,
             db: database,
           },
@@ -177,6 +179,41 @@ export function initActivityModule({
         )
 
         indexers.push(dayTargetIndexer, activityIndexer)
+        break
+      }
+
+      case 'hour': {
+        const hourTargetIndexer = new HourTargetIndexer(logger, clock, {
+          onTick: async (targetTimestamp) => {
+            if (!config.activity) {
+              return
+            }
+
+            await database.syncMetadata.upsertMany([
+              {
+                feature: 'activity',
+                id: project.id,
+                target: targetTimestamp,
+              },
+            ])
+          },
+        })
+
+        const activityIndexer = new HourActivityIndexer(
+          {
+            projectId: project.id,
+            minHeight:
+              UnixTime.toStartOf(project.activityConfig.sinceTimestamp, 'day') /
+              UnixTime.HOUR,
+            parents: [hourTargetIndexer],
+            provider: providers.day.getHourlyProvider(project.chainName),
+            indexerService,
+            db: database,
+          },
+          logger,
+        )
+
+        indexers.push(hourTargetIndexer, activityIndexer)
         break
       }
 

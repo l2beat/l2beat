@@ -164,6 +164,47 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  /**
+   * Filters rows like `getByChainsAndTimestamp`, so that method returns the
+   * token's rows for the snapshot found here.
+   */
+  async getLatestPromotedTimestampForToken(
+    abstractTokenId: string,
+    options: {
+      upTo: UnixTime
+      sourceChains: string[]
+      destinationChains: string[]
+    },
+  ): Promise<UnixTime | undefined> {
+    if (
+      options.sourceChains.length === 0 ||
+      options.destinationChains.length === 0
+    ) {
+      return undefined
+    }
+
+    const result = await this.db
+      .selectFrom('AggregatedInteropToken as token')
+      .innerJoin(
+        'InteropAggregateStatus as status',
+        'status.timestamp',
+        'token.timestamp',
+      )
+      .select((eb) => eb.fn.max('token.timestamp').as('max_timestamp'))
+      .where('status.status', '=', 'promoted')
+      .where('token.abstractTokenId', '=', abstractTokenId)
+      .where('token.timestamp', '<=', UnixTime.toDate(options.upTo))
+      .where('token.srcChain', 'in', options.sourceChains)
+      .where('token.dstChain', 'in', options.destinationChains)
+      .whereRef('token.srcChain', '!=', 'token.dstChain')
+      .where('token.transferCount', '>', 0)
+      .executeTakeFirst()
+
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
+  }
+
   async deleteAllButEarliestPerDayBefore(timestamp: UnixTime): Promise<number> {
     const query = this.db
       .with('earliest_timestamp_by_day', (eb) =>

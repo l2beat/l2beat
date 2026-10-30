@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // Referrer-only: identical RelationsLib source also serves the critical refund verifiers.
+  "category": "core",
+  "description": "Runtime library immutably linked into the zk.money resolver verifier. It evaluates circuit constraints or derives Fiat-Shamir challenges for zero-knowledge UltraHonk proofs."
+}

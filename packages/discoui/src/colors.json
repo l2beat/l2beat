@@ -1,0 +1,34 @@
+{
+  "transparent": "transparent",
+  "white": "#FFFFFF",
+  "black": "#000000",
+  "coffee": {
+    "100": "#F8EBDD",
+    "200": "#F0D8BD",
+    "300": "#CDB090",
+    "400": "#A98763",
+    "500": "#816A53",
+    "600": "#594C43",
+    "700": "#3C332D",
+    "800": "#282422",
+    "900": "#1D1816"
+  },
+  "autumn": {
+    "200": "#D4F417",
+    "300": "#BAD80A",
+    "600": "#4C9E2E"
+  },
+  "aux": {
+    "blue": "#8B8BE8",
+    "orange": "#FE8019",
+    "red": "#FB4A35",
+    "green": "#9DDE6C",
+    "teal": "#83A599",
+    "yellow": "#FABD30",
+    "amber": "#FFC107",
+    "cyan": "#1c92a8",
+    "pink": "#e27991",
+    "purple": "#a73db5",
+    "brown": "#7F3D0C"
+  }
+}

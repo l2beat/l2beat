@@ -1,6 +1,6 @@
 import { Breadcrumbs } from '~/components/Breadcrumbs'
+import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { SearchBarButton } from '~/components/search-bar/SearchBarButton'
-import { formatTimestampToDateWithHour } from '~/utils/dates'
 
 interface Props {
   title: string
@@ -39,7 +39,7 @@ export function TvsBreakdownPageHeader({
             },
           ]}
         />
-        <SearchBarButton className="max-lg:hidden" label="Search projects" />
+        <SearchBarButton className="max-lg:hidden" />
       </div>
 
       <div className="flex flex-col items-start justify-between gap-[10px] md:mb-4 md:flex-row md:items-center">
@@ -47,7 +47,7 @@ export function TvsBreakdownPageHeader({
         <div className="font-medium text-secondary text-xs">
           Timestamp:&nbsp;
           <span className="font-medium text-base text-primary">
-            {formatTimestampToDateWithHour(tvsBreakdownTimestamp)}
+            <UtcDateTime timestamp={tvsBreakdownTimestamp} />
           </span>
         </div>
       </div>

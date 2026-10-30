@@ -123,6 +123,7 @@
         "blobbasefeeScalar": 810949,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2",
+        "enabledFeatures": [],
         "gasLimit": 30000000,
         "gasPayingToken": {
           "addr_": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
@@ -193,10 +194,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8": "Proxy",
@@ -349,6 +356,7 @@
         "isUpgrading": false,
         "owner": "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d": "ProxyAdmin"
       }
@@ -371,6 +379,7 @@
         "$immutable": true,
         "owner": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd": "AddressManager"
       },
@@ -552,6 +561,7 @@
         "systemConfig": "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
         "version": "2.2.0"
       },
+      "fieldMeta": { "$admin": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9": "L1ChugSplashProxy",
         "eth:0xE6874d09046173911A5e2bD4B4e6148dBB1B4f8A": "L1StandardBridge"
@@ -967,7 +977,7 @@
     "opstack/L2OutputOracle_soon": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismPortal_soon": "0x501665d0286b3d5ec36d23208700c4c03246a24a07ae843b04971530af9ec17b",
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 25797241 },
   "permissionsConfigHash": "0xc283f71afe630050a7132b5e7b587701cb1663054cc70a8a69efa05483e5dbe2",

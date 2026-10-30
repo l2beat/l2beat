@@ -4,6 +4,7 @@ import type { PriceProvider } from '@l2beat/shared'
 import { createPrivacyConfigurationId } from '@l2beat/shared'
 import { CoingeckoId } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -63,12 +64,16 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
         Array.from(configsByPriceId.entries()).map(
           async ([priceId, configs]) => {
             try {
-              const prices =
-                await this.$.priceProvider.getUsdPriceHistoryHourly(
-                  CoingeckoId(priceId),
-                  from,
-                  adjustedTo,
-                )
+              const prices = await withCoreFeatureRpcMetricsContext(
+                'privacy.price',
+                {},
+                () =>
+                  this.$.priceProvider.getUsdPriceHistoryHourly(
+                    CoingeckoId(priceId),
+                    from,
+                    adjustedTo,
+                  ),
+              )
 
               const configurationRecords: PrivacyPriceRecord[] =
                 configs.flatMap((configuration) =>

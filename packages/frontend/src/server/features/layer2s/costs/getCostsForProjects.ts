@@ -1,45 +1,34 @@
-import type { Project } from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { getDb } from '~/server/database'
 import type { ChartRange } from '~/utils/range/range'
-import { getTrackedTxsProjects } from '../../utils/getTrackedTxsProjects'
 import type { LatestCostsResponse } from './types'
 import { sumCostValues } from './utils/sumCostValues'
 
 export async function getCostsForProjects(
-  projects: Project<'trackedTxsConfig'>[],
+  projectIds: ProjectId[],
   range: ChartRange,
 ) {
   const db = getDb()
   const response: LatestCostsResponse = {}
 
-  const configurations = await db.indexerConfiguration.getByIndexerId(
-    'tracked_txs_indexer',
-  )
-
-  const trackedTxsProjects = getTrackedTxsProjects(
-    projects,
-    configurations,
-    'l2costs',
-  )
-
-  const records = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
-    trackedTxsProjects.map((p) => p.id),
-    range,
-  )
+  const [syncMetadata, records] = await Promise.all([
+    db.syncMetadata.getByFeatureAndIds('l2costs', projectIds),
+    db.aggregatedL2Cost.getByProjectsAndTimeRange(projectIds, range),
+  ])
 
   const groupedRecords = groupBy(records, 'projectId')
 
-  for (const project of trackedTxsProjects) {
-    const records = groupedRecords[project.id]
-    if (records === undefined) continue
+  for (const { id, syncedUntil } of syncMetadata) {
+    const records = groupedRecords[id]
+    if (records === undefined || syncedUntil === null) continue
     const timestamps = records.map((r) => r.timestamp)
     const from = Math.min(...timestamps)
     const to = Math.max(...timestamps)
-    response[project.id] = {
+    response[id] = {
       ...sumCostValues(records),
       range: [from, to],
-      syncedUntil: project.syncedUntil,
+      syncedUntil,
     }
   }
   return response

@@ -30,7 +30,10 @@ export async function getCostsTable(
 
   const projects = (await getCostsProjects()).filter((p) => !p.archivedAt)
 
-  const projectsCosts = await getCostsForProjects(projects, range)
+  const projectsCosts = await getCostsForProjects(
+    projects.map((p) => p.id),
+    range,
+  )
   const rangeByProject = Object.fromEntries(
     Object.entries(projectsCosts).map(([projectId, data]) => {
       return [projectId, data.range]

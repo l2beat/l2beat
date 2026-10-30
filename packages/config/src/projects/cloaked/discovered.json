@@ -1,12 +1,13 @@
 {
   "name": "cloaked",
-  "timestamp": 1787312501,
-  "configHash": "0x2df7970cd512a02a1f37562509ca934da9c1210b08b2abc2562817a5899f8acb",
+  "timestamp": 1791536658,
+  "configHash": "0x460ec0b053aebb32229bb4cc6bce10daaddbd9d44d75064d9a5ed422de419b61",
   "entries": [
     {
       "name": "OffchainResolver",
       "address": "eth:0x77fEF66b77d6a44AeCcCCf911f9864c7b7ca392C",
       "type": "Contract",
+      "template": "cloaked/OffchainResolver",
       "sourceHashes": [
         "0x52653e2948499a80fbc61c906203d95ae671d650741d0095057a71240846c939"
       ],
@@ -34,7 +35,8 @@
       },
       "implementationNames": {
         "eth:0x77fEF66b77d6a44AeCcCCf911f9864c7b7ca392C": "OffchainResolver"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Cloaked Resolver Owner",
@@ -68,8 +70,10 @@
       "function transferOwnership(address newOwner)"
     ]
   },
-  "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 25803276 },
+  "usedTemplates": {
+    "cloaked/OffchainResolver": "0x8c8955e33f4e4e5947ed4b54b0ad488ade506cc3354a3ebad0c2b2b745b7ffaf"
+  },
+  "usedBlockNumbers": { "ethereum": 26153834 },
   "permissionsConfigHash": "0xdb3349569bba7611213f2035148d5b1b7f51ce7d1af66beaec85387f338c75ff",
   "permissions": {
     "eth:0xDFc622F06EfDD0E830d82f30679A3C9302BC7940": {

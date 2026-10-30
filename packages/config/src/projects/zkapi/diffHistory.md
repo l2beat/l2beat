@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x09cb59747104b260475678ee50eef780b7eaa7bc
+
+# Diff at Fri, 16 Oct 2026 05:36:55 GMT:
+
+- id: 000dc49a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791373302
+- current timestamp: 1791373302
+
+## Description
+
+Ossification review: Bn254Poseidon critical, no severity on immutable fields.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791373302 (main branch discovery), not current.
+
+```diff
+    contract ZkApiVault (eth:0x4386FDbdA35D995beB3BF8625118Ec5982ec81fe) [zkapi/ZkApiVault] {
+    +++ description: Escrows ETH for anonymous API authorizations as publicly numbered notes. A Groth16 proof closes a note with operator clearance, or starts a delayed escape that any request proof with the same nullifier cancels. Closing reveals the note id, payout address and remaining balance and sends the used part to the treasury. Anyone can sweep an expired note entirely to the treasury, also while paused.
+      fieldMeta.proofAdapter:
+-        {"severity":"HIGH"}
+      fieldMeta.stateSigningKeyX.severity:
+-        "HIGH"
+      fieldMeta.stateSigningKeyY:
+-        {"severity":"HIGH"}
+      fieldMeta.clearanceSigningKeyX.severity:
+-        "HIGH"
+      fieldMeta.clearanceSigningKeyY:
+-        {"severity":"HIGH"}
+      fieldMeta.noteTtl.severity:
+-        "HIGH"
+      fieldMeta.challengePeriod.severity:
+-        "HIGH"
+      fieldMeta.requestChargeCap.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract Bn254Poseidon (eth:0xc6B55e86668d8c446B3D81273AAb9CBb20F28c7f) [zkapi/Bn254Poseidon] {
+    +++ description: Linked Poseidon hash library used by the vault for active-note leaves and Merkle updates. Its BN254 parameters must agree with the request and withdrawal circuits.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x5824f3669b2887098bf63807d97bf138f6460e93
 
 # Diff at Wed, 07 Oct 2026 11:42:45 GMT:

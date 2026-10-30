@@ -4,12 +4,14 @@
   "critical": true,
   "description": "Contract used to bridge and escrow ERC-20 tokens.",
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "accessControl": {
       "handler": {
         "type": "accessControl"
       }
     },
     "defaultAdminAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
@@ -232,6 +234,7 @@
       ]
     },
     "customContractSetters": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "SET_CUSTOM_CONTRACT_ROLE", "members"],
       "permissions": [
@@ -242,6 +245,7 @@
       ]
     },
     "reserveTokenSetters": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "SET_RESERVED_TOKEN_ROLE", "members"],
       "permissions": [
@@ -252,6 +256,7 @@
       ]
     },
     "reserveTokenRemovers": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "REMOVE_RESERVED_TOKEN_ROLE", "members"],
       "permissions": [
@@ -262,6 +267,7 @@
       ]
     },
     "messageServiceSetters": {
+      "severity": "MEDIUM",
       "copy": "accessControl",
       "edit": ["get", "SET_MESSAGE_SERVICE_ROLE", "members"],
       "permissions": [
@@ -273,7 +279,12 @@
     },
     "remoteSender": {
       "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here.",
-      "edit": ["format", "LineaAddress"]
+      "edit": [
+        "if",
+        ["=", ["env", "chainName"], "ethereum"],
+        ["format", "LineaAddress"],
+        ["format", "EthereumAddress"]
+      ]
     },
     "messageService": {
       "severity": "HIGH",

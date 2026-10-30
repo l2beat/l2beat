@@ -157,5 +157,10 @@
       "updateId": "49f509dc",
       "reason": "Registered the OPSuccinct celo/v2.1.0 game implementation (SP1 Hypercube), rotating the aggregation and range verification keys."
     }
+  ],
+  "ignoredTransactions": [
+    "0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",
+    "0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",
+    "0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a"
   ]
 }

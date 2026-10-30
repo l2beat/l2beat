@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ForwardingTable",
+  "critical": true,
+  "category": "core",
+  "description": "Routing table of zk.money deposit addresses. For each listed token it names the portal that deposit addresses using this table sweep into, and per intent the fee for the beneficiary and the tip for the sweeper. Rows and intents can only be added, never changed or removed.",
+  "ignoreRelatives": ["rows"],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add rows for unlisted tokens, add fees for unlisted intents, and change the beneficiary of deposit-address fees. A new row can route an unlisted token to any contract that reports that token as UNDERLYING and the table's ROLLUP_VERSION."
+        }
+      ]
+    },
+    "_$beneficiary": {
+      "description": "Receives the beneficiary fee of each sweep through this table.",
+      "severity": "MEDIUM"
+    },
+    // Not HIGH, as SIPAFactory blessings: a listed token's row can never change,
+    // so a new row only routes a token that no deposit address could sweep before.
+    "rows": {
+      "description": "Listed tokens with the portal their deposits sweep into and the fees per intent (1 = Deposit, 2 = Registration, 3 = UserOp).",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": ["token", "portal", "intents"],
+        "add": { "event": "RowAdded" }
+      }
+    },
+    "addedIntents": {
+      "description": "Fees per intent added to listed tokens after their row.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": ["token", "intents"],
+        "add": { "event": "IntentsAdded" }
+      }
+    }
+  }
+}

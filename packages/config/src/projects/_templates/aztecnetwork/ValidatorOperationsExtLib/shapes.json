@@ -3,5 +3,11 @@
     "hash": "0xc88df74ecd70e3c5acf5a861fec985c5640899bc17d3d2a0d18cbfa9f9c94089",
     "address": "eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411",
     "blockNumber": 25428902
+  },
+  "ValidatorOperationsExtLib_v6.sol": {
+    "hash": "0x23284d8d0e30803ce2e79de4722191cb2bc62f94233016fc56d16da3700351d2",
+    "address": "eth:0x89ed816dfa4125Efd40AB978AC986446a4Cd8c69",
+    "chain": "ethereum",
+    "blockNumber": 26160093
   }
 }

@@ -15,7 +15,7 @@ The operator also runs the indexer and a challenger that disputes escapes from o
 ### Flow
 
 1. **Deposit** ETH from your wallet. The vault records its amount and an expiry about {{noteTtl}} later.
-2. **Request access.** The app proves an active note covers your chosen budget. The operator returns a short-lived OpenRouter key.
+2. **Request access.** The app proves an active note covers the budget tier of your chosen model. The operator returns a short-lived OpenRouter key.
 3. **Chat.** Send prompts to OpenRouter with that key.
 4. **Settle.** The operator bills the key's usage.
 5. **Withdraw.** A cooperative close needs the operator's clearance. The vault publishes the note id and remaining balance. It returns the remainder to your chosen address and pays usage to the treasury.
@@ -26,11 +26,11 @@ Losing the note secret and latest signed balance that are saved by the app loses
 
 ### App
 
-The ratings assume OA Chat, a hosted browser app with public source and local build instructions. It fetches the whole note tree and proves in the browser. It relays inference through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build runs code beyond the public main branch, including analytics. zkapi-clientd is a local daemon with an OpenAI-compatible API. It asks the operator's indexer for the user's note path and reuses keys across requests, both of which can harm privacy.
+OA Chat is a hosted browser app with local build instructions. It fetches the whole note tree and proves in the browser. It relays inference and chain reads through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build runs code beyond the [public source](https://github.com/OpenAnonymity/oa-chat), including Google and passkey sign-in, analytics and a looser verifier check.
 
 ### Providers and verifier
 
-OpenRouter and the model provider can read prompts and responses and link requests under one key. Open Anonymity holds the OpenRouter accounts. A verifier running in an attestable Azure confidential container checks that OA's account has provider logging disabled. Its build reproduces from source and matches the attested measurement, see the verification steps. Both clients pin only the verifier's address, so the check only holds when the user verifies it personally.
+OpenRouter and the model provider can read prompts and responses and link requests under one key. Open Anonymity holds the OpenRouter accounts. A verifier running in an attestable Azure confidential container checks that OA's account has provider logging disabled. Its build reproduces from source and matches the attested measurement, see the verification steps. OA Chat pins only the verifier's address, so the check only holds when the user verifies it personally. When the verifier cannot be reached, the hosted app still accepts a key signed by OA's station and shows "Key not verified".
 
 ### Exits
 

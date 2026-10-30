@@ -103,7 +103,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     <ChartTooltipWrapper>
       <div className="flex min-w-48 flex-col gap-1">
         <div className="mb-1 font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+          {formatTimestamp(label, { mode: 'datetime' })}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {

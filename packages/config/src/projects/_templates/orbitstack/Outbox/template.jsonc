@@ -6,11 +6,16 @@
   "ignoreMethods": ["spent", "isSpent"],
   "category": "bridge-canonical",
   "fields": {
+    // updateRollupAddress() re-points who may call updateSendRoot(): a
+    // swapped rollup can insert arbitrary withdrawal roots.
+    "rollup": {
+      "severity": "HIGH"
+    },
     "bridge": {
       "severity": "HIGH"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

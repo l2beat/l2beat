@@ -163,10 +163,7 @@ export const badges = [
     type: BadgeType.DA,
     name: 'Avail',
     description: 'This project is posting its data to Avail',
-    action: {
-      type: 'publicDaHighlight',
-      slug: 'avail',
-    },
+    action: undefined,
   },
   {
     id: 'AvailVector',
@@ -174,20 +171,14 @@ export const badges = [
     name: 'Avail with Vector',
     description:
       'This project utilizes Avail and has Vector enabled, facilitating the bridging of data availability commitments between Avail and Ethereum.',
-    action: {
-      type: 'publicDaHighlight',
-      slug: 'avail',
-    },
+    action: undefined,
   },
   {
     id: 'Celestia',
     type: BadgeType.DA,
     name: 'Celestia',
     description: 'This project is posting its data to Celestia',
-    action: {
-      type: 'publicDaHighlight',
-      slug: 'celestia',
-    },
+    action: undefined,
   },
   {
     id: 'CelestiaBlobstream',
@@ -195,20 +186,14 @@ export const badges = [
     name: 'Celestia with Blobstream',
     description:
       'This project utilizes Celestia and has Blobstream enabled, facilitating the bridging of data availability commitments between Celestia and Ethereum.',
-    action: {
-      type: 'publicDaHighlight',
-      slug: 'celestia',
-    },
+    action: undefined,
   },
   {
     id: 'EigenDA',
     type: BadgeType.DA,
     name: 'EigenDA',
     description: 'This project is posting its data to EigenDA',
-    action: {
-      type: 'publicDaHighlight',
-      slug: 'eigenda',
-    },
+    action: undefined,
   },
   {
     id: 'EigenDAVerifier',
@@ -216,40 +201,28 @@ export const badges = [
     name: 'EigenDA with DA Verifier',
     description:
       'This project uses EigenDA and integrates the DACert Verifier to validate DA commitments.',
-    action: {
-      type: 'publicDaHighlight',
-      slug: 'eigendaverifier',
-    },
+    action: undefined,
   },
   {
     id: 'NearDA',
     type: BadgeType.DA,
     name: 'NearDA',
     description: 'This project is posting its data to NearDA',
-    action: {
-      type: 'publicDaHighlight',
-      slug: 'near',
-    },
+    action: undefined,
   },
   {
     id: 'EthereumBlobs',
     type: BadgeType.DA,
     name: 'Ethereum with blobs',
     description: 'This project is posting its data to Ethereum as blobs',
-    action: {
-      type: 'publicDaHighlight',
-      slug: 'ethereum',
-    },
+    action: undefined,
   },
   {
     id: 'EthereumCalldata',
     type: BadgeType.DA,
     name: 'Ethereum with calldata',
     description: 'This project is posting its data to Ethereum as calldata',
-    action: {
-      type: 'publicDaHighlight',
-      slug: 'ethereum',
-    },
+    action: undefined,
   },
   {
     id: 'CustomDA',
@@ -761,10 +734,7 @@ export const badges = [
     type: BadgeType.DA,
     name: 'Espresso',
     description: 'This project is posting its data to Espresso',
-    action: {
-      type: 'publicDaHighlight',
-      slug: 'espresso',
-    },
+    action: undefined,
   },
   {
     id: 'EspressoHotShotLightClient',
@@ -772,10 +742,7 @@ export const badges = [
     name: 'Espresso with HotShot Light Client',
     description:
       'This project utilizes Espresso and has HotShot Light Client enabled, facilitating the bridging of data availability attestations between Espresso and Ethereum.',
-    action: {
-      type: 'publicDaHighlight',
-      slug: 'espresso',
-    },
+    action: undefined,
   },
 ] as const satisfies Badge[]
 

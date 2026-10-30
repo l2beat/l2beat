@@ -2,6 +2,9 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Timelock contract allowing the queueing of transactions with a minimum delay of {{getMinDelay_formatted}}.",
   "fields": {
+    "getMinDelay": {
+      "severity": "HIGH"
+    },
     "getMinDelay_formatted": {
       "severity": "HIGH",
       "handler": {
@@ -12,11 +15,13 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl"
       }
     },
     "timelockAdminAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
@@ -30,6 +35,7 @@
       ]
     },
     "Proposer": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
@@ -42,6 +48,7 @@
       ]
     },
     "Canceller": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
@@ -54,6 +61,7 @@
       ]
     },
     "Executor": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"

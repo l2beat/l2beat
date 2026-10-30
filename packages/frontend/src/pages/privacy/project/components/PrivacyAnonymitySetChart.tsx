@@ -12,6 +12,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipRows,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -39,26 +40,18 @@ type Series = PrivacyAnonymitySetChartResponse['series'][number]
 type Point = [number, ...number[]]
 type ChartPoint = { timestamp: number } & Record<string, number>
 
-interface Props {
+type Props = {
   data: Point[] | undefined
   series: Series[] | undefined
-  syncedUntil?: number
   isLoading: boolean
   project: ChartProject
-  type: 'history' | 'holding-duration'
-  /** Only meaningful on the date-based history chart. */
-  milestones?: Milestone[]
-}
+} & (
+  | { type: 'history'; milestones: Milestone[]; syncedUntil?: number }
+  | { type: 'holding-duration'; durationLabel: string }
+)
 
-export function PrivacyAnonymitySetChart({
-  data,
-  series = [],
-  syncedUntil,
-  isLoading,
-  project,
-  type,
-  milestones,
-}: Props) {
+export function PrivacyAnonymitySetChart(props: Props) {
+  const { data, series = [], isLoading, project } = props
   const meta = useMemo(() => getChartMeta(series), [series])
   const chartData = useMemo(
     () =>
@@ -72,6 +65,10 @@ export function PrivacyAnonymitySetChart({
     [data, series],
   )
   const { dataKeys, toggleDataKey } = useChartDataKeys(meta)
+  const formatTooltipTitle =
+    props.type === 'history'
+      ? (timestamp: number) => formatTimestamp(timestamp)
+      : (days: number) => `${days}-day ${props.durationLabel}`
 
   return (
     <ChartContainer
@@ -79,7 +76,7 @@ export function PrivacyAnonymitySetChart({
       meta={meta}
       isLoading={isLoading}
       project={project}
-      milestones={milestones}
+      milestones={props.type === 'history' ? props.milestones : undefined}
       interactiveLegend={{ dataKeys, onItemClick: toggleDataKey }}
     >
       <LineChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
@@ -99,19 +96,19 @@ export function PrivacyAnonymitySetChart({
         ))}
         <ChartTooltip
           filterNull={false}
-          content={<AnonymitySetTooltip type={type} />}
+          content={<AnonymitySetTooltip formatTitle={formatTooltipTitle} />}
         />
         <ChartCommonComponents
           data={chartData}
           isLoading={isLoading}
-          syncedUntil={type === 'history' ? syncedUntil : undefined}
+          syncedUntil={props.type === 'history' ? props.syncedUntil : undefined}
           yAxis={{
             domain: [0, 'auto'],
             allowDecimals: false,
             tickFormatter: (value) => formatInteger(Number(value)),
           }}
           xAxis={
-            type === 'holding-duration'
+            props.type === 'holding-duration'
               ? {
                   type: 'number',
                   domain: ['dataMin', 'dataMax'],
@@ -142,9 +139,9 @@ function getChartMeta(series: Series[]): ChartMeta {
 function AnonymitySetTooltip({
   payload,
   label,
-  type,
+  formatTitle,
 }: CustomChartTooltipProps & {
-  type: Props['type']
+  formatTitle: (label: number) => string
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -152,11 +149,10 @@ function AnonymitySetTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="mb-2 font-medium text-label-value-14 text-secondary">
-        {type === 'history'
-          ? formatTimestamp(label, { longMonthName: true })
-          : `${label}-day holding duration`}
+        {formatTitle(label)}
       </div>
-      <div className="flex flex-col gap-2">
+      {/* Keyed by point, so each new point opens at its largest sets. */}
+      <ChartTooltipRows key={label} className="flex flex-col gap-2">
         {sortAnonymitySetTooltipEntries(payload).map((entry) => {
           if (
             typeof entry.dataKey !== 'string' ||
@@ -188,7 +184,7 @@ function AnonymitySetTooltip({
             </div>
           )
         })}
-      </div>
+      </ChartTooltipRows>
     </ChartTooltipWrapper>
   )
 }

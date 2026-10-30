@@ -40,6 +40,31 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
+  describe(ActivityRepository.prototype.addMany.name, () => {
+    it('adds the counts to stored days and widens their block range', async () => {
+      await repository.addMany([record('a', START, 10, 12, 1, 5)])
+      await repository.addMany([
+        record('a', START, 5, 6, 6, 9),
+        record('a', START + 1 * UnixTime.DAY, 3, 3, 10, 12),
+      ])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        record('a', START, 15, 18, 1, 9),
+        record('a', START + 1 * UnixTime.DAY, 3, 3, 10, 12),
+      ])
+    })
+
+    it('counts the uops of a chain that started reporting them mid-day', async () => {
+      await repository.addMany([record('a', START, 10, null, 1, 5)])
+      await repository.addMany([record('a', START, 5, 6, 6, 9)])
+      await repository.addMany([record('a', START, 1, null, 10, 10)])
+
+      const results = await repository.getAll()
+      expect(results).toEqual([record('a', START, 16, 6, 1, 10)])
+    })
+  })
+
   describe(ActivityRepository.prototype.checkIfExists.name, () => {
     beforeEach(async () => {
       await repository.deleteAll()
@@ -217,6 +242,25 @@ describeDatabase(ActivityRepository.name, (db) => {
           uopsTimestamp: START + 2 * UnixTime.DAY,
           count: 5,
           countTimestamp: START + 2 * UnixTime.DAY,
+        },
+      })
+    })
+
+    it('should return the latest timestamp when the max repeats', async () => {
+      await repository.upsertMany([
+        record('a', START, 5, 9),
+        record('a', START + 1 * UnixTime.DAY, 5, 9),
+        record('a', START + 2 * UnixTime.DAY, 4, 7),
+      ])
+
+      const result = await repository.getMaxCountsForProjects()
+
+      expect(result).toEqual({
+        [ProjectId('a')]: {
+          uopsCount: 9,
+          uopsTimestamp: START + 1 * UnixTime.DAY,
+          count: 5,
+          countTimestamp: START + 1 * UnixTime.DAY,
         },
       })
     })

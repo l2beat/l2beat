@@ -96,6 +96,7 @@
         "$immutable": true,
         "owner": "base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "base:0x5416B7421c42B9218B29f688C47a46020c23cF0d": "AddressManager"
       },
@@ -181,6 +182,7 @@
         "isUpgrading": false,
         "owner": "base:0xb02b6c8e9970D7Fd54a000a95AC4fBAA3bb11288"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15": "ProxyAdmin"
       }
@@ -313,10 +315,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "base:0xa096dD38362bd2cE3C696474329989960722A7Fd": "Proxy",
@@ -378,7 +386,11 @@
         "SYSTEM_CONFIG": "base:0xa096dD38362bd2cE3C696474329989960722A7Fd",
         "version": "1.7.2"
       },
-      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "base:0xb765Df9d2925a82678F4B7bc60eF5294c1604514": "Proxy",
         "base:0x764b431e61972Ae785b504B373efb139F38A7694": "OptimismPortal"

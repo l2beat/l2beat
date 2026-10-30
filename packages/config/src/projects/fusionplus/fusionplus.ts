@@ -4,6 +4,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -15,6 +16,7 @@ export const fusionplus: BaseProject = {
   name: '1inch Fusion+',
   shortName: undefined,
   addedAt: UnixTime(1770021647),
+  discoveryInfo: getDiscoveryInfo([discovery]),
   interopConfig: {
     description: 'HTLC-like cross-chain intent protocol built by 1inch.',
     detailedDescription: readProjectMarkdown(

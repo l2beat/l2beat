@@ -30,6 +30,19 @@ import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('taiko')
 
+for (const bridge of [
+  'eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC',
+  'taiko:0x1670000000000000000000000000000000000001',
+]) {
+  assert(
+    !discovery.getContractValue<boolean>(
+      ChainSpecificAddress(bridge),
+      'recallEnabled',
+    ),
+    'Taiko bridge recalls are enabled: update the exit description.',
+  )
+}
+
 const mainnetInboxAddress = ChainSpecificAddress.address(
   discovery.getContract('MainnetInbox').address,
 )
@@ -93,6 +106,28 @@ const chainStart = UnixTime(1716620627)
 
 const proverPlural = whitelistedProverCount === 1 ? '' : 's'
 const taikoMultisigStats = discovery.getMultisigStats('Taiko Multisig')
+const risc0TimelockProposers = discovery.getContractValue<
+  ChainSpecificAddress[]
+>('eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711', 'Proposer')
+assert(
+  risc0TimelockProposers.length === 1 &&
+    discovery.isEOA(risc0TimelockProposers[0]),
+  'RISC Zero timelock proposer changed, update the governance research.',
+)
+// RISC0 route 0x8b38038c: Groth16 v3.1.0 whose verifying key matches no published RISC Zero setup
+assert(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'RiscZeroVerifierRouter',
+    'verifier_8b38038c',
+  ) === 'eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50',
+  'RISC0 route 0x8b38038c changed, update the state validation research.',
+)
+const risc0TimelockDelay = formatSeconds(
+  discovery.getContractValue<number>(
+    'eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711',
+    'getMinDelay',
+  ),
+)
 const securityCouncilMembersCount = discovery.getContractValue<number>(
   'SignerList (Security Council)',
   'addresslistLength',
@@ -547,6 +582,15 @@ export const taiko: ScalingProject = {
             title: 'ZkRequiredVerifier.sol - Etherscan source code',
             url: 'https://etherscan.io/address/0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec#code',
           },
+          {
+            title:
+              'RiscZeroGroth16Verifier.sol v3.1.0 - Etherscan source code, verifying key',
+            url: 'https://etherscan.io/address/0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e#code',
+          },
+          {
+            title: 'Groth16Verifier.sol - RISC Zero published verifying key',
+            url: 'https://github.com/risc0/risc0-ethereum/blob/main/contracts/src/groth16/Groth16Verifier.sol',
+          },
         ],
         risks: [],
       },
@@ -556,6 +600,7 @@ export const taiko: ScalingProject = {
     content: readProjectMarkdown('taiko', 'upgradesAndGovernance', {
       securityCouncilStats,
       taikoMultisigStats,
+      risc0TimelockDelay,
       standardProposalThreshold,
       standardProposalDuration,
       timelockPeriod,
@@ -646,13 +691,27 @@ export const taiko: ScalingProject = {
       ],
     },
     exitMechanisms: [
-      // TODO: double check exit mechanism
       {
         name: 'Regular exit',
         description:
-          'The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is finalized the funds become available for withdrawal on L1. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.',
-        risks: [],
-        references: [],
+          'Users initiate withdrawals on Taiko and claim them on Ethereum with a Merkle proof after state finalization. ETH and ERC20 releases consume configured withdrawal quotas. Failed deliveries remain retryable, but source-chain refunds are disabled on both bridges.',
+        risks: [
+          {
+            category: 'Funds can be frozen if',
+            text: 'a bridge message cannot be delivered successfully, because failed-message refunds are disabled.',
+          },
+        ],
+        references: [
+          {
+            title:
+              'Bridge - processMessage, retryMessage and whenRecallEnabled',
+            url: 'https://etherscan.io/address/0xe6BF63dCc936063caD2300f32DaA67d9eE5c57b6#code',
+          },
+          {
+            title: 'ERC20Vault - onMessageInvocation',
+            url: 'https://etherscan.io/address/0xd429A698d19b5789ce6Eb72d8B3ae9fad3b28A92#code',
+          },
+        ],
       },
     ],
   },
@@ -664,6 +723,15 @@ export const taiko: ScalingProject = {
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
+    {
+      title: 'Bridge recalls disabled',
+      // Verified Bridge code and recallEnabled=false on both upgraded proxies.
+      url: 'https://etherscan.io/tx/0x935e4a93cf26e7bef2ac3c445815e253496d82d51e4205e7073a3d511a9111f4',
+      date: '2026-10-12T00:00:00Z',
+      description:
+        'Failed bridge messages must be retried successfully, with no source-chain refund path.',
+      type: 'general',
+    },
     {
       title: 'Unzen upgrade: validity rollup',
       url: 'https://etherscan.io/tx/0x64875b5b84b41b520551854696c0ce408fb3e0aa2ede604cc95a5919b6140ea7',

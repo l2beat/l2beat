@@ -37,6 +37,19 @@ export function getHashForMatchingFromSources(
   return getHashToBeMatched(hashes)
 }
 
+/**
+ * The bundles whose hash `getHashForMatchingFromSources` matches on: the
+ * only bundle, or every implementation behind a proxy, combined when there
+ * are several.
+ */
+export function getSourcesToBeMatched(
+  perContractSources: PerContractSource[],
+): PerContractSource[] {
+  return perContractSources.length === 1
+    ? [...perContractSources]
+    : perContractSources.slice(1)
+}
+
 export function getHashToBeMatched(
   hashes: (string | undefined)[],
 ): Hash256 | undefined {

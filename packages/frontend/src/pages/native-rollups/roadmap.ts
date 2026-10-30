@@ -76,14 +76,6 @@ export const ROADMAP_YEARS: RoadmapGroup[] = [
       },
       {
         status: 'done',
-        date: 'July 2026',
-        title: 'EIP-8357: EVM verification key registry',
-        description:
-          'Proposed: an L1 contract that records the verification key of Ethereum’s EVM program at each fork, so native rollups follow L1 upgrades without their own governance.',
-        url: EIP_8357_URL,
-      },
-      {
-        status: 'done',
         date: 'August 2026',
         title: 'ethrex proof-of-concept',
         description:
@@ -105,6 +97,14 @@ export const ROADMAP_YEARS: RoadmapGroup[] = [
         description:
           "The specification follows Glamsterdam's block-level access lists and stateless validation program, and posts blocks with Hegotá's EIP-8141 frame transactions.",
         url: NATIVE_ROLLUPS_BOOK_URL,
+      },
+      {
+        status: 'done',
+        date: 'October 2026',
+        title: 'EIP-8357: EVM verification key registry',
+        description:
+          'An L1 contract that records the verification key of Ethereum’s EVM program at each fork, so native rollups follow L1 upgrades without their own governance, is merged as a Draft EIP.',
+        url: EIP_8357_URL,
       },
       {
         status: 'done',
@@ -137,7 +137,7 @@ export const ROADMAP_YEARS: RoadmapGroup[] = [
         status: 'planned',
         title: 'EIP-8357 in clients and a fork',
         description:
-          'Finish the registry’s review, tests, and system contract, and propose it together with EIP-8288, so the fork that brings proof dependencies also brings the EVM program’s keys.',
+          'Finish the registry’s tests and system contract, and propose it together with EIP-8288, so the fork that brings proof dependencies also brings the EVM program’s keys.',
         url: EIP_8357_URL,
       },
       {

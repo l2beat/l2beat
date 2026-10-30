@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SkyEscrowFactory",
+  "category": "core",
+  "description": "Deploys deterministic escrows for moving funds between the DAI and sUSDS portals. Anyone can execute a funded escrow. Its implementation and routes are immutable.",
+  "ignoreRelatives": ["DAI", "SUSDS"],
+  "fields": {
+    "IMPLEMENTATION": {
+      "template": "zkmoney/SkyEscrow"
+    },
+    "SKY_EXECUTOR": {
+      "template": "zkmoney/SkyWithdrawalExecutor"
+    }
+  }
+}
