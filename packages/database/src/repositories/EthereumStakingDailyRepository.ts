@@ -19,9 +19,15 @@ export interface EthereumStakingDailyRecord {
   withdrawals: bigint
   /** Deposits the beacon chain credited during the day, to a balance or the pending queue. */
   deposits: bigint
-  /** What proposers earned from the day's blocks. */
-  executionRewards: bigint
+  /** What builders paid proposers, in the blocks with a builder payment. */
+  builderPayments: bigint
+  /** Priority fees of the blocks without a builder payment, which their proposers kept. */
+  priorityFees: bigint
+  /** ETH sent to the fee recipient in its own transactions, in the blocks without a builder payment. */
+  directTransfers: bigint
   blockCount: number
+  /** Blocks whose fee recipient's last transaction pays the proposer. */
+  builderBlockCount: number
 }
 
 function toRecord(
@@ -36,8 +42,11 @@ function toRecord(
       row.pendingDeposits === null ? null : BigInt(row.pendingDeposits),
     withdrawals: BigInt(row.withdrawals),
     deposits: BigInt(row.deposits),
-    executionRewards: BigInt(row.executionRewards),
+    builderPayments: BigInt(row.builderPayments),
+    priorityFees: BigInt(row.priorityFees),
+    directTransfers: BigInt(row.directTransfers),
     blockCount: row.blockCount,
+    builderBlockCount: row.builderBlockCount,
   }
 }
 
@@ -52,8 +61,11 @@ function toRow(
     pendingDeposits: record.pendingDeposits?.toString() ?? null,
     withdrawals: record.withdrawals.toString(),
     deposits: record.deposits.toString(),
-    executionRewards: record.executionRewards.toString(),
+    builderPayments: record.builderPayments.toString(),
+    priorityFees: record.priorityFees.toString(),
+    directTransfers: record.directTransfers.toString(),
     blockCount: record.blockCount,
+    builderBlockCount: record.builderBlockCount,
   }
 }
 
@@ -74,8 +86,11 @@ export class EthereumStakingDailyRepository extends BaseRepository {
             pendingDeposits: eb.ref('excluded.pendingDeposits'),
             withdrawals: eb.ref('excluded.withdrawals'),
             deposits: eb.ref('excluded.deposits'),
-            executionRewards: eb.ref('excluded.executionRewards'),
+            builderPayments: eb.ref('excluded.builderPayments'),
+            priorityFees: eb.ref('excluded.priorityFees'),
+            directTransfers: eb.ref('excluded.directTransfers'),
             blockCount: eb.ref('excluded.blockCount'),
+            builderBlockCount: eb.ref('excluded.builderBlockCount'),
           })),
         )
         .execute()

@@ -29,6 +29,24 @@ const INACTIVE_STATUSES = [
   'withdrawal_possible',
 ]
 
+/**
+ * Capella to Fulu: 12-second slots, and builders paying proposers on the
+ * execution layer. ePBS (Gloas) moves that payment to the consensus layer, so
+ * a day in a later fork fails instead of being stored without it.
+ */
+const SUPPORTED_FORK_VERSIONS = [
+  '0x03000000',
+  '0x04000000',
+  '0x05000000',
+  '0x06000000',
+]
+
+/**
+ * A change re-reads every day from the start, at about 9M calls, so bump it
+ * only when a fix changes what past days store.
+ */
+const STORED_DATA_VERSION = '1'
+
 interface EthereumStakingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
@@ -38,7 +56,7 @@ interface EthereumStakingIndexerDeps
     | 'getTotalBalance'
     | 'getValidatorsInfo'
     | 'getPendingDepositsAmount'
-    | 'getDepositIndex'
+    | 'getForkAndDepositIndex'
   >
   blockTimestampProvider: Pick<
     BlockTimestampProvider,
@@ -60,6 +78,7 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
       {
         ...$,
         name: INDEXER_NAMES.ETHEREUM_STAKING,
+        configHash: STORED_DATA_VERSION,
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
       logger,
@@ -90,8 +109,8 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
       totalBalance,
       inactiveBalance,
       pendingDeposits,
-      depositIndex,
-      nextDepositIndex,
+      start,
+      end,
       fromBlock,
       nextDayBlock,
     ] = await Promise.all([
@@ -102,18 +121,25 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
       slot >= ELECTRA_SLOT
         ? this.$.beacon.getPendingDepositsAmount(slot)
         : Promise.resolve(null),
-      this.$.beacon.getDepositIndex(slot),
-      this.$.beacon.getDepositIndex(nextSlot),
+      this.$.beacon.getForkAndDepositIndex(slot),
+      this.$.beacon.getForkAndDepositIndex(nextSlot),
       this.firstBlockAtOrAfter(day),
       this.firstBlockAtOrAfter(UnixTime(day + UnixTime.DAY)),
     ])
+    for (const state of [start, end]) {
+      if (!SUPPORTED_FORK_VERSIONS.includes(state.forkVersion)) {
+        throw new Error('Unsupported Ethereum fork', {
+          cause: { day, forkVersion: state.forkVersion },
+        })
+      }
+    }
     const toBlock = nextDayBlock - 1
     const [execution, deposits] = await Promise.all([
-      readExecutionDay(this.$.rpc, fromBlock, toBlock),
+      readExecutionDay(this.$.rpc, this.logger, fromBlock, toBlock),
       readCreditedDeposits(
         this.$.rpc,
         { from: fromBlock, to: toBlock },
-        { start: depositIndex, end: nextDepositIndex },
+        { start: start.depositIndex, end: end.depositIndex },
       ),
     ])
 

@@ -96,17 +96,24 @@ export class BeaconChainClient extends ClientCore {
   }
 
   /**
-   * How many deposits from the deposit contract a state has credited. From
-   * Electra it stops at the first new deposit, as those are credited in their
-   * own block. Only the start of the state is read, as the counter comes before
-   * the validators.
+   * The fork version of a state, and how many deposits from the deposit
+   * contract it has credited. From Electra the counter stops at the first new
+   * deposit, as those are credited in their own block. Only the start of the
+   * state is read, as both come before the validators, the fork first.
    */
-  async getDepositIndex(slot: number): Promise<number> {
+  async getForkAndDepositIndex(
+    slot: number,
+  ): Promise<{ forkVersion: string; depositIndex: number }> {
+    let forkVersion: string | undefined
     for await (const value of this.streamMatches(
       `eth/v2/debug/beacon/states/${slot}`,
-      /^data\.eth1_deposit_index$/,
+      /^data\.(fork\.current_version|eth1_deposit_index)$/,
     )) {
-      return Number(value)
+      if (forkVersion === undefined) {
+        forkVersion = String(value)
+        continue
+      }
+      return { forkVersion, depositIndex: Number(value) }
     }
     throw new Error('BeaconChain state has no deposit index', {
       cause: { slot },

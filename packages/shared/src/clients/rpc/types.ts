@@ -100,6 +100,8 @@ const EVMTransactionReceipt = z.object({
     .union([Quantity.decode, z.null()])
     .transform((price) => price ?? undefined)
     .optional(),
+  // 1 on success, 0 on revert; absent before Byzantium
+  status: Quantity.decode.transform((n) => Number(n)).optional(),
   logs: z.array(
     z.object({
       address: z.string(),

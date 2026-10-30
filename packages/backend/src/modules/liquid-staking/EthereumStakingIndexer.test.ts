@@ -23,7 +23,7 @@ describe(EthereumStakingIndexer.name, () => {
     )
 
     expect(beacon.getTotalBalance).toHaveBeenOnlyCalledWith(slotAt(day))
-    expect(beacon.getDepositIndex.calls.map((c) => c.args)).toEqual([
+    expect(beacon.getForkAndDepositIndex.calls.map((c) => c.args)).toEqual([
       [slotAt(day)],
       [slotAt(day + UnixTime.DAY)],
     ])
@@ -43,8 +43,11 @@ describe(EthereumStakingIndexer.name, () => {
         pendingDeposits: null,
         withdrawals: 0n,
         deposits: 0n,
-        executionRewards: 0n,
+        builderPayments: 0n,
+        priorityFees: 0n,
+        directTransfers: 0n,
         blockCount: UnixTime.DAY,
+        builderBlockCount: 0,
       },
     ])
   })
@@ -57,6 +60,18 @@ describe(EthereumStakingIndexer.name, () => {
 
     expect(beacon.getPendingDepositsAmount).toHaveBeenOnlyCalledWith(
       slotAt(afterElectra - UnixTime.DAY),
+    )
+  })
+
+  it('fails on a day in a fork it does not know', async () => {
+    const { indexer, beacon } = createIndexer()
+    beacon.getForkAndDepositIndex.resolvesTo({
+      forkVersion: '0x07000000',
+      depositIndex: 5,
+    })
+
+    await expect(indexer.update(day + 1, day + UnixTime.DAY)).toBeRejectedWith(
+      'Unsupported Ethereum fork',
     )
   })
 
@@ -83,7 +98,10 @@ function createIndexer() {
       totalStake: 10n,
       numberOfValidators: 1,
     }),
-    getDepositIndex: mockFn().resolvesTo(5),
+    getForkAndDepositIndex: mockFn().resolvesTo({
+      forkVersion: '0x03000000',
+      depositIndex: 5,
+    }),
     getPendingDepositsAmount: mockFn().resolvesTo(7n),
   }
   // Empty blocks keep the execution sums at zero; readExecutionDay has its own tests.
