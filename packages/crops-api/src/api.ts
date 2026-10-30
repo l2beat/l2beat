@@ -15,7 +15,7 @@ import {
 // `meta({ description })` reaches the OpenAPI document.
 
 /** API responses link to production whatever host served them. */
-export const L2BEAT_ORIGIN = 'https://l2beat.com'
+export const L2BEAT_ORIGIN = 'https://ethbeat.org'
 
 const unixSeconds = () => v.number().meta({ description: 'Unix seconds.' })
 
