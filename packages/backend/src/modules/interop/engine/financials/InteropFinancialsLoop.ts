@@ -148,9 +148,47 @@ export class InteropFinancialsLoop extends TimeLoop {
       UnixTime.DAY,
     )
 
+    // Recent prices are deleted after a week, before slow withdrawals finish,
+    // so a side without a price at its own time is valued at the transfer time.
+    const ownTimeRequestCount = requests.length
+    const withTransferTimeFallback = (
+      requestId: number | undefined,
+      id: DeployedTokenId | undefined,
+      timestamp: UnixTime,
+    ) =>
+      requestId !== undefined &&
+      id !== undefined &&
+      prices.get(requestId) === undefined
+        ? getRequestId(id, timestamp)
+        : requestId
+    const transfersWithPrices = transfersWithPriceRequests.map((t) => ({
+      ...t,
+      srcPriceRequestId: withTransferTimeFallback(
+        t.srcPriceRequestId,
+        t.srcId,
+        t.transfer.timestamp,
+      ),
+      dstPriceRequestId: withTransferTimeFallback(
+        t.dstPriceRequestId,
+        t.dstId,
+        t.transfer.timestamp,
+      ),
+    }))
+    const fallbackRequests = requests.slice(ownTimeRequestCount)
+    if (fallbackRequests.length > 0) {
+      const fallbackPrices =
+        await this.db.interopRecentPrices.getClosestPricesAtOrBefore(
+          fallbackRequests,
+          UnixTime.DAY,
+        )
+      for (const [requestId, price] of fallbackPrices) {
+        prices.set(requestId, price)
+      }
+    }
+
     const skippedValuations: InteropSkippedTransferValuationNotification[] = []
 
-    const updates = transfersWithPriceRequests.map((t) => {
+    const updates = transfersWithPrices.map((t) => {
       const update: InteropTransferUpdate = getEmptyFinancialUpdate()
       if (t.srcId) {
         const skipped = this.applyTokenUpdate(
@@ -307,7 +345,11 @@ export class InteropFinancialsLoop extends TimeLoop {
         coingeckoId: tokenInfo.coingeckoId,
         priceTimestamp,
       })
-      return
+      return {
+        abstractTokenId: tokenInfo.abstractId,
+        symbol: tokenInfo.symbol,
+        amount,
+      }
     }
 
     if (price > this.maxTokenPriceUsd) {
