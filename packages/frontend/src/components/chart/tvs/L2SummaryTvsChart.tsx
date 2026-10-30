@@ -16,18 +16,6 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  CyanFillGradientDef,
-  CyanStrokeGradientDef,
-} from '~/components/core/chart/defs/CyanGradientDef'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
-import {
-  YellowFillGradientDef,
-  YellowStrokeGradientDef,
-} from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -121,33 +109,22 @@ export function L2SummaryTvsChart({
           // Without right:1 the chart last point is not hoverable for some reason
           margin={{ top: 20, right: 1, left: 0, bottom: 0 }}
         >
-          <defs>
-            <PinkFillGradientDef id="rollups-fill" />
-            <PinkStrokeGradientDef id="rollups-stroke" />
-            <CyanFillGradientDef id="validiums-and-optimiums-fill" />
-            <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
-            <YellowFillGradientDef id="others-fill" />
-            <YellowStrokeGradientDef id="others-stroke" />
-          </defs>
           <ChartLegend content={<ChartLegendContent />} />
           <ChartStrokeOverFillAreaComponents
             data={[
               {
                 dataKey: 'rollups',
-                stroke: 'url(#rollups-stroke)',
-                fill: 'url(#rollups-fill)',
+                stroke: chartMeta.rollups.color,
                 hide: !dataKeys.includes('rollups'),
               },
               {
                 dataKey: 'validiumsAndOptimiums',
-                stroke: 'url(#validiums-and-optimiums-stroke)',
-                fill: 'url(#validiums-and-optimiums-fill)',
+                stroke: chartMeta.validiumsAndOptimiums.color,
                 hide: !dataKeys.includes('validiumsAndOptimiums'),
               },
               {
                 dataKey: 'others',
-                stroke: 'url(#others-stroke)',
-                fill: 'url(#others-fill)',
+                stroke: chartMeta.others.color,
                 hide: !dataKeys.includes('others'),
               },
             ]}

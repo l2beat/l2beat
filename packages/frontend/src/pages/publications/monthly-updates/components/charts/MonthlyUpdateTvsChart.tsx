@@ -1,8 +1,7 @@
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { useId } from 'react'
-import { Area, AreaChart } from 'recharts'
+import { AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -13,7 +12,7 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+import { ChartTintedArea } from '~/components/core/chart/ChartTintedArea'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -33,7 +32,6 @@ export function MonthlyUpdateTvsChart({
   to: UnixTime
 }) {
   const trpc = useTRPC()
-  const id = useId()
   const { data, isLoading } = useQuery(
     trpc.tvs.chart.queryOptions({
       range: [from, to],
@@ -80,20 +78,9 @@ export function MonthlyUpdateTvsChart({
           className="h-44! min-h-44!"
           margin={{ top: 20 }}
         >
-          <defs>
-            <CustomFillGradientDef
-              id={id}
-              colors={{
-                primary: 'var(--project-primary)',
-                secondary: 'var(--project-secondary)',
-              }}
-            />
-          </defs>
-          <Area
+          <ChartTintedArea
             dataKey="value"
-            fill={`url(#${id})`}
-            fillOpacity={1}
-            stroke="var(--project-primary)"
+            color="var(--project-primary)"
             isAnimationActive={false}
           />
           <ChartCommonComponents

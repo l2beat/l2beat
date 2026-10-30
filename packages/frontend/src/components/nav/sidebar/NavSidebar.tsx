@@ -38,10 +38,17 @@ import type { NavGroup } from '../types'
 interface Props {
   groups: NavGroup[]
   logoLink: string
+  /** Off where the page has a garden banner of its own (home). */
+  showGardenBanner: boolean
   className?: string
 }
 
-export function NavSidebar({ groups, logoLink, className }: Props) {
+export function NavSidebar({
+  groups,
+  logoLink,
+  showGardenBanner,
+  className,
+}: Props) {
   const pathname = usePathname()
   const { setOpenMobile } = useSidebar()
   const closeMobileSidebar = () => setOpenMobile(false)
@@ -65,7 +72,7 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        {env.CLIENT_SIDE_GARDEN_ENABLED && (
+        {env.CLIENT_SIDE_GARDEN_ENABLED && showGardenBanner && (
           <SidebarGroup className="mb-2">
             <CropsMiniBanner
               isActive={pathname.startsWith(GARDEN_PATH)}

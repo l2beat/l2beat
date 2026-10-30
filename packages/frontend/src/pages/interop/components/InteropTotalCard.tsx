@@ -38,7 +38,7 @@ export function InteropTotalCard({
         <span
           className={cn(
             'font-bold text-heading-20 md:text-heading-24',
-            mobile ? 'text-primary' : 'text-brand',
+            mobile ? 'text-primary' : 'text-brand-deep',
           )}
         >
           {value}

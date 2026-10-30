@@ -16,7 +16,8 @@ const statsMeta: Record<StatType, { label: string; color: string }> = {
   },
   rollups: {
     label: 'Rollups',
-    color: 'var(--chart-fuchsia)',
+    // As in the charts above, where rollups are the pink series.
+    color: 'var(--chart-pink)',
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',

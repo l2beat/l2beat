@@ -36,7 +36,6 @@ const CLIENT_CONFIG = {
     .transform((v) => new URL(v).origin)
     .default('https://l2beat.com'),
   CLIENT_SIDE_GITCOIN_ROUND_LIVE: coerceBoolean.default(false),
-  CLIENT_SIDE_SHOW_HIRING_BADGE: coerceBoolean.default(false),
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: coerceBoolean.default(false),
   CLIENT_SIDE_DEFI_ENABLED: featureFlag,
   CLIENT_SIDE_GARDEN_ENABLED: featureFlag,
@@ -160,7 +159,6 @@ function getRawEnv(): Record<
     ORGANIZATION_ALTERNATE_NAME: process.env.ORGANIZATION_ALTERNATE_NAME,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
-    CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
     CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
     CLIENT_SIDE_DEFI_ENABLED: process.env.CLIENT_SIDE_DEFI_ENABLED,
     CLIENT_SIDE_GARDEN_ENABLED: process.env.CLIENT_SIDE_GARDEN_ENABLED,

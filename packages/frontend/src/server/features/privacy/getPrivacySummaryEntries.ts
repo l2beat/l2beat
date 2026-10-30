@@ -38,6 +38,8 @@ export interface PrivacySummaryEntry {
   isTracked: boolean
   hasTvl: boolean
   totalValueLockedUsd?: number
+  /** Against 7 days ago. */
+  totalValueLockedChange?: number
   poolsTracked: number
   totalValueDeposited30dUsd?: number
   anonymitySet: PrivacyAnonymitySetSummary
@@ -57,6 +59,7 @@ type PrivacySummaryTrackingMetrics = Pick<
   | 'isTracked'
   | 'poolsTracked'
   | 'totalValueLockedUsd'
+  | 'totalValueLockedChange'
   | 'totalValueDeposited30dUsd'
   | 'anonymitySet'
 >
@@ -99,6 +102,7 @@ export async function getPrivacySummaryEntries(
     const projectId = project.id
     const projectDaily = dailyByProject[projectId] ?? []
     const totalValueLockedUsd = tvl.projects[projectId]?.breakdown.total
+    const totalValueLockedChange = tvl.projects[projectId]?.change.total
     const totalValueDeposited30dUsd = projectDaily.reduce(
       (sum, row) => sum + row.depositValueUsd,
       0,
@@ -109,6 +113,7 @@ export async function getPrivacySummaryEntries(
       ...getTrackingMetrics({
         poolsTracked: getPoolsTracked(project),
         totalValueLockedUsd,
+        totalValueLockedChange,
         totalValueDeposited30dUsd,
         anonymitySet: anonymitySets.get(projectId) ?? {
           status: 'unavailable',
@@ -139,6 +144,10 @@ async function getMockPrivacySummaryEntries(
             project.tvsConfig === undefined
               ? undefined
               : Math.random() * 1_000_000_000,
+          totalValueLockedChange:
+            project.tvsConfig === undefined
+              ? undefined
+              : Math.random() * 0.2 - 0.1,
           totalValueDeposited30dUsd: Math.random() * 100_000_000,
           anonymitySet: anonymitySets.get(project.id) ?? {
             status: 'unavailable',
@@ -183,6 +192,7 @@ function getTrackingMetrics(
       isTracked: false,
       poolsTracked: metrics.poolsTracked,
       totalValueLockedUsd: metrics.totalValueLockedUsd,
+      totalValueLockedChange: metrics.totalValueLockedChange,
       anonymitySet: metrics.anonymitySet,
     }
   }

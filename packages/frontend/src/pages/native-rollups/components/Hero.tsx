@@ -7,10 +7,10 @@ import { NATIVE_ROLLUPS_BOOK_URL, NATIVE_ROLLUPS_DEMO_URL } from '../links'
 export function Hero() {
   return (
     <PrimaryCard className="relative overflow-hidden md:p-8">
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-purple-100/10 via-transparent to-pink-100/10" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-brand/10 via-transparent to-brand/5" />
       <div
         aria-hidden
-        className="-top-24 -right-24 pointer-events-none absolute size-72 rounded-full bg-radial from-pink-100/25 to-transparent blur-2xl"
+        className="-top-24 -right-24 pointer-events-none absolute size-72 rounded-full bg-radial from-brand/20 to-transparent blur-2xl"
       />
       <div className="relative grid w-full items-center gap-4 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-x-8 lg:gap-y-6">
         <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-6 text-center lg:mx-0 lg:items-start lg:text-left">

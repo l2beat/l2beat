@@ -15,7 +15,7 @@ const badgeVariants = cva('inline rounded text-center font-medium', {
       gray: 'border border-[#CCDBFF] bg-[#D5E5F1] font-medium text-secondary dark:border-[#1B3C54] dark:bg-[#192E3C]',
       warning: 'bg-yellow-500 text-black',
       brightYellow: 'bg-yellow-200 text-purple-700',
-      pink: 'bg-pink-900 text-white',
+      pink: 'bg-brand text-white',
       purple: 'bg-purple-100',
       blue: 'border border-n-sky-500 bg-n-sky-500/20 text-n-sky-500 dark:border-n-sky-300 dark:bg-n-sky-300/20 dark:text-n-sky-300',
       green: 'border border-positive bg-positive/20 text-positive',

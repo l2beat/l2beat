@@ -119,7 +119,8 @@ function ChartContainer<T extends { timestamp: number }>({
   logoClassName?: string
   isLoading?: boolean
   project?: ChartProject
-  size?: 'regular' | 'small'
+  /** `fill` takes the parent's height, e.g. a sparkline's. */
+  size?: 'regular' | 'small' | 'fill'
   noDataSourceMessage?: string
 }) {
   // Recharts renders nothing until it has measured its container, and every
@@ -136,18 +137,23 @@ function ChartContainer<T extends { timestamp: number }>({
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
-      <div ref={ref} className="group relative">
+      <div
+        ref={ref}
+        className={cn('group relative', size === 'fill' && 'h-full')}
+      >
         <ChartSettledSize
           className={cn(
             size === 'regular' &&
               'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
             size === 'small' && 'h-[114px] min-h-[114px] w-full',
+            size === 'fill' && 'size-full',
           )}
         >
           <Slot
             className={cn(
               chartContainerClassNames,
               'size-full',
+              size === 'fill' && 'aspect-auto! h-full! min-h-0!',
               // Chrome dispatches mouse moves as content scrolls under the
               // pointer; each one re-renders the tooltip with forced layouts.
               ignorePointerWhileScrollingClassName,
@@ -174,12 +180,12 @@ function ChartContainer<T extends { timestamp: number }>({
         {!hasData &&
           !isLoading &&
           !(noDataSourcesSelected && shouldMountChart) && (
-            <ChartNoDataState size={size} />
+            <ChartNoDataState size={size === 'regular' ? 'regular' : 'small'} />
           )}
         {noDataSourcesSelected && !isLoading && shouldMountChart && (
           <ChartNoDataSourceState message={noDataSourceMessage} />
         )}
-        {shouldMountChart && size !== 'small' && (
+        {shouldMountChart && size === 'regular' && (
           <Logo
             animated={false}
             className={cn(
@@ -193,7 +199,7 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {shouldMountChart && size !== 'small' && project && (
+        {shouldMountChart && size === 'regular' && project && (
           <ChartProjectLogo
             project={project}
             className={cn(
@@ -465,7 +471,7 @@ function ChartLegendContent({
         !interactiveLegend.disableOnboarding && (
           <div
             className={cn(
-              '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-12 italic transition-[opacity,scale] ease-out group-hover:scale-[1.15]',
+              '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand-deep text-label-value-12 italic transition-[opacity,scale] ease-out group-hover:scale-[1.15]',
               legendOnboardingHintClassName,
             )}
             data-legend-onboarding-hint=""

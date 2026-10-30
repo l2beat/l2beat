@@ -7,7 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import compact from 'lodash/compact'
-import { useId, useMemo } from 'react'
+import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
 import type {
   ChartMeta,
@@ -23,7 +23,6 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -45,7 +44,6 @@ export function MonthlyUpdateActivityChart({
   to: UnixTime
 }) {
   const trpc = useTRPC()
-  const id = useId()
   const { data, isLoading } = useQuery(
     trpc.activity.chart.queryOptions({
       range: [from, to],
@@ -98,7 +96,6 @@ export function MonthlyUpdateActivityChart({
               {
                 dataKey: 'projects',
                 stroke: 'var(--project-primary)',
-                fill: `url(#${id})`,
               },
             ])}
           />
@@ -111,15 +108,6 @@ export function MonthlyUpdateActivityChart({
             syncedUntil={data?.syncedUntil}
           />
           <ChartTooltip filterNull={false} content={<CustomTooltip />} />
-          <defs>
-            <CustomFillGradientDef
-              id={id}
-              colors={{
-                primary: 'var(--project-primary)',
-                secondary: 'var(--project-secondary)',
-              }}
-            />
-          </defs>
         </AreaChart>
       </ChartContainer>
     </PrimaryCard>

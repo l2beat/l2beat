@@ -107,8 +107,36 @@ describe(getInteropFlowAggregates.name, () => {
       },
     })
     expect(result.topToken).toEqual({ id: 'eth', volume: 30 })
-    expect(result.topProtocol).toEqual({ id: 'main', volume: 150 })
+    expect(result.topProtocols).toEqual([{ id: 'main', volume: 150 }])
     expect(result.tokenIds.toSorted()).toEqual(['dai', 'eth', 'usdc', 'usdt'])
+  })
+
+  it('lists the 15 busiest protocols, busiest first', () => {
+    const volumes = [3, 16, 1, 12, 5, 15, 2, 10, 4, 14, 6, 9, 7, 13, 8, 11]
+    const result = getInteropFlowAggregates(
+      volumes.map((volume) =>
+        record({
+          projectId: `protocol-${volume}`,
+          srcChain: 'chain-a',
+          dstChain: 'chain-b',
+          transferCount: 1,
+          srcValueUsd: volume,
+          dstValueUsd: volume,
+          totalDurationSum: 0,
+          transfersWithDurationCount: 0,
+          transferTypeStats: undefined,
+          tokens: [],
+        }),
+      ),
+      new Set(),
+    )
+
+    expect(result.topProtocols).toEqual(
+      Array.from({ length: 15 }, (_, i) => ({
+        id: `protocol-${16 - i}`,
+        volume: 16 - i,
+      })),
+    )
   })
 })
 

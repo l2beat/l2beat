@@ -5,6 +5,7 @@
 @import "./table-scroll.css";
 @import "./sticky-table.css";
 @import "./section-navigation.css";
+@import "./home.css";
 
 @plugin "tailwindcss-animate";
 
@@ -81,10 +82,15 @@
   --positive: #007408;
   --warning: #ab8000;
   --negative: #d70000;
-  --brand: #9621bf;
+  --brand: #ff3776;
+  /* Text in the brand colour: #FF3776 is too light to read as small text, so
+     a shade that keeps 4.5:1 on every surface, the grey ones included. */
+  --brand-deep: #c2104a;
+  /* A lighter brand pink, e.g. for the chart loader's second ball. */
+  --brand-light: #ff8fb0;
   --selection-brand-share: 30%;
   /* The nav's current page. */
-  --nav-active: var(--brand);
+  --nav-active: var(--brand-deep);
   --background: #e6e7ec;
   --surface-primary: #fafafa;
   --surface-primary-hover: #e6ecef;
@@ -103,12 +109,12 @@
   --scrollbar: #8a909d;
   --popover-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.55);
 
-  --row-highlight: #ce66f4;
+  --row-highlight: #ff8fb0;
 
   /* Chart colors */
   --chart-ethereum: #2a5bd8;
   --chart-ethereum-secondary: #53a3ff;
-  --chart-pink: #ef43b3;
+  --chart-pink: #ff3776;
   --chart-cyan: #36a3a3;
   --chart-yellow: #ab8000;
   --chart-emerald: #0ce97e;
@@ -119,33 +125,10 @@
   --chart-orange: #f98a24;
   --chart-yellow-lime: #d6db5b;
 
-  --chart-stacked-pink: #ff45b5;
+  --chart-stacked-pink: #ff8fb0;
   --chart-stacked-yellow: #ffc300;
   --chart-stacked-purple: #9576d1;
   --chart-stacked-blue: #3385ff;
-
-  /* Chart gradients */
-
-  --chart-ethereum-fill-gradient: #3482f6;
-  --chart-ethereum-stroke-gradient-1: #66b2ff;
-  --chart-ethereum-stroke-gradient-2: #5d82cf;
-
-  --chart-pink-fill-gradient: #f464e8;
-  --chart-pink-stroke-gradient-1: #9576d1;
-  --chart-pink-stroke-gradient-2: #ef43b3;
-
-  --chart-cyan-fill-gradient: #40cbe3;
-  --chart-cyan-stroke-gradient-1: #36a3a3;
-  --chart-cyan-stroke-gradient-2: #367bb8;
-
-  --chart-yellow-fill-gradient: #e7c34e;
-  --chart-yellow-stroke-gradient-1: #ab8000;
-  --chart-yellow-stroke-gradient-2: #b68f36;
-
-  --chart-emerald-fill-gradient: #53f6b2;
-  --chart-lime-fill-gradient: #6ffb00;
-  --chart-fuchsia-fill-gradient: #f464e8;
-  --chart-sky-fill-gradient: #50bfff;
 }
 
 .dark {
@@ -155,7 +138,8 @@
   --positive: #12d660;
   --warning: #ffc107;
   --negative: #ff3d3d;
-  --brand: #db8bf7;
+  --brand-deep: #ff7aa5;
+  --brand-light: #ffa3c0;
   --selection-brand-share: 50%;
   --background: #07080c;
   --surface-primary: #1b1e2a;
@@ -177,12 +161,11 @@
   --popover-shadow:
     0 0 0 1px var(--divider), 0px 8px 24px 0px rgba(0, 0, 0, 0.7);
 
-  --row-highlight: #9521bf;
+  --row-highlight: #a3204f;
 
   /* Chart colors */
   --chart-ethereum: #3387ff;
   --chart-ethereum-secondary: #5d82cf;
-  --chart-pink: #ecb0fb;
   --chart-cyan: #40cbe3;
   --chart-yellow: #e7c34e;
   --chart-emerald: #0ce97e;
@@ -190,32 +173,58 @@
   --chart-lime: #61ff12;
   --chart-sky: #66ccff;
 
-  --chart-stacked-pink: #ff45b5;
+  --chart-stacked-pink: #ff8fb0;
   --chart-stacked-yellow: #ffc300;
   --chart-stacked-purple: #9576d1;
   --chart-stacked-blue: #3385ff;
+}
 
-  /* Chart gradients */
-  --chart-ethereum-fill-gradient: #2469c4;
-  --chart-ethereum-stroke-gradient-1: #66b2ff;
-  --chart-ethereum-stroke-gradient-2: #3482f6;
+/* The home page's theme: the colours of the social post designs. Ink text,
+   white cards, hairline rules, pink links and the page's one block of
+   colour.
+   The page sets it on its wrapper for the first paint, and on <html> once
+   mounted, so popovers portalled to <body> get it too. */
+.home-theme {
+  --primary: #0d0c0c;
+  --surface-primary: #ffffff;
+  --divider: rgb(13 12 12 / 0.14);
+  --link: #d4114f;
+  --link-stroke: #f7c3d3;
+  /* Axis labels: a step lighter than secondary text, still 4.5:1 on the
+     white cards. */
+  --muted: #707581;
+  --chart-grid: rgb(13 12 12 / 0.09);
+  --chart-baseline: rgb(13 12 12 / 0.4);
+}
 
-  --chart-pink-fill-gradient: #b13fb5;
-  --chart-pink-stroke-gradient-1: #ecb0fb;
-  --chart-pink-stroke-gradient-2: #ef43b3;
+.dark .home-theme,
+.dark.home-theme {
+  --link: #ff6b9a;
+  --link-stroke: #5a1f33;
+  --primary: #fafafa;
+  --surface-primary: #1b1e2a;
+  --divider: #3d4358;
+  --muted: #80869a;
+  --chart-grid: rgb(255 255 255 / 0.09);
+  --chart-baseline: rgb(255 255 255 / 0.4);
+}
 
-  --chart-cyan-fill-gradient: #2497b3;
-  --chart-cyan-stroke-gradient-1: #36a3a3;
-  --chart-cyan-stroke-gradient-2: #40cbe3;
+/* A block in the other theme's colours. */
+.home-theme .home-inverted {
+  --primary: #fafafa;
+  --secondary: #abb1c1;
+  --surface-primary: #131215;
+  --surface-secondary: #33384b;
+  --divider: #3d4358;
+}
 
-  --chart-yellow-fill-gradient: #c99a1f;
-  --chart-yellow-stroke-gradient-1: #ffd100;
-  --chart-yellow-stroke-gradient-2: #b68f36;
-
-  --chart-emerald-fill-gradient: #12a35a;
-  --chart-lime-fill-gradient: #c7fd89;
-  --chart-fuchsia-fill-gradient: #b13fb5;
-  --chart-sky-fill-gradient: #66ccff;
+/* In the dark, a step up instead: a full-width light block would outshine
+   everything above it. */
+.dark .home-theme .home-inverted,
+.dark.home-theme .home-inverted {
+  --surface-primary: #33384b;
+  --surface-secondary: #4a5069;
+  --divider: #4a5069;
 }
 
 @theme inline {
@@ -405,18 +414,12 @@
 
   --color-purple-50: #6c57bf;
   --color-purple-100: #7e41cc;
-  --color-purple-300: #f1d6ff;
   --color-purple-450: #c164e3;
   --color-purple-500: #6a008e;
   --color-purple-700: #4a133c;
-  --color-purple-800: #32102a;
 
   --color-pink-100: #ff46c0;
-  --color-pink-200: #db8bf7;
   --color-pink-750: #bc4b51;
-  --color-pink-800: #b94ddf;
-  --color-pink-900: #ab3bd2;
-  --color-n-pink-350: #ff5ffb;
   --color-n-pink-400: #fc49c2;
 
   --color-green-200: #b0ffaa;
@@ -471,8 +474,6 @@
   --color-n-sky-300: #76cdf9;
   --color-n-sky-500: #2498d6;
 
-  --color-fuchsia-700: #860cb0;
-
   --color-n-cyan-600: #1c8ba4;
 
   --color-lime-650: #61b143;
@@ -492,6 +493,7 @@
   --color-warning: var(--warning);
   --color-negative: var(--negative);
   --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
   --color-nav-active: var(--nav-active);
   --color-background: var(--background);
   --color-surface-primary: var(--surface-primary);
@@ -509,6 +511,7 @@
   --color-link: var(--link);
   --color-link-stroke: var(--link-stroke);
   --color-chart-ethereum: var(--chart-ethereum);
+  --color-chart-pink: var(--chart-pink);
   --color-chart-fuchsia: var(--chart-fuchsia);
   --color-chart-lime: var(--chart-lime);
   --color-chart-sky: var(--chart-sky);

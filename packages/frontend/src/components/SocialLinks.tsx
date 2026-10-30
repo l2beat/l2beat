@@ -43,7 +43,7 @@ export function SocialLinks({ variant }: Props) {
       <Icon
         aria-label={title}
         className={cn(
-          'size-6',
+          'size-[18px]',
           variant === 'gray' &&
             'fill-primary transition-colors hover:fill-secondary',
         )}

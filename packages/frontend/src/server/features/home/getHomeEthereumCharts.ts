@@ -7,21 +7,24 @@ import { getFullySyncedDaRange } from '../data-availability/throughput/utils/get
 import { countPerSecond } from '../layer2s/activity/utils/countPerSecond'
 import { getActivitySyncInfo } from '../layer2s/activity/utils/getActivitySyncInfo'
 import { getFullySyncedActivityRange } from '../layer2s/activity/utils/getFullySyncedActivityRange'
-import { computeSeriesChange } from './computeSeriesChange'
+import {
+  computeRangeTotal,
+  computeWeeklyAverageChange,
+  EMPTY_HOME_KPI,
+  type HomeKpi,
+  type HomeSeriesPoint,
+} from './homeSeries'
 
 export interface HomeEthereumCharts {
-  activity: {
-    chart: [number, number | null][]
-    syncedUntil: number
-    pastDayUops: number | undefined
-    change: number | undefined
-  }
-  da: {
-    chart: [number, number | null][]
-    syncedUntil: number
-    trackedShare: number | undefined
-    change: number | undefined
-  }
+  /** UOPS; the figure is the past day's. */
+  activity: HomeKpi
+  /** Blob data posted; the figure is the total over the range. */
+  da: HomeKpi & { trackedShare: number | undefined }
+}
+
+export const EMPTY_HOME_ETHEREUM_CHARTS: HomeEthereumCharts = {
+  activity: EMPTY_HOME_KPI,
+  da: { ...EMPTY_HOME_KPI, trackedShare: undefined },
 }
 
 export async function getHomeEthereumCharts(
@@ -51,12 +54,7 @@ async function getEthereumActivitySparkline(
   ])
 
   if (!syncInfo.hasSyncData || records.length === 0) {
-    return {
-      chart: [],
-      syncedUntil: adjustedRange[1],
-      pastDayUops: undefined,
-      change: undefined,
-    }
+    return EMPTY_HOME_ETHEREUM_CHARTS.activity
   }
 
   const { syncedUntil } = syncInfo
@@ -70,20 +68,19 @@ async function getEthereumActivitySparkline(
     'day',
   )
 
-  const chart: [number, number | null][] = timestamps.map((timestamp) => {
+  const chart = timestamps.map((timestamp): HomeSeriesPoint => {
     if (timestamp > syncedUntil) {
       return [timestamp, null]
     }
-    return [timestamp, uopsByTimestamp.get(timestamp) ?? 0]
+    return [timestamp, countPerSecond(uopsByTimestamp.get(timestamp) ?? 0)]
   })
 
   const pastDayCount = uopsByTimestamp.get(syncedUntil)
   return {
     chart,
-    syncedUntil,
-    pastDayUops:
+    value:
       pastDayCount !== undefined ? countPerSecond(pastDayCount) : undefined,
-    change: computeSeriesChange(chart.map(([_, value]) => value)),
+    change: computeWeeklyAverageChange(chart),
   }
 }
 
@@ -92,21 +89,15 @@ async function getEthereumDaSparkline(
 ): Promise<HomeEthereumCharts['da']> {
   const db = getDb()
 
-  const adjustedRange = getFullySyncedDaRange(range)
+  const [from, to] = getFullySyncedDaRange(range)
+  // The headline is the total over the range, so its change compares that
+  // total with the range before it: the totals are fetched for both.
+  const previousFrom = from !== null ? from - (to - from) : null
 
   const totalRecords = await db.dataAvailability.getByProjectIdsAndTimeRange(
     ['ethereum'],
-    adjustedRange,
+    [previousFrom, to],
   )
-
-  if (totalRecords.length === 0) {
-    return {
-      chart: [],
-      syncedUntil: adjustedRange[1],
-      trackedShare: undefined,
-      change: undefined,
-    }
-  }
 
   const totalByDay = new Map<number, number>()
   for (const record of totalRecords) {
@@ -114,41 +105,40 @@ async function getEthereumDaSparkline(
     totalByDay.set(day, (totalByDay.get(day) ?? 0) + Number(record.totalSize))
   }
 
-  const days = [...totalByDay.keys()].sort((a, b) => a - b)
-  const firstDay = days[0]
-  const lastDay = days[days.length - 1]
+  const allDays = [...totalByDay.entries()].sort(([a], [b]) => a - b)
+  const days = allDays.filter(([day]) => from === null || day >= from)
+  const firstDay = days.at(0)?.[0]
+  const lastDay = days.at(-1)?.[0]
   if (firstDay === undefined || lastDay === undefined) {
-    return {
-      chart: [],
-      syncedUntil: adjustedRange[1],
-      trackedShare: undefined,
-      change: undefined,
-    }
+    return EMPTY_HOME_ETHEREUM_CHARTS.da
   }
 
-  const chart: [number, number | null][] = generateTimestamps(
-    [firstDay, lastDay],
-    'day',
-  ).map((timestamp) => [timestamp, totalByDay.get(timestamp) ?? null])
-
-  const posterRecords = await db.dataAvailability.getByDaLayersAndTimeRange(
-    ['ethereum'],
-    [lastDay, lastDay + UnixTime.DAY],
-    ['ethereum'],
+  const chart = generateTimestamps([firstDay, lastDay], 'day').map(
+    (timestamp): HomeSeriesPoint => [
+      timestamp,
+      totalByDay.get(timestamp) ?? null,
+    ],
   )
-  const trackedTotal = posterRecords.reduce(
+
+  const { total, change } = computeRangeTotal(allDays, from, previousFrom)
+
+  // What the projects we track posted, over the same range as the total;
+  // summed in the database, a row per timestamp rather than per project.
+  const trackedRecords =
+    await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+      ['ethereum'],
+      [firstDay, lastDay + UnixTime.DAY],
+    )
+  const trackedTotal = trackedRecords.reduce(
     (acc, record) => acc + Number(record.totalSize),
     0,
   )
-  const dayTotal = totalByDay.get(lastDay) ?? 0
-  const trackedShare =
-    dayTotal > 0 ? Math.min(trackedTotal / dayTotal, 1) : undefined
 
   return {
     chart,
-    syncedUntil: totalRecords[totalRecords.length - 1]?.timestamp ?? lastDay,
-    trackedShare,
-    change: computeSeriesChange(chart.map(([_, value]) => value)),
+    value: total,
+    trackedShare: total > 0 ? Math.min(trackedTotal / total, 1) : undefined,
+    change,
   }
 }
 
@@ -158,14 +148,13 @@ function getMockHomeEthereumCharts(range: ChartRange): HomeEthereumCharts {
 
   return {
     activity: {
-      chart: timestamps.map((timestamp) => [+timestamp, 950_400]),
-      syncedUntil: adjustedRange[1],
-      pastDayUops: 11,
+      chart: timestamps.map((timestamp) => [+timestamp, 11]),
+      value: 11,
       change: 0,
     },
     da: {
       chart: timestamps.map((timestamp) => [+timestamp, 250_000_000_000]),
-      syncedUntil: adjustedRange[1],
+      value: timestamps.length * 250_000_000_000,
       trackedShare: 0.87,
       change: 0,
     },

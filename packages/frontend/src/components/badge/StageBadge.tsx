@@ -29,7 +29,7 @@ export function StageBadge({
       <div
         className={cn(
           'inline-flex h-[18px] w-[60px] items-center justify-center rounded text-center font-medium text-[13px] uppercase leading-none! md:h-[22px] md:w-[66px] md:text-xs',
-          getClassNames(stage),
+          getStageBadgeClassName(stage),
         )}
       >
         {value ?? 'n/a'}
@@ -50,7 +50,9 @@ export function StageBadge({
   )
 }
 
-function getClassNames(stage: Stage | 'UnderReview' | 'NotApplicable'): string {
+export function getStageBadgeClassName(
+  stage: Stage | 'UnderReview' | 'NotApplicable',
+): string {
   switch (stage) {
     case 'Stage 2':
       return 'bg-green-900 border border-[#179323] text-white'

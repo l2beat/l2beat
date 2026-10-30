@@ -27,8 +27,8 @@ export function NativeRollupsHeroIllustration({
           y2="260"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="var(--color-purple-100)" />
-          <stop offset="1" stopColor="var(--color-pink-100)" />
+          <stop stopColor="var(--color-brand-deep)" />
+          <stop offset="1" stopColor="var(--color-brand)" />
         </linearGradient>
         <linearGradient
           id="nr-brand-soft"
@@ -38,12 +38,8 @@ export function NativeRollupsHeroIllustration({
           y2="260"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="var(--color-purple-100)" stopOpacity="0.18" />
-          <stop
-            offset="1"
-            stopColor="var(--color-pink-100)"
-            stopOpacity="0.18"
-          />
+          <stop stopColor="var(--color-brand-deep)" stopOpacity="0.18" />
+          <stop offset="1" stopColor="var(--color-brand)" stopOpacity="0.18" />
         </linearGradient>
         <radialGradient
           id="nr-glow"
@@ -52,8 +48,8 @@ export function NativeRollupsHeroIllustration({
           r="190"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="var(--color-purple-100)" stopOpacity="0.14" />
-          <stop offset="1" stopColor="var(--color-pink-100)" stopOpacity="0" />
+          <stop stopColor="var(--color-brand-deep)" stopOpacity="0.14" />
+          <stop offset="1" stopColor="var(--color-brand)" stopOpacity="0" />
         </radialGradient>
         <marker
           id="nr-arrow"

@@ -26,11 +26,8 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { ChartTintedArea } from '~/components/core/chart/ChartTintedArea'
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -56,7 +53,7 @@ interface Props {
 const chartMeta = {
   range: {
     label: 'Min&max submission interval',
-    color: 'var(--chart-pink-stroke-gradient-1)',
+    color: 'var(--chart-pink)',
     indicatorType: {
       shape: 'line',
     },
@@ -150,12 +147,10 @@ export function LivenessChart({
           />,
         ])}
 
-        <Area
+        <ChartTintedArea
           dataKey="range"
           isAnimationActive={false}
-          stroke="url(#strokeRange)"
-          fill="var(--chart-pink-fill-gradient)"
-          fillOpacity={0.4}
+          color={chartMeta.range.color}
         />
         <Area
           dataKey="avg"
@@ -195,8 +190,6 @@ export function LivenessChart({
           }
         />
         <defs>
-          <PinkFillGradientDef id="fillRange" />
-          <PinkStrokeGradientDef id="strokeRange" />
           <NoDataPatternDef />
           <pattern
             id="noDataLiveness"

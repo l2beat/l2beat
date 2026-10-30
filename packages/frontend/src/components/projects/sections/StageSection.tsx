@@ -253,7 +253,7 @@ export function StageSection({
                   {stage.principle && (
                     <div className="space-y-2">
                       <div className="flex items-center gap-1">
-                        <span className="font-bold text-brand text-label-value-14">
+                        <span className="font-bold text-brand-deep text-label-value-14">
                           Principle
                         </span>
                         <Tooltip>

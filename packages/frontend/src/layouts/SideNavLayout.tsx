@@ -51,7 +51,7 @@ const contentAreaVariants = cva('mx-auto flex w-full min-w-0 grow flex-col', {
     variant: {
       default: 'max-w-(--breakpoint-lg) md:px-5 lg:pl-0',
       wide: 'max-w-412 md:px-5 lg:pl-0',
-      home: 'max-w-none px-4 pb-6 max-md:px-0 md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px]',
+      home: 'max-w-none px-4 pb-6 max-md:px-0 max-md:pb-0 md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px] min-[1880px]:px-6',
     },
   },
 })
@@ -61,7 +61,7 @@ const footerVariants = cva(undefined, {
     variant: {
       default: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
       wide: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
-      home: 'max-md:border-t-0 md:px-12 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6',
+      home: 'max-md:border-t-0 md:px-12 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6 min-[1880px]:px-12',
     },
   },
 })
@@ -71,7 +71,7 @@ const footerInnerVariants = cva(undefined, {
     variant: {
       default: 'max-w-[1142px]',
       wide: 'max-w-[1142px]',
-      home: 'max-w-none max-lg:[&>p]:ml-0',
+      home: 'max-w-none 2xl:max-w-[1744px] max-lg:[&>p]:ml-0',
     },
   },
 })
@@ -103,7 +103,11 @@ export function SideNavLayout({
           logoLink="/"
           sideLinks={navSecondaryLinks}
         />
-        <NavSidebar logoLink="/" groups={navGroups} />
+        <NavSidebar
+          logoLink="/"
+          groups={navGroups}
+          showGardenBanner={variant !== 'home'}
+        />
         <div
           className={cn(
             contentWrapperVariants({ variant }),

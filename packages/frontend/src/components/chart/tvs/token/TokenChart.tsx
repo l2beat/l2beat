@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, formatCurrency } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart } from 'recharts'
+import { AreaChart } from 'recharts'
 import type {
   ChartMeta,
   ChartProject,
@@ -17,10 +17,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
+import { ChartTintedArea } from '~/components/core/chart/ChartTintedArea'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { formatTimestamp } from '~/utils/dates'
 
@@ -68,16 +65,10 @@ export function TokenChart({
       project={project}
     >
       <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <defs>
-          <PinkFillGradientDef id="fill" />
-          <PinkStrokeGradientDef id="stroke" />
-        </defs>
         <ChartLegend content={<ChartLegendContent />} />
-        <Area
+        <ChartTintedArea
           dataKey="value"
-          fill="url(#fill)"
-          fillOpacity={1}
-          stroke="url(#stroke)"
+          color={chartMeta.value.color}
           isAnimationActive={false}
         />
         <ChartCommonComponents
