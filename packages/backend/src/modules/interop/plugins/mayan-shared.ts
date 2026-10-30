@@ -13,6 +13,8 @@ export const MAYAN_PROTOCOLS = {
   fastMCTP: EthereumAddress('0xC1062b7C5Dc8E4b1Df9F200fe360cDc0eD6e7741'),
   mayanCircle: EthereumAddress('0x875d6d37EC55c8cF220B9E5080717549d8Aa8EcA'),
   mayanSwap2: EthereumAddress('0x238856DE6d9d32EA3Dd4e9e7dbfe08b23cD5048c'),
+  // Pays out same-chain swaps (MONO_CHAIN in the Mayan explorer), no cross-chain leg.
+  monoChainSwap: EthereumAddress('0x8A44fb98a2Ad415809e6f8f57E5ca8fA2747fF3E'),
 } as const satisfies Record<string, EthereumAddressValue>
 
 // Swift v1 used a single contract for source and destination operations.
