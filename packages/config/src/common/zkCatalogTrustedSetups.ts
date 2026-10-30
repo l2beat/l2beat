@@ -174,7 +174,7 @@ export const TRUSTED_SETUPS = {
       },
     },
     shortDescription:
-      'Circuit-specific trusted setup for Groth16 Tornado Cash circuits. It was built on top of 30 phase 1 contributions, and reached 1114 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
+      'Circuit-specific trusted setup for Groth16 Tornado Cash circuits. It was built on top of 30 phase 1 contributions, and reached 1114 phase 2 contributions. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/TornadoCash.md'),
   },
   PrivacyPools: {
@@ -191,7 +191,7 @@ export const TRUSTED_SETUPS = {
       },
     },
     shortDescription:
-      'Trusted setup for two Groth16 Privacy Pools circuits. Phase 1 used 61 participant contributions and a public randomness beacon, with 513 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
+      'Trusted setup for two Groth16 Privacy Pools circuits. Phase 1 used 61 participant contributions and a public randomness beacon, with 513 to 514 phase 2 contributions. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyPools.md'),
   },
   PrivacyPoolsV2: {
@@ -276,7 +276,7 @@ export const TRUSTED_SETUPS = {
       },
     },
     shortDescription:
-      'Circuit-specific trusted setup for 54 Groth16 Railgun circuits over BN254. Phase 1 used 54 participant contributions and a public randomness beacon, with 304 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
+      'Circuit-specific trusted setup for 54 Groth16 Railgun circuits over BN254. Phase 1 used 54 participant contributions and a public randomness beacon, with 304 phase 2 contributions. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/Railgun.md'),
   },
 } as const satisfies Record<string, TrustedSetup>
