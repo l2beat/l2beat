@@ -7,6 +7,7 @@ import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopIte
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
 import { SelectedChainsTokensDialog } from '../../components/tokens/TokensDialog'
 import { InteropTopItems } from '../../components/top-items/TopItems'
+import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 
 export function TokenCount({
   isLoading,
@@ -47,8 +48,19 @@ export function TokenCount({
               <InteropTopItems
                 topItems={{
                   items: topItems.items.map((token) => ({
+                    id: token.id,
                     displayName: token.symbol,
                     iconUrl: token.iconUrl,
+                    volume: token.volume,
+                    issuer: token.issuer,
+                    href: getInteropTokenUrl(token),
+                    transferCount: token.transferCount,
+                    avgDuration: token.avgDuration,
+                    avgValue: token.avgValue,
+                    minTransferValueUsd: token.minTransferValueUsd,
+                    maxTransferValueUsd: token.maxTransferValueUsd,
+                    netMintedValue: token.netMintedValue,
+                    flows: token.flows,
                   })),
                   remainingCount: topItems.remainingCount,
                 }}
