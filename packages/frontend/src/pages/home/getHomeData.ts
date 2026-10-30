@@ -3,6 +3,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { RosetteValue } from '~/components/rosette/types'
+import { SITE_NAME_WITH_FORMER } from '~/consts/siteName'
 import {
   EMPTY_HOME_ETHEREUM_CHARTS,
   getHomeEthereumCharts,
@@ -79,9 +80,8 @@ export async function getHomeData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'ETHBEAT',
-        description:
-          'Track the Ethereum ecosystem in one view: Layer 2s, privacy protocols, Ethereum and its interoperability flows, projects evaluated across the CROPS framework, and our latest research.',
+        title: SITE_NAME_WITH_FORMER,
+        description: `${SITE_NAME_WITH_FORMER} tracks the Ethereum ecosystem in one view: Layer 2s, privacy protocols, Ethereum and its interoperability flows, projects evaluated across the CROPS framework, and our latest research.`,
         url: req.originalUrl,
         openGraph: {
           image: '/meta-images/home/opengraph-image.png',

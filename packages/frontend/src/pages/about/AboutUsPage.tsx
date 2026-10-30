@@ -1,5 +1,7 @@
+import { CustomLink } from '~/components/link/CustomLink'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -27,8 +29,11 @@ function Details() {
     <div className="grid gap-4 font-normal text-base leading-6 md:grid-cols-2">
       <div className="flex flex-col gap-4">
         <p>
-          We are a public goods company dedicated to providing onchain
-          transparency.
+          We are ETHBEAT (formerly L2BEAT), a public goods company dedicated to
+          providing onchain transparency.{' '}
+          <CustomLink href={RENAME_ANNOUNCEMENT_PATH}>
+            Why the new name?
+          </CustomLink>
         </p>
         <p>
           What sets ETHBEAT apart is our unwavering commitment to delivering

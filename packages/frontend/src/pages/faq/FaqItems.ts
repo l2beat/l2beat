@@ -10,6 +10,11 @@ export interface FaqItem {
 const items: { question: string; answer: string | string[] }[] = [
   // General
   {
+    question: 'Is ETHBEAT the same as L2BEAT?',
+    answer:
+      'Yes. ETHBEAT (formerly L2BEAT) is the same team doing the same research with the same data, under a new name. [L2BEAT is now ETHBEAT](/l2beat-is-now-ethbeat) explains what changed and what did not.',
+  },
+  {
     question: 'What is the overall purpose of this site?',
     answer:
       'ETHBEAT was created to provide transparent and verifiable insights into emerging layer two (L2) technologies which, in line with the [rollup-centric Ethereum scaling roadmap](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698) are aimed at scaling Ethereum. Since then we have expanded to cover the interoperability protocols that connect these chains, privacy protocols on Ethereum, and the ZK technology many of these projects rely on.',

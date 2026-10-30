@@ -48,10 +48,10 @@ describe(createLlmsTxtRouter.name, () => {
     expect(response.headers.get('vary')).toEqual('Accept')
   })
 
-  it('opens with the ETHBEAT title and a one-paragraph summary', async () => {
+  it('opens with the ETHBEAT title, naming L2BEAT too, and a one-paragraph summary', async () => {
     const body = await getLlmsTxt()
 
-    expect(body).toMatchRegex(/^# ETHBEAT\n\n> \S.+\n\n/)
+    expect(body).toMatchRegex(/^# ETHBEAT \(formerly L2BEAT\)\n\n> \S.+\n\n/)
   })
 
   it('links the main sections of the site', async () => {

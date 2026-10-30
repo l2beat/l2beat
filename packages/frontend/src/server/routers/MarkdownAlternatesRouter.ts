@@ -1,4 +1,5 @@
 import express from 'express'
+import { SITE_NAME_WITH_FORMER } from '~/consts/siteName'
 import {
   DEFI_SUMMARY_DESCRIPTION,
   PRIVACY_SUMMARY_DESCRIPTION,
@@ -73,13 +74,13 @@ const LIST_PAGE_DOCUMENTS: Record<
   Omit<MarkdownAlternate, 'path'>
 > = {
   '/layer2s/summary': {
-    title: 'ETHBEAT scaling projects',
+    title: `Scaling projects on ${SITE_NAME_WITH_FORMER}`,
     summary:
       'Every layer 2 and layer 3 tracked by ETHBEAT, with category, stage, stack and host chain. Each link is the project page; its last path segment is the {slug} for the public API.',
     getSections: getScalingListSections,
   },
   '/zk-catalog': {
-    title: 'ETHBEAT ZK catalog',
+    title: `ZK catalog on ${SITE_NAME_WITH_FORMER}`,
     summary:
       'Zero-knowledge proving systems used by tracked projects, with their creators, trusted setups and onchain verifiers.',
     notes: [
@@ -90,14 +91,14 @@ const LIST_PAGE_DOCUMENTS: Record<
     getSections: getZkListSections,
   },
   '/privacy/summary': {
-    title: 'ETHBEAT privacy protocols',
+    title: `Privacy protocols on ${SITE_NAME_WITH_FORMER}`,
     summary:
       'Privacy protocols on Ethereum and its layer 2s tracked by ETHBEAT, with their category and exit window.',
     notes: PRIVACY_SUMMARY_DESCRIPTION,
     getSections: getPrivacyListSections,
   },
   '/interop/summary': {
-    title: 'ETHBEAT interoperability protocols',
+    title: `Interoperability protocols on ${SITE_NAME_WITH_FORMER}`,
     summary:
       'Cross-chain protocols tracked by ETHBEAT, with their type and the bridge types they use.',
     notes:
@@ -105,13 +106,13 @@ const LIST_PAGE_DOCUMENTS: Record<
     getSections: getInteropListSections,
   },
   '/defi/summary': {
-    title: 'ETHBEAT DeFi protocols',
+    title: `DeFi protocols on ${SITE_NAME_WITH_FORMER}`,
     summary: 'DeFi protocols tracked by ETHBEAT, with their category.',
     notes: DEFI_SUMMARY_DESCRIPTION,
     getSections: getDefiListSections,
   },
   '/ossification': {
-    title: 'ETHBEAT ossification',
+    title: `Ossification on ${SITE_NAME_WITH_FORMER}`,
     summary:
       'How long the critical contracts of each tracked project have gone unchanged, and how much value they secured meanwhile, with the exit window where the project has one.',
     notes: [

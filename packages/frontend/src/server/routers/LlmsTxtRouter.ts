@@ -1,6 +1,7 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
+import { SITE_NAME_WITH_FORMER } from '~/consts/siteName'
 import { env } from '~/env'
 import {
   type LinkListSection,
@@ -48,7 +49,7 @@ export function createLlmsTxtRouter() {
 }
 
 const LLMS_TXT = {
-  title: 'ETHBEAT',
+  title: SITE_NAME_WITH_FORMER,
   summary:
     'ETHBEAT is an independent analytics and research website about Ethereum scaling and privacy. It tracks layer 2s and layer 3s, data availability layers, interoperability protocols and zero-knowledge proving systems, assessing their risks, maturity stages, value secured, activity, liveness and costs. It also reviews privacy protocols on Ethereum and its layer 2s: what each one hides and from whom, anonymity sets, trusted setups and exit windows. Risk assessments are backed by on-chain contract discovery and all project data is open source.',
   notes: [

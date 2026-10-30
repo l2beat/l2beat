@@ -12,7 +12,11 @@ describe(getFaqStructuredData.name, () => {
   })
 
   it('pairs each question with its answer rendered to HTML', () => {
-    expect(faqPage.mainEntity[0]).toEqual({
+    const question = faqPage.mainEntity.find(
+      (q) => q.name === 'What is the overall purpose of this site?',
+    )
+
+    expect(question).toEqual({
       '@type': 'Question',
       name: 'What is the overall purpose of this site?',
       acceptedAnswer: {
