@@ -1,3 +1,136 @@
+Generated with discovered.json: 0x1889e487fd48c347bb2931a0978786ccfc4913a2
+
+# Diff at Fri, 30 Oct 2026 11:40:49 GMT:
+
+- id: 8a65e7f7
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a32b7746d81261011718b887e668c6740d92df4a block: 1791966825
+- current timestamp: 1793360381
+
+## Description
+
+L1BlastBridge: upgraded; ETH and ERC20 deposits revert after L1 block 26298276 (2026-10-29), withdrawal finalization unchanged.
+ETHYieldManager and USDYieldManager: upgraded to unverified implementations that add `withdrawFunds(address,address,uint256)` and remove `commitYieldReportAfterInsuranceWithdrawal`.
+
+## Watched changes
+
+```diff
+    contract L1BlastBridge (eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115) [N/A] {
+    +++ description: Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.
+      sourceHashes.1:
+-        "0x2de77137c7520591ce7be53e8fdff330d246d95d6713af63b93c30d6188df3c1"
++        "0x9ef3cf4dab20bb175675236c7fa821b10bb2b1d5db9f06262800e2d1427c511a"
+      values.$implementation:
+-        "eth:0x7A2075519Dd9598b62075FD397aF0Dd34b14619a"
++        "eth:0xedec6E12b067dADDBa9fB555bb02b208116Fa392"
+      values.DEPOSIT_CUTOFF_BLOCK:
++        26298276
+      implementationNames.eth:0x7A2075519Dd9598b62075FD397aF0Dd34b14619a:
+-        "L1BlastBridge"
+      implementationNames.eth:0xedec6E12b067dADDBa9fB555bb02b208116Fa392:
++        "L1BlastBridge"
+    }
+```
+
+```diff
+    contract ETHYieldManager (eth:0x98078db053902644191f93988341E31289E1C8FE) [N/A] {
+    +++ description: Contract managing Yield Providers for ETH.
+      sourceHashes:
+-        ["0x25b3b37613a93de74b5c7b795eb7f1446dfea8b9e763cfebe29c2f2881acfbb3","0xb87f66cb0d382c418fb77d2ac7850660f016f0817764937c3d267c8f4eda3088"]
+      values.$implementation:
+-        "eth:0xf2F6148327B3020610FCa26E094D9A5cc4689525"
++        "eth:0x7d92135dE632F02fa934191b8cdbC6bC09C5A298"
+      values.accumulatedNegativeYields:
+-        0
+      values.admin:
+-        "eth:0xF0218c491421B5830cbf96804CD9680b56ef70BD"
+      values.blastBridge:
+-        "eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115"
+      values.insurance:
+-        "eth:0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873"
++++ description: Insurance fee taken from positive yields
++++ severity: LOW
+      values.insuranceFeeBips:
+-        0
+      values.insuranceWithdrawalBuffer:
+-        10
+      values.MAX_INSURANCE_FEE_BIPS:
+-        10000
+      values.owner:
+-        "eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.portal:
+-        "eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb"
+      values.sharePrice:
+-        "1000000000000000000000000000"
+      values.TOKEN:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.version:
+-        "1.0.0"
+      implementationNames.eth:0xf2F6148327B3020610FCa26E094D9A5cc4689525:
+-        "ETHYieldManager"
+      implementationNames.eth:0x7d92135dE632F02fa934191b8cdbC6bC09C5A298:
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract USDYieldManager (eth:0xa230285d5683C74935aD14c446e137c8c8828438) [N/A] {
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+      sourceHashes:
+-        ["0x25b3b37613a93de74b5c7b795eb7f1446dfea8b9e763cfebe29c2f2881acfbb3","0x956934682bbb4fe0586d036110d75b514aac8f9dc5c5aa1958fe59d2d023d69f"]
+      values.$implementation:
+-        "eth:0xeCDdf748A60E23609c07af6CA3856744B139B911"
++        "eth:0xF0420dde455814950c79717207Df9e07ce0BF725"
+      values.accumulatedNegativeYields:
+-        0
+      values.admin:
+-        "eth:0xF0218c491421B5830cbf96804CD9680b56ef70BD"
+      values.blastBridge:
+-        "eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115"
+      values.insurance:
+-        "eth:0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6"
++++ description: Insurance fee taken from positive yields
++++ severity: LOW
+      values.insuranceFeeBips:
+-        0
+      values.insuranceWithdrawalBuffer:
+-        0
+      values.MAX_INSURANCE_FEE_BIPS:
+-        10000
+      values.owner:
+-        "eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.portal:
+-        "eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb"
+      values.sharePrice:
+-        "1000000000000000000000000000"
+      values.TOKEN:
+-        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.version:
+-        "1.0.0"
+      implementationNames.eth:0xeCDdf748A60E23609c07af6CA3856744B139B911:
+-        "USDYieldManager"
+      implementationNames.eth:0xF0420dde455814950c79717207Df9e07ce0BF725:
++        ""
+      unverified:
++        true
+    }
+```
+
+## Source code changes
+
+```diff
+.../ETHYieldManager.sol => /dev/null               | 7448 -------------------
+ .../L1BlastBridge/L1BlastBridge.sol                |  130 +-
+ .../USDYieldManager.sol => /dev/null               | 7771 --------------------
+ 3 files changed, 121 insertions(+), 15228 deletions(-)
+```
+
 Generated with discovered.json: 0x8e20e6e55ccdbf85af2353cdec6347e623bc595d
 
 # Diff at Fri, 16 Oct 2026 09:37:44 GMT:
