@@ -331,17 +331,12 @@ function UniqueTokensFooter({
     <InteropTopItems
       topItems={{
         items: topTokens.items.map((token) => ({
-          id: token.id,
           displayName: token.symbol,
-          issuer: token.issuer,
           iconUrl: token.iconUrl,
-          volume: token.volume,
-          href: getInteropTokenUrl(token),
         })),
         remainingCount: topTokens.remainingCount,
       }}
       className="mt-0.5"
-      type="cell"
       setIsOpen={setIsOpen}
     />
   )

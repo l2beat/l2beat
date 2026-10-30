@@ -10,17 +10,9 @@ interface Props {
   usedIn: UsedInProjectWithIcon[]
   className?: string
   emptyClassName?: string
-  maxProjects?: number
-  noLink?: boolean
 }
 
-export function ProjectsUsedIn({
-  usedIn,
-  className,
-  emptyClassName,
-  maxProjects = 5,
-  noLink,
-}: Props) {
+export function ProjectsUsedIn({ usedIn, className, emptyClassName }: Props) {
   if (usedIn.length === 0) {
     return (
       <span className={cn('text-secondary', emptyClassName)}>
@@ -35,16 +27,10 @@ export function ProjectsUsedIn({
         id: project.id,
         name: project.name,
         iconUrl: project.icon,
-        href: noLink ? undefined : project.url,
+        href: project.url,
       }))}
-      dialog={{
-        title: 'Projects used in',
-        description: 'Search for projects used in',
-        searchPlaceholder: 'Start typing to find project...',
-        emptyText: 'No projects found.',
-      }}
+      title="Used in"
       className={className}
-      maxVisibleProjects={maxProjects}
     />
   )
 }

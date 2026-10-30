@@ -1,29 +1,22 @@
+import { formatCurrency } from '@l2beat/shared-pure'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
-import { InteropTopItems } from '../top-items/TopItems'
-
-const VISIBLE_PROTOCOL_COUNT = 6
 
 export function TopProtocolsCell({
   protocols,
 }: {
   protocols: ProtocolEntry[]
 }) {
-  const visible = protocols.slice(0, VISIBLE_PROTOCOL_COUNT)
-  const remainingCount = protocols.length - visible.length
-
   return (
-    <InteropTopItems
-      topItems={{
-        items: visible.map((p) => ({
-          id: p.id.toString(),
-          displayName: p.name,
-          iconUrl: p.iconUrl,
-          volume: p.volume,
-        })),
-        remainingCount,
-      }}
-      type="cell"
-      hideDialog
+    <ProjectIconList
+      projects={protocols.map((p) => ({
+        id: p.id.toString(),
+        name: p.name,
+        iconUrl: p.iconUrl,
+        href: `/interop/protocols/${p.slug}`,
+        description: formatCurrency(p.volume, 'usd'),
+      }))}
+      title="Protocols"
     />
   )
 }

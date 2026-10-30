@@ -2,7 +2,6 @@ import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import type { TokenData } from '~/server/features/layer2s/interop/types'
 import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
-import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { AnchoredInteropSelection } from '../../utils/types'
 import { InteropTopItems } from '../top-items/TopItems'
 import { TokensDialog } from './TokensDialog'
@@ -35,13 +34,11 @@ export function TopTokensCell({
       <InteropTopItems
         topItems={{
           items: topItems.items.map((token) => ({
-            ...token,
             displayName: token.symbol,
-            href: hideDialog ? getInteropTokenUrl(token) : undefined,
+            iconUrl: token.iconUrl,
           })),
           remainingCount: topItems.remainingCount,
         }}
-        type="cell"
         {...(hideDialog
           ? { hideDialog: true as const }
           : { hideDialog: false as const, setIsOpen })}

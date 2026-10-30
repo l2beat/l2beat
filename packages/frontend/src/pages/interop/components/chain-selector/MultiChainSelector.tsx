@@ -1,8 +1,9 @@
+import { ProjectIconList } from '~/components/ProjectIconList'
 import { stickyTopBarRef } from '~/components/table/stickyTopBar'
 import { SwapIcon } from '~/icons/Swap'
+import { toProtocolItems } from '~/pages/interop/utils/toProtocolItems'
 import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-import { AllProtocolsDialog } from './AllProtocolsDialog'
 import { MultiChainSelectorButton } from './MultiChainSelectorButton'
 import type { InteropChainWithIcon } from './types'
 
@@ -41,7 +42,10 @@ export function MultiChainSelector({ chains, protocols }: Props) {
             <span className="font-medium text-base leading-none">
               Across {protocols.length} protocols
             </span>
-            <AllProtocolsDialog protocols={protocols} />
+            <ProjectIconList
+              projects={toProtocolItems(protocols)}
+              title="Protocols"
+            />
           </div>
         )}
       </div>
