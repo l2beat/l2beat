@@ -21,7 +21,7 @@ export const WALKAWAY_TEST = {
   'not-passed': {
     verdict: 'The project does not pass the walkaway test',
     explanation:
-      'users are not able to exit in the presence of malicious operators if the Security Council disappears.',
+      "users cannot count on exiting in the presence of malicious operators if the Security Council disappears, or if the project's contracts were exploited.",
   },
 } as const
 
