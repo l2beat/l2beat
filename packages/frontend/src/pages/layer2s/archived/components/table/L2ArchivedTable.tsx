@@ -11,14 +11,13 @@ import { l2ArchivedColumns } from './columns'
 const WALK_AWAY_SECTIONS = {
   passed: {
     title: 'Pass the walkaway test',
-    description:
-      'Users can exit in the presence of malicious operators even if the team disappears.',
+    description: 'Users can exit in the absence of operators.',
     icon: <WalkAwayPassedIcon className="size-6 shrink-0 fill-positive" />,
   },
   'not-passed': {
     title: 'Do not pass the walkaway test',
     description:
-      "Users cannot count on exiting in the presence of malicious operators if the team disappears, or the project's contracts were exploited.",
+      "Users cannot count on exiting in the absence of operators, or the project's contracts were exploited.",
     icon: <WalkAwayNotPassedIcon className="size-6 shrink-0 fill-negative" />,
   },
 }
