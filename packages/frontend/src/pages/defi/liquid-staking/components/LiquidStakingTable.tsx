@@ -7,21 +7,18 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
+import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
-import type { DefiSummaryEntry } from '~/server/features/defi/getDefiSummaryEntries'
-import { DefiDependenciesCell } from './DefiDependenciesCell'
+import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
+import { LIQUID_STAKING_METRICS, TVL_TOOLTIP } from '../liquidStakingMetrics'
+import { LIQUID_STAKING_RISKS } from '../liquidStakingRisks'
 
-const columnHelper = createColumnHelper<DefiSummaryEntry>()
+const columnHelper = createColumnHelper<LiquidStakingEntry>()
 
 const columns = [
   ...getCommonProjectColumns(columnHelper, (row) => row.href),
@@ -57,53 +54,64 @@ const columns = [
     header: 'TVL',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (value === undefined) {
-        return <NoDataBadge />
-      }
-
-      const formatted = (
+      return value === undefined ? (
+        <NoDataBadge />
+      ) : (
         <span className="font-medium text-sm">
           {formatCurrency(value, 'usd')}
         </span>
-      )
-      const dataSource = ctx.row.original.tvlDataSource
-      if (!dataSource) {
-        return formatted
-      }
-
-      return (
-        <Tooltip contentInHtml>
-          <TooltipTrigger>{formatted}</TooltipTrigger>
-          <TooltipContent>Data source: {dataSource}</TooltipContent>
-        </Tooltip>
       )
     },
     sortUndefined: 'last',
     meta: {
       align: 'right',
-      tooltip: 'Total USD value of assets locked in the protocol.',
+      tooltip: TVL_TOOLTIP,
     },
   }),
-  columnHelper.accessor('category', {
-    header: 'Category',
-    cell: (ctx) => (
-      <span className="font-medium text-sm">{ctx.getValue()}</span>
-    ),
-    enableSorting: false,
-  }),
-  columnHelper.accessor('dependencies', {
-    header: 'Dependencies',
-    cell: (ctx) => <DefiDependenciesCell dependencies={ctx.getValue()} />,
-    enableSorting: false,
-  }),
+  ...LIQUID_STAKING_METRICS.map(({ key, title, tooltip, format }) =>
+    columnHelper.accessor((entry) => entry[key]?.value, {
+      id: key,
+      header: title,
+      cell: (ctx) => {
+        const value = ctx.getValue()
+        return value === undefined ? (
+          <NoDataBadge />
+        ) : (
+          <span className="font-medium text-sm">{format(value)}</span>
+        )
+      },
+      sortUndefined: 'last',
+      meta: { align: 'right', tooltip },
+    }),
+  ),
+  ...LIQUID_STAKING_RISKS.map(({ key, title, tooltip }) =>
+    columnHelper.accessor((entry) => entry.risks[key], {
+      id: key,
+      header: title,
+      cell: (ctx) => (
+        <TableValueCell value={ctx.getValue()} href={ctx.row.original.href} />
+      ),
+      enableSorting: false,
+      meta: { tooltip },
+    }),
+  ),
 ]
+
+/** The chart values start hidden; the column controls show them. */
+const HIDDEN_METRICS = Object.fromEntries(
+  LIQUID_STAKING_METRICS.map(({ key }) => [key, false]),
+)
 
 const initialSorting: SortingState = [{ id: 'totalValueLockedUsd', desc: true }]
 
-export function DefiSummaryTable({ entries }: { entries: DefiSummaryEntry[] }) {
+export function LiquidStakingTable({
+  entries,
+}: {
+  entries: LiquidStakingEntry[]
+}) {
   const [sorting, setSorting] = useState<SortingState>(initialSorting)
 
-  const table = useTable('DefiSummaryTable', {
+  const table = useTable('LiquidStakingTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -114,12 +122,14 @@ export function DefiSummaryTable({ entries }: { entries: DefiSummaryEntry[] }) {
         left: ['#', 'logo'],
       },
     },
+    initialState: { columnVisibility: HIDDEN_METRICS },
     onSortingChange: setSorting,
   })
 
   return (
-    <PrimaryCard className="mt-4">
+    <div className="mt-4">
+      <ColumnsControls columns={table.getAllColumns()} />
       <BasicTable table={table} />
-    </PrimaryCard>
+    </div>
   )
 }

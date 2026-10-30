@@ -9,5 +9,5 @@ export const ZK_CATALOG_DESCRIPTION =
 export const PRIVACY_SUMMARY_DESCRIPTION =
   'Reviews of privacy protocols on Ethereum: privacy pools, shielded ledgers, stealth addresses, confidential tokens and anonymous access. Each is rated by what it hides from each adversary, alongside its anonymity set and trusted setup where it has them. The reviews follow the CROPS principles: censorship resistance, open source, privacy and security.'
 
-export const DEFI_SUMMARY_DESCRIPTION =
-  'Overview of DeFi protocols tracked by L2BEAT.'
+export const LIQUID_STAKING_DESCRIPTION =
+  'A risk comparison of Ethereum liquid staking protocols: who can mint the token, who runs the validators, where the backing sits, who sets the exchange rate, how holders exit and who can upgrade the code, alongside what each token yields and what an exit costs.'

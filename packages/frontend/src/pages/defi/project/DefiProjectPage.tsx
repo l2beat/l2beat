@@ -20,6 +20,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
+import { LiquidStakingProjectSummary } from './components/LiquidStakingProjectSummary'
 
 interface Props extends AppLayoutProps {
   entry: ProjectDefiEntry
@@ -110,6 +111,14 @@ export function DefiProjectPage({
                       data-role="nav-section"
                       className="scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
                     >
+                      {entry.liquidStaking && (
+                        <>
+                          <LiquidStakingProjectSummary
+                            summary={entry.liquidStaking}
+                          />
+                          <HorizontalSeparator className="my-4 max-md:hidden" />
+                        </>
+                      )}
                       <div className="max-md:hidden">
                         <div className="flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
                           {entry.badges.length > 0 && (
