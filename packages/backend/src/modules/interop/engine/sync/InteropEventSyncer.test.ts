@@ -437,6 +437,52 @@ describe(InteropEventSyncer.name, () => {
 
       expect(result).toEqual(undefined)
     })
+
+    it('logs a throwing plugin and lets the next plugin capture', () => {
+      const event = makeInteropEventNoPlugin()
+      const failure = new Error('boom')
+      const error = mockFn().returns(undefined)
+      const syncer = createSyncer(
+        {
+          chain: 'base',
+          cluster: makeCluster({
+            name: 'clusterName',
+            plugins: [
+              makePlugin({
+                name: 'across',
+                capture: mockFn().throws(failure),
+              }),
+              makePlugin({
+                name: 'wormhole',
+                capture: mockFn().returns([event]),
+              }),
+            ],
+          }),
+        },
+        mockLogger(error),
+      )
+
+      const result = syncer.captureLog(
+        mockObject<LogToCapture>({
+          block: makeBlock(5),
+          tx: mockObject<LogToCapture['tx']>({ hash: '0x123' }),
+          log: mockObject<LogToCapture['log']>({
+            logIndex: 2,
+            topics: ['0xabc'],
+          }),
+        }),
+      )
+
+      expect(result).toEqual([{ ...event, plugin: 'wormhole' }])
+      expect(error).toHaveBeenOnlyCalledWith('Capture failed', failure, {
+        plugin: 'across',
+        chain: 'base',
+        blockNumber: 5,
+        tx: '0x123',
+        logIndex: 2,
+        topic: '0xabc',
+      })
+    })
   })
 
   describe(InteropEventSyncer.prototype.captureTx.name, () => {
@@ -542,6 +588,49 @@ describe(InteropEventSyncer.name, () => {
 
       expect(result).toEqual(undefined)
       expect(getCreatorEvents).not.toHaveBeenCalled()
+    })
+
+    it('logs a throwing plugin and lets the next plugin capture', () => {
+      const event = makeInteropEventNoPlugin()
+      const failure = new Error('boom')
+      const error = mockFn().returns(undefined)
+      const txToCapture = mockObject<TxToCapture>({
+        chain: 'base',
+        block: makeBlock(5),
+        tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
+      })
+      const syncer = createSyncer(
+        {
+          chain: 'base',
+          cluster: makeCluster({
+            name: 'clusterName',
+            plugins: [
+              makePlugin({
+                name: 'across',
+                captureTx: mockFn().throws(failure),
+              }),
+              makePlugin({
+                name: 'wormhole',
+                captureTx: mockFn().returns([event]),
+              }),
+            ],
+          }),
+        },
+        mockLogger(error),
+      )
+
+      const result = syncer.captureTx(txToCapture)
+
+      expect(result).toEqual({
+        events: [{ ...event, plugin: 'wormhole' }],
+        fulfilledCreatorEvents: [],
+      })
+      expect(error).toHaveBeenOnlyCalledWith('Capture failed', failure, {
+        plugin: 'across',
+        chain: 'base',
+        blockNumber: 5,
+        tx: '0x123',
+      })
     })
   })
 
@@ -1106,7 +1195,10 @@ class TestSyncer extends InteropEventSyncer {
   }
 }
 
-function createSyncer(overrides: Partial<TestSyncer> = {}) {
+function createSyncer(
+  overrides: Partial<TestSyncer> = {},
+  logger: Logger = Logger.SILENT,
+) {
   const { chain, cluster, rpcClient, store, db, ...rest } = overrides
   const syncer = new TestSyncer(
     chain ?? 'ethereum',
@@ -1114,10 +1206,16 @@ function createSyncer(overrides: Partial<TestSyncer> = {}) {
     rpcClient ?? mockRpcClient(),
     store ?? mockStore(),
     db ?? mockDb(),
-    Logger.SILENT,
+    logger,
   )
   Object.assign(syncer, rest)
   return syncer
+}
+
+function mockLogger(error: Logger['error']) {
+  return mockObject<Logger>({
+    for: mockFn().returns(mockObject<Logger>({ error })),
+  })
 }
 
 function makeCluster(

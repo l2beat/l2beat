@@ -239,11 +239,25 @@ export class InteropEventSyncer extends TimeLoop {
     })
   }
 
+  // A plugin that throws is logged and skipped like in InteropBlockProcessor.
+  // Rethrowing would make the syncer retry the same range forever and stall
+  // every plugin of the cluster on this chain.
   captureLog(logToCapture: LogToCapture) {
     for (const plugin of this.cluster.plugins) {
-      const produced = plugin.capture(logToCapture)
-      if (produced) {
-        return produced.map((p) => ({ ...p, plugin: plugin.name }))
+      try {
+        const produced = plugin.capture(logToCapture)
+        if (produced) {
+          return produced.map((p) => ({ ...p, plugin: plugin.name }))
+        }
+      } catch (e) {
+        this.logger.error('Capture failed', e, {
+          plugin: plugin.name,
+          chain: this.chain,
+          blockNumber: logToCapture.block.number,
+          tx: logToCapture.tx.hash,
+          logIndex: logToCapture.log.logIndex,
+          topic: logToCapture.log.topics[0],
+        })
       }
     }
   }
@@ -260,12 +274,21 @@ export class InteropEventSyncer extends TimeLoop {
             plugin.name,
           )
         : undefined
-      const produced = plugin.captureTx(txToCapture, creatorEvents)
-      if (produced) {
-        return {
-          events: produced.map((p) => ({ ...p, plugin: plugin.name })),
-          fulfilledCreatorEvents: creatorEvents ?? [],
+      try {
+        const produced = plugin.captureTx(txToCapture, creatorEvents)
+        if (produced) {
+          return {
+            events: produced.map((p) => ({ ...p, plugin: plugin.name })),
+            fulfilledCreatorEvents: creatorEvents ?? [],
+          }
         }
+      } catch (e) {
+        this.logger.error('Capture failed', e, {
+          plugin: plugin.name,
+          chain: this.chain,
+          blockNumber: txToCapture.block.number,
+          tx: txToCapture.tx.hash,
+        })
       }
     }
   }
