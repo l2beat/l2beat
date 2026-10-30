@@ -340,7 +340,7 @@ export const tornadoCash: BaseProject = {
           'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
           'Stake lock': `After voting or proposing, staked tokens are locked for **${stakeLockPeriod}** after proposal ends, preventing governance hopping.`,
           'Voting venue':
-            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the governance page of the app, see the App section above.',
+            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the [governance page](https://tornadocash.eth.limo/governance) of the app, see the App section above.',
           'Proposal threshold': `**${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
           Quorum: `**${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
           'Execution model': `**Permissionless execution after an onchain vote and timelock.** An accepted proposal waits ${formatSeconds(executionDelay)} and can then be executed by anyone within ${formatSeconds(executionExpiration)}. Proposal executable payload is committed in the \`propose()\` transaction.`,

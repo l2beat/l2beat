@@ -413,7 +413,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'Governance token':
           '`ARB` — 10,000,000,000 total · ~6.15B circulating · ~3.5B in DAO treasury. 1 token = 1 vote, delegated. Foundation tokens excluded from Votable Tokens.',
         'Voting venue':
-          '[Tally](https://www.tally.xyz/gov/arbitrum) — two on-chain governors on Arbitrum One: Core (Constitutional) `0xf07DeD9d…` · Treasury (Non-Constitutional) `0x789fC990…`.',
+          '[Arbitrum Governance](https://alt.gov.arbitrum.foundation/) — two on-chain governors on Arbitrum One: Core (Constitutional) `0xf07DeD9d…` · Treasury (Non-Constitutional) `0x789fC990…`.',
         'Proposal threshold':
           '**1,000,000 ARB** delegated to submit on-chain. 500k ARB delegated to post a Snapshot temperature check.',
         Quorum: `**${l2CoreQuorumPercent}%** of Delegated Voting Power Constitutional · **${l2TreasuryQuorumPercent}%** Treasury, with floor/ceiling bounds of 150–450M ARB (Const) / 100–300M ARB (Treasury). Counts "For" + "Abstain".`,
