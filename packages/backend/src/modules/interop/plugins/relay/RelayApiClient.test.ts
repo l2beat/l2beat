@@ -248,6 +248,53 @@ describe(RelayApiClient.name, () => {
 
       expect(result.requests[0]?.status).toEqual(undefined)
     })
+
+    it('skips malformed records without retrying the page', async () => {
+      const error = mockFn().returns(undefined)
+      const logger = mockObject<Logger>({
+        for: mockFn().returns(mockObject<Logger>({ error })),
+      })
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo(
+          ok(
+            page(
+              [
+                request('a'),
+                { id: 'b', status: 'success' },
+                { ...request('c'), updatedAt: 'not a date' },
+                request('d'),
+              ],
+              'cursor-1',
+            ),
+          ),
+        ),
+      })
+
+      const result = await createClient(httpClient, logger).getRequests()
+
+      expect(result.requests.map((r) => r.id)).toEqual(['a', 'd'])
+      expect(result.continuation).toEqual('cursor-1')
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(1)
+      expect(error).toHaveBeenOnlyCalledWith(
+        'Skipping malformed Relay requests',
+        {
+          requests: 4,
+          skipped: 2,
+          samples: [
+            { id: 'b', path: expect.a(String), message: expect.a(String) },
+            { id: 'c', path: expect.a(String), message: 'Invalid date' },
+          ],
+        },
+      )
+    })
+
+    it('rejects a page without a request list', async () => {
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo(ok({ continuation: 'cursor-1' })),
+      })
+
+      await expect(createClient(httpClient).getRequests()).toBeRejected()
+    })
   })
 
   describe(RelayApiClient.prototype.getAllRequests.name, () => {
@@ -363,6 +410,23 @@ describe(RelayApiClient.name, () => {
         'network timeout',
       )
       expect(httpClient.fetchRaw).toHaveBeenCalledTimes(5)
+    })
+
+    it('follows the cursor past a page of malformed records', async () => {
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn()
+          .resolvesToOnce(ok(page([{ id: 'a' }], 'cursor-1')))
+          .resolvesToOnce(ok(page([request('b')], undefined))),
+      })
+
+      const result = await createClient(httpClient).getAllRequests({
+        limit: 500,
+      })
+
+      expect(result.requests.map((r) => r.id)).toEqual(['b'])
+      expect(result.continuation).toEqual(undefined)
+      const secondUrl = httpClient.fetchRaw.calls[1]?.args[0] as string
+      expect(secondUrl).toInclude('continuation=cursor-1')
     })
 
     it('rejects an unchanged continuation cursor', async () => {
