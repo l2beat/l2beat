@@ -371,6 +371,7 @@ export const privacyBoost: BaseProject = {
     },
     tokens: privacyTokens,
     trackedOn: ['base'],
+    scalingProjects: [ProjectId('base')],
     anonymitySet: { type: 'too-small' },
     exitWindow: {
       value: 'None',

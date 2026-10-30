@@ -47,6 +47,7 @@ import type {
   PrivacyRelayerStat,
 } from './types'
 import { getPrivacyBucketTvls } from './utils/getPrivacyBucketTvls'
+import { getScalingProjectItems } from './utils/getPrivacyScalingLinks'
 import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 
 interface PrivacyProjectFlowData {
@@ -87,6 +88,7 @@ export interface PrivacyProjectDetails {
   attributes: PrivacyAttribute[]
   milestones: Milestone[]
   trackedOn: ProjectIconListItem[]
+  scalingProjects: ProjectIconListItem[]
   assets: PrivacyAsset[]
   summary: {
     bucketCount: number
@@ -124,11 +126,13 @@ export async function getPrivacyProjectDetails(
     { totals, daily30d, tokenValues, bucketTvls },
     relayerStat,
     trackedOn,
+    scalingProjects,
     ossification,
   ] = await Promise.all([
     getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
     getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
     getTrackedOn(project),
+    getScalingProjects(project),
     getProjectOssification(project),
   ])
 
@@ -316,6 +320,7 @@ export async function getPrivacyProjectDetails(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ),
     trackedOn,
+    scalingProjects,
     assets: orderedAssets,
     summary: {
       bucketCount: summaryBucketCount,
@@ -352,6 +357,19 @@ async function getTrackedOn(
     optional: [...PROJECT_PAGE_METADATA_FIELDS],
   })
   return getPrivacyTrackedChains(project.privacyInfo.trackedOn, chainProjects)
+}
+
+async function getScalingProjects(
+  project: PrivacyProject,
+): Promise<ProjectIconListItem[]> {
+  const ids = project.privacyInfo.scalingProjects
+  if (!ids) return []
+  const scalingProjects = await ps.getProjects({
+    ids,
+    select: ['scalingInfo'],
+    optional: ['scalingStage'],
+  })
+  return getScalingProjectItems(ids, scalingProjects)
 }
 
 const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7
