@@ -9,7 +9,7 @@ Generated with discovered.json: 0x1889e487fd48c347bb2931a0978786ccfc4913a2
 
 ## Description
 
-L1BlastBridge: upgraded; ETH and ERC20 deposits revert after L1 block 26298276 (2026-10-29), withdrawal finalization unchanged.
+L1BlastBridge: upgraded; its ETH and ERC20 deposit functions revert after L1 block 26298276 (2026-10-29), withdrawal finalization unchanged.
 ETHYieldManager and USDYieldManager: upgraded to unverified implementations that add `withdrawFunds(address,address,uint256)` and remove `commitYieldReportAfterInsuranceWithdrawal`.
 
 ## Watched changes
