@@ -97,8 +97,6 @@ export const base: ScalingProject = opStackL2({
           transferTypes: [
             'opstack.L1ToL2Transfer',
             'opstack-standardbridge.L1ToL2Transfer',
-            'beefy-bridge.L1ToL2Transfer',
-            'maker-bridge.L1ToL2Transfer',
             'sorare-base.L1ToL2Transfer',
             'lido-wsteth.L1ToL2Transfer',
             'sky-bridge.L1ToL2Transfer',
@@ -109,7 +107,6 @@ export const base: ScalingProject = opStackL2({
           transferTypes: [
             'opstack.L2ToL1Transfer',
             'opstack-standardbridge.L2ToL1Transfer',
-            'maker-bridge.L2ToL1Transfer',
             'lido-wsteth.L2ToL1Transfer',
             'sky-bridge.L2ToL1Transfer',
           ],
@@ -125,16 +122,6 @@ export const base: ScalingProject = opStackL2({
       {
         chain: 'base',
         plugin: 'opstack-standardbridge',
-        bridgeType: 'lockAndMint',
-      },
-      {
-        chain: 'base',
-        plugin: 'beefy-bridge',
-        bridgeType: 'lockAndMint',
-      },
-      {
-        chain: 'base',
-        plugin: 'maker-bridge',
         bridgeType: 'lockAndMint',
       },
       {
