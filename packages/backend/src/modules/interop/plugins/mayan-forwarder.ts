@@ -131,7 +131,9 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
     ]
 
     const parsed = parseForwarderLog(input.log)
-    if (!parsed) return
+    if (!parsed || parsed.mayanProtocol === MAYAN_PROTOCOLS.monoChainSwap) {
+      return
+    }
 
     const decodedData = decodeMayanData(
       parsed.protocolData,
