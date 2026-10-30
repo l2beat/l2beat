@@ -1,6 +1,6 @@
 {
   "name": "unichain",
-  "timestamp": 1792587967,
+  "timestamp": 1793196526,
   "configHash": "0x3660ee6aa3eaee972704869d40fd2442904412571b4612e885a225bcfe78c6f2",
   "entries": [
     {
@@ -254,7 +254,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 26241063
+          "prevBlockNum": 26291682
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -482,13 +482,13 @@
           ]
         ],
         "$upgradeCount": 9,
-        "anchorGame": "eth:0xAD6e4F687e2443304e77e96a955Fb503091648a6",
+        "anchorGame": "eth:0x6195A5a6c2e079d7134EBf7fE7140E7CF3dEF4dC",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xca80ab2585ee1f53c1c2bc12120d898155d4f96acd8c8438d079e4bc0d5680bb",
-          1791980363
+          "0x35b3d4440e668013ffe2c14901ce9454a9962b2ea7cc309508bb6ec3e39dfa94",
+          1792587294
         ],
         "getStartingAnchorRoot": {
           "root": "0xaf64a866304eb17696278d26290bb172aa941eac3370d9bc8bd313d492beb7d3",
@@ -642,7 +642,7 @@
         "game9Args": "0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1dfacc005dcd857b401e4732e6f7837135a22825cfa27cf508e4e3aa8d30b3226ac3b5ea0e8bcacaff974ad145ac900f1dd5551f0c9e143314dc4022fcf0000000000000000000000000000000000000000000000000000000000000000",
         "game9Vm": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
         "game9Weth": "eth:0x74ad145aC900F1DD5551F0C9E143314DC4022FCf",
-        "gameCount": 17037,
+        "gameCount": 17207,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -942,7 +942,7 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "systemConfig": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-        "totalSupply": "20080000000000000000",
+        "totalSupply": "20247594000000000000",
         "version": "1.5.1"
       },
       "implementationNames": {
@@ -1222,7 +1222,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 11,
+        "nonce": 13,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1422,7 +1422,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292666721",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292667050",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1801,7 +1801,7 @@
         "optimismMintableERC20Factory": "eth:0xA2B597EaeAcb6F627e088cbEaD319e934ED5edad",
         "optimismPortal": "eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2",
         "overhead": 0,
-        "owner": "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1",
+        "owner": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
         "paused": false,
         "proxyAdmin": "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
@@ -2087,7 +2087,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "l1CrossDomainMessenger": "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623435",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623440",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2148,7 +2148,7 @@
         "$upgradeCount": 3,
         "baseFee": 0,
         "baseFeeScalar": 2000,
-        "blobBaseFee": 5303886,
+        "blobBaseFee": 12899187,
         "blobBaseFeeScalar": 900000,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2157,7 +2157,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 97675794,
+        "l1BaseFee": 205371745,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2417,10 +2417,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 97675794,
+        "basefee": 205371745,
         "baseFeeScalar": 2000,
         "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
-        "blobBaseFee": 5303886,
+        "blobBaseFee": 12899187,
         "blobBaseFeeScalar": 900000,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "unichain:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2430,17 +2430,17 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xa9949124a1469feffff7dcc903a87f6fd16bf4672b76aa89d528c76c045218d7",
+        "hash": "0xb671b9a8cecd4d5f2cf38992c4631c64f475bd1b86a646684f04654975cbaa11",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26241157,
+        "number": 26291725,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "proxyAdmin": "unichain:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "sequenceNumber": 11,
-        "timestamp": 1792587899,
+        "sequenceNumber": 3,
+        "timestamp": 1793196467,
         "version": "1.9.0"
       },
       "implementationNames": {
@@ -2816,7 +2816,7 @@
         "0xec3d2631b587840a92d5bdbf31e3c065d86709caa6845a58abbfe5e425470ff0"
       ],
       "proxyType": "immutable",
-      "description": "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa).",
+      "description": "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa).",
       "ignoreInWatchMode": ["lastDisbursementTime"],
       "deployerAddress": "unichain:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1730748360,
@@ -2824,7 +2824,7 @@
       "values": {
         "$immutable": true,
         "feeDisbursementInterval": 86400,
-        "l1Recipient": "unichain:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
+        "l1Recipient": "eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
         "lastDisbursementTime": 1787244110,
         "minWithdrawalAmount": "10000000000000000000",
         "owner": "unichain:0xb4E696eAFAB6B13AB18D40fAE1a962700C84BefB",
@@ -2832,7 +2832,8 @@
       },
       "implementationNames": {
         "unichain:0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002": "L1Splitter"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "L1Splitter",
@@ -2843,7 +2844,7 @@
         "0xec3d2631b587840a92d5bdbf31e3c065d86709caa6845a58abbfe5e425470ff0"
       ],
       "proxyType": "immutable",
-      "description": "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15).",
+      "description": "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xFb9d55c1846D1d442B277F6f87Da319156941401).",
       "ignoreInWatchMode": ["lastDisbursementTime"],
       "deployerAddress": "unichain:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1730748360,
@@ -2851,15 +2852,16 @@
       "values": {
         "$immutable": true,
         "feeDisbursementInterval": 86400,
-        "l1Recipient": "unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15",
+        "l1Recipient": "eth:0xFb9d55c1846D1d442B277F6f87Da319156941401",
         "lastDisbursementTime": 1746125949,
-        "minWithdrawalAmount": "10000000000000000000",
+        "minWithdrawalAmount": "3000000000000000000",
         "owner": "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1",
         "pendingOwner": "unichain:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
         "unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003": "L1Splitter"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "NetFeeSplitter",
@@ -2876,16 +2878,6 @@
       "implementationNames": {
         "unichain:0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004": "NetFeeSplitter"
       }
-    },
-    {
-      "address": "unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "unichain:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "unichain:0xb4E696eAFAB6B13AB18D40fAE1a962700C84BefB",
@@ -4785,10 +4777,10 @@
     "opstack/SuperFaultDisputeGame": "0xe700487053704fb924edde231c30f9f105c368a6cc367633f117d07672f2fd74",
     "opstack/SuperPermissionedDisputeGame": "0xa146247ae93d5a2d8d731791462cda682c3558bd36eceef57df055c8d7cfdfd9",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
-    "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
+    "unichain/L1Splitter": "0xc171f8ca7ded1583edc3a75a29a12914a22b690399b62cb108620e69141252ff"
   },
-  "usedBlockNumbers": { "ethereum": 26241162, "unichain": 61839608 },
-  "permissionsConfigHash": "0xb3103b7d2defa048d956393f57212dbbcb1635d7e7e8b4ac766fea44ef012fa4",
+  "usedBlockNumbers": { "ethereum": 26291728, "unichain": 62448166 },
+  "permissionsConfigHash": "0x76e08a3fdaf873701015134bef8a0743e2c322c8d8254e5775992a387bc0f0b4",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -5222,6 +5214,12 @@
               "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
             }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
         }
       ],
       "directlyReceivedPermissions": [
@@ -5231,16 +5229,6 @@
           "description": "takes ownership of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
           "role": ".fallbackOwner",
           "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
-        }
-      ]
-    },
-    "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "role": ".owner"
         }
       ]
     },
@@ -5258,6 +5246,15 @@
               "address": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
               "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
             },
+            { "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner",
+          "via": [
             { "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92" }
           ]
         }
