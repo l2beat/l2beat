@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { INTEROP_ONE_SIDED_CHAINS, ProjectService } from '@l2beat/config'
 import type { HttpClient, RpcClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { expect, mockObject } from 'earl'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
@@ -11,8 +11,14 @@ import {
   type PluginCluster,
   pluginsAsClusters,
 } from './index'
-import type { InteropPlugin } from './types'
+import type { InteropPlugin, InteropPluginResyncable } from './types'
 import { definedNetworks, isPluginResyncable } from './types'
+
+// The opstack plugins have no RISE network yet
+const KNOWN_UNSUPPORTED_CHAINS = new Set([
+  'opstack:rise',
+  'opstack-standardbridge:rise',
+])
 
 describe('Interop Plugins', async () => {
   const chainNames = new Set<string>()
@@ -87,6 +93,43 @@ describe('Interop Plugins', async () => {
     })
   }
 
+  describe('project interop configs', () => {
+    const pluginsByName = new Map<string, InteropPlugin>(
+      flattenClusters(plugins.eventPlugins).map((p) => [p.name, p]),
+    )
+    const entries: { project: string; plugin: string; chain?: string }[] = []
+
+    before(async () => {
+      const ps = new ProjectService()
+      const projects = await ps.getProjects({ select: ['interopConfig'] })
+      for (const project of projects) {
+        for (const { plugin, chain } of project.interopConfig.plugins) {
+          entries.push({ project: project.id, plugin, chain })
+        }
+      }
+    })
+
+    it('reference existing plugins', () => {
+      const unknown = entries.filter((e) => !pluginsByName.has(e.plugin))
+      expect(unknown).toEqual([])
+    })
+
+    // A chain qualifier keeps transfers with that chain on either side. This
+    // assumes the plugin captures its own events there, so a plugin matching
+    // another plugin's events on that chain needs an exception.
+    it('qualify chains the plugin requests logs from', () => {
+      const unsupported = entries.filter((e) => {
+        if (!e.chain || KNOWN_UNSUPPORTED_CHAINS.has(`${e.plugin}:${e.chain}`))
+          return false
+        const plugin = pluginsByName.get(e.plugin)
+        if (!plugin || !isPluginResyncable(plugin)) return false
+        const chains = getRequestedChains(plugin)
+        return chains !== undefined && !chains.has(e.chain)
+      })
+      expect(unsupported).toEqual([])
+    })
+  })
+
   describe('flattenClusters', () => {
     it('flattens plugins and plugin clusters in order', () => {
       const pluginA = mockObject<InteropPlugin>({ name: 'across' })
@@ -114,3 +157,17 @@ describe('Interop Plugins', async () => {
     })
   })
 })
+
+function getRequestedChains(
+  plugin: InteropPluginResyncable,
+): Set<string> | undefined {
+  const chains = new Set<string>()
+  for (const request of plugin.getDataRequests()) {
+    if (request.type !== 'event') continue
+    if (request.addresses === '*') return undefined
+    for (const address of request.addresses) {
+      chains.add(ChainSpecificAddress.longChain(address))
+    }
+  }
+  return chains
+}
