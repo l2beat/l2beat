@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x694b5b3b29f6b5259a21886d896646b8476b16d2
+
+# Diff at Fri, 30 Oct 2026 09:03:39 GMT:
+
+- id: dcedcd84
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3d1218cb07020fc721784bb6efe8b6c3307f13db block: 1792657894
+- current timestamp: 1792657894
+
+## Description
+
+UpgradeableBeacon template applied.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792657894 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639","description":"change the beacon implementation.","role":".owner"}
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639","description":"change the beacon implementation.","role":".owner","via":[{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as arb-nova:0x53923A0d1f4805463584c91b2E55d6c600A94E91. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      template:
++        "global/UpgradeableBeacon"
+      description:
++        "A beacon with an upgradeable implementation currently set as arb-nova:0x53923A0d1f4805463584c91b2E55d6c600A94E91. Beacon proxy contracts pointing to this beacon will all use its implementation."
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"},"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      receivedPermissions.0:
++        {"permission":"interact","from":"arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639","description":"change the beacon implementation.","role":".owner","via":[{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+    }
+```
+
 Generated with discovered.json: 0xd0eb1c33fbc44f936598509f21b55af476f48b38
 
 # Diff at Thu, 22 Oct 2026 08:32:47 GMT:
