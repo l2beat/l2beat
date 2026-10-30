@@ -144,25 +144,26 @@ function UpgradePathTimeline({
         {path.steps.map((step, i) => {
           const isWaiting = isWaitingStep(step)
           return (
-            <li key={i} className="relative pb-3.5 pl-7 last:pb-0">
-              <span
-                className={cn(
-                  'absolute top-1.5 left-[5px] size-2.5 rounded-full',
-                  isWaiting
-                    ? 'border-2 border-secondary bg-surface-primary'
-                    : 'bg-brand',
-                )}
-              />
+            <li
+              key={i}
+              className="relative flex gap-2 pb-3.5 text-paragraph-14 last:pb-0 md:text-paragraph-15"
+            >
+              {/* Runs from this dot's center to the next one's, behind both dots, so it never leaves a gap. */}
               {i < path.steps.length - 1 && (
-                <span className="-bottom-1.5 absolute top-[18px] left-[9px] w-0.5 bg-divider" />
+                <span className="-bottom-[0.5lh] absolute top-[0.5lh] left-[9px] w-0.5 bg-divider" />
               )}
-              <Markdown
-                inline
-                className={cn(
-                  'text-paragraph-14 md:text-paragraph-15',
-                  isWaiting && 'text-secondary',
-                )}
-              >
+              {/* One line tall, so the dot sits on the first line's center at any font size. */}
+              <span className="relative flex h-[1lh] w-5 shrink-0 items-center justify-center">
+                <span
+                  className={cn(
+                    'size-2.5 rounded-full',
+                    isWaiting
+                      ? 'border-2 border-secondary bg-surface-primary'
+                      : 'bg-brand',
+                  )}
+                />
+              </span>
+              <Markdown inline className={cn(isWaiting && 'text-secondary')}>
                 {step}
               </Markdown>
             </li>
