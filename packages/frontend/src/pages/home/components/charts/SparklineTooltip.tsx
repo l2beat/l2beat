@@ -13,10 +13,16 @@ export function SparklineTooltip({
   formatValue,
   partLabels,
   weeklyAverage,
+  width,
 }: CustomChartTooltipProps & {
   formatValue: (value: number) => string
   partLabels: string[] | undefined
   weeklyAverage: boolean | undefined
+  /**
+   * The whole width, padding included, set by the chart so it can keep the
+   * tooltip inside its plot (see `PlotBoundTooltip`). Long labels wrap.
+   */
+  width: number
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -40,7 +46,10 @@ export function SparklineTooltip({
   ]
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-50 flex-col gap-2 sm:w-60">
+      <div
+        className="flex flex-col gap-2"
+        style={{ width: width - WRAPPER_PADDING }}
+      >
         <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {weeklyAverage
             ? formatRange(label, label + WEEK_DAYS * UnixTime.DAY)
@@ -73,3 +82,6 @@ export function SparklineTooltip({
     </ChartTooltipWrapper>
   )
 }
+
+/** `ChartTooltipWrapper`'s p-3, on both sides. */
+const WRAPPER_PADDING = 24

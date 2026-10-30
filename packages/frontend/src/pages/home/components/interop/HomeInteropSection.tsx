@@ -84,9 +84,10 @@ function Content({ className }: { className?: string }) {
         link={{ href: '/interop/summary', label: 'Dashboard' }}
       />
       {/* From lg the section is as tall as the column beside it, its body at
-          least 480px (400px in the page's three columns); from md to lg it
-          has the whole row, so its body is 480px tall. Either way the
-          body is a size container (it never sets the height itself). Roughly
+          least 480px (in the page's three columns 400px, 456px once they are
+          over 1700px); from md to lg it has the whole row, so its body is
+          480px tall. Either way the body is a size container (it never sets
+          the height itself). Roughly
           square, the graph fills it, the largest square it fits with 48px
           spare at either side, and the figures go in the corners its ring
           leaves free; without that spare they run into the ring where the
@@ -95,7 +96,7 @@ function Content({ className }: { className?: string }) {
           figures, the graph as a square (smaller when the height runs out, so
           nothing spills), then as many top protocols as the height left holds.
           Below md it stacks too, the graph a fixed-size square. */}
-      <div className="relative flex home-wide:min-h-[400px] min-w-0 flex-col gap-5 md:max-lg:h-[480px] lg:min-h-[480px] lg:flex-1 lg:basis-0 md:[container:interop-body/size]">
+      <div className="relative flex home-wide:@min-[1700px]/home:min-h-[456px] home-wide:min-h-[400px] min-w-0 flex-col gap-5 md:max-lg:h-[480px] lg:min-h-[480px] lg:flex-1 lg:basis-0 md:[container:interop-body/size]">
         {figures && (
           // Two rows of three on shared tracks, spread from edge to edge: the
           // first column flush left, the last flush right, so the figures

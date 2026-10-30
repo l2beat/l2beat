@@ -48,12 +48,13 @@ export function HomeMandateBanner({ className }: { className?: string }) {
           {/* Medium weight: regular white reads thin on the pink. */}
           <p
             className={cn(
-              'max-w-[62%]',
+              'max-w-[68%]',
               HOME_TEXT.body,
               'text-balance font-medium text-pure-white',
             )}
           >
-            What L2BEAT stands for and how we work.
+            {/* "stands for" stays together when the line wraps. */}
+            What L2BEAT stands{'\u00a0'}for and how we work.
           </p>
         </div>
       </a>

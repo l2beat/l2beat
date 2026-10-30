@@ -1,5 +1,13 @@
-import { useMemo } from 'react'
-import { AreaChart, ReferenceDot, ReferenceLine, XAxis, YAxis } from 'recharts'
+import { type ComponentProps, useMemo } from 'react'
+import {
+  AreaChart,
+  ReferenceDot,
+  ReferenceLine,
+  useActiveTooltipCoordinate,
+  usePlotArea,
+  XAxis,
+  YAxis,
+} from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import { ChartContainer, ChartTooltip } from '~/components/core/chart/Chart'
 import { ChartTintedArea } from '~/components/core/chart/ChartTintedArea'
@@ -153,15 +161,10 @@ export function HomeSparkline({
                 stroke="none"
               />
             )}
-            <ChartTooltip
-              content={
-                <SparklineTooltip
-                  formatValue={formatValue}
-                  partLabels={partLabels}
-                  weeklyAverage={weeklyAverage}
-                />
-              }
-              filterNull={false}
+            <PlotBoundTooltip
+              formatValue={formatValue}
+              partLabels={partLabels}
+              weeklyAverage={weeklyAverage}
             />
           </AreaChart>
         </ChartContainer>
@@ -169,6 +172,47 @@ export function HomeSparkline({
     </div>
   )
 }
+
+/**
+ * The tooltip beside the cursor, on the side with more room, from the plot's
+ * top and never past its sides: the figure beside the chart and the low
+ * label under it stay readable. It is as wide as the plot allows, up to
+ * 240px; where neither side of the cursor has room it covers the cursor line.
+ * Recharts can only flip a tooltip to the other side, which on a narrow plot
+ * still runs it off.
+ */
+function PlotBoundTooltip(
+  props: Omit<ComponentProps<typeof SparklineTooltip>, 'width'>,
+) {
+  const coordinate = useActiveTooltipCoordinate()
+  const plot = usePlotArea()
+  if (!plot) {
+    return null
+  }
+  const width = Math.min(MAX_TOOLTIP_WIDTH, plot.width)
+  const x =
+    coordinate &&
+    Math.min(
+      Math.max(
+        coordinate.x > plot.x + plot.width / 2
+          ? coordinate.x - width - TOOLTIP_OFFSET
+          : coordinate.x + TOOLTIP_OFFSET,
+        plot.x,
+      ),
+      plot.x + plot.width - width,
+    )
+  return (
+    <ChartTooltip
+      content={<SparklineTooltip {...props} width={width} />}
+      filterNull={false}
+      offset={TOOLTIP_OFFSET}
+      position={x === undefined ? undefined : { x, y: plot.y }}
+    />
+  )
+}
+
+const TOOLTIP_OFFSET = 16
+const MAX_TOOLTIP_WIDTH = 240
 
 /** Recharts' grid layer: guide lines go under the series, not across it. */
 const BEHIND_SERIES = -100

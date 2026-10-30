@@ -4,9 +4,13 @@
 /* Three columns once the page is wide enough that two would stretch every
    card: the banners in a row, the domains side by side with Ethereum and the
    articles under it, then interop across two columns beside new research.
-   Each card names its area (`home-wide:[grid-area:…]`). */
+   Each card names its area (`home-wide:[grid-area:…]`). From 1560px each
+   column is about 510px, where the banners still keep their text short. The
+   home layout's padding steps down to 24px at the same width (1880px of
+   window), so at 1920 the rankings keep their 480px tier (Vol 30d, UOPS) even
+   beside a scrollbar. */
 @custom-variant home-wide {
-  @container home (width >= 1400px) {
+  @container home (width >= 1560px) {
     @slot;
   }
 }

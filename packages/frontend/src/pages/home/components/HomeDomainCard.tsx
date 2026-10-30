@@ -25,10 +25,11 @@ export function HomeDomainCard({
 }) {
   return (
     // 24px between the parts, 32px above the ranking: it is a block of its
-    // own, not a caption to the charts.
+    // own, not a caption to the charts. Beside the articles card
+    // (`home-wide`) the ranking's title lines up with the articles' title.
     <HomeCard
       className={cn(
-        'row-span-3 grid min-w-0 grid-rows-subgrid gap-6 [&>:nth-child(3)]:mt-2',
+        'row-span-3 grid min-w-0 grid-rows-subgrid gap-6 [&>:nth-child(3)]:mt-2 home-wide:[&>:nth-child(3)]:mt-6',
         className,
       )}
     >
@@ -42,12 +43,13 @@ export function HomeDomainCard({
  * Two KPIs side by side, set apart by space alone; one under the other where
  * the side-by-side tiles would be too narrow (see `kpi-rows`). Stacked, the
  * two share their columns, so both charts start where the wider figure ends,
- * and at least 6rem in, so they line up across the cards too.
+ * and at least 7.5rem in, wider than any figure, so they line up across the
+ * cards too.
  */
 export function HomeKpiRow({ children }: { children: ReactNode }) {
   return (
     <div className="@container/kpis min-w-0">
-      <div className="grid grid-cols-2 kpi-rows:grid-cols-[minmax(6rem,auto)_minmax(0,1fr)] gap-6 lg:gap-x-8">
+      <div className="grid grid-cols-2 kpi-rows:grid-cols-[minmax(7.5rem,auto)_minmax(0,1fr)] gap-6 lg:gap-x-8">
         {children}
       </div>
     </div>

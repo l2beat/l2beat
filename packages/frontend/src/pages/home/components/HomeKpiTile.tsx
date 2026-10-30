@@ -35,7 +35,8 @@ export function HomeKpiTile({
   const hasChange = change !== undefined && Number.isFinite(change)
   return (
     <div className="kpi-rows:col-span-2 grid min-w-0 grid-cols-1 kpi-rows:grid-cols-subgrid kpi-rows:items-center gap-y-4">
-      <div className="flex min-w-0 flex-col">
+      {/* Positioned, so a stacked accessory can hang under it. */}
+      <div className="relative flex min-w-0 flex-col">
         <span
           className={cn(
             'flex min-w-0 items-baseline gap-x-1.5',
@@ -43,7 +44,9 @@ export function HomeKpiTile({
           )}
         >
           <span className="truncate">{label}</span>
-          {/* Beside a chart the label's column has no room to spare. */}
+          {/* Beside a chart the label's column has no room to spare: there
+              it hangs under the change, out of the flow, so this figure
+              centres on the chart like the figures beside it. */}
           {labelAccessory && (
             <span className="flex kpi-rows:hidden shrink-0 gap-x-1.5 tabular-nums">
               <span aria-hidden>·</span>
@@ -69,6 +72,16 @@ export function HomeKpiTile({
             </span>
           )}
         </span>
+        {labelAccessory && (
+          <span
+            className={cn(
+              'kpi-rows:absolute kpi-rows:top-full kpi-rows:left-0 kpi-rows:mt-2 kpi-rows:block hidden tabular-nums',
+              HOME_TEXT.meta,
+            )}
+          >
+            {labelAccessory}
+          </span>
+        )}
       </div>
       {chart}
     </div>
