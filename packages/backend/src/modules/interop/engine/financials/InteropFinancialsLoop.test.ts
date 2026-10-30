@@ -628,6 +628,234 @@ describe(InteropFinancialsLoop.name, () => {
       ])
     })
 
+    it('keeps token identity and amount when the price is missing', async () => {
+      const srcToken = DeployedTokenId.from(
+        'ethereum',
+        EthereumAddress.random(),
+      )
+
+      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+        getClosestPricesAtOrBefore: mockPrices(new Map()),
+      })
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getUnprocessed: mockFn().resolvesTo([
+          {
+            transferId: 'msg1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
+            srcRawAmount: BigInt('1000000000000000000'),
+            dstChain: 'arbitrum',
+          },
+        ]),
+        updateManyFinancials: mockFn().resolvesTo(undefined),
+      })
+      const db = mockObject<Database>({
+        interopRecentPrices,
+        interopTransfer,
+      })
+
+      const tokenDb = mockObject<TokenDbClient>({
+        deployedTokens: {
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'ethereum',
+                  address: DeployedTokenId.address(srcToken),
+                  symbol: 'TOK',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: 'src-abstract-id',
+                  coingeckoId: 'token',
+                  isPriceUnreliable: false,
+                },
+              },
+            ]),
+          },
+        },
+      } as any)
+
+      const service = new InteropFinancialsLoop(
+        [
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
+        ],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        { intervalMs: 1000 },
+      )
+
+      await service.run()
+
+      expect(interopTransfer.updateManyFinancials).toHaveBeenCalledWith([
+        {
+          id: 'msg1',
+          update: {
+            srcAbstractTokenId: 'src-abstract-id',
+            srcSymbol: 'TOK',
+            srcPrice: null,
+            srcAmount: 1,
+            srcValueUsd: null,
+            dstAbstractTokenId: null,
+            dstSymbol: null,
+            dstPrice: null,
+            dstAmount: null,
+            dstValueUsd: null,
+          },
+        },
+      ])
+    })
+
+    it('values sides without a price at their own time at the transfer timestamp', async () => {
+      const srcToken = DeployedTokenId.from('optimism', 'native')
+      const dstToken = DeployedTokenId.from('ethereum', 'native')
+      const timestamp = UnixTime(30 * UnixTime.DAY)
+      const srcTime = UnixTime(timestamp - 8 * UnixTime.DAY)
+
+      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+        getClosestPricesAtOrBefore: mockFn(
+          (requests: InteropRecentPriceRequest[]) =>
+            Promise.resolve(
+              new Map(
+                requests.map((request) => [
+                  request.requestId,
+                  request.timestamp >= timestamp - 7 * UnixTime.DAY
+                    ? 3000
+                    : undefined,
+                ]),
+              ),
+            ),
+        ),
+      })
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getUnprocessed: mockFn().resolvesTo([
+          {
+            transferId: 'withdrawal',
+            timestamp,
+            srcTime,
+            srcChain: 'optimism',
+            srcTokenAddress: 'native',
+            srcRawAmount: BigInt('1000000000000000000'),
+            dstChain: 'ethereum',
+            dstTime: timestamp,
+            dstTokenAddress: 'native',
+            dstRawAmount: BigInt('1000000000000000000'),
+          },
+          {
+            transferId: 'one-sided',
+            timestamp: UnixTime(timestamp + 1),
+            srcTime,
+            srcChain: 'optimism',
+            srcTokenAddress: 'native',
+            srcRawAmount: BigInt('2000000000000000000'),
+            dstChain: 'ethereum',
+          },
+        ]),
+        updateManyFinancials: mockFn().resolvesTo(undefined),
+      })
+      const db = mockObject<Database>({
+        interopRecentPrices,
+        interopTransfer,
+      })
+
+      const tokenDb = mockObject<TokenDbClient>({
+        deployedTokens: {
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'optimism',
+                  address: DeployedTokenId.address(srcToken),
+                  symbol: 'ETH',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: 'ethereum+native',
+                  coingeckoId: 'ethereum',
+                  isPriceUnreliable: false,
+                },
+              },
+              {
+                deployedToken: {
+                  chain: 'ethereum',
+                  address: DeployedTokenId.address(dstToken),
+                  symbol: 'ETH',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: 'ethereum+native',
+                  coingeckoId: 'ethereum',
+                  isPriceUnreliable: false,
+                },
+              },
+            ]),
+          },
+        },
+      } as any)
+
+      const service = new InteropFinancialsLoop(
+        [
+          { id: 'optimism', type: 'evm' as const },
+          { id: 'ethereum', type: 'evm' as const },
+        ],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        { intervalMs: 1000 },
+      )
+
+      await service.run()
+
+      expect(
+        interopRecentPrices.getClosestPricesAtOrBefore,
+      ).toHaveBeenNthCalledWith(
+        2,
+        [
+          {
+            requestId: 2,
+            coingeckoId: 'ethereum',
+            timestamp: UnixTime(timestamp + 1),
+          },
+        ],
+        UnixTime.DAY,
+      )
+      expect(interopTransfer.updateManyFinancials).toHaveBeenCalledWith([
+        {
+          id: 'withdrawal',
+          update: {
+            srcAbstractTokenId: 'ethereum+native',
+            srcSymbol: 'ETH',
+            srcPrice: 3000,
+            srcAmount: 1,
+            srcValueUsd: 3000,
+            dstAbstractTokenId: 'ethereum+native',
+            dstSymbol: 'ETH',
+            dstPrice: 3000,
+            dstAmount: 1,
+            dstValueUsd: 3000,
+          },
+        },
+        {
+          id: 'one-sided',
+          update: {
+            srcAbstractTokenId: 'ethereum+native',
+            srcSymbol: 'ETH',
+            srcPrice: 3000,
+            srcAmount: 2,
+            srcValueUsd: 6000,
+            dstAbstractTokenId: null,
+            dstSymbol: null,
+            dstPrice: null,
+            dstAmount: null,
+            dstValueUsd: null,
+          },
+        },
+      ])
+    })
+
     it('skips valuation and notifies when price exceeds the configured threshold', async () => {
       const srcToken = DeployedTokenId.from(
         'ethereum',
