@@ -103,6 +103,9 @@ export const wbeth: BaseProject = {
       type: 'wbeth',
       wBETH: discovery.getContract('wBETH').address,
       unwrapToken: discovery.getContract('UnwrapTokenV1ETH').address,
+      // Its pools were never deep, and have been empty since 2026; Binance
+      // redeems off-chain.
+      marketQuotes: [],
     },
     risks: {
       minting: {

@@ -19,6 +19,12 @@ export async function getLiquidStakingConfig(
         project.liquidStaking.contracts,
       ),
       projectId: project.id,
+      sinceTimestamp: UnixTime(
+        Math.max(
+          SINCE_TIMESTAMP,
+          project.liquidStaking.sinceTimestamp ?? SINCE_TIMESTAMP,
+        ),
+      ),
       contracts: project.liquidStaking.contracts,
     }))
 

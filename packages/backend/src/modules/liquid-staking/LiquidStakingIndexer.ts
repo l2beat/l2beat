@@ -12,7 +12,7 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../tools/uif/multi/types'
-import { decodeUint, getLiquidStakingReads } from './liquidStakingReads'
+import { getLiquidStakingReads } from './liquidStakingReads'
 import type { LiquidStakingProjectConfig } from './types'
 
 /** Hours per update, so a long backfill saves its progress as it goes. */
@@ -29,8 +29,8 @@ interface LiquidStakingIndexerDeps
 }
 
 /**
- * Reads every project's token state at the last Ethereum block at or before
- * each full hour, in one multicall per hour.
+ * Reads a project's token state at the last Ethereum block at or before each
+ * full hour, in one multicall per hour.
  */
 export class LiquidStakingIndexer extends ManagedMultiIndexer<LiquidStakingProjectConfig> {
   constructor(
@@ -93,25 +93,29 @@ export class LiquidStakingIndexer extends ManagedMultiIndexer<LiquidStakingProje
         'ethereum',
       )
     const reads = configurations.map((c) =>
-      getLiquidStakingReads(c.properties.contracts),
+      getLiquidStakingReads(c.properties.contracts, blockNumber),
     )
     const responses = await this.$.rpc.multicall(
-      reads.flatMap((r) => r.calls),
+      reads.flatMap((r) => r.reads.map((read) => read.call)),
       blockNumber,
     )
     assert(
-      responses.length === reads.reduce((n, r) => n + r.calls.length, 0),
+      responses.length === reads.reduce((n, r) => n + r.reads.length, 0),
       'Unexpected number of multicall responses',
     )
 
     let offset = 0
     return configurations.map((configuration, i) => {
-      const { calls, toState } = reads[i]
-      const results = responses.slice(offset, offset + calls.length)
-      offset += calls.length
+      const { reads: projectReads, toState } = reads[i]
+      const results = responses.slice(offset, offset + projectReads.length)
+      offset += projectReads.length
       // The multicall allows failures, and a call to an address without code
       // succeeds with no data.
-      if (results.some((r) => !r.success || r.data.length === 0)) {
+      const failed = results.some(
+        (r, j) =>
+          !projectReads[j]?.optional && (!r.success || r.data.length === 0),
+      )
+      if (failed) {
         throw new Error('Liquid staking call reverted', {
           cause: {
             projectId: configuration.properties.projectId,
@@ -125,7 +129,7 @@ export class LiquidStakingIndexer extends ManagedMultiIndexer<LiquidStakingProje
         projectId: configuration.properties.projectId,
         timestamp,
         blockNumber,
-        ...toState(results.map((r) => decodeUint(r.data))),
+        ...toState(results, timestamp),
       }
     })
   }

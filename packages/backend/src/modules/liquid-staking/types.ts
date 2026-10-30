@@ -4,6 +4,8 @@ import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 export interface LiquidStakingProjectConfig {
   configurationId: string
   projectId: ProjectId
+  /** The later of the charts' start and the token's launch. */
+  sinceTimestamp: UnixTime
   contracts: ProjectLiquidStakingContracts
 }
 

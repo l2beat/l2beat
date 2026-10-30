@@ -10,13 +10,19 @@ export interface LiquidStakingSnapshotRecord {
   blockNumber: number
   /** ETH per token, 18 decimals; for Lido per share, i.e. per wstETH. */
   exchangeRate: bigint
-  /** Withdrawal queue counters (Lido, ether.fi). */
+  /** Withdrawal queue counters (Lido, ether.fi), or the unwrap request and allocation counters (wBETH). */
   lastRequestId: number | null
   lastFinalizedRequestId: number | null
-  /** ETH that burning the token pays out at once (Rocket Pool), wei. */
+  /** ETH the protocol pays out at once: burning rETH (Rocket Pool), or the instant redemption (ether.fi), wei. */
   instantExitEth: bigint | null
+  /** The instant exit's fee, basis points. */
+  instantExitFeeBps: number | null
   /** Lock on an onchain redemption (wBETH), seconds. */
   lockTime: number | null
+  /** ETH the best onchain pool pays for 100 tokens, wei; null without a quote. */
+  marketExitEth: bigint | null
+  /** What those tokens are worth at the protocol's rate, wei. */
+  marketExitValueEth: bigint | null
 }
 
 function toRecord(
@@ -26,8 +32,9 @@ function toRecord(
     ...row,
     timestamp: UnixTime.fromDate(row.timestamp),
     exchangeRate: BigInt(row.exchangeRate),
-    instantExitEth:
-      row.instantExitEth === null ? null : BigInt(row.instantExitEth),
+    instantExitEth: toBigInt(row.instantExitEth),
+    marketExitEth: toBigInt(row.marketExitEth),
+    marketExitValueEth: toBigInt(row.marketExitValueEth),
   }
 }
 
@@ -39,7 +46,13 @@ function toRow(
     timestamp: UnixTime.toDate(record.timestamp),
     exchangeRate: record.exchangeRate.toString(),
     instantExitEth: record.instantExitEth?.toString() ?? null,
+    marketExitEth: record.marketExitEth?.toString() ?? null,
+    marketExitValueEth: record.marketExitValueEth?.toString() ?? null,
   }
+}
+
+function toBigInt(value: string | null): bigint | null {
+  return value === null ? null : BigInt(value)
 }
 
 export class LiquidStakingSnapshotRepository extends BaseRepository {
@@ -59,7 +72,10 @@ export class LiquidStakingSnapshotRepository extends BaseRepository {
             lastRequestId: eb.ref('excluded.lastRequestId'),
             lastFinalizedRequestId: eb.ref('excluded.lastFinalizedRequestId'),
             instantExitEth: eb.ref('excluded.instantExitEth'),
+            instantExitFeeBps: eb.ref('excluded.instantExitFeeBps'),
             lockTime: eb.ref('excluded.lockTime'),
+            marketExitEth: eb.ref('excluded.marketExitEth'),
+            marketExitValueEth: eb.ref('excluded.marketExitValueEth'),
           })),
         )
         .execute()

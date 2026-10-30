@@ -24,16 +24,19 @@ describe(LiquidStakingIndexer.name, () => {
   const rocketpool: LiquidStakingProjectConfig = {
     configurationId: 'aaaaaaaaaaaa',
     projectId: ProjectId('rocketpool'),
+    sinceTimestamp: start,
     contracts: {
       type: 'rocketpool',
       rETH: ChainSpecificAddress(
         'eth:0x1111111111111111111111111111111111111111',
       ),
+      marketQuotes: [],
     },
   }
   const wbeth: LiquidStakingProjectConfig = {
     configurationId: 'bbbbbbbbbbbb',
     projectId: ProjectId('wbeth'),
+    sinceTimestamp: start,
     contracts: {
       type: 'wbeth',
       wBETH: ChainSpecificAddress(
@@ -42,13 +45,14 @@ describe(LiquidStakingIndexer.name, () => {
       unwrapToken: ChainSpecificAddress(
         'eth:0x3333333333333333333333333333333333333333',
       ),
+      marketQuotes: [],
     },
   }
 
   it('reads each hour in one multicall and saves only when asked', async () => {
     const { indexer, snapshots, rpc } = createIndexer(
       [rocketpool, wbeth],
-      [ok(11n), ok(12n), ok(21n), ok(22n)],
+      [ok(11n), ok(12n), ok(21n), ok(22n), ok(24n), ok(23n)],
     )
 
     const save = await indexer.multiUpdate(
@@ -76,7 +80,10 @@ describe(LiquidStakingIndexer.name, () => {
       lastRequestId: null,
       lastFinalizedRequestId: null,
       instantExitEth: 12n,
+      instantExitFeeBps: 0,
       lockTime: null,
+      marketExitEth: null,
+      marketExitValueEth: null,
     })
     expect(records?.[1]?.lockTime).toEqual(22)
   })
