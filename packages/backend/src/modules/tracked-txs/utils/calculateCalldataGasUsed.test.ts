@@ -1,7 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
 
 describe(calculateCalldataGasUsed.name, () => {
+  const blockTimestamp = UnixTime(1746500000)
+
   it('returns standard calldata cost for blocks before Pectra (< 22431084)', () => {
     const blockNumber = 22431083
     const dataLength = 100
@@ -11,6 +14,7 @@ describe(calculateCalldataGasUsed.name, () => {
 
     const result = calculateCalldataGasUsed(
       blockNumber,
+      blockTimestamp,
       dataLength,
       nonZeroBytes,
       gasUsed,
@@ -35,6 +39,7 @@ describe(calculateCalldataGasUsed.name, () => {
 
       const result = calculateCalldataGasUsed(
         blockNumber,
+        blockTimestamp,
         dataLength,
         nonZeroBytes,
         gasUsed,
@@ -55,6 +60,7 @@ describe(calculateCalldataGasUsed.name, () => {
 
       const result = calculateCalldataGasUsed(
         blockNumber,
+        blockTimestamp,
         dataLength,
         nonZeroBytes,
         gasUsed,
@@ -73,6 +79,7 @@ describe(calculateCalldataGasUsed.name, () => {
 
     const result = calculateCalldataGasUsed(
       blockNumber,
+      blockTimestamp,
       dataLength,
       nonZeroBytes,
       gasUsed,
@@ -95,6 +102,7 @@ describe(calculateCalldataGasUsed.name, () => {
 
     const result = calculateCalldataGasUsed(
       blockNumber,
+      blockTimestamp,
       dataLength,
       nonZeroBytes,
       gasUsed,
@@ -107,5 +115,19 @@ describe(calculateCalldataGasUsed.name, () => {
     expect(result).toEqual(
       compute >= 1.5 * standardCalldata ? standardCalldata : 40 * dataLength,
     )
+  })
+
+  it('keeps pre-Glamsterdam rules while Glamsterdam is not scheduled', () => {
+    // Sepolia 0x536648e5…7f1f05 paid the Glamsterdam calldata floor:
+    // 7,674,136 = 15,000 + 64 * 119,674
+    const result = calculateCalldataGasUsed(
+      22431084,
+      UnixTime(4102444800),
+      119_674,
+      119_491,
+      7_674_136,
+    )
+
+    expect(result).toEqual(16 * 119_491 + 4 * 183)
   })
 })

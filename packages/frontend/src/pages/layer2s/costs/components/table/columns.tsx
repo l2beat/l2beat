@@ -159,7 +159,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
           'before:bg-chart-stacked-pink',
         ),
         tooltip:
-          "The transaction gas cost excluding calldata, blobs and the 21'000 intrinsic gas overhead for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
+          'The transaction gas cost excluding calldata, blobs and the intrinsic gas overhead for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
       },
     }),
     columnHelper.accessor((row) => availableCosts(row)?.overhead, {
@@ -186,7 +186,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
           'before:bg-chart-stacked-purple',
         ),
         tooltip:
-          "The cost of the fixed 21'000 intrinsic gas cost per L1 transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
+          "The cost of the intrinsic gas per L1 transaction (21'000 gas, or up to 15'000 after the Glamsterdam upgrade) for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
       },
     }),
 
