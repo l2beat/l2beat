@@ -43,7 +43,7 @@ export function SparklineTooltip({
       <div className="flex w-50 flex-col gap-2 sm:w-60">
         <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {weeklyAverage
-            ? formatRange(label, label + (WEEK_DAYS - 1) * UnixTime.DAY)
+            ? formatRange(label, label + WEEK_DAYS * UnixTime.DAY)
             : formatTimestamp(label)}
         </div>
         {rows.map((row, index) => (
