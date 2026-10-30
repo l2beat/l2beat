@@ -763,6 +763,61 @@ describe('flatten', () => {
     )
   })
 
+  it('renames file-level constants with the same name', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { first } from "./First.sol";
+      import { second } from "./Second.sol";
+      contract R1 {
+        function f() public pure returns (uint256) {
+          return first() + second();
+        }
+      }
+    `,
+    )
+    const firstFile = sol(
+      'First.sol',
+      `
+      uint256 constant LIMIT = 1;
+      function first() pure returns (uint256) { return LIMIT; }
+    `,
+    )
+    const secondFile = sol(
+      'Second.sol',
+      `
+      uint256 constant LIMIT = 2;
+      function second() pure returns (uint256) { return LIMIT; }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'R1',
+      'Root.sol',
+      [rootFile, firstFile, secondFile],
+      [],
+      { includeAll: true },
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      uint256 constant LIMIT = 1;
+
+      function first() pure returns (uint256) { return LIMIT; }
+
+      uint256 constant LIMIT_1 = 2;
+
+      function second() pure returns (uint256) { return LIMIT_1; }
+
+      contract R1 {
+        function f() public pure returns (uint256) {
+          return first() + second();
+        }
+      }
+    `),
+    )
+  })
+
   it('file-level constant referencing a renamed type', () => {
     // Two libraries share the name `Lib`. The file-level constant in
     // Globals.sol references `Lib`, so renameIdentifiers runs on the
