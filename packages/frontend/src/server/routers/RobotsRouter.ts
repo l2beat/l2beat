@@ -18,6 +18,9 @@ const PRODUCTION_RULES = [
  */
 const CONTENT_SIGNAL = 'Content-Signal: ai-train=yes, search=yes, ai-input=yes'
 
+/** Named so they are welcome explicitly, not only through `*`. */
+const AI_CRAWLERS = ['GPTBot', 'OAI-SearchBot', 'ClaudeBot', 'PerplexityBot']
+
 export function createRobotsRouter(deploymentEnv: DeploymentEnv) {
   const router = express.Router()
   const body = getRobotsTxtBody(deploymentEnv)
@@ -32,17 +35,20 @@ export function createRobotsRouter(deploymentEnv: DeploymentEnv) {
 const DISALLOW_EVERYTHING = 'User-agent: *\nDisallow: /\n'
 
 /**
- * One `*` group for every crawler, AI ones included. A group naming a crawler
- * makes it ignore `*`, so add one only when a bot needs different rules.
+ * One group for every crawler. The AI crawlers are named in the `*` group
+ * rather than given their own: a crawler obeys only the group naming it, so a
+ * separate group would need the rules repeated.
  */
 function getRobotsTxtBody(deploymentEnv: DeploymentEnv): string {
   if (deploymentEnv !== 'production') {
     return DISALLOW_EVERYTHING
   }
 
-  const group = ['User-agent: *', CONTENT_SIGNAL, ...PRODUCTION_RULES].join(
-    '\n',
-  )
+  const group = [
+    ...[...AI_CRAWLERS, '*'].map((agent) => `User-agent: ${agent}`),
+    CONTENT_SIGNAL,
+    ...PRODUCTION_RULES,
+  ].join('\n')
   const sitemap = `Sitemap: ${PRODUCTION_ORIGIN}/sitemap.xml`
 
   return `${group}\n\n${sitemap}\n`

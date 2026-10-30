@@ -87,6 +87,8 @@ const SERVER_CONFIG = {
     .optional(),
   INTEROP_CHAINS: stringArray.optional(),
   INTEROP_UPCOMING_CHAINS: stringArray.optional(),
+  // Another name the organization is known by, for the home page JSON-LD.
+  ORGANIZATION_ALTERNATE_NAME: z.string().optional(),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -148,6 +150,7 @@ function getRawEnv(): Record<
     LOG_LEVEL: process.env.LOG_LEVEL,
     INTEROP_CHAINS: process.env.INTEROP_CHAINS,
     INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
+    ORGANIZATION_ALTERNATE_NAME: process.env.ORGANIZATION_ALTERNATE_NAME,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
