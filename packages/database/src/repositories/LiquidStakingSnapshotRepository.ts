@@ -19,6 +19,10 @@ export interface LiquidStakingSnapshotRecord {
   instantExitFeeBps: number | null
   /** Lock on an onchain redemption (wBETH), seconds. */
   lockTime: number | null
+  /** ETH the best onchain pool pays for 100 tokens, wei; null without a quote. */
+  marketExitEth: bigint | null
+  /** What those tokens are worth at the protocol's rate, wei. */
+  marketExitValueEth: bigint | null
 }
 
 function toRecord(
@@ -28,8 +32,9 @@ function toRecord(
     ...row,
     timestamp: UnixTime.fromDate(row.timestamp),
     exchangeRate: BigInt(row.exchangeRate),
-    instantExitEth:
-      row.instantExitEth === null ? null : BigInt(row.instantExitEth),
+    instantExitEth: toBigInt(row.instantExitEth),
+    marketExitEth: toBigInt(row.marketExitEth),
+    marketExitValueEth: toBigInt(row.marketExitValueEth),
   }
 }
 
@@ -41,7 +46,13 @@ function toRow(
     timestamp: UnixTime.toDate(record.timestamp),
     exchangeRate: record.exchangeRate.toString(),
     instantExitEth: record.instantExitEth?.toString() ?? null,
+    marketExitEth: record.marketExitEth?.toString() ?? null,
+    marketExitValueEth: record.marketExitValueEth?.toString() ?? null,
   }
+}
+
+function toBigInt(value: string | null): bigint | null {
+  return value === null ? null : BigInt(value)
 }
 
 export class LiquidStakingSnapshotRepository extends BaseRepository {
@@ -63,6 +74,8 @@ export class LiquidStakingSnapshotRepository extends BaseRepository {
             instantExitEth: eb.ref('excluded.instantExitEth'),
             instantExitFeeBps: eb.ref('excluded.instantExitFeeBps'),
             lockTime: eb.ref('excluded.lockTime'),
+            marketExitEth: eb.ref('excluded.marketExitEth'),
+            marketExitValueEth: eb.ref('excluded.marketExitValueEth'),
           })),
         )
         .execute()

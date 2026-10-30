@@ -324,6 +324,10 @@ model LiquidStakingSnapshot {
   instantExitFeeBps      Int?
   /// Lock on an onchain redemption (wBETH), seconds.
   lockTime               Int?
+  /// ETH the best onchain pool pays for 100 tokens, wei; null without a quote.
+  marketExitEth          Decimal? @db.Decimal(80, 0)
+  /// What those tokens are worth at the protocol's rate, wei.
+  marketExitValueEth     Decimal? @db.Decimal(80, 0)
 
   @@id([configurationId, timestamp])
   @@index([projectId, timestamp])
