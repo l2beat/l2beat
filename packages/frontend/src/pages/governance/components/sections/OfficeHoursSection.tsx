@@ -7,7 +7,7 @@ export function OfficeHoursSection() {
   return (
     <GovernanceCard
       mobileFull
-      type="purple"
+      type="brand"
       className="flex flex-col justify-between lg:col-span-3"
     >
       <div className="flex flex-col gap-4">

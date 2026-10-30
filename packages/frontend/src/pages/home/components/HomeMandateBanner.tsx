@@ -15,7 +15,7 @@ const MANDATE_HREF = '/about-us'
  * The mandate itself is drawn in the corner, flat like the garden beside it:
  * a charter signed with L2BEAT's heartbeat and sealed with its heart.
  */
-export function HomeMandateBanner({ className }: { className?: string }) {
+export function HomeMandateBanner() {
   return (
     // The page's one block of colour.
     <HomeCard
@@ -23,8 +23,7 @@ export function HomeMandateBanner({ className }: { className?: string }) {
       // Deeper at the bottom, so the rule runs clear of the text.
       className={cn(
         HOME_BANNER_CLASS,
-        'bg-accent pb-7 text-on-accent [--charter-w:6rem] md:pb-8 lg:[--charter-w:7rem] xl:[--charter-w:8rem]',
-        className,
+        'bg-brand pb-7 text-pure-white [--charter-w:6rem] md:pb-8 lg:[--charter-w:7rem] xl:[--charter-w:8rem]',
       )}
     >
       <a href={MANDATE_HREF}>
@@ -33,7 +32,7 @@ export function HomeMandateBanner({ className }: { className?: string }) {
             on. */}
         <span
           aria-hidden
-          className="absolute left-0 bg-on-accent"
+          className="absolute left-0 bg-pure-white"
           style={RULE_STYLE}
         />
         {/* Lifts toward the reader on hover, as if picked up. Smaller below
@@ -50,7 +49,7 @@ export function HomeMandateBanner({ className }: { className?: string }) {
             className={cn(
               'max-w-[62%]',
               HOME_TEXT.body,
-              'text-balance font-medium text-on-accent',
+              'text-balance font-medium text-pure-white',
             )}
           >
             What L2BEAT stands for and how we work.
@@ -137,14 +136,14 @@ function MandateCharter({ className }: { className?: string }) {
         strokeWidth="3.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="stroke-accent"
+        className="stroke-brand"
         style={{
           strokeDasharray: 1,
           animation: 'mandate-sign 0.9s ease-out 0.4s both',
         }}
       />
       {/* The seal: the heart of the logo. */}
-      <circle cx="134" cy="132" r="17" className="fill-accent" />
+      <circle cx="134" cy="132" r="17" className="fill-brand" />
       <path
         d={HEART}
         transform="translate(123 121) scale(0.92)"

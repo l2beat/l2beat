@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import { cn } from '~/utils/cn'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 
@@ -11,7 +10,6 @@ import { HomeCardHeader } from './HomeCardHeader'
 export function HomeDomainCard({
   title,
   link,
-  className,
   children,
 }: {
   title: string
@@ -20,18 +18,12 @@ export function HomeDomainCard({
    * everything we track.
    */
   link: { href: string; label: string }
-  className?: string
   children: ReactNode
 }) {
   return (
-    <HomeCard
-      className={cn(
-        // 24px between the parts, 32px above the ranking: it is a block of
-        // its own, not a caption to the charts.
-        'row-span-3 grid min-w-0 grid-rows-subgrid gap-6 [&>:nth-child(3)]:mt-2',
-        className,
-      )}
-    >
+    // 24px between the parts, 32px above the ranking: it is a block of its
+    // own, not a caption to the charts.
+    <HomeCard className="row-span-3 grid min-w-0 grid-rows-subgrid gap-6 [&>:nth-child(3)]:mt-2">
       <HomeCardHeader title={title} link={link} />
       {children}
     </HomeCard>
@@ -44,15 +36,9 @@ export function HomeDomainCard({
  * two share their columns, so both charts start where the wider figure ends,
  * and at least 6rem in, so they line up across the cards too.
  */
-export function HomeKpiRow({
-  className,
-  children,
-}: {
-  className?: string
-  children: ReactNode
-}) {
+export function HomeKpiRow({ children }: { children: ReactNode }) {
   return (
-    <div className={cn('@container/kpis min-w-0', className)}>
+    <div className="@container/kpis min-w-0">
       <div className="grid grid-cols-2 kpi-rows:grid-cols-[minmax(6rem,auto)_minmax(0,1fr)] gap-6 lg:gap-x-8">
         {children}
       </div>

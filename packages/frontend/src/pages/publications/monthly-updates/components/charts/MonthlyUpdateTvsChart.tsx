@@ -1,7 +1,7 @@
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { Area, AreaChart } from 'recharts'
+import { AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -12,7 +12,7 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
+import { ChartTintedArea } from '~/components/core/chart/ChartTintedArea'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -78,11 +78,9 @@ export function MonthlyUpdateTvsChart({
           className="h-44! min-h-44!"
           margin={{ top: 20 }}
         >
-          <Area
+          <ChartTintedArea
             dataKey="value"
-            fill="var(--project-primary)"
-            fillOpacity={AREA_FILL_OPACITY}
-            stroke="var(--project-primary)"
+            color="var(--project-primary)"
             isAnimationActive={false}
           />
           <ChartCommonComponents

@@ -8,7 +8,7 @@ import { HomeCardHeader } from './HomeCardHeader'
 export function HomeQuestionCard() {
   return (
     // In ink, closing the page as the pink mandate opens it.
-    <HomeCard className="inverted flex flex-col gap-4 text-primary md:flex-row md:items-center md:justify-between md:gap-8">
+    <HomeCard className="home-inverted flex flex-col gap-4 text-primary md:flex-row md:items-center md:justify-between md:gap-8">
       <div className="flex flex-col gap-1.5">
         <HomeCardHeader title="Have a question?" />
         <p className={HOME_TEXT.body}>

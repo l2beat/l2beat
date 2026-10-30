@@ -80,8 +80,7 @@ interface FlowsStats {
   topRoute: { srcChain: string; dstChain: string; volume: number } | undefined
   topChain: FlowChain | undefined
   topToken: FlowToken | undefined
-  topProtocol: FlowProtocol | undefined
-  /** Busiest first; the home page lists them under its interop graph. */
+  /** Busiest first. */
   topProtocols: FlowProtocol[]
 }
 
@@ -133,7 +132,6 @@ export async function getInteropFlows(
         topRoute: undefined,
         topChain: undefined,
         topToken: undefined,
-        topProtocol: undefined,
         topProtocols: [],
       },
     }
@@ -306,7 +304,6 @@ export async function getInteropFlows(
           }
         : undefined,
       topToken,
-      topProtocol: topProtocols[0],
       topProtocols,
     },
   }
@@ -497,7 +494,6 @@ function getMockInteropFlows(): InteropFlowsData {
         iconUrl: '/icons/ethereum.png',
         volume: 1_000_000,
       },
-      topProtocol: MOCK_TOP_PROTOCOLS[0],
       topProtocols: MOCK_TOP_PROTOCOLS,
     },
   }

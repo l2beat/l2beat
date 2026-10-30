@@ -1,4 +1,6 @@
 import { formatInteger } from '@l2beat/shared-pure'
+import type { NavGroup } from '~/components/nav/types'
+import { navGroups } from '~/consts/navGroups'
 import { env } from '~/env'
 import { ChevronIcon } from '~/icons/Chevron'
 import { L2Icon } from '~/icons/pages/L2'
@@ -31,6 +33,32 @@ interface MoreItem {
 /** The charts' pink, so the menu's sections match the cards below. */
 const ICON_CLASS = 'size-5 stroke-chart-pink'
 
+/** The domains the strip shows as tiles, by their nav group's `match`. */
+const TILES: Record<
+  string,
+  { icon: React.ReactNode; count?: (counts: HomeProjectCounts) => number }
+> = {
+  privacy: {
+    icon: <PrivacyIcon className={ICON_CLASS} />,
+    count: (counts) => counts.privacy,
+  },
+  layer2s: {
+    icon: <L2Icon className={ICON_CLASS} />,
+    count: (counts) => counts.l2,
+  },
+  'liquid-staking': {
+    icon: <LiquidStakingIcon className="size-5 stroke-secondary" />,
+  },
+}
+
+/** A group's own page, or its first link's; none while it is not out yet. */
+function getGroupHref(group: NavGroup): string | undefined {
+  if (group.type === 'single') {
+    return group.disabled ? undefined : group.href
+  }
+  return group.links[0]?.[0]?.href
+}
+
 /**
  * The desktop sidebar's menu, for the screens where it hides behind the menu
  * button, in its order: the garden and the domains as tiles, then the rest a
@@ -43,34 +71,26 @@ export function HomeStatsStrip({
   counts: HomeProjectCounts
   className?: string
 }) {
-  const domains: Tile[] = [
-    {
-      label: 'Privacy',
-      metric: { count: counts.privacy, unit: 'projects' },
-      href: '/privacy',
-      icon: <PrivacyIcon className={ICON_CLASS} />,
-    },
-    {
-      label: 'Layer 2s',
-      metric: { count: counts.l2, unit: 'projects' },
-      href: '/layer2s/summary',
-      icon: <L2Icon className={ICON_CLASS} />,
-    },
-    {
-      label: 'Liquid staking',
-      icon: <LiquidStakingIcon className="size-5 stroke-secondary" />,
-    },
-  ]
+  const domains = navGroups.flatMap((group): Tile[] => {
+    const tile = TILES[group.match]
+    if (!tile || group.section === 'more') return []
+    const href = getGroupHref(group)
+    return [
+      {
+        label: group.title,
+        metric: tile.count && { count: tile.count(counts), unit: 'projects' },
+        href,
+        icon: tile.icon,
+      },
+    ]
+  })
 
-  const more: MoreItem[] = [
-    // ZK Catalog is the only Security page out so far.
-    { label: 'Security', href: '/zk-catalog' },
-    { label: 'Interop', href: '/interop/summary' },
-    ...(env.CLIENT_SIDE_TOKENS_PAGE
-      ? [{ label: 'Tokens', href: '/tokens' }]
-      : []),
-    ...(env.CLIENT_SIDE_BLOBS_PAGE ? [{ label: 'Blobs', href: '/blobs' }] : []),
-  ]
+  const more = navGroups.flatMap((group): MoreItem[] => {
+    const href = getGroupHref(group)
+    return group.section === 'more' && href
+      ? [{ label: group.title, href }]
+      : []
+  })
 
   return (
     <HomeCard className={cn('flex flex-col gap-2', className)}>

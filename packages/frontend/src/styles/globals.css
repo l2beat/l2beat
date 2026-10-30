@@ -5,6 +5,7 @@
 @import "./table-scroll.css";
 @import "./sticky-table.css";
 @import "./section-navigation.css";
+@import "./home.css";
 
 @plugin "tailwindcss-animate";
 
@@ -66,112 +67,6 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
-
-/* A home KPI pair (HomeKpiRow) too narrow for two tiles of 230px: each KPI
-   becomes a row, the figure beside a wider, shorter sparkline. */
-@custom-variant kpi-rows {
-  @container kpis (width < 496px) {
-    @slot;
-  }
-}
-
-/* The home interop section's body, a size container from lg (see
-   HomeInteropSection): stacked like on phones when it is clearly taller than
-   wide or too narrow for the corners, otherwise the figures in the corners. */
-@custom-variant interop-stacked {
-  @container interop-body (aspect-ratio <= 4 / 5) or (width <= 500px) {
-    @slot;
-  }
-}
-/* Exactly the opposite, so one of the two always holds. */
-@custom-variant interop-corners {
-  @container interop-body (aspect-ratio > 4 / 5) and (width > 500px) {
-    @slot;
-  }
-}
-
-/* A home list of 40px rows (HOME_ROW_CLASS) that shows as many whole rows as
-   its height holds, up to 15. The rest are dropped, not clipped, so they take
-   no focus and are not read out. Its height must come from its parent: a size
-   container cannot take it from its rows. */
-@utility home-fill-rows {
-  container: home-rows / size;
-  @container home-rows (height < 80px) {
-    & > :nth-child(n + 2) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 120px) {
-    & > :nth-child(n + 3) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 160px) {
-    & > :nth-child(n + 4) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 200px) {
-    & > :nth-child(n + 5) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 240px) {
-    & > :nth-child(n + 6) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 280px) {
-    & > :nth-child(n + 7) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 320px) {
-    & > :nth-child(n + 8) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 360px) {
-    & > :nth-child(n + 9) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 400px) {
-    & > :nth-child(n + 10) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 440px) {
-    & > :nth-child(n + 11) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 480px) {
-    & > :nth-child(n + 12) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 520px) {
-    & > :nth-child(n + 13) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 560px) {
-    & > :nth-child(n + 14) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 600px) {
-    & > :nth-child(n + 15) {
-      display: none;
-    }
-  }
-  @container home-rows (height < 640px) {
-    & > :nth-child(n + 16) {
-      display: none;
-    }
-  }
-}
 
 :root {
   /* Prevent horizontal overscroll on mobile to avoid unwanted scrolling when swiping on charts.
@@ -271,7 +166,6 @@
   /* Chart colors */
   --chart-ethereum: #3387ff;
   --chart-ethereum-secondary: #5d82cf;
-  --chart-pink: #ff3776;
   --chart-cyan: #40cbe3;
   --chart-yellow: #e7c34e;
   --chart-emerald: #0ce97e;
@@ -296,9 +190,6 @@
   --divider: rgb(13 12 12 / 0.14);
   --link: #d4114f;
   --link-stroke: #f7c3d3;
-  /* The page's one block of colour, and text on it. */
-  --accent: #ff3776;
-  --on-accent: #ffffff;
   /* Axis labels: a step lighter than secondary text, still 4.5:1 on the
      white cards. */
   --muted: #707581;
@@ -319,7 +210,7 @@
 }
 
 /* A block in the other theme's colours. */
-.home-theme .inverted {
+.home-theme .home-inverted {
   --primary: #fafafa;
   --secondary: #abb1c1;
   --surface-primary: #131215;
@@ -329,10 +220,8 @@
 
 /* In the dark, a step up instead: a full-width light block would outshine
    everything above it. */
-.dark .home-theme .inverted,
-.dark.home-theme .inverted {
-  --primary: #fafafa;
-  --secondary: #abb1c1;
+.dark .home-theme .home-inverted,
+.dark.home-theme .home-inverted {
   --surface-primary: #33384b;
   --surface-secondary: #4a5069;
   --divider: #4a5069;
@@ -525,18 +414,12 @@
 
   --color-purple-50: #6c57bf;
   --color-purple-100: #7e41cc;
-  --color-purple-300: #f1d6ff;
   --color-purple-450: #c164e3;
   --color-purple-500: #6a008e;
   --color-purple-700: #4a133c;
-  --color-purple-800: #32102a;
 
   --color-pink-100: #ff46c0;
-  --color-pink-200: #db8bf7;
   --color-pink-750: #bc4b51;
-  --color-pink-800: #b94ddf;
-  --color-pink-900: #ab3bd2;
-  --color-n-pink-350: #ff5ffb;
   --color-n-pink-400: #fc49c2;
 
   --color-green-200: #b0ffaa;
@@ -591,8 +474,6 @@
   --color-n-sky-300: #76cdf9;
   --color-n-sky-500: #2498d6;
 
-  --color-fuchsia-700: #860cb0;
-
   --color-n-cyan-600: #1c8ba4;
 
   --color-lime-650: #61b143;
@@ -631,8 +512,6 @@
   --color-link-stroke: var(--link-stroke);
   --color-chart-ethereum: var(--chart-ethereum);
   --color-chart-pink: var(--chart-pink);
-  --color-accent: var(--accent);
-  --color-on-accent: var(--on-accent);
   --color-chart-fuchsia: var(--chart-fuchsia);
   --color-chart-lime: var(--chart-lime);
   --color-chart-sky: var(--chart-sky);
@@ -1041,16 +920,6 @@
   --garden-moon: #e9e4c8;
   --garden-sky: #0e1830;
   --garden-sprout: #3f6b3a;
-}
-
-/* The heartbeat that signs the mandate on the home page, drawn once. */
-@keyframes mandate-sign {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
 }
 
 /* Referenced from inline styles in CropPlant, CropsBed and the page backdrops.

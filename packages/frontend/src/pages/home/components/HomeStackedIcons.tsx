@@ -1,6 +1,11 @@
 import { cn } from '~/utils/cn'
 import { HOME_ICON_CLASS } from '../homeStyles'
 
+export interface HomeStackedIcon {
+  name: string
+  iconUrl: string
+}
+
 /**
  * Overlapping project icons, the first `max` of them. Always beside a count
  * that says what they are, so the icons themselves are decorative; hover
@@ -9,12 +14,9 @@ import { HOME_ICON_CLASS } from '../homeStyles'
 export function HomeStackedIcons({
   items,
   max,
-  className,
 }: {
-  items: { name: string; iconUrl: string }[]
+  items: HomeStackedIcon[]
   max: number
-  /** For the icons, e.g. a size. */
-  className?: string
 }) {
   const visible = items.slice(0, max)
   return (
@@ -27,7 +29,7 @@ export function HomeStackedIcons({
           title={item.name}
           // White discs with a shadow, so icons drawn on a transparent
           // ground stay apart where they overlap.
-          className={cn(HOME_ICON_CLASS, 'relative bg-white shadow', className)}
+          className={cn(HOME_ICON_CLASS, 'relative bg-white shadow')}
           style={{ zIndex: visible.length - index }}
         />
       ))}

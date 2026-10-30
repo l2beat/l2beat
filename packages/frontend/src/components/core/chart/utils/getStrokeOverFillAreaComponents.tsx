@@ -1,9 +1,10 @@
 import type { ComponentProps } from 'react'
 import { Area } from 'recharts'
-import { AREA_FILL_OPACITY } from './areaFillOpacity'
+import { ChartTintedArea } from '../ChartTintedArea'
 
 interface ChartStrokeOverFillAreaComponentsProps {
-  data: Omit<ComponentProps<typeof Area>, 'ref'>[]
+  /** Each area's fill is a tint of its `stroke`. */
+  data: Omit<ComponentProps<typeof Area>, 'ref' | 'fill' | 'fillOpacity'>[]
 }
 
 /**
@@ -27,12 +28,11 @@ export function ChartStrokeOverFillAreaComponents({
   let index = 0
   for (const props of data) {
     fillComponents.push(
-      <Area
+      <ChartTintedArea
         key={`fill-${index}`}
         isAnimationActive={false}
-        fillOpacity={AREA_FILL_OPACITY}
         {...props}
-        fill={props.stroke}
+        color={props.stroke}
         tooltipType="none"
         legendType="none"
         stroke="none"

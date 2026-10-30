@@ -7,12 +7,19 @@ import {
   type PrivacySummaryEntry,
 } from '../privacy/getPrivacySummaryEntries'
 import { getTvsChartByProjects } from '../tvs/getTvsChartByProjects'
-import { computeSeriesChange } from './computeSeriesChange'
+import {
+  computeRangeTotal,
+  computeSeriesChange,
+  EMPTY_HOME_KPI,
+  getLatestValue,
+  type HomeKpi,
+  type HomeSeriesPoint,
+} from './homeSeries'
 
 const TOP_PROTOCOLS_COUNT = 5
 
 /** Carries what the privacy rosette needs, so the card can show it per row. */
-export interface HomePrivacyTopProtocol
+interface HomePrivacyTopProtocol
   extends Pick<PrivacySummaryEntry, 'adversaries' | 'isUnderReview'> {
   id: string
   name: string
@@ -27,17 +34,19 @@ export interface HomePrivacyTopProtocol
 }
 
 export interface HomePrivacyData {
-  tvl: {
-    chart: [timestamp: number, value: number | null][]
-    change: number | undefined
-  }
-  deposits: {
-    chart: [timestamp: number, count: number, valueUsd: number][]
-    totalValueUsd: number
-    /** Against the same length of time before the chart's. */
-    change: number | undefined
-  }
+  tvl: HomeKpi
+  /**
+   * Value deposited; the figure is the total over the range, its change
+   * against the same length of time before it.
+   */
+  deposits: HomeKpi
   topProtocols: HomePrivacyTopProtocol[]
+}
+
+export const EMPTY_HOME_PRIVACY_DATA: HomePrivacyData = {
+  tvl: EMPTY_HOME_KPI,
+  deposits: EMPTY_HOME_KPI,
+  topProtocols: [],
 }
 
 export async function getHomePrivacyData(
@@ -73,7 +82,7 @@ export async function getHomePrivacyData(
   ])
 
   const tvl = tvlChart.chart.map(
-    ([timestamp, valuesByProject]): [number, number | null] => {
+    ([timestamp, valuesByProject]): HomeSeriesPoint => {
       const values = Object.values(valuesByProject).filter(
         (value): value is number => value !== null,
       )
@@ -85,34 +94,26 @@ export async function getHomePrivacyData(
   )
 
   const flows = flowsChart.chart.map(
-    ([timestamp, depositsCount, , depositsValueUsd]): [
-      number,
-      number,
-      number,
-    ] => [timestamp, depositsCount, depositsValueUsd],
+    ([timestamp, , , depositsValueUsd]): [number, number] => [
+      timestamp,
+      depositsValueUsd,
+    ],
   )
   const deposits = flows.filter(
     ([timestamp]) => from === null || timestamp >= from,
   )
-  const depositsTotal = sumDeposits(deposits)
-  // Only against a range the chart covers in full, so a short history does
-  // not read as growth.
-  const previousTotal =
-    previousFrom !== null &&
-    from !== null &&
-    (flows[0]?.[0] ?? from) <= previousFrom
-      ? sumDeposits(flows.filter(([timestamp]) => timestamp < from))
-      : 0
+  const { total, change } = computeRangeTotal(flows, from, previousFrom)
 
   return {
     tvl: {
       chart: tvl,
-      change: computeSeriesChange(tvl.map(([, value]) => value)),
+      value: getLatestValue(tvl),
+      change: computeSeriesChange(tvl),
     },
     deposits: {
       chart: deposits,
-      totalValueUsd: depositsTotal,
-      change: previousTotal > 0 ? depositsTotal / previousTotal - 1 : undefined,
+      value: deposits.length > 0 ? total : undefined,
+      change,
     },
     // The /privacy order: privacy rating first, value locked after.
     topProtocols: entries.slice(0, TOP_PROTOCOLS_COUNT).map((entry) => ({
@@ -127,8 +128,4 @@ export async function getHomePrivacyData(
       isUnderReview: entry.isUnderReview,
     })),
   }
-}
-
-function sumDeposits(points: [number, number, number][]): number {
-  return points.reduce((acc, [, , valueUsd]) => acc + valueUsd, 0)
 }

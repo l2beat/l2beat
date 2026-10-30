@@ -1,6 +1,6 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { type ComponentProps, useEffect } from 'react'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -8,23 +8,16 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
 import type { HomePrivacyData } from '~/server/features/home/getHomePrivacyData'
-import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
-import type { InteropFlowsProtocol } from '../interop/components/flows/utils/InteropFlowsContext'
 import { HomeCropsBanner } from './components/HomeCropsBanner'
 import { HomeEthereumCard } from './components/HomeEthereumCard'
-import { HomeInteropSection } from './components/HomeInteropSection'
 import { HomeL2Card } from './components/HomeL2Card'
 import { HomeMandateBanner } from './components/HomeMandateBanner'
 import { HomePrivacyCard } from './components/HomePrivacyCard'
 import { HomeQuestionCard } from './components/HomeQuestionCard'
+import { HomeRecentColumn } from './components/HomeRecentColumn'
+import type { HomeStackedIcon } from './components/HomeStackedIcons'
 import { HomeStatsStrip } from './components/HomeStatsStrip'
-import {
-  HomeLatestArticlesSection,
-  HomeProjectChangesSection,
-  type HomeRecentChangesProject,
-  HomeWhatsNewProjects,
-} from './components/HomeWhatsNewSection'
-import type { HomeCropsProject } from './getHomeCropsProjects'
+import { HomeInteropSection } from './components/interop/HomeInteropSection'
 import type { HomeRecentProject, HomeTopL2Project } from './getHomeData'
 import type { HomeProjectCounts } from './getHomeProjectCounts'
 import type { HomeResearchItem } from './getHomeResearch'
@@ -32,17 +25,14 @@ import type { HomeResearchItem } from './getHomeResearch'
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   projectCounts: HomeProjectCounts
-  cropsProjects: HomeCropsProject[]
+  cropsProjects: HomeStackedIcon[]
   l2Charts: HomeL2Charts
   topL2Projects: HomeTopL2Project[]
   privacy: HomePrivacyData
   ethereumCharts: HomeEthereumCharts
-  interopFlowChains: InteropChainWithIcon[]
-  interopDefaultFlowChains: string[]
-  flowProtocols: InteropFlowsProtocol[]
+  interop: ComponentProps<typeof HomeInteropSection>
   recentProjects: HomeRecentProject[]
-  recentChangesCount: number
-  recentChangesProjects: HomeRecentChangesProject[]
+  recentChanges: { count: number; projects: HomeStackedIcon[] }
   research: HomeResearchItem[]
 }
 
@@ -54,12 +44,9 @@ export function HomePage({
   topL2Projects,
   privacy,
   ethereumCharts,
-  interopFlowChains,
-  interopDefaultFlowChains,
-  flowProtocols,
+  interop,
   recentProjects,
-  recentChangesCount,
-  recentChangesProjects,
+  recentChanges,
   research,
   ...props
 }: Props) {
@@ -119,35 +106,13 @@ export function HomePage({
               <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-2">
                 <div className="flex min-w-0 flex-col max-lg:contents md:gap-4">
                   <HomeEthereumCard charts={ethereumCharts} />
-                  {/* Two columns once wide enough: articles over project
-                    changes, and new research filling the other column with
-                    as many rows as fit. Stacked, the columns dissolve and
-                    project changes comes last. */}
-                  <div className="@container/recent flex min-w-0 flex-1 flex-col max-lg:order-last">
-                    <div className="flex @min-[560px]/recent:grid min-w-0 flex-1 @min-[560px]/recent:grid-cols-2 flex-col md:gap-4">
-                      <div className="@min-[560px]/recent:flex contents @min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-col @min-[560px]/recent:gap-4">
-                        <HomeLatestArticlesSection
-                          research={research}
-                          className="@min-[560px]/recent:flex-1"
-                        />
-                        <HomeProjectChangesSection
-                          count={recentChangesCount}
-                          projects={recentChangesProjects}
-                          className="@min-[560px]/recent:order-none order-last"
-                        />
-                      </div>
-                      <HomeWhatsNewProjects
-                        projects={recentProjects}
-                        className="@min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-1"
-                      />
-                    </div>
-                  </div>
+                  <HomeRecentColumn
+                    research={research}
+                    recentChanges={recentChanges}
+                    recentProjects={recentProjects}
+                  />
                 </div>
-                <HomeInteropSection
-                  chains={interopFlowChains}
-                  defaultSelectedChains={interopDefaultFlowChains}
-                  protocols={flowProtocols}
-                />
+                <HomeInteropSection {...interop} />
               </div>
               {/* The page's one action, last, across the full width. */}
               <HomeQuestionCard />

@@ -65,6 +65,9 @@ export const HOME_ROW_CLASS = 'h-10'
 export const HOME_ROW_LINES_CLASS =
   '[&>li+li]:shadow-[inset_0_1px_0_var(--divider)]'
 
+/** A row's linked name: underlined while its row (`group`) is hovered. */
+export const HOME_ROW_LINK_CLASS = 'underline-offset-2 group-hover:underline'
+
 /** Every project, chain and token icon on the page. */
 export const HOME_ICON_CLASS = 'size-5 shrink-0 rounded-full'
 

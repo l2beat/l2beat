@@ -26,8 +26,8 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { ChartTintedArea } from '~/components/core/chart/ChartTintedArea'
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
-import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -147,12 +147,10 @@ export function LivenessChart({
           />,
         ])}
 
-        <Area
+        <ChartTintedArea
           dataKey="range"
           isAnimationActive={false}
-          stroke={chartMeta.range.color}
-          fill={chartMeta.range.color}
-          fillOpacity={AREA_FILL_OPACITY}
+          color={chartMeta.range.color}
         />
         <Area
           dataKey="avg"

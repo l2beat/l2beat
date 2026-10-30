@@ -41,7 +41,7 @@ export interface InteropFlowAggregates {
   tokenIds: string[]
 }
 
-/** Enough to fill the home page's list under the interop graph. */
+/** The most protocols `topProtocols` lists. */
 const TOP_PROTOCOLS_COUNT = 15
 
 export function getInteropFlowAggregates(

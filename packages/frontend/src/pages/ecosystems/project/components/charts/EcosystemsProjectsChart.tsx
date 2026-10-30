@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart } from 'recharts'
+import { AreaChart } from 'recharts'
 import type {
   ChartMeta,
   CustomChartTooltipProps,
@@ -13,7 +13,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
+import { ChartTintedArea } from '~/components/core/chart/ChartTintedArea'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { EcosystemMilestone } from '~/server/features/ecosystems/getEcosystemEntry'
@@ -71,11 +71,9 @@ export function EcosystemsProjectsChart({
           className="h-[110px]! min-h-[110px]!"
           margin={{ top: 20 }}
         >
-          <Area
+          <ChartTintedArea
             dataKey="projectCount"
-            fill="var(--ecosystem-primary)"
-            fillOpacity={AREA_FILL_OPACITY}
-            stroke="var(--ecosystem-primary)"
+            color="var(--ecosystem-primary)"
             type="stepAfter"
             isAnimationActive={false}
           />

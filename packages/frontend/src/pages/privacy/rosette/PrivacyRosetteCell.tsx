@@ -1,5 +1,6 @@
 import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
+import { cn } from '~/utils/cn'
 import { getPrivacyAdversaryRosetteValues } from '../adversaries/privacyAdversaryUi'
 import { PrivacyRosetteTrigger } from './PrivacyRosetteTrigger'
 
@@ -8,15 +9,15 @@ interface Props {
   /** The project page. */
   href: string
   isUnderReview: boolean
-  /** The rosette's size, instead of the table's. */
-  className?: string
+  /** For the rosette, e.g. its size. */
+  iconClassName?: string
 }
 
 export function PrivacyRosetteCell({
   adversaries,
   href,
   isUnderReview,
-  className,
+  iconClassName,
 }: Props) {
   const values = getPrivacyAdversaryRosetteValues(adversaries)
   return (
@@ -28,7 +29,7 @@ export function PrivacyRosetteCell({
     >
       <PizzaRosetteIcon
         values={values}
-        className={className ?? 'size-6 md:size-8'}
+        className={cn('size-6 md:size-8', iconClassName)}
         isUnderReview={isUnderReview}
         background={false}
         disableSectionLinking

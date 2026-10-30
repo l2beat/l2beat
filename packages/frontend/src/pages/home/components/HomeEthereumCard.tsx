@@ -1,13 +1,11 @@
-import { formatActivityCount, formatBytes, UnixTime } from '@l2beat/shared-pure'
-import { useMemo } from 'react'
+import { formatActivityCount, formatBytes } from '@l2beat/shared-pure'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { env } from '~/env'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { HOME_CHART_HEIGHT_CLASS, HOME_UNDERLINE_CLASS } from '../homeStyles'
-import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
+import { HOME_UNDERLINE_CLASS } from '../homeStyles'
 import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
@@ -15,41 +13,10 @@ import { HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
 
 /** Ethereum's blob data and activity, a chart pair like every other card's. */
-export function HomeEthereumCard({
-  charts,
-  className,
-}: {
-  charts: HomeEthereumCharts
-  className?: string
-}) {
-  const activityChartData = useMemo<HomeSparklineDataPoint[]>(
-    () =>
-      charts.activity.chart.map(([timestamp, uopsCount]) => ({
-        timestamp,
-        value: uopsCount !== null ? uopsCount / UnixTime.DAY : null,
-      })),
-    [charts.activity.chart],
-  )
-
-  const dataPostedChartData = useMemo<HomeSparklineDataPoint[]>(
-    () => charts.da.chart.map(([timestamp, value]) => ({ timestamp, value })),
-    [charts.da.chart],
-  )
-
-  const totalPosted = useMemo(
-    () =>
-      charts.da.chart.reduce<number | undefined>((acc, [, value]) => {
-        if (value === null) return acc
-        return (acc ?? 0) + value
-      }, undefined),
-    [charts.da.chart],
-  )
-
-  const { pastDayUops } = charts.activity
-  const { trackedShare } = charts.da
-
+export function HomeEthereumCard({ charts }: { charts: HomeEthereumCharts }) {
+  const { activity, da } = charts
   return (
-    <HomeCard className={cn('flex min-w-0 flex-col gap-5', className)}>
+    <HomeCard className="flex min-w-0 flex-col gap-5">
       <HomeCardHeader
         title="Ethereum"
         subtitle={env.CLIENT_SIDE_BLOBS_PAGE && <LiveBlobsLink />}
@@ -59,39 +26,37 @@ export function HomeEthereumCard({
         <HomeKpiTile
           label="Blob data"
           labelAccessory={
-            trackedShare !== undefined &&
-            `${formatPercent(trackedShare)} by L2s`
+            da.trackedShare !== undefined &&
+            `${formatPercent(da.trackedShare)} by L2s`
           }
           {...splitUnit(
-            totalPosted !== undefined ? formatBytes(totalPosted) : undefined,
+            da.value !== undefined ? formatBytes(da.value) : undefined,
           )}
-          change={charts.da.change}
+          change={da.change}
           chart={
             <HomeSparkline
-              data={dataPostedChartData}
+              data={da.chart}
               tooltipLabel="Data posted"
               formatValue={(value) => formatBytes(value)}
               weeklyAverage
               perDay
-              className={HOME_CHART_HEIGHT_CLASS}
             />
           }
         />
         <HomeKpiTile
           label="Activity/UOPS"
           value={
-            pastDayUops !== undefined
-              ? formatActivityCount(pastDayUops)
+            activity.value !== undefined
+              ? formatActivityCount(activity.value)
               : undefined
           }
-          change={charts.activity.change}
+          change={activity.change}
           chart={
             <HomeSparkline
-              data={activityChartData}
+              data={activity.chart}
               tooltipLabel="UOPS"
               formatValue={(value) => `${formatActivityCount(value)} UOPS`}
               weeklyAverage
-              className={HOME_CHART_HEIGHT_CLASS}
             />
           }
         />

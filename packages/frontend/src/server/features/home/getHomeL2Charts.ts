@@ -3,6 +3,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import type { ChartRange } from '~/utils/range/range'
+import { countPerSecond } from '../layer2s/activity/utils/countPerSecond'
 import { getActivityProjects } from '../layer2s/activity/utils/getActivityProjects'
 import { getFullySyncedActivityRange } from '../layer2s/activity/utils/getFullySyncedActivityRange'
 import { getSummedTvsValues } from '../layer2s/tvs/utils/getSummedTvsValues'
@@ -11,19 +12,22 @@ import { createTvsProjectsFilter } from '../layer2s/tvs/utils/projectFilterUtils
 import {
   computeSeriesChange,
   computeWeeklyAverageChange,
-} from './computeSeriesChange'
+  EMPTY_HOME_KPI,
+  getLatestValue,
+  type HomeKpi,
+  type HomeSeriesPoint,
+} from './homeSeries'
 
 export interface HomeL2Charts {
-  tvs: {
-    /** [timestamp, rollups, validiumsAndOptimiums] */
-    chart: [number, number | null, number | null][]
-    change: number | undefined
-  }
-  activity: {
-    /** [timestamp, rollupsUops, validiumsAndOptimiumsUops] */
-    chart: [number, number | null, number | null][]
-    change: number | undefined
-  }
+  /** Each point breaks down into rollups and validiums & optimiums. */
+  tvs: HomeKpi
+  /** UOPS. */
+  activity: HomeKpi
+}
+
+export const EMPTY_HOME_L2_CHARTS: HomeL2Charts = {
+  tvs: EMPTY_HOME_KPI,
+  activity: EMPTY_HOME_KPI,
 }
 
 export async function getHomeL2Charts(
@@ -66,8 +70,22 @@ async function getHomeTvsChart(
     getSummedTvsValues(validiumsAndOptimiums, range, options),
   ])
 
-  const chart = mergeSeriesByTimestamp(rollupValues, validiumAndOptimiumValues)
-  return { chart, change: computeSeriesChange(sumSeries(chart)) }
+  const chart = mergeSeriesByTimestamp(
+    rollupValues,
+    validiumAndOptimiumValues,
+  ).map(
+    ([timestamp, rollups, vAndO]): HomeSeriesPoint => [
+      timestamp,
+      sum(rollups, vAndO),
+      rollups,
+      vAndO,
+    ],
+  )
+  return {
+    chart,
+    value: getLatestValue(chart),
+    change: computeSeriesChange(chart),
+  }
 }
 
 async function getHomeActivityChart(
@@ -104,9 +122,16 @@ async function getHomeActivityChart(
   const chart = mergeSeriesByTimestamp(
     toSeries(rollupEntries),
     toSeries(validiumAndOptimiumEntries),
-  )
+  ).map(([timestamp, rollups, vAndO]): HomeSeriesPoint => {
+    const count = sum(rollups, vAndO)
+    return [timestamp, count !== null ? countPerSecond(count) : null]
+  })
 
-  return { chart, change: computeWeeklyAverageChange(sumSeries(chart)) }
+  return {
+    chart,
+    value: getLatestValue(chart),
+    change: computeWeeklyAverageChange(chart),
+  }
 }
 
 export function mergeSeriesByTimestamp(
@@ -131,12 +156,10 @@ export function mergeSeriesByTimestamp(
 }
 
 /** Rollups and validiums & optimiums together; null where neither has data. */
-function sumSeries(
-  chart: [number, number | null, number | null][],
-): (number | null)[] {
-  return chart.map(([_, rollups, vAndO]) =>
-    rollups !== null || vAndO !== null ? (rollups ?? 0) + (vAndO ?? 0) : null,
-  )
+function sum(rollups: number | null, vAndO: number | null): number | null {
+  return rollups !== null || vAndO !== null
+    ? (rollups ?? 0) + (vAndO ?? 0)
+    : null
 }
 
 function getMockHomeL2Charts(range: ChartRange): HomeL2Charts {
@@ -145,11 +168,13 @@ function getMockHomeL2Charts(range: ChartRange): HomeL2Charts {
 
   return {
     tvs: {
-      chart: timestamps.map((timestamp) => [+timestamp, 3000, 2000]),
+      chart: timestamps.map((timestamp) => [+timestamp, 5000, 3000, 2000]),
+      value: 5000,
       change: 0,
     },
     activity: {
-      chart: timestamps.map((timestamp) => [+timestamp, 14000, 10000]),
+      chart: timestamps.map((timestamp) => [+timestamp, countPerSecond(24000)]),
+      value: countPerSecond(24000),
       change: 0,
     },
   }

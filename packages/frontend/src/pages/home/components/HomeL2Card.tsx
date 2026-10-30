@@ -1,13 +1,6 @@
-import {
-  formatActivityCount,
-  formatCurrency,
-  UnixTime,
-} from '@l2beat/shared-pure'
-import { useMemo } from 'react'
+import { formatActivityCount, formatCurrency } from '@l2beat/shared-pure'
 import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
 import type { HomeTopL2Project } from '../getHomeData'
-import { HOME_CHART_HEIGHT_CLASS } from '../homeStyles'
-import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
 import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
@@ -24,45 +17,10 @@ interface Props {
   topProjects: HomeTopL2Project[]
   /** Every Layer 2 we track, for the link under the ranking. */
   projectCount: number
-  className?: string
 }
 
-export function HomeL2Card({
-  charts,
-  topProjects,
-  projectCount,
-  className,
-}: Props) {
-  const tvsChartData = useMemo<HomeSparklineDataPoint[]>(
-    () =>
-      charts.tvs.chart.map(([timestamp, rollups, validiumsAndOptimiums]) => {
-        const hasAny = rollups !== null || validiumsAndOptimiums !== null
-        return {
-          timestamp,
-          value: hasAny ? (rollups ?? 0) + (validiumsAndOptimiums ?? 0) : null,
-          tvsBreakdown: { rollups, validiumsAndOptimiums },
-        }
-      }),
-    [charts.tvs.chart],
-  )
-
-  const activityChartData = useMemo<HomeSparklineDataPoint[]>(
-    () =>
-      charts.activity.chart.map(([timestamp, rollupsUops, vAndOUops]) => {
-        const hasAny = rollupsUops !== null || vAndOUops !== null
-        return {
-          timestamp,
-          value: hasAny
-            ? ((rollupsUops ?? 0) + (vAndOUops ?? 0)) / UnixTime.DAY
-            : null,
-        }
-      }),
-    [charts.activity.chart],
-  )
-
-  const latestTvs = tvsChartData.findLast((d) => d.value !== null)?.value
-  const latestUops = activityChartData.findLast((d) => d.value !== null)?.value
-
+export function HomeL2Card({ charts, topProjects, projectCount }: Props) {
+  const { tvs, activity } = charts
   return (
     <HomeDomainCard
       title="Layer 2s"
@@ -70,34 +28,36 @@ export function HomeL2Card({
         href: '/layer2s/summary',
         label: `All ${projectCount} projects`,
       }}
-      className={className}
     >
       <HomeKpiRow>
         <HomeKpiTile
           label="Value secured"
           value={
-            latestTvs != null ? formatCurrency(latestTvs, 'usd') : undefined
+            tvs.value !== undefined
+              ? formatCurrency(tvs.value, 'usd')
+              : undefined
           }
-          change={charts.tvs.change}
+          change={tvs.change}
           chart={
             <HomeSparkline
-              className={HOME_CHART_HEIGHT_CLASS}
-              data={tvsChartData}
+              data={tvs.chart}
               tooltipLabel="Value secured"
               formatValue={(value) => formatCurrency(value, 'usd')}
+              partLabels={['Rollups', 'Validiums & Optimiums']}
             />
           }
         />
         <HomeKpiTile
           label="Activity/UOPS"
           value={
-            latestUops != null ? formatActivityCount(latestUops) : undefined
+            activity.value !== undefined
+              ? formatActivityCount(activity.value)
+              : undefined
           }
-          change={charts.activity.change}
+          change={activity.change}
           chart={
             <HomeSparkline
-              className={HOME_CHART_HEIGHT_CLASS}
-              data={activityChartData}
+              data={activity.chart}
               tooltipLabel="UOPS"
               formatValue={(value) => `${formatActivityCount(value)} UOPS`}
               weeklyAverage

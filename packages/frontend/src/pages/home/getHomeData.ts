@@ -1,11 +1,20 @@
-import type { Stage } from '@l2beat/config'
+import type { Project, Stage } from '@l2beat/config'
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { RosetteValue } from '~/components/rosette/types'
-import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
-import { getHomeL2Charts } from '~/server/features/home/getHomeL2Charts'
-import { getHomePrivacyData } from '~/server/features/home/getHomePrivacyData'
+import {
+  EMPTY_HOME_ETHEREUM_CHARTS,
+  getHomeEthereumCharts,
+} from '~/server/features/home/getHomeEthereumCharts'
+import {
+  EMPTY_HOME_L2_CHARTS,
+  getHomeL2Charts,
+} from '~/server/features/home/getHomeL2Charts'
+import {
+  EMPTY_HOME_PRIVACY_DATA,
+  getHomePrivacyData,
+} from '~/server/features/home/getHomePrivacyData'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import {
   getL2SummaryData,
@@ -21,15 +30,15 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
-import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '../interop/components/flows/consts'
-import type { InteropFlowsProtocol } from '../interop/components/flows/utils/InteropFlowsContext'
 import { getFlowChainOrderByVolume } from '../interop/utils/getFlowChainOrderByVolume'
 import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
+import { mapInteropChainsToWithIcons } from '../interop/utils/mapInteropChainsToWithIcons'
 import { selectDefaultFlowChains } from '../interop/utils/selectDefaultFlowChains'
+import { toInteropFlowsProtocols } from '../interop/utils/toInteropFlowsProtocols'
 import { getHomeCropsProjects } from './getHomeCropsProjects'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
 import { getHomeResearch } from './getHomeResearch'
@@ -82,29 +91,6 @@ export async function getHomeData(
 
 async function getCachedData(manifest: Manifest) {
   const helpers = getSsrHelpers()
-
-  const l2Projects = await ps.getProjects({
-    select: ['scalingInfo'],
-  })
-  const l2ProjectSlugById = new Map(l2Projects.map((p) => [p.id, p.slug]))
-
-  const interopChains: InteropChainWithIcon[] = getInteropChains()
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-      href: getInteropChainHref(chain, l2ProjectSlugById),
-    }))
-  const interopProtocols = await ps.getProjects({ select: ['interopConfig'] })
-  const flowProtocols: InteropFlowsProtocol[] = interopProtocols.map(
-    (protocol) => ({
-      id: protocol.id,
-      name: protocol.interopConfig.name ?? protocol.name,
-      slug: protocol.slug,
-      iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
-    }),
-  )
-
   const chartRange = optionToRange(HOME_CHART_RANGE)
 
   // The sections that read the databases each fall back to empty on their
@@ -117,7 +103,7 @@ async function getCachedData(manifest: Manifest) {
     recentChanges,
     l2Charts,
     ethereumCharts,
-    interopFlows,
+    interop,
     privacy,
     cropsProjects,
   ] = await Promise.all([
@@ -137,20 +123,14 @@ async function getCachedData(manifest: Manifest) {
       count: 0,
       groups: [],
     }),
-    orEmpty('l2Charts', getHomeL2Charts(chartRange), {
-      tvs: { chart: [], change: undefined },
-      activity: { chart: [], change: undefined },
-    }),
-    orEmpty('ethereumCharts', getHomeEthereumCharts(chartRange), {
-      activity: { chart: [], pastDayUops: undefined, change: undefined },
-      da: { chart: [], trackedShare: undefined, change: undefined },
-    }),
-    getInteropFlowsForHome(interopChains, flowProtocols, helpers),
-    orEmpty('privacy', getHomePrivacyData(chartRange), {
-      tvl: { chart: [], change: undefined },
-      deposits: { chart: [], totalValueUsd: 0, change: undefined },
-      topProtocols: [],
-    }),
+    orEmpty('l2Charts', getHomeL2Charts(chartRange), EMPTY_HOME_L2_CHARTS),
+    orEmpty(
+      'ethereumCharts',
+      getHomeEthereumCharts(chartRange),
+      EMPTY_HOME_ETHEREUM_CHARTS,
+    ),
+    getInteropFlowsForHome(manifest, helpers),
+    orEmpty('privacy', getHomePrivacyData(chartRange), EMPTY_HOME_PRIVACY_DATA),
     orEmpty('cropsProjects', getHomeCropsProjects(manifest), []),
   ])
 
@@ -162,15 +142,15 @@ async function getCachedData(manifest: Manifest) {
     topL2Projects,
     privacy,
     ethereumCharts,
-    interopFlowChains: interopFlows.chains,
-    interopDefaultFlowChains: interopFlows.defaultSelectedChains,
-    flowProtocols,
+    interop,
     recentProjects,
-    recentChangesCount: recentChanges.count,
-    recentChangesProjects: recentChanges.groups.map((group) => ({
-      name: group.name,
-      iconUrl: group.iconUrl,
-    })),
+    recentChanges: {
+      count: recentChanges.count,
+      projects: recentChanges.groups.map((group) => ({
+        name: group.name,
+        iconUrl: group.iconUrl,
+      })),
+    },
     research: getHomeResearch(),
   }
 }
@@ -182,11 +162,24 @@ async function getCachedData(manifest: Manifest) {
  * stats hydrate instead of refetching.
  */
 async function getInteropFlowsForHome(
-  interopChains: InteropChainWithIcon[],
-  protocols: InteropFlowsProtocol[],
+  manifest: Manifest,
   helpers: ReturnType<typeof getSsrHelpers>,
 ) {
-  const chainIds = interopChains.map((chain) => chain.id)
+  const [l2Projects, interopProjects] = await Promise.all([
+    ps.getProjects({ select: ['scalingInfo'] }),
+    ps.getProjects({ select: ['interopConfig'] }),
+  ])
+  const l2ProjectSlugById = new Map(l2Projects.map((p) => [p.id, p.slug]))
+  const chains = mapInteropChainsToWithIcons(
+    manifest,
+    getInteropChains().filter((chain) => !chain.isUpcoming),
+  ).map((chain) => ({
+    ...chain,
+    href: getInteropChainHref(chain, l2ProjectSlugById),
+  }))
+  const protocols = toInteropFlowsProtocols(manifest, interopProjects)
+
+  const chainIds = chains.map((chain) => chain.id)
   const protocolIds = protocols.map((protocol) => protocol.id)
   // Unordered, the graph still draws; the flows query itself is prefetched,
   // and a failed prefetch only means the client fetches it.
@@ -199,7 +192,7 @@ async function getInteropFlowsForHome(
         )
       : chainIds
   const { sortedChains, defaultSelectedFlowChains } = selectDefaultFlowChains(
-    interopChains,
+    chains,
     order,
   )
   if (
@@ -216,6 +209,7 @@ async function getInteropFlowsForHome(
   return {
     chains: sortedChains,
     defaultSelectedChains: defaultSelectedFlowChains,
+    protocols,
   }
 }
 
@@ -262,8 +256,8 @@ export interface HomeRecentProject {
   name: string
   href: string
   iconUrl: string
-  category: 'l2' | 'interop' | 'zkCatalog' | 'ecosystems' | 'privacy'
-  l2Category: string | undefined
+  /** What kind of project it is, e.g. "ZK Rollup" or "Privacy". */
+  label: string
 }
 
 async function getRecentProjectsForHome(
@@ -281,74 +275,61 @@ async function getRecentProjectsForHome(
   })
 
   return projects
-    .filter(
-      (project) =>
-        project.scalingInfo ||
-        project.ecosystemConfig ||
-        project.interopConfig ||
-        project.zkCatalogInfo ||
-        project.privacyInfo,
-    )
-    .sort((a, b) => b.addedAt - a.addedAt)
-    .slice(0, RECENT_PROJECTS_COUNT)
-    .map((project) => {
-      if (project.scalingInfo) {
-        return {
-          id: project.id.toString(),
-          name: project.name,
-          href: `/layer2s/projects/${project.slug}`,
-          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-          category: 'l2' as const,
-          l2Category:
-            project.scalingInfo.type === 'Other'
-              ? `${project.scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} - Other`
-              : project.scalingInfo.type,
-        }
-      }
-      // Privacy is checked before the ZK Catalog: projects listed in both
-      // (e.g. Railgun, Tornado Cash) should surface as privacy projects.
-      if (project.privacyInfo) {
-        return {
-          id: project.id.toString(),
-          name: project.name,
-          href: `/privacy/projects/${project.slug}`,
-          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-          category: 'privacy' as const,
-          l2Category: undefined,
-        }
-      }
-      if (project.zkCatalogInfo) {
-        return {
-          id: project.id.toString(),
-          name: project.name,
-          href: `/zk-catalog/${project.slug}`,
-          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-          category: 'zkCatalog' as const,
-          l2Category: undefined,
-        }
-      }
-      if (project.ecosystemConfig) {
-        return {
-          id: project.id.toString(),
-          name: project.name,
-          href: `/ecosystems/${project.slug}`,
-          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-          category: 'ecosystems' as const,
-          l2Category: undefined,
-        }
-      }
-      // Only interopConfig is left — the filter above guarantees it is set.
-      // Scaling projects that are also interop protocols are handled by the
-      // 'l2' branch, matching the redirect on /interop/protocols/:slug.
-      return {
-        id: project.id.toString(),
-        name: project.interopConfig?.name ?? project.name,
-        href: `/interop/protocols/${project.slug}`,
-        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-        category: 'interop' as const,
-        l2Category: undefined,
-      }
+    .flatMap((project) => {
+      const listing = getRecentProjectListing(project)
+      return listing ? [{ project, listing }] : []
     })
+    .sort((a, b) => b.project.addedAt - a.project.addedAt)
+    .slice(0, RECENT_PROJECTS_COUNT)
+    .map(({ project, listing }) => ({
+      id: project.id.toString(),
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+      ...listing,
+    }))
+}
+
+/** Where a new project is listed, or nothing for a project we do not list. */
+function getRecentProjectListing(
+  project: Project<
+    never,
+    | 'scalingInfo'
+    | 'ecosystemConfig'
+    | 'interopConfig'
+    | 'zkCatalogInfo'
+    | 'privacyInfo'
+  >,
+): Pick<HomeRecentProject, 'name' | 'href' | 'label'> | undefined {
+  const { name, slug, scalingInfo } = project
+  if (scalingInfo) {
+    return {
+      name,
+      href: `/layer2s/projects/${slug}`,
+      label:
+        scalingInfo.type === 'Other'
+          ? `${scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} - Other`
+          : (scalingInfo.type ?? 'Scaling project'),
+    }
+  }
+  // Privacy is checked before the ZK Catalog: projects listed in both
+  // (e.g. Railgun, Tornado Cash) should surface as privacy projects.
+  if (project.privacyInfo) {
+    return { name, href: `/privacy/projects/${slug}`, label: 'Privacy' }
+  }
+  if (project.zkCatalogInfo) {
+    return { name, href: `/zk-catalog/${slug}`, label: 'ZK Catalog' }
+  }
+  if (project.ecosystemConfig) {
+    return { name, href: `/ecosystems/${slug}`, label: 'Ecosystem' }
+  }
+  // Scaling projects that are also interop protocols are handled by the
+  // scaling branch, matching the redirect on /interop/protocols/:slug.
+  if (project.interopConfig) {
+    return {
+      name: project.interopConfig.name ?? name,
+      href: `/interop/protocols/${slug}`,
+      label: 'Interoperability',
+    }
+  }
 }
 
 /** The section's data, or `empty` (logged) when getting it fails. */

@@ -11,6 +11,7 @@ import {
   HOME_ICON_CLASS,
   HOME_ROW_CLASS,
   HOME_ROW_LINES_CLASS,
+  HOME_ROW_LINK_CLASS,
   HOME_TEXT,
 } from '../homeStyles'
 import { HomeChange } from './HomeChange'
@@ -18,7 +19,7 @@ import { HomeChange } from './HomeChange'
 export interface HomeRankedTableRow {
   id: string
   name: string
-  href: string | undefined
+  href: string
   iconUrl: string
 }
 
@@ -32,7 +33,7 @@ export interface HomeRankedTableColumn<T> {
    */
   middle?: boolean
   /** Above the column, so the rows need no label of their own. */
-  header?: string
+  header: string
   /**
    * The narrowest table that still shows the column, e.g. for a secondary
    * figure, so names keep their room. A hidden column takes its track with
@@ -46,11 +47,10 @@ export interface HomeRankedTableColumn<T> {
   withChange?: boolean
 }
 
-type MinTableWidth = 360 | 480 | 640
+type MinTableWidth = 480 | 640
 
 /** Literal classes, so Tailwind sees them. */
 const HIDE_BELOW: Record<MinTableWidth, string> = {
-  360: '@max-[360px]:hidden',
   480: '@max-[480px]:hidden',
   640: '@max-[640px]:hidden',
 }
@@ -72,13 +72,11 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
   title,
   rows,
   columns,
-  className,
 }: {
   title: string
   rows: T[]
   /** Columns after the rank and the name. */
   columns: HomeRankedTableColumn<T>[]
-  className?: string
 }) {
   if (rows.length === 0) {
     return null
@@ -94,9 +92,9 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
     // A container: in a narrow card the secondary columns give way, so names
     // keep their room; in a wide one the middle columns move in from the
     // figures.
-    <div className={cn('@container min-w-0', className)}>
+    <div className="@container min-w-0">
       <div
-        className="grid @min-[360px]:grid-cols-(--ranked-columns-360) @min-[480px]:grid-cols-(--ranked-columns-480) @min-[640px]:grid-cols-(--ranked-columns-640) grid-cols-(--ranked-columns-0) content-start @min-[480px]:gap-x-5 gap-x-4"
+        className="grid @min-[480px]:grid-cols-(--ranked-columns-480) @min-[640px]:grid-cols-(--ranked-columns-640) grid-cols-(--ranked-columns-0) content-start @min-[480px]:gap-x-5 gap-x-4"
         style={columnsStyle}
       >
         <div className="col-span-full grid grid-cols-subgrid items-baseline pb-2">
@@ -127,12 +125,8 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
                 hasChange && STACKED_CHANGE_ROW_CLASS,
               )}
             >
-              <span
-                className={cn('w-3 text-right tabular-nums', HOME_TEXT.meta)}
-              >
-                {index + 1}
-              </span>
-              <Name row={row} />
+              <HomeRank rank={index + 1} />
+              <HomeRankedName {...row} />
               {columns.map((column) => (
                 <span
                   key={column.id}
@@ -154,7 +148,7 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
 }
 
 /** The table widths where columns hide or show, each with its own tracks. */
-const TIERS = [0, 360, 480, 640] as const
+const TIERS = [0, 480, 640] as const
 
 /**
  * The tracks of a table at least `width` wide: the rank, the name, then only
@@ -182,26 +176,32 @@ function getGridColumns<T>(
   ].join(' ')
 }
 
-function Name({ row }: { row: HomeRankedTableRow }) {
-  const content = (
-    <>
-      <img src={row.iconUrl} alt="" className={HOME_ICON_CLASS} />
-      <span
-        className={cn(
-          'truncate underline-offset-2 group-hover:underline',
-          HOME_TEXT.row,
-        )}
-      >
-        {row.name}
-      </span>
-    </>
-  )
-  if (!row.href) {
-    return <span className="flex min-w-0 items-center gap-2">{content}</span>
-  }
+export function HomeRank({ rank }: { rank: number }) {
   return (
-    <a href={row.href} className="group flex min-w-0 items-center gap-2">
-      {content}
+    <span
+      className={cn('w-3 shrink-0 text-right tabular-nums', HOME_TEXT.meta)}
+    >
+      {rank}
+    </span>
+  )
+}
+
+/** A ranked row's icon and name, the row's one link. */
+export function HomeRankedName({
+  name,
+  href,
+  iconUrl,
+  className,
+}: Omit<HomeRankedTableRow, 'id'> & { className?: string }) {
+  return (
+    <a
+      href={href}
+      className={cn('group flex min-w-0 items-center gap-2', className)}
+    >
+      <img src={iconUrl} alt="" className={HOME_ICON_CLASS} />
+      <span className={cn('truncate', HOME_ROW_LINK_CLASS, HOME_TEXT.row)}>
+        {name}
+      </span>
     </a>
   )
 }

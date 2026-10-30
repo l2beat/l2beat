@@ -1,6 +1,6 @@
 import { assert, formatActivityCount, UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
-import { Area, AreaChart } from 'recharts'
+import { AreaChart } from 'recharts'
 import type {
   ChartMeta,
   CustomChartTooltipProps,
@@ -15,7 +15,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
+import { ChartTintedArea } from '~/components/core/chart/ChartTintedArea'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
 
@@ -55,11 +55,9 @@ export function ActivityRatioChart({
       size="small"
     >
       <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <Area
+        <ChartTintedArea
           dataKey="ratio"
-          fillOpacity={AREA_FILL_OPACITY}
-          fill={chartMeta.ratio.color}
-          stroke={chartMeta.ratio.color}
+          color={chartMeta.ratio.color}
           dot={false}
           isAnimationActive={false}
         />

@@ -1,7 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import { Area, AreaChart } from 'recharts'
+import { AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
@@ -16,7 +16,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
+import { ChartTintedArea } from '~/components/core/chart/ChartTintedArea'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -127,11 +127,9 @@ export function EcosystemsTvsChart({
           // Without right:1 the chart last point is not hoverable for some reason
           margin={{ top: 20, right: 1 }}
         >
-          <Area
+          <ChartTintedArea
             dataKey="value"
-            fill="var(--ecosystem-primary)"
-            fillOpacity={AREA_FILL_OPACITY}
-            stroke="var(--ecosystem-primary)"
+            color="var(--ecosystem-primary)"
             isAnimationActive={false}
           />
           <ChartCommonComponents

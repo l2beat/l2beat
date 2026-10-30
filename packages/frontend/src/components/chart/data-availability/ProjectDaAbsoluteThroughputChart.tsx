@@ -17,9 +17,9 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { ChartTintedArea } from '~/components/core/chart/ChartTintedArea'
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { AREA_FILL_OPACITY } from '~/components/core/chart/utils/areaFillOpacity'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -109,11 +109,9 @@ export function ProjectDaAbsoluteThroughputChart({
           <NoDataPatternDef />
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
-        <Area
+        <ChartTintedArea
           dataKey="project"
-          fill={projectChartMeta.project?.color}
-          fillOpacity={AREA_FILL_OPACITY}
-          stroke={projectChartMeta.project?.color}
+          color={projectChartMeta.project?.color}
           isAnimationActive={false}
           dot={false}
           hide={!dataKeys.includes('project')}

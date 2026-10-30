@@ -1,7 +1,6 @@
 import { CROP_COLUMNS, type CropKey } from '~/components/garden/crops'
 import { GARDEN_PATH } from '~/pages/garden/paths'
 import { cn } from '~/utils/cn'
-import type { HomeCropsProject } from '../getHomeCropsProjects'
 import {
   HOME_BANNER_CLASS,
   HOME_BANNER_TITLE_CLASS,
@@ -9,7 +8,7 @@ import {
 } from '../homeStyles'
 import { type GardenFlower, GardenFlowers, GardenLandscape } from './GardenSky'
 import { HomeCard } from './HomeCard'
-import { HomeStackedIcons } from './HomeStackedIcons'
+import { type HomeStackedIcon, HomeStackedIcons } from './HomeStackedIcons'
 
 /** The banner speaks of principles, so Open source reads as Openness here. */
 const BANNER_LABELS: Partial<Record<CropKey, string>> = {
@@ -35,7 +34,7 @@ export function HomeCropsBanner({
   projects,
   className,
 }: {
-  projects: HomeCropsProject[]
+  projects: HomeStackedIcon[]
   className?: string
 }) {
   return (

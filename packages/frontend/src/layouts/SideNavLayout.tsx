@@ -103,7 +103,11 @@ export function SideNavLayout({
           logoLink="/"
           sideLinks={navSecondaryLinks}
         />
-        <NavSidebar logoLink="/" groups={navGroups} />
+        <NavSidebar
+          logoLink="/"
+          groups={navGroups}
+          showGardenBanner={variant !== 'home'}
+        />
         <div
           className={cn(
             contentWrapperVariants({ variant }),

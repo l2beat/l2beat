@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { EM_DASH } from '~/consts/characters'
 import { cn } from '~/utils/cn'
-import { HOME_CHART_PERIOD_LABEL } from '../homeChartRanges'
+import { HOME_CHART_RANGE } from '../homeChartRanges'
 import { HOME_TEXT } from '../homeStyles'
 import { HomeChange } from './HomeChange'
 
@@ -18,7 +18,6 @@ export function HomeKpiTile({
   unit,
   change,
   chart,
-  className,
 }: {
   label: string
   /**
@@ -32,16 +31,10 @@ export function HomeKpiTile({
   /** Ratio over the chart's period, e.g. 0.12 for +12%. */
   change?: number
   chart: ReactNode
-  className?: string
 }) {
   const hasChange = change !== undefined && Number.isFinite(change)
   return (
-    <div
-      className={cn(
-        'kpi-rows:col-span-2 grid min-w-0 grid-cols-1 kpi-rows:grid-cols-subgrid kpi-rows:items-center gap-y-4',
-        className,
-      )}
-    >
+    <div className="kpi-rows:col-span-2 grid min-w-0 grid-cols-1 kpi-rows:grid-cols-subgrid kpi-rows:items-center gap-y-4">
       <div className="flex min-w-0 flex-col">
         <span
           className={cn(
@@ -72,7 +65,7 @@ export function HomeKpiTile({
           {value !== undefined && hasChange && (
             <span className="flex items-baseline gap-1 font-medium text-label-value-13">
               <HomeChange value={change} />
-              <span className="text-secondary">{HOME_CHART_PERIOD_LABEL}</span>
+              <span className="text-secondary">{HOME_CHART_RANGE}</span>
             </span>
           )}
         </span>

@@ -29,7 +29,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
 
   return (
     <GovernanceCard
-      type={event.highlighted ? 'purple' : isMobile ? 'primary' : 'secondary'}
+      type={event.highlighted ? 'brand' : isMobile ? 'primary' : 'secondary'}
       size="medium"
       className="flex flex-col justify-start gap-4 md:h-[304px]"
     >

@@ -14,6 +14,7 @@ import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
 import { getInteropChainHref } from '../utils/getInteropChainHref'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import { selectDefaultFlowChains } from '../utils/selectDefaultFlowChains'
+import { toInteropFlowsProtocols } from '../utils/toInteropFlowsProtocols'
 import type { InteropSelection } from '../utils/types'
 
 export async function getInteropSummaryData(
@@ -140,12 +141,7 @@ async function getCachedData(
 
   return {
     queryState: helpers.dehydrate(),
-    protocols: protocols.map((protocol) => ({
-      id: protocol.id,
-      name: protocol.interopConfig.name ?? protocol.name,
-      slug: protocol.slug,
-      iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
-    })),
+    protocols: toInteropFlowsProtocols(manifest, protocols),
     defaultFlowChainOrder,
   }
 }

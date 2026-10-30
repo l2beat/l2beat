@@ -11,21 +11,14 @@ export function HomeCardHeader({
   title,
   subtitle,
   link,
-  className,
 }: {
   title: string
   subtitle?: ReactNode
   /** Named for what it opens, e.g. "All 14 projects". */
   link?: { href: string; label: string }
-  className?: string
 }) {
   return (
-    <div
-      className={cn(
-        'flex min-w-0 items-baseline justify-between gap-x-4',
-        className,
-      )}
-    >
+    <div className="flex min-w-0 items-baseline justify-between gap-x-4">
       <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
         <h2 className={cn('shrink-0', HOME_TEXT.title)}>{title}</h2>
         {subtitle && <span className={HOME_TEXT.subtitle}>{subtitle}</span>}
