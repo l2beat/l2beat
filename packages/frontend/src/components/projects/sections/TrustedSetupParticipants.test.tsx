@@ -50,7 +50,12 @@ describe(TrustedSetupParticipants.name, () => {
       />,
     )
 
-    expect(html).toInclude('>0<', 'Unknown', 'Transcript unavailable.')
+    expect(html).toInclude(
+      '>0<',
+      '>Unknown<',
+      '>number of participants<',
+      'Transcript unavailable.',
+    )
   })
 
   it('shows a circuit-dependent range and its explanation', () => {

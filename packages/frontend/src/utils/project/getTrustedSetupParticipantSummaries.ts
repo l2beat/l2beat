@@ -59,7 +59,12 @@ function summarizePhase(
 ): TrustedSetupParticipantSummary {
   const count = phase.count
   if (count === undefined) {
-    return { label, value: 'Unknown', description: phase.description }
+    return {
+      label,
+      value: 'Unknown',
+      unit: `number of ${phase.unit}`,
+      description: phase.description,
+    }
   }
 
   return {
