@@ -1,4 +1,8 @@
-export const WALK_AWAY_PASSED_PROJECTS = [
+import type { UnixTime } from '@l2beat/shared-pure'
+
+export type WalkAwayVerdict = 'passed' | 'not-passed'
+
+const WALK_AWAY_PASSED_PROJECTS = [
   'arbitrum',
   'base',
   'optimism',
@@ -12,43 +16,29 @@ export const WALK_AWAY_PASSED_PROJECTS = [
   'fuelv1',
 ]
 
-export const WALK_AWAY_NOT_PASSED_PROJECTS = [
-  'starknet',
-  'aztec',
-  'aztecconnect',
-  'cartesi-prt-honeypot',
-  'degate',
-  'degate2',
-  'degate3',
-  'kinto',
-  'apex-pro',
-  'astarzkevm',
-  'canvasconnect',
-  'deversifi',
-  'edgex',
-  'form',
-  'forknet',
-  'gluon',
-  'gmnetwork',
-  'gpt',
-  'hermez',
-  'immutablex',
-  'jovay',
-  'layer2finance',
-  'layer2financezk',
-  'omgnetwork',
-  'reddioex',
-  'ternoa',
-  'wirex',
-  'witness',
-  'zkswap',
-  'zkswap2',
-]
+const WALK_AWAY_NOT_PASSED_PROJECTS = ['starknet']
 
-/** An archived project that was not cleared above does not pass. */
-export function getWalkAwayVerdict(id: string, isArchived: boolean) {
-  if (WALK_AWAY_PASSED_PROJECTS.includes(id)) return 'passed'
-  if (WALK_AWAY_NOT_PASSED_PROJECTS.includes(id) || isArchived) {
+/**
+ * Archived projects fail unless listed as passed: their operators are gone,
+ * so nothing assures an exit.
+ */
+export function getWalkAwayVerdict(project: {
+  id: string
+  archivedAt: UnixTime
+}): WalkAwayVerdict
+export function getWalkAwayVerdict(project: {
+  id: string
+  archivedAt?: UnixTime
+}): WalkAwayVerdict | undefined
+export function getWalkAwayVerdict(project: {
+  id: string
+  archivedAt?: UnixTime
+}): WalkAwayVerdict | undefined {
+  if (WALK_AWAY_PASSED_PROJECTS.includes(project.id)) return 'passed'
+  if (
+    project.archivedAt !== undefined ||
+    WALK_AWAY_NOT_PASSED_PROJECTS.includes(project.id)
+  ) {
     return 'not-passed'
   }
   return undefined

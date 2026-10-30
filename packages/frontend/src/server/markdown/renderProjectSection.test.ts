@@ -154,7 +154,7 @@ describe(renderProjectSection.name, () => {
 
       expect(markdown).toInclude(
         'Arbitrum One is a Stage 1 Appchain Optimistic Rollup.',
-        '**The project does not pass the walkaway test**: users cannot count on exiting',
+        '**The project does not pass the walkaway test**: users are not able to exit',
         'Rollup operators cannot compromise the system, but being **application-specific** might bring additional risk.\n\nLong.\n\n**Note:** We',
         '**New requirements coming soon** (effective 2026-09-21 14:13 UTC)',
         '- The proof system is permissioned.',
