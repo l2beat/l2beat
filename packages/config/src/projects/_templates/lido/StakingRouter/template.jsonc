@@ -26,6 +26,62 @@
     "getTotalModulesValidatorsBalance"
   ],
   "fields": {
+    "getModuleValidatorsBalance": {
+      "handler": {
+        "type": "array",
+        "method": "getModuleValidatorsBalance",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleActiveValidatorsCount": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleActiveValidatorsCount",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleLastDepositBlock": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleLastDepositBlock",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleMaxDepositsPerBlock": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleMaxDepositsPerBlock",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleMinDepositBlockDistance": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleMinDepositBlockDistance",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleNonce": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleNonce",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleStateAccounting": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleStateAccounting",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleStateDeposits": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleStateDeposits",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
     "getStakingModuleIsActive": {
       "handler": {
         "type": "array",

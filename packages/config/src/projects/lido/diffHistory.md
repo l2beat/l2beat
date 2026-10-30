@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x1bbde280017ede3d92bdfdb89bb29c7d5515e106
+Generated with discovered.json: 0xc2d1c930391fa0bff8b24227e3e56e1f543b8410
 
-# Diff at Wed, 28 Oct 2026 15:18:12 GMT:
+# Diff at Fri, 30 Oct 2026 10:53:31 GMT:
 
 - id: 8f82b3ea
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@587d1f6dec079363d18304cbf4f6dc10ac8ad56f block: 1792491537
-- current timestamp: 1793200672
+- comparing to: main@fe75fdc71f490da1fbfc7f6f5a24026eeec12086 block: 1792491537
+- current timestamp: 1793357595
 
 ## Description
 
@@ -389,6 +389,10 @@ TriggerableWithdrawalsGateway and Burner: new Ejector and Accounting granted the
 +        false
       values.getStakingModuleIsStopped.0:
 +        false
+      values.getStakingModuleMaxDepositsPerBlock.4:
++        30
+      values.getStakingModuleMinDepositBlockDistance.4:
++        25
       values.getStakingModuleStateConfig.0.priorityExitShareThreshold:
 -        10000
 +        0
