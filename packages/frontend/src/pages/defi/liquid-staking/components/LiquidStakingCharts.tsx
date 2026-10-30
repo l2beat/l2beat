@@ -184,6 +184,7 @@ function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
         formatYAxisLabel={(value) => `${value.toFixed(0)}d`}
         formatTooltipValue={formatDays}
         isEstimated={(timestamp, key) => estimated.has(`${timestamp}:${key}`)}
+        dailyBuckets
       />
     </ChartCard>
   )

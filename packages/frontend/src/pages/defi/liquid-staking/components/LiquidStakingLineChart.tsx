@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
 import type {
@@ -17,7 +18,7 @@ import {
 } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange, formatTimestamp } from '~/utils/dates'
 
 export interface LiquidStakingChartSeries {
   key: string
@@ -48,6 +49,11 @@ interface Props {
   formatTooltipValue: (value: number) => string
   /** Whether a series' value on a day is an estimate, shown with ~. */
   isEstimated?: (timestamp: number, key: string) => boolean
+  /**
+   * Each point is a day's average, not a moment, so the tooltip shows the
+   * day as a range.
+   */
+  dailyBuckets?: boolean
   background?: LiquidStakingChartBackground
 }
 
@@ -59,6 +65,7 @@ export function LiquidStakingLineChart({
   formatYAxisLabel,
   formatTooltipValue,
   isEstimated,
+  dailyBuckets,
   background,
 }: Props) {
   const chartMeta = useMemo<ChartMeta>(() => {
@@ -155,6 +162,7 @@ export function LiquidStakingLineChart({
             <CustomTooltip
               formatValue={formatTooltipValue}
               isEstimated={isEstimated}
+              dailyBuckets={dailyBuckets}
               background={background}
             />
           }
@@ -169,10 +177,12 @@ function CustomTooltip({
   label,
   formatValue,
   isEstimated,
+  dailyBuckets,
   background,
 }: CustomChartTooltipProps & {
   formatValue: (value: number) => string
   isEstimated?: (timestamp: number, key: string) => boolean
+  dailyBuckets?: boolean
   background?: LiquidStakingChartBackground
 }) {
   const { meta } = useChart()
@@ -198,7 +208,9 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { mode: 'date' })}
+          {dailyBuckets
+            ? formatRange(label, label + UnixTime.DAY)
+            : formatTimestamp(label, { mode: 'date' })}
         </div>
         <div className="mt-2 flex flex-col gap-2">
           {lines.map((entry) => {
