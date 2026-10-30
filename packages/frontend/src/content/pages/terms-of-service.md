@@ -5,7 +5,7 @@
 ## 1. General Information
 
 ### 1.1. About Us
-These Terms of Service (“Terms”) govern your access to and use of the ETHBEAT website - new-domain.tbd (“the Website”), operated by L2BEAT, a limited liability company (spółka z ograniczoną odpowiedzialnością) with its registered office in Warsaw at Poznańska 16/4, 00-680 Warsaw, Poland, KRS No 0000920990, under the name ETHBEAT (“ETHBEAT”).
+These Terms of Service (“Terms”) govern your access to and use of the ETHBEAT website - ethbeat.org (“the Website”), operated by L2BEAT, a limited liability company (spółka z ograniczoną odpowiedzialnością) with its registered office in Warsaw at Poznańska 16/4, 00-680 Warsaw, Poland, KRS No 0000920990, under the name ETHBEAT (“ETHBEAT”).
 
 ### 1.2. Acceptance of Terms
 By accessing or using the Website, you agree to be bound by these Terms and all applicable laws and regulations. If you do not agree with these Terms, you must not use the Website.

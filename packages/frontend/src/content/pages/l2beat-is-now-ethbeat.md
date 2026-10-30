@@ -11,7 +11,7 @@ We started in 2021 to track a handful of rollups, and the name said exactly that
 ## What changed
 
 - **The name and the logo.** ETHBEAT, with a new hand-lettered heart.
-- **The address.** The site now lives at **new-domain.tbd**. Every l2beat.com link redirects permanently to the same page there.
+- **The address.** The site now lives at **ethbeat.org**. Every l2beat.com link redirects permanently to the same page there.
 - **Link previews.** Pages shared on X, Telegram and elsewhere show new preview images. Platforms cache previews, so older posts may show the old ones for a while.
 
 ## What did not change
@@ -29,16 +29,16 @@ We started in 2021 to track a handful of rollups, and the name said exactly that
 
 Only the domain changes. Everything after it stays the same.
 
-- `l2beat.com` → `new-domain.tbd`
-- `l2beat.com/layer2s/summary` → `new-domain.tbd/layer2s/summary`
-- `l2beat.com/layer2s/projects/arbitrum` → `new-domain.tbd/layer2s/projects/arbitrum`
-- `l2beat.com/api/scaling/summary` → `new-domain.tbd/api/scaling/summary`
-- `l2beat.com/llms.txt` → `new-domain.tbd/llms.txt`
+- `l2beat.com` → `ethbeat.org`
+- `l2beat.com/layer2s/summary` → `ethbeat.org/layer2s/summary`
+- `l2beat.com/layer2s/projects/arbitrum` → `ethbeat.org/layer2s/projects/arbitrum`
+- `l2beat.com/api/scaling/summary` → `ethbeat.org/api/scaling/summary`
+- `l2beat.com/llms.txt` → `ethbeat.org/llms.txt`
 
 ## If you link to us or use our data
 
 - Nothing breaks: old links redirect. **[TBD: say how long the redirects stay, e.g. "indefinitely".]**
-- Update links and API base URLs to new-domain.tbd when convenient.
+- Update links and API base URLs to ethbeat.org when convenient.
 - When you cite us, "ETHBEAT (formerly L2BEAT)" helps readers who know the old name.
 
 Questions? Ask on the [forum](https://forum.l2beat.com) or write to **[TBD: contact address]**.
