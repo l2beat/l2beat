@@ -8,6 +8,7 @@ CREATE TABLE "LiquidStakingSnapshot" (
     "lastRequestId" INTEGER,
     "lastFinalizedRequestId" INTEGER,
     "instantExitEth" DECIMAL(80,0),
+    "instantExitFeeBps" INTEGER,
     "lockTime" INTEGER,
 
     CONSTRAINT "LiquidStakingSnapshot_pkey" PRIMARY KEY ("configurationId","timestamp")

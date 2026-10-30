@@ -10,11 +10,13 @@ export interface LiquidStakingSnapshotRecord {
   blockNumber: number
   /** ETH per token, 18 decimals; for Lido per share, i.e. per wstETH. */
   exchangeRate: bigint
-  /** Withdrawal queue counters (Lido, ether.fi). */
+  /** Withdrawal queue counters (Lido, ether.fi), or the unwrap request and allocation counters (wBETH). */
   lastRequestId: number | null
   lastFinalizedRequestId: number | null
-  /** ETH that burning the token pays out at once (Rocket Pool), wei. */
+  /** ETH the protocol pays out at once: burning rETH (Rocket Pool), or the instant redemption (ether.fi), wei. */
   instantExitEth: bigint | null
+  /** The instant exit's fee, basis points. */
+  instantExitFeeBps: number | null
   /** Lock on an onchain redemption (wBETH), seconds. */
   lockTime: number | null
 }
@@ -59,6 +61,7 @@ export class LiquidStakingSnapshotRepository extends BaseRepository {
             lastRequestId: eb.ref('excluded.lastRequestId'),
             lastFinalizedRequestId: eb.ref('excluded.lastFinalizedRequestId'),
             instantExitEth: eb.ref('excluded.instantExitEth'),
+            instantExitFeeBps: eb.ref('excluded.instantExitFeeBps'),
             lockTime: eb.ref('excluded.lockTime'),
           })),
         )

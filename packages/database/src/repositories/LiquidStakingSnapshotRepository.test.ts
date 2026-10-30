@@ -19,6 +19,7 @@ describeDatabase(LiquidStakingSnapshotRepository.name, (db) => {
       ...record('a', 1),
       exchangeRate: 1_234_567_890_123_456_789_012n,
       instantExitEth: 5n,
+      instantExitFeeBps: 30,
     }
     await repository.upsertMany([updated])
 
@@ -94,6 +95,7 @@ function record(
     lastRequestId: 10,
     lastFinalizedRequestId: 8,
     instantExitEth: null,
+    instantExitFeeBps: null,
     lockTime: null,
   }
 }
