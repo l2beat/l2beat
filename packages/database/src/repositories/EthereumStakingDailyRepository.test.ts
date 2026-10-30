@@ -55,7 +55,10 @@ function record(day: number): EthereumStakingDailyRecord {
     pendingDeposits: null,
     withdrawals: 10n ** 21n,
     deposits: 10n ** 20n,
-    executionRewards: 10n ** 19n,
+    builderPayments: 10n ** 19n,
+    priorityFees: 10n ** 18n,
+    directTransfers: 10n ** 17n,
     blockCount: 7_150,
+    builderBlockCount: 6_300,
   }
 }
