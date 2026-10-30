@@ -315,11 +315,13 @@ model LiquidStakingSnapshot {
   blockNumber            Int
   /// ETH per token, 18 decimals; for Lido per share, i.e. per wstETH.
   exchangeRate           Decimal  @db.Decimal(80, 0)
-  /// Withdrawal queue counters (Lido, ether.fi).
+  /// Withdrawal queue counters (Lido, ether.fi), or the unwrap request and allocation counters (wBETH).
   lastRequestId          Int?
   lastFinalizedRequestId Int?
-  /// ETH that burning the token pays out at once (Rocket Pool), wei.
+  /// ETH the protocol pays out at once: burning rETH (Rocket Pool), or the instant redemption (ether.fi), wei.
   instantExitEth         Decimal? @db.Decimal(80, 0)
+  /// The instant exit's fee, basis points.
+  instantExitFeeBps      Int?
   /// Lock on an onchain redemption (wBETH), seconds.
   lockTime               Int?
 
