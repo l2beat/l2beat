@@ -7,6 +7,7 @@ import type { NextFunction, Request, Response } from 'express'
 import express from 'express'
 import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { CLIENT_ENV_KEYS, env, rawEnv } from '~/env'
 import { isFrontendCacheEnabled } from '~/utils/FrontendInMemoryCache'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
@@ -19,6 +20,7 @@ import type { RenderData, ServerRenderFunction } from '../ssr/types'
 import { jsonForInlineScript } from '../utils/jsonForInlineScript'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { getTokenGraphs } from './features/tokens/getTokenGraphs'
+import { AliasHostRedirectMiddleware } from './middlewares/AliasHostRedirectMiddleware'
 import { ErrorHandler } from './middlewares/ErrorHandler'
 import { LlmsLinkHeaderMiddleware } from './middlewares/LlmsLinkHeaderMiddleware'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
@@ -56,6 +58,11 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     ? undefined
     : readFileSync(CLIENT_TEMPLATE_PATH, 'utf-8')
   const pagePreloads = loadPagePreloads(!options.dev)
+
+  // First, so alias hosts redirect before any route answers.
+  if (env.REDIRECT_HOSTS?.length) {
+    app.use(AliasHostRedirectMiddleware(PRODUCTION_ORIGIN, env.REDIRECT_HOSTS))
+  }
 
   // Before every router so llms.txt, sitemaps and markdown lists are compressed too
   if (!options.dev) {

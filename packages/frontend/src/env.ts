@@ -64,6 +64,8 @@ const SERVER_CONFIG = {
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
   COOLIFY_URL: z.string().optional(),
   COOLIFY_RESOURCE_UUID: z.string().optional(),
+  // Comma-separated hosts the app answers on that redirect to the production origin.
+  REDIRECT_HOSTS: stringArray.optional(),
 
   LOG_LEVEL: z
     .enum(['NONE', 'CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE'])
@@ -133,6 +135,7 @@ function getRawEnv(): Record<
     DATABASE_STATEMENT_TIMEOUT_MS: process.env.DATABASE_STATEMENT_TIMEOUT_MS,
     DISABLE_CACHE: process.env.DISABLE_CACHE,
     MOCK: process.env.MOCK,
+    REDIRECT_HOSTS: process.env.REDIRECT_HOSTS,
     NODE_ENV: process.env.NODE_ENV,
     COOLIFY_URL: process.env.COOLIFY_URL,
     COOLIFY_RESOURCE_UUID: process.env.COOLIFY_RESOURCE_UUID,
