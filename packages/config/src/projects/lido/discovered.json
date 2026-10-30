@@ -556,8 +556,8 @@
       "type": "Contract",
       "template": "lido/Escrow",
       "sourceHashes": [
-        "0x85169eeeb90741916e4da1279a6d46ed3fd567fda961aafb0abec62df1e732da",
-        "0x85169eeeb90741916e4da1279a6d46ed3fd567fda961aafb0abec62df1e732da"
+        "0x1c057484fbe43610390a20a79ee17ce640bd72ebca23b5d9327926338563564e",
+        "0x1c057484fbe43610390a20a79ee17ce640bd72ebca23b5d9327926338563564e"
       ],
       "proxyType": "EIP1167 proxy",
       "description": "Dual Governance escrow in which holders lock stETH, wstETH or unstETH to build veto support. It can be irreversibly converted into a Rage Quit escrow that withdraws the locked position as ETH.",
@@ -1695,7 +1695,7 @@
       "type": "Contract",
       "template": "lido/TiebreakerSubCommittee",
       "sourceHashes": [
-        "0x95d0e17e9221fb7f3746842c42c025956bbf749f08ff3d1fd875a851d626ae0d"
+        "0x682eb86d27569d05b9969051761e08fcb9040b3030a55d7a7507a9a0325bef0a"
       ],
       "proxyType": "immutable",
       "description": "A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.",
@@ -4978,7 +4978,7 @@
       "type": "Contract",
       "template": "lido/ImmutableDualGovernanceConfigProvider",
       "sourceHashes": [
-        "0x6151c0a96e6e5adc39e3767e937b87ae08fcaada0d2cc13da149e0c88dced6f2"
+        "0xf3dcc9c578fa34b09c56c2b8c93ee4663d7799be5dbf85627975e1f7038c308e"
       ],
       "proxyType": "immutable",
       "description": "Immutable Dual Governance timing and veto-threshold configuration. Replacing the provider in DualGovernance is the only way to change these parameters.",
@@ -6139,7 +6139,7 @@
       "type": "Contract",
       "template": "lido/TiebreakerSubCommittee",
       "sourceHashes": [
-        "0x95d0e17e9221fb7f3746842c42c025956bbf749f08ff3d1fd875a851d626ae0d"
+        "0x682eb86d27569d05b9969051761e08fcb9040b3030a55d7a7507a9a0325bef0a"
       ],
       "proxyType": "immutable",
       "description": "A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.",
@@ -6355,7 +6355,7 @@
       "type": "Contract",
       "template": "lido/DualGovernance",
       "sourceHashes": [
-        "0x8923bda086d38da489840dcd7157b305452170106195da75c6d2cbd9db31473a"
+        "0xf4baaa5bc37c8030062c68c89c6101f05d98f661cefa31da7f483555c99b0a98"
       ],
       "proxyType": "immutable",
       "description": "Lido Dual Governance state machine. Registered proposers submit calls through an associated executor, while stETH, wstETH and unstETH holders can lock assets in an escrow to delay or stop governance execution and enter Rage Quit.",
@@ -6428,7 +6428,7 @@
       "type": "Contract",
       "template": "lido/CSVerifier",
       "sourceHashes": [
-        "0x6e4dbf3b712fa927cfc7fc9b111470e00aa741968c6bfde30f25b932645e252a"
+        "0x72ca49dc232a73eb06a2b5d7e5b60c1f64b456fdb1ba8ba5bf7dcd01753ef493"
       ],
       "proxyType": "immutable",
       "description": "Permissionless beacon-state proof verifier for a Community Staking Module. Valid proofs report validator balances, withdrawals and slashing to the connected module.",
@@ -6736,7 +6736,7 @@
       "type": "Contract",
       "template": "lido/EmergencyProtectedTimelock",
       "sourceHashes": [
-        "0x333a362970e417c078fe05b3b5f38c151802bcfc03662168777531f5f90ed873"
+        "0x82154ecac469b6885b54890285d86a6f226f464bcbd5b72cbec1a95bb586cc76"
       ],
       "proxyType": "immutable",
       "description": "Timelock used by Dual Governance. Governance submits and schedules batches, anyone may execute a ready batch, and time-bounded emergency committees can activate emergency mode and execute already submitted proposals without the ordinary schedule delay.",
@@ -7437,7 +7437,7 @@
       "template": "lido/CSModule",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
-        "0x19666aa54a37d52558d2c5a2354e67ce7f975afd7cfa437feb6ef96489092bb8"
+        "0xea7dbf301f2c6396dda21bdb9fede89dc76490dbdba56f62155f932e685caad6"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.",
@@ -7658,7 +7658,7 @@
       "type": "Contract",
       "template": "lido/TiebreakerSubCommittee",
       "sourceHashes": [
-        "0x95d0e17e9221fb7f3746842c42c025956bbf749f08ff3d1fd875a851d626ae0d"
+        "0x682eb86d27569d05b9969051761e08fcb9040b3030a55d7a7507a9a0325bef0a"
       ],
       "proxyType": "immutable",
       "description": "A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.",
@@ -8460,7 +8460,7 @@
       "type": "Contract",
       "template": "lido/TiebreakerCoreCommittee",
       "sourceHashes": [
-        "0x122392d68a27a9890f459ce792791c30d7f2ba96b42f47c924ab87d8b45c8817"
+        "0xd3c27e7a20d3db17c659c433b111eff30d0324b3eb901756c54595e2cee7fe0b"
       ],
       "proxyType": "immutable",
       "description": "Top-level Dual Governance tiebreaker committee. Its members reach quorum to schedule a delayed governance proposal or resume a paused sealable contract when Dual Governance is tied.",
@@ -8694,7 +8694,7 @@
       "type": "Contract",
       "template": "lido/CSVerifier",
       "sourceHashes": [
-        "0x6e4dbf3b712fa927cfc7fc9b111470e00aa741968c6bfde30f25b932645e252a"
+        "0x72ca49dc232a73eb06a2b5d7e5b60c1f64b456fdb1ba8ba5bf7dcd01753ef493"
       ],
       "proxyType": "immutable",
       "description": "Permissionless beacon-state proof verifier for a Community Staking Module. Valid proofs report validator balances, withdrawals and slashing to the connected module.",
