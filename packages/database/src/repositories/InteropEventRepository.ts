@@ -30,6 +30,18 @@ export interface InteropEventContext {
   logIndex: number
 }
 
+/** Selects rows on `chain` that are newer than `timestamp`. */
+export interface InteropChainCutoff {
+  chain: string
+  timestamp: UnixTime
+}
+
+export interface InteropEventTx {
+  chain: string
+  txHash: string
+  timestamp: UnixTime
+}
+
 export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
   return {
     plugin: row.plugin,
@@ -303,6 +315,65 @@ export class InteropEventRepository extends BaseRepository {
       .where('plugin', '=', plugin)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async deleteForPluginsAfter(
+    plugins: string[],
+    cutoffs: InteropChainCutoff[],
+  ): Promise<number> {
+    if (plugins.length === 0 || cutoffs.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('InteropEvent')
+      .where('plugin', 'in', plugins)
+      .where((eb) =>
+        eb.or(
+          cutoffs.map((cutoff) =>
+            eb.and([
+              eb('chain', '=', cutoff.chain),
+              eb('timestamp', '>', UnixTime.toDate(cutoff.timestamp)),
+            ]),
+          ),
+        ),
+      )
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  /** Returns the events that were matched or unsupported before the reset. */
+  async resetMatchedInTxs(
+    plugins: string[],
+    txs: InteropEventTx[],
+  ): Promise<InteropEventRecord[]> {
+    if (plugins.length === 0 || txs.length === 0) return []
+    const records: InteropEventRecord[] = []
+    await this.batch(txs, 1_000, async (batch) => {
+      const rows = await this.db
+        .updateTable('InteropEvent')
+        .set({ matched: false, unsupported: false })
+        .where('plugin', 'in', plugins)
+        .where((eb) =>
+          eb.or([eb('matched', '=', true), eb('unsupported', '=', true)]),
+        )
+        .where((eb) =>
+          eb.or(
+            batch.map((tx) =>
+              eb.and([
+                eb('chain', '=', tx.chain),
+                eb('timestamp', '=', UnixTime.toDate(tx.timestamp)),
+                eb(
+                  sql<string>`lower(ctx ->> 'txHash')`,
+                  '=',
+                  tx.txHash.toLowerCase(),
+                ),
+              ]),
+            ),
+          ),
+        )
+        .returningAll()
+        .execute()
+      records.push(...rows.map(toRecord))
+    })
+    return records
   }
 
   async deleteAll(): Promise<number> {

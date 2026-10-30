@@ -66,10 +66,12 @@ export type {
 } from './repositories/InteropAggregateStatusRepository'
 export type { InteropConfigRecord } from './repositories/InteropConfigRepository'
 export type {
+  InteropChainCutoff,
   InteropEventContext,
   InteropEventRecord,
   InteropEventStatsRecord,
   InteropEventSupportBreakdownRecord,
+  InteropEventTx,
 } from './repositories/InteropEventRepository'
 export type {
   InteropMessageDetailedStatsRecord,

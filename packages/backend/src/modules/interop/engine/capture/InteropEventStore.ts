@@ -1,4 +1,9 @@
-import type { Database, InteropEventRecord } from '@l2beat/database'
+import type {
+  Database,
+  InteropChainCutoff,
+  InteropEventRecord,
+  InteropEventTx,
+} from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type {
   InteropApproximateQuery,
@@ -26,6 +31,10 @@ export class InteropEventStore implements InteropEventDb {
 
   async start() {
     const records = await this.db.interopEvent.getUnmatched()
+    this.addUnmatchedRecords(records)
+  }
+
+  private addUnmatchedRecords(records: InteropEventRecord[]) {
     for (const record of records) {
       const event = fromDbRecord(record)
       const removed = this.eventDb.addEvent(event)
@@ -135,6 +144,36 @@ export class InteropEventStore implements InteropEventDb {
     const count = await this.db.interopEvent.deleteAllForPlugin(plugin)
     this.derivedTxStore.onEventsRemoved(this.eventDb.removeForPlugin(plugin))
     return count
+  }
+
+  async deleteForPluginsAfter(
+    plugins: string[],
+    cutoffs: InteropChainCutoff[],
+  ) {
+    const count = await this.db.interopEvent.deleteForPluginsAfter(
+      plugins,
+      cutoffs,
+    )
+    const pluginSet = new Set(plugins)
+    const cutoffByChain = new Map(cutoffs.map((c) => [c.chain, c.timestamp]))
+    this.derivedTxStore.onEventsRemoved(
+      this.eventDb.removeWhere((event) => {
+        const cutoff = cutoffByChain.get(event.ctx.chain)
+        return (
+          pluginSet.has(event.plugin) &&
+          cutoff !== undefined &&
+          event.ctx.timestamp > cutoff
+        )
+      }),
+    )
+    return count
+  }
+
+  /** Makes matched and unsupported events of these txs matchable again. */
+  async resetMatchedInTxs(plugins: string[], txs: InteropEventTx[]) {
+    const records = await this.db.interopEvent.resetMatchedInTxs(plugins, txs)
+    this.addUnmatchedRecords(records)
+    return records.length
   }
 }
 

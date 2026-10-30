@@ -2,6 +2,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropMessage } from '../kysely/generated/types'
+import type { InteropChainCutoff } from './InteropEventRepository'
 
 export interface InteropMessageRecord {
   plugin: string
@@ -69,6 +70,11 @@ export function toRow(
     dstEventId: record.dstEventId,
   }
 }
+
+export type InteropMessageSides = Pick<
+  InteropMessageRecord,
+  'srcChain' | 'srcTime' | 'srcTxHash' | 'dstChain' | 'dstTime' | 'dstTxHash'
+>
 
 export interface InteropMessageStatsRecord {
   plugin: string
@@ -245,6 +251,50 @@ export class InteropMessageRepository extends BaseRepository {
       .where('plugin', '=', plugin)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  /** Deletes messages with either side newer than its chain's cutoff. */
+  async deleteForPluginsAfter(
+    plugins: string[],
+    cutoffs: InteropChainCutoff[],
+  ): Promise<InteropMessageSides[]> {
+    if (plugins.length === 0 || cutoffs.length === 0) return []
+    const rows = await this.db
+      .deleteFrom('InteropMessage')
+      .where('plugin', 'in', plugins)
+      .where((eb) =>
+        eb.or(
+          cutoffs.flatMap((cutoff) => [
+            eb.and([
+              eb('srcChain', '=', cutoff.chain),
+              eb('srcTime', '>', UnixTime.toDate(cutoff.timestamp)),
+            ]),
+            eb.and([
+              eb('dstChain', '=', cutoff.chain),
+              eb('dstTime', '>', UnixTime.toDate(cutoff.timestamp)),
+            ]),
+          ]),
+        ),
+      )
+      .returning([
+        'srcChain',
+        'srcTime',
+        'srcTxHash',
+        'dstChain',
+        'dstTime',
+        'dstTxHash',
+      ])
+      .execute()
+    return rows.map((row) => ({
+      srcChain: row.srcChain ?? undefined,
+      srcTime:
+        row.srcTime !== null ? UnixTime.fromDate(row.srcTime) : undefined,
+      srcTxHash: row.srcTxHash ?? undefined,
+      dstChain: row.dstChain ?? undefined,
+      dstTime:
+        row.dstTime !== null ? UnixTime.fromDate(row.dstTime) : undefined,
+      dstTxHash: row.dstTxHash ?? undefined,
+    }))
   }
 
   async getUniqueAppsPerPlugin(): Promise<InteropMessageUniqueAppsRecord[]> {

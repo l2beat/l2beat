@@ -248,4 +248,59 @@ describeDatabase(InteropMessageRepository.name, (database) => {
       expect(remaining[0]?.messageId).toEqual('msg3')
     })
   })
+
+  describe(
+    InteropMessageRepository.prototype.deleteForPluginsAfter.name,
+    () => {
+      it('deletes messages with a side newer than its chain cutoff', async () => {
+        const at = (srcTime: number, dstTime: number) => ({
+          srcTime: UnixTime(srcTime),
+          dstTime: UnixTime(dstTime),
+          timestamp: UnixTime(dstTime),
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
+        })
+        await repository.insertMany([
+          makeRecord(UnixTime(0), { messageId: 'before', ...at(50, 100) }),
+          makeRecord(UnixTime(0), {
+            messageId: 'straddling',
+            ...at(50, 101),
+            srcTxHash: '0xsrc',
+            dstTxHash: '0xdst',
+          }),
+          makeRecord(UnixTime(0), { messageId: 'srcAfter', ...at(201, 300) }),
+          makeRecord(UnixTime(0), {
+            messageId: 'otherPlugin',
+            plugin: 'other',
+            ...at(50, 101),
+          }),
+        ])
+
+        const deleted = await repository.deleteForPluginsAfter(
+          ['plugin'],
+          [
+            { chain: 'arbitrum', timestamp: UnixTime(200) },
+            { chain: 'ethereum', timestamp: UnixTime(100) },
+          ],
+        )
+
+        expect(deleted).toEqualUnsorted([
+          {
+            srcChain: 'arbitrum',
+            srcTime: UnixTime(50),
+            srcTxHash: '0xsrc',
+            dstChain: 'ethereum',
+            dstTime: UnixTime(101),
+            dstTxHash: '0xdst',
+          },
+          expect.subset({ srcTime: UnixTime(201), dstTime: UnixTime(300) }),
+        ])
+        const remaining = await repository.getAll()
+        expect(remaining.map((m) => m.messageId)).toEqualUnsorted([
+          'before',
+          'otherPlugin',
+        ])
+      })
+    },
+  )
 })

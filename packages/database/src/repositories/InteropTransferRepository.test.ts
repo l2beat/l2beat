@@ -605,6 +605,89 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropTransferRepository.prototype.deleteForPluginsAfter.name,
+    () => {
+      it('deletes transfers with a side newer than its chain cutoff', async () => {
+        const t = (id: string, srcTime: number, duration: number) =>
+          transfer(
+            'plugin1',
+            id,
+            'deposit',
+            UnixTime(srcTime),
+            'ethereum',
+            'arbitrum',
+            duration,
+          )
+        await repository.insertMany([
+          t('atCutoff', 100, 100),
+          t('dstAfter', 100, 101),
+          t('srcAfter', 101, 0),
+          {
+            ...transfer(
+              'plugin1',
+              'noSrcEvent',
+              'deposit',
+              UnixTime(500),
+              'solana',
+              'ethereum',
+            ),
+            srcTime: undefined,
+            srcTxHash: undefined,
+          },
+          transfer(
+            'plugin2',
+            'otherPlugin',
+            'deposit',
+            UnixTime(500),
+            'ethereum',
+            'arbitrum',
+          ),
+        ])
+
+        const deleted = await repository.deleteForPluginsAfter(
+          ['plugin1'],
+          [
+            { chain: 'ethereum', timestamp: UnixTime(100) },
+            { chain: 'arbitrum', timestamp: UnixTime(200) },
+          ],
+        )
+
+        expect(deleted).toEqualUnsorted([
+          {
+            srcChain: 'ethereum',
+            srcTime: UnixTime(100),
+            srcTxHash: '0xdstaftersrc',
+            dstChain: 'arbitrum',
+            dstTime: UnixTime(201),
+            dstTxHash: '0xdstafterdst',
+          },
+          {
+            srcChain: 'ethereum',
+            srcTime: UnixTime(101),
+            srcTxHash: '0xsrcaftersrc',
+            dstChain: 'arbitrum',
+            dstTime: UnixTime(101),
+            dstTxHash: '0xsrcafterdst',
+          },
+          {
+            srcChain: 'solana',
+            srcTime: undefined,
+            srcTxHash: undefined,
+            dstChain: 'ethereum',
+            dstTime: UnixTime(500),
+            dstTxHash: '0xnosrceventdst',
+          },
+        ])
+        const remaining = await repository.getAll()
+        expect(remaining.map((t) => t.transferId)).toEqualUnsorted([
+          'atCutoff',
+          'otherPlugin',
+        ])
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.getUnprocessed.name, () => {
     it('returns only unprocessed transfers', async () => {
       const unprocessedRecord1 = transfer(
