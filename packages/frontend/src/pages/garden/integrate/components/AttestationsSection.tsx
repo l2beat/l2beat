@@ -62,7 +62,7 @@ export function AttestationsSection({
         >
           {attestations.schema}
         </CodeSnippet>
-        <ol className="mt-5 flex max-w-2xl flex-col gap-2.5">
+        <ol className="mt-5 flex flex-col gap-2.5">
           {VERIFY_STEPS.map((step, index) => (
             <li
               key={step}

@@ -124,7 +124,7 @@ export function BadgeSection({
           <h3 className="font-bold text-heading-16 md:text-heading-18">
             Using it fairly
           </h3>
-          <ul className="mt-4 flex max-w-2xl flex-col gap-2.5">
+          <ul className="mt-4 flex flex-col gap-2.5">
             {BADGE_RULES.map((rule) => (
               <li
                 key={rule}

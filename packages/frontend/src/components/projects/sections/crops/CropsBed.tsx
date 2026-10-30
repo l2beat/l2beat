@@ -85,7 +85,7 @@ export function CropsBed({
         <CropNote
           key={definition.key}
           note={definition.note}
-          className="mt-5 max-w-2xl text-pretty @min-[520px]:text-paragraph-13 text-paragraph-14"
+          className="mt-5 text-pretty @min-[520px]:text-paragraph-13 text-paragraph-14"
         />
       ))}
     </div>

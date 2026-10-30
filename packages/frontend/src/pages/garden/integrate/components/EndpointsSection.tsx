@@ -49,7 +49,7 @@ export function EndpointsSection({
 function ApiNotes() {
   return (
     <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
-      <ul className="flex max-w-2xl flex-col gap-2.5">
+      <ul className="flex flex-col gap-2.5">
         {API_NOTES.map((note) => (
           <li
             key={note}
@@ -62,7 +62,7 @@ function ApiNotes() {
           </li>
         ))}
       </ul>
-      <p className="mt-4 max-w-2xl text-pretty text-paragraph-14 text-secondary md:text-paragraph-16">
+      <p className="mt-4 text-pretty text-paragraph-14 text-secondary md:text-paragraph-16">
         Browse the{' '}
         <ExternalLink href={CROPS_API_DOCS_URL}>interactive docs</ExternalLink>{' '}
         or read the{' '}
@@ -108,7 +108,7 @@ function EndpointCard({
       <h3 className="mt-3 font-bold text-heading-18 md:text-heading-20">
         {endpoint.summary}
       </h3>
-      <p className="mt-1 max-w-2xl text-pretty text-paragraph-14 text-secondary md:text-paragraph-16">
+      <p className="mt-1 text-pretty text-paragraph-14 text-secondary md:text-paragraph-16">
         <Markup text={endpoint.description} />
       </p>
       {endpoint.params.length > 0 && (
