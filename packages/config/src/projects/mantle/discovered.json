@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "timestamp": 1792586696,
-  "configHash": "0x6ca9993b54f955fe6182607825e85ce48c83c40d51bba523ac1c6329bc733630",
+  "configHash": "0x85e1d40245ca2000d214769fe150640122026ddc776b161b84d5bea96efdad67",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -901,6 +901,40 @@
       "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
+      "name": "SequencerFeeVault",
+      "address": "mantle:0x4200000000000000000000000000000000000011",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
+        "0x463f090b5881cfb4d2beec55f69ee96ef571669e94cc0607aeefe411950f089e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Collects the sequencer fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "deployerAddress": "mantle:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1688314886,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "mantle:0x4200000000000000000000000000000000000018",
+        "$implementation": "mantle:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "l1FeeWallet": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+        "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
+        "RECIPIENT": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+        "totalProcessed": "7077174882360678038883681",
+        "version": "1.1.0"
+      },
+      "implementationNames": {
+        "mantle:0x4200000000000000000000000000000000000011": "Proxy",
+        "mantle:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011": "SequencerFeeVault"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
+      "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
       "name": "L2ToL1MessagePasser",
       "address": "mantle:0x4200000000000000000000000000000000000016",
       "type": "Contract",
@@ -960,6 +994,111 @@
           "href": "https://basescan.org/address/0xc0d3c0d3c0d3c0d3c0d3c0d3c0d3c0d3c0d30018#code"
         }
       ]
+    },
+    {
+      "name": "BaseFeeVault",
+      "address": "mantle:0x4200000000000000000000000000000000000019",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
+        "0x04df44076e2dd29cd651d5e2e6f9ef10ecd0e270a2c6e6d01aff3f66af686e66"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Collects the EIP-1559 base fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "deployerAddress": "mantle:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1688314886,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "mantle:0x4200000000000000000000000000000000000018",
+        "$implementation": "mantle:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
+        "RECIPIENT": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+        "totalProcessed": "2208159730913940460000000",
+        "version": "1.1.0"
+      },
+      "implementationNames": {
+        "mantle:0x4200000000000000000000000000000000000019": "Proxy",
+        "mantle:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019": "BaseFeeVault"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
+      "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "name": "L1FeeVault",
+      "address": "mantle:0x420000000000000000000000000000000000001A",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
+        "0x04df44076e2dd29cd651d5e2e6f9ef10ecd0e270a2c6e6d01aff3f66af686e66"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "deployerAddress": "mantle:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1688314886,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "mantle:0x4200000000000000000000000000000000000018",
+        "$implementation": "mantle:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
+        "RECIPIENT": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+        "totalProcessed": 0,
+        "version": "1.1.0"
+      },
+      "implementationNames": {
+        "mantle:0x420000000000000000000000000000000000001A": "Proxy",
+        "mantle:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A": "BaseFeeVault"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
+      "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "name": "OperatorFeeVault",
+      "address": "mantle:0x420000000000000000000000000000000000001b",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe25193b3a80e29449b74ddabcadc4a7be2b7d45c9bb86d4613c8f4a4a5de4a53",
+        "0x04df44076e2dd29cd651d5e2e6f9ef10ecd0e270a2c6e6d01aff3f66af686e66"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Collects the operator fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "deployerAddress": "mantle:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1688314886,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "mantle:0x4200000000000000000000000000000000000018",
+        "$implementation": "mantle:0x220280fBf8c32d030c314B4839559706bA7F5691",
+        "$pastUpgrades": [
+          [
+            "2026-04-22T07:00:00.000Z",
+            "0x6c73d3330b8ed907f218c4cdbdcf11b24cfc9a168c2ce9f78fc089248bde3ff0",
+            ["mantle:0x220280fBf8c32d030c314B4839559706bA7F5691"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
+        "RECIPIENT": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+        "totalProcessed": 0,
+        "version": "1.1.0"
+      },
+      "implementationNames": {
+        "mantle:0x420000000000000000000000000000000000001b": "Proxy",
+        "mantle:0x220280fBf8c32d030c314B4839559706bA7F5691": "BaseFeeVault"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "mantle:0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1",
@@ -1473,6 +1612,15 @@
     "mantle:0x09734bB3980906Bb217305EA6Bd34256feEAB105": [
       "constructor(address _singleton)"
     ],
+    "mantle:0x220280fBf8c32d030c314B4839559706bA7F5691": [
+      "constructor(address _recipient)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()"
+    ],
     "mantle:0x4200000000000000000000000000000000000007": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1493,6 +1641,16 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "mantle:0x4200000000000000000000000000000000000011": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "mantle:0x4200000000000000000000000000000000000016": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1504,6 +1662,36 @@
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "mantle:0x4200000000000000000000000000000000000018": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "mantle:0x4200000000000000000000000000000000000019": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "mantle:0x420000000000000000000000000000000000001A": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "mantle:0x420000000000000000000000000000000000001b": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1574,6 +1762,16 @@
       "function withdraw(address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
       "function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable"
     ],
+    "mantle:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011": [
+      "constructor(address _recipient)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function l1FeeWallet() view returns (address)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()"
+    ],
     "mantle:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": [
       "constructor(address _l1mnt)",
       "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 mntValue, uint256 ethValue, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
@@ -1585,6 +1783,24 @@
       "function messageNonce() view returns (uint256)",
       "function sentMessages(bytes32) view returns (bool)",
       "function version() view returns (string)"
+    ],
+    "mantle:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019": [
+      "constructor(address _recipient)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()"
+    ],
+    "mantle:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A": [
+      "constructor(address _recipient)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()"
     ],
     "mantle:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
       "event AddedOwner(address owner)",
@@ -1649,7 +1865,7 @@
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x9a1f78fb3786e973f0204ba0c2838e0a89a5abeba36441b67f62257a9fe0d58c"
   },
   "usedBlockNumbers": { "ethereum": 26241056, "mantle": 102228192 },
-  "permissionsConfigHash": "0xd2a275f13393a14154a6c99f6e2b9f162872e129287327fd49cc40f880b08108",
+  "permissionsConfigHash": "0x035919e449f95aab69a7d73eb53524bc461a100a78f28b35a404b0914742ef98",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"
   },
@@ -1917,6 +2133,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000011",
+          "role": "admin",
+          "via": [
+            { "address": "mantle:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "mantle:0x4200000000000000000000000000000000000016",
           "role": "admin",
           "via": [
@@ -1926,6 +2150,30 @@
         {
           "permission": "upgrade",
           "from": "mantle:0x4200000000000000000000000000000000000018",
+          "role": "admin",
+          "via": [
+            { "address": "mantle:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000019",
+          "role": "admin",
+          "via": [
+            { "address": "mantle:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x420000000000000000000000000000000000001A",
+          "role": "admin",
+          "via": [
+            { "address": "mantle:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x420000000000000000000000000000000000001b",
           "role": "admin",
           "via": [
             { "address": "mantle:0x4200000000000000000000000000000000000018" }
@@ -1954,12 +2202,32 @@
         },
         {
           "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000011",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "mantle:0x4200000000000000000000000000000000000016",
           "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "mantle:0x4200000000000000000000000000000000000018",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x4200000000000000000000000000000000000019",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x420000000000000000000000000000000000001A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x420000000000000000000000000000000000001b",
           "role": "admin"
         }
       ]

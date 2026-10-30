@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xd9c1fa01d64904ea2072eb54d8cd0661d129f713
+
+# Diff at Tue, 27 Oct 2026 14:24:16 GMT:
+
+- id: e09c4376
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d12fbcdceca465d194135b056f6b494973ee3b0f block: 1792587967
+- current timestamp: 1792587967
+
+## Description
+
+Discover the OperatorFeeVault predeploy, so changes to its recipient, withdrawal network and minimum withdrawal show up in diffs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792587967 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"ink:0x420000000000000000000000000000000000001b","role":"admin","via":[{"address":"ink:0x4200000000000000000000000000000000000018"}]}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (ink:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      directlyReceivedPermissions.13:
++        {"permission":"upgrade","from":"ink:0x420000000000000000000000000000000000001b","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OperatorFeeVault (ink:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault]
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+```
+
 Generated with discovered.json: 0xd7e563d8199910646a1abd9fc8a906d2b5228066
 
 # Diff at Wed, 21 Oct 2026 13:48:52 GMT:

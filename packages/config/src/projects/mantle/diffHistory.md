@@ -1,3 +1,74 @@
+Generated with discovered.json: 0xb974a90d2b866fc991bfc401caa084cd7880a629
+
+# Diff at Tue, 27 Oct 2026 14:48:18 GMT:
+
+- id: 21fe5c0b
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b3346aafa392488900d7a556a206cfabc7acf611 block: 1792586696
+- current timestamp: 1792586696
+
+## Description
+
+Discover the L2 fee vaults (sequencer, base, L1 and operator fees), so upgrades to them show up in diffs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792586696 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (mantle:0x09734bB3980906Bb217305EA6Bd34256feEAB105) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"mantle:0x4200000000000000000000000000000000000011","role":"admin","via":[{"address":"mantle:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"mantle:0x4200000000000000000000000000000000000019","role":"admin","via":[{"address":"mantle:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"mantle:0x420000000000000000000000000000000000001A","role":"admin","via":[{"address":"mantle:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"mantle:0x420000000000000000000000000000000000001b","role":"admin","via":[{"address":"mantle:0x4200000000000000000000000000000000000018"}]}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (mantle:0x4200000000000000000000000000000000000018) [N/A] {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"mantle:0x4200000000000000000000000000000000000011","role":"admin"}
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"mantle:0x4200000000000000000000000000000000000019","role":"admin"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"mantle:0x420000000000000000000000000000000000001A","role":"admin"}
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"mantle:0x420000000000000000000000000000000000001b","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SequencerFeeVault (mantle:0x4200000000000000000000000000000000000011) [N/A]
+    +++ description: Collects the sequencer fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
+```
+
+```diff
++   Status: CREATED
+    contract BaseFeeVault (mantle:0x4200000000000000000000000000000000000019) [N/A]
+    +++ description: Collects the EIP-1559 base fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
+```
+
+```diff
++   Status: CREATED
+    contract L1FeeVault (mantle:0x420000000000000000000000000000000000001A) [N/A]
+    +++ description: Collects the L1 data portion of the L2 transaction fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
+```
+
+```diff
++   Status: CREATED
+    contract OperatorFeeVault (mantle:0x420000000000000000000000000000000000001b) [N/A]
+    +++ description: Collects the operator fees, which anyone can withdraw as MNT to the recipient on L1 once the minimum withdrawal amount is reached.
+```
+
 Generated with discovered.json: 0xb976585f7f3e2190c736e05b1172702fbf3c77b7
 
 # Diff at Sat, 24 Oct 2026 16:41:06 GMT:

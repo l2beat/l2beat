@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xb5e3bfcf111e835244986574b0343050219f0ee7
+
+# Diff at Tue, 27 Oct 2026 14:24:30 GMT:
+
+- id: 8f7784e3
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d12fbcdceca465d194135b056f6b494973ee3b0f block: 1791538610
+- current timestamp: 1791538610
+
+## Description
+
+Discover the OperatorFeeVault predeploy, so upgrades to it show up in diffs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791538610 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (base:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.12:
++        {"permission":"upgrade","from":"base:0x420000000000000000000000000000000000001b","role":"admin"}
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"base:0x420000000000000000000000000000000000001b","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OperatorFeeVault (base:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault]
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+```
+
 Generated with discovered.json: 0xb014cd6e694ec54707e4443698ca7526db6719a4
 
 # Diff at Sat, 24 Oct 2026 16:41:04 GMT:
