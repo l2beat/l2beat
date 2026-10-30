@@ -234,6 +234,13 @@ export class WormholeConfigPlugin
         'Failed to parse Wormhole core contracts from docs, the page structure or URL likely changed',
       )
     }
+    if (tokenBridgeByChain.size === 0) {
+      throw new Error(
+        'Failed to parse Wormhole token bridges from docs, the page structure or URL likely changed',
+      )
+    }
+
+    const previousNetworks = this.store.get(WormholeConfig) ?? []
 
     const abi = parseAbi(['function chainId() view returns (uint16)'])
     const data = encodeFunctionData({
@@ -303,11 +310,17 @@ export class WormholeConfigPlugin
           tokenBridge: tokenBridgeByChain.get(chain.name),
         }
       } catch (error) {
-        this.logger.debug('Failed to resolve Wormhole core for chain', {
+        // A failed call says nothing about the chain, so keep the last verified
+        // entry instead of replacing it with one that has no core contract.
+        const previous = previousNetworks.find(
+          (n) => n.chain === chain.name && n.coreContract,
+        )
+        this.logger.warn('Failed to resolve Wormhole core for chain', {
           chain: chain.name,
+          keptPrevious: previous !== undefined,
           error,
         })
-        return undefined
+        return previous
       }
     })
 
