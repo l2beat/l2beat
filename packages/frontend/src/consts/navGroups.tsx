@@ -124,12 +124,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
           title: 'ZK Catalog',
           href: '/zk-catalog',
         },
-        // Not built yet, or behind a flag: listed, but not links.
-        {
-          title: 'Audits',
-          href: '/security/audits',
-          disabled: true,
-        },
+        // Behind a flag: listed, but not a link.
         {
           title: 'Ossification',
           href: '/ossification',
