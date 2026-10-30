@@ -169,7 +169,7 @@ export const celo: ScalingProject = opStackL2({
         'Governance token':
           '`CELO` — 1,000,000,000 total supply. Voting weight comes from Locked CELO, not raw balance. Governance is native to the Celo chain and predates the L2 migration.',
         'Voting venue':
-          'The onchain `Governance` contract on Celo, with proposals raised as CGPs and discussed on the [Celo forum](https://forum.celo.org). Ethereum-side rollup contracts are not reachable from it.',
+          'The onchain `Governance` contract on Celo, with proposals raised as CGPs, discussed on the [Celo forum](https://forum.celo.org) and voted on in [Celo Mondo](https://mondo.celo.org/governance). Ethereum-side rollup contracts are not reachable from it.',
         'Proposal threshold':
           '**10,000 CELO deposit** to queue a proposal. Queued proposals expire after 4 weeks, and only the 3 most-upvoted are promoted to a vote each day.',
         Quorum:
