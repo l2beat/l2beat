@@ -183,7 +183,7 @@ function BadgeTile({
         <img
           src={asset.url}
           alt={`CROPS ${asset.kind}, ${label.toLowerCase()}`}
-          className="h-auto max-w-full"
+          className="h-auto max-h-full max-w-full object-contain"
           style={{ width }}
         />
       </div>
