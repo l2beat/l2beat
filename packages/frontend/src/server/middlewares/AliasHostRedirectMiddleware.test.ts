@@ -1,5 +1,5 @@
 import { request } from 'node:http'
-import type { AddressInfo } from 'node:net'
+import { type AddressInfo, connect } from 'node:net'
 import { expect } from 'earl'
 import express from 'express'
 import { AliasHostRedirectMiddleware } from './AliasHostRedirectMiddleware'
@@ -56,18 +56,63 @@ describe(AliasHostRedirectMiddleware.name, () => {
   it('serves health checks on an alias host', async () => {
     expect(await get('alias.example', '/health')).toEqual({ status: 200 })
   })
+
+  it('serves requests without a Host header', async () => {
+    expect(await getWithoutHost('/faq')).toEqual({ status: 200 })
+  })
 })
 
 function get(host: string, path: string, aliasHosts = ALIAS_HOSTS) {
   return send('GET', host, path, aliasHosts)
 }
 
-async function send(
+function send(
   method: string,
   host: string,
   path: string,
   aliasHosts = ALIAS_HOSTS,
-): Promise<{ status: number; location?: string }> {
+) {
+  return withServer(
+    aliasHosts,
+    (port) =>
+      new Promise<{ status: number; location?: string }>((resolve, reject) => {
+        request({ port, method, path, headers: { host } }, (res) => {
+          res.resume()
+          const status = res.statusCode ?? 0
+          const location = res.headers.location
+          resolve(location === undefined ? { status } : { status, location })
+        })
+          .on('error', reject)
+          .end()
+      }),
+  )
+}
+
+// Node's server rejects HTTP/1.1 without Host, but HTTP/1.0 may omit it, and
+// the http client can't speak HTTP/1.0, so write the request by hand.
+function getWithoutHost(path: string) {
+  return withServer(
+    ALIAS_HOSTS,
+    (port) =>
+      new Promise<{ status: number }>((resolve, reject) => {
+        let response = ''
+        connect(port)
+          .on('data', (chunk) => {
+            response += chunk
+          })
+          .on('end', () => {
+            resolve({ status: Number(response.split(' ')[1]) })
+          })
+          .on('error', reject)
+          .end(`GET ${path} HTTP/1.0\r\n\r\n`)
+      }),
+  )
+}
+
+async function withServer<T>(
+  aliasHosts: string[],
+  run: (port: number) => Promise<T>,
+): Promise<T> {
   const app = express()
   app.use(AliasHostRedirectMiddleware(CANONICAL_ORIGIN, aliasHosts))
   app.all('/{*path}', (_req, res) => {
@@ -79,16 +124,7 @@ async function send(
   const { port } = server.address() as AddressInfo
 
   try {
-    return await new Promise((resolve, reject) => {
-      request({ port, method, path, headers: { host } }, (res) => {
-        res.resume()
-        const status = res.statusCode ?? 0
-        const location = res.headers.location
-        resolve(location === undefined ? { status } : { status, location })
-      })
-        .on('error', reject)
-        .end()
-    })
+    return await run(port)
   } finally {
     await new Promise((resolve) => server.close(resolve))
   }

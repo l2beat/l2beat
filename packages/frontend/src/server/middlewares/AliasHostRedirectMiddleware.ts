@@ -20,7 +20,8 @@ export function AliasHostRedirectMiddleware(
 
   return (req: Request, res: Response, next: NextFunction) => {
     if (
-      !redirectedHosts.has(req.hostname.toLowerCase()) ||
+      // hostname is undefined for HTTP/1.0 requests without a Host header.
+      !redirectedHosts.has(req.hostname?.toLowerCase() ?? '') ||
       req.path === '/health'
     ) {
       return next()
