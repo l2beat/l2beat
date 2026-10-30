@@ -26,6 +26,8 @@ export function getTrustedSetupsSectionFromTrustedSetups(
         risk: ts.risk,
         description: ts.longDescription,
         proofSystems: [ts.proofSystem],
+        participantCount: ts.participantCount,
+        phases: ts.phases,
       }
     } else {
       trustedSetup.proofSystems.push(ts.proofSystem)

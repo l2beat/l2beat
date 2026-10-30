@@ -5,6 +5,7 @@ import { Markdown } from '~/components/markdown/Markdown'
 import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import { ProjectSection } from './ProjectSection'
+import { TrustedSetupParticipants } from './TrustedSetupParticipants'
 import type { ProjectSectionProps } from './types'
 
 export interface TrustedSetupSectionProps extends ProjectSectionProps {
@@ -13,6 +14,8 @@ export interface TrustedSetupSectionProps extends ProjectSectionProps {
     risk: TrustedSetup['risk']
     description: TrustedSetup['longDescription']
     proofSystems: ZkCatalogTag[]
+    participantCount?: TrustedSetup['participantCount']
+    phases?: TrustedSetup['phases']
   }[]
 }
 
@@ -43,6 +46,10 @@ export function TrustedSetupSection({
                     ))}
                   </div>
                 </div>
+                <TrustedSetupParticipants
+                  participantCount={trustedSetup.participantCount}
+                  phases={trustedSetup.phases}
+                />
                 <div className="space-y-2">
                   <h3 className="font-semibold text-secondary text-subtitle-12 uppercase">
                     Detailed description
