@@ -82,13 +82,13 @@ const MORE_ABOUT_US = [
   {
     title: 'Governance',
     description:
-      'The L2BEAT Governance Team: the latest insights, analyses, and updates.',
+      'The ETHBEAT Governance Team: the latest insights, analyses, and updates.',
     href: '/governance',
   },
   {
     title: 'Donate',
     description:
-      "Support L2BEAT's independent research & development with a donation.",
+      "Support ETHBEAT's independent research & development with a donation.",
     href: '/donate',
   },
 ]

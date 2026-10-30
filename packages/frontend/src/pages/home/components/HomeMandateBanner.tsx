@@ -1,3 +1,4 @@
+import { Logo } from '~/components/Logo'
 import { cn } from '~/utils/cn'
 import {
   HOME_BANNER_CLASS,
@@ -13,7 +14,7 @@ const MANDATE_HREF = '/about-us'
 /**
  * Beside CROPS from md; on phones between Ethereum and Interop.
  * The mandate itself is drawn in the corner, flat like the garden beside it:
- * a charter signed with L2BEAT's heartbeat and sealed with its heart.
+ * a charter signed with ETHBEAT's heartbeat and sealed with its heart.
  */
 export function HomeMandateBanner({ className }: { className?: string }) {
   return (
@@ -54,7 +55,7 @@ export function HomeMandateBanner({ className }: { className?: string }) {
             )}
           >
             {/* "stands for" stays together when the line wraps. */}
-            What L2BEAT stands{'\u00a0'}for and how we work.
+            What ETHBEAT stands{'\u00a0'}for and how we work.
           </p>
         </div>
       </a>
@@ -74,10 +75,6 @@ const RULE_STYLE = {
   bottom: 'calc(var(--charter-w) * (170 - 132 - 1.75) / 180 - 14px)',
   right: 'calc(var(--charter-w) * (180 - 26) / 180 - 14px)',
 }
-
-/** A heart, 24 units square, as in the logo's mark. */
-const HEART =
-  'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'
 
 /** The charter's lines of text: [y, width], ragged like a real paragraph. */
 const TEXT_LINES = [
@@ -129,7 +126,7 @@ function MandateCharter({ className }: { className?: string }) {
           className="fill-[#ccd0da]"
         />
       ))}
-      {/* Signed with the beat in L2BEAT, once, as the page loads. It starts
+      {/* Signed with the beat in ETHBEAT, once, as the page loads. It starts
           at the edge, where the banner's rule meets it. */}
       <path
         d="M26 132h40l6-12 9 26 8-34 6 20h14"
@@ -144,13 +141,8 @@ function MandateCharter({ className }: { className?: string }) {
           animation: 'mandate-sign 0.9s ease-out 0.4s both',
         }}
       />
-      {/* The seal: the heart of the logo. */}
-      <circle cx="134" cy="132" r="17" className="fill-brand" />
-      <path
-        d={HEART}
-        transform="translate(123 121) scale(0.92)"
-        className="fill-white"
-      />
+      {/* The seal: the logo's heart, still, where the heartbeat ends. */}
+      <Logo small animated={false} x="109" y="116" width="36" height="32" />
     </svg>
   )
 }
