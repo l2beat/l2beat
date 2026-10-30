@@ -119,7 +119,8 @@ export function ActivityChangePins({
       isDesktop ? MAX_PINS_DESKTOP : MAX_PINS_MOBILE,
       Math.max(1, Math.floor(plotArea.width / PLOT_WIDTH_PER_PIN)),
     )
-    const located = [...events]
+    const located = events
+      .filter((e) => e.isPeak)
       .sort((a, b) => b.score - a.score)
       .flatMap((event) => {
         const point = locate(event)
@@ -250,6 +251,9 @@ export function ActivityChangePins({
               collisionPadding={16}
               aria-label="Change breakdown"
               className="max-h-(--radix-popover-content-available-height) w-[360px] overflow-y-auto p-4"
+              // The portal keeps React's tree: clicks here would bubble to
+              // the chart and reopen whatever day was last hovered.
+              onClick={(e) => e.stopPropagation()}
               onOpenAutoFocus={(e) => {
                 if (!openedWithKeyboardRef.current) e.preventDefault()
               }}
@@ -487,8 +491,10 @@ function ChangeDetails({
         ))}
       </div>
       <p className="mt-3 text-2xs text-secondary leading-snug">
-        Each project is compared with its own previous {BASELINE_DAYS} days.
-        This shows where activity changed, not why.
+        Pins mark days when a category moved far outside its usual range. Each
+        project is compared with its median day over the previous{' '}
+        {BASELINE_DAYS} days; the baseline is the sum of those medians. This
+        shows where activity changed, not why.
       </p>
       <div className="mt-3 flex items-center justify-between gap-2 border-divider border-t pt-3">
         {position && position.count > 1 ? (
@@ -733,7 +739,7 @@ function IconButton({
   )
 }
 
-/** One line for the hover tooltip under a category that changed that day. */
+/** A short summary for the hover tooltip under a category that changed. */
 export function ActivityChangeTooltipLine({
   event,
   projects,
@@ -747,21 +753,28 @@ export function ActivityChangeTooltipLine({
   const project = leader && projects[leader.projectId]
   const word = event.observed < event.baseline ? 'drop' : 'rise'
   return (
-    <div className="-mt-1 flex flex-col pl-5 text-2xs text-secondary">
-      <span>
-        {formatRelative(event)} vs {BASELINE_DAYS}-day baseline
-      </span>
-      {project && leader && (
+    <div className="-mt-1 flex flex-col gap-0.5 pl-5 text-2xs text-secondary leading-snug">
+      {project && leader ? (
         <span className="flex items-center gap-1">
-          <img src={project.iconUrl} alt="" className="size-3 rounded-full" />
+          <img
+            src={project.iconUrl}
+            alt=""
+            className="size-3 shrink-0 rounded-full"
+          />
           <span>
             <span className="font-medium text-primary">{project.name}</span>
             {isOverWhole(leader.share)
-              ? `: more than the whole ${word}`
-              : `: ${Math.round(leader.share * 100)}% of the ${word}`}
+              ? ` alone moved more than the whole ${word}`
+              : ` accounts for ${Math.round(leader.share * 100)}% of the ${word}`}
           </span>
         </span>
+      ) : (
+        <span>
+          The {word} is spread across{' '}
+          {event.contributors.length + event.restCount} projects
+        </span>
       )}
+      <span>({formatVsBaseline(event)})</span>
       {showHint && <span className="text-brand">Click for the breakdown</span>}
     </div>
   )
@@ -778,7 +791,8 @@ export function ActivityChangeEventsList({
   if (events.length === 0) return null
   return (
     <ul className="sr-only" aria-label="Notable changes (automated)">
-      {[...events]
+      {events
+        .filter((e) => e.isPeak)
         .sort((a, b) => a.timestamp - b.timestamp)
         .map((event) => (
           <li key={getEventKey(event)}>{getEventLabel(event, projects)}</li>
@@ -832,6 +846,15 @@ function formatRelative(event: ActivityChangeEvent) {
   if (ratio >= 3) return `▲ ${Math.round(ratio)}×`
   const pct = Math.round(Math.abs(ratio - 1) * 100)
   return ratio >= 1 ? `▲ ${pct}%` : `▼ ${pct}%`
+}
+
+function formatVsBaseline(event: ActivityChangeEvent) {
+  const period = `the previous ${BASELINE_DAYS} days`
+  if (event.baseline <= 0) return `up from no activity in ${period}`
+  const ratio = event.observed / event.baseline
+  if (ratio >= 3) return `${Math.round(ratio)}× its usual level over ${period}`
+  const pct = Math.round(Math.abs(ratio - 1) * 100)
+  return `${pct}% ${ratio >= 1 ? 'above' : 'below'} its usual level over ${period}`
 }
 
 function formatSignedRate(delta: number) {

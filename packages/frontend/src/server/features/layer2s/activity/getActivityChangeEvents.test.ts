@@ -95,7 +95,7 @@ describe(computeActivityChangeEvents.name, () => {
     expect(events).toEqual([])
   })
 
-  it('reports one event per run of notable days, at its peak', () => {
+  it('keeps every day of a multi-day surge and marks its peak', () => {
     const events = compute(
       steadyA,
       series('b', (d) =>
@@ -103,7 +103,10 @@ describe(computeActivityChangeEvents.name, () => {
       ),
     )
 
-    expect(events.map((e) => e.timestamp)).toEqual([DAY_35])
+    expect(events.map((e) => [e.timestamp, e.isPeak])).toEqual([
+      [DAY_35 - UnixTime.DAY, false],
+      [DAY_35, true],
+    ])
   })
 
   it('treats a surge with a calm day in the middle as one event', () => {
@@ -114,6 +117,8 @@ describe(computeActivityChangeEvents.name, () => {
       ),
     )
 
-    expect(events.map((e) => e.timestamp)).toEqual([DAY_35])
+    expect(events.filter((e) => e.isPeak).map((e) => e.timestamp)).toEqual([
+      DAY_35,
+    ])
   })
 })

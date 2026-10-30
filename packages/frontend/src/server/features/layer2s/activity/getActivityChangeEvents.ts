@@ -54,6 +54,8 @@ export interface ActivityChangeEvent {
   contributors: ActivityChangeContributor[]
   restDelta: number
   restCount: number
+  /** The strongest day of its episode; only peaks get a pin. */
+  isPeak: boolean
 }
 
 export interface ActivityChangeEventsData {
@@ -230,12 +232,13 @@ export function computeActivityChangeEvents(
             .filter(([, delta]) => delta !== 0),
           restDelta: rest.reduce((sum, [, delta]) => sum + delta, 0),
           restCount: rest.filter(([, delta]) => delta !== 0).length,
+          isPeak: false,
         })
       }
     }
   }
 
-  return keepEpisodePeaks(candidates)
+  return markEpisodePeaks(candidates)
 }
 
 function getCategoryDay(
@@ -282,39 +285,37 @@ function getCategoryDay(
 
 /**
  * Notable days in the same direction, at most a few days apart, are one
- * event: keep only the day with the largest change.
+ * episode: its day with the largest change is the peak. The other days stay,
+ * so a multi-day surge is explained on every day it covers.
  */
-function keepEpisodePeaks(
+function markEpisodePeaks(
   candidates: ActivityChangeEvent[],
 ): ActivityChangeEvent[] {
-  const result: ActivityChangeEvent[] = []
+  const events = [...candidates].sort((a, b) => a.timestamp - b.timestamp)
   const episodeByKey = new Map<
     string,
-    { lastTimestamp: number; index: number }
+    { lastTimestamp: number; peak: ActivityChangeEvent }
   >()
 
-  for (const event of [...candidates].sort(
-    (a, b) => a.timestamp - b.timestamp,
-  )) {
+  for (const event of events) {
     const change = event.observed - event.baseline
     const key = `${event.metric}:${event.category}:${Math.sign(change)}`
     const episode = episodeByKey.get(key)
 
     if (episode && event.timestamp - episode.lastTimestamp <= MAX_EPISODE_GAP) {
       episode.lastTimestamp = event.timestamp
-      const peak = result[episode.index]
-      if (peak && Math.abs(change) > Math.abs(peak.observed - peak.baseline)) {
-        result[episode.index] = event
+      const { peak } = episode
+      if (Math.abs(change) > Math.abs(peak.observed - peak.baseline)) {
+        peak.isPeak = false
+        event.isPeak = true
+        episode.peak = event
       }
     } else {
-      result.push(event)
-      episodeByKey.set(key, {
-        lastTimestamp: event.timestamp,
-        index: result.length - 1,
-      })
+      event.isPeak = true
+      episodeByKey.set(key, { lastTimestamp: event.timestamp, peak: event })
     }
   }
-  return result
+  return events
 }
 
 function getRobustZ(value: number, history: number[]): number | undefined {

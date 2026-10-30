@@ -180,9 +180,9 @@ export function L2RecategorizedActivityChart({
           // On touch the pins open the drawer; a tap on the chart only
           // shows the tooltip.
           if (!isDesktop || state.activeLabel == null) return
-          const [event] = (
-            eventsByTimestamp.get(Number(state.activeLabel)) ?? []
-          ).sort((a, b) => b.score - a.score)
+          const [event] = [
+            ...(eventsByTimestamp.get(Number(state.activeLabel)) ?? []),
+          ].sort((a, b) => b.score - a.score)
           if (event) setOpenChangeKey(getEventKey(event))
         }}
       >
@@ -227,7 +227,11 @@ export function L2RecategorizedActivityChart({
         />
         <ChartTooltip
           // The details popover or drawer replaces the tooltip while open.
-          active={openChangeKey ? false : undefined}
+          active={
+            events.some((e) => getEventKey(e) === openChangeKey)
+              ? false
+              : undefined
+          }
           content={
             <CustomTooltip
               syncedUntil={data?.syncedUntil}
