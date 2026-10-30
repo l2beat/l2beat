@@ -23,7 +23,10 @@ export function HomeNewProjectsCard({
   }
   return (
     <HomeCard
-      className={cn('flex recent-cols:min-h-0 flex-col gap-2', className)}
+      className={cn(
+        'flex home-wide:min-h-0 recent-cols:min-h-0 flex-col gap-2',
+        className,
+      )}
     >
       <HomeCardHeader title="New research" />
       <NewProjects projects={projects} />
@@ -35,13 +38,13 @@ const STACKED_PROJECTS_COUNT = 5
 
 function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
   return (
-    // Row height and lines as in the rankings. Beside the articles the list
-    // takes the height they leave (a 0px height, so it never sets it, but
-    // room for five) and shows as many whole rows as fit. Stacked it shows
-    // five.
+    // Row height and lines as in the rankings. Beside the articles, or beside
+    // interop in the page's three columns, the list takes the height they
+    // leave (a 0px height, so it never sets it, but room for five) and shows
+    // as many whole rows as fit. Stacked it shows five.
     <ul
       className={cn(
-        'recent-cols:home-fill-rows flex recent-cols:h-0 recent-cols:min-h-[200px] recent-cols:flex-1 flex-col recent-cols:overflow-hidden',
+        'recent-cols:home-fill-rows home-wide:home-fill-rows flex home-wide:h-0 recent-cols:h-0 home-wide:min-h-[200px] recent-cols:min-h-[200px] home-wide:flex-1 recent-cols:flex-1 flex-col home-wide:overflow-hidden recent-cols:overflow-hidden',
         HOME_ROW_LINES_CLASS,
       )}
     >
@@ -51,7 +54,8 @@ function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
           className={cn(
             'flex w-full shrink-0',
             HOME_ROW_CLASS,
-            index >= STACKED_PROJECTS_COUNT && 'recent-cols:flex hidden',
+            index >= STACKED_PROJECTS_COUNT &&
+              'home-wide:flex recent-cols:flex hidden',
           )}
         >
           <a

@@ -13,16 +13,19 @@ import {
 export function HomePrivacyCard({
   data,
   projectCount,
+  className,
 }: {
   data: HomePrivacyData
   /** Every privacy project we track, for the link under the ranking. */
   projectCount: number
+  className?: string
 }) {
   const { tvl, deposits } = data
   return (
     <HomeDomainCard
       title="Privacy"
       link={{ href: '/privacy', label: `All ${projectCount} projects` }}
+      className={className}
     >
       <HomeKpiRow>
         <HomeKpiTile

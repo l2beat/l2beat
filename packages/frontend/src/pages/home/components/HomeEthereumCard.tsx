@@ -13,10 +13,23 @@ import { HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
 
 /** Ethereum's blob data and activity, a chart pair like every other card's. */
-export function HomeEthereumCard({ charts }: { charts: HomeEthereumCharts }) {
+export function HomeEthereumCard({
+  charts,
+  className,
+}: {
+  charts: HomeEthereumCharts
+  className?: string
+}) {
   const { activity, da } = charts
   return (
-    <HomeCard className="flex min-w-0 flex-col gap-5">
+    // Beside the domain cards (`home-wide`) it takes their title and chart
+    // rows, so its parts stay level with theirs.
+    <HomeCard
+      className={cn(
+        'home-wide:row-span-2 flex home-wide:grid min-w-0 home-wide:grid-rows-subgrid flex-col gap-5 home-wide:gap-6',
+        className,
+      )}
+    >
       <HomeCardHeader
         title="Ethereum"
         subtitle={env.CLIENT_SIDE_BLOBS_PAGE && <LiveBlobsLink />}

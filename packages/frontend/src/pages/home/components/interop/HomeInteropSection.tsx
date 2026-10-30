@@ -12,6 +12,7 @@ import {
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import { useTRPC } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { HomeCard } from '../HomeCard'
 import { HomeCardHeader } from '../HomeCardHeader'
 import { InteropCornerFigures } from './InteropCornerFigures'
@@ -26,11 +27,13 @@ export function HomeInteropSection({
   chains,
   defaultSelectedChains,
   protocols,
+  className,
 }: {
   /** Every active chain, ordered by volume. */
   chains: InteropChainWithIcon[]
   defaultSelectedChains: string[]
   protocols: InteropFlowsProtocol[]
+  className?: string
 }) {
   return (
     <InteropFlowsProvider
@@ -38,12 +41,12 @@ export function HomeInteropSection({
       protocols={protocols}
       defaultSelectedChains={defaultSelectedChains}
     >
-      <Content />
+      <Content className={className} />
     </InteropFlowsProvider>
   )
 }
 
-function Content() {
+function Content({ className }: { className?: string }) {
   const trpc = useTRPC()
   const { allChains, selectedChains, selectedProtocols } = useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
@@ -74,14 +77,15 @@ function Content() {
   const figures = data && getInteropFigures(data.stats, allChains)
 
   return (
-    <HomeCard className="flex flex-col gap-5">
+    <HomeCard className={cn('flex flex-col gap-5', className)}>
       <HomeCardHeader
         title="Interop"
         subtitle="Last 24h"
         link={{ href: '/interop/summary', label: 'Dashboard' }}
       />
-      {/* From lg the section is as tall as the column beside it; from md to
-          lg it has the whole row, so its body is 480px tall. Either way the
+      {/* From lg the section is as tall as the column beside it, its body at
+          least 480px (400px in the page's three columns); from md to lg it
+          has the whole row, so its body is 480px tall. Either way the
           body is a size container (it never sets the height itself). Roughly
           square, the graph fills it, the largest square it fits with 48px
           spare at either side, and the figures go in the corners its ring
@@ -91,7 +95,7 @@ function Content() {
           figures, the graph as a square (smaller when the height runs out, so
           nothing spills), then as many top protocols as the height left holds.
           Below md it stacks too, the graph a fixed-size square. */}
-      <div className="relative flex min-w-0 flex-col gap-5 md:max-lg:h-[480px] lg:min-h-[480px] lg:flex-1 lg:basis-0 md:[container:interop-body/size]">
+      <div className="relative flex home-wide:min-h-[400px] min-w-0 flex-col gap-5 md:max-lg:h-[480px] lg:min-h-[480px] lg:flex-1 lg:basis-0 md:[container:interop-body/size]">
         {figures && (
           // Two rows of three on shared tracks, spread from edge to edge: the
           // first column flush left, the last flush right, so the figures

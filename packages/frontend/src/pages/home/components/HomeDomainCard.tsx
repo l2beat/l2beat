@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { cn } from '~/utils/cn'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 
@@ -10,6 +11,7 @@ import { HomeCardHeader } from './HomeCardHeader'
 export function HomeDomainCard({
   title,
   link,
+  className,
   children,
 }: {
   title: string
@@ -18,12 +20,18 @@ export function HomeDomainCard({
    * everything we track.
    */
   link: { href: string; label: string }
+  className?: string
   children: ReactNode
 }) {
   return (
     // 24px between the parts, 32px above the ranking: it is a block of its
     // own, not a caption to the charts.
-    <HomeCard className="row-span-3 grid min-w-0 grid-rows-subgrid gap-6 [&>:nth-child(3)]:mt-2">
+    <HomeCard
+      className={cn(
+        'row-span-3 grid min-w-0 grid-rows-subgrid gap-6 [&>:nth-child(3)]:mt-2',
+        className,
+      )}
+    >
       <HomeCardHeader title={title} link={link} />
       {children}
     </HomeCard>

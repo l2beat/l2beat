@@ -45,8 +45,11 @@ import { getHomeResearch } from './getHomeResearch'
 import { HOME_CHART_RANGE } from './homeChartRanges'
 
 const TOP_L2_PROJECTS_COUNT = 5
-/** Beside the articles new research shows as many as fit, at least five. */
-const RECENT_PROJECTS_COUNT = 8
+/**
+ * Beside the articles, or beside interop on wide screens, new research shows
+ * as many as fit, at least five.
+ */
+const RECENT_PROJECTS_COUNT = 12
 
 export async function getHomeData(
   req: Request,

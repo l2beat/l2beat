@@ -42,13 +42,13 @@ export function HomeCropsBanner({
       <a href={GARDEN_PATH}>
         <GardenLandscape
           flat
-          className="left-[40%]"
+          className="home-wide:left-[50%] left-[40%] max-md:left-[48%]"
           // The sun climbs a little over the hills on hover.
           lightClassName="top-[38%] left-[72%] size-36 transition-[translate] duration-500 ease-out group-hover:-translate-y-[65%]"
         >
           <GardenFlowers flowers={FLOWERS} motion="grow" />
         </GardenLandscape>
-        <div className="relative flex max-w-[54%] flex-col gap-1.5">
+        <div className="relative flex home-wide:max-w-[64%] max-w-[54%] flex-col gap-1.5 max-md:max-w-[64%]">
           {/* The whole card is the link; the sentence says what CROPS is. */}
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <h2 className={cn(HOME_TEXT.title, HOME_BANNER_TITLE_CLASS)}>
@@ -59,7 +59,14 @@ export function HomeCropsBanner({
               <span className={HOME_TEXT.meta}>{projects.length} projects</span>
             </span>
           </div>
-          <p className={HOME_TEXT.body}>
+          {/* Balanced only where its column is narrow: on phones and in the
+              three columns. */}
+          <p
+            className={cn(
+              HOME_TEXT.body,
+              'home-wide:text-balance max-md:text-balance',
+            )}
+          >
             Protocols that hold to CROPS:{' '}
             {CROP_COLUMNS.map((crop, index) => (
               <span key={crop.key}>

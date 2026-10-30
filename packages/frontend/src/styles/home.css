@@ -1,6 +1,35 @@
 /* The home page's layout variants and utilities. Its theme (.home-theme)
    stays in globals.css, after :root and .dark, which it overrides. */
 
+/* Three columns once the page is wide enough that two would stretch every
+   card: the banners in a row, the domains side by side with Ethereum and the
+   articles under it, then interop across two columns beside new research.
+   Each card names its area (`home-wide:[grid-area:…]`). */
+@custom-variant home-wide {
+  @container home (width >= 1400px) {
+    @slot;
+  }
+}
+@utility home-areas {
+  grid-template-areas:
+    "crops changes mandate"
+    "privacy l2 ethereum"
+    "privacy l2 ethereum"
+    "privacy l2 articles"
+    "interop interop research"
+    "question question question";
+}
+/* Without the garden (it is behind a flag) the mandate takes its place. */
+@utility home-areas-no-crops {
+  grid-template-areas:
+    "mandate mandate changes"
+    "privacy l2 ethereum"
+    "privacy l2 ethereum"
+    "privacy l2 articles"
+    "interop interop research"
+    "question question question";
+}
+
 /* Two columns under Ethereum (HomeRecentColumn): articles over project
    changes, new research beside them. */
 @custom-variant recent-cols {

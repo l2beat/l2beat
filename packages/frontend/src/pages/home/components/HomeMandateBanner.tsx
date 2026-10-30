@@ -11,11 +11,11 @@ import { HomeCard } from './HomeCard'
 const MANDATE_HREF = '/about-us'
 
 /**
- * Beside CROPS from lg; alone below it, where the menu takes CROPS's place.
+ * Beside CROPS from md, under it on phones.
  * The mandate itself is drawn in the corner, flat like the garden beside it:
  * a charter signed with L2BEAT's heartbeat and sealed with its heart.
  */
-export function HomeMandateBanner() {
+export function HomeMandateBanner({ className }: { className?: string }) {
   return (
     // The page's one block of colour.
     <HomeCard
@@ -24,6 +24,7 @@ export function HomeMandateBanner() {
       className={cn(
         HOME_BANNER_CLASS,
         'bg-brand pb-7 text-pure-white [--charter-w:6rem] md:pb-8 lg:[--charter-w:7rem] xl:[--charter-w:8rem]',
+        className,
       )}
     >
       <a href={MANDATE_HREF}>

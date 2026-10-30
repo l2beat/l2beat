@@ -1,14 +1,20 @@
 import { externalLinks } from '~/consts/externalLinks'
 import { CustomLinkIcon } from '~/icons/Outlink'
+import { cn } from '~/utils/cn'
 import { HOME_BUTTON_CLASS, HOME_TEXT } from '../homeStyles'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 
 /** The page's close: the question and its answer on one row from md. */
-export function HomeQuestionCard() {
+export function HomeQuestionCard({ className }: { className?: string }) {
   return (
     // In ink, closing the page as the pink mandate opens it.
-    <HomeCard className="home-inverted flex flex-col gap-4 text-primary md:flex-row md:items-center md:justify-between md:gap-8">
+    <HomeCard
+      className={cn(
+        'home-inverted flex flex-col gap-4 text-primary md:flex-row md:items-center md:justify-between md:gap-8',
+        className,
+      )}
+    >
       <div className="flex flex-col gap-1.5">
         <HomeCardHeader title="Have a question?" />
         <p className={HOME_TEXT.body}>

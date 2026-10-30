@@ -68,7 +68,13 @@ export function HomeProjectChangesBanner({
       trigger={
         <HomeCard
           asChild
-          className={cn(HOME_BANNER_CLASS, 'w-full text-left', className)}
+          // A button centres its content when stretched; start it at the
+          // top like the other banners in its row.
+          className={cn(
+            HOME_BANNER_CLASS,
+            'flex w-full flex-col justify-start text-left',
+            className,
+          )}
         >
           <button type="button">{content}</button>
         </HomeCard>

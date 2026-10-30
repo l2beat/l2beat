@@ -17,9 +17,15 @@ interface Props {
   topProjects: HomeTopL2Project[]
   /** Every Layer 2 we track, for the link under the ranking. */
   projectCount: number
+  className?: string
 }
 
-export function HomeL2Card({ charts, topProjects, projectCount }: Props) {
+export function HomeL2Card({
+  charts,
+  topProjects,
+  projectCount,
+  className,
+}: Props) {
   const { tvs, activity } = charts
   return (
     <HomeDomainCard
@@ -28,6 +34,7 @@ export function HomeL2Card({ charts, topProjects, projectCount }: Props) {
         href: '/layer2s/summary',
         label: `All ${projectCount} projects`,
       }}
+      className={className}
     >
       <HomeKpiRow>
         <HomeKpiTile
