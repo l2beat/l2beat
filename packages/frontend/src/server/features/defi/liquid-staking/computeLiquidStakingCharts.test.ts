@@ -120,57 +120,130 @@ describe(computeCostOfExitChart.name, () => {
       1e-6,
     )
 
-    // The first request counts even while the second is still queued.
+    // While the second is still queued, it waits at the pace of the
+    // finalizations so far: half a request an hour, with half a request
+    // ahead of it, so one more hour after the hour it has waited.
     const partial = compute([project('etherfi')], snapshots.slice(0, -1))
     expect(present(partial.costOfExit[0]?.projects.etherfi)).toBeCloseTo(
-      1 / 24,
-      1e-6,
+      (1 + 2) / 2 / 24,
+      1e-12,
     )
+    expect(partial.costOfExit[0]?.estimated).toEqual(['etherfi'])
+    expect(completed.costOfExit[0]?.estimated).toEqual([])
   })
 
   it('takes the market when it is cheaper than the queue', () => {
-    const prices = new Map([
-      ['ethereum', dailyPrices(2000)],
-      // 0.1% under its ETH backing.
-      ['wrapped-beacon-eth', dailyPrices(2000 * 1.01 * 0.999)],
-    ])
     const charts = compute(
       [project('wbeth')],
       [
         snapshot('wbeth', START + DAY, 1.0),
-        snapshot('wbeth', DAY_31, 1.01, { lockTime: 40 * DAY }),
+        // 100 tokens fetch 0.1% under what they're worth at the rate.
+        snapshot('wbeth', DAY_31, 1.01, {
+          lockTime: 40 * DAY,
+          marketExitEth: (100_899n * ETH) / 1000n,
+          marketExitValueEth: 101n * ETH,
+        }),
       ],
-      [],
-      prices,
     )
     const annualYield = 0.01 * (365 / 30)
     expect(present(charts.costOfExit[0]?.projects.wbeth)).toBeCloseTo(
       (0.001 * 365) / annualYield,
-      1e-6,
+      1e-9,
     )
   })
 
-  it('exits Rocket Pool at once while its buffer holds ETH', () => {
+  it('exits Rocket Pool at once only while its buffer holds the reference exit', () => {
+    const at = (instantExitEth: bigint) =>
+      compute(
+        [project('rocketpool')],
+        [
+          snapshot('rocketpool', START + DAY, 1),
+          snapshot('rocketpool', DAY_31, 1, {
+            instantExitEth,
+            instantExitFeeBps: 0,
+          }),
+        ],
+      ).costOfExit[0]?.projects.rocketpool
+
+    expect(at(100n * ETH)).toEqual(0)
+    // Dust in the buffer pays out nothing worth counting.
+    expect(at(ETH)).toEqual(null)
+  })
+
+  it('counts an instant redemption’s fee in days of yield', () => {
     const charts = compute(
-      [project('rocketpool')],
+      [project('etherfi')],
       [
-        snapshot('rocketpool', START + DAY, 1),
-        snapshot('rocketpool', DAY_31, 1, { instantExitEth: ETH }),
+        snapshot('etherfi', START + DAY, 1.0),
+        snapshot('etherfi', DAY_31, 1.003, {
+          instantExitEth: 500n * ETH,
+          instantExitFeeBps: 30,
+        }),
       ],
     )
-    expect(charts.costOfExit[0]?.projects.rocketpool).toEqual(0)
+    const annualYield = 0.003 * (365 / 30)
+    expect(present(charts.costOfExit[0]?.projects.etherfi)).toBeCloseTo(
+      (0.003 * 365) / annualYield,
+      1e-9,
+    )
+  })
+
+  it('makes wBETH unwraps wait at least the lock, even without requests', () => {
+    const lockTime = 10 * DAY
+    const quiet = compute(
+      [project('wbeth')],
+      [snapshot('wbeth', DAY_31, 1, { lockTime })],
+    )
+    expect(quiet.costOfExit[0]?.projects.wbeth).toEqual(10)
+
+    // A request allocated ETH after an hour still waits out its lock.
+    const allocated = compute(
+      [project('wbeth')],
+      [
+        snapshot('wbeth', DAY_31, 1, {
+          lockTime,
+          lastRequestId: 5,
+          lastFinalizedRequestId: 5,
+        }),
+        snapshot('wbeth', DAY_31 + HOUR, 1, {
+          lockTime,
+          lastRequestId: 6,
+          lastFinalizedRequestId: 5,
+        }),
+        snapshot('wbeth', DAY_31 + 2 * HOUR, 1, {
+          lockTime,
+          lastRequestId: 6,
+          lastFinalizedRequestId: 6,
+        }),
+      ],
+    )
+    expect(allocated.costOfExit[0]?.projects.wbeth).toEqual(10)
   })
 })
 
 describe(getQueueWaits.name, () => {
-  it('stops at the first requests that are still queued', () => {
+  it('estimates the requests still queued from the finalization pace', () => {
+    expect(
+      getQueueWaits([
+        { timestamp: 0, lastRequestId: 1, lastFinalizedRequestId: 1 },
+        { timestamp: HOUR, lastRequestId: 3, lastFinalizedRequestId: 1 },
+        { timestamp: 2 * HOUR, lastRequestId: 5, lastFinalizedRequestId: 3 },
+      ]),
+    ).toEqual([
+      { timestamp: HOUR, requests: 2, hours: 1, estimated: false },
+      // One request finalized an hour; the middle of 3 to 5 is one ahead.
+      { timestamp: 2 * HOUR, requests: 2, hours: 1, estimated: true },
+    ])
+  })
+
+  it('counts the wait so far when nothing has finalized lately', () => {
     expect(
       getQueueWaits([
         { timestamp: 0, lastRequestId: 1, lastFinalizedRequestId: 1 },
         { timestamp: HOUR, lastRequestId: 2, lastFinalizedRequestId: 1 },
-        { timestamp: 2 * HOUR, lastRequestId: 3, lastFinalizedRequestId: 2 },
+        { timestamp: 3 * HOUR, lastRequestId: 2, lastFinalizedRequestId: 1 },
       ]),
-    ).toEqual([{ timestamp: HOUR, requests: 1, hours: 1 }])
+    ).toEqual([{ timestamp: HOUR, requests: 1, hours: 2, estimated: true }])
   })
 })
 
@@ -178,7 +251,6 @@ function compute(
   projects: LiquidStakingChartToken[],
   snapshots: LiquidStakingSnapshotRecord[],
   network: EthereumStakingDailyRecord[] = [],
-  prices = new Map<string, Map<number, number>>(),
 ) {
   const days = [UnixTime(DAY_31)]
   return {
@@ -188,20 +260,14 @@ function compute(
       snapshots,
       network,
     }),
-    costOfExit: computeCostOfExitChart({ days, projects, snapshots, prices }),
+    costOfExit: computeCostOfExitChart({ days, projects, snapshots }),
   }
 }
 
 function project(
   type: LiquidStakingChartToken['type'],
 ): LiquidStakingChartToken {
-  const priceIds = {
-    lido: 'wrapped-steth',
-    rocketpool: 'rocket-pool-eth',
-    etherfi: 'wrapped-eeth',
-    wbeth: 'wrapped-beacon-eth',
-  }
-  return { id: type, type, priceId: priceIds[type] }
+  return { id: type, type }
 }
 
 function snapshot(
@@ -219,7 +285,10 @@ function snapshot(
     lastRequestId: null,
     lastFinalizedRequestId: null,
     instantExitEth: null,
+    instantExitFeeBps: null,
     lockTime: null,
+    marketExitEth: null,
+    marketExitValueEth: null,
     ...exit,
   }
 }
@@ -244,12 +313,6 @@ function day(
     blockCount: 7200,
     builderBlockCount: 6300,
   }
-}
-
-function dailyPrices(usd: number): Map<number, number> {
-  return new Map(
-    Array.from({ length: 40 }, (_, i) => [START + i * DAY, usd] as const),
-  )
 }
 
 function present(value: number | null | undefined): number {

@@ -46,6 +46,8 @@ interface Props {
   isLoading: boolean
   formatYAxisLabel: (value: number) => string
   formatTooltipValue: (value: number) => string
+  /** Whether a series' value on a day is an estimate, shown with ~. */
+  isEstimated?: (timestamp: number, key: string) => boolean
   background?: LiquidStakingChartBackground
 }
 
@@ -56,6 +58,7 @@ export function LiquidStakingLineChart({
   isLoading,
   formatYAxisLabel,
   formatTooltipValue,
+  isEstimated,
   background,
 }: Props) {
   const chartMeta = useMemo<ChartMeta>(() => {
@@ -151,6 +154,7 @@ export function LiquidStakingLineChart({
           content={
             <CustomTooltip
               formatValue={formatTooltipValue}
+              isEstimated={isEstimated}
               background={background}
             />
           }
@@ -164,9 +168,11 @@ function CustomTooltip({
   payload,
   label,
   formatValue,
+  isEstimated,
   background,
 }: CustomChartTooltipProps & {
   formatValue: (value: number) => string
+  isEstimated?: (timestamp: number, key: string) => boolean
   background?: LiquidStakingChartBackground
 }) {
   const { meta } = useChart()
@@ -204,7 +210,7 @@ function CustomTooltip({
                 color={config.color}
                 indicator={config.indicatorType ?? { shape: 'line' }}
                 label={config.label}
-                value={formatValue(entry.value)}
+                value={`${entry.name && isEstimated?.(label, entry.name) ? '~' : ''}${formatValue(entry.value)}`}
               />
             )
           })}

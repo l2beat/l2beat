@@ -1,4 +1,7 @@
-import type { LiquidStakingSummary } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
+import type {
+  LiquidStakingLatestValue,
+  LiquidStakingSummary,
+} from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import { formatDays, formatYield } from './formatLiquidStaking'
 
 /** Shown next to the metrics, in the table and on project pages. */
@@ -23,8 +26,16 @@ export const COST_OF_EXIT_METRIC: LiquidStakingMetric = {
   key: 'costOfExit',
   title: 'Cost of exit',
   tooltip:
-    'How many days of staking yield a holder gives up to exit, by the cheaper route: waiting for a protocol withdrawal, which earns nothing while queued, or selling at the market discount.',
+    "How many days of staking yield a holder gives up to exit about 100 ETH, by the cheapest route: the protocol's withdrawal queue, which earns nothing while it waits; the protocol's instant exit, for its fee; or selling on the best onchain pool, for its discount. ~ marks an estimate: requests still queued are timed at the last 7 days' pace.",
   format: formatDays,
+}
+
+/** A latest value, marked with ~ when it's an estimate. */
+export function formatLatestValue(
+  metric: LiquidStakingMetric,
+  latest: LiquidStakingLatestValue,
+): string {
+  return `${latest.estimated ? '~' : ''}${metric.format(latest.value)}`
 }
 
 /** The chart values, also shown in the table and on project pages. */

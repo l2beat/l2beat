@@ -18,6 +18,8 @@ export interface LiquidStakingSummary {
 export interface LiquidStakingLatestValue {
   value: number
   timestamp: number
+  /** It counts requests still queued, at an estimated wait. */
+  estimated: boolean
 }
 
 /** The project's row of the liquid staking page, with the latest chart values. */
@@ -55,12 +57,16 @@ export function buildLiquidStakingSummary(
 }
 
 function getLatestValue(
-  points: LiquidStakingChartPoint[],
+  points: (LiquidStakingChartPoint & { estimated?: string[] })[],
   projectId: string,
 ): LiquidStakingLatestValue | undefined {
   const latest = points.findLast((point) => point.projects[projectId] != null)
   const value = latest?.projects[projectId]
   return latest && value != null
-    ? { value, timestamp: latest.timestamp }
+    ? {
+        value,
+        timestamp: latest.timestamp,
+        estimated: latest.estimated?.includes(projectId) ?? false,
+      }
     : undefined
 }

@@ -98,7 +98,6 @@ export const wbeth: BaseProject = {
     ],
   },
   liquidStaking: {
-    priceId: 'wrapped-beacon-eth',
     contracts: {
       type: 'wbeth',
       wBETH: discovery.getContract('wBETH').address,

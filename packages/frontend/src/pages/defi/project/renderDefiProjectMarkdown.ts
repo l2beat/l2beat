@@ -5,7 +5,10 @@ import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import { formatUtcDateTime } from '~/server/markdown/renderSectionParts'
 import { getUnderReviewText } from '~/utils/project/underReview'
-import { LIQUID_STAKING_METRICS } from '../liquid-staking/liquidStakingMetrics'
+import {
+  formatLatestValue,
+  LIQUID_STAKING_METRICS,
+} from '../liquid-staking/liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquid-staking/liquidStakingRisks'
 
 /**
@@ -62,12 +65,12 @@ function getFacts(
 function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
   if (!summary) return []
   return compact([
-    ...LIQUID_STAKING_METRICS.map(({ key, title, tooltip, format }) => {
-      const latest = summary[key]
+    ...LIQUID_STAKING_METRICS.map((metric) => {
+      const latest = summary[metric.key]
       return (
         latest && {
-          label: title,
-          value: `${format(latest.value)} (on ${formatUtcDateTime(UnixTime(latest.timestamp))}). ${tooltip}`,
+          label: metric.title,
+          value: `${formatLatestValue(metric, latest)} (on ${formatUtcDateTime(UnixTime(latest.timestamp))}). ${metric.tooltip}`,
         }
       )
     }),

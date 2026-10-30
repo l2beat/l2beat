@@ -9,6 +9,7 @@ import type {
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import { formatTimestamp } from '~/utils/dates'
 import {
+  formatLatestValue,
   LIQUID_STAKING_METRICS,
   TVL_TOOLTIP,
 } from '../../liquid-staking/liquidStakingMetrics'
@@ -34,14 +35,16 @@ export function LiquidStakingProjectSummary({
             )
           }
         />
-        {LIQUID_STAKING_METRICS.map(({ key, title, tooltip, format }) => {
-          const latest = summary[key]
+        {LIQUID_STAKING_METRICS.map((metric) => {
+          const latest = summary[metric.key]
           return (
             <ProjectSummaryStat
-              key={key}
-              title={title}
-              tooltip={withDate(tooltip, latest)}
-              value={latest ? format(latest.value) : <NoDataBadge />}
+              key={metric.key}
+              title={metric.title}
+              tooltip={withDate(metric.tooltip, latest)}
+              value={
+                latest ? formatLatestValue(metric, latest) : <NoDataBadge />
+              }
             />
           )
         })}

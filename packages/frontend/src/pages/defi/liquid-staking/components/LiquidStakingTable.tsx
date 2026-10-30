@@ -15,7 +15,11 @@ import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
-import { LIQUID_STAKING_METRICS, TVL_TOOLTIP } from '../liquidStakingMetrics'
+import {
+  formatLatestValue,
+  LIQUID_STAKING_METRICS,
+  TVL_TOOLTIP,
+} from '../liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquidStakingRisks'
 
 const columnHelper = createColumnHelper<LiquidStakingEntry>()
@@ -68,20 +72,22 @@ const columns = [
       tooltip: TVL_TOOLTIP,
     },
   }),
-  ...LIQUID_STAKING_METRICS.map(({ key, title, tooltip, format }) =>
-    columnHelper.accessor((entry) => entry[key]?.value, {
-      id: key,
-      header: title,
+  ...LIQUID_STAKING_METRICS.map((metric) =>
+    columnHelper.accessor((entry) => entry[metric.key]?.value, {
+      id: metric.key,
+      header: metric.title,
       cell: (ctx) => {
-        const value = ctx.getValue()
-        return value === undefined ? (
+        const latest = ctx.row.original[metric.key]
+        return latest === undefined ? (
           <NoDataBadge />
         ) : (
-          <span className="font-medium text-sm">{format(value)}</span>
+          <span className="font-medium text-sm">
+            {formatLatestValue(metric, latest)}
+          </span>
         )
       },
       sortUndefined: 'last',
-      meta: { align: 'right', tooltip },
+      meta: { align: 'right', tooltip: metric.tooltip },
     }),
   ),
   ...LIQUID_STAKING_RISKS.map(({ key, title, tooltip }) =>

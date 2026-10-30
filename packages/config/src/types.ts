@@ -1071,8 +1071,6 @@ export interface ProjectDefiRiskValue extends TableReadyValue {
 export interface ProjectLiquidStaking {
   /** When the token launched, if after 2024-01-01, where the indexer starts. */
   sinceTimestamp?: UnixTime
-  /** CoinGecko id of the token the exchange rate is for, priced by TVS. */
-  priceId: string
   /** What the liquid staking indexer reads. */
   contracts: ProjectLiquidStakingContracts
   /** The row of the liquid staking risk comparison. */

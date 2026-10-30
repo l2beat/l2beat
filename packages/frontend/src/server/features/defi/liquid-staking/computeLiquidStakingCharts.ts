@@ -5,19 +5,23 @@ import type {
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type {
-  LiquidStakingChartPoint,
+  LiquidStakingCostOfExitPoint,
   LiquidStakingYieldPoint,
 } from './getLiquidStakingCharts'
 
 /** Yields and the network line are measured over this many days. */
 export const YIELD_WINDOW_DAYS = 30
-/** The market discount is a median over this many days, to smooth out spikes. */
-const DISCOUNT_WINDOW_DAYS = 7
+/**
+ * The exit the cost is measured for. A protocol's instant exit counts only
+ * when it can pay this out, and the market quotes sell 100 tokens.
+ */
+export const REFERENCE_EXIT_ETH = 100
+/** Requests still queued are estimated at the finalization pace of this many days. */
+const PACE_WINDOW_DAYS = 7
 
 export interface LiquidStakingChartToken {
   id: string
   type: ProjectLiquidStakingContracts['type']
-  priceId: string
 }
 
 export interface YieldChartInputs {
@@ -34,10 +38,8 @@ export interface CostOfExitChartInputs {
   /** The chart's days, oldest first. */
   days: UnixTime[]
   projects: LiquidStakingChartToken[]
-  /** Hourly, oldest first, from YIELD_WINDOW_DAYS before the first day. */
+  /** Hourly, oldest first, from YIELD_WINDOW_DAYS before the first day to now. */
   snapshots: LiquidStakingSnapshotRecord[]
-  /** USD price by price id, then by day. */
-  prices: Map<string, Map<number, number>>
 }
 
 const DAY = UnixTime.DAY
@@ -66,27 +68,29 @@ export function computeYieldChart(
 
 export function computeCostOfExitChart(
   inputs: CostOfExitChartInputs,
-): LiquidStakingChartPoint[] {
+): LiquidStakingCostOfExitPoint[] {
   const byProject = new Map(
     inputs.projects.map((project) => [
       project.id,
       new ExitCostSeries(
         project,
         inputs.snapshots.filter((s) => s.projectId === project.id),
-        inputs.prices,
       ),
     ]),
   )
 
-  return inputs.days.map((day) => ({
-    timestamp: day,
-    projects: Object.fromEntries(
-      inputs.projects.map((p) => [
-        p.id,
-        byProject.get(p.id)?.costOfExitAt(day) ?? null,
-      ]),
-    ),
-  }))
+  return inputs.days.map((day) => {
+    const costs = inputs.projects.map(
+      (p) => [p.id, byProject.get(p.id)?.costOfExitAt(day) ?? null] as const,
+    )
+    return {
+      timestamp: day,
+      projects: Object.fromEntries(
+        costs.map(([id, cost]) => [id, cost?.days ?? null]),
+      ),
+      estimated: costs.filter(([, cost]) => cost?.estimated).map(([id]) => id),
+    }
+  })
 }
 
 /** A token's exchange rate, by snapshot time. */
@@ -115,85 +119,123 @@ class ExchangeRates {
   }
 }
 
+interface ExitCost {
+  days: number
+  /** It counts requests still queued, at an estimated wait. */
+  estimated: boolean
+}
+
 class ExitCostSeries {
   private readonly rates: ExchangeRates
-  private readonly byTimestamp: Map<number, LiquidStakingSnapshotRecord>
-  /** Request day → the request-weighted wait of its requests, in days. */
-  private readonly queueWaitDays: Map<number, number>
+  /** Day start → that day's hourly snapshots. */
+  private readonly hoursByDay: Map<number, LiquidStakingSnapshotRecord[]>
+  /** Request day → the request-weighted wait of its requests. */
+  private readonly queueWaits: Map<number, ExitCost>
 
   constructor(
     private readonly project: LiquidStakingChartToken,
     snapshots: LiquidStakingSnapshotRecord[],
-    private readonly prices: Map<string, Map<number, number>>,
   ) {
     this.rates = new ExchangeRates(snapshots)
-    this.byTimestamp = new Map(snapshots.map((s) => [s.timestamp, s]))
-    this.queueWaitDays = averageWaitByDay(getQueueWaits(snapshots))
+    this.hoursByDay = new Map()
+    for (const snapshot of snapshots) {
+      const day = UnixTime.toStartOf(snapshot.timestamp, 'day')
+      const hours = this.hoursByDay.get(day) ?? []
+      hours.push(snapshot)
+      this.hoursByDay.set(day, hours)
+    }
+    const lockTimes = new Map(snapshots.map((s) => [s.timestamp, s.lockTime]))
+    this.queueWaits = averageWaitByDay(
+      getQueueWaits(snapshots),
+      // An unwrapped wBETH request also waits out its lock.
+      (timestamp) => lockTimes.get(timestamp) ?? 0,
+    )
   }
 
-  /** Days of yield an exit costs, by the cheaper of the queue and the market. */
-  costOfExitAt(day: number): number | null {
-    const routes = [this.queueDaysAt(day), this.marketDaysAt(day)].filter(
-      (days): days is number => days !== null,
+  /** Days of yield an exit costs, by the cheapest route. */
+  costOfExitAt(day: number): ExitCost | null {
+    const annualYield = this.rates.yieldAt(day)
+    const routes = [
+      this.queueAt(day),
+      this.instantAt(day, annualYield),
+      this.marketAt(day, annualYield),
+    ].filter((route): route is ExitCost => route !== null)
+    return routes.reduce<ExitCost | null>(
+      (best, route) => (best === null || route.days < best.days ? route : best),
+      null,
     )
-    return routes.length > 0 ? Math.min(...routes) : null
   }
 
   /** A queued exit earns nothing while it waits, so it costs the wait. */
-  private queueDaysAt(day: number): number | null {
-    switch (this.project.type) {
-      case 'lido':
-      case 'etherfi':
-        return this.queueWaitDays.get(day) ?? null
-      case 'rocketpool': {
-        // Burning rETH pays out at once while the buffer has ETH.
-        const buffer = this.byTimestamp.get(day)?.instantExitEth
-        return buffer ? 0 : null
-      }
-      case 'wbeth': {
-        const lockTime = this.byTimestamp.get(day)?.lockTime
-        return lockTime != null ? lockTime / DAY : null
-      }
-    }
+  private queueAt(day: number): ExitCost | null {
+    const wait = this.queueWaits.get(day)
+    if (wait || this.project.type !== 'wbeth') return wait ?? null
+    // Without requests that day, an exit would still wait out the lock.
+    const lockTime = this.hoursByDay.get(day)?.[0]?.lockTime
+    return lockTime != null ? { days: lockTime / DAY, estimated: false } : null
+  }
+
+  /**
+   * Burning rETH, or ether.fi's instant redemption, when it could pay out the
+   * reference exit for most of the day. The fee costs the days of yield it
+   * equals.
+   */
+  private instantAt(day: number, annualYield: number | null): ExitCost | null {
+    const hours = this.hoursByDay.get(day) ?? []
+    const open = hours.filter(
+      (s) =>
+        s.instantExitEth !== null &&
+        toEth(s.instantExitEth) >= REFERENCE_EXIT_ETH,
+    )
+    if (open.length === 0 || open.length * 2 < hours.length) return null
+    const feeBps = median(open.map((s) => s.instantExitFeeBps ?? 0)) ?? 0
+    const days = toYieldDays(feeBps / 10_000, annualYield)
+    return days === null ? null : { days, estimated: false }
   }
 
   /** Selling at a discount costs the days of yield the discount equals. */
-  private marketDaysAt(day: number): number | null {
-    const annualYield = this.rates.yieldAt(day)
-    if (annualYield === null || annualYield <= 0) return null
-
-    const discounts: number[] = []
-    for (let i = 0; i < DISCOUNT_WINDOW_DAYS; i++) {
-      const discount = this.discountAt(day - i * DAY)
-      if (discount !== undefined) discounts.push(discount)
-    }
+  private marketAt(day: number, annualYield: number | null): ExitCost | null {
+    const discounts = (this.hoursByDay.get(day) ?? []).flatMap((s) =>
+      s.marketExitEth !== null && s.marketExitValueEth
+        ? [1 - toEth(s.marketExitEth) / toEth(s.marketExitValueEth)]
+        : [],
+    )
     const discount = median(discounts)
     if (discount === undefined) return null
-    // A token at a premium exits for free.
-    return (Math.max(0, discount) * 365) / annualYield
+    // Selling at a premium exits for free.
+    const days = toYieldDays(Math.max(0, discount), annualYield)
+    return days === null ? null : { days, estimated: false }
   }
+}
 
-  /** How far below its ETH backing the token trades. */
-  private discountAt(day: number): number | undefined {
-    const rate = this.rates.at(day)
-    const tokenUsd = this.prices.get(this.project.priceId)?.get(day)
-    const ethUsd = this.prices.get('ethereum')?.get(day)
-    if (rate === undefined || tokenUsd === undefined || !ethUsd) return
-    return 1 - tokenUsd / (rate * ethUsd)
-  }
+/** A cost as a share of the exit, in the days of yield it takes to earn. */
+function toYieldDays(cost: number, annualYield: number | null): number | null {
+  if (cost === 0) return 0
+  if (annualYield === null || annualYield <= 0) return null
+  return (cost * 365) / annualYield
+}
+
+interface QueueWait {
+  /** The snapshot that first counted the requests. */
+  timestamp: number
+  requests: number
+  hours: number
+  estimated: boolean
 }
 
 /**
  * Split each hour's requests by when they finalized. Both counters only
- * grow, so one pass finds every completed portion's wait.
+ * grow, so one pass finds every completed portion's wait. Requests still
+ * queued at the last snapshot get an estimated wait.
  */
 export function getQueueWaits(
   snapshots: Pick<
     LiquidStakingSnapshotRecord,
     'timestamp' | 'lastRequestId' | 'lastFinalizedRequestId'
   >[],
-): { timestamp: number; requests: number; hours: number }[] {
-  const waits: { timestamp: number; requests: number; hours: number }[] = []
+): QueueWait[] {
+  const waits: QueueWait[] = []
+  const queued: { timestamp: number; from: number; to: number }[] = []
   let finalizedAt = 0
   for (let i = 1; i < snapshots.length; i++) {
     const previous = snapshots[i - 1]?.lastRequestId
@@ -203,8 +245,15 @@ export function getQueueWaits(
     let requestId = previous
     while (requestId < current.lastRequestId) {
       const finalized = snapshots[finalizedAt]
-      // Requests still queued have no wait yet; later hours queue behind them.
-      if (finalized === undefined) return waits
+      if (finalized === undefined) {
+        // Not finalized by the last snapshot, and later hours queue behind.
+        queued.push({
+          timestamp: current.timestamp,
+          from: requestId,
+          to: current.lastRequestId,
+        })
+        break
+      }
       const last = Math.min(
         finalized.lastFinalizedRequestId ?? -1,
         current.lastRequestId,
@@ -214,32 +263,87 @@ export function getQueueWaits(
           timestamp: current.timestamp,
           requests: last - requestId,
           hours: (finalized.timestamp - current.timestamp) / UnixTime.HOUR,
+          estimated: false,
         })
         requestId = last
       }
       if (requestId < current.lastRequestId) finalizedAt++
     }
   }
-  return waits
+  return [...waits, ...estimateQueuedWaits(snapshots, queued)]
+}
+
+/**
+ * Requests still queued finalize in order at the pace of the last
+ * PACE_WINDOW_DAYS. With no pace to go by, each has waited at least until
+ * the last snapshot.
+ */
+function estimateQueuedWaits(
+  snapshots: Pick<
+    LiquidStakingSnapshotRecord,
+    'timestamp' | 'lastFinalizedRequestId'
+  >[],
+  queued: { timestamp: number; from: number; to: number }[],
+): QueueWait[] {
+  const last = snapshots.at(-1)
+  const lastFinalized = last?.lastFinalizedRequestId
+  if (last === undefined || lastFinalized == null) return []
+  const paceStart = snapshots.find(
+    (s) => s.timestamp >= last.timestamp - PACE_WINDOW_DAYS * DAY,
+  )
+  const finalizedPerHour =
+    paceStart?.lastFinalizedRequestId != null && paceStart !== last
+      ? (lastFinalized - paceStart.lastFinalizedRequestId) /
+        ((last.timestamp - paceStart.timestamp) / UnixTime.HOUR)
+      : 0
+
+  return queued.map(({ timestamp, from, to }) => {
+    // The middle request of the portion stands for all of it.
+    const ahead = Math.max(0, (from + to) / 2 - lastFinalized)
+    const hoursLeft = finalizedPerHour > 0 ? ahead / finalizedPerHour : 0
+    return {
+      timestamp,
+      requests: to - from,
+      hours: (last.timestamp - timestamp) / UnixTime.HOUR + hoursLeft,
+      estimated: true,
+    }
+  })
 }
 
 /**
  * The request-weighted wait of each day's requests, in days. Requests made in
  * the hour before a snapshot belong to that hour, so midnight closes a day.
+ * `minimumWait` is the wait, in seconds, of every request at a snapshot.
  */
 function averageWaitByDay(
-  waits: { timestamp: number; requests: number; hours: number }[],
-): Map<number, number> {
-  const totals = new Map<number, { requests: number; hours: number }>()
+  waits: QueueWait[],
+  minimumWait: (timestamp: number) => number,
+): Map<number, ExitCost> {
+  const totals = new Map<
+    number,
+    { requests: number; hours: number; estimated: boolean }
+  >()
   for (const wait of waits) {
     const day = UnixTime.toStartOf(UnixTime(wait.timestamp - 1), 'day')
-    const total = totals.get(day) ?? { requests: 0, hours: 0 }
+    const total = totals.get(day) ?? {
+      requests: 0,
+      hours: 0,
+      estimated: false,
+    }
+    const hours = Math.max(
+      wait.hours,
+      minimumWait(wait.timestamp) / UnixTime.HOUR,
+    )
     total.requests += wait.requests
-    total.hours += wait.requests * wait.hours
+    total.hours += wait.requests * hours
+    total.estimated ||= wait.estimated
     totals.set(day, total)
   }
   return new Map(
-    [...totals].map(([day, t]) => [day, t.hours / t.requests / 24]),
+    [...totals].map(([day, t]) => [
+      day,
+      { days: t.hours / t.requests / 24, estimated: t.estimated },
+    ]),
   )
 }
 

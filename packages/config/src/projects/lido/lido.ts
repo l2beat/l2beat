@@ -198,8 +198,6 @@ export const lido: BaseProject = {
     ],
   },
   liquidStaking: {
-    // Per wstETH, like the indexed rate.
-    priceId: 'wrapped-steth',
     contracts: {
       type: 'lido',
       stETH: discovery.getContract(STETH).address,

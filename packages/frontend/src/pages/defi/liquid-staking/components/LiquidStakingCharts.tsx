@@ -155,6 +155,15 @@ function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
       })),
     [data],
   )
+  const estimated = useMemo(
+    () =>
+      new Set(
+        data?.flatMap((point) =>
+          point.estimated.map((id) => `${point.timestamp}:${id}`),
+        ),
+      ),
+    [data],
+  )
 
   return (
     <ChartCard
@@ -162,7 +171,7 @@ function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
       title="Cost of exit"
       info={[
         COST_OF_EXIT_METRIC.tooltip,
-        'The discount is a 7-day median of market prices. For wBETH the wait is the operator-set lock time.',
+        "The discount is the day's median of hourly quotes for selling 100 tokens on the deepest pools. An instant exit counts on days it could pay out 100 ETH. wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time; its pools are too thin to quote.",
       ].join(' ')}
       range={range}
       setRange={setRange}
@@ -174,6 +183,7 @@ function CostOfExitChart({ projectSeries, defaultRange }: ChartProps) {
         isLoading={isLoading}
         formatYAxisLabel={(value) => `${value.toFixed(0)}d`}
         formatTooltipValue={formatDays}
+        isEstimated={(timestamp, key) => estimated.has(`${timestamp}:${key}`)}
       />
     </ChartCard>
   )

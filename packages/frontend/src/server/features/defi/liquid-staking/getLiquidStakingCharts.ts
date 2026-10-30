@@ -30,13 +30,18 @@ const FIRST_DAY =
 /** Both charts, for the latest values a page shows next to them. */
 export interface LiquidStakingCharts {
   yield: LiquidStakingYieldPoint[]
-  costOfExit: LiquidStakingChartPoint[]
+  costOfExit: LiquidStakingCostOfExitPoint[]
 }
 
 export interface LiquidStakingChartPoint {
   timestamp: number
   /** By project id, null on days without data. */
   projects: Record<string, number | null>
+}
+
+export interface LiquidStakingCostOfExitPoint extends LiquidStakingChartPoint {
+  /** Projects whose value counts requests still queued, at an estimated wait. */
+  estimated: string[]
 }
 
 export interface LiquidStakingYieldPoint extends LiquidStakingChartPoint {
@@ -82,10 +87,10 @@ export async function getLiquidStakingYieldChart(
   })
 }
 
-/** In days of yield, by the cheaper of the queue and the market. */
+/** In days of yield, by the cheapest route. */
 export async function getLiquidStakingCostOfExitChart(
   params: LiquidStakingChartsParams,
-): Promise<LiquidStakingChartPoint[]> {
+): Promise<LiquidStakingCostOfExitPoint[]> {
   const projects = await getLiquidStakingProjects()
   const projectIds = projects.map((project) => project.id)
   if (env.MOCK) {
@@ -94,48 +99,31 @@ export async function getLiquidStakingCostOfExitChart(
     return days.map((timestamp, i) => ({
       timestamp,
       projects: byProject(projectIds, costOfExit, i),
+      estimated: i === days.length - 1 ? projectIds : [],
     }))
   }
   const { from, to, lookback } = getDays(params)
-  const priceIds = ['ethereum', ...projects.map((p) => p.liquidStaking.priceId)]
-  const db = getDb()
-  const [snapshots, prices] = await Promise.all([
-    db.liquidStakingSnapshot.getByProjectsInRange(
-      projects.map((p) => p.id),
-      lookback,
-      // Up to now, so requests made by the chart's end find when they were
-      // finalized, even when that came after the end.
-      UnixTime.now(),
-    ),
-    Promise.all(
-      priceIds.map(async (priceId) => {
-        const records = await db.tvsPrice.getPricesInRangeByPriceId(
-          priceId,
-          lookback,
-          to,
-        )
-        return [
-          priceId,
-          new Map(records.map((r) => [r.timestamp, r.priceUsd])),
-        ] as const
-      }),
-    ),
-  ])
+  const snapshots = await getDb().liquidStakingSnapshot.getByProjectsInRange(
+    projects.map((p) => p.id),
+    lookback,
+    // Up to now, so requests made by the chart's end find when they were
+    // finalized, even when that came after the end, and the estimate for
+    // requests still queued starts from the latest counters.
+    UnixTime.now(),
+  )
   return computeCostOfExitChart({
     days: generateTimestamps([from, to], 'day'),
     projects: projects.map((p) => ({
       id: p.id,
       type: p.liquidStaking.contracts.type,
-      priceId: p.liquidStaking.priceId,
     })),
     snapshots,
-    prices: new Map(prices),
   })
 }
 
 /**
  * The chart's first and last day, and how far back the first day's values
- * look: its yield a window, its discount a week.
+ * look: a yield window.
  */
 function getDays(params: LiquidStakingChartsParams) {
   const to = UnixTime.toStartOf(UnixTime(params.range[1]), 'day')

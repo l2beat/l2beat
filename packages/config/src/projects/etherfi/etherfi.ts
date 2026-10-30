@@ -150,7 +150,6 @@ export const etherfi: BaseProject = {
     ],
   },
   liquidStaking: {
-    priceId: 'wrapped-eeth',
     contracts: {
       type: 'etherfi',
       weETH: discovery.getContract('weETH').address,
