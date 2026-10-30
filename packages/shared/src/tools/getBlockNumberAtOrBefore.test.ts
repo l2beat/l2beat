@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { TargetNotReadyError } from './DataNotReadyError'
 import { getBlockNumberAtOrBefore } from './getBlockNumberAtOrBefore'
 
 const linear =
@@ -34,6 +35,62 @@ describe(getBlockNumberAtOrBefore.name, async () => {
       getBlock,
     )
     expect(res).toEqual(rhs)
+  })
+
+  describe('with requireLaterBlock', () => {
+    it('is not ready when the timestamp is at or after rhsTimestamp', async () => {
+      const getBlock = linear(7, 42)
+      const rhs = 77
+      const rhsTimestamp = (await getBlock(rhs)).timestamp
+
+      for (const timestamp of [rhsTimestamp, rhsTimestamp + 1]) {
+        await expect(
+          getBlockNumberAtOrBefore(UnixTime(timestamp), 0, rhs, getBlock, {
+            requireLaterBlock: true,
+          }),
+        ).toBeRejectedWith(TargetNotReadyError)
+      }
+    })
+
+    it('reports the tip when not ready', async () => {
+      const getBlock = linear(7, 42)
+      const rhs = 77
+      const rhsTimestamp = (await getBlock(rhs)).timestamp
+
+      const error = await getBlockNumberAtOrBefore(
+        UnixTime(rhsTimestamp + 1),
+        0,
+        rhs,
+        getBlock,
+        { requireLaterBlock: true },
+      ).catch((e: unknown) => e)
+
+      expect(error).toEqual(
+        new TargetNotReadyError(UnixTime(rhsTimestamp + 1), rhs, rhsTimestamp),
+      )
+    })
+
+    it('is not ready when the only block is at the timestamp', async () => {
+      const getBlock = linear(10)
+      await expect(
+        getBlockNumberAtOrBefore(UnixTime(420), 42, 42, getBlock, {
+          requireLaterBlock: true,
+        }),
+      ).toBeRejectedWith(TargetNotReadyError)
+    })
+
+    it('returns the last block at or before the timestamp once rhsBlock is after it', async () => {
+      // two blocks per timestamp, so the last one is not the first match
+      const getBlock = async (n: number) => ({ timestamp: Math.floor(n / 2) })
+      const res = await getBlockNumberAtOrBefore(
+        UnixTime(30),
+        0,
+        62,
+        getBlock,
+        { requireLaterBlock: true },
+      )
+      expect(res).toEqual(61)
+    })
   })
 
   it('returns exact block when timestamp matches one inside the range', async () => {

@@ -1,6 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import type { BlockTimestampProvider } from '@l2beat/shared'
+import {
+  type BlockTimestampProvider,
+  TargetNotReadyError,
+} from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { ActivityConfigProject } from '../../../config/Config'
@@ -65,6 +68,55 @@ describe(BlockTargetIndexer.name, () => {
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
       ).toHaveBeenNthCalledWith(1, LAST_HOUR, 'chain')
+    })
+
+    it('throws while the chain tip has not passed the target hour', async () => {
+      const target = UnixTime.now() - 10 * UnixTime.MINUTE
+      const clock = mockObject<Clock>({ getLastHour: () => target })
+      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+        getBlockNumberAtOrBefore: mockFn().rejectsWithOnce(
+          new TargetNotReadyError(target, 122, target - 5),
+        ),
+      })
+      const onTick = mockFn().resolvesTo(undefined)
+      const indexer = new BlockTargetIndexer(
+        Logger.SILENT,
+        clock,
+        blockTimestampProvider,
+        getMockDb(),
+        mockObject<ActivityConfigProject>({
+          id: ProjectId('mock'),
+          chainName: 'chain',
+        }),
+        { onTick },
+      )
+
+      await expect(indexer.tick()).toBeRejectedWith(TargetNotReadyError)
+      expect(onTick).not.toHaveBeenCalled()
+    })
+
+    it('uses the tip once the chain has stalled for an hour', async () => {
+      const clock = mockObject<Clock>({ getLastHour: () => LAST_HOUR })
+      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+        getBlockNumberAtOrBefore: mockFn().rejectsWithOnce(
+          new TargetNotReadyError(LAST_HOUR, 122, LAST_HOUR - 5),
+        ),
+      })
+      const onTick = mockFn().resolvesTo(undefined)
+      const indexer = new BlockTargetIndexer(
+        Logger.SILENT,
+        clock,
+        blockTimestampProvider,
+        getMockDb(),
+        mockObject<ActivityConfigProject>({
+          id: ProjectId('mock'),
+          chainName: 'chain',
+        }),
+        { onTick },
+      )
+
+      expect(await indexer.tick()).toEqual(122)
+      expect(onTick).toHaveBeenOnlyCalledWith(LAST_HOUR, 122)
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {

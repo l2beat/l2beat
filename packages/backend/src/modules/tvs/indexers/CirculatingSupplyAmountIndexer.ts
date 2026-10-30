@@ -1,9 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { CirculatingSupplyAmountFormula } from '@l2beat/config'
 import type { TvsAmountRecord } from '@l2beat/database'
-import type { CirculatingSupplyProvider } from '@l2beat/shared'
+import {
+  type CirculatingSupplyProvider,
+  DataNotReadyError,
+} from '@l2beat/shared'
 import { CoingeckoId } from '@l2beat/shared-pure'
-import { Indexer } from '@l2beat/uif'
+import {
+  keepPublishedHours,
+  retryWhileNotReady,
+} from '../../../tools/dataNotReady'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -32,7 +38,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
       {
         ...$,
         name: INDEXER_NAMES.TVS_CIRCULATING_SUPPLY,
-        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        updateRetryStrategy: retryWhileNotReady(),
       },
       logger,
     )
@@ -60,74 +66,83 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
       configurations: configurations.length,
     })
 
-    const records = (
-      await Promise.all(
-        configurations.map(async (configuration) => {
-          try {
-            const supplies =
-              await this.$.circulatingSupplyProvider.getCirculatingSupplies(
-                CoingeckoId(configuration.properties.apiId),
-                { from: from, to: adjustedTo },
-              )
-
-            // defense in depth: a non-finite value would crash the BigInt
-            // conversion below and halt the whole indexer
-            const validSupplies = supplies.filter(
-              (p) => Number.isFinite(p.value) && p.value >= 0,
-            )
-            if (validSupplies.length !== supplies.length) {
-              // Use critical level to trigger maintenance alert
-              this.logger.critical(
-                `Dropped invalid circulating supply values for ${configuration.properties.apiId}`,
-                {
-                  priceId: configuration.properties.apiId,
-                  dropped: supplies.length - validSupplies.length,
-                },
-              )
-            }
-
-            const supplyRecords: TvsAmountRecord[] = validSupplies.map((p) => ({
-              configurationId: configuration.id,
-              timestamp: p.timestamp,
-              amount: BigInt(p.value * 10 ** configuration.properties.decimals),
-            }))
-
-            const optimizedRecords = supplyRecords.filter((p) =>
-              this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
+    const results = await Promise.all(
+      configurations.map(async (configuration) => {
+        try {
+          const supplies =
+            await this.$.circulatingSupplyProvider.getCirculatingSupplies(
+              CoingeckoId(configuration.properties.apiId),
+              { from: from, to: adjustedTo },
             )
 
-            return optimizedRecords
-          } catch (error) {
-            if (
-              error instanceof Error &&
-              error.message.startsWith('Insufficient data in response')
-            ) {
-              this.logger.warn(
-                `Failed to fetch for ${configuration.properties.apiId}`,
-                {
-                  priceId: configuration.properties.apiId,
-                  error,
-                },
-              )
-              return []
-            }
-            this.logger.error(
-              `Error fetching circulating supply for ${configuration.properties.apiId}`,
+          // defense in depth: a non-finite value would crash the BigInt
+          // conversion below and halt the whole indexer
+          const validSupplies = supplies.filter(
+            (p) => Number.isFinite(p.value) && p.value >= 0,
+          )
+          if (validSupplies.length !== supplies.length) {
+            // Use critical level to trigger maintenance alert
+            this.logger.critical(
+              `Dropped invalid circulating supply values for ${configuration.properties.apiId}`,
+              {
+                priceId: configuration.properties.apiId,
+                dropped: supplies.length - validSupplies.length,
+              },
+            )
+          }
+
+          const supplyRecords: TvsAmountRecord[] = validSupplies.map((p) => ({
+            configurationId: configuration.id,
+            timestamp: p.timestamp,
+            amount: BigInt(p.value * 10 ** configuration.properties.decimals),
+          }))
+
+          const optimizedRecords = supplyRecords.filter((p) =>
+            this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
+          )
+
+          return {
+            records: optimizedRecords,
+            lastHour: supplies.at(-1)?.timestamp ?? adjustedTo,
+          }
+        } catch (error) {
+          if (
+            error instanceof Error &&
+            error.message.startsWith('Insufficient data in response')
+          ) {
+            this.logger.warn(
+              `Failed to fetch for ${configuration.properties.apiId}`,
               {
                 priceId: configuration.properties.apiId,
                 error,
               },
             )
-
-            throw error
+            return { records: [], lastHour: adjustedTo }
           }
-        }),
-      )
-    ).flat()
+          if (error instanceof DataNotReadyError) throw error
+          this.logger.error(
+            `Error fetching circulating supply for ${configuration.properties.apiId}`,
+            {
+              priceId: configuration.properties.apiId,
+              error,
+            },
+          )
+
+          throw error
+        }
+      }),
+    )
+
+    const { records, syncedTo } = keepPublishedHours(
+      results,
+      { from, to: adjustedTo },
+      this.logger,
+    )
 
     this.logger.info('Fetched circulating supplies', {
       from,
       to: adjustedTo,
+      syncedTo,
       configurations: configurations.length,
       records: records.length,
     })
@@ -137,11 +152,11 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
 
       this.logger.info('Saved amounts into DB', {
         from,
-        to: adjustedTo,
+        to: syncedTo,
         records: records.length,
       })
 
-      return adjustedTo
+      return syncedTo
     }
   }
 

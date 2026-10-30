@@ -2,7 +2,10 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { Indexer } from '@l2beat/uif'
+import {
+  keepPublishedHours,
+  retryWhileNotReady,
+} from '../../../tools/dataNotReady'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -29,7 +32,7 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       {
         ...$,
         name: INDEXER_NAMES.TVS_PRICE,
-        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        updateRetryStrategy: retryWhileNotReady(),
       },
       logger,
     )
@@ -57,51 +60,59 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       configurations: configurations.length,
     })
 
-    const records = (
-      await Promise.all(
-        configurations.map(async (configuration) => {
-          try {
-            const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
-              CoingeckoId(configuration.properties.priceId),
-              UnixTime(from),
-              adjustedTo,
-            )
-            const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
-              configurationId: configuration.id,
-              timestamp: p.timestamp,
-              priceUsd: p.value,
-              priceId: configuration.properties.priceId,
-            }))
+    const results = await Promise.all(
+      configurations.map(async (configuration) => {
+        try {
+          const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
+            CoingeckoId(configuration.properties.priceId),
+            UnixTime(from),
+            adjustedTo,
+          )
+          const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
+            configurationId: configuration.id,
+            timestamp: p.timestamp,
+            priceUsd: p.value,
+            priceId: configuration.properties.priceId,
+          }))
 
-            const optimizedRecords = configurationRecords.filter((p) =>
-              this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
-            )
+          const optimizedRecords = configurationRecords.filter((p) =>
+            this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
+          )
 
-            return optimizedRecords
-          } catch (error) {
-            if (
-              error instanceof Error &&
-              error.message.startsWith('Insufficient data in response')
-            ) {
-              this.logger.warn(
-                `Failed to fetch prices for ${configuration.properties.priceId}`,
-                {
-                  priceId: configuration.properties.priceId,
-                  error,
-                },
-              )
-              return []
-            }
-
-            throw error
+          return {
+            records: optimizedRecords,
+            lastHour: prices.at(-1)?.timestamp ?? adjustedTo,
           }
-        }),
-      )
-    ).flat()
+        } catch (error) {
+          if (
+            error instanceof Error &&
+            error.message.startsWith('Insufficient data in response')
+          ) {
+            this.logger.warn(
+              `Failed to fetch prices for ${configuration.properties.priceId}`,
+              {
+                priceId: configuration.properties.priceId,
+                error,
+              },
+            )
+            return { records: [], lastHour: adjustedTo }
+          }
+
+          throw error
+        }
+      }),
+    )
+
+    const { records, syncedTo } = keepPublishedHours(
+      results,
+      { from, to: adjustedTo },
+      this.logger,
+    )
 
     this.logger.info('Fetched prices', {
       from,
       to: adjustedTo,
+      syncedTo,
       configurations: configurations.length,
       records: records.length,
     })
@@ -111,11 +122,11 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
 
       this.logger.info('Saved prices into DB', {
         from,
-        to: adjustedTo,
+        to: syncedTo,
         records: records.length,
       })
 
-      return adjustedTo
+      return syncedTo
     }
   }
 

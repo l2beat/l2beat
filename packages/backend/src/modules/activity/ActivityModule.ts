@@ -29,6 +29,9 @@ export function initActivityModule({
   logger = logger.tag({ feature: 'activity', module: 'activity' })
 
   const indexerService = new IndexerService(database)
+  // Day sources publish a day some time after it ends, and most of them are
+  // never read again, so a day waits at least an hour.
+  const dayClock = clock.withMinDelay(UnixTime.HOUR)
 
   const indexers: ActivityIndexer[] = []
 
@@ -137,7 +140,7 @@ export function initActivityModule({
       }
 
       case 'day': {
-        const dayTargetIndexer = new DayTargetIndexer(logger, clock, {
+        const dayTargetIndexer = new DayTargetIndexer(logger, dayClock, {
           // We do not want to index today's data because it's not fully processed yet
           // We want to process full previous day
           onTick: async (targetTimestamp) => {

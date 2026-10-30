@@ -3,8 +3,11 @@ import type { PrivacyPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { createPrivacyConfigurationId } from '@l2beat/shared'
 import { CoingeckoId } from '@l2beat/shared-pure'
-import { Indexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
+import {
+  keepPublishedHours,
+  retryWhileNotReady,
+} from '../../../tools/dataNotReady'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -29,7 +32,7 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
       {
         ...$,
         name: INDEXER_NAMES.PRIVACY_PRICE,
-        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        updateRetryStrategy: retryWhileNotReady(),
       },
       logger,
     )
@@ -59,55 +62,61 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
       configsByPriceId.set(priceId, existing)
     }
 
-    const records = (
-      await Promise.all(
-        Array.from(configsByPriceId.entries()).map(
-          async ([priceId, configs]) => {
-            try {
-              const prices = await withCoreFeatureRpcMetricsContext(
-                'privacy.price',
-                {},
-                () =>
-                  this.$.priceProvider.getUsdPriceHistoryHourly(
-                    CoingeckoId(priceId),
-                    from,
-                    adjustedTo,
-                  ),
-              )
+    const results = await Promise.all(
+      Array.from(configsByPriceId.entries()).map(async ([priceId, configs]) => {
+        try {
+          const prices = await withCoreFeatureRpcMetricsContext(
+            'privacy.price',
+            {},
+            () =>
+              this.$.priceProvider.getUsdPriceHistoryHourly(
+                CoingeckoId(priceId),
+                from,
+                adjustedTo,
+              ),
+          )
 
-              const configurationRecords: PrivacyPriceRecord[] =
-                configs.flatMap((configuration) =>
-                  prices.map((p) => ({
-                    configurationId: configuration.id,
-                    timestamp: p.timestamp,
-                    priceUsd: p.value,
-                    priceId,
-                  })),
-                )
+          const configurationRecords: PrivacyPriceRecord[] = configs.flatMap(
+            (configuration) =>
+              prices.map((p) => ({
+                configurationId: configuration.id,
+                timestamp: p.timestamp,
+                priceUsd: p.value,
+                priceId,
+              })),
+          )
 
-              return configurationRecords
-            } catch (error) {
-              if (
-                error instanceof Error &&
-                error.message.startsWith('Insufficient data in response')
-              ) {
-                this.logger.warn(`Failed to fetch prices for ${priceId}`, {
-                  priceId,
-                  error,
-                })
-                return []
-              }
+          return {
+            records: configurationRecords,
+            lastHour: prices.at(-1)?.timestamp ?? adjustedTo,
+          }
+        } catch (error) {
+          if (
+            error instanceof Error &&
+            error.message.startsWith('Insufficient data in response')
+          ) {
+            this.logger.warn(`Failed to fetch prices for ${priceId}`, {
+              priceId,
+              error,
+            })
+            return { records: [], lastHour: adjustedTo }
+          }
 
-              throw error
-            }
-          },
-        ),
-      )
-    ).flat()
+          throw error
+        }
+      }),
+    )
+
+    const { records, syncedTo } = keepPublishedHours(
+      results,
+      { from, to: adjustedTo },
+      this.logger,
+    )
 
     this.logger.info('Fetched privacy prices', {
       from,
       to: adjustedTo,
+      syncedTo,
       configurations: configurations.length,
       records: records.length,
     })
@@ -117,11 +126,11 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
 
       this.logger.info('Saved privacy prices into DB', {
         from,
-        to: adjustedTo,
+        to: syncedTo,
         records: records.length,
       })
 
-      return adjustedTo
+      return syncedTo
     }
   }
 
