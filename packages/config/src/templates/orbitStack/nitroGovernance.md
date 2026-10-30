@@ -1,6 +1,6 @@
 All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is governed by the Arbitrum Decentralized Autonomous Organization (DAO)
 and their elected Security Council. The Arbitrum DAO controls Arbitrum One and Arbitrum Nova through upgrades and modifications to their smart contracts on Layer 1 Ethereum and the Layer 2s.
-While the DAO governs through token-weighted governance in their associated ARB token on [Tally](https://www.tally.xyz/gov/arbitrum), the Security Council can directly act through
+While the DAO governs through token-weighted governance in their associated ARB token on [Arbitrum Governance](https://alt.gov.arbitrum.foundation/), the Security Council can directly act through
 multisigs on all three chains. Although they are technically separate and connect to different target permissions,
 their member- and threshold configuration is kept in sync by a manager contract on Arbitrum One sending crosschain transactions.
 
