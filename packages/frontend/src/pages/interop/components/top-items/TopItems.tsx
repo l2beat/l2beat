@@ -7,10 +7,12 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import {
+  iconBackdropClasses,
   MAX_VISIBLE_PROJECTS,
   overflowCountClasses,
 } from '~/components/ProjectIconList'
 import { EM_DASH } from '~/consts/characters'
+import { useIsTouch } from '~/hooks/useIsTouch'
 import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
 import { cn } from '~/utils/cn'
 
@@ -53,7 +55,7 @@ const remainingCountVariants = cva('font-bold', {
   },
 })
 
-const iconVariants = cva('rounded-full bg-white', {
+const iconVariants = cva(`rounded-full ${iconBackdropClasses}`, {
   variants: {
     type: {
       default: 'size-7 min-w-7 border border-divider shadow-sm',
@@ -72,6 +74,7 @@ export function InteropTopItems({
 }: InteropTopItemsCellProps &
   Omit<React.ComponentProps<'button'>, 'type'> &
   VariantProps<typeof buttonVariants>) {
+  const isTouch = useIsTouch()
   // Same rule as ProjectIconList: all icons when they fit, otherwise one
   // fewer and the rest as "+N".
   const shown =
@@ -90,6 +93,9 @@ export function InteropTopItems({
             index={i}
             type={type}
             href={item.href}
+            // On touch the whole cell is one button that opens the list, so
+            // its icons must not be links or tooltip triggers of their own.
+            bare={isTouch && !hideDialog}
             className={cn(i !== shown.length - 1 && '-mr-1.5')}
           />
         ))}
@@ -153,11 +159,13 @@ function ItemIconWithTooltip({
   index,
   type,
   href,
+  bare,
   className,
 }: {
   item: TopItem
   index: number
   href?: string
+  bare: boolean
   className?: string
 } & VariantProps<typeof iconVariants>) {
   const icon = (
@@ -169,6 +177,8 @@ function ItemIconWithTooltip({
       style={{ zIndex: 5 - index }}
     />
   )
+
+  if (bare) return icon
 
   return (
     <Tooltip>

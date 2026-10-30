@@ -1,7 +1,8 @@
 import type { Stage } from '@l2beat/config'
 import { useCommandState } from 'cmdk'
-import { useState } from 'react'
+import { type ReactNode, useRef, useState } from 'react'
 import { useDevice } from '~/hooks/useDevice'
+import { useIsTouch } from '~/hooks/useIsTouch'
 import { useRouter } from '~/hooks/useRouter'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
@@ -48,8 +49,13 @@ const MIN_SEARCHABLE_PROJECTS = 7
 /**
  * Overlapping project icons, each linking to its project. When they don't
  * all fit, a "+N" button opens the full list.
+ *
+ * On touch a logo has no tooltip and a middle one is 14 px wide, so tapping
+ * any of them opens the named list instead of guessing. A single icon still
+ * links straight to its project.
  */
 export function ProjectIconList({ projects, title, className }: Props) {
+  const isTouch = useIsTouch()
   if (projects.length === 0) return null
 
   const visible =
@@ -58,23 +64,51 @@ export function ProjectIconList({ projects, title, className }: Props) {
       : projects
   const hiddenCount = projects.length - visible.length
 
+  if (isTouch && projects.length > 1) {
+    return (
+      <FullList
+        projects={projects}
+        title={title}
+        triggerClassName={cn(touchTriggerClasses, className)}
+      >
+        <IconRow projects={visible} linked={false} />
+        {hiddenCount > 0 ? (
+          <span className={overflowCountClasses}>+{hiddenCount}</span>
+        ) : (
+          <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary" />
+        )}
+      </FullList>
+    )
+  }
+
   return (
     <div className={cn('flex items-center gap-1', className)}>
-      <div className="flex items-center">
-        {visible.map((project, index) => (
-          <ProjectIcon
-            key={project.id}
-            project={project}
-            zIndex={visible.length - index}
-          />
-        ))}
-      </div>
+      <IconRow projects={visible} linked />
       {hiddenCount > 0 && (
-        <FullList projects={projects} title={title} hiddenCount={hiddenCount} />
+        <FullList
+          projects={projects}
+          title={title}
+          triggerClassName={overflowCountClasses}
+        >
+          +{hiddenCount}
+        </FullList>
       )}
     </div>
   )
 }
+
+/**
+ * White behind the logos keeps transparent ones legible in dark mode. It
+ * stops 1 px short of the edge, or it shows through the edge of logos that
+ * fill the circle as a thin white ring.
+ */
+export const iconBackdropClasses =
+  'bg-[radial-gradient(closest-side,white_calc(100%-1px),transparent_calc(100%-1px))]'
+
+// The whole stack is one button, at least 44 px tall, that does not paint
+// over the card or table it sits in until pressed.
+const touchTriggerClasses =
+  '-mx-2 inline-flex min-h-11 items-center gap-1 rounded-md bg-transparent px-2 transition-colors focus-visible:outline-2 focus-visible:outline-brand active:bg-surface-secondary primary-card:bg-transparent'
 
 // The page background, cards and shaded table columns all differ, so the
 // button keeps a light fill and a border on each, including inside cards.
@@ -88,6 +122,45 @@ export const overflowCountClasses =
 const iconClasses =
   '-ml-1.5 first:ml-0 rounded-full focus-visible:z-10! focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand'
 
+function IconRow({
+  projects,
+  linked,
+}: {
+  projects: ProjectIconListItem[]
+  linked: boolean
+}) {
+  return (
+    <span className="flex items-center">
+      {projects.map((project, index) => {
+        const zIndex = projects.length - index
+        return linked ? (
+          <ProjectIcon key={project.id} project={project} zIndex={zIndex} />
+        ) : (
+          <span
+            key={project.id}
+            className={cn('relative size-5', iconClasses)}
+            style={{ zIndex }}
+          >
+            <IconImage project={project} />
+          </span>
+        )
+      })}
+    </span>
+  )
+}
+
+function IconImage({ project }: { project: ProjectIconListItem }) {
+  return (
+    <img
+      width={20}
+      height={20}
+      src={project.iconUrl}
+      alt={`${project.name} logo`}
+      className={cn('size-5 min-w-5 rounded-full shadow', iconBackdropClasses)}
+    />
+  )
+}
+
 function ProjectIcon({
   project,
   zIndex,
@@ -95,15 +168,7 @@ function ProjectIcon({
   project: ProjectIconListItem
   zIndex: number
 }) {
-  const image = (
-    <img
-      width={20}
-      height={20}
-      src={project.iconUrl}
-      alt={`${project.name} logo`}
-      className="size-5 min-w-5 rounded-full bg-white shadow"
-    />
-  )
+  const image = <IconImage project={project} />
   return (
     // Short enough to feel instant on purpose, long enough that sweeping the
     // cursor across a table column does not flash every row's tooltip.
@@ -148,33 +213,52 @@ function ProjectIcon({
 function FullList({
   projects,
   title,
-  hiddenCount,
+  triggerClassName,
+  children,
 }: {
   projects: ProjectIconListItem[]
   title: string
-  hiddenCount: number
+  triggerClassName: string
+  children: ReactNode
 }) {
   const [open, setOpen] = useState(false)
   const { isDesktop } = useDevice()
+  const isTouch = useIsTouch()
+  const triggerRef = useRef<HTMLButtonElement>(null)
   const label = `Show all ${projects.length}: ${title}`
   const list = (
     <ProjectList
       projects={projects}
       title={title}
       inDialog={!isDesktop}
-      onSelect={() => setOpen(false)}
+      onNavigate={() => setOpen(false)}
     />
   )
+  // Focusing the search field on touch raises the keyboard over the list, so
+  // focus the panel itself instead.
+  const onOpenAutoFocus = isTouch
+    ? (event: Event) => {
+        event.preventDefault()
+        if (event.currentTarget instanceof HTMLElement) {
+          event.currentTarget.focus()
+        }
+      }
+    : undefined
 
   if (isDesktop) {
     return (
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger className={overflowCountClasses} aria-label={label}>
-          +{hiddenCount}
+        <PopoverTrigger
+          className={triggerClassName}
+          aria-label={label}
+          aria-haspopup="dialog"
+        >
+          {children}
         </PopoverTrigger>
         <PopoverContent
           className="w-80 primary-card:bg-surface-primary p-0"
           align="start"
+          onOpenAutoFocus={onOpenAutoFocus}
         >
           {list}
         </PopoverContent>
@@ -185,12 +269,15 @@ function FullList({
   return (
     <>
       <button
+        ref={triggerRef}
         type="button"
-        className={overflowCountClasses}
+        className={triggerClassName}
         aria-label={label}
+        aria-haspopup="dialog"
+        aria-expanded={open}
         onClick={() => setOpen(true)}
       >
-        +{hiddenCount}
+        {children}
       </button>
       <CommandDialog
         open={open}
@@ -199,6 +286,13 @@ function FullList({
         description={title}
         // Centred, so a long list grows evenly and stays on screen.
         contentClassName="max-md:top-1/2"
+        onOpenAutoFocus={onOpenAutoFocus}
+        // A tap does not focus the button, so Radix would return focus to the
+        // page; send it back to the button that opened the list.
+        onCloseAutoFocus={(event) => {
+          event.preventDefault()
+          triggerRef.current?.focus()
+        }}
       >
         {list}
       </CommandDialog>
@@ -210,12 +304,12 @@ function ProjectList({
   projects,
   title,
   inDialog,
-  onSelect,
+  onNavigate,
 }: {
   projects: ProjectIconListItem[]
   title: string
   inDialog: boolean
-  onSelect: () => void
+  onNavigate: () => void
 }) {
   const router = useRouter()
   const searchable = projects.length >= MIN_SEARCHABLE_PROJECTS
@@ -265,57 +359,106 @@ function ProjectList({
               key={project.id}
               value={`${project.name} ${project.id}`}
               className={cn(
-                'group flex items-center gap-2.5 rounded-md primary-card:data-[selected=true]:bg-surface-secondary',
-                inDialog ? 'min-h-12 py-3' : 'py-2',
+                'group rounded-md p-0 primary-card:data-[selected=true]:bg-surface-secondary',
                 // Touch has no keyboard cursor, so the first row is not marked.
                 inDialog &&
-                  'active:bg-surface-secondary data-[selected=true]:bg-transparent primary-card:data-[selected=true]:bg-transparent',
+                  'data-[selected=true]:bg-transparent primary-card:data-[selected=true]:bg-transparent',
+                inDialog && project.href && 'active:bg-surface-secondary',
               )}
+              // Enter on the keyboard cursor; clicks go through the link.
               onSelect={() => {
                 if (!project.href) return
-                onSelect()
+                onNavigate()
                 router.push(project.href)
               }}
             >
-              <img
-                src={project.iconUrl}
-                alt=""
-                width={24}
-                height={24}
-                className="size-6 min-w-6 rounded-full bg-white"
-              />
-              <span className="flex min-w-0 flex-1 flex-col">
-                <span className="truncate font-semibold text-label-value-14">
-                  {project.name}
-                </span>
-                {project.description && (
-                  <span className="truncate text-label-value-12 text-secondary">
-                    {project.description}
-                  </span>
+              <ProjectRow
+                project={project}
+                className={cn(
+                  'flex w-full items-center gap-2.5 px-2',
+                  inDialog ? 'min-h-12 py-3' : 'py-2',
                 )}
-              </span>
-              {project.stage && (
-                <StageBadge
-                  stage={project.stage}
-                  isAppchain={false}
-                  className="shrink-0"
-                />
-              )}
-              {project.href && (
-                <ChevronIcon
+                onNavigate={onNavigate}
+              >
+                <img
+                  src={project.iconUrl}
+                  alt=""
+                  width={24}
+                  height={24}
                   className={cn(
-                    '-rotate-90 size-2.5 shrink-0 fill-secondary',
-                    // Pointers see the arrow on the row they are on.
-                    !inDialog &&
-                      'opacity-0 group-data-[selected=true]:opacity-100',
+                    'size-6 min-w-6 rounded-full',
+                    iconBackdropClasses,
                   )}
                 />
-              )}
+                <span className="flex min-w-0 flex-1 flex-col">
+                  <span className="truncate font-semibold text-label-value-14">
+                    {project.name}
+                  </span>
+                  {project.description && (
+                    <span className="truncate text-label-value-12 text-secondary">
+                      {project.description}
+                    </span>
+                  )}
+                </span>
+                {project.stage && (
+                  <StageBadge
+                    stage={project.stage}
+                    isAppchain={false}
+                    className="shrink-0"
+                  />
+                )}
+                {project.href && (
+                  <ChevronIcon
+                    className={cn(
+                      '-rotate-90 size-2.5 shrink-0 fill-secondary',
+                      // Pointers see the arrow on the row they are on.
+                      !inDialog &&
+                        'opacity-0 group-data-[selected=true]:opacity-100',
+                    )}
+                  />
+                )}
+              </ProjectRow>
             </CommandItem>
           ))}
         </CommandGroup>
       </CommandList>
     </Command>
+  )
+}
+
+/**
+ * A row with a link is a real link, so opening it in a new tab or from a
+ * long press works. The plain click closes the list; modified clicks leave it
+ * open for the next one.
+ */
+function ProjectRow({
+  project,
+  className,
+  onNavigate,
+  children,
+}: {
+  project: ProjectIconListItem
+  className: string
+  onNavigate: () => void
+  children: ReactNode
+}) {
+  if (!project.href) {
+    return <div className={className}>{children}</div>
+  }
+  return (
+    <a
+      href={project.href}
+      className={className}
+      // cmdk also selects the item on click; the link already navigates.
+      onClick={(event) => {
+        event.stopPropagation()
+        const modified =
+          event.metaKey || event.ctrlKey || event.shiftKey || event.altKey
+        if (!modified) onNavigate()
+      }}
+    >
+      {children}
+    </a>
   )
 }
 
