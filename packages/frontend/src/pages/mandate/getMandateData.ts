@@ -1,5 +1,4 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getCollectionEntry } from '~/content/getCollection'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -9,10 +8,6 @@ export async function getMandateData(
   url: string,
 ): Promise<RenderData> {
   const appLayoutProps = await getAppLayoutProps()
-  const content = getCollectionEntry('pages', 'mandate')
-  if (!content) {
-    throw new Error('Mandate content is missing')
-  }
 
   return {
     head: {
@@ -28,10 +23,7 @@ export async function getMandateData(
     },
     ssr: {
       page: 'MandatePage',
-      props: {
-        ...appLayoutProps,
-        content: content.content,
-      },
+      props: appLayoutProps,
     },
   }
 }

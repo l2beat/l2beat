@@ -175,7 +175,8 @@
   }
 }
 
-/* The heartbeat that signs the mandate on the home page, drawn once. */
+/* The heartbeat that signs the mandate, on the home page and on the mandate
+   page, drawn once. */
 @keyframes mandate-sign {
   from {
     stroke-dashoffset: 1;
