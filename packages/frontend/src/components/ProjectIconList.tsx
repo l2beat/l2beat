@@ -1,4 +1,5 @@
 import type { Stage } from '@l2beat/config'
+import { useCommandState } from 'cmdk'
 import { useState } from 'react'
 import { useDevice } from '~/hooks/useDevice'
 import { useRouter } from '~/hooks/useRouter'
@@ -53,7 +54,7 @@ export function ProjectIconList({ projects, title, className }: Props) {
   const hiddenCount = projects.length - visible.length
 
   return (
-    <div className={cn('flex items-center gap-1.5', className)}>
+    <div className={cn('flex items-center gap-1', className)}>
       <div className="-space-x-1.5 flex items-center">
         {visible.map((project, index) => (
           <ProjectIcon
@@ -74,7 +75,7 @@ export function ProjectIconList({ projects, title, className }: Props) {
 // button keeps a light fill and a border on each, including inside cards.
 // It matches the icons' size and takes taps from a larger invisible area.
 export const overflowCountClasses =
-  "relative inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full border border-divider bg-surface-primary px-1 font-bold text-label-value-12 text-primary tabular-nums leading-none transition-colors after:absolute after:-inset-1.5 after:content-[''] primary-card:bg-surface-primary hover:border-secondary focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-1 focus-visible:outline-solid focus-visible:ring-0 data-[state=open]:border-secondary data-[state=open]:bg-surface-secondary md:text-label-value-12"
+  "relative inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full border border-divider bg-surface-primary px-1.5 font-bold text-label-value-12 text-primary tabular-nums leading-none transition-colors after:absolute after:-inset-1.5 after:content-[''] primary-card:bg-surface-primary hover:border-brand focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-1 focus-visible:outline-solid focus-visible:ring-0 data-[state=open]:border-brand md:text-label-value-12"
 
 const iconFocusClasses =
   'rounded-full focus-visible:z-10! focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand'
@@ -182,6 +183,8 @@ function FullList({
         onOpenChange={setOpen}
         title={title}
         description={title}
+        // Centred, so a long list grows evenly and stays on screen.
+        contentClassName="max-md:top-1/2"
       >
         {list}
       </CommandDialog>
@@ -205,34 +208,51 @@ function ProjectList({
 
   return (
     <Command className="rounded-[inherit] primary-card:bg-surface-primary">
-      <div
-        className={cn(
-          'flex items-center justify-between gap-2 px-4 font-medium text-secondary',
-          // The search box below draws its own divider.
-          searchable ? 'pt-2.5 pb-1' : 'border-divider border-b py-2.5',
-          inDialog ? 'text-label-value-14' : 'text-label-value-12',
-        )}
-      >
-        <span className="flex items-center gap-1.5">
-          {title}
-          <span className="font-bold text-primary tabular-nums">
-            {projects.length}
+      {/* Title, search and rows share a 14 px left edge. */}
+      <div className="border-divider border-b">
+        <div
+          className={cn(
+            'flex items-center justify-between gap-2 px-3.5',
+            searchable ? 'pt-3.5 pb-2.5' : 'py-3',
+          )}
+        >
+          <span className="flex min-w-0 items-center gap-1.5">
+            <span className="truncate text-heading-16 text-primary">
+              {title}
+            </span>
+            <CountChip total={projects.length} />
           </span>
-        </span>
-        {inDialog && (
-          <DialogClose className="static flex size-8 items-center justify-center" />
+          {inDialog && (
+            <DialogClose className="-my-2 -mr-3 static flex size-10 items-center justify-center [&_svg]:size-3.5 [&_svg]:fill-secondary hover:[&_svg]:fill-primary" />
+          )}
+        </div>
+        {searchable && (
+          <CommandInput
+            placeholder={`Search ${projects.length} projects…`}
+            wrapperClassName="mx-1.5 mb-2 h-9 rounded-md border border-divider bg-surface-primary px-2 focus-within:border-brand"
+            // 16 px on phones, or iOS Safari zooms in on focus.
+            className="h-9 py-0 font-normal text-label-value-14 max-md:text-label-value-16"
+          />
         )}
       </div>
-      {searchable && <CommandInput placeholder="Search projects..." />}
-      <CommandList>
+      <CommandList
+        className={cn(
+          inDialog && 'max-h-[min(520px,60dvh)]',
+          // Lists long enough to search can scroll: fade the cut-off row and
+          // let the real last row scroll clear of the fade.
+          searchable &&
+            'mask-[linear-gradient(to_bottom,black_calc(100%-16px),transparent)]',
+        )}
+      >
         <CommandEmpty>Nothing found.</CommandEmpty>
-        <CommandGroup>
+        <CommandGroup className={cn(searchable && 'pb-4')}>
           {projects.map((project) => (
             <CommandItem
               key={project.id}
               value={`${project.name} ${project.id}`}
               className={cn(
-                'flex items-center gap-2.5 py-2 primary-card:data-[selected=true]:bg-surface-secondary',
+                'group flex items-center gap-2.5 rounded-md primary-card:data-[selected=true]:bg-surface-secondary',
+                inDialog ? 'min-h-12 py-3' : 'py-2',
                 // Touch has no keyboard cursor, so the first row is not marked.
                 inDialog &&
                   'active:bg-surface-secondary data-[selected=true]:bg-transparent primary-card:data-[selected=true]:bg-transparent',
@@ -251,7 +271,7 @@ function ProjectList({
                 className="size-6 min-w-6 rounded-full bg-white"
               />
               <span className="flex min-w-0 flex-1 flex-col">
-                <span className="truncate font-bold text-label-value-14">
+                <span className="truncate font-semibold text-label-value-14">
                   {project.name}
                 </span>
                 {project.description && (
@@ -268,12 +288,30 @@ function ProjectList({
                 />
               )}
               {project.href && (
-                <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary" />
+                <ChevronIcon
+                  className={cn(
+                    '-rotate-90 size-2.5 shrink-0 fill-secondary',
+                    // Pointers see the arrow on the row they are on.
+                    !inDialog &&
+                      'opacity-0 group-data-[selected=true]:opacity-100',
+                  )}
+                />
               )}
             </CommandItem>
           ))}
         </CommandGroup>
       </CommandList>
     </Command>
+  )
+}
+
+/** The list's size, or how many match while searching. */
+function CountChip({ total }: { total: number }) {
+  const matching = useCommandState((state) => state.filtered.count)
+  const searching = useCommandState((state) => state.search !== '')
+  return (
+    <span className="inline-flex h-5 shrink-0 items-center rounded-full bg-surface-secondary px-1.5 font-bold text-label-value-12 text-secondary tabular-nums">
+      {searching ? `${matching} / ${total}` : total}
+    </span>
   )
 }

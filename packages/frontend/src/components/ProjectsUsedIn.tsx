@@ -29,7 +29,7 @@ export function ProjectsUsedIn({ usedIn, className, emptyClassName }: Props) {
         iconUrl: project.icon,
         href: project.url,
       }))}
-      title="Used in"
+      title="Used by"
       className={className}
     />
   )

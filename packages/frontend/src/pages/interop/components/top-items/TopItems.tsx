@@ -39,7 +39,7 @@ const buttonVariants = cva('group/dialog-trigger flex items-center', {
   variants: {
     type: {
       default: 'gap-2',
-      cell: 'gap-1.5',
+      cell: 'gap-1',
     },
   },
 })
@@ -133,7 +133,7 @@ function RemainingCount({
       <span
         className={cn(
           overflowCountClasses,
-          'group-hover/dialog-trigger:border-secondary',
+          'group-hover/dialog-trigger:border-brand',
         )}
       >
         +{count}
