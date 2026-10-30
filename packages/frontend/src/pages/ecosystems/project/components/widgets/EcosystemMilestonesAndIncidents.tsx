@@ -4,7 +4,7 @@ import { MilestoneDrawerContent } from '~/components/core/chart/ChartMilestones'
 import {
   getTickCondition,
   getTickFormatter,
-} from '~/components/core/chart/utils/getXAxisProps'
+} from '~/components/core/chart/utils/xAxisTicks'
 import { Drawer, DrawerContent, DrawerTrigger } from '~/components/core/Drawer'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useBreakpoint } from '~/hooks/useBreakpoint'

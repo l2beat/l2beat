@@ -1,19 +1,17 @@
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart } from 'recharts'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+import {
+  ChartTooltipWrapper,
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
+import { fillGradient } from '~/components/core/chart/gradients'
+import {
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { EcosystemMilestone } from '~/server/features/ecosystems/getEcosystemEntry'
@@ -22,6 +20,20 @@ import { formatTimestamp } from '~/utils/dates'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
+
+type ChartDataPoint = EcosystemProjectsCountData['chart'][number]
+
+const SERIES: ChartSeries<'projectCount', ChartDataPoint>[] = [
+  {
+    key: 'projectCount',
+    stroke: 'var(--ecosystem-primary)',
+    fill: fillGradient(
+      'var(--ecosystem-primary)',
+      'var(--ecosystem-secondary)',
+    ),
+    curve: 'stepAfter',
+  },
+]
 
 interface Props {
   id: string
@@ -64,40 +76,16 @@ export function EcosystemsProjectsChart({
         data={data.chart}
         logoClassName="bottom-[42px]"
         milestones={ecosystemMilestones}
+        className="h-[110px]! min-h-[110px]!"
       >
-        <AreaChart
-          responsive
+        <TimeSeriesChart
           data={data.chart}
-          className="h-[110px]! min-h-[110px]!"
-          margin={{ top: 20 }}
-        >
-          <defs>
-            <CustomFillGradientDef
-              id="fill"
-              colors={{
-                primary: 'var(--ecosystem-primary)',
-                secondary: 'var(--ecosystem-secondary)',
-              }}
-            />
-          </defs>
-          <Area
-            dataKey="projectCount"
-            fill="url(#fill)"
-            fillOpacity={1}
-            stroke="var(--ecosystem-primary)"
-            type="stepAfter"
-            isAnimationActive={false}
-          />
-          <ChartCommonComponents
-            data={data.chart}
-            isLoading={false}
-            yAxis={{
-              tickCount: 2,
-            }}
-            syncedUntil={undefined}
-          />
-          <ChartTooltip content={<CustomTooltip />} />
-        </AreaChart>
+          series={SERIES}
+          ariaLabel="Live projects count"
+          margin={{ right: 0 }}
+          yAxis={{ tickCount: 2 }}
+          renderTooltip={(row, keys) => <CustomTooltip row={row} keys={keys} />}
+        />
       </ChartContainer>
       <HorizontalSeparator className="mb-3 sm:hidden" />
       {id !== 'agglayer' && <Stats stats={data.stats} />}
@@ -151,21 +139,21 @@ function Stats({ stats }: { stats: EcosystemProjectsCountData['stats'] }) {
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+function CustomTooltip({
+  row,
+  keys,
+}: {
+  row: ChartDataPoint
+  keys: 'projectCount'[]
+}) {
   const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
+  const payload = getTooltipEntries(row, keys, { skipNull: true })
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col gap-1">
-        <div>{formatTimestamp(label, { mode: 'date' })}</div>
+        <div>{formatTimestamp(row.timestamp, { mode: 'date' })}</div>
         <div>
           {payload.map((entry) => {
-            if (
-              entry.name === undefined ||
-              entry.value === undefined ||
-              entry.value === null
-            )
-              return null
             const config = meta[entry.name]
             assert(config, 'No config')
 

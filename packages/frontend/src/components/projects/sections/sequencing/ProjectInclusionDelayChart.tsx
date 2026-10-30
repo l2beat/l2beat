@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import type {

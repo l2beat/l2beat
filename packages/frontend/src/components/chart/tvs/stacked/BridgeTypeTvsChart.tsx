@@ -1,14 +1,14 @@
 import type { Milestone } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
-import { Area, AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type {
+  ChartMeta,
+  ChartProject,
+} from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import type { ChartUnit } from '../../types'
 import { StackedTvsChartTooltip } from './StackedTvsChartTooltip'
 
@@ -49,6 +49,8 @@ export const bridgeTypeTvsChartMeta = {
   },
 } satisfies ChartMeta
 
+type SeriesKey = keyof typeof bridgeTypeTvsChartMeta
+
 export function BridgeTypeTvsChart({
   data,
   syncedUntil,
@@ -60,6 +62,15 @@ export function BridgeTypeTvsChart({
   toggleDataKey,
   project,
 }: Props) {
+  // Bottom of the stack first.
+  const series: ChartSeries<SeriesKey, BridgeTypeChartDataPoint>[] = (
+    ['external', 'native', 'canonical'] as const
+  ).map((key) => ({
+    key,
+    fill: bridgeTypeTvsChartMeta[key].color,
+    stack: true,
+  }))
+
   // If only one data key is selected we want to change the domain
   // Having it from 0 to MAX does make sense for stacked chart (better comparison)
   // But for single data source it should not start from 0
@@ -74,59 +85,22 @@ export function BridgeTypeTvsChart({
         onItemClick: toggleDataKey,
       }}
       project={project}
+      legend
     >
-      {/* Without right:1 the chart last point is not hoverable for some reason */}
-      <AreaChart responsive data={data} margin={{ top: 20, right: 1 }}>
-        <ChartLegend content={<ChartLegendContent />} />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            tickFormatter: (value: number) => formatCurrency(value, unit),
-            tickCount,
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <Area
-          dataKey="external"
-          hide={!dataKeys.includes('external')}
-          fill={bridgeTypeTvsChartMeta.external.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-          activeDot={
-            !dataKeys.includes('canonical') && !dataKeys.includes('native')
-          }
-        />
-        <Area
-          dataKey="native"
-          hide={!dataKeys.includes('native')}
-          fill={bridgeTypeTvsChartMeta.native.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-          activeDot={!dataKeys.includes('canonical')}
-        />
-        <Area
-          dataKey="canonical"
-          hide={!dataKeys.includes('canonical')}
-          fill={bridgeTypeTvsChartMeta.canonical.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-        />
-
-        <ChartTooltip
-          content={
-            <StackedTvsChartTooltip unit={unit} meta={bridgeTypeTvsChartMeta} />
-          }
-          filterNull={false}
-        />
-      </AreaChart>
+      <TimeSeriesChart
+        data={data}
+        series={series}
+        ariaLabel="Value secured by bridge type"
+        syncedUntil={syncedUntil}
+        yAxis={{
+          domain: 'autoIfSingle',
+          format: (value) => formatCurrency(value, unit),
+          tickCount,
+        }}
+        renderTooltip={(row, keys) => (
+          <StackedTvsChartTooltip row={row} keys={keys} unit={unit} />
+        )}
+      />
     </ChartContainer>
   )
 }

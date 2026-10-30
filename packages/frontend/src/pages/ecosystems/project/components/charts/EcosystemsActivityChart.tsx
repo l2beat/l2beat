@@ -1,24 +1,16 @@
 import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import { AreaChart } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/EthereumGradientDef'
+  CHART_GRADIENTS,
+  fillGradient,
+} from '~/components/core/chart/gradients'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
@@ -123,52 +115,38 @@ export function EcosystemsActivityChart({
           onItemClick: toggleDataKey,
           disableOnboarding: true,
         }}
+        legend
+        className="h-44! min-h-44!"
       >
-        <AreaChart
-          responsive
+        <TimeSeriesChart
           data={chartData}
-          className="h-44! min-h-44!"
-          // Without right:1 the chart last point is not hoverable for some reason
-          margin={{ top: 20, right: 1 }}
-        >
-          <ChartLegend content={<ChartLegendContent />} />
-          <ChartStrokeOverFillAreaComponents
-            data={[
-              {
-                dataKey: 'ethereum',
-                stroke: 'url(#strokeEthereum)',
-                fill: 'url(#fillEthereum)',
-                hide: !dataKeys.includes('ethereum'),
-              },
-              {
-                dataKey: 'projects',
-                stroke: 'var(--ecosystem-primary)',
-                fill: 'url(#fillProjects)',
-                hide: !dataKeys.includes('projects'),
-              },
-            ]}
-          />
-          <ChartCommonComponents
-            data={chartData}
-            isLoading={isLoading}
-            yAxis={{
-              unit: ' UOPS',
-            }}
-            syncedUntil={data?.syncedUntil}
-          />
-          <ChartTooltip content={<ActivityCustomTooltip metric="uops" />} />
-          <defs>
-            <CustomFillGradientDef
-              id="fillProjects"
-              colors={{
-                primary: 'var(--ecosystem-primary)',
-                secondary: 'var(--ecosystem-secondary)',
-              }}
+          series={[
+            {
+              key: 'ethereum',
+              stroke: CHART_GRADIENTS.ethereum.stroke,
+              fill: CHART_GRADIENTS.ethereum.fill,
+            },
+            {
+              key: 'projects',
+              stroke: 'var(--ecosystem-primary)',
+              fill: fillGradient(
+                'var(--ecosystem-primary)',
+                'var(--ecosystem-secondary)',
+              ),
+            },
+          ]}
+          ariaLabel="Activity"
+          yAxis={{ unit: ' UOPS' }}
+          syncedUntil={data?.syncedUntil}
+          renderTooltip={(row, keys) => (
+            <ActivityCustomTooltip
+              row={row}
+              keys={keys}
+              metric="uops"
+              skipNull
             />
-            <EthereumFillGradientDef id="fillEthereum" />
-            <EthereumStrokeGradientDef id="strokeEthereum" />
-          </defs>
-        </AreaChart>
+          )}
+        />
       </ChartContainer>
       <div className="mt-2.5 ml-auto w-fit">
         <ActivityChartRangeControls range={range} setRange={setRange} />

@@ -5,32 +5,17 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { useMemo } from 'react'
-import {
-  Area,
-  ComposedChart,
-  Line,
-  ReferenceArea,
-  ReferenceDot,
-} from 'recharts'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+} from '~/components/core/chart/ChartContext'
+import { ChartTooltipWrapper } from '~/components/core/chart/ChartTooltip'
+import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipWrapper,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -68,6 +53,32 @@ const chartMeta = {
   },
 } satisfies ChartMeta
 
+const GAP_STROKE = { stroke: 'var(--secondary)', strokeOpacity: 0.15 }
+
+/**
+ * The range is a band between the minimum and the maximum. Faint lines
+ * bridge both series' gaps, and a lone point gets dots, as no line shows it.
+ */
+const SERIES: ChartSeries<string, LivenessChartDataPoint>[] = [
+  {
+    key: 'range',
+    value: (row) => row.range?.[1],
+    value0: (row) => row.range?.[0],
+    stroke: CHART_GRADIENTS.pink.stroke,
+    fill: 'var(--chart-pink-fill-gradient)',
+    fillOpacity: 0.4,
+    gapStroke: GAP_STROKE,
+    isolatedDots: {},
+  },
+  {
+    key: 'avg',
+    stroke: 'var(--chart-pink)',
+    strokeDasharray: '5 5',
+    gapStroke: GAP_STROKE,
+    isolatedDots: { fillOpacity: 0.25 },
+  },
+]
+
 export function LivenessChart({
   data,
   isLoading,
@@ -79,19 +90,6 @@ export function LivenessChart({
   anyAnomalyLive,
   resolution,
 }: Props) {
-  const singleDataPoints = useMemo(() => {
-    return data?.filter((point, i, arr) => {
-      const prevPoint = arr.at(i - 1)
-      const nextPoint = arr.at(i + 1)
-
-      return (
-        prevPoint?.range === null &&
-        nextPoint?.range === null &&
-        point.range !== null
-      )
-    })
-  }, [data])
-
   return (
     <ChartContainer
       data={data}
@@ -99,148 +97,56 @@ export function LivenessChart({
       isLoading={isLoading}
       milestones={milestones}
       project={project}
+      legend
     >
-      <ComposedChart responsive data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent />} />
-        <Area
-          dataKey="range"
-          isAnimationActive={false}
-          stroke="var(--secondary)"
-          legendType="none"
-          strokeOpacity={0.15}
-          fill="none"
-          connectNulls
-        />
-        <Line
-          dataKey="avg"
-          legendType="none"
-          isAnimationActive={false}
-          stroke="var(--secondary)"
-          strokeOpacity={0.15}
-          strokeDasharray="5 5"
-          dot={false}
-          connectNulls
-        />
-        {singleDataPoints?.map((point) => [
-          <ReferenceDot
-            key={`${point.timestamp}-bottom-range`}
-            x={point.timestamp}
-            y={point.range?.[0] ?? 0}
-            fill={chartMeta.range.color}
-            stroke={chartMeta.range.color}
-            r={3}
-          />,
-          <ReferenceDot
-            key={`${point.timestamp}-top-range`}
-            x={point.timestamp}
-            y={point.range?.[1] ?? 0}
-            fill={chartMeta.range.color}
-            stroke={chartMeta.range.color}
-            r={3}
-          />,
-          <ReferenceDot
-            key={`${point.timestamp}-avg`}
-            x={point.timestamp}
-            y={point.avg ?? 0}
-            fill={chartMeta.avg.color}
-            fillOpacity={0.25}
-            stroke={chartMeta.avg.color}
-            strokeDasharray="1 1"
-            r={3}
-          />,
-        ])}
-
-        <Area
-          dataKey="range"
-          isAnimationActive={false}
-          stroke="url(#strokeRange)"
-          fill="var(--chart-pink-fill-gradient)"
-          fillOpacity={0.4}
-        />
-        <Area
-          dataKey="avg"
-          isAnimationActive={false}
-          stroke="var(--chart-pink)"
-          fill="none"
-          strokeDasharray="5 5"
-        />
-
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            tickFormatter: (value: number) => formatSeconds(value),
-            domain: ['auto', 'auto'],
-            tickCount,
-          }}
-          syncedUntil={undefined}
-        />
-        {lastValidTimestamp && (
-          <ReferenceArea
-            x1={lastValidTimestamp}
-            fill={anyAnomalyLive ? 'var(--negative)' : 'url(#noDataFill)'}
-            fillOpacity={anyAnomalyLive ? 0.2 : undefined}
+      <TimeSeriesChart
+        data={data}
+        series={SERIES}
+        ariaLabel="Liveness"
+        yAxis={{ format: formatSeconds, domain: 'auto', tickCount }}
+        referenceAreas={
+          lastValidTimestamp
+            ? [
+                {
+                  x1: lastValidTimestamp,
+                  ...(anyAnomalyLive
+                    ? { fill: 'var(--negative)', fillOpacity: 0.2 }
+                    : {}),
+                },
+              ]
+            : undefined
+        }
+        renderTooltip={(row) => (
+          <LivenessCustomTooltip
+            row={row}
+            subtype={subtype}
+            anyAnomalyLive={anyAnomalyLive}
+            resolution={resolution}
+            lastValidTimestamp={lastValidTimestamp}
           />
         )}
-
-        <ChartTooltip
-          filterNull={false}
-          content={
-            <LivenessCustomTooltip
-              subtype={subtype}
-              anyAnomalyLive={anyAnomalyLive}
-              resolution={resolution}
-              lastValidTimestamp={lastValidTimestamp}
-            />
-          }
-        />
-        <defs>
-          <PinkFillGradientDef id="fillRange" />
-          <PinkStrokeGradientDef id="strokeRange" />
-          <NoDataPatternDef />
-          <pattern
-            id="noDataLiveness"
-            patternUnits="userSpaceOnUse"
-            width="20"
-            height="20"
-            patternTransform="rotate(45)"
-          >
-            <rect
-              width="10"
-              height="20"
-              fill="var(--chart-pink)"
-              fillOpacity={0.25}
-            />
-          </pattern>
-        </defs>
-      </ComposedChart>
+      />
     </ChartContainer>
   )
 }
 
 function LivenessCustomTooltip({
-  payload,
-  label: timestamp,
+  row,
   subtype,
   anyAnomalyLive,
   resolution,
   lastValidTimestamp,
-}: CustomChartTooltipProps & {
+}: {
+  row: LivenessChartDataPoint
   subtype: TrackedTxsConfigSubtype
   anyAnomalyLive: boolean
   resolution: ChartResolution
   lastValidTimestamp: number | undefined
 }) {
-  if (!payload || typeof timestamp !== 'number') return null
-
-  const filteredPayload = payload.filter(
-    (p) => p.name !== undefined && p.value !== undefined && p.type !== 'none',
-  )
-  const range = filteredPayload.find((p) => p.name === 'range')
-  const avg = filteredPayload.find((p) => p.name === 'avg')
+  const { timestamp, range, avg } = row
 
   let content: React.ReactNode = null
-  if (!range?.value || !avg?.value) {
+  if (!range || !avg) {
     content = (
       <div className="mt-2 font-medium text-label-value-16">
         {anyAnomalyLive ||
@@ -250,11 +156,11 @@ function LivenessCustomTooltip({
       </div>
     )
   } else {
-    const [min, max] = range.value as unknown as [number, number]
+    const [min, max] = range
     content = (
       <div className="mt-2 flex flex-col gap-2">
         <Stat name="Minimum" seconds={min} />
-        <Stat name="Average" seconds={avg.value} />
+        <Stat name="Average" seconds={avg} />
         <Stat name="Maximum" seconds={max} />
       </div>
     )

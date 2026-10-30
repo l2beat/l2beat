@@ -3,22 +3,22 @@ import { UnixTime } from '@l2beat/shared-pure'
 import sum from 'lodash/sum'
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
-import { Area, AreaChart } from 'recharts'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+} from '~/components/core/chart/ChartContext'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
+import {
+  ChartTooltipRow,
+  ChartTooltipWrapper,
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import {
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputChartDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
 import { formatRange } from '~/utils/dates'
@@ -37,6 +37,8 @@ interface Props {
   /** The hint's extra row would lift this chart's baseline above a hint-less chart beside it */
   disableLegendOnboarding?: boolean
 }
+
+type ChartRow = { timestamp: number; [key: string]: number | null }
 
 const colorsCache = new Map<string, string>()
 
@@ -144,9 +146,7 @@ export function DaThroughputByProjectChart({
         const isSynced =
           lastProjectsDataTimestamp && timestamp <= lastProjectsDataTimestamp
 
-        const result: { timestamp: number; [key: string]: number | null } = {
-          timestamp,
-        }
+        const result: ChartRow = { timestamp }
 
         for (const project of allProjects) {
           const value = values?.[project]
@@ -162,6 +162,16 @@ export function DaThroughputByProjectChart({
     )
   }, [data, allProjects, denominator])
 
+  const series: ChartSeries<string, ChartRow>[] = allProjects.map(
+    (project) => ({
+      key: project,
+      fill: chartMeta?.[project]?.color,
+      stack: true,
+      curve: 'step',
+      activeDot: false,
+    }),
+  )
+
   return (
     <ChartContainer
       data={chartData}
@@ -174,65 +184,51 @@ export function DaThroughputByProjectChart({
       isLoading={isLoading}
       project={project}
       milestones={milestones}
-    >
-      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
+      legend
+      legendLeading={
         <ChartLegendToggleAll
           showAllSelected={showAllSelected}
           onToggleAll={toggleAllDataKeys}
         />
-        {allProjects?.map((project) => (
-          <Area
-            key={project}
-            dataKey={project}
-            stackId="a"
-            hide={!dataKeys.includes(project)}
-            fill={chartMeta?.[project]?.color}
-            fillOpacity={1}
-            activeDot={false}
-            isAnimationActive={false}
-            strokeWidth={0}
-            type="step"
+      }
+    >
+      <TimeSeriesChart
+        data={chartData}
+        series={series}
+        ariaLabel="Data throughput by project"
+        syncedUntil={syncedUntil}
+        yAxis={{ unit: ` ${unit}`, tickCount: 4 }}
+        renderTooltip={(row, keys) => (
+          <CustomTooltip
+            row={row}
+            keys={keys}
+            denominator={denominator}
+            resolution={resolution}
           />
-        ))}
-
-        <ChartCommonComponents
-          data={chartData}
-          isLoading={isLoading}
-          yAxis={{
-            unit: ` ${unit}`,
-            tickCount: 4,
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartTooltip
-          filterNull={false}
-          content={
-            <CustomTooltip denominator={denominator} resolution={resolution} />
-          }
-        />
-      </AreaChart>
+        )}
+      />
     </ChartContainer>
   )
 }
 
 function CustomTooltip({
-  payload,
-  label,
+  row,
+  keys,
   denominator: mainDenominator,
   resolution,
-}: CustomChartTooltipProps & {
+}: {
+  row: ChartRow
+  keys: string[]
   denominator: number
   resolution: ChartResolution
 }) {
-  const { meta: config } = useChart()
-  if (!payload || typeof label !== 'number') return null
-  const actualPayload = [...payload]
-    .sort((a, b) => {
-      if (a.name === 'Unknown') return 1
-      if (b.name === 'Unknown') return -1
-      return (b.value ?? 0) - (a.value ?? 0)
-    })
-    .filter((p) => !p.hide)
+  const label = row.timestamp
+  // Hidden series are not in `keys`.
+  const actualPayload = getTooltipEntries(row, keys).sort((a, b) => {
+    if (a.name === 'Unknown') return 1
+    if (b.name === 'Unknown') return -1
+    return (b.value ?? 0) - (a.value ?? 0)
+  })
 
   return (
     <ChartTooltipWrapper>
@@ -242,33 +238,21 @@ function CustomTooltip({
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
         {actualPayload.slice(0, 20).map((entry, index) => {
-          if (entry.type === 'none') return null
-          const configEntry = entry.name ? config[entry.name] : undefined
-          if (!configEntry) return null
           const value = entry.value ?? 0
           const valueInBytes = value * mainDenominator
           const { unit, denominator } = getDaDataParams(valueInBytes)
           const formattedValue = (valueInBytes / denominator).toFixed(2)
           return (
-            <div
+            <ChartTooltipRow
               key={index}
-              className="flex items-center justify-between gap-x-6"
+              name={entry.name}
+              gap="gap-x-6"
+              wrapLabel={false}
             >
-              <div className="flex items-center gap-1">
-                <ChartDataIndicator
-                  backgroundColor={configEntry.color}
-                  type={configEntry.indicatorType}
-                />
-                <span className="font-medium text-label-value-14">
-                  {configEntry.label}
-                </span>
-              </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {entry.value !== null && entry.value !== undefined
-                  ? `${formattedValue} ${unit}`
-                  : 'No data'}
+                {entry.value !== null ? `${formattedValue} ${unit}` : 'No data'}
               </span>
-            </div>
+            </ChartTooltipRow>
           )
         })}
         {actualPayload.length > 20 && (

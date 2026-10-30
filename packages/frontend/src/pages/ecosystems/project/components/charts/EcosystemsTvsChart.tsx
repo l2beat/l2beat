@@ -1,22 +1,19 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
-import type { ChartMeta } from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+import { fillGradient } from '~/components/core/chart/gradients'
+import {
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -37,6 +34,17 @@ import { optionToRange } from '~/utils/range/range'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
+
+const SERIES: ChartSeries<'value', TvsChartDataPoint>[] = [
+  {
+    key: 'value',
+    stroke: 'var(--ecosystem-primary)',
+    fill: fillGradient(
+      'var(--ecosystem-primary)',
+      'var(--ecosystem-secondary)',
+    ),
+  },
+]
 
 export function EcosystemsTvsChart({
   id,
@@ -119,41 +127,19 @@ export function EcosystemsTvsChart({
         data={chartData}
         isLoading={isLoading}
         milestones={ecosystemMilestones}
+        legend
+        className="h-44! min-h-44!"
       >
-        <AreaChart
-          responsive
+        <TimeSeriesChart
           data={chartData}
-          className="h-44! min-h-44!"
-          // Without right:1 the chart last point is not hoverable for some reason
-          margin={{ top: 20, right: 1 }}
-        >
-          <defs>
-            <CustomFillGradientDef
-              id="fill"
-              colors={{
-                primary: 'var(--ecosystem-primary)',
-                secondary: 'var(--ecosystem-secondary)',
-              }}
-            />
-          </defs>
-          <Area
-            dataKey="value"
-            fill="url(#fill)"
-            fillOpacity={1}
-            stroke="var(--ecosystem-primary)"
-            isAnimationActive={false}
-          />
-          <ChartCommonComponents
-            data={chartData}
-            isLoading={isLoading}
-            yAxis={{
-              tickFormatter: (value: number) => formatCurrency(value, unit),
-            }}
-            syncedUntil={data?.syncedUntil}
-          />
-          <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />
-          <ChartLegend content={<ChartLegendContent />} />
-        </AreaChart>
+          series={SERIES}
+          ariaLabel="TVS"
+          yAxis={{ format: (value) => formatCurrency(value, unit) }}
+          syncedUntil={data?.syncedUntil}
+          renderTooltip={(row, keys) => (
+            <TvsCustomTooltip row={row} keys={keys} unit={unit} skipNull />
+          )}
+        />
       </ChartContainer>
       <ChartControlsWrapper className="mt-2.5 flex-wrap">
         <TvsChartUnitControls unit={unit} setUnit={setUnit} />

@@ -2,34 +2,18 @@ import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  CyanFillGradientDef,
-  CyanStrokeGradientDef,
-} from '~/components/core/chart/defs/CyanGradientDef'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
-import {
-  YellowFillGradientDef,
-  YellowStrokeGradientDef,
-} from '~/components/core/chart/defs/YellowGradientDef'
+  getTooltipEntries,
+  sumEntries,
+} from '~/components/core/chart/ChartTooltip'
+import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
@@ -83,18 +67,7 @@ export function L2SummaryTvsChart({
     }),
   )
 
-  const chartData = useMemo(() => {
-    return data?.chart.map(
-      ([timestamp, rollups, validiumsAndOptimiums, others]) => {
-        return {
-          timestamp,
-          rollups,
-          validiumsAndOptimiums,
-          others,
-        }
-      },
-    )
-  }, [data])
+  const chartData = useMemo(() => toChartData(data), [data])
   const stats = getStats(chartData, dataKeys)
 
   return (
@@ -109,78 +82,59 @@ export function L2SummaryTvsChart({
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
+        legend
         interactiveLegend={{
           dataKeys,
           onItemClick: toggleDataKey,
           disableOnboarding: true,
         }}
       >
-        <AreaChart
-          responsive
+        <TimeSeriesChart
           data={chartData}
-          // Without right:1 the chart last point is not hoverable for some reason
-          margin={{ top: 20, right: 1, left: 0, bottom: 0 }}
-        >
-          <defs>
-            <PinkFillGradientDef id="rollups-fill" />
-            <PinkStrokeGradientDef id="rollups-stroke" />
-            <CyanFillGradientDef id="validiums-and-optimiums-fill" />
-            <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
-            <YellowFillGradientDef id="others-fill" />
-            <YellowStrokeGradientDef id="others-stroke" />
-          </defs>
-          <ChartLegend content={<ChartLegendContent />} />
-          <ChartStrokeOverFillAreaComponents
-            data={[
-              {
-                dataKey: 'rollups',
-                stroke: 'url(#rollups-stroke)',
-                fill: 'url(#rollups-fill)',
-                hide: !dataKeys.includes('rollups'),
-              },
-              {
-                dataKey: 'validiumsAndOptimiums',
-                stroke: 'url(#validiums-and-optimiums-stroke)',
-                fill: 'url(#validiums-and-optimiums-fill)',
-                hide: !dataKeys.includes('validiumsAndOptimiums'),
-              },
-              {
-                dataKey: 'others',
-                stroke: 'url(#others-stroke)',
-                fill: 'url(#others-fill)',
-                hide: !dataKeys.includes('others'),
-              },
-            ]}
-          />
-          <ChartCommonComponents
-            data={chartData}
-            isLoading={isLoading}
-            yAxis={{
-              domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-              tickFormatter: (value: number) => formatCurrency(value, unit),
-            }}
-            syncedUntil={data?.syncedUntil}
-          />
-          <ChartTooltip content={<CustomTooltip />} filterNull={false} />
-        </AreaChart>
+          ariaLabel="Value secured"
+          series={[
+            {
+              key: 'rollups',
+              stroke: CHART_GRADIENTS.pink.stroke,
+              fill: CHART_GRADIENTS.pink.fill,
+            },
+            {
+              key: 'validiumsAndOptimiums',
+              stroke: CHART_GRADIENTS.cyan.stroke,
+              fill: CHART_GRADIENTS.cyan.fill,
+            },
+            {
+              key: 'others',
+              stroke: CHART_GRADIENTS.yellow.stroke,
+              fill: CHART_GRADIENTS.yellow.fill,
+            },
+          ]}
+          yAxis={{
+            domain: 'autoIfSingle',
+            format: (value: number) => formatCurrency(value, unit),
+          }}
+          syncedUntil={data?.syncedUntil}
+          renderTooltip={(row, keys) => (
+            <CustomTooltip row={row} visibleKeys={keys} />
+          )}
+        />
       </ChartContainer>
     </div>
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
-  if (!payload || typeof label !== 'number') return null
+type ChartRow = NonNullable<ReturnType<typeof toChartData>>[number]
 
-  const validPayload = payload.filter((p) => p.type !== 'none' && !p.hide)
-  const total = validPayload.reduce<number | null>((acc, curr) => {
-    if (curr.value === null || curr.value === undefined) {
-      return acc
-    }
-    if (acc === null) {
-      return curr?.value ?? null
-    }
-    return acc + curr.value
-  }, null)
+function CustomTooltip({
+  row,
+  visibleKeys,
+}: {
+  row: ChartRow
+  visibleKeys: (keyof typeof chartMeta)[]
+}) {
+  const label = row.timestamp
+  const payload = getTooltipEntries(row, visibleKeys)
+  const total = sumEntries(payload)
   const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
     <ChartTooltipWrapper>
@@ -192,7 +146,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
                 mode: 'datetime',
               })}
         </div>
-        {validPayload.length > 1 && (
+        {payload.length > 1 && (
           <>
             <div className="mt-3 mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">
               <span className="[@media(min-width:600px)]:hidden">Total</span>
@@ -207,34 +161,32 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
           </>
         )}
         <div className="mt-2 flex flex-col gap-2">
-          {payload.map((entry) => {
-            if (entry.type === 'none' || entry.hide) return null
-            const config = chartMeta[entry.name as keyof typeof chartMeta]
-            return (
-              <div
-                key={entry.name}
-                className="flex items-center justify-between gap-x-1"
-              >
-                <span className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
-                  </span>
-                </span>
-                <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.value !== null && entry.value !== undefined
-                    ? formatCurrency(entry.value, 'usd')
-                    : 'No data'}
-                </span>
-              </div>
-            )
-          })}
+          {payload.map((entry) => (
+            <ChartTooltipRow key={entry.name} name={entry.name} gap="gap-x-1">
+              <ChartTooltipValue
+                value={entry.value}
+                format={(value) => formatCurrency(value, 'usd')}
+              />
+            </ChartTooltipRow>
+          ))}
         </div>
       </div>
     </ChartTooltipWrapper>
+  )
+}
+
+function toChartData(
+  data:
+    | { chart: [number, number | null, number | null, number | null][] }
+    | undefined,
+) {
+  return data?.chart.map(
+    ([timestamp, rollups, validiumsAndOptimiums, others]) => ({
+      timestamp,
+      rollups,
+      validiumsAndOptimiums,
+      others,
+    }),
   )
 }
 

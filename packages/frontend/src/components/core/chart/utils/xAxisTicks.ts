@@ -1,37 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { XAxisProps } from 'recharts'
 import { MONTHS, parseTimestamp } from '~/utils/dates'
-
-const common: XAxisProps = {
-  dataKey: 'timestamp',
-  tickLine: false,
-  axisLine: false,
-}
-
-export function getXAxisProps<T extends { timestamp: number }>(
-  data: T[] | undefined,
-): XAxisProps {
-  if (!data || data.length === 0) {
-    return {
-      ...common,
-      ticks: [],
-    }
-  }
-  const timestamps = data.map((point) => point.timestamp)
-  const minTimestamp = UnixTime(Math.min(...timestamps))
-  const maxTimestamp = UnixTime(Math.max(...timestamps))
-
-  const actualRangeInDays =
-    (UnixTime.toStartOf(maxTimestamp, 'day') -
-      UnixTime.toStartOf(minTimestamp, 'day')) /
-    UnixTime.DAY
-
-  return {
-    ...common,
-    ticks: timestamps.filter(getTickCondition(actualRangeInDays)),
-    tickFormatter: getTickFormatter(actualRangeInDays),
-  }
-}
 
 export function getTickCondition(actualRangeInDays: number) {
   return (timestamp: number) => {
@@ -76,5 +44,27 @@ export function getTickFormatter(actualRangeInDays: number) {
     if (actualRangeInDays <= 1095)
       return `${MONTHS[month]?.shortName} ‘${year.slice(-2)}`
     return year
+  }
+}
+
+/**
+ * Time-axis ticks for rows at `xs`, spaced for the range they span. Labels
+ * near the plot edges would be cut off, so the outer 3% gets none.
+ */
+export function getTimeTicks(xs: number[]) {
+  const first = xs[0]
+  const last = xs.at(-1)
+  if (first === undefined || last === undefined) {
+    return { values: [], format: String }
+  }
+  const rangeInDays =
+    (UnixTime.toStartOf(UnixTime(last), 'day') -
+      UnixTime.toStartOf(UnixTime(first), 'day')) /
+    UnixTime.DAY
+  const isTick = getTickCondition(rangeInDays)
+  const edge = (last - first) * 0.03
+  return {
+    values: xs.filter((t) => isTick(t) && t > first + edge && t < last - edge),
+    format: getTickFormatter(rangeInDays),
   }
 }

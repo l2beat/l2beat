@@ -1,27 +1,17 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import {
-  CartesianGrid,
-  ComposedChart,
-  DefaultZIndexes,
-  Line,
-  ReferenceDot,
-  XAxis,
-  YAxis,
-} from 'recharts'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartLegendItemLabel,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
+import { scaleLog } from 'd3-scale'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import {
+  ChartTooltipWrapper,
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
+import {
+  type ChartReferenceDot,
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import type {
   InclusionDelayChartDataPoint,
   InclusionDelayEntityMarker,
@@ -70,142 +60,129 @@ export function InclusionDelayChart({
     thresholdMarkers,
   )
 
-  return (
-    <ChartContainer data={data} meta={chartMeta} isLoading={false}>
-      <ComposedChart
-        responsive
-        data={data}
-        margin={{ top: 20, right: 8, left: 0, bottom: 4 }}
-      >
-        <ChartLegend
-          content={
-            <ChartLegendContent>
-              {entityMarkerMode === 'detailed' && entityMarkers.length > 0 && (
-                <div className="order-last flex shrink-0 items-center gap-[3px] pl-2">
-                  <ChartDataIndicator
-                    type={{ shape: 'square' }}
-                    backgroundColor={INCLUSION_DELAY_ENTITY_MARKER_COLOR}
-                  />
-                  <ChartLegendItemLabel>
-                    Largest attributed entities
-                  </ChartLegendItemLabel>
-                </div>
-              )}
-            </ChartLegendContent>
-          }
-        />
-        <CartesianGrid
-          vertical={false}
-          syncWithTicks
-          zIndex={DefaultZIndexes.line + 1}
-        />
-        <XAxis
-          type="number"
-          dataKey="censoringFraction"
-          domain={[0, maxCensorFraction]}
-          ticks={getFractionTicks(maxCensorFraction)}
-          tickFormatter={formatCensoringFraction}
-          tickLine={false}
-          axisLine={false}
-          minTickGap={16}
-        />
-        <YAxis
-          scale={yAxisScale === 'log' ? 'log' : 'linear'}
-          domain={yDomain}
-          ticks={
-            yAxisScale === 'log'
-              ? (getLogDelayTicks(yDomain[0], yDomain[1]) ?? undefined)
-              : undefined
-          }
-          tickFormatter={(value) => formatDelayDays(Number(value))}
-          tickLine={false}
-          axisLine={false}
-          mirror
-          tickCount={yAxisScale === 'linear' ? 4 : undefined}
-          dy={-10}
-          tick={{ width: 350 }}
-          allowDataOverflow={yAxisScale === 'log'}
-        />
-        {dataKeys.map((dataKey) => {
-          const meta = chartMeta[dataKey]
-          if (!meta || meta.indicatorType.shape !== 'line') {
-            return null
-          }
+  const series: ChartSeries<string, InclusionDelayChartDataPoint>[] =
+    dataKeys.flatMap((dataKey) => {
+      const meta = chartMeta[dataKey]
+      if (!meta || meta.indicatorType.shape !== 'line') return []
+      return [
+        {
+          key: dataKey,
+          stroke: meta.color,
+          strokeDasharray: meta.indicatorType.strokeDasharray
+            ? '5 5'
+            : undefined,
+          connectNulls: true,
+        },
+      ]
+    })
 
-          return (
-            <Line
-              key={dataKey}
-              dataKey={dataKey}
-              stroke={meta.color}
-              strokeDasharray={
-                meta.indicatorType.strokeDasharray ? '5 5' : undefined
+  const referenceDots: ChartReferenceDot[] = [
+    ...entityMarkers.map(
+      (marker): ChartReferenceDot => ({
+        x: marker.stakeFraction,
+        y: marker.delayDays,
+        r: 4.5,
+        fill: marker.color ?? INCLUSION_DELAY_ENTITY_MARKER_COLOR,
+        stroke: 'var(--background)',
+        strokeWidth: 2,
+        label:
+          entityMarkerMode === 'detailed'
+            ? {
+                text: marker.label,
+                position: 'top',
+                fill: 'var(--primary)',
+                fontSize: 11,
+                fontWeight: 500,
+                offset: 8,
               }
-              dot={false}
-              connectNulls
-              isAnimationActive={false}
+            : undefined,
+      }),
+    ),
+    ...thresholdMarkers.map(
+      (marker): ChartReferenceDot => ({
+        x: marker.censoringFraction,
+        y: marker.delayDays,
+        r: 5.5,
+        fill: 'transparent',
+        stroke: DELAY_THRESHOLD_COLOR,
+        strokeWidth: 2.5,
+        label: {
+          text: marker.label,
+          position: 'bottom',
+          fill: DELAY_THRESHOLD_COLOR,
+          fontSize: 11,
+          fontWeight: 500,
+          offset: 8,
+        },
+      }),
+    ),
+  ]
+
+  return (
+    <ChartContainer
+      data={data}
+      meta={chartMeta}
+      legend
+      legendLeading={
+        entityMarkerMode === 'detailed' &&
+        entityMarkers.length > 0 && (
+          // `order-last`: after the series items.
+          <div className="order-last flex shrink-0 items-center gap-[3px] pl-2">
+            <ChartDataIndicator
+              type={{ shape: 'square' }}
+              backgroundColor={INCLUSION_DELAY_ENTITY_MARKER_COLOR}
             />
-          )
-        })}
-        {entityMarkers.map((marker) => (
-          <ReferenceDot
-            key={marker.id}
-            x={marker.stakeFraction}
-            y={marker.delayDays}
-            r={4.5}
-            fill={marker.color ?? INCLUSION_DELAY_ENTITY_MARKER_COLOR}
-            stroke="var(--background)"
-            strokeWidth={2}
-            label={
-              entityMarkerMode === 'detailed'
-                ? {
-                    value: marker.label,
-                    position: 'top',
-                    fill: 'var(--primary)',
-                    fontSize: 11,
-                    fontWeight: 500,
-                    offset: 8,
-                  }
-                : undefined
-            }
-            ifOverflow="discard"
-          />
-        ))}
-        {thresholdMarkers.map((marker) => (
-          <ReferenceDot
-            key={marker.id}
-            x={marker.censoringFraction}
-            y={marker.delayDays}
-            r={5.5}
-            fill="transparent"
-            stroke={DELAY_THRESHOLD_COLOR}
-            strokeWidth={2.5}
-            label={{
-              value: marker.label,
-              position: 'bottom',
-              fill: DELAY_THRESHOLD_COLOR,
-              fontSize: 11,
-              fontWeight: 500,
-              offset: 8,
-            }}
-            ifOverflow="discard"
-          />
-        ))}
-        <ChartTooltip filterNull={false} content={<InclusionDelayTooltip />} />
-      </ComposedChart>
+            <span className="text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
+              Largest attributed entities
+            </span>
+          </div>
+        )
+      }
+    >
+      <TimeSeriesChart
+        data={data}
+        series={series}
+        ariaLabel="Inclusion delay"
+        x={getCensoringFraction}
+        xAxis={{
+          ticks: getFractionTicks(maxCensorFraction),
+          format: formatCensoringFraction,
+          domain: [0, maxCensorFraction],
+        }}
+        yAxis={{
+          scale: yAxisScale === 'log' ? scaleLog : undefined,
+          domain: yDomain,
+          ticks:
+            yAxisScale === 'log'
+              ? getLogDelayTicks(yDomain[0], yDomain[1])
+              : undefined,
+          format: formatDelayDays,
+          tickCount: yAxisScale === 'linear' ? 4 : 5,
+        }}
+        // Room for the x axis, plus 4px below it.
+        margin={{ right: 8, bottom: 29 }}
+        referenceDots={referenceDots}
+        renderTooltip={(row, keys) => (
+          <InclusionDelayTooltip row={row} keys={keys} />
+        )}
+      />
     </ChartContainer>
   )
 }
 
-function InclusionDelayTooltip({
-  payload,
-  label: censoringFraction,
-}: CustomChartTooltipProps) {
-  const { meta } = useChart()
-  if (!payload || typeof censoringFraction !== 'number') return null
+function getCensoringFraction(row: InclusionDelayChartDataPoint) {
+  return row.censoringFraction
+}
 
-  const rows = payload.filter(
-    (entry) => typeof entry.dataKey === 'string' && meta[entry.dataKey],
-  )
+function InclusionDelayTooltip({
+  row,
+  keys,
+}: {
+  row: InclusionDelayChartDataPoint
+  keys: string[]
+}) {
+  const { meta } = useChart()
+  const { censoringFraction } = row
 
   return (
     <ChartTooltipWrapper>
@@ -215,8 +192,8 @@ function InclusionDelayTooltip({
           transaction inclusion delay of
         </div>
         <div className="flex flex-col gap-1">
-          {rows.map((entry) => {
-            const dataKey = `${entry.dataKey}`
+          {getTooltipEntries(row, keys).map((entry) => {
+            const dataKey = entry.name
             const item = meta[dataKey]
             if (!item) return null
 
@@ -318,11 +295,6 @@ function formatDelayDays(days: number) {
   return formatSeconds(seconds)
 }
 
-function formatTooltipDelay(value: unknown) {
-  if (value === null || value === undefined) return 'no inclusion'
-
-  const days = Number(value)
-  if (!Number.isFinite(days)) return 'no inclusion'
-
-  return formatDelayDays(days)
+function formatTooltipDelay(days: number | null) {
+  return days === null ? 'no inclusion' : formatDelayDays(days)
 }

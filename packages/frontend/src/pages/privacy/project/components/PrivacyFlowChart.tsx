@@ -1,26 +1,21 @@
 import type { Milestone } from '@l2beat/config'
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
 import type { ChartScale } from '~/components/chart/types'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+} from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
+  ChartTooltipRow,
   ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
+import { fillGradient } from '~/components/core/chart/gradients'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { PrivacyFlowsChartPoint } from '~/server/features/privacy/getPrivacyFlowsChart'
 import { formatRange } from '~/utils/dates'
@@ -47,6 +42,8 @@ const chartMeta = {
     indicatorType: { shape: 'line' },
   },
 } satisfies ChartMeta
+
+type SeriesKey = keyof typeof chartMeta
 
 export function PrivacyFlowChart({
   data,
@@ -89,78 +86,52 @@ export function PrivacyFlowChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
+      legend
     >
-      <AreaChart
-        responsive
+      <TimeSeriesChart
         data={chartData}
-        // Without right:1 the chart last point is not hoverable for some reason
-        margin={{ top: 20, right: project ? 0 : 1 }}
-      >
-        <defs>
-          <CustomFillGradientDef
-            id={`privacy-${metric}-deposits-fill`}
-            colors={{
-              primary: 'var(--chart-emerald)',
-              secondary: 'var(--chart-emerald)',
-            }}
-          />
-          <CustomFillGradientDef
-            id={`privacy-${metric}-withdrawals-fill`}
-            colors={{
-              primary: 'var(--chart-pink)',
-              secondary: 'var(--chart-pink)',
-            }}
-          />
-        </defs>
-        <ChartLegend content={<ChartLegendContent />} />
-        <ChartStrokeOverFillAreaComponents
-          data={[
-            {
-              dataKey: 'deposits',
-              stroke: 'var(--chart-emerald)',
-              fill: `url(#privacy-${metric}-deposits-fill)`,
-              hide: !dataKeys.includes('deposits'),
-            },
-            {
-              dataKey: 'withdrawals',
-              stroke: 'var(--chart-pink)',
-              fill: `url(#privacy-${metric}-withdrawals-fill)`,
-              hide: !dataKeys.includes('withdrawals'),
-            },
-          ]}
-        />
-        <ChartTooltip
-          filterNull={false}
-          content={<PrivacyFlowChartTooltip metric={metric} />}
-        />
-        <ChartCommonComponents
-          data={chartData}
-          isLoading={isLoading}
-          yAxis={{
-            scale: scale === 'linear' ? 'auto' : scale,
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            tickCount: 4,
-            tickFormatter: (value) =>
-              metric === 'count'
-                ? formatInteger(Number(value))
-                : formatCurrency(Number(value), 'usd'),
-          }}
-          syncedUntil={syncedUntil}
-        />
-      </AreaChart>
+        ariaLabel={metric === 'count' ? 'Flows count' : 'Flows value'}
+        margin={{ right: project ? 0 : 1 }}
+        series={[
+          {
+            key: 'deposits',
+            stroke: 'var(--chart-emerald)',
+            fill: fillGradient('var(--chart-emerald)'),
+          },
+          {
+            key: 'withdrawals',
+            stroke: 'var(--chart-pink)',
+            fill: fillGradient('var(--chart-pink)'),
+          },
+        ]}
+        yAxis={{
+          scale: scale === 'linear' ? undefined : scaleSymlog,
+          domain: 'autoIfSingle',
+          tickCount: 4,
+          format: (value) =>
+            metric === 'count'
+              ? formatInteger(value)
+              : formatCurrency(value, 'usd'),
+        }}
+        syncedUntil={syncedUntil}
+        renderTooltip={(row, keys) => (
+          <PrivacyFlowChartTooltip row={row} keys={keys} metric={metric} />
+        )}
+      />
     </ChartContainer>
   )
 }
 
 function PrivacyFlowChartTooltip({
-  payload,
-  label,
+  row,
+  keys,
   metric,
-}: CustomChartTooltipProps & {
+}: {
+  row: { timestamp: number } & Record<SeriesKey, number | null>
+  keys: SeriesKey[]
   metric: 'count' | 'value'
 }) {
-  const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
+  const label = row.timestamp
 
   return (
     <ChartTooltipWrapper>
@@ -169,34 +140,20 @@ function PrivacyFlowChartTooltip({
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
-        {payload.map((entry) => {
-          if (entry.name === undefined || entry.hide || entry.type === 'none') {
-            return null
-          }
-
-          const config = meta[entry.name]
-          if (!config) return null
-
+        {getTooltipEntries(row, keys).map((entry) => {
           return (
-            <div
+            <ChartTooltipRow
               key={entry.name}
-              className="flex items-center justify-between gap-x-6"
+              name={entry.name}
+              gap="gap-x-6"
+              wrapLabel={false}
             >
-              <div className="flex items-center gap-1">
-                <ChartDataIndicator
-                  type={config.indicatorType}
-                  backgroundColor={config.color}
-                />
-                <span className="font-medium text-label-value-14">
-                  {config.label}
-                </span>
-              </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
                 {metric === 'count'
-                  ? formatInteger(Number(entry.value ?? 0))
-                  : formatCurrency(Number(entry.value ?? 0), 'usd')}
+                  ? formatInteger(entry.value ?? 0)
+                  : formatCurrency(entry.value ?? 0, 'usd')}
               </span>
-            </div>
+            </ChartTooltipRow>
           )
         })}
       </div>

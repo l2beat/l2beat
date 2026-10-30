@@ -1,20 +1,17 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart } from 'recharts'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
+import {
+  ChartTooltipRow,
+  ChartTooltipValue,
+  ChartTooltipWrapper,
+  getTooltipEntries,
+  sumEntries,
+} from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
@@ -78,51 +75,44 @@ export function PrivacyTvlBreakdownChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
-    >
-      {/* Without right:1 the chart last point is not hoverable for some reason */}
-      <AreaChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
+      legend
+      legendLeading={
         <ChartLegendToggleAll
           showAllSelected={showAllSelected}
           onToggleAll={toggleAllDataKeys}
         />
-        {projects.map((project) => (
-          <Area
-            key={project.id}
-            dataKey={project.id}
-            stackId="a"
-            hide={!dataKeys.includes(project.id)}
-            fill={chartMeta[project.id]?.color}
-            fillOpacity={1}
-            stroke={chartMeta[project.id]?.color}
-            strokeWidth={0}
-            activeDot={false}
-            isAnimationActive={false}
-          />
-        ))}
-        <ChartCommonComponents
-          data={chartData}
-          isLoading={isLoading}
-          yAxis={{
-            tickCount: 4,
-            tickFormatter: (value) => formatCurrency(Number(value), 'usd'),
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartTooltip filterNull={false} content={<CustomTooltip />} />
-      </AreaChart>
+      }
+    >
+      <TimeSeriesChart
+        data={chartData}
+        ariaLabel="Value secured by project"
+        series={projects.map((project) => ({
+          key: project.id,
+          stack: true,
+          fill: chartMeta[project.id]?.color,
+          activeDot: false,
+        }))}
+        yAxis={{
+          tickCount: 4,
+          format: (value) => formatCurrency(value, 'usd'),
+        }}
+        syncedUntil={syncedUntil}
+        renderTooltip={(row, keys) => <CustomTooltip row={row} keys={keys} />}
+      />
     </ChartContainer>
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
-  const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
-
-  const visible = payload.filter((p) => p.type !== 'none' && !p.hide)
-  const total = visible.reduce<number | null>((acc, curr) => {
-    if (curr.value === null || curr.value === undefined) return acc
-    return (acc ?? 0) + curr.value
-  }, null)
+function CustomTooltip({
+  row,
+  keys,
+}: {
+  row: { timestamp: number; [key: string]: number | null }
+  keys: string[]
+}) {
+  const label = row.timestamp
+  const visible = getTooltipEntries(row, keys)
+  const total = sumEntries(visible)
 
   return (
     <ChartTooltipWrapper>
@@ -147,28 +137,19 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
           {[...visible]
             .sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
             .map((entry) => {
-              const config = entry.name ? meta[entry.name] : undefined
-              if (!config) return null
               return (
-                <div
+                <ChartTooltipRow
                   key={entry.name}
-                  className="flex items-center justify-between gap-x-3"
+                  name={entry.name}
+                  gap="gap-x-3"
+                  wrapLabel={false}
                 >
-                  <div className="flex items-center gap-1">
-                    <ChartDataIndicator
-                      backgroundColor={config.color}
-                      type={config.indicatorType}
-                    />
-                    <span className="font-medium text-label-value-14">
-                      {config.label}
-                    </span>
-                  </div>
-                  <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
-                    {entry.value !== null && entry.value !== undefined
-                      ? formatCurrency(entry.value, 'usd')
-                      : 'No data'}
-                  </span>
-                </div>
+                  <ChartTooltipValue
+                    value={entry.value}
+                    format={(value) => formatCurrency(value, 'usd')}
+                    className="text-primary tabular-nums"
+                  />
+                </ChartTooltipRow>
               )
             })}
         </div>

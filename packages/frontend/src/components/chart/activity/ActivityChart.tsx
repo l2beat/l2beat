@@ -1,54 +1,39 @@
 import type { Milestone } from '@l2beat/config'
 import {
-  assert,
   assertUnreachable,
   formatActivityCount,
   formatInteger,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
-import { AreaChart } from 'recharts'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+} from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  CyanFillGradientDef,
-  CyanStrokeGradientDef,
-} from '~/components/core/chart/defs/CyanGradientDef'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/EthereumGradientDef'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
-import {
-  YellowFillGradientDef,
-  YellowStrokeGradientDef,
-} from '~/components/core/chart/defs/YellowGradientDef'
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
+import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import {
+  type ChartSeries,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
-import { ChartStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
 import type { ChartScale } from '../types'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+
+type SeriesKey = 'ethereum' | 'projects'
 
 interface ActivityChartDataPoint {
   timestamp: number
@@ -111,6 +96,25 @@ export function ActivityChart({
   ) satisfies ChartMeta
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
+
+  const projectsGradient = CHART_GRADIENTS[typeToGradient(type)]
+  const series: ChartSeries<SeriesKey, ActivityChartDataPoint>[] = [
+    {
+      key: 'ethereum',
+      stroke: CHART_GRADIENTS.ethereum.stroke,
+      fill: CHART_GRADIENTS.ethereum.fill,
+    },
+    ...(project.id !== ProjectId.ETHEREUM
+      ? [
+          {
+            key: 'projects' as const,
+            stroke: projectsGradient.stroke,
+            fill: projectsGradient.fill,
+          },
+        ]
+      : []),
+  ]
+
   return (
     <ChartContainer
       data={data}
@@ -126,87 +130,52 @@ export function ActivityChart({
       }
       project={project}
       milestones={milestones}
+      legend
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <ChartLegend
-          content={(props) => <ChartLegendContent payload={props.payload} />}
-        />
-        <ChartStrokeOverFillAreaComponents
-          data={[
-            {
-              dataKey: 'ethereum',
-              stroke: 'url(#strokeEthereum)',
-              fill: 'url(#fillEthereum)',
-              hide: !dataKeys.includes('ethereum'),
-            },
-            ...(project.id !== ProjectId.ETHEREUM
-              ? [
-                  {
-                    dataKey: 'projects',
-                    stroke: 'url(#strokeProjects)',
-                    fill: 'url(#fillProjects)',
-                    hide: !dataKeys.includes('projects'),
-                  },
-                ]
-              : []),
-          ]}
-        />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            scale: scale === 'linear' ? 'auto' : scale,
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            unit: metric === 'tps' ? ' TPS' : ' UOPS',
-            tickCount: tickCount ?? 3,
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartTooltip
-          filterNull={false}
-          content={
-            <ActivityCustomTooltip metric={metric} resolution={resolution} />
-          }
-        />
-        <defs>
-          {type === 'Rollups' && (
-            <>
-              <PinkFillGradientDef id="fillProjects" />
-              <PinkStrokeGradientDef id="strokeProjects" />
-            </>
-          )}
-          {type === 'ValidiumsAndOptimiums' && (
-            <>
-              <CyanFillGradientDef id="fillProjects" />
-              <CyanStrokeGradientDef id="strokeProjects" />
-            </>
-          )}
-          {type === 'Others' && (
-            <>
-              <YellowFillGradientDef id="fillProjects" />
-              <YellowStrokeGradientDef id="strokeProjects" />
-            </>
-          )}
-          <EthereumFillGradientDef id="fillEthereum" />
-          <EthereumStrokeGradientDef id="strokeEthereum" />
-        </defs>
-      </AreaChart>
+      <TimeSeriesChart
+        data={data}
+        series={series}
+        ariaLabel="Activity"
+        yAxis={{
+          scale: scale === 'linear' ? undefined : scaleSymlog,
+          domain: 'autoIfSingle',
+          unit: metric === 'tps' ? ' TPS' : ' UOPS',
+          tickCount: tickCount ?? 3,
+        }}
+        syncedUntil={syncedUntil}
+        renderTooltip={(row, keys) => (
+          <ActivityCustomTooltip
+            row={row}
+            keys={keys}
+            metric={metric}
+            resolution={resolution}
+          />
+        )}
+      />
     </ChartContainer>
   )
 }
 
-export function ActivityCustomTooltip({
-  payload,
-  label: timestamp,
+export function ActivityCustomTooltip<
+  T extends { timestamp: number },
+  K extends string,
+>({
+  row,
+  keys,
   metric,
+  skipNull,
   resolution = 'day',
-}: CustomChartTooltipProps & {
+}: {
+  row: T
+  keys: K[]
   metric: ActivityMetric
+  /** Leave out series without a value, instead of showing "No data". */
+  skipNull?: boolean
   resolution?: ActivityResolution
 }) {
+  const timestamp = row.timestamp
   const resolutionSeconds = UnixTime.periodToSeconds(resolution)
-  const { meta } = useChart()
-  if (!payload || typeof timestamp !== 'number') return null
+  const payload = getTooltipEntries(row, keys, { skipNull })
 
   return (
     <ChartTooltipWrapper>
@@ -217,34 +186,15 @@ export function ActivityCustomTooltip({
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
-          {payload.map((entry) => {
-            if (entry.name === undefined || entry.type === 'none' || entry.hide)
-              return null
-            const config = meta[entry.name]
-            assert(config, 'No config')
-
-            return (
-              <div
-                key={entry.name}
-                className="flex w-full items-center justify-between gap-2"
-              >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
-                  </span>
-                </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value !== null && entry.value !== undefined
-                    ? formatActivityCount(entry.value)
-                    : 'No data'}
-                </span>
-              </div>
-            )
-          })}
+          {payload.map((entry) => (
+            <ChartTooltipRow key={entry.name} name={entry.name}>
+              <ChartTooltipValue
+                value={entry.value}
+                format={formatActivityCount}
+                className="tabular-nums"
+              />
+            </ChartTooltipRow>
+          ))}
         </div>
 
         <span className="mt-3 text-heading-16">
@@ -252,43 +202,32 @@ export function ActivityCustomTooltip({
         </span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
-          {payload.map((entry) => {
-            if (
-              entry.name === undefined ||
-              entry.value === undefined ||
-              entry.type === 'none' ||
-              entry.hide
-            )
-              return null
-            const config = meta[entry.name]
-            assert(config, 'No config')
-
-            return (
-              <div
-                key={entry.name}
-                className="flex w-full items-center justify-between gap-2"
-              >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
-                  </span>
-                </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value === null
-                    ? 'No data'
-                    : formatInteger(entry.value * resolutionSeconds)}
-                </span>
-              </div>
-            )
-          })}
+          {payload.map((entry) => (
+            <ChartTooltipRow key={entry.name} name={entry.name}>
+              <ChartTooltipValue
+                value={entry.value}
+                format={(value) => formatInteger(value * resolutionSeconds)}
+                className="tabular-nums"
+              />
+            </ChartTooltipRow>
+          ))}
         </div>
       </div>
     </ChartTooltipWrapper>
   )
+}
+
+function typeToGradient(type: ActivityChartType) {
+  switch (type) {
+    case 'Rollups':
+      return 'pink'
+    case 'ValidiumsAndOptimiums':
+      return 'cyan'
+    case 'Others':
+      return 'yellow'
+    default:
+      assertUnreachable(type)
+  }
 }
 
 function typeToColor(type: ActivityChartType) {

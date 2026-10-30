@@ -1,19 +1,12 @@
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { useId } from 'react'
-import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
-import type { ChartMeta } from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
+import { fillGradient } from '~/components/core/chart/gradients'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -33,7 +26,6 @@ export function MonthlyUpdateTvsChart({
   to: UnixTime
 }) {
   const trpc = useTRPC()
-  const id = useId()
   const { data, isLoading } = useQuery(
     trpc.tvs.chart.queryOptions({
       range: [from, to],
@@ -73,43 +65,35 @@ export function MonthlyUpdateTvsChart({
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
       <Header timeRange={timeRange} stats={stats} unit={'usd'} />
-      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
-        <AreaChart
-          responsive
+      <ChartContainer
+        meta={chartMeta}
+        data={chartData}
+        isLoading={isLoading}
+        legend
+        className="h-44! min-h-44!"
+      >
+        <TimeSeriesChart
           data={chartData}
-          className="h-44! min-h-44!"
-          margin={{ top: 20 }}
-        >
-          <defs>
-            <CustomFillGradientDef
-              id={id}
-              colors={{
-                primary: 'var(--project-primary)',
-                secondary: 'var(--project-secondary)',
-              }}
-            />
-          </defs>
-          <Area
-            dataKey="value"
-            fill={`url(#${id})`}
-            fillOpacity={1}
-            stroke="var(--project-primary)"
-            isAnimationActive={false}
-          />
-          <ChartCommonComponents
-            data={chartData}
-            isLoading={isLoading}
-            yAxis={{
-              tickFormatter: (value: number) => formatCurrency(value, 'usd'),
-            }}
-            syncedUntil={data?.syncedUntil}
-          />
-          <ChartTooltip
-            filterNull={false}
-            content={<TvsCustomTooltip unit="usd" />}
-          />
-          <ChartLegend content={<ChartLegendContent />} />
-        </AreaChart>
+          ariaLabel="Total Value Secured"
+          margin={{ right: 0 }}
+          series={[
+            {
+              key: 'value',
+              stroke: 'var(--project-primary)',
+              fill: fillGradient(
+                'var(--project-primary)',
+                'var(--project-secondary)',
+              ),
+            },
+          ]}
+          yAxis={{
+            format: (value) => formatCurrency(value, 'usd'),
+          }}
+          syncedUntil={data?.syncedUntil}
+          renderTooltip={(row, keys) => (
+            <TvsCustomTooltip row={row} keys={keys} unit="usd" />
+          )}
+        />
       </ChartContainer>
     </PrimaryCard>
   )
