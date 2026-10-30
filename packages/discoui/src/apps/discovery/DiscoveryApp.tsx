@@ -1,6 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Navigate, Outlet } from 'react-router'
+import { IS_READONLY } from '../../config/readonly'
 import type { AppModule } from '../createRouter'
+import { AgentBridge } from './agent/AgentBridge'
 import { ConfigHealthReportPage } from './ConfigHealthReportPage'
 import { NotificationsRoot } from './components/Notifications'
 import { HomePage } from './HomePage'
@@ -23,6 +25,7 @@ export const DiscoveryAppModule: AppModule = {
       path: '/ui',
       element: (
         <QueryClientProvider client={queryClient}>
+          {!IS_READONLY && <AgentBridge />}
           <Outlet />
         </QueryClientProvider>
       ),

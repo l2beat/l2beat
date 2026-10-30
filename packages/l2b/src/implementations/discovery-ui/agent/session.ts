@@ -11,7 +11,7 @@ const RECEIPT_TIMEOUT_MS = 5_000
 // What the agent and the open tabs share. Event ids carry a per-boot prefix,
 // so a tab that outlives a server restart never mistakes a new event for one
 // it already has.
-export class AgentSession<Context, Receipt> {
+export class AgentSession<Context, Receipt extends { unavailable?: boolean }> {
   context: Context | undefined
   private readonly tabs = new Map<Response, number>()
   private readonly bootId = randomUUID().slice(0, 8)
@@ -69,6 +69,9 @@ export class AgentSession<Context, Receipt> {
   // waits for the first tab's receipt.
   // A tab that has nothing to say about the event stays silent, so waiting
   // out timeoutMs without a receipt means no tab had anything to report.
+  // A tab that cannot act on it, like one showing another project, answers
+  // unavailable at once while another tab may still act, so that answer
+  // stands only when every tab gave it.
   async request(
     event: object,
     timeoutMs = RECEIPT_TIMEOUT_MS,
@@ -79,14 +82,23 @@ export class AgentSession<Context, Receipt> {
       return { tabs }
     }
     const receipt = await new Promise<Receipt | undefined>((resolve) => {
-      const timeout = setTimeout(() => {
-        this.receiptWaiters.delete(id)
-        resolve(undefined)
-      }, timeoutMs)
-      this.receiptWaiters.set(id, (r) => {
+      let unavailableCount = 0
+      const finish = (r: Receipt | undefined) => {
         clearTimeout(timeout)
         this.receiptWaiters.delete(id)
         resolve(r)
+      }
+      // A tab still silent may yet act, so a timeout confirms nothing.
+      const timeout = setTimeout(() => finish(undefined), timeoutMs)
+      this.receiptWaiters.set(id, (r) => {
+        if (r.unavailable !== true) {
+          finish(r)
+          return
+        }
+        unavailableCount++
+        if (unavailableCount === tabs) {
+          finish(r)
+        }
       })
     })
     return { tabs, receipt }
