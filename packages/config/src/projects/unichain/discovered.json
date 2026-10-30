@@ -1,15 +1,10 @@
 {
   "name": "unichain",
-  "timestamp": 1793196526,
-  "configHash": "0x3660ee6aa3eaee972704869d40fd2442904412571b4612e885a225bcfe78c6f2",
+  "timestamp": 1793359565,
+  "configHash": "0xe14d4aaaf7af750b3433c63f32c725e6a12c4a60ca1e14f58cff9df0e0443c11",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x01Bc161F133d37Ed8624f77e1DCF1671b9423c92",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -254,7 +249,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 26291682
+          "prevBlockNum": 26305211
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -482,13 +477,13 @@
           ]
         ],
         "$upgradeCount": 9,
-        "anchorGame": "eth:0x6195A5a6c2e079d7134EBf7fE7140E7CF3dEF4dC",
+        "anchorGame": "eth:0x5EF3Ea46b9f85C71fb3eA11fB41b8C2A6fcC7A21",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x35b3d4440e668013ffe2c14901ce9454a9962b2ea7cc309508bb6ec3e39dfa94",
-          1792587294
+          "0x5fdaaa9b2909bb4a20b4ec757c5bfd2faa1acb47e27eee8ff816a07502880d88",
+          1792749792
         ],
         "getStartingAnchorRoot": {
           "root": "0xaf64a866304eb17696278d26290bb172aa941eac3370d9bc8bd313d492beb7d3",
@@ -626,8 +621,8 @@
         "game42": "eth:0x0000000000000000000000000000000000000000",
         "game5": "eth:0x5C3eb47cB0174aea522a2a9Ae79487139A53D691",
         "game5AnchorStateRegistry": "eth:0x27Cf508E4E3Aa8d30b3226aC3b5Ea0e8bcaCAFF9",
-        "game5Args": "0x27cf508e4e3aa8d30b3226ac3b5ea0e8bcacaff9d5f0e2912c70771c589cd8bb087ede0dab4afa9a",
-        "game5Proposer": "eth:0xD5F0E2912C70771C589CD8bB087EDE0Dab4AFA9A",
+        "game5Args": "0x27cf508e4e3aa8d30b3226ac3b5ea0e8bcacaff986b392ca30ad7453c8d88b56eb5a04fd0e2175b7",
+        "game5Proposer": "eth:0x86b392cA30aD7453c8d88B56EB5A04fD0E2175b7",
         "game621": "eth:0x0000000000000000000000000000000000000000",
         "game8": "eth:0x0000000000000000000000000000000000000000",
         "game8AbsolutePrestate": "UNRESOLVED",
@@ -642,7 +637,7 @@
         "game9Args": "0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1dfacc005dcd857b401e4732e6f7837135a22825cfa27cf508e4e3aa8d30b3226ac3b5ea0e8bcacaff974ad145ac900f1dd5551f0c9e143314dc4022fcf0000000000000000000000000000000000000000000000000000000000000000",
         "game9Vm": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
         "game9Weth": "eth:0x74ad145aC900F1DD5551F0C9E143314DC4022FCf",
-        "gameCount": 17207,
+        "gameCount": 17253,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -706,11 +701,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Optimism EOA 1",
       "address": "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c",
       "type": "EOA",
@@ -718,11 +708,6 @@
     },
     {
       "address": "eth:0x3041BA32f451F5850c147805F5521AC206421623",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x34d19AC0a7B195359354DB4D5E8aDa7A1f2Cb27C",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -815,18 +800,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 44,
+        "nonce": 47,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0x5b5B0669De777AF0Eb7A73eD46AaEe9711ab01E4",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81",
@@ -942,7 +922,7 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "systemConfig": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-        "totalSupply": "20247594000000000000",
+        "totalSupply": "20415188000000000000",
         "version": "1.5.1"
       },
       "implementationNames": {
@@ -1071,11 +1051,6 @@
       }
     },
     {
-      "address": "eth:0x7D742aD88c6cE2D3dD1B4582b5180423b74cBc4c",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1148,11 +1123,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "eth:0x833C6f278474A78658af91aE8edC926FE33a230e",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OpFoundationUpgradeSafe",
       "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "type": "Contract",
@@ -1185,7 +1155,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 74,
+        "nonce": 78,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1194,41 +1164,9 @@
       }
     },
     {
-      "name": "Unichain Multisig 2",
-      "address": "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x5451D0ff17735067e9ccaa77470Caa13c6027B11",
-      "sinceTimestamp": 1730143223,
-      "sinceBlock": 21066179,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0x5b5B0669De777AF0Eb7A73eD46AaEe9711ab01E4",
-          "eth:0xc531e0368dc3928E11987D096558dEE7A22ECEE4",
-          "eth:0x7D742aD88c6cE2D3dD1B4582b5180423b74cBc4c",
-          "eth:0x01Bc161F133d37Ed8624f77e1DCF1671b9423c92",
-          "eth:0x34d19AC0a7B195359354DB4D5E8aDa7A1f2Cb27C"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0xbea15583997db2831ec7dea58be331771c073bea8444c2b48ded663621f2260e",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 13,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      "address": "eth:0x86b392cA30aD7453c8d88B56EB5A04fD0E2175b7",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SuperchainConfig",
@@ -1422,7 +1360,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292667050",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292667150",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1453,6 +1391,11 @@
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "unichain" } }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0x9Ef649E8746cC47A17708a5e86B2d66c7F6C00d1",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea",
@@ -1641,7 +1584,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 71,
+        "nonce": 74,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1752,7 +1695,7 @@
         ],
         "$upgradeCount": 15,
         "basefeeScalar": 2000,
-        "batcherHash": "eth:0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",
+        "batcherHash": "eth:0x9Ef649E8746cC47A17708a5e86B2d66c7F6C00d1",
         "blobbasefeeScalar": 900000,
         "daFootprintGasScalar": 0,
         "DELAYED_WETH_SLOT": "0x51547f31a231e1007dca33017faa3da20d959b95087c588a7768bfb922fd58ff",
@@ -1819,7 +1762,7 @@
         "startBlock": 21116363,
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "eth:0x833C6f278474A78658af91aE8edC926FE33a230e",
+        "unsafeBlockSigner": "eth:0xFaACA0A10e4a23C5E01485DE07767547d4D8056D",
         "version": "4.0.0",
         "VERSION": 0
       },
@@ -1845,11 +1788,6 @@
         "eth:0x670b850A235A6fA98cD7a195eB139D0277E471fA": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0xc531e0368dc3928E11987D096558dEE7A22ECEE4",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6",
@@ -1968,11 +1906,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xD5F0E2912C70771C589CD8bB087EDE0Dab4AFA9A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xd91530dB01c60C6B3b824707D33fb0771aB85930",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2012,6 +1945,11 @@
     },
     {
       "address": "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFaACA0A10e4a23C5E01485DE07767547d4D8056D",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2087,7 +2025,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "l1CrossDomainMessenger": "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623440",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623444",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2148,7 +2086,7 @@
         "$upgradeCount": 3,
         "baseFee": 0,
         "baseFeeScalar": 2000,
-        "blobBaseFee": 12899187,
+        "blobBaseFee": 10980047,
         "blobBaseFeeScalar": 900000,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2157,7 +2095,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 205371745,
+        "l1BaseFee": 201967702,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2417,10 +2355,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 205371745,
+        "basefee": 201967702,
         "baseFeeScalar": 2000,
-        "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
-        "blobBaseFee": 12899187,
+        "batcherHash": "0x0000000000000000000000009ef649e8746cc47a17708a5e86b2d66c7f6c00d1",
+        "blobBaseFee": 10980047,
         "blobBaseFeeScalar": 900000,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "unichain:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2430,17 +2368,17 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xb671b9a8cecd4d5f2cf38992c4631c64f475bd1b86a646684f04654975cbaa11",
+        "hash": "0x207f2ba1a1b3b6b43f13cb5e034e3c541ca1c6ab6b156e97ccf7579459b7381f",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26291725,
+        "number": 26305256,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "proxyAdmin": "unichain:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "sequenceNumber": 3,
-        "timestamp": 1793196467,
+        "sequenceNumber": 5,
+        "timestamp": 1793359487,
         "version": "1.9.0"
       },
       "implementationNames": {
@@ -2695,21 +2633,24 @@
           ]
         ],
         "$upgradeCount": 3,
-        "MIN_WITHDRAWAL_AMOUNT": 0,
-        "minWithdrawalAmount": 0,
+        "MIN_WITHDRAWAL_AMOUNT": "150000000000000000",
+        "minWithdrawalAmount": "150000000000000000",
         "proxyAdmin": "unichain:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "recipient": "unichain:0x4200000000000000000000000000000000000019",
-        "RECIPIENT": "unichain:0x4200000000000000000000000000000000000019",
+        "recipient": "eth:0x7d324ADedacddc6A284245279C6856eFAcEAA915",
+        "RECIPIENT": "eth:0x7d324ADedacddc6A284245279C6856eFAcEAA915",
         "totalProcessed": 0,
         "version": "1.1.1",
-        "WITHDRAWAL_NETWORK": 1,
-        "withdrawalNetwork": 1
+        "WITHDRAWAL_NETWORK": 0,
+        "withdrawalNetwork": 0
       },
       "implementationNames": {
         "unichain:0x420000000000000000000000000000000000001b": "Proxy",
         "unichain:0xEddf416c7159387cc6DF3015700F79Cfb8911373": "OperatorFeeVault"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
@@ -2844,7 +2785,7 @@
         "0xec3d2631b587840a92d5bdbf31e3c065d86709caa6845a58abbfe5e425470ff0"
       ],
       "proxyType": "immutable",
-      "description": "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0xFb9d55c1846D1d442B277F6f87Da319156941401).",
+      "description": "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (eth:0x7d324ADedacddc6A284245279C6856eFAcEAA915).",
       "ignoreInWatchMode": ["lastDisbursementTime"],
       "deployerAddress": "unichain:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1730748360,
@@ -2852,10 +2793,10 @@
       "values": {
         "$immutable": true,
         "feeDisbursementInterval": 86400,
-        "l1Recipient": "eth:0xFb9d55c1846D1d442B277F6f87Da319156941401",
-        "lastDisbursementTime": 1746125949,
-        "minWithdrawalAmount": "3000000000000000000",
-        "owner": "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1",
+        "l1Recipient": "eth:0x7d324ADedacddc6A284245279C6856eFAcEAA915",
+        "lastDisbursementTime": 1793286802,
+        "minWithdrawalAmount": "150000000000000000",
+        "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "pendingOwner": "unichain:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
@@ -3700,9 +3641,6 @@
       "function systemConfig() view returns (address)",
       "function updateRetirementTimestamp()",
       "function version() view returns (string)"
-    ],
-    "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1": [
-      "constructor(address _singleton)"
     ],
     "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": [
       "constructor(address _admin)",
@@ -4779,8 +4717,8 @@
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
     "unichain/L1Splitter": "0xc171f8ca7ded1583edc3a75a29a12914a22b690399b62cb108620e69141252ff"
   },
-  "usedBlockNumbers": { "ethereum": 26291728, "unichain": 62448166 },
-  "permissionsConfigHash": "0x76e08a3fdaf873701015134bef8a0743e2c322c8d8254e5775992a387bc0f0b4",
+  "usedBlockNumbers": { "ethereum": 26305261, "unichain": 62611204 },
+  "permissionsConfigHash": "0x0556d0e73922a5eafbc5d06571ce5590a40307489e8c46f7ff114adda3bb79d4",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -4808,16 +4746,6 @@
           "from": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
           "description": "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 3mo 8d.",
           "role": ".livenessGuard"
-        }
-      ]
-    },
-    "eth:0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".batcherHash"
         }
       ]
     },
@@ -5229,6 +5157,16 @@
           "description": "takes ownership of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
           "role": ".fallbackOwner",
           "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+        }
+      ]
+    },
+    "eth:0x9Ef649E8746cC47A17708a5e86B2d66c7F6C00d1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".batcherHash"
         }
       ]
     },
