@@ -286,7 +286,9 @@ class NetworkSeries {
       r.totalBalance + (r.pendingDeposits ?? 0n)
     const consensus =
       held(end) - held(start) + start.withdrawals - start.deposits
-    return toEth(consensus + start.executionRewards)
+    const execution =
+      start.builderPayments + start.priorityFees + start.directTransfers
+    return toEth(consensus + execution)
   }
 }
 

@@ -39,10 +39,10 @@ describe(computeYieldChart.name, () => {
     const charts = compute([], [], network)
     const point = charts.yield[0]
     expect(present(point?.ethStaked)).toBeCloseTo(999_310, 1e-6)
-    // 65 ETH a day over an average active stake of 999,145 ETH.
+    // 65 ETH a day over the average active stake of days 1 to 30, 999,155 ETH.
     expect(present(point?.network)).toBeCloseTo(
-      ((65 * 30) / 999_145) * (365 / 30),
-      1e-6,
+      ((65 * 30) / 999_155) * (365 / 30),
+      1e-12,
     )
   })
 
@@ -53,9 +53,10 @@ describe(computeYieldChart.name, () => {
         ? day(START + i * DAY, 1_000_000n + 10n * BigInt(i), null)
         : day(START + i * DAY, 999_000n + 10n * BigInt(i), 1_000n),
     )
+    // The 1,000 ETH left the active stake on 21 of the window's 30 days.
     expect(present(compute([], [], network).yield[0]?.network)).toBeCloseTo(
-      ((65 * 30) / (999_145 - (1_000 * 20) / 30)) * (365 / 30),
-      1e-6,
+      ((65 * 30) / (999_155 - (1_000 * 21) / 30)) * (365 / 30),
+      1e-12,
     )
   })
 })
@@ -237,8 +238,11 @@ function day(
     pendingDeposits: pendingEth === null ? null : pendingEth * ETH,
     withdrawals: 100n * ETH,
     deposits: 50n * ETH,
-    executionRewards: 5n * ETH,
+    builderPayments: 3n * ETH,
+    priorityFees: ETH + ETH / 2n,
+    directTransfers: ETH / 2n,
     blockCount: 7200,
+    builderBlockCount: 6300,
   }
 }
 
