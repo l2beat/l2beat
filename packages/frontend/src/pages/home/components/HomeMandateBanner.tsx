@@ -129,7 +129,7 @@ function MandateCharter({ className }: { className?: string }) {
       {/* Signed with the beat in ETHBEAT, once, as the page loads. It starts
           at the edge, where the banner's rule meets it. */}
       <path
-        d="M26 132h40l6-12 9 26 8-34 6 20h14"
+        d="M26 132h40l6-12 9 26 8-34 6 20h18"
         pathLength={1}
         fill="none"
         strokeWidth="3.5"
