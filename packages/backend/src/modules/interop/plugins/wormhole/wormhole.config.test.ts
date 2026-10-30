@@ -3,7 +3,12 @@ import type { CallParameters, HttpClient, IRpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { InteropConfigStore } from '../../engine/config/InteropConfigStore'
-import { parseWormholeChainIds, WormholeConfigPlugin } from './wormhole.config'
+import {
+  parseWormholeChainIds,
+  WormholeConfig,
+  WormholeConfigPlugin,
+  type WormholeNetwork,
+} from './wormhole.config'
 
 const GO_SOURCE = `
 // NOTE: Please keep these in numerical order.
@@ -118,6 +123,58 @@ describe(WormholeConfigPlugin.name, () => {
         'Failed to parse Wormhole core contracts',
       )
     })
+
+    it('keeps the last verified entry of a chain whose RPC call fails', async () => {
+      const previousBsc: WormholeNetwork = {
+        chain: 'bsc',
+        chainId: 56,
+        wormholeChainId: 4,
+        coreContract: BSC_CORE,
+        relayer: WORMHOLE_RELAYER,
+        tokenBridge: BSC_TOKEN_BRIDGE,
+      }
+      const store = new InteropConfigStore(undefined)
+      await store.set(WormholeConfig, [previousBsc])
+      const plugin = createPlugin({
+        http: httpReturning({ docs: DOCS_HTML, chainIds: GO_SOURCE }),
+        chains: [
+          { id: 1, name: 'ethereum' },
+          { id: 56, name: 'bsc' },
+        ],
+        rpcs: new Map([
+          ['ethereum', failingRpc()],
+          ['bsc', failingRpc()],
+        ]),
+        store,
+      })
+
+      const networks = await plugin.getLatestNetworks()
+
+      expect(networks.find((n) => n.chain === 'bsc')).toEqual(previousBsc)
+      expect(networks.find((n) => n.chain === 'ethereum')).toEqual(undefined)
+    })
+  })
+
+  describe(WormholeConfigPlugin.prototype.run.name, () => {
+    it('fails loudly and keeps the saved config when the docs list no token bridges', async () => {
+      const previous: WormholeNetwork[] = [
+        { chain: 'bsc', wormholeChainId: 4, tokenBridge: BSC_TOKEN_BRIDGE },
+      ]
+      const store = new InteropConfigStore(undefined)
+      await store.set(WormholeConfig, previous)
+      const plugin = createPlugin({
+        http: httpReturning({
+          docs: DOCS_HTML.replace('Wrapped Token Transfers', 'Token Bridge'),
+          chainIds: GO_SOURCE,
+        }),
+        store,
+      })
+
+      await expect(plugin.run()).toBeRejectedWith(
+        'Failed to parse Wormhole token bridges',
+      )
+      expect(store.get(WormholeConfig)).toEqual(previous)
+    })
   })
 })
 
@@ -125,10 +182,11 @@ function createPlugin(options: {
   http: HttpClient
   chains?: { id: number; name: string }[]
   rpcs?: Map<string, IRpcClient>
+  store?: InteropConfigStore
 }) {
   return new WormholeConfigPlugin(
     options.chains ?? [],
-    new InteropConfigStore(undefined),
+    options.store ?? new InteropConfigStore(undefined),
     Logger.SILENT,
     options.http,
     options.rpcs ?? new Map(),
@@ -144,6 +202,12 @@ function httpReturning(bodies: { docs: string; chainIds: string }) {
         : bodies.chainIds
       return { text: async () => body } as unknown as Response
     }),
+  })
+}
+
+function failingRpc() {
+  return mockObject<IRpcClient>({
+    getBlock: mockFn().rejectsWith(new Error('RPC unavailable')),
   })
 }
 

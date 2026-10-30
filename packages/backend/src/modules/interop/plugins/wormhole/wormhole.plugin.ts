@@ -1,4 +1,4 @@
-import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { CCTPV1Config, CCTPV2Config } from '../cctp/cctp.config'
 import { findParsedAfter, findTransferLogBefore } from '../logScan'
@@ -75,11 +75,10 @@ export class WormholePlugin implements InteropPluginResyncable {
     if (!networks) return
 
     const network = networks.find((n) => n.chain === input.chain)
-    if (!network) {
+    // Chains known only by their Wormhole chain ID have no core to capture from
+    if (!network?.coreContract) {
       return
     }
-
-    assert(network.coreContract, 'We capture only chain with core contracts')
 
     const parsed = parseLogMessagePublished(input.log, [network.coreContract])
     if (!parsed) return
