@@ -17,7 +17,12 @@ import {
 } from './core/Command'
 import { DialogClose } from './core/Dialog'
 import { Popover, PopoverContent, PopoverTrigger } from './core/Popover'
-import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/Tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from './core/tooltip/Tooltip'
 
 export interface ProjectIconListItem {
   id: string
@@ -55,7 +60,7 @@ export function ProjectIconList({ projects, title, className }: Props) {
 
   return (
     <div className={cn('flex items-center gap-1', className)}>
-      <div className="-space-x-1.5 flex items-center">
+      <div className="flex items-center">
         {visible.map((project, index) => (
           <ProjectIcon
             key={project.id}
@@ -77,8 +82,11 @@ export function ProjectIconList({ projects, title, className }: Props) {
 export const overflowCountClasses =
   "relative inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full border border-divider bg-surface-primary px-1.5 font-bold text-label-value-12 text-primary tabular-nums leading-none transition-colors after:absolute after:-inset-1.5 after:content-[''] primary-card:bg-surface-primary hover:border-brand focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-1 focus-visible:outline-solid focus-visible:ring-0 data-[state=open]:border-brand md:text-label-value-12"
 
-const iconFocusClasses =
-  'rounded-full focus-visible:z-10! focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand'
+// Each icon overlaps the previous one by its own margin rather than through
+// space-x on the row, which keys on :last-child and so shifts when anything
+// is added after an icon. Focus shows a ring above the neighbours.
+const iconClasses =
+  '-ml-1.5 first:ml-0 rounded-full focus-visible:z-10! focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand'
 
 function ProjectIcon({
   project,
@@ -97,14 +105,16 @@ function ProjectIcon({
     />
   )
   return (
-    <Tooltip>
+    // Short enough to feel instant on purpose, long enough that sweeping the
+    // cursor across a table column does not flash every row's tooltip.
+    <Tooltip delayDuration={100}>
       {project.href ? (
         <TooltipTrigger asChild disabledOnMobile>
           <a
             href={project.href}
             className={cn(
               "after:-inset-y-1.5 hover:-translate-y-0.5 relative size-5 transition-transform after:absolute after:inset-x-0 after:content-[''] hover:z-10!",
-              iconFocusClasses,
+              iconClasses,
             )}
             style={{ zIndex }}
           >
@@ -113,20 +123,24 @@ function ProjectIcon({
         </TooltipTrigger>
       ) : (
         <TooltipTrigger
-          className={cn('relative size-5', iconFocusClasses)}
+          className={cn('relative size-5', iconClasses)}
           style={{ zIndex }}
         >
           {image}
         </TooltipTrigger>
       )}
-      <TooltipContent>
-        <p className="font-bold text-label-value-15">{project.name}</p>
-        {project.description && (
-          <p className="text-label-value-13 text-secondary">
-            {project.description}
-          </p>
-        )}
-      </TooltipContent>
+      {/* Portalled: rendered inline, the content would become a sibling of the
+          icon and change the row's width while open. */}
+      <TooltipPortal>
+        <TooltipContent>
+          <p className="font-bold text-label-value-15">{project.name}</p>
+          {project.description && (
+            <p className="text-label-value-13 text-secondary">
+              {project.description}
+            </p>
+          )}
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }
