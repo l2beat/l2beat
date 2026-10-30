@@ -52,6 +52,16 @@ describe(EthereumStakingIndexer.name, () => {
     ])
   })
 
+  it('stores the first day on the first update, from minHeight', async () => {
+    const { indexer, daily } = createIndexer()
+    const minHeight = day + UnixTime.DAY
+
+    expect(
+      await indexer.update(minHeight, minHeight + 5 * UnixTime.DAY),
+    ).toEqual(minHeight)
+    expect(daily.upsertMany.calls[0]?.args[0]?.[0]?.timestamp).toEqual(day)
+  })
+
   it('reads the pending deposits from Electra on', async () => {
     const { indexer, beacon } = createIndexer()
     const afterElectra = UnixTime.fromDate(new Date('2025-06-01T00:00:00Z'))
