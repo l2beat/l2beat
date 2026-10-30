@@ -93,6 +93,13 @@ export const etherfi: BaseProject = {
     category: 'Liquid Staking',
     tvl: { source: 'l2beat' },
   },
+  liquidStaking: {
+    contracts: {
+      type: 'etherfi',
+      weETH: discovery.getContract('weETH').address,
+      withdrawRequestNft: discovery.getContract('WithdrawRequestNFT').address,
+    },
+  },
   externalDependencies: [
     {
       type: 'not-tracked',

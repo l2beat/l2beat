@@ -127,6 +127,13 @@ export const lido: BaseProject = {
     category: 'Liquid Staking',
     tvl: { source: 'l2beat' },
   },
+  liquidStaking: {
+    contracts: {
+      type: 'lido',
+      stETH: discovery.getContract(STETH).address,
+      withdrawalQueue: discovery.getContract('WithdrawalQueueERC721').address,
+    },
+  },
   externalDependencies: [],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

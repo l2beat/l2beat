@@ -146,6 +146,12 @@ export const rocketpool: BaseProject = {
     category: 'Liquid Staking',
     tvl: { source: 'l2beat' },
   },
+  liquidStaking: {
+    contracts: {
+      type: 'rocketpool',
+      rETH: discovery.getContract('RocketTokenRETH').address,
+    },
+  },
   // Declared empty on purpose: the protocol has no bridge, no third-party price
   // feed, and no external contract it depends on. Its only outside contract is
   // the Ethereum beacon-chain deposit contract, which is part of the chain

@@ -80,6 +80,38 @@ describe(RpcClientCompat.name, () => {
     })
   })
 
+  describe(RpcClientCompat.prototype.getBlockReceipts.name, () => {
+    it('maps the gas fields and fails on an unknown block', async () => {
+      const getBlockReceipts = mockFn()
+        .resolvesToOnce([
+          {
+            blockHash: `0x${'ab'.repeat(32)}`,
+            gasUsed: 21_000n,
+            effectiveGasPrice: 3n,
+            logs: [],
+          },
+        ])
+        .resolvesToOnce(null)
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({ getBlockReceipts }),
+        'ethereum',
+      )
+
+      expect(await client.getBlockReceipts(100)).toEqual([
+        {
+          blockHash: `0x${'ab'.repeat(32)}`,
+          gasUsed: 21_000n,
+          effectiveGasPrice: 3n,
+          logs: [],
+        },
+      ])
+      expect(getBlockReceipts).toHaveBeenNthCalledWith(1, 100n)
+      await expect(client.getBlockReceipts(101)).toBeRejectedWith(
+        NotFoundOnRpcError,
+      )
+    })
+  })
+
   describe(RpcClientCompat.prototype.getTransactionReceipt.name, () => {
     it('keeps the block hash, event emitter and log index', async () => {
       const client = new RpcClientCompat(

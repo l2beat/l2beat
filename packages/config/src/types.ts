@@ -256,6 +256,8 @@ export interface BaseProject {
 
   // defi data
   defiInfo?: ProjectDefiInfo
+  /** Only on projects whose DeFi category is "Liquid Staking". */
+  liquidStaking?: ProjectLiquidStaking
 
   // external dependency data
   externalDependencies?: ProjectExternalDependency[]
@@ -1048,6 +1050,11 @@ export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
   category: ProjectDefiCategory
   tvl?: ProjectDefiTvlConfig
+}
+
+export interface ProjectLiquidStaking {
+  /** What the liquid staking indexer reads. */
+  contracts: ProjectLiquidStakingContracts
 }
 
 export type ProjectDefiTvlConfig =
@@ -1863,6 +1870,35 @@ export interface HourActivityConfig {
 }
 
 export type LivenessOverwriteMode = 'no-data'
+
+/**
+ * The contracts the liquid staking indexer reads every hour: the token's
+ * exchange rate, plus whatever decides how fast a holder can exit.
+ */
+export type ProjectLiquidStakingContracts =
+  | {
+      type: 'lido'
+      stETH: ChainSpecificAddress
+      /** Its request counters give the queue wait. */
+      withdrawalQueue: ChainSpecificAddress
+    }
+  | {
+      type: 'rocketpool'
+      /** Its collateral is the ETH that burning rETH can pay out at once. */
+      rETH: ChainSpecificAddress
+    }
+  | {
+      type: 'etherfi'
+      weETH: ChainSpecificAddress
+      /** Its request counters give the queue wait. */
+      withdrawRequestNft: ChainSpecificAddress
+    }
+  | {
+      type: 'wbeth'
+      wBETH: ChainSpecificAddress
+      /** Its lock time is the wait for an onchain redemption. */
+      unwrapToken: ChainSpecificAddress
+    }
 
 export interface ProjectLivenessInfo {
   explanation?: string

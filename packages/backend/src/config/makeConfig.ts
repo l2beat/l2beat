@@ -11,6 +11,7 @@ import { getDaBeatConfig } from './features/dabeat'
 import { getDefiTvlConfig } from './features/defiTvl'
 import { getEcosystemsConfig } from './features/ecosystemToken'
 import { getInteropFeatureConfig } from './features/interop'
+import { getLiquidStakingConfig } from './features/liquidStaking'
 import { getPrivacyConfig } from './features/privacy'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
@@ -123,6 +124,9 @@ export async function makeConfig(
         flags,
         env.string('DEFILLAMA_API_URL', 'https://api.llama.fi'),
       )),
+    liquidStaking:
+      flags.isEnabled('liquid-staking') &&
+      (await getLiquidStakingConfig(ps, flags)),
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&
       (await getTrackedTxsConfig(ps, env, flags)),

@@ -40,6 +40,8 @@ const BLOCK_TIMESTAMP_BATCH_SIZE = 25
 
 export interface Receipt {
   blockHash?: string
+  gasUsed?: bigint
+  effectiveGasPrice?: bigint
   logs: ReceiptLog[]
 }
 
@@ -78,6 +80,8 @@ export interface IRpcClient extends BlockClient, LogsClient {
   getTransactionReceipt(txHash: string): Promise<Receipt>
   /** In batch requests, in the order of `txHashes` */
   getTransactionReceipts(txHashes: string[]): Promise<Receipt[]>
+  /** Every receipt of a block in one call (eth_getBlockReceipts). */
+  getBlockReceipts(blockNumber: number): Promise<Receipt[]>
   getBalance(
     holder: EthereumAddress,
     blockNumber: number | 'latest',
@@ -244,6 +248,18 @@ export class RpcClientCompat implements IRpcClient {
     return found.map(toReceipt)
   }
 
+  async getBlockReceipts(blockNumber: number): Promise<Receipt[]> {
+    const receipts = await this.ethRpcClient.getBlockReceipts(
+      BigInt(blockNumber),
+    )
+    if (receipts === null) {
+      throw new NotFoundOnRpcError('Block not found', {
+        cause: { blockNumber },
+      })
+    }
+    return receipts.map(toReceipt)
+  }
+
   async getBalance(
     holder: EthereumAddress,
     blockNumber: number | 'latest',
@@ -402,6 +418,16 @@ export function toEVMBlock(
   if (block.settledHeight !== undefined) {
     base.settledHeight = Number(block.settledHeight)
   }
+  // Absent only in partial headers built by tests
+  if (block.miner !== undefined) {
+    base.miner = block.miner.toString()
+  }
+  if (block.baseFeePerGas !== undefined) {
+    base.baseFeePerGas = block.baseFeePerGas
+  }
+  if (block.withdrawals !== undefined) {
+    base.withdrawals = block.withdrawals.map((w) => ({ amount: w.amount }))
+  }
   if (block.transactions) {
     return {
       ...base,
@@ -414,6 +440,10 @@ export function toEVMBlock(
 function toReceipt(receipt: RpcReceipt): Receipt {
   return {
     blockHash: receipt.blockHash,
+    ...(receipt.gasUsed !== undefined && { gasUsed: receipt.gasUsed }),
+    ...(receipt.effectiveGasPrice != null && {
+      effectiveGasPrice: receipt.effectiveGasPrice,
+    }),
     logs: receipt.logs.map((log) => {
       // Only pending logs lack an index, and a receipt implies a mined transaction.
       assert(
