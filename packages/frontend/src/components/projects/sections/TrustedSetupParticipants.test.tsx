@@ -83,4 +83,13 @@ describe(TrustedSetupParticipants.name, () => {
   it('renders nothing for a setup without participant metadata', () => {
     expect(renderToStaticMarkup(<TrustedSetupParticipants />)).toEqual('')
   })
+
+  it('preserves contribution units without phase metadata', () => {
+    const html = renderToStaticMarkup(
+      <TrustedSetupParticipants contributionCount={54} phases={{}} />,
+    )
+
+    expect(html).toInclude('Contributions', '>54<', '>contributions<')
+    expect(html.includes('participants')).toEqual(false)
+  })
 })

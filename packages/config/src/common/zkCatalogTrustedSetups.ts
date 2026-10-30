@@ -87,7 +87,7 @@ export const TRUSTED_SETUPS = {
   PolygonZkEVM: {
     id: 'PolygonZkEVM',
     name: 'Polygon zkEVM',
-    participantCount: 54,
+    contributionCount: 54,
     phases: { phase1: { count: 54, unit: 'contributions' } },
     risk: 'yellow',
     shortDescription:
@@ -97,7 +97,7 @@ export const TRUSTED_SETUPS = {
   Risc0: {
     id: 'Risc0',
     name: 'Risc0 Groth16',
-    participantCount: 54,
+    contributionCount: 54,
     phases: {
       phase1: { count: 54, unit: 'contributions' },
       phase2: { count: 238, unit: 'participants' },
@@ -110,7 +110,7 @@ export const TRUSTED_SETUPS = {
   Halo2KZG: {
     id: 'Halo2KZG',
     name: 'Halo2 KZG over BN254',
-    participantCount: 71,
+    contributionCount: 71,
     phases: { phase1: { count: 71, unit: 'contributions' } },
     risk: 'yellow',
     shortDescription:
@@ -120,7 +120,7 @@ export const TRUSTED_SETUPS = {
   Zircuit: {
     id: 'Zircuit',
     name: 'Zircuit',
-    participantCount: 105,
+    contributionCount: 105,
     phases: {
       phase1: {
         count: 105,
@@ -159,13 +159,18 @@ export const TRUSTED_SETUPS = {
     id: 'TornadoCash',
     name: 'Tornado Cash',
     risk: 'yellow',
-    participantCount: 30,
+    contributionCount: 30,
     phases: {
-      phase1: { count: 30, unit: 'contributions' },
+      phase1: {
+        count: 30,
+        unit: 'contributions',
+        description:
+          '29 publicly attributed and 1 anonymous contribution. Contributors may repeat.',
+      },
       phase2: {
         count: 1114,
         unit: 'contributions',
-        description: '450 identified and 664 anonymous contributions.',
+        description: '450 publicly attributed and 664 anonymous contributions.',
       },
     },
     shortDescription:
@@ -176,7 +181,7 @@ export const TRUSTED_SETUPS = {
     id: 'PrivacyPools',
     name: 'Privacy Pools v1',
     risk: 'yellow',
-    participantCount: 61,
+    contributionCount: 61,
     phases: {
       phase1: { count: 61, unit: 'contributions' },
       phase2: {
@@ -193,7 +198,7 @@ export const TRUSTED_SETUPS = {
     id: 'PrivacyPoolsV2',
     name: 'Privacy Pools v2',
     risk: 'yellow',
-    participantCount: 61,
+    contributionCount: 61,
     phases: {
       phase1: { count: 61, unit: 'contributions' },
       phase2: {
@@ -261,7 +266,7 @@ export const TRUSTED_SETUPS = {
     id: 'Railgun',
     name: 'Railgun',
     risk: 'yellow',
-    participantCount: 54,
+    contributionCount: 54,
     phases: {
       phase1: { count: 54, unit: 'contributions' },
       phase2: {

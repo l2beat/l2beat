@@ -27,6 +27,7 @@ export function getTrustedSetupsSectionFromTrustedSetups(
         description: ts.longDescription,
         proofSystems: [ts.proofSystem],
         participantCount: ts.participantCount,
+        contributionCount: ts.contributionCount,
         phases: ts.phases,
       }
     } else {

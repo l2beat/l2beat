@@ -10,7 +10,7 @@ describe(getTrustedSetupsSectionFromTrustedSetups.name, () => {
       risk: 'yellow',
       shortDescription: 'Short description.',
       longDescription: 'Long description.',
-      participantCount: 30,
+      contributionCount: 30,
       phases: {
         phase1: { count: 30, unit: 'contributions' },
         phase2: { count: 1114, unit: 'contributions' },
@@ -33,7 +33,8 @@ describe(getTrustedSetupsSectionFromTrustedSetups.name, () => {
         name: setup.name,
         risk: setup.risk,
         description: setup.longDescription,
-        participantCount: 30,
+        participantCount: undefined,
+        contributionCount: 30,
         phases: setup.phases,
         proofSystems: [first, second],
       },

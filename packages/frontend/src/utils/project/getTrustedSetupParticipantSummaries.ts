@@ -9,7 +9,10 @@ export interface TrustedSetupParticipantSummary {
 }
 
 export function getTrustedSetupParticipantSummaries(
-  setup: Pick<TrustedSetup, 'participantCount' | 'phases'>,
+  setup: Pick<
+    TrustedSetup,
+    'participantCount' | 'contributionCount' | 'phases'
+  >,
 ): TrustedSetupParticipantSummary[] {
   if (setup.phases?.phase1 || setup.phases?.phase2) {
     return [
@@ -22,12 +25,18 @@ export function getTrustedSetupParticipantSummaries(
     ]
   }
 
-  return setup.participantCount !== undefined
+  const count = setup.participantCount ?? setup.contributionCount
+  const unit =
+    setup.participantCount !== undefined ? 'participants' : 'contributions'
+  return count !== undefined
     ? [
-        summarizePhase('Participants', {
-          count: setup.participantCount,
-          unit: 'participants',
-        }),
+        summarizePhase(
+          unit === 'participants' ? 'Participants' : 'Contributions',
+          {
+            count,
+            unit,
+          },
+        ),
       ]
     : []
 }

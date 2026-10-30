@@ -15,6 +15,7 @@ export interface TrustedSetupSectionProps extends ProjectSectionProps {
     description: TrustedSetup['longDescription']
     proofSystems: ZkCatalogTag[]
     participantCount?: TrustedSetup['participantCount']
+    contributionCount?: TrustedSetup['contributionCount']
     phases?: TrustedSetup['phases']
   }[]
 }
@@ -34,22 +35,25 @@ export function TrustedSetupSection({
                 <h3 className="font-bold text-heading-16">
                   {trustedSetup.name}
                 </h3>
-                <div className="flex items-center gap-2">
-                  <TrustedSetupRiskDot risk={trustedSetup.risk} size="lg" />
-                  <div className="flex gap-1">
-                    {trustedSetup.proofSystems.map((proofSystem) => (
-                      <TechStackTag
-                        key={proofSystem.type + proofSystem.name}
-                        tag={proofSystem}
-                        withoutTooltip
-                      />
-                    ))}
+                <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8">
+                  <div className="flex shrink-0 items-center gap-2 lg:pt-4">
+                    <TrustedSetupRiskDot risk={trustedSetup.risk} size="lg" />
+                    <div className="flex flex-wrap gap-1">
+                      {trustedSetup.proofSystems.map((proofSystem) => (
+                        <TechStackTag
+                          key={proofSystem.type + proofSystem.name}
+                          tag={proofSystem}
+                          withoutTooltip
+                        />
+                      ))}
+                    </div>
                   </div>
+                  <TrustedSetupParticipants
+                    participantCount={trustedSetup.participantCount}
+                    contributionCount={trustedSetup.contributionCount}
+                    phases={trustedSetup.phases}
+                  />
                 </div>
-                <TrustedSetupParticipants
-                  participantCount={trustedSetup.participantCount}
-                  phases={trustedSetup.phases}
-                />
                 <div className="space-y-2">
                   <h3 className="font-semibold text-secondary text-subtitle-12 uppercase">
                     Detailed description
