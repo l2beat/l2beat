@@ -28,7 +28,9 @@ export function parseUpgradePath(text: string): UpgradePath | undefined {
 
 /** Waiting steps are where users get time to exit, so the timeline sets them apart. */
 export function isWaitingStep(step: string) {
-  return /^wait\b|\btimelock\b|\boutbox\b|\bdelay\b/i.test(step)
+  return /^wait\b|\btimelock\b|\boutbox\b|\bdelay\b|\bveto (window|period)\b/i.test(
+    step,
+  )
 }
 
 function capitalize(text: string) {
