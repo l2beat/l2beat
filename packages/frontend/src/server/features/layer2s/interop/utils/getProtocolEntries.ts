@@ -28,7 +28,7 @@ import { getRelevantBridgeTypes } from './getRelevantBridgeTypes'
 import { getTokensData } from './getTokensData'
 import { getTopItems } from './getTopItems'
 
-const DEFAULT_TOP_ITEMS_LIMIT = 3
+const DEFAULT_TOP_ITEMS_LIMIT = 5
 const logger = getLogger().for('getAllProtocolEntries')
 
 export function getProtocolEntries(

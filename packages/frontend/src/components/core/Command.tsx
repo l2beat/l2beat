@@ -34,13 +34,19 @@ const CommandDialog = ({
   title,
   description,
   onEscapeKeyDown,
+  onOpenAutoFocus,
+  onCloseAutoFocus,
   fullScreenMobile,
+  contentClassName,
   ...props
 }: DialogProps & {
   title: string
   description: string
   fullScreenMobile?: boolean
+  contentClassName?: string
   onEscapeKeyDown?: (event: KeyboardEvent) => void
+  onOpenAutoFocus?: (event: Event) => void
+  onCloseAutoFocus?: (event: Event) => void
 }) => {
   return (
     <Dialog {...props}>
@@ -54,8 +60,11 @@ const CommandDialog = ({
           // gets out of the way faster.
           'overflow-hidden p-0 ease-out-quint data-[state=closed]:duration-100 data-[state=open]:duration-150 max-md:border-none md:top-1/4 md:max-w-lg',
           !fullScreenMobile && 'max-md:top-1/3',
+          contentClassName,
         )}
         onEscapeKeyDown={onEscapeKeyDown}
+        onOpenAutoFocus={onOpenAutoFocus}
+        onCloseAutoFocus={onCloseAutoFocus}
         fullScreenMobile={fullScreenMobile}
       >
         {/* The full-screen input row is sticky because iOS Safari only re-tints
@@ -77,12 +86,18 @@ const CommandDialog = ({
 const CommandInput = ({
   ref,
   className,
+  wrapperClassName,
   children,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.Input>) => {
+}: React.ComponentProps<typeof CommandPrimitive.Input> & {
+  wrapperClassName?: string
+}) => {
   return (
     <div
-      className="flex items-center border-divider border-b px-3"
+      className={cn(
+        'flex items-center border-divider border-b px-3',
+        wrapperClassName,
+      )}
       cmdk-input-wrapper=""
     >
       <SearchIcon className="mr-2 size-4 shrink-0 fill-secondary" />

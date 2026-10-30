@@ -167,13 +167,7 @@ export function PrivacyProjectPage({
                               value={
                                 <ProjectIconList
                                   projects={entry.trackedOn}
-                                  dialog={{
-                                    title: 'Tracked on',
-                                    description: 'Search for chains',
-                                    searchPlaceholder:
-                                      'Start typing to find chain...',
-                                    emptyText: 'No chains found.',
-                                  }}
+                                  title="Tracked on"
                                 />
                               }
                             />
