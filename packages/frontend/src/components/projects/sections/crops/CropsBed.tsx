@@ -13,6 +13,7 @@ import {
   toCropEntries,
 } from '~/components/garden/crops'
 import { useEntranceHold } from '~/components/garden/useEntranceHold'
+import { Moon, Sun } from '~/pages/garden/assets/GardenBackground'
 import { cn } from '~/utils/cn'
 import { gardenVerdictText } from '../sectionCopy'
 
@@ -54,7 +55,13 @@ export function CropsBed({
         )}
       >
         <Sky inGarden={inGarden} />
-        <div className="relative grid grid-cols-4 items-end pt-7">
+        <div
+          className={cn(
+            'relative grid grid-cols-4 items-end',
+            // The sun and moon stand in the corner above the last plant's head.
+            inGarden ? 'pt-12' : 'pt-7',
+          )}
+        >
           {entries.map((entry, index) => (
             <Plant key={entry.definition.key} entry={entry} index={index} />
           ))}
@@ -65,7 +72,7 @@ export function CropsBed({
       <div
         className={cn(
           'grid grid-cols-4',
-          '@max-[719.9px]:grid-cols-2 @max-[719.9px]:gap-x-6 @max-[719.9px]:gap-y-5 @max-[719.9px]:pt-4',
+          '@max-[719.9px]:grid-cols-2 @max-[719.9px]:gap-x-6 @max-[719.9px]:gap-y-8 @max-[719.9px]:pt-4',
           '@max-[519.9px]:grid-cols-1',
         )}
       >
@@ -78,7 +85,7 @@ export function CropsBed({
         <CropNote
           key={definition.key}
           note={definition.note}
-          className="mt-4 text-[12px] leading-snug"
+          className="mt-5 text-pretty @min-[520px]:text-paragraph-13 text-paragraph-14"
         />
       ))}
     </div>
@@ -100,6 +107,7 @@ function Plant({ entry, index }: { entry: CropEntry; index: number }) {
         sentiment={evaluation.sentiment}
         delay={index * STAGGER}
         width={80}
+        soil="plain"
         className="@max-[519.9px]:[&>svg]:h-[62px] @max-[519.9px]:[&>svg]:w-[53px]"
       />
     </div>
@@ -128,7 +136,9 @@ function LetterChip({
         isDashed ? 'border-crop-neutral border-dashed' : CROP_BORDER[sentiment],
         className,
       )}
-      style={{ animation: `garden-pop .3s ${EASE_OUT_BACK} ${delay}s both` }}
+      style={{
+        animation: `garden-pop .3s ${EASE_OUT_BACK} ${delay}s backwards`,
+      }}
     >
       <span
         aria-hidden
@@ -153,7 +163,7 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
           entry={entry}
           delay={index * STAGGER}
           // Wide layouts stand each plant over its column, so the badge is only needed once the columns wrap.
-          className="@max-[719.9px]:grid hidden size-[22px] text-[10px]"
+          className="@max-[719.9px]:grid hidden size-[22px] text-[11px]"
         />
         {definition.label}
       </h3>
@@ -165,12 +175,8 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
       >
         {getCropStatusText(evaluation.status, evaluation.sentiment)}
       </p>
-      <div
-        className={cn(
-          'text-paragraph-13 leading-snug',
-          '@min-[900px]:text-paragraph-14',
-        )}
-      >
+      {/* 13px only where four columns share a laptop-width section. */}
+      <div className="text-pretty @min-[720px]:@max-[899.9px]:text-paragraph-13 text-paragraph-14">
         <CropFindings evaluation={evaluation} ossification={ossification} />
       </div>
     </div>
@@ -199,7 +205,7 @@ function Verdict({
         {gardenVerdictText(listing)}
       </p>
       <div className="flex items-center gap-2">
-        <span className="text-paragraph-13 text-secondary">
+        <span className="@min-[520px]:text-paragraph-13 text-paragraph-14 text-secondary">
           {goodCount} of 4 rated good
         </span>
         <span className="flex gap-1" aria-hidden>
@@ -224,16 +230,14 @@ function Sky({ inGarden }: { inGarden: boolean }) {
     <div aria-hidden className="absolute inset-0">
       <div
         className={cn(
-          'absolute inset-0 bg-gradient-to-b',
-          inGarden
-            ? 'from-garden-sky via-garden-tint to-garden-tint'
-            : 'from-surface-secondary/70 via-surface-secondary/30 to-surface-secondary/20',
+          'absolute inset-0',
+          inGarden ? 'bg-garden-sky' : 'bg-surface-secondary/40',
         )}
       />
       {inGarden && (
         <>
-          <Sun />
-          <Moon />
+          <Sun className="absolute top-1.5 right-1.5 size-12 dark:hidden" />
+          <Moon className="absolute top-1.5 right-1.5 hidden size-12 dark:block" />
           <Stars />
         </>
       )}
@@ -255,29 +259,15 @@ function Sky({ inGarden }: { inGarden: boolean }) {
   )
 }
 
-function Sun() {
-  return (
-    // Smaller in a narrow bed, where a full-size sun would sit on the last plant.
-    <span className="absolute @max-[519.9px]:top-2 top-3 @max-[519.9px]:right-2 right-4 @max-[519.9px]:size-8 size-14 rounded-full bg-garden-sun/70 blur-[2px] dark:hidden" />
-  )
-}
-
-/** A crescent: the inset shadow paints the lit side of an otherwise transparent disc. */
-function Moon() {
-  return (
-    <span className="absolute top-3 right-5 hidden size-12 rotate-[-20deg] rounded-full shadow-[inset_-13px_-5px_0_0_var(--garden-moon)] drop-shadow-[0_0_6px_var(--garden-moon)] dark:block" />
-  )
-}
-
+// Stars keep above the flower heads: between the leaves a star reads as a stray dot.
 const STARS = [
-  { left: '6%', top: '18%', size: 2 },
-  { left: '17%', top: '42%', size: 1.5 },
-  { left: '29%', top: '12%', size: 1.5 },
-  { left: '41%', top: '30%', size: 2 },
-  { left: '54%', top: '10%', size: 1.5 },
-  { left: '63%', top: '38%', size: 1.5 },
-  { left: '74%', top: '16%', size: 2 },
-  { left: '96%', top: '46%', size: 1.5 },
+  { left: '6%', top: '12%', size: 2 },
+  { left: '19%', top: '6%', size: 1.5 },
+  { left: '31%', top: '16%', size: 1.5 },
+  { left: '44%', top: '8%', size: 2 },
+  { left: '56%', top: '14%', size: 1.5 },
+  { left: '69%', top: '6%', size: 1.5 },
+  { left: '80%', top: '14%', size: 2 },
 ]
 
 function Stars() {

@@ -5,8 +5,8 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { GardenPageHeader } from '../components/GardenPageHeader'
 import { GARDEN_PATH } from '../paths'
+import type { CropsBadgeAsset } from './badges'
 import { AttestationsSection } from './components/AttestationsSection'
-import { AudiencePicker } from './components/AudiencePicker'
 import { BadgeSection } from './components/BadgeSection'
 import { EndpointsSection } from './components/EndpointsSection'
 import type { CropsApiEndpoint } from './content'
@@ -14,18 +14,17 @@ import type { IntegrateExamples } from './getIntegrateExamples'
 
 export interface IntegrateCropsPageProps extends AppLayoutProps {
   attestations: CropsAttestationsMeta
+  badges: CropsBadgeAsset[]
   endpoints: CropsApiEndpoint[]
   examples: IntegrateExamples
 }
-
-const CONSUMERS_ID = 'for-apps'
-const PROTOCOLS_ID = 'for-protocols'
 
 // Pasted into other sites, so it must link to production even from a preview.
 const BADGE_HREF = `${PRODUCTION_ORIGIN}${GARDEN_PATH}`
 
 export function IntegrateCropsPage({
   attestations,
+  badges,
   endpoints,
   examples,
   ...props
@@ -36,18 +35,10 @@ export function IntegrateCropsPage({
         <div className="flex grow flex-col pb-24">
           <GardenPageHeader title="Integrate CROPS" />
           <main>
-            <AudiencePicker
-              consumersId={CONSUMERS_ID}
-              protocolsId={PROTOCOLS_ID}
-            />
-            <SectionDivider
-              id={CONSUMERS_ID}
-              label="For wallets and interfaces"
-            />
+            <BadgeSection badges={badges} href={BADGE_HREF} />
+            <SectionDivider id="api" label="For wallets and interfaces" />
             <EndpointsSection endpoints={endpoints} examples={examples} />
             <AttestationsSection attestations={attestations} />
-            <SectionDivider id={PROTOCOLS_ID} label="For reviewed protocols" />
-            <BadgeSection href={BADGE_HREF} />
           </main>
         </div>
         <ScrollToTopButton />

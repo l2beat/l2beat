@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { SearchIcon } from '~/icons/Search'
 import { cn } from '~/utils/cn'
+import { EASE_OUT_QUINT } from '~/utils/easing'
 import { useSearchBarContext } from './SearchBarContext'
 import { SEARCH_BAR_EXAMPLES } from './searchBarExamples'
 
@@ -14,7 +15,9 @@ export function SearchBarButton({ className }: { className?: string }) {
       // A fixed name: the hint after "Search" changes every few seconds.
       aria-label="Search"
       className={cn(
-        'flex h-10 w-72 items-center rounded-lg border border-divider bg-surface-primary p-2.5 text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2',
+        // A size container, so the hint can't widen it: beside a full-width
+        // column it shrinks to min-w-60, and the hint drops its example.
+        '@container/search flex h-10 w-72 min-w-60 items-center rounded-lg border border-divider bg-surface-primary p-2.5 text-secondary transition-transform duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]',
         className,
       )}
     >
@@ -36,7 +39,7 @@ export function SmallSearchBarButton() {
     <button
       onClick={() => setOpen((open) => !open)}
       aria-label="Search"
-      className="flex size-6 items-center justify-center"
+      className="flex size-6 items-center justify-center transition-transform duration-150 ease-out active:scale-90"
     >
       <SearchIcon className="size-6" />
     </button>
@@ -57,30 +60,55 @@ function ExampleHint() {
 
   useEffect(() => {
     const element = ref.current
-    if (
-      !element ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
-      return
-    }
+    if (!element) return
+    // Read on every tick: the preference can change while the page is open.
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     let index = 0
     const interval = setInterval(() => {
+      if (reducedMotion.matches) return
+      // Not under the pointer or keyboard focus, where it would change while
+      // someone is about to click.
+      if (element.closest('button')?.matches(':hover, :focus-visible')) return
       index = (index + 1) % SEARCH_BAR_EXAMPLES.length
-      element.textContent = SEARCH_BAR_EXAMPLES[index] ?? ''
-      element.animate(
-        [
-          { opacity: 0, transform: 'translateY(4px)' },
-          { opacity: 1, transform: 'none' },
-        ],
-        { duration: 300, easing: 'ease-out' },
+      // The old hint leaves upwards and the next one rises in behind it, so
+      // they read as one ticker; the blur hides the moment both are faint.
+      const exit = element.animate(
+        { opacity: 0, transform: 'translateY(-4px)', filter: 'blur(2px)' },
+        // Held until the next hint takes over, or the old one flashes back.
+        { duration: 120, easing: EASE_OUT_QUINT, fill: 'forwards' },
       )
+      exit.onfinish = () => {
+        const [full, short] = element.children
+        const example = SEARCH_BAR_EXAMPLES[index]
+        if (full && short && example) {
+          full.textContent = example.full
+          short.textContent = example.short
+        }
+        element.animate(
+          [
+            { opacity: 0, transform: 'translateY(4px)', filter: 'blur(2px)' },
+            { opacity: 1, transform: 'none', filter: 'none' },
+          ],
+          { duration: 200, easing: EASE_OUT_QUINT },
+        )
+        exit.cancel()
+      }
     }, EXAMPLE_INTERVAL_MS)
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      for (const animation of element.getAnimations()) animation.cancel()
+    }
   }, [])
 
   return (
     <span ref={ref} className="truncate font-normal text-secondary/80">
-      {SEARCH_BAR_EXAMPLES[0]}
+      {/* 16rem: the longest full hint, with room before the "/" */}
+      <span className="@max-[16rem]/search:hidden">
+        {SEARCH_BAR_EXAMPLES[0]?.full}
+      </span>
+      <span className="@min-[16rem]/search:hidden">
+        {SEARCH_BAR_EXAMPLES[0]?.short}
+      </span>
     </span>
   )
 }

@@ -90,6 +90,20 @@ export class TokenIngestionQueueRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
+  async find(
+    address: TokenIngestionQueueAddress,
+  ): Promise<TokenIngestionQueueRecord | undefined> {
+    const normalized = normalizeAddress(address)
+    const row = await this.db
+      .selectFrom('TokenIngestionQueue')
+      .selectAll()
+      .where('chain', '=', normalized.chain)
+      .where('address', '=', normalized.address)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async countPending(): Promise<number> {
     const count = await this.db
       .selectFrom('TokenIngestionQueue')

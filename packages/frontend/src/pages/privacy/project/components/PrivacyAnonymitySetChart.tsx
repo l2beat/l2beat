@@ -12,6 +12,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipRows,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -150,7 +151,8 @@ function AnonymitySetTooltip({
       <div className="mb-2 font-medium text-label-value-14 text-secondary">
         {formatTitle(label)}
       </div>
-      <div className="flex flex-col gap-2">
+      {/* Keyed by point, so each new point opens at its largest sets. */}
+      <ChartTooltipRows key={label} className="flex flex-col gap-2">
         {sortAnonymitySetTooltipEntries(payload).map((entry) => {
           if (
             typeof entry.dataKey !== 'string' ||
@@ -182,7 +184,7 @@ function AnonymitySetTooltip({
             </div>
           )
         })}
-      </div>
+      </ChartTooltipRows>
     </ChartTooltipWrapper>
   )
 }

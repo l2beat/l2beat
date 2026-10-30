@@ -31,7 +31,7 @@ export function CropsMiniBanner({
       onClick={onClick}
       data-active={isActive}
       className={cn(
-        'group @container/crops relative flex items-center overflow-hidden rounded-md border border-garden-border px-2.5 py-2 outline-none ring-brand transition-colors hover:border-garden-accent/50 focus-visible:ring-2 data-[active=true]:border-garden-accent/60',
+        'group @container/crops relative flex items-center overflow-hidden rounded-md border border-garden-accent/30 bg-garden-tint px-2.5 py-2 outline-none ring-brand transition-colors hover:border-garden-accent/50 focus-visible:ring-2 data-[active=true]:border-garden-accent/60',
         className,
       )}
     >
@@ -47,9 +47,11 @@ export function CropsMiniBanner({
         </span>
       </GardenLandscape>
       <span className="relative flex min-w-0 flex-col gap-1">
-        <span className="font-semibold text-sm leading-none">CROPS</span>
+        <span className="font-semibold text-sm leading-none">
+          The CROPS guide
+        </span>
         <span className="truncate text-secondary text-xs leading-none">
-          The Infinite Garden
+          Curated projects
         </span>
       </span>
     </a>

@@ -203,12 +203,8 @@ jobs:
           - name: perf
             args: --project perf --no-deps
             webkit: true
-          - name: blobs perf 1/3
-            args: --project "blobs perf" --no-deps --shard 1/3
-          - name: blobs perf 2/3
-            args: --project "blobs perf" --no-deps --shard 2/3
-          - name: blobs perf 3/3
-            args: --project "blobs perf" --no-deps --shard 3/3
+          - name: blobs perf
+            args: --project "blobs perf" --no-deps
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}

@@ -8,22 +8,20 @@ import { SUBMISSION_QUESTIONS_PATH } from '../../paths'
 
 export function ClosingSection() {
   return (
-    <section className="mt-8 md:mt-12">
-      <PrimaryCard className="relative overflow-hidden text-center md:p-10">
-        <div
-          aria-hidden
-          className="-bottom-24 pointer-events-none absolute inset-x-0 mx-auto size-72 rounded-full bg-radial from-garden-accent/25 to-transparent blur-2xl"
-        />
-        <div className="relative mx-auto flex max-w-2xl flex-col items-center">
-          <h2 className="text-balance font-bold text-heading-24 md:text-heading-32">
+    <section className="mt-4 md:mt-6">
+      {/* The garden callout tone: a flat tint over the solid card. */}
+      <PrimaryCard className="relative overflow-hidden border border-garden-border max-md:mx-4 max-md:rounded-xl md:p-8">
+        <span aria-hidden className="absolute inset-0 bg-garden-tint" />
+        <div className="relative max-w-2xl">
+          <h2 className="text-balance font-bold text-heading-18 md:text-heading-20">
             Ready to submit?
           </h2>
-          <p className="mt-3 text-pretty text-paragraph-15 text-secondary md:text-paragraph-16">
+          <p className="mt-2 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15">
             Send us the details and we will take it from there. Questions, or
             comments on the assessments, belong on the{' '}
             <CustomLink href={externalLinks.forum}>forum</CustomLink>.
           </p>
-          <Button asChild variant="fill" className="mt-6 w-full gap-2 sm:w-max">
+          <Button asChild variant="fill" className="mt-5 w-full gap-2 sm:w-max">
             <a
               href={SUBMISSION_QUESTIONS_PATH}
               target="_blank"

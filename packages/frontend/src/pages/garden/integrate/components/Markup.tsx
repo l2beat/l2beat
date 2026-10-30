@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 export function Code({ children }: { children: ReactNode }) {
   return (
-    <code className="rounded bg-surface-tertiary px-1.5 py-0.5 font-mono text-paragraph-13">
+    <code className="rounded bg-surface-tertiary px-1.5 py-px font-mono text-paragraph-13 text-primary">
       {children}
     </code>
   )

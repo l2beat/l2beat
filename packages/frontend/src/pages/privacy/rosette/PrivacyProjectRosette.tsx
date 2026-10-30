@@ -25,11 +25,12 @@ export function PrivacyProjectRosette({
       placement="project"
     >
       <span className="flex items-center gap-2 text-left">
-        {/* Taller than the other stats' dots; the margin keeps the rows level.
-            From xl up the page header shows the big rosette instead. */}
+        {/* Taller than the other stats' dots from md up; the margin keeps
+            the rows level. From xl up the page header shows the big rosette
+            instead. */}
         <PizzaRosetteIcon
           values={values}
-          className="-my-1 size-8 shrink-0 xl:hidden"
+          className="md:-my-1 size-6 shrink-0 md:size-8 xl:hidden"
           isUnderReview={isUnderReview}
           background={false}
           disableSectionLinking

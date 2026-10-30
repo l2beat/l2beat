@@ -63,6 +63,8 @@ async function getCachedData() {
           type: 'projects',
           projectIds: entries.map((entry) => entry.id),
         },
+        // Matches the chart's query, so the page renders with its data
+        hourly: true,
       }),
     ),
     helpers.queryClient.prefetchQuery(

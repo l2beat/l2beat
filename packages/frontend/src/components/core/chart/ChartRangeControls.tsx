@@ -30,6 +30,8 @@ export { rangeToOption, type ChartRangeOptionValue }
 interface ChartRangeOption {
   value: ChartRangeOptionValue
   disabled?: boolean
+  /** Shown on hover over a disabled option */
+  disabledReason?: string
   label: string
 }
 
@@ -195,27 +197,43 @@ function PredefinedOptions({
         'bg-surface-primary primary-card:bg-surface-secondary',
       )}
     >
-      {options.map((option) => (
-        <button
-          key={option.value}
-          onClick={() => {
-            const range = optionToRange(option.value)
-            setValue(range)
-            setInternalValue(undefined)
-            track('chartRangeSelected', { name, value: option.value })
-          }}
-          type="button"
-          disabled={option.disabled}
-          data-state={selectedOption === option.value ? 'checked' : 'unchecked'}
-          className={cn(
-            'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
-            'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
-          )}
-        >
-          {option.label}
-        </button>
-      ))}
+      {options.map((option) => {
+        const button = (
+          <button
+            key={option.value}
+            onClick={() => {
+              const range = optionToRange(option.value)
+              setValue(range)
+              setInternalValue(undefined)
+              track('chartRangeSelected', { name, value: option.value })
+            }}
+            type="button"
+            disabled={option.disabled}
+            data-state={
+              selectedOption === option.value ? 'checked' : 'unchecked'
+            }
+            className={cn(
+              'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
+              'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
+            )}
+          >
+            {option.label}
+          </button>
+        )
+        // A disabled button gets no hover, so the reason sits around it
+        return option.disabled && option.disabledReason ? (
+          <span
+            key={option.value}
+            className="flex h-full"
+            title={option.disabledReason}
+          >
+            {button}
+          </span>
+        ) : (
+          button
+        )
+      })}
       {children}
     </div>
   )

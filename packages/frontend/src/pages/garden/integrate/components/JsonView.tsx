@@ -7,11 +7,11 @@ import {
 
 const TOKEN = {
   key: 'text-[#0d5aa7] dark:text-[#7cc4ff]',
-  string: 'text-[#16863f] dark:text-[#3fe07f]',
-  number: 'text-[#b06a00] dark:text-[#ffb454]',
+  string: 'text-[#126b35] dark:text-[#3fe07f]',
+  number: 'text-[#8a5200] dark:text-[#ffb454]',
   keyword: 'text-brand-deep',
-  punct: 'text-[#8b9099] dark:text-[#6b7079]',
-  elision: 'text-[#a6abb3] dark:text-[#5a5f68]',
+  punct: 'text-secondary',
+  elision: 'text-secondary/70',
 }
 
 const ELISION_TEXT: Record<ElisionKind, string> = {

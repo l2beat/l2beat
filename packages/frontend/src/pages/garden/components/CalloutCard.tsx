@@ -6,17 +6,17 @@ export type CalloutTone = 'garden' | 'brand'
 
 const TONE: Record<
   CalloutTone,
-  { card: string; glow: string; chip: string; icon: string }
+  { border: string; tint: string; chip: string; icon: string }
 > = {
   garden: {
-    card: 'border-garden-border bg-gradient-to-br from-garden-tint via-surface-primary to-surface-primary',
-    glow: 'bg-crop-good/30 dark:bg-crop-good/20',
+    border: 'border-garden-border',
+    tint: 'bg-garden-tint',
     chip: 'bg-garden-accent/15',
     icon: 'text-garden-accent',
   },
   brand: {
-    card: 'border-brand/30 bg-gradient-to-br from-brand/15 via-surface-primary to-surface-primary dark:from-brand/20',
-    glow: 'bg-brand/25 dark:bg-brand/20',
+    border: 'border-brand/30',
+    tint: 'bg-brand/10 dark:bg-brand/15',
     chip: 'bg-brand/15',
     icon: 'text-brand-deep',
   },
@@ -44,25 +44,19 @@ export function CalloutCard({
   return (
     <div
       className={cn(
-        'relative flex flex-col overflow-hidden rounded-2xl border p-5 md:p-6',
-        style.card,
+        // A solid backdrop under the tint keeps the hills from showing through.
+        'relative flex flex-col overflow-hidden rounded-xl border bg-surface-primary p-4 md:p-8',
+        style.border,
       )}
     >
-      <span
-        aria-hidden
-        className={cn(
-          '-top-20 -right-12 pointer-events-none absolute rounded-full blur-3xl',
-          horizontal ? 'size-64' : 'size-48',
-          style.glow,
-        )}
-      />
+      <span aria-hidden className={cn('absolute inset-0', style.tint)} />
       <div
         className={cn(
           'relative flex grow flex-col',
           horizontal && 'md:flex-row md:items-center md:gap-8',
         )}
       >
-        <div className={cn('flex flex-col', horizontal && 'md:grow')}>
+        <div className="flex grow flex-col">
           <span
             className={cn(
               'flex size-9 items-center justify-center rounded-xl',
@@ -76,7 +70,7 @@ export function CalloutCard({
           </p>
           <p
             className={cn(
-              'mt-1.5 text-paragraph-13 text-secondary md:text-paragraph-15',
+              'mt-1.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15',
               horizontal ? 'md:max-w-2xl' : 'grow',
             )}
           >

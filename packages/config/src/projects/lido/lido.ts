@@ -7,9 +7,9 @@ import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('lido')
 
-// The four consensus instances share one committee; read from the
+// The consensus instances share one committee; read from the
 // AccountingOracle's HashConsensus (referenced by address since the name is
-// not unique across the four instances).
+// not unique across the instances).
 const ACCOUNTING_HASH_CONSENSUS =
   'eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288'
 const STETH = 'eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84'
@@ -27,6 +27,14 @@ const dsmGuardianAddresses = discovery.getContractValue<string[]>(
   'getGuardians',
 )
 const dsmGuardians = dsmGuardianAddresses.length
+const stakingModules = discovery.getContractValue<number[]>(
+  'StakingRouter',
+  'getStakingModuleIds',
+).length
+assert(
+  stakingModules === 5,
+  'Lido staking module count changed, update the module list in detailedDescription.md',
+)
 const dsmQuorum = discovery.getContractValue<number>(
   'DepositSecurityModule',
   'getGuardianQuorum',
@@ -100,11 +108,12 @@ export const lido: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Lido is Ethereum’s largest liquid staking protocol. Users deposit ETH and receive stETH, a rebasing token whose supply tracks the protocol’s total pooled ETH staked across four node-operator modules. Because staked ETH lives on the beacon chain, the core trust surface is the execution-layer↔consensus-layer boundary, bridged by a ${oracleQuorum}-of-${oracleMembers} oracle committee (bounded by on-chain sanity checks) and by trustless EIP-4788 beacon-root proofs. Withdrawal credentials are set by the protocol, so node operators cannot take user principal. Every protocol-critical change is controlled by the Lido DAO through Dual Governance, which gives stETH holders a veto and a rage-quit exit against DAO proposals over a ${dgSubmitDays}-day-plus timelock.`,
+    description: `Lido is Ethereum’s largest liquid staking protocol. Users deposit ETH and receive stETH, a rebasing token whose supply tracks the protocol’s total pooled ETH staked across ${stakingModules} node-operator modules. Because staked ETH lives on the beacon chain, the core trust surface is the execution-layer↔consensus-layer boundary, bridged by a ${oracleQuorum}-of-${oracleMembers} oracle committee (bounded by on-chain sanity checks) and by trustless EIP-4788 beacon-root proofs. Withdrawal credentials are set by the protocol, so node operators cannot take user principal. Every protocol-critical change is controlled by the Lido DAO through Dual Governance, which gives stETH holders a veto and a rage-quit exit against DAO proposals over a ${dgSubmitDays}-day-plus timelock.`,
     detailedDescription: readProjectMarkdown('lido', 'detailedDescription', {
       oracleMembers,
       oracleQuorum,
       dsmGuardians,
+      stakingModules,
       dsmQuorum,
       delegationCooldownDays,
       vaultShareCap,

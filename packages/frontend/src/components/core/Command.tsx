@@ -50,7 +50,9 @@ const CommandDialog = ({
       </DialogHeader>
       <DialogContent
         className={cn(
-          'overflow-hidden p-0 max-md:border-none md:top-1/4 md:max-w-lg',
+          // A palette, often opened from the keyboard: it opens quickly and
+          // gets out of the way faster.
+          'overflow-hidden p-0 ease-out-quint data-[state=closed]:duration-100 data-[state=open]:duration-150 max-md:border-none md:top-1/4 md:max-w-lg',
           !fullScreenMobile && 'max-md:top-1/3',
         )}
         onEscapeKeyDown={onEscapeKeyDown}

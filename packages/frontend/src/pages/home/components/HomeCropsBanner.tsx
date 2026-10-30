@@ -53,7 +53,7 @@ export function HomeCropsBanner({
           {/* The whole card is the link; the sentence says what CROPS is. */}
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <h2 className={cn(HOME_TEXT.title, HOME_BANNER_TITLE_CLASS)}>
-              The Infinite Garden
+              The CROPS guide
             </h2>
             <span className="flex items-center gap-2">
               <HomeStackedIcons items={projects} max={6} />

@@ -194,6 +194,8 @@
   /* A lighter brand pink, e.g. for the chart loader's second ball. */
   --brand-light: #ff8fb0;
   --selection-brand-share: 30%;
+  /* The nav's current page. */
+  --nav-active: var(--brand-deep);
   --background: #e6e7ec;
   --surface-primary: #fafafa;
   --surface-primary-hover: #e6ecef;
@@ -218,7 +220,6 @@
   --chart-ethereum: #2a5bd8;
   --chart-ethereum-secondary: #53a3ff;
   --chart-pink: #ff3776;
-  --nav-active: var(--brand-deep);
   --chart-cyan: #36a3a3;
   --chart-yellow: #ab8000;
   --chart-emerald: #0ce97e;
@@ -612,6 +613,7 @@
   --color-negative: var(--negative);
   --color-brand: var(--brand);
   --color-brand-deep: var(--brand-deep);
+  --color-nav-active: var(--nav-active);
   --color-background: var(--background);
   --color-surface-primary: var(--surface-primary);
   --color-surface-primary-hover: var(--surface-primary-hover);
@@ -629,7 +631,6 @@
   --color-link-stroke: var(--link-stroke);
   --color-chart-ethereum: var(--chart-ethereum);
   --color-chart-pink: var(--chart-pink);
-  --color-nav-active: var(--nav-active);
   --color-accent: var(--accent);
   --color-on-accent: var(--on-accent);
   --color-chart-fuchsia: var(--chart-fuchsia);
@@ -669,6 +670,9 @@
 
   --transition-property-height: height;
   --transition-property-max-height: max-height;
+
+  /* Web Animations take a copy: EASE_OUT_QUINT in ~/utils/easing.ts. */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -991,7 +995,7 @@
   }
 }
 
-/* The Infinite Garden: crop and garden colours, the backdrop canvases and the plant animations. */
+/* The CROPS guide: crop and garden colours, the backdrop canvases and the plant animations. */
 
 :root {
   /* `-ink` is the same hue adjusted to read as text. */
@@ -1049,7 +1053,10 @@
   }
 }
 
-/* Referenced from inline styles in CropPlant, CropsBed and the page backdrops. */
+/* Referenced from inline styles in CropPlant, CropsBed and the page backdrops.
+   The entrances end at rest and fill backwards, never both: a held end
+   transform keeps Chrome's layer at the raster scale it caught mid-grow, so
+   the art stays blurry. */
 @keyframes garden-grow {
   0% {
     transform: scaleY(0.02);

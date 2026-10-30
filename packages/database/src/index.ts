@@ -11,7 +11,6 @@ export type {
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
 export type {
-  ActivityPeaks,
   ActivityRecord,
   ActivityTotals,
 } from './repositories/ActivityRepository'
@@ -31,7 +30,7 @@ export {
   AppStatePair,
   type AppStateRecord,
 } from './repositories/AppStateRepository'
-export type { BlobPairCount, BlobRecord } from './repositories/BlobsRepository'
+export type { BlobRecord } from './repositories/BlobsRepository'
 export type {
   ChainApi,
   ChainRecord,

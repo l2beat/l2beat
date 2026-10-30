@@ -102,7 +102,7 @@ function Seedling({
   const grow: CSSProperties = {
     transformBox: 'fill-box',
     transformOrigin: '50% 100%',
-    animation: `garden-grow .9s cubic-bezier(.18,.7,.24,1) ${delay}s both`,
+    animation: `garden-grow .9s cubic-bezier(.18,.7,.24,1) ${delay}s backwards`,
   }
   const sway: CSSProperties = {
     transformBox: 'fill-box',

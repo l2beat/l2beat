@@ -61,14 +61,14 @@ export const API_NOTES = [
 
 export const VERIFY_STEPS = [
   'Read the attestation from the EAS contract with the uid in `attestations.current`: `getAttestation(uid)`.',
-  'Check `attester` and `schema` against the values below, so an attestation someone else made cannot be mistaken for ours.',
+  'Check `attester` and `schema` against the values above, so an attestation someone else made cannot be mistaken for ours.',
   'Check it is the current one. The newest wins: of our attestations under the schema that are not revoked, the one with the highest revision names the current set. A change is a new attestation that points to the one it supersedes through `refUID`; older ones stay valid in EAS but no longer count.',
   'Decode `projectIds`: these are the protocols we have reviewed, as of `reviewedAt`, at revision `revision`.',
   'For the rating per property, the reasoning, and what we did not look at, read `/v1/project/{id}.json`. Ratings might change as protocols change.',
 ]
 
 export const BADGE_RULES = [
-  'The snippet links the garden. Point its `href` at your project page on L2BEAT instead, so a visitor can read the evaluation rather than only see that one exists.',
+  'The snippet links the CROPS guide. Point its `href` at your project page on L2BEAT instead, so a visitor can read the evaluation rather than only see that one exists.',
   'The badge says we have reviewed you and named you onchain. It is not a certification, an audit, or an endorsement - please do not describe it as any of those.',
   'Your rating can change. Make sure to check the API for the latest status before showing the badge.',
 ]

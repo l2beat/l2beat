@@ -3,6 +3,7 @@ import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMet
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getCropsBadgeAssets } from './badges'
 import { CROPS_API_ENDPOINTS } from './content'
 import { getIntegrateExamples } from './getIntegrateExamples'
 
@@ -22,10 +23,10 @@ export async function getIntegrateCropsData(
       metadata: getMetadata(manifest, {
         name: 'Integrate CROPS',
         description:
-          'Pull the CROPS evaluations from The Infinite Garden into your own app.',
+          'Pull the CROPS evaluations from the CROPS guide into your own app.',
         url,
         openGraph: {
-          image: '/meta-images/the-infinite-garden/opengraph-image.png',
+          image: '/meta-images/the-crops-guide/opengraph-image.png',
         },
       }),
     },
@@ -34,6 +35,7 @@ export async function getIntegrateCropsData(
       props: {
         ...appLayoutProps,
         attestations,
+        badges: getCropsBadgeAssets(manifest),
         endpoints: CROPS_API_ENDPOINTS,
         examples,
       },

@@ -25,7 +25,6 @@ import {
   useActivityMetricContext,
 } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
-import { countPerSecond } from '~/server/features/layer2s/activity/utils/countPerSecond'
 import { formatRange } from '~/utils/dates'
 import type { ChartScale } from '../types'
 
@@ -82,12 +81,11 @@ export function L2RecategorizedActivityChart({
 }: Props) {
   const { metric } = useActivityMetricContext()
 
+  const resolutionSeconds = UnixTime.periodToSeconds(data?.resolution ?? 'day')
   const chartData = useMemo(() => {
     const getDataPoint = (uops: number | null, tx: number | null) => {
-      if (metric === 'uops') {
-        return uops !== null ? countPerSecond(uops) : null
-      }
-      return tx !== null ? countPerSecond(tx) : null
+      const count = metric === 'uops' ? uops : tx
+      return count !== null ? count / resolutionSeconds : null
     }
 
     return data?.data.map(
@@ -114,7 +112,7 @@ export function L2RecategorizedActivityChart({
         }
       },
     )
-  }, [data, metric])
+  }, [data, metric, resolutionSeconds])
 
   return (
     <ChartContainer
@@ -160,6 +158,7 @@ export function L2RecategorizedActivityChart({
           content={
             <CustomTooltip
               syncedUntil={data?.syncedUntil}
+              resolutionSeconds={resolutionSeconds}
               metric={metric}
               chartMeta={chartMeta}
             />
@@ -184,10 +183,12 @@ function CustomTooltip({
   payload,
   label,
   syncedUntil,
+  resolutionSeconds,
   metric,
   chartMeta,
 }: CustomChartTooltipProps & {
   syncedUntil: number | undefined
+  resolutionSeconds: number
   metric: ActivityMetric
   chartMeta: ChartMeta
 }) {
@@ -197,7 +198,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(label, label + UnixTime.DAY)}
+          {formatRange(label, label + resolutionSeconds)}
         </div>
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />
@@ -262,7 +263,7 @@ function CustomTooltip({
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
                   {syncedUntil && syncedUntil < label
                     ? 'No data'
-                    : formatInteger(entry.value * UnixTime.DAY)}
+                    : formatInteger(entry.value * resolutionSeconds)}
                 </span>
               </div>
             )

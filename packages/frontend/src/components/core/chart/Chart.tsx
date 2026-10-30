@@ -4,6 +4,7 @@ import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
+import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { useIsNearViewport } from '~/hooks/useIsNearViewport'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import { cn } from '~/utils/cn'
@@ -253,7 +254,7 @@ type CustomChartTooltipProps = Omit<
 
 function ChartTooltipWrapper({ children }: { children: React.ReactNode }) {
   const ref = React.useRef<HTMLDivElement>(null)
-  useKeepTooltipInWindow(ref)
+  useKeepTooltipInPlace(ref)
   return (
     <div ref={ref} className={tooltipContentVariants()}>
       {children}
@@ -261,23 +262,84 @@ function ChartTooltipWrapper({ children }: { children: React.ReactNode }) {
   )
 }
 
+/**
+ * The rows of a tooltip that can grow taller than its chart. A tap leaves a
+ * tooltip in place, so on a touch screen they scroll, below a title that
+ * stays in view. A hover tooltip follows the cursor, which never reaches it,
+ * so there they show in full.
+ */
+function ChartTooltipRows({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  const isTouchScreen =
+    typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches
+  if (!isTouchScreen) return <div className={className}>{children}</div>
+  return (
+    <ScrollWithGradient
+      data-chart-tooltip-rows
+      // Its scrollbar sits in the tooltip's padding, clear of the values.
+      className={cn('-mr-3 overscroll-contain pr-3', className)}
+      {...keepTouchesInTooltip}
+    >
+      {children}
+    </ScrollWithGradient>
+  )
+}
+
+/** Scrolling the tooltip must not move the chart's cursor beneath it. */
+const stopPropagation = (e: React.SyntheticEvent) => e.stopPropagation()
+const keepTouchesInTooltip = {
+  onClick: stopPropagation,
+  onMouseDown: stopPropagation,
+  onMouseMove: stopPropagation,
+  onPointerDown: stopPropagation,
+  onPointerMove: stopPropagation,
+  onTouchStart: stopPropagation,
+  onTouchMove: stopPropagation,
+  onTouchEnd: stopPropagation,
+}
+
 /** The least room left between a tooltip and the window's edge. */
 const TOOLTIP_WINDOW_MARGIN = 8
 
 /**
- * A tooltip may leave its chart (see `ChartTooltip`) but not the window: past
- * an edge it is cut off, and past the right one it also widens the page,
- * which phones answer by zooming the whole page out. After every render of
- * the content, once recharts has placed its wrapper, this moves the wrapper
- * back inside, before the frame is painted.
+ * A tooltip may leave its chart sideways (see `ChartTooltip`) but not the
+ * window: past an edge it is cut off, and past the right one it also widens
+ * the page, which phones answer by zooming the whole page out. Nor may it
+ * hang below its chart: on a phone a tap leaves it over the next section as
+ * the page scrolls, and iOS Safari cuts it off at that section's edge, so
+ * scrolling `ChartTooltipRows` are cut to fit the chart. After every render
+ * of the content, once recharts has placed its wrapper, this moves the
+ * wrapper back inside, before the frame is painted.
  */
-function useKeepTooltipInWindow(ref: React.RefObject<HTMLDivElement | null>) {
+function useKeepTooltipInPlace(ref: React.RefObject<HTMLDivElement | null>) {
   React.useLayoutEffect(() => {
     const wrapper = ref.current?.closest<HTMLElement>(
       '.recharts-tooltip-wrapper',
     )
     const chart = wrapper?.offsetParent
     if (!wrapper || !chart) return
+    // A legend below the plot stays clear, so its items can still be tapped.
+    const legend = chart.querySelector<HTMLElement>('.recharts-legend-wrapper')
+    const bottom =
+      legend && legend.offsetTop > chart.clientHeight / 2
+        ? legend.offsetTop
+        : chart.clientHeight
+    const scroller = ref.current?.querySelector<HTMLElement>(
+      '[data-chart-tooltip-rows]',
+    )
+    if (scroller) {
+      const rest = wrapper.offsetHeight - scroller.offsetHeight
+      scroller.style.maxHeight = `${bottom - rest}px`
+      // recharts lets every touch through its tooltip to the chart; one that
+      // scrolls has to catch them.
+      wrapper.style.pointerEvents =
+        scroller.scrollHeight > scroller.clientHeight ? 'auto' : 'none'
+    }
     // The inline transform is where recharts sends the wrapper, also while
     // it is still sliding there. Rewriting it, rather than adding an offset
     // of our own, keeps every frame of the slide inside the window too.
@@ -290,8 +352,9 @@ function useKeepTooltipInWindow(ref: React.RefObject<HTMLDivElement | null>) {
     if (left + shift < TOOLTIP_WINDOW_MARGIN) {
       shift = TOOLTIP_WINDOW_MARGIN - left
     }
-    if (shift !== 0) {
-      wrapper.style.transform = `translate(${x + shift}px, ${y}px)`
+    const top = Math.min(y, Math.max(0, bottom - wrapper.offsetHeight))
+    if (shift !== 0 || top !== y) {
+      wrapper.style.transform = `translate(${x + shift}px, ${top}px)`
     }
   })
 }
@@ -479,6 +542,7 @@ export {
   ChartLegendItemLabel,
   ChartTooltip,
   type CustomChartTooltipProps,
+  ChartTooltipRows,
   ChartTooltipWrapper,
   SimpleChartContainer,
 }
