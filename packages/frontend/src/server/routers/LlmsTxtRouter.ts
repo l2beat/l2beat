@@ -1,5 +1,6 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { env } from '~/env'
 import {
   type LinkListSection,
@@ -56,7 +57,7 @@ const LLMS_TXT = {
     '- Links ending in .md are markdown: summary pages list every tracked project with its page URL, and the Markdown pages section covers single projects. The other links are HTML pages.',
     '- Prefer the .md URLs: page URLs also answer Accept: text/markdown, but an edge cache may serve them as HTML.',
     '- Slugs and interop token ids are case-sensitive: use them exactly as listed.',
-    '- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for https://l2beat.com/layer2s/projects/arbitrum.',
+    `- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for ${PRODUCTION_ORIGIN}/layer2s/projects/arbitrum.`,
     '- All API endpoints except the scaling summary wrap their result as { success, data }.',
     '- "Stage" is the rollup maturity level (Stage 0, 1 or 2) defined by the stages framework linked below.',
     '',

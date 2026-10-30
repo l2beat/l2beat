@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { PRODUCTION_FRONTEND_URL } from '~/api/frontend'
 import { Button } from '~/components/core/Button'
 import {
   Card,
@@ -401,5 +402,5 @@ function getProtocolHref(protocolId: string | undefined) {
     return undefined
   }
 
-  return `https://l2beat.com/interop/protocols/${protocolId}`
+  return `${PRODUCTION_FRONTEND_URL}/interop/protocols/${protocolId}`
 }
