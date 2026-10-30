@@ -46,6 +46,29 @@ const reportWaitDelay = formatSeconds(
   { fullUnit: true },
 )
 
+// weETH minted on L1 against L2 deposits whose ETH has not arrived yet
+const unbackedWeeth = `${(
+  Number(
+    discovery.getContractValueBigInt(
+      'EtherfiL1SyncPoolETH',
+      'getTotalUnbackedTokens',
+    ) /
+      10n ** 15n,
+  ) / 1000
+).toFixed(1)} weETH`
+
+// stETH held by EtherFiRestaker as a share of the ETH backing eETH
+const stethSharePct = `${
+  Number(
+    (discovery.getContractValueBigInt(
+      'EtherFiRestaker',
+      'getTotalPooledEther',
+    ) *
+      1000n) /
+      discovery.getContractValueBigInt('LiquidityPool', 'getTotalPooledEther'),
+  ) / 10
+}%`
+
 export const etherfi: BaseProject = {
   id: ProjectId('etherfi'),
   slug: 'etherfi',
@@ -61,7 +84,7 @@ export const etherfi: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `ether.fi is a liquid staking and restaking protocol. Deposit ETH for ${value('eETH', 'symbol')} (rebasing) or its wrapper ${value('weETH', 'symbol')}, and the pool stakes it both through ether.fi's own permissioned operators and through third-party liquid staking tokens it accepts, with restaking in EigenLayer. A ${oracleQuorum}-of-${oracleMembers} committee sets the exchange rate under hard caps of at most ${maxPositiveRebase} per report. To exit, holders burn ${value('eETH', 'symbol')} for a withdrawal NFT the oracle must finalize, or swap instantly through a buffer for a fee up to ${maxExitFee}, though only a small buffer is instantly liquid, so large exits wait for validators to unwind. Upgrades and roles sit behind a ${upgradeDelay} timelock, with multisigs for day-to-day pausing and parameters.`,
+    description: `ether.fi is a liquid staking protocol. Deposit ETH for ${value('eETH', 'symbol')} (rebasing) or its wrapper ${value('weETH', 'symbol')}, and the pool stakes it both through ether.fi's own permissioned operators, whose validators withdraw to EigenLayer pods, and through third-party liquid staking tokens it accepts. A ${oracleQuorum}-of-${oracleMembers} committee sets the exchange rate under hard caps of at most ${maxPositiveRebase} per report. To exit, holders burn ${value('eETH', 'symbol')} for a withdrawal NFT the oracle must finalize, or swap instantly through a buffer for a fee up to ${maxExitFee}, though only a small buffer is instantly liquid, so large exits wait for validators to unwind. Upgrades and roles sit behind a ${upgradeDelay} timelock, with multisigs for day-to-day pausing and parameters.`,
     detailedDescription: readProjectMarkdown('etherfi', 'detailedDescription', {
       eethSymbol: value('eETH', 'symbol'),
       weethSymbol: value('weETH', 'symbol'),
@@ -99,20 +122,18 @@ export const etherfi: BaseProject = {
       name: 'EigenLayer',
       icon: 'eigenlayer',
       description:
-        "Holds the native stake of EigenPod-backed nodes: their validators' withdrawal credentials point at an EigenLayer EigenPod, so that ETH sits inside EigenLayer contracts. Its DelegationManager, EigenPodManager and StrategyManager are upgradeable by EigenLayer governance, and since the slashing release an AVS can slash delegated stake. Exits from these pods also wait out EigenLayer's roughly 14-day withdrawal delay. A node created without a pod is itself its validators' withdrawal address and requests exits directly through the EIP-7002 system contract, outside EigenLayer.",
+        "Holds the native stake of EigenPod-backed nodes: their validators' withdrawal credentials point at an EigenLayer EigenPod, so that ETH sits inside EigenLayer contracts. The pods and EigenLayer's DelegationManager, EigenPodManager and StrategyManager are upgradeable by EigenLayer governance, through its timelock or at once by its community multisig, and since the slashing release an AVS can slash delegated stake, but only stake an operator has allocated to it. Exits from these pods also wait out EigenLayer's withdrawal delay. A node created without a pod is itself its validators' withdrawal address and requests exits directly through the EIP-7002 system contract, outside EigenLayer.",
     },
     {
       type: 'tracked',
       projectId: ProjectId('lido'),
-      description:
-        'About a quarter of the backing is stETH taken through the Liquifier and held by EtherFiRestaker rather than native ETH. A stETH depeg or a Lido failure directly impairs that share of eETH.',
+      description: `${stethSharePct} of the backing is stETH taken through the Liquifier and held by EtherFiRestaker rather than native ETH. A stETH depeg or a Lido failure directly impairs that share of eETH.`,
     },
     {
       type: 'not-tracked',
       name: 'LayerZero',
       icon: 'layerzero',
-      description:
-        "weETH crosses chains as a LayerZero OFT. The mainnet lock-box holds ~110k weETH, and an L1 sync pool anticipatorily mints weETH against a dummy placeholder when a LayerZero message reports an L2 deposit, before the bridged ETH arrives (live unbacked ~45 weETH). A compromise of the LayerZero endpoint or its verifiers could forge inbound messages to unlock real weETH from the lock-box or mint against shared backing, and a messaging halt would strand cross-chain holders. Cross-chain integrity depends on LayerZero, bounded by the lock-box balance and the dummy token's Liquifier cap.",
+      description: `weETH crosses chains as a LayerZero OFT. The mainnet lock-box holds the weETH that backs every bridged token, and an L1 sync pool anticipatorily mints weETH against a dummy placeholder when a LayerZero message reports an L2 deposit, before the bridged ETH arrives (currently ${unbackedWeeth}). A compromise of the LayerZero endpoint or its verifiers could forge inbound messages to unlock real weETH from the lock-box or mint against shared backing, and a messaging halt would strand cross-chain holders. Cross-chain integrity depends on LayerZero, bounded by the lock-box balance and the dummy token's Liquifier cap.`,
     },
   ],
   permissions: discovery.getDiscoveredPermissions(),
