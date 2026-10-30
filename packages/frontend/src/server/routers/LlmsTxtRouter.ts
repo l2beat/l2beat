@@ -319,6 +319,12 @@ const PAGE_SECTIONS: LinkListSection[] = [
         path: staticPagePath('/about-us'),
         description: 'The mission, team and funding of ETHBEAT.',
       },
+      {
+        name: 'L2BEAT is now ETHBEAT',
+        path: staticPagePath('/l2beat-is-now-ethbeat'),
+        description:
+          'The rename from L2BEAT: what changed, what did not, and the old and new URLs.',
+      },
     ],
   },
 ]

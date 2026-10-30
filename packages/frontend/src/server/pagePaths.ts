@@ -48,6 +48,7 @@ export const STATIC_PAGE_PATHS = [
   '/native-rollups',
   '/faq',
   '/about-us',
+  '/l2beat-is-now-ethbeat',
   '/brand-kit',
   '/changelog',
   '/donate',
