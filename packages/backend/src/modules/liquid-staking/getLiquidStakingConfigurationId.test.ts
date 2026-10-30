@@ -26,4 +26,23 @@ describe(getLiquidStakingConfigurationId.name, () => {
       }),
     )
   })
+
+  it('keeps the id when the quoted pools change', () => {
+    const rETH = ChainSpecificAddress(
+      'eth:0x1111111111111111111111111111111111111111',
+    )
+    expect(
+      getLiquidStakingConfigurationId(ProjectId('rocketpool'), {
+        type: 'rocketpool',
+        rETH,
+        marketQuotes: [],
+      }),
+    ).toEqual(
+      getLiquidStakingConfigurationId(ProjectId('rocketpool'), {
+        type: 'rocketpool',
+        rETH,
+        marketQuotes: [{ type: 'uniswapV3', fee: 100 }],
+      }),
+    )
+  })
 })
