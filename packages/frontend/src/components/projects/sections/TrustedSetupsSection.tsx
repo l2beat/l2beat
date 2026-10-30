@@ -36,7 +36,7 @@ export function TrustedSetupSection({
                   {trustedSetup.name}
                 </h3>
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8">
-                  <div className="flex shrink-0 items-center gap-2 lg:pt-4">
+                  <div className="flex shrink-0 items-center gap-2">
                     <TrustedSetupRiskDot risk={trustedSetup.risk} size="lg" />
                     <div className="flex flex-wrap gap-1">
                       {trustedSetup.proofSystems.map((proofSystem) => (

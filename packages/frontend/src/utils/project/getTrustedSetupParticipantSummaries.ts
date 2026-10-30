@@ -3,6 +3,8 @@ import { formatNumberWithCommas } from '@l2beat/shared-pure'
 
 export interface TrustedSetupParticipantSummary {
   label: string
+  /** Absent for legacy totals that no phase claims. */
+  phase?: 1 | 2
   value: string
   unit?: string
   description?: string
@@ -17,10 +19,20 @@ export function getTrustedSetupParticipantSummaries(
   if (setup.phases?.phase1 || setup.phases?.phase2) {
     return [
       ...(setup.phases.phase1
-        ? [summarizePhase('Phase 1', setup.phases.phase1)]
+        ? [
+            {
+              ...summarizePhase('Phase 1', setup.phases.phase1),
+              phase: 1 as const,
+            },
+          ]
         : []),
       ...(setup.phases.phase2
-        ? [summarizePhase('Phase 2', setup.phases.phase2)]
+        ? [
+            {
+              ...summarizePhase('Phase 2', setup.phases.phase2),
+              phase: 2 as const,
+            },
+          ]
         : []),
     ]
   }

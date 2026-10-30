@@ -15,9 +15,11 @@ describe(TrustedSetupParticipants.name, () => {
 
     expect(html).toInclude(
       'Phase 1',
+      'Universal',
       '30',
       'contributions',
       'Phase 2',
+      'Circuit-specific',
       '1,114',
       'participants',
     )
