@@ -23,7 +23,7 @@ We started in 2021 to track a handful of rollups, and the name said exactly that
 - **Badges.** CROPS badges keep loading from their old URLs and now show the new name. A badge pasted as inline markup keeps its old text until you copy the markup again.
 - **Open source.** The code and every project config stay at [github.com/l2beat/l2beat](https://github.com/l2beat/l2beat).
 - **Forum, Disco and tools.** **[TBD: confirm whether forum.l2beat.com, disco.l2beat.com and tools.l2beat.com move.]**
-- **Social accounts.** **[TBD: new handles, or "unchanged".]**
+- **Social accounts.** On X we are now [@ethbeat_org](https://x.com/ethbeat_org). **[TBD: YouTube, LinkedIn and Medium.]**
 
 ## Old and new URLs
 
@@ -37,8 +37,8 @@ Only the domain changes. Everything after it stays the same.
 
 ## If you link to us or use our data
 
-- Nothing breaks: old links redirect. **[TBD: say how long the redirects stay, e.g. "indefinitely".]**
+- Nothing breaks: old links redirect, and the redirects stay indefinitely.
 - Update links and API base URLs to ethbeat.org when convenient.
 - When you cite us, "ETHBEAT (formerly L2BEAT)" helps readers who know the old name.
 
-Questions? Ask on the [forum](https://forum.l2beat.com) or write to **[TBD: contact address]**.
+Questions? Ask on the [forum](https://forum.l2beat.com).
