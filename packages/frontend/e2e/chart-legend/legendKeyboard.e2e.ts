@@ -35,7 +35,7 @@ for (const { name, page: path, legend, finishesOnboarding } of CASES) {
     await expect(item).toHaveAttribute('aria-pressed', 'true', {
       timeout: DATA_TIMEOUT,
     })
-    const chart = await chartOf(item, SERIES)
+    const chart = await chartOf(item)
     const shown = await chart.locator(SERIES).count()
 
     await tabTo(chart, item)
@@ -71,16 +71,16 @@ async function tabTo(start: Locator, target: Locator) {
   throw new Error('Tab never reached the legend item')
 }
 
-/** The legend's chart: its closest ancestor that holds series marks. */
-async function chartOf(item: Locator, selector: string) {
-  const page = item.page()
-  await expect(page.locator(selector).first()).toBeAttached()
-  await item.evaluate((e, selector) => {
-    let node = e.parentElement
-    while (node && !node.querySelector(selector)) node = node.parentElement
-    node?.setAttribute('data-legend-chart', '')
-  }, selector)
-  return page.locator('[data-legend-chart]')
+/** The legend's chart: the legend's parent, once its series are drawn. */
+async function chartOf(item: Locator) {
+  await item.evaluate((e) =>
+    e
+      .closest('.chart-legend')
+      ?.parentElement?.setAttribute('data-legend-chart', ''),
+  )
+  const chart = item.page().locator('[data-legend-chart]')
+  await expect(chart.locator(SERIES).first()).toBeAttached()
+  return chart
 }
 
 async function finishedOnboarding(page: Page) {
