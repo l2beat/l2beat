@@ -75,14 +75,14 @@ export function HomePage({
             <div className="@container/home">
               <div
                 className={cn(
-                  'flex home-wide:grid home-wide:grid-cols-3 flex-col md:gap-4 [&>.primary-card:last-child]:max-md:border-b-0 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b',
+                  'home-wide:home-tracks flex home-wide:grid flex-col md:gap-4 [&>.primary-card:last-child]:max-md:border-b-0 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b',
                   hasCrops
                     ? 'home-wide:home-areas'
                     : 'home-wide:home-areas-no-crops',
                 )}
               >
                 {/* Without the garden (it is behind a flag) the mandate takes
-                  the row. */}
+                  the row. On phones it comes later, after Ethereum. */}
                 <div className="grid home-wide:contents grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(280px,300px)] md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(300px,320px)] xl:grid-cols-[minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
                   {hasCrops && (
                     <HomeCropsBanner
@@ -93,7 +93,7 @@ export function HomePage({
                   <HomeMandateBanner
                     className={cn(
                       !hasCrops && 'col-span-full',
-                      'home-wide:[grid-area:mandate]',
+                      'home-wide:[grid-area:mandate] max-md:hidden',
                     )}
                   />
                 </div>
@@ -121,6 +121,8 @@ export function HomePage({
                       charts={ethereumCharts}
                       className="home-wide:[grid-area:ethereum]"
                     />
+                    {/* The phones' mandate, between Ethereum and Interop. */}
+                    <HomeMandateBanner className="md:hidden" />
                     <HomeRecentColumn
                       research={research}
                       recentChanges={recentChanges}

@@ -11,7 +11,7 @@ import { HomeCard } from './HomeCard'
 const MANDATE_HREF = '/about-us'
 
 /**
- * Beside CROPS from md, under it on phones.
+ * Beside CROPS from md; on phones between Ethereum and Interop.
  * The mandate itself is drawn in the corner, flat like the garden beside it:
  * a charter signed with L2BEAT's heartbeat and sealed with its heart.
  */

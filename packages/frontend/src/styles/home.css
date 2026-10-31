@@ -2,36 +2,51 @@
    stays in globals.css, after :root and .dark, which it overrides. */
 
 /* Three columns once the page is wide enough that two would stretch every
-   card: the banners in a row, the domains side by side with Ethereum and the
-   articles under it, then interop across two columns beside new research.
-   Each card names its area (`home-wide:[grid-area:…]`). From 1560px each
-   column is about 510px, where the banners still keep their text short. The
-   home layout's padding steps down to 24px at the same width (1880px of
-   window), so at 1920 the rankings keep their 480px tier (Vol 30d, UOPS) even
-   beside a scrollbar. */
+   card, each row split its own way: the banners in thirds, the domains
+   3 : 3 : 2 with a narrower Ethereum, then new research over the articles,
+   as narrow as Ethereum, beside interop across the rest. The tracks run
+   between every row's gutters, so each card spans whole tracks; in units of
+   the width less two gutters (--w), the gutters fall at 1/4 (research),
+   1/3 and 2/3 (banners), 3/8 and 3/4 (domains). Each card names its area
+   (`home-wide:[grid-area:…]`). The research row is the flexible one:
+   interop's height beyond the two cards' goes to it, and it fills as many
+   rows as fit. The home layout's padding steps down to 24px at 1560px
+   (1880px of window). */
 @custom-variant home-wide {
   @container home (width >= 1560px) {
     @slot;
   }
 }
+@utility home-tracks {
+  --gutter: 1rem;
+  --w: calc(100% - 2 * var(--gutter));
+  column-gap: var(--gutter);
+  grid-template-columns:
+    calc(var(--w) / 4) calc(var(--w) / 12 - var(--gutter))
+    calc(var(--w) / 24 - var(--gutter)) calc(var(--w) * 7 / 24)
+    calc(var(--w) / 12 - var(--gutter)) calc(var(--w) / 4);
+  grid-template-rows: repeat(4, auto) 1fr repeat(2, auto);
+}
 @utility home-areas {
   grid-template-areas:
-    "crops changes mandate"
-    "privacy l2 ethereum"
-    "privacy l2 ethereum"
-    "privacy l2 articles"
-    "interop interop research"
-    "question question question";
+    "crops crops changes changes mandate mandate"
+    "privacy privacy privacy l2 l2 ethereum"
+    "privacy privacy privacy l2 l2 ethereum"
+    "privacy privacy privacy l2 l2 ethereum"
+    "research interop interop interop interop interop"
+    "articles interop interop interop interop interop"
+    "question question question question question question";
 }
 /* Without the garden (it is behind a flag) the mandate takes its place. */
 @utility home-areas-no-crops {
   grid-template-areas:
-    "mandate mandate changes"
-    "privacy l2 ethereum"
-    "privacy l2 ethereum"
-    "privacy l2 articles"
-    "interop interop research"
-    "question question question";
+    "mandate mandate mandate mandate changes changes"
+    "privacy privacy privacy l2 l2 ethereum"
+    "privacy privacy privacy l2 l2 ethereum"
+    "privacy privacy privacy l2 l2 ethereum"
+    "research interop interop interop interop interop"
+    "articles interop interop interop interop interop"
+    "question question question question question question";
 }
 
 /* Two columns under Ethereum (HomeRecentColumn): articles over project
@@ -43,10 +58,22 @@
 }
 
 /* A home KPI pair (HomeKpiRow) too narrow for two tiles of 230px: each KPI
-   becomes a row, the figure beside a wider, shorter sparkline. */
+   becomes a row, the figure beside a wider, shorter sparkline. In the page's
+   three columns (`home-wide`), where only Ethereum is that narrow, the two
+   tiles go one under the other instead (`kpi-column`), down beside the
+   domains' rankings. */
 @custom-variant kpi-rows {
-  @container kpis (width < 496px) {
-    @slot;
+  @container home (width < 1560px) {
+    @container kpis (width < 496px) {
+      @slot;
+    }
+  }
+}
+@custom-variant kpi-column {
+  @container home (width >= 1560px) {
+    @container kpis (width < 496px) {
+      @slot;
+    }
   }
 }
 

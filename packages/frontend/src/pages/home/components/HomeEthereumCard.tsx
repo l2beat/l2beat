@@ -22,11 +22,12 @@ export function HomeEthereumCard({
 }) {
   const { activity, da } = charts
   return (
-    // Beside the domain cards (`home-wide`) it takes their title and chart
-    // rows, so its parts stay level with theirs.
+    // Beside the domain cards (`home-wide`) it takes their rows, its title
+    // level with theirs and its charts, one under the other, down to the
+    // foot of their rankings.
     <HomeCard
       className={cn(
-        'home-wide:row-span-2 flex home-wide:grid min-w-0 home-wide:grid-rows-subgrid flex-col gap-5 home-wide:gap-6',
+        'home-wide:row-span-3 flex home-wide:grid min-w-0 home-wide:grid-rows-subgrid flex-col gap-5 home-wide:gap-6 home-wide:[&>:nth-child(2)]:row-span-2',
         className,
       )}
     >
