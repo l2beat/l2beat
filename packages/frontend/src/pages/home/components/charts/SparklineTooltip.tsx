@@ -1,134 +1,87 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { type ReactNode, useLayoutEffect, useRef } from 'react'
 import type { CustomChartTooltipProps } from '~/components/core/chart/Chart'
-import { ChartTooltipWrapper, useChart } from '~/components/core/chart/Chart'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { WEEK_DAYS } from '~/server/features/home/homeSeries'
 import { cn } from '~/utils/cn'
 import { formatRange, formatTimestamp } from '~/utils/dates'
 import type { SparklinePoint } from './sparklineScale'
 
+/**
+ * The date and the value under the cursor or finger, compact: the series is
+ * named beside the chart. Placed off the chart by `PointTooltip`.
+ */
 export function SparklineTooltip({
   payload,
   label,
   formatValue,
   partLabels,
   weeklyAverage,
-  fingerX,
+  anchorX,
+  side,
 }: CustomChartTooltipProps & {
   formatValue: (value: number) => string
   partLabels: string[] | undefined
   weeklyAverage: boolean | undefined
-  /**
-   * Where a finger scrubs the chart, in the chart's pixels: the tooltip then
-   * goes compact and follows it above the chart (see `FingerTooltip`).
-   */
-  fingerX?: number
+  /** The active point's x, in the chart's pixels. */
+  anchorX: number | undefined
+  side: 'above' | 'below'
 }) {
-  const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
-  const entry = payload[0]
-  const config = entry?.name !== undefined ? meta[entry.name] : undefined
-  if (!entry || !config) return null
+  const entry = payload?.[0]
+  if (!entry || typeof label !== 'number' || anchorX === undefined) {
+    return null
+  }
   const point = entry.payload as SparklinePoint | undefined
-  const date = weeklyAverage
-    ? formatRange(label, label + WEEK_DAYS * UnixTime.DAY)
-    : formatTimestamp(label)
   const format = (value: unknown) =>
     typeof value === 'number' ? formatValue(value) : 'No data'
-  const parts = (partLabels ?? []).map((partLabel, index) => ({
-    label: partLabel,
-    value: point?.parts[index],
-  }))
-
-  if (fingerX !== undefined) {
-    // The series is named beside the chart, so the date and the value do.
-    return (
-      <FingerTooltip fingerX={fingerX}>
-        <div className="whitespace-nowrap text-label-value-13 text-secondary">
-          {date}
-        </div>
-        <div className="flex items-baseline gap-1.5 whitespace-nowrap">
-          <span className="font-semibold text-label-value-15 tabular-nums">
-            {format(entry.value)}
-          </span>
-          {weeklyAverage && (
-            <span className="text-label-value-13 text-secondary">
-              daily average
-            </span>
-          )}
-        </div>
-        {parts.map((part) => (
-          <div
-            key={part.label}
-            className="flex justify-between gap-3 whitespace-nowrap text-label-value-13"
-          >
-            <span className="text-secondary">{part.label}</span>
-            <span className="font-medium tabular-nums">
-              {format(part.value)}
-            </span>
-          </div>
-        ))}
-      </FingerTooltip>
-    )
-  }
-
-  const rows = [
-    {
-      id: 'value',
-      label: weeklyAverage ? `${config.label}, daily average` : config.label,
-      value: entry.value,
-      indicator: true,
-    },
-    ...parts.map((part) => ({ id: part.label, ...part, indicator: false })),
-  ]
   return (
-    <ChartTooltipWrapper>
-      <div className="flex w-50 flex-col gap-2 sm:w-60">
-        <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {date}
-        </div>
-        {rows.map((row, index) => (
-          <div key={row.id}>
-            {index === 1 && <HorizontalSeparator className="mb-2" />}
-            <div className="flex w-full items-center justify-between gap-2">
-              <div className="flex items-center gap-1">
-                {row.indicator && (
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                )}
-                <span className="font-medium text-label-value-14">
-                  {row.label}
-                </span>
-              </div>
-              <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                {format(row.value)}
-              </span>
-            </div>
-          </div>
-        ))}
+    <PointTooltip anchorX={anchorX} side={side}>
+      <div className="whitespace-nowrap text-label-value-13 text-secondary">
+        {weeklyAverage
+          ? formatRange(label, label + WEEK_DAYS * UnixTime.DAY)
+          : formatTimestamp(label)}
       </div>
-    </ChartTooltipWrapper>
+      <div className="flex items-baseline gap-1.5 whitespace-nowrap">
+        <span className="font-semibold text-label-value-15 tabular-nums">
+          {format(entry.value)}
+        </span>
+        {weeklyAverage && (
+          <span className="text-label-value-13 text-secondary">
+            daily average
+          </span>
+        )}
+      </div>
+      {partLabels?.map((partLabel, index) => (
+        <div
+          key={partLabel}
+          className="flex justify-between gap-3 whitespace-nowrap text-label-value-13"
+        >
+          <span className="text-secondary">{partLabel}</span>
+          <span className="font-medium tabular-nums">
+            {format(point?.parts[index])}
+          </span>
+        </div>
+      ))}
+    </PointTooltip>
   )
 }
 
 /**
- * A finger scrubbing a chart covers what lies under and beside it, so the
- * tooltip sits clear above the whole chart, labels and all, centred on the
- * finger and kept inside the window. Where the window has no room above the
- * chart, it goes under it instead. Recharts leaves the wrapper where the chart
- * puts it (its corner); after every render this moves it into place, before
- * the frame is painted.
+ * A tooltip clear of the whole chart, labels and all, so it never hides the
+ * line it describes: on its `side` of the chart, or the other one where the
+ * window has no room. It centres on the active point, within the chart's
+ * width where it fits, so it spills less onto the charts beside, and always
+ * inside the window. Recharts leaves the wrapper where the chart puts it (its
+ * corner); after every render this moves it into place, before the frame is
+ * painted.
  */
-function FingerTooltip({
-  fingerX,
+function PointTooltip({
+  anchorX,
+  side,
   children,
 }: {
-  fingerX: number
+  anchorX: number
+  side: 'above' | 'below'
   children: ReactNode
 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -137,18 +90,30 @@ function FingerTooltip({
     const wrapper = box?.closest<HTMLElement>('.recharts-tooltip-wrapper')
     const chart = wrapper?.offsetParent
     if (!box || !wrapper || !chart) return
-    const { left: chartLeft, top: chartTop } = chart.getBoundingClientRect()
+    const rect = chart.getBoundingClientRect()
     const { offsetWidth: width, offsetHeight: height } = box
-    const windowWidth = document.documentElement.clientWidth
-    const left = Math.min(
-      Math.max(chartLeft + fingerX - width / 2, WINDOW_MARGIN),
-      windowWidth - WINDOW_MARGIN - width,
+    const { clientWidth, clientHeight } = document.documentElement
+    // In the chart's pixels.
+    const centred = anchorX - width / 2
+    const inChart =
+      width <= chart.clientWidth
+        ? clamp(centred, 0, chart.clientWidth - width)
+        : centred
+    const left = clamp(
+      inChart,
+      WINDOW_MARGIN - rect.left,
+      clientWidth - WINDOW_MARGIN - width - rect.left,
     )
-    const fitsAbove = chartTop - FINGER_GAP - height >= WINDOW_MARGIN
-    const top = fitsAbove
-      ? -FINGER_GAP - height
-      : chart.clientHeight + FINGER_GAP
-    wrapper.style.transform = `translate(${left - chartLeft}px, ${top}px)`
+    // Room for the tooltip on each side; where neither fits, the roomier.
+    const roomAbove = rect.top - GAP - WINDOW_MARGIN
+    const roomBelow = clientHeight - WINDOW_MARGIN - rect.bottom - GAP
+    const fits = (room: number) => room >= height
+    const above =
+      side === 'above'
+        ? fits(roomAbove) || (!fits(roomBelow) && roomAbove >= roomBelow)
+        : !fits(roomBelow) && (fits(roomAbove) || roomAbove > roomBelow)
+    const top = above ? -GAP - height : chart.clientHeight + GAP
+    wrapper.style.transform = `translate(${left}px, ${top}px)`
   })
   return (
     <div
@@ -163,8 +128,13 @@ function FingerTooltip({
   )
 }
 
-/** Between the chart, labels included, and the tooltip over it. */
-const FINGER_GAP = 12
+/** `min` wins where the range is empty: a window narrower than the tooltip. */
+function clamp(value: number, min: number, max: number) {
+  return Math.max(Math.min(value, max), min)
+}
+
+/** Between the chart, labels included, and the tooltip. */
+const GAP = 12
 
 /** The least room left between the tooltip and the window's edge. */
 const WINDOW_MARGIN = 8

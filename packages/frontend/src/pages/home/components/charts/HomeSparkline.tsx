@@ -11,7 +11,6 @@ import {
   ReferenceDot,
   ReferenceLine,
   useActiveTooltipCoordinate,
-  usePlotArea,
   XAxis,
   YAxis,
 } from 'recharts'
@@ -29,7 +28,6 @@ import { getSparklineScale, type SparklinePoint } from './sparklineScale'
 
 interface Props {
   data: HomeSeriesPoint[]
-  tooltipLabel: string
   formatValue: (value: number) => string
   /** The tooltip's names for the parts each point breaks down into. */
   partLabels?: string[]
@@ -68,6 +66,14 @@ const CHART_KEYS = new Set(['ArrowLeft', 'ArrowRight', 'Enter'])
 const STROKE = 'var(--chart-pink)'
 
 /**
+ * ChartContainer needs a series; the tooltip leaves it unnamed, as the card
+ * names it beside the chart.
+ */
+const META: ChartMeta = {
+  value: { label: '', color: STROKE, indicatorType: { shape: 'line' } },
+}
+
+/**
  * A chart reduced to its line and a soft fill: no axes, a hairline at the
  * period's high and low with their values, and a dot on the latest value.
  * The high and low hairlines bound the plot; their values sit outside it,
@@ -75,7 +81,6 @@ const STROKE = 'var(--chart-pink)'
  */
 export function HomeSparkline({
   data: dailyData,
-  tooltipLabel,
   formatValue,
   partLabels,
   weeklyAverage,
@@ -104,16 +109,6 @@ export function HomeSparkline({
   // Hidden, the tooltip and the dot under it go together.
   const hidden = useSyncExternalStore(subscribe, getShown, getNoneShown) !== id
   const last = data.findLast((d) => d.value !== null)
-  const meta = useMemo<ChartMeta>(
-    () => ({
-      value: {
-        label: tooltipLabel,
-        color: STROKE,
-        indicatorType: { shape: 'line' },
-      },
-    }),
-    [tooltipLabel],
-  )
 
   return (
     <div className={cn('relative', HOME_CHART_HEIGHT_CLASS)}>
@@ -131,7 +126,7 @@ export function HomeSparkline({
         }}
       >
         <ChartContainer
-          meta={meta}
+          meta={META}
           data={data}
           isLoading={false}
           size="fill"
@@ -210,33 +205,34 @@ export function HomeSparkline({
 }
 
 /**
- * With a mouse, the tooltip beside the cursor from the plot's top, so the low
- * label under it stays readable, free to leave the chart sideways (see
- * `ChartTooltip`). Under a finger it follows the finger above the chart (see
- * `FingerTooltip`), at once: a slide would trail behind the finger.
+ * The tooltip off the chart, so it never hides the line it describes (see
+ * `PointTooltip`). Under a finger it goes above the chart, clear of the hand;
+ * under a cursor, below it, clear of the figure above that the value is read
+ * against. It follows the active point at once: a slide would trail behind.
  */
 function ScrubTooltip({
   hidden,
   touch,
   ...props
-}: Omit<ComponentProps<typeof SparklineTooltip>, 'fingerX'> & {
+}: Omit<ComponentProps<typeof SparklineTooltip>, 'anchorX' | 'side'> & {
   hidden: boolean
   touch: boolean
 }) {
-  const plot = usePlotArea()
   const coordinate = useActiveTooltipCoordinate()
   return (
     <ChartTooltip
       content={
         <SparklineTooltip
           {...props}
-          fingerX={touch ? coordinate?.x : undefined}
+          anchorX={coordinate?.x}
+          side={touch ? 'above' : 'below'}
         />
       }
       filterNull={false}
       active={hidden ? false : undefined}
-      isAnimationActive={!touch}
-      position={touch ? { x: 0, y: 0 } : plot && { y: plot.y }}
+      isAnimationActive={false}
+      // Placed by `PointTooltip` instead.
+      position={{ x: 0, y: 0 }}
     />
   )
 }

@@ -39,7 +39,6 @@ export function HomePrivacyCard({
           chart={
             <HomeSparkline
               data={tvl.chart}
-              tooltipLabel="Value locked"
               formatValue={(value) => formatCurrency(value, 'usd')}
             />
           }
@@ -55,7 +54,6 @@ export function HomePrivacyCard({
           chart={
             <HomeSparkline
               data={deposits.chart}
-              tooltipLabel="Deposited"
               formatValue={(value) => formatCurrency(value, 'usd')}
               weeklyAverage
               perDay
