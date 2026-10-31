@@ -12,7 +12,7 @@ import {
   overflowCountClasses,
 } from '~/components/ProjectIconList'
 import { EM_DASH } from '~/consts/characters'
-import { useIsTouch } from '~/hooks/useIsTouch'
+import { useCanHover } from '~/hooks/useCanHover'
 import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
 import { cn } from '~/utils/cn'
 
@@ -74,7 +74,7 @@ export function InteropTopItems({
 }: InteropTopItemsCellProps &
   Omit<React.ComponentProps<'button'>, 'type'> &
   VariantProps<typeof buttonVariants>) {
-  const isTouch = useIsTouch()
+  const isTouch = useCanHover() === false
   // Same rule as ProjectIconList: all icons when they fit, otherwise one
   // fewer and the rest as "+N".
   const shown =

@@ -1,8 +1,8 @@
 import type { Stage } from '@l2beat/config'
 import { useCommandState } from 'cmdk'
 import { type ReactNode, useRef, useState } from 'react'
+import { useCanHover } from '~/hooks/useCanHover'
 import { useDevice } from '~/hooks/useDevice'
-import { useIsTouch } from '~/hooks/useIsTouch'
 import { useRouter } from '~/hooks/useRouter'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
@@ -58,7 +58,7 @@ const NO_ROW = '-'
  * links straight to its project.
  */
 export function ProjectIconList({ projects, title, className }: Props) {
-  const isTouch = useIsTouch()
+  const isTouch = useCanHover() === false
   if (projects.length === 0) return null
 
   const visible =
@@ -177,7 +177,7 @@ function ProjectIcon({
     // cursor across a table column does not flash every row's tooltip.
     <Tooltip delayDuration={100}>
       {project.href ? (
-        <TooltipTrigger asChild disabledOnMobile>
+        <TooltipTrigger asChild disabledOnTouch>
           <a
             href={project.href}
             className={cn(
@@ -226,7 +226,7 @@ function FullList({
 }) {
   const [open, setOpen] = useState(false)
   const { isDesktop } = useDevice()
-  const isTouch = useIsTouch()
+  const isTouch = useCanHover() === false
   const triggerRef = useRef<HTMLButtonElement>(null)
   const label = `Show all ${projects.length}: ${title}`
   const list = (
