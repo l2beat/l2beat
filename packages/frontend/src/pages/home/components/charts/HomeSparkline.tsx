@@ -1,4 +1,11 @@
-import { type ComponentProps, useMemo } from 'react'
+import {
+  type ComponentProps,
+  type PointerEvent,
+  useId,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from 'react'
 import {
   AreaChart,
   ReferenceDot,
@@ -47,10 +54,15 @@ const SPARKLINE_CLASS = cn(
   'absolute inset-0',
   '[&_.recharts-area-curve]:stroke-2!',
   '[&_.recharts-surface]:overflow-visible!',
+  // A sideways drag scrubs the chart, an upright one scrolls the page; a
+  // long press would select the labels.
+  'touch-pan-y touch-pinch-zoom select-none [-webkit-touch-callout:none]',
   // The chart is a tab stop (arrow keys walk the tooltip), but ChartContainer
   // hides every chart's outline; a sparkline shows it on keyboard focus.
   '[&_.recharts-surface:focus-visible]:outline-2! [&_.recharts-surface:focus-visible]:outline-solid! [&_.recharts-surface:focus-visible]:outline-offset-2!',
 )
+
+const CHART_KEYS = new Set(['ArrowLeft', 'ArrowRight', 'Enter'])
 
 /** Every home sparkline shares the brand colour, so the cards read as a set. */
 const STROKE = 'var(--chart-pink)'
@@ -81,6 +93,16 @@ export function HomeSparkline({
     [dailyData, weeklyAverage],
   )
   const { domain, range } = useMemo(() => getSparklineScale(data), [data])
+  const id = useId()
+  // Asked per gesture, not of the device: a tablet can have a trackpad too.
+  // A pen covers the chart like a finger does.
+  const [touch, setTouch] = useState(false)
+  const showTooltip = (event: PointerEvent) => {
+    setTouch(event.pointerType !== 'mouse')
+    show(id)
+  }
+  // Hidden, the tooltip and the dot under it go together.
+  const hidden = useSyncExternalStore(subscribe, getShown, getNoneShown) !== id
   const last = data.findLast((d) => d.value !== null)
   const meta = useMemo<ChartMeta>(
     () => ({
@@ -95,7 +117,19 @@ export function HomeSparkline({
 
   return (
     <div className={cn('relative', HOME_CHART_HEIGHT_CLASS)}>
-      <div className={SPARKLINE_CLASS}>
+      <div
+        className={SPARKLINE_CLASS}
+        onPointerDown={showTooltip}
+        onPointerMove={showTooltip}
+        onFocus={() => show(id)}
+        // The keys recharts walks the tooltip with bring it back, also after
+        // a scroll has hidden it; Tab, Escape and the rest leave it be.
+        onKeyDown={(event) => {
+          if (!CHART_KEYS.has(event.key)) return
+          setTouch(false)
+          show(id)
+        }}
+      >
         <ChartContainer
           meta={meta}
           data={data}
@@ -150,7 +184,7 @@ export function HomeSparkline({
               dot={false}
               isAnimationActive={false}
               connectNulls={false}
-              activeDot={{ r: 3.5, stroke: 'none', fill: STROKE }}
+              activeDot={!hidden && { r: 3.5, stroke: 'none', fill: STROKE }}
             />
             {last && last.value !== null && (
               <ReferenceDot
@@ -161,7 +195,9 @@ export function HomeSparkline({
                 stroke="none"
               />
             )}
-            <PlotBoundTooltip
+            <ScrubTooltip
+              hidden={hidden}
+              touch={touch}
               formatValue={formatValue}
               partLabels={partLabels}
               weeklyAverage={weeklyAverage}
@@ -174,45 +210,36 @@ export function HomeSparkline({
 }
 
 /**
- * The tooltip beside the cursor, on the side with more room, from the plot's
- * top and never past its sides: the figure beside the chart and the low
- * label under it stay readable. It is as wide as the plot allows, up to
- * 240px; where neither side of the cursor has room it covers the cursor line.
- * Recharts can only flip a tooltip to the other side, which on a narrow plot
- * still runs it off.
+ * With a mouse, the tooltip beside the cursor from the plot's top, so the low
+ * label under it stays readable, free to leave the chart sideways (see
+ * `ChartTooltip`). Under a finger it follows the finger above the chart (see
+ * `FingerTooltip`), at once: a slide would trail behind the finger.
  */
-function PlotBoundTooltip(
-  props: Omit<ComponentProps<typeof SparklineTooltip>, 'width'>,
-) {
-  const coordinate = useActiveTooltipCoordinate()
+function ScrubTooltip({
+  hidden,
+  touch,
+  ...props
+}: Omit<ComponentProps<typeof SparklineTooltip>, 'fingerX'> & {
+  hidden: boolean
+  touch: boolean
+}) {
   const plot = usePlotArea()
-  if (!plot) {
-    return null
-  }
-  const width = Math.min(MAX_TOOLTIP_WIDTH, plot.width)
-  const x =
-    coordinate &&
-    Math.min(
-      Math.max(
-        coordinate.x > plot.x + plot.width / 2
-          ? coordinate.x - width - TOOLTIP_OFFSET
-          : coordinate.x + TOOLTIP_OFFSET,
-        plot.x,
-      ),
-      plot.x + plot.width - width,
-    )
+  const coordinate = useActiveTooltipCoordinate()
   return (
     <ChartTooltip
-      content={<SparklineTooltip {...props} width={width} />}
+      content={
+        <SparklineTooltip
+          {...props}
+          fingerX={touch ? coordinate?.x : undefined}
+        />
+      }
       filterNull={false}
-      offset={TOOLTIP_OFFSET}
-      position={x === undefined ? undefined : { x, y: plot.y }}
+      active={hidden ? false : undefined}
+      isAnimationActive={!touch}
+      position={touch ? { x: 0, y: 0 } : plot && { y: plot.y }}
     />
   )
 }
-
-const TOOLTIP_OFFSET = 16
-const MAX_TOOLTIP_WIDTH = 240
 
 /** Recharts' grid layer: guide lines go under the series, not across it. */
 const BEHIND_SERIES = -100
@@ -259,3 +286,39 @@ function ExtremeLabel({
     </text>
   )
 }
+
+/**
+ * The one sparkline whose tooltip may show. A tap leaves a tooltip up, so
+ * without this, tapping the next chart would leave two; touching a chart
+ * claims it, and scrolling the page or touching anything else hides every
+ * tooltip.
+ */
+let shownId: string | undefined
+const listeners = new Set<() => void>()
+
+function show(id: string | undefined) {
+  if (shownId === id) return
+  shownId = id
+  for (const listener of listeners) listener()
+}
+
+const hide = () => show(undefined)
+
+function subscribe(listener: () => void) {
+  if (listeners.size === 0) {
+    window.addEventListener('scroll', hide, { passive: true })
+    // Before the chart's own handler, which claims it back.
+    window.addEventListener('pointerdown', hide, { capture: true })
+  }
+  listeners.add(listener)
+  return () => {
+    listeners.delete(listener)
+    if (listeners.size === 0) {
+      window.removeEventListener('scroll', hide)
+      window.removeEventListener('pointerdown', hide, { capture: true })
+    }
+  }
+}
+
+const getShown = () => shownId
+const getNoneShown = () => undefined
