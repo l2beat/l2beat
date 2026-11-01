@@ -6,6 +6,7 @@ type Dependencies = {
   chains: readonly { id: string }[]
   oneSidedChains: readonly string[]
   oneSidedPlugins: readonly string[]
+  maxTransferValueUsd: number
 }
 
 export function createCoverageRouter(deps: Dependencies) {
@@ -15,6 +16,7 @@ export function createCoverageRouter(deps: Dependencies) {
         capturedChains: deps.chains.map((chain) => chain.id),
         oneSidedChains: deps.oneSidedChains,
         oneSidedPlugins: deps.oneSidedPlugins,
+        maxTransferValueUsd: deps.maxTransferValueUsd,
       }),
     ),
   })

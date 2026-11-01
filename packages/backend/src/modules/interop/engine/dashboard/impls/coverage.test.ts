@@ -146,6 +146,37 @@ describe(buildInteropCoverage.name, () => {
     ])
   })
 
+  it('counts valued Wormhole core messages under the token bridge', () => {
+    const result = buildInteropCoverage(
+      [{ ...row('wormhole', 'near', 20, 5), pricedUnmatchedEvents: 2 }],
+      [volume('wormhole-token-bridge', 80, 4)],
+      CONFIG,
+      RANGE,
+    )
+
+    expect(
+      result.plugins.map((p) => ({
+        plugin: p.plugin,
+        uncoveredValueUsd: p.uncoveredValueUsd,
+        uncoveredEvents: p.uncoveredEvents,
+        coveragePct: p.coveragePct,
+      })),
+    ).toEqual([
+      {
+        plugin: 'wormhole-token-bridge',
+        uncoveredValueUsd: 20,
+        uncoveredEvents: 2,
+        coveragePct: 80,
+      },
+      {
+        plugin: 'wormhole',
+        uncoveredValueUsd: 0,
+        uncoveredEvents: 3,
+        coveragePct: undefined,
+      },
+    ])
+  })
+
   it('computes coverage per plugin from transfers and uncovered events', () => {
     const result = buildInteropCoverage(
       [

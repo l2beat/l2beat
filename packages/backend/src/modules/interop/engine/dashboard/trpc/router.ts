@@ -39,6 +39,7 @@ export interface InteropTrpcRouterDeps {
   matchingEnabled: boolean
   oneSidedChains: readonly string[]
   oneSidedPlugins: readonly string[]
+  maxTransferValueUsd: number
   tokenDbClient: TokenDbClient
 }
 

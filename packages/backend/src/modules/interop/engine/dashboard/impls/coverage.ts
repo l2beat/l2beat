@@ -277,6 +277,32 @@ export function resolveCounterpartChain(
   }
 }
 
+// The Wormhole core plugin values only the messages Token Bridge sends, and
+// the token bridge plugin turns those into transfers, so their volume
+// belongs to it
+const VALUED_FOR: Record<string, string> = {
+  wormhole: 'wormhole-token-bridge',
+}
+
+function attributeToTransferPlugin(
+  row: InteropEventCounterpartVolumeRecord,
+): InteropEventCounterpartVolumeRecord[] {
+  const plugin = VALUED_FOR[row.plugin]
+  if (plugin === undefined || row.pricedUnmatchedEvents === 0) return [row]
+  const valued = { ...row, plugin, unmatchedEvents: row.pricedUnmatchedEvents }
+  const rest = row.unmatchedEvents - row.pricedUnmatchedEvents
+  if (rest === 0) return [valued]
+  return [
+    valued,
+    {
+      ...row,
+      unmatchedEvents: rest,
+      unmatchedValueUsd: 0,
+      pricedUnmatchedEvents: 0,
+    },
+  ]
+}
+
 export function buildInteropCoverage(
   events: InteropEventCounterpartVolumeRecord[],
   transfers: InteropTransferPluginVolumeRecord[],
@@ -300,7 +326,7 @@ export function buildInteropCoverage(
     }
   >()
 
-  for (const row of events) {
+  for (const row of events.flatMap(attributeToTransferPlugin)) {
     if (row.counterpartChain === '') continue
     const resolved = resolveCounterpartChain(
       row.plugin,
@@ -451,7 +477,7 @@ function toPct(covered: number, uncovered: number): number | undefined {
 
 export async function getInteropCoverageData(
   db: Database,
-  config: CoverageChainsConfig,
+  config: CoverageChainsConfig & { maxTransferValueUsd: number },
   now = UnixTime.now(),
 ): Promise<InteropCoverageData> {
   const from = (now - COVERAGE_WINDOW) as UnixTime
@@ -459,6 +485,7 @@ export async function getInteropCoverageData(
     db.interopEvent.getUnmatchedCounterpartVolume(
       from,
       (now - PRICES_WINDOW) as UnixTime,
+      config.maxTransferValueUsd,
     ),
     db.interopTransfer.getVolumeByPlugin({ from, to: now }),
     db.interopConfig.getAllLatest(),

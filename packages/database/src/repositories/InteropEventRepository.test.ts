@@ -260,6 +260,10 @@ describeDatabase(InteropEventRepository.name, (db) => {
     () => {
       const USDC =
         '0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+
+      afterEach(async () => {
+        await db.interopTransfer.deleteAll()
+      })
       const OTHER_TOKEN =
         '0x0000000000000000000000001111111111111111111111111111111111111111'
 
@@ -374,6 +378,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
         const result = await repository.getUnmatchedCounterpartVolume(
           UnixTime(1000),
           UnixTime(0),
+          1_000_000_000,
         )
 
         expect(result).toEqualUnsorted([
@@ -400,6 +405,74 @@ describeDatabase(InteropEventRepository.name, (db) => {
             unmatchedValueUsd: 2,
             pricedUnmatchedEvents: 1,
             lastTimestamp: UnixTime(1060),
+          },
+        ])
+      })
+
+      it('leaves amounts it cannot parse and values above the ceiling unpriced', async () => {
+        await db.interopTransfer.insertMany([pricedTransfer(USDC)])
+        await repository.insertMany([
+          event(
+            'cctp-v2',
+            'e1',
+            'cctp-v2.MessageSent',
+            UnixTime(1010),
+            UnixTime(9000),
+            {
+              chain: 'ethereum',
+              args: {
+                $dstChain: 'Unknown_26',
+                amount: '1.5',
+                tokenAddress: USDC,
+              },
+            },
+          ),
+          event(
+            'cctp-v2',
+            'e2',
+            'cctp-v2.MessageSent',
+            UnixTime(1020),
+            UnixTime(9000),
+            {
+              chain: 'ethereum',
+              args: {
+                $dstChain: 'Unknown_26',
+                amount: 'BigInt(5000000)',
+                tokenAddress: USDC,
+              },
+            },
+          ),
+          event(
+            'cctp-v2',
+            'e3',
+            'cctp-v2.MessageSent',
+            UnixTime(1030),
+            UnixTime(9000),
+            {
+              chain: 'ethereum',
+              args: {
+                $dstChain: 'Unknown_26',
+                amount: '3000000',
+                tokenAddress: USDC,
+              },
+            },
+          ),
+        ])
+
+        const result = await repository.getUnmatchedCounterpartVolume(
+          UnixTime(1000),
+          UnixTime(0),
+          4,
+        )
+
+        expect(result).toEqual([
+          {
+            plugin: 'cctp-v2',
+            counterpartChain: 'Unknown_26',
+            unmatchedEvents: 3,
+            unmatchedValueUsd: 3,
+            pricedUnmatchedEvents: 1,
+            lastTimestamp: UnixTime(1030),
           },
         ])
       })

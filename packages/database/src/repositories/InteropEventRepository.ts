@@ -265,17 +265,25 @@ export class InteropEventRepository extends BaseRepository {
    * USD value. Event args have no fixed shape,
    * so token and amount are read from the fields plugins use, and priced with
    * each token's USD per raw unit across the transfers valued since
-   * `pricesFrom`.
+   * `pricesFrom`. Like transfer financials, a value above `maxValueUsd` is
+   * left out.
    */
   async getUnmatchedCounterpartVolume(
     from: UnixTime,
     pricesFrom: UnixTime,
+    maxValueUsd: number,
   ): Promise<InteropEventCounterpartVolumeRecord[]> {
     const token = sql.raw(
       `right(lower(${argsByDirection(OUTGOING_TOKEN_ARGS, INCOMING_TOKEN_ARGS)}), 40)`,
     )
+    // Amounts are stored as `BigInt(<digits>)` or plain digits, anything else
+    // stays unpriced
+    const rawAmount = argsByDirection(
+      OUTGOING_AMOUNT_ARGS,
+      INCOMING_AMOUNT_ARGS,
+    )
     const amount = sql.raw(
-      `nullif(regexp_replace(${argsByDirection(OUTGOING_AMOUNT_ARGS, INCOMING_AMOUNT_ARGS)}, '[^0-9]', '', 'g'), '')::numeric`,
+      `coalesce(substring(${rawAmount} from '^BigInt\\((\\d+)\\)$'), substring(${rawAmount} from '^(\\d+)$'))::numeric`,
     )
     const result = await sql<{
       plugin: string
@@ -309,17 +317,22 @@ export class InteropEventRepository extends BaseRepository {
         WHERE timestamp > ${UnixTime.toDate(from)}
           AND NOT matched
           AND (args ->> '$dstChain' IS NOT NULL OR args ->> '$srcChain' IS NOT NULL)
+      ),
+      valued AS (
+        SELECT events.plugin, events.counterpart, events.timestamp,
+          events.amount * prices."perRaw" AS value
+        FROM events
+        LEFT JOIN prices ON prices.chain = events.chain AND prices.token = events.token
       )
       SELECT
-        events.plugin,
-        events.counterpart AS "counterpartChain",
+        plugin,
+        counterpart AS "counterpartChain",
         count(*)::int AS "unmatchedEvents",
-        sum(events.amount * prices."perRaw")::float8 AS "unmatchedValueUsd",
-        (count(prices."perRaw") FILTER (WHERE events.amount IS NOT NULL))::int AS "pricedUnmatchedEvents",
-        max(events.timestamp) AS "lastTimestamp"
-      FROM events
-      LEFT JOIN prices ON prices.chain = events.chain AND prices.token = events.token
-      GROUP BY events.plugin, events.counterpart
+        sum(value) FILTER (WHERE value <= ${maxValueUsd})::float8 AS "unmatchedValueUsd",
+        (count(value) FILTER (WHERE value <= ${maxValueUsd}))::int AS "pricedUnmatchedEvents",
+        max(timestamp) AS "lastTimestamp"
+      FROM valued
+      GROUP BY plugin, counterpart
     `.execute(this.db)
 
     return result.rows.map((row) => ({
