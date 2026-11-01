@@ -28,6 +28,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
 } from '../types'
 import { ZkStackConfig } from './zkstack.config'
 import {
@@ -139,7 +140,7 @@ const L1MessageSent = createInteropEventType<{
   $dstChain: string
 }>('zkstack.L1MessageSent', {
   direction: 'outgoing',
-  ttl: 30 * UnixTime.DAY,
+  ttl: SLOW_WITHDRAWAL_TTL,
 })
 
 const BridgeBurn = createInteropEventType<{
@@ -148,7 +149,7 @@ const BridgeBurn = createInteropEventType<{
   receiver: EthereumAddress
   srcTokenAddress?: Address32
   srcAmount: bigint
-}>('zkstack.BridgeBurn', { direction: 'outgoing', ttl: 30 * UnixTime.DAY })
+}>('zkstack.BridgeBurn', { direction: 'outgoing', ttl: SLOW_WITHDRAWAL_TTL })
 
 const Withdrawal = createInteropEventType<{
   matchId: string
@@ -156,7 +157,7 @@ const Withdrawal = createInteropEventType<{
   receiver: EthereumAddress
   srcTokenAddress: Address32
   srcAmount: bigint
-}>('zkstack.Withdrawal', { direction: 'outgoing', ttl: 30 * UnixTime.DAY })
+}>('zkstack.Withdrawal', { direction: 'outgoing', ttl: SLOW_WITHDRAWAL_TTL })
 
 const BridgeMintL1 = createInteropEventType<{
   matchId: string

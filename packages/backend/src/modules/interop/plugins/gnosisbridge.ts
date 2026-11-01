@@ -10,6 +10,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
 } from './types'
 
 const userRequestForAffirmationLog =
@@ -90,7 +91,7 @@ const AmbMessageRequested = createInteropEventType<AmbMessageRequestedArgs>(
   'gnosisbridge.AmbMessageRequested',
   {
     direction: 'outgoing',
-    ttl: 30 * UnixTime.DAY,
+    ttl: SLOW_WITHDRAWAL_TTL,
   },
 )
 
@@ -110,7 +111,7 @@ const OmnibridgeTransferInitiated = createInteropEventType<{
   $dstChain: GnosisBridgeChain
 }>('gnosisbridge.OmnibridgeTransferInitiated', {
   direction: 'outgoing',
-  ttl: 30 * UnixTime.DAY,
+  ttl: SLOW_WITHDRAWAL_TTL,
 })
 
 const OmnibridgeTransferFinalized = createInteropEventType<{
@@ -148,7 +149,7 @@ const XdaiWithdrawalInitiated = createInteropEventType<{
   amount: bigint
 }>('gnosisbridge.XdaiWithdrawalInitiated', {
   direction: 'outgoing',
-  ttl: 30 * UnixTime.DAY,
+  ttl: SLOW_WITHDRAWAL_TTL,
 })
 
 const XdaiWithdrawalFinalized =

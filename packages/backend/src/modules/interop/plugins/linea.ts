@@ -14,6 +14,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
 } from './types'
 
 const messageSentLog =
@@ -49,7 +50,7 @@ const MessageSent = createInteropEventType<{
   messageHash: `0x${string}`
   value: bigint
   $dstChain: CounterpartyChain
-}>('linea.MessageSent', { direction: 'outgoing', ttl: 30 * UnixTime.DAY })
+}>('linea.MessageSent', { direction: 'outgoing', ttl: SLOW_WITHDRAWAL_TTL })
 
 const MessageClaimed = createInteropEventType<{
   messageHash: `0x${string}`
@@ -62,7 +63,7 @@ const BridgingInitiatedV2 = createInteropEventType<{
   $dstChain: CounterpartyChain
 }>('linea.BridgingInitiatedV2', {
   direction: 'outgoing',
-  ttl: 30 * UnixTime.DAY,
+  ttl: SLOW_WITHDRAWAL_TTL,
 })
 
 const BridgingFinalizedV2 = createInteropEventType<{

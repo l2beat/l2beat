@@ -17,6 +17,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
 } from './types'
 
 const BRIDGE_ADDRESS = '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe' // assume: same on all networks
@@ -128,7 +129,7 @@ const AgglayerBridgeEvent = createInteropEventType<{
   srcWasBurned?: boolean
   metadata?: `0x${string}`
   $dstChain: string
-}>('agglayer.BridgeEvent', { direction: 'outgoing', ttl: 30 * UnixTime.DAY })
+}>('agglayer.BridgeEvent', { direction: 'outgoing', ttl: SLOW_WITHDRAWAL_TTL })
 
 const AgglayerClaimEvent = createInteropEventType<{
   matchId: string
