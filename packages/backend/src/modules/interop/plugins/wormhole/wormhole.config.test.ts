@@ -18,6 +18,8 @@ const (
 	ChainIDHyperEVM ChainID = 47
 	ChainIDRobinhoodChain ChainID = 72
 	ChainIDWormchain ChainID = 3104
+	// ChainIDHyperCore is the ChainID of HyperCore (ID taken from Mayan)
+	ChainIDHyperCore ChainID = 65000
 )
 `
 
@@ -55,6 +57,7 @@ describe(parseWormholeChainIds.name, () => {
       { chain: 'hyperevm', wormholeChainId: 47 },
       { chain: 'robinhood', wormholeChainId: 72 },
       { chain: 'wormchain', wormholeChainId: 3104 },
+      { chain: 'hyperliquid', wormholeChainId: 65000 },
     ])
   })
 
@@ -93,6 +96,7 @@ describe(WormholeConfigPlugin.name, () => {
         { chain: 'hyperevm', wormholeChainId: 47 },
         { chain: 'robinhood', wormholeChainId: 72 },
         { chain: 'wormchain', wormholeChainId: 3104 },
+        { chain: 'hyperliquid', wormholeChainId: 65000 },
       ])
     })
 
