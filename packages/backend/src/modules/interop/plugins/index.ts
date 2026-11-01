@@ -269,7 +269,7 @@ export function createInteropPlugins(
         ],
       },
       new OneinchFusionPlusPlugin(),
-      new LifiIntentsPlugin(),
+      new LifiIntentsPlugin(deps.oneSidedChains),
       new HyperliquidBridgePlugin(deps.oneSidedChains),
       new LighterBridgePlugin(deps.oneSidedChains),
       new BaseSolBridgePlugin(deps.oneSidedChains),

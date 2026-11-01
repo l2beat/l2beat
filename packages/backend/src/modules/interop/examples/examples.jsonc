@@ -6544,6 +6544,51 @@
       ]
     }
   },
+  "lifi-intents-onesided": {
+    "tags": ["lifi-intents"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x5233b6bc703c7f57cf773f42ade813f54f0004889b29f8f495a5e59317ab50d9" // outgoing solana
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xad0ffc17923a47ffdb76fe3a6c0a2fe8f76b2afb80025a0c01f999898a8b3323" // outgoing tron
+      },
+      {
+        "chain": "base",
+        "tx": "0x3d6ea8dbbb5113e5c23dc3ceef2b466b5cae8e5bcd2084c362bc471466d33d39" // outgoing plasma
+      }
+    ],
+    "expects": {
+      "events": [
+        "lifi-intents.OutputRequested",
+        "lifi-intents.OutputRequested",
+        "lifi-intents.OutputRequested"
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "lifi-intents.Transfer",
+          "plugin": "lifi-intents",
+          "src": { "financials": { "symbol": "USDC" } },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "lifi-intents.Transfer",
+          "plugin": "lifi-intents",
+          "src": { "financials": { "symbol": "USDT" } },
+          "dst": { "chain": "tron" }
+        },
+        {
+          "type": "lifi-intents.Transfer",
+          "plugin": "lifi-intents",
+          "src": { "financials": { "symbol": "USDC" } },
+          "dst": { "chain": "plasma" }
+        }
+      ]
+    }
+  },
   "gasziponesided": {
     "loadConfigs": ["gaszip"],
     "txs": [
