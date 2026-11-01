@@ -115,6 +115,24 @@ function toTokenAddress(value: bigint): Address32 {
   return Address32.from(`0x${address.toString(16).padStart(40, '0')}`)
 }
 
+// A v1.1 destination escrow pays the protocol fee (word 0 of `parameters`)
+// and the integrator fee (word 1) out of `amount`, and the maker gets the rest
+function getMakerAmount(complement: {
+  amount: bigint
+  parameters?: `0x${string}`
+}): bigint {
+  const parameters = complement.parameters
+  if (parameters === undefined || parameters.length < 2 + 128) {
+    return complement.amount
+  }
+  const fees =
+    BigInt(`0x${parameters.slice(2, 66)}`) +
+    BigInt(`0x${parameters.slice(66, 130)}`)
+  return fees <= complement.amount
+    ? complement.amount - fees
+    : complement.amount
+}
+
 export class OneinchFusionPlusPlugin implements InteropPlugin {
   readonly name = 'oneinch-fusion-plus'
 
@@ -155,7 +173,7 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
           srcTokenAddress: toTokenAddress(srcImmutables.token),
           srcAmount: srcImmutables.amount,
           dstTokenAddress: toTokenAddress(dstImmutablesComplement.token),
-          dstAmount: dstImmutablesComplement.amount,
+          dstAmount: getMakerAmount(dstImmutablesComplement),
           $dstChain: findChain(
             ONEINCH_FUSIONPLUS_NETWORKS,
             (n) => n.chainId,

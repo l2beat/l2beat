@@ -7122,6 +7122,39 @@
       ]
     }
   },
+  "oneinch-fusion-plus-v1-1-fees": {
+    "description": "1inch Fusion+ v1.1 Ethereum to Base swap that pays a protocol fee from the destination escrow",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x66c396e211adb4e6e809fadaec4b6dd08097a440fa92ae8cc1ba2d6fe17828a6"
+      },
+      {
+        "chain": "base",
+        "tx": "0x7168e765ba6f1727ff77a81405a0c26a309275728b2ea72ed1ae7828f54a08ab"
+      },
+      {
+        "chain": "base",
+        "tx": "0x828fb0bab38a3c33ca2a60e5bc6b028a41c5a9de39fb3beba6937a728540b598"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "oneinch-fusion-plus.Message", "app": "oneinch-fusion-plus" }
+      ],
+      "transfers": [
+        {
+          "type": "oneinch-fusion-plus.Transfer",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          // 4288508991366983 minus the 12827045836591 protocol fee
+          "dst": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAmount": "4275681945530392"
+          }
+        }
+      ]
+    }
+  },
   "lifi-intents": {
     "description": "LI.FI Intents Base to Arbitrum fill with Polymer proof",
     "tags": ["lifi-intents"],
