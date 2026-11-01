@@ -2066,6 +2066,45 @@
       ]
     }
   },
+  "cctp-v2-partial-arc": {
+    "loadConfigs": ["cctp-v2"],
+    "txs": [
+      // Ethereum -> Arc: source side only
+      {
+        "chain": "ethereum",
+        "tx": "0x31b2779324fbf983c72d852a0c935c19a8fd4fc6a2ffee815afe65ff4e4ed24a"
+      },
+      // Arc -> Ethereum: destination side only
+      {
+        "chain": "ethereum",
+        "tx": "0xdf0d90e7d6bd4ab31d33a7f56a8e6f83e237b637913ebbf87b793d1535a3319c"
+      }
+    ],
+    "expects": {
+      "events": ["cctp-v2.MessageSent", "cctp-v2.MessageReceived"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "cctp-v2.Transfer",
+          "plugin": "cctp-v2",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "financials": { "symbol": "USDC" }
+          },
+          "dst": { "chain": "arc" }
+        },
+        {
+          "type": "cctp-v2.Transfer",
+          "plugin": "cctp-v2",
+          "src": { "chain": "arc" },
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "financials": { "symbol": "USDC" }
+          }
+        }
+      ]
+    }
+  },
   "wormhole-tokenbridge-to-bsc": {
     "loadConfigs": ["wormhole"],
     "txs": [
@@ -2875,6 +2914,49 @@
     ],
     "messages": ["circle-gateway.Message"],
     "transfers": ["circle-gateway.Transfer"]
+  },
+  "circle-gateway-partial-arc": {
+    "loadConfigs": ["cctp-v2"],
+    "txs": [
+      // Base -> Arc: source side only (burn on Base after the mint on Arc)
+      {
+        "chain": "base",
+        "tx": "0x26b9280d524324920050f46026cbf4e6eacd56ae9fad6df14c1e0845a753e257"
+      },
+      // Arc -> Arbitrum: destination side only
+      {
+        "chain": "arbitrum",
+        "tx": "0xd40b41ac7a6a52707cb584332b14db97f900d5bd3210d341eb6beba7801b9ab5"
+      }
+    ],
+    "expects": {
+      "events": [
+        "circle-gateway.GatewayBurned",
+        "circle-gateway.AttestationUsed"
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "circle-gateway.Transfer",
+          "plugin": "circle-gateway",
+          "src": {
+            "event": { "ctx": { "chain": "base" } },
+            "financials": { "symbol": "USDC" }
+          },
+          "dst": { "chain": "arc" }
+        },
+        {
+          "type": "circle-gateway.Transfer",
+          "plugin": "circle-gateway",
+          "src": { "chain": "arc" },
+          "dst": {
+            "event": { "ctx": { "chain": "arbitrum" } },
+            "wasMinted": true,
+            "financials": { "symbol": "USDC" }
+          }
+        }
+      ]
+    }
   },
   "layerzerov2": {
     "loadConfigs": ["layerzero-v2"],
@@ -4440,6 +4522,39 @@
             "wasMinted": false,
             "financials": { "symbol": "USDT" }
           }
+        }
+      ]
+    }
+  },
+  "across-partial-arc": {
+    "loadConfigs": ["across"],
+    "txs": [
+      // Ethereum -> Arc: source side only
+      {
+        "chain": "ethereum",
+        "tx": "0x6e0001cac6c1507c3d7a1fb72b0ad5ab7bcbf11dd28e0967e23e5a932f1298a0"
+      },
+      // Arc -> Base: destination side only
+      {
+        "chain": "base",
+        "tx": "0xdb2bdab26f6fe197f05c6fae90130865e228d4213dfae0b9af28e098c5785ff4"
+      }
+    ],
+    "expects": {
+      "events": ["across.FundsDeposited", "across.FilledRelay"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "across.Transfer",
+          "plugin": "across",
+          "src": { "financials": { "symbol": "USDC" } },
+          "dst": { "chain": "arc" }
+        },
+        {
+          "type": "across.Transfer",
+          "plugin": "across",
+          "src": { "chain": "arc" },
+          "dst": { "financials": { "symbol": "USDC" } }
         }
       ]
     }

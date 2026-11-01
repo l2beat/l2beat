@@ -52,7 +52,10 @@ export const GatewayBurned = createInteropEventType<{
 export class CircleGatewayPlugIn implements InteropPlugin {
   readonly name = 'circle-gateway'
 
-  constructor(private configs: InteropConfigStore) {}
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
 
   capture(input: LogToCapture) {
     const networks = this.configs.get(CCTPV2Config)
@@ -92,17 +95,28 @@ export class CircleGatewayPlugIn implements InteropPlugin {
       ]
   }
 
-  matchTypes = [GatewayBurned]
-  match(
-    gatewayBurned: InteropEvent,
-    db: InteropEventDb,
-  ): MatchResult | undefined {
-    if (GatewayBurned.checkType(gatewayBurned)) {
+  matchTypes = [GatewayBurned, AttestationUsed]
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (GatewayBurned.checkType(event)) {
+      const gatewayBurned = event
       const attestationUsed = db.find(AttestationUsed, {
         transferSpecHash: gatewayBurned.args.transferSpecHash,
       })
       if (!attestationUsed) {
-        return
+        // $srcChain is the message source, i.e. the transfer destination
+        const dstChain = gatewayBurned.args.$srcChain
+        if (!this.oneSidedChains.includes(dstChain)) return
+
+        return [
+          Result.Transfer('circle-gateway.Transfer', {
+            srcEvent: gatewayBurned,
+            srcTokenAddress: gatewayBurned.args.token,
+            srcAmount: gatewayBurned.args.value,
+            dstChain,
+            dstWasMinted: true,
+            srcWasBurned: true,
+          }),
+        ]
       }
 
       return [
@@ -119,6 +133,23 @@ export class CircleGatewayPlugIn implements InteropPlugin {
           dstEvent: attestationUsed,
           dstAmount: attestationUsed.args.value,
           dstTokenAddress: attestationUsed.args.token,
+          dstWasMinted: true,
+          srcWasBurned: true,
+        }),
+      ]
+    }
+
+    if (AttestationUsed.checkType(event)) {
+      // $dstChain is the message destination, i.e. the transfer source
+      const srcChain = event.args.$dstChain
+      if (!this.oneSidedChains.includes(srcChain)) return
+
+      return [
+        Result.Transfer('circle-gateway.Transfer', {
+          srcChain,
+          dstEvent: event,
+          dstAmount: event.args.value,
+          dstTokenAddress: event.args.token,
           dstWasMinted: true,
           srcWasBurned: true,
         }),
