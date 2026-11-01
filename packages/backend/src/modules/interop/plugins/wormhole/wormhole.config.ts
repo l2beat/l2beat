@@ -333,20 +333,21 @@ async function getTokenBridgeWeth(
   tokenBridge: EthereumAddress,
   blockNumber: number,
 ): Promise<EthereumAddress | undefined> {
-  const [result] = await callWithOptionalMulticall(
-    rpc,
-    [
-      {
-        to: tokenBridge,
-        input: Bytes.fromHex(
-          encodeFunctionData({ abi: wethAbi, functionName: 'WETH' }),
-        ),
-      },
-    ],
-    blockNumber,
-  )
-  if (!result?.success || result.data.toString() === '0x') return
+  // Optional: a failure here must not drop the chain's core and token bridge
   try {
+    const [result] = await callWithOptionalMulticall(
+      rpc,
+      [
+        {
+          to: tokenBridge,
+          input: Bytes.fromHex(
+            encodeFunctionData({ abi: wethAbi, functionName: 'WETH' }),
+          ),
+        },
+      ],
+      blockNumber,
+    )
+    if (!result?.success || result.data.toString() === '0x') return
     const weth = decodeFunctionResult({
       abi: wethAbi,
       functionName: 'WETH',
