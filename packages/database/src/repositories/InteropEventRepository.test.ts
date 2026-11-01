@@ -6,6 +6,7 @@ import {
   type InteropEventRecord,
   InteropEventRepository,
 } from './InteropEventRepository'
+import type { InteropTransferRecord } from './InteropTransferRepository'
 
 describeDatabase(InteropEventRepository.name, (db) => {
   const repository = db.interopEvent
@@ -255,132 +256,132 @@ describeDatabase(InteropEventRepository.name, (db) => {
   })
 
   describe(
-    InteropEventRepository.prototype.getSupportBreakdownByChainArg.name,
+    InteropEventRepository.prototype.getCounterpartChainVolume.name,
     () => {
-      it('aggregates by $dstChain split by support flag', async () => {
+      const USDC =
+        '0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+
+      it('sums events by plugin and counterpart chain, priced from transfers', async () => {
+        await db.interopTransfer.insertMany([pricedTransfer(USDC)])
         await repository.insertMany([
           event(
-            'plugin1',
-            'event1',
-            'layerzero-v2.PacketOFTSent',
-            UnixTime(100),
-            UnixTime(200),
+            'cctp-v2',
+            'e1',
+            'cctp-v2.MessageSent',
+            UnixTime(1010),
+            UnixTime(9000),
             {
-              unsupported: false,
-              args: { $dstChain: 'base' },
-            },
-          ),
-          event(
-            'plugin1',
-            'event2',
-            'layerzero-v2.PacketOFTSent',
-            UnixTime(110),
-            UnixTime(210),
-            {
+              chain: 'ethereum',
               unsupported: true,
-              args: { $dstChain: 'base' },
+              args: {
+                $dstChain: 'Unknown_26',
+                amount: 'BigInt(5000000)',
+                tokenAddress: USDC,
+              },
             },
           ),
           event(
-            'plugin1',
-            'event3',
-            'layerzero-v2.PacketOFTSent',
-            UnixTime(120),
-            UnixTime(220),
+            'cctp-v2',
+            'e2',
+            'cctp-v2.MessageSent',
+            UnixTime(1020),
+            UnixTime(9000),
             {
-              unsupported: false,
-              args: { $dstChain: '' },
+              chain: 'ethereum',
+              unsupported: true,
+              args: {
+                $dstChain: 'Unknown_26',
+                amount: 'BigInt(3000000)',
+                tokenAddress: USDC,
+              },
             },
           ),
           event(
-            'plugin1',
-            'event4',
-            'layerzero-v2.PacketOFTSent',
-            UnixTime(130),
-            UnixTime(230),
+            'cctp-v2',
+            'e3',
+            'cctp-v2.MessageReceived',
+            UnixTime(1030),
+            UnixTime(9000),
             {
-              unsupported: false,
-              args: {},
+              chain: 'ethereum',
+              args: {
+                $srcChain: 'base',
+                dstAmount: 'BigInt(1000000)',
+                dstTokenAddress: USDC,
+              },
+            },
+          ),
+          event(
+            'hyperlane',
+            'e4',
+            'hyperlane.Dispatch',
+            UnixTime(1040),
+            UnixTime(9000),
+            {
+              chain: 'ethereum',
+              args: { $dstChain: 'Unknown_6714' },
+            },
+          ),
+          event(
+            'cctp-v2',
+            'e5',
+            'cctp-v2.MessageSent',
+            UnixTime(900),
+            UnixTime(9000),
+            {
+              chain: 'ethereum',
+              args: {
+                $dstChain: 'Unknown_26',
+                amount: 'BigInt(7000000)',
+                tokenAddress: USDC,
+              },
+            },
+          ),
+          event(
+            'cctp-v2',
+            'e6',
+            'cctp-v2.Other',
+            UnixTime(1050),
+            UnixTime(9000),
+            {
+              chain: 'ethereum',
+              args: { amount: 'BigInt(7000000)', tokenAddress: USDC },
             },
           ),
         ])
 
-        const result = await repository.getSupportBreakdownByChainArg(
-          'layerzero-v2.PacketOFTSent',
-          '$dstChain',
+        const result = await repository.getCounterpartChainVolume(
+          UnixTime(1000),
+          UnixTime(0),
         )
 
         expect(result).toEqualUnsorted([
           {
-            chain: 'base',
-            isSupported: true,
-            count: 1,
+            plugin: 'cctp-v2',
+            counterpartChain: 'Unknown_26',
+            events: 2,
+            unsupportedEvents: 2,
+            pricedEvents: 2,
+            valueUsd: 8,
+            lastTimestamp: UnixTime(1020),
           },
           {
-            chain: 'base',
-            isSupported: false,
-            count: 1,
+            plugin: 'cctp-v2',
+            counterpartChain: 'base',
+            events: 1,
+            unsupportedEvents: 0,
+            pricedEvents: 1,
+            valueUsd: 1,
+            lastTimestamp: UnixTime(1030),
           },
           {
-            chain: '(unknown)',
-            isSupported: true,
-            count: 2,
-          },
-        ])
-      })
-
-      it('aggregates by $srcChain', async () => {
-        await repository.insertMany([
-          event(
-            'plugin1',
-            'event1',
-            'layerzero-v2.PacketOFTDelivered',
-            UnixTime(100),
-            UnixTime(200),
-            {
-              unsupported: false,
-              args: { $srcChain: 'arbitrum' },
-            },
-          ),
-          event(
-            'plugin1',
-            'event2',
-            'layerzero-v2.PacketOFTDelivered',
-            UnixTime(110),
-            UnixTime(210),
-            {
-              unsupported: false,
-              args: { $srcChain: 'arbitrum' },
-            },
-          ),
-          event(
-            'plugin1',
-            'event3',
-            'layerzero-v2.PacketOFTDelivered',
-            UnixTime(120),
-            UnixTime(220),
-            {
-              unsupported: true,
-              args: { $srcChain: 'base' },
-            },
-          ),
-        ])
-
-        const result = await repository.getSupportBreakdownByChainArg(
-          'layerzero-v2.PacketOFTDelivered',
-          '$srcChain',
-        )
-
-        expect(result).toEqualUnsorted([
-          {
-            chain: 'arbitrum',
-            isSupported: true,
-            count: 2,
-          },
-          {
-            chain: 'base',
-            isSupported: false,
-            count: 1,
+            plugin: 'hyperlane',
+            counterpartChain: 'Unknown_6714',
+            events: 1,
+            unsupportedEvents: 0,
+            pricedEvents: 0,
+            valueUsd: 0,
+            lastTimestamp: UnixTime(1040),
           },
         ])
       })
@@ -675,5 +676,44 @@ function event(
     chain: 'chain',
     blockNumber: 1,
     ...overrides,
+  }
+}
+
+// 2 USDC on Ethereum valued at $2, so 1 raw unit is $0.000001
+function pricedTransfer(usdc: string): InteropTransferRecord {
+  return {
+    plugin: 'cctp-v2',
+    transferId: 'priced',
+    type: 'cctp-v2.Transfer',
+    bridgeType: undefined,
+    duration: 0,
+    timestamp: UnixTime(500),
+    srcTime: UnixTime(500),
+    srcChain: 'ethereum',
+    srcTxHash: '0xsrc',
+    srcLogIndex: 1,
+    srcEventId: 'priced-src',
+    srcTokenAddress: usdc,
+    srcRawAmount: 2_000_000n,
+    srcWasBurned: true,
+    srcSymbol: 'USDC',
+    srcAbstractTokenId: 'usdc',
+    srcAmount: 2,
+    srcPrice: 1,
+    srcValueUsd: 2,
+    dstTime: UnixTime(500),
+    dstChain: 'base',
+    dstTxHash: '0xdst',
+    dstLogIndex: 2,
+    dstEventId: 'priced-dst',
+    dstTokenAddress: undefined,
+    dstRawAmount: undefined,
+    dstWasMinted: true,
+    dstSymbol: undefined,
+    dstAbstractTokenId: undefined,
+    dstAmount: undefined,
+    dstPrice: undefined,
+    dstValueUsd: undefined,
+    isProcessed: true,
   }
 }

@@ -11,7 +11,7 @@ import { ActivityPage } from './pages/interop/activity/ActivityPage'
 import { SuspiciousTransfersPage } from './pages/interop/activity/SuspiciousTransfersPage'
 import { AggregatesPage } from './pages/interop/aggregates/AggregatesPage'
 import { ChainsSummaryPage } from './pages/interop/chains-summary/ChainsSummaryPage'
-import { CoveragePiesPage } from './pages/interop/coverage-pies/CoveragePiesPage'
+import { CoveragePage } from './pages/interop/coverage/CoveragePage'
 import { EventDetailsPage } from './pages/interop/events/EventDetailsPage'
 import { EventsPage } from './pages/interop/events/EventsPage'
 import { FinancialsPage } from './pages/interop/financials/FinancialsPage'
@@ -98,8 +98,12 @@ function EnvironmentScopedApp() {
               element={<SuspiciousTransfersPage />}
             />
             <Route
+              path="/interop/insights/coverage"
+              element={<CoveragePage />}
+            />
+            <Route
               path="/interop/insights/coverage-pies"
-              element={<CoveragePiesPage />}
+              element={<CoveragePage />}
             />
             <Route
               path="/interop/insights/highlights"

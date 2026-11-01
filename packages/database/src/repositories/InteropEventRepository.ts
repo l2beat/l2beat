@@ -82,11 +82,36 @@ export interface InteropEventStatsRecord {
   unsupported: number
 }
 
-export interface InteropEventSupportBreakdownRecord {
-  chain: string
-  isSupported: boolean
-  count: number
+export interface InteropEventCounterpartVolumeRecord {
+  plugin: string
+  counterpartChain: string
+  events: number
+  unsupportedEvents: number
+  pricedEvents: number
+  valueUsd: number
+  lastTimestamp: UnixTime
 }
+
+// Arg names plugins use for the captured side's token and amount
+const COUNTERPART_TOKEN_ARGS = [
+  'tokenAddress',
+  'token',
+  'inputToken',
+  'srcTokenAddress',
+  'dstTokenAddress',
+  'tokenIn',
+  'giveTokenAddress',
+]
+const COUNTERPART_AMOUNT_ARGS = [
+  'amount',
+  'value',
+  'inputAmount',
+  'srcAmount',
+  'dstAmount',
+  'amountSentLD',
+  'amountIn',
+  'giveAmount',
+]
 
 export class InteropEventRepository extends BaseRepository {
   async insertMany(records: InteropEventRecord[]): Promise<number> {
@@ -204,34 +229,77 @@ export class InteropEventRepository extends BaseRepository {
     }))
   }
 
-  async getSupportBreakdownByChainArg(
-    type: string,
-    chainArg: '$dstChain' | '$srcChain',
-  ): Promise<InteropEventSupportBreakdownRecord[]> {
-    const chainExpression = sql<string>`COALESCE(NULLIF(args ->> ${chainArg}, ''), '(unknown)')`
+  /**
+   * Events by plugin and the chain on their other side (`$srcChain` or
+   * `$dstChain`), with an estimated USD value. Event args have no fixed shape,
+   * so token and amount are read from the fields plugins use, and priced with
+   * each token's USD per raw unit across the transfers valued since
+   * `pricesFrom`.
+   */
+  async getCounterpartChainVolume(
+    from: UnixTime,
+    pricesFrom: UnixTime,
+  ): Promise<InteropEventCounterpartVolumeRecord[]> {
+    const token = sql.raw(
+      `right(lower(coalesce(${COUNTERPART_TOKEN_ARGS.map((key) => `args ->> '${key}'`).join(', ')})), 40)`,
+    )
+    const amount = sql.raw(
+      `nullif(regexp_replace(coalesce(${COUNTERPART_AMOUNT_ARGS.map((key) => `args ->> '${key}'`).join(', ')}), '[^0-9]', '', 'g'), '')::numeric`,
+    )
+    const result = await sql<{
+      plugin: string
+      counterpartChain: string
+      events: number
+      unsupportedEvents: number
+      pricedEvents: number
+      valueUsd: number | null
+      lastTimestamp: Date
+    }>`
+      WITH prices AS (
+        SELECT chain, token, sum(usd) / nullif(sum(raw), 0) AS "perRaw"
+        FROM (
+          SELECT "srcChain" AS chain, right(lower("srcTokenAddress"), 40) AS token,
+            "srcValueUsd" AS usd, "srcRawAmount"::numeric AS raw
+          FROM "InteropTransfer"
+          WHERE timestamp > ${UnixTime.toDate(pricesFrom)} AND "srcValueUsd" > 0
+          UNION ALL
+          SELECT "dstChain", right(lower("dstTokenAddress"), 40),
+            "dstValueUsd", "dstRawAmount"::numeric
+          FROM "InteropTransfer"
+          WHERE timestamp > ${UnixTime.toDate(pricesFrom)} AND "dstValueUsd" > 0
+        ) sides
+        GROUP BY chain, token
+      ),
+      events AS (
+        SELECT plugin, chain, timestamp, unsupported,
+          coalesce(args ->> '$dstChain', args ->> '$srcChain') AS counterpart,
+          ${token} AS token,
+          ${amount} AS amount
+        FROM "InteropEvent"
+        WHERE timestamp > ${UnixTime.toDate(from)}
+          AND (args ->> '$dstChain' IS NOT NULL OR args ->> '$srcChain' IS NOT NULL)
+      )
+      SELECT
+        events.plugin,
+        events.counterpart AS "counterpartChain",
+        count(*)::int AS events,
+        (count(*) FILTER (WHERE events.unsupported))::int AS "unsupportedEvents",
+        (count(prices."perRaw") FILTER (WHERE events.amount IS NOT NULL))::int AS "pricedEvents",
+        sum(events.amount * prices."perRaw")::float8 AS "valueUsd",
+        max(events.timestamp) AS "lastTimestamp"
+      FROM events
+      LEFT JOIN prices ON prices.chain = events.chain AND prices.token = events.token
+      GROUP BY events.plugin, events.counterpart
+    `.execute(this.db)
 
-    const source = this.db
-      .selectFrom('InteropEvent')
-      .where('type', '=', type)
-      .select([chainExpression.as('chain'), 'unsupported'])
-      .as('source')
-
-    const rows = await this.db
-      .selectFrom(source)
-      .select((eb) => [
-        'chain',
-        sql<boolean>`NOT unsupported`.as('isSupported'),
-        eb.fn.countAll().as('count'),
-      ])
-      .groupBy(['chain', 'unsupported'])
-      .orderBy('count', 'desc')
-      .orderBy('chain', 'asc')
-      .execute()
-
-    return rows.map((row) => ({
-      chain: row.chain,
-      isSupported: Boolean(row.isSupported),
-      count: Number(row.count),
+    return result.rows.map((row) => ({
+      plugin: row.plugin,
+      counterpartChain: row.counterpartChain,
+      events: row.events,
+      unsupportedEvents: row.unsupportedEvents,
+      pricedEvents: row.pricedEvents,
+      valueUsd: row.valueUsd ?? 0,
+      lastTimestamp: UnixTime.fromDate(row.lastTimestamp),
     }))
   }
 

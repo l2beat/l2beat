@@ -133,8 +133,8 @@ const navGroups: NavigationGroup[] = [
             url: '/interop/insights/activity/suspicious-transfers',
           },
           {
-            title: 'Coverage pies',
-            url: '/interop/insights/coverage-pies',
+            title: 'Coverage',
+            url: '/interop/insights/coverage',
           },
           {
             title: 'Highlights',
