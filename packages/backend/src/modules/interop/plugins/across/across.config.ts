@@ -48,7 +48,7 @@ const ACROSS_CHAIN_NAME_FALLBACKS = [
     querySpokePool: false,
   },
   {
-    name: 'hypercore',
+    name: 'hyperliquid',
     id: 1_337,
     querySpokePool: false,
   },
