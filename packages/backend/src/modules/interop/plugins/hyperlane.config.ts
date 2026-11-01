@@ -23,6 +23,17 @@ export const HyperlaneWarpRoutesConfig = defineConfig<HyperlaneWarpRouteMap>(
   'hyperlane-warp-routes',
 )
 
+// messageAmount = localAmount * numerator / denominator
+export interface HyperlaneWarpRouteScale {
+  numerator: string
+  denominator: string
+}
+
+export type HyperlaneWarpRouteScaleMap = Record<string, HyperlaneWarpRouteScale>
+
+export const HyperlaneWarpRouteScalesConfig =
+  defineConfig<HyperlaneWarpRouteScaleMap>('hyperlane-warp-route-scales')
+
 const HYPERLANE_METADATA_URL =
   'https://raw.githubusercontent.com/hyperlane-xyz/hyperlane-registry/main/chains/metadata.yaml'
 const HYPERLANE_WARP_ROUTES_URL =
@@ -45,6 +56,7 @@ export interface HyperlaneWarpRouteRegistryEntry {
   chain: string
   router: string
   standard: string
+  scale?: HyperlaneWarpRouteScale
 }
 
 function getHyperlaneChainNameOverride(name: string) {
@@ -86,6 +98,15 @@ export function hyperlaneWarpRouteKey(chain: string, router: string): string {
   return `${chain}:${router.toLowerCase()}`
 }
 
+function toWarpRouteScale(
+  scale: Partial<HyperlaneWarpRouteScale> | undefined,
+): HyperlaneWarpRouteScale | undefined {
+  const { numerator, denominator } = scale ?? {}
+  if (!numerator || !/^[1-9]\d*$/.test(numerator)) return
+  if (!denominator || !/^[1-9]\d*$/.test(denominator)) return
+  return { numerator, denominator }
+}
+
 export function parseHyperlaneWarpRouteRegistry(
   yaml: string,
 ): HyperlaneWarpRouteRegistryEntry[] {
@@ -93,6 +114,7 @@ export function parseHyperlaneWarpRouteRegistry(
   let currentRouter: string | undefined
   let currentChain: string | undefined
   let currentStandard: string | undefined
+  let currentScale: Partial<HyperlaneWarpRouteScale> | undefined
 
   const pushCurrent = () => {
     if (!currentRouter || !currentChain || !currentStandard) return
@@ -100,6 +122,7 @@ export function parseHyperlaneWarpRouteRegistry(
       chain: normalizeHyperlaneChainName(currentChain),
       router: currentRouter,
       standard: currentStandard,
+      scale: toWarpRouteScale(currentScale),
     })
   }
 
@@ -110,6 +133,7 @@ export function parseHyperlaneWarpRouteRegistry(
       currentRouter = unquoteYamlString(router)
       currentChain = undefined
       currentStandard = undefined
+      currentScale = undefined
       continue
     }
 
@@ -124,6 +148,29 @@ export function parseHyperlaneWarpRouteRegistry(
     const standard = parseStringField(line, '      standard: ')
     if (standard !== undefined) {
       currentStandard = unquoteYamlString(standard)
+      continue
+    }
+
+    // Older routers use a single multiplier, newer ones a fraction
+    const scale = parseStringField(line, '      scale:')
+    if (scale !== undefined) {
+      const multiplier = unquoteYamlString(scale)
+      currentScale =
+        multiplier === '' ? {} : { numerator: multiplier, denominator: '1' }
+      continue
+    }
+
+    if (!currentScale) continue
+
+    const numerator = parseStringField(line, '        numerator: ')
+    if (numerator !== undefined) {
+      currentScale.numerator = unquoteYamlString(numerator)
+      continue
+    }
+
+    const denominator = parseStringField(line, '        denominator: ')
+    if (denominator !== undefined) {
+      currentScale.denominator = unquoteYamlString(denominator)
     }
   }
 
@@ -152,22 +199,40 @@ export function buildHyperlaneWarpRouteMap(
   return result
 }
 
-export function mergeHyperlaneWarpRouteMaps(
-  previous: HyperlaneWarpRouteMap | undefined,
-  latest: HyperlaneWarpRouteMap,
-): HyperlaneWarpRouteMap {
+export function buildHyperlaneWarpRouteScaleMap(
+  entries: HyperlaneWarpRouteRegistryEntry[],
+): HyperlaneWarpRouteScaleMap {
+  const result: HyperlaneWarpRouteScaleMap = {}
+
+  for (const entry of entries) {
+    if (!/^0x[0-9a-fA-F]{40}$/.test(entry.router)) continue
+    if (!entry.scale || entry.scale.numerator === entry.scale.denominator)
+      continue
+
+    result[hyperlaneWarpRouteKey(entry.chain, entry.router)] = entry.scale
+  }
+
+  return result
+}
+
+export function mergeHyperlaneWarpRouteMaps<T>(
+  previous: Record<string, T> | undefined,
+  latest: Record<string, T>,
+): Record<string, T> {
   return { ...previous, ...latest }
 }
 
-function areHyperlaneWarpRouteMapsEqual(
-  a: HyperlaneWarpRouteMap | undefined,
-  b: HyperlaneWarpRouteMap,
+function areHyperlaneWarpRouteMapsEqual<T>(
+  a: Record<string, T> | undefined,
+  b: Record<string, T>,
+  isEqual: (a: T, b: T) => boolean = (x, y) => x === y,
 ): boolean {
   if (!a) return false
   const aKeys = Object.keys(a)
   const bKeys = Object.keys(b)
   return (
-    aKeys.length === bKeys.length && bKeys.every((key) => a[key] === b[key])
+    aKeys.length === bKeys.length &&
+    bKeys.every((key) => a[key] !== undefined && isEqual(a[key], b[key]))
   )
 }
 
@@ -286,7 +351,11 @@ export class HyperlaneConfigPlugin
   extends TimeLoop
   implements InteropConfigPlugin
 {
-  provides = [HyperlaneConfig, HyperlaneWarpRoutesConfig]
+  provides = [
+    HyperlaneConfig,
+    HyperlaneWarpRoutesConfig,
+    HyperlaneWarpRouteScalesConfig,
+  ]
 
   private readonly bootstrapNetworks: HyperlaneNetwork[]
   private readonly bootstrapChainNamesByChainId: Map<number, string>
@@ -311,10 +380,16 @@ export class HyperlaneConfigPlugin
   async run() {
     const previous = this.store.get(HyperlaneConfig)
     const previousWarpRoutes = this.store.get(HyperlaneWarpRoutesConfig)
-    const [latest, latestWarpRoutes] = await Promise.all([
+    const previousWarpRouteScales = this.store.get(
+      HyperlaneWarpRouteScalesConfig,
+    )
+    const [latest, warpRouteEntries] = await Promise.all([
       this.getLatestNetworks(),
-      this.getLatestWarpRoutes(),
+      this.getLatestWarpRouteEntries(),
     ])
+    const latestWarpRoutes = buildHyperlaneWarpRouteMap(warpRouteEntries)
+    const latestWarpRouteScales =
+      buildHyperlaneWarpRouteScaleMap(warpRouteEntries)
 
     const reconciled = reconcileNetworks(previous, latest)
 
@@ -353,6 +428,27 @@ export class HyperlaneConfigPlugin
         plugin: HyperlaneWarpRoutesConfig.key,
       })
       await this.store.set(HyperlaneWarpRoutesConfig, mergedWarpRoutes)
+    }
+
+    const mergedWarpRouteScales = mergeHyperlaneWarpRouteMaps(
+      previousWarpRouteScales,
+      latestWarpRouteScales,
+    )
+    if (
+      !areHyperlaneWarpRouteMapsEqual(
+        previousWarpRouteScales,
+        mergedWarpRouteScales,
+        (x, y) =>
+          x.numerator === y.numerator && x.denominator === y.denominator,
+      )
+    ) {
+      this.logger.info('Warp route scales updated', {
+        plugin: HyperlaneWarpRouteScalesConfig.key,
+      })
+      await this.store.set(
+        HyperlaneWarpRouteScalesConfig,
+        mergedWarpRouteScales,
+      )
     }
   }
 
@@ -396,7 +492,9 @@ export class HyperlaneConfigPlugin
     return networks.sort((a, b) => a.chain.localeCompare(b.chain))
   }
 
-  async getLatestWarpRoutes(): Promise<HyperlaneWarpRouteMap> {
+  async getLatestWarpRouteEntries(): Promise<
+    HyperlaneWarpRouteRegistryEntry[]
+  > {
     const response = await this.http.fetchRaw(HYPERLANE_WARP_ROUTES_URL, {
       timeout: 10_000,
     })
@@ -406,6 +504,6 @@ export class HyperlaneConfigPlugin
     }
 
     const yaml = await response.text()
-    return buildHyperlaneWarpRouteMap(parseHyperlaneWarpRouteRegistry(yaml))
+    return parseHyperlaneWarpRouteRegistry(yaml)
   }
 }
