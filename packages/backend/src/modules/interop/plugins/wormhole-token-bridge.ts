@@ -205,7 +205,9 @@ interface RedeemedTokens {
 
 // The bridge mints or releases the tokens after TransferRedeemed. A legacy
 // relayer fee or a token tax adds smaller payouts of the same token, so the
-// largest payout before the next redemption is the user's.
+// largest payout before the next redemption is the user's. A native payout is
+// a single unwrap that runs before any recipient code, so it is never replaced
+// by a later Withdrawal, which any contract can emit.
 function findRedeemedTokens(
   input: LogToCapture,
   tokenBridge: EthereumAddress,
@@ -220,6 +222,7 @@ function findRedeemedTokens(
     if (!redeemed) {
       redeemed = payout
     } else if (
+      redeemed.tokenAddress !== Address32.NATIVE &&
       payout.tokenAddress === redeemed.tokenAddress &&
       payout.wasMinted === redeemed.wasMinted &&
       payout.amount > redeemed.amount
