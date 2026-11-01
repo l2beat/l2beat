@@ -54,7 +54,11 @@ import {
   type EthereumAddress,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
-import { isMayanCctpForwarded, MayanForwarded } from '../mayan-forwarder'
+import {
+  findMayanForwardedForSend,
+  isMayanCctpForwarded,
+  MayanForwarded,
+} from '../mayan-forwarder'
 import { OrderFulfilled } from '../mayan-mctp-fast'
 import { findWrappedMayanWormholeLog } from '../mayan-wormhole'
 import {
@@ -355,9 +359,13 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
 
       // Without a destination event there is no mayan.Message, so the
       // Mayan forwarder event is consumed by the transfer instead.
-      const mayanForwarded = db
-        .findAll(MayanForwarded, { sameTxAfter: event })
-        .find(isMayanCctpForwarded)
+      const mayanForwarded = findMayanForwardedForSend(
+        db,
+        event,
+        db.find(CCTPv2MessageSent, { sameTxAfter: event }),
+        dstChain,
+        isMayanCctpForwarded,
+      )
 
       return [
         Result.Transfer('cctp-v2.Transfer', {

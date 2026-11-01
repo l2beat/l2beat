@@ -33,6 +33,7 @@ import {
   type DataRequest,
   findChain,
   type InteropEvent,
+  type InteropEventDb,
   type InteropPluginResyncable,
   type LogToCapture,
 } from './types'
@@ -428,6 +429,27 @@ export function isMayanSwiftForwarded(event: MayanForwardedEvent): boolean {
     isMayanSwiftProtocolAddress,
     MAYAN_SWIFT_METHODS,
   )
+}
+
+// The forwarder logs after the send it wraps. In a tx with several sends, only
+// a forwarder before the next send and to the same chain belongs to this one.
+export function findMayanForwardedForSend(
+  db: InteropEventDb,
+  send: InteropEvent,
+  nextSend: InteropEvent | undefined,
+  dstChain: string,
+  isForwarded: (event: MayanForwardedEvent) => boolean,
+) {
+  return db
+    .findAll(MayanForwarded, { sameTxAfter: send })
+    .find(
+      (forwarded) =>
+        (nextSend === undefined ||
+          forwarded.ctx.logIndex < nextSend.ctx.logIndex) &&
+        (forwarded.args.$dstChain === undefined ||
+          forwarded.args.$dstChain === dstChain) &&
+        isForwarded(forwarded),
+    )
 }
 
 export function isMayanCircleForwarded(event: MayanForwardedEvent): boolean {

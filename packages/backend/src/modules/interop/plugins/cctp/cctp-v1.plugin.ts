@@ -54,7 +54,11 @@ import {
   type EthereumAddress,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
-import { isMayanCircleForwarded, MayanForwarded } from '../mayan-forwarder'
+import {
+  findMayanForwardedForSend,
+  isMayanCircleForwarded,
+  MayanForwarded,
+} from '../mayan-forwarder'
 import { findWrappedMayanWormholeLog } from '../mayan-wormhole'
 import {
   createInteropEventType,
@@ -318,9 +322,13 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
       // Without a destination event there is no mayan.Message, so the
       // Mayan forwarder event and its Wormhole message are consumed by the
       // transfer instead.
-      const mayanForwarded = db
-        .findAll(MayanForwarded, { sameTxAfter: event })
-        .find(isMayanCircleForwarded)
+      const mayanForwarded = findMayanForwardedForSend(
+        db,
+        event,
+        db.find(CCTPv1MessageSent, { sameTxAfter: event }),
+        dstChain,
+        isMayanCircleForwarded,
+      )
       const mayanWrappedWormholeLog = mayanForwarded
         ? findWrappedMayanWormholeLog(db, mayanForwarded, LogMessagePublished)
         : undefined
