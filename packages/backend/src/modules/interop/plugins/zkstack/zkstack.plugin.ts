@@ -564,8 +564,14 @@ export class ZkStackPlugin implements InteropPluginResyncable {
 
     // WITHDRAWAL
     if (BridgeMintL1.checkType(event)) {
+      // The match id has no chain, so identical withdrawals from other ZK stack
+      // chains would otherwise be candidates too
+      const srcChain = getNetworkByChainId(BigInt(event.args.chainId))?.chain
+      if (!srcChain) return
+
       const gasWithdrawals = db.findAll(Withdrawal, {
         matchId: event.args.matchId,
+        ctx: { chain: srcChain },
       })
       if (gasWithdrawals.length > 0) {
         // pick earliest, more deterministic for spam cases
@@ -604,6 +610,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
 
       const bridgeBurn = db.find(BridgeBurn, {
         matchId: event.args.matchId,
+        ctx: { chain: srcChain },
       })
       if (!bridgeBurn) return
 
