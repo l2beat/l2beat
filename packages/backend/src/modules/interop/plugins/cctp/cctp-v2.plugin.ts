@@ -362,7 +362,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       const mayanForwarded = findMayanForwardedForSend(
         db,
         event,
-        db.find(CCTPv2MessageSent, { sameTxAfter: event }),
+        [db.find(CCTPv2MessageSent, { sameTxAfter: event })],
         dstChain,
         isMayanCctpForwarded,
       )

@@ -33,11 +33,32 @@ describe(findMayanForwardedForSend.name, () => {
     for (const event of [first, second, own]) db.addEvent(event)
 
     expect(
-      findMayanForwardedForSend(db, first, second, 'solana', () => true),
+      findMayanForwardedForSend(db, first, [second], 'solana', () => true),
     ).toEqual(undefined)
     expect(
-      findMayanForwardedForSend(db, second, undefined, 'solana', () => true),
+      findMayanForwardedForSend(db, second, [undefined], 'solana', () => true),
     ).toEqual(own)
+  })
+
+  it('stops at the nearest of several next sends', () => {
+    const db = new InMemoryEventDb()
+    const first = send(1, 'solana')
+    const otherVersion = send(2, 'solana')
+    const later = send(5, 'solana')
+    const notOwn = forwarded(3, 'solana')
+    for (const event of [first, otherVersion, later, notOwn]) {
+      db.addEvent(event)
+    }
+
+    expect(
+      findMayanForwardedForSend(
+        db,
+        first,
+        [later, otherVersion],
+        'solana',
+        () => true,
+      ),
+    ).toEqual(undefined)
   })
 
   it('skips a forwarder to another chain', () => {
@@ -47,7 +68,7 @@ describe(findMayanForwardedForSend.name, () => {
     for (const event of [first, other]) db.addEvent(event)
 
     expect(
-      findMayanForwardedForSend(db, first, undefined, 'solana', () => true),
+      findMayanForwardedForSend(db, first, [], 'solana', () => true),
     ).toEqual(undefined)
   })
 })

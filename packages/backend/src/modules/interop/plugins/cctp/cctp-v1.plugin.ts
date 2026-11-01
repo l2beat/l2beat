@@ -83,6 +83,7 @@ import {
   parseCctpMessageSent,
   parseCctpV1ReceivedTransfer,
 } from './cctp.utils'
+import { CCTPv2MessageSent } from './cctp-v2.plugin'
 
 type CCTPV1MessagePayloadInfo = {
   app?: string
@@ -325,7 +326,11 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
       const mayanForwarded = findMayanForwardedForSend(
         db,
         event,
-        db.find(CCTPv1MessageSent, { sameTxAfter: event }),
+        // A V2 send in the same tx bounds a V1 forwarder too
+        [
+          db.find(CCTPv1MessageSent, { sameTxAfter: event }),
+          db.find(CCTPv2MessageSent, { sameTxAfter: event }),
+        ],
         dstChain,
         isMayanCircleForwarded,
       )

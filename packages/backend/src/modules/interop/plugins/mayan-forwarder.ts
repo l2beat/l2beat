@@ -436,16 +436,18 @@ export function isMayanSwiftForwarded(event: MayanForwardedEvent): boolean {
 export function findMayanForwardedForSend(
   db: InteropEventDb,
   send: InteropEvent,
-  nextSend: InteropEvent | undefined,
+  nextSends: (InteropEvent | undefined)[],
   dstChain: string,
   isForwarded: (event: MayanForwardedEvent) => boolean,
 ) {
+  const boundary = Math.min(
+    ...nextSends.map((next) => next?.ctx.logIndex ?? Number.POSITIVE_INFINITY),
+  )
   return db
     .findAll(MayanForwarded, { sameTxAfter: send })
     .find(
       (forwarded) =>
-        (nextSend === undefined ||
-          forwarded.ctx.logIndex < nextSend.ctx.logIndex) &&
+        forwarded.ctx.logIndex < boundary &&
         (forwarded.args.$dstChain === undefined ||
           forwarded.args.$dstChain === dstChain) &&
         isForwarded(forwarded),
