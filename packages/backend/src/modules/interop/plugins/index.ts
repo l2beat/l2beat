@@ -184,7 +184,7 @@ export function createInteropPlugins(
     eventPlugins: [
       new DeBridgePlugin(deps.oneSidedChains),
       new DeBridgeDlnPlugin(deps.oneSidedChains),
-      new AgglayerPlugin(),
+      new AgglayerPlugin(deps.oneSidedChains),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
       new ButterNetworkPlugin(),
