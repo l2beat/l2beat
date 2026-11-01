@@ -13,6 +13,7 @@ import {
 const CONFIG = {
   capturedChains: ['ethereum', 'base', 'arbitrum'],
   oneSidedChains: ['solana'],
+  oneSidedPlugins: ['cctp-v2', 'across', 'ccip'],
 }
 const RANGE = { from: UnixTime(0), to: UnixTime(86400) }
 
@@ -37,27 +38,49 @@ describe(buildInteropCoverage.name, () => {
       label: 'arc',
       status: 'not-tracked',
       rawChains: ['Unknown_26', 'Unknown_5042', 'Unknown_arc', 'arc'],
-      valueUsd: 111.5,
+      uncountedValueUsd: 111.5,
       events: 21,
+      uncountedEvents: 21,
       pricedEvents: 21,
       lastSeen: UnixTime(100),
       plugins: [
-        { plugin: 'cctp-v2', valueUsd: 60, events: 10 },
-        { plugin: 'circle-gateway', valueUsd: 50, events: 5 },
-        { plugin: 'across', valueUsd: 1, events: 3 },
-        { plugin: 'ccip', valueUsd: 0.5, events: 1 },
-        { plugin: 'layerzero-v2-ofts', valueUsd: 0, events: 2 },
+        {
+          plugin: 'cctp-v2',
+          supportsOneSided: true,
+          uncountedValueUsd: 60,
+          uncountedEvents: 10,
+        },
+        {
+          plugin: 'circle-gateway',
+          supportsOneSided: false,
+          uncountedValueUsd: 50,
+          uncountedEvents: 5,
+        },
+        {
+          plugin: 'across',
+          supportsOneSided: true,
+          uncountedValueUsd: 1,
+          uncountedEvents: 3,
+        },
+        {
+          plugin: 'ccip',
+          supportsOneSided: true,
+          uncountedValueUsd: 0.5,
+          uncountedEvents: 1,
+        },
+        {
+          plugin: 'layerzero-v2-ofts',
+          supportsOneSided: false,
+          uncountedValueUsd: 0,
+          uncountedEvents: 2,
+        },
       ],
     })
   })
 
-  it('leaves out captured and enabled one-sided chains', () => {
+  it('leaves out captured chains and events without a counterpart', () => {
     const result = buildInteropCoverage(
-      [
-        row('cctp-v2', 'base', 10),
-        row('ccip', 'Unknown_solana', 10),
-        row('cctp-v2', ''),
-      ],
+      [row('cctp-v2', 'base', 10), row('cctp-v2', '')],
       [],
       CONFIG,
       RANGE,
@@ -66,13 +89,42 @@ describe(buildInteropCoverage.name, () => {
     expect(result.chains).toEqual([])
   })
 
+  it('keeps only the uncounted events of enabled one-sided chains', () => {
+    const result = buildInteropCoverage(
+      [
+        row('cctp-v2', 'solana', 30, 4, { unmatchedEvents: 0 }),
+        row('mayan-forwarder', 'solana', 7, 2),
+      ],
+      [],
+      CONFIG,
+      RANGE,
+    )
+
+    expect(
+      result.chains.map((c) => ({
+        key: c.key,
+        status: c.status,
+        uncountedValueUsd: c.uncountedValueUsd,
+        plugins: c.plugins.map((p) => p.plugin),
+      })),
+    ).toEqual([
+      {
+        key: 'solana',
+        status: 'one-sided',
+        uncountedValueUsd: 7,
+        plugins: ['mayan-forwarder'],
+      },
+    ])
+  })
+
   it('tells unmapped ids, unknown ids, untracked and disabled one-sided chains apart', () => {
     const result = buildInteropCoverage(
       [
-        row('cctp-v2', 'Unknown_6', 4),
-        row('cctp-v2', 'Unknown_99', 3),
-        row('across', 'Unknown_728126428', 2),
-        row('layerzero-v2-ofts', 'ton', 1),
+        row('cctp-v2', 'Unknown_6', 5),
+        row('cctp-v2', 'Unknown_99', 4),
+        row('across', 'Unknown_728126428', 3),
+        row('layerzero-v2-ofts', 'ton', 2),
+        row('cctp-v2', 'Unknown_5', 1),
       ],
       [],
       CONFIG,
@@ -86,7 +138,7 @@ describe(buildInteropCoverage.name, () => {
         status: c.status,
       })),
     ).toEqual([
-      { key: 'base', label: 'base', status: 'unmapped-id' },
+      { key: 'unmapped:base', label: 'base', status: 'unmapped-id' },
       {
         key: 'CCTP domain:99',
         label: 'Unknown CCTP domain 99',
@@ -94,6 +146,7 @@ describe(buildInteropCoverage.name, () => {
       },
       { key: 'tron', label: 'tron', status: 'one-sided-disabled' },
       { key: 'ton', label: 'ton', status: 'not-tracked' },
+      { key: 'unmapped:solana', label: 'solana', status: 'unmapped-id' },
     ])
   })
 
@@ -102,6 +155,8 @@ describe(buildInteropCoverage.name, () => {
       [
         row('cctp-v2', 'Unknown_26', 30),
         row('cctp-v2', 'Unknown_8', 10),
+        row('cctp-v2', 'Unknown_6', 2),
+        row('cctp-v2', 'solana', 3, 1, { unmatchedEvents: 0 }),
         row('across', 'base', 5),
       ],
       [
@@ -116,28 +171,45 @@ describe(buildInteropCoverage.name, () => {
     expect(result.plugins).toEqual([
       {
         plugin: 'cctp-v2',
+        supportsOneSided: true,
         coveredValueUsd: 60,
         transfers: 5,
-        uncoveredValueUsd: 40,
-        uncoveredEvents: 2,
-        coveragePct: 60,
+        uncoveredValueUsd: 42,
+        uncoveredByStatus: {
+          'unmapped-id': 2,
+          'one-sided': 0,
+          'one-sided-disabled': 0,
+          'unknown-id': 0,
+          'not-tracked': 40,
+        },
+        uncoveredEvents: 3,
+        coveragePct: (100 * 60) / 102,
         topMissing: [
           { label: 'arc', valueUsd: 30 },
           { label: 'sui', valueUsd: 10 },
+          { label: 'base (unmapped)', valueUsd: 2 },
         ],
       },
       {
         plugin: 'across',
+        supportsOneSided: true,
         coveredValueUsd: 10,
         transfers: 2,
         uncoveredValueUsd: 0,
+        uncoveredByStatus: {
+          'unmapped-id': 0,
+          'one-sided': 0,
+          'one-sided-disabled': 0,
+          'unknown-id': 0,
+          'not-tracked': 0,
+        },
         uncoveredEvents: 0,
         coveragePct: 100,
         topMissing: [],
       },
     ])
     expect(result.coveredValueUsd).toEqual(70)
-    expect(result.uncoveredValueUsd).toEqual(40)
+    expect(result.uncoveredValueUsd).toEqual(42)
   })
 })
 
@@ -192,15 +264,18 @@ function row(
   counterpartChain: string,
   valueUsd = 0,
   events = 1,
+  overrides: Partial<InteropEventCounterpartVolumeRecord> = {},
 ): InteropEventCounterpartVolumeRecord {
+  const unmatchedEvents = overrides.unmatchedEvents ?? events
   return {
     plugin,
     counterpartChain,
     events,
-    unsupportedEvents: events,
     pricedEvents: events,
-    valueUsd,
+    unmatchedEvents,
+    unmatchedValueUsd: unmatchedEvents === 0 ? 0 : valueUsd,
     lastTimestamp: UnixTime(100),
+    ...overrides,
   }
 }
 

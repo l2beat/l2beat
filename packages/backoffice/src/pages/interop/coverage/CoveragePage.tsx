@@ -28,11 +28,13 @@ export function CoveragePage() {
       title="Coverage"
       description={
         <>
-          Volume to and from chains we neither capture nor treat as one-sided,
-          from the last 24 hours of captured events. Values come from event
-          amounts priced with the last week of valued transfers, so events
-          without an amount (plain messages) are counted but not valued. Covered
-          volume is the plugin's transfers in the same window.
+          Volume in the last 24 hours of captured events that no plugin turned
+          into a transfer, by the chain on the other side. Event amounts are
+          priced with the last week of valued transfers, so events without an
+          amount (plain messages) are counted but not valued. Any transfer with
+          a chain we don't capture has its other leg on our side, so a plugin
+          with a one-sided path counts it once the chain is enabled as
+          one-sided.
         </>
       }
       actions={
@@ -43,7 +45,7 @@ export function CoveragePage() {
               variant={view === 'chains' ? 'secondary' : 'ghost'}
               onClick={() => setView('chains')}
             >
-              Missing chains
+              Chains
             </Button>
             <Button
               size="sm"
@@ -76,9 +78,6 @@ export function CoveragePage() {
             <Badge variant="secondary">
               Coverage {formatPct(data.coveragePct)}
             </Badge>
-            <Badge variant="secondary">
-              {data.chains.length} missing chains
-            </Badge>
             <Badge className="border-violet-200 bg-violet-50 text-violet-800">
               {
                 data.chains.filter((chain) => chain.status === 'unmapped-id')
@@ -97,19 +96,17 @@ export function CoveragePage() {
     >
       {isLoading ? <LoadingState className="m-6" /> : null}
       {isError ? <ErrorState className="m-6" cause={error.message} /> : null}
-      {data && view === 'chains' ? (
-        <MissingChainsTable data={data.chains} />
-      ) : null}
+      {data && view === 'chains' ? <ChainsTable data={data.chains} /> : null}
       {data && view === 'plugins' ? <PluginsTable data={data.plugins} /> : null}
     </TablePageLayout>
   )
 }
 
-function MissingChainsTable({ data }: { data: CoverageChain[] }) {
+function ChainsTable({ data }: { data: CoverageChain[] }) {
   const tableState = useTanStackTable({
     data,
     columns: coverageChainColumns,
-    initialSorting: [{ id: 'valueUsd', desc: true }],
+    initialSorting: [{ id: 'uncountedValueUsd', desc: true }],
     getRowId: (row) => row.key,
     searchPlaceholder: 'Search chains or plugins',
   })

@@ -6,6 +6,7 @@ import { formatCompactUsd, formatPct } from './format'
 import type { CoverageChain, CoveragePlugin } from './types'
 
 const STATUS_LABELS: Record<CoverageChain['status'], string> = {
+  'one-sided': 'One-sided',
   'unmapped-id': 'Unmapped id',
   'unknown-id': 'Unknown id',
   'not-tracked': 'Not tracked',
@@ -13,6 +14,7 @@ const STATUS_LABELS: Record<CoverageChain['status'], string> = {
 }
 
 const STATUS_CLASSES: Record<CoverageChain['status'], string> = {
+  'one-sided': 'border-emerald-200 bg-emerald-50 text-emerald-700',
   'unmapped-id': 'border-violet-200 bg-violet-50 text-violet-800',
   'unknown-id': 'border-amber-200 bg-amber-50 text-amber-800',
   'not-tracked': 'border-red-200 bg-red-50 text-red-700',
@@ -22,12 +24,19 @@ const STATUS_CLASSES: Record<CoverageChain['status'], string> = {
 const MAX_PLUGIN_BADGES = 4
 
 function formatPluginValue(plugin: CoverageChain['plugins'][number]): string {
-  return plugin.valueUsd > 0
-    ? formatCompactUsd(plugin.valueUsd)
-    : `${formatNumberWithCommas(plugin.events)} ev`
+  return plugin.uncountedValueUsd > 0
+    ? formatCompactUsd(plugin.uncountedValueUsd)
+    : `${formatNumberWithCommas(plugin.uncountedEvents)} ev`
+}
+
+function describePlugin(plugin: CoverageChain['plugins'][number]): string {
+  const path = plugin.supportsOneSided ? '' : ', no one-sided path'
+  return `${plugin.plugin}: ${formatPluginValue(plugin)} uncounted, ${formatNumberWithCommas(plugin.uncountedEvents)} events${path}`
 }
 
 const STATUS_DESCRIPTIONS: Record<CoverageChain['status'], string> = {
+  'one-sided':
+    'An enabled one-sided chain. Plugins with a one-sided path count its transfers from our side.',
   'unmapped-id':
     'We track this chain, but the plugin reports an id it cannot map, so these events are dropped.',
   'unknown-id': 'No config or verified list names this id.',
@@ -66,16 +75,20 @@ export const coverageChainColumns: TableOptions<CoverageChain>['columns'] = [
     ),
     meta: { csvHeader: 'Status', filter: { kind: 'select' } },
   }),
-  chainHelper.accessor('valueUsd', {
-    header: 'Uncovered volume',
+  chainHelper.accessor('uncountedValueUsd', {
+    header: () => (
+      <span title="Events with this chain on the other side that no plugin turned into a transfer">
+        Uncounted
+      </span>
+    ),
     cell: ({ getValue }) => (
       <span className="font-medium tabular-nums">
         {formatCompactUsd(getValue())}
       </span>
     ),
-    meta: { csvHeader: 'Uncovered volume USD' },
+    meta: { csvHeader: 'Uncounted volume USD' },
   }),
-  chainHelper.accessor('events', {
+  chainHelper.accessor('uncountedEvents', {
     header: 'Events',
     cell: ({ getValue }) => (
       <span className="tabular-nums">{formatNumberWithCommas(getValue())}</span>
@@ -110,8 +123,12 @@ export const coverageChainColumns: TableOptions<CoverageChain>['columns'] = [
               <Badge
                 key={plugin.plugin}
                 variant="secondary"
-                className="font-normal"
-                title={`${formatNumberWithCommas(plugin.events)} events`}
+                className={
+                  plugin.supportsOneSided
+                    ? 'font-normal'
+                    : 'border-amber-200 bg-amber-50 font-normal text-amber-800'
+                }
+                title={describePlugin(plugin)}
               >
                 {plugin.plugin}
                 <span className="text-muted-foreground tabular-nums">
@@ -123,9 +140,7 @@ export const coverageChainColumns: TableOptions<CoverageChain>['columns'] = [
               <Badge
                 variant="outline"
                 className="font-normal"
-                title={hidden
-                  .map((p) => `${p.plugin} ${formatPluginValue(p)}`)
-                  .join('\n')}
+                title={hidden.map(describePlugin).join('\n')}
               >
                 +{hidden.length} more
               </Badge>
@@ -155,6 +170,24 @@ export const coveragePluginColumns: TableOptions<CoveragePlugin>['columns'] = [
     cell: ({ getValue }) => <span className="font-medium">{getValue()}</span>,
     meta: { csvHeader: 'Plugin' },
   }),
+  pluginHelper.accessor('supportsOneSided', {
+    header: () => (
+      <span title="Whether the plugin emits partial transfers for one-sided chains">
+        One-sided path
+      </span>
+    ),
+    cell: ({ getValue }) =>
+      getValue() ? (
+        <Badge className="border-emerald-200 bg-emerald-50 text-emerald-700">
+          Yes
+        </Badge>
+      ) : (
+        <Badge className="border-amber-200 bg-amber-50 text-amber-800">
+          No
+        </Badge>
+      ),
+    meta: { csvHeader: 'One-sided path' },
+  }),
   pluginHelper.accessor((row) => row.coveragePct ?? -1, {
     id: 'coveragePct',
     header: 'Coverage',
@@ -177,6 +210,46 @@ export const coveragePluginColumns: TableOptions<CoveragePlugin>['columns'] = [
     ),
     meta: { csvHeader: 'Uncovered volume USD' },
   }),
+  pluginHelper.accessor((row) => row.uncoveredByStatus['one-sided'], {
+    id: 'uncoveredOneSided',
+    header: () => (
+      <span title="Uncounted volume to enabled one-sided chains. A one-sided path, or a fix to it, counts this right away.">
+        On one-sided chains
+      </span>
+    ),
+    cell: ({ getValue }) => <UsdOrDash value={getValue()} />,
+    meta: { csvHeader: 'Uncovered on one-sided chains USD' },
+  }),
+  pluginHelper.accessor(
+    (row) =>
+      row.uncoveredByStatus['not-tracked'] +
+      row.uncoveredByStatus['one-sided-disabled'],
+    {
+      id: 'uncoveredUntracked',
+      header: () => (
+        <span title="Uncounted volume to chains we don't track. Counted once the chain is enabled as one-sided and the plugin has a path.">
+          On untracked chains
+        </span>
+      ),
+      cell: ({ getValue }) => <UsdOrDash value={getValue()} />,
+      meta: { csvHeader: 'Uncovered on untracked chains USD' },
+    },
+  ),
+  pluginHelper.accessor(
+    (row) =>
+      row.uncoveredByStatus['unmapped-id'] +
+      row.uncoveredByStatus['unknown-id'],
+    {
+      id: 'uncoveredIds',
+      header: () => (
+        <span title="Uncounted volume behind ids the plugin can't map (a tracked chain) or nobody can name">
+          Id gaps
+        </span>
+      ),
+      cell: ({ getValue }) => <UsdOrDash value={getValue()} />,
+      meta: { csvHeader: 'Uncovered behind id gaps USD' },
+    },
+  ),
   pluginHelper.accessor('transfers', {
     header: 'Transfers',
     cell: ({ getValue }) => (
@@ -217,6 +290,14 @@ export const coveragePluginColumns: TableOptions<CoveragePlugin>['columns'] = [
     },
   ),
 ]
+
+function UsdOrDash({ value }: { value: number }) {
+  return value > 0 ? (
+    <span className="tabular-nums">{formatCompactUsd(value)}</span>
+  ) : (
+    <span className="text-muted-foreground">-</span>
+  )
+}
 
 function CoverageBar({ pct }: { pct: number | undefined }) {
   if (pct === undefined) {

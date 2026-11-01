@@ -38,6 +38,7 @@ export interface InteropTrpcRouterDeps {
   financialsEnabled: boolean
   matchingEnabled: boolean
   oneSidedChains: readonly string[]
+  oneSidedPlugins: readonly string[]
   tokenDbClient: TokenDbClient
 }
 

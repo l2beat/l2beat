@@ -86,9 +86,10 @@ export interface InteropEventCounterpartVolumeRecord {
   plugin: string
   counterpartChain: string
   events: number
-  unsupportedEvents: number
   pricedEvents: number
-  valueUsd: number
+  // Events no plugin turned into a transfer or message
+  unmatchedEvents: number
+  unmatchedValueUsd: number
   lastTimestamp: UnixTime
 }
 
@@ -250,9 +251,9 @@ export class InteropEventRepository extends BaseRepository {
       plugin: string
       counterpartChain: string
       events: number
-      unsupportedEvents: number
       pricedEvents: number
-      valueUsd: number | null
+      unmatchedEvents: number
+      unmatchedValueUsd: number | null
       lastTimestamp: Date
     }>`
       WITH prices AS (
@@ -271,7 +272,7 @@ export class InteropEventRepository extends BaseRepository {
         GROUP BY chain, token
       ),
       events AS (
-        SELECT plugin, chain, timestamp, unsupported,
+        SELECT plugin, chain, timestamp, matched,
           coalesce(args ->> '$dstChain', args ->> '$srcChain') AS counterpart,
           ${token} AS token,
           ${amount} AS amount
@@ -283,9 +284,9 @@ export class InteropEventRepository extends BaseRepository {
         events.plugin,
         events.counterpart AS "counterpartChain",
         count(*)::int AS events,
-        (count(*) FILTER (WHERE events.unsupported))::int AS "unsupportedEvents",
         (count(prices."perRaw") FILTER (WHERE events.amount IS NOT NULL))::int AS "pricedEvents",
-        sum(events.amount * prices."perRaw")::float8 AS "valueUsd",
+        (count(*) FILTER (WHERE NOT events.matched))::int AS "unmatchedEvents",
+        (sum(events.amount * prices."perRaw") FILTER (WHERE NOT events.matched))::float8 AS "unmatchedValueUsd",
         max(events.timestamp) AS "lastTimestamp"
       FROM events
       LEFT JOIN prices ON prices.chain = events.chain AND prices.token = events.token
@@ -296,9 +297,9 @@ export class InteropEventRepository extends BaseRepository {
       plugin: row.plugin,
       counterpartChain: row.counterpartChain,
       events: row.events,
-      unsupportedEvents: row.unsupportedEvents,
       pricedEvents: row.pricedEvents,
-      valueUsd: row.valueUsd ?? 0,
+      unmatchedEvents: row.unmatchedEvents,
+      unmatchedValueUsd: row.unmatchedValueUsd ?? 0,
       lastTimestamp: UnixTime.fromDate(row.lastTimestamp),
     }))
   }

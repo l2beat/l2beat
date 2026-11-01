@@ -191,27 +191,37 @@ function normalizeChainName(chain: string): string {
 
 export type InteropCoverageChainStatus =
   | 'unmapped-id'
+  | 'one-sided'
+  | 'one-sided-disabled'
   | 'unknown-id'
   | 'not-tracked'
-  | 'one-sided-disabled'
 
 export interface InteropCoverageChain {
   key: string
   label: string
   status: InteropCoverageChainStatus
   rawChains: string[]
-  valueUsd: number
+  // Events no plugin turned into a transfer
+  uncountedValueUsd: number
   events: number
+  uncountedEvents: number
   pricedEvents: number
   lastSeen: UnixTime
-  plugins: { plugin: string; valueUsd: number; events: number }[]
+  plugins: {
+    plugin: string
+    supportsOneSided: boolean
+    uncountedValueUsd: number
+    uncountedEvents: number
+  }[]
 }
 
 export interface InteropCoveragePlugin {
   plugin: string
+  supportsOneSided: boolean
   coveredValueUsd: number
   transfers: number
   uncoveredValueUsd: number
+  uncoveredByStatus: Record<InteropCoverageChainStatus, number>
   uncoveredEvents: number
   coveragePct: number | undefined
   topMissing: { label: string; valueUsd: number }[]
@@ -230,6 +240,7 @@ export interface InteropCoverageData {
 interface CoverageChainsConfig {
   capturedChains: readonly string[]
   oneSidedChains: readonly string[]
+  oneSidedPlugins: readonly string[]
 }
 
 interface ResolvedChain {
@@ -275,78 +286,97 @@ export function buildInteropCoverage(
   range: { from: UnixTime; to: UnixTime },
   idNames: IdNames = buildIdNames({}),
 ): InteropCoverageData {
-  const covered = new Set([...config.capturedChains, ...config.oneSidedChains])
+  const captured = new Set(config.capturedChains)
+  const oneSided = new Set(config.oneSidedChains)
+  const oneSidedPlugins = new Set(config.oneSidedPlugins)
   const configuredOneSided = new Set<string>(INTEROP_ONE_SIDED_CHAINS)
 
   const chains = new Map<string, InteropCoverageChain>()
-  const pluginMissing = new Map<string, Map<string, number>>()
   const pluginUncovered = new Map<
     string,
-    { valueUsd: number; events: number }
+    {
+      valueUsd: number
+      byStatus: Record<InteropCoverageChainStatus, number>
+      events: number
+      byChain: Map<string, number>
+    }
   >()
 
   for (const row of events) {
-    if (row.counterpartChain === '') continue
+    if (row.counterpartChain === '' || row.unmatchedEvents === 0) continue
     const resolved = resolveCounterpartChain(
       row.plugin,
       row.counterpartChain,
       idNames,
     )
-    const isCovered = covered.has(resolved.key)
-    // A covered chain behind an id the plugin can't map is a plugin gap
-    if (isCovered && !resolved.isUnmappedId) continue
+    const isCaptured = captured.has(resolved.key)
+    const isOneSided = oneSided.has(resolved.key)
+    if (isCaptured && !resolved.isUnmappedId) continue
 
-    const status: InteropCoverageChainStatus = isCovered
-      ? 'unmapped-id'
-      : !resolved.isNamed
-        ? 'unknown-id'
-        : configuredOneSided.has(resolved.key)
-          ? 'one-sided-disabled'
-          : 'not-tracked'
-    const chain = chains.get(resolved.key) ?? {
-      key: resolved.key,
+    // A tracked chain behind an id the plugin can't map is a plugin gap
+    const status: InteropCoverageChainStatus =
+      isCaptured || (isOneSided && resolved.isUnmappedId)
+        ? 'unmapped-id'
+        : isOneSided
+          ? 'one-sided'
+          : !resolved.isNamed
+            ? 'unknown-id'
+            : configuredOneSided.has(resolved.key)
+              ? 'one-sided-disabled'
+              : 'not-tracked'
+    const key =
+      status === 'unmapped-id' ? `unmapped:${resolved.key}` : resolved.key
+    const chain = chains.get(key) ?? {
+      key,
       label: resolved.label,
       status,
       rawChains: [],
-      valueUsd: 0,
+      uncountedValueUsd: 0,
       events: 0,
+      uncountedEvents: 0,
       pricedEvents: 0,
       lastSeen: row.lastTimestamp,
       plugins: [],
     }
+    const supportsOneSided = oneSidedPlugins.has(row.plugin)
     if (!chain.rawChains.includes(row.counterpartChain)) {
       chain.rawChains.push(row.counterpartChain)
     }
-    chain.valueUsd += row.valueUsd
+    chain.uncountedValueUsd += row.unmatchedValueUsd
     chain.events += row.events
+    chain.uncountedEvents += row.unmatchedEvents
     chain.pricedEvents += row.pricedEvents
     chain.lastSeen = Math.max(chain.lastSeen, row.lastTimestamp) as UnixTime
     const plugin = chain.plugins.find((p) => p.plugin === row.plugin)
     if (plugin) {
-      plugin.valueUsd += row.valueUsd
-      plugin.events += row.events
+      plugin.uncountedValueUsd += row.unmatchedValueUsd
+      plugin.uncountedEvents += row.unmatchedEvents
     } else {
       chain.plugins.push({
         plugin: row.plugin,
-        valueUsd: row.valueUsd,
-        events: row.events,
+        supportsOneSided,
+        uncountedValueUsd: row.unmatchedValueUsd,
+        uncountedEvents: row.unmatchedEvents,
       })
     }
-    chains.set(resolved.key, chain)
+    chains.set(key, chain)
 
     const uncovered = pluginUncovered.get(row.plugin) ?? {
       valueUsd: 0,
+      byStatus: emptyByStatus(),
       events: 0,
+      byChain: new Map<string, number>(),
     }
-    uncovered.valueUsd += row.valueUsd
-    uncovered.events += row.events
-    pluginUncovered.set(row.plugin, uncovered)
-    const missing = pluginMissing.get(row.plugin) ?? new Map<string, number>()
-    missing.set(
-      resolved.label,
-      (missing.get(resolved.label) ?? 0) + row.valueUsd,
+    uncovered.valueUsd += row.unmatchedValueUsd
+    uncovered.byStatus[status] += row.unmatchedValueUsd
+    uncovered.events += row.unmatchedEvents
+    const label =
+      status === 'unmapped-id' ? `${resolved.label} (unmapped)` : resolved.label
+    uncovered.byChain.set(
+      label,
+      (uncovered.byChain.get(label) ?? 0) + row.unmatchedValueUsd,
     )
-    pluginMissing.set(row.plugin, missing)
+    pluginUncovered.set(row.plugin, uncovered)
   }
 
   const pluginCovered = new Map<
@@ -354,14 +384,24 @@ export function buildInteropCoverage(
     { valueUsd: number; transfers: number }
   >()
   for (const row of transfers) {
+    // Transfer volume is the larger of the two sides, as on the site
+    const valueUsd = Math.max(row.srcValueSum, row.dstValueSum)
     const current = pluginCovered.get(row.plugin) ?? {
       valueUsd: 0,
       transfers: 0,
     }
-    // Transfer volume is the larger of the two sides, as on the site
-    current.valueUsd += Math.max(row.srcValueSum, row.dstValueSum)
+    current.valueUsd += valueUsd
     current.transfers += row.count
     pluginCovered.set(row.plugin, current)
+  }
+
+  for (const chain of chains.values()) {
+    chain.rawChains.sort()
+    chain.plugins.sort(
+      (a, b) =>
+        b.uncountedValueUsd - a.uncountedValueUsd ||
+        b.uncountedEvents - a.uncountedEvents,
+    )
   }
 
   const pluginNames = new Set([
@@ -370,25 +410,24 @@ export function buildInteropCoverage(
   ])
   const plugins = [...pluginNames].map((plugin): InteropCoveragePlugin => {
     const coveredValueUsd = pluginCovered.get(plugin)?.valueUsd ?? 0
-    const uncoveredValueUsd = pluginUncovered.get(plugin)?.valueUsd ?? 0
+    const uncovered = pluginUncovered.get(plugin)
+    const uncoveredValueUsd = uncovered?.valueUsd ?? 0
     return {
       plugin,
+      supportsOneSided: oneSidedPlugins.has(plugin),
       coveredValueUsd,
       transfers: pluginCovered.get(plugin)?.transfers ?? 0,
       uncoveredValueUsd,
-      uncoveredEvents: pluginUncovered.get(plugin)?.events ?? 0,
+      uncoveredByStatus: uncovered?.byStatus ?? emptyByStatus(),
+      uncoveredEvents: uncovered?.events ?? 0,
       coveragePct: toPct(coveredValueUsd, uncoveredValueUsd),
-      topMissing: [...(pluginMissing.get(plugin) ?? new Map()).entries()]
+      topMissing: [...(uncovered?.byChain ?? new Map()).entries()]
+        .filter(([, valueUsd]) => valueUsd > 0)
         .map(([label, valueUsd]) => ({ label, valueUsd }))
         .sort((a, b) => b.valueUsd - a.valueUsd)
         .slice(0, 3),
     }
   })
-
-  for (const chain of chains.values()) {
-    chain.rawChains.sort()
-    chain.plugins.sort((a, b) => b.valueUsd - a.valueUsd || b.events - a.events)
-  }
 
   const coveredValueUsd = plugins.reduce((a, p) => a + p.coveredValueUsd, 0)
   const uncoveredValueUsd = plugins.reduce((a, p) => a + p.uncoveredValueUsd, 0)
@@ -400,9 +439,21 @@ export function buildInteropCoverage(
     uncoveredValueUsd,
     coveragePct: toPct(coveredValueUsd, uncoveredValueUsd),
     chains: [...chains.values()].sort(
-      (a, b) => b.valueUsd - a.valueUsd || b.events - a.events,
+      (a, b) =>
+        b.uncountedValueUsd - a.uncountedValueUsd ||
+        b.uncountedEvents - a.uncountedEvents,
     ),
     plugins: plugins.sort((a, b) => b.uncoveredValueUsd - a.uncoveredValueUsd),
+  }
+}
+
+function emptyByStatus(): Record<InteropCoverageChainStatus, number> {
+  return {
+    'unmapped-id': 0,
+    'one-sided': 0,
+    'one-sided-disabled': 0,
+    'unknown-id': 0,
+    'not-tracked': 0,
   }
 }
 
