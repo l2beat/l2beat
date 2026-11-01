@@ -4061,10 +4061,20 @@
       {
         "chain": "base",
         "tx": "0x6c966643efa99850c8ab6c22621def512634ed7bfff7023805e18ab3389b6e1d" // inc solana
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xdbb5e2a6a3a9ba5f766edb2e976176f789052de97f99e185e0de26206909ccc4" // outgoing tron
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x826339acfa4f9a9f2a44c9e7cfd5901663659a66cb8f0ca6121aff59427d05ce" // inc tron
       }
     ],
     "expects": {
       "events": [
+        "across.FilledRelay",
+        "across.FundsDeposited",
         "across.FilledRelay",
         "across.FundsDeposited",
         "across.FilledRelay"
@@ -4086,6 +4096,23 @@
           "dst": {
             "wasMinted": false,
             "financials": { "symbol": "USDC" }
+          }
+        },
+        // Ethereum -> Tron: source side only
+        {
+          "type": "across.Transfer",
+          "plugin": "across",
+          "src": { "financials": { "symbol": "USDT" } },
+          "dst": { "chain": "tron" }
+        },
+        // Tron -> Ethereum: destination side only
+        {
+          "type": "across.Transfer",
+          "plugin": "across",
+          "src": { "chain": "tron" },
+          "dst": {
+            "wasMinted": false,
+            "financials": { "symbol": "USDT" }
           }
         }
       ]
