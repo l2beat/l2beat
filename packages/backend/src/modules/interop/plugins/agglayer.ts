@@ -304,6 +304,7 @@ export class AgglayerPlugin implements InteropPluginResyncable {
       const dstChain = bridge.args.$dstChain
       if (
         bridge.args.leafType !== ASSET_LEAF_TYPE ||
+        bridge.args.amount === 0n ||
         !this.oneSidedChains.includes(dstChain)
       ) {
         return
