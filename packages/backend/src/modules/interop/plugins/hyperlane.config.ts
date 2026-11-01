@@ -222,6 +222,22 @@ export function mergeHyperlaneWarpRouteMaps<T>(
   return { ...previous, ...latest }
 }
 
+// A route that is still listed but has no scale is 1:1 now, so a scale it
+// used to have must not be kept
+export function mergeHyperlaneWarpRouteScales(
+  previous: HyperlaneWarpRouteScaleMap | undefined,
+  latest: HyperlaneWarpRouteScaleMap,
+  latestWarpRoutes: HyperlaneWarpRouteMap,
+): HyperlaneWarpRouteScaleMap {
+  const merged = mergeHyperlaneWarpRouteMaps(previous, latest)
+  for (const key of Object.keys(merged)) {
+    if (latest[key] === undefined && latestWarpRoutes[key] !== undefined) {
+      delete merged[key]
+    }
+  }
+  return merged
+}
+
 function areHyperlaneWarpRouteMapsEqual<T>(
   a: Record<string, T> | undefined,
   b: Record<string, T>,
@@ -430,9 +446,10 @@ export class HyperlaneConfigPlugin
       await this.store.set(HyperlaneWarpRoutesConfig, mergedWarpRoutes)
     }
 
-    const mergedWarpRouteScales = mergeHyperlaneWarpRouteMaps(
+    const mergedWarpRouteScales = mergeHyperlaneWarpRouteScales(
       previousWarpRouteScales,
       latestWarpRouteScales,
+      latestWarpRoutes,
     )
     if (
       !areHyperlaneWarpRouteMapsEqual(
