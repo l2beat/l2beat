@@ -1,9 +1,4 @@
-import {
-  Address32,
-  ChainSpecificAddress,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { Address32, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   MessagePassed,
   PortalDepositFinalized,
@@ -34,16 +29,10 @@ const withdrawalInitiatedLog =
 const erc20WithdrawalFinalizedLog =
   'event ERC20WithdrawalFinalized(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)'
 
-// Token addresses
-const L1_WSTETH = Address32.from(
-  EthereumAddress('0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0'),
-)
-
 interface LidoWstethNetwork {
   chain: string
   l1Bridge: ChainSpecificAddress
   l2Bridge: ChainSpecificAddress
-  l2Token: Address32
 }
 
 // Lido wstETH bridge configurations per network
@@ -56,9 +45,6 @@ const LIDO_WSTETH_NETWORKS = defineNetworks<LidoWstethNetwork>('lido-wsteth', [
     l2Bridge: ChainSpecificAddress(
       'base:0xac9D11cD4D7eF6e54F14643a393F68Ca014287AB',
     ),
-    l2Token: Address32.from(
-      EthereumAddress('0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452'),
-    ),
   },
   {
     chain: 'optimism',
@@ -67,9 +53,6 @@ const LIDO_WSTETH_NETWORKS = defineNetworks<LidoWstethNetwork>('lido-wsteth', [
     ),
     l2Bridge: ChainSpecificAddress(
       'oeth:0x8E01013243a96601a86eb3153F0d9Fa4fbFb6957',
-    ),
-    l2Token: Address32.from(
-      EthereumAddress('0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb'),
     ),
   },
 ])
@@ -92,6 +75,7 @@ const L2_BRIDGE_TO_NETWORK = new Map(
 const DepositInitiated = createInteropEventType<{
   chain: string
   amount: bigint
+  l1Token: Address32
   l2Token: Address32
 }>('lido-wsteth.DepositInitiated')
 
@@ -99,6 +83,7 @@ const DepositInitiated = createInteropEventType<{
 const DepositFinalized = createInteropEventType<{
   chain: string
   amount: bigint
+  l1Token: Address32
   l2Token: Address32
 }>('lido-wsteth.DepositFinalized')
 
@@ -106,6 +91,7 @@ const DepositFinalized = createInteropEventType<{
 const WithdrawalInitiated = createInteropEventType<{
   chain: string
   amount: bigint
+  l1Token: Address32
   l2Token: Address32
 }>('lido-wsteth.WithdrawalInitiated', {
   ttl: 30 * UnixTime.DAY,
@@ -115,6 +101,7 @@ const WithdrawalInitiated = createInteropEventType<{
 const ERC20WithdrawalFinalized = createInteropEventType<{
   chain: string
   amount: bigint
+  l1Token: Address32
   l2Token: Address32
 }>('lido-wsteth.ERC20WithdrawalFinalized')
 
@@ -170,7 +157,8 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
           DepositInitiated.create(input, {
             chain: lidoNetwork.chain,
             amount: depositInitiated._amount,
-            l2Token: lidoNetwork.l2Token,
+            l1Token: Address32.from(depositInitiated._l1Token),
+            l2Token: Address32.from(depositInitiated._l2Token),
           }),
         ]
       }
@@ -184,7 +172,8 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
           ERC20WithdrawalFinalized.create(input, {
             chain: lidoNetwork.chain,
             amount: withdrawalFinalized._amount,
-            l2Token: lidoNetwork.l2Token,
+            l1Token: Address32.from(withdrawalFinalized._l1Token),
+            l2Token: Address32.from(withdrawalFinalized._l2Token),
           }),
         ]
       }
@@ -202,7 +191,8 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
           DepositFinalized.create(input, {
             chain: lidoNetwork.chain,
             amount: depositFinalized._amount,
-            l2Token: lidoNetwork.l2Token,
+            l1Token: Address32.from(depositFinalized._l1Token),
+            l2Token: Address32.from(depositFinalized._l2Token),
           }),
         ]
       }
@@ -216,7 +206,8 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
           WithdrawalInitiated.create(input, {
             chain: lidoNetwork.chain,
             amount: withdrawalInitiated._amount,
-            l2Token: lidoNetwork.l2Token,
+            l1Token: Address32.from(withdrawalInitiated._l1Token),
+            l2Token: Address32.from(withdrawalInitiated._l2Token),
           }),
         ]
       }
@@ -256,7 +247,7 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
         Result.Transfer('lido-wsteth.L1ToL2Transfer', {
           srcEvent: depositInitiated,
           srcAmount: depositInitiated.args.amount,
-          srcTokenAddress: L1_WSTETH,
+          srcTokenAddress: depositInitiated.args.l1Token,
           srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
@@ -303,7 +294,7 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
           srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
-          dstTokenAddress: L1_WSTETH,
+          dstTokenAddress: event.args.l1Token,
           dstWasMinted: false,
         }),
       ]
