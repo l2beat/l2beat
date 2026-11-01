@@ -77,7 +77,7 @@ const L2_BRIDGE_TO_NETWORK = new Map(
 )
 
 // L1 → L2: ERC20DepositInitiated from wstETH bridge
-// Deposits captured before the token was recorded were all valued as wstETH
+// Events captured before the L1 token was recorded were all valued as wstETH
 const L1_WSTETH = Address32.from(
   EthereumAddress('0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0'),
 )
@@ -111,7 +111,7 @@ const WithdrawalInitiated = createInteropEventType<{
 const ERC20WithdrawalFinalized = createInteropEventType<{
   chain: string
   amount: bigint
-  l1Token: Address32
+  l1Token?: Address32
   l2Token: Address32
 }>('lido-wsteth.ERC20WithdrawalFinalized')
 
@@ -304,7 +304,7 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
           srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
-          dstTokenAddress: event.args.l1Token,
+          dstTokenAddress: event.args.l1Token ?? L1_WSTETH,
           dstWasMinted: false,
         }),
       ]
