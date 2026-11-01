@@ -294,11 +294,13 @@ function toTransferRecord(transfer: InteropTransfer): InteropTransferRecord {
       srcTime !== undefined && dstTime !== undefined
         ? Math.max(dstTime - srcTime, 0)
         : undefined,
-    timestamp: Math.max(
-      srcTime ?? 0,
-      dstTime ?? 0,
-      transfer.events[0]?.ctx.timestamp ?? 0,
-    ),
+    timestamp:
+      transfer.timestamp ??
+      Math.max(
+        srcTime ?? 0,
+        dstTime ?? 0,
+        transfer.events[0]?.ctx.timestamp ?? 0,
+      ),
 
     srcChain,
     srcTime,
