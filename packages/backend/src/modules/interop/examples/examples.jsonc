@@ -2784,6 +2784,45 @@
       ]
     }
   },
+  "axelar-capitalized-chain": {
+    "description": "Axelar contract call with token to 'Optimism' rather than 'optimism'",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xfb90a3540921964e756f6798f34b3706c405e63b1362b52bf2621e3652eb0d7c"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x825125962c0fefa71571b7fbbe4b0e1efb52235af6db7854da06caae7be3ff01"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x04999a3808e6a720a3b8e786abf873048ab9b36936ecbcf80e4a0b0d753d3018"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "axelar.ContractCallWithToken",
+          "args": { "$dstChain": "optimism" }
+        },
+        {
+          "type": "axelar.ContractCallApprovedWithMint",
+          "args": { "$srcChain": "ethereum" }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "axelar.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "707652604"
+          },
+          "dst": { "event": { "ctx": { "chain": "optimism" } } }
+        }
+      ]
+    }
+  },
   "axelar-its": {
     "txs": [
       {
