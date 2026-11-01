@@ -1,4 +1,9 @@
-import { Address32, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   MessagePassed,
   PortalDepositFinalized,
@@ -72,10 +77,15 @@ const L2_BRIDGE_TO_NETWORK = new Map(
 )
 
 // L1 → L2: ERC20DepositInitiated from wstETH bridge
+// Deposits captured before the token was recorded were all valued as wstETH
+const L1_WSTETH = Address32.from(
+  EthereumAddress('0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0'),
+)
+
 const DepositInitiated = createInteropEventType<{
   chain: string
   amount: bigint
-  l1Token: Address32
+  l1Token?: Address32
   l2Token: Address32
 }>('lido-wsteth.DepositInitiated')
 
@@ -247,7 +257,7 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
         Result.Transfer('lido-wsteth.L1ToL2Transfer', {
           srcEvent: depositInitiated,
           srcAmount: depositInitiated.args.amount,
-          srcTokenAddress: depositInitiated.args.l1Token,
+          srcTokenAddress: depositInitiated.args.l1Token ?? L1_WSTETH,
           srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
