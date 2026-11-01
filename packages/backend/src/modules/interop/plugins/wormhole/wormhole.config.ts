@@ -28,6 +28,8 @@ export interface WormholeNetwork {
   coreContract?: EthereumAddress
   relayer?: EthereumAddress
   tokenBridge?: EthereumAddress
+  // The token the bridge unwraps to native for completeTransferAndUnwrapETH
+  weth?: EthereumAddress
 }
 
 export const WormholeConfig = defineConfig<WormholeNetwork[]>('wormhole')
@@ -294,13 +296,19 @@ export class WormholeConfigPlugin
         const selected = validNonZero[0]
         if (!selected) return undefined
 
+        const tokenBridge = tokenBridgeByChain.get(chain.name)
+        const weth = tokenBridge
+          ? await getTokenBridgeWeth(rpc, tokenBridge, block.number)
+          : undefined
+
         return {
           chain: chain.name,
           chainId: chain.id,
           wormholeChainId: selected.wormholeChainId,
           coreContract: selected.coreContract,
           relayer: WORMHOLE_RELAYER,
-          tokenBridge: tokenBridgeByChain.get(chain.name),
+          tokenBridge,
+          ...(weth ? { weth } : {}),
         }
       } catch (error) {
         this.logger.debug('Failed to resolve Wormhole core for chain', {
@@ -315,5 +323,39 @@ export class WormholeConfigPlugin
     const networks = networksArrays.filter((n) => n !== undefined)
 
     return mergeWormholeNetworks(chainIdNetworks, networks)
+  }
+}
+
+const wethAbi = parseAbi(['function WETH() view returns (address)'])
+
+async function getTokenBridgeWeth(
+  rpc: IRpcClient,
+  tokenBridge: EthereumAddress,
+  blockNumber: number,
+): Promise<EthereumAddress | undefined> {
+  const [result] = await callWithOptionalMulticall(
+    rpc,
+    [
+      {
+        to: tokenBridge,
+        input: Bytes.fromHex(
+          encodeFunctionData({ abi: wethAbi, functionName: 'WETH' }),
+        ),
+      },
+    ],
+    blockNumber,
+  )
+  if (!result?.success || result.data.toString() === '0x') return
+  try {
+    const weth = decodeFunctionResult({
+      abi: wethAbi,
+      functionName: 'WETH',
+      data: result.data.toString() as Hex,
+    })
+    return weth === '0x0000000000000000000000000000000000000000'
+      ? undefined
+      : EthereumAddress(weth)
+  } catch {
+    return
   }
 }

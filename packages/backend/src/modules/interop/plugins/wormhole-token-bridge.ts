@@ -92,7 +92,11 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
     if (!network?.tokenBridge) return
     const parsed = parseLogTransferRedeemed(input.log, [network.tokenBridge])
     if (!parsed) return
-    const redeemed = findRedeemedTokens(input, network.tokenBridge)
+    const redeemed = findRedeemedTokens(
+      input,
+      network.tokenBridge,
+      network.weth,
+    )
 
     const senderAddress = EthereumAddress(
       `0x${parsed.emitterAddress.slice(-40)}`,
@@ -205,24 +209,29 @@ interface RedeemedTokens {
 
 // The bridge mints or releases the tokens after TransferRedeemed. A legacy
 // relayer fee or a token tax adds smaller payouts of the same token, so the
-// largest payout before the next redemption is the user's. A native payout is
-// a single unwrap that runs before any recipient code, so it is never replaced
-// by a later Withdrawal, which any contract can emit.
+// largest payout before the next redemption is the user's. When unwrapping to
+// native, the bridge unwraps the relayer fee first and the recipient's amount
+// last, so the last unwrap is the user's.
 function findRedeemedTokens(
   input: LogToCapture,
   tokenBridge: EthereumAddress,
+  weth: EthereumAddress | undefined,
 ): RedeemedTokens | undefined {
   let redeemed: RedeemedTokens | undefined
   // biome-ignore lint/style/noNonNullAssertion: It's there
   for (const [log] of iterateLogs(input.txLogs, input.log.logIndex!, 'after')) {
     if (parseLogTransferRedeemed(log, [tokenBridge])) break
 
-    const payout = parseRedeemedTokens(log, tokenBridge)
+    const payout = parseRedeemedTokens(log, tokenBridge, weth)
     if (!payout) continue
     if (!redeemed) {
       redeemed = payout
     } else if (
-      redeemed.tokenAddress !== Address32.NATIVE &&
+      payout.tokenAddress === Address32.NATIVE &&
+      redeemed.tokenAddress === Address32.NATIVE
+    ) {
+      redeemed = payout
+    } else if (
       payout.tokenAddress === redeemed.tokenAddress &&
       payout.wasMinted === redeemed.wasMinted &&
       payout.amount > redeemed.amount
@@ -236,9 +245,11 @@ function findRedeemedTokens(
 function parseRedeemedTokens(
   log: LogToCapture['txLogs'][number],
   tokenBridge: EthereumAddress,
+  weth: EthereumAddress | undefined,
 ): RedeemedTokens | undefined {
-  // completeTransferAndUnwrapETH unwraps WETH and sends native ETH
-  const withdrawal = parseWethWithdrawal(log, null)
+  // completeTransferAndUnwrapETH unwraps WETH and sends native ETH. Any
+  // contract can emit a Withdrawal, so only the bridge's WETH counts.
+  const withdrawal = weth && parseWethWithdrawal(log, [weth])
   if (withdrawal) {
     if (EthereumAddress(withdrawal.src) !== tokenBridge) return
     return {
