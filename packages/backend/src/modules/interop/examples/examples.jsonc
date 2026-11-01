@@ -2061,6 +2061,81 @@
       ]
     }
   },
+  // Redemptions whose payout is not the log right after TransferRedeemed:
+  // completeTransferAndUnwrapETH emits a WETH Withdrawal and sends native
+  // AVAX/ETH, DYDX emits delegation events before its Transfer, and a tax
+  // token pays out to the token and 0xdead before the recipient (BSC).
+  "wormhole-tokenbridge-unwrap": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x8638206ea6fd1be00d05d3899ee393c243b74e088742be08ef8f2b434b8e4bd3"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0x8d2db01bf75c0f841a1a3113836e08dae8d94a0717ef3ef82795ac020aba5e0a"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x2ee6895a1b72da443125f88fe8375072570968d877974535499bb0adce183a35"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x7a1971fcd6fc22f6907952ac321aed3bd93c86d0b6c81760c4a85bfa4ecba5be"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x10a0e23de18d79007d73235404acc9cb2746ad04ff614e3048f161c2a63ccef9"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "wormhole.LogTransferRedeemed",
+          "args": {
+            "dstTokenAddress": "0x000000000000000000000000df0210cf1b279b1963fab539c41b13d211573222",
+            "dstAmount": "2622456208777997958600000000",
+            "dstWasMinted": false
+          }
+        }
+      ],
+      "messages": [
+        { "type": "wormhole.Message", "app": "wormhole-tokenbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "830000000000000000000",
+            "wasMinted": false
+          }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "1000000000000000000",
+            "wasMinted": false
+          }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAddress": "0x00000000000000000000000092d6c1e31e14520e676a687f0a93788b716beff5",
+            "tokenAmount": "1656615752130000000000",
+            "wasMinted": false
+          }
+        }
+      ]
+    }
+  },
   "mayan-mctp": {
     "loadConfigs": ["wormhole", "cctp-v2", "cctp-v1"],
     "txs": [
