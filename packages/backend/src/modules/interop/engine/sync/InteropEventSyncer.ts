@@ -263,6 +263,14 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   captureTx(txToCapture: TxToCapture): TxCaptureResult | undefined {
+    return this.captureTxReportingFailure(txToCapture).result
+  }
+
+  private captureTxReportingFailure(txToCapture: TxToCapture): {
+    result?: TxCaptureResult
+    failed: boolean
+  } {
+    let failed = false
     for (const plugin of this.cluster.plugins) {
       if (!plugin.captureTx) {
         continue
@@ -278,11 +286,15 @@ export class InteropEventSyncer extends TimeLoop {
         const produced = plugin.captureTx(txToCapture, creatorEvents)
         if (produced) {
           return {
-            events: produced.map((p) => ({ ...p, plugin: plugin.name })),
-            fulfilledCreatorEvents: creatorEvents ?? [],
+            result: {
+              events: produced.map((p) => ({ ...p, plugin: plugin.name })),
+              fulfilledCreatorEvents: creatorEvents ?? [],
+            },
+            failed,
           }
         }
       } catch (e) {
+        failed = true
         this.logger.error('Capture failed', e, {
           plugin: plugin.name,
           chain: this.chain,
@@ -291,6 +303,7 @@ export class InteropEventSyncer extends TimeLoop {
         })
       }
     }
+    return { failed }
   }
 
   async capturePendingHistoricalTxs(beforeBlock: bigint) {
@@ -301,6 +314,7 @@ export class InteropEventSyncer extends TimeLoop {
     )
     const interopEvents: InteropEvent[] = []
     const fulfilledCreatorEvents: InteropEvent[] = []
+    const failedTxHashes = new Set<string>()
 
     for (const txHash of txHashes) {
       const tx = await this.getTransactionByHash(txHash)
@@ -314,7 +328,7 @@ export class InteropEventSyncer extends TimeLoop {
       const block = await this.getBlockByNumber(tx.blockNumber)
       assert(block, `Missing block ${tx.blockNumber} for tx ${txHash}`)
 
-      const result = this.captureTx({
+      const { result, failed } = this.captureTxReportingFailure({
         chain: this.chain,
         tx: toTransaction(tx),
         block: toBlock(block),
@@ -325,13 +339,17 @@ export class InteropEventSyncer extends TimeLoop {
       if (result) {
         interopEvents.push(...result.events)
         fulfilledCreatorEvents.push(...result.fulfilledCreatorEvents)
+      } else if (failed) {
+        failedTxHashes.add(txHash)
       }
     }
 
+    // A tx whose capture threw stays pending, so its creator events get
+    // another history check instead of being lost
     const checkedInHistoryEvents =
       this.store.derivedTxStore.markCheckedInHistory(
         this.chain,
-        txHashes,
+        txHashes.filter((txHash) => !failedTxHashes.has(txHash)),
         pluginNames,
       )
 

@@ -224,9 +224,11 @@ export class RelayApiClient {
 
     const result: GetRequestsResponse = { requests: [] }
     let continuation = options.continuation
+    // Pages of only malformed records return no requests, so a cursor cycle
+    // would otherwise never reach the limit
+    const seenContinuations = new Set(continuation ? [continuation] : [])
 
     do {
-      const previousContinuation = continuation
       const res = await this.getRequests({
         ...options,
         sortBy: 'updatedAt',
@@ -239,8 +241,11 @@ export class RelayApiClient {
       remaining -= res.requests.length
       continuation = res.continuation
 
-      if (continuation && continuation === previousContinuation) {
-        throw new Error('Relay API returned an unchanged continuation cursor')
+      if (continuation) {
+        if (seenContinuations.has(continuation)) {
+          throw new Error('Relay API returned a repeated continuation cursor')
+        }
+        seenContinuations.add(continuation)
       }
     } while (continuation && remaining > 0)
 

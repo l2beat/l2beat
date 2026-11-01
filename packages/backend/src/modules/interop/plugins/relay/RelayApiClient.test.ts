@@ -437,8 +437,22 @@ describe(RelayApiClient.name, () => {
 
       await expect(
         client.getAllRequests({ limit: 500, continuation: 'cursor-1' }),
-      ).toBeRejectedWith('unchanged continuation cursor')
+      ).toBeRejectedWith('repeated continuation cursor')
       expect(httpClient.fetchRaw).toHaveBeenCalledTimes(1)
+    })
+
+    it('rejects a continuation cursor cycle over malformed pages', async () => {
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn()
+          .resolvesToOnce(ok(page([{ id: 'a' }], 'cursor-1')))
+          .resolvesToOnce(ok(page([{ id: 'b' }], 'cursor-2')))
+          .resolvesToOnce(ok(page([{ id: 'c' }], 'cursor-1'))),
+      })
+
+      await expect(
+        createClient(httpClient).getAllRequests({ limit: 500 }),
+      ).toBeRejectedWith('repeated continuation cursor')
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(3)
     })
 
     it('rejects an invalid request limit before calling the API', async () => {
