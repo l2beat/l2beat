@@ -314,11 +314,17 @@ export class InteropEventSyncer extends TimeLoop {
     )
     const interopEvents: InteropEvent[] = []
     const fulfilledCreatorEvents: InteropEvent[] = []
-    const failedTxHashes = new Set<string>()
+    const keepPending = new Set<string>()
 
     for (const txHash of txHashes) {
       const tx = await this.getTransactionByHash(txHash)
-      if (!tx || tx.blockNumber === null || tx.blockNumber >= beforeBlock) {
+      if (tx && tx.blockNumber !== null && tx.blockNumber >= beforeBlock) {
+        // Captured live with its block. If that capture throws, the next
+        // history check retries it.
+        keepPending.add(txHash)
+        continue
+      }
+      if (!tx || tx.blockNumber === null) {
         continue
       }
 
@@ -339,17 +345,18 @@ export class InteropEventSyncer extends TimeLoop {
       if (result) {
         interopEvents.push(...result.events)
         fulfilledCreatorEvents.push(...result.fulfilledCreatorEvents)
-      } else if (failed) {
-        failedTxHashes.add(txHash)
+      }
+      if (failed) {
+        // Its creator events get another history check instead of being lost.
+        // Fulfilled ones leave the store, so a retry can't capture them twice.
+        keepPending.add(txHash)
       }
     }
 
-    // A tx whose capture threw stays pending, so its creator events get
-    // another history check instead of being lost
     const checkedInHistoryEvents =
       this.store.derivedTxStore.markCheckedInHistory(
         this.chain,
-        txHashes.filter((txHash) => !failedTxHashes.has(txHash)),
+        txHashes.filter((txHash) => !keepPending.has(txHash)),
         pluginNames,
       )
 
