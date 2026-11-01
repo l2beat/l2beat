@@ -247,6 +247,8 @@ export class WormholeConfigPlugin
       input: Bytes.fromHex(data),
     }))
 
+    const previousNetworks = this.store.get(WormholeConfig) ?? []
+
     const networkPromises = this.chains.map(async (chain) => {
       const rpc = this.rpcs.get(chain.name)
       if (!rpc) return undefined
@@ -297,8 +299,12 @@ export class WormholeConfigPlugin
         if (!selected) return undefined
 
         const tokenBridge = tokenBridgeByChain.get(chain.name)
+        // A failed lookup keeps the WETH last resolved for the same bridge
         const weth = tokenBridge
-          ? await getTokenBridgeWeth(rpc, tokenBridge, block.number)
+          ? ((await getTokenBridgeWeth(rpc, tokenBridge, block.number)) ??
+            previousNetworks.find(
+              (n) => n.chain === chain.name && n.tokenBridge === tokenBridge,
+            )?.weth)
           : undefined
 
         return {
