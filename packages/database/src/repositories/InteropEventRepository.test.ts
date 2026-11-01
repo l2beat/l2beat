@@ -256,12 +256,14 @@ describeDatabase(InteropEventRepository.name, (db) => {
   })
 
   describe(
-    InteropEventRepository.prototype.getCounterpartChainVolume.name,
+    InteropEventRepository.prototype.getUnmatchedCounterpartVolume.name,
     () => {
       const USDC =
         '0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+      const OTHER_TOKEN =
+        '0x0000000000000000000000001111111111111111111111111111111111111111'
 
-      it('sums events by plugin and counterpart chain, priced from transfers', async () => {
+      it('sums unmatched events by plugin and counterpart chain, priced from transfers', async () => {
         await db.interopTransfer.insertMany([pricedTransfer(USDC)])
         await repository.insertMany([
           event(
@@ -349,9 +351,27 @@ describeDatabase(InteropEventRepository.name, (db) => {
               args: { amount: 'BigInt(7000000)', tokenAddress: USDC },
             },
           ),
+          // Captured on the destination, so the destination token is priced
+          event(
+            'debridge-dln',
+            'e7',
+            'debridge-dln.FulfilledOrder',
+            UnixTime(1060),
+            UnixTime(9000),
+            {
+              chain: 'ethereum',
+              args: {
+                $srcChain: 'Unknown_7565164',
+                fromToken: OTHER_TOKEN,
+                fromAmount: 'BigInt(9000000000)',
+                toToken: USDC,
+                fillAmount: 'BigInt(2000000)',
+              },
+            },
+          ),
         ])
 
-        const result = await repository.getCounterpartChainVolume(
+        const result = await repository.getUnmatchedCounterpartVolume(
           UnixTime(1000),
           UnixTime(0),
         )
@@ -360,29 +380,26 @@ describeDatabase(InteropEventRepository.name, (db) => {
           {
             plugin: 'cctp-v2',
             counterpartChain: 'Unknown_26',
-            events: 2,
-            pricedEvents: 2,
             unmatchedEvents: 2,
             unmatchedValueUsd: 8,
+            pricedUnmatchedEvents: 2,
             lastTimestamp: UnixTime(1020),
-          },
-          {
-            plugin: 'cctp-v2',
-            counterpartChain: 'base',
-            events: 1,
-            pricedEvents: 1,
-            unmatchedEvents: 0,
-            unmatchedValueUsd: 0,
-            lastTimestamp: UnixTime(1030),
           },
           {
             plugin: 'hyperlane',
             counterpartChain: 'Unknown_6714',
-            events: 1,
-            pricedEvents: 0,
             unmatchedEvents: 1,
             unmatchedValueUsd: 0,
+            pricedUnmatchedEvents: 0,
             lastTimestamp: UnixTime(1040),
+          },
+          {
+            plugin: 'debridge-dln',
+            counterpartChain: 'Unknown_7565164',
+            unmatchedEvents: 1,
+            unmatchedValueUsd: 2,
+            pricedUnmatchedEvents: 1,
+            lastTimestamp: UnixTime(1060),
           },
         ])
       })

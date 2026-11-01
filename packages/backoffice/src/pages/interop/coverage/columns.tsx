@@ -96,7 +96,10 @@ export const coverageChainColumns: TableOptions<CoverageChain>['columns'] = [
     meta: { csvHeader: 'Events' },
   }),
   chainHelper.accessor(
-    (row) => (row.events === 0 ? 0 : (100 * row.pricedEvents) / row.events),
+    (row) =>
+      row.uncountedEvents === 0
+        ? 0
+        : (100 * row.pricedUncountedEvents) / row.uncountedEvents,
     {
       id: 'pricedPct',
       header: 'Priced',

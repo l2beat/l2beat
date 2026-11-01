@@ -1,6 +1,6 @@
 import type {
   InteropEventCounterpartVolumeRecord,
-  InteropTransfersStatsRecord,
+  InteropTransferPluginVolumeRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -39,9 +39,8 @@ describe(buildInteropCoverage.name, () => {
       status: 'not-tracked',
       rawChains: ['Unknown_26', 'Unknown_5042', 'Unknown_arc', 'arc'],
       uncountedValueUsd: 111.5,
-      events: 21,
       uncountedEvents: 21,
-      pricedEvents: 21,
+      pricedUncountedEvents: 21,
       lastSeen: UnixTime(100),
       plugins: [
         {
@@ -89,12 +88,9 @@ describe(buildInteropCoverage.name, () => {
     expect(result.chains).toEqual([])
   })
 
-  it('keeps only the uncounted events of enabled one-sided chains', () => {
+  it('keeps enabled one-sided chains that have uncounted events', () => {
     const result = buildInteropCoverage(
-      [
-        row('cctp-v2', 'solana', 30, 4, { unmatchedEvents: 0 }),
-        row('mayan-forwarder', 'solana', 7, 2),
-      ],
+      [row('mayan-forwarder', 'solana', 7, 2)],
       [],
       CONFIG,
       RANGE,
@@ -156,14 +152,9 @@ describe(buildInteropCoverage.name, () => {
         row('cctp-v2', 'Unknown_26', 30),
         row('cctp-v2', 'Unknown_8', 10),
         row('cctp-v2', 'Unknown_6', 2),
-        row('cctp-v2', 'solana', 3, 1, { unmatchedEvents: 0 }),
         row('across', 'base', 5),
       ],
-      [
-        stats('cctp-v2', 60, 58, 4),
-        stats('cctp-v2', 0, 0, 1),
-        stats('across', 9, 10, 2),
-      ],
+      [volume('cctp-v2', 60, 5), volume('across', 10, 2)],
       CONFIG,
       RANGE,
     )
@@ -264,33 +255,21 @@ function row(
   counterpartChain: string,
   valueUsd = 0,
   events = 1,
-  overrides: Partial<InteropEventCounterpartVolumeRecord> = {},
 ): InteropEventCounterpartVolumeRecord {
-  const unmatchedEvents = overrides.unmatchedEvents ?? events
   return {
     plugin,
     counterpartChain,
-    events,
-    pricedEvents: events,
-    unmatchedEvents,
-    unmatchedValueUsd: unmatchedEvents === 0 ? 0 : valueUsd,
+    unmatchedEvents: events,
+    unmatchedValueUsd: valueUsd,
+    pricedUnmatchedEvents: events,
     lastTimestamp: UnixTime(100),
-    ...overrides,
   }
 }
 
-function stats(
+function volume(
   plugin: string,
-  srcValueSum: number,
-  dstValueSum: number,
+  volumeUsd: number,
   count: number,
-): InteropTransfersStatsRecord {
-  return {
-    plugin,
-    type: `${plugin}.Transfer`,
-    count,
-    avgDuration: 0,
-    srcValueSum,
-    dstValueSum,
-  }
+): InteropTransferPluginVolumeRecord {
+  return { plugin, count, volumeUsd }
 }

@@ -311,6 +311,12 @@ export interface InteropTransfersDetailedStatsRecord {
   dstValueSum: number
 }
 
+export interface InteropTransferPluginVolumeRecord {
+  plugin: string
+  count: number
+  volumeUsd: number
+}
+
 export interface InteropSuspiciousTransferRecord extends InteropTransferRecord {
   valueDifferencePercent: number
 }
@@ -950,6 +956,34 @@ export class InteropTransferRepository extends BaseRepository {
       avgDuration: Number(overall.avgDuration),
       srcValueSum: Number(overall.srcValueSum),
       dstValueSum: Number(overall.dstValueSum),
+    }))
+  }
+
+  /**
+   * Transfer count and volume per plugin. A transfer's volume is the larger of
+   * its two sides, taken per transfer, so a one-sided transfer counts in full.
+   */
+  async getVolumeByPlugin(
+    timeRange: InteropTransferTimeRange,
+  ): Promise<InteropTransferPluginVolumeRecord[]> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        'plugin',
+        eb.fn.countAll().as('count'),
+        sql<number | null>`SUM(GREATEST("srcValueUsd", "dstValueUsd"))`.as(
+          'volumeUsd',
+        ),
+      ])
+      .where('timestamp', '>', UnixTime.toDate(timeRange.from))
+      .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
+      .groupBy('plugin')
+      .execute()
+
+    return rows.map((row) => ({
+      plugin: row.plugin,
+      count: Number(row.count),
+      volumeUsd: Number(row.volumeUsd ?? 0),
     }))
   }
 

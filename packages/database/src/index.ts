@@ -95,6 +95,7 @@ export {
   type InteropTransferDeployedTokenPairStatsByToken,
   type InteropTransferFinancialsFilter,
   type InteropTransferFinancialsStats,
+  type InteropTransferPluginVolumeRecord,
   type InteropTransferRecord,
   type InteropTransfersDetailedStatsRecord,
   type InteropTransfersStatsRecord,

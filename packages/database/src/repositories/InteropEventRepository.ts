@@ -85,34 +85,63 @@ export interface InteropEventStatsRecord {
 export interface InteropEventCounterpartVolumeRecord {
   plugin: string
   counterpartChain: string
-  events: number
-  pricedEvents: number
-  // Events no plugin turned into a transfer or message
   unmatchedEvents: number
   unmatchedValueUsd: number
+  // Unmatched events with an amount and a price for their token
+  pricedUnmatchedEvents: number
   lastTimestamp: UnixTime
 }
 
-// Arg names plugins use for the captured side's token and amount
-const COUNTERPART_TOKEN_ARGS = [
+// Arg names plugins use for the captured side's token and amount, by
+// direction: an event with `$dstChain` was captured on the source side, one
+// with `$srcChain` on the destination side
+const OUTGOING_TOKEN_ARGS = [
   'tokenAddress',
   'token',
-  'inputToken',
   'srcTokenAddress',
-  'dstTokenAddress',
+  'inputToken',
   'tokenIn',
+  'fromToken',
   'giveTokenAddress',
+  'transferTokenAddress',
 ]
-const COUNTERPART_AMOUNT_ARGS = [
+const OUTGOING_AMOUNT_ARGS = [
   'amount',
   'value',
-  'inputAmount',
   'srcAmount',
-  'dstAmount',
+  'inputAmount',
   'amountSentLD',
   'amountIn',
+  'fromAmount',
   'giveAmount',
+  'transferAmount',
 ]
+const INCOMING_TOKEN_ARGS = [
+  'tokenAddress',
+  'token',
+  'dstTokenAddress',
+  'outputToken',
+  'tokenOut',
+  'toToken',
+  'giveTokenAddress',
+  'transferTokenAddress',
+]
+const INCOMING_AMOUNT_ARGS = [
+  'amount',
+  'value',
+  'dstAmount',
+  'outputAmount',
+  'amountReceivedLD',
+  'fillAmount',
+  'giveAmount',
+  'transferAmount',
+]
+
+function argsByDirection(outgoing: string[], incoming: string[]): string {
+  const pick = (keys: string[]) =>
+    `coalesce(${keys.map((key) => `args ->> '${key}'`).join(', ')})`
+  return `CASE WHEN args ->> '$dstChain' IS NOT NULL THEN ${pick(outgoing)} ELSE ${pick(incoming)} END`
+}
 
 export class InteropEventRepository extends BaseRepository {
   async insertMany(records: InteropEventRecord[]): Promise<number> {
@@ -231,29 +260,29 @@ export class InteropEventRepository extends BaseRepository {
   }
 
   /**
-   * Events by plugin and the chain on their other side (`$srcChain` or
-   * `$dstChain`), with an estimated USD value. Event args have no fixed shape,
+   * Events no plugin turned into a transfer or message, by plugin and the
+   * chain on their other side (`$srcChain` or `$dstChain`), with an estimated
+   * USD value. Event args have no fixed shape,
    * so token and amount are read from the fields plugins use, and priced with
    * each token's USD per raw unit across the transfers valued since
    * `pricesFrom`.
    */
-  async getCounterpartChainVolume(
+  async getUnmatchedCounterpartVolume(
     from: UnixTime,
     pricesFrom: UnixTime,
   ): Promise<InteropEventCounterpartVolumeRecord[]> {
     const token = sql.raw(
-      `right(lower(coalesce(${COUNTERPART_TOKEN_ARGS.map((key) => `args ->> '${key}'`).join(', ')})), 40)`,
+      `right(lower(${argsByDirection(OUTGOING_TOKEN_ARGS, INCOMING_TOKEN_ARGS)}), 40)`,
     )
     const amount = sql.raw(
-      `nullif(regexp_replace(coalesce(${COUNTERPART_AMOUNT_ARGS.map((key) => `args ->> '${key}'`).join(', ')}), '[^0-9]', '', 'g'), '')::numeric`,
+      `nullif(regexp_replace(${argsByDirection(OUTGOING_AMOUNT_ARGS, INCOMING_AMOUNT_ARGS)}, '[^0-9]', '', 'g'), '')::numeric`,
     )
     const result = await sql<{
       plugin: string
       counterpartChain: string
-      events: number
-      pricedEvents: number
       unmatchedEvents: number
       unmatchedValueUsd: number | null
+      pricedUnmatchedEvents: number
       lastTimestamp: Date
     }>`
       WITH prices AS (
@@ -272,21 +301,21 @@ export class InteropEventRepository extends BaseRepository {
         GROUP BY chain, token
       ),
       events AS (
-        SELECT plugin, chain, timestamp, matched,
+        SELECT plugin, chain, timestamp,
           coalesce(args ->> '$dstChain', args ->> '$srcChain') AS counterpart,
           ${token} AS token,
           ${amount} AS amount
         FROM "InteropEvent"
         WHERE timestamp > ${UnixTime.toDate(from)}
+          AND NOT matched
           AND (args ->> '$dstChain' IS NOT NULL OR args ->> '$srcChain' IS NOT NULL)
       )
       SELECT
         events.plugin,
         events.counterpart AS "counterpartChain",
-        count(*)::int AS events,
-        (count(prices."perRaw") FILTER (WHERE events.amount IS NOT NULL))::int AS "pricedEvents",
-        (count(*) FILTER (WHERE NOT events.matched))::int AS "unmatchedEvents",
-        (sum(events.amount * prices."perRaw") FILTER (WHERE NOT events.matched))::float8 AS "unmatchedValueUsd",
+        count(*)::int AS "unmatchedEvents",
+        sum(events.amount * prices."perRaw")::float8 AS "unmatchedValueUsd",
+        (count(prices."perRaw") FILTER (WHERE events.amount IS NOT NULL))::int AS "pricedUnmatchedEvents",
         max(events.timestamp) AS "lastTimestamp"
       FROM events
       LEFT JOIN prices ON prices.chain = events.chain AND prices.token = events.token
@@ -296,10 +325,9 @@ export class InteropEventRepository extends BaseRepository {
     return result.rows.map((row) => ({
       plugin: row.plugin,
       counterpartChain: row.counterpartChain,
-      events: row.events,
-      pricedEvents: row.pricedEvents,
       unmatchedEvents: row.unmatchedEvents,
       unmatchedValueUsd: row.unmatchedValueUsd ?? 0,
+      pricedUnmatchedEvents: row.pricedUnmatchedEvents,
       lastTimestamp: UnixTime.fromDate(row.lastTimestamp),
     }))
   }

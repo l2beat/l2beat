@@ -2,7 +2,7 @@ import { INTEROP_ONE_SIDED_CHAINS } from '@l2beat/config'
 import type {
   Database,
   InteropEventCounterpartVolumeRecord,
-  InteropTransfersStatsRecord,
+  InteropTransferPluginVolumeRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 
@@ -27,7 +27,7 @@ interface IdSpace {
 const ID_SPACES: IdSpace[] = [
   {
     label: 'CCTP domain',
-    plugins: ['cctp-v1', 'cctp-v2', 'circle-gateway'],
+    plugins: ['cctp-v1', 'cctp-v2', 'circle-gateway', 'mayan-mctp-fast'],
     fromConfigs: [
       { key: 'cctp-v1', field: 'domain' },
       { key: 'cctp-v2', field: 'domain' },
@@ -100,7 +100,6 @@ const ID_SPACES: IdSpace[] = [
       'mayan-forwarder',
       'mayan-swift',
       'mayan-swift-settlement',
-      'mayan-mctp-fast',
     ],
     fromConfigs: [{ key: 'wormhole', field: 'wormholeChainId' }],
     names: {},
@@ -203,9 +202,8 @@ export interface InteropCoverageChain {
   rawChains: string[]
   // Events no plugin turned into a transfer
   uncountedValueUsd: number
-  events: number
   uncountedEvents: number
-  pricedEvents: number
+  pricedUncountedEvents: number
   lastSeen: UnixTime
   plugins: {
     plugin: string
@@ -281,7 +279,7 @@ export function resolveCounterpartChain(
 
 export function buildInteropCoverage(
   events: InteropEventCounterpartVolumeRecord[],
-  transfers: InteropTransfersStatsRecord[],
+  transfers: InteropTransferPluginVolumeRecord[],
   config: CoverageChainsConfig,
   range: { from: UnixTime; to: UnixTime },
   idNames: IdNames = buildIdNames({}),
@@ -303,7 +301,7 @@ export function buildInteropCoverage(
   >()
 
   for (const row of events) {
-    if (row.counterpartChain === '' || row.unmatchedEvents === 0) continue
+    if (row.counterpartChain === '') continue
     const resolved = resolveCounterpartChain(
       row.plugin,
       row.counterpartChain,
@@ -332,9 +330,8 @@ export function buildInteropCoverage(
       status,
       rawChains: [],
       uncountedValueUsd: 0,
-      events: 0,
       uncountedEvents: 0,
-      pricedEvents: 0,
+      pricedUncountedEvents: 0,
       lastSeen: row.lastTimestamp,
       plugins: [],
     }
@@ -343,9 +340,8 @@ export function buildInteropCoverage(
       chain.rawChains.push(row.counterpartChain)
     }
     chain.uncountedValueUsd += row.unmatchedValueUsd
-    chain.events += row.events
     chain.uncountedEvents += row.unmatchedEvents
-    chain.pricedEvents += row.pricedEvents
+    chain.pricedUncountedEvents += row.pricedUnmatchedEvents
     chain.lastSeen = Math.max(chain.lastSeen, row.lastTimestamp) as UnixTime
     const plugin = chain.plugins.find((p) => p.plugin === row.plugin)
     if (plugin) {
@@ -379,21 +375,12 @@ export function buildInteropCoverage(
     pluginUncovered.set(row.plugin, uncovered)
   }
 
-  const pluginCovered = new Map<
-    string,
-    { valueUsd: number; transfers: number }
-  >()
-  for (const row of transfers) {
-    // Transfer volume is the larger of the two sides, as on the site
-    const valueUsd = Math.max(row.srcValueSum, row.dstValueSum)
-    const current = pluginCovered.get(row.plugin) ?? {
-      valueUsd: 0,
-      transfers: 0,
-    }
-    current.valueUsd += valueUsd
-    current.transfers += row.count
-    pluginCovered.set(row.plugin, current)
-  }
+  const pluginCovered = new Map(
+    transfers.map((row) => [
+      row.plugin,
+      { valueUsd: row.volumeUsd, transfers: row.count },
+    ]),
+  )
 
   for (const chain of chains.values()) {
     chain.rawChains.sort()
@@ -469,11 +456,11 @@ export async function getInteropCoverageData(
 ): Promise<InteropCoverageData> {
   const from = (now - COVERAGE_WINDOW) as UnixTime
   const [events, transfers, configs] = await Promise.all([
-    db.interopEvent.getCounterpartChainVolume(
+    db.interopEvent.getUnmatchedCounterpartVolume(
       from,
       (now - PRICES_WINDOW) as UnixTime,
     ),
-    db.interopTransfer.getStats({ from, to: now }),
+    db.interopTransfer.getVolumeByPlugin({ from, to: now }),
     db.interopConfig.getAllLatest(),
   ])
   const idNames = buildIdNames(
