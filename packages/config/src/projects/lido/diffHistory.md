@@ -1,3 +1,650 @@
+Generated with discovered.json: 0xc2d1c930391fa0bff8b24227e3e56e1f543b8410
+
+# Diff at Fri, 30 Oct 2026 10:53:31 GMT:
+
+- id: 8f82b3ea
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fe75fdc71f490da1fbfc7f6f5a24026eeec12086 block: 1792491537
+- current timestamp: 1793357595
+
+## Description
+
+Dual Governance proposal 15 (executed 2026-10-23) added staking module 5, "Community Staking 0x02": a second CSModule for 0x02 (compounding) validators with its own Accounting, FeeOracle, FeeDistributor, HashConsensus (same oracle committee), ParametersRegistry, Verifier, Ejector, ExitPenalties, ValidatorStrikes and PermissionlessGate, stake share limit 0.01%, priority exit threshold 2.4%, module fee 2%, treasury fee 8%.
+StakingRouter: the curated Node Operators Registry (module 1) stake share limit and priority exit threshold 100% → 0.
+CircuitBreaker: CommunityStakingModuleCommittee registered as pauser of five of the new contracts (CSModule, Accounting, FeeOracle, Verifier, Ejector).
+TriggerableWithdrawalsGateway and Burner: new Ejector and Accounting granted their roles.
+
+## Watched changes
+
+```diff
+    EOA (eth:0x2aE828F10DfeE5b4c42f6E61D3d30033D4520753) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members","via":[{"address":"eth:0x5e8Ed9f10307eD6FA793A347e4D0f407D00B9C6f"}]}
+    }
+```
+
+```diff
+    contract Voting (eth:0x2e59A20f205bB85a89C53f1936454680651E618e) [lido/Voting] {
+    +++ description: Lido DAO's Aragon token voting application. LDO holders vote on executable DAO scripts, with configurable support, quorum, vote duration, and an objection phase.
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311","description":"grant or revoke every FeeOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311","description":"pause fee report submission for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311","description":"resume fee report submission.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x122CdeDD0da630B555050976052C262EA25f8335","description":"grant or revoke FeeDistributor roles and change the rebate recipient.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.23:
++        {"permission":"interact","from":"eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E","description":"grant or revoke Ejector roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.24:
++        {"permission":"interact","from":"eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E","description":"pause validator ejection requests.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.25:
++        {"permission":"interact","from":"eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E","description":"resume validator ejection requests.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900","description":"grant or revoke Accounting roles, change the bond lock period and penalty recipient, and configure fee splits and custom rewards claimers.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.31:
++        {"permission":"interact","from":"eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.32:
++        {"permission":"interact","from":"eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900","description":"resume bond deposits and reward claims.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.48:
++        {"permission":"interact","from":"eth:0x5352b3d8274933c72dC774DccCD12B7301EdBfD7","description":"grant or revoke ParametersRegistry roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.62:
++        {"permission":"interact","from":"eth:0x69b4C32a43565e768794D41b4A265F86dE61b861","description":"grant or revoke verifier pause and resume roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.63:
++        {"permission":"interact","from":"eth:0x69b4C32a43565e768794D41b4A265F86dE61b861","description":"pause processing of validator proofs.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.64:
++        {"permission":"interact","from":"eth:0x69b4C32a43565e768794D41b4A265F86dE61b861","description":"resume processing of validator proofs.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.68:
++        {"permission":"interact","from":"eth:0x78e36353FE904c3685585D9F3204D4aAcb3Ad506","description":"grant or revoke asset-recovery and administrative roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.70:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"grant or revoke Community Staking Module roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.71:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.72:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"resume the Community Staking Module.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.83:
++        {"permission":"interact","from":"eth:0x89bd84481F7679732EADDF7d99d02ABD8309df65","description":"grant or revoke ValidatorStrikes roles and change the Ejector used for poor-performing validators.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.135:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"add or remove oracle committee members and change the report quorum.","role":".memberAndQuorumManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.136:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.185:
++        {"permission":"upgrade","from":"eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.186:
++        {"permission":"upgrade","from":"eth:0x122CdeDD0da630B555050976052C262EA25f8335","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.192:
++        {"permission":"upgrade","from":"eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.198:
++        {"permission":"upgrade","from":"eth:0x5352b3d8274933c72dC774DccCD12B7301EdBfD7","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.203:
++        {"permission":"upgrade","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.207:
++        {"permission":"upgrade","from":"eth:0x89bd84481F7679732EADDF7d99d02ABD8309df65","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.214:
++        {"permission":"upgrade","from":"eth:0xa96021Eff64E8FE927424C77902c56C4F17d10A5","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+    }
+```
+
+```diff
+    EOA (eth:0x375ABa35EA2011Af97b51bd395494C827d1C39BD) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members","via":[{"address":"eth:0x99Cd2EF33040879D40BBC77Df81863D97f13C64d"}]}
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) [lido/LidoDaoAgent] {
+    +++ description: The Lido DAO's Aragon execution and treasury agent. It can transfer assets, execute arbitrary calls or scripts, and validate signatures according to granular ACL permissions.
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311","description":"grant or revoke every FeeOracle role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x122CdeDD0da630B555050976052C262EA25f8335","description":"grant or revoke FeeDistributor roles and change the rebate recipient.","role":".defaultAdmins"}
+      directlyReceivedPermissions.7:
++        {"permission":"interact","from":"eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E","description":"grant or revoke Ejector roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900","description":"grant or revoke Accounting roles, change the bond lock period and penalty recipient, and configure fee splits and custom rewards claimers.","role":".defaultAdmins"}
+      directlyReceivedPermissions.18:
++        {"permission":"interact","from":"eth:0x5352b3d8274933c72dC774DccCD12B7301EdBfD7","description":"grant or revoke ParametersRegistry roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.29:
++        {"permission":"interact","from":"eth:0x69b4C32a43565e768794D41b4A265F86dE61b861","description":"grant or revoke verifier pause and resume roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.33:
++        {"permission":"interact","from":"eth:0x78e36353FE904c3685585D9F3204D4aAcb3Ad506","description":"grant or revoke asset-recovery and administrative roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.34:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"grant or revoke Community Staking Module roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.42:
++        {"permission":"interact","from":"eth:0x89bd84481F7679732EADDF7d99d02ABD8309df65","description":"grant or revoke ValidatorStrikes roles and change the Ejector used for poor-performing validators.","role":".defaultAdmins"}
+      directlyReceivedPermissions.70:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"add or remove oracle committee members and change the report quorum.","role":".memberAndQuorumManagers"}
+      directlyReceivedPermissions.71:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.93:
++        {"permission":"upgrade","from":"eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311","role":"admin"}
+      directlyReceivedPermissions.94:
++        {"permission":"upgrade","from":"eth:0x122CdeDD0da630B555050976052C262EA25f8335","role":"admin"}
+      directlyReceivedPermissions.100:
++        {"permission":"upgrade","from":"eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900","role":"admin"}
+      directlyReceivedPermissions.106:
++        {"permission":"upgrade","from":"eth:0x5352b3d8274933c72dC774DccCD12B7301EdBfD7","role":"admin"}
+      directlyReceivedPermissions.111:
++        {"permission":"upgrade","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","role":"admin"}
+      directlyReceivedPermissions.115:
++        {"permission":"upgrade","from":"eth:0x89bd84481F7679732EADDF7d99d02ABD8309df65","role":"admin"}
+      directlyReceivedPermissions.122:
++        {"permission":"upgrade","from":"eth:0xa96021Eff64E8FE927424C77902c56C4F17d10A5","role":"admin"}
+    }
+```
+
+```diff
+    EOA (eth:0x4D3aD7E8e591d389B612Fc063f53837E284d3F86) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members","via":[{"address":"eth:0xd524101C3c40f71Fce7B9312D299603880a06Bdb"}]}
+    }
+```
+
+```diff
+    contract DelegationContract (eth:0x4E3F2DEeb59eB9a205D82D17647b3e56422e0FEe) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members"}
+    }
+```
+
+```diff
+    EOA (eth:0x5416CAAb6f37BF81cb2dc7ce0a363AfB9DD92d57) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members","via":[{"address":"eth:0x56B3eA8016Da18C6E8CD8135492d242F0dE0DBBC"}]}
+    }
+```
+
+```diff
+    EOA (eth:0x5595033F304217aFDB8ffB35E42C22B72184730b) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members","via":[{"address":"eth:0xE75A431A98487DC69A14Bdd13d858E3238e9C1b3"}]}
+    }
+```
+
+```diff
+    EOA (eth:0x565F04cB319EC2295E1fcbBbe5F708687FFcCE75) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members","via":[{"address":"eth:0x4E3F2DEeb59eB9a205D82D17647b3e56422e0FEe"}]}
+    }
+```
+
+```diff
+    contract DelegationContract (eth:0x56B3eA8016Da18C6E8CD8135492d242F0dE0DBBC) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members"}
+    }
+```
+
+```diff
+    contract DelegationContract (eth:0x5e8Ed9f10307eD6FA793A347e4D0f407D00B9C6f) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members"}
+    }
+```
+
+```diff
+    contract CircuitBreaker (eth:0x6019CB557978296BA3C08a7B73225C0975DFB2F7) [lido/CircuitBreaker] {
+    +++ description: Emergency pause coordinator. The admin assigns one heartbeat-gated pauser to each registered protocol contract; a live pauser can trigger one time-bounded pause before its assignment is consumed.
+      values.$pausersByPausable.eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B:
++        "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f"
+      values.$pausersByPausable.eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900:
++        "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f"
+      values.$pausersByPausable.eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311:
++        "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f"
+      values.$pausersByPausable.eth:0x69b4C32a43565e768794D41b4A265F86dE61b861:
++        "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f"
+      values.$pausersByPausable.eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E:
++        "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f"
+      values.activePausers.19:
++        "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f"
+      values.activePausers.20:
++        "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f"
+      values.activePausers.21:
++        "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f"
+      values.activePausers.22:
++        "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f"
+      values.activePausers.23:
++        "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f"
+      values.getPausables.19:
++        "eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B"
+      values.getPausables.20:
++        "eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900"
+      values.getPausables.21:
++        "eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311"
+      values.getPausables.22:
++        "eth:0x69b4C32a43565e768794D41b4A265F86dE61b861"
+      values.getPausables.23:
++        "eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E"
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311","description":"pause fee report submission for a chosen duration.","role":".pausers"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E","description":"pause validator ejection requests.","role":".pausers"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers"}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x69b4C32a43565e768794D41b4A265F86dE61b861","description":"pause processing of validator proofs.","role":".pausers"}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers"}
+    }
+```
+
+```diff
+    contract ResealManager (eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24) [lido/ResealManager] {
+    +++ description: Adapter that lets the governance configured in the EmergencyProtectedTimelock indefinitely extend an existing pause or resume a supported sealable contract.
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311","description":"pause fee report submission for a chosen duration.","role":".pausers"}
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311","description":"resume fee report submission.","role":".resumers"}
+      directlyReceivedPermissions.8:
++        {"permission":"interact","from":"eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E","description":"pause validator ejection requests.","role":".pausers"}
+      directlyReceivedPermissions.9:
++        {"permission":"interact","from":"eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E","description":"resume validator ejection requests.","role":".resumers"}
+      directlyReceivedPermissions.12:
++        {"permission":"interact","from":"eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers"}
+      directlyReceivedPermissions.13:
++        {"permission":"interact","from":"eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900","description":"resume bond deposits and reward claims.","role":".resumers"}
+      directlyReceivedPermissions.22:
++        {"permission":"interact","from":"eth:0x69b4C32a43565e768794D41b4A265F86dE61b861","description":"pause processing of validator proofs.","role":".pausers"}
+      directlyReceivedPermissions.23:
++        {"permission":"interact","from":"eth:0x69b4C32a43565e768794D41b4A265F86dE61b861","description":"resume processing of validator proofs.","role":".resumers"}
+      directlyReceivedPermissions.24:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers"}
+      directlyReceivedPermissions.25:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"resume the Community Staking Module.","role":".resumers"}
+    }
+```
+
+```diff
+    EOA (eth:0x7abC999C7E1f22a7E12b2A1024bC17676FE18b4b) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members","via":[{"address":"eth:0xc7442d4d8F3FfEa0fA4a18Ad3062c8137cE21749"}]}
+    }
+```
+
+```diff
+    EOA (eth:0x82A821E8a2585D1AC8f346BE7Da6995490d21Ca6) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members","via":[{"address":"eth:0xc77d0Bf3AA4778E36a89CDC8bbc9c34d8060637d"}]}
+    }
+```
+
+```diff
+    contract DelegationContract (eth:0x99Cd2EF33040879D40BBC77Df81863D97f13C64d) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members"}
+    }
+```
+
+```diff
+    EOA (eth:0xC10258969442c7957351A0ddc8194D2685B2a2c2) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members","via":[{"address":"eth:0xC4f2704273598d51A0ec76A31C12553ec8f5A891"}]}
+    }
+```
+
+```diff
+    contract DelegationContract (eth:0xC4f2704273598d51A0ec76A31C12553ec8f5A891) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members"}
+    }
+```
+
+```diff
+    contract CommunityStakingModuleCommittee (eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x5352b3d8274933c72dC774DccCD12B7301EdBfD7","description":"change general delayed-penalty, penalty-rebate, key-removal and other charge parameters.","role":".penaltyAndChargeManagers"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"report a general delayed penalty against a node operator.","role":".delayedPenaltyReporters"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"rewind the validator top-up queue to an earlier item.","role":".topUpQueueRewinders"}
+    }
+```
+
+```diff
+    contract DelegationContract (eth:0xc7442d4d8F3FfEa0fA4a18Ad3062c8137cE21749) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members"}
+    }
+```
+
+```diff
+    contract DelegationContract (eth:0xc77d0Bf3AA4778E36a89CDC8bbc9c34d8060637d) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members"}
+    }
+```
+
+```diff
+    contract DelegationContract (eth:0xd524101C3c40f71Fce7B9312D299603880a06Bdb) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members"}
+    }
+```
+
+```diff
+    contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B) [lido/TriggerableWithdrawalsGateway] {
+    +++ description: The permissioned entrypoint for full EIP-7002 validator withdrawals. It charges the current request fee, applies a replenishing global exit limit, forwards requests to WithdrawalVault, and notifies StakingRouter.
+      values.accessControl.ADD_FULL_WITHDRAWAL_REQUEST_ROLE.members.3:
++        "eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E"
+      values.withdrawalRequesters.3:
++        "eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E"
+    }
+```
+
+```diff
+    contract DelegationContract (eth:0xE75A431A98487DC69A14Bdd13d858E3238e9C1b3) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210","description":"submit report hashes and participate in reaching oracle consensus.","role":".members"}
+    }
+```
+
+```diff
+    contract Burner (eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a) [lido/Burner] {
+    +++ description: Escrows stETH shares requested for cover or non-cover burning and burns them during an oracle report. Excess stETH can be recovered into the Lido protocol during migration.
+      values.accessControl.REQUEST_BURN_MY_STETH_ROLE.members.2:
++        "eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900"
+      values.selfBurnRequesters.2:
++        "eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900"
+    }
+```
+
+```diff
+    contract EasyTrack (eth:0xF0211b7660680B49De1A7E9f25C65660F0a13Fea) [lido/EasyTrack] {
+    +++ description: Optimistic Lido DAO motion system. Approved factories restrict the target and selector of each motion; LDO holders can object, and an unobstructed motion is executed through the EVMScriptExecutor after its delay.
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"report slashed withdrawn validators for node operators.","role":".slashedWithdrawalReporters","via":[{"address":"eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977"}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"settle a previously reported general delayed penalty.","role":".delayedPenaltySettlers","via":[{"address":"eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977"}]}
+    }
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) [lido/StakingRouter] {
+    +++ description: Coordinates Lido staking modules, allocates deposits and top-ups, tracks validator balances and exit states, and distributes staking rewards. Version 3 uses validator balances instead of validator counts and supports EIP-7251 compounding validators.
+      values.getStakingModuleIds.4:
++        5
+      values.getStakingModuleIsActive.0:
++        true
+      values.getStakingModuleIsDepositsPaused.0:
++        false
+      values.getStakingModuleIsStopped.0:
++        false
+      values.getStakingModuleMaxDepositsPerBlock.4:
++        30
+      values.getStakingModuleMinDepositBlockDistance.4:
++        25
+      values.getStakingModuleStateConfig.0.priorityExitShareThreshold:
+-        10000
++        0
+      values.getStakingModuleStateConfig.0.stakeShareLimit:
+-        10000
++        0
+      values.getStakingModuleStateConfig.4:
++        {"moduleAddress":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","moduleFee":200,"treasuryFee":800,"stakeShareLimit":1,"priorityExitShareThreshold":240,"status":0,"withdrawalCredentialsType":2}
+      values.getStakingModuleStatus.0:
++        0
+      values.getStakingModuleWithdrawalCredentials.3:
++        "0x020000000000000000000000b9d7934878b5fb9610b3fe8a5e441e8fad7e293f"
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"submit validator deposits and top-ups, update validator and target limits, and finalize reward accounting.","role":".stakingRouters"}
+    }
+```
+
+```diff
+    contract EVMScriptExecutor (eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977) [lido/EVMScriptExecutor] {
+    +++ description: EasyTrack execution adapter. It executes the Aragon CallsScript produced by an approved EasyTrack motion, making downstream calls from this contract's address.
+      directlyReceivedPermissions.7:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"report slashed withdrawn validators for node operators.","role":".slashedWithdrawalReporters"}
+      directlyReceivedPermissions.8:
++        {"permission":"interact","from":"eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B","description":"settle a previously reported general delayed penalty.","role":".delayedPenaltySettlers"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FeeOracle (eth:0x0fB5EC09Cc975d8E1aF43063e51882798814f311) [lido/FeeOracle]
+    +++ description: Receives committee-consensus reports containing a staking module's reward-distribution Merkle root and forwards them to FeeDistributor and ValidatorStrikes.
+```
+
+```diff
++   Status: CREATED
+    contract FeeDistributor (eth:0x122CdeDD0da630B555050976052C262EA25f8335) [lido/FeeDistributor]
+    +++ description: Receives a staking module's stETH fee shares and distributes them to node operators according to a Merkle tree submitted by its FeeOracle. Claims are accounted in stETH shares.
+```
+
+```diff
++   Status: CREATED
+    contract Ejector (eth:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E) [lido/Ejector]
+    +++ description: Submits triggerable full-withdrawal requests for validators. Node operators may voluntarily eject their own validators, while ValidatorStrikes can eject validators for poor performance.
+```
+
+```diff
++   Status: CREATED
+    contract Accounting (eth:0x3696dDd942A9e156F5D4728505D1b9a32dCef900) [lido/Accounting]
+    +++ description: Manages node-operator bonds for a permissionless staking module. It accepts ETH, stETH and wstETH bonds, applies bond curves, locks or penalizes bond, and lets eligible node-operator addresses claim rewards after the module's fee distribution.
+```
+
+```diff
++   Status: CREATED
+    contract ParametersRegistry (eth:0x5352b3d8274933c72dC774DccCD12B7301EdBfD7) [lido/ParametersRegistry]
+    +++ description: Stores configurable Community Staking Module parameters, including bond curves, operator rewards, penalties, key limits, queue policy, performance thresholds, and validator-exit rules.
+```
+
+```diff
++   Status: CREATED
+    contract Community Staking Module Verifier (eth:0x69b4C32a43565e768794D41b4A265F86dE61b861) [lido/CSVerifier]
+    +++ description: Permissionless beacon-state proof verifier for a Community Staking Module. Valid proofs report validator balances, withdrawals and slashing to the connected module.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionlessGate (eth:0x78e36353FE904c3685585D9F3204D4aAcb3Ad506) [lido/PermissionlessGate]
+    +++ description: Permissionless Community Staking Module onboarding contract. Any address can create a node operator using its fixed bond curve by depositing ETH, stETH or wstETH.
+```
+
+```diff
++   Status: CREATED
+    contract CSModule (eth:0x792Cd25e4aE3578375031FB55e048E163A804F7B) [lido/CSModule]
+    +++ description: Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorStrikes (eth:0x89bd84481F7679732EADDF7d99d02ABD8309df65) [lido/ValidatorStrikes]
+    +++ description: Stores the oracle-provided Merkle root of validator performance strikes. Proven strike data can cause a poor-performing validator to be ejected and penalized.
+```
+
+```diff
++   Status: CREATED
+    contract ExitPenalties (eth:0xa96021Eff64E8FE927424C77902c56C4F17d10A5) [lido/ExitPenalties]
+    +++ description: Records delayed-exit, triggerable-withdrawal, and poor-performance penalties for a permissionless staking module.
+```
+
+```diff
++   Status: CREATED
+    contract HashConsensus (eth:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210) [lido/HashConsensus]
+    +++ description: Collects report hashes from an enumerable oracle committee and forwards a report to its processor once quorum agrees. It defines report frames, quorum, fast-lane members, and the report processor.
+```
+
+## Source code changes
+
+```diff
+.../Accounting.sol                                 |  8778 +++++++++++++++
+ .../OssifiableProxy.p.sol                          |   702 ++
+ .../CSModule.sol                                   |     0
+ .../OssifiableProxy.p.sol                          |   702 ++
+ .../CSModule.sol                                   | 10807 +++++++++++++++++++
+ .../OssifiableProxy.p.sol                          |     0
+ ...:0x69b4C32a43565e768794D41b4A265F86dE61b861.sol |  7328 +++++++++++++
+ ...:0x2EE500885870b020e84E86a09A5d26D1EEec3E5E.sol |  7945 ++++++++++++++
+ .../ExitPenalties.sol                              |  4388 ++++++++
+ .../OssifiableProxy.p.sol                          |   702 ++
+ .../FeeDistributor.sol                             |  6607 ++++++++++++
+ .../OssifiableProxy.p.sol                          |   702 ++
+ .../FeeOracle.sol                                  |  8187 ++++++++++++++
+ .../OssifiableProxy.p.sol                          |   702 ++
+ ...:0xd5a965FAab2d02D3cC2286A9da42d09F0F2aE210.sol |  5396 +++++++++
+ .../OssifiableProxy.p.sol                          |   702 ++
+ .../ParametersRegistry.sol                         |  5525 ++++++++++
+ ...0x78e36353FE904c3685585D9F3204D4aAcb3Ad506.sol} |     0
+ ...:0xb8cd8F059Ad7a5dB8CAfDe34aAb007317F7156C8.sol |  7113 ++++++++++++
+ .../OssifiableProxy.p.sol                          |   702 ++
+ .../ValidatorStrikes.sol                           |  7930 ++++++++++++++
+ 21 files changed, 84918 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792491537 (main branch discovery), not current.
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) [lido/CSModule] {
+    +++ description: Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.
+      values.getKeysForTopUp:
+-        []
+    }
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) [lido/StakingRouter] {
+    +++ description: Coordinates Lido staking modules, allocates deposits and top-ups, tracks validator balances and exit states, and distributes staking rewards. Version 3 uses validator balances instead of validator counts and supports EIP-7251 compounding validators.
+      values.getStakingModuleStateConfig.0.withdrawalCredentialsType:
++        1
+      values.getStakingModuleStateConfig.0.status:
++        0
+      values.getStakingModuleStateConfig.0.priorityExitShareThreshold:
++        10000
+      values.getStakingModuleStateConfig.0.stakeShareLimit:
++        10000
+      values.getStakingModuleStateConfig.0.treasuryFee:
++        650
+      values.getStakingModuleStateConfig.0.moduleFee:
++        350
+      values.getStakingModuleStateConfig.0.moduleAddress:
++        "eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5"
+      values.getStakingModuleStateConfig.0.6:
+-        1
+      values.getStakingModuleStateConfig.0.5:
+-        0
+      values.getStakingModuleStateConfig.0.4:
+-        10000
+      values.getStakingModuleStateConfig.0.3:
+-        10000
+      values.getStakingModuleStateConfig.0.2:
+-        650
+      values.getStakingModuleStateConfig.0.1:
+-        350
+      values.getStakingModuleStateConfig.0.0:
+-        "eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5"
+      values.getStakingModuleStateConfig.1.withdrawalCredentialsType:
++        1
+      values.getStakingModuleStateConfig.1.status:
++        0
+      values.getStakingModuleStateConfig.1.priorityExitShareThreshold:
++        478
+      values.getStakingModuleStateConfig.1.stakeShareLimit:
++        430
+      values.getStakingModuleStateConfig.1.treasuryFee:
++        200
+      values.getStakingModuleStateConfig.1.moduleFee:
++        800
+      values.getStakingModuleStateConfig.1.moduleAddress:
++        "eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433"
+      values.getStakingModuleStateConfig.1.6:
+-        1
+      values.getStakingModuleStateConfig.1.5:
+-        0
+      values.getStakingModuleStateConfig.1.4:
+-        478
+      values.getStakingModuleStateConfig.1.3:
+-        430
+      values.getStakingModuleStateConfig.1.2:
+-        200
+      values.getStakingModuleStateConfig.1.1:
+-        800
+      values.getStakingModuleStateConfig.1.0:
+-        "eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433"
+      values.getStakingModuleStateConfig.2.withdrawalCredentialsType:
++        1
+      values.getStakingModuleStateConfig.2.status:
++        0
+      values.getStakingModuleStateConfig.2.priorityExitShareThreshold:
++        1080
+      values.getStakingModuleStateConfig.2.stakeShareLimit:
++        900
+      values.getStakingModuleStateConfig.2.treasuryFee:
++        400
+      values.getStakingModuleStateConfig.2.moduleFee:
++        600
+      values.getStakingModuleStateConfig.2.moduleAddress:
++        "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F"
+      values.getStakingModuleStateConfig.2.6:
+-        1
+      values.getStakingModuleStateConfig.2.5:
+-        0
+      values.getStakingModuleStateConfig.2.4:
+-        1080
+      values.getStakingModuleStateConfig.2.3:
+-        900
+      values.getStakingModuleStateConfig.2.2:
+-        400
+      values.getStakingModuleStateConfig.2.1:
+-        600
+      values.getStakingModuleStateConfig.2.0:
+-        "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F"
+      values.getStakingModuleStateConfig.3.withdrawalCredentialsType:
++        2
+      values.getStakingModuleStateConfig.3.status:
++        0
+      values.getStakingModuleStateConfig.3.priorityExitShareThreshold:
++        10000
+      values.getStakingModuleStateConfig.3.stakeShareLimit:
++        10000
+      values.getStakingModuleStateConfig.3.treasuryFee:
++        600
+      values.getStakingModuleStateConfig.3.moduleFee:
++        400
+      values.getStakingModuleStateConfig.3.moduleAddress:
++        "eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1"
+      values.getStakingModuleStateConfig.3.6:
+-        2
+      values.getStakingModuleStateConfig.3.5:
+-        0
+      values.getStakingModuleStateConfig.3.4:
+-        10000
+      values.getStakingModuleStateConfig.3.3:
+-        10000
+      values.getStakingModuleStateConfig.3.2:
+-        600
+      values.getStakingModuleStateConfig.3.1:
+-        400
+      values.getStakingModuleStateConfig.3.0:
+-        "eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1"
+    }
+```
+
 Generated with discovered.json: 0x1a35f8b31c31bd1d307ccd1a14a945d87b7510a7
 
 # Diff at Tue, 20 Oct 2026 10:19:11 GMT:

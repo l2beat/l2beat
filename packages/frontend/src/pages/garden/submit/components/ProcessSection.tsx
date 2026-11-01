@@ -46,7 +46,7 @@ export function ProcessSection() {
               <h3 className="text-balance pt-1.5 font-bold text-heading-18 md:text-heading-20">
                 {step.title}
               </h3>
-              <p className="mt-1.5 max-w-2xl text-pretty text-paragraph-14 text-secondary md:text-paragraph-15">
+              <p className="mt-1.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15">
                 {step.description}
               </p>
             </li>

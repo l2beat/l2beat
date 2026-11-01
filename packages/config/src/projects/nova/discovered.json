@@ -576,10 +576,12 @@
       "name": "UpgradeableBeacon",
       "address": "arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639",
       "type": "Contract",
+      "template": "global/UpgradeableBeacon",
       "sourceHashes": [
         "0x00ec02964a63af2bae64273fd7236be3bdda2093b2f8d7131e260893b54e1efa"
       ],
       "proxyType": "immutable",
+      "description": "A beacon with an upgradeable implementation currently set as arb-nova:0x53923A0d1f4805463584c91b2E55d6c600A94E91. Beacon proxy contracts pointing to this beacon will all use its implementation.",
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1656313096,
       "sinceBlock": 20,
@@ -587,6 +589,10 @@
         "$immutable": true,
         "implementation": "arb-nova:0x53923A0d1f4805463584c91b2E55d6c600A94E91",
         "owner": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639": "UpgradeableBeacon"
@@ -7969,6 +7975,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "orbitstack/ArbFilteredTransactionsManager": "0xd7b28d473b33601181ef2584f528fc110014a0b547c299eb5f3371658188d6c3",
@@ -7999,8 +8006,8 @@
     "orbitstack/Timelock": "0x829942d628216f5e3ccb318e325a75285505725be8242695aa60ebe14e54e2aa",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "ethereum": 26246975, "nova": 85286608 },
-  "permissionsConfigHash": "0x664da4c7724d7a4eff66181e9cf51bcaf152d155810281776af2addb55ba33cb",
+  "usedBlockNumbers": { "ethereum": 26246975, "nova": 85286609 },
+  "permissionsConfigHash": "0xfb5c717834e22d431e182ac727a4cb39e89596adf4b9e735fe39ce8c09c9f0a3",
   "permissions": {
     "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482": {
       "directlyReceivedPermissions": [
@@ -8012,6 +8019,12 @@
         {
           "permission": "act",
           "from": "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639",
+          "description": "change the beacon implementation.",
           "role": ".owner"
         }
       ]
@@ -8042,6 +8055,15 @@
     },
     "arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639",
+          "description": "change the beacon implementation.",
+          "role": ".owner",
+          "via": [
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+          ]
+        },
         {
           "permission": "upgrade",
           "from": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
@@ -8540,6 +8562,15 @@
     },
     "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639",
+          "description": "change the beacon implementation.",
+          "role": ".owner",
+          "via": [
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x30668ee252A28986EE6dc21b26E4018Ac0e339b9",

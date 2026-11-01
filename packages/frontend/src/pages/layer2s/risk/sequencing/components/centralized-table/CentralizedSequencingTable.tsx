@@ -2,6 +2,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
+import { TableSectionHeader } from '~/components/table/TableSectionHeader'
 import { useTable } from '~/hooks/useTable'
 import type { L2RiskCentralizedSequencingEntry } from '~/server/features/layer2s/risks/sequencing/getL2RiskSequencingEntries'
 import { l2CentralizedSequencingColumns } from './columns'
@@ -30,20 +31,12 @@ export function CentralizedSequencingTable({ entries }: Props) {
 
   return (
     <>
-      <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <div className="min-w-0 md:flex-1">
-          <h2 className="font-bold text-heading-16 md:text-heading-20">
-            Centralized sequencing
-          </h2>
-          <p className="mt-1 text-paragraph-14 text-secondary md:text-paragraph-15">
-            Inclusion columns show how a user bypasses censorship by the
-            centralized operator while the chain is live. Exit covers the worst
-            case where state proposers stop. Delays assume Ethereum includes the
-            required L1 transactions.
-          </p>
-        </div>
+      <TableSectionHeader
+        title="Centralized sequencing"
+        description="Inclusion columns show how a user bypasses censorship by the centralized operator while the chain is live. Exit covers the worst case where state proposers stop. Delays assume Ethereum includes the required L1 transactions."
+      >
         <ColumnsControls columns={table.getAllColumns()} />
-      </div>
+      </TableSectionHeader>
       <BasicTable table={table} />
     </>
   )
