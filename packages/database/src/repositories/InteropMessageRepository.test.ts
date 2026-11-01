@@ -303,4 +303,75 @@ describeDatabase(InteropMessageRepository.name, (database) => {
       })
     },
   )
+
+  describe(
+    InteropMessageRepository.prototype.deleteForPluginsInTxs.name,
+    () => {
+      it('deletes messages with a side in one of the txs', async () => {
+        const at = (srcTime: number, dstTime: number) => ({
+          srcTime: UnixTime(srcTime),
+          dstTime: UnixTime(dstTime),
+          timestamp: UnixTime(dstTime),
+        })
+        await repository.insertMany([
+          makeRecord(UnixTime(0), {
+            messageId: 'srcInTx',
+            ...at(100, 200),
+            srcTxHash: '0xAA',
+            dstTxHash: '0xbb',
+          }),
+          makeRecord(UnixTime(0), {
+            messageId: 'dstInTx',
+            ...at(50, 300),
+            srcTxHash: '0xcc',
+            dstTxHash: '0xdd',
+          }),
+          makeRecord(UnixTime(0), {
+            messageId: 'otherChain',
+            ...at(100, 200),
+            srcChain: 'base',
+            srcTxHash: '0xaa',
+          }),
+          makeRecord(UnixTime(0), {
+            messageId: 'otherPlugin',
+            plugin: 'other',
+            ...at(100, 200),
+            srcTxHash: '0xaa',
+          }),
+        ])
+
+        const deleted = await repository.deleteForPluginsInTxs(
+          ['plugin'],
+          [
+            { chain: 'ethereum', txHash: '0xaa', timestamp: UnixTime(100) },
+            { chain: 'arbitrum', txHash: '0xDD', timestamp: UnixTime(300) },
+          ],
+        )
+
+        expect(deleted).toEqualUnsorted([
+          {
+            srcChain: 'ethereum',
+            srcTime: UnixTime(100),
+            srcTxHash: '0xAA',
+            dstChain: 'arbitrum',
+            dstTime: UnixTime(200),
+            dstTxHash: '0xbb',
+          },
+          {
+            srcChain: 'ethereum',
+            srcTime: UnixTime(50),
+            srcTxHash: '0xcc',
+            dstChain: 'arbitrum',
+            dstTime: UnixTime(300),
+            dstTxHash: '0xdd',
+          },
+        ])
+        const remaining = await repository.getAll()
+        expect(remaining.map((m) => m.messageId)).toEqualUnsorted([
+          'otherChain',
+          'otherPlugin',
+        ])
+      })
+    },
+  )
 })

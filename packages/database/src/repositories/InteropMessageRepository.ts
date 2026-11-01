@@ -2,7 +2,10 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropMessage } from '../kysely/generated/types'
-import type { InteropChainCutoff } from './InteropEventRepository'
+import type {
+  InteropChainCutoff,
+  InteropEventTx,
+} from './InteropEventRepository'
 
 export interface InteropMessageRecord {
   plugin: string
@@ -75,6 +78,28 @@ export type InteropMessageSides = Pick<
   InteropMessageRecord,
   'srcChain' | 'srcTime' | 'srcTxHash' | 'dstChain' | 'dstTime' | 'dstTxHash'
 >
+
+const SIDE_COLUMNS = [
+  'srcChain',
+  'srcTime',
+  'srcTxHash',
+  'dstChain',
+  'dstTime',
+  'dstTxHash',
+] as const
+
+function toSides(
+  row: Pick<Selectable<InteropMessage>, (typeof SIDE_COLUMNS)[number]>,
+): InteropMessageSides {
+  return {
+    srcChain: row.srcChain ?? undefined,
+    srcTime: row.srcTime !== null ? UnixTime.fromDate(row.srcTime) : undefined,
+    srcTxHash: row.srcTxHash ?? undefined,
+    dstChain: row.dstChain ?? undefined,
+    dstTime: row.dstTime !== null ? UnixTime.fromDate(row.dstTime) : undefined,
+    dstTxHash: row.dstTxHash ?? undefined,
+  }
+}
 
 export interface InteropMessageStatsRecord {
   plugin: string
@@ -276,25 +301,51 @@ export class InteropMessageRepository extends BaseRepository {
           ]),
         ),
       )
-      .returning([
-        'srcChain',
-        'srcTime',
-        'srcTxHash',
-        'dstChain',
-        'dstTime',
-        'dstTxHash',
-      ])
+      .returning(SIDE_COLUMNS)
       .execute()
-    return rows.map((row) => ({
-      srcChain: row.srcChain ?? undefined,
-      srcTime:
-        row.srcTime !== null ? UnixTime.fromDate(row.srcTime) : undefined,
-      srcTxHash: row.srcTxHash ?? undefined,
-      dstChain: row.dstChain ?? undefined,
-      dstTime:
-        row.dstTime !== null ? UnixTime.fromDate(row.dstTime) : undefined,
-      dstTxHash: row.dstTxHash ?? undefined,
-    }))
+    return rows.map(toSides)
+  }
+
+  /** Deletes messages with either side in one of the txs. */
+  async deleteForPluginsInTxs(
+    plugins: string[],
+    txs: InteropEventTx[],
+  ): Promise<InteropMessageSides[]> {
+    if (plugins.length === 0 || txs.length === 0) return []
+    const deleted: InteropMessageSides[] = []
+    await this.batch(txs, 1_000, async (batch) => {
+      const rows = await this.db
+        .deleteFrom('InteropMessage')
+        .where('plugin', 'in', plugins)
+        .where((eb) =>
+          eb.or(
+            batch.flatMap((tx) => [
+              eb.and([
+                eb('srcChain', '=', tx.chain),
+                eb('srcTime', '=', UnixTime.toDate(tx.timestamp)),
+                eb(
+                  eb.fn<string>('lower', ['srcTxHash']),
+                  '=',
+                  tx.txHash.toLowerCase(),
+                ),
+              ]),
+              eb.and([
+                eb('dstChain', '=', tx.chain),
+                eb('dstTime', '=', UnixTime.toDate(tx.timestamp)),
+                eb(
+                  eb.fn<string>('lower', ['dstTxHash']),
+                  '=',
+                  tx.txHash.toLowerCase(),
+                ),
+              ]),
+            ]),
+          ),
+        )
+        .returning(SIDE_COLUMNS)
+        .execute()
+      deleted.push(...rows.map(toSides))
+    })
+    return deleted
   }
 
   async getUniqueAppsPerPlugin(): Promise<InteropMessageUniqueAppsRecord[]> {

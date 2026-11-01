@@ -97,7 +97,9 @@ export class InteropDataCleaner extends TimeLoop {
    * rebuilds those from the recaptured events, so their events from before
    * the cutoff are made matchable again. That is done per tx, because a
    * match also consumes events its records don't name, like the
-   * MessagePassed next to an OP stack bridge withdrawal.
+   * MessagePassed next to an OP stack bridge withdrawal. A record with a
+   * side in a reset tx would then be matched a second time, so it is deleted
+   * too and its other side's tx is reset, until no new tx comes up.
    */
   private async wipeResyncedData(cutoffs: InteropChainCutoff[]) {
     const plugins = this.cluster.plugins.map((plugin) => plugin.name)
@@ -109,10 +111,27 @@ export class InteropDataCleaner extends TimeLoop {
         cutoffs,
       )),
     ]
-    await this.store.resetMatchedInTxs(
-      plugins,
-      getTxsBeforeCutoffs(deletedMatches, cutoffs),
-    )
+    const txs = new Map<string, InteropEventTx>()
+    let newTxs = getTxsBeforeCutoffs(deletedMatches, cutoffs)
+    while (newTxs.length > 0) {
+      for (const tx of newTxs) {
+        txs.set(getTxKey(tx), tx)
+      }
+      const deletedInTxs = [
+        ...(await this.db.interopMessage.deleteForPluginsInTxs(
+          plugins,
+          newTxs,
+        )),
+        ...(await this.db.interopTransfer.deleteForPluginsInTxs(
+          plugins,
+          newTxs,
+        )),
+      ]
+      newTxs = getTxsBeforeCutoffs(deletedInTxs, cutoffs).filter(
+        (tx) => !txs.has(getTxKey(tx)),
+      )
+    }
+    await this.store.resetMatchedInTxs(plugins, Array.from(txs.values()))
   }
 }
 
@@ -161,11 +180,16 @@ export function getTxsBeforeCutoffs(
     if (cutoff !== undefined && timestamp > cutoff) {
       return
     }
-    txs.set(`${chain}:${txHash.toLowerCase()}`, { chain, txHash, timestamp })
+    const tx = { chain, txHash, timestamp }
+    txs.set(getTxKey(tx), tx)
   }
   for (const match of matches) {
     add(match.srcChain, match.srcTxHash, match.srcTime)
     add(match.dstChain, match.dstTxHash, match.dstTime)
   }
   return Array.from(txs.values())
+}
+
+function getTxKey(tx: InteropEventTx) {
+  return `${tx.chain}:${tx.txHash.toLowerCase()}`
 }

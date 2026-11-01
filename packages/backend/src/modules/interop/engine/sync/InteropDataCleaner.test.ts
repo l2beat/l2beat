@@ -36,6 +36,19 @@ describe(InteropDataCleaner.name, () => {
       },
     ])
     const deleteTransfers = mockFn().resolvesTo([])
+    const deleteMessagesInTxs = mockFn().resolvesTo([])
+    const deleteTransfersInTxs = mockFn()
+      .resolvesToOnce([
+        {
+          srcChain: 'ethereum',
+          srcTime: UnixTime(900),
+          srcTxHash: '0xeth2',
+          dstChain: 'arbitrum',
+          dstTime: UnixTime(2000),
+          dstTxHash: '0xARB',
+        },
+      ])
+      .resolvesTo([])
     const resetMatchedInTxs = mockFn().resolvesTo(1)
     const deleteSyncedRanges = mockFn().resolvesTo(0)
     const updateByPluginName = mockFn().resolvesTo(2)
@@ -45,9 +58,11 @@ describe(InteropDataCleaner.name, () => {
       transaction,
       interopMessage: mockObject<Database['interopMessage']>({
         deleteForPluginsAfter: deleteMessages,
+        deleteForPluginsInTxs: deleteMessagesInTxs,
       }),
       interopTransfer: mockObject<Database['interopTransfer']>({
         deleteForPluginsAfter: deleteTransfers,
+        deleteForPluginsInTxs: deleteTransfersInTxs,
       }),
       interopPluginSyncedRange: mockObject<
         Database['interopPluginSyncedRange']
@@ -84,9 +99,21 @@ describe(InteropDataCleaner.name, () => {
     expect(deleteEvents).toHaveBeenOnlyCalledWith(plugins, cutoffs)
     expect(deleteMessages).toHaveBeenOnlyCalledWith(plugins, cutoffs)
     expect(deleteTransfers).toHaveBeenOnlyCalledWith(plugins, cutoffs)
-    expect(resetMatchedInTxs).toHaveBeenOnlyCalledWith(plugins, [
-      { chain: 'arbitrum', txHash: '0xarb', timestamp: UnixTime(2000) },
-    ])
+    const arbTx = {
+      chain: 'arbitrum',
+      txHash: '0xarb',
+      timestamp: UnixTime(2000),
+    }
+    const ethTx = {
+      chain: 'ethereum',
+      txHash: '0xeth2',
+      timestamp: UnixTime(900),
+    }
+    expect(deleteMessagesInTxs).toHaveBeenCalledTimes(2)
+    expect(deleteMessagesInTxs).toHaveBeenNthCalledWith(1, plugins, [arbTx])
+    expect(deleteMessagesInTxs).toHaveBeenNthCalledWith(2, plugins, [ethTx])
+    expect(deleteTransfersInTxs).toHaveBeenCalledTimes(2)
+    expect(resetMatchedInTxs).toHaveBeenOnlyCalledWith(plugins, [arbTx, ethTx])
     expect(deleteSyncedRanges).not.toHaveBeenCalled()
     expect(updateByPluginName).toHaveBeenCalledWith('cluster', {
       wipeRequired: false,
@@ -312,19 +339,28 @@ describeDatabase(`${InteropDataCleaner.name} resync`, (db) => {
   })
   const Sibling = createInteropEventType<{ key: string }>('test.Sibling')
   const Dst = createInteropEventType<{ key: string }>('test.Dst')
+  const OneSided = createInteropEventType<{ key: string }>('test.OneSided')
   const plugin: InteropPluginResyncable = {
     ...makePlugin('across'),
-    matchTypes: [Dst],
-    match(dst, events) {
-      if (!Dst.checkType(dst)) return
-      const src = events.find(Src, { key: dst.args.key })
+    matchTypes: [Dst, OneSided],
+    match(event, events) {
+      if (OneSided.checkType(event)) {
+        return [
+          Result.Transfer('test.Transfer', {
+            srcEvent: event,
+            dstChain: 'solana',
+          }),
+        ]
+      }
+      if (!Dst.checkType(event)) return
+      const src = events.find(Src, { key: event.args.key })
       if (!src) return
       const sibling = events.find(Sibling, { sameTxAfter: src })
       if (!sibling) return
       return [
         Result.Transfer('test.Transfer', {
           srcEvent: src,
-          dstEvent: dst,
+          dstEvent: event,
           extraEvents: [sibling],
         }),
       ]
@@ -428,6 +464,80 @@ describeDatabase(`${InteropDataCleaner.name} resync`, (db) => {
     )
   })
 
+  it('rebuilds kept transfers that share a tx with a deleted one exactly once', async () => {
+    // One tx holds the source of a transfer finished after the cutoff, a
+    // one-sided transfer and the destination of a transfer kept by the wipe.
+    const straddlingSrc = event(Src, 'ethereum', 900, '0xa1', 'straddling')
+    const straddlingSibling = event(Sibling, 'ethereum', 900, '0xa1', 'x', 1)
+    const oneSided = event(OneSided, 'ethereum', 900, '0xa1', 'oneSided', 2)
+    const keptDst = event(Dst, 'ethereum', 900, '0xa1', 'kept', 3)
+    const straddlingDst = event(Dst, 'arbitrum', 1100, '0xb1', 'straddling')
+    const keptSrc = event(Src, 'arbitrum', 800, '0xb2', 'kept')
+    const keptSibling = event(Sibling, 'arbitrum', 800, '0xb2', 'x', 1)
+    const keptEvents = [
+      straddlingSrc,
+      straddlingSibling,
+      oneSided,
+      keptDst,
+      keptSrc,
+      keptSibling,
+    ]
+    await db.interopEvent.insertMany(
+      [...keptEvents, straddlingDst].map((e) => toRecord(e, true)),
+    )
+    await db.interopTransfer.insertMany([
+      transfer('straddling', straddlingSrc, straddlingDst),
+      transfer('oneSided', oneSided, undefined),
+      transfer('kept', keptSrc, keptDst),
+    ])
+    for (const chain of ['ethereum', 'arbitrum']) {
+      await db.interopPluginSyncState.setResyncRequestedFrom(
+        'cluster',
+        chain,
+        CUTOFF,
+      )
+    }
+    const store = new InteropEventStore(db, 100, [plugin])
+    await store.start()
+
+    await new InteropDataCleaner(
+      { name: 'cluster', plugins: [plugin] },
+      [makeSyncer('ethereum', true), makeSyncer('arbitrum', true)],
+      store,
+      db,
+      Logger.SILENT,
+    ).run()
+
+    const events = await db.interopEvent.getAll()
+    expect(events.map((e) => [e.eventId, e.matched] as const)).toEqualUnsorted(
+      keptEvents.map((e) => [e.eventId, false] as const),
+    )
+
+    await store.saveNewEvents([
+      event(Dst, 'arbitrum', 1100, '0xb1', 'straddling'),
+    ])
+    const result = await match(
+      store,
+      (type) => store.getEvents(type),
+      store.getEventTypes(),
+      store.getEventCount(),
+      [plugin],
+      ['ethereum', 'arbitrum'],
+      Logger.SILENT,
+      new Map(),
+    )
+
+    const transferSources = [
+      ...(await db.interopTransfer.getAll()).map((t) => t.srcEventId),
+      ...result.transfers.map((t) => t.src.event?.eventId),
+    ]
+    expect(transferSources).toEqualUnsorted([
+      straddlingSrc.eventId,
+      oneSided.eventId,
+      keptSrc.eventId,
+    ])
+  })
+
   function event(
     type: typeof Src,
     chain: string,
@@ -467,15 +577,15 @@ describeDatabase(`${InteropDataCleaner.name} resync`, (db) => {
   function transfer(
     transferId: string,
     src: InteropEvent,
-    dst: InteropEvent,
+    dst: InteropEvent | undefined,
   ): InteropTransferRecord {
     return {
       plugin: plugin.name,
       transferId,
       type: 'test.Transfer',
       bridgeType: undefined,
-      duration: dst.ctx.timestamp - src.ctx.timestamp,
-      timestamp: dst.ctx.timestamp,
+      duration: dst ? dst.ctx.timestamp - src.ctx.timestamp : undefined,
+      timestamp: dst?.ctx.timestamp ?? src.ctx.timestamp,
       srcTime: src.ctx.timestamp,
       srcChain: src.ctx.chain,
       srcTxHash: src.ctx.txHash,
@@ -489,11 +599,11 @@ describeDatabase(`${InteropDataCleaner.name} resync`, (db) => {
       srcAmount: undefined,
       srcPrice: undefined,
       srcValueUsd: undefined,
-      dstTime: dst.ctx.timestamp,
-      dstChain: dst.ctx.chain,
-      dstTxHash: dst.ctx.txHash,
-      dstLogIndex: dst.ctx.logIndex,
-      dstEventId: dst.eventId,
+      dstTime: dst?.ctx.timestamp,
+      dstChain: dst?.ctx.chain ?? 'solana',
+      dstTxHash: dst?.ctx.txHash,
+      dstLogIndex: dst?.ctx.logIndex,
+      dstEventId: dst?.eventId,
       dstTokenAddress: undefined,
       dstRawAmount: undefined,
       dstWasMinted: undefined,
