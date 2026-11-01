@@ -7086,6 +7086,42 @@
       ]
     }
   },
+  "oneinch-fusion-plus-v1-1": {
+    "description": "1inch Fusion+ Arbitrum to Ethereum swap through the v1.1 escrow factory",
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xadfb63dbc2fcd6e463e1e314b2b6b2a4c89bf8cf8200e5fe3eca73949f4336f9"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6ee11dc65d2de51590ed4327619ac1f5b0f3c74cbc63b41348e42ac5edb7fa48"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xd1e722b136e58a82259e7da0399daecaa56ebf7ff0e28b9f584cf3bc80764d2f"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "oneinch-fusion-plus.Message", "app": "oneinch-fusion-plus" }
+      ],
+      "transfers": [
+        {
+          "type": "oneinch-fusion-plus.Transfer",
+          "src": { "event": { "ctx": { "chain": "arbitrum" } } },
+          "dst": {
+            "event": {
+              "ctx": {
+                "chain": "ethereum",
+                "txHash": "0xd1e722b136e58a82259e7da0399daecaa56ebf7ff0e28b9f584cf3bc80764d2f"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
   "lifi-intents": {
     "description": "LI.FI Intents Base to Arbitrum fill with Polymer proof",
     "tags": ["lifi-intents"],
