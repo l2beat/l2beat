@@ -219,11 +219,22 @@ function getIgnoredAndLinkOffsets(text: string) {
     'g',
   )
 
-  return [linkPattern, backtickPattern, angleBracketPattern].flatMap(
-    (pattern) =>
-      [...text.matchAll(pattern)].map((match) => ({
-        start: match.index,
-        end: match.index + match[0].length,
-      })),
+  // markdown-it reads a < inside a code span as code, so code spans are
+  // blanked out (keeping offsets) before looking for tags and comments
+  const withoutCode = text.replace(backtickPattern, (code) =>
+    ' '.repeat(code.length),
   )
+
+  return [
+    ...getOffsets(text, linkPattern),
+    ...getOffsets(text, backtickPattern),
+    ...getOffsets(withoutCode, angleBracketPattern),
+  ]
+}
+
+function getOffsets(text: string, pattern: RegExp) {
+  return [...text.matchAll(pattern)].map((match) => ({
+    start: match.index,
+    end: match.index + match[0].length,
+  }))
 }

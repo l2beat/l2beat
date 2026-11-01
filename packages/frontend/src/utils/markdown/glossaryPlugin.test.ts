@@ -92,6 +92,15 @@ describe(linkGlossaryTerms.name, () => {
     )
   })
 
+  it('should not read a comment marker inside a code span as a comment', () => {
+    const output = linkTerms('Use `<!--` before a Blob. <!-- note -->')
+    expect(output).toEqual(
+      `Use \`<!--\` before a [Blob](/glossary#blob?description=${encodeURIComponent(
+        'Blob description',
+      )}). <!-- note -->`,
+    )
+  })
+
   it('should not replace terms in HTML attributes that contain >', () => {
     const input = '<abbr title="a > blob">x</abbr>'
     const output = linkTerms(input)
