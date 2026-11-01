@@ -3901,6 +3901,59 @@
       ]
     }
   },
+  "stargatev2taxi-plasma": {
+    "description": "Stargate v2 ETH taxis to and from Plasma (one-sided)",
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      // Ethereum -> Plasma source-side only
+      {
+        "chain": "ethereum",
+        "tx": "0xba0269a7ef033c00984d66582fdbb4277c38670989e58a07e0afde528b235140"
+      },
+      // Plasma -> Ethereum destination-side only
+      {
+        "chain": "ethereum",
+        "tx": "0x71d142fd22c48b2e7174f9cb0eeba20d9f1af4c5f0b2ab3257a4878eaae666cc"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "stargate-v2.OFTSentTaxi",
+          "args": { "$dstChain": "plasma" }
+        },
+        {
+          "type": "stargate-v2.OFTReceived",
+          "args": {
+            "$srcChain": "plasma",
+            "amountReceivedLD": "3910000000000000"
+          }
+        }
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "stargate-v2-taxi.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "native",
+            "wasBurned": false
+          },
+          "dst": { "chain": "plasma" }
+        },
+        {
+          "type": "stargate-v2-taxi.Transfer",
+          "src": { "chain": "plasma" },
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "native",
+            "tokenAmount": "3910000000000000",
+            "wasMinted": false
+          }
+        }
+      ]
+    }
+  },
   "layerzeromix": {
     "loadConfigs": ["layerzero-v2"],
     // Messages:
