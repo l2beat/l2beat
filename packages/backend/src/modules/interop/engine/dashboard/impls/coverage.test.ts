@@ -4,7 +4,11 @@ import type {
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { buildInteropCoverage, resolveCounterpartChain } from './coverage'
+import {
+  buildIdNames,
+  buildInteropCoverage,
+  resolveCounterpartChain,
+} from './coverage'
 
 const CONFIG = {
   capturedChains: ['ethereum', 'base', 'arbitrum'],
@@ -62,10 +66,11 @@ describe(buildInteropCoverage.name, () => {
     expect(result.chains).toEqual([])
   })
 
-  it('tells unknown ids, untracked chains and disabled one-sided chains apart', () => {
+  it('tells unmapped ids, unknown ids, untracked and disabled one-sided chains apart', () => {
     const result = buildInteropCoverage(
       [
-        row('cctp-v2', 'Unknown_31', 3),
+        row('cctp-v2', 'Unknown_6', 4),
+        row('cctp-v2', 'Unknown_99', 3),
         row('across', 'Unknown_728126428', 2),
         row('layerzero-v2-ofts', 'ton', 1),
       ],
@@ -81,9 +86,10 @@ describe(buildInteropCoverage.name, () => {
         status: c.status,
       })),
     ).toEqual([
+      { key: 'base', label: 'base', status: 'unmapped-id' },
       {
-        key: 'CCTP domain:31',
-        label: 'Unknown CCTP domain 31',
+        key: 'CCTP domain:99',
+        label: 'Unknown CCTP domain 99',
         status: 'unknown-id',
       },
       { key: 'tron', label: 'tron', status: 'one-sided-disabled' },
@@ -136,16 +142,48 @@ describe(buildInteropCoverage.name, () => {
 })
 
 describe(resolveCounterpartChain.name, () => {
+  const idNames = buildIdNames({
+    'layerzero-v2': [{ chain: 'rootstock', eid: 30333, chainId: 30 }],
+    relay: [{ chain: 'anubis', chainId: 6714 }],
+    ccip: {
+      networks: [
+        { chain: 'Unknown_wemix', chainSelector: '5142893604156789321' },
+      ],
+    },
+  })
+
   it('reads numeric ids in the id space of the plugin', () => {
-    expect(resolveCounterpartChain('cctp-v1', 'Unknown_9').key).toEqual('aptos')
-    expect(resolveCounterpartChain('across', 'Unknown_9').key).toEqual(
+    expect(
+      resolveCounterpartChain('cctp-v1', 'Unknown_9', idNames).key,
+    ).toEqual('aptos')
+    expect(resolveCounterpartChain('across', 'Unknown_9', idNames).key).toEqual(
       'chain id:9',
     )
-    expect(resolveCounterpartChain('hyperlane', 'Unknown_6714')).toEqual({
-      key: 'Hyperlane domain:6714',
-      label: 'Unknown Hyperlane domain 6714',
+    expect(
+      resolveCounterpartChain('hyperlane', 'Unknown_9200', idNames),
+    ).toEqual({
+      key: 'Hyperlane domain:9200',
+      label: 'Unknown Hyperlane domain 9200',
       isNamed: false,
+      isUnmappedId: true,
     })
+  })
+
+  it('names ids from the stored configs', () => {
+    expect(
+      resolveCounterpartChain('stargate', 'Unknown_30333', idNames).key,
+    ).toEqual('rootstock')
+    // Hyperlane domains fall back to EVM chain ids
+    expect(
+      resolveCounterpartChain('hyperlane', 'Unknown_6714', idNames).key,
+    ).toEqual('anubis')
+    expect(
+      resolveCounterpartChain('ccip', 'Unknown_5142893604156789321', idNames)
+        .key,
+    ).toEqual('wemix')
+    expect(
+      resolveCounterpartChain('across', 'Unknown_30', idNames).key,
+    ).toEqual('rootstock')
   })
 })
 

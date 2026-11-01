@@ -79,6 +79,13 @@ export function CoveragePage() {
             <Badge variant="secondary">
               {data.chains.length} missing chains
             </Badge>
+            <Badge className="border-violet-200 bg-violet-50 text-violet-800">
+              {
+                data.chains.filter((chain) => chain.status === 'unmapped-id')
+                  .length
+              }{' '}
+              plugin mapping gaps
+            </Badge>
             <Badge variant="secondary">
               {formatTimestamp(data.from)} to {formatTimestamp(data.to)} UTC
             </Badge>

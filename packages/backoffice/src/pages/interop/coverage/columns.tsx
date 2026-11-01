@@ -6,12 +6,14 @@ import { formatCompactUsd, formatPct } from './format'
 import type { CoverageChain, CoveragePlugin } from './types'
 
 const STATUS_LABELS: Record<CoverageChain['status'], string> = {
+  'unmapped-id': 'Unmapped id',
   'unknown-id': 'Unknown id',
   'not-tracked': 'Not tracked',
   'one-sided-disabled': 'One-sided, flag off',
 }
 
 const STATUS_CLASSES: Record<CoverageChain['status'], string> = {
+  'unmapped-id': 'border-violet-200 bg-violet-50 text-violet-800',
   'unknown-id': 'border-amber-200 bg-amber-50 text-amber-800',
   'not-tracked': 'border-red-200 bg-red-50 text-red-700',
   'one-sided-disabled': 'border-sky-200 bg-sky-50 text-sky-800',
@@ -23,6 +25,15 @@ function formatPluginValue(plugin: CoverageChain['plugins'][number]): string {
   return plugin.valueUsd > 0
     ? formatCompactUsd(plugin.valueUsd)
     : `${formatNumberWithCommas(plugin.events)} ev`
+}
+
+const STATUS_DESCRIPTIONS: Record<CoverageChain['status'], string> = {
+  'unmapped-id':
+    'We track this chain, but the plugin reports an id it cannot map, so these events are dropped.',
+  'unknown-id': 'No config or verified list names this id.',
+  'not-tracked': 'We neither capture this chain nor treat it as one-sided.',
+  'one-sided-disabled':
+    'A configured one-sided chain whose feature flag is off here.',
 }
 
 const chainHelper = createColumnHelper<CoverageChain>()
@@ -46,7 +57,10 @@ export const coverageChainColumns: TableOptions<CoverageChain>['columns'] = [
   chainHelper.accessor('status', {
     header: 'Status',
     cell: ({ row }) => (
-      <Badge className={STATUS_CLASSES[row.original.status]}>
+      <Badge
+        className={STATUS_CLASSES[row.original.status]}
+        title={STATUS_DESCRIPTIONS[row.original.status]}
+      >
         {STATUS_LABELS[row.original.status]}
       </Badge>
     ),
