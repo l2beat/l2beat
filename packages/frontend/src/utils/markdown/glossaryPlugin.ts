@@ -203,9 +203,21 @@ function escapeRegExp(string: string) {
 function getIgnoredAndLinkOffsets(text: string) {
   const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g
   const backtickPattern = /`([^`]*)`/g
-  // Autolinks (<https://…>) and inline HTML tags, whose quoted attributes may
-  // contain >
-  const angleBracketPattern = /<[^\s<>](?:[^<>"']|"[^"]*"|'[^']*')*>/g
+  // What markdown-it renders as an autolink or inline HTML: URL and email
+  // autolinks, open tags (quoted attributes may contain >), closing tags and
+  // comments
+  const angleBracketPattern = new RegExp(
+    [
+      /<[A-Za-z][A-Za-z0-9+.-]{1,31}:[^<>\s]*>/.source,
+      /<[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*>/
+        .source,
+      /<[A-Za-z][A-Za-z0-9-]*(?:\s+[A-Za-z_:][A-Za-z0-9_.:-]*(?:\s*=\s*(?:[^\s"'=<>`]+|'[^']*'|"[^"]*"))?)*\s*\/?>/
+        .source,
+      /<\/[A-Za-z][A-Za-z0-9-]*\s*>/.source,
+      /<!--[\s\S]*?-->/.source,
+    ].join('|'),
+    'g',
+  )
 
   return [linkPattern, backtickPattern, angleBracketPattern].flatMap(
     (pattern) =>

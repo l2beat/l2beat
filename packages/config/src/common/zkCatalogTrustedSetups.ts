@@ -215,7 +215,7 @@ export const TRUSTED_SETUPS = {
     id: 'PrivacyBoostv1',
     name: 'Privacy Boost',
     risk: 'red',
-    participantCount: 23,
+    participantCount: 25,
     phases: {
       phase1: { count: 61, unit: 'contributions' },
       phase2: {
@@ -232,7 +232,7 @@ export const TRUSTED_SETUPS = {
     id: 'PrivacyBoostv2',
     name: 'Privacy Boost v2',
     risk: 'red',
-    participantCount: 23,
+    participantCount: 26,
     phases: {
       phase1: { count: 61, unit: 'contributions' },
       phase2: {

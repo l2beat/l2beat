@@ -77,6 +77,21 @@ describe(linkGlossaryTerms.name, () => {
     expect(output).toEqual(input)
   })
 
+  it('should not replace terms in autolinks with an apostrophe', () => {
+    const input = "<https://example.com/bob's/blob>"
+    const output = linkTerms(input)
+    expect(output).toEqual(input)
+  })
+
+  it('should replace terms between a < and a > that are not a tag', () => {
+    const output = linkTerms('Up to <10 Blob per block, a > b')
+    expect(output).toEqual(
+      `Up to <10 [Blob](/glossary#blob?description=${encodeURIComponent(
+        'Blob description',
+      )}) per block, a > b`,
+    )
+  })
+
   it('should not replace terms in HTML attributes that contain >', () => {
     const input = '<abbr title="a > blob">x</abbr>'
     const output = linkTerms(input)
