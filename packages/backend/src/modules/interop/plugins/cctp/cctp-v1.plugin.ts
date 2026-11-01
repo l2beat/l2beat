@@ -315,6 +315,16 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
       if (!this.oneSidedChains.includes(dstChain)) return
       if (isMessageOnlyPayload(event.args)) return []
 
+      // Without a destination event there is no mayan.Message, so the
+      // Mayan forwarder event and its Wormhole message are consumed by the
+      // transfer instead.
+      const mayanForwarded = db
+        .findAll(MayanForwarded, { sameTxAfter: event })
+        .find(isMayanCircleForwarded)
+      const mayanWrappedWormholeLog = mayanForwarded
+        ? findWrappedMayanWormholeLog(db, mayanForwarded, LogMessagePublished)
+        : undefined
+
       return [
         Result.Transfer('cctp-v1.Transfer', {
           srcEvent: event,
@@ -324,6 +334,12 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
           srcWasBurned: true,
           dstWasMinted: true,
           bridgeType: 'burnAndMint',
+          extraEvents: mayanForwarded
+            ? [
+                mayanForwarded,
+                ...(mayanWrappedWormholeLog ? [mayanWrappedWormholeLog] : []),
+              ]
+            : undefined,
         }),
       ]
     }

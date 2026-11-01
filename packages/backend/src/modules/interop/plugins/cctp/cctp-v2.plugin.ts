@@ -353,6 +353,12 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       const dstChain = event.args.$dstChain
       if (!this.oneSidedChains.includes(dstChain)) return
 
+      // Without a destination event there is no mayan.Message, so the
+      // Mayan forwarder event is consumed by the transfer instead.
+      const mayanForwarded = db
+        .findAll(MayanForwarded, { sameTxAfter: event })
+        .find(isMayanCctpForwarded)
+
       return [
         Result.Transfer('cctp-v2.Transfer', {
           srcEvent: event,
@@ -362,6 +368,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
           srcWasBurned: true,
           dstWasMinted: true,
           bridgeType: 'burnAndMint',
+          extraEvents: mayanForwarded ? [mayanForwarded] : undefined,
         }),
       ]
     }
