@@ -141,6 +141,7 @@ export function createInteropModule({
     tokenDbClient,
     eventPlugins,
     config.interop.capture.chains.map((c) => c.id),
+    config.interop.oneSidedChains,
     logger,
   )
 

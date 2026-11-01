@@ -31,6 +31,7 @@ export class InteropMatchingLoop extends TimeLoop {
     private tokenDbClient: TokenDbClient,
     private plugins: InteropPlugin[],
     private supportedChains: string[],
+    private oneSidedChains: string[],
     protected logger: Logger,
     private readonly intervalMs = 10_000,
   ) {
@@ -48,6 +49,7 @@ export class InteropMatchingLoop extends TimeLoop {
       this.store.getEventCount(),
       this.plugins,
       this.supportedChains,
+      this.oneSidedChains,
       this.logger,
       tokenMap,
     )
@@ -81,6 +83,7 @@ export async function match(
   count: number,
   plugins: InteropPlugin[],
   supportedChains: string[],
+  oneSidedChains: string[],
   logger: Logger,
   tokenMap: TokenMap,
 ) {
@@ -98,6 +101,10 @@ export async function match(
     const allTransfers: InteropTransfer[] = []
     const isExcluded = (event: InteropEvent) =>
       matched.has(event) || unsupported.has(event)
+    // One-sided chains are not captured, but events to or from them can
+    // still match an event that a captured chain emits later.
+    const isSupportedChain = (chain: string) =>
+      supportedChains.includes(chain) || oneSidedChains.includes(chain)
     const filteredDb = createFilteredDb(db, isExcluded)
 
     for (const plugin of plugins) {
@@ -185,17 +192,11 @@ export async function match(
           continue
         }
         const $srcChain = (event.args as Record<string, unknown>).$srcChain
-        if (
-          typeof $srcChain === 'string' &&
-          !supportedChains.includes($srcChain)
-        ) {
+        if (typeof $srcChain === 'string' && !isSupportedChain($srcChain)) {
           unsupported.add(event)
         }
         const $dstChain = (event.args as Record<string, unknown>).$dstChain
-        if (
-          typeof $dstChain === 'string' &&
-          !supportedChains.includes($dstChain)
-        ) {
+        if (typeof $dstChain === 'string' && !isSupportedChain($dstChain)) {
           unsupported.add(event)
         }
       }

@@ -75,6 +75,7 @@ describe(InteropMatchingLoop.name, () => {
         tokenDbClient,
         [],
         [],
+        [],
         Logger.SILENT,
       )
 
@@ -138,6 +139,7 @@ describe('match', () => {
       db.getEventCount(),
       [plugin],
       [],
+      [],
       Logger.SILENT,
       mockObject<TokenMap>({}),
     )
@@ -185,6 +187,7 @@ describe('match', () => {
       db.getEventCount(),
       [plugin],
       [],
+      [],
       Logger.SILENT,
       deployedToAbstractMap,
     )
@@ -230,6 +233,7 @@ describe('match', () => {
       db.getEventCount(),
       [plugin],
       ['ethereum'],
+      [],
       Logger.SILENT,
       mockObject<TokenMap>({}),
     )
@@ -241,5 +245,42 @@ describe('match', () => {
     expect(transfer.src.event?.ctx.chain).toEqual('ethereum')
     expect(transfer.dst.event).toEqual(undefined)
     expect(transfer.dst.chain).toEqual('solana')
+  })
+
+  it('does not mark events to or from one-sided chains as unsupported', async () => {
+    const Event = createInteropEventType<{
+      $srcChain?: string
+      $dstChain?: string
+    }>('test.Event')
+    const db = new InMemoryEventDb()
+
+    const toOneSided = Event.mock({ $dstChain: 'solana' }, 1)
+    const fromOneSided = Event.mock({ $srcChain: 'solana' }, 2)
+    const toUnknown = Event.mock({ $dstChain: 'sui' }, 3)
+    db.addEvent(toOneSided)
+    db.addEvent(fromOneSided)
+    db.addEvent(toUnknown)
+
+    const plugin: InteropPlugin = {
+      name: 'mock-plugin' as InteropPluginName,
+      matchTypes: [Event],
+      match() {
+        return undefined
+      },
+    }
+
+    const result = await match(
+      db,
+      (type) => db.getEvents(type),
+      db.getEventTypes(),
+      db.getEventCount(),
+      [plugin],
+      ['ethereum'],
+      ['solana'],
+      Logger.SILENT,
+      mockObject<TokenMap>({}),
+    )
+
+    expect(result.unsupported).toEqual([toUnknown])
   })
 })
