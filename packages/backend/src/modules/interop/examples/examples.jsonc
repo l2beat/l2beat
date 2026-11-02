@@ -8281,6 +8281,53 @@
     "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
   },
+  "agglayer-partial-xlayer": {
+    "tags": ["agglayer"],
+    "txs": [
+      // Ethereum → X Layer (bridgeAsset, USDT locked on Ethereum)
+      {
+        "chain": "ethereum",
+        "tx": "0xcb553d86297115df87f083d8d65b4c2bda40aaaaf2c435cfcb097570b2ed8acd"
+      },
+      // X Layer → Ethereum (claimAsset, USDT released on Ethereum)
+      {
+        "chain": "ethereum",
+        "tx": "0xf681e68bbbf633ed4a7cabba714299f77d61144a325995a8daf09676d4ae7096"
+      }
+    ],
+    "expects": {
+      "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "agglayer.Transfer",
+          "plugin": "agglayer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "0x000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7",
+            "tokenAmount": "20000000000",
+            "wasBurned": false,
+            "financials": { "symbol": "USDT" }
+          },
+          "dst": { "chain": "xlayer" }
+        },
+        {
+          "type": "agglayer.Transfer",
+          "plugin": "agglayer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "xlayer" },
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "0x000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7",
+            "tokenAmount": "6145910000",
+            "wasMinted": false,
+            "financials": { "symbol": "USDT" }
+          }
+        }
+      ]
+    }
+  },
   "opstack-derived-tx-base-deposit": {
     "description": "Ethereum -> Base OptimismPortal deposit with derived destination tx hash",
     "tags": ["opstack", "derived-transaction"],
