@@ -44,4 +44,11 @@ describe(getBadgeLookup.name, () => {
 
     expect(Object.keys(getBadgeLookup([{ badges: [ref] }]))).toEqual([ref.id])
   })
+
+  // A page that forgets to send the lookup must fail its render, not drop badges.
+  it('throws when a ref is missing from the lookup', () => {
+    expect(() => resolveBadgeRefs([{ id: 'missing' }], {})).toThrow(
+      'Badge missing from the page lookup',
+    )
+  })
 })

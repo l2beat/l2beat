@@ -40,12 +40,12 @@ export function resolveBadgeRefs(
   lookup: BadgeLookup,
 ): BadgeWithParams[] {
   if (!refs) return []
-  return refs.flatMap((ref) => {
+  return refs.map((ref) => {
     const badge = lookup[ref.id]
-    if (!badge) {
-      console.error('Badge missing from the page lookup', ref)
-      return []
-    }
-    return [{ ...badge, href: ref.href ?? badge.href }]
+    // Throwing fails the server render, so a page whose data getter forgets
+    // `badgeLookup` breaks the all-pages e2e instead of quietly losing badges.
+    if (!badge)
+      throw new Error('Badge missing from the page lookup', { cause: ref })
+    return { ...badge, href: ref.href ?? badge.href }
   })
 }
