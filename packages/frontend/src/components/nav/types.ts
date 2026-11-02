@@ -1,3 +1,5 @@
+import type { NavViewParams } from './navLinkHref'
+
 export type NavGroup = (
   | {
       type: 'multiple'
@@ -25,4 +27,6 @@ export interface NavLink {
   disabled?: boolean
   subLinks?: NavLink[]
   exactMatch?: boolean
+  /** What the page keeps when reached from another page of its group. */
+  viewParams?: NavViewParams
 }

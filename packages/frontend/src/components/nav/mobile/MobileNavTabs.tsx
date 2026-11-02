@@ -2,6 +2,7 @@ import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 import { isLinkActive } from '~/utils/isLinkActive'
 import { OverflowWrapper } from '../../core/OverflowWrapper'
+import { useNavLinkHref } from '../navLinkHref'
 import type { NavGroup, NavLink } from '../types'
 
 /**
@@ -21,9 +22,9 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
         !g.disableMobileTabs
       )
     })
+  const links = currentGroup?.links.flat() ?? []
+  const getHref = useNavLinkHref(links)
   if (!currentGroup) return null
-
-  const links = currentGroup.links.flat()
 
   // Do not display the tabs if the current group is not found,
   // or the current group does not have a link that matches the current path.
@@ -37,11 +38,12 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
 
   return (
     <>
-      <NavTabRow links={links} pathname={pathname} />
+      <NavTabRow links={links} pathname={pathname} getHref={getHref} />
       {activeSubLinks && (
         <NavTabRow
           links={activeSubLinks}
           pathname={pathname}
+          getHref={getHref}
           tabClassName="h-8 text-2xs"
         />
       )}
@@ -52,10 +54,12 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
 function NavTabRow({
   links,
   pathname,
+  getHref,
   tabClassName,
 }: {
   links: NavLink[]
   pathname: string
+  getHref: (link: NavLink) => string
   tabClassName?: string
 }) {
   return (
@@ -79,7 +83,7 @@ function NavTabRow({
                     })
                   }
                 }}
-                href={link.href}
+                href={getHref(link)}
                 key={link.href}
                 data-state={isSelected ? 'selected' : undefined}
                 className={cn(

@@ -1,6 +1,6 @@
 import type { Badge, Project } from '@l2beat/config'
 import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
-import { getL2Tab } from '../layer2s/getCommonL2Entry'
+import { getL2CategoryTab } from '~/utils/project/l2Tabs'
 
 export function getBadgeLink(
   badge: Badge,
@@ -24,6 +24,6 @@ export function getBadgeLink(
   }
 
   if (badge.action.type === 'selfDaHighlight') {
-    return `/layer2s/risk/data-availability?tab=${getL2Tab(project)}&highlight=${project.slug}`
+    return `/layer2s/risk/data-availability?tab=${getL2CategoryTab(project.scalingInfo.type)}&highlight=${project.slug}`
   }
 }

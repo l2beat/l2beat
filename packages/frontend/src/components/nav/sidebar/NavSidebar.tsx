@@ -33,6 +33,7 @@ import { NavPinnedProjects } from '../../pinned-projects/NavPinnedProjects'
 import { SocialLinks } from '../../SocialLinks'
 import { NavWhatsNew } from '../../whats-new/NavWhatsNew'
 import { MobileNavTriggerClose } from '../mobile/MobileNavTrigger'
+import { useNavLinkHref } from '../navLinkHref'
 import type { NavGroup } from '../types'
 
 interface Props {
@@ -182,6 +183,7 @@ function NavCollapsibleItem({
 }) {
   const pathname = usePathname()
   const allGroupLinks = useMemo(() => group.links.flat(), [group.links])
+  const getHref = useNavLinkHref(allGroupLinks)
   const isAnyLinkActive = allGroupLinks.some((link) =>
     isLinkActive({ href: link.href, pathname, exact: link.exactMatch }),
   )
@@ -240,7 +242,7 @@ function NavCollapsibleItem({
                     </SidebarGroupSubButton>
                   ) : (
                     <SidebarGroupSubButton
-                      href={item.href}
+                      href={getHref(item)}
                       isActive={isLinkActive({
                         href: item.href,
                         pathname,
@@ -256,7 +258,7 @@ function NavCollapsibleItem({
                       {item.subLinks.map((subItem) => (
                         <SidebarGroupSubLink
                           key={subItem.title}
-                          href={subItem.href}
+                          href={getHref(subItem)}
                           isActive={isLinkActive({
                             href: subItem.href,
                             pathname,

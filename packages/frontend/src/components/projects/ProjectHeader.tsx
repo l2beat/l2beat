@@ -24,6 +24,8 @@ interface Props {
   project: Project
   /** The section this page belongs to, shown as a breadcrumb above the name */
   section?: ProjectSection
+  /** Where the breadcrumb leads, when the project sits on a tab of its section's page */
+  sectionHref?: string
   /** The project's page in each section; the ones besides `section` show as "Also in" links */
   sectionLinks?: ProjectSectionLink[]
   /** Shows the group name as the title, with the version as a switcher */
@@ -38,6 +40,7 @@ interface Props {
 export function ProjectHeader({
   project,
   section,
+  sectionHref,
   sectionLinks,
   versions,
   ongoingAnomaly,
@@ -54,6 +57,7 @@ export function ProjectHeader({
         {section && (
           <ProjectSectionBreadcrumb
             section={section}
+            href={sectionHref}
             otherSections={sectionLinks?.filter(
               (link) => link.section !== section,
             )}
@@ -138,12 +142,14 @@ export function ProjectHeader({
 
 function ProjectSectionBreadcrumb({
   section,
+  href = PROJECT_SECTIONS[section].href,
   otherSections,
 }: {
   section: ProjectSection
+  href?: string
   otherSections?: ProjectSectionLink[]
 }) {
-  const { label, href, icon: Icon } = PROJECT_SECTIONS[section]
+  const { label, icon: Icon } = PROJECT_SECTIONS[section]
   return (
     <nav
       aria-label="Breadcrumb"

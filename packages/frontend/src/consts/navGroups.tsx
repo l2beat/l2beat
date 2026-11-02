@@ -8,6 +8,13 @@ import { L2Icon } from '~/icons/pages/L2'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
+import {
+  L2_CATEGORY_TABS,
+  L2_STATE_VALIDATION_TABS,
+} from '~/utils/project/l2Tabs'
+
+const L2_CATEGORY_VIEW = { tabs: L2_CATEGORY_TABS, filters: true } as const
+const FILTERS_ONLY_VIEW = { filters: true } as const
 
 export const navGroups: NavGroup[] = compact<NavGroup>([
   {
@@ -40,25 +47,30 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         {
           title: 'Summary',
           href: '/layer2s/summary',
+          viewParams: L2_CATEGORY_VIEW,
         },
         {
           title: 'Risk Analysis',
           shortTitle: 'Risks',
           href: '/layer2s/risk',
+          viewParams: L2_CATEGORY_VIEW,
           subLinks: [
             {
               title: 'Overview',
               href: '/layer2s/risk',
               exactMatch: true,
+              viewParams: L2_CATEGORY_VIEW,
             },
             {
               title: 'State Validation',
               href: '/layer2s/risk/state-validation',
+              viewParams: { tabs: L2_STATE_VALIDATION_TABS, filters: true },
             },
             {
               title: 'Data Availability',
               shortTitle: 'DA',
               href: '/layer2s/risk/data-availability',
+              viewParams: L2_CATEGORY_VIEW,
             },
             {
               title: 'Sequencing',
@@ -70,24 +82,29 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
           title: 'Value Secured',
           shortTitle: 'Value',
           href: '/layer2s/tvs',
+          viewParams: L2_CATEGORY_VIEW,
         },
         {
           title: 'Activity',
           href: '/layer2s/activity',
+          viewParams: FILTERS_ONLY_VIEW,
         },
         {
           title: 'Liveness',
           href: '/layer2s/liveness',
+          viewParams: L2_CATEGORY_VIEW,
         },
         {
           title: 'Costs',
           href: '/layer2s/costs',
+          viewParams: L2_CATEGORY_VIEW,
         },
       ],
       [
         {
           title: 'Archived',
           href: '/layer2s/archived',
+          viewParams: FILTERS_ONLY_VIEW,
         },
       ],
       [

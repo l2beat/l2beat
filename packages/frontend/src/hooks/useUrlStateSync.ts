@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useDebouncedValue } from './useDebouncedValue'
 import { useEventCallback } from './useEventCallback'
 import { useEventListener } from './useEventListener'
+import { notifyLocationSearchChange } from './useLocationSearch'
 
 interface UseUrlStateSyncOptions<T> {
   /** The live client state; its canonical URL is pushed (debounced). */
@@ -56,6 +57,7 @@ export function useUrlStateSync<T>({
     }
 
     window.history.pushState({}, '', nextUrl)
+    notifyLocationSearchChange()
     onPushState?.(nextUrl, nextState)
   })
 

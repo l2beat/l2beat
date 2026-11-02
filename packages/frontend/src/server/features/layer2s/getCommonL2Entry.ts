@@ -3,6 +3,7 @@ import type { FilterableEntry } from '~/components/table/filters/filterableValue
 import { getRowBackgroundColor } from '~/components/table/utils/rowType'
 import { manifest } from '~/utils/Manifest'
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
+import { getL2CategoryTab, type L2CategoryTab } from '~/utils/project/l2Tabs'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
@@ -14,7 +15,7 @@ const proofSystemLabel: Record<ProjectScalingProofSystem['type'], string> = {
 }
 
 export interface CommonL2Entry extends CommonProjectEntry, FilterableEntry {
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
+  tab: L2CategoryTab
   isLayer3: boolean
 }
 
@@ -41,7 +42,7 @@ export function getCommonL2Entry({
     emergencyWarning: project.statuses.emergencyWarning,
     ongoingAnomaly,
   }
-  const tab = getL2Tab(project)
+  const tab = getL2CategoryTab(project.scalingInfo.type)
 
   return {
     id: project.id,
@@ -113,18 +114,4 @@ export function getCommonL2Entry({
       .map((badge) => getBadgeWithParamsAndLink(badge, project))
       .filter((b) => b !== undefined),
   }
-}
-
-export function getL2Tab(
-  project: Project<'scalingInfo' | 'statuses'>,
-): 'rollups' | 'validiumsAndOptimiums' | 'others' {
-  const isRollup =
-    project.scalingInfo.type === 'Optimistic Rollup' ||
-    project.scalingInfo.type === 'ZK Rollup'
-
-  return project.scalingInfo.type === 'Other'
-    ? 'others'
-    : isRollup
-      ? 'rollups'
-      : 'validiumsAndOptimiums'
 }

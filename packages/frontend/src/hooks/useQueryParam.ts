@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useEventListener } from './useEventListener'
+import { notifyLocationSearchChange } from './useLocationSearch'
 
 const getURLSearchParams = () => {
   if (typeof window !== 'undefined') {
@@ -44,6 +45,7 @@ export const useQueryParam = (
           window.history.pushState({}, '', window.location.pathname)
         }
       }
+      notifyLocationSearchChange()
     }
   }
 

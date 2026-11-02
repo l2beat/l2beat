@@ -21,6 +21,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
+import { getL2ListingHref } from '~/utils/project/l2Tabs'
 import { ProjectL2Summary } from './components/L2ProjectSummary'
 
 interface Props extends AppLayoutProps {
@@ -89,6 +90,10 @@ export function L2ProjectPage({
                   <ProjectHeader
                     project={projectEntry}
                     section="layer2s"
+                    sectionHref={getL2ListingHref({
+                      category: projectEntry.header.category,
+                      isArchived: projectEntry.archivedAt !== undefined,
+                    })}
                     sectionLinks={sectionLinks}
                     versions={versionLinks}
                     ongoingAnomaly={projectEntry.header.ongoingAnomaly}
