@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useIsClient } from '~/hooks/useIsClient'
+import { getSsrData } from '~/ssr/pageDataScripts'
 import { cn } from '~/utils/cn'
 import { Logo } from '../Logo'
 import { readJsonLd, readOpenGraph } from './headTags'
@@ -42,7 +43,7 @@ export function L2BeatDevTools() {
     }
 
     const updateMetrics = () => {
-      setSizeMetrics(getSizeMetrics(window.__SSR_DATA__))
+      setSizeMetrics(getSizeMetrics(getSsrData()))
     }
 
     updateMetrics()
@@ -77,7 +78,7 @@ export function L2BeatDevTools() {
     return null
   }
 
-  const ssrData = window.__SSR_DATA__
+  const ssrData = getSsrData()
   const metrics = sizeMetrics ? getDevToolsMetrics(sizeMetrics) : []
 
   const copyableJson =

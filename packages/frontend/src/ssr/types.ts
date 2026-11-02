@@ -9,7 +9,7 @@ export interface RenderData {
 
 export type RenderFunction = (data: RenderData, url: string) => Promise<string>
 
-/** What the client reads from `window.__SSR_DATA__`. */
+/** What the client reads from the `ssr-data` script. */
 export type ClientSsrData = SsrData & {
   /** Only the terms this page can link, not the whole glossary. */
   glossaryTerms: GlossaryTerm[]
