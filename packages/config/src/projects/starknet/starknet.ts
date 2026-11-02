@@ -628,8 +628,40 @@ export const starknet: ScalingProject = {
           '**No**, the community can only dispute the emergency upgrades after the fact in advisory way.',
       },
       upgrades: {
-        'Major upgrade path': `Release announcement (≥1 SNIP + specific GitHub commit) → 2-week community deliberation → 1-week final review → 1-week STRK vote on the [Governance Hub on L2](https://governance.starknet.io/) → Security Council vetting → deployment queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1, whose ${executionDelay} onchain delay covers the procedural ≥7-day freeze → execution. Minimum wall-clock ≈ **5 weeks** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
-        'Minor upgrade path': `Announcement (SNIP may be submitted in parallel) → 1-week review → 1-week STRK vote on L2 → deployment queued in the DelayedExecutor, whose ${executionDelay} onchain delay covers the procedural ≥5-day freeze → execution. No Security Council approval required. Minimum wall-clock ≈ **22 days** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
+        'Major upgrade path': {
+          steps: [
+            {
+              description:
+                'Release announcement (≥1 SNIP + specific GitHub commit)',
+            },
+            { description: '2-week community deliberation' },
+            { description: '1-week final review' },
+            {
+              description:
+                '1-week STRK vote on the [Governance Hub on L2](https://governance.starknet.io/)',
+            },
+            { description: 'Security Council vetting' },
+            {
+              description: `Deployment queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1, whose ${executionDelay} onchain delay covers the procedural ≥7-day freeze`,
+              isWait: true,
+            },
+            { description: 'Execution' },
+          ],
+          note: `Minimum wall-clock ≈ **5 weeks** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
+        },
+        'Minor upgrade path': {
+          steps: [
+            { description: 'Announcement (SNIP may be submitted in parallel)' },
+            { description: '1-week review' },
+            { description: '1-week STRK vote on L2' },
+            {
+              description: `Deployment queued in the DelayedExecutor, whose ${executionDelay} onchain delay covers the procedural ≥5-day freeze`,
+              isWait: true,
+            },
+            { description: 'Execution' },
+          ],
+          note: `No Security Council approval required. Minimum wall-clock ≈ **22 days** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
+        },
         'Emergency upgrade path': `**${scThreshold} Security Council, instant**.`,
         'Exit window': `**${executionDelay}** enforced onchain by the DelayedExecutor on the normal upgrade path (procedurally ≥7 days after the vote for major releases, ≥5 days for minor). **0** for emergency upgrades by the Security Council.`,
       },

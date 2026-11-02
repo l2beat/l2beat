@@ -24,6 +24,14 @@
     "ccip-router-only-offramp": {
       "definitionHash": "520827b3634db41ed4cd64e96fe63aa0e0d8befeb0d19f02fc42ffbdd9a8687a",
       "sealedAt": "2026-09-28T16:52:30.690Z"
+    },
+    "oftbatched": {
+      "definitionHash": "d300833aad6ed1453e7a843057903da1b998ad61bbcfe5089bf730b263fe1133",
+      "sealedAt": "2026-11-01T14:52:10.213Z"
+    },
+    "mayan-mctp-partial-solana": {
+      "definitionHash": "3374b0f2a007806b80e66c71ce1af5932de6dc95461ca69cb738dccbc78735cd",
+      "sealedAt": "2026-11-01T11:38:21.576Z"
     }
   }
 }

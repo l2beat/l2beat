@@ -6,7 +6,13 @@ import {
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import {
+  iconBackdropClasses,
+  MAX_VISIBLE_PROJECTS,
+  overflowCountClasses,
+} from '~/components/ProjectIconList'
 import { EM_DASH } from '~/consts/characters'
+import { useIsTouch } from '~/hooks/useIsTouch'
 import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
 import { cn } from '~/utils/cn'
 
@@ -46,20 +52,14 @@ const remainingCountVariants = cva('font-bold', {
       default: 'text-label-value-13',
       cell: 'text-label-value-15',
     },
-    hideDialog: {
-      false: 'group-hover/dialog-trigger:underline',
-    },
-  },
-  defaultVariants: {
-    hideDialog: false,
   },
 })
 
-const iconVariants = cva('rounded-full bg-white', {
+const iconVariants = cva(`rounded-full ${iconBackdropClasses}`, {
   variants: {
     type: {
       default: 'size-7 min-w-7 border border-divider shadow-sm',
-      cell: 'relative size-5 min-w-5 shadow',
+      cell: 'hover:-translate-y-0.5 relative size-5 min-w-5 shadow transition-transform hover:z-10!',
     },
   },
 })
@@ -74,23 +74,35 @@ export function InteropTopItems({
 }: InteropTopItemsCellProps &
   Omit<React.ComponentProps<'button'>, 'type'> &
   VariantProps<typeof buttonVariants>) {
+  const isTouch = useIsTouch()
+  // Same rule as ProjectIconList: all icons when they fit, otherwise one
+  // fewer and the rest as "+N".
+  const shown =
+    topItems.remainingCount > 0
+      ? topItems.items.slice(0, MAX_VISIBLE_PROJECTS - 1)
+      : topItems.items
+  const hiddenCount =
+    topItems.remainingCount + topItems.items.length - shown.length
   const content = (
     <>
       <div className="flex items-center">
-        {topItems.items.map((item, i) => (
+        {shown.map((item, i) => (
           <ItemIconWithTooltip
             key={item.id}
             item={item}
             index={i}
             type={type}
             href={item.href}
-            className={cn(i !== topItems.items.length - 1 && '-mr-1.5')}
+            // On touch the whole cell is one button that opens the list, so
+            // its icons must not be links or tooltip triggers of their own.
+            bare={isTouch && !hideDialog}
+            className={cn(i !== shown.length - 1 && '-mr-1.5')}
           />
         ))}
       </div>
-      {topItems.remainingCount > 0 && (
+      {hiddenCount > 0 && (
         <RemainingCount
-          topItems={topItems}
+          count={hiddenCount}
           type={type}
           hideDialog={hideDialog}
         />
@@ -115,15 +127,28 @@ export function InteropTopItems({
 }
 
 function RemainingCount({
-  topItems,
+  count,
   type,
   hideDialog,
 }: {
-  topItems: TopItems<TopItem>
+  count: number
+  hideDialog: boolean | undefined
 } & VariantProps<typeof remainingCountVariants>) {
+  if (!hideDialog) {
+    return (
+      <span
+        className={cn(
+          overflowCountClasses,
+          'group-hover/dialog-trigger:border-brand',
+        )}
+      >
+        +{count}
+      </span>
+    )
+  }
   return (
-    <span className={remainingCountVariants({ type, hideDialog })}>
-      +{topItems.remainingCount}
+    <span className={remainingCountVariants({ type })}>
+      +{count}
       {type === 'default' ? ' more' : ''}
     </span>
   )
@@ -134,11 +159,13 @@ function ItemIconWithTooltip({
   index,
   type,
   href,
+  bare,
   className,
 }: {
   item: TopItem
   index: number
   href?: string
+  bare: boolean
   className?: string
 } & VariantProps<typeof iconVariants>) {
   const icon = (
@@ -150,6 +177,8 @@ function ItemIconWithTooltip({
       style={{ zIndex: 5 - index }}
     />
   )
+
+  if (bare) return icon
 
   return (
     <Tooltip>

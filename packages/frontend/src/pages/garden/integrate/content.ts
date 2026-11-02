@@ -61,7 +61,7 @@ export const API_NOTES = [
 
 export const VERIFY_STEPS = [
   'Read the attestation from the EAS contract with the uid in `attestations.current`: `getAttestation(uid)`.',
-  'Check `attester` and `schema` against the values below, so an attestation someone else made cannot be mistaken for ours.',
+  'Check `attester` and `schema` against the values above, so an attestation someone else made cannot be mistaken for ours.',
   'Check it is the current one. The newest wins: of our attestations under the schema that are not revoked, the one with the highest revision names the current set. A change is a new attestation that points to the one it supersedes through `refUID`; older ones stay valid in EAS but no longer count.',
   'Decode `projectIds`: these are the protocols we have reviewed, as of `reviewedAt`, at revision `revision`.',
   'For the rating per property, the reasoning, and what we did not look at, read `/v1/project/{id}.json`. Ratings might change as protocols change.',

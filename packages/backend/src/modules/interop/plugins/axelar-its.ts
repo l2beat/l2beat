@@ -5,17 +5,16 @@
 
 import { Address32 } from '@l2beat/shared-pure'
 import {
-  AXELAR_NETWORKS,
   ContractCall,
   ContractCallApproved,
   ContractCallExecuted,
+  findAxelarChain,
 } from './axelar'
 import { findBestTransferLogByExactAmount } from './logScan'
 import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
 import {
   createEventParser,
   createInteropEventType,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
@@ -69,11 +68,7 @@ export class AxelarITSPlugin implements InteropPlugin {
         (log) => parseTransfer(log, null),
       )
 
-      const $dstChain = findChain(
-        AXELAR_NETWORKS,
-        (x) => x.axelarChainName,
-        interchainTransfer.destinationChain,
-      )
+      const $dstChain = findAxelarChain(interchainTransfer.destinationChain)
       const matchId = axelarSynthMatchId(
         input.chain,
         $dstChain,
@@ -109,11 +104,7 @@ export class AxelarITSPlugin implements InteropPlugin {
         (log) => parseTransfer(log, null),
       )
 
-      const $srcChain = findChain(
-        AXELAR_NETWORKS,
-        (x) => x.axelarChainName,
-        interchainTransferReceived.sourceChain,
-      )
+      const $srcChain = findAxelarChain(interchainTransferReceived.sourceChain)
       const matchId = axelarSynthMatchId(
         $srcChain,
         input.chain,

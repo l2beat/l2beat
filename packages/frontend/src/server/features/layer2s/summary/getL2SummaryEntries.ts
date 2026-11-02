@@ -11,6 +11,8 @@ import type {
   WarningWithSentiment,
 } from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
+import type { WalkAwayVerdict } from '~/consts/walkAwayProjects'
+import { getWalkAwayVerdict } from '~/consts/walkAwayProjects'
 import { getL2Risks } from '~/pages/layer2s/utils/getL2Risks'
 import { groupByL2Tabs } from '~/pages/layer2s/utils/groupByL2Tabs'
 import { ps } from '~/server/projects'
@@ -107,9 +109,10 @@ export interface L2SummaryEntry extends CommonL2Entry {
   tvsOrder: number
   risks: RosetteValue[]
   baseLayerRisks: RosetteValue[] | undefined
+  walkAway: WalkAwayVerdict | undefined
 }
 
-export function getL2SummaryEntry(
+function getL2SummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks' | 'display',
     'tvsInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig' | 'contracts'
@@ -159,5 +162,6 @@ export function getL2SummaryEntry(
     baseLayerRisks: project.scalingRisks.host
       ? getL2Risks(project.scalingRisks.host)
       : undefined,
+    walkAway: getWalkAwayVerdict(project),
   }
 }

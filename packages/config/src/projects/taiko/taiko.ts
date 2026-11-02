@@ -617,7 +617,27 @@ export const taiko: ScalingProject = {
         'DAO can override SC?': `**No** — ${minVetoPercent}% of eligible TAIKO can block a standard proposal but never an emergency one. Token holders cannot create proposals, approve payloads, remove council members, or block emergency proposals; changing the signer list requires another council-approved proposal.`,
       },
       upgrades: {
-        'Normal upgrade path': `Security Council member creates a public executable payload → ${standardProposalThreshold} council approvals → **${standardProposalDuration} token-holder veto period** → if less than ${minVetoPercent}% of eligible TAIKO vetoes, **${timelockPeriod} timelock** → permissionless execution of the approved onchain actions.`,
+        'Normal upgrade path': {
+          steps: [
+            {
+              description:
+                'Security Council member creates a public executable payload',
+            },
+            { description: `${standardProposalThreshold} council approvals` },
+            {
+              description: `**${standardProposalDuration} token-holder veto period**`,
+              isWait: true,
+            },
+            {
+              description: `If less than ${minVetoPercent}% of eligible TAIKO vetoes, **${timelockPeriod} timelock**`,
+              isWait: true,
+            },
+            {
+              description:
+                'Permissionless execution of the approved onchain actions',
+            },
+          ],
+        },
         'Emergency upgrade path': `**${emergencyProposalThreshold} Security Council approvals, instant** — proposal metadata and actions stay encrypted while approvals are collected. A council member decrypts the payload, which is integrity-checked against the approved ciphertext and executed without a token-holder veto or timelock; its contents become public upon execution or expiry.`,
         'Exit window': `**${standardUpgradeDelay} standard · 0 emergency** — the standard path provides ${standardProposalDuration} of public vetoing followed by a ${timelockPeriod} timelock. Emergency proposals bypass both.`,
       },

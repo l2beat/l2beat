@@ -1,6 +1,7 @@
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { LayerZeroV2Config } from './layerzero/layerzero.config'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
   parseOFTReceived,
@@ -408,7 +409,17 @@ function getStargateBridgeType(srcWasBurned: boolean, dstWasMinted: boolean) {
 export class StargatePlugin implements InteropPlugin {
   readonly name = 'stargate'
 
-  constructor(private configs: InteropConfigStore) {}
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
+
+  private getChain(eid: number): string {
+    return (
+      STARGATE_NETWORKS.find((n) => n.eid === eid)?.chain ??
+      findChain(this.configs.get(LayerZeroV2Config) ?? [], (x) => x.eid, eid)
+    )
+  }
 
   capture(input: LogToCapture) {
     const network = STARGATE_NETWORKS.find((b) => b.chain === input.chain)
@@ -450,11 +461,7 @@ export class StargatePlugin implements InteropPlugin {
                 amountSentLD: oftSent.amountSentLD,
                 amountReceivedLD: oftSent.amountReceivedLD,
                 amountSD: passenger.amountSD,
-                $dstChain: findChain(
-                  STARGATE_NETWORKS,
-                  (x) => x.eid,
-                  oftSent.dstEid,
-                ),
+                $dstChain: this.getChain(oftSent.dstEid),
                 hydra: pool.hydra ?? false,
               }),
             ]
@@ -467,7 +474,7 @@ export class StargatePlugin implements InteropPlugin {
           amountSentLD: oftSent.amountSentLD,
           amountReceivedLD: oftSent.amountReceivedLD,
           tokenAddress: pool.tokenAddress,
-          $dstChain: findChain(STARGATE_NETWORKS, (x) => x.eid, oftSent.dstEid),
+          $dstChain: this.getChain(oftSent.dstEid),
           hydra: pool.hydra ?? false,
         }),
       ]
@@ -496,11 +503,7 @@ export class StargatePlugin implements InteropPlugin {
           tokenAddress: pool.tokenAddress,
           destinationEid,
           amountReceivedLD: oftReceived.amountReceivedLD,
-          $srcChain: findChain(
-            STARGATE_NETWORKS,
-            (x) => x.eid,
-            oftReceived.srcEid,
-          ),
+          $srcChain: this.getChain(oftReceived.srcEid),
           hydra: pool.hydra ?? false,
         }),
       ]
@@ -508,21 +511,13 @@ export class StargatePlugin implements InteropPlugin {
 
     const creditsSent = parseCreditsSent(input.log, poolAddresses)
     if (creditsSent) {
-      const $dstChain = findChain(
-        STARGATE_NETWORKS,
-        (x) => x.eid,
-        creditsSent.dstEid,
-      )
+      const $dstChain = this.getChain(creditsSent.dstEid)
       return [StargateV2CreditsSent.create(input, { $dstChain })]
     }
 
     const creditsReceived = parseCreditsReceived(input.log, poolAddresses)
     if (creditsReceived) {
-      const $srcChain = findChain(
-        STARGATE_NETWORKS,
-        (x) => x.eid,
-        creditsReceived.srcEid,
-      )
+      const $srcChain = this.getChain(creditsReceived.srcEid)
       return [StargateV2CreditsReceived.create(input, { $srcChain })]
     }
 
@@ -534,26 +529,29 @@ export class StargatePlugin implements InteropPlugin {
           numPassengers: busDriven.numPassengers,
           guid: busDriven.guid,
           destinationEid: busDriven.dstEid,
-          $dstChain: findChain(
-            STARGATE_NETWORKS,
-            (x) => x.eid,
-            busDriven.dstEid,
-          ),
+          $dstChain: this.getChain(busDriven.dstEid),
         }),
       ]
     }
   }
 
-  matchTypes = [PacketDelivered]
-  match(
-    packetDelivered: InteropEvent,
+  matchTypes = [PacketDelivered, StargateV2OFTSentTaxi]
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (PacketDelivered.checkType(event)) {
+      return this.matchPacketDelivered(event, db)
+    }
+    if (StargateV2OFTSentTaxi.checkType(event)) {
+      return this.matchOneSidedTaxiSent(event, db)
+    }
+  }
+
+  private matchPacketDelivered(
+    packetDelivered: EventOf<typeof PacketDelivered>,
     db: InteropEventDb,
   ): MatchResult | undefined {
-    if (!PacketDelivered.checkType(packetDelivered)) return
-
     const guid = packetDelivered.args.guid
     const packetSent = db.find(PacketSent, { guid })
-    if (!packetSent) return
+    if (!packetSent) return this.matchOneSidedTaxiReceived(packetDelivered, db)
 
     const busDriven = db.find(StargateV2BusDriven, { guid })
     if (busDriven) {
@@ -682,6 +680,58 @@ export class StargatePlugin implements InteropPlugin {
         }),
       ]
     }
+  }
+
+  private matchOneSidedTaxiSent(
+    oftSentTaxi: EventOf<typeof StargateV2OFTSentTaxi>,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
+    const dstChain = oftSentTaxi.args.$dstChain
+    if (!this.oneSidedChains.includes(dstChain)) return
+
+    const guid = oftSentTaxi.args.guid
+    if (guid === GUID_ZERO) return
+    if (db.find(StargateV2OFTReceived, { guid })) return
+
+    const packetSent = db.find(PacketSent, { guid })
+
+    return [
+      Result.Transfer('stargate-v2-taxi.Transfer', {
+        srcEvent: oftSentTaxi,
+        dstChain,
+        srcTokenAddress: oftSentTaxi.args.tokenAddress,
+        srcAmount: oftSentTaxi.args.amountSentLD,
+        srcWasBurned: oftSentTaxi.args.hydra,
+        extraEvents: packetSent ? [packetSent] : undefined,
+      }),
+    ]
+  }
+
+  private matchOneSidedTaxiReceived(
+    packetDelivered: EventOf<typeof PacketDelivered>,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
+    const srcChain = packetDelivered.args.$srcChain
+    if (!this.oneSidedChains.includes(srcChain)) return
+
+    // A bus delivers one OFTReceived per passenger under the bus guid, so only
+    // a lone OFTReceived is taken as a taxi. Without the source BusDriven a
+    // one-passenger bus looks the same.
+    const oftReceived = db.findAll(StargateV2OFTReceived, {
+      guid: packetDelivered.args.guid,
+    })
+    if (oftReceived.length !== 1) return
+
+    return [
+      Result.Transfer('stargate-v2-taxi.Transfer', {
+        srcChain,
+        dstEvent: oftReceived[0],
+        dstTokenAddress: oftReceived[0].args.tokenAddress,
+        dstAmount: oftReceived[0].args.amountReceivedLD,
+        dstWasMinted: oftReceived[0].args.hydra,
+        extraEvents: [packetDelivered],
+      }),
+    ]
   }
 }
 

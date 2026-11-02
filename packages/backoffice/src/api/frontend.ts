@@ -31,12 +31,15 @@ function createFrontendClient(baseUrl: string) {
 
 export type FrontendApi = ReturnType<typeof createFrontendClient>
 
+export const PRODUCTION_FRONTEND_URL = 'https://l2beat.com'
+
 const LOCAL_FRONTEND_URL =
   (import.meta.env.VITE_LOCAL_FRONTEND_URL as string | undefined) ??
   'http://localhost:3000'
 
-const productionFrontendApi: FrontendApi =
-  createFrontendClient('https://l2beat.com')
+const productionFrontendApi: FrontendApi = createFrontendClient(
+  PRODUCTION_FRONTEND_URL,
+)
 const stagingFrontendApi: FrontendApi = createFrontendClient(
   'https://fe-stag.l2beat.com',
 )

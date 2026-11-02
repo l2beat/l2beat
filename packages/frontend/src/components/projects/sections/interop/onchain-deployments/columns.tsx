@@ -94,17 +94,7 @@ export const interopTokenOnchainDeploymentsColumns = [
         return <InteropNoDataBadge tooltip={NO_MINTERS_TOOLTIP} />
       }
 
-      return (
-        <ProjectIconList
-          projects={minters}
-          dialog={{
-            title: 'Minting bridges',
-            description: 'Search for a bridge minting this deployment',
-            searchPlaceholder: 'Start typing to find a bridge...',
-            emptyText: 'No bridges found.',
-          }}
-        />
-      )
+      return <ProjectIconList projects={minters} title="Minting bridges" />
     },
     meta: {
       tooltip:

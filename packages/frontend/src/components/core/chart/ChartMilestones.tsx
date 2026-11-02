@@ -206,7 +206,7 @@ function MilestoneListIcon({ milestone }: { milestone: Milestone }) {
   )
 }
 
-export function MilestoneDrawerContent({
+function MilestoneDrawerContent({
   milestoneIndex,
   allMilestones,
 }: {
