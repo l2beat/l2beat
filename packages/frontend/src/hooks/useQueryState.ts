@@ -34,17 +34,20 @@ export function useQueryState<T>(
   })
   // Holds the value as it was set, so reselecting "1y" an hour later moves
   // the interval forward, and a calendar range isn't snapped to the preset
-  // its param names. Parsed again only when the param changes elsewhere.
-  const [state, setState] = useState(() => ({
-    param,
-    value: parseOrDefault(codec, param),
-  }))
-  let value = state.value
+  // its param names. Read again only when the param changes elsewhere
+  // (Back/Forward, another hook on the same key), or when the default it
+  // stands for changes (e.g. a sort default that follows a metric).
+  const [state, setState] = useState(() => read(codec, param))
+  let current = state
   if (state.param !== param) {
-    // Back/Forward, or another hook reading the same key
-    value = parseOrDefault(codec, param)
-    setState({ param, value })
+    current = read(codec, param)
+  } else if (state.codec !== codec) {
+    current = state.isDefault
+      ? { ...state, codec, value: codec.getDefault() }
+      : { ...state, codec }
   }
+  if (current !== state) setState(current)
+  const value = current.value
 
   // Functional updates read the latest value, also when a handler calls
   // the setter twice before React re-renders.
@@ -57,15 +60,36 @@ export function useQueryState<T>(
     const next = isUpdater(action) ? action(latest.current) : action
     latest.current = next
     const nextParam = codec.serialize(next)
-    setState({ param: nextParam, value: next })
+    setState({
+      param: nextParam,
+      codec,
+      value: next,
+      isDefault: nextParam === defaultParam,
+    })
     setParam(nextParam)
   })
 
   return [value, setValue]
 }
 
-function parseOrDefault<T>(codec: QueryParamCodec<T>, param: string): T {
-  return codec.parse(param) ?? codec.getDefault()
+interface Entry<T> {
+  param: string
+  codec: QueryParamCodec<T>
+  value: T
+  /** The param is missing, equals the default or doesn't parse. */
+  isDefault: boolean
+}
+
+function read<T>(codec: QueryParamCodec<T>, param: string): Entry<T> {
+  const parsed = codec.parse(param)
+  const isDefault =
+    parsed === undefined || param === codec.serialize(codec.getDefault())
+  return {
+    param,
+    codec,
+    value: parsed === undefined ? codec.getDefault() : parsed,
+    isDefault,
+  }
 }
 
 function isUpdater<T>(action: SetStateAction<T>): action is (prev: T) => T {
