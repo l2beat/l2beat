@@ -5,7 +5,6 @@ import type {
 } from '@l2beat/shared'
 import {
   type ChainSpecificAddress,
-  type CoingeckoId,
   EthereumAddress,
   isDateOnly,
   type KnownInteropBridgeType,
@@ -275,7 +274,6 @@ export interface BaseProject {
   trackedTxsConfig?: TrackedTxConfigEntryWithoutId[]
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
-  ecosystemConfig?: ProjectEcosystemConfig
   zkCatalogInfo?: ProjectZkCatalogInfo
 
   // discovery data
@@ -1925,30 +1923,6 @@ export interface ProjectEcosystemInfo {
   isPartOfSuperchain?: boolean
   sinceTimestamp?: UnixTime
   untilTimestamp?: UnixTime
-}
-
-export interface ProjectEcosystemConfig {
-  startedAt?: UnixTime
-  token: {
-    coingeckoId: CoingeckoId
-    description: string
-  }
-  links: {
-    buildOn: string
-    learnMore: string
-    governanceDelegateToL2BEAT: string
-    governanceProposals: string
-    tools?: string[]
-    grants?: string
-  }
-  firstBanner?: {
-    headlineText?: string
-    mainText?: string
-  }
-  secondBanner?: {
-    headlineText?: string
-    mainText?: string
-  }
 }
 // #endregion
 

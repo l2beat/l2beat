@@ -68,7 +68,6 @@ const schema = {
   trackedTxsConfig: 'TEXT',
   daTrackingConfig: 'TEXT',
   ecosystemInfo: 'TEXT',
-  ecosystemConfig: 'TEXT',
 
   permissions: 'TEXT',
   contracts: 'TEXT',

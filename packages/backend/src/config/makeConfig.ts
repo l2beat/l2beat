@@ -9,7 +9,6 @@ import { getBackofficeConfig } from './features/backoffice'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getDefiTvlConfig } from './features/defiTvl'
-import { getEcosystemsConfig } from './features/ecosystemToken'
 import { getInteropFeatureConfig } from './features/interop'
 import { getPrivacyConfig } from './features/privacy'
 import { getTrackedTxsConfig } from './features/trackedTxs'
@@ -140,8 +139,6 @@ export async function makeConfig(
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, flags)),
-    ecosystems:
-      flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
     cropAttestations: flags.isEnabled('crop-attestations') && {
       githubToken: env.optionalString('GITHUB_TOKEN'),
     },
