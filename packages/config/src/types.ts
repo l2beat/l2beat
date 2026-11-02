@@ -2124,7 +2124,6 @@ export interface ProjectDiscoveryUpdateSection {
 
 export type InteropPluginName =
   | 'across'
-  | 'across-settlement'
   | 'across-settlement-op'
   | 'across-settlement-orbit'
   | 'agglayer'
@@ -2157,7 +2156,6 @@ export type InteropPluginName =
   | 'lifi-intents'
   | 'maker-bridge'
   | 'mayan-forwarder'
-  | 'mayan-mctp'
   | 'mayan-mctp-fast'
   | 'mayan-swift'
   | 'mayan-swift-settlement'
@@ -2173,7 +2171,6 @@ export type InteropPluginName =
   | 'relay'
   | 'sky-bridge'
   | 'sorare-base'
-  | 'squid-coral'
   | 'stargate'
   | 'synthetix-bridge'
   | 'world-id'
