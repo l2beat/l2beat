@@ -6809,7 +6809,7 @@
     ]
   },
   "oneinch-fusion-plus": {
-    // one crosschain tx, one orphaned escrow creation
+    // one completed swap (source escrow, destination escrow, destination withdrawal), one orphaned escrow creation
     "txs": [
       {
         "chain": "ethereum",
@@ -6820,10 +6820,58 @@
         "tx": "0x9819f6178c8dc03acde6259ecd4199cc3407bf546e4df849cdb4bc4e476a2fcf"
       },
       {
+        "chain": "arbitrum",
+        "tx": "0x416856b439ec9755a0c4f265e0f982365d952b2352fcc431e83f1f3092267b9a"
+      },
+      {
         "chain": "base",
         "tx": "0x2745a60ccdfddb2e92251813d86450fe821f997de702edad1c72c37ac6a64ec1"
       }
     ]
+  },
+  "oneinch-fusion-plus-native": {
+    "description": "1inch Fusion+ Ethereum wBETH to Base ETH swap, counted at the destination escrow withdrawal",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x8e2dacbed990d233629c32acc2452d5ad5a464d9340c7ad334858017a35e444d"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4b5ba4e6101c95af805c5883f2e6533a5463d0b0bc8bf1313a86337931920d3b"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb4b3bcaefe3fd6703f63e0a70a7149bbe5a4fda683ed3973e0e55e03c73b3467"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "oneinch-fusion-plus.Message", "app": "oneinch-fusion-plus" }
+      ],
+      "transfers": [
+        {
+          "type": "oneinch-fusion-plus.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "0x000000000000000000000000a2e3356610840701bdf5611a53974510ae27e2e1",
+            "tokenAmount": "316207723679343361",
+            "wasBurned": false
+          },
+          "dst": {
+            "event": {
+              "ctx": {
+                "chain": "base",
+                "txHash": "0xb4b3bcaefe3fd6703f63e0a70a7149bbe5a4fda683ed3973e0e55e03c73b3467"
+              }
+            },
+            "tokenAddress": "native",
+            "tokenAmount": "347599531891899361",
+            "wasMinted": false
+          }
+        }
+      ]
+    }
   },
   "lifi-intents": {
     "description": "LI.FI Intents Base to Arbitrum fill with Polymer proof",
