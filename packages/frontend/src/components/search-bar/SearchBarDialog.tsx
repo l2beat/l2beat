@@ -21,9 +21,14 @@ import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { useTRPC } from '~/trpc/React'
 import { Skeleton } from '../core/Skeleton'
 import { linkVariants } from '../link/CustomLink'
+import {
+  type SavedProject,
+  usePinnedProjects,
+} from '../pinned-projects/pinnedProjectsStore'
 import { useSearchBarContext } from './SearchBarContext'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
+import { getEmptyStateGroups } from './searchBarEmptyState'
 import { searchBarPages } from './searchBarPages'
 import { groupSearchResults, searchEntries } from './searchBarResults'
 import type { AnySearchBarEntry } from './types'
@@ -39,6 +44,11 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   const [value, setValue] = useState('')
   const debouncedValue = useDebouncedValue(value, 200)
   const { open, setOpen } = useSearchBarContext()
+  const pinnedProjects = usePinnedProjects()
+  const emptyState = useMemo(
+    () => getEmptyStateGroups(pinnedProjects, recentlyAdded),
+    [pinnedProjects, recentlyAdded],
+  )
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
@@ -94,7 +104,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   }
 
   function onItemFollow(
-    item: SearchBarProject | AnySearchBarEntry,
+    item: SearchBarProject | AnySearchBarEntry | SavedProject,
     staysOnPage: boolean,
   ) {
     track('searchBarProjectSelected', {
@@ -162,8 +172,22 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
           {!searchProblem && <CommandEmpty>No results found.</CommandEmpty>}
 
           {value === '' && (
+            <>
+              <SavedProjectsGroup
+                heading="Pinned"
+                projects={emptyState.pinned}
+                onFollow={onItemFollow}
+              />
+              <SavedProjectsGroup
+                heading="Recently viewed"
+                projects={emptyState.recentlyViewed}
+                onFollow={onItemFollow}
+              />
+            </>
+          )}
+          {value === '' && (
             <CommandGroup heading="Recently added projects">
-              {recentlyAdded.map((project) => {
+              {emptyState.recentlyAdded.map((project) => {
                 return (
                   <SearchBarItem
                     key={project.id}
@@ -258,6 +282,47 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
         </CommandList>
       </Command>
     </CommandDialog>
+  )
+}
+
+/**
+ * The visitor's own projects, saved with only a name and an icon, so their
+ * rows carry no kind label.
+ */
+function SavedProjectsGroup({
+  heading,
+  projects,
+  onFollow,
+}: {
+  heading: string
+  projects: SavedProject[]
+  onFollow: (project: SavedProject, staysOnPage: boolean) => void
+}) {
+  if (projects.length === 0) return null
+  return (
+    <CommandGroup heading={heading}>
+      {projects.map((project) => (
+        <SearchBarItem
+          key={project.href}
+          href={project.href}
+          onFollow={(staysOnPage) => onFollow(project, staysOnPage)}
+          // cmdk keys items by value, which defaults to the row's text; two
+          // projects can share a name.
+          value={`${heading}-${project.href}`}
+        >
+          <img
+            src={project.iconUrl}
+            alt={`${project.name} logo`}
+            className="rounded-sm"
+            width={20}
+            height={20}
+          />
+          <div className="font-medium text-sm leading-none tracking-[-1%]">
+            {project.name}
+          </div>
+        </SearchBarItem>
+      ))}
+    </CommandGroup>
   )
 }
 
