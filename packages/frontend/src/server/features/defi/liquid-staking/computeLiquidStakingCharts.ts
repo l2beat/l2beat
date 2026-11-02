@@ -11,6 +11,19 @@ import type {
 
 /** Yields and the network line are measured over this many days. */
 export const YIELD_WINDOW_DAYS = 30
+
+/**
+ * The last day a chart shows, for a range that ends at `end`. A yield is as
+ * of a midnight, so the day that has started has one. A cost of exit is a
+ * whole day's average or median, so only a day that has ended has one.
+ */
+export function getLastChartDay(
+  end: number,
+  lastDay: 'started' | 'ended',
+): UnixTime {
+  const started = UnixTime.toStartOf(UnixTime(end), 'day')
+  return lastDay === 'started' ? started : UnixTime(started - UnixTime.DAY)
+}
 /**
  * The exit the cost is measured for. A protocol's instant exit counts only
  * when it can pay this out, and the market quotes sell 100 tokens.

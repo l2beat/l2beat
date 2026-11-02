@@ -7,6 +7,7 @@ import { expect } from 'earl'
 import {
   computeCostOfExitChart,
   computeYieldChart,
+  getLastChartDay,
   getQueueWaits,
   type LiquidStakingChartToken,
 } from './computeLiquidStakingCharts'
@@ -266,6 +267,18 @@ describe(getQueueWaits.name, () => {
         { timestamp: 3 * HOUR, lastRequestId: 2, lastFinalizedRequestId: 1 },
       ]),
     ).toEqual([{ timestamp: HOUR, requests: 1, hours: 2, estimated: true }])
+  })
+})
+
+describe(getLastChartDay.name, () => {
+  it('ends a yield chart with today, and a cost-of-exit chart with yesterday', () => {
+    // 02:00 UTC: today has started, but two hours aren't a day.
+    const now = DAY_31 + 2 * HOUR
+
+    expect(getLastChartDay(now, 'started')).toEqual(UnixTime(DAY_31))
+    expect(getLastChartDay(now, 'ended')).toEqual(UnixTime(DAY_31 - DAY))
+    // At midnight, the day before has just ended.
+    expect(getLastChartDay(DAY_31, 'ended')).toEqual(UnixTime(DAY_31 - DAY))
   })
 })
 
