@@ -200,4 +200,31 @@ describe(formatEcsLog.name, () => {
       }),
     )
   })
+
+  it('error message string', () => {
+    const message = formatEcsLog({
+      time: new Date(0),
+      level: 'WARN',
+      message: 'hello',
+      parameters: {
+        error: 'oops, something went wrong',
+        attempt: 1,
+      },
+    })
+    expect(message).toEqual(
+      JSON.stringify({
+        '@timestamp': '1970-01-01T00:00:00.000Z',
+        log: { level: 'WARN' },
+        service: {},
+        labels: {},
+        message: 'hello',
+        error: {
+          message: 'oops, something went wrong',
+        },
+        parameters: {
+          attempt: 1,
+        },
+      }),
+    )
+  })
 })

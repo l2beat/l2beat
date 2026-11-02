@@ -1,13 +1,14 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { Skeleton } from '~/components/core/Skeleton'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { toProtocolItems } from '~/pages/interop/utils/toProtocolItems'
 import type {
   ProtocolDisplayable,
   ProtocolEntry,
 } from '~/server/features/layer2s/interop/types'
 import { NoResultsInfo } from '../summary/components/NoResultsInfo'
 import { BetweenChainsInfo } from './BetweenChainsInfo'
-import { AllProtocolsDialog } from './chain-selector/AllProtocolsDialog'
 import { AllProtocolsTable } from './table/AllProtocolsTable'
 
 export function AllProtocolsCard({
@@ -48,7 +49,10 @@ export function AllProtocolsCard({
             />
             {zeroTransferProtocols && zeroTransferProtocols.length > 0 && (
               <div className="flex items-center justify-center gap-1 border-divider border-t pt-4">
-                <AllProtocolsDialog protocols={zeroTransferProtocols} />
+                <ProjectIconList
+                  projects={toProtocolItems(zeroTransferProtocols)}
+                  title="Protocols without transfers"
+                />
                 <span className="font-normal text-secondary text-xs leading-none md:text-base">
                   have no transfers for the selected path.
                 </span>

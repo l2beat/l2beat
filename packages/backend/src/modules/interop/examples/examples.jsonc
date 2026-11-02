@@ -1814,6 +1814,19 @@
       ]
     }
   },
+  "mayan-forwarder-mono-chain": {
+    "description": "Same-chain swaps paid out by MonoChainSwap, expect no events",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x1d0481684d6583c553b6c1d7f19a277c562006ce1145596dc12706199ef381e2"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x68575a81c31e144f5db1d525f7d5e30ebd94f44180abab8a77abbe4a6050bac8"
+      }
+    ]
+  },
   "meson": {
     "description": "Liquidity swap + tunnel samples from MESON_PLAN",
     "txs": [
@@ -2004,6 +2017,94 @@
       ]
     }
   },
+  "cctpv2-plasma": {
+    "description": "CCTP v2 USDC to and from Plasma (domain 33, one-sided)",
+    "loadConfigs": ["cctp-v2"],
+    "txs": [
+      // Ethereum -> Plasma source-side only
+      {
+        "chain": "ethereum",
+        "tx": "0xa6dd4663dd4846f34f77fa20454303c78418cd800c085e8a954207c7ec916741"
+      },
+      // Plasma -> Base destination-side only
+      {
+        "chain": "base",
+        "tx": "0x87260111d7ffdd091a4eafcc0563cce902fc7a783d8b102734c289713b2a24db"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "cctp-v2.MessageSent",
+          "args": { "$dstChain": "plasma", "amount": "5828069237" }
+        },
+        {
+          "type": "cctp-v2.MessageReceived",
+          "args": { "$srcChain": "plasma", "dstAmount": "19999756376" }
+        }
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "cctp-v2.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "financials": { "symbol": "USDC" }
+          },
+          "dst": { "chain": "plasma" }
+        },
+        {
+          "type": "cctp-v2.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": { "chain": "plasma" },
+          "dst": {
+            "event": { "ctx": { "chain": "base" } },
+            "financials": { "symbol": "USDC" }
+          }
+        }
+      ]
+    }
+  },
+  "cctp-v2-partial-arc": {
+    "loadConfigs": ["cctp-v2"],
+    "txs": [
+      // Ethereum -> Arc: source side only
+      {
+        "chain": "ethereum",
+        "tx": "0x31b2779324fbf983c72d852a0c935c19a8fd4fc6a2ffee815afe65ff4e4ed24a"
+      },
+      // Arc -> Ethereum: destination side only
+      {
+        "chain": "ethereum",
+        "tx": "0xdf0d90e7d6bd4ab31d33a7f56a8e6f83e237b637913ebbf87b793d1535a3319c"
+      }
+    ],
+    "expects": {
+      "events": ["cctp-v2.MessageSent", "cctp-v2.MessageReceived"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "cctp-v2.Transfer",
+          "plugin": "cctp-v2",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "financials": { "symbol": "USDC" }
+          },
+          "dst": { "chain": "arc" }
+        },
+        {
+          "type": "cctp-v2.Transfer",
+          "plugin": "cctp-v2",
+          "src": { "chain": "arc" },
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "financials": { "symbol": "USDC" }
+          }
+        }
+      ]
+    }
+  },
   "wormhole-tokenbridge-to-bsc": {
     "loadConfigs": ["wormhole"],
     "txs": [
@@ -2057,6 +2158,81 @@
           "type": "wormhole-tokenbridge.Transfer",
           "src": { "wasBurned": true },
           "dst": { "wasMinted": false }
+        }
+      ]
+    }
+  },
+  // Redemptions whose payout is not the log right after TransferRedeemed:
+  // completeTransferAndUnwrapETH emits a WETH Withdrawal and sends native
+  // AVAX/ETH, DYDX emits delegation events before its Transfer, and a tax
+  // token pays out to the token and 0xdead before the recipient (BSC).
+  "wormhole-tokenbridge-unwrap": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x8638206ea6fd1be00d05d3899ee393c243b74e088742be08ef8f2b434b8e4bd3"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0x8d2db01bf75c0f841a1a3113836e08dae8d94a0717ef3ef82795ac020aba5e0a"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x2ee6895a1b72da443125f88fe8375072570968d877974535499bb0adce183a35"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x7a1971fcd6fc22f6907952ac321aed3bd93c86d0b6c81760c4a85bfa4ecba5be"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x10a0e23de18d79007d73235404acc9cb2746ad04ff614e3048f161c2a63ccef9"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "wormhole.LogTransferRedeemed",
+          "args": {
+            "dstTokenAddress": "0x000000000000000000000000df0210cf1b279b1963fab539c41b13d211573222",
+            "dstAmount": "2622456208777997958600000000",
+            "dstWasMinted": false
+          }
+        }
+      ],
+      "messages": [
+        { "type": "wormhole.Message", "app": "wormhole-tokenbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "830000000000000000000",
+            "wasMinted": false
+          }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "1000000000000000000",
+            "wasMinted": false
+          }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAddress": "0x00000000000000000000000092d6c1e31e14520e676a687f0a93788b716beff5",
+            "tokenAmount": "1656615752130000000000",
+            "wasMinted": false
+          }
         }
       ]
     }
@@ -2115,6 +2291,90 @@
         { "type": "cctp-v1.Message", "app": "cctp-v1" }
       ],
       "transfers": ["cctp-v2.Transfer", "cctp-v2.Transfer", "cctp-v1.Transfer"]
+    }
+  },
+  "mayan-mctp-partial-solana": {
+    "description": "Mayan MCTP orders to Solana: the one-sided CCTP transfer consumes the Mayan forwarder event.",
+    "loadConfigs": ["wormhole", "cctp-v2", "cctp-v1"],
+    "txs": [
+      // Fast MCTP createOrder, Ethereum -> Solana (CCTP v2)
+      {
+        "chain": "ethereum",
+        "tx": "0xf3b9a415834034868eaad3bc59873f8a9af0ffec18287913e61325b4eea1b9d0"
+      },
+      // Fast MCTP bridge, Monad -> Solana (CCTP v2)
+      {
+        "chain": "monad",
+        "tx": "0x087c647372a308cc587e88b54a827f20e0fc0f1710db6165b20994cc444ca353"
+      },
+      // MCTP createOrder, Ethereum -> Solana (CCTP v1 + Wormhole)
+      {
+        "chain": "ethereum",
+        "tx": "0x4ff0af0952eab406cf9f4248dc18af10ec45172ffdf0c25c56f2d9cfe75f8973"
+      }
+    ],
+    "expects": {
+      "events": [
+        "cctp-v2.MessageSent",
+        "mayan-forwarder.MayanForwarded",
+        "cctp-v2.MessageSent",
+        "mayan-forwarder.MayanForwarded",
+        "cctp-v1.MessageSent",
+        "wormhole.LogMessagePublished",
+        "mayan-forwarder.MayanForwarded"
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "cctp-v2.Transfer",
+          "src": {
+            "event": {
+              "ctx": {
+                "chain": "ethereum",
+                "txHash": "0xf3b9a415834034868eaad3bc59873f8a9af0ffec18287913e61325b4eea1b9d0"
+              }
+            }
+          },
+          "dst": { "chain": "solana" },
+          "events": [
+            { "type": "cctp-v2.MessageSent" },
+            { "type": "mayan-forwarder.MayanForwarded" }
+          ]
+        },
+        {
+          "type": "cctp-v2.Transfer",
+          "src": {
+            "event": {
+              "ctx": {
+                "chain": "monad",
+                "txHash": "0x087c647372a308cc587e88b54a827f20e0fc0f1710db6165b20994cc444ca353"
+              }
+            }
+          },
+          "dst": { "chain": "solana" },
+          "events": [
+            { "type": "cctp-v2.MessageSent" },
+            { "type": "mayan-forwarder.MayanForwarded" }
+          ]
+        },
+        {
+          "type": "cctp-v1.Transfer",
+          "src": {
+            "event": {
+              "ctx": {
+                "chain": "ethereum",
+                "txHash": "0x4ff0af0952eab406cf9f4248dc18af10ec45172ffdf0c25c56f2d9cfe75f8973"
+              }
+            }
+          },
+          "dst": { "chain": "solana" },
+          "events": [
+            { "type": "cctp-v1.MessageSent" },
+            { "type": "mayan-forwarder.MayanForwarded" },
+            { "type": "wormhole.LogMessagePublished" }
+          ]
+        }
+      ]
     }
   },
   "msw": {
@@ -2464,6 +2724,62 @@
       ]
     }
   },
+  "mayan-swift-hypercore": {
+    "loadConfigs": ["wormhole"],
+    "description": "Order that Mayan's explorer lists as Ethereum -> HyperCore (65000). Onchain it targets HyperEVM (47) and the fill deposits the USDC into HyperCore.",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x5a484013bc9a4733f660e943bc9c8abbce157f2fca33eedfab77df29e0f69f7b"
+      },
+      {
+        "chain": "hyperevm",
+        "tx": "0xb18a69126f163214af843caf5b8f571d760bd13c84cb8e5f55bf0bb0fc27c841"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "args": { "$dstChain": "hyperevm" }
+        },
+        {
+          "type": "mayan-swift.OrderCreated",
+          "args": {
+            "key": "0x4d858c2b4d523dc08a42f6879a9312028c8d771da9bdbfb4b083344114cace8f",
+            "$dstChain": "hyperevm"
+          }
+        },
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "args": {
+            "key": "0x4d858c2b4d523dc08a42f6879a9312028c8d771da9bdbfb4b083344114cace8f"
+          },
+          "ctx": { "chain": "hyperevm" }
+        }
+      ],
+      "messages": [
+        {
+          "type": "mayan-swift.Message",
+          "app": "mayan-swift",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "hyperevm" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": { "event": { "ctx": { "chain": "hyperevm" } } }
+        },
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "src": { "event": { "ctx": { "chain": "hyperevm" } } },
+          "dst": { "chain": "hyperliquid" }
+        }
+      ]
+    }
+  },
   "mayan-swift-settlement": {
     "loadConfigs": ["wormhole"],
     "description": "Non-batched and batched Mayan Swift settlement flows.",
@@ -2683,6 +2999,49 @@
     "messages": ["circle-gateway.Message"],
     "transfers": ["circle-gateway.Transfer"]
   },
+  "circle-gateway-partial-arc": {
+    "loadConfigs": ["cctp-v2"],
+    "txs": [
+      // Base -> Arc: source side only (burn on Base after the mint on Arc)
+      {
+        "chain": "base",
+        "tx": "0x26b9280d524324920050f46026cbf4e6eacd56ae9fad6df14c1e0845a753e257"
+      },
+      // Arc -> Arbitrum: destination side only
+      {
+        "chain": "arbitrum",
+        "tx": "0xd40b41ac7a6a52707cb584332b14db97f900d5bd3210d341eb6beba7801b9ab5"
+      }
+    ],
+    "expects": {
+      "events": [
+        "circle-gateway.GatewayBurned",
+        "circle-gateway.AttestationUsed"
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "circle-gateway.Transfer",
+          "plugin": "circle-gateway",
+          "src": {
+            "event": { "ctx": { "chain": "base" } },
+            "financials": { "symbol": "USDC" }
+          },
+          "dst": { "chain": "arc" }
+        },
+        {
+          "type": "circle-gateway.Transfer",
+          "plugin": "circle-gateway",
+          "src": { "chain": "arc" },
+          "dst": {
+            "event": { "ctx": { "chain": "arbitrum" } },
+            "wasMinted": true,
+            "financials": { "symbol": "USDC" }
+          }
+        }
+      ]
+    }
+  },
   "layerzerov2": {
     "loadConfigs": ["layerzero-v2"],
     "txs": [
@@ -2780,6 +3139,45 @@
           "bridgeType": "lockAndMint",
           "src": { "financials": { "symbol": "USDC" } },
           "dst": { "financials": { "symbol": "axlUSDC" } }
+        }
+      ]
+    }
+  },
+  "axelar-capitalized-chain": {
+    "description": "Axelar contract call with token to 'Optimism' rather than 'optimism'",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xfb90a3540921964e756f6798f34b3706c405e63b1362b52bf2621e3652eb0d7c"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x825125962c0fefa71571b7fbbe4b0e1efb52235af6db7854da06caae7be3ff01"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x04999a3808e6a720a3b8e786abf873048ab9b36936ecbcf80e4a0b0d753d3018"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "axelar.ContractCallWithToken",
+          "args": { "$dstChain": "optimism" }
+        },
+        {
+          "type": "axelar.ContractCallApprovedWithMint",
+          "args": { "$srcChain": "ethereum" }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "axelar.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "707652604"
+          },
+          "dst": { "event": { "ctx": { "chain": "optimism" } } }
         }
       ]
     }
@@ -2978,6 +3376,15 @@
         "chain": "monad",
         "tx": "0x889d4c07cd24c8169487d2466b2949fdcd92158dfdf79d9319574617324c34bb"
       },
+      // intent fill to Robinhood
+      {
+        "chain": "ethereum",
+        "tx": "0xa28a4087f7bdc1d6e69dd7c4e764e465652abb5d53a20f2ebcb64b53b2580779"
+      },
+      {
+        "chain": "robinhood",
+        "tx": "0x6bed72094126f36c0f269d7648d90824ee7fc71f990857f282eb401f5f132d71"
+      },
       // intent fill
       {
         "chain": "arbitrum",
@@ -3032,6 +3439,20 @@
           "type": "debridge-dln.FulfilledOrder",
           "args": {
             "orderId": "0x7d59d14f000f465b3f811ffd0641d019bb287ba41fdb097ab6a1feb819cdee2d",
+            "$srcChain": "ethereum"
+          }
+        },
+        {
+          "type": "debridge-dln.CreatedOrder",
+          "args": {
+            "orderId": "0xbd51ebcc504b8ff20e0e16a0b931118ab769bb63f0b9c5e9634873c17616f5e2",
+            "$dstChain": "robinhood"
+          }
+        },
+        {
+          "type": "debridge-dln.FulfilledOrder",
+          "args": {
+            "orderId": "0xbd51ebcc504b8ff20e0e16a0b931118ab769bb63f0b9c5e9634873c17616f5e2",
             "$srcChain": "ethereum"
           }
         },
@@ -3158,6 +3579,12 @@
         {
           "type": "debridge-dln.Message",
           "app": "debridge-dln",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "robinhood" } }
+        },
+        {
+          "type": "debridge-dln.Message",
+          "app": "debridge-dln",
           "src": {
             "ctx": { "chain": "base" },
             "args": {
@@ -3190,6 +3617,18 @@
           "dst": {
             "event": { "ctx": { "chain": "monad" } },
             "tokenAmount": "5655601265366768073993"
+          }
+        },
+        {
+          "type": "debridge-dln.Transfer",
+          "bridgeType": "nonMinting",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "274587683"
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "robinhood" } },
+            "tokenAmount": "10869095163105382466409"
           }
         },
         {
@@ -3852,6 +4291,59 @@
       ]
     }
   },
+  "stargatev2taxi-plasma": {
+    "description": "Stargate v2 ETH taxis to and from Plasma (one-sided)",
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      // Ethereum -> Plasma source-side only
+      {
+        "chain": "ethereum",
+        "tx": "0xba0269a7ef033c00984d66582fdbb4277c38670989e58a07e0afde528b235140"
+      },
+      // Plasma -> Ethereum destination-side only
+      {
+        "chain": "ethereum",
+        "tx": "0x71d142fd22c48b2e7174f9cb0eeba20d9f1af4c5f0b2ab3257a4878eaae666cc"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "stargate-v2.OFTSentTaxi",
+          "args": { "$dstChain": "plasma" }
+        },
+        {
+          "type": "stargate-v2.OFTReceived",
+          "args": {
+            "$srcChain": "plasma",
+            "amountReceivedLD": "3910000000000000"
+          }
+        }
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "stargate-v2-taxi.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "native",
+            "wasBurned": false
+          },
+          "dst": { "chain": "plasma" }
+        },
+        {
+          "type": "stargate-v2-taxi.Transfer",
+          "src": { "chain": "plasma" },
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "native",
+            "tokenAmount": "3910000000000000",
+            "wasMinted": false
+          }
+        }
+      ]
+    }
+  },
   "layerzeromix": {
     "loadConfigs": ["layerzero-v2"],
     // Messages:
@@ -4061,10 +4553,20 @@
       {
         "chain": "base",
         "tx": "0x6c966643efa99850c8ab6c22621def512634ed7bfff7023805e18ab3389b6e1d" // inc solana
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xdbb5e2a6a3a9ba5f766edb2e976176f789052de97f99e185e0de26206909ccc4" // outgoing tron
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x826339acfa4f9a9f2a44c9e7cfd5901663659a66cb8f0ca6121aff59427d05ce" // inc tron
       }
     ],
     "expects": {
       "events": [
+        "across.FilledRelay",
+        "across.FundsDeposited",
         "across.FilledRelay",
         "across.FundsDeposited",
         "across.FilledRelay"
@@ -4087,6 +4589,56 @@
             "wasMinted": false,
             "financials": { "symbol": "USDC" }
           }
+        },
+        // Ethereum -> Tron: source side only
+        {
+          "type": "across.Transfer",
+          "plugin": "across",
+          "src": { "financials": { "symbol": "USDT" } },
+          "dst": { "chain": "tron" }
+        },
+        // Tron -> Ethereum: destination side only
+        {
+          "type": "across.Transfer",
+          "plugin": "across",
+          "src": { "chain": "tron" },
+          "dst": {
+            "wasMinted": false,
+            "financials": { "symbol": "USDT" }
+          }
+        }
+      ]
+    }
+  },
+  "across-partial-arc": {
+    "loadConfigs": ["across"],
+    "txs": [
+      // Ethereum -> Arc: source side only
+      {
+        "chain": "ethereum",
+        "tx": "0x6e0001cac6c1507c3d7a1fb72b0ad5ab7bcbf11dd28e0967e23e5a932f1298a0"
+      },
+      // Arc -> Base: destination side only
+      {
+        "chain": "base",
+        "tx": "0xdb2bdab26f6fe197f05c6fae90130865e228d4213dfae0b9af28e098c5785ff4"
+      }
+    ],
+    "expects": {
+      "events": ["across.FundsDeposited", "across.FilledRelay"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "across.Transfer",
+          "plugin": "across",
+          "src": { "financials": { "symbol": "USDC" } },
+          "dst": { "chain": "arc" }
+        },
+        {
+          "type": "across.Transfer",
+          "plugin": "across",
+          "src": { "chain": "arc" },
+          "dst": { "financials": { "symbol": "USDC" } }
         }
       ]
     }
@@ -4343,6 +4895,66 @@
     ],
     "messages": [{ "type": "opstack.L2ToL1Message", "app": "lido-wsteth" }],
     "transfers": ["lido-wsteth.L2ToL1Transfer"]
+  },
+  "lido-steth-optimism-ethereum-deposit": {
+    "tags": ["lido"],
+    "description": "Optimism L1 → L2 stETH deposit, amounts are in stETH",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x17ec580d9374a5d69293a494c61dc9fcdf59a648dcb687db9e4ba75eafd9b981"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x31d388079b9d22010aaef89ecb7d40eecbab5bed5bb3fe0bc195f7ea3acbe819"
+      }
+    ],
+    "expects": {
+      "messages": [{ "type": "opstack.L1ToL2Message", "app": "lido-wsteth" }],
+      "transfers": [
+        {
+          "type": "lido-wsteth.L1ToL2Transfer",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000ae7ab96520de3a18e5e111b5eaab095312d7fe84",
+            "tokenAmount": "20808369595905386"
+          },
+          "dst": {
+            "tokenAddress": "0x00000000000000000000000076a50b8c7349ccddb7578c6627e79b5d99d24138",
+            "tokenAmount": "20808369595905385"
+          }
+        }
+      ]
+    }
+  },
+  "lido-steth-optimism-ethereum-withdrawal": {
+    "tags": ["lido"],
+    "description": "Optimism L2 → L1 stETH withdrawal, amounts are in stETH",
+    "txs": [
+      {
+        "chain": "optimism",
+        "tx": "0xbddb246630ff7a2bd980ffa8fcdff5c8dfc977861bf0122ac7da47c94708072a"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x63f8f5eef43c8f4f6d5c6e30b5915d5112b46c3ae1ae30ae24ad05076ddb2eee"
+      }
+    ],
+    "expects": {
+      "messages": [{ "type": "opstack.L2ToL1Message", "app": "lido-wsteth" }],
+      "transfers": [
+        {
+          "type": "lido-wsteth.L2ToL1Transfer",
+          "src": {
+            "tokenAddress": "0x00000000000000000000000076a50b8c7349ccddb7578c6627e79b5d99d24138",
+            "tokenAmount": "124540187869859786448"
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000ae7ab96520de3a18e5e111b5eaab095312d7fe84",
+            "tokenAmount": "124692521552351828884"
+          }
+        }
+      ]
+    }
   },
   "sorare-base": {
     "txs": [
@@ -5072,6 +5684,65 @@
           },
           "dst": {
             "tokenAmount": "1208543441872000000",
+            "financials": { "symbol": "ETH" }
+          }
+        }
+      ]
+    }
+  },
+  "orbitstack-depositeth": {
+    "description": "ETH deposits via Inbox.depositEth, credited on L2 by a deposit tx with no logs",
+    "txs": [
+      // ethereum -> arbitrum (~36.4 ETH)
+      {
+        "chain": "ethereum",
+        "tx": "0xf3773c0a76f4f5dfaed3ae16eb9cb84a09adf16f4c3558e3a8868a231717dc26"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9c1fca27d65b585a331ceb28a277ce964726481acffbeaa0e0cd3ddc1616a289"
+      },
+      // ethereum -> robinhood (~0.1 ETH)
+      {
+        "chain": "ethereum",
+        "tx": "0x199598b23d0c401f44318bdfd7eaf000ceb5eb821d1fbb79bb878278f5424ce6"
+      },
+      {
+        "chain": "robinhood",
+        "tx": "0x4945f9d407e6f91ac0923bc8041efc9f3fe1911a7b5097c0800eccada08bff1a"
+      }
+    ],
+    "expects": {
+      "events": [
+        "orbitstack.MessageDelivered",
+        "orbitstack.EthDepositTx",
+        "orbitstack.MessageDelivered",
+        "orbitstack.EthDepositTx"
+      ],
+      "messages": [
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" }
+      ],
+      "transfers": [
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "36437225294834113060",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "36437225294834113060",
+            "financials": { "symbol": "ETH" }
+          }
+        },
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "99846227349264786",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "99846227349264786",
             "financials": { "symbol": "ETH" }
           }
         }
@@ -6088,6 +6759,70 @@
       ]
     }
   },
+  "hwr-scaled-decimals": {
+    // BSC USDC/USDT use 18 decimals and their routers scale amounts to 6
+    // decimals, so the Transfer search must look for the unscaled amount, not
+    // the router fee (USDC) or the WBNB swap leg (USDT). An ERC-721 route has
+    // no ERC-20 Transfer and must not fall back to a native transfer.
+    "loadConfigs": ["hyperlane"],
+    "txs": [
+      {
+        "chain": "bsc",
+        "tx": "0xf666e0e8f812189bbd7db51a4589f55a474d43d87d3990c13eb7baacacf5818f"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x4f3d581f129860ed0820e1bcdf172dff12286cbaaf055ec12844787a36db55a7"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x5e5480d2021206404bf22909d443e673737162f4d99db68b1d46c1ec625bbd9c"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4e002fc694090a7d1a0f30f358d37deeec86462f9ee473a0c3172e78dba9bcba"
+      },
+      {
+        "chain": "base",
+        "tx": "0xfcd529c909c5b3d2e7ca4767543fb0b8b7f9e590c84ca6577ead641e3f9c24b5"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xfed92a25f3c1da2c7078f60ea07cf9262c5ec85c02a414a1b63f76b0aef669cc"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "hyperlane.Message", "app": "hwr" },
+        { "type": "hyperlane.Message", "app": "hwr" },
+        { "type": "hyperlane.Message", "app": "unknown" }
+      ],
+      "transfers": [
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": {
+            "tokenAddress": "0x0000000000000000000000008ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+            "tokenAmount": "17980765171269150000000"
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "tokenAmount": "17978068461"
+          }
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": {
+            "tokenAddress": "0x00000000000000000000000055d398326f99059ff775485246999027b3197955",
+            "tokenAmount": "197208000000000000000"
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "tokenAmount": "197208000"
+          }
+        }
+      ]
+    }
+  },
   "oft": {
     "loadConfigs": ["layerzero-v2"],
     // 4 oft transfers
@@ -6260,6 +6995,59 @@
       ]
     }
   },
+  "oftbatched": {
+    "description": "OFT sends and receives with other logs between the OFT event and the endpoint event",
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x8319fa1496424f1519791d883f3cc041da3d2d3dbe9a5f1fa28d379eb672d1b4" // Safe batch of 8 USDe sends, SafeReceived between each PacketSent and OFTSent
+      },
+      {
+        "chain": "base",
+        "tx": "0x9e44c70b94e421be592682277c8de82d1ca6e09a51882874ee652dc60a718556" // receive of the batch's base send
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x49ad701f958d0a2386e0907748383865ca5bf8348cf332413982eaeb5e019af9" // tron -> eth USDT, ComposeSent between OFTReceived and PacketDelivered
+      }
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "oftv2.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "337534000000000000000000"
+          },
+          "dst": { "event": { "ctx": { "chain": "base" } } }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "src": { "tokenAmount": "556855000000000000000000" },
+          "dst": { "chain": "plasma" }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "src": { "tokenAmount": "10068000000000000000000" },
+          "dst": { "chain": "xlayer" }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "src": { "tokenAmount": "247397000000000000000000" },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "src": { "chain": "tron" },
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "29970513112"
+          }
+        }
+      ]
+    }
+  },
   "cctp-debug": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],
     // should be 4 cctpv1 message and 2 cctpv2 matched transfers and some stray events around.
@@ -6349,7 +7137,7 @@
     ]
   },
   "oneinch-fusion-plus": {
-    // one crosschain tx, one orphaned escrow creation
+    // one completed swap (source escrow, destination escrow, destination withdrawal), one orphaned escrow creation
     "txs": [
       {
         "chain": "ethereum",
@@ -6360,10 +7148,127 @@
         "tx": "0x9819f6178c8dc03acde6259ecd4199cc3407bf546e4df849cdb4bc4e476a2fcf"
       },
       {
+        "chain": "arbitrum",
+        "tx": "0x416856b439ec9755a0c4f265e0f982365d952b2352fcc431e83f1f3092267b9a"
+      },
+      {
         "chain": "base",
         "tx": "0x2745a60ccdfddb2e92251813d86450fe821f997de702edad1c72c37ac6a64ec1"
       }
     ]
+  },
+  "oneinch-fusion-plus-native": {
+    "description": "1inch Fusion+ Ethereum wBETH to Base ETH swap, counted at the destination escrow withdrawal",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x8e2dacbed990d233629c32acc2452d5ad5a464d9340c7ad334858017a35e444d"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4b5ba4e6101c95af805c5883f2e6533a5463d0b0bc8bf1313a86337931920d3b"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb4b3bcaefe3fd6703f63e0a70a7149bbe5a4fda683ed3973e0e55e03c73b3467"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "oneinch-fusion-plus.Message", "app": "oneinch-fusion-plus" }
+      ],
+      "transfers": [
+        {
+          "type": "oneinch-fusion-plus.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "0x000000000000000000000000a2e3356610840701bdf5611a53974510ae27e2e1",
+            "tokenAmount": "316207723679343361",
+            "wasBurned": false
+          },
+          "dst": {
+            "event": {
+              "ctx": {
+                "chain": "base",
+                "txHash": "0xb4b3bcaefe3fd6703f63e0a70a7149bbe5a4fda683ed3973e0e55e03c73b3467"
+              }
+            },
+            "tokenAddress": "native",
+            "tokenAmount": "347599531891899361",
+            "wasMinted": false
+          }
+        }
+      ]
+    }
+  },
+  "oneinch-fusion-plus-v1-1": {
+    "description": "1inch Fusion+ Arbitrum to Ethereum swap through the v1.1 escrow factory",
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xadfb63dbc2fcd6e463e1e314b2b6b2a4c89bf8cf8200e5fe3eca73949f4336f9"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6ee11dc65d2de51590ed4327619ac1f5b0f3c74cbc63b41348e42ac5edb7fa48"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xd1e722b136e58a82259e7da0399daecaa56ebf7ff0e28b9f584cf3bc80764d2f"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "oneinch-fusion-plus.Message", "app": "oneinch-fusion-plus" }
+      ],
+      "transfers": [
+        {
+          "type": "oneinch-fusion-plus.Transfer",
+          "src": { "event": { "ctx": { "chain": "arbitrum" } } },
+          "dst": {
+            "event": {
+              "ctx": {
+                "chain": "ethereum",
+                "txHash": "0xd1e722b136e58a82259e7da0399daecaa56ebf7ff0e28b9f584cf3bc80764d2f"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "oneinch-fusion-plus-v1-1-fees": {
+    "description": "1inch Fusion+ v1.1 Ethereum to Base swap that pays a protocol fee from the destination escrow",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x66c396e211adb4e6e809fadaec4b6dd08097a440fa92ae8cc1ba2d6fe17828a6"
+      },
+      {
+        "chain": "base",
+        "tx": "0x7168e765ba6f1727ff77a81405a0c26a309275728b2ea72ed1ae7828f54a08ab"
+      },
+      {
+        "chain": "base",
+        "tx": "0x828fb0bab38a3c33ca2a60e5bc6b028a41c5a9de39fb3beba6937a728540b598"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "oneinch-fusion-plus.Message", "app": "oneinch-fusion-plus" }
+      ],
+      "transfers": [
+        {
+          "type": "oneinch-fusion-plus.Transfer",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          // 4288508991366983 minus the 12827045836591 protocol fee
+          "dst": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAmount": "4275681945530392"
+          }
+        }
+      ]
+    }
   },
   "lifi-intents": {
     "description": "LI.FI Intents Base to Arbitrum fill with Polymer proof",
@@ -6513,6 +7418,51 @@
             "event": { "ctx": { "chain": "base" } },
             "tokenAmount": "1100000"
           }
+        }
+      ]
+    }
+  },
+  "lifi-intents-onesided": {
+    "tags": ["lifi-intents"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x5233b6bc703c7f57cf773f42ade813f54f0004889b29f8f495a5e59317ab50d9" // outgoing solana
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xad0ffc17923a47ffdb76fe3a6c0a2fe8f76b2afb80025a0c01f999898a8b3323" // outgoing tron
+      },
+      {
+        "chain": "base",
+        "tx": "0x3d6ea8dbbb5113e5c23dc3ceef2b466b5cae8e5bcd2084c362bc471466d33d39" // outgoing plasma
+      }
+    ],
+    "expects": {
+      "events": [
+        "lifi-intents.OutputRequested",
+        "lifi-intents.OutputRequested",
+        "lifi-intents.OutputRequested"
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "lifi-intents.Transfer",
+          "plugin": "lifi-intents",
+          "src": { "financials": { "symbol": "USDC" } },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "lifi-intents.Transfer",
+          "plugin": "lifi-intents",
+          "src": { "financials": { "symbol": "USDT" } },
+          "dst": { "chain": "tron" }
+        },
+        {
+          "type": "lifi-intents.Transfer",
+          "plugin": "lifi-intents",
+          "src": { "financials": { "symbol": "USDC" } },
+          "dst": { "chain": "plasma" }
         }
       ]
     }
@@ -7598,6 +8548,53 @@
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
     "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-partial-xlayer": {
+    "tags": ["agglayer"],
+    "txs": [
+      // Ethereum → X Layer (bridgeAsset, USDT locked on Ethereum)
+      {
+        "chain": "ethereum",
+        "tx": "0xcb553d86297115df87f083d8d65b4c2bda40aaaaf2c435cfcb097570b2ed8acd"
+      },
+      // X Layer → Ethereum (claimAsset, USDT released on Ethereum)
+      {
+        "chain": "ethereum",
+        "tx": "0xf681e68bbbf633ed4a7cabba714299f77d61144a325995a8daf09676d4ae7096"
+      }
+    ],
+    "expects": {
+      "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "agglayer.Transfer",
+          "plugin": "agglayer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "0x000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7",
+            "tokenAmount": "20000000000",
+            "wasBurned": false,
+            "financials": { "symbol": "USDT" }
+          },
+          "dst": { "chain": "xlayer" }
+        },
+        {
+          "type": "agglayer.Transfer",
+          "plugin": "agglayer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "xlayer" },
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "0x000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7",
+            "tokenAmount": "6145910000",
+            "wasMinted": false,
+            "financials": { "symbol": "USDT" }
+          }
+        }
+      ]
+    }
   },
   "opstack-derived-tx-base-deposit": {
     "description": "Ethereum -> Base OptimismPortal deposit with derived destination tx hash",

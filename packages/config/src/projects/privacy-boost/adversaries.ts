@@ -27,7 +27,10 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       exposureShort: 'Transfers inside publish only encrypted notes.',
       exposureContinued: `${S.entryExitPublic()} Each epoch pairs every exit with the nullifiers and note shape of the transfer that funded it. Forced withdrawals publish the spent notes and the account, public gift exits the destination.`,
       advice: "Exit through the operator's relay.",
-      interior: INTERIOR,
+      interior: {
+        ...INTERIOR,
+        linkage: { verdict: 'atRisk', note: 'Exposed in a forced withdrawal.' },
+      },
       sources: [
         { contract: 'PrivacyBoost' },
         {
@@ -64,22 +67,27 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Address with 0.001 WETH round trips',
+          title: 'Address behind 2,638 of 2,677 WETH deposits (2026-10-30)',
           url: 'https://basescan.org/address/0xf977237b7d978dde922ee4909619740c73d8a49b',
+        },
+        {
+          title:
+            'Pool transfers: 54 other depositors since 2026-09-02, 25 in WETH and 26 in USDC (2026-10-30)',
+          url: 'https://basescan.org/address/0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40#tokentxns',
         },
       ],
     },
     networkObserver: {
       sentiment: 'bad',
       exposureShort:
-        "Alchemy, under the operator's key, sees the signed-in wallet in the session that submits each withdrawal, pairing them by timing.",
+        "Alchemy, under the operator's key, sees the signed-in wallet in the session that submits each withdrawal, so it can pair them by timing.",
       exposureContinued:
         "The hosted wallet works over Tor but has no RPC setting to leave Alchemy out. Its key core runs in an iframe without network access and reaches only the operator's server and Alchemy through the page. Other third parties get token ids or nothing.",
       interior: {
         ...INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only on a busy pool, since Alchemy times each withdrawal session.',
+          note: 'Private only on a busy pool, since Alchemy sees the wallet in each withdrawal session.',
         },
       },
       sources: [

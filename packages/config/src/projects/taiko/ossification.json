@@ -1253,6 +1253,14 @@
       "updateId": "977668bc",
       "transaction": "0x8f6a04836fdadfb319517fd0b4a2da93247205562d3fb63d15ecccec7531db05",
       "reason": "The timelock granted proposer, executor and canceller to the EOA 0xF616…d412, so one signer can again add and remove RISC Zero verifier routes. The 2/5 Safe renounced its roles on 2026-10-22."
+    },
+    {
+      "timestamp": 1793127383,
+      "type": "state",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "updateId": "cf2226a4",
+      "transaction": "0x5005dff6814f2bd9198599adcc94d375d4747c43e5249991f8c32cb9e0e49c13",
+      "reason": "Added route 0x8b38038c to the estop 0x9660… wrapping RiscZeroGroth16Verifier v3.1.0, whose Groth16 verifying key matches no published RISC Zero setup (addVerifier via the timelock)."
     }
   ]
 }

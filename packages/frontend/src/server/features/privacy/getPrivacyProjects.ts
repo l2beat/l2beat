@@ -16,11 +16,15 @@ const OPTIONAL = [
   'ossificationHistory',
   'milestones',
   'auditCoverage',
+  'archivedAt',
 ] as const
 
+/** Archived projects keep their own page, reachable from their newer version,
+ *  but drop out of the lists. */
 export async function getPrivacyProjects(): Promise<PrivacyProject[]> {
   const projects = await ps.getProjects({
     where: ['privacyInfo'],
+    whereNot: ['archivedAt'],
     select: [...SELECT],
     optional: [...OPTIONAL],
   })

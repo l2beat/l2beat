@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x00ea3de1eebe717a111f20395632ee1a351909fe
+
+# Diff at Wed, 28 Oct 2026 13:40:25 GMT:
+
+- id: 952fe96c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cc7e9e73c101d0a260af6bfe078851f3ff1d60cb block: 1792144034
+- current timestamp: 1793194486
+
+## Description
+
+The Polygon Labs Engineering/Security Multisig added an EOA signer and is now 2/8. It upgrades and administers the MigrationManager and is a signer of the three 2/3 Katana vaultBridge multisigs.
+
+## Watched changes
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xFD621b24968F64E3f14E7a099538ae13e1381417"
+      values.multisigThreshold:
+-        "2 of 7 (29%)"
++        "2 of 8 (25%)"
+    }
+```
+
 Generated with discovered.json: 0xe4bc9bd96c34312fc9fc925903fd708ca74e93c3
 
 # Diff at Sat, 24 Oct 2026 16:41:06 GMT:

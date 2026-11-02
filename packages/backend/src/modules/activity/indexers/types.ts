@@ -1,11 +1,14 @@
 import type { ActivityRecord, Database } from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
+import type { HourlyCountsProvider } from '../../../providers/day/DayProviders'
 import type { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
 import type { ActivityBlock } from '../services/txs/types'
 import type { BlockActivityIndexer } from './BlockActivityIndexer'
 import type { BlockTargetIndexer } from './BlockTargetIndexer'
 import type { DayActivityIndexer } from './DayActivityIndexer'
 import type { DayTargetIndexer } from './DayTargetIndexer'
+import type { HourActivityIndexer } from './HourActivityIndexer'
+import type { HourTargetIndexer } from './HourTargetIndexer'
 import type { SlotTargetIndexer } from './SlotTargetIndexer'
 
 export interface ActivityIndexerDeps
@@ -42,9 +45,18 @@ export interface DayActivityIndexerDeps extends ActivityIndexerDeps {
   uncertaintyBuffer: number
 }
 
+export interface HourActivityIndexerDeps
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
+  projectId: ProjectId
+  db: Database
+  provider: HourlyCountsProvider
+}
+
 export type ActivityIndexer =
   | BlockActivityIndexer
   | DayActivityIndexer
   | BlockTargetIndexer
   | DayTargetIndexer
+  | HourActivityIndexer
+  | HourTargetIndexer
   | SlotTargetIndexer

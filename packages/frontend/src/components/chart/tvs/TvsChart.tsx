@@ -23,7 +23,6 @@ export function TvsCustomTooltip({
       <div className="flex min-w-28 flex-col">
         <div className="mb-3 font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, {
-            longMonthName: true,
             mode: 'datetime',
           })}
         </div>

@@ -1,4 +1,65 @@
-Generated with discovered.json: 0x0aac9bcb51fe859820c16898eabfa572cc05fc0d
+Generated with discovered.json: 0x725fd7ec41c94d9276a82f73099ef9622674ad19
+
+# Diff at Fri, 30 Oct 2026 14:00:36 GMT:
+
+- id: e175eec5
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fbb4c5e1c17a319e598e10bff438f587f10fcbcb block: 1793012002
+- current timestamp: 1793367325
+
+## Description
+
+zk.money names move to Aztec v6: the NameRegistry, the ENS record and the resolver operator now point to zkmoneyv6 contracts, which this discovery no longer follows. The v5 Resolver and RegistrationController stay as seeds.
+
+## Watched changes
+
+```diff
+    contract Resolver (eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F) [zkmoney/Resolver] {
+    +++ description: ENS resolver for zk.money names. It returns a deposit address derived from a resolver operator's answer, which must come with a zk proof that it matches the user's registered keys and L2 address in the AccountMetadataRegistry.
++++ description: Resolver set for zk.money in the ENS registry.
++++ severity: HIGH
+      values.ensResolver:
+-        "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F"
++        "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525"
+    }
+```
+
+```diff
+    contract NameRegistry (eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a) [zkmoney/NameRegistry] {
+    +++ description: Registry of zk.money names. It points to the RegistrationController and the AccountMetadataRegistry, which together decide where payments to a zk.money name resolve to.
++++ severity: HIGH
+      values.registrationController:
+-        "eth:0x10EB6fecD2DCE6DA55d25C355374c970D5D11E23"
++        "eth:0x45F626E2a4D63232677C96B163ac46e20514a915"
++++ severity: HIGH
+      values.resolver:
+-        "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F"
++        "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525"
+    }
+```
+
+```diff
+    contract AccountMetadataRegistry (eth:0xDA79Bae4485c40291363D885Aae5B543d2D0Efa9) [zkmoney/AccountMetadataRegistry] {
+    +++ description: Stores user records (Aztec L2 address, keys, chosen resolver operator) and resolver operator entries. User records can be written by the user or by the RegistrationController. Anyone can register as a resolver operator.
+      values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.0.1:
+-        "112601459342247942869064749588970208967989742799476805946984122328994807074558"
++        "91380317572347884033234557058971661735677496832042332515746246346312091580181"
+      values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.0.0:
+-        "103084522734471857115051869841763019900578383836917791387182750820147840889585"
++        "78424701733732488215665087776877938889254215889323330557684387640730288987814"
+      values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.1:
+-        "0x07248288047b1945ad7453dc2ca9f73b2320b5ab4ba042875d1d11073131848e"
++        "0x1847cc9b9248ca3a57e3c90c91188c2c41262b860b6be229966d843956f00ae7"
+      values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.2:
+-        "https://d2yb6xtgmawdj1.cloudfront.net/{sender}/{data}.json"
++        "https://rop-v6.v6-prod.oxide.zk.money/{sender}/{data}.json"
+      values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.3:
+-        "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449"
++        "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C"
+    }
+```
+
+Generated with discovered.json: 0x35faa6a92fd1b55e88b9830121b29f087bc1e5d7
 
 # Diff at Mon, 26 Oct 2026 10:54:45 GMT:
 

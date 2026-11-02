@@ -24,7 +24,10 @@ function DialogTitle({ children, ...props }: RadixDialog.DialogTitleProps) {
   return (
     <RadixDialog.Title
       {...props}
-      className={cn('mb-1 font-medium text-lg', props.className)}
+      className={cn(
+        'mb-1 font-semibold text-base text-coffee-100',
+        props.className,
+      )}
     >
       {children}
     </RadixDialog.Title>
@@ -38,7 +41,7 @@ function DialogDescription({
   return (
     <RadixDialog.Description
       {...props}
-      className={cn('mb-5 text-sm leading-normal', props.className)}
+      className={cn('mb-4 text-coffee-300 text-xs leading-4', props.className)}
     >
       {children}
     </RadixDialog.Description>
@@ -49,7 +52,7 @@ function DialogOverlay({ children, ...props }: RadixDialog.DialogOverlayProps) {
   return (
     <RadixDialog.Portal>
       <RadixDialog.Overlay
-        className="fixed inset-0 z-20 data-[state=open]:bg-coffee-900/60"
+        className="fixed inset-0 z-20 data-[state=open]:bg-black/50"
         {...props}
       />
       {children}
@@ -77,7 +80,7 @@ function DialogBody({
     <Overlay>
       <RadixDialog.Content
         className={cn(
-          '-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-25 max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto border border-coffee-400 bg-coffee-600 p-6 shadow-(--shadow-6) focus:outline-hidden',
+          '-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-25 max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto rounded-md border border-coffee-600 bg-coffee-900 p-5 text-coffee-100 shadow-[0_16px_40px_-12px_#000000ee] focus:outline-hidden',
           className,
         )}
         {...props}
@@ -94,10 +97,10 @@ function DialogBody({
         {!noCloseButton && (
           <Dialog.Close asChild>
             <button
-              className="absolute top-2.5 right-2.5 inline-flex cursor-pointer appearance-none items-center justify-center rounded-full focus:outline-hidden"
+              className="absolute top-3 right-3 inline-flex size-7 cursor-pointer appearance-none items-center justify-center rounded-sm text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100 focus:outline-hidden focus-visible:ring-1 focus-visible:ring-autumn-300"
               aria-label="Close"
             >
-              <IconClose className="stroke-coffee-200" />
+              <IconClose />
             </button>
           </Dialog.Close>
         )}
@@ -126,7 +129,7 @@ function PageBlocker({ ref }: { ref?: React.Ref<HTMLDivElement> }) {
     return () => root.removeAttribute('aria-hidden')
   }, [])
 
-  return <div ref={ref} className="fixed inset-0 z-20 bg-coffee-900/60" />
+  return <div ref={ref} className="fixed inset-0 z-20 bg-black/50" />
 }
 
 const TABBABLE =

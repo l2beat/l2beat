@@ -1,4 +1,4 @@
-zk.money lets users send DAI privately on Aztec and move it into sUSDS savings. Funds are escrowed on Ethereum. Names, deposits and withdrawals are public.
+zk.money on Aztec v5 let users send DAI privately and move it into sUSDS savings. Funds are escrowed on Ethereum. Names, deposits and withdrawals are public.
 
 Every withdrawal and refund needs a zk proof and a signature from a live AWS Nitro enclave (TEE). Each pool's enclave decrypts and reads the operations it handles. Aztec Labs controls names and the contract lists the released wallets use.
 
@@ -15,7 +15,7 @@ The portal releases funds only after Aztec proves the withdrawal message and one
 Accounts sign with a passkey. The released wallet requires a registered name to access an account on a new device.
 
 ### App
-The privacy ratings cover DAI payments and sUSDS savings in [zk.money Desktop v0.5.0](https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.5.0).
+The ratings cover DAI payments and sUSDS savings.
 
 The Desktop release runs local code. Its endpoint settings accept the user's own Aztec node, Ethereum endpoint and DAI enclave. The sUSDS enclave address is always fetched from Aztec Labs among other addresses in two unsigned contract lists. Replacing them can redirect future deposits and payments.
 

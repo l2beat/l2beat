@@ -9,7 +9,7 @@ import type {
   DiscoveryPaths,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
 import type { DefiTvlConfig } from '../modules/defi-tvl/types'
 import type { PrivacyConfig } from '../modules/privacy/types'
@@ -46,7 +46,6 @@ export interface Config {
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: number | undefined }[]
   readonly daBeat: DaBeatConfig | false
-  readonly ecosystems: EcosystemsConfig | false
   readonly cropAttestations: CropAttestationsConfig | false
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
@@ -97,7 +96,10 @@ export interface ClockConfig {
 }
 
 export interface TvsConfig {
-  readonly projects: (ProjectTvsConfig & { amountSources: string[] })[]
+  readonly projects: (ProjectTvsConfig & {
+    amountSources: string[]
+    storeEscrowValues: boolean
+  })[]
   readonly amounts: AmountConfig[]
   readonly prices: PriceConfig[]
   readonly chains: string[]
@@ -278,15 +280,6 @@ export interface DaBeatConfig {
   readonly projectsForDaBeatStats: ProjectId[]
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
-}
-
-export interface EcosystemTokenConfig {
-  readonly configurationId: string
-  readonly projectId: ProjectId
-  readonly coingeckoId: CoingeckoId
-}
-export interface EcosystemsConfig {
-  readonly tokens: EcosystemTokenConfig[]
 }
 
 type BlockLayerAsProjectDaTrackingConfig = {

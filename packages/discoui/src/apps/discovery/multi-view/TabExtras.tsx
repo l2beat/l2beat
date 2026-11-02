@@ -20,7 +20,7 @@ export function TabExtras(props: { id: PanelId }) {
   return (
     <button
       type="button"
-      className="w-4 text-coffee-200 hover:text-coffee-100"
+      className="flex size-6 items-center justify-center rounded-sm text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100"
       onClick={() => {
         const { selected, highlighted } = usePanelStore.getState()
         void toClipboard(props.id, project, selected[0], highlighted)

@@ -92,7 +92,10 @@ export function AuditsTimelineChart({ timeline }: Props) {
   return (
     <div className="flex flex-col gap-3">
       <ChartControlsWrapper>
-        <ProjectChartTimeRange timeRange={[from, to]} />
+        <ProjectChartTimeRange
+          timeRange={[from, to]}
+          isPlaceholderData={false}
+        />
         <ChartRangeControls
           name="audits-timeline"
           value={range}

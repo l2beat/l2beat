@@ -7,7 +7,6 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
   const projects = await ps.getProjects({
     optional: [
       'scalingInfo',
-      'ecosystemConfig',
       'interopConfig',
       'zkCatalogInfo',
       'privacyInfo',

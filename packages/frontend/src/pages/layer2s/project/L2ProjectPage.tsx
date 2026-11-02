@@ -20,11 +20,13 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { ProjectL2Summary } from './components/L2ProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectL2Entry
   sectionLinks: ProjectSectionLink[]
+  versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
   selectedUpdateId?: string
 }
@@ -32,6 +34,7 @@ interface Props extends AppLayoutProps {
 export function L2ProjectPage({
   projectEntry,
   sectionLinks,
+  versionLinks,
   queryState,
   selectedUpdateId,
   ...props
@@ -67,7 +70,7 @@ export function L2ProjectPage({
               !!projectEntry.colors?.project || !!projectEntry.colors?.ecosystem
             }
           >
-            <div className="-z-1 -translate-y-2/5 fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
+            <div className="-z-1 -translate-y-2/5 pointer-events-none fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
 
             {!isNavigationEmpty && (
               <StickyMobileSectionNavigation
@@ -87,10 +90,14 @@ export function L2ProjectPage({
                     project={projectEntry}
                     section="layer2s"
                     sectionLinks={sectionLinks}
+                    versions={versionLinks}
                     ongoingAnomaly={projectEntry.header.ongoingAnomaly}
                     recentUpdatesCount={projectEntry.header.recentUpdatesCount}
                   />
-                  <ProjectSummaryBars project={projectEntry} />
+                  <ProjectSummaryBars
+                    project={projectEntry}
+                    versions={versionLinks}
+                  />
                   {projectEntry.header.badges && (
                     <BadgesSection
                       badges={projectEntry.header.badges}

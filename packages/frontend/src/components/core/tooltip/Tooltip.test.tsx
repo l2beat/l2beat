@@ -50,6 +50,32 @@ describe(Tooltip.name, () => {
     expect(description.text).toEqual('Why this is Stage 1')
   })
 
+  it('describes an open trigger once when the content is also in the HTML', () => {
+    const html = renderOnServer(
+      <Tooltip contentInHtml defaultOpen>
+        <TooltipTrigger>Stage 1</TooltipTrigger>
+        <TooltipContent>Why this is Stage 1</TooltipContent>
+      </Tooltip>,
+    )
+
+    expect(getTooltipTriggerDescription(html).text).toEqual(
+      'Why this is Stage 1',
+    )
+  })
+
+  it('follows a controlled open state when describing the trigger', () => {
+    const html = renderOnServer(
+      <Tooltip contentInHtml defaultOpen open={false}>
+        <TooltipTrigger>Stage 1</TooltipTrigger>
+        <TooltipContent>Why this is Stage 1</TooltipContent>
+      </Tooltip>,
+    )
+
+    expect(getTooltipTriggerDescription(html).text).toEqual(
+      'Why this is Stage 1',
+    )
+  })
+
   it('leaves visual-only parts out of the HTML copy', () => {
     const html = renderOnServer(
       <Tooltip contentInHtml>

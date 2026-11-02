@@ -9,7 +9,7 @@ interface Props {
 
 export function SectionHeading({ title, description, size = 'lg' }: Props) {
   return (
-    <div className="mb-4 max-md:px-4 md:mb-6">
+    <div className="mb-4 max-md:px-4 md:mb-6 lg:pl-2">
       <h2
         className={cn(
           'font-bold',
@@ -21,7 +21,7 @@ export function SectionHeading({ title, description, size = 'lg' }: Props) {
         {title}
       </h2>
       {description && (
-        <p className="mt-2 max-w-3xl text-paragraph-15 text-secondary md:text-paragraph-16">
+        <p className="mt-2 max-w-2xl text-pretty text-paragraph-15 text-secondary md:text-paragraph-16">
           {description}
         </p>
       )}

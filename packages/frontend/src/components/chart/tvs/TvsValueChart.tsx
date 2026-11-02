@@ -32,6 +32,7 @@ interface Props {
   data: TvsValueChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   project?: ChartProject
   milestones?: Milestone[]
 }
@@ -48,11 +49,13 @@ export function TvsValueChart({
   data,
   syncedUntil,
   isLoading,
+  isPlaceholderData,
   project,
   milestones,
 }: Props) {
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
@@ -95,7 +98,6 @@ function TvsValueChartTooltip({ payload, label }: CustomChartTooltipProps) {
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
         {formatTimestamp(label, {
-          longMonthName: true,
           mode: 'datetime',
         })}
       </div>

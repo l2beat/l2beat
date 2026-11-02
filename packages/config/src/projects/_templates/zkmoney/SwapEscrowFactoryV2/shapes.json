@@ -4,5 +4,11 @@
     "address": "eth:0x3B5D8c731364902eAFa46Be327AFB044C10c5952",
     "chain": "ethereum",
     "blockNumber": 26132184
+  },
+  "SwapEscrowFactory_v6": {
+    "hash": "0x8cc38eb3f14962815539d579e0033e17ff91e90c4985a7306f43146e750af181",
+    "address": "eth:0x8F4105a55C457D796Adab90d5D9E649861E81625",
+    "chain": "ethereum",
+    "blockNumber": 26290653
   }
 }

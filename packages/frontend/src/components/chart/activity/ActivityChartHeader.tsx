@@ -1,19 +1,24 @@
 import { InfoIcon } from '~/icons/Info'
 import { useActivityMetricContext } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import { ActivityMetricControls } from '~/pages/layer2s/activity/components/ActivityMetricControls'
+import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
 
-export function ActivityChartHeader() {
+export function ActivityChartHeader({
+  resolution,
+}: {
+  resolution: ActivityResolution
+}) {
   const { metric, setMetric } = useActivityMetricContext()
 
   return (
     <div className="flex items-center gap-2">
       <h2 className="whitespace-nowrap font-bold text-xl max-md:ml-1 md:text-2xl">
-        Daily average
+        {resolution === 'hour' ? 'Hourly' : 'Daily'} average
       </h2>
       <div className="flex items-center gap-2">
         <ActivityMetricControls

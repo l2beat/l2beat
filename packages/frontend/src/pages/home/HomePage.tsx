@@ -74,7 +74,8 @@ export function HomePage({
   ...props
 }: Props) {
   return (
-    <AppLayout {...props}>
+    // Home shows What's new in its own card, so not in the nav too.
+    <AppLayout {...props} whatsNewItem={undefined}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout
           variant="home"

@@ -17,6 +17,5 @@ export function getLivenessSyncWarning(
   }
   return `No liveness data since ${formatTimestamp(syncedUntil, {
     mode: 'datetime',
-    longMonthName: true,
   })}.`
 }

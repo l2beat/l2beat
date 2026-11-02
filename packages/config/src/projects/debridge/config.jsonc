@@ -29,6 +29,10 @@
     "eth:0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59": "WethGate"
   },
   "overrides": {
+    // Holds only protocol fees from the intent contracts, no user funds.
+    "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc": {
+      "category": "non-critical"
+    },
     "eth:0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59": {
       "ignoreDiscovery": true
     },

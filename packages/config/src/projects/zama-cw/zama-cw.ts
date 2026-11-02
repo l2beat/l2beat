@@ -353,6 +353,52 @@ export const zamaCw: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.confidentialAmounts,
+    referenceApp: {
+      name: 'Zama app',
+      url: 'https://app.zama.org',
+      since: '2026-10-09',
+      // Vercel deployment id of the served app, the data-dpl-id of its pages.
+      build: 'dpl_HkkjtLU1mXu9VT5nadJciMGnnY1t',
+      checked: '2026-10-30',
+      checkedApps: [
+        {
+          name: 'Zerion',
+          icon: 'zerion',
+          finding:
+            "Decrypts the user's confidential balances on Zerion's servers, so Zerion sees every amount the user reveals.",
+          fix: 'Decrypt balances on the device under a key only the device holds.',
+          source:
+            'https://github.com/zeriontech/zerion-wallet-extension/blob/dc9be458cd0e08be170058ba256bd4144e362f0a/docs/adr/0007-signed-permits-live-in-storage-session.md#L5',
+        },
+        {
+          name: 'Bron',
+          icon: 'bron',
+          finding:
+            "Ties the wallet to the user's name and email in a Bron account, which its store listing says Bron shares with other companies.",
+          fix: 'Let users create and use a wallet without giving a name or email.',
+          source:
+            'https://play.google.com/store/apps/datasafety?id=org.bron.mobile',
+          checked: '2026-10-27',
+        },
+        {
+          name: 'cToken',
+          icon: 'ctoken',
+          finding:
+            "Reads the user's address through Alchemy and PublicNode straight from the browser, so both see it with the user's IP.",
+          fix: "Read the chain through the app's own server, as the Zama app does.",
+          source: 'https://ct-7984-chriswilder.netlify.app',
+          checked: '2026-10-27',
+        },
+        {
+          name: 'fhevm-wallet',
+          finding:
+            "Needs the user's own Zama API key on mainnet, which Zama reviews and bills, so Zama ties every request to the user.",
+          fix: 'Relay requests under a key that is not tied to the user.',
+          source:
+            'https://github.com/mocarram/fhevm-wallet/blob/f942463b53c0637ffbd4573d0a6f7a7558e21aeb/src/core/fhe/FheService.ts#L40-L52',
+        },
+      ],
+    },
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
     anonymitySet: {
@@ -375,7 +421,7 @@ export const zamaCw: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        "The contracts, the SDK and the KMS and coprocessor sources are public. Zama's app source is unpublished.",
+        "The contracts, the SDK and the coprocessor source are public. The source of the KMS nodes and of Zama's app is not.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.fhe,

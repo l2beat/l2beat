@@ -13,6 +13,9 @@ export function useDiscoveryCommand() {
   }
 
   async function handleDiscoverCommand(project: string, devMode?: boolean) {
+    if (useTerminalStore.getState().command.inFlight) {
+      return
+    }
     toast.loading('Discovery has started', { id: toastId })
     if (devMode !== undefined) {
       setDevMode(devMode)
@@ -21,6 +24,7 @@ export function useDiscoveryCommand() {
     const isOk = await discover(project)
 
     queryClient.invalidateQueries({ queryKey: ['projects', project] })
+    queryClient.invalidateQueries({ queryKey: ['projects'], exact: true })
     queryClient.invalidateQueries({ queryKey: ['config-sync-status', project] })
     queryClient.invalidateQueries({ queryKey: ['address-usage'] })
 

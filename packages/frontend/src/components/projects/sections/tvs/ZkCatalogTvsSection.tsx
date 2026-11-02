@@ -6,6 +6,7 @@ import { Breakdown } from '~/components/breakdown/Breakdown'
 import { ZkCatalogProjectsTvsChart } from '~/components/chart/tvs/stacked/zk-catalog/ZkCatalogProjectsTvsChart'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import type { ChartProject } from '~/components/core/chart/Chart'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -92,13 +93,14 @@ function ChartControls({
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
 
-  const { data } = useQuery(
-    trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
+  const { data, isPlaceholderData } = useChartQuery(
+    trpc.tvs.detailedChartWithProjectsRanges,
+    {
       projects: projectsForTvs,
       range,
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens,
-    }),
+    },
   )
 
   const timeRange = useMemo(
@@ -110,6 +112,7 @@ function ChartControls({
   )
   return (
     <TvsChartControls
+      isPlaceholderData={isPlaceholderData}
       timeRange={timeRange}
       range={{
         value: range,

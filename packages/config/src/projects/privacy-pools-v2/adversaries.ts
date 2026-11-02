@@ -2,15 +2,20 @@ import {
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
-import type { ProjectPrivacyReferenceClient } from '../../types'
+import type { ProjectPrivacyReferenceApp } from '../../types'
 
-// main after v1.2.1 of the web app, the build privacypools.com serves.
-export const REFERENCE_CLIENT: ProjectPrivacyReferenceClient = {
+// main after v1.2.1 of the web app. privacypools.com serves v1.3.0 (555d19f),
+// whose diff from this pin adds an Aave notice and touches no network code.
+export const REFERENCE_APP = {
   name: 'privacypools.com',
-  repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
-  commit: '6c292b47a977cd86d506994f1b9a0fc51b9a79db',
-}
-const WEBSITE = `${REFERENCE_CLIENT.repository}/blob/${REFERENCE_CLIENT.commit}/`
+  url: 'https://privacypools.com',
+  since: '2026-10-23',
+  source: {
+    repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
+    commit: '6c292b47a977cd86d506994f1b9a0fc51b9a79db',
+  },
+} satisfies ProjectPrivacyReferenceApp
+const WEBSITE = `${REFERENCE_APP.source.repository}/blob/${REFERENCE_APP.source.commit}/`
 // v1.0.2 of the monorepo: the circuits behind the live verifiers and the SDK the app vendors.
 export const MONOREPO_REPOSITORY =
   'https://github.com/0xbow-io/privacy-pools-v2-monorepo'
@@ -31,7 +36,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       exposureContinued:
         'A relayed transfer pays its fee as a public withdrawal to the relayer, so transfers are visible as events. A ragequit publishes the owner, the amount, the label and the commitment, which names the transaction that created the note. Claiming a payment to an unregistered address registers that wallet.',
       advice:
-        'Exit through a relayer, so none of your wallets pay gas for the receiving address. Ragequit only notes you deposited and never spent from. On any other note, a ragequit names the private transaction that created it.',
+        'Exit through a relayer, so none of your wallets pay gas for the receiving address. Ragequit only notes you deposited and never spent from.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -50,11 +55,12 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
             MONOREPO + 'packages/circuits/circuits/templates/Transact.circom',
         },
         {
-          title: 'Relayed transfers pay the fee as a public output',
+          title:
+            'Relayed transfers pay the fee as a public output (checked 2026-10-30)',
           url: DOCS + 'operations/transfer',
         },
         {
-          title: 'Ragequit publishes the label and owner',
+          title: 'Ragequit publishes the label and owner (checked 2026-10-30)',
           url: DOCS + 'operations/ragequit',
         },
       ],
@@ -63,8 +69,8 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       exposureShort:
         "A note's label passes to every later payee, and the ASP update that first approved it often leaves one candidate deposit.",
-      exposureContinued: `The ASP adds ten labels per update, decoys included, so an update that follows a single deposit names it. Without a payee, a relayed exit of a common amount hides among every approved deposit of its asset. Any amount is allowed, so an unusual one pairs a deposit with its withdrawal, and a yield deposit's share count encodes the day it was made. ${S.walletFingerprint('relayer')}`,
-      advice: `Reshield into another asset before paying someone who should not learn the deposit, since the reshield deposits the funds again under a new label. ${S.largeAnonymitySet} ${S.commonAmounts} ${S.freshExit}`,
+      exposureContinued: `The ASP adds ten labels per update, decoys included, so an update that follows a single deposit names it. Without a payee, a relayed exit of a common amount hides among every approved deposit of its asset. Any amount is allowed, so an unusual amount, or a share count only one deposit day produces, pairs a deposit with its withdrawal. ${S.walletFingerprint('relayer')}`,
+      advice: `Reshield into another asset before paying someone who should not learn the deposit, since the reshield deposits the funds again under a new label. Use ppETH or ppUSDC, the pools with the most depositors. ${S.commonAmounts} ${S.freshExit}`,
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -87,7 +93,8 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
           title: 'Each root update links its list on IPFS',
         },
         {
-          title: 'Share counts encode the exchange rate at deposit',
+          title:
+            'Share counts encode the exchange rate at deposit (checked 2026-10-30)',
           url: DOCS + 'concepts/yield-shares',
         },
         {
@@ -99,11 +106,11 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        "The default RPCs, Alchemy under 0xbow's key with a public node as fallback, see the account at sign-in and can time it against the withdrawal.",
+        "The default RPCs, led by Alchemy under 0xbow's key, see the account at sign-in and can time it against the withdrawal.",
       exposureContinued:
-        "Network services like the LI.FI swap service and Sentry error reporting receive your IP address unless the app is used over Tor or a VPN, while the Tor mode is not compatible with a local Ethereum node. The app confirms a relayed withdrawal from bulk reads, so no request names it, and the pairing rests on timing, which Tor does not hide. The app downloads the pool's events whole from the ASP and matches notes locally. The relayer learns the recipient at quote time. Tor Browser works, but the relayer refuses many Tor exits and the app offers no other relayer.",
+        "An IP-hiding route does not hide that timing, a local node does. Tor Browser and the app's Tor option cannot reach a local node, so the route must carry all traffic.",
       advice:
-        'Set your own node, served over https, as the endpoint for the chain before signing in. Withdraw in a new Tor Browser session signed in with your account key, so no wallet is connected, and retry on a new circuit when the relayer refuses.',
+        'Send all traffic through an IP-hiding route and set a local node as the endpoint before signing in. Withdraw signed in with the account key instead of a wallet.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -111,25 +118,22 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         asset: 'private',
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only from an own node, with a new Tor Browser session for the exit.',
+          note: 'Private only with a local node and all traffic through an IP-hiding route.',
         },
       },
       sources: [
+        S.ipHidingRoutes,
         {
           title: 'Alchemy first, public node last',
           url: WEBSITE + 'config/rpc-order.ts#L55-L70',
         },
         {
+          title: 'Sign-in reads the account from the Keystore',
+          url: WEBSITE + 'components/sdk-provider.tsx#L679-L711',
+        },
+        {
           title: 'Allowlist refuses per-note reads and topic filters',
           url: WEBSITE + 'services/egress-policy.ts#L447-L520',
-        },
-        {
-          title: 'The receive quote carries the recipient',
-          url: WEBSITE + 'services/egress-policy.ts#L606-L617',
-        },
-        {
-          title: 'Tor needs a gateway the user runs',
-          url: WEBSITE + 'config/tor.ts#L1-L50',
         },
       ],
     },
@@ -138,9 +142,8 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       exposureShort:
         'The ASP postman can publish a new approved list at any time with no delay, and every private spend must prove against the latest one.',
       exposureContinued:
-        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's relayer sees the IP and recipient of every private exit and its ASP feeds see the IP of every session, so one operator can pair a deposit session with its withdrawal. The request logs of its Alchemy key show it the account each sign-in looks up, which it can time against the withdrawals its relayer submits. A multisig holds every admin role and can upgrade the four core contracts without delay.",
-      advice:
-        'Before withdrawing, check the size of the approved list behind the latest root, which the ASPRegistry links on IPFS. Exit as the network observer advice says, so 0xbow sees no IP it saw at the deposit and no account lookup.',
+        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's ASP feeds see every session's IP and its relayer every exit's IP and recipient, so 0xbow can pair deposit and exit sessions. The request logs of its Alchemy key show it the account each sign-in looks up, which it can time against the withdrawals its relayer submits. 0xbow can change the hosted app at any time, and a multisig can upgrade the four core contracts without delay.",
+      advice: `Exit as the network observer advice says, after checking the size of the approved list that the ASPRegistry's latest root links on IPFS. ${S.localBuild}`,
       interior: {
         sender: 'private',
         recipient: {
@@ -164,7 +167,8 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
           title: 'transact: only the latest ASP root is accepted',
         },
         {
-          title: 'What the relayer receives, the IP included',
+          title:
+            'What the relayer receives, the IP included (checked 2026-10-30)',
           url: DOCS + 'introduction/threat-model',
         },
         {

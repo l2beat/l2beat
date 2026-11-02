@@ -193,7 +193,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
   private resolveSender(
     record: RawRecord,
     transactionSenders: Map<string, string>,
-    tracedFunders: Map<RawRecord, EthereumAddress>,
+    tracedFunders: Map<RawRecord, string>,
   ): string {
     switch (record.origin.type) {
       case 'event':
@@ -214,7 +214,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
           funder !== undefined,
           `Missing traced funder for ${record.log.transactionHash}`,
         )
-        return funder.toString()
+        return funder
       }
       default:
         assertUnreachable(record.origin)
@@ -224,8 +224,8 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
   /** One trace per configuration, as each carries its own funding params. */
   private async getTracedFunders(
     records: RawRecord[],
-  ): Promise<Map<RawRecord, EthereumAddress>> {
-    const funders = new Map<RawRecord, EthereumAddress>()
+  ): Promise<Map<RawRecord, string>> {
+    const funders = new Map<RawRecord, string>()
     const byConfiguration = groupBy(
       records.filter(isTracedFunderRecord),
       (record) => record.configuration.id,
@@ -318,7 +318,7 @@ function isTracedFunderRecord(record: RawRecord): record is TracedFunderRecord {
  */
 function withoutUntracedFunders(
   records: RawRecord[],
-  tracedFunders: Map<RawRecord, EthereumAddress>,
+  tracedFunders: Map<RawRecord, string>,
 ): RawRecord[] {
   return records.filter(
     (record) =>

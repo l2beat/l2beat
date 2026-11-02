@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { CopyButton } from '~/components/CopyButton'
 import { cn } from '~/utils/cn'
 
@@ -37,8 +37,10 @@ export function CodeSnippet({
       {hasHeader && (
         <div
           className={cn(
-            'flex items-center justify-between gap-3 px-3 py-2',
+            'flex items-center justify-between gap-3 px-4 py-2',
             hasBody && 'border-divider border-b',
+            // A request URL wraps on phone; keep the copy button on its first line.
+            header && 'max-md:items-start',
           )}
         >
           {header ?? (
@@ -57,10 +59,11 @@ export function CodeSnippet({
         </div>
       )}
       {hasBody && (
+        // The height cuts a line in half, so a long body reads as scrollable.
         <pre
           className={cn(
-            'max-h-[30rem] overflow-auto p-4 font-mono text-paragraph-12 leading-relaxed md:text-paragraph-13',
-            wrap && 'whitespace-pre-wrap break-all',
+            'max-h-[30.75rem] overflow-auto p-4 font-mono text-paragraph-13 leading-relaxed',
+            wrap && 'whitespace-pre-wrap break-words',
           )}
         >
           <code>{children}</code>
@@ -71,13 +74,25 @@ export function CodeSnippet({
 }
 
 export function RequestHeader({ url }: { url: string }) {
+  // On phone the URL wraps after a slash, so the path stays in view rather than behind a scroll.
+  const segments = url.split('/')
   return (
-    <span className="flex min-w-0 items-center gap-2.5">
-      <span className="shrink-0 rounded bg-[#e8f0e2] px-1.5 py-0.5 font-bold text-[#3f6d2c] text-[11px] uppercase tracking-wider dark:bg-[#15ca60]/15 dark:text-[#8fd06a]">
+    <span className="flex min-w-0 items-center gap-2.5 max-md:items-start">
+      <span className="shrink-0 rounded bg-garden-accent/15 px-1.5 py-0.5 font-bold text-[11px] text-garden-accent uppercase tracking-wider">
         get
       </span>
-      <code className="min-w-0 overflow-x-auto whitespace-nowrap font-mono text-paragraph-13">
-        {url}
+      <code className="min-w-0 overflow-x-auto whitespace-nowrap font-mono text-paragraph-13 max-md:whitespace-normal max-md:break-words">
+        {segments.map((segment, index) => (
+          // Positional: the index is the identity of a path segment.
+          <Fragment key={index}>
+            {segment}
+            {index < segments.length - 1 && (
+              <>
+                /<wbr />
+              </>
+            )}
+          </Fragment>
+        ))}
       </code>
     </span>
   )

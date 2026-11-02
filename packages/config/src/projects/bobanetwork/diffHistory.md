@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x1be51815cbdb99086706122637d2a8f01eef91f2
+
+# Diff at Tue, 27 Oct 2026 15:09:42 GMT:
+
+- id: aff6d9b2
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b3346aafa392488900d7a556a206cfabc7acf611 block: 1782210040
+- current timestamp: 1793113693
+
+## Description
+
+AnchorStateRegistry: anchor game set for the first time since the 2026-05-04 retirement, so MIPS and PreimageOracle are now reached through it.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/bobanetwork/.flat/MIPS.sol        | 3274 ++++++++++++++++++++
+ .../projects/bobanetwork/.flat/PreimageOracle.sol  | 1463 +++++++++
+ 2 files changed, 4737 insertions(+)
+```
+
 Generated with discovered.json: 0x5b6b89e79d5b6f377d7f210c64e3f7c1e5f76a0c
 
 # Diff at Fri, 16 Oct 2026 09:37:44 GMT:

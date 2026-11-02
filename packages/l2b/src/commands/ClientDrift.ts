@@ -1,7 +1,4 @@
-import {
-  type ProjectPrivacyReferenceClient,
-  ProjectService,
-} from '@l2beat/config'
+import { type ProjectPrivacyReferenceApp, ProjectService } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import chalk from 'chalk'
@@ -32,13 +29,14 @@ const Comparison = v.object({
 
 interface ProjectClient {
   id: string
-  client: ProjectPrivacyReferenceClient
+  name: string
+  source: NonNullable<ProjectPrivacyReferenceApp['source']>
 }
 
 export const ClientDrift = command({
   name: 'client-drift',
   description:
-    "Lists what changed in a privacy project's reference client since the commit its ratings were reviewed against, or in every project's when none is given. Set GITHUB_TOKEN to lift GitHub's anonymous rate limit. Rebuild packages/config first.",
+    "Lists what changed in a privacy project's reference app since the commit its ratings were reviewed against, or in every project's when none is given. Set GITHUB_TOKEN to lift GitHub's anonymous rate limit. Rebuild packages/config first.",
   args: {
     project: positional({
       type: optional(string),
@@ -60,8 +58,10 @@ async function getProjectClients(
   if (projectId === undefined) {
     const projects = await ps.getProjects({ select: ['privacyInfo'] })
     return projects.flatMap((project) => {
-      const client = project.privacyInfo.referenceClient
-      return client ? [{ id: project.id, client }] : []
+      const client = project.privacyInfo.referenceApp
+      return client?.source
+        ? [{ id: project.id, name: client.name, source: client.source }]
+        : []
     })
   }
 
@@ -76,28 +76,28 @@ async function getProjectClients(
     process.exitCode = 1
     return []
   }
-  const client = project.privacyInfo?.referenceClient
-  if (!client) {
-    console.log(`${project.id} has no reference client`)
+  const client = project.privacyInfo?.referenceApp
+  if (!client?.source) {
+    console.log(`${project.id} has no open-source reference app`)
     return []
   }
-  return [{ id: project.id, client }]
+  return [{ id: project.id, name: client.name, source: client.source }]
 }
 
-async function printDrift({ id, client }: ProjectClient): Promise<void> {
-  const api = `https://api.github.com/repos/${getGithubRepository(client.repository)}`
+async function printDrift({ id, name, source }: ProjectClient): Promise<void> {
+  const api = `https://api.github.com/repos/${getGithubRepository(source.repository)}`
   const { default_branch } = Repository.validate(
     await fetchGithub(api, HEADERS).then((response) => response.json()),
   )
   const comparison = Comparison.validate(
     await fetchGithub(
-      `${api}/compare/${client.commit}...${default_branch}`,
+      `${api}/compare/${source.commit}...${default_branch}`,
       HEADERS,
     ).then((response) => response.json()),
   )
 
   if (comparison.ahead_by === 0) {
-    console.log(`${id} (${client.name}): up to date`)
+    console.log(`${id} (${name}): up to date`)
     return
   }
   const files = (comparison.files ?? []).map((file) => file.filename)
@@ -105,10 +105,10 @@ async function printDrift({ id, client }: ProjectClient): Promise<void> {
     (file) => READ_FIRST.test(file) && !NOISE.test(file),
   )
   console.log(
-    `${id} (${client.name}): ${comparison.ahead_by} commit${comparison.ahead_by === 1 ? '' : 's'} ahead on ${default_branch}, ${files.length} files changed, ${readFirst.length} to read first`,
+    `${id} (${name}): ${comparison.ahead_by} commit${comparison.ahead_by === 1 ? '' : 's'} ahead on ${default_branch}, ${files.length} files changed, ${readFirst.length} to read first`,
   )
   console.log(
-    `  ${client.repository}/compare/${client.commit}...${default_branch}`,
+    `  ${source.repository}/compare/${source.commit}...${default_branch}`,
   )
   for (const file of readFirst.slice(0, MAX_LISTED)) {
     console.log(`  - ${file}`)

@@ -42,6 +42,7 @@ interface Props {
   project?: ChartProject
   resolution: ChartResolution
   isLoading: boolean
+  isPlaceholderData: boolean
   syncedUntil: number | undefined
   tickCount?: number
   milestones: Milestone[]
@@ -52,6 +53,7 @@ export function DataPostedChart({
   project,
   resolution,
   isLoading,
+  isPlaceholderData,
   syncedUntil,
   tickCount,
   milestones,
@@ -70,6 +72,7 @@ export function DataPostedChart({
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={filteredChartMeta}
       isLoading={isLoading}

@@ -1,4 +1,5 @@
 import {
+  CONFLICT_COLOR,
   getClusterLabelOpacity,
   getNodeVisualScale,
   nodeColor,
@@ -43,6 +44,9 @@ export interface RelationGraphViewState {
   selection: RelationGraphSelection | undefined
   focus: RelationGraphFocus | undefined
   highlightAnomalies: boolean
+  /** Nodes whose ingestion queue entry is in conflict, while the conflicts
+   * are highlighted; undefined otherwise. */
+  conflictNodeIds: ReadonlySet<string> | undefined
   deletedRelationIds: ReadonlySet<string>
   theme: RelationGraphTheme
 }
@@ -63,12 +67,16 @@ export interface RelationGraphTheme {
 
 type StyleInputs = Pick<
   RelationGraphViewState,
-  'focus' | 'highlightAnomalies' | 'hovered' | 'selection'
+  'conflictNodeIds' | 'focus' | 'highlightAnomalies' | 'hovered' | 'selection'
 >
 
 const NODE_RADIUS = 7
 const NODE_HOVER_RADIUS = 8.5
 export const NODE_RING_RADIUS = 12
+/** Conflict halos keep this screen radius at overview zoom, where the nodes
+ * themselves shrink to specks, so every conflict can be spotted. */
+const CONFLICT_HALO_MIN_RADIUS = 7
+const CONFLICT_HALO_MIN_WIDTH = 2
 const NODE_LABEL_FONT_SIZE = 11
 const NODE_CHAIN_LABEL_FONT_SIZE = 9
 /** The chain subtitle keeps the old label position, directly above the node. */
@@ -108,6 +116,7 @@ export function drawRelationGraph(
     drawRelationLabels(ctx, scene, view)
   }
   drawNodes(ctx, scene, view)
+  drawConflictHalos(ctx, scene, view)
   drawNodeLabels(ctx, scene, view)
   drawClusterLabels(ctx, scene, view)
   ctx.globalAlpha = 1
@@ -207,7 +216,7 @@ function drawNodes(
   scene: RelationGraphScene,
   view: RelationGraphViewState,
 ) {
-  const { camera, focus, hovered, selection, theme } = view
+  const { camera, hovered, selection, theme } = view
   const visualScale = nodeVisualScreenScale(camera.k)
   for (const node of scene.nodes) {
     const x = node.x * camera.k + camera.x
@@ -215,7 +224,7 @@ function drawNodes(
     if (isPointOutsideViewport(x, y, view)) continue
 
     const id = node.data.id
-    const groupAlpha = focus === undefined || focus.nodeIds.has(id) ? 1 : 0.12
+    const groupAlpha = getNodeOpacity(node, view)
     const isHovered = hovered?.type === 'node' && hovered.id === id
     const isSelected = selection?.type === 'node' && selection.id === id
     const color = nodeColor(node.data)
@@ -251,16 +260,56 @@ function drawNodes(
   ctx.globalAlpha = 1
 }
 
+/**
+ * Drawn over the nodes so that no neighbor covers a conflict, and with a
+ * minimum screen size so that conflicts stay visible at overview zoom.
+ */
+function drawConflictHalos(
+  ctx: CanvasRenderingContext2D,
+  scene: RelationGraphScene,
+  view: RelationGraphViewState,
+) {
+  const { camera, conflictNodeIds } = view
+  if (conflictNodeIds === undefined || conflictNodeIds.size === 0) return
+  const visualScale = nodeVisualScreenScale(camera.k)
+  const radius = Math.max(
+    NODE_RING_RADIUS * visualScale,
+    CONFLICT_HALO_MIN_RADIUS,
+  )
+  ctx.strokeStyle = CONFLICT_COLOR
+  ctx.lineWidth = Math.max(2.5 * visualScale, CONFLICT_HALO_MIN_WIDTH)
+  for (const node of scene.nodes) {
+    if (!conflictNodeIds.has(node.data.id)) continue
+    const x = node.x * camera.k + camera.x
+    const y = node.y * camera.k + camera.y
+    if (isPointOutsideViewport(x, y, view)) continue
+
+    ctx.globalAlpha = getNodeOpacity(node, view)
+    ctx.beginPath()
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke()
+  }
+  ctx.globalAlpha = 1
+}
+
 function drawNodeLabels(
   ctx: CanvasRenderingContext2D,
   scene: RelationGraphScene,
   view: RelationGraphViewState,
 ) {
-  const { camera, focus, hovered, theme } = view
+  const { camera, conflictNodeIds, focus, hovered, theme } = view
   const layout = getNodeLabelLayout(camera.k)
-  // Zoomed out, labels are only kept for the hovered and focused nodes — a
-  // handful — clamped up to stay legible; cluster labels carry that view.
-  if (!layout.showAll && hovered === undefined && focus === undefined) return
+  // Zoomed out, labels are only kept for the hovered, focused and
+  // highlighted conflict nodes — a handful — clamped up to stay legible;
+  // cluster labels carry that view.
+  if (
+    !layout.showAll &&
+    hovered === undefined &&
+    focus === undefined &&
+    conflictNodeIds === undefined
+  ) {
+    return
+  }
 
   ctx.textAlign = 'center'
   ctx.textBaseline = 'alphabetic'
@@ -302,20 +351,20 @@ function drawNodeLabelLine(
   text: (node: SceneNode) => string,
   opacity: number,
 ) {
-  const { camera, focus, hovered } = view
+  const { camera, conflictNodeIds, focus, hovered } = view
   ctx.font = font
   for (const node of scene.nodes) {
     const id = node.data.id
     const emphasized =
       (hovered?.type === 'node' && hovered.id === id) ||
-      focus?.nodeIds.has(id) === true
+      focus?.nodeIds.has(id) === true ||
+      conflictNodeIds?.has(id) === true
     if (!showAll && !emphasized) continue
     const x = node.x * camera.k + camera.x
     const y = node.y * camera.k + camera.y
     if (isPointOutsideViewport(x, y, view)) continue
 
-    const focusOpacity = focus === undefined || focus.nodeIds.has(id) ? 1 : 0.12
-    ctx.globalAlpha = focusOpacity * opacity
+    ctx.globalAlpha = getNodeOpacity(node, view) * opacity
     const labelY = y + offsetY
     const label = text(node)
     ctx.strokeText(label, x, labelY)
@@ -438,9 +487,16 @@ function getLinkOpacity(
 ) {
   if (isHovered || inFocus) return 0.95
   if (view.focus !== undefined) return 0.08
-  if (view.highlightAnomalies) {
-    return link.relation.isConflict ? 0.95 : 0.22
+  if (view.highlightAnomalies && link.relation.isConflict) return 0.95
+  // Highlighted conflicts keep their own relations visible: they show
+  // where the token would land once its conflict is resolved.
+  if (view.conflictNodeIds !== undefined) {
+    return view.conflictNodeIds.has(link.source.data.id) ||
+      view.conflictNodeIds.has(link.target.data.id)
+      ? 0.75
+      : 0.15
   }
+  if (view.highlightAnomalies) return 0.22
   return 0.55
 }
 
@@ -464,6 +520,16 @@ function displayedRelationColor(
 ) {
   if (!highlightAnomalies) return relationColor(relation)
   return relation.isConflict ? RELATION_COLORS.conflict : RELATION_COLORS.muted
+}
+
+/** A focus fades everything outside it; highlighted conflicts fade the
+ * nodes that are not conflicts, though less, as they still show context. */
+export function getNodeOpacity(node: SceneNode, view: StyleInputs): number {
+  const id = node.data.id
+  const { conflictNodeIds, focus } = view
+  if (focus !== undefined) return focus.nodeIds.has(id) ? 1 : 0.12
+  if (conflictNodeIds !== undefined && !conflictNodeIds.has(id)) return 0.3
+  return 1
 }
 
 export function getNodeRingOpacity(node: SceneNode, view: StyleInputs): number {

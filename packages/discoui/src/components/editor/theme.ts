@@ -40,7 +40,7 @@ const editorTheme = EditorView.theme(
     },
     '.cm-gutters': {
       backgroundColor: colors.coffee['900'],
-      color: colors.coffee['600'],
+      color: colors.coffee['400'],
       border: 'none',
     },
     '.cm-lineNumbers .cm-gutterElement': {

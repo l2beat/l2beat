@@ -18,13 +18,13 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/core/Drawer'
+import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { CustomLink } from '~/components/link/CustomLink'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { DiffoIcon } from '~/icons/Diffo'
 import { HistoryClockIcon } from '~/icons/HistoryClock'
 import { cn } from '~/utils/cn'
-import { formatTimestamp } from '~/utils/dates'
 import type { PastUpgradeProxyContract } from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
 
 export interface PastUpgradesData {
@@ -167,10 +167,7 @@ function PastUpgradeEntry({
           title={upgrade.isInitialDeployment ? 'Deployment time' : 'Time'}
         >
           <span className="font-medium text-label-value-15">
-            {formatTimestamp(upgrade.timestamp, {
-              mode: 'datetime',
-              longMonthName: false,
-            })}
+            <UtcDateTime timestamp={upgrade.timestamp} />
           </span>
         </ValueWithTitle>
         {showProxyContract && (

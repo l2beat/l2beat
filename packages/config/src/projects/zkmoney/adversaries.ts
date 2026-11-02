@@ -113,7 +113,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       exposureContinued:
         "Desktop has no Tor setting. Routing all of the computer's traffic through Tor works, but Chrome's QUIC traffic to WalletConnect bypasses Tor unless UDP is blocked.",
       advice:
-        'Set your own Ethereum node as the L1 endpoint, and run Desktop on a system that sends all traffic through Tor and blocks UDP, such as Whonix.',
+        "Set the user's own Ethereum node as the L1 endpoint, and run Desktop on a system that sends all traffic through Tor and blocks UDP, such as Whonix.",
       interior: {
         ...INTERIOR,
         sender: {

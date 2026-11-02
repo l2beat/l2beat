@@ -18,7 +18,6 @@ import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
 import { DefiTvlRepository } from './repositories/DefiTvlRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
-import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { HourlyActivityRepository } from './repositories/HourlyActivityRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
@@ -51,6 +50,7 @@ import { TokenMetadataRepository } from './repositories/TokenMetadataRepository'
 import { TokenValueRepository } from './repositories/TokenValueRepository'
 import { TvsAmountRepository } from './repositories/TvsAmountRepository'
 import { TvsBlockTimestampRepository } from './repositories/TvsBlockTimestampRepository'
+import { TvsEscrowValueRepository } from './repositories/TvsEscrowValueRepository'
 import { TvsPriceRepository } from './repositories/TvsPriceRepository'
 import { UpdateDiffRepository } from './repositories/UpdateDiffRepository'
 import { UpdateMessageRepository } from './repositories/UpdateMessageRepository'
@@ -108,10 +108,6 @@ export function createDatabase(
     flatSources: new FlatSourcesRepository(db),
     // #endregion
 
-    // #region Ecosystems
-    ecosystemToken: new EcosystemTokenRepository(db),
-    // #endregion
-
     // #region CROPS
     cropAttestation: new CropAttestationRepository(db),
     // #endregion
@@ -156,6 +152,7 @@ export function createDatabase(
     // #region Tvs
     tvsPrice: new TvsPriceRepository(db),
     tvsAmount: new TvsAmountRepository(db),
+    tvsEscrowValue: new TvsEscrowValueRepository(db),
     tvsBlockTimestamp: new TvsBlockTimestampRepository(db),
     tvsTokenValue: new TokenValueRepository(db),
     tvsTokenMetadata: new TokenMetadataRepository(db),

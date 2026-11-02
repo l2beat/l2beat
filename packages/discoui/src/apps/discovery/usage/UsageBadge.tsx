@@ -1,4 +1,3 @@
-import { cn } from '../../../utils/cn'
 import { summarizeAddressUsage } from './addressUsage'
 import { useAddressUsage } from './useAddressUsage'
 
@@ -6,7 +5,6 @@ export function UsageBadge(props: {
   address: string
   openedProject: string
   sourceProject: string
-  isSelected: boolean
 }) {
   const usage = useAddressUsage()
   if (usage.data === undefined) {
@@ -26,12 +24,7 @@ export function UsageBadge(props: {
   return (
     <span
       title={`Also discovered in ${summary.places.map((x) => x.project).join(', ')}`}
-      className={cn(
-        'rounded-sm px-1 font-mono text-2xs leading-4',
-        props.isSelected
-          ? 'bg-black/20 text-black'
-          : 'bg-aux-yellow/20 text-aux-yellow',
-      )}
+      className="rounded-sm bg-aux-yellow/20 px-1 font-mono text-2xs text-aux-yellow leading-4"
     >
       +{summary.places.length}
     </span>

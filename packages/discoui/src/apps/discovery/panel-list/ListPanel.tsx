@@ -110,25 +110,25 @@ function ListItemChain(props: {
         key={chain}
         className={cn(!props.first && 'border-t border-t-coffee-600')}
       >
-        <div className="group flex min-h-[22px] items-center justify-between pr-1 hover:bg-aux-brown">
+        <div className="group flex min-h-6 items-center justify-between bg-coffee-900 px-1 hover:bg-coffee-800">
           <button
             onClick={() => setOpen((open) => !open)}
-            className="flex w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
+            className="flex min-w-0 flex-1 cursor-pointer select-none items-center gap-1 font-semibold text-[11px] text-coffee-200 uppercase tracking-wide"
           >
             {open && <IconChevronDown />}
             {!open && <IconChevronRight />}
-            {`${props.entry.project} on ${chain}`}
+            <span className="min-w-0 break-words text-left">{`${props.entry.project} on ${chain}`}</span>
           </button>
           {props.entry.project !== props.openedProject && (
             <Link
               to={`/ui/p/${props.entry.project}`}
-              className="mr-2 whitespace-nowrap text-coffee-400 text-xs underline hover:text-coffee-100"
+              className="mr-2 whitespace-nowrap text-[11px] text-coffee-300 underline hover:text-coffee-100"
             >
               open
             </Link>
           )}
-          <span className="whitespace-nowrap text-coffee-400 text-xs italic group-hover:text-coffee-200">
-            @ {blockNumber}
+          <span className="whitespace-nowrap font-mono text-[11px] text-coffee-300 tabular-nums group-hover:text-coffee-200">
+            @{blockNumber}
           </span>
         </div>
         {open && (
@@ -204,7 +204,7 @@ function ListItemContracts(props: {
     <>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex min-h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-medium text-coffee-400 text-sm hover:bg-aux-brown hover:text-coffee-200"
+        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 bg-coffee-800 pl-2 font-semibold text-coffee-300 text-xs hover:bg-coffee-700 hover:text-coffee-100"
       >
         {open && (
           <>
@@ -221,7 +221,7 @@ function ListItemContracts(props: {
         {props.title}
       </button>
       {open && (
-        <ol>
+        <ol className="relative before:pointer-events-none before:absolute before:inset-y-0 before:left-4 before:z-1 before:w-px before:bg-coffee-600/60">
           {sortedEntries.map((entry) => (
             <AddressEntry
               key={entry.address}
@@ -261,9 +261,10 @@ const AddressEntry = memo(function AddressEntry({
     <li
       data-address={entry.address}
       className={cn(
-        'flex min-h-[22px] cursor-pointer select-none items-center gap-1 whitespace-pre pl-4 text-sm',
-        isSelected && 'bg-autumn-300 text-black',
-        !isSelected && 'bg-coffee-800 hover:bg-aux-brown',
+        'flex min-h-[22px] cursor-pointer select-none items-center gap-1.5 whitespace-pre pl-6 text-[13px] leading-[18px]',
+        isSelected &&
+          'bg-autumn-300/15 text-coffee-100 shadow-[inset_2px_0_0_#BAD80A]',
+        !isSelected && 'hover:bg-coffee-800',
       )}
       onClick={() => select([entry.address])}
       style={{
@@ -271,9 +272,11 @@ const AddressEntry = memo(function AddressEntry({
         filter: isGrayedOut ? 'grayscale(100%)' : 'none',
       }}
     >
-      <div className="mr-[7px] min-h-[22px] border-coffee-600 border-l" />
-      <AddressIcon type={entry.type} />
-      <span className="overflow-hidden text-ellipsis tabular-nums">
+      <AddressIcon
+        type={entry.type}
+        className={cn('size-3.5 shrink-0', isSelected && 'text-autumn-300')}
+      />
+      <span className="min-w-0 truncate tabular-nums">
         {entry.name ?? toShortenedAddress(entry.address)}
       </span>
       <div className="mr-1 ml-auto flex items-center gap-1 text-coffee-400">
@@ -282,7 +285,6 @@ const AddressEntry = memo(function AddressEntry({
             address={entry.address}
             openedProject={openedProject}
             sourceProject={sourceProject}
-            isSelected={isSelected}
           />
         )}
         {isHidden && <IconEyeClosed />}

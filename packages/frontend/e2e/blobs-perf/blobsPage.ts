@@ -8,21 +8,15 @@ import type { Browser, CDPSession, Page } from 'playwright/test'
 export const SLOT_MS = 12_000
 const GENESIS_MS = 1606824023_000
 
-/**
- * /blobs scrolled to the belt, as a visitor watches it, once it is live.
- * With `touch`, a phone's: a finger, not a mouse
- */
+/** /blobs scrolled to the belt, as a visitor watches it, once it is live */
 export async function openBlobs(
   browser: Browser,
   width: number,
   height: number,
-  { touch = false } = {},
 ) {
   const context = await browser.newContext({
     viewport: { width, height },
     deviceScaleFactor: 2,
-    hasTouch: touch,
-    isMobile: touch,
   })
   const page = await context.newPage()
   await page.addInitScript(countBeltPaints)
@@ -125,8 +119,8 @@ export function lowerOf(existing: number | undefined, measured: number) {
 const STOP_LIVE_PING = '.animate-ping { animation: none !important; }'
 
 // The logo in the navbar beats for a second every five, laying out every frame
-// of it, at a phase the slots know nothing of: a swipe met one beat or two,
-// and its layouts swung by 60 or so with it
+// of it, at a phase the slots know nothing of: a watch meets one beat or two,
+// and its layouts would swing by 60 or so with it
 const PAUSE_SVG_ANIMATIONS = `document
   .querySelectorAll('svg')
   .forEach((svg) => svg.pauseAnimations())`

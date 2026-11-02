@@ -3,6 +3,7 @@ import { PINNED_CELL_ATTRIBUTE } from '~/components/table/utils/commonPinningSty
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import { cn } from '~/utils/cn'
 import { toRgba } from '~/utils/color'
+import { EASE_OUT_QUINT } from '~/utils/easing'
 
 /** Long enough to read as counting, short enough to be done before the next block */
 const ROLL_MS = 900
@@ -15,7 +16,6 @@ const FLASH_MS = 1800
 const REORDER_MS = 600
 /** A new row has nowhere to slide from, so it fades in */
 const ENTER_MS = 300
-const EASE_OUT = 'cubic-bezier(0.22, 1, 0.36, 1)'
 
 /**
  * Counts up to each new value and glows only if the formatted text climbs too:
@@ -107,23 +107,23 @@ export function Pop({
     // drag out the way out, leaving a faint "+5" hanging about
     const keyframes = reducedMotion
       ? [
-          { opacity: 0, easing: EASE_OUT },
+          { opacity: 0, easing: EASE_OUT_QUINT },
           { opacity: 1, offset: POP_IN },
-          { opacity: 1, offset: POP_OUT, easing: EASE_OUT },
+          { opacity: 1, offset: POP_OUT, easing: EASE_OUT_QUINT },
           { opacity: 0 },
         ]
       : [
           {
             opacity: 0,
             transform: 'translateY(4px) scale(0.9)',
-            easing: EASE_OUT,
+            easing: EASE_OUT_QUINT,
           },
           { opacity: 1, transform: 'none', offset: POP_IN },
           {
             opacity: 1,
             transform: 'translateY(-3px)',
             offset: POP_OUT,
-            easing: EASE_OUT,
+            easing: EASE_OUT_QUINT,
           },
           { opacity: 0, transform: 'translateY(-8px)' },
         ]
@@ -214,12 +214,12 @@ export function useReorder(
       if (was === undefined) {
         row.animate([{ opacity: 0 }, {}], {
           duration: ENTER_MS,
-          easing: EASE_OUT,
+          easing: EASE_OUT_QUINT,
         })
       } else if (was !== top) {
         row.animate(
           [{ transform: `translateY(${was - top}px)` }, { transform: 'none' }],
-          { duration: REORDER_MS, easing: EASE_OUT },
+          { duration: REORDER_MS, easing: EASE_OUT_QUINT },
         )
       }
     }

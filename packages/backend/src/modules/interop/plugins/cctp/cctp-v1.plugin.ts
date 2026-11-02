@@ -54,7 +54,11 @@ import {
   type EthereumAddress,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
-import { isMayanCircleForwarded, MayanForwarded } from '../mayan-forwarder'
+import {
+  findMayanForwardedForSend,
+  isMayanCircleForwarded,
+  MayanForwarded,
+} from '../mayan-forwarder'
 import { findWrappedMayanWormholeLog } from '../mayan-wormhole'
 import {
   createInteropEventType,
@@ -79,6 +83,7 @@ import {
   parseCctpMessageSent,
   parseCctpV1ReceivedTransfer,
 } from './cctp.utils'
+import { CCTPv2MessageSent } from './cctp-v2.plugin'
 
 type CCTPV1MessagePayloadInfo = {
   app?: string
@@ -315,6 +320,24 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
       if (!this.oneSidedChains.includes(dstChain)) return
       if (isMessageOnlyPayload(event.args)) return []
 
+      // Without a destination event there is no mayan.Message, so the
+      // Mayan forwarder event and its Wormhole message are consumed by the
+      // transfer instead.
+      const mayanForwarded = findMayanForwardedForSend(
+        db,
+        event,
+        // A V2 send in the same tx bounds a V1 forwarder too
+        [
+          db.find(CCTPv1MessageSent, { sameTxAfter: event }),
+          db.find(CCTPv2MessageSent, { sameTxAfter: event }),
+        ],
+        dstChain,
+        isMayanCircleForwarded,
+      )
+      const mayanWrappedWormholeLog = mayanForwarded
+        ? findWrappedMayanWormholeLog(db, mayanForwarded, LogMessagePublished)
+        : undefined
+
       return [
         Result.Transfer('cctp-v1.Transfer', {
           srcEvent: event,
@@ -324,6 +347,12 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
           srcWasBurned: true,
           dstWasMinted: true,
           bridgeType: 'burnAndMint',
+          extraEvents: mayanForwarded
+            ? [
+                mayanForwarded,
+                ...(mayanWrappedWormholeLog ? [mayanWrappedWormholeLog] : []),
+              ]
+            : undefined,
         }),
       ]
     }

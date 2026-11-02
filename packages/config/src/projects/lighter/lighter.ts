@@ -193,7 +193,7 @@ export const lighter: ScalingProject = {
       },
     ],
     activityConfig: {
-      type: 'day',
+      type: 'hour',
       dataSource: 'Lighter API',
       sinceTimestamp: UnixTime(1759363200), // 2025-10-01T00:00:00Z
     },
@@ -226,7 +226,7 @@ export const lighter: ScalingProject = {
         noRedTrustedSetups: true,
         programHashesReproducible: null,
         proverSourcePublished: true,
-        verifierContractsReproducible: true,
+        verifierContractsReproducible: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -289,7 +289,7 @@ export const lighter: ScalingProject = {
       {
         name: 'Escape hatch through ZK proofs',
         description:
-          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. The desert exit circuit and a full state snapshot at batch #166859 are public, and the deployed DesertVerifier matches a rebuild from that circuit. L2BEAT reproduced the snapshot state root from L1 blobs and verified the roll-forward to chain head.',
+          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. A desert exit circuit and a full state snapshot at batch #166859 are public, but the sources for the currently deployed DesertVerifier are not published, so it cannot be independently regenerated. L2BEAT reproduced the snapshot state root from L1 blobs and verified the roll-forward to chain head.',
         risks: [],
         references: [
           {
@@ -340,11 +340,11 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0x2F7FC37b104d25a420A761c16ee515c2e23B9200#code#F1#L54',
+            url: 'https://etherscan.io/address/0x329d7d7f7B3F2879991B83E1A53BCe6D7ce63E6f#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',
-            url: 'https://etherscan.io/address/0x866418061d4C1168e1c8E8f6facE79675395E008#code#F1#L55',
+            url: 'https://etherscan.io/address/0x975210588389526a3A1DeF1628e7A4d7aBdFD121#code#F1#L55',
           },
         ],
       },

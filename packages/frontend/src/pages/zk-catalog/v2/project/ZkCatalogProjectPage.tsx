@@ -15,18 +15,21 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
+import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ProjectZkCatalogSummary } from './components/header/ZkCatalogProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectZkCatalogEntry
   sectionLinks: ProjectSectionLink[]
+  versionLinks?: ProjectVersionLinks
   queryState: DehydratedState
 }
 
 export function ZkCatalogProjectPage({
   projectEntry,
   sectionLinks,
+  versionLinks,
   queryState,
   ...props
 }: Props) {
@@ -58,9 +61,13 @@ export function ZkCatalogProjectPage({
                     project={projectEntry}
                     section="zkCatalog"
                     sectionLinks={sectionLinks}
+                    versions={versionLinks}
                     secondLine={projectEntry.creator}
                   />
-                  <ProjectSummaryBars project={projectEntry} />
+                  <ProjectSummaryBars
+                    project={projectEntry}
+                    versions={versionLinks}
+                  />
                   {projectEntry.header.description && (
                     <AboutSection
                       description={projectEntry.header.description}

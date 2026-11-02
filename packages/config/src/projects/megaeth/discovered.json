@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1791537732,
+  "timestamp": 1793195533,
   "configHash": "0x0c5352058982822b68d9c047dcbefb6a95049530e9d5935baa65530ff25b8c6c",
   "entries": [
     {
@@ -52,7 +52,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 14842800,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x85Be92bae2eE287078DDb421D277DfC83Ab8a04F",
+        "lastResolved": "eth:0x3fCcC3565F09fda50A2d8788c51140b9917b2ee4",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -603,7 +603,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 5 (20%)",
-        "nonce": 5,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -647,7 +647,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292671151",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292671567",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -712,7 +712,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 26153912
+          "prevBlockNum": 26291523
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -786,7 +786,7 @@
         "game1337": "eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 8153,
+        "gameCount": 8613,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -958,6 +958,7 @@
         "verifier_242f9d5b": "eth:0x0000000000000000000000000000000000000000",
         "verifier_310fe598": "eth:0x0000000000000000000000000000000000000000",
         "verifier_73c457ba": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3",
+        "verifier_8b38038c": "eth:0x0000000000000000000000000000000000000000",
         "verifier_9f39696c": "eth:0x0000000000000000000000000000000000000000",
         "verifier_bb001d44": "eth:0x0000000000000000000000000000000000000000",
         "verifier_f536085a": "eth:0x0000000000000000000000000000000000000000"
@@ -969,7 +970,8 @@
         "verifier_f536085a": { "severity": "MEDIUM" },
         "verifier_bb001d44": { "severity": "MEDIUM" },
         "verifier_73c457ba": { "severity": "MEDIUM" },
-        "verifier_242f9d5b": { "severity": "MEDIUM" }
+        "verifier_242f9d5b": { "severity": "MEDIUM" },
+        "verifier_8b38038c": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x910b159F79288DD706789ec7768E979d4D88C057": "RiscZeroVerifierRouter"
@@ -2534,10 +2536,10 @@
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
     "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",
-    "risc0/RiscZeroVerifierRouter": "0xb74ea20385c8afa507c773dd57793a9fbf10ce64ed9c17b58dff13665aff9f7a",
+    "risc0/RiscZeroVerifierRouter": "0x91a73c1ea423f86bdb76d4376a36c05ba7d3967177b07e20444d52bb472abb81",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 26153924 },
+  "usedBlockNumbers": { "ethereum": 26291647 },
   "permissionsConfigHash": "0x1e84a8524ac413cc2ef798fb9847982f15380d2e6c2196afad45ef56d2706a4b",
   "modelledAgainst": {
     "shared-eigenda": "0x1666d662d36428e6c9cc77823b016e58fd3728a21fdf0cf004e089ccb7c5f8f3",

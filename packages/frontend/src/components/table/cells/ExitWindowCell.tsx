@@ -45,7 +45,7 @@ export function ExitWindowCell({ value, href }: Props) {
   if (value.description || value.regular?.description || value.warning) {
     return (
       <Tooltip>
-        <TooltipTrigger disabledOnMobile className="h-[inherit]">
+        <TooltipTrigger disabledOnTouch className="h-[inherit]">
           {trigger}
         </TooltipTrigger>
         <TooltipContent>

@@ -114,6 +114,14 @@ assert(
     discovery.isEOA(risc0TimelockProposers[0]),
   'RISC Zero timelock proposer changed, update the governance research.',
 )
+// RISC0 route 0x8b38038c: Groth16 v3.1.0 whose verifying key matches no published RISC Zero setup
+assert(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'RiscZeroVerifierRouter',
+    'verifier_8b38038c',
+  ) === 'eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50',
+  'RISC0 route 0x8b38038c changed, update the state validation research.',
+)
 const risc0TimelockDelay = formatSeconds(
   discovery.getContractValue<number>(
     'eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711',
@@ -574,6 +582,15 @@ export const taiko: ScalingProject = {
             title: 'ZkRequiredVerifier.sol - Etherscan source code',
             url: 'https://etherscan.io/address/0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec#code',
           },
+          {
+            title:
+              'RiscZeroGroth16Verifier.sol v3.1.0 - Etherscan source code, verifying key',
+            url: 'https://etherscan.io/address/0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e#code',
+          },
+          {
+            title: 'Groth16Verifier.sol - RISC Zero published verifying key',
+            url: 'https://github.com/risc0/risc0-ethereum/blob/main/contracts/src/groth16/Groth16Verifier.sol',
+          },
         ],
         risks: [],
       },
@@ -600,7 +617,27 @@ export const taiko: ScalingProject = {
         'DAO can override SC?': `**No** — ${minVetoPercent}% of eligible TAIKO can block a standard proposal but never an emergency one. Token holders cannot create proposals, approve payloads, remove council members, or block emergency proposals; changing the signer list requires another council-approved proposal.`,
       },
       upgrades: {
-        'Normal upgrade path': `Security Council member creates a public executable payload → ${standardProposalThreshold} council approvals → **${standardProposalDuration} token-holder veto period** → if less than ${minVetoPercent}% of eligible TAIKO vetoes, **${timelockPeriod} timelock** → permissionless execution of the approved onchain actions.`,
+        'Normal upgrade path': {
+          steps: [
+            {
+              description:
+                'Security Council member creates a public executable payload',
+            },
+            { description: `${standardProposalThreshold} council approvals` },
+            {
+              description: `**${standardProposalDuration} token-holder veto period**`,
+              isWait: true,
+            },
+            {
+              description: `If less than ${minVetoPercent}% of eligible TAIKO vetoes, **${timelockPeriod} timelock**`,
+              isWait: true,
+            },
+            {
+              description:
+                'Permissionless execution of the approved onchain actions',
+            },
+          ],
+        },
         'Emergency upgrade path': `**${emergencyProposalThreshold} Security Council approvals, instant** — proposal metadata and actions stay encrypted while approvals are collected. A council member decrypts the payload, which is integrity-checked against the approved ciphertext and executed without a token-holder veto or timelock; its contents become public upon execution or expiry.`,
         'Exit window': `**${standardUpgradeDelay} standard · 0 emergency** — the standard path provides ${standardProposalDuration} of public vetoing followed by a ${timelockPeriod} timelock. Emergency proposals bypass both.`,
       },

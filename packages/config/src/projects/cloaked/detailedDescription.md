@@ -4,7 +4,7 @@ The user trusts Cloaked, which holds a key that sees all their addresses, runs t
 
 ### Keys
 
-The app creates the user's keys in their browser, from a passkey, a wallet signature and a four-digit PIN, or an email login through Web3Auth. Cloaked gets a viewing key that shows all the user's addresses, while only the user can spend.
+The app creates the user's keys in their browser, from a passkey, a wallet signature and a four-digit PIN, or an email login through Web3Auth. The passkey must support the PRF extension, as Apple Passwords, Google Password Manager, 1Password and security keys with hmac-secret do. Cloaked gets a viewing key that shows all the user's addresses, while only the user can spend.
 
 ### Flow
 
@@ -14,7 +14,7 @@ The app creates the user's keys in their browser, from a passkey, a wallet signa
 
 ### App
 
-The web app at [app.clkd.xyz](https://app.clkd.xyz) and the browser extension are closed source. They read balances through Cloaked's servers, and a linked ENS name through Alchemy under Cloaked's key. The open [recovery tool](https://github.com/cloakedxyz/clkd-recovery) recreates the user's address keys offline.
+The app reads balances through Cloaked's servers, and a linked ENS name through Alchemy under Cloaked's key. Reown, WalletConnect's maker, gets the IP and Cloaked's project id whenever a sign-in or approval opens. The payment page a shared link opens loads its font from Google, which learns the payee's Cloaked name and the payer's IP. The email login runs on Web3Auth's page, which loads hCaptcha, Google Analytics and Segment. The open [recovery tool](https://github.com/cloakedxyz/clkd-recovery) recreates the user's address keys offline.
 
 ### Incognito
 

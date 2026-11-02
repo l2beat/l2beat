@@ -137,7 +137,7 @@ const mainPages: MainPage[] = [
     title: 'Blobs',
   },
   {
-    title: 'The Infinite Garden',
+    title: 'The CROPS guide',
   },
   {
     title: 'Submit your protocol',

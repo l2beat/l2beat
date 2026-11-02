@@ -9,7 +9,7 @@ Balances are encrypted notes in a public tree of commitments. Spending a note pu
 ### Flow
 
 1. **Shield.** You send tokens to the pool, which creates a note for your 0zk address. Your address, token and amount are public.
-2. **Transfer.** Your wallet proves the spend locally. A [broadcaster](https://docs.railgun.org/developer-guide/wallet/transactions/unshielding), reached over the [Waku network](https://blog.waku.org/2024-04-26-railgun-case-study/), submits it and pays the gas for a fee paid in a private note.
+2. **Transfer.** Your wallet proves the spend locally. A [broadcaster](https://docs.railgun.org/developer-guide/wallet/transactions/unshielding), reached over the [Waku network](https://docs.railgun.org/wiki/learn/privacy-system/community-broadcasters), submits it and pays the gas for a fee paid in a private note.
 3. **DeFi.** A DeFi bundle unshields tokens to an adapter contract, runs the calls and shields the results back in one transaction. Tokens and amounts of the calls are public.
 4. **Unshield.** The pool pays out to any address. Recipient, token and amount are public.
 
@@ -19,11 +19,11 @@ The user's wallet derives spending and viewing keys from a recovery phrase. The 
 
 ### App
 
-Railgun names no reference wallet, so the ratings assume [RailOxide](https://github.com/triamazikamno/railoxide). It routes all traffic through built-in Tor and builds Private Proofs of Innocence (PPoI) from a local copy of the lists. Other wallets likely leak significantly more.
+The app sends its traffic over built-in Tor, each sensitive call on its own circuit. It builds Private Proofs of Innocence (PPoI) from a local copy of the lists. Instead of a broadcaster, the user can submit from a public account that pays the gas. On Ethereum, a public account without ETH can submit too, and the transaction pays a [block builder](https://github.com/triamazikamno/railoxide/blob/7981f35afe8fe5a198a450e0cad66d37f159556e/crates/wallet-ops/src/settings/effective.rs#L12-L15) from the private balance.
 
 ### Swaps
 
-RailOxide swaps through [CoW Protocol](https://docs.cow.fi/). Each swap uses a fresh swap account as its adapter. A broadcaster submits the account's EIP-7702 delegation to RelayAdapt7702, for a fee paid in a private note. The account signs a CoW order, which RailOxide sends over a separate Tor circuit. The order carries the signed unshield, so its nullifiers are public before it fills. At settlement the account unshields, trades and shields the proceeds back, or CoW pays them to an address the user names. The account ties the setup to the swap, and an unfilled order to the later spend of its notes.
+The app swaps through [CoW Protocol](https://docs.cow.fi/). Each swap uses a fresh swap account as its adapter. A broadcaster submits the account's EIP-7702 delegation to RelayAdapt7702. The account signs a CoW order, which the app sends over a separate Tor circuit. The order carries the signed unshield, so its nullifiers are public before it fills. At settlement the account unshields, trades and shields the proceeds back, or CoW pays them to an address the user names. [Across or NEAR Intents](https://github.com/triamazikamno/railoxide/blob/7981f35afe8fe5a198a450e0cad66d37f159556e/crates/wallet-ops/src/bridge/mod.rs#L1-L11) can deliver them on another chain instead. The account ties the setup to the swap, and an unfilled order to the later spend of its notes.
 
 ### Compliance
 

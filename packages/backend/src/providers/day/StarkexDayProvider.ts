@@ -1,9 +1,9 @@
 import type { StarkexClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
-import type { DayProvider } from './DayProviders'
+import type { DailyCountsProvider } from './DayProviders'
 
-export class StarkexDayProvider implements DayProvider {
+export class StarkexDayProvider implements DailyCountsProvider {
   constructor(
     private starkexClient: StarkexClient,
     private products: string[],

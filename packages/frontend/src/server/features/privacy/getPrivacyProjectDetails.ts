@@ -11,6 +11,7 @@ import type {
   ProjectGarden,
   ProjectPermissions,
   ProjectPrivacyAdversaries,
+  ProjectPrivacyReferenceApp,
   ProjectStatuses,
   ProjectUpgradesAndGovernance,
   ProjectZkCatalogInfo,
@@ -31,6 +32,7 @@ import {
   type ProjectOssificationView,
 } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -45,12 +47,15 @@ import type {
   PrivacyProject,
   PrivacyRelayerStat,
 } from './types'
+import { getPrivacyBucketTvls } from './utils/getPrivacyBucketTvls'
 import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
   daily30d: PrivacyFlowDailyRecord[]
   tokenValues: TokenValueRecord[]
+  /** Value of each bucket's pool at its asset's latest TVL, by bucket id. */
+  bucketTvls: Map<string, number>
 }
 
 export interface PrivacyProjectDetails {
@@ -58,6 +63,7 @@ export interface PrivacyProjectDetails {
   slug: string
   name: string
   shortName?: string
+  archivedAt?: UnixTime
   display: ProjectDisplay
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
@@ -73,6 +79,7 @@ export interface PrivacyProjectDetails {
   category: PrivacyCategory
   exitWindow: PrivacyExitWindow
   adversaries: ProjectPrivacyAdversaries
+  referenceApp?: ProjectPrivacyReferenceApp
   reproducibility: PrivacySummaryValue
   anonymitySetType: PrivacyAnonymitySetType | undefined
   hasTvl: boolean
@@ -116,7 +123,7 @@ export async function getPrivacyProjectDetails(
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
   const [
-    { totals, daily30d, tokenValues },
+    { totals, daily30d, tokenValues, bucketTvls },
     relayerStat,
     trackedOn,
     ossification,
@@ -216,7 +223,7 @@ export async function getPrivacyProjectDetails(
         type: bucket.type,
         denomination: bucket.denomination,
         totalAmount: null,
-        totalValueUsd: null,
+        totalValueUsd: bucketTvls.get(bucket.id) ?? null,
         deposits: {
           total: depositCountTotal,
           last7d: depositCount7d,
@@ -283,6 +290,7 @@ export async function getPrivacyProjectDetails(
     slug: project.slug,
     name: project.name,
     shortName: project.shortName,
+    archivedAt: project.archivedAt,
     display: project.display,
     contracts: project.contracts,
     permissions: project.permissions,
@@ -297,6 +305,7 @@ export async function getPrivacyProjectDetails(
     category: project.privacyInfo.category,
     exitWindow: project.privacyInfo.exitWindow,
     adversaries: project.privacyInfo.adversaries,
+    referenceApp: project.privacyInfo.referenceApp,
     reproducibility: project.privacyInfo.reproducibility,
     anonymitySetType: getPrivacyAnonymitySetType(project),
     hasTvl: project.tvsConfig !== undefined,
@@ -423,7 +432,25 @@ async function getPrivacyProjectFlowData(
     db.privacyFlowEvent.getDailyByProjectIds([projectId], from, to),
     db.tvsTokenValue.getLastNonZeroValue(now, projectId),
   ])
-  return { totals, daily30d, tokenValues }
+  const escrowValues = await db.tvsEscrowValue
+    .getByProjectAt(projectId, [
+      ...new Set(tokenValues.map((value) => value.timestamp)),
+    ])
+    .catch((error) => {
+      // Bucket values are optional, so the page still renders when they
+      // can't be read, e.g. before the backend has created their table.
+      getLogger()
+        .for('getPrivacyProjectDetails')
+        .warn('Escrow values unavailable', { projectId, error })
+      return []
+    })
+  const bucketTvls = getPrivacyBucketTvls(
+    project.privacyInfo.tokens,
+    project.tvsConfig ?? [],
+    tokenValues,
+    escrowValues,
+  )
+  return { totals, daily30d, tokenValues, bucketTvls }
 }
 
 function getMockPrivacyProjectFlowData(
@@ -481,5 +508,9 @@ function getMockPrivacyProjectFlowData(
     }),
   )
 
-  return { totals, daily30d, tokenValues }
+  const bucketTvls = new Map(
+    bucketIds.map((bucketId) => [bucketId, Math.random() * 1_000_000]),
+  )
+
+  return { totals, daily30d, tokenValues, bucketTvls }
 }

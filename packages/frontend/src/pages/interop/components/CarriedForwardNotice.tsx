@@ -1,5 +1,5 @@
+import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { cn } from '~/utils/cn'
-import { formatTimestamp } from '~/utils/dates'
 
 /**
  * Shown in place of a transfer list when the selection's count includes
@@ -23,8 +23,8 @@ export function CarriedForwardNotice({
     >
       Transfers can&apos;t be listed for this selection right now. Data for some
       of its chains is delayed, so the transfer count carries over figures last
-      computed on {formatTimestamp(carriedFrom, { mode: 'datetime' })} and the
-      transfers behind them fall outside the current window.
+      computed on <UtcDateTime timestamp={carriedFrom} /> and the transfers
+      behind them fall outside the current window.
     </div>
   )
 }

@@ -2,144 +2,99 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import {
+  formatDate,
+  formatLocalDateTime,
+  formatPublicationDate,
+  formatRange,
   formatTimestamp,
-  formatTimestampToDateWithHour,
   getNextDateForDayOfWeek,
 } from './dates'
 
+const at = (iso: string) => UnixTime.fromDate(new Date(iso))
+const TIMEZONES = ['UTC', 'America/New_York', 'Asia/Tokyo']
+
+function withTimezone(tz: string, fn: () => void) {
+  const original = process.env.TZ
+  process.env.TZ = tz
+  try {
+    fn()
+  } finally {
+    if (original === undefined) Reflect.deleteProperty(process.env, 'TZ')
+    else process.env.TZ = original
+  }
+}
+
 describe('dates', () => {
-  describe(formatTimestampToDateWithHour.name, () => {
-    it('12:00', () => {
-      const date = UnixTime.fromDate(new Date('2021-04-21T12:00:00Z'))
-      expect(formatTimestampToDateWithHour(date)).toEqual(
-        '12:00 PM UTC, Apr 21st 2021',
-      )
+  describe(formatTimestamp.name, () => {
+    it('formats a date as day, short month and year', () => {
+      expect(formatTimestamp(at('2021-04-21T12:00:00Z'))).toEqual('21 Apr 2021')
+      expect(formatTimestamp(at('2030-01-01T05:00:00Z'))).toEqual('1 Jan 2030')
+      expect(
+        formatTimestamp(at('1968-12-31T11:30:00Z'), { mode: 'date' }),
+      ).toEqual('31 Dec 1968')
     })
 
-    it('00:00', () => {
-      const date = UnixTime.fromDate(new Date('2021-04-21T00:00:00Z'))
-      expect(formatTimestampToDateWithHour(date)).toEqual(
-        '12:00 AM UTC, Apr 21st 2021',
-      )
+    it('adds a 24-hour UTC time in datetime mode', () => {
+      expect(
+        formatTimestamp(at('2021-04-21T13:00:00Z'), { mode: 'datetime' }),
+      ).toEqual('21 Apr 2021, 13:00 UTC')
+      expect(
+        formatTimestamp(at('2030-01-01T00:05:00Z'), { mode: 'datetime' }),
+      ).toEqual('1 Jan 2030, 00:05 UTC')
     })
 
-    it('11:30', () => {
-      const date = UnixTime.fromDate(new Date('1968-12-31T11:30:00Z'))
-      expect(formatTimestampToDateWithHour(date)).toEqual(
-        '11:30 AM UTC, Dec 31st 1968',
-      )
-    })
-
-    it('5:00', () => {
-      const date = UnixTime.fromDate(new Date('2030-01-01T05:00:00Z'))
-      expect(formatTimestampToDateWithHour(date)).toEqual(
-        '5:00 AM UTC, Jan 01st 2030',
-      )
-    })
-
-    it('nd', () => {
-      const date = UnixTime.fromDate(new Date('2031-05-22T05:00:00Z'))
-      expect(formatTimestampToDateWithHour(date)).toEqual(
-        '5:00 AM UTC, May 22nd 2031',
-      )
-    })
-
-    it('rd', () => {
-      const date = UnixTime.fromDate(new Date('2031-05-23T05:00:00Z'))
-      expect(formatTimestampToDateWithHour(date)).toEqual(
-        '5:00 AM UTC, May 23rd 2031',
-      )
-    })
-
-    it('th', () => {
-      const date = UnixTime.fromDate(new Date('2022-08-05T13:00:00Z'))
-      expect(formatTimestampToDateWithHour(date)).toEqual(
-        '1:00 PM UTC, Aug 05th 2022',
-      )
+    it('formats only the UTC time in time mode', () => {
+      expect(
+        formatTimestamp(at('2030-01-01T05:00:00Z'), { mode: 'time' }),
+      ).toEqual('05:00 UTC')
     })
   })
 
-  describe(formatTimestamp.name, () => {
-    describe('without options', () => {
-      it('returns date with short month name and without time', () => {
-        const date1 = UnixTime.fromDate(new Date('2021-04-21T12:00:00Z'))
-        expect(formatTimestamp(date1)).toEqual('2021 Apr 21')
-        const date2 = UnixTime.fromDate(new Date('1968-12-31T11:30:00Z'))
-        expect(formatTimestamp(date2)).toEqual('1968 Dec 31')
-        const date3 = UnixTime.fromDate(new Date('2030-01-01T05:00:00Z'))
-        expect(formatTimestamp(date3)).toEqual('2030 Jan 01')
+  describe(formatRange.name, () => {
+    it('drops the month and year the start shares with the end', () => {
+      expect(
+        formatRange(at('2026-07-01T00:00:00Z'), at('2026-07-02T00:00:00Z')),
+      ).toEqual('1 —\n2 Jul 2026')
+      expect(
+        formatRange(at('2026-06-30T00:00:00Z'), at('2026-07-07T00:00:00Z')),
+      ).toEqual('30 Jun —\n7 Jul 2026')
+      expect(
+        formatRange(at('2025-12-31T00:00:00Z'), at('2026-01-01T00:00:00Z')),
+      ).toEqual('31 Dec 2025 —\n1 Jan 2026')
+    })
+
+    it('formats ranges shorter than a day as UTC hours', () => {
+      expect(
+        formatRange(at('2026-06-30T01:00:00Z'), at('2026-06-30T02:00:00Z')),
+      ).toEqual('30 Jun 2026, 01:00 — 02:00 UTC')
+    })
+  })
+
+  describe(formatDate.name, () => {
+    it('formats a YYYY-MM-DD date', () => {
+      expect(formatDate('2024-08-01')).toEqual('1 Aug 2024')
+    })
+  })
+
+  describe(formatLocalDateTime.name, () => {
+    it('formats the instant in the visitor zone with its UTC offset', () => {
+      withTimezone('America/New_York', () => {
+        expect(formatLocalDateTime(at('2026-07-01T02:00:00Z'))).toEqual(
+          '30 Jun 2026, 22:00 UTC-4',
+        )
+      })
+      withTimezone('Asia/Kolkata', () => {
+        expect(formatLocalDateTime(at('2026-07-01T14:00:00Z'))).toEqual(
+          '1 Jul 2026, 19:30 UTC+5:30',
+        )
       })
     })
 
-    describe('with options', () => {
-      describe('mode', () => {
-        describe('date', () => {
-          it('returns date with short month name and without time', () => {
-            const date1 = UnixTime.fromDate(new Date('2021-04-21T12:00:00Z'))
-            expect(formatTimestamp(date1, { mode: 'date' })).toEqual(
-              '2021 Apr 21',
-            )
-            const date2 = UnixTime.fromDate(new Date('1968-12-31T11:30:00Z'))
-            expect(formatTimestamp(date2, { mode: 'date' })).toEqual(
-              '1968 Dec 31',
-            )
-            const date3 = UnixTime.fromDate(new Date('2030-01-01T05:00:00Z'))
-            expect(formatTimestamp(date3, { mode: 'date' })).toEqual(
-              '2030 Jan 01',
-            )
-          })
-        })
-
-        describe('datetime', () => {
-          it('returns date with short month name and time', () => {
-            const date1 = UnixTime.fromDate(new Date('2021-04-21T12:00:00Z'))
-            expect(formatTimestamp(date1, { mode: 'datetime' })).toEqual(
-              '2021 Apr 21, 12:00 UTC',
-            )
-            const date2 = UnixTime.fromDate(new Date('1968-12-31T11:30:00Z'))
-            expect(formatTimestamp(date2, { mode: 'datetime' })).toEqual(
-              '1968 Dec 31, 11:30 UTC',
-            )
-            const date3 = UnixTime.fromDate(new Date('2030-01-01T05:00:00Z'))
-            expect(formatTimestamp(date3, { mode: 'datetime' })).toEqual(
-              '2030 Jan 01, 05:00 UTC',
-            )
-          })
-        })
-
-        describe('time', () => {
-          it('returns time', () => {
-            const date1 = UnixTime.fromDate(new Date('2021-04-21T12:00:00Z'))
-            expect(formatTimestamp(date1, { mode: 'time' })).toEqual(
-              '12:00 UTC',
-            )
-            const date2 = UnixTime.fromDate(new Date('1968-12-31T11:30:00Z'))
-            expect(formatTimestamp(date2, { mode: 'time' })).toEqual(
-              '11:30 UTC',
-            )
-            const date3 = UnixTime.fromDate(new Date('2030-01-01T05:00:00Z'))
-            expect(formatTimestamp(date3, { mode: 'time' })).toEqual(
-              '05:00 UTC',
-            )
-          })
-        })
-      })
-
-      describe('longMonthName', () => {
-        it('returns date with long month name and without time', () => {
-          const date1 = UnixTime.fromDate(new Date('2021-04-21T12:00:00Z'))
-          expect(formatTimestamp(date1, { longMonthName: true })).toEqual(
-            '2021 April 21',
-          )
-          const date2 = UnixTime.fromDate(new Date('1968-12-31T11:30:00Z'))
-          expect(formatTimestamp(date2, { longMonthName: true })).toEqual(
-            '1968 December 31',
-          )
-          const date3 = UnixTime.fromDate(new Date('2030-01-01T05:00:00Z'))
-          expect(formatTimestamp(date3, { longMonthName: true })).toEqual(
-            '2030 January 01',
-          )
-        })
+    it('returns nothing when the visitor zone is at UTC+0', () => {
+      withTimezone('Europe/London', () => {
+        expect(formatLocalDateTime(at('2026-12-01T14:00:00Z'))).toEqual(
+          undefined,
+        )
       })
     })
   })
@@ -150,5 +105,43 @@ describe('dates', () => {
       const nextThursday = getNextDateForDayOfWeek(4, date)
       expect(nextThursday.toISOString()).toEqual('2021-04-22T00:00:00.000Z')
     })
+
+    for (const tz of TIMEZONES) {
+      it(`uses the UTC day regardless of process timezone (TZ=${tz})`, () => {
+        withTimezone(tz, () => {
+          // Wednesday 20:00 UTC is already Thursday in Asia/Tokyo
+          expect(
+            getNextDateForDayOfWeek(
+              4,
+              new Date('2021-04-21T20:00:00Z'),
+            ).toISOString(),
+          ).toEqual('2021-04-22T00:00:00.000Z')
+          // Saturday 02:00 UTC is still Friday, 30 April in America/New_York
+          expect(
+            getNextDateForDayOfWeek(
+              6,
+              new Date('2021-05-01T02:00:00Z'),
+            ).toISOString(),
+          ).toEqual('2021-05-08T00:00:00.000Z')
+        })
+      })
+    }
+  })
+
+  describe(formatPublicationDate.name, () => {
+    for (const tz of TIMEZONES) {
+      it(`formats the UTC day regardless of process timezone (TZ=${tz})`, () => {
+        withTimezone(tz, () => {
+          // Still 31 July in America/New_York
+          expect(formatPublicationDate(new Date('2024-08-01'))).toEqual(
+            '1 Aug 2024',
+          )
+          // Already 1 January 2025 in Asia/Tokyo
+          expect(
+            formatPublicationDate(new Date('2024-12-31T23:30:00Z')),
+          ).toEqual('31 Dec 2024')
+        })
+      })
+    }
   })
 })

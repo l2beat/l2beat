@@ -7,7 +7,6 @@ const CATEGORY_LABEL: Record<HomeRecentProject['category'], string> = {
   l2: 'Scaling project',
   interop: 'Interoperability',
   zkCatalog: 'ZK Catalog',
-  ecosystems: 'Ecosystem',
   privacy: 'Privacy',
 }
 

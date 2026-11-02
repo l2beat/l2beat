@@ -3,7 +3,7 @@ import { CalloutCard } from './CalloutCard'
 
 export function GardenCallouts() {
   return (
-    <section className="mt-4 grid gap-4 max-md:px-4 md:mt-6 md:grid-cols-2">
+    <section className="mt-4 grid gap-4 max-md:px-4 md:mt-6 md:grid-cols-2 md:gap-6">
       <CalloutCard
         tone="garden"
         title="Get your protocol reviewed"

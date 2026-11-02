@@ -86,7 +86,6 @@ async function getDynamicPages(): Promise<Page[]> {
   const [
     l2Projects,
     zkCatalogProjects,
-    ecosystemProjects,
     privacyProjects,
     defiProjects,
     auditedProjects,
@@ -99,8 +98,7 @@ async function getDynamicPages(): Promise<Page[]> {
       optional: ['tvsConfig'],
     }),
     ps.getProjects({ select: ['zkCatalogInfo'] }),
-    ps.getProjects({ where: ['ecosystemConfig'] }),
-    ps.getProjects({ where: ['privacyInfo'] }),
+    ps.getProjects({ where: ['privacyInfo'], whereNot: ['archivedAt'] }),
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps.getProjects({ where: ['defiInfo'] })
       : Promise.resolve([]),
@@ -116,7 +114,6 @@ async function getDynamicPages(): Promise<Page[]> {
       .filter((project) => project.tvsConfig)
       .map(projectPage('/layer2s/projects', '/tvs-breakdown')),
     ...zkCatalogProjects.map(projectPage('/zk-catalog')),
-    ...ecosystemProjects.map(projectPage('/ecosystems')),
     ...privacyProjects.map(projectPage('/privacy/projects')),
     ...defiProjects.map(projectPage('/defi/projects')),
     ...auditedProjects.map(projectPage('/audits/projects')),

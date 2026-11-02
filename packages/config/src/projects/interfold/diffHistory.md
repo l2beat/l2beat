@@ -1,4 +1,64 @@
-Generated with discovered.json: 0xf7b41bc9006c656fa5ae912a9a0ae738c4256bbf
+Generated with discovered.json: 0x6da3c3cadff2854b9a60bcf453edcd418e05e888
+
+# Diff at Fri, 30 Oct 2026 14:46:36 GMT:
+
+- id: 8aa53b87
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fbb4c5e1c17a319e598e10bff438f587f10fcbcb block: 1793194868
+- current timestamp: 1793371512
+
+## Description
+
+Both CRISP ballot verifiers are verified on Etherscan now and described as zero-knowledge Honk verifiers, and the disabled RISC Zero CRISPProgram is renamed CRISPProgramV1.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793194868 (main branch discovery), not current.
+
+```diff
+    contract CrispBallotVerifier (eth:0x6E1eC1e74162D9c141e12B593Cad390aEfFb6bD0) [N/A] {
+    +++ description: Zero-knowledge Honk verifier that CRISPProgram uses for ballot proofs in rounds whose voters are listed in a Merkle tree.
+      unverified:
+-        true
+      description:
+-        "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds whose voters are listed in a Merkle tree."
++        "Zero-knowledge Honk verifier that CRISPProgram uses for ballot proofs in rounds whose voters are listed in a Merkle tree."
+      implementationNames.eth:0x6E1eC1e74162D9c141e12B593Cad390aEfFb6bD0:
+-        ""
++        "HonkVerifier"
+      sourceHashes:
++        ["0x99bf5fbf93a23bacaf511a363a0aaec649611f98c48105c8d328a0e7cbb984ff"]
+    }
+```
+
+```diff
+    contract CRISPProgramV1 (eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f) [interfold/CRISPProgram] {
+    +++ description: CRISP encrypted-ballot E3 application. It verifies ballot eligibility and encryption proofs, commits ciphertext inputs, checks that a RISC Zero tally is bound to its input root and parameters, and decodes the threshold-decrypted tally.
+      name:
+-        "CRISPProgram"
++        "CRISPProgramV1"
+    }
+```
+
+```diff
+    contract CrispOnchainBallotVerifier (eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8) [N/A] {
+    +++ description: Zero-knowledge Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every governance vote.
+      unverified:
+-        true
+      description:
+-        "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every governance vote."
++        "Zero-knowledge Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every governance vote."
+      implementationNames.eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8:
+-        ""
++        "HonkVerifier"
+      sourceHashes:
++        ["0x7848351f9b708fbe10244325719d7d4a8230a3b5785fd41a7d387deeef6f6e5e"]
+    }
+```
+
+Generated with discovered.json: 0x4237a7c7d453e9de6b93a7c8181e1bcd3768b7de
 
 # Diff at Fri, 23 Oct 2026 12:07:43 GMT:
 

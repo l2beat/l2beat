@@ -791,6 +791,67 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toSummedByProjectRow)
   }
 
+  /**
+   * Sums `valueForProject` per project at each `resolution` step in the range,
+   * and at every timestamp after the last step, so a chart can end on the
+   * latest hour. It skips the rows in between, which a chart would drop: a
+   * daily chart would otherwise sum 90 days of six-hourly and 7 days of hourly
+   * rows too.
+   */
+  async getSummedByProjectAtResolution(
+    projectIds: string[],
+    [from, to]: [UnixTime | null, UnixTime],
+    resolution: 'hour' | 'six hours' | 'day',
+    opts: { excludeRwaRestrictedTokens: boolean },
+  ): Promise<{ projectId: string; timestamp: UnixTime; value: number }[]> {
+    if (projectIds.length === 0) {
+      return []
+    }
+
+    const step = UnixTime.periodToSeconds(resolution)
+    let query = this.db
+      .selectFrom('TokenValue')
+      .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
+      .select((eb) => [
+        'TokenValue.projectId',
+        'TokenValue.timestamp',
+        eb.cast(eb.fn.sum('valueForProject'), 'double precision').as('value'),
+      ])
+      .where('TokenValue.projectId', 'in', projectIds)
+      .where('TokenValue.timestamp', '<=', UnixTime.toDate(to))
+      .where((eb) =>
+        eb.or([
+          eb(
+            sql`extract(epoch from "TokenValue"."timestamp")::bigint % ${step}`,
+            '=',
+            0,
+          ),
+          eb(
+            'TokenValue.timestamp',
+            '>',
+            UnixTime.toDate(UnixTime.toStartOf(to, resolution)),
+          ),
+        ]),
+      )
+      .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
+
+    if (from) {
+      query = query.where('TokenValue.timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    if (opts.excludeRwaRestrictedTokens) {
+      query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) => ({
+      projectId: row.projectId,
+      timestamp: UnixTime.fromDate(row.timestamp),
+      value: Number(row.value),
+    }))
+  }
+
   async checkIfExists(
     projectId: string,
     fromInclusive?: UnixTime,

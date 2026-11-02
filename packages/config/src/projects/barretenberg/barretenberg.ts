@@ -14,7 +14,11 @@ import { readProjectMarkdown } from '../../utils/readMarkdown'
 const ZK_MONEY_CIRCUITS =
   'https://github.com/aztec-labs-eng/zkmoney-public/tree/68425f9cf408ac803eade04d10318fcf345444a0/vendor/oxide/noir-projects/'
 
+const ZK_MONEY_V6_CIRCUITS =
+  'https://github.com/aztec-labs-eng/zkmoney-public/tree/8fd198412a956f214639b5782d3a86e3d47ca60e/vendor/oxide/noir-projects/'
+
 const zkMoneyDiscovery = new ProjectDiscovery('zkmoney')
+const zkMoneyV6Discovery = new ProjectDiscovery('zkmoneyv6')
 const aztecV5Discovery = new ProjectDiscovery('aztecnetwork')
 const aztecDiscovery = new ProjectDiscovery('aztecnetworkv6')
 const ZK_MONEY_RELATIONS_LIB_HASH =
@@ -71,6 +75,20 @@ function getVerifierKeyHash(
     )
   }
   return keyHash
+}
+// v5 and v6 deploy the same resolver verifier source with the same key.
+function getResolverVerifierKeyHash(): string {
+  const [v5, v6] = [zkMoneyDiscovery, zkMoneyV6Discovery].map((discovery) =>
+    getVerifierKeyHash(
+      discovery,
+      ['ResolverVerifier'],
+      '0x279d6dad93155d6c03ddd050359fb4675a66c08812b5306f6dfc9754e42827b7',
+      '0x4037936aa34f65195d0dc7ef3c98cc82e4f969470558a15ede8590867175baf2',
+      [ZK_MONEY_RELATIONS_LIB_HASH, ZK_MONEY_TRANSCRIPT_LIB_HASH],
+    ),
+  )
+  assert(v5 === v6, 'zk.money resolver verifier keys diverged')
+  return v5
 }
 
 export const barretenberg: BaseProject = {
@@ -163,6 +181,10 @@ export const barretenberg: BaseProject = {
       {
         projectId: ProjectId('zkmoney'),
         sinceTimestamp: UnixTime(1790298635), // 2026-09-25T01:10:35Z, ZkMoneyPortal deployment
+      },
+      {
+        projectId: ProjectId('zkmoneyv6'),
+        sinceTimestamp: UnixTime(1793015927), // 2026-10-26T12:38:47Z, OxidePortal deployment
       },
     ],
     verifierHashes: [
@@ -355,12 +377,83 @@ export const barretenberg: BaseProject = {
       },
       {
         hash: getVerifierKeyHash(
-          zkMoneyDiscovery,
-          ['ResolverVerifier'],
-          '0x279d6dad93155d6c03ddd050359fb4675a66c08812b5306f6dfc9754e42827b7',
-          '0x4037936aa34f65195d0dc7ef3c98cc82e4f969470558a15ede8590867175baf2',
-          [ZK_MONEY_RELATIONS_LIB_HASH, ZK_MONEY_TRANSCRIPT_LIB_HASH],
+          zkMoneyV6Discovery,
+          ['FrozenNotesRefundVerifier'],
+          '0x2249c28908d7fb322c39421e6c030c96dddbd364163e5b41f378a21953a58135',
+          '0x548185f9efc19f851980ec0328bd9cf4e8e7bd7faa823bda8aec68ccde700fc3',
         ),
+        name: 'zk.money v6 frozen notes refund verifier',
+        description:
+          'Verifies refunds of notes that were unspent when a zk.money v6 portal froze. Generated without the zero-knowledge option.',
+        sourceLink: `${ZK_MONEY_V6_CIRCUITS}frozen_notes_refund`,
+        proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+        knownDeployments: [
+          {
+            address: zkMoneyV6Discovery.getContract('FrozenNotesRefundVerifier')
+              .address,
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'barretenberg',
+          'verificationSteps-zkmoneyv6',
+        ),
+      },
+      {
+        hash: getVerifierKeyHash(
+          zkMoneyV6Discovery,
+          ['FrozenDepositsRefundVerifier'],
+          '0x2710bacfccd5568bb732fc67370c3ce2ac817002ea02a099baa47ea42586544f',
+          '0x8b474ade271d50ce657dc9992d426db5fd8eea042803080355cb2291be45432b',
+        ),
+        name: 'zk.money v6 frozen deposits refund verifier',
+        description:
+          'Verifies refunds of deposits that reached Aztec but were unspent when a zk.money v6 portal froze. Generated without the zero-knowledge option.',
+        sourceLink: `${ZK_MONEY_V6_CIRCUITS}frozen_deposits_refund`,
+        proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+        knownDeployments: [
+          {
+            address: zkMoneyV6Discovery.getContract(
+              'FrozenDepositsRefundVerifier',
+            ).address,
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'barretenberg',
+          'verificationSteps-zkmoneyv6',
+        ),
+      },
+      {
+        hash: getVerifierKeyHash(
+          zkMoneyV6Discovery,
+          ['UnprocessedDepositRefundVerifier'],
+          '0x1597ef3e1caf60ec4a7d845d676b580e64933bce926ff8cef4f1a80ac000ccec',
+          '0xcfacecd08ff16303f5000fccf609cf80c51363678d1b1acd51d9476de9cfdc89',
+        ),
+        name: 'zk.money v6 unprocessed deposit refund verifier',
+        description:
+          'Verifies refunds of deposits that had not reached Aztec when a zk.money v6 portal froze. Generated without the zero-knowledge option.',
+        sourceLink: `${ZK_MONEY_V6_CIRCUITS}unprocessed_deposit_refund`,
+        proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+        knownDeployments: [
+          {
+            address: zkMoneyV6Discovery.getContract(
+              'UnprocessedDepositRefundVerifier',
+            ).address,
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'barretenberg',
+          'verificationSteps-zkmoneyv6',
+        ),
+      },
+      {
+        hash: getResolverVerifierKeyHash(),
         name: 'zk.money resolver verifier',
         description:
           'Verifies that the secret behind a deposit address returned for a zk.money name was derived from the registered user and resolver operator keys, and binds the address to the registered Aztec address. Generated with the zero-knowledge option.',
@@ -369,6 +462,9 @@ export const barretenberg: BaseProject = {
         knownDeployments: [
           {
             address: zkMoneyDiscovery.getContract('ResolverVerifier').address,
+          },
+          {
+            address: zkMoneyV6Discovery.getContract('ResolverVerifier').address,
           },
         ],
         verificationStatus: 'successful',

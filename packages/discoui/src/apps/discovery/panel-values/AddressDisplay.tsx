@@ -21,15 +21,13 @@ export function AddressDisplay({ value, simplified }: AddressDisplayProps) {
 
   const copy = (
     <button
-      className="block h-4 w-4"
+      className="block h-4 w-4 text-coffee-400 hover:text-coffee-200"
       onClick={(e) => {
         e.preventDefault()
         copyToClipboard(address ?? value.address)
       }}
     >
-      {!copied && (
-        <IconCopy className="relative top-[3px] block text-coffee-600" />
-      )}
+      {!copied && <IconCopy className="relative top-[3px] block" />}
       {copied && (
         <IconTick className="relative top-[3px] block text-aux-green" />
       )}
@@ -42,8 +40,9 @@ export function AddressDisplay({ value, simplified }: AddressDisplayProps) {
       href={`${explorerUrl}/${address}`}
       target="_blank"
       rel="noopener noreferrer"
+      className="text-coffee-400 hover:text-coffee-200"
     >
-      <IconLink className="relative top-[3px] block text-coffee-600" />
+      <IconLink className="relative top-[3px] block" />
     </a>
   )
 
@@ -68,10 +67,12 @@ export function AddressDisplay({ value, simplified }: AddressDisplayProps) {
             className="relative top-[3px] block"
             type={value.addressType}
           />
-          <strong>
+          <span className="font-medium font-sans text-[13px]">
             {value.name ?? (value.addressType === 'EOA' ? 'EOA' : 'Unknown')}
-          </strong>
-          {toShortenedAddress(value.address)}
+          </span>
+          <span className="text-coffee-300">
+            {toShortenedAddress(value.address)}
+          </span>
         </button>
         {copy}
         {explore}

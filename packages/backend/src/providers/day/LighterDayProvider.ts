@@ -1,47 +1,15 @@
 import type { LighterClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { DayProvider } from './DayProviders'
+import type { HourlyCount, HourlyCountsProvider } from './DayProviders'
 
-export class LighterDayProvider implements DayProvider {
+export class LighterDayProvider implements HourlyCountsProvider {
   constructor(private lighterClient: LighterClient) {}
 
-  async getDailyTxsCount(
-    from: number,
-    to: number,
-  ): Promise<Record<number, number>> {
+  async getHourlyCounts(from: UnixTime, to: UnixTime): Promise<HourlyCount[]> {
+    // The whole history of full hours, each labelled with its end
     const hourlyStats = await this.lighterClient.getHourlyStats()
-
-    const dailyData = new Map<number, number>()
-
-    for (const stat of hourlyStats) {
-      const dayStart = UnixTime.toStartOf(stat.timestamp, 'day')
-
-      if (dayStart >= from * UnixTime.DAY && dayStart < to * UnixTime.DAY) {
-        const current = dailyData.get(dayStart) ?? 0
-        dailyData.set(dayStart, current + stat.count)
-      }
-    }
-
-    return Object.fromEntries(dailyData)
-  }
-
-  async getDailyUopsCount(
-    from: number,
-    to: number,
-  ): Promise<Record<number, number>> {
-    const hourlyStats = await this.lighterClient.getHourlyStats()
-
-    const dailyData = new Map<number, number>()
-
-    for (const stat of hourlyStats) {
-      const dayStart = UnixTime.toStartOf(stat.timestamp, 'day')
-
-      if (dayStart >= from * UnixTime.DAY && dayStart < to * UnixTime.DAY) {
-        const current = dailyData.get(dayStart) ?? 0
-        dailyData.set(dayStart, current + stat.uopsCount)
-      }
-    }
-
-    return Object.fromEntries(dailyData)
+    return hourlyStats
+      .map((stat) => ({ ...stat, timestamp: stat.timestamp - UnixTime.HOUR }))
+      .filter((stat) => stat.timestamp >= from && stat.timestamp < to)
   }
 }

@@ -5,7 +5,6 @@
   `--sticky-table-header-top` is set by whatever sticks above the table.
 */
 @utility sticky-table {
-  timeline-scope: --sticky-table-timeline;
   /*
     Sorting from the stuck header reorders the rows on screen, and scroll
     anchoring (iOS Safari) would then scroll the page after whichever row it
@@ -15,7 +14,6 @@
 }
 
 @utility sticky-table-scroller {
-  scroll-timeline: --sticky-table-timeline inline;
   overscroll-behavior-x: none;
 
   [data-sticky-table-ready] > & {
@@ -80,7 +78,7 @@
 /* Each cell is shown, and interactive, in one layer only. */
 @utility sticky-table-header-track {
   animation: sticky-table-header-track linear both;
-  animation-timeline: --sticky-table-timeline;
+  animation-timeline: --table-scroll-timeline;
 
   & th[data-pinned] {
     visibility: hidden;
@@ -99,7 +97,7 @@
   width: var(--sticky-table-pinned-width, 0px);
   overflow: clip;
   animation: sticky-table-header-pinned-layer linear both;
-  animation-timeline: --sticky-table-timeline;
+  animation-timeline: --table-scroll-timeline;
 
   & th:not([data-pinned]) {
     visibility: hidden;

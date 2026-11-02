@@ -87,9 +87,6 @@ export const pageLoaders = {
   ZkCatalogProjectPage: async () =>
     (await import('./zk-catalog/v2/project/ZkCatalogProjectPage'))
       .ZkCatalogProjectPage,
-  EcosystemProjectPage: async () =>
-    (await import('./ecosystems/project/EcosystemProjectPage'))
-      .EcosystemProjectPage,
   GovernancePage: async () =>
     (await import('./governance/GovernancePage')).GovernancePage,
   NativeRollupsPage: async () =>

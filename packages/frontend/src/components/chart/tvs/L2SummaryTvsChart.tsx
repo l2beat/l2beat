@@ -106,6 +106,7 @@ export function L2SummaryTvsChart({
         range={range}
       />
       <ChartContainer
+        isPlaceholderData={false}
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
@@ -187,9 +188,8 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
       <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="font-medium text-label-value-14 text-secondary">
           {isFullDay
-            ? formatTimestamp(label, { longMonthName: true })
+            ? formatTimestamp(label)
             : formatTimestamp(label, {
-                longMonthName: true,
                 mode: 'datetime',
               })}
         </div>

@@ -6,18 +6,18 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants>
 
 const buttonVariants = cva(
-  'flex items-center justify-center border border-coffee-400 font-medium text-sm transition-colors duration-100 hover:bg-coffee-400/50 disabled:opacity-50 disabled:hover:bg-transparent',
+  'flex items-center justify-center rounded-sm border border-coffee-500 font-medium text-sm transition-colors duration-100 hover:bg-coffee-700 hover:text-coffee-100 disabled:opacity-50 disabled:hover:bg-transparent',
   {
     variants: {
       variant: {
         default: '',
-        solid: 'bg-coffee-400/50 hover:bg-coffee-400/70',
+        solid: 'border-coffee-600 bg-coffee-700 hover:bg-coffee-600',
         icon: 'border-none bg-transparent hover:bg-transparent',
         destructive: 'border-aux-red! bg-aux-red/10! hover:bg-aux-red/20!',
       },
       size: {
         default: 'px-4 py-1',
-        small: 'px-2 py-0.5 text-xs',
+        small: 'h-6 px-2 text-xs',
         icon: 'size-4 p-0',
       },
     },

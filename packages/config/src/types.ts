@@ -5,7 +5,6 @@ import type {
 } from '@l2beat/shared'
 import {
   type ChainSpecificAddress,
-  type CoingeckoId,
   EthereumAddress,
   isDateOnly,
   type KnownInteropBridgeType,
@@ -275,7 +274,6 @@ export interface BaseProject {
   trackedTxsConfig?: TrackedTxConfigEntryWithoutId[]
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
-  ecosystemConfig?: ProjectEcosystemConfig
   zkCatalogInfo?: ProjectZkCatalogInfo
 
   // discovery data
@@ -289,9 +287,31 @@ export interface BaseProject {
   ossificationHistory?: OssificationHistory
   auditCoverage?: ProjectAuditCoverage
 
+  /** For projects that ship each version as new contracts, with its own
+   *  page. Built from `projects/versions.ts` when config builds. */
+  versions?: ProjectVersions
+
   // tags
   archivedAt?: UnixTime
   hasTestnet?: true
+}
+
+export interface ProjectVersions {
+  group: { id: string; name: string }
+  /** This project's label within the group, e.g. "v2". */
+  label: string
+  /** Every version in the group, this project included, in display order. */
+  siblings: ProjectVersionSibling[]
+}
+
+export interface ProjectVersionSibling {
+  id: ProjectId
+  slug: string
+  name: string
+  label: string
+  /** The version to show by default. */
+  isLatest: boolean
+  archivedAt?: UnixTime
 }
 
 // #region common data
@@ -729,8 +749,21 @@ export interface ProjectScalingDa {
 export interface ProjectGovernanceInfo {
   securityCouncil?: Record<string, string>
   guardians?: Record<string, string>
-  upgrades?: Record<string, string>
+  upgrades?: Record<string, string | ProjectUpgradePath>
   tokenGovernance?: Record<string, string>
+}
+
+/** An upgrade path spelled out step by step, so pages can draw it as a timeline. */
+export interface ProjectUpgradePath {
+  steps: ProjectUpgradePathStep[]
+  /** Remarks about the path as a whole, such as its total duration. */
+  note?: string
+}
+
+export interface ProjectUpgradePathStep {
+  description: string
+  /** A stretch where nobody acts (timelock, veto window, delay), drawn apart from the steps where someone does. */
+  isWait?: boolean
 }
 
 export interface ProjectScalingTechnology {
@@ -1007,7 +1040,22 @@ export interface TrustedSetup {
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
+  /** Participant total, distinct from the number of contributed updates. */
   participantCount?: number
+  /** Participant-generated updates, excluding beacons. Contributors may repeat. */
+  contributionCount?: number
+  phases?: {
+    phase1?: TrustedSetupPhase
+    phase2?: TrustedSetupPhase
+  }
+}
+
+export interface TrustedSetupPhase {
+  /** Omit when the phase exists but its count is unknown. */
+  count?: number | { min: number; max: number }
+  /** Contributions need not identify distinct participants. */
+  unit: 'participants' | 'contributions'
+  description?: string
 }
 
 // #endregion
@@ -1088,11 +1136,10 @@ export interface ProjectPrivacyInfo {
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
   /**
-   * The released open-source client the adversary ratings assume, at the
-   * commit they were reviewed against. `l2b client-drift` lists what changed
-   * upstream since. Absent for closed clients and for reviews that pin none.
+   * The most private released app found for the protocol, which the adversary
+   * ratings assume. The project page lists it above the other apps checked.
    */
-  referenceClient?: ProjectPrivacyReferenceClient
+  referenceApp?: ProjectPrivacyReferenceApp
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
   anonymitySet?:
@@ -1145,12 +1192,54 @@ export type PrivacyAnonymitySetRegistrationSource = {
   extractor: 'umbraStealthKeyChanged'
 }
 
-export interface ProjectPrivacyReferenceClient {
+export interface ProjectPrivacyReferenceApp {
   name: string
-  /** GitHub repository, e.g. https://github.com/owner/repo */
-  repository: string
-  /** Full commit hash. Adversary sources into the repository pin it. */
-  commit: string
+  /** Icon slug under /icons. Defaults to the project's icon, for apps its team builds. */
+  icon?: string
+  /** Where users get the app: its website, release page or repository. */
+  url: string
+  /** Day the ratings first assumed this app, YYYY-MM-DD. */
+  since: string
+  /** Release the review covers, without a leading v. Absent for hosted apps. */
+  version?: string
+  /**
+   * Source at the reviewed commit, absent for closed apps. An app counts as
+   * open when its release builds from this commit, or a trace of the release
+   * matches the endpoints in it.
+   * `l2b client-drift` lists what changed upstream since.
+   */
+  source?: {
+    /** GitHub repository, e.g. https://github.com/owner/repo */
+    repository: string
+    /** Full commit hash. Adversary sources into the repository pin it. */
+    commit: string
+  }
+  /**
+   * Served build the review traced, e.g. a deployment or bundle id. For a
+   * closed hosted app without a release version.
+   */
+  build?: string
+  /** Day the review traced the closed app, YYYY-MM-DD. Absent when untraced. */
+  checked?: string
+  /**
+   * Other released apps for the protocol, checked but not rated. Each one
+   * leaks more than the reference app, which its finding shows.
+   */
+  checkedApps?: ProjectPrivacyCheckedApp[]
+}
+
+export interface ProjectPrivacyCheckedApp {
+  name: string
+  /** Icon slug under /icons, e.g. "railway" for /icons/railway.png. Absent when the app has no logo. */
+  icon?: string
+  /** The traced behaviour that leaks more, as one sentence. */
+  finding: string
+  /** What the app changes to match the reference app on this finding, as one sentence. */
+  fix?: string
+  /** Proves the finding: pinned code, or the app itself when it is closed. */
+  source: string
+  /** Day the finding was checked, YYYY-MM-DD. Set when `source` is the app itself. */
+  checked?: string
 }
 
 export type ProjectPrivacyRelayerTracking =
@@ -1200,6 +1289,18 @@ export type ZkMoneyFundingParams = ZkMoneyDepositParams & {
    * before a scan starts count as untraceable until the SIPA is emptied.
    */
   historyFromBlock: number
+  /**
+   * Executors that redeposit refunds from an earlier deployment. Each of their
+   * deposits joins as its own member, keyed by its recipient commitment, since
+   * the refund names no funder.
+   */
+  migrationExecutors?: EthereumAddress[]
+  /**
+   * Factories whose escrows move funds between the project's own portals. A
+   * deposit by one of their escrows joins no member, since its mover already
+   * holds funds in the project.
+   */
+  internalEscrowFactories?: EthereumAddress[]
 }
 
 /** Identifies withdrawal finalizers and excludes observable self-finalizations. */
@@ -1208,6 +1309,8 @@ export type ZkMoneyWithdrawalRelayerParams = {
   executorAddress: EthereumAddress
   /** Helper that forwards fees to its caller, so the payout is followed through it. */
   operationExecutor: EthereumAddress
+  /** Receives the fixed fee the executor pays before the principal, if it charges one. */
+  feeBeneficiary?: EthereumAddress
 }
 
 /** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
@@ -1747,6 +1850,7 @@ export interface ElasticChainEscrow {
 export type ProjectActivityConfig =
   | BlockActivityConfig
   | DayActivityConfig
+  | HourActivityConfig
   | SlotActivityConfig
 
 export interface BlockActivityConfig {
@@ -1775,6 +1879,14 @@ export interface DayActivityConfig {
   dataSource: string
   resyncLastDays?: number
   batchSize?: number
+}
+
+/** For APIs that count by the hour. Synced each hour, like block chains */
+export interface HourActivityConfig {
+  type: 'hour'
+  sinceTimestamp: UnixTime
+  /** Source of the data, will be displayed in the UI */
+  dataSource: string
 }
 
 export type LivenessOverwriteMode = 'no-data'
@@ -1827,30 +1939,6 @@ export interface ProjectEcosystemInfo {
   isPartOfSuperchain?: boolean
   sinceTimestamp?: UnixTime
   untilTimestamp?: UnixTime
-}
-
-export interface ProjectEcosystemConfig {
-  startedAt?: UnixTime
-  token: {
-    coingeckoId: CoingeckoId
-    description: string
-  }
-  links: {
-    buildOn: string
-    learnMore: string
-    governanceDelegateToL2BEAT: string
-    governanceProposals: string
-    tools?: string[]
-    grants?: string
-  }
-  firstBanner?: {
-    headlineText?: string
-    mainText?: string
-  }
-  secondBanner?: {
-    headlineText?: string
-    mainText?: string
-  }
 }
 // #endregion
 
@@ -2026,7 +2114,6 @@ export interface ProjectDiscoveryUpdateSection {
 
 export type InteropPluginName =
   | 'across'
-  | 'across-settlement'
   | 'across-settlement-op'
   | 'across-settlement-orbit'
   | 'agglayer'
@@ -2059,7 +2146,6 @@ export type InteropPluginName =
   | 'lifi-intents'
   | 'maker-bridge'
   | 'mayan-forwarder'
-  | 'mayan-mctp'
   | 'mayan-mctp-fast'
   | 'mayan-swift'
   | 'mayan-swift-settlement'
@@ -2075,7 +2161,6 @@ export type InteropPluginName =
   | 'relay'
   | 'sky-bridge'
   | 'sorare-base'
-  | 'squid-coral'
   | 'stargate'
   | 'synthetix-bridge'
   | 'world-id'

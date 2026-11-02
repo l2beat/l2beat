@@ -79,7 +79,7 @@ export function ModuleButton() {
           <IconControlFolder />
         </ToolbarButton>
       </PopoverTrigger>
-      <PopoverContent side="top" sideOffset={10} className="w-72 p-3">
+      <PopoverContent side="top" sideOffset={10} className="w-72 p-2.5">
         {owned.length > 1 && (
           <p className="text-coffee-300 text-xs">
             The selection spans {owned.map((o) => o.owner).join(', ')}. Select
@@ -208,9 +208,7 @@ function Header(props: { title: string; hint: string }) {
   return (
     <div className="border-coffee-600/70 border-b pb-2">
       <div className="font-medium text-coffee-100 text-sm">{props.title}</div>
-      <div className="text-[11px] text-coffee-300 leading-tight">
-        {props.hint}
-      </div>
+      <div className="text-coffee-300 text-xs leading-4">{props.hint}</div>
     </div>
   )
 }

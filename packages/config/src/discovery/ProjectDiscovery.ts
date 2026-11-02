@@ -814,7 +814,7 @@ export class ProjectDiscovery {
   }
 
   replaceAddressesWithNames(s: string): string {
-    const ethereumAddressRegex = /\b(?:[a-zA-Z0-9]+:)?0x[a-fA-F0-9]{40}\b/g
+    const ethereumAddressRegex = /\b(?:[a-zA-Z0-9-]+:)?0x[a-fA-F0-9]{40}\b/g
     const addressStrings = s.match(ethereumAddressRegex) ?? []
     const addresses = addressStrings.map((a) => ChainSpecificAddress(a))
 

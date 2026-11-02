@@ -39,7 +39,6 @@ const ALL_PROJECT_OPTIONAL_KEYS = [
   'trackedTxsConfig',
   'daTrackingConfig',
   'ecosystemInfo',
-  'ecosystemConfig',
   'ossificationHistory',
   'zkCatalogInfo',
   'permissions',

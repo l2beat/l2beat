@@ -30,12 +30,8 @@ describe(BlockActivityIndexer.name, () => {
       expect(newSafeHeight).toEqual(50)
     })
 
-    it('adds the hours, then the days with the peaks of the hours as stored', async () => {
+    it('adds the hours and the days of the batch', async () => {
       const hourlyActivityRepository = mockHourlyActivityRepository()
-      hourlyActivityRepository.addMany.resolvesToOnce([
-        hourlyRecord(START, 20),
-        hourlyRecord(START + 1 * UnixTime.DAY, 2),
-      ])
       const activityRepository = mockObject<Database['activity']>({
         addMany: mockFn().resolvesTo(2),
       })
@@ -63,20 +59,8 @@ describe(BlockActivityIndexer.name, () => {
         hourlyRecord(START + 1 * UnixTime.DAY, 2),
       ])
       expect(activityRepository.addMany).toHaveBeenOnlyCalledWith([
-        dayRecord(START, {
-          count: 7,
-          start: 1,
-          end: 2,
-          peakHour: 20,
-          peakMinute: 4,
-        }),
-        dayRecord(START + 1 * UnixTime.DAY, {
-          count: 2,
-          start: 3,
-          end: 3,
-          peakHour: 2,
-          peakMinute: 2,
-        }),
+        activityRecord('a', START, 7, 7, 1, 2),
+        activityRecord('a', START + 1 * UnixTime.DAY, 2, 2, 3, 3),
       ])
       expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenCalledWith(
         'activity',
@@ -101,66 +85,6 @@ describe(BlockActivityIndexer.name, () => {
       expect(
         hourlyActivityRepository.deleteByProjectIdUntil,
       ).toHaveBeenOnlyCalledWith(ProjectId('a'), START + 16 * UnixTime.DAY)
-    })
-
-    it('continues the peak of a minute split between consecutive batches', async () => {
-      const activityRepository = mockActivityRepository()
-      const indexer = createIndexer({
-        blockSource: mockBlockSourceOnce(
-          [block(START + 50, 3, 3, 1), block(START + 55, 2, 2, 2)],
-          [block(START + 58, 4, 4, 3), block(START + 70, 1, 1, 4)],
-        ),
-        db: mockDatabaseWith({ activity: activityRepository }),
-        batchSize: 1,
-      })
-
-      await indexer.update(1, 2)
-      await indexer.update(3, 4)
-
-      expect(peakMinuteOf(activityRepository, 2)).toEqual(9)
-    })
-
-    it('continues a minute once when a batch is retried after its save failed', async () => {
-      const activityRepository = mockActivityRepository()
-      activityRepository.addMany
-        .resolvesToOnce(1)
-        .rejectsWithOnce(new Error('Connection lost'))
-      const secondBatch = [
-        block(START + 58, 4, 4, 3),
-        block(START + 70, 1, 1, 4),
-      ]
-      const indexer = createIndexer({
-        blockSource: mockBlockSourceOnce(
-          [block(START + 50, 3, 3, 1), block(START + 55, 2, 2, 2)],
-          secondBatch,
-          secondBatch,
-        ),
-        db: mockDatabaseWith({ activity: activityRepository }),
-        batchSize: 1,
-      })
-
-      await indexer.update(1, 2)
-      await expect(indexer.update(3, 4)).toBeRejected()
-      await indexer.update(3, 4)
-
-      expect(peakMinuteOf(activityRepository, 3)).toEqual(9)
-    })
-
-    it('does not continue a minute from a batch that did not end right before', async () => {
-      const activityRepository = mockActivityRepository()
-      const indexer = createIndexer({
-        blockSource: mockBlockSourceOnce(
-          [block(START + 50, 3, 3, 1), block(START + 55, 2, 2, 2)],
-          [block(START + 58, 4, 4, 5)],
-        ),
-        db: mockDatabaseWith({ activity: activityRepository }),
-        batchSize: 1,
-      })
-
-      await indexer.update(1, 2)
-      await indexer.update(5, 5)
-
-      expect(peakMinuteOf(activityRepository, 2)).toEqual(4)
     })
   })
 
@@ -297,54 +221,10 @@ function hourlyRecord(
   return { projectId: ProjectId('a'), timestamp, count, uopsCount: count }
 }
 
-/** Uops follow txs */
-function dayRecord(
-  timestamp: UnixTime,
-  values: {
-    count: number
-    start: number
-    end: number
-    peakHour: number
-    peakMinute: number
-  },
-) {
-  return {
-    ...activityRecord(
-      'a',
-      timestamp,
-      values.count,
-      values.count,
-      values.start,
-      values.end,
-    ),
-    peakHourCount: values.peakHour,
-    peakHourUopsCount: values.peakHour,
-    peakMinuteCount: values.peakMinute,
-    peakMinuteUopsCount: values.peakMinute,
-  }
-}
-
-/** The peak minute of the only day in the `nth` call */
-function peakMinuteOf(
-  activityRepository: ReturnType<typeof mockActivityRepository>,
-  nth: number,
-) {
-  return activityRepository.addMany.calls[nth - 1]?.args[0][0]?.peakMinuteCount
-}
-
 function mockBlockSource(blocks: ReturnType<typeof block>[]) {
   return mockObject<ActivityBlockSource>({
     getBlocks: mockFn().resolvesTo(blocks),
   })
-}
-
-/** One batch per call */
-function mockBlockSourceOnce(...batches: ReturnType<typeof block>[][]) {
-  const getBlocks = mockFn<ActivityBlockSource['getBlocks']>()
-  for (const batch of batches) {
-    getBlocks.resolvesToOnce(batch)
-  }
-  return mockObject<ActivityBlockSource>({ getBlocks })
 }
 
 function mockActivityRepository() {
@@ -353,10 +233,9 @@ function mockActivityRepository() {
   })
 }
 
-/** Stores nothing before, so the totals are the hours as added */
 function mockHourlyActivityRepository() {
   return mockObject<Database['hourlyActivity']>({
-    addMany: mockFn(async (records: HourlyActivityRecord[]) => records),
+    addMany: mockFn().resolvesTo(0),
     deleteByProjectIdUntil: mockFn().resolvesTo(0),
     deleteByProjectIdFrom: mockFn().resolvesTo(0),
   })

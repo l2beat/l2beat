@@ -9,21 +9,27 @@ import {
   CommandGroup,
   CommandInput,
   CommandInputActionButton,
-  CommandItem,
+  CommandLinkItem,
   CommandList,
 } from '~/components/core/Command'
+import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
-import { useRouter } from '~/hooks/useRouter'
+import { usePathname } from '~/hooks/usePathname'
 import { useTracking } from '~/hooks/useTracking'
 import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { useTRPC } from '~/trpc/React'
 import { Skeleton } from '../core/Skeleton'
 import { linkVariants } from '../link/CustomLink'
+import {
+  type SavedProject,
+  usePinnedProjects,
+} from '../pinned-projects/pinnedProjectsStore'
 import { useSearchBarContext } from './SearchBarContext'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
+import { getEmptyStateGroups } from './searchBarEmptyState'
 import { searchBarPages } from './searchBarPages'
 import { groupSearchResults, searchEntries } from './searchBarResults'
 import type { AnySearchBarEntry } from './types'
@@ -39,7 +45,12 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   const [value, setValue] = useState('')
   const debouncedValue = useDebouncedValue(value, 200)
   const { open, setOpen } = useSearchBarContext()
-  const router = useRouter()
+  const pinnedProjects = usePinnedProjects()
+  const pathname = usePathname()
+  const emptyState = useMemo(
+    () => getEmptyStateGroups(pinnedProjects, recentlyAdded, pathname),
+    [pinnedProjects, recentlyAdded, pathname],
+  )
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
@@ -94,13 +105,17 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
     setOpen(false)
   }
 
-  function onItemSelect(item: SearchBarProject | AnySearchBarEntry) {
-    setOpen(false)
-    router.push(item.href)
+  function onItemFollow(
+    item: SearchBarProject | AnySearchBarEntry | SavedProject,
+    staysOnPage: boolean,
+  ) {
     track('searchBarProjectSelected', {
       name: item.name,
     })
-    // Clear after the dialog's close animation (duration-200) so the input
+    // Stays open so several results can be opened side by side to compare.
+    if (staysOnPage) return
+    setOpen(false)
+    // Clear after the dialog's close animation (100ms) so the input
     // doesn't visibly reset and flash the "Recently added" list mid-close.
     setTimeout(() => setValue(''), 200)
   }
@@ -111,23 +126,19 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   return (
     <CommandDialog
       title="Search"
-      description="Search for projects and tokens by name or address"
+      description="Search projects, tokens and protocols by name or address"
       open={open}
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
       fullScreenMobile
     >
       <Command shouldFilter={false} className="rounded-none">
-        <CommandInput
+        <SearchBarInput
           ref={inputRef}
-          placeholder="Search for projects and tokens by name or address"
           value={value}
           onValueChange={setValue}
-        >
-          <CommandInputActionButton onClick={() => onEscapeKeyDown()}>
-            {value !== '' ? 'Clear' : 'Close'}
-          </CommandInputActionButton>
-        </CommandInput>
+          onAction={() => onEscapeKeyDown()}
+        />
         <CommandList className="max-h-screen supports-[height:100dvh]:max-h-dvh md:h-[270px] md:max-h-[270px]">
           {((value !== debouncedValue && value !== '') || isFetching) && (
             <CommandPrimitive.Loading>
@@ -163,12 +174,29 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
           {!searchProblem && <CommandEmpty>No results found.</CommandEmpty>}
 
           {value === '' && (
+            <>
+              <SavedProjectsGroup
+                heading="Pinned"
+                projects={emptyState.pinned}
+                onFollow={onItemFollow}
+              />
+              <SavedProjectsGroup
+                heading="Recently viewed"
+                projects={emptyState.recentlyViewed}
+                onFollow={onItemFollow}
+              />
+            </>
+          )}
+          {value === '' && (
             <CommandGroup heading="Recently added projects">
-              {recentlyAdded.map((project) => {
+              {emptyState.recentlyAdded.map((project) => {
                 return (
                   <SearchBarItem
                     key={project.id}
-                    onSelect={() => onItemSelect(project)}
+                    href={project.href}
+                    onFollow={(staysOnPage) =>
+                      onItemFollow(project, staysOnPage)
+                    }
                     label={entryToLabel(project)}
                   >
                     <img
@@ -204,7 +232,10 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                   return (
                     <SearchBarItem
                       key={item.href}
-                      onSelect={() => onItemSelect(item)}
+                      href={item.href}
+                      onFollow={(staysOnPage) =>
+                        onItemFollow(item, staysOnPage)
+                      }
                       label={entryToLabel(item)}
                       value={
                         // I know it looks ugly but there is a bug in CMDK that scrolls to wrong item sometimes.
@@ -256,21 +287,65 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   )
 }
 
+/**
+ * The visitor's own projects, saved with only a name and an icon, so their
+ * rows carry no kind label.
+ */
+function SavedProjectsGroup({
+  heading,
+  projects,
+  onFollow,
+}: {
+  heading: string
+  projects: SavedProject[]
+  onFollow: (project: SavedProject, staysOnPage: boolean) => void
+}) {
+  if (projects.length === 0) return null
+  return (
+    <CommandGroup heading={heading}>
+      {projects.map((project) => (
+        <SearchBarItem
+          key={project.href}
+          href={project.href}
+          onFollow={(staysOnPage) => onFollow(project, staysOnPage)}
+          // cmdk keys items by value, which defaults to the row's text; two
+          // projects can share a name.
+          value={`${heading}-${project.href}`}
+        >
+          <img
+            src={project.iconUrl}
+            alt={`${project.name} logo`}
+            className="rounded-sm"
+            width={20}
+            height={20}
+          />
+          <div className="font-medium text-sm leading-none tracking-[-1%]">
+            {project.name}
+          </div>
+        </SearchBarItem>
+      ))}
+    </CommandGroup>
+  )
+}
+
 function SearchBarItem({
-  onSelect,
+  href,
+  onFollow,
   children,
   label,
   value,
 }: {
-  onSelect: () => void
+  href: string
+  onFollow: (staysOnPage: boolean) => void
   children: React.ReactNode
   label?: string
   value?: string
 }) {
   return (
-    <CommandItem
-      className="cursor-pointer gap-2 rounded-lg"
-      onSelect={onSelect}
+    <CommandLinkItem
+      className="gap-2 rounded-lg"
+      href={href}
+      onFollow={onFollow}
       value={value}
     >
       {children}
@@ -279,7 +354,7 @@ function SearchBarItem({
           {label}
         </div>
       )}
-    </CommandItem>
+    </CommandLinkItem>
   )
 }
 
@@ -337,8 +412,6 @@ function entryToLabel(entry: AnySearchBarEntry) {
       return 'Interop'
     case 'zkCatalog':
       return 'ZK Project'
-    case 'ecosystem':
-      return 'Ecosystem'
     case 'privacy':
       return 'Privacy'
     case 'defi':
@@ -346,4 +419,40 @@ function entryToLabel(entry: AnySearchBarEntry) {
     default:
       assertUnreachable(entry.kind)
   }
+}
+
+/**
+ * Mounted only while the dialog is open, so the breakpoint listener is too.
+ * The full placeholder would be cut off on phones (below 550px), where
+ * "Close" sits beside it.
+ */
+function SearchBarInput({
+  ref,
+  value,
+  onValueChange,
+  onAction,
+}: {
+  ref: React.Ref<HTMLInputElement>
+  value: string
+  onValueChange: (value: string) => void
+  onAction: () => void
+}) {
+  const breakpoint = useBreakpoint()
+  const isPhone = breakpoint === 'xs'
+  return (
+    <CommandInput
+      ref={ref}
+      placeholder={
+        isPhone
+          ? 'Projects, tokens or addresses'
+          : 'Search projects, tokens, protocols or addresses'
+      }
+      value={value}
+      onValueChange={onValueChange}
+    >
+      <CommandInputActionButton onClick={onAction}>
+        {value !== '' ? 'Clear' : 'Close'}
+      </CommandInputActionButton>
+    </CommandInput>
+  )
 }

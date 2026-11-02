@@ -4,5 +4,11 @@
     "address": "eth:0x9c4A7d65AFDC2b4eF1164264D9585ED64c869054",
     "chain": "ethereum",
     "blockNumber": 26182437
+  },
+  "SkyEscrowFactory_v6": {
+    "hash": "0x8e5cc9dc91a8476a4998d78267201e01bbab0558c02e85e9d719b6dd47744b87",
+    "address": "eth:0x7F890e5DF3B4165D1cE4E9A42e97C44f1d7dCc09",
+    "chain": "ethereum",
+    "blockNumber": 26290653
   }
 }

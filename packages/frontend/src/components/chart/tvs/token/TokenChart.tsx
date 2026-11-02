@@ -34,6 +34,7 @@ interface Props {
   project: ChartProject
   syncedUntil: number | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   milestones: Milestone[]
   token: ProjectToken
 }
@@ -42,6 +43,7 @@ export function TokenChart({
   data,
   project,
   isLoading,
+  isPlaceholderData,
   milestones,
   token,
   syncedUntil,
@@ -61,6 +63,7 @@ export function TokenChart({
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       meta={chartMeta}
       data={data}
       isLoading={isLoading}
@@ -103,7 +106,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     <ChartTooltipWrapper>
       <div className="flex min-w-48 flex-col gap-1">
         <div className="mb-1 font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+          {formatTimestamp(label, { mode: 'datetime' })}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {

@@ -68,7 +68,6 @@ const schema = {
   trackedTxsConfig: 'TEXT',
   daTrackingConfig: 'TEXT',
   ecosystemInfo: 'TEXT',
-  ecosystemConfig: 'TEXT',
 
   permissions: 'TEXT',
   contracts: 'TEXT',
@@ -76,6 +75,7 @@ const schema = {
   discoveryUpdates: 'TEXT',
   ossificationHistory: 'TEXT',
   auditCoverage: 'TEXT',
+  versions: 'TEXT',
 
   archivedAt: 'INTEGER',
   hasTestnet: 'BOOLEAN',

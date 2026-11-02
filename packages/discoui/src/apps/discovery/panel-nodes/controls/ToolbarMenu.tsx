@@ -79,7 +79,7 @@ function MenuItem(props: { item: ToolbarMenuItem; onSelect: () => void }) {
       type="button"
       disabled={item.disabled}
       onClick={props.onSelect}
-      className="flex h-8 w-full items-center gap-2 rounded-md px-2 text-left text-coffee-200 text-xs transition-colors hover:bg-coffee-700 disabled:pointer-events-none disabled:opacity-40"
+      className="flex h-7 w-full items-center gap-2 rounded-sm px-2 text-left text-coffee-200 text-xs transition-colors hover:bg-coffee-700 disabled:pointer-events-none disabled:opacity-40"
     >
       <span className="flex w-4 shrink-0 justify-center text-coffee-400">
         {item.icon}

@@ -2,6 +2,7 @@
 
 @import "./markdown.css" layer(base);
 @import "./article.css" layer(base);
+@import "./table-scroll.css";
 @import "./sticky-table.css";
 @import "./section-navigation.css";
 
@@ -66,6 +67,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* A mouse or trackpad: an iPad is as wide as a laptop but has no hover, and
+   a narrow window still has one. `not-can-hover:` is touch. The outer
+   parentheses keep `not-` negating both features: `not (a) and (b)` is not
+   a valid query, and a browser drops it. */
+@custom-variant can-hover (@media ((hover: hover) and (pointer: fine)));
+
 :root {
   /* Prevent horizontal overscroll on mobile to avoid unwanted scrolling when swiping on charts.
      Not applied on desktop to preserve MacOS swipe-back gesture. */
@@ -82,6 +89,8 @@
   --negative: #d70000;
   --brand: #9621bf;
   --selection-brand-share: 30%;
+  /* The nav's current page. */
+  --nav-active: var(--brand);
   --background: #e6e7ec;
   --surface-primary: #fafafa;
   --surface-primary-hover: #e6ecef;
@@ -489,6 +498,7 @@
   --color-warning: var(--warning);
   --color-negative: var(--negative);
   --color-brand: var(--brand);
+  --color-nav-active: var(--nav-active);
   --color-background: var(--background);
   --color-surface-primary: var(--surface-primary);
   --color-surface-primary-hover: var(--surface-primary-hover);
@@ -542,6 +552,9 @@
 
   --transition-property-height: height;
   --transition-property-max-height: max-height;
+
+  /* Web Animations take a copy: EASE_OUT_QUINT in ~/utils/easing.ts. */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -866,7 +879,7 @@
   }
 }
 
-/* The Infinite Garden: crop and garden colours, the backdrop canvases and the plant animations. */
+/* The CROPS guide: crop and garden colours, the backdrop canvases and the plant animations. */
 
 :root {
   /* `-ink` is the same hue adjusted to read as text. */
@@ -914,7 +927,10 @@
   --garden-sprout: #3f6b3a;
 }
 
-/* Referenced from inline styles in CropPlant, CropsBed and the page backdrops. */
+/* Referenced from inline styles in CropPlant, CropsBed and the page backdrops.
+   The entrances end at rest and fill backwards, never both: a held end
+   transform keeps Chrome's layer at the raster scale it caught mid-grow, so
+   the art stays blurry. */
 @keyframes garden-grow {
   0% {
     transform: scaleY(0.02);

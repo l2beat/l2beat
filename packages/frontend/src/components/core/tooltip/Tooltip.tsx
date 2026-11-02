@@ -3,7 +3,6 @@ import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import type React from 'react'
 import { createContext, useContext, useId, useRef, useState } from 'react'
-import { useDevice } from '~/hooks/useDevice'
 import { mergeRefs } from '~/utils/mergeRefs'
 import {
   TooltipTriggerContextProvider,
@@ -34,7 +33,7 @@ const Tooltip = ({
   return (
     <TooltipPrimitive.Root open={open} onOpenChange={setOpen} {...props}>
       <TooltipTriggerContextProvider
-        value={{ open, setOpen, contentDescriptionId }}
+        value={{ open: props.open ?? open, setOpen, contentDescriptionId }}
       >
         {children}
       </TooltipTriggerContextProvider>
@@ -44,42 +43,62 @@ const Tooltip = ({
 
 const TooltipTrigger = ({
   ref,
-  disabledOnMobile,
+  disabledOnTouch,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Trigger> & {
-  disabledOnMobile?: boolean
+  /**
+   * A tap does what the trigger does, e.g. follows its link, and never opens
+   * the tooltip.
+   */
+  disabledOnTouch?: boolean
 }) => {
   const localRef = useRef(null)
-  const { isDesktop } = useDevice()
-  const { setOpen, contentDescriptionId } = useTooltipTriggerContext()
-  // Omitted rather than undefined: an explicit undefined would override the
-  // id Radix sets while the tooltip is open.
-  const describedBy = contentDescriptionId
-    ? { 'aria-describedby': contentDescriptionId }
-    : {}
+  // Whether the tooltip was open when the last touch or pen press began.
+  const tapStartedOpen = useRef<boolean>(undefined)
+  const { open, setOpen, contentDescriptionId } = useTooltipTriggerContext()
+  // While open, Radix adds the id of its own copy of the same content, so the
+  // HTML copy would make screen readers read it twice.
+  const describedBy = open ? undefined : contentDescriptionId
 
   if (props.disabled) {
     return props.children
   }
 
-  // Tooltips do not work on mobile by default
-  if (disabledOnMobile) {
-    return <TooltipPrimitive.Trigger ref={ref} {...describedBy} {...props} />
+  // Radix opens a tooltip on hover and focus only, never on a tap
+  if (disabledOnTouch) {
+    return (
+      <TooltipPrimitive.Trigger
+        ref={ref}
+        aria-describedby={describedBy}
+        {...props}
+      />
+    )
   }
 
-  const onClick = !isDesktop
-    ? (e: React.MouseEvent) => {
-        e.preventDefault()
-        setOpen(true)
-      }
-    : undefined
+  // Touch has no hover, so the first tap opens the tooltip in place of the
+  // trigger's own action, and a tap on the open tooltip closes it or follows
+  // its link. This goes by the tap, not the width: an iPad in landscape is
+  // as wide as a laptop, and a click in a narrow window must still follow a
+  // link. A key press has no pointer down, so it keeps the trigger's action.
+  const onPointerDown = (e: React.PointerEvent) => {
+    // Recorded before Radix closes an open tooltip on the same press.
+    tapStartedOpen.current = e.pointerType === 'mouse' ? undefined : open
+  }
+  const onClick = (e: React.MouseEvent) => {
+    const startedOpen = tapStartedOpen.current
+    tapStartedOpen.current = undefined
+    if (startedOpen !== false) return
+    e.preventDefault()
+    setOpen(true)
+  }
 
   return (
     <TooltipPrimitive.Trigger
       ref={mergeRefs(ref, localRef)}
+      onPointerDown={onPointerDown}
       onClick={onClick}
       data-role="tooltip-trigger"
-      {...describedBy}
+      aria-describedby={describedBy}
       {...props}
     />
   )
@@ -143,12 +162,22 @@ const TooltipVisualOnly = ({ children }: { children: React.ReactNode }) => {
   return isInsideHtmlCopy ? null : children
 }
 
+/**
+ * Left out of the tooltip popup but kept in its HTML copy, for text a
+ * compact popup drops but crawlers and LLMs should still read.
+ */
+const TooltipHtmlCopyOnly = ({ children }: { children: React.ReactNode }) => {
+  const isInsideHtmlCopy = useContext(InsideHtmlCopyContext)
+  return isInsideHtmlCopy ? children : null
+}
+
 const TooltipPortal = TooltipPrimitive.Portal
 TooltipPortal.displayName = TooltipPrimitive.Portal.displayName
 
 export {
   Tooltip,
   TooltipContent,
+  TooltipHtmlCopyOnly,
   tooltipContentVariants,
   TooltipProvider,
   TooltipTrigger,

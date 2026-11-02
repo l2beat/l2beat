@@ -43,6 +43,7 @@ import {
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
+import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
 import { ChartStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
 import type { ChartScale } from '../types'
@@ -59,12 +60,14 @@ interface Props {
   data: ActivityChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   milestones: Milestone[]
   scale: ChartScale
   metric: ActivityMetric
   type: ActivityChartType
   project: ChartProject
   tickCount?: number
+  resolution?: ActivityResolution
 }
 
 export function ActivityChart({
@@ -72,11 +75,13 @@ export function ActivityChart({
   syncedUntil,
   milestones,
   isLoading,
+  isPlaceholderData,
   scale,
   type,
   metric,
   project,
   tickCount,
+  resolution = 'day',
 }: Props) {
   const chartMeta = useMemo(
     () => ({
@@ -110,6 +115,7 @@ export function ActivityChart({
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
@@ -161,7 +167,9 @@ export function ActivityChart({
         />
         <ChartTooltip
           filterNull={false}
-          content={<ActivityCustomTooltip metric={metric} />}
+          content={
+            <ActivityCustomTooltip metric={metric} resolution={resolution} />
+          }
         />
         <defs>
           {type === 'Rollups' && (
@@ -194,9 +202,12 @@ export function ActivityCustomTooltip({
   payload,
   label: timestamp,
   metric,
+  resolution = 'day',
 }: CustomChartTooltipProps & {
   metric: ActivityMetric
+  resolution?: ActivityResolution
 }) {
+  const resolutionSeconds = UnixTime.periodToSeconds(resolution)
   const { meta } = useChart()
   if (!payload || typeof timestamp !== 'number') return null
 
@@ -204,7 +215,7 @@ export function ActivityCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(timestamp, timestamp + UnixTime.DAY)}
+          {formatRange(timestamp, timestamp + resolutionSeconds)}
         </div>
         <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />
@@ -272,7 +283,7 @@ export function ActivityCustomTooltip({
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
                   {entry.value === null
                     ? 'No data'
-                    : formatInteger(entry.value * UnixTime.DAY)}
+                    : formatInteger(entry.value * resolutionSeconds)}
                 </span>
               </div>
             )

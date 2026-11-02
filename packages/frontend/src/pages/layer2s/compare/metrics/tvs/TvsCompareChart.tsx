@@ -1,6 +1,6 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { PROJECT_TVS_CHART_VALUE_KEYS } from '~/server/features/layer2s/tvs/projectTvsChartValues'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
@@ -18,10 +18,9 @@ export function TvsCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading } = useQuery(
-    trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
-      getTvsCompareChartParams(queryProjects, config, chartRange),
-    ),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.tvs.detailedChartWithProjectsRanges,
+    getTvsCompareChartParams(queryProjects, config, chartRange),
   )
   const unit = config.tvs.unit
   // Index into `ProjectTvsChartDataPoint`, derived from the shared key order
@@ -50,6 +49,7 @@ export function TvsCompareChart({
 
   return (
     <CompareMetricLineChart
+      isPlaceholderData={isPlaceholderData}
       projects={projects}
       data={chartData}
       isLoading={isLoading}
@@ -58,7 +58,6 @@ export function TvsCompareChart({
       formatTooltipValue={(value) => formatCurrency(value, unit)}
       renderTooltipTimestamp={(label) =>
         formatTimestamp(label, {
-          longMonthName: true,
           mode: 'datetime',
         })
       }

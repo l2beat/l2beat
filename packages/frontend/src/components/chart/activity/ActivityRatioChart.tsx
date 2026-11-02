@@ -16,6 +16,7 @@ import {
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
+import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
 
 interface ActivityRatioChartDataPoint {
@@ -27,9 +28,17 @@ interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
+  resolution?: ActivityResolution
 }
 
-export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
+export function ActivityRatioChart({
+  data,
+  isLoading,
+  isPlaceholderData,
+  syncedUntil,
+  resolution = 'day',
+}: Props) {
   const chartMeta = {
     ratio: {
       label: 'UOPS/TPS Ratio',
@@ -41,6 +50,7 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
   } satisfies ChartMeta
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
@@ -67,7 +77,10 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
           syncedUntil={syncedUntil}
         />
 
-        <ChartTooltip filterNull={false} content={<ActivityCustomTooltip />} />
+        <ChartTooltip
+          filterNull={false}
+          content={<ActivityCustomTooltip resolution={resolution} />}
+        />
         <ChartLegend content={<ChartLegendContent />} />
         <defs>
           <EmeraldFillGradientDef id="fillRatio" />
@@ -80,7 +93,8 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
 function ActivityCustomTooltip({
   payload,
   label: timestamp,
-}: CustomChartTooltipProps) {
+  resolution,
+}: CustomChartTooltipProps & { resolution: ActivityResolution }) {
   const { meta } = useChart()
   if (!payload || typeof timestamp !== 'number') return null
 
@@ -88,7 +102,10 @@ function ActivityCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatRange(timestamp, timestamp + UnixTime.DAY)}
+          {formatRange(
+            timestamp,
+            timestamp + UnixTime.periodToSeconds(resolution),
+          )}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {

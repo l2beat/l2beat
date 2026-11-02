@@ -8,7 +8,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import { env } from '~/env'
 import type { OssificationStats } from '../projects/ossification/getOssificationStats'
 import { describeOssification } from './describeOssification'
-import { isCropsShown } from './getAttestationsMeta'
+import { isCropsAttested } from './getAttestationsMeta'
 
 /**
  * Goes first on a project page: the CROPS verdict is a reading of the whole
@@ -25,7 +25,7 @@ export async function getGardenCropsSection(
   if (
     !env.CLIENT_SIDE_GARDEN_ENABLED ||
     !project.garden ||
-    !(await isCropsShown(project.id))
+    !(await isCropsAttested(project.id))
   ) {
     return undefined
   }

@@ -20,13 +20,14 @@ export interface CropCriteria {
 
 export const CROP_CRITERIA: Record<CropKey, CropCriteria> = {
   censorshipResistance: {
-    question: 'Can anyone use it, and can everyone leave?',
+    question:
+      'Can anyone use the protocol and withdraw their funds without permission?',
     summary:
       'No one, including the team, an operator or governance, can stop a user from using the protocol or withdrawing their funds.',
     minimums: [
       'Anyone can use it and exit it: no allowlist, no KYC, and no operator whose approval is needed.',
       'The core contracts cannot be upgraded or paused, or any change waits at least 30 days, so users can exit first.',
-      'Passes the walkaway test: users can still withdraw if the team, the frontend and every relayer disappear.',
+      '**Passes the walkaway test:** users can still withdraw if the team, the frontend and every relayer disappear.',
       'Any remaining admin power is documented and limited: it applies to all users equally and cannot affect payments or withdrawals.',
     ],
     pullsDown: [
@@ -36,7 +37,8 @@ export const CROP_CRITERIA: Record<CropKey, CropCriteria> = {
     ],
   },
   openSource: {
-    question: 'Can we read it, rebuild it, and run it ourselves?',
+    question:
+      'Can anyone inspect the code, build it, and run it independently?',
     summary:
       'Everything needed to use the protocol is published under a license that allows running, modifying and forking it.',
     minimums: [
@@ -56,7 +58,7 @@ export const CROP_CRITERIA: Record<CropKey, CropCriteria> = {
     },
   },
   privacy: {
-    question: 'Does using it cost you your privacy?',
+    question: 'How much privacy do users actually have?',
     summary:
       'Privacy is enforced by cryptography, not by policy, and cannot be undone later.',
     minimums: [

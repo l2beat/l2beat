@@ -1,7 +1,7 @@
 {
   "name": "grvt",
-  "timestamp": 1792750638,
-  "configHash": "0xf52596b54bd6d21c4f7a698977c39f3662d491d190be98bc4e70a040cfa0f313",
+  "timestamp": 1793617586,
+  "configHash": "0x2084c1e51035868baf0c9a414d9ff9295ca19404533437794a0eacdebaec6748",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -37,9 +37,219 @@
       }
     },
     {
+      "name": "NativeBridgeGateway",
+      "address": "eth:0x17CBac7631063d8A79ddb5c3fc7C2336F0161915",
+      "type": "Contract",
+      "template": "grvt/NativeBridgeGateway",
+      "sourceHashes": [
+        "0xf31aeb6e49fa6b302d2dc1ed76c4d201ad9c2accdb0d9a45c30b13ae334fb5e9",
+        "0xbda3bd0645c587dc8cf35c1704ea647a225bb2f4c7c3276f3ba84dd15c09795d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Bridges ETH of the GRVTL1TreasuryVault to the exchange on GRVT and returns failed ETH deposits to the vault. Only the vault can bridge through it.",
+      "deployerAddress": "eth:0x340d75F15bF97aF6AE518d746063c591bB5368f0",
+      "sinceTimestamp": 1775013647,
+      "sinceBlock": 24782027,
+      "values": {
+        "$admin": "eth:0x421a3f9b8665174B4FcF5fD4A9012B79be457f51",
+        "$implementation": "eth:0xF1d59A0D1eC7C0B66B9E04bCAE0130302b3c599C",
+        "$pastUpgrades": [
+          [
+            "2026-04-01T03:20:47.000Z",
+            "0xcd1ee4db9ae01e86a4163175121ee9931e79634f5930ccea8b6beb1b5d042ef1",
+            ["eth:0xA20697E4219884128E0c880825280A4d29AEbF65"]
+          ],
+          [
+            "2026-04-07T01:59:23.000Z",
+            "0x386b2490e6c5f84ec8316384284dfababdf1a0a3becb148c95f77646aec8061d",
+            ["eth:0xF1d59A0D1eC7C0B66B9E04bCAE0130302b3c599C"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "bridgeHub": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+        "grvtBridgeProxyFeeToken": "eth:0xAB3B124052F0389D1cbED221d912026Ac995bb95",
+        "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+        "wrappedNativeToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "implementationNames": {
+        "eth:0x17CBac7631063d8A79ddb5c3fc7C2336F0161915": "TransparentUpgradeableProxy",
+        "eth:0xF1d59A0D1eC7C0B66B9E04bCAE0130302b3c599C": "NativeBridgeGateway"
+      }
+    },
+    {
+      "name": "GenericSwapStrategy",
+      "address": "eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18",
+      "type": "Contract",
+      "template": "grvt/GenericSwapStrategy",
+      "sourceHashes": [
+        "0xbddffd3a10983f909a560a7e8002ce116563639237e88604c2525cee8ac853e8",
+        "0x939a25bcd42ed113a6154a3cc2e5f1f8d36ab5cffa5b5fa061fa003d00a0cf7f"
+      ],
+      "proxyType": "Beacon proxy",
+      "description": "Yield strategy of the GRVTL1TreasuryVault for one vault token. Whitelisted operators swap registered receipt tokens (e.g. tokenized treasuries) with the strategy at the price of their price sources, within per-swap and per-token exposure caps. Only the vault can allocate to and withdraw from it.",
+      "deployerAddress": "eth:0x1cd92A13A1cD81522CdAf3E4a4C08116FD17CAD4",
+      "sinceTimestamp": 1786587971,
+      "sinceBlock": 25743097,
+      "values": {
+        "$admin": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+        "$beacon": "eth:0x829bD0cA27893de561fdb173DDBcb8B6f40f7bF6",
+        "$implementation": "eth:0xE6b3bFDcDaB61c9522D8CC43f5Db4Ccee304A4c1",
+        "$pastUpgrades": [
+          [
+            "2026-08-13T02:24:59.000Z",
+            "0x865d634e04548546f5982adde814348fdc5394220c5ca585a207c8800dc63fae",
+            ["eth:0xE6b3bFDcDaB61c9522D8CC43f5Db4Ccee304A4c1"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "OPERATOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490",
+              "eth:0x67fB799C70ee1Ecbc015AcB25F0BA8E77F20F251"
+            ]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "isYieldStrategyV2": "0xa42fe856",
+        "MAX_RECEIPT_TOKENS": 64,
+        "name": "GENERIC_SWAP_USDC_V1",
+        "operator": [
+          "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490",
+          "eth:0x67fB799C70ee1Ecbc015AcB25F0BA8E77F20F251"
+        ],
+        "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
+        "owner": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+        "pauser": [],
+        "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "positionBreakdown": [
+          {
+            "token": "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+            "amount": "250024603666922502566",
+            "kind": 0
+          },
+          {
+            "token": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
+            "amount": "5930000000000000000000",
+            "kind": 0
+          }
+        ],
+        "priceSources": [
+          "eth:0x016Aa3B97f3a5B08Ddb49656d58C20543C0b11EA",
+          "eth:0x61917077B3f03e01814B913FDD28CB1bF574148E"
+        ],
+        "receiptTokens": [
+          "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+          "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
+        ],
+        "swapsPaused": false,
+        "totalExposure": 6338884826,
+        "totalExposureStrict": 6338884826,
+        "tvlTokens": [
+          "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+          "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
+        ],
+        "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+        "vaultToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "vaultTokenDecimals": 6,
+        "withdrawableExposure": 0
+      },
+      "fieldMeta": {
+        "pauser": { "severity": "MEDIUM" },
+        "receiptTokens": {
+          "severity": "HIGH",
+          "description": "Tokens that the strategy can hold in exchange for the vault token."
+        },
+        "priceSources": {
+          "severity": "HIGH",
+          "description": "Whitelisted price sources that can price receipt tokens."
+        },
+        "swapsPaused": { "severity": "MEDIUM" }
+      },
+      "implementationNames": {
+        "eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18": "BeaconProxy",
+        "eth:0xE6b3bFDcDaB61c9522D8CC43f5Db4Ccee304A4c1": "GenericSwapStrategy"
+      }
+    },
+    {
+      "name": "AaveV3Strategy",
+      "address": "eth:0x1ff873538e62BA19cd36CE97e48F6fC84D07a5E4",
+      "type": "Contract",
+      "template": "grvt/AaveV3Strategy",
+      "sourceHashes": [
+        "0xf31aeb6e49fa6b302d2dc1ed76c4d201ad9c2accdb0d9a45c30b13ae334fb5e9",
+        "0x2278fb85b18cbd1f93bd7629623810f389c3c8d014ec7ddf8587eb17d36fe27a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Yield strategy of the GRVTL1TreasuryVault that supplies the vault token to Aave V3. Only the vault can allocate to and withdraw from it.",
+      "deployerAddress": "eth:0x340d75F15bF97aF6AE518d746063c591bB5368f0",
+      "sinceTimestamp": 1775013371,
+      "sinceBlock": 24782004,
+      "values": {
+        "$admin": "eth:0x2B19C664F7b1D389A6a9d483acd283098613D84A",
+        "$implementation": "eth:0xac2b5c60Fc27fB47333f0416F8F2dAe600Ee50fb",
+        "$pastUpgrades": [
+          [
+            "2026-04-01T03:16:11.000Z",
+            "0x4219355b37d3fcba23ab65fc0aeaf02b0c7d05b989e554afce0f182445b0bc21",
+            ["eth:0x9ED9Bc30C8E033C943EC1fF9979408a200C17735"]
+          ],
+          [
+            "2026-04-07T01:59:59.000Z",
+            "0xaa310d1f812be6722f45b54e99100d8d219411b00a90bff62e7b53b52bf08308",
+            ["eth:0xac2b5c60Fc27fB47333f0416F8F2dAe600Ee50fb"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "aavePool": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+        "aToken": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
+        "name": "AAVE_V3_ETHEREUM_USDT",
+        "underlying": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45"
+      },
+      "implementationNames": {
+        "eth:0x1ff873538e62BA19cd36CE97e48F6fC84D07a5E4": "TransparentUpgradeableProxy",
+        "eth:0xac2b5c60Fc27fB47333f0416F8F2dAe600Ee50fb": "AaveV3Strategy"
+      }
+    },
+    {
       "address": "eth:0x293d3512083507664Ee5EDe44c0477f600e3A3BE",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x2B19C664F7b1D389A6a9d483acd283098613D84A",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x340d75F15bF97aF6AE518d746063c591bB5368f0",
+      "sinceTimestamp": 1775013371,
+      "sinceBlock": 24782004,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "eth:0x2B19C664F7b1D389A6a9d483acd283098613D84A": "ProxyAdmin"
+      }
     },
     {
       "name": "ValidatorTimelock",
@@ -117,11 +327,49 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "eth:0x2F5C5166BC2f3d39195fE48A4Bcd2aD5747eE749",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "BridgeHub",
       "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
+    },
+    {
+      "name": "YieldRecipientTreasury",
+      "address": "eth:0x31641AE3A4c0A29Bf04c020E266cBc8fF2EdecA4",
+      "type": "Contract",
+      "template": "grvt/YieldRecipientTreasury",
+      "sourceHashes": [
+        "0x60209a63112ee7d952736eab8b4a143c4fef167b7a11a72e358d7745d3d4b455"
+      ],
+      "proxyType": "immutable",
+      "description": "Receives the yield harvested from the strategies of the GRVTL1TreasuryVault and reimburses the vault for strategy entry and exit fees. The owner and authorized withdrawers can send its balance to the withdrawalRecipient.",
+      "deployerAddress": "eth:0x22B188Ec2C8EefB33646E8c59b39a3214a8179BF",
+      "sinceTimestamp": 1782104147,
+      "sinceBlock": 25370882,
+      "values": {
+        "$immutable": true,
+        "authorizedVaults": ["eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45"],
+        "authorizedWithdrawers": [
+          "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"
+        ],
+        "isFeeReimburser": "0x1b30784a",
+        "owner": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "withdrawalRecipient": "eth:0xcE7aC6b6E8559a6E0634223d9692d6ea99bE23Ca"
+      },
+      "fieldMeta": {
+        "authorizedVaults": {
+          "description": "Vaults that can pull fee reimbursements from the treasury."
+        }
+      },
+      "implementationNames": {
+        "eth:0x31641AE3A4c0A29Bf04c020E266cBc8fF2EdecA4": "YieldRecipientTreasury"
+      }
     },
     {
       "name": "GrvtChainAdminMultisig",
@@ -154,7 +402,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 78,
+        "nonce": 85,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -220,6 +468,57 @@
       }
     },
     {
+      "name": "ProxyAdmin",
+      "address": "eth:0x421a3f9b8665174B4FcF5fD4A9012B79be457f51",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x340d75F15bF97aF6AE518d746063c591bB5368f0",
+      "sinceTimestamp": 1775013647,
+      "sinceBlock": 24782027,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "eth:0x421a3f9b8665174B4FcF5fD4A9012B79be457f51": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "eth:0x4296a124A6546473D19bD9CeC3ff4213102a77bB",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x4296a124A6546473D19bD9CeC3ff4213102a77bB",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x3d13f9516451664410561e4731f9657e30813b11dcb25c088a7c745872df8e52",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "address": "eth:0x436694cf0Fb5BF20F96c1FBA1315B26B32f06F4b",
       "type": "EOA",
       "proxyType": "EOA"
@@ -228,6 +527,166 @@
       "address": "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "TimelockController",
+      "address": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+      "type": "Contract",
+      "template": "global/TimelockController",
+      "sourceHashes": [
+        "0xdd8ec07f87f722860fc7bc13d58cdf22e5a4c9f819dde1856586684b8e0ea9d5"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 2d.",
+      "deployerAddress": "eth:0x340d75F15bF97aF6AE518d746063c591bB5368f0",
+      "sinceTimestamp": 1775013563,
+      "sinceBlock": 24782020,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+              "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A",
+              "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"
+            ]
+          }
+        },
+        "Canceller": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": [
+          "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+          "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
+        ],
+        "Executor": [
+          "eth:0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A",
+          "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"
+        ],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 172800,
+        "getMinDelayFormatted": "2d",
+        "Proposer": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "defaultAdminAC": { "severity": "MEDIUM" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
+        "Executor": {
+          "severity": "MEDIUM",
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
+      "implementationNames": {
+        "eth:0x4e29715b7Ca2569678027c01627D936235eA36De": "TimelockController"
+      }
+    },
+    {
+      "name": "CompartmentRegistry",
+      "address": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
+      "type": "Contract",
+      "template": "grvt/CompartmentRegistry",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0xeb93c87c2a8ca4e8b6de390ff462b1791dddefb471af92051187cf26498374f1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry of compartments: contracts on Ethereum that hold the capital of GRVT vaults withdrawn from L2, deploy it into external yield venues and bridge it back to the vaults on GRVT. The registry also holds the roles and the global pause for all compartments.",
+      "deployerAddress": "eth:0x428F188b7590453C0481a613Fb7f81AE5894e579",
+      "sinceTimestamp": 1793372219,
+      "sinceBlock": 26306312,
+      "values": {
+        "$admin": "eth:0x8196Df3c158E67963021e869e972d2c2254Ed485",
+        "$implementation": "eth:0xD73adD2f6253C465c92584bAe8a1419dd3c49e91",
+        "$pastUpgrades": [
+          [
+            "2026-10-30T14:56:59.000Z",
+            "0xa4486d59550745a09e70c2fcc2fadf164fd307b5c82c90076e565d711bbd49ea",
+            ["eth:0xD73adD2f6253C465c92584bAe8a1419dd3c49e91"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "REGISTRY_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "CONFIG_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "COMPARTMENT_CREATOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "UNPAUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          }
+        },
+        "bootstrap": "eth:0x68b7e779b0219401ec1959067a30597b34E0de56",
+        "bridgeProxy": "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
+        "compartmentCount": 1,
+        "compartmentCreator": [
+          "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
+        ],
+        "compartmentInitCodeHash": "0x415513bda57e4332d02e1e57495828204c497f77ffbb953ca2a68db7144dd55c",
+        "compartments": ["eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44"],
+        "configAdmin": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdmin": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "globallyPaused": false,
+        "pauser": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "registryAdmin": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "unpauser": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "upgradeAuthority": "eth:0x736258fdd7dc998A1180333AFec1C045868EAcdf"
+      },
+      "fieldMeta": {
+        "compartments": {
+          "description": "All compartments created by the registry."
+        },
+        "defaultAdmin": { "severity": "MEDIUM" },
+        "registryAdmin": { "severity": "MEDIUM" },
+        "compartmentCreator": { "severity": "MEDIUM" },
+        "configAdmin": { "severity": "MEDIUM" },
+        "pauser": { "severity": "MEDIUM" },
+        "unpauser": { "severity": "MEDIUM" },
+        "globallyPaused": {
+          "severity": "MEDIUM",
+          "description": "Stops the creation of compartments and deposits of all compartments into their yield venues. Withdrawals from venues and bridging back to GRVT stay available."
+        }
+      },
+      "implementationNames": {
+        "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89": "TransparentUpgradeableProxy",
+        "eth:0xD73adD2f6253C465c92584bAe8a1419dd3c49e91": "CompartmentRegistry"
+      }
     },
     {
       "address": "eth:0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37",
@@ -265,7 +724,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -314,7 +773,134 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "name": "AaveV3StrategyV2",
+      "address": "eth:0x646123424BEcBF14a7542bc44340AdB241BA32b3",
+      "type": "Contract",
+      "template": "grvt/AaveV3StrategyV2",
+      "sourceHashes": [
+        "0xbddffd3a10983f909a560a7e8002ce116563639237e88604c2525cee8ac853e8",
+        "0x73705e85443475069b67c2f534edf3c1756b63652f69a1b573130015f0aabe71"
+      ],
+      "proxyType": "Beacon proxy",
+      "description": "Yield strategy of the GRVTL1TreasuryVault that supplies the vault token to Aave V3. Only the vault can allocate to and withdraw from it.",
+      "deployerAddress": "eth:0x22B188Ec2C8EefB33646E8c59b39a3214a8179BF",
+      "sinceTimestamp": 1782448175,
+      "sinceBlock": 25399423,
+      "values": {
+        "$admin": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+        "$beacon": "eth:0xb0a45B7336550665e3A59901E383b7d08a617C01",
+        "$implementation": "eth:0x7E0ee1A4AF682C50293676a381b854bA8F66165B",
+        "$pastUpgrades": [
+          [
+            "2026-06-26T04:29:23.000Z",
+            "0x21c994ac4905c03f46ed6e8bba2698d75a6ade0d7075773b91082d6fcf0b496f",
+            ["eth:0xbc823E65f3b06feAdb39a0194AB5804B5499B59e"]
+          ],
+          [
+            "2026-08-13T02:15:23.000Z",
+            "0x9d0db411764a91f6c053c7846a2aebfcb10a27c666b9e9e41a601ba2044a0d28",
+            ["eth:0x7E0ee1A4AF682C50293676a381b854bA8F66165B"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "aavePool": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+        "aToken": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
+        "isYieldStrategyV2": "0xa42fe856",
+        "name": "AAVE_V3_USDT_V2",
+        "positionBreakdown": [
+          {
+            "token": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
+            "amount": 49570799,
+            "kind": 0
+          }
+        ],
+        "totalExposure": 49570799,
+        "totalExposureStrict": 49570799,
+        "tvlTokens": [
+          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a"
+        ],
+        "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+        "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "withdrawableExposure": 49570799
+      },
+      "implementationNames": {
+        "eth:0x646123424BEcBF14a7542bc44340AdB241BA32b3": "BeaconProxy",
+        "eth:0x7E0ee1A4AF682C50293676a381b854bA8F66165B": "AaveV3StrategyV2"
+      }
+    },
+    {
+      "name": "",
+      "address": "eth:0x67fB799C70ee1Ecbc015AcB25F0BA8E77F20F251",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x1cd92A13A1cD81522CdAf3E4a4C08116FD17CAD4",
+      "sinceTimestamp": 1786611359,
+      "sinceBlock": 25745038,
+      "values": {
+        "$admin": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+        "$implementation": "eth:0xd932BE3129d0D92A9032686734d0661f0250C33D",
+        "$pastUpgrades": [
+          [
+            "2026-08-13T08:55:59.000Z",
+            "0xa44b5b24d8abd8ab4da50efbce85f625090e0437f25b02dbfe55864c004a37e4",
+            ["eth:0xd932BE3129d0D92A9032686734d0661f0250C33D"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "eth:0x67fB799C70ee1Ecbc015AcB25F0BA8E77F20F251": "",
+        "eth:0xd932BE3129d0D92A9032686734d0661f0250C33D": ""
+      }
+    },
+    {
+      "name": "Bootstrap",
+      "address": "eth:0x68b7e779b0219401ec1959067a30597b34E0de56",
+      "type": "Contract",
+      "template": "grvt/Bootstrap",
+      "sourceHashes": [
+        "0xb7c623a0652386b2e2d13fcdf144cc739c27f69f2ce0b8731f30058d1e277a6d"
+      ],
+      "proxyType": "immutable",
+      "description": "Placeholder implementation that new compartment proxies are deployed with, so that their CREATE2 address does not depend on the real implementation. The CompartmentRegistry upgrades a compartment to its real implementation in the same transaction.",
+      "deployerAddress": "eth:0x428F188b7590453C0481a613Fb7f81AE5894e579",
+      "sinceTimestamp": 1793372051,
+      "sinceBlock": 26306298,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x68b7e779b0219401ec1959067a30597b34E0de56": "Bootstrap"
+      }
+    },
+    {
+      "name": "UpgradeAuthority",
+      "address": "eth:0x736258fdd7dc998A1180333AFec1C045868EAcdf",
+      "type": "Contract",
+      "template": "grvt/UpgradeAuthority",
+      "sourceHashes": [
+        "0x27ead53ebaf03e07e3c7285d2780944f6602392568711dd88661f964396be1da"
+      ],
+      "proxyType": "immutable",
+      "description": "Owns the ProxyAdmins of the CompartmentRegistry and of every compartment. Accounts with the REGISTRY_ADMIN_ROLE in the CompartmentRegistry can use it to upgrade these contracts without delay.",
+      "deployerAddress": "eth:0x428F188b7590453C0481a613Fb7f81AE5894e579",
+      "sinceTimestamp": 1793372219,
+      "sinceBlock": 26306312,
+      "values": {
+        "$immutable": true,
+        "registry": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89"
+      },
+      "implementationNames": {
+        "eth:0x736258fdd7dc998A1180333AFec1C045868EAcdf": "UpgradeAuthority"
+      }
+    },
+    {
       "address": "eth:0x79BfE9868a2613F3327FB2B9e3a39959165118F4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x7Bd209a11d6121306DAf4589D50334Cf41A56122",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -322,6 +908,28 @@
       "address": "eth:0x7C1B26554cF3A724613bF47B24f7C65F324702f9",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x8196Df3c158E67963021e869e972d2c2254Ed485",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x428F188b7590453C0481a613Fb7f81AE5894e579",
+      "sinceTimestamp": 1793372219,
+      "sinceBlock": 26306312,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x736258fdd7dc998A1180333AFec1C045868EAcdf",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "eth:0x8196Df3c158E67963021e869e972d2c2254Ed485": "ProxyAdmin"
+      }
     },
     {
       "name": "EraVerifierFflonk",
@@ -364,6 +972,74 @@
       "targetProject": "shared-zk-stack"
     },
     {
+      "name": "SGHOStrategy",
+      "address": "eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E",
+      "type": "Contract",
+      "template": "grvt/SGHOStrategy",
+      "sourceHashes": [
+        "0xbddffd3a10983f909a560a7e8002ce116563639237e88604c2525cee8ac853e8",
+        "0x4d7a8545ebad51a3f1e845fc0f1dfd7e915020d66a27049e40b25130d54498c4"
+      ],
+      "proxyType": "Beacon proxy",
+      "description": "Yield strategy of the GRVTL1TreasuryVault that converts the vault token to GHO through the Aave GHO Stability Module and deposits it into sGHO. Only the vault can allocate to and withdraw from it.",
+      "deployerAddress": "eth:0x22B188Ec2C8EefB33646E8c59b39a3214a8179BF",
+      "sinceTimestamp": 1782448247,
+      "sinceBlock": 25399429,
+      "values": {
+        "$admin": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+        "$beacon": "eth:0xC7df7afF67830D7169ee4824f9FC1Da06521A7a8",
+        "$implementation": "eth:0xca831CA00A0D8D47c5A8b99a22b1503392C24f3C",
+        "$pastUpgrades": [
+          [
+            "2026-06-26T04:30:35.000Z",
+            "0x2a6348e4938be78f086904f717ead533edd76315b8051b130ac63d0e2023bd77",
+            ["eth:0x57e6A18De2029533c4BFBc5d9aD10B479F24cFCe"]
+          ],
+          [
+            "2026-08-13T02:15:23.000Z",
+            "0x9d0db411764a91f6c053c7846a2aebfcb10a27c666b9e9e41a601ba2044a0d28",
+            ["eth:0xca831CA00A0D8D47c5A8b99a22b1503392C24f3C"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "ghoDecimals": 18,
+        "ghoGsm": "eth:0x882285E62656b9623AF136Ce3078c6BdCc33F5E3",
+        "ghoToken": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+        "gsmStataToken": "eth:0x7Bc3485026Ac48b6cf9BaF0A377477Fff5703Af8",
+        "isYieldStrategyV2": "0xa42fe856",
+        "name": "SGHO_USDT",
+        "positionBreakdown": [
+          {
+            "token": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
+            "amount": "15386635615417910131",
+            "kind": 0
+          },
+          {
+            "token": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+            "amount": 554000000000,
+            "kind": 1
+          }
+        ],
+        "sGhoToken": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
+        "totalExposure": 15700357,
+        "totalExposureStrict": 15700357,
+        "tvlTokens": [
+          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+          "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
+          "eth:0x7Bc3485026Ac48b6cf9BaF0A377477Fff5703Af8"
+        ],
+        "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+        "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "vaultTokenDecimals": 6,
+        "withdrawableExposure": 15700357
+      },
+      "implementationNames": {
+        "eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E": "BeaconProxy",
+        "eth:0xca831CA00A0D8D47c5A8b99a22b1503392C24f3C": "SGHOStrategy"
+      }
+    },
+    {
       "address": "eth:0x8E2A969f6685e27439D9F25630E62c8A2203B5Db",
       "type": "EOA",
       "proxyType": "EOA"
@@ -394,6 +1070,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xb594841628A0138614B4d98611D3515cd8BCdE8d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Governance",
       "address": "eth:0xbdC07D62fA117B195E579c2e299f037b158E7335",
       "type": "Contract",
@@ -408,12 +1089,12 @@
       "sinceBlock": 22866325,
       "values": {
         "$immutable": true,
-        "executedCount": 54,
+        "executedCount": 57,
         "minDelay": 0,
         "owner": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "scheduledShadowCount": 0,
-        "scheduledTransparentCount": 54,
+        "scheduledTransparentCount": 57,
         "securityCouncil": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -432,6 +1113,11 @@
       "implementationNames": {
         "eth:0xbdC07D62fA117B195E579c2e299f037b158E7335": "Governance"
       }
+    },
+    {
+      "address": "eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -477,6 +1163,321 @@
       }
     },
     {
+      "name": "GRVTL1TreasuryVault",
+      "address": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+      "type": "Contract",
+      "template": "grvt/GRVTL1TreasuryVault",
+      "sourceHashes": [
+        "0xf31aeb6e49fa6b302d2dc1ed76c4d201ad9c2accdb0d9a45c30b13ae334fb5e9",
+        "0x0cc05d069a0e045385d634974abbec93185695f4b6f22f94df9ec6fba064af8e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Holds most of the exchange reserves of GRVT on Ethereum, which the exchange withdraws from GRVT to this vault. The funds can be allocated to whitelisted yield strategies, bridged back to the exchange on GRVT, and yield above the allocated principal is harvested to the yieldRecipient. Strategies and their allocation caps are whitelisted by the VAULT_ADMIN_ROLE.",
+      "critical": true,
+      "ignoreInWatchMode": [
+        "availableNativeForRebalance",
+        "trackedTvlTokenTotals"
+      ],
+      "deployerAddress": "eth:0x340d75F15bF97aF6AE518d746063c591bB5368f0",
+      "sinceTimestamp": 1775013335,
+      "sinceBlock": 24782001,
+      "values": {
+        "$admin": "eth:0xF57Be7cB5B1c5e37fDb19DdF8E5A359A5e381575",
+        "$implementation": "eth:0x1f9D91f85fdeC6A2dE1AE0612CbD0242D4CdacCF",
+        "$pastUpgrades": [
+          [
+            "2026-04-01T03:15:35.000Z",
+            "0xfb2b64a090ab9784d6ffd8d61e00f8135968930253ca4ec2ead719c8809290d4",
+            ["eth:0x11F6Ee88e10F3AC0C1560B5Fd43300F6dda4EF2e"]
+          ],
+          [
+            "2026-06-26T08:52:35.000Z",
+            "0xbe8c8bce1d3b31fdb24730a3690b5fe7aefa9dd2f93064612326128cc427a9fe",
+            ["eth:0x91f3d32A0F968DC01471d04d82564D7157FE6D34"]
+          ],
+          [
+            "2026-08-13T02:15:23.000Z",
+            "0x9d0db411764a91f6c053c7846a2aebfcb10a27c666b9e9e41a601ba2044a0d28",
+            ["eth:0x1f9D91f85fdeC6A2dE1AE0612CbD0242D4CdacCF"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "VAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "REBALANCER_ROLE": {
+            "adminRole": "VAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A",
+              "eth:0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270",
+              "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"
+            ]
+          },
+          "ALLOCATOR_ROLE": {
+            "adminRole": "VAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A",
+              "eth:0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270",
+              "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"
+            ]
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "VAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A",
+              "eth:0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270",
+              "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"
+            ]
+          },
+          "YIELD_HARVESTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"]
+          }
+        },
+        "allocator": [
+          "eth:0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A",
+          "eth:0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270",
+          "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"
+        ],
+        "ALLOCATOR_ROLE": "0x68bf109b95a5c15fb2bb99041323c27d15f8675e11bf7420a1cd6ad64c394f46",
+        "availableNativeForRebalance": 0,
+        "bridgeHub": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdmin": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "getSupportedVaultTokens": [
+          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+        ],
+        "getTrackedTvlTokens": [
+          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
+          "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+          "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
+          "eth:0x7Bc3485026Ac48b6cf9BaF0A377477Fff5703Af8",
+          "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C"
+        ],
+        "grvtBridgeProxyFeeToken": "eth:0xAB3B124052F0389D1cbED221d912026Ac995bb95",
+        "l2ChainId": 325,
+        "l2ExchangeRecipient": "eth:0x85deE82d32d78eaa59588B6574Df420ef2A74098",
+        "MAX_STRATEGIES_PER_TOKEN": 8,
+        "nativeBridgeGateway": "eth:0x17CBac7631063d8A79ddb5c3fc7C2336F0161915",
+        "paused": false,
+        "pauser": [
+          "eth:0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A",
+          "eth:0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270",
+          "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"
+        ],
+        "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
+        "rebalancer": [
+          "eth:0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A",
+          "eth:0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270",
+          "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"
+        ],
+        "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
+        "strategiesUSDC": ["eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18"],
+        "strategiesUSDT": [
+          "eth:0x1ff873538e62BA19cd36CE97e48F6fC84D07a5E4",
+          "eth:0x646123424BEcBF14a7542bc44340AdB241BA32b3",
+          "eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E",
+          "eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12"
+        ],
+        "trackedTvlTokenTotals": {
+          "tokens": [
+            "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
+            "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+            "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
+            "eth:0x7Bc3485026Ac48b6cf9BaF0A377477Fff5703Af8",
+            "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C"
+          ],
+          "statuses": [
+            {
+              "idle": 5778960152160,
+              "strategy": 3548421827035,
+              "total": 9327381979195,
+              "skippedStrategies": 0
+            },
+            {
+              "idle": 0,
+              "strategy": 49617824,
+              "total": 49617824,
+              "skippedStrategies": 0
+            },
+            {
+              "idle": 0,
+              "strategy": 554000000000,
+              "total": 554000000000,
+              "skippedStrategies": 0
+            },
+            {
+              "idle": 0,
+              "strategy": "5945386636058208186858",
+              "total": "5945386636058208186858",
+              "skippedStrategies": 0
+            },
+            { "idle": 0, "strategy": 0, "total": 0, "skippedStrategies": 0 },
+            {
+              "idle": 106975737483,
+              "strategy": 0,
+              "total": 106975737483,
+              "skippedStrategies": 0
+            },
+            {
+              "idle": 0,
+              "strategy": "17378893190859067450796532",
+              "total": "17378893190859067450796532",
+              "skippedStrategies": 0
+            }
+          ]
+        },
+        "VAULT_ADMIN_ROLE": "0x7edcee67725a77bfa311b39349d7e96df9b23fbdbdcb328dfc17d77926920c13",
+        "vaultAdmin": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "wrappedNativeToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "YIELD_HARVESTER_ROLE": "0x4a5294ea79f30ebe1f423dbeb31c8d3701252cf1095cee3c9779f109adb49d49",
+        "yieldHarvester": ["eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"],
+        "yieldRecipient": "eth:0x31641AE3A4c0A29Bf04c020E266cBc8fF2EdecA4",
+        "yieldRecipientTimelockController": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De"
+      },
+      "fieldMeta": {
+        "defaultAdmin": { "severity": "MEDIUM" },
+        "vaultAdmin": { "severity": "MEDIUM" },
+        "pauser": { "severity": "MEDIUM" },
+        "strategiesUSDT": {
+          "severity": "HIGH",
+          "description": "Strategies that hold USDT of the vault, including withdraw-only strategies that cannot receive new allocations."
+        },
+        "strategiesUSDC": {
+          "severity": "HIGH",
+          "description": "Strategies that hold USDC of the vault, including withdraw-only strategies that cannot receive new allocations."
+        },
+        "getSupportedVaultTokens": {
+          "description": "Tokens that the vault can allocate to strategies. A new token needs its own strategies field in this template."
+        },
+        "l2ExchangeRecipient": {
+          "description": "Exchange contract on GRVT that receives the funds bridged from the vault.",
+          "type": "L2"
+        },
+        "yieldRecipient": {
+          "severity": "MEDIUM",
+          "description": "Receives the yield harvested from strategies. Only the yieldRecipientTimelockController can change it."
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Stops allocations to strategies, yield harvests and bridging to GRVT. Withdrawals from strategies stay available."
+        }
+      },
+      "implementationNames": {
+        "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45": "TransparentUpgradeableProxy",
+        "eth:0x1f9D91f85fdeC6A2dE1AE0612CbD0242D4CdacCF": "GRVTL1TreasuryVault"
+      }
+    },
+    {
+      "name": "TimelockController",
+      "address": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+      "type": "Contract",
+      "template": "global/TimelockController",
+      "sourceHashes": [
+        "0xdd8ec07f87f722860fc7bc13d58cdf22e5a4c9f819dde1856586684b8e0ea9d5"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 3d.",
+      "deployerAddress": "eth:0x1cd92A13A1cD81522CdAf3E4a4C08116FD17CAD4",
+      "sinceTimestamp": 1786587911,
+      "sinceBlock": 25743092,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          }
+        },
+        "Canceller": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3"],
+        "Executor": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 259200,
+        "getMinDelayFormatted": "3d",
+        "Proposer": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"],
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "defaultAdminAC": { "severity": "MEDIUM" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
+        "Executor": {
+          "severity": "MEDIUM",
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
+      "implementationNames": {
+        "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3": "TimelockController"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0xcE7aC6b6E8559a6E0634223d9692d6ea99bE23Ca",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x4296a124A6546473D19bD9CeC3ff4213102a77bB",
+      "sinceTimestamp": 1671520763,
+      "sinceBlock": 16224369,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x7Bd209a11d6121306DAf4589D50334Cf41A56122",
+          "eth:0x7C1B26554cF3A724613bF47B24f7C65F324702f9",
+          "eth:0x2F5C5166BC2f3d39195fE48A4Bcd2aD5747eE749",
+          "eth:0xdbe6018e2a45e5A5f9D40D54A72Fe4A0eCF8F879",
+          "eth:0x4296a124A6546473D19bD9CeC3ff4213102a77bB",
+          "eth:0xb594841628A0138614B4d98611D3515cd8BCdE8d"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xf8a581b13452a1aa514cb15d74c71faadc5056115409ede5b98b3829c7284ff1",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 107,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xcE7aC6b6E8559a6E0634223d9692d6ea99bE23Ca": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
       "name": "EraDualVerifier",
       "address": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
       "type": "Contract",
@@ -509,6 +1510,91 @@
       }
     },
     {
+      "name": "HighYieldEarnVaultCompartment",
+      "address": "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44",
+      "type": "Contract",
+      "template": "grvt/HighYieldEarnVaultCompartment",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0x2c18ba57366a7c586f1ec2ea28bf046c5889d23a81058b1c5f3c8587b60d1524"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into listed Axcess loan vaults, Nest vaults and Wildcat V2 markets. Proceeds of venue exits always return to the compartment, and funds can only leave it to a listed venue or to the vault's deposit proxy on GRVT through the GRVTBridgeProxy. Venues are listed by the REGISTRY_ADMIN_ROLE of the CompartmentRegistry.",
+      "deployerAddress": "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490",
+      "sinceTimestamp": 1793376431,
+      "sinceBlock": 26306662,
+      "values": {
+        "$admin": "eth:0xf311e82885d51425cd6798eD44AF3b8FA7DF03F6",
+        "$implementation": "eth:0x28F188A3b89f24B838D0a6e37c7602b5F319DbAF",
+        "$pastUpgrades": [
+          [
+            "2026-10-30T16:07:11.000Z",
+            "0x1ad2a507cfe20d03cfea452bde92e38c6e6dbd99ae602041b303c86a12876a23",
+            ["eth:0x68b7e779b0219401ec1959067a30597b34E0de56"]
+          ],
+          [
+            "2026-10-30T16:07:11.000Z",
+            "0x1ad2a507cfe20d03cfea452bde92e38c6e6dbd99ae602041b303c86a12876a23",
+            ["eth:0x28F188A3b89f24B838D0a6e37c7602b5F319DbAF"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "0xe0e65c783ac33ff1c5ccf4399c9185066773921d6f8d050bf80781603021f097",
+            "members": []
+          },
+          "OPERATOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f"]
+          },
+          "REBALANCER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f"]
+          }
+        },
+        "axcessVaultList": ["eth:0x1ADd118F7CcA31386C1d872f7EBAcf1bBdDf51D7"],
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "initialized": true,
+        "nestVaultList": ["eth:0x5FbB19247a41E0b67a520Cb85BD7DDAFde6Ed487"],
+        "operator": ["eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f"],
+        "paused": false,
+        "pauser": [],
+        "rebalancer": ["eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f"],
+        "registry": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
+        "wildcatArchController": "eth:0xfEB516d9D946dD487A9346F6fee11f40C6945eE4",
+        "wildcatMarketList": ["eth:0x4A8364A38cD1F98dBB69485D857221710bdb1DfC"],
+        "wildcatV2Factory": "eth:0xdd7dd3b5076Cf89440d05585FF56d246386207BE"
+      },
+      "fieldMeta": {
+        "pauser": { "severity": "MEDIUM" },
+        "axcessVaultList": {
+          "severity": "HIGH",
+          "description": "Axcess loan vaults (institutional credit) that the compartment can deposit into."
+        },
+        "nestVaultList": {
+          "severity": "HIGH",
+          "description": "Nest vaults (tokenized real-world assets) that the compartment can deposit into."
+        },
+        "wildcatMarketList": {
+          "severity": "HIGH",
+          "description": "Wildcat V2 markets (undercollateralized loans) that the compartment can deposit into."
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Stops deposits into yield venues. Withdrawals from venues and bridging back to GRVT stay available."
+        }
+      },
+      "implementationNames": {
+        "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44": "TransparentUpgradeableProxy",
+        "eth:0x28F188A3b89f24B838D0a6e37c7602b5F319DbAF": "HighYieldEarnVaultCompartment"
+      }
+    },
+    {
       "name": "L1Nullifier",
       "address": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
       "type": "Reference",
@@ -516,21 +1602,27 @@
       "targetProject": "shared-zk-stack"
     },
     {
+      "address": "eth:0xdbe6018e2a45e5A5f9D40D54A72Fe4A0eCF8F879",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GRVTBridgeProxy",
       "address": "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
       "type": "Contract",
+      "template": "grvt/GRVTBridgeProxy",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x5061251553a3aefbac60a53a4ca37e0da1a7979b38e33e09934e41db023506be"
+        "0x73fd5ff7c83f381e99cdd24e7228efdb5339414c31c8ad82da2ebaadc350c062"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.",
+      "description": "Checks the signature of the DepositApprover for each user deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT. Compartments registered in the compartmentRegistry can deposit without a signature, but only to the L2 deposit proxy derived from their registered vault ID.",
       "deployerAddress": "eth:0x6efB5ABAfD23c1317906666B9Df8514AAB704871",
       "sinceTimestamp": 1733129219,
       "sinceBlock": 21313725,
       "values": {
         "$admin": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
-        "$implementation": "eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1",
+        "$implementation": "eth:0x8bc3249fEc4f61440Af91Ea2F3506F156039297C",
         "$pastUpgrades": [
           [
             "2024-12-02T08:46:59.000Z",
@@ -546,12 +1638,18 @@
             "2026-05-14T09:56:47.000Z",
             "0xbc38229556154bce739a2fc9f896f5360edb78dd453f44ed9b0284e9ac8d9a6d",
             ["eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1"]
+          ],
+          [
+            "2026-10-30T17:33:11.000Z",
+            "0xe19e147e4b75d26f519159deea105c5b152e55806c4269a37ab76499c1e94961",
+            ["eth:0x8bc3249fEc4f61440Af91Ea2F3506F156039297C"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "baseToken": "eth:0xAB3B124052F0389D1cbED221d912026Ac995bb95",
         "bridgeHub": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "chainID": 325,
+        "compartmentRegistry": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
         "depositApprover": "eth:0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37",
         "ETH_TOKEN_ADDRESS": "eth:0x0000000000000000000000000000000000000001",
         "getDepositApprover": "eth:0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37",
@@ -563,11 +1661,22 @@
           "depositProxyBeacon": "eth:0x8E2A969f6685e27439D9F25630E62c8A2203B5Db"
         },
         "owner": "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "vaultDepositProxyBeacon": "eth:0x2bdfFc4a90aE73bca865AafC89A6719BA5fafCAC"
+      },
+      "fieldMeta": {
+        "compartmentRegistry": {
+          "severity": "MEDIUM",
+          "description": "Every compartment registered in this registry can deposit its tokens to GRVT without a DepositApprover signature. The zero address disables compartment deposits."
+        },
+        "vaultDepositProxyBeacon": {
+          "description": "Beacon of the vault deposit proxies on GRVT, used to derive the L2 destination of compartment deposits.",
+          "type": "L2"
+        }
       },
       "implementationNames": {
         "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65": "TransparentUpgradeableProxy",
-        "eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1": "GRVTBridgeProxy"
+        "eth:0x8bc3249fEc4f61440Af91Ea2F3506F156039297C": "GRVTBridgeProxy"
       }
     },
     {
@@ -865,7 +1974,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 5113,
+        "getFirstUnprocessedPriorityTx": 5205,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -873,8 +1982,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x424cacc3eaedc22e98fa56f6e4e0d5c4d8c63e2f9c5303e6f145b2c7634e1952",
+        "getPriorityQueueSize": 1,
+        "getPriorityTreeRoot": "0x3096bee69ca632a8a9ef7b14c0a53ac8b930892c62c609572de7c9eb6dd70418",
         "getPriorityTreeStartIndex": 440,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -882,13 +1991,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 124628,
-        "getTotalBatchesExecuted": 124586,
-        "getTotalBatchesVerified": 124611,
-        "getTotalBlocksCommitted": 124628,
-        "getTotalBlocksExecuted": 124586,
-        "getTotalBlocksVerified": 124611,
-        "getTotalPriorityTxs": 5113,
+        "getTotalBatchesCommitted": 127821,
+        "getTotalBatchesExecuted": 127779,
+        "getTotalBatchesVerified": 127807,
+        "getTotalBlocksCommitted": 127821,
+        "getTotalBlocksExecuted": 127779,
+        "getTotalBlocksVerified": 127807,
+        "getTotalPriorityTxs": 5206,
         "getTransactionFilterer": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
         "getVerifierParams": {
@@ -995,9 +2104,160 @@
       }
     },
     {
+      "name": "GenericSwapStrategy",
+      "address": "eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12",
+      "type": "Contract",
+      "template": "grvt/GenericSwapStrategy",
+      "sourceHashes": [
+        "0xbddffd3a10983f909a560a7e8002ce116563639237e88604c2525cee8ac853e8",
+        "0x939a25bcd42ed113a6154a3cc2e5f1f8d36ab5cffa5b5fa061fa003d00a0cf7f"
+      ],
+      "proxyType": "Beacon proxy",
+      "description": "Yield strategy of the GRVTL1TreasuryVault for one vault token. Whitelisted operators swap registered receipt tokens (e.g. tokenized treasuries) with the strategy at the price of their price sources, within per-swap and per-token exposure caps. Only the vault can allocate to and withdraw from it.",
+      "deployerAddress": "eth:0x1cd92A13A1cD81522CdAf3E4a4C08116FD17CAD4",
+      "sinceTimestamp": 1786587923,
+      "sinceBlock": 25743093,
+      "values": {
+        "$admin": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+        "$beacon": "eth:0x829bD0cA27893de561fdb173DDBcb8B6f40f7bF6",
+        "$implementation": "eth:0xE6b3bFDcDaB61c9522D8CC43f5Db4Ccee304A4c1",
+        "$pastUpgrades": [
+          [
+            "2026-08-13T02:24:59.000Z",
+            "0x865d634e04548546f5982adde814348fdc5394220c5ca585a207c8800dc63fae",
+            ["eth:0xE6b3bFDcDaB61c9522D8CC43f5Db4Ccee304A4c1"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"]
+          },
+          "OPERATOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490",
+              "eth:0x67fB799C70ee1Ecbc015AcB25F0BA8E77F20F251"
+            ]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "isYieldStrategyV2": "0xa42fe856",
+        "MAX_RECEIPT_TOKENS": 64,
+        "name": "GENERIC_SWAP_USDT_V1",
+        "operator": [
+          "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490",
+          "eth:0x67fB799C70ee1Ecbc015AcB25F0BA8E77F20F251"
+        ],
+        "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
+        "owner": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+        "pauser": [],
+        "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "positionBreakdown": [
+          {
+            "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "amount": 3548421827035,
+            "kind": 1
+          },
+          {
+            "token": "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+            "amount": "17378643166255400528293966",
+            "kind": 0
+          },
+          {
+            "token": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
+            "amount": 442790276727,
+            "kind": 0
+          }
+        ],
+        "priceSources": [
+          "eth:0x1189E2C915e3DEcb41d4127dc142540e3ef0fE76",
+          "eth:0x609c1ecfd342fA697644673f978a8978BaBc8e25"
+        ],
+        "receiptTokens": [
+          "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+          "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
+        ],
+        "swapsPaused": false,
+        "totalExposure": 23565049876400,
+        "totalExposureStrict": 23565049876400,
+        "tvlTokens": [
+          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+          "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
+        ],
+        "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+        "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "vaultTokenDecimals": 6,
+        "withdrawableExposure": 3548421827035
+      },
+      "fieldMeta": {
+        "pauser": { "severity": "MEDIUM" },
+        "receiptTokens": {
+          "severity": "HIGH",
+          "description": "Tokens that the strategy can hold in exchange for the vault token."
+        },
+        "priceSources": {
+          "severity": "HIGH",
+          "description": "Whitelisted price sources that can price receipt tokens."
+        },
+        "swapsPaused": { "severity": "MEDIUM" }
+      },
+      "implementationNames": {
+        "eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12": "BeaconProxy",
+        "eth:0xE6b3bFDcDaB61c9522D8CC43f5Db4Ccee304A4c1": "GenericSwapStrategy"
+      }
+    },
+    {
       "address": "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xf311e82885d51425cd6798eD44AF3b8FA7DF03F6",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490",
+      "sinceTimestamp": 1793376431,
+      "sinceBlock": 26306662,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x736258fdd7dc998A1180333AFec1C045868EAcdf",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "eth:0xf311e82885d51425cd6798eD44AF3b8FA7DF03F6": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xF57Be7cB5B1c5e37fDb19DdF8E5A359A5e381575",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x340d75F15bF97aF6AE518d746063c591bB5368f0",
+      "sinceTimestamp": 1775013335,
+      "sinceBlock": 24782001,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "eth:0xF57Be7cB5B1c5e37fDb19DdF8E5A359A5e381575": "ProxyAdmin"
+      }
     },
     {
       "address": "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C",
@@ -1127,6 +2387,26 @@
       "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
       "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
     ],
+    "eth:0x17CBac7631063d8A79ddb5c3fc7C2336F0161915": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18": [
+      "constructor(address beacon, bytes data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidBeacon(address beacon)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event BeaconUpgraded(address indexed beacon)"
+    ],
     "eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45": [
       "constructor(uint256 _eraChainId, uint256 _l1ChainId)",
       "error BaseTokenGasPriceDenominatorNotSet()",
@@ -1176,11 +2456,290 @@
       "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
       "function requestL2TransactionToGatewayMailbox(uint256 _chainId, bytes32 _canonicalTxHash, uint64 _expirationTimestamp) returns (bytes32 canonicalTxHash)"
     ],
+    "eth:0x1f9D91f85fdeC6A2dE1AE0612CbD0242D4CdacCF": [
+      "constructor(address viewModule_, address opsModule_)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error CapExceeded()",
+      "error FeeCapExceeded(address token, address strategy, uint256 fee, uint256 maxAllowed)",
+      "error FeeReimbursementFailed(address token, address strategy, uint256 requested, uint256 received)",
+      "error IncompatibleYieldRecipientTreasury(address treasury)",
+      "error InsufficientWithdrawableStrategyExposure(address token, address strategy, uint256 required, uint256 available)",
+      "error InvalidAllocationBalanceDelta(address token, address strategy, uint256 requested, uint256 beforeBal, uint256 afterBal)",
+      "error InvalidInitialization()",
+      "error InvalidParam()",
+      "error InvalidStrategyExposureRead(address token, address strategy)",
+      "error InvalidStrategyForReceiptTransfer(address vaultToken, address strategy)",
+      "error InvalidStrategyTokenRead(address token, address strategy)",
+      "error InvalidV2StrategyFinalization(address token, address strategy)",
+      "error InvalidV2StrategyPolicy(address token, address strategy)",
+      "error NativeBridgeGatewayNotSet()",
+      "error NativeTransferFailed()",
+      "error NotInitializing()",
+      "error Paused()",
+      "error ReceiptTransferAmountMismatch(address receipt, uint256 requested, uint256 sourceMoved, uint256 destReceived)",
+      "error ReceiptTransferDestinationUnsupported(address strategy, address receipt)",
+      "error ReceiptTransferExceedsCostBasis(address strategy, uint256 valueRemoved, uint256 costBasis)",
+      "error ReceiptTransferZeroValue(address strategy)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error SlippageExceeded()",
+      "error StrategyAccountingMismatch(address token, address strategy, uint256 strategyReported, uint256 vaultMeasured)",
+      "error StrategyNotWhitelisted()",
+      "error TokenNotBridgeable()",
+      "error TokenNotSupported()",
+      "error Unauthorized()",
+      "error V2StrategyPolicyInactive(address token, address strategy)",
+      "error YieldNotAvailable()",
+      "error YieldRecipientTimelockControllerNotSet()",
+      "event BridgeSentToL2(address indexed token, uint256 amount, uint256 l2TxGasLimit, uint256 l2TxGasPerPubdataByte, address indexed refundRecipient, bytes32 bridgeTxHash, bool isNative)",
+      "event BridgeableVaultTokenUpdated(address indexed vaultToken, bool bridgeable)",
+      "event Initialized(uint64 version)",
+      "event NativeBridgeGatewayUpdated(address indexed previousNativeBridgeGateway, address indexed newNativeBridgeGateway)",
+      "event NativeSweptToYieldRecipient(address indexed yieldRecipient, uint256 amount)",
+      "event ReceiptTransferredBetweenStrategies(address indexed receipt, address indexed sourceStrategy, address indexed destStrategy, address sourceVaultToken, address destVaultToken, uint256 receiptAmount, uint256 valueRemoved, uint256 valueAdded)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event StrategyPolicyConfigUpdated(address indexed vaultToken, address indexed strategy, uint24 entryCapHundredthBps, uint24 exitCapHundredthBps, bool policyActive)",
+      "event StrategyRemovalCheckFailed(address indexed vaultToken, address indexed strategy)",
+      "event StrategyRemovalFinalized(address indexed vaultToken, address indexed strategy)",
+      "event StrategyReportedReceivedMismatch(address indexed vaultToken, address indexed strategy, uint256 reported, uint256 measured)",
+      "event TrackedTvlTokenOverrideUpdated(address indexed token, bool enabled, bool forceTrack)",
+      "event VaultPaused(address indexed account)",
+      "event VaultTokenAllocatedToStrategy(address indexed vaultToken, address indexed strategy, uint256 amount, uint256 invested, uint256 fee)",
+      "event VaultTokenConfigUpdated(address indexed token, tuple(bool supported) cfg)",
+      "event VaultTokenDeallocatedFromStrategy(address indexed vaultToken, address indexed strategy, uint256 requested, uint256 received, uint256 fee, uint256 loss)",
+      "event VaultTokenStrategyConfigUpdated(address indexed vaultToken, address indexed strategy, bool whitelisted, uint256 cap)",
+      "event VaultUnpaused(address indexed account)",
+      "event YieldHarvested(address indexed vaultToken, address indexed strategy, address indexed yieldRecipient, uint256 requested, uint256 received)",
+      "event YieldRecipientTimelockControllerUpdated(address indexed previousTimelock, address indexed newTimelock)",
+      "event YieldRecipientUpdated(address indexed previousYieldRecipient, address indexed newYieldRecipient)",
+      "function ALLOCATOR_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MAX_STRATEGIES_PER_TOKEN() view returns (uint256)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function REBALANCER_ROLE() view returns (bytes32)",
+      "function VAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function YIELD_HARVESTER_ROLE() view returns (bytes32)",
+      "function allocateVaultTokenToStrategy(address token, address, uint256)",
+      "function availableErc20ForRebalance(address erc20Token) view returns (uint256)",
+      "function availableNativeForRebalance() view returns (uint256)",
+      "function bridgeHub() view returns (address)",
+      "function deallocateAllVaultTokenFromStrategy(address token, address) returns (uint256 received)",
+      "function deallocateVaultTokenFromStrategy(address token, address, uint256) returns (uint256 received)",
+      "function finalizeStrategyRemoval(address token, address strategy)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getStrategyPolicyConfig(address token, address strategy) view returns (tuple(uint24 entryCapHundredthBps, uint24 exitCapHundredthBps, bool policyActive))",
+      "function getSupportedVaultTokens() view returns (address[])",
+      "function getTrackedTvlTokens() view returns (address[])",
+      "function getVaultTokenConfig(address token) view returns (tuple(bool supported))",
+      "function getVaultTokenStrategies(address token) view returns (address[])",
+      "function getVaultTokenStrategyConfig(address token, address strategy) view returns (tuple(bool whitelisted, bool active, uint256 cap))",
+      "function grantRole(bytes32 role, address account)",
+      "function grvtBridgeProxyFeeToken() view returns (address)",
+      "function harvestAllYieldFromStrategy(address token, address, uint256) returns (uint256 received)",
+      "function harvestYieldFromStrategy(address token, address, uint256, uint256) returns (uint256 received)",
+      "function harvestableYield(address token, address strategy) view returns (uint256)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hasStrategyPolicyConfig(address token, address strategy) view returns (bool)",
+      "function idleTokenBalance(address token) view returns (uint256)",
+      "function initialize(address admin, address bridgeHub_, address grvtBridgeProxyFeeToken_, uint256 l2ChainId_, address l2ExchangeRecipient_, address wrappedNativeToken_, address yieldRecipient_)",
+      "function isBridgeableVaultToken(address vaultToken) view returns (bool)",
+      "function isStrategyWhitelistedForVaultToken(address token, address strategy) view returns (bool)",
+      "function isSupportedVaultToken(address vaultToken) view returns (bool)",
+      "function isTrackedTvlToken(address token) view returns (bool)",
+      "function l2ChainId() view returns (uint256)",
+      "function l2ExchangeRecipient() view returns (address)",
+      "function nativeBridgeGateway() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function rebalanceErc20ToL2(address erc20Token, uint256 amount) payable",
+      "function rebalanceNativeToL2(uint256 amount) payable",
+      "function refreshStrategyTvlTokens(address vaultToken, address strategy)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setBridgeableVaultToken(address token, bool bridgeable)",
+      "function setNativeBridgeGateway(address newNativeBridgeGateway)",
+      "function setStrategyPolicyConfig(address, address, tuple(uint24 entryCapHundredthBps, uint24 exitCapHundredthBps, bool policyActive))",
+      "function setTrackedTvlTokenOverride(address token, bool enabled, bool forceTrack)",
+      "function setVaultTokenConfig(address token, tuple(bool supported) cfg)",
+      "function setVaultTokenStrategyConfig(address token, address strategy, tuple(bool whitelisted, bool active, uint256 cap) cfg)",
+      "function setYieldRecipient(address newYieldRecipient)",
+      "function setYieldRecipientTimelockController(address newTimelock)",
+      "function strategyCostBasis(address token, address strategy) view returns (uint256)",
+      "function strategyPositionBreakdown(address vaultToken, address strategy) view returns (tuple(address token, uint256 amount, uint8 kind)[] components)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function sweepNativeToYieldRecipient(uint256 amount)",
+      "function tokenTotals(address token) view returns (tuple(uint256 idle, uint256 strategy, uint256 total) totals)",
+      "function tokenTotalsBatch(address[] tokens) view returns (tuple(uint256 idle, uint256 strategy, uint256 total, uint256 skippedStrategies)[] statuses)",
+      "function tokenTotalsConservative(address token) view returns (tuple(uint256 idle, uint256 strategy, uint256 total, uint256 skippedStrategies) status)",
+      "function trackedTvlTokenTotals() view returns (address[] tokens, tuple(uint256 idle, uint256 strategy, uint256 total, uint256 skippedStrategies)[] statuses)",
+      "function transferReceiptBetweenStrategies(address, address sourceVaultToken, address, address destVaultToken, address, uint256) returns (uint256 valueRemoved, uint256 valueAdded)",
+      "function unpause()",
+      "function wrappedNativeToken() view returns (address)",
+      "function yieldRecipient() view returns (address)",
+      "function yieldRecipientTimelockController() view returns (address)"
+    ],
+    "eth:0x1ff873538e62BA19cd36CE97e48F6fC84D07a5E4": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x28F188A3b89f24B838D0a6e37c7602b5F319DbAF": [
+      "constructor(address registry_, address wildcatArchController_, address wildcatV2Factory_)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error CompartmentPaused()",
+      "error InvalidInitialization()",
+      "error InvalidVenue(address venue)",
+      "error NotAuthorized(bytes32 role, address account)",
+      "error NotInitializing()",
+      "error NotPauser(address account)",
+      "error NotProxyAdmin(address caller, address expected)",
+      "error NotRegisteredCompartment(address self)",
+      "error NotWildcatV2Market(address market)",
+      "error ReceivedBelowMinimum(uint256 received, uint256 minReceived)",
+      "error ReentrancyGuardReentrantCall()",
+      "error RoleNotGrantable(bytes32 role)",
+      "error RoleNotRevocable(bytes32 role)",
+      "error SafeERC20FailedOperation(address token)",
+      "error TooManyOpenRequests(address venue)",
+      "error UnknownBatch(address venue, uint32 expiry)",
+      "error VenueAssetChanged(address venue, address expected, address actual)",
+      "error VenueListFull()",
+      "error VenueNotEnabled(address venue)",
+      "error VenueNotListed(address venue)",
+      "error VenueStillHeld(address venue, uint256 exposure)",
+      "error ZeroAddress()",
+      "error ZeroMinimum()",
+      "event BridgedToL2(address indexed token, uint256 amount, bytes32 l2TxHash)",
+      "event ExitCancelled(address indexed venue, uint256 released, uint256 remaining)",
+      "event ExitClaimed(address indexed venue, address indexed asset, uint256 expected, uint256 received)",
+      "event ExitRequested(address indexed venue, uint256 amount, uint256 key)",
+      "event Initialized(uint64 version)",
+      "event Paused(address indexed by)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address indexed by)",
+      "event VenueDeposited(address indexed venue, address indexed asset, uint256 assets, uint256 received)",
+      "event VenueListed(address indexed venue, bool enabled, address asset)",
+      "event VenueRemoved(address indexed venue)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function axcessClaimRecovery(address vault) returns (uint256 received)",
+      "function axcessDeposit(address vault, uint256 assets, uint256 minShares) returns (uint256 shares)",
+      "function axcessFundRedemptions(address vault)",
+      "function axcessMint(address vault, uint256 shares, uint256 maxAssets) returns (uint256 received)",
+      "function axcessOpenRequests(address vault) view returns (uint256[] ids, uint256[] shares)",
+      "function axcessRedeem(address vault) returns (uint256 received)",
+      "function axcessRequestRedeem(address vault, uint256 shares) returns (uint256 requestId)",
+      "function axcessTerms(address vault) view returns (bool enabled, address asset)",
+      "function axcessVaultList() view returns (address[])",
+      "function bridgeToL2(address token, uint256 amount)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getRoleMembers(bytes32 role) view returns (address[])",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(tuple(address operator, address[] rebalancers, address[] pausers, tuple(address vault, bool enabled)[] axcessVaults, tuple(address vault, address gateway, bool enabled)[] nestVaults, tuple(address market, bool enabled)[] wildcatMarkets) p)",
+      "function initialized() view returns (bool)",
+      "function nestCancelRedeem(address vault, uint256 newPendingShares) returns (uint256 released)",
+      "function nestDeposit(address vault, uint256 assets, uint256 minShares, bytes attestation) returns (uint256 shares)",
+      "function nestGateway(address vault) view returns (address)",
+      "function nestInstantRedeem(address vault, uint256 shares, uint256 minAssets) returns (uint256 received)",
+      "function nestMint(address vault, uint256 shares, uint256 maxAssets, bytes attestation) returns (uint256 received)",
+      "function nestRedeem(address vault, uint256 shares) returns (uint256 received)",
+      "function nestRequestRedeem(address vault, uint256 shares)",
+      "function nestShare(address vault) view returns (address)",
+      "function nestTerms(address vault) view returns (bool enabled, address asset)",
+      "function nestVaultList() view returns (address[])",
+      "function nestWithdraw(address vault, uint256 assets) returns (uint256 received)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function registry() view returns (address)",
+      "function removeAxcessVault(address vault)",
+      "function removeNestVault(address vault)",
+      "function removeWildcatMarket(address market)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setAxcessVault(address vault, bool enabled)",
+      "function setNestVault(address vault, address gateway, bool enabled)",
+      "function setWildcatMarket(address market, bool enabled)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function wildcatArchController() view returns (address)",
+      "function wildcatDeposit(address market, uint256 assets, uint256 minReceived) returns (uint256 received)",
+      "function wildcatDepositUpTo(address market, uint256 maxAssets, uint256 minReceived, bytes credential) returns (uint256 received)",
+      "function wildcatExecuteWithdrawal(address market, uint32 expiry) returns (uint256 received)",
+      "function wildcatExecuteWithdrawals(address market, uint32[] expiries) returns (uint256 received)",
+      "function wildcatMarketList() view returns (address[])",
+      "function wildcatOpenExpiries(address market) view returns (uint32[])",
+      "function wildcatProcessUnpaidBatches(address market, uint256 maxBatches)",
+      "function wildcatQueueFullWithdrawal(address market) returns (uint32 expiry)",
+      "function wildcatQueueWithdrawal(address market, uint256 amount) returns (uint32 expiry)",
+      "function wildcatTerms(address market) view returns (bool enabled, address asset)",
+      "function wildcatV2Factory() view returns (address)"
+    ],
+    "eth:0x2B19C664F7b1D389A6a9d483acd283098613D84A": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x31641AE3A4c0A29Bf04c020E266cBc8fF2EdecA4": [
+      "constructor(address initialOwner)",
+      "error InsufficientTreasuryBalance()",
+      "error InvalidParam()",
+      "error NativeTransferFailed()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error UnauthorizedVault()",
+      "error UnauthorizedWithdrawer()",
+      "error WithdrawalRecipientNotSet()",
+      "event AuthorizedVaultUpdated(address indexed vault, bool allowed)",
+      "event AuthorizedWithdrawerUpdated(address indexed account, bool allowed)",
+      "event ERC20Withdrawn(address indexed token, address indexed recipient, uint256 amount)",
+      "event FeeReimbursed(address indexed token, address recipient, uint256 amount)",
+      "event NativeWithdrawn(address indexed recipient, uint256 amount)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event WithdrawalRecipientUpdated(address indexed previousRecipient, address indexed newRecipient)",
+      "function acceptOwnership()",
+      "function isAuthorizedVault(address vault) view returns (bool allowed)",
+      "function isAuthorizedWithdrawer(address account) view returns (bool allowed)",
+      "function isFeeReimburser() pure returns (bytes4 selector)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function reimburseFee(address token, address recipient, uint256 amount) returns (uint256 reimbursed)",
+      "function renounceOwnership()",
+      "function setAuthorizedVault(address vault, bool allowed)",
+      "function setAuthorizedWithdrawer(address account, bool allowed)",
+      "function setWithdrawalRecipient(address newRecipient)",
+      "function transferOwnership(address newOwner)",
+      "function withdrawERC20(address token, uint256 amount)",
+      "function withdrawNative(uint256 amount)",
+      "function withdrawalRecipient() view returns (address)"
     ],
     "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253": [
       "constructor(uint256 _l1ChainId, address _rollupDAManager)",
@@ -1326,6 +2885,64 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0x421a3f9b8665174B4FcF5fD4A9012B79be457f51": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x4e29715b7Ca2569678027c01627D936235eA36De": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error FailedCall()",
+      "error TimelockInsufficientDelay(uint256 delay, uint256 minDelay)",
+      "error TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)",
+      "error TimelockUnauthorizedCaller(address caller)",
+      "error TimelockUnexecutedPredecessor(bytes32 predecessorId)",
+      "error TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getOperationState(bytes32 id) view returns (uint8)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
     "eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35": [
       "constructor(address _bridgehubAddr)",
       "error DefaultAdminTransferNotAllowed()",
@@ -1398,6 +3015,17 @@
       "function setRoleAdmin(address _chainAddress, bytes32 _role, bytes32 _adminRole)",
       "function transferOwnership(address newOwner)",
       "function upgradeChainFromVersion(address _chainAddress, uint256, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata))"
+    ],
+    "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c": [
       "constructor(address _singleton)"
@@ -1476,50 +3104,74 @@
       "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
       "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
     ],
-    "eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1": [
+    "eth:0x646123424BEcBF14a7542bc44340AdB241BA32b3": [
+      "constructor(address beacon, bytes data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidBeacon(address beacon)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event BeaconUpgraded(address indexed beacon)"
+    ],
+    "eth:0x68b7e779b0219401ec1959067a30597b34E0de56": [
+      "error BootstrapUnreachable()",
+      "function bootstrap() pure"
+    ],
+    "eth:0x736258fdd7dc998A1180333AFec1C045868EAcdf": [
+      "constructor(address registryImplementation, tuple(address bootstrap, address bridgeProxy, address defaultAdmin, address registryAdmin, address configAdmin, address compartmentCreator, address unpauser, address pauser) params)",
+      "error ImplementationIsBootstrap()",
+      "error NotAuthorized(address caller)",
+      "error RegistryProxyAdminPinned()",
+      "error RegistryUpgradeInvalid()",
+      "error ZeroAddress()",
+      "event ProxyAdminOwnershipTransferred(address indexed proxyAdmin, address indexed newOwner, address indexed caller)",
+      "event Upgraded(address indexed proxy, address indexed implementation, address indexed caller, address proxyAdmin, bytes data)",
+      "function registry() view returns (address)",
+      "function transferProxyAdminOwnership(address admin, address newOwner)",
+      "function upgrade(address admin, address proxy, address impl, bytes data)"
+    ],
+    "eth:0x7E0ee1A4AF682C50293676a381b854bA8F66165B": [
       "constructor()",
-      "event BridgeHubSet(address indexed bridgeHub)",
-      "event BridgeProxyDepositInitiated(bytes32 indexed txDataHash, bytes32 indexed l2DepositTxHash, address indexed to, address from, address l1Token, uint256 amount)",
-      "event ClaimedFailedDepositBridgeProxy(address indexed to, address indexed l1Token, uint256 amount, bool assetRouterClaimSucceeded)",
-      "event DepositApproverSet(address indexed depositApprover)",
-      "event Initialized(uint8 version)",
-      "event Initialized(uint256 chainID, address bridgeHub, address owner, address depositApprover, address baseToken)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "error InvalidATokenConfig()",
+      "error InvalidInitialization()",
+      "error InvalidParam()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error Unauthorized()",
+      "error UnsupportedReceipt(address receipt)",
+      "event Allocated(address indexed vaultToken, uint256 amount, uint256 invested)",
+      "event Initialized(uint64 version)",
+      "event Withdrawn(address indexed vaultToken, uint256 requested, uint256 received)",
+      "function aToken() view returns (address)",
+      "function aavePool() view returns (address)",
+      "function allocate(uint256 amount) returns (uint256 invested)",
+      "function exactTokenBalance(address token) view returns (uint256)",
+      "function initialize(address vault_, address aavePool_, address vaultToken_, address aToken_, string strategyName_)",
+      "function isYieldStrategyV2() pure returns (bytes4)",
+      "function name() view returns (string)",
+      "function positionBreakdown() view returns (tuple(address token, uint256 amount, uint8 kind)[] components)",
+      "function receiptTransferSupported(address) pure returns (bool supported)",
+      "function totalExposure() view returns (uint256 exposure)",
+      "function totalExposureStrict() view returns (uint256 exposure)",
+      "function transferReceiptIn(address receipt, uint256) pure",
+      "function transferReceiptOut(address receipt, uint256, address) pure returns (uint256)",
+      "function tvlTokens() view returns (address[] tokens)",
+      "function vault() view returns (address)",
+      "function vaultToken() view returns (address)",
+      "function withdraw(uint256 amount) returns (uint256 received)",
+      "function withdrawableExposure() view returns (uint256 exposure)"
+    ],
+    "eth:0x8196Df3c158E67963021e869e972d2c2254Ed485": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event TokenAllowed(address token)",
-      "event TokenDisallowed(address token)",
-      "function ETH_TOKEN_ADDRESS() view returns (address)",
-      "function L2_GAS_LIMIT_DEPOSIT() view returns (uint256)",
-      "function L2_GAS_LIMIT_MINT_BASE_TOKEN() view returns (uint256)",
-      "function acceptOwnership()",
-      "function addAllowedToken(address _token)",
-      "function approveBaseToken(address to, uint256 amount) returns (bool)",
-      "function balanceDecimals(address) view returns (uint8)",
-      "function baseToken() view returns (address)",
-      "function bridgeHub() view returns (address)",
-      "function chainID() view returns (uint256)",
-      "function claimFailedDeposit(address _depositSender, address _l1Token, uint256 _amount, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _deadline, uint8 _v, bytes32 _r, bytes32 _s) payable returns (bytes32 txHash)",
-      "function depositApprover() view returns (address)",
-      "function depositHappened(bytes32 l2DepositTxHash) view returns (bytes32 depositDataHash)",
-      "function getDepositApprover() view returns (address)",
-      "function getDepositProxyAddress(address accountID) view returns (address)",
-      "function initialize(uint256 _chainID, address _bridgeHub, address _owner, address _depositApprover, address _baseToken)",
-      "function isTokenAllowed(address _token) view returns (bool)",
-      "function l2DepositProxyAddressDerivationParams() view returns (address exchangeAddress, bytes32 beaconProxyBytecodeHash, address depositProxyBeacon)",
-      "function mintBaseTokenL2(address _l2Receiver, uint256 _amount)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
       "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function removeAllowedToken(address _token)",
       "function renounceOwnership()",
-      "function setBalanceDecimals(address _l1Token, uint8 _decimals)",
-      "function setBridgeHub(address _bridgeHub)",
-      "function setDepositApprover(address _depositApprover)",
-      "function setL2DepositProxyAddressDerivationParams(tuple(address exchangeAddress, bytes32 beaconProxyBytecodeHash, address depositProxyBeacon) _params)",
-      "function setL2GasPerPubdataByteLimit(uint256 limit)",
-      "function sweepERC20(address _token, address _to, uint256 _amount)",
-      "function sweepETH(address _to, uint256 _amount)",
-      "function transferOwnership(address newOwner)"
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "eth:0x8319feDe99061C6723c86D366a903e8fa3a0f541": [
       "constructor()",
@@ -1542,9 +3194,102 @@
       "function verificationKeyHash() pure returns (bytes32)",
       "function verify(uint256[], uint256[]) view returns (bool)"
     ],
+    "eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E": [
+      "constructor(address beacon, bytes data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidBeacon(address beacon)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event BeaconUpgraded(address indexed beacon)"
+    ],
+    "eth:0x8bc3249fEc4f61440Af91Ea2F3506F156039297C": [
+      "constructor()",
+      "event BridgeHubSet(address indexed bridgeHub)",
+      "event BridgeProxyDepositInitiated(bytes32 indexed txDataHash, bytes32 indexed l2DepositTxHash, address indexed to, address from, address l1Token, uint256 amount)",
+      "event ClaimedFailedDepositBridgeProxy(address indexed to, address indexed l1Token, uint256 amount, bool assetRouterClaimSucceeded)",
+      "event CompartmentDepositInitiated(bytes32 indexed l2DepositTxHash, address indexed compartment, uint256 indexed compartmentId, uint8 compartmentType, address l2Destination, address l1Token, uint256 amount, bytes32 txDataHash)",
+      "event CompartmentRegistrySet(address indexed compartmentRegistry)",
+      "event DepositApproverSet(address indexed depositApprover)",
+      "event Initialized(uint8 version)",
+      "event Initialized(uint256 chainID, address bridgeHub, address owner, address depositApprover, address baseToken)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TokenAllowed(address token)",
+      "event TokenDisallowed(address token)",
+      "event VaultDepositProxyBeaconSet(address indexed beacon)",
+      "function ETH_TOKEN_ADDRESS() view returns (address)",
+      "function L2_GAS_LIMIT_DEPOSIT() view returns (uint256)",
+      "function L2_GAS_LIMIT_MINT_BASE_TOKEN() view returns (uint256)",
+      "function acceptOwnership()",
+      "function addAllowedToken(address _token)",
+      "function approveBaseToken(address to, uint256 amount) returns (bool)",
+      "function balanceDecimals(address) view returns (uint8)",
+      "function baseToken() view returns (address)",
+      "function bridgeHub() view returns (address)",
+      "function chainID() view returns (uint256)",
+      "function claimFailedDeposit(address _depositSender, address _l1Token, uint256 _amount, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
+      "function compartmentRegistry() view returns (address)",
+      "function computeVaultDepositProxyAddress(uint256 vaultID, address exchange, bytes32 beaconProxyBytecodeHash, address vaultBeacon) pure returns (address)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _deadline, uint8 _v, bytes32 _r, bytes32 _s) payable returns (bytes32 txHash)",
+      "function depositApprover() view returns (address)",
+      "function depositFromCompartment(address _l1Token, uint256 _amount) returns (bytes32 txHash)",
+      "function depositHappened(bytes32 l2DepositTxHash) view returns (bytes32 depositDataHash)",
+      "function getCompartmentDepositDestination(address compartment) view returns (address l2Destination)",
+      "function getDepositApprover() view returns (address)",
+      "function getDepositProxyAddress(address accountID) view returns (address)",
+      "function getVaultDepositProxyAddress(uint256 vaultID) view returns (address)",
+      "function initialize(uint256 _chainID, address _bridgeHub, address _owner, address _depositApprover, address _baseToken)",
+      "function isTokenAllowed(address _token) view returns (bool)",
+      "function l2DepositProxyAddressDerivationParams() view returns (address exchangeAddress, bytes32 beaconProxyBytecodeHash, address depositProxyBeacon)",
+      "function mintBaseTokenL2(address _l2Receiver, uint256 _amount)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function removeAllowedToken(address _token)",
+      "function renounceOwnership()",
+      "function setBalanceDecimals(address _l1Token, uint8 _decimals)",
+      "function setBridgeHub(address _bridgeHub)",
+      "function setCompartmentRegistry(address _compartmentRegistry)",
+      "function setDepositApprover(address _depositApprover)",
+      "function setL2DepositProxyAddressDerivationParams(tuple(address exchangeAddress, bytes32 beaconProxyBytecodeHash, address depositProxyBeacon) _params)",
+      "function setL2GasPerPubdataByteLimit(uint256 limit)",
+      "function setVaultDepositProxyBeacon(address _beacon)",
+      "function sweepERC20(address _token, address _to, uint256 _amount)",
+      "function sweepETH(address _to, uint256 _amount)",
+      "function transferOwnership(address newOwner)",
+      "function vaultDepositProxyBeacon() view returns (address)"
+    ],
     "eth:0x907b30407249949521Bf0c89A43558dae200146A": [
       "error ValL1DAWrongInputLength(uint256 inputLength, uint256 expectedLength)",
       "function checkDA(uint256, uint256, bytes32, bytes _operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)"
+    ],
+    "eth:0xac2b5c60Fc27fB47333f0416F8F2dAe600Ee50fb": [
+      "constructor()",
+      "error InvalidATokenConfig()",
+      "error InvalidInitialization()",
+      "error InvalidParam()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error Unauthorized()",
+      "error UninvestedTokenAfterSupply(uint256 beforeBalance, uint256 afterBalance)",
+      "event Allocated(address indexed token, uint256 amount)",
+      "event Deallocated(address indexed token, uint256 requested, uint256 received)",
+      "event Initialized(uint64 version)",
+      "event UninvestedTokenSwept(address indexed token, uint256 amount)",
+      "function aToken() view returns (address)",
+      "function aavePool() view returns (address)",
+      "function allocate(address token, uint256 amount)",
+      "function deallocate(address token, uint256 amount) returns (uint256 received)",
+      "function deallocateAll(address token) returns (uint256 received)",
+      "function exactTokenBalance(address token) view returns (uint256)",
+      "function initialize(address vault_, address aavePool_, address underlying_, address aToken_, string strategyName_)",
+      "function name() view returns (string)",
+      "function positionBreakdown(address vaultToken) view returns (tuple(address token, uint256 amount, uint8 kind)[] components)",
+      "function strategyExposure(address token) view returns (uint256 exposure)",
+      "function tvlTokens(address vaultToken) view returns (address[] tokens)",
+      "function underlying() view returns (address)",
+      "function vault() view returns (address)"
     ],
     "eth:0xbdC07D62fA117B195E579c2e299f037b158E7335": [
       "constructor(address _admin, address _securityCouncil, uint256 _minDelay)",
@@ -1585,6 +3330,114 @@
       "function updateDelay(uint256 _newDelay)",
       "function updateSecurityCouncil(address _newSecurityCouncil)"
     ],
+    "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xca831CA00A0D8D47c5A8b99a22b1503392C24f3C": [
+      "constructor()",
+      "error GsmQuoteMismatch()",
+      "error GsmSettlementMismatch()",
+      "error InsufficientReceiptBalance(uint256 requested, uint256 available)",
+      "error InsufficientRedeemableLiquidity(uint256 requested, uint256 available)",
+      "error InvalidGsmConfig()",
+      "error InvalidInitialization()",
+      "error InvalidInitializationParams()",
+      "error InvalidSGhoAsset()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error ReportedInvestmentExceedsInput(uint256 invested, uint256 amount)",
+      "error SGhoDepositReturnedZeroShares()",
+      "error SGhoWithdrawSettlementMismatch()",
+      "error SafeERC20FailedOperation(address token)",
+      "error UnauthorizedCaller()",
+      "error UnsupportedReceipt(address receipt)",
+      "error ZeroAmount()",
+      "event Allocated(address indexed vaultToken, uint256 amountIn, uint256 invested, uint256 ghoOut, uint256 sGhoSharesReceived)",
+      "event Initialized(uint64 version)",
+      "event ReceiptTransferredIn(address indexed receipt, uint256 receiptAmount)",
+      "event ReceiptTransferredOut(address indexed receipt, address indexed recipient, uint256 receiptAmount)",
+      "event Withdrawn(address indexed vaultToken, uint256 requested, uint256 received)",
+      "function allocate(uint256 amount) returns (uint256 invested)",
+      "function exactTokenBalance(address token) view returns (uint256 amount)",
+      "function ghoDecimals() view returns (uint8)",
+      "function ghoGsm() view returns (address)",
+      "function ghoToken() view returns (address)",
+      "function gsmStataToken() view returns (address)",
+      "function initialize(address vault_, address vaultToken_, address sGho_, address gsm_, string strategyName_)",
+      "function isYieldStrategyV2() pure returns (bytes4)",
+      "function name() view returns (string)",
+      "function positionBreakdown() view returns (tuple(address token, uint256 amount, uint8 kind)[] components)",
+      "function receiptTransferSupported(address receipt) view returns (bool supported)",
+      "function sGhoToken() view returns (address)",
+      "function totalExposure() view returns (uint256 exposure)",
+      "function totalExposureStrict() view returns (uint256 exposure)",
+      "function transferReceiptIn(address receipt, uint256 receiptAmount)",
+      "function transferReceiptOut(address receipt, uint256 receiptAmount, address recipient) returns (uint256 movedAmount)",
+      "function tvlTokens() view returns (address[] tokens)",
+      "function vault() view returns (address)",
+      "function vaultToken() view returns (address)",
+      "function vaultTokenDecimals() view returns (uint8)",
+      "function withdraw(uint256 amount) returns (uint256 received)",
+      "function withdrawableExposure() view returns (uint256 exposure)"
+    ],
+    "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error FailedCall()",
+      "error TimelockInsufficientDelay(uint256 delay, uint256 minDelay)",
+      "error TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)",
+      "error TimelockUnauthorizedCaller(address caller)",
+      "error TimelockUnexecutedPredecessor(bytes32 predecessorId)",
+      "error TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getOperationState(bytes32 id) view returns (uint8)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
+    "eth:0xcE7aC6b6E8559a6E0634223d9692d6ea99bE23Ca": [
+      "constructor(address _singleton)"
+    ],
     "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081": [
       "constructor(address _fflonkVerifier, address _plonkVerifier)",
       "error EmptyProofLength()",
@@ -1595,6 +3448,114 @@
       "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
       "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
     ],
+    "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xD73adD2f6253C465c92584bAe8a1419dd3c49e91": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressMismatch(address expected, address actual)",
+      "error AlreadyGloballyPaused()",
+      "error EntityAlreadyRegistered(uint8 entityType, uint256 entityId)",
+      "error GlobalPauseActive()",
+      "error ImplementationHasNoCode(address implementation)",
+      "error ImplementationIsBootstrap()",
+      "error IndexOutOfBounds(uint256 index, uint256 length)",
+      "error InvalidInitialization()",
+      "error NotGloballyPaused()",
+      "error NotInitialized(address compartment)",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error UnsupportedEntityType(uint8 entityType)",
+      "error ZeroAddress()",
+      "event CompartmentCreated(address indexed compartment, uint8 indexed entityType, uint256 indexed entityId, address implementation, address proxyAdmin)",
+      "event GlobalPaused(address indexed by)",
+      "event GlobalUnpaused(address indexed by)",
+      "event Initialized(uint64 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function bootstrap() view returns (address)",
+      "function bridgeProxy() view returns (address)",
+      "function compartmentAddress(uint8 entityType, uint256 entityId) view returns (address)",
+      "function compartmentAt(uint256 i) view returns (tuple(address compartment, uint8 entityType, uint256 entityId))",
+      "function compartmentCount() view returns (uint256)",
+      "function compartmentEntity(address compartment) view returns (uint8 entityType, uint256 entityId, bool exists)",
+      "function compartmentInitCodeHash() view returns (bytes32)",
+      "function createCompartment(uint8 entityType, uint256 entityId, address implementation, bytes initData) returns (address compartment)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function globallyPaused() view returns (bool)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(tuple(address bootstrap, address upgradeAuthority, address bridgeProxy, address defaultAdmin, address registryAdmin, address configAdmin, address compartmentCreator, address unpauser, address pauser) params)",
+      "function isCompartment(address a) view returns (bool)",
+      "function pauseGlobal()",
+      "function proxyAdminOf(address compartment) pure returns (address)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpauseGlobal()",
+      "function upgradeAuthority() view returns (address)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
     "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1604,6 +3565,104 @@
     "eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
       "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
+    ],
+    "eth:0xE6b3bFDcDaB61c9522D8CC43f5Db4Ccee304A4c1": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error ExposureCapExceeded(address token, uint256 newExposureVaultToken, uint256 capVaultToken)",
+      "error InsufficientIdleVaultToken(uint256 requested, uint256 available)",
+      "error InsufficientReceiptBalance(address token, uint256 requested, uint256 available)",
+      "error InvalidInitialization()",
+      "error InvalidInitializationParams()",
+      "error InvalidPriceSource()",
+      "error InvalidReceiptToken(address token)",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error OwnershipRenounceDisabled()",
+      "error PriceSourceCurrencyMismatch(address priceSource, address expectedBase, address expectedQuote)",
+      "error PriceSourceNotWhitelisted(address priceSource)",
+      "error PriceUnavailable(address token)",
+      "error ReceiptBalanceNotZero(address token, uint256 balance)",
+      "error ReceiptTokenAlreadyRegistered(address token)",
+      "error ReceiptTokenDisabled(address token)",
+      "error ReceiptTokenLimitReached()",
+      "error ReceiptTokenNotRegistered(address token)",
+      "error ReceiptTransferAmountMismatch(address token, uint256 expected, uint256 received)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error SlippageExceeded(uint256 amount, uint256 limit)",
+      "error StalePrice(address token, uint256 updatedAt, uint256 maxAge)",
+      "error SwapSizeExceeded(address token, uint256 swapVaultToken, uint256 maxSwapVaultToken)",
+      "error SwapsPaused()",
+      "error UnauthorizedCaller()",
+      "error VaultTokenTransferAmountMismatch(uint256 expected, uint256 received)",
+      "error ZeroAmount()",
+      "event Allocated(uint256 amount)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PriceSourceWhitelisted(address indexed priceSource, bool whitelisted)",
+      "event ReceiptConfigSet(address indexed token, address indexed priceSource, uint8 tokenDecimals, uint64 maxPriceAge, uint256 exposureCapVaultToken, uint256 maxSwapVaultToken)",
+      "event ReceiptDeregistered(address indexed token)",
+      "event ReceiptEnabledSet(address indexed token, bool enabled)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SwappedReceiptIn(address indexed operator, address indexed token, uint256 receiptAmount, uint256 vaultOut, uint256 priceE18)",
+      "event SwappedReceiptOut(address indexed operator, address indexed token, uint256 receiptAmount, uint256 vaultIn, uint256 priceE18)",
+      "event SwapsPausedSet(address indexed account, bool paused)",
+      "event Withdrawn(uint256 requested, uint256 received)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MAX_RECEIPT_TOKENS() view returns (uint256)",
+      "function OPERATOR_ROLE() view returns (bytes32)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function acceptOwnership()",
+      "function allocate(uint256 amount) returns (uint256 invested)",
+      "function deregisterReceiptToken(address token)",
+      "function disableReceipt(address token)",
+      "function enableReceipt(address token)",
+      "function exactTokenBalance(address token) view returns (uint256 amount)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin_, address initialOwner_, address vault_, address vaultToken_, string strategyName_)",
+      "function isPriceSourceWhitelisted(address priceSource) view returns (bool)",
+      "function isYieldStrategyV2() pure returns (bytes4)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pauseSwaps()",
+      "function pendingOwner() view returns (address)",
+      "function positionBreakdown() view returns (tuple(address token, uint256 amount, uint8 kind)[] components)",
+      "function previewSwap(address token, uint256 receiptAmount, bool isIn) view returns (uint256 vaultAmount, uint256 priceE18)",
+      "function receiptConfig(address token) view returns (tuple(bool registered, bool enabled, address priceSource, uint8 tokenDecimals, uint64 maxPriceAge, uint256 exposureCapVaultToken, uint256 maxSwapVaultToken, uint256 lastGoodPriceE18, uint64 lastGoodPriceAt))",
+      "function receiptTokens() view returns (address[])",
+      "function receiptTransferSupported(address receipt) view returns (bool supported)",
+      "function receiptValueDown(uint256 receiptAmount, uint256 priceE18, uint8 tokenDecimals) view returns (uint256)",
+      "function refreshReceiptPrice(address token)",
+      "function renounceOwnership() pure",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setReceiptConfig(address token, address priceSource, uint8 tokenDecimals, uint64 maxPriceAge, uint256 exposureCapVaultToken, uint256 maxSwapVaultToken)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function swapReceiptIn(address token, uint256 receiptAmount, uint256 minVaultOut) returns (uint256 vaultOut)",
+      "function swapReceiptOut(address token, uint256 receiptAmount, uint256 maxVaultIn) returns (uint256 vaultIn)",
+      "function swapsPaused() view returns (bool)",
+      "function totalExposure() view returns (uint256 exposure)",
+      "function totalExposureStrict() view returns (uint256 exposure)",
+      "function transferOwnership(address newOwner)",
+      "function transferReceiptIn(address receipt, uint256 receiptAmount)",
+      "function transferReceiptOut(address receipt, uint256 receiptAmount, address recipient) returns (uint256 movedAmount)",
+      "function tvlTokens() view returns (address[] tokens)",
+      "function unpauseSwaps()",
+      "function unwhitelistPriceSource(address priceSource)",
+      "function vault() view returns (address)",
+      "function vaultToken() view returns (address)",
+      "function vaultTokenDecimals() view returns (uint8)",
+      "function whitelistPriceSource(address priceSource)",
+      "function withdraw(uint256 amount) returns (uint256 received)",
+      "function withdrawableExposure() view returns (uint256 exposure)"
     ],
     "eth:0xe81d64195072e4d09639b31Abb257d0096FEa9d1": [
       "constructor(address _admin, address _securityCouncil, uint256 _minDelay)",
@@ -1636,11 +3695,88 @@
       "function transferOwnership(address newOwner)",
       "function updateDelay(uint256 _newDelay)",
       "function updateSecurityCouncil(address _newSecurityCouncil)"
+    ],
+    "eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12": [
+      "constructor(address beacon, bytes data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidBeacon(address beacon)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event BeaconUpgraded(address indexed beacon)"
+    ],
+    "eth:0xF1d59A0D1eC7C0B66B9E04bCAE0130302b3c599C": [
+      "constructor()",
+      "error InvalidGatewayNativeBalance(uint256 actual, uint256 expected)",
+      "error InvalidInitialization()",
+      "error InvalidNativeClaimDelta(bytes32 bridgeTxHash, uint256 claimed, uint256 expected)",
+      "error InvalidParam()",
+      "error NativeBridgeAlreadyRecovered(bytes32 bridgeTxHash)",
+      "error NativeBridgeRecordNotFound(bytes32 bridgeTxHash)",
+      "error NotInitializing()",
+      "error SafeERC20FailedOperation(address token)",
+      "error Unauthorized()",
+      "error UnexpectedNativeSender(address sender)",
+      "event BridgeHubUpdated(address indexed previousBridgeHub, address indexed newBridgeHub)",
+      "event FailedNativeDepositRecovered(bytes32 indexed bridgeTxHash, uint256 amount)",
+      "event Initialized(uint64 version)",
+      "event NativeBridgedToL2(bytes32 indexed bridgeTxHash, uint256 chainId, uint256 amount, uint256 baseCost, address indexed l2Recipient, address indexed refundRecipient)",
+      "event TokenSwept(address indexed token, address indexed recipient, uint256 amount)",
+      "event UnexpectedNativeRecoveredToVault(uint256 amount)",
+      "function bridgeHub() view returns (address)",
+      "function bridgeNativeToL2(uint256 chainId, uint256 l2GasLimit, uint256 l2GasPerPubdataByteLimit, address l2Recipient, address refundRecipient, uint256 amount, uint256 baseCost) returns (bytes32 txHash)",
+      "function claimAndRecoverFailedNativeDeposit(bytes32 bridgeTxHash, uint256 l2BatchNumber, uint256 l2MessageIndex, uint16 l2TxNumberInBatch, bytes32[] merkleProof)",
+      "function grvtBridgeProxyFeeToken() view returns (address)",
+      "function initialize(address wrappedNativeToken_, address grvtBridgeProxyFeeToken_, address bridgeHub_, address vault_)",
+      "function nativeBridgeRecordRefundSenders(bytes32 bridgeTxHash) view returns (address refundSender)",
+      "function nativeBridgeRecordSharedBridges(bytes32 bridgeTxHash) view returns (address sharedBridge)",
+      "function nativeBridgeRecords(bytes32 bridgeTxHash) view returns (uint256 chainId, uint256 amount, bool recovered)",
+      "function recoverUnexpectedNativeToVault(uint256 amount)",
+      "function setBridgeHub(address newBridgeHub)",
+      "function sweepToken(address token, address recipient, uint256 amount)",
+      "function vault() view returns (address)",
+      "function wrappedNativeToken() view returns (address)"
+    ],
+    "eth:0xf311e82885d51425cd6798eD44AF3b8FA7DF03F6": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xF57Be7cB5B1c5e37fDb19DdF8E5A359A5e381575": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ]
   },
   "usedTemplates": {
     "adi/Governance": "0x46af5a5c4f79ce9ea6efb5ec445c6bb975a26e603abb09e50fe8a0e16f4e2e32",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "grvt/AaveV3Strategy": "0x7aea28e84ebe42f8b0f6740ff6afa7c23b139e35239b2f9bdee1f859423bac16",
+    "grvt/AaveV3StrategyV2": "0x5211a9fdf9f49d2c4f819a4d2583a988aa47da457c04f9085bf511d7e0530ca2",
+    "grvt/Bootstrap": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "grvt/CompartmentRegistry": "0xcba1e7e3a77c959d542d7bc0a056465a76f3c5128e47e8d69c46783b9f351d4b",
+    "grvt/GenericSwapStrategy": "0xca1c531d8d0f87845f1891dd64dd7aa33721a181022f89a9cb73d08d85573385",
+    "grvt/GRVTBridgeProxy": "0x3f9d8d9dbb6739d3072ee514bdf2b4697c6090b9eb43b96b02d8e13ac244c624",
+    "grvt/GRVTL1TreasuryVault": "0x3249e2207d078c67bddf1a5b40c87fe8aeabb7ed988ef1ac9033100e8fc7b208",
+    "grvt/HighYieldEarnVaultCompartment": "0x64318b766d80d2efcf624293be7755107598a0fdf4cec6bf8d8bc452ac34efdd",
+    "grvt/NativeBridgeGateway": "0x8dec68a73024b5bcadbad1e1008e25f4aadc20b6287675b441f4529d0f42969d",
+    "grvt/SGHOStrategy": "0x0e0c720fca5f30277811c82a8ceffa3d4359fe8bc3d597c3d8c6e2f79d2d0289",
+    "grvt/UpgradeAuthority": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "grvt/YieldRecipientTreasury": "0x4190868e223c0dd5ed5dd5e5f6ec517c93399fb182c38a0fe67c45634d6fe15a",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/Diamond": "0xf8ceb7cc4613a5afb74ab717732cca35ae7826aaa6ba9643d656020bdb3cec08",
     "shared-zk-stack/DualVerifier": "0x9378cf0ffe4ba30c57c7c2d9c7eefefc31c62efe9c6be4c177a9fbc3fedd4970",
@@ -1649,10 +3785,10 @@
     "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26254672 },
-  "permissionsConfigHash": "0xb92e9aa573d47c838570b5af5e8538c27959bb340b640f0318067d726aa76cc7",
+  "usedBlockNumbers": { "ethereum": 26326688 },
+  "permissionsConfigHash": "0xcce27155895ef3ad07e157bcfb54659f47c2913da7247c399b4f64fc5fa77027",
   "modelledAgainst": {
-    "shared-zk-stack": "0x5c5ff23838fc7b5156f4cf75b1dd2efc5d47beb9f0b3f7434d20690afdbf2fd0"
+    "shared-zk-stack": "0x46314e1d2cbb1c7cf6eadfeedc7105f4dae01d4adb90efd083410f82f274904e"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
@@ -1669,6 +3805,73 @@
         {
           "permission": "upgrade",
           "from": "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "allocate the funds of the GRVTL1TreasuryVault to whitelisted strategies and withdraw them back to the vault.",
+          "role": ".allocator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "bridge funds from the GRVTL1TreasuryVault to the exchange on GRVT.",
+          "role": ".rebalancer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "pause allocations to strategies, yield harvests and bridging to GRVT in the GRVTL1TreasuryVault.",
+          "role": ".pauser"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+          "delay": 172800,
+          "role": ".Executor"
+        }
+      ]
+    },
+    "eth:0x29D2e773A31C07D375c50F0110422832bd044d08": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C",
+          "description": "one of its 3/3 signers.",
+          "role": ".SECURITY_COUNCIL"
+        }
+      ]
+    },
+    "eth:0x2B19C664F7b1D389A6a9d483acd283098613D84A": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1ff873538e62BA19cd36CE97e48F6fC84D07a5E4",
           "role": "admin"
         }
       ]
@@ -1718,9 +3921,117 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18",
+          "description": "register receipt tokens with their price sources and caps, and whitelist price sources.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
+          "description": "create compartments with an arbitrary implementation and vault ID. A new compartment can deposit to GRVT through the GRVTBridgeProxy without a DepositApprover signature.",
+          "role": ".compartmentCreator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
+          "description": "grant and revoke the operator, rebalancer and pauser roles of all compartments.",
+          "role": ".configAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
+          "description": "list and remove the external yield venues of all compartments, and upgrade all compartments and the CompartmentRegistry without delay through the UpgradeAuthority.",
+          "role": ".registryAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
+          "description": "manage all roles in the CompartmentRegistry.",
+          "role": ".defaultAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
+          "description": "pause the creation of compartments and deposits of all compartments into their yield venues.",
+          "role": ".pauser"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
+          "description": "unpause the CompartmentRegistry and all compartments, and manage the pauser role of all compartments.",
+          "role": ".unpauser"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D",
           "description": "set the conversion factor for gas token deposits.",
           "role": ".tokenMultiplierSetter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "manage the VAULT_ADMIN_ROLE in the GRVTL1TreasuryVault.",
+          "role": ".defaultAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "whitelist yield strategies and their allocation caps, set the supported and bridgeable tokens, manage the operational roles, pause and unpause, withdraw funds from strategies, harvest yield and send ETH to the yield recipient.",
+          "role": ".vaultAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+          "description": "propose transactions.",
+          "role": ".Proposer"
         },
         {
           "permission": "interact",
@@ -1732,26 +4043,196 @@
           ]
         },
         {
+          "permission": "interact",
+          "from": "eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12",
+          "description": "register receipt tokens with their price sources and caps, and whitelist price sources.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x17CBac7631063d8A79ddb5c3fc7C2336F0161915",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x421a3f9b8665174B4FcF5fD4A9012B79be457f51" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1ff873538e62BA19cd36CE97e48F6fC84D07a5E4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x2B19C664F7b1D389A6a9d483acd283098613D84A" }
+          ]
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x646123424BEcBF14a7542bc44340AdB241BA32b3",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x67fB799C70ee1Ecbc015AcB25F0BA8E77F20F251",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xF57Be7cB5B1c5e37fDb19DdF8E5A359A5e381575" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12",
           "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
+          "from": "eth:0x2B19C664F7b1D389A6a9d483acd283098613D84A",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x421a3f9b8665174B4FcF5fD4A9012B79be457f51",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
           "from": "eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D",
           "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+          "delay": 259200,
+          "role": ".Executor"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xF57Be7cB5B1c5e37fDb19DdF8E5A359A5e381575",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x421a3f9b8665174B4FcF5fD4A9012B79be457f51": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x17CBac7631063d8A79ddb5c3fc7C2336F0161915",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x31641AE3A4c0A29Bf04c020E266cBc8fF2EdecA4",
+          "description": "send the balance of the YieldRecipientTreasury to its withdrawalRecipient.",
+          "role": ".authorizedWithdrawers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "allocate the funds of the GRVTL1TreasuryVault to whitelisted strategies and withdraw them back to the vault.",
+          "role": ".allocator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "bridge funds from the GRVTL1TreasuryVault to the exchange on GRVT.",
+          "role": ".rebalancer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "harvest the yield above the allocated principal from the strategies of the GRVTL1TreasuryVault to the yield recipient.",
+          "role": ".yieldHarvester"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "pause allocations to strategies, yield harvests and bridging to GRVT in the GRVTL1TreasuryVault.",
+          "role": ".pauser"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+          "delay": 172800,
+          "role": ".Executor"
+        }
+      ]
+    },
+    "eth:0x4e29715b7Ca2569678027c01627D936235eA36De": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
         }
       ]
     },
     "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
+          "role": ".admin",
+          "via": [
+            { "address": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
@@ -1772,6 +4253,15 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xBfaa733261500101996A10A231794263567d52ab",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b" },
+            { "address": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
           "role": "admin",
           "via": [
@@ -1785,22 +4275,11 @@
           "permission": "act",
           "from": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063",
           "role": ".owner"
-        }
-      ]
-    },
-    "eth:0x59195219d1176E42f8e607e9AC114926D47f9035": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "soft freeze, hard freeze, approve a protocol upgrade.",
-          "role": ".securityCouncil"
         },
         {
-          "permission": "interact",
-          "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
-          "description": "one of its 3/3 signers.",
-          "role": ".SECURITY_COUNCIL"
+          "permission": "act",
+          "from": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172",
+          "role": ".owner"
         }
       ]
     },
@@ -1824,34 +4303,6 @@
         }
       ]
     },
-    "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "extend the legal veto period, approve a protocol upgrade.",
-          "role": ".guardians"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
-          "description": "one of its 3/3 signers.",
-          "role": ".GUARDIANS"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
-          "role": ".VETO_GUARDIAN"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
-          "role": ".VETO_GUARDIAN"
-        }
-      ]
-    },
     "eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D": {
       "directlyReceivedPermissions": [
         {
@@ -1862,6 +4313,63 @@
         }
       ]
     },
+    "eth:0x67fB799C70ee1Ecbc015AcB25F0BA8E77F20F251": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18",
+          "description": "swap registered receipt tokens with the strategy at the price of their price sources, within the configured caps.",
+          "role": ".operator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12",
+          "description": "swap registered receipt tokens with the strategy at the price of their price sources, within the configured caps.",
+          "role": ".operator"
+        }
+      ]
+    },
+    "eth:0x736258fdd7dc998A1180333AFec1C045868EAcdf": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8196Df3c158E67963021e869e972d2c2254Ed485" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xf311e82885d51425cd6798eD44AF3b8FA7DF03F6" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x8196Df3c158E67963021e869e972d2c2254Ed485",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xf311e82885d51425cd6798eD44AF3b8FA7DF03F6",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x8196Df3c158E67963021e869e972d2c2254Ed485": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89",
+          "role": "admin"
+        }
+      ]
+    },
     "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56": {
       "receivedPermissions": [
         {
@@ -1869,6 +4377,53 @@
           "from": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
           "description": "address is part of the GRVTTransactionFilterer whitelist.",
           "role": ".whitelistedSender"
+        }
+      ]
+    },
+    "eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C",
+          "description": "one of its 3/3 signers.",
+          "role": ".GUARDIANS"
+        }
+      ]
+    },
+    "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
+          "role": ".admin"
+        }
+      ]
+    },
+    "eth:0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "allocate the funds of the GRVTL1TreasuryVault to whitelisted strategies and withdraw them back to the vault.",
+          "role": ".allocator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "bridge funds from the GRVTL1TreasuryVault to the exchange on GRVT.",
+          "role": ".rebalancer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "description": "pause allocations to strategies, yield harvests and bridging to GRVT in the GRVTL1TreasuryVault.",
+          "role": ".pauser"
         }
       ]
     },
@@ -1921,6 +4476,22 @@
         }
       ]
     },
+    "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18",
+          "description": "swap registered receipt tokens with the strategy at the price of their price sources, within the configured caps.",
+          "role": ".operator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12",
+          "description": "swap registered receipt tokens with the strategy at the price of their price sources, within the configured caps.",
+          "role": ".operator"
+        }
+      ]
+    },
     "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB": {
       "receivedPermissions": [
         {
@@ -1942,20 +4513,11 @@
       ]
     },
     "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": {
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
-          "from": "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+          "permission": "interact",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
           "role": ".owner"
         },
         {
@@ -1999,6 +4561,132 @@
           "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "control all roles in the ZkToken access control, including the minter roles.",
           "role": ".DefaultAdmin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "role": "admin",
+          "via": [
+            { "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+          "role": ".owner"
         }
       ]
     },
@@ -2012,176 +4700,12 @@
         }
       ]
     },
-    "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "description": "pause / unpause the bridge.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "description": "pause, unpause and set critical escrow address references.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
-          "description": "pause, resume chain migrations.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
-          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "description": "control all roles in the ZkToken access control, including the minter roles.",
-          "role": ".DefaultAdmin",
-          "via": [
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" },
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "role": "admin",
-          "via": [
-            { "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" },
-            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
-        }
-      ],
+    "eth:0xF57Be7cB5B1c5e37fDb19DdF8E5A359A5e381575": {
       "directlyReceivedPermissions": [
         {
-          "permission": "act",
-          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "role": ".emergencyUpgradeBoard"
+          "permission": "upgrade",
+          "from": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
+          "role": "admin"
         }
       ]
     },
@@ -2189,7 +4713,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
+          "from": "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C",
           "description": "one of its 3/3 signers.",
           "role": ".ZK_FOUNDATION_SAFE"
         },
@@ -2198,6 +4722,22 @@
           "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
           "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
           "role": ".PROPOSE_GUARDIAN"
+        }
+      ]
+    },
+    "eth:0xbF3D8452244849f3598165981FcF5b2DA15eaE4f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44",
+          "description": "bridge the compartment's funds to its vault on GRVT.",
+          "role": ".rebalancer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44",
+          "description": "deposit the compartment's funds into its listed Axcess, Nest and Wildcat venues and withdraw them back to the compartment.",
+          "role": ".operator"
         }
       ]
     },
@@ -2211,6 +4751,37 @@
         }
       ]
     },
+    "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18",
+          "description": "register receipt tokens with their price sources and caps, and whitelist price sources.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcAc7375CaA2A8E3024Cd8FB44309ee3246e9B0d3",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12",
+          "description": "register receipt tokens with their price sources and caps, and whitelist price sources.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBfaa733261500101996A10A231794263567d52ab",
+          "role": "admin"
+        }
+      ]
+    },
     "eth:0xe81d64195072e4d09639b31Abb257d0096FEa9d1": {
       "receivedPermissions": [
         {
@@ -2221,147 +4792,26 @@
         }
       ]
     },
-    "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714": {
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "start (queue) upgrades.",
-          "role": ".L2_PROTOCOL_GOVERNOR"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC"
-        }
-      ]
-    },
-    "zksync:0x76705327e682F2d96943280D99464Ab61219e34f": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "start (queue) upgrades.",
-          "role": ".L2_PROTOCOL_GOVERNOR",
-          "via": [
-            { "address": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "description": "cancel queued transactions.",
-          "role": ".Canceller"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
-          "via": [
-            { "address": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "description": "propose transactions.",
-          "role": ".Proposer"
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "role": ".Executor"
-        }
-      ]
-    },
-    "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
-          "role": ".MinterAdmin",
-          "via": [
-            {
-              "address": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-              "delay": 259200
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-          "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
-          "via": [
-            {
-              "address": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-              "delay": 259200
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-          "description": "cancel queued transactions.",
-          "role": ".Canceller"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-          "description": "propose transactions.",
-          "role": ".Proposer"
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-          "delay": 259200,
-          "role": ".Executor"
-        }
-      ]
-    },
-    "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": {
+    "eth:0xf311e82885d51425cd6798eD44AF3b8FA7DF03F6": {
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44",
           "role": "admin"
         }
       ]
     },
-    "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d": {
+    "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938": {
       "directlyReceivedPermissions": [
         {
-          "permission": "interact",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
-          "role": ".MinterAdmin"
+          "permission": "upgrade",
+          "from": "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
+          "role": "admin"
         },
         {
-          "permission": "interact",
-          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-          "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC"
+          "permission": "upgrade",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "role": "admin"
         }
       ]
     }

@@ -19,11 +19,11 @@ The closed SDK can derive the private account's keys from a wallet signature, wh
 
 ### App
 
-Apps integrate the Privacy Boost SDK, whose core ships as closed-source WebAssembly. The ratings assume the operator's hosted wallet at [app.privacyboost.io](https://app.privacyboost.io), the only public app. It runs that core and reads the chain through Alchemy under the operator's key.
+Apps integrate the Privacy Boost SDK, whose core is closed source. The operator's hosted wallet is the only public app. It runs that core as WebAssembly and reads the chain through Alchemy under the operator's key. Each visit loads the newest core the operator has deployed, since the app pins no core version.
 
 ### Exits
 
-**Forced withdrawal.** If operator turns malicious or stops processing withdrawals, a user can prove a forced withdrawal of up to {{maxForcedInputs}} notes locally. The contract checks the authorization at request time, and anyone can execute the withdrawal {{forcedWithdrawalDelay}} later if the notes are still unspent. The account owner can cancel it. It publishes the spent notes and exposes the linked account.
+**Forced withdrawal.** If the operator turns malicious or stops processing withdrawals, a user can prove a forced withdrawal of up to {{maxForcedInputs}} notes locally. The contract checks the authorization at request time, and anyone can execute the withdrawal {{forcedWithdrawalDelay}} later if the notes are still unspent. The account owner can cancel it. It publishes the spent notes and exposes the linked account.
 
 ### Compliance
 

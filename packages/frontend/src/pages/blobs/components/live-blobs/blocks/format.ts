@@ -50,7 +50,10 @@ export function formatKib(kib: number): string {
   return `${value.toFixed(decimals)} ${SIZE_UNITS[unit]}`
 }
 
-const CLOCK = new Intl.DateTimeFormat(undefined, {
+// UTC, 24-hour, as every other time on the site, whatever the device's zone and locale
+const CLOCK = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'UTC',
+  hourCycle: 'h23',
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',
@@ -58,5 +61,5 @@ const CLOCK = new Intl.DateTimeFormat(undefined, {
 
 /** With seconds: slots are 12 s, so minutes alone repeat */
 export function formatClock(unixSeconds: number): string {
-  return CLOCK.format(unixSeconds * 1000)
+  return `${CLOCK.format(unixSeconds * 1000)} UTC`
 }

@@ -7,6 +7,7 @@ import { ps } from '~/server/projects'
 import {
   firstSentence,
   type LinkListSection,
+  type MarkdownLink,
   withFacts,
 } from '../listPageMarkdown'
 import { formatVerifierCounts } from '../zkSectionBodies'
@@ -14,24 +15,44 @@ import { formatVerifierCounts } from '../zkSectionBodies'
 export async function getZkListSections(): Promise<LinkListSection[]> {
   const projects = await ps.getProjects({
     select: ['zkCatalogInfo'],
-    whereNot: ['archivedAt'],
-    optional: ['display'],
+    optional: ['display', 'archivedAt'],
   })
+  const active = projects.filter((p) => !p.archivedAt)
+  // Kept for historical reasons: no other markdown index lists them.
+  const archived = projects.filter((p) => p.archivedAt)
   return [
     {
       heading: 'Proving systems (/zk-catalog/{slug})',
-      links: projects.map((p) => ({
-        name: p.name,
-        path: `/zk-catalog/${p.slug}`,
-        description: withFacts(firstSentence(p.display?.description ?? ''), [
-          p.zkCatalogInfo.creator && `by ${p.zkCatalogInfo.creator}`,
-          p.zkCatalogInfo.quantumResistant && 'quantum resistant',
-          trustedSetupsFact(p.zkCatalogInfo.trustedSetups),
-          verifiersFact(p.zkCatalogInfo.verifierHashes),
-        ]),
-      })),
+      links: active.map(zkLink),
     },
+    ...(archived.length > 0
+      ? [
+          {
+            heading: 'Archived proving systems (/zk-catalog/{slug})',
+            links: archived.map(zkLink),
+          },
+        ]
+      : []),
   ]
+}
+
+function zkLink(project: {
+  name: string
+  slug: string
+  zkCatalogInfo: ProjectZkCatalogInfo
+  display?: { description: string }
+}): MarkdownLink {
+  const info = project.zkCatalogInfo
+  return {
+    name: project.name,
+    path: `/zk-catalog/${project.slug}`,
+    description: withFacts(firstSentence(project.display?.description ?? ''), [
+      info.creator && `by ${info.creator}`,
+      info.quantumResistant && 'quantum resistant',
+      trustedSetupsFact(info.trustedSetups),
+      verifiersFact(info.verifierHashes),
+    ]),
+  }
 }
 
 function trustedSetupsFact(

@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Yield strategy of the GRVTL1TreasuryVault that converts the vault token to GHO through the Aave GHO Stability Module and deposits it into sGHO. Only the vault can allocate to and withdraw from it.",
+  "ignoreRelatives": [
+    "ghoGsm",
+    "ghoToken",
+    "gsmStataToken",
+    "positionBreakdown",
+    "sGhoToken",
+    "tvlTokens",
+    "vaultToken"
+  ]
+}

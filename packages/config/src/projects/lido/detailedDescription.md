@@ -2,7 +2,7 @@ Lido is Ethereum’s largest liquid staking protocol. Users deposit ETH and rece
 
 ### Staking and node operators
 
-Deposited ETH is buffered in the Lido contract, then routed by the StakingRouter across four staking modules — the curated Node Operators Registry, Simple DVT, the permissionless Community Staking Module, and the MaxEB Curated Module v2. Withdrawal credentials for pooled validators are set by the router to the protocol’s WithdrawalVault, not by operators, so operators can never redirect user principal. Their misbehavior can only degrade yield (socialized to stETH holders), they post a bond in the newer modules (CSM/CMv2), and their validators can be force-exited via EIP-7002.
+Deposited ETH is buffered in the Lido contract, then routed by the StakingRouter across {{stakingModules}} staking modules — the curated Node Operators Registry, Simple DVT, the permissionless Community Staking Module, the MaxEB Curated Module v2, and a second Community Staking Module for 0x02 (compounding) validators. Withdrawal credentials for pooled validators are set by the router to the protocol’s WithdrawalVault, not by operators, so operators can never redirect user principal. Their misbehavior can only degrade yield (socialized to stETH holders), they post a bond in the newer modules (CSM/CMv2), and their validators can be force-exited via EIP-7002.
 
 ![Lido deposit flow](/images/architecture/lido-deposits.png#center)
 

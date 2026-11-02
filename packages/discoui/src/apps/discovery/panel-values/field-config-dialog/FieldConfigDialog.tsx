@@ -145,7 +145,7 @@ function FieldConfigBody({ fieldName }: { fieldName: string }) {
           </Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="config" className="overflow-y-auto py-2">
-          <div className="space-y-2">
+          <div className="space-y-3">
             <ConfigRow
               headline={
                 <span className="flex items-center gap-2">
@@ -226,8 +226,12 @@ function FieldConfigBody({ fieldName }: { fieldName: string }) {
             <ConfigRow headline="Handler">
               <div className="group relative">
                 <Code
-                  className="group-hover:pointer-events-none"
                   content={configHandlerString ?? 'No handler defined'}
+                  className={cn(
+                    'group-hover:pointer-events-none',
+                    configHandlerString === undefined &&
+                      'text-coffee-400 italic',
+                  )}
                 />
                 <FieldHandlerConfigDialog
                   context="config"
@@ -237,7 +241,12 @@ function FieldConfigBody({ fieldName }: { fieldName: string }) {
             </ConfigRow>
 
             <ConfigRow headline="Edit">
-              <Code content={configEditString ?? 'No edit formula defined'} />
+              <Code
+                content={configEditString ?? 'No edit formula defined'}
+                className={cn(
+                  configEditString === undefined && 'text-coffee-400 italic',
+                )}
+              />
             </ConfigRow>
 
             <ConfigRow headline="Description">
@@ -251,7 +260,7 @@ function FieldConfigBody({ fieldName }: { fieldName: string }) {
           </div>
         </Tabs.Content>
         <Tabs.Content value="template" className="overflow-y-auto py-2">
-          <div className="space-y-2">
+          <div className="space-y-3">
             {models.templateModel.hasTemplate ? (
               <>
                 <ConfigRow
@@ -339,8 +348,12 @@ function FieldConfigBody({ fieldName }: { fieldName: string }) {
                 <ConfigRow headline="Handler">
                   <div className="group relative">
                     <Code
-                      className="group-hover:pointer-events-none"
                       content={templateHandlerString ?? 'No handler defined'}
+                      className={cn(
+                        'group-hover:pointer-events-none',
+                        templateHandlerString === undefined &&
+                          'text-coffee-400 italic',
+                      )}
                     />
                     <FieldHandlerConfigDialog
                       context="template"
@@ -352,6 +365,10 @@ function FieldConfigBody({ fieldName }: { fieldName: string }) {
                 <ConfigRow headline="Edit">
                   <Code
                     content={templateEditString ?? 'No edit formula defined'}
+                    className={cn(
+                      templateEditString === undefined &&
+                        'text-coffee-400 italic',
+                    )}
                   />
                 </ConfigRow>
 
@@ -388,7 +405,9 @@ function SeverityButton({
   return (
     <Button
       onClick={onClick}
-      className={cn(isActive && 'bg-coffee-400/50')}
+      className={cn(
+        isActive && 'border-autumn-300 bg-autumn-300/15 text-autumn-300',
+      )}
       size="small"
     >
       {children}

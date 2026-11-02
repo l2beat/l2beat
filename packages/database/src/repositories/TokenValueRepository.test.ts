@@ -2390,6 +2390,83 @@ describeDatabase(TokenValueRepository.name, (db) => {
     },
   )
 
+  describe(
+    TokenValueRepository.prototype.getSummedByProjectAtResolution.name,
+    () => {
+      const metadataRepository = db.tvsTokenMetadata
+      const HOUR = UnixTime.HOUR
+      // Midnight UTC
+      const T = UnixTime(1_700_006_400)
+
+      beforeEach(async () => {
+        await metadataRepository.insertMany([
+          {
+            projectId: 'arbitrum',
+            tokenId: 'a',
+            source: 'canonical',
+            category: 'ether',
+            isAssociated: false,
+          },
+          {
+            projectId: 'arbitrum',
+            tokenId: 'b',
+            source: 'canonical',
+            category: 'rwaRestricted',
+            isAssociated: false,
+          },
+          {
+            projectId: 'base',
+            tokenId: 'c',
+            source: 'canonical',
+            category: 'ether',
+            isAssociated: false,
+          },
+        ])
+        await repository.upsertMany([
+          tokenValue('a', 'arbitrum', T - 6 * HOUR, 1, 1, 1, 1, 1),
+          tokenValue('a', 'arbitrum', T, 1, 10, 10, 10, 1),
+          tokenValue('b', 'arbitrum', T, 1, 5, 5, 5, 1),
+          tokenValue('a', 'arbitrum', T + HOUR, 1, 20, 20, 20, 1),
+          tokenValue('a', 'arbitrum', T + 2 * HOUR, 1, 30, 30, 30, 1),
+          tokenValue('a', 'arbitrum', T + 3 * HOUR, 1, 40, 40, 40, 1),
+          tokenValue('c', 'base', T, 1, 50, 50, 50, 1),
+        ])
+      })
+
+      afterEach(async () => {
+        await metadataRepository.deleteAll()
+      })
+
+      it('sums projects at resolution boundaries and every timestamp after the last one', async () => {
+        const result = await repository.getSummedByProjectAtResolution(
+          ['arbitrum'],
+          [null, T + 2 * HOUR],
+          'day',
+          { excludeRwaRestrictedTokens: false },
+        )
+
+        expect(result).toEqualUnsorted([
+          { projectId: 'arbitrum', timestamp: T, value: 15 },
+          { projectId: 'arbitrum', timestamp: T + HOUR, value: 20 },
+          { projectId: 'arbitrum', timestamp: T + 2 * HOUR, value: 30 },
+        ])
+      })
+
+      it('excludes RWA restricted tokens', async () => {
+        const result = await repository.getSummedByProjectAtResolution(
+          ['arbitrum'],
+          [T, T],
+          'day',
+          { excludeRwaRestrictedTokens: true },
+        )
+
+        expect(result).toEqual([
+          { projectId: 'arbitrum', timestamp: T, value: 10 },
+        ])
+      })
+    },
+  )
+
   afterEach(async () => {
     await repository.deleteAll()
   })

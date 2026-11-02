@@ -55,12 +55,15 @@ function LeafHeader(props: { leafKey: LeafKey }) {
   return (
     <div
       data-leaf-handle={key}
-      className="flex h-[36px] shrink-0 cursor-move select-none items-center gap-2 border-coffee-600 border-y bg-coffee-800 pr-2"
+      className={cn(
+        'flex h-8 shrink-0 cursor-move select-none items-center gap-0.5 border-coffee-700 border-t-2 border-b bg-coffee-800 pr-1',
+        isActive ? 'border-t-autumn-300' : 'border-t-transparent',
+      )}
     >
       {config.renderHeader({ key, isActive, isFullScreen })}
       <button
         type="button"
-        className="w-4 text-coffee-200 hover:text-coffee-100"
+        className="flex size-6 items-center justify-center rounded-sm text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100"
         onClick={() => toggleFullScreen(key)}
         aria-label={isFullScreen ? 'Exit full screen' : 'Full screen'}
       >
@@ -68,7 +71,7 @@ function LeafHeader(props: { leafKey: LeafKey }) {
       </button>
       <button
         type="button"
-        className="w-4 text-coffee-200 hover:text-coffee-100"
+        className="flex size-6 items-center justify-center rounded-sm text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100"
         onClick={() => removeLeaf(key)}
         aria-label="Close panel"
       >

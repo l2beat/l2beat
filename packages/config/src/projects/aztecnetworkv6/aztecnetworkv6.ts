@@ -366,7 +366,9 @@ export const aztecnetworkv6: ScalingProject = {
         sinceBlock: v6ActivationBlock,
         // Proposers batch through Multicall3, so blobs match on the event
         // topic. The inbox only catches direct calls to the v6 Rollup. While v5
-        // runs, its blobs carry the same topic and count here.
+        // runs, its blobs carry the same topic and count here. Reverted
+        // proposals emit no event and proposers' blob self-sends have neither,
+        // so both go unattributed.
         // TODO: match on the emitting contract once the backend supports it.
         inbox: rollupAddress,
         topics: [

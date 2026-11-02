@@ -25,6 +25,7 @@ interface Props {
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
+  isPlaceholderData: boolean
   dataKeys: (keyof typeof bridgeTypeTvsChartMeta)[]
   toggleDataKey: (dataKey: string) => void
   tickCount?: number
@@ -55,6 +56,7 @@ export function BridgeTypeTvsChart({
   milestones,
   unit,
   isLoading,
+  isPlaceholderData,
   tickCount,
   dataKeys,
   toggleDataKey,
@@ -65,6 +67,7 @@ export function BridgeTypeTvsChart({
   // But for single data source it should not start from 0
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={bridgeTypeTvsChartMeta}
       isLoading={isLoading}

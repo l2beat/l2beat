@@ -3,10 +3,12 @@ import {
   HighlightedTableRowProvider,
   useHighlightedTableRowContext,
 } from '~/components/table/HighlightedTableRowContext'
+import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { StickyTableHeader } from './StickyTableHeader'
 import { TableTooltip } from './TableTooltip'
 import {
+  scrollToNextColumns,
   stickyTableHeaderClassNames,
   useStickyTableHeader,
 } from './useStickyTableHeader'
@@ -68,6 +70,22 @@ const Table = ({
             {children}
           </table>
         </HighlightedTableRowProvider>
+      </div>
+      <div aria-hidden className="table-edge-fade">
+        {/* A shortcut for a mouse without a sideways wheel; the table itself
+            stays the way to reach its columns, so it takes no focus. */}
+        <button
+          type="button"
+          tabIndex={-1}
+          className="table-edge-fade-chevron"
+          onClick={() => {
+            if (sticky.root.current && sticky.scroller.current) {
+              scrollToNextColumns(sticky.root.current, sticky.scroller.current)
+            }
+          }}
+        >
+          <ChevronIcon className="-rotate-90 size-3.5 text-zinc-500 dark:text-n-zinc-300" />
+        </button>
       </div>
     </div>
   )

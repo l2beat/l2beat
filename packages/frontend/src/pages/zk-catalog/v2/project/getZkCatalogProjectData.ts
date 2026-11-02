@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getProjectSectionLinks } from '~/server/features/projects/getProjectSectionLinks'
+import { getProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -61,11 +62,13 @@ async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
   })
   if (!project) return undefined
 
-  const [appLayoutProps, projectEntry, sectionLinks] = await Promise.all([
-    getAppLayoutProps(),
-    getZkCatalogProjectEntry(project),
-    getProjectSectionLinks(slug),
-  ])
+  const [appLayoutProps, projectEntry, sectionLinks, versionLinks] =
+    await Promise.all([
+      getAppLayoutProps(),
+      getZkCatalogProjectEntry(project),
+      getProjectSectionLinks(slug),
+      getProjectVersionLinks(slug, 'zkCatalog'),
+    ])
 
   return {
     head: {
@@ -90,6 +93,7 @@ async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
       ...appLayoutProps,
       projectEntry,
       sectionLinks,
+      versionLinks,
       queryState: helpers.dehydrate(),
     },
   }

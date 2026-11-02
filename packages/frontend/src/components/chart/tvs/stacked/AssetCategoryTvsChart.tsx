@@ -28,6 +28,7 @@ interface Props {
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
+  isPlaceholderData: boolean
   tickCount?: number
   project?: ChartProject
   excludeRwaRestrictedTokens: boolean
@@ -72,6 +73,7 @@ export function AssetCategoryTvsChart({
   milestones,
   unit,
   isLoading,
+  isPlaceholderData,
   tickCount,
   dataKeys,
   toggleDataKey,
@@ -83,6 +85,7 @@ export function AssetCategoryTvsChart({
   // But for single one it should not start from 0
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={assetCategoryTvsChartMeta}
       isLoading={isLoading}

@@ -29,6 +29,7 @@ interface Props {
   data: PrivacyFlowsChartPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   metric: 'count' | 'value'
   scale?: ChartScale
   project?: ChartProject
@@ -52,6 +53,7 @@ export function PrivacyFlowChart({
   data,
   syncedUntil,
   isLoading,
+  isPlaceholderData,
   metric,
   scale = 'linear',
   project,
@@ -80,6 +82,7 @@ export function PrivacyFlowChart({
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={chartData}
       meta={chartMeta}
       isLoading={isLoading}

@@ -133,6 +133,15 @@
       // RiscZeroSetVerifier behind the active estop 0x844D...
       "critical": { "sinceTimestamp": 1772638115 }
     },
+    // route 0x8b38038c, added to the router by tx 0x5005dff6...
+    "eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50": {
+      // active RiscZeroVerifierEmergencyStop (selector 0x8b38038c)
+      "critical": { "sinceTimestamp": 1793127383 }
+    },
+    "eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e": {
+      // RiscZeroGroth16Verifier v3.1.0 behind the active estop 0x9660...
+      "critical": { "sinceTimestamp": 1793127383 }
+    },
     // --- ossification: retired critical contracts (keep their change history; untilTimestamp = time they left the perimeter) ---
     // tier-system era (deleted in diffHistory 167b8dff, 2025-05-28)
     "eth:0x579f40D0BE111b823962043702cabe6Aaa290780": {

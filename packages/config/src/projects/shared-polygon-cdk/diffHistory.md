@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x3e4e104195093af2304084b103332b5198e6c422
+
+# Diff at Wed, 28 Oct 2026 13:42:08 GMT:
+
+- id: 4130b006
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cc7e9e73c101d0a260af6bfe078851f3ff1d60cb block: 1792144133
+- current timestamp: 1793194766
+
+## Description
+
+Cedar (rollup ID 30) submitted its first pessimistic proof, so its bridge state now settles through the Agglayer.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.17:
++        30
+    }
+```
+
 Generated with discovered.json: 0xd15850f28fe9931b5c385d6bb8b9040486cceadc
 
 # Diff at Sat, 24 Oct 2026 16:41:08 GMT:

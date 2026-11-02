@@ -254,7 +254,7 @@ export function LayoutLibrary() {
                 <div className="font-medium text-sm">Committed layouts</div>
                 {projectId ? (
                   <>
-                    <div className="max-h-48 overflow-y-auto border border-coffee-400 bg-coffee-400/10">
+                    <div className="max-h-48 overflow-y-auto rounded-sm border border-coffee-700 bg-coffee-800/50">
                       {layoutsQuery.isPending ? (
                         <EmptyState>Loading committed layouts...</EmptyState>
                       ) : layoutsQuery.isError ? (

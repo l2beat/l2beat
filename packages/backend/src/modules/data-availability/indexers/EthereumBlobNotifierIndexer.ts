@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { EthereumDaTrackingConfig } from '@l2beat/config'
-import type { Database } from '@l2beat/database'
+import type { BlobRecord, Database } from '@l2beat/database'
 import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
 import { pluralize, UnixTime } from '@l2beat/shared-pure'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
@@ -8,7 +8,7 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import { matchEthereumProject } from '../services/matchEthereumConfigs'
+import { matchEthereumConfigs } from '../services/matchEthereumConfigs'
 
 interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
@@ -75,34 +75,45 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
     const todayStart = UnixTime.toStartOf(to, 'day')
     const yesterdayStart = todayStart - UnixTime.DAY
 
-    const pairs = await this.$.db.blobs.getCountPerAddressInbox(
+    const blobs = await this.$.db.blobs.getByTimestampRange(
       'ethereum',
       yesterdayStart,
       todayStart,
     )
 
-    const unmatchedPairs: UnmatchedBlobPair[] = []
+    const unmatched = new Map<string, UnmatchedBlobPair>()
+    for (const blob of blobs) {
+      if (this.isAttributed(blob)) continue
 
-    for (const pair of pairs) {
-      if (pair.count < COUNT_THRESHOLD) continue
-
-      const isMatched = this.$.configurations.some((config) =>
-        matchEthereumProject(
-          {
-            inbox: pair.to ?? '',
-            sequencer: pair.from,
-            topics: [],
-          },
-          config,
-        ),
-      )
-
-      if (!isMatched) {
-        unmatchedPairs.push(pair)
+      const key = `${blob.from}:${blob.to}`
+      const pair = unmatched.get(key)
+      if (pair) {
+        pair.count++
+      } else {
+        unmatched.set(key, { from: blob.from, to: blob.to, count: 1 })
       }
     }
 
-    return unmatchedPairs
+    return [...unmatched.values()].filter(
+      (pair) => pair.count >= COUNT_THRESHOLD,
+    )
+  }
+
+  /**
+   * The DA indexer's match, so projects tracked by event, like Aztec posting
+   * through Multicall3, are not reported
+   */
+  private isAttributed(blob: BlobRecord): boolean {
+    const configs = matchEthereumConfigs(
+      this.$.configurations,
+      blob.blockNumber,
+      {
+        inbox: blob.to ?? '',
+        sequencer: blob.from,
+        topics: blob.topics ?? [],
+      },
+    )
+    return configs.length > 0
   }
 
   formatDiscordMessages(pairs: UnmatchedBlobPair[], to: number): string[] {

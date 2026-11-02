@@ -1,3 +1,217 @@
+Generated with discovered.json: 0x5b361dc495764bcdeec7d186eb577f8c4d7e6c74
+
+# Diff at Wed, 28 Oct 2026 13:54:41 GMT:
+
+- id: a1b77e4a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cc7e9e73c101d0a260af6bfe078851f3ff1d60cb block: 1793113693
+- current timestamp: 1793195449
+
+## Description
+
+The RISC Zero EOA added route 0x8b38038c on the RiscZeroVerifierRouter to RiscZeroGroth16Verifier v3.1.0. Its verifying key matches no published RISC Zero setup. BOB's retired Kailua path no longer uses the router, so discovery ignores the new route.
+https://disco.l2beat.com/diff/eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D/eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsExecuted.21:
++        {"id":"0x682e79774f6b8e0fc1dbddd69bfca4374e9827b815d8fb2a73d602d541714c82","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af308b38038c000000000000000000000000000000000000000000000000000000000000000000000000000000009660bd6dcdf455dcfb30c07c642ab22e7cb89f50"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_8b38038c:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793113693 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: MEDIUM
+      values.verifier_8b38038c:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.verifier_8b38038c:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0x3eba512d4b4c9695df18ec8b0b7caa40b9b42752
+
+# Diff at Tue, 27 Oct 2026 15:07:49 GMT:
+
+- id: 60041f8f
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b3346aafa392488900d7a556a206cfabc7acf611 block: 1791965825
+- current timestamp: 1793113693
+
+## Description
+
+TimelockController: Proposer, Executor and Canceller moved from the RISC Zero Safe to an EOA, which also accepted ownership of the RiscZeroVerifierEmergencyStops. The EOA scheduled a new verifier route on the RiscZeroVerifierRouter, 3d delay.
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsExecuted.18:
++        {"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsExecuted.19:
++        {"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":1,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsExecuted.20:
++        {"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":2,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.24:
++        {"id":"0x682e79774f6b8e0fc1dbddd69bfca4374e9827b815d8fb2a73d602d541714c82","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af308b38038c000000000000000000000000000000000000000000000000000000000000000000000000000000009660bd6dcdf455dcfb30c07c642ab22e7cb89f50","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
++++ severity: MEDIUM
+      values.Canceller.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: MEDIUM
+      values.Executor.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++++ severity: MEDIUM
+      values.Proposer.0:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.pendingOwner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.pendingOwner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.pendingOwner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.pendingOwner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.pendingOwner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    EOA (eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"cancel queued transactions.","role":".Canceller"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"execute transactions that are ready.","role":".Executor"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","delay":259200}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"propose transactions.","role":".Proposer"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x1efDd13f831ceeEa14940806705A53D3211CD698","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","description":"add/remove verifiers and the selectors they are mapped to.","role":".owner","via":[{"address":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","delay":259200}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1","description":"pause the verifier.","role":".owner"}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","delay":259200,"role":".Executor"}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../.flat@1791965825/Safe/Safe.sol => /dev/null    | 1216 --------------------
+ .../Safe/SafeProxy.p.sol => /dev/null              |   42 -
+ 2 files changed, 1258 deletions(-)
+```
+
 Generated with discovered.json: 0xdea54daf56b3547e2a02c4ba8b0ea05d20207bce
 
 # Diff at Fri, 16 Oct 2026 09:37:44 GMT:

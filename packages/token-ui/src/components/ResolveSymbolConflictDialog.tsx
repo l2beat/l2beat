@@ -161,7 +161,7 @@ function ResolveSymbolConflictDialogContent({
   // Runs after PlanConfirmationDialog successfully executed the plan (it
   // also shows the standard success toast and invalidates the abstract-token
   // queries). All that is left is retrying the queue entry and refreshing
-  // the queue page.
+  // the queue views (the queue page and the graph's conflicts).
   async function onPlanExecuted() {
     setIsRetrying(true)
     try {
@@ -172,9 +172,7 @@ function ResolveSymbolConflictDialogContent({
       )
     } finally {
       setIsRetrying(false)
-      await queryClient.invalidateQueries(
-        trpc.tokenIngestionQueue.getPage.queryFilter(),
-      )
+      await queryClient.invalidateQueries(trpc.tokenIngestionQueue.pathFilter())
     }
     onClose()
   }

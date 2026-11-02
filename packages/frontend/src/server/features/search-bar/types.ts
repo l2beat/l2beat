@@ -15,7 +15,6 @@ export type SearchBarProjectEntry = SearchBarEntry & {
     | 'layer3'
     | 'interop'
     | 'zkCatalog'
-    | 'ecosystem'
     | 'privacy'
     | 'defi'
   l2Category?: ProjectScalingCategory

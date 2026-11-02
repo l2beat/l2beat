@@ -2,24 +2,11 @@ import type { Logger } from '@l2beat/backend-tools'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { continueMinute, getDayPeaks, type MinuteCarry } from '../utils/peaks'
+import { HOURLY_ACTIVITY_DAYS } from '../utils/hourlyActivity'
 import { sumPerPeriod } from '../utils/sumPerPeriod'
 import type { BlockActivityIndexerDeps } from './types'
 
-/**
- * Hourly rows serve charts of up to a week, kept with a week of margin. The
- * busiest hour and minute of each day stay on its daily row
- */
-const HOURLY_ACTIVITY_DAYS = 14
-
 export class BlockActivityIndexer extends ManagedChildIndexer {
-  /**
-   * What the last batch counted of its last minute, which the next batch may
-   * continue. Kept in memory only: after a restart the first minute's peak
-   * counts the new batch's part of it alone
-   */
-  private lastMinute: MinuteCarry | undefined
-
   constructor(
     private readonly $: BlockActivityIndexerDeps,
     logger: Logger,
@@ -48,11 +35,6 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     const latestTimestamp = blocks.at(-1)?.timestamp
     assert(latestTimestamp !== undefined, 'Latest timestamp is undefined')
 
-    const minutes = continueMinute(
-      sumPerPeriod(blocks, 'minute'),
-      this.lastMinute,
-      from,
-    )
     const days = sumPerPeriod(blocks, 'day')
     const hourlyCutoff =
       UnixTime.toStartOf(latestTimestamp, 'hour') -
@@ -61,9 +43,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     this.logger.info('Saving records', { count: days.length })
 
     await this.$.db.transaction(async () => {
-      // A batch may hold only part of an hour, so the day's busiest hour is
-      // found among the hours as stored after adding it
-      const hours = await this.$.db.hourlyActivity.addMany(
+      await this.$.db.hourlyActivity.addMany(
         sumPerPeriod(blocks, 'hour').map((hour) => ({
           projectId: this.$.projectId,
           timestamp: hour.timestamp,
@@ -75,7 +55,6 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
         days.map((day) => ({
           projectId: this.$.projectId,
           ...day,
-          ...getDayPeaks(day.timestamp, hours, minutes),
         })),
       )
       await this.$.db.hourlyActivity.deleteByProjectIdUntil(
@@ -89,8 +68,6 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
         adjustedTo,
       )
     })
-    const lastMinute = minutes.at(-1)
-    this.lastMinute = lastMinute && { height: adjustedTo, minute: lastMinute }
 
     return adjustedTo
   }

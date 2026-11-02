@@ -221,6 +221,38 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
   )
 
   describe(
+    InteropAggregateStatusRepository.prototype
+      .getPromotedMidnightTimestampsSince.name,
+    () => {
+      it('returns promoted midnight snapshots from the start', async () => {
+        const day = (n: number, hours = 0) =>
+          UnixTime(n * UnixTime.DAY + hours * UnixTime.HOUR)
+
+        await repository.upsertAuto({ timestamp: day(1), status: 'promoted' })
+        await repository.upsertAuto({ timestamp: day(2), status: 'blocked' })
+        await repository.upsertAuto({
+          timestamp: day(2, 1),
+          status: 'promoted',
+        })
+        await repository.upsertAuto({ timestamp: day(3), status: 'promoted' })
+        await repository.upsertAuto({
+          timestamp: day(3, 1),
+          status: 'promoted',
+        })
+        await repository.upsertAuto({
+          timestamp: day(4, 2),
+          status: 'promoted',
+        })
+        await repository.upsertAuto({ timestamp: day(5), status: 'promoted' })
+
+        expect(
+          await repository.getPromotedMidnightTimestampsSince(day(2)),
+        ).toEqual([day(3), day(5)])
+      })
+    },
+  )
+
+  describe(
     InteropAggregateStatusRepository.prototype.deleteOrphaned.name,
     () => {
       it('removes status rows whose snapshot no longer exists', async () => {

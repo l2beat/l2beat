@@ -1,5 +1,4 @@
 import type { GardenListing, ResolvedCrops } from '~/components/garden/crops'
-import { CustomLinkIcon } from '~/icons/Outlink'
 import { GARDEN_PATH } from '~/pages/garden/paths'
 import { CropsBed } from './crops/CropsBed'
 import { ProjectSection } from './ProjectSection'
@@ -24,10 +23,9 @@ export function GardenCropsSection({
       headerAccessory={
         <a
           href={GARDEN_PATH}
-          className="inline-flex items-center gap-1 font-medium text-label-value-14 text-link"
+          className="font-medium text-label-value-14 text-link"
         >
-          See The Infinite Garden
-          <CustomLinkIcon className="fill-current" />
+          See the CROPS guide
         </a>
       }
     >

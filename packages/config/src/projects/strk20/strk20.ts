@@ -143,6 +143,57 @@ export const strk20: BaseProject = {
   ],
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceApp: {
+      name: 'Bramble',
+      icon: 'bramble',
+      url: 'https://chromewebstore.google.com/detail/jcfafpefcpcejehepoednnollpeenpop',
+      since: '2026-10-27',
+      version: '0.10.7',
+      source: {
+        repository: 'https://github.com/starknet-innovation/bramble',
+        commit: 'd90222a2653c997a5cf8d8c6433df5ea10c16112',
+      },
+      checkedApps: [
+        {
+          name: 'Ready extension',
+          icon: 'ready',
+          finding:
+            "Sends the account and viewing key to Ready's servers, with no setting for a self-run discovery service.",
+          fix: 'Let users set their own discovery service and prover, as Bramble does.',
+          source:
+            'https://chromewebstore.google.com/detail/dlcobpjiigpikoobohmabehhmhfoodbb',
+          checked: '2026-10-30',
+        },
+        {
+          name: 'Xverse extension',
+          icon: 'xverse',
+          finding:
+            "Its privacy servers refuse Tor, so they get the user's IP along with the account and viewing key.",
+          fix: 'Accept Tor connections on its privacy servers.',
+          source:
+            'https://chromewebstore.google.com/detail/idnnbdplmphpflfnlkomgpfbpcgelopg',
+          checked: '2026-10-30',
+        },
+        {
+          name: 'Haven web app',
+          icon: 'haven',
+          finding:
+            "Reads the account's balances and transfers through Cartridge's public RPC, a third party that refuses most Tor circuits.",
+          fix: "Read the chain through Haven's own servers or a user-set RPC, and accept Tor there.",
+          source: 'https://go.haven.hn',
+          checked: '2026-10-30',
+        },
+        {
+          name: 'OffMarket web app',
+          icon: 'offmarket',
+          finding:
+            'Reports each deposit, trade and settled position to FullStory, a session recorder that is always on, so FullStory can link them.',
+          fix: 'Remove FullStory from the pages that handle private actions.',
+          source: 'https://offmarket.cx',
+          checked: '2026-10-30',
+        },
+      ],
+    },
     trackedOn: ['starknet'],
     tokens: getPrivacyTokens(),
     zkCatalogId: ProjectId('stwo'),
@@ -155,14 +206,14 @@ export const strk20: BaseProject = {
       walkawayTest: {
         passed: false,
         reason:
-          'Although the full software stack needed to generate proofs and exit is published and self-hostable, STRK-20 heavily relies on the permissioned Starknet sequencer: it alone verifies client proofs and must include pool transactions, so users cannot exit without its cooperation.',
+          "The prover and discovery service are open and self-hostable. StarkWare's permissioned sequencer alone checks client proofs and includes pool transactions, so users cannot exit without it.",
       },
     },
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The pool contract, SDK, discovery service and prover are open source. The deployed pool, anonymizer and bridge helpers rebuild from their published source. Source for the AVNU, Endur and escrow helpers is not published, and the wallets are closed.',
+        "The pool contract, SDK, discovery service and prover are open source. The deployed pool, anonymizer and bridge helpers rebuild from their published source. Source for the AVNU, Endur and escrow helpers is not published. Bramble's store build matches a rebuild of its tag, while its gateway runs closed code.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
