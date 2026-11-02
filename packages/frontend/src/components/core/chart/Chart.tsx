@@ -23,6 +23,7 @@ import { ChartLoader } from './ChartLoader'
 import { ChartMilestones } from './ChartMilestones'
 import { ChartNoDataSourceState } from './ChartNoDataSourceState'
 import { ChartNoDataState } from './ChartNoDataState'
+import { useChartShowsPreviousData } from './ChartPreviousData'
 import { ChartProjectLogo } from './ChartProjectLogo'
 import { ChartSettledSize } from './ChartSettledSize'
 import { sortLegend } from './utils/sortLegend'
@@ -134,9 +135,14 @@ function ChartContainer<T extends { timestamp: number }>({
     (key) => interactiveLegend && !interactiveLegend?.dataKeys.includes(key),
   )
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
+  const showsPreviousData = useChartShowsPreviousData()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
-      <div ref={ref} className="group relative">
+      <div
+        ref={ref}
+        className="group relative"
+        aria-busy={showsPreviousData || undefined}
+      >
         <ChartSettledSize
           className={cn(
             size === 'regular' &&
@@ -156,6 +162,13 @@ function ChartContainer<T extends { timestamp: number }>({
                 '[&_.recharts-reference-area]:hidden',
               ],
               (isLoading || !hasData) && 'pointer-events-none',
+              // The plot dims as `previousChartDataClassName` does. Its tooltip
+              // stays hidden: some charts format it with the new range's
+              // resolution, which the old buckets do not have.
+              showsPreviousData && [
+                '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
+                '[&_.recharts-surface]:opacity-40 [&_.recharts-surface]:transition-opacity [&_.recharts-surface]:delay-150 [&_.recharts-surface]:duration-200',
+              ],
             )}
           >
             {shouldMountChart ? children : <div />}

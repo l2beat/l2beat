@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { formatCostValue } from '~/pages/layer2s/costs/utils/formatCostValue'
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
@@ -21,9 +22,10 @@ export function CostsCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isPlaceholderData } = useQuery(
     trpc.costs.detailedChartWithProjectsRanges.queryOptions(
       getCostsCompareChartParams(queryProjects, chartRange),
+      { placeholderData: keepPreviousData },
     ),
   )
   const unit = config.costs.unit
@@ -43,16 +45,18 @@ export function CostsCompareChart({
   const resolution = rangeToResolution(chartRange)
 
   return (
-    <CompareMetricLineChart
-      projects={projects}
-      data={chartData}
-      isLoading={isLoading}
-      syncedUntil={data?.syncedUntil}
-      formatYAxisLabel={(value) => formatCostValue(value, unit)}
-      formatTooltipValue={(value) => formatCostValue(value, unit)}
-      renderTooltipTimestamp={(label) =>
-        formatRange(label, label + UnixTime.periodToSeconds(resolution))
-      }
-    />
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <CompareMetricLineChart
+        projects={projects}
+        data={chartData}
+        isLoading={isLoading}
+        syncedUntil={data?.syncedUntil}
+        formatYAxisLabel={(value) => formatCostValue(value, unit)}
+        formatTooltipValue={(value) => formatCostValue(value, unit)}
+        renderTooltipTimestamp={(label) =>
+          formatRange(label, label + UnixTime.periodToSeconds(resolution))
+        }
+      />
+    </ChartShowsPreviousData>
   )
 }

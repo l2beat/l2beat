@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
@@ -7,6 +7,7 @@ import { ProjectTokenChart } from '~/components/chart/tvs/token/ProjectTokenChar
 import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import { TokenSummaryBox } from '~/components/chart/tvs/token/TokenSummaryBox'
 import type { ChartProject } from '~/components/core/chart/Chart'
+import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { useTRPC } from '~/trpc/React'
@@ -23,14 +24,18 @@ export function TokenChart({
     return null
   }
 
+  // A chart per token: another token's chart, kept while this one loads,
+  // would show under this token's name.
   return (
     <>
       <TokenChartControls
+        key={selectedToken.id}
         token={selectedToken}
         projectId={project.id}
         className="mt-2"
       />
       <ProjectTokenChart
+        key={selectedToken.id}
         project={project}
         milestones={milestones}
         token={selectedToken}
@@ -51,14 +56,17 @@ function TokenChartControls({
 }) {
   const trpc = useTRPC()
   const { range, setRange } = useTvsChartControlsContext()
-  const { data } = useQuery(
-    trpc.tvs.tokenChart.queryOptions({
-      token: {
-        tokenId: token.id,
-        projectId,
+  const { data, isPlaceholderData } = useQuery(
+    trpc.tvs.tokenChart.queryOptions(
+      {
+        token: {
+          tokenId: token.id,
+          projectId,
+        },
+        range,
       },
-      range,
-    }),
+      { placeholderData: keepPreviousData },
+    ),
   )
 
   const timeRange = useMemo(
@@ -70,13 +78,15 @@ function TokenChartControls({
   )
 
   return (
-    <TvsChartControls
-      className={className}
-      timeRange={timeRange}
-      range={{
-        value: range,
-        setValue: setRange,
-      }}
-    />
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <TvsChartControls
+        className={className}
+        timeRange={timeRange}
+        range={{
+          value: range,
+          setValue: setRange,
+        }}
+      />
+    </ChartShowsPreviousData>
   )
 }

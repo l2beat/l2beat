@@ -22,6 +22,10 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { useChart } from './Chart'
 import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
+import {
+  previousChartDataClassName,
+  useChartShowsPreviousData,
+} from './ChartPreviousData'
 
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
@@ -41,10 +45,16 @@ export function ChartMilestones<T extends { timestamp: number }>({
     [data, milestones],
   )
 
+  const showsPreviousData = useChartShowsPreviousData()
+
   if (timestampedMilestones.length < 2) return null
 
   return (
-    <div data-role="milestones" ref={ref}>
+    <div
+      data-role="milestones"
+      ref={ref}
+      className={cn(showsPreviousData && previousChartDataClassName)}
+    >
       {timestampedMilestones.map((data, index) => {
         if (width === undefined || data.milestones.length === 0) return null
         const x = index / (timestampedMilestones.length - 1)

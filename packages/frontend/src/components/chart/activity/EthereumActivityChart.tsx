@@ -1,8 +1,9 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
+import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
@@ -36,10 +37,15 @@ export function EthereumActivityChart({
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('linear')
 
-  const { data: chart, isLoading } = useQuery(
-    trpc.activity.ethereumChart.queryOptions({
-      range,
-    }),
+  const {
+    data: chart,
+    isLoading,
+    isPlaceholderData,
+  } = useQuery(
+    trpc.activity.ethereumChart.queryOptions(
+      { range },
+      { placeholderData: keepPreviousData },
+    ),
   )
 
   const type = getChartType(category)
@@ -71,52 +77,54 @@ export function EthereumActivityChart({
 
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
   return (
-    <div className="flex flex-col">
-      <ChartControlsWrapper>
-        <ProjectChartTimeRange timeRange={timeRange} />
-        <ActivityChartRangeControls range={range} setRange={setRange} />
-      </ChartControlsWrapper>
-      <div className="mt-4 mb-3">
-        <ActivityChart
-          data={chartData}
-          milestones={milestones}
-          scale={scale}
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <div className="flex flex-col">
+        <ChartControlsWrapper>
+          <ProjectChartTimeRange timeRange={timeRange} />
+          <ActivityChartRangeControls range={range} setRange={setRange} />
+        </ChartControlsWrapper>
+        <div className="mt-4 mb-3">
+          <ActivityChart
+            data={chartData}
+            milestones={milestones}
+            scale={scale}
+            metric={metric}
+            isLoading={isLoading}
+            syncedUntil={chart?.syncedUntil}
+            type={type}
+            project={project}
+            tickCount={4}
+          />
+        </div>
+        <div className="mb-2">
+          <ActivityRatioChart
+            data={ratioData}
+            syncedUntil={chart?.syncedUntil}
+            isLoading={isLoading}
+          />
+        </div>
+
+        <div className="flex justify-between gap-4">
+          <ActivityMetricControls
+            value={metric}
+            onValueChange={setMetric}
+            projectChart
+          />
+          <RadioGroup
+            name="activityChartScale"
+            value={scale}
+            onValueChange={(value) => setScale(value as ChartScale)}
+          >
+            <RadioGroupItem value="symlog">LOG</RadioGroupItem>
+            <RadioGroupItem value="linear">LIN</RadioGroupItem>
+          </RadioGroup>
+        </div>
+        <ActivityChartStatsPanel
+          stats={chart?.stats}
           metric={metric}
           isLoading={isLoading}
-          syncedUntil={chart?.syncedUntil}
-          type={type}
-          project={project}
-          tickCount={4}
         />
       </div>
-      <div className="mb-2">
-        <ActivityRatioChart
-          data={ratioData}
-          syncedUntil={chart?.syncedUntil}
-          isLoading={isLoading}
-        />
-      </div>
-
-      <div className="flex justify-between gap-4">
-        <ActivityMetricControls
-          value={metric}
-          onValueChange={setMetric}
-          projectChart
-        />
-        <RadioGroup
-          name="activityChartScale"
-          value={scale}
-          onValueChange={(value) => setScale(value as ChartScale)}
-        >
-          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
-          <RadioGroupItem value="linear">LIN</RadioGroupItem>
-        </RadioGroup>
-      </div>
-      <ActivityChartStatsPanel
-        stats={chart?.stats}
-        metric={metric}
-        isLoading={isLoading}
-      />
-    </div>
+    </ChartShowsPreviousData>
   )
 }

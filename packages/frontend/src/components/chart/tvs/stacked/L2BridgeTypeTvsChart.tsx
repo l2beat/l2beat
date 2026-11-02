@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useL2TvsDataKeys } from '~/pages/layer2s/tvs/components/L2TvsDataKeysContext'
 import type { TvsProjectFilter } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
 import { useTRPC } from '~/trpc/React'
@@ -29,13 +30,16 @@ export function L2BridgeTypeTvsChart({
   const { tokenBridgeTypeDataKeys, tokenBridgeTypeToggleDataKey } =
     useL2TvsDataKeys()
 
-  const { data, isLoading } = useQuery(
-    trpc.tvs.detailedChart.queryOptions({
-      range,
-      excludeAssociatedTokens,
-      filter,
-      excludeRwaRestrictedTokens,
-    }),
+  const { data, isLoading, isPlaceholderData } = useQuery(
+    trpc.tvs.detailedChart.queryOptions(
+      {
+        range,
+        excludeAssociatedTokens,
+        filter,
+        excludeRwaRestrictedTokens,
+      },
+      { placeholderData: keepPreviousData },
+    ),
   )
 
   const chartData = useMemo(
@@ -62,14 +66,16 @@ export function L2BridgeTypeTvsChart({
   )
 
   return (
-    <BridgeTypeTvsChart
-      data={chartData}
-      milestones={milestones}
-      unit={unit}
-      isLoading={isLoading}
-      syncedUntil={data?.syncedUntil}
-      dataKeys={tokenBridgeTypeDataKeys}
-      toggleDataKey={tokenBridgeTypeToggleDataKey}
-    />
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <BridgeTypeTvsChart
+        data={chartData}
+        milestones={milestones}
+        unit={unit}
+        isLoading={isLoading}
+        syncedUntil={data?.syncedUntil}
+        dataKeys={tokenBridgeTypeDataKeys}
+        toggleDataKey={tokenBridgeTypeToggleDataKey}
+      />
+    </ChartShowsPreviousData>
   )
 }

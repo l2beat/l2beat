@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -29,17 +30,31 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     () => tvlProjects.map((p) => p.id).sort(),
     [tvlProjects],
   )
-  const { data: flowsData, isLoading: isFlowsLoading } = useQuery(
-    trpc.privacy.flowsChart.queryOptions({
-      projectIds,
-      range,
-    }),
+  const {
+    data: flowsData,
+    isLoading: isFlowsLoading,
+    isPlaceholderData: isFlowsPlaceholderData,
+  } = useQuery(
+    trpc.privacy.flowsChart.queryOptions(
+      {
+        projectIds,
+        range,
+      },
+      { placeholderData: keepPreviousData },
+    ),
   )
-  const { data: tvlData, isLoading: isTvlLoading } = useQuery(
-    trpc.tvs.chartByProjects.queryOptions({
-      projectIds: tvlProjectIds,
-      range,
-    }),
+  const {
+    data: tvlData,
+    isLoading: isTvlLoading,
+    isPlaceholderData: isTvlPlaceholderData,
+  } = useQuery(
+    trpc.tvs.chartByProjects.queryOptions(
+      {
+        projectIds: tvlProjectIds,
+        range,
+      },
+      { placeholderData: keepPreviousData },
+    ),
   )
 
   const flowChartTimeRange = useMemo(
@@ -60,34 +75,38 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
   )
 
   const countsChart = (
-    <div>
-      <div className="mb-3">
-        <h2 className="font-bold text-lg md:text-xl">
-          Total deposit and withdrawal counts
-        </h2>
-        <ChartTimeRange timeRange={flowChartTimeRange} />
+    <ChartShowsPreviousData value={isFlowsPlaceholderData}>
+      <div>
+        <div className="mb-3">
+          <h2 className="font-bold text-lg md:text-xl">
+            Total deposit and withdrawal counts
+          </h2>
+          <ChartTimeRange timeRange={flowChartTimeRange} />
+        </div>
+        <PrivacyFlowChart
+          data={flowsData?.chart}
+          syncedUntil={flowsData?.syncedUntil}
+          isLoading={isFlowsLoading}
+          metric={'count'}
+        />
       </div>
-      <PrivacyFlowChart
-        data={flowsData?.chart}
-        syncedUntil={flowsData?.syncedUntil}
-        isLoading={isFlowsLoading}
-        metric={'count'}
-      />
-    </div>
+    </ChartShowsPreviousData>
   )
   const tvlChart = (
-    <div>
-      <div className="mb-3">
-        <h2 className="font-bold text-lg md:text-xl">Total value locked</h2>
-        <ChartTimeRange timeRange={tvlChartTimeRange} />
+    <ChartShowsPreviousData value={isTvlPlaceholderData}>
+      <div>
+        <div className="mb-3">
+          <h2 className="font-bold text-lg md:text-xl">Total value locked</h2>
+          <ChartTimeRange timeRange={tvlChartTimeRange} />
+        </div>
+        <PrivacyTvlBreakdownChart
+          data={tvlData?.chart}
+          projects={tvlProjects}
+          syncedUntil={tvlData?.syncedUntil}
+          isLoading={isTvlLoading}
+        />
       </div>
-      <PrivacyTvlBreakdownChart
-        data={tvlData?.chart}
-        projects={tvlProjects}
-        syncedUntil={tvlData?.syncedUntil}
-        isLoading={isTvlLoading}
-      />
-    </div>
+    </ChartShowsPreviousData>
   )
 
   return (

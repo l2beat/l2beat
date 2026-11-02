@@ -1,8 +1,13 @@
 import type { Milestone } from '@l2beat/config'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
+import {
+  ChartPreviousDataDim,
+  ChartShowsPreviousData,
+  useValueOfShownData,
+} from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { LivenessChartRangeControls } from '~/pages/layer2s/liveness/components/LivenessChartRangeControls'
@@ -42,16 +47,20 @@ export function ProjectLivenessChart({
     getDefaultSubtype(configuredSubtypes),
   )
 
-  const { data: chart, isLoading } = useQuery(
-    trpc.liveness.projectChart.queryOptions({
-      projectId: project.id,
-      range,
-      subtype,
-    }),
+  const {
+    data: chart,
+    isLoading,
+    isPlaceholderData,
+  } = useQuery(
+    trpc.liveness.projectChart.queryOptions(
+      { projectId: project.id, range, subtype },
+      { placeholderData: keepPreviousData },
+    ),
   )
+  const shown = useValueOfShownData({ range, subtype }, isPlaceholderData)
 
   const anyAnomalyLive = anomalies.some(
-    (anomaly) => anomaly.subtype === subtype && isAnomalyOngoing(anomaly),
+    (anomaly) => anomaly.subtype === shown.subtype && isAnomalyOngoing(anomaly),
   )
   const chartData = useMemo(() => {
     return chart?.data?.map(([timestamp, min, avg, max]) => {
@@ -74,49 +83,53 @@ export function ProjectLivenessChart({
     return lastValidTimestamp
   }, [chart?.data])
 
-  const resolution = rangeToResolution(range)
+  const resolution = rangeToResolution(shown.range)
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
 
   return (
-    <div className="flex flex-col">
-      <div
-        className={cn(
-          'flex flex-col gap-1',
-          hideSubtypeSwitch && 'flex-row justify-between',
-        )}
-      >
-        <ProjectChartTimeRange timeRange={timeRange} />
-        <ChartControlsWrapper className="flex-wrap-reverse">
-          {!hideSubtypeSwitch && (
-            <LivenessChartSubtypeControls
-              subtype={subtype}
-              setSubtype={setSubtype}
-              configuredSubtypes={configuredSubtypes}
-            />
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <div className="flex flex-col">
+        <div
+          className={cn(
+            'flex flex-col gap-1',
+            hideSubtypeSwitch && 'flex-row justify-between',
           )}
-          <LivenessChartRangeControls range={range} setRange={setRange} />
-        </ChartControlsWrapper>
+        >
+          <ProjectChartTimeRange timeRange={timeRange} />
+          <ChartControlsWrapper className="flex-wrap-reverse">
+            {!hideSubtypeSwitch && (
+              <LivenessChartSubtypeControls
+                subtype={subtype}
+                setSubtype={setSubtype}
+                configuredSubtypes={configuredSubtypes}
+              />
+            )}
+            <LivenessChartRangeControls range={range} setRange={setRange} />
+          </ChartControlsWrapper>
+        </div>
+        <div className="mt-4 mb-3">
+          <LivenessChart
+            data={chartData}
+            isLoading={isLoading}
+            project={project}
+            subtype={shown.subtype}
+            milestones={milestones}
+            lastValidTimestamp={lastValidTimestamp}
+            anyAnomalyLive={anyAnomalyLive}
+            resolution={resolution}
+            tickCount={4}
+          />
+        </div>
+        <ChartPreviousDataDim>
+          <LivenessChartStats
+            isLoading={isLoading}
+            stats={chart?.stats}
+            anomalies={anomalies}
+            configuredSubtypes={configuredSubtypes}
+            isArchived={isArchived}
+          />
+        </ChartPreviousDataDim>
       </div>
-      <div className="mt-4 mb-3">
-        <LivenessChart
-          data={chartData}
-          isLoading={isLoading}
-          project={project}
-          subtype={subtype}
-          milestones={milestones}
-          lastValidTimestamp={lastValidTimestamp}
-          anyAnomalyLive={anyAnomalyLive}
-          resolution={resolution}
-          tickCount={4}
-        />
-      </div>
-      <LivenessChartStats
-        isLoading={isLoading}
-        stats={chart?.stats}
-        anomalies={anomalies}
-        configuredSubtypes={configuredSubtypes}
-        isArchived={isArchived}
-      />
-    </div>
+    </ChartShowsPreviousData>
   )
 }

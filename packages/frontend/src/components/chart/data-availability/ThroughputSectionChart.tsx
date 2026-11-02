@@ -1,7 +1,11 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
+import {
+  ChartShowsPreviousData,
+  useValueOfShownData,
+} from '~/components/core/chart/ChartPreviousData'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -35,15 +39,15 @@ export function ThroughputSectionChart({
   const { includeL2Only, setIncludeL2Only } = useIncludeL2Only()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
-  const { data, isLoading } = useQuery(
-    trpc.da.projectCharts.queryOptions({
-      range,
-      projectId: project.id,
-      includeL2Only,
-    }),
+  const { data, isLoading, isPlaceholderData } = useQuery(
+    trpc.da.projectCharts.queryOptions(
+      { range, projectId: project.id, includeL2Only },
+      { placeholderData: keepPreviousData },
+    ),
   )
+  const shownRange = useValueOfShownData(range, isPlaceholderData)
 
-  const resolution = useMemo(() => rangeToResolution(range), [range])
+  const resolution = useMemo(() => rangeToResolution(shownRange), [shownRange])
 
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     data?.totalChart.data,
@@ -61,45 +65,47 @@ export function ThroughputSectionChart({
   )
 
   return (
-    <div>
-      <div className="mt-2 space-y-1">
-        <EthereumProjectsOnlyCheckbox
-          name="projectThroughputIncludeL2Only"
-          checked={includeL2Only}
-          onCheckedChange={setIncludeL2Only}
-        />
-        <div className="flex justify-between gap-x-1">
-          <ProjectChartTimeRange timeRange={timeRange} />
-          <ChartRangeControls
-            name="throughput"
-            value={range}
-            setValue={setRange}
-            options={Object.values(DaThroughputTimeRangeValues).map((v) => ({
-              value: v,
-              label: v.toUpperCase(),
-            }))}
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <div>
+        <div className="mt-2 space-y-1">
+          <EthereumProjectsOnlyCheckbox
+            name="projectThroughputIncludeL2Only"
+            checked={includeL2Only}
+            onCheckedChange={setIncludeL2Only}
+          />
+          <div className="flex justify-between gap-x-1">
+            <ProjectChartTimeRange timeRange={timeRange} />
+            <ChartRangeControls
+              name="throughput"
+              value={range}
+              setValue={setRange}
+              options={Object.values(DaThroughputTimeRangeValues).map((v) => ({
+                value: v,
+                label: v.toUpperCase(),
+              }))}
+            />
+          </div>
+        </div>
+        <div className="mb-2">
+          <ProjectDaAbsoluteThroughputChart
+            project={project}
+            dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
+            isLoading={isLoading}
+            milestones={milestones}
+            syncedUntil={data?.syncedUntil}
+            resolution={resolution}
           />
         </div>
-      </div>
-      <div className="mb-2">
-        <ProjectDaAbsoluteThroughputChart
+        <DaThroughputByProjectChart
+          data={data?.byProjectChart.data}
           project={project}
-          dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
-          isLoading={isLoading}
-          milestones={milestones}
           syncedUntil={data?.syncedUntil}
+          isLoading={isLoading}
+          customColors={customColors}
+          milestones={milestones}
           resolution={resolution}
         />
       </div>
-      <DaThroughputByProjectChart
-        data={data?.byProjectChart.data}
-        project={project}
-        syncedUntil={data?.syncedUntil}
-        isLoading={isLoading}
-        customColors={customColors}
-        milestones={milestones}
-        resolution={resolution}
-      />
-    </div>
+    </ChartShowsPreviousData>
   )
 }

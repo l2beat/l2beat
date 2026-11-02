@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { L2AssetCategoryTvsChart } from '~/components/chart/tvs/stacked/L2AssetCategoryTvsChart'
 import { L2BridgeTypeTvsChart } from '~/components/chart/tvs/stacked/L2BridgeTypeTvsChart'
@@ -8,6 +8,7 @@ import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeContr
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
@@ -36,13 +37,16 @@ export function L2TvsCharts({ entries, milestones }: Props) {
     }
   }, [entries])
 
-  const { data } = useQuery(
-    trpc.tvs.detailedChart.queryOptions({
-      range,
-      filter,
-      excludeAssociatedTokens: display.excludeAssociatedTokens,
-      excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
-    }),
+  const { data, isPlaceholderData } = useQuery(
+    trpc.tvs.detailedChart.queryOptions(
+      {
+        range,
+        filter,
+        excludeAssociatedTokens: display.excludeAssociatedTokens,
+        excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
+      },
+      { placeholderData: keepPreviousData },
+    ),
   )
 
   const timeRange = getChartTimeRangeFromData(
@@ -75,30 +79,32 @@ export function L2TvsCharts({ entries, milestones }: Props) {
   )
 
   return (
-    <div>
-      <TvsChartHeader
-        unit={unit}
-        value={stats?.total}
-        change={stats?.change}
-        range={range}
-        timeRange={timeRange}
-      />
-      <div className="mt-4 mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
-        {byBridgeTypeChart}
-        {byAssetSourceChart}
-      </div>
-      <ChartTabs
-        className="-mx-4 md:-mx-6 pb-1! lg:hidden"
-        charts={[byBridgeTypeChart, byAssetSourceChart]}
-      />
-      <ChartControlsWrapper>
-        <div className="flex flex-wrap items-center gap-2">
-          <TvsChartUnitControls unit={unit} setUnit={setUnit} />
-          <CompareProjectsLink href={getCompareEntryUrl({ metric: 'tvs' })} />
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <div>
+        <TvsChartHeader
+          unit={unit}
+          value={stats?.total}
+          change={stats?.change}
+          range={range}
+          timeRange={timeRange}
+        />
+        <div className="mt-4 mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
+          {byBridgeTypeChart}
+          {byAssetSourceChart}
         </div>
-        <TvsChartRangeControls range={range} setRange={setRange} />
-      </ChartControlsWrapper>
-    </div>
+        <ChartTabs
+          className="-mx-4 md:-mx-6 pb-1! lg:hidden"
+          charts={[byBridgeTypeChart, byAssetSourceChart]}
+        />
+        <ChartControlsWrapper>
+          <div className="flex flex-wrap items-center gap-2">
+            <TvsChartUnitControls unit={unit} setUnit={setUnit} />
+            <CompareProjectsLink href={getCompareEntryUrl({ metric: 'tvs' })} />
+          </div>
+          <TvsChartRangeControls range={range} setRange={setRange} />
+        </ChartControlsWrapper>
+      </div>
+    </ChartShowsPreviousData>
   )
 }
 

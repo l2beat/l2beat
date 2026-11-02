@@ -1,6 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { PROJECT_TVS_CHART_VALUE_KEYS } from '~/server/features/layer2s/tvs/projectTvsChartValues'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
@@ -18,9 +19,10 @@ export function TvsCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isPlaceholderData } = useQuery(
     trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
       getTvsCompareChartParams(queryProjects, config, chartRange),
+      { placeholderData: keepPreviousData },
     ),
   )
   const unit = config.tvs.unit
@@ -49,18 +51,20 @@ export function TvsCompareChart({
   )
 
   return (
-    <CompareMetricLineChart
-      projects={projects}
-      data={chartData}
-      isLoading={isLoading}
-      syncedUntil={data?.syncedUntil}
-      formatYAxisLabel={(value) => formatCurrency(value, unit)}
-      formatTooltipValue={(value) => formatCurrency(value, unit)}
-      renderTooltipTimestamp={(label) =>
-        formatTimestamp(label, {
-          mode: 'datetime',
-        })
-      }
-    />
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <CompareMetricLineChart
+        projects={projects}
+        data={chartData}
+        isLoading={isLoading}
+        syncedUntil={data?.syncedUntil}
+        formatYAxisLabel={(value) => formatCurrency(value, unit)}
+        formatTooltipValue={(value) => formatCurrency(value, unit)}
+        renderTooltipTimestamp={(label) =>
+          formatTimestamp(label, {
+            mode: 'datetime',
+          })
+        }
+      />
+    </ChartShowsPreviousData>
   )
 }

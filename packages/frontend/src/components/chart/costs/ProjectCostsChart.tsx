@@ -1,7 +1,12 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
+import {
+  ChartPreviousDataDim,
+  ChartShowsPreviousData,
+  useValueOfShownData,
+} from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -29,12 +34,13 @@ export function ProjectCostsChart({
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
 
-  const { data, isLoading } = useQuery(
-    trpc.costs.projectChart.queryOptions({
-      range,
-      projectId: project.id,
-    }),
+  const { data, isLoading, isPlaceholderData } = useQuery(
+    trpc.costs.projectChart.queryOptions(
+      { range, projectId: project.id },
+      { placeholderData: keepPreviousData },
+    ),
   )
+  const shownRange = useValueOfShownData(range, isPlaceholderData)
 
   const chartData = useMemo(() => {
     if (!data) {
@@ -89,34 +95,42 @@ export function ProjectCostsChart({
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(chartData, {
-        bucket: rangeToResolution(range),
+        bucket: rangeToResolution(shownRange),
       }),
-    [chartData, range],
+    [chartData, shownRange],
   )
 
   return (
-    <div>
-      <div className="mt-4 mb-3 flex justify-between gap-1">
-        <ProjectChartTimeRange timeRange={timeRange} />
-        <CostsChartRangeControls range={range} setRange={setRange} />
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <div>
+        <div className="mt-4 mb-3 flex justify-between gap-1">
+          <ProjectChartTimeRange timeRange={timeRange} />
+          <CostsChartRangeControls range={range} setRange={setRange} />
+        </div>
+        <div className="mt-4 mb-3">
+          <CostsChart
+            project={project}
+            data={chartData}
+            syncedUntil={data?.syncedUntil}
+            unit={unit}
+            isLoading={isLoading}
+            milestones={milestones}
+            range={shownRange}
+            hasBlobs={!!data?.hasBlobs}
+            tickCount={4}
+          />
+        </div>
+        <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
+        <HorizontalSeparator className="my-4" />
+        <ChartPreviousDataDim>
+          <ProjectCostsChartStats
+            data={data}
+            isLoading={isLoading}
+            unit={unit}
+          />
+        </ChartPreviousDataDim>
       </div>
-      <div className="mt-4 mb-3">
-        <CostsChart
-          project={project}
-          data={chartData}
-          syncedUntil={data?.syncedUntil}
-          unit={unit}
-          isLoading={isLoading}
-          milestones={milestones}
-          range={range}
-          hasBlobs={!!data?.hasBlobs}
-          tickCount={4}
-        />
-      </div>
-      <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
-      <HorizontalSeparator className="my-4" />
-      <ProjectCostsChartStats data={data} isLoading={isLoading} unit={unit} />
-    </div>
+    </ChartShowsPreviousData>
   )
 }
 

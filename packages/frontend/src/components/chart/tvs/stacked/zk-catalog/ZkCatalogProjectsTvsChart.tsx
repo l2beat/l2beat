@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatCurrency } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
@@ -20,6 +20,7 @@ import {
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
+import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
@@ -48,13 +49,16 @@ export function ZkCatalogProjectsTvsChart({
   const { range, unit } = useTvsChartControlsContext()
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
 
-  const { data, isLoading } = useQuery(
-    trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
-      projects: projectsForTvs,
-      range,
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens,
-    }),
+  const { data, isLoading, isPlaceholderData } = useQuery(
+    trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
+      {
+        projects: projectsForTvs,
+        range,
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens,
+      },
+      { placeholderData: keepPreviousData },
+    ),
   )
 
   const projectLabels = useMemo(() => {
@@ -149,52 +153,54 @@ export function ZkCatalogProjectsTvsChart({
     useChartDataKeys(chartMeta)
 
   return (
-    <ChartContainer
-      data={chartData}
-      meta={chartMeta}
-      isLoading={isLoading}
-      milestones={milestones}
-      interactiveLegend={{
-        dataKeys,
-        onItemClick: toggleDataKey,
-      }}
-      project={project}
-    >
-      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
-        <ChartLegendToggleAll
-          showAllSelected={showAllSelected}
-          onToggleAll={toggleAllDataKeys}
-        />
-        {chartOrderedIds.map((projectId) => (
-          <Area
-            key={projectId}
-            dataKey={projectId}
-            hide={!dataKeys.includes(projectId)}
-            fill={chartMeta[projectId]?.color}
-            fillOpacity={1}
-            strokeWidth={0}
-            stackId={dataKeys.length === 1 ? undefined : 'a'}
-            isAnimationActive={false}
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <ChartContainer
+        data={chartData}
+        meta={chartMeta}
+        isLoading={isLoading}
+        milestones={milestones}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+        }}
+        project={project}
+      >
+        <AreaChart responsive data={chartData} margin={{ top: 20 }}>
+          <ChartLegendToggleAll
+            showAllSelected={showAllSelected}
+            onToggleAll={toggleAllDataKeys}
           />
-        ))}
-        <ChartCommonComponents
-          data={chartData}
-          isLoading={isLoading}
-          yAxis={{
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            tickFormatter: (value: number) => formatCurrency(value, unit),
-            tickCount: 4,
-          }}
-          syncedUntil={data?.syncedUntil}
-        />
-        <ChartTooltip
-          content={
-            <CustomTooltip unit={unit} sinceByProjectId={sinceByProjectId} />
-          }
-          filterNull={false}
-        />
-      </AreaChart>
-    </ChartContainer>
+          {chartOrderedIds.map((projectId) => (
+            <Area
+              key={projectId}
+              dataKey={projectId}
+              hide={!dataKeys.includes(projectId)}
+              fill={chartMeta[projectId]?.color}
+              fillOpacity={1}
+              strokeWidth={0}
+              stackId={dataKeys.length === 1 ? undefined : 'a'}
+              isAnimationActive={false}
+            />
+          ))}
+          <ChartCommonComponents
+            data={chartData}
+            isLoading={isLoading}
+            yAxis={{
+              domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
+              tickFormatter: (value: number) => formatCurrency(value, unit),
+              tickCount: 4,
+            }}
+            syncedUntil={data?.syncedUntil}
+          />
+          <ChartTooltip
+            content={
+              <CustomTooltip unit={unit} sinceByProjectId={sinceByProjectId} />
+            }
+            filterNull={false}
+          />
+        </AreaChart>
+      </ChartContainer>
+    </ChartShowsPreviousData>
   )
 }
 

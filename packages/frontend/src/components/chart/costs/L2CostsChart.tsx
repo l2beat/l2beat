@@ -1,6 +1,10 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import {
+  ChartShowsPreviousData,
+  useValueOfShownData,
+} from '~/components/core/chart/ChartPreviousData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
@@ -63,12 +67,13 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
     }
   }, [entries, filters, tab])
 
-  const { data, isLoading } = useQuery(
-    trpc.costs.chart.queryOptions({
-      range,
-      filter,
-    }),
+  const { data, isLoading, isPlaceholderData } = useQuery(
+    trpc.costs.chart.queryOptions(
+      { range, filter },
+      { placeholderData: keepPreviousData },
+    ),
   )
+  const shownRange = useValueOfShownData(range, isPlaceholderData)
 
   const chartData = useMemo(() => {
     return data?.chart.map(
@@ -117,38 +122,45 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(chartData, {
-        bucket: rangeToResolution(range),
+        bucket: rangeToResolution(shownRange),
       }),
-    [chartData, range],
+    [chartData, shownRange],
   )
 
   return (
-    <div>
-      <Header timeRange={timeRange} />
-      <div className="mt-4 mb-3">
-        <CostsChart
-          data={chartData}
-          syncedUntil={data?.syncedUntil}
-          unit={unit}
-          isLoading={isLoading}
-          milestones={milestones}
-          range={range}
-          hasBlobs={!!data?.hasBlobs}
-        />
-      </div>
-      <ChartControlsWrapper>
-        <div className="flex flex-wrap items-center gap-1">
-          <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
-          <CostsMetricControls value={metric} onValueChange={onMetricChange} />
-          <CompareProjectsLink href={getCompareEntryUrl({ metric: 'costs' })} />
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <div>
+        <Header timeRange={timeRange} />
+        <div className="mt-4 mb-3">
+          <CostsChart
+            data={chartData}
+            syncedUntil={data?.syncedUntil}
+            unit={unit}
+            isLoading={isLoading}
+            milestones={milestones}
+            range={shownRange}
+            hasBlobs={!!data?.hasBlobs}
+          />
         </div>
-        <CostsChartRangeControls
-          range={range}
-          setRange={setRange}
-          metric={metric}
-        />
-      </ChartControlsWrapper>
-    </div>
+        <ChartControlsWrapper>
+          <div className="flex flex-wrap items-center gap-1">
+            <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
+            <CostsMetricControls
+              value={metric}
+              onValueChange={onMetricChange}
+            />
+            <CompareProjectsLink
+              href={getCompareEntryUrl({ metric: 'costs' })}
+            />
+          </div>
+          <CostsChartRangeControls
+            range={range}
+            setRange={setRange}
+            metric={metric}
+          />
+        </ChartControlsWrapper>
+      </div>
+    </ChartShowsPreviousData>
   )
 }
 

@@ -1,5 +1,10 @@
 import { formatCurrency } from '@l2beat/shared-pure'
+import {
+  previousChartDataClassName,
+  useChartShowsPreviousData,
+} from '~/components/core/chart/ChartPreviousData'
 import { INFINITY } from '~/consts/characters'
+import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { Skeleton } from '../../core/Skeleton'
@@ -21,6 +26,7 @@ export function TvsChartHeader({
   range,
   timeRange,
 }: Props) {
+  const showsPreviousData = useChartShowsPreviousData()
   const changeOverTime =
     range[0] === null ? (
       INFINITY
@@ -37,7 +43,12 @@ export function TvsChartHeader({
         </h2>
         <ChartTimeRange timeRange={timeRange} />
       </div>
-      <div className="flex flex-col items-end">
+      <div
+        className={cn(
+          'flex flex-col items-end',
+          showsPreviousData && previousChartDataClassName,
+        )}
+      >
         <div className="whitespace-nowrap text-right font-bold text-xl md:text-2xl">
           {value === undefined ? (
             <Skeleton className="my-[5px] h-5 w-32 md:my-1.5 md:h-6" />

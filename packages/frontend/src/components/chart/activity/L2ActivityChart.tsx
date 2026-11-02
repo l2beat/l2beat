@@ -1,7 +1,8 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -46,15 +47,18 @@ export function L2ActivityChart({ milestones, entries }: Props) {
     RECATEGORISED_ACTIVITY_CHART_META,
   )
 
-  const { data, isLoading } = useQuery(
-    trpc.activity.recategorisedChart.queryOptions({
-      range,
-      filter: {
-        type: 'projects',
-        projectIds: entries.map((entry) => entry.id),
+  const { data, isLoading, isPlaceholderData } = useQuery(
+    trpc.activity.recategorisedChart.queryOptions(
+      {
+        range,
+        filter: {
+          type: 'projects',
+          projectIds: entries.map((entry) => entry.id),
+        },
+        hourly: true,
       },
-      hourly: true,
-    }),
+      { placeholderData: keepPreviousData },
+    ),
   )
 
   const ratioData = useMemo(() => getRatioChartData(data), [data])
@@ -68,39 +72,41 @@ export function L2ActivityChart({ milestones, entries }: Props) {
   )
 
   return (
-    <div className="flex flex-col">
-      <ActivityChartHeader resolution={data?.resolution ?? 'day'} />
-      <L2RecategorizedActivityStats entries={entries} />
-      <div className="mt-1 mb-2 flex items-center gap-2">
-        <ChartTimeRange timeRange={timeRange} />
-        {data && <IncompleteHoursHint data={data} />}
-      </div>
-      <L2RecategorizedActivityChart
-        data={data}
-        isLoading={isLoading}
-        milestones={milestones}
-        scale={scale}
-        chartMeta={RECATEGORISED_ACTIVITY_CHART_META}
-        interactiveLegend={{
-          dataKeys,
-          onItemClick: toggleDataKey,
-        }}
-      />
-      <div className="mb-2">
-        <ActivityRatioChart
-          data={ratioData}
+    <ChartShowsPreviousData value={isPlaceholderData}>
+      <div className="flex flex-col">
+        <ActivityChartHeader resolution={data?.resolution ?? 'day'} />
+        <L2RecategorizedActivityStats entries={entries} />
+        <div className="mt-1 mb-2 flex items-center gap-2">
+          <ChartTimeRange timeRange={timeRange} />
+          {data && <IncompleteHoursHint data={data} />}
+        </div>
+        <L2RecategorizedActivityChart
+          data={data}
           isLoading={isLoading}
-          syncedUntil={data?.syncedUntil}
-          resolution={data?.resolution}
+          milestones={milestones}
+          scale={scale}
+          chartMeta={RECATEGORISED_ACTIVITY_CHART_META}
+          interactiveLegend={{
+            dataKeys,
+            onItemClick: toggleDataKey,
+          }}
+        />
+        <div className="mb-2">
+          <ActivityRatioChart
+            data={ratioData}
+            isLoading={isLoading}
+            syncedUntil={data?.syncedUntil}
+            resolution={data?.resolution}
+          />
+        </div>
+        <Controls
+          scale={scale}
+          setScale={setScale}
+          range={range}
+          setRange={setRange}
         />
       </div>
-      <Controls
-        scale={scale}
-        setScale={setScale}
-        range={range}
-        setRange={setRange}
-      />
-    </div>
+    </ChartShowsPreviousData>
   )
 }
 
