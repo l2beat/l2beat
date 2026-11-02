@@ -9,8 +9,7 @@ import { TableFilterContextProvider } from '~/components/table/filters/TableFilt
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { LazyTabbedL2Entries } from '~/pages/layer2s/utils/lazyL2Tabs'
-import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
+import type { L2TabsIndex } from '~/pages/layer2s/utils/lazyL2Tabs'
 import { optionToRange } from '~/utils/range/range'
 import { ChartTabs } from './components/ChartTabs'
 import { L2SummaryTables } from './components/L2SummaryTables'
@@ -21,11 +20,11 @@ import {
 } from './l2SummaryConstants'
 
 interface Props extends AppLayoutProps {
-  entries: LazyTabbedL2Entries<L2SummaryEntry>
+  tabsIndex: L2TabsIndex
   queryState: DehydratedState
 }
 
-export function L2SummaryPage({ entries, queryState, ...props }: Props) {
+export function L2SummaryPage({ tabsIndex, queryState, ...props }: Props) {
   const tvsChartRange = optionToRange(...SCALING_SUMMARY_TVS_CHART_RANGE_ARGS)
   const activityChartRange = optionToRange(
     ...SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
@@ -53,7 +52,7 @@ export function L2SummaryPage({ entries, queryState, ...props }: Props) {
             }}
           >
             <TableFilterContextProvider>
-              <L2SummaryTables {...entries} />
+              <L2SummaryTables index={tabsIndex} />
             </TableFilterContextProvider>
           </TvsDisplayControlsContextProvider>
         </SideNavLayout>

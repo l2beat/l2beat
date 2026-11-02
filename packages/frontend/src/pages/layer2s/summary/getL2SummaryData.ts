@@ -2,9 +2,9 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import {
+  getL2TabsIndex,
   type L2Tab,
   parseL2Tab,
-  toLazyTabbedL2Entries,
 } from '~/pages/layer2s/utils/lazyL2Tabs'
 import {
   getCachedL2SummaryEntries,
@@ -53,7 +53,7 @@ export async function getL2SummaryData(
       page: 'L2SummaryPage',
       props: {
         ...appLayoutProps,
-        entries: toLazyTabbedL2Entries(entries, tab, getRowCount),
+        tabsIndex: getL2TabsIndex(entries, getRowCount),
         queryState,
       },
     },
@@ -87,8 +87,11 @@ async function getQueryState(tab: L2Tab) {
         filter: { type: 'all' },
       }),
     ),
-    // The TVS breakdown of the tab the page opens on, so its table renders
-    // complete. Other tabs fetch theirs when opened.
+    // The entries and TVS breakdown of the tab the page opens on, so its
+    // table renders complete. Other tabs fetch theirs when opened.
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.layer2s.summaryTabEntries.queryOptions({ tab }),
+    ),
     helpers.queryClient.prefetchQuery(
       helpers.trpc.tvs.table.queryOptions({
         type: tab,

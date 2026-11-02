@@ -9,14 +9,13 @@ export type L2Tab = v.infer<typeof L2Tab>
 export const L2Tab = v.enum(L2_TABS)
 
 /**
- * What a tabbed L2 page ships in its SSR data. Only the tab the page opens on
- * (`?tab=`) carries its entries: a hidden tab never renders until clicked, so its
+ * What a tabbed L2 page ships about all tabs, so it can label and filter them
+ * without their entries. A hidden tab never renders until clicked, so its
  * entries would be dead weight (the summary's "others" tab alone is ~60% of
- * the page's data). The hidden tabs' entries are fetched when opened.
+ * the page's data). The page prefetches the open tab's entries (`?tab=`), and
+ * a hidden tab fetches its own when opened.
  */
-export interface LazyTabbedL2Entries<T> {
-  initialTab: L2Tab
-  initialEntries: T[]
+export interface L2TabsIndex {
   filterables: TabbedFilterables
   /**
    * Table rows each entry renders (more than one when a cell lists several
@@ -38,14 +37,11 @@ export interface TabbedFilterables {
   tabs: Record<L2Tab, (number[] | null)[]>
 }
 
-export function toLazyTabbedL2Entries<T extends FilterableEntry>(
+export function getL2TabsIndex<T extends FilterableEntry>(
   entries: Record<L2Tab, T[]>,
-  initialTab: L2Tab,
   getRowCount: (entry: T) => number = () => 1,
-): LazyTabbedL2Entries<T> {
+): L2TabsIndex {
   return {
-    initialTab,
-    initialEntries: entries[initialTab],
     filterables: encodeFilterables(entries),
     rowCounts: mapTabs(entries, (tabEntries) => tabEntries.map(getRowCount)),
   }

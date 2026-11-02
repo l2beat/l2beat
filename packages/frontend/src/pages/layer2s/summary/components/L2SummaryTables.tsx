@@ -17,9 +17,8 @@ import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import { TableLoadError } from '~/components/table/TableLoadError'
-import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { useTRPC } from '~/trpc/React'
-import type { L2Tab, LazyTabbedL2Entries } from '../../utils/lazyL2Tabs'
+import type { L2Tab, L2TabsIndex } from '../../utils/lazyL2Tabs'
 import {
   useLazyL2TabEntries,
   useLazyL2TabFilters,
@@ -29,10 +28,9 @@ import { L2SummaryRollupsTable } from './table/L2SummaryRollupsTable'
 import type { L2SummaryTableProps } from './table/L2SummaryTableProps'
 import { L2SummaryValidiumsAndOptimiumsTable } from './table/L2SummaryValidiumsAndOptimiumsTable'
 
-type Props = LazyTabbedL2Entries<L2SummaryEntry>
-export function L2SummaryTables(props: Props) {
+export function L2SummaryTables({ index }: { index: L2TabsIndex }) {
   const { display, setDisplay } = useTvsDisplayControlsContext()
-  const { allFilterables, counts } = useLazyL2TabFilters(props)
+  const { allFilterables, counts } = useLazyL2TabFilters(index)
 
   const initialSort = {
     id: 'total',
@@ -64,7 +62,6 @@ export function L2SummaryTables(props: Props) {
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
             <L2SummaryTab
-              lazy={props}
               tab="rollups"
               rowCount={counts.rollups.rowCount}
               Table={L2SummaryRollupsTable}
@@ -75,7 +72,6 @@ export function L2SummaryTables(props: Props) {
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
             <L2SummaryTab
-              lazy={props}
               tab="validiumsAndOptimiums"
               rowCount={counts.validiumsAndOptimiums.rowCount}
               Table={L2SummaryValidiumsAndOptimiumsTable}
@@ -86,7 +82,6 @@ export function L2SummaryTables(props: Props) {
           <DirectoryTabsContent value="others">
             <OthersInfo />
             <L2SummaryTab
-              lazy={props}
               tab="others"
               rowCount={counts.others.rowCount}
               Table={L2SummaryOthersTable}
@@ -99,12 +94,10 @@ export function L2SummaryTables(props: Props) {
 }
 
 function L2SummaryTab({
-  lazy,
   tab,
   rowCount,
   Table,
 }: {
-  lazy: Props
   tab: L2Tab
   /** Rows the filtered entries render, known before they load. */
   rowCount: number
@@ -113,8 +106,6 @@ function L2SummaryTab({
   const trpc = useTRPC()
   const filterEntries = useFilterEntries()
   const { entries, isLoading, isFailed, retry } = useLazyL2TabEntries(
-    lazy,
-    tab,
     trpc.layer2s.summaryTabEntries.queryOptions({ tab }),
   )
 

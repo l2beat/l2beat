@@ -3,8 +3,8 @@ import type { FilterableEntry } from '~/components/table/filters/filterableValue
 import {
   decodeFilterables,
   encodeFilterables,
+  getL2TabsIndex,
   parseL2Tab,
-  toLazyTabbedL2Entries,
 } from './lazyL2Tabs'
 
 // Method: the encoding exists only to shrink the SSR data, so the property
@@ -40,23 +40,20 @@ describe(encodeFilterables.name, () => {
   })
 })
 
-describe(toLazyTabbedL2Entries.name, () => {
-  it('keeps only the initial tab entries and every entry row count', () => {
+describe(getL2TabsIndex.name, () => {
+  it('keeps every entry row count', () => {
     const entry = (name: string) => ({ name, filterable: undefined })
-    const lazy = toLazyTabbedL2Entries(
+    const index = getL2TabsIndex(
       {
         rollups: [entry('a')],
         validiumsAndOptimiums: [entry('b')],
         others: [entry('c'), entry('d')],
       },
-      'others',
       (e) => (e.name === 'd' ? 2 : 1),
     )
 
-    expect(lazy.initialTab).toEqual('others')
-    expect(lazy.initialEntries).toEqual([entry('c'), entry('d')])
-    expect(lazy.filterables.tabs.rollups).toEqual([null])
-    expect(lazy.rowCounts).toEqual({
+    expect(index.filterables.tabs.rollups).toEqual([null])
+    expect(index.rowCounts).toEqual({
       rollups: [1],
       validiumsAndOptimiums: [1],
       others: [1, 2],
