@@ -1,8 +1,5 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import {
-  previousChartDataClassName,
-  useChartShowsPreviousData,
-} from '~/components/core/chart/ChartPreviousData'
+import { previousChartDataClassName } from '~/components/core/chart/ChartPreviousData'
 import { INFINITY } from '~/consts/characters'
 import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'
@@ -17,6 +14,7 @@ interface Props {
   change: number | undefined
   range: ChartRange
   timeRange: [number, number] | undefined
+  isPlaceholderData: boolean
 }
 
 export function TvsChartHeader({
@@ -25,8 +23,8 @@ export function TvsChartHeader({
   change,
   range,
   timeRange,
+  isPlaceholderData,
 }: Props) {
-  const showsPreviousData = useChartShowsPreviousData()
   const changeOverTime =
     range[0] === null ? (
       INFINITY
@@ -41,12 +39,15 @@ export function TvsChartHeader({
           Total value secured
           <span className="max-md:hidden"> stacked by type</span>
         </h2>
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange
+          timeRange={timeRange}
+          isPlaceholderData={isPlaceholderData}
+        />
       </div>
       <div
         className={cn(
           'flex flex-col items-end',
-          showsPreviousData && previousChartDataClassName,
+          isPlaceholderData && previousChartDataClassName,
         )}
       >
         <div className="whitespace-nowrap text-right font-bold text-xl md:text-2xl">

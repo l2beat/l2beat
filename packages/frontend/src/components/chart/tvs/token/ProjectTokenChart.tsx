@@ -2,7 +2,6 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { useTRPC } from '~/trpc/React'
@@ -37,17 +36,16 @@ export function ProjectTokenChart({ project, milestones, token }: Props) {
   }, [data])
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <div className="mt-4 mb-3">
-        <TokenChart
-          data={chartData}
-          project={project}
-          isLoading={isLoading}
-          milestones={milestones}
-          token={token}
-          syncedUntil={data?.syncedUntil}
-        />
-      </div>
-    </ChartShowsPreviousData>
+    <div className="mt-4 mb-3">
+      <TokenChart
+        isPlaceholderData={isPlaceholderData}
+        data={chartData}
+        project={project}
+        isLoading={isLoading}
+        milestones={milestones}
+        token={token}
+        syncedUntil={data?.syncedUntil}
+      />
+    </div>
   )
 }

@@ -2,7 +2,6 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
@@ -60,20 +59,19 @@ export function ProjectBridgeTypeTvsChart({
   )
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <div className="mt-4 mb-3">
-        <BridgeTypeTvsChart
-          data={chartData}
-          milestones={milestones}
-          unit={unit}
-          isLoading={isLoading}
-          tickCount={4}
-          syncedUntil={data?.syncedUntil}
-          dataKeys={dataKeys}
-          toggleDataKey={toggleDataKey}
-          project={project}
-        />
-      </div>
-    </ChartShowsPreviousData>
+    <div className="mt-4 mb-3">
+      <BridgeTypeTvsChart
+        isPlaceholderData={isPlaceholderData}
+        data={chartData}
+        milestones={milestones}
+        unit={unit}
+        isLoading={isLoading}
+        tickCount={4}
+        syncedUntil={data?.syncedUntil}
+        dataKeys={dataKeys}
+        toggleDataKey={toggleDataKey}
+        project={project}
+      />
+    </div>
   )
 }

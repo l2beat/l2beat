@@ -6,7 +6,6 @@ import { Breakdown } from '~/components/breakdown/Breakdown'
 import { ZkCatalogProjectsTvsChart } from '~/components/chart/tvs/stacked/zk-catalog/ZkCatalogProjectsTvsChart'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -112,19 +111,18 @@ function ChartControls({
     [data?.chart],
   )
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <TvsChartControls
-        timeRange={timeRange}
-        range={{
-          value: range,
-          setValue: setRange,
-        }}
-        unit={{
-          value: unit,
-          setValue: setUnit,
-        }}
-      />
-    </ChartShowsPreviousData>
+    <TvsChartControls
+      isPlaceholderData={isPlaceholderData}
+      timeRange={timeRange}
+      range={{
+        value: range,
+        setValue: setRange,
+      }}
+      unit={{
+        value: unit,
+        setValue: setUnit,
+      }}
+    />
   )
 }
 

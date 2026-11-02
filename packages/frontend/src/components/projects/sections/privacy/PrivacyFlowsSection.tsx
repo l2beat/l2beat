@@ -3,7 +3,6 @@ import { useMemo, useState } from 'react'
 import type { ChartScale } from '~/components/chart/types'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -54,49 +53,51 @@ export function PrivacyFlowsSection({
   )
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <ProjectSection {...projectSectionProps}>
-        <ChartControlsWrapper className="mb-4">
-          <ProjectChartTimeRange timeRange={timeRange} />
-          <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
-        </ChartControlsWrapper>
-        <PrivacyFlowChart
-          data={data?.chart}
-          syncedUntil={data?.syncedUntil}
-          isLoading={isLoading}
-          metric={metric}
-          scale={scale}
-          project={project}
-          milestones={milestones}
+    <ProjectSection {...projectSectionProps}>
+      <ChartControlsWrapper className="mb-4">
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
         />
-        <div className="mt-2 flex items-center justify-between gap-2">
-          {isLoading ? (
-            <>
-              <Skeleton className="h-8 w-[120px]" />
-              <Skeleton className="h-8 w-[91px] md:w-[95px]" />
-            </>
-          ) : (
-            <>
-              <RadioGroup
-                name="privacyFlowsMetric"
-                value={metric}
-                onValueChange={(value) => setMetric(value as FlowsMetric)}
-              >
-                <RadioGroupItem value="count">COUNT</RadioGroupItem>
-                <RadioGroupItem value="value">USD</RadioGroupItem>
-              </RadioGroup>
-              <RadioGroup
-                name="privacyFlowsScale"
-                value={scale}
-                onValueChange={(value) => setScale(value as ChartScale)}
-              >
-                <RadioGroupItem value="symlog">LOG</RadioGroupItem>
-                <RadioGroupItem value="linear">LIN</RadioGroupItem>
-              </RadioGroup>
-            </>
-          )}
-        </div>
-      </ProjectSection>
-    </ChartShowsPreviousData>
+        <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
+      </ChartControlsWrapper>
+      <PrivacyFlowChart
+        isPlaceholderData={isPlaceholderData}
+        data={data?.chart}
+        syncedUntil={data?.syncedUntil}
+        isLoading={isLoading}
+        metric={metric}
+        scale={scale}
+        project={project}
+        milestones={milestones}
+      />
+      <div className="mt-2 flex items-center justify-between gap-2">
+        {isLoading ? (
+          <>
+            <Skeleton className="h-8 w-[120px]" />
+            <Skeleton className="h-8 w-[91px] md:w-[95px]" />
+          </>
+        ) : (
+          <>
+            <RadioGroup
+              name="privacyFlowsMetric"
+              value={metric}
+              onValueChange={(value) => setMetric(value as FlowsMetric)}
+            >
+              <RadioGroupItem value="count">COUNT</RadioGroupItem>
+              <RadioGroupItem value="value">USD</RadioGroupItem>
+            </RadioGroup>
+            <RadioGroup
+              name="privacyFlowsScale"
+              value={scale}
+              onValueChange={(value) => setScale(value as ChartScale)}
+            >
+              <RadioGroupItem value="symlog">LOG</RadioGroupItem>
+              <RadioGroupItem value="linear">LIN</RadioGroupItem>
+            </RadioGroup>
+          </>
+        )}
+      </div>
+    </ProjectSection>
   )
 }

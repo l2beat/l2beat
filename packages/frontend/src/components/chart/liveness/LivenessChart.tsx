@@ -44,6 +44,7 @@ interface LivenessChartDataPoint {
 interface Props {
   data: LivenessChartDataPoint[] | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   project?: ChartProject
   subtype: TrackedTxsConfigSubtype
   milestones: Milestone[]
@@ -71,6 +72,7 @@ const chartMeta = {
 export function LivenessChart({
   data,
   isLoading,
+  isPlaceholderData,
   project,
   subtype,
   milestones,
@@ -94,6 +96,7 @@ export function LivenessChart({
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={chartMeta}
       isLoading={isLoading}

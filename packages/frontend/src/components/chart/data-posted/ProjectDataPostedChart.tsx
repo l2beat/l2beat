@@ -1,10 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import {
-  ChartPreviousDataDim,
-  ChartShowsPreviousData,
-} from '~/components/core/chart/ChartPreviousData'
+import { ChartPreviousDataDim } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DataPostedRangeControls } from '~/pages/layer2s/data-posted/DataPostedRangeControls'
@@ -44,31 +41,30 @@ export function ProjectDataPostedChart({
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <div className="flex flex-col">
-        <ChartControlsWrapper>
-          <ProjectChartTimeRange timeRange={timeRange} />
-          <DataPostedRangeControls range={range} setRange={setRange} />
-        </ChartControlsWrapper>
-        <div className="mt-4">
-          <DataPostedChart
-            milestones={milestones}
-            resolution={resolution}
-            data={chartData}
-            syncedUntil={data?.syncedUntil}
-            isLoading={isLoading}
-            tickCount={4}
-            project={project}
-          />
-        </div>
-        <HorizontalSeparator className="my-4" />
-        <ChartPreviousDataDim>
-          <ProjectDataPostedChartStats
-            data={data?.stats}
-            isLoading={isLoading}
-          />
-        </ChartPreviousDataDim>
+    <div className="flex flex-col">
+      <ChartControlsWrapper>
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
+        <DataPostedRangeControls range={range} setRange={setRange} />
+      </ChartControlsWrapper>
+      <div className="mt-4">
+        <DataPostedChart
+          isPlaceholderData={isPlaceholderData}
+          milestones={milestones}
+          resolution={resolution}
+          data={chartData}
+          syncedUntil={data?.syncedUntil}
+          isLoading={isLoading}
+          tickCount={4}
+          project={project}
+        />
       </div>
-    </ChartShowsPreviousData>
+      <HorizontalSeparator className="my-4" />
+      <ChartPreviousDataDim isPlaceholderData={isPlaceholderData}>
+        <ProjectDataPostedChartStats data={data?.stats} isLoading={isLoading} />
+      </ChartPreviousDataDim>
+    </div>
   )
 }

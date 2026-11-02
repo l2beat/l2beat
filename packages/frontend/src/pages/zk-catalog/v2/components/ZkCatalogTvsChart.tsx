@@ -16,7 +16,6 @@ import {
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
@@ -119,103 +118,105 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
   )
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <PrimaryCard className="mb-4">
-        <div className="mb-3">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            <h2 className="font-bold text-lg md:text-xl">Prover adoption</h2>
-            <RadioGroup
-              name="zkCatalogProverMetric"
-              value={metric}
-              onValueChange={(value) => setMetric(value as Metric)}
-              variant="highlighted"
-              className="h-9"
-            >
-              <RadioGroupItem value="value" className="md:text-base">
-                Value secured
-              </RadioGroupItem>
-              <RadioGroupItem value="projects" className="md:text-base">
-                Projects
-              </RadioGroupItem>
-            </RadioGroup>
-          </div>
-          <ChartTimeRange timeRange={timeRange} />
-        </div>
-        <ChartContainer
-          data={chartData}
-          meta={chartMeta}
-          isLoading={isLoading}
-          interactiveLegend={{
-            dataKeys,
-            onItemClick: toggleDataKey,
-          }}
-        >
-          {/* Without right:1 the chart last point is not hoverable for some reason */}
-          <AreaChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
-            <ChartLegendToggleAll
-              showAllSelected={showAllSelected}
-              onToggleAll={toggleAllDataKeys}
-            />
-            {Object.keys(chartMeta).map((id) => (
-              <Area
-                key={id}
-                dataKey={id}
-                stackId="a"
-                hide={!dataKeys.includes(id)}
-                fill={chartMeta[id]?.color}
-                fillOpacity={1}
-                strokeWidth={0}
-                activeDot={false}
-                isAnimationActive={false}
-              />
-            ))}
-            <ChartCommonComponents
-              data={chartData}
-              isLoading={isLoading}
-              yAxis={
-                unit === 'percentage'
-                  ? {
-                      unit: '%',
-                      // To avoid showing 100.000001% we specify domain manually
-                      domain: [0, 100],
-                      allowDataOverflow: true,
-                    }
-                  : metric === 'value'
-                    ? {
-                        tickCount: 4,
-                        tickFormatter: (value) =>
-                          formatCurrency(Number(value), 'usd'),
-                      }
-                    : { tickCount: 4, allowDecimals: false }
-              }
-              // Project counts don't depend on TVS sync
-              syncedUntil={metric === 'value' ? data?.syncedUntil : undefined}
-            />
-            <ChartTooltip
-              filterNull={false}
-              content={
-                <CustomTooltip
-                  metric={metric}
-                  unit={unit}
-                  pointsByTimestamp={pointsByTimestamp}
-                />
-              }
-            />
-          </AreaChart>
-        </ChartContainer>
-        <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+    <PrimaryCard className="mb-4">
+      <div className="mb-3">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <h2 className="font-bold text-lg md:text-xl">Prover adoption</h2>
           <RadioGroup
-            name="zkCatalogProverUnit"
-            value={unit}
-            onValueChange={(value) => setUnit(value as Unit)}
+            name="zkCatalogProverMetric"
+            value={metric}
+            onValueChange={(value) => setMetric(value as Metric)}
+            variant="highlighted"
+            className="h-9"
           >
-            <RadioGroupItem value="absolute">Absolute</RadioGroupItem>
-            <RadioGroupItem value="percentage">Percentage</RadioGroupItem>
+            <RadioGroupItem value="value" className="md:text-base">
+              Value secured
+            </RadioGroupItem>
+            <RadioGroupItem value="projects" className="md:text-base">
+              Projects
+            </RadioGroupItem>
           </RadioGroup>
-          <TvsChartRangeControls range={range} setRange={setRange} />
         </div>
-      </PrimaryCard>
-    </ChartShowsPreviousData>
+        <ChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
+      </div>
+      <ChartContainer
+        isPlaceholderData={isPlaceholderData}
+        data={chartData}
+        meta={chartMeta}
+        isLoading={isLoading}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+        }}
+      >
+        {/* Without right:1 the chart last point is not hoverable for some reason */}
+        <AreaChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
+          <ChartLegendToggleAll
+            showAllSelected={showAllSelected}
+            onToggleAll={toggleAllDataKeys}
+          />
+          {Object.keys(chartMeta).map((id) => (
+            <Area
+              key={id}
+              dataKey={id}
+              stackId="a"
+              hide={!dataKeys.includes(id)}
+              fill={chartMeta[id]?.color}
+              fillOpacity={1}
+              strokeWidth={0}
+              activeDot={false}
+              isAnimationActive={false}
+            />
+          ))}
+          <ChartCommonComponents
+            data={chartData}
+            isLoading={isLoading}
+            yAxis={
+              unit === 'percentage'
+                ? {
+                    unit: '%',
+                    // To avoid showing 100.000001% we specify domain manually
+                    domain: [0, 100],
+                    allowDataOverflow: true,
+                  }
+                : metric === 'value'
+                  ? {
+                      tickCount: 4,
+                      tickFormatter: (value) =>
+                        formatCurrency(Number(value), 'usd'),
+                    }
+                  : { tickCount: 4, allowDecimals: false }
+            }
+            // Project counts don't depend on TVS sync
+            syncedUntil={metric === 'value' ? data?.syncedUntil : undefined}
+          />
+          <ChartTooltip
+            filterNull={false}
+            content={
+              <CustomTooltip
+                metric={metric}
+                unit={unit}
+                pointsByTimestamp={pointsByTimestamp}
+              />
+            }
+          />
+        </AreaChart>
+      </ChartContainer>
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+        <RadioGroup
+          name="zkCatalogProverUnit"
+          value={unit}
+          onValueChange={(value) => setUnit(value as Unit)}
+        >
+          <RadioGroupItem value="absolute">Absolute</RadioGroupItem>
+          <RadioGroupItem value="percentage">Percentage</RadioGroupItem>
+        </RadioGroup>
+        <TvsChartRangeControls range={range} setRange={setRange} />
+      </div>
+    </PrimaryCard>
   )
 }
 

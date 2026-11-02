@@ -52,6 +52,7 @@ interface Props {
   projects: CompareProjectEntry[]
   data: CompareChartPoint[] | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   syncedUntil: number | undefined
   formatYAxisLabel: (value: number) => string
   formatTooltipValue: (value: number) => string
@@ -66,6 +67,7 @@ export function CompareMetricLineChart({
   projects,
   data,
   isLoading,
+  isPlaceholderData,
   syncedUntil,
   formatYAxisLabel,
   formatTooltipValue,
@@ -99,9 +101,13 @@ export function CompareMetricLineChart({
   return (
     <div className="flex flex-col">
       <div className="mt-3 mb-2">
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
       </div>
       <ChartContainer
+        isPlaceholderData={isPlaceholderData}
         data={data}
         meta={chartMeta}
         isLoading={isLoading}

@@ -1,7 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
@@ -70,41 +69,44 @@ export function L2ActivityChart({ milestones, entries }: Props) {
   )
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <div className="flex flex-col">
-        <ActivityChartHeader resolution={data?.resolution ?? 'day'} />
-        <L2RecategorizedActivityStats entries={entries} />
-        <div className="mt-1 mb-2 flex items-center gap-2">
-          <ChartTimeRange timeRange={timeRange} />
-          {data && <IncompleteHoursHint data={data} />}
-        </div>
-        <L2RecategorizedActivityChart
-          data={data}
-          isLoading={isLoading}
-          milestones={milestones}
-          scale={scale}
-          chartMeta={RECATEGORISED_ACTIVITY_CHART_META}
-          interactiveLegend={{
-            dataKeys,
-            onItemClick: toggleDataKey,
-          }}
+    <div className="flex flex-col">
+      <ActivityChartHeader resolution={data?.resolution ?? 'day'} />
+      <L2RecategorizedActivityStats entries={entries} />
+      <div className="mt-1 mb-2 flex items-center gap-2">
+        <ChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
         />
-        <div className="mb-2">
-          <ActivityRatioChart
-            data={ratioData}
-            isLoading={isLoading}
-            syncedUntil={data?.syncedUntil}
-            resolution={data?.resolution}
-          />
-        </div>
-        <Controls
-          scale={scale}
-          setScale={setScale}
-          range={range}
-          setRange={setRange}
+        {data && <IncompleteHoursHint data={data} />}
+      </div>
+      <L2RecategorizedActivityChart
+        isPlaceholderData={isPlaceholderData}
+        data={data}
+        isLoading={isLoading}
+        milestones={milestones}
+        scale={scale}
+        chartMeta={RECATEGORISED_ACTIVITY_CHART_META}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+        }}
+      />
+      <div className="mb-2">
+        <ActivityRatioChart
+          isPlaceholderData={isPlaceholderData}
+          data={ratioData}
+          isLoading={isLoading}
+          syncedUntil={data?.syncedUntil}
+          resolution={data?.resolution}
         />
       </div>
-    </ChartShowsPreviousData>
+      <Controls
+        scale={scale}
+        setScale={setScale}
+        range={range}
+        setRange={setRange}
+      />
+    </div>
   )
 }
 

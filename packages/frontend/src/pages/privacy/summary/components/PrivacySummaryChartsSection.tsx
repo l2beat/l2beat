@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -65,38 +64,42 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
   )
 
   const countsChart = (
-    <ChartShowsPreviousData value={isFlowsPlaceholderData}>
-      <div>
-        <div className="mb-3">
-          <h2 className="font-bold text-lg md:text-xl">
-            Total deposit and withdrawal counts
-          </h2>
-          <ChartTimeRange timeRange={flowChartTimeRange} />
-        </div>
-        <PrivacyFlowChart
-          data={flowsData?.chart}
-          syncedUntil={flowsData?.syncedUntil}
-          isLoading={isFlowsLoading}
-          metric={'count'}
+    <div>
+      <div className="mb-3">
+        <h2 className="font-bold text-lg md:text-xl">
+          Total deposit and withdrawal counts
+        </h2>
+        <ChartTimeRange
+          isPlaceholderData={isFlowsPlaceholderData}
+          timeRange={flowChartTimeRange}
         />
       </div>
-    </ChartShowsPreviousData>
+      <PrivacyFlowChart
+        isPlaceholderData={isFlowsPlaceholderData}
+        data={flowsData?.chart}
+        syncedUntil={flowsData?.syncedUntil}
+        isLoading={isFlowsLoading}
+        metric={'count'}
+      />
+    </div>
   )
   const tvlChart = (
-    <ChartShowsPreviousData value={isTvlPlaceholderData}>
-      <div>
-        <div className="mb-3">
-          <h2 className="font-bold text-lg md:text-xl">Total value locked</h2>
-          <ChartTimeRange timeRange={tvlChartTimeRange} />
-        </div>
-        <PrivacyTvlBreakdownChart
-          data={tvlData?.chart}
-          projects={tvlProjects}
-          syncedUntil={tvlData?.syncedUntil}
-          isLoading={isTvlLoading}
+    <div>
+      <div className="mb-3">
+        <h2 className="font-bold text-lg md:text-xl">Total value locked</h2>
+        <ChartTimeRange
+          isPlaceholderData={isTvlPlaceholderData}
+          timeRange={tvlChartTimeRange}
         />
       </div>
-    </ChartShowsPreviousData>
+      <PrivacyTvlBreakdownChart
+        isPlaceholderData={isTvlPlaceholderData}
+        data={tvlData?.chart}
+        projects={tvlProjects}
+        syncedUntil={tvlData?.syncedUntil}
+        isLoading={isTvlLoading}
+      />
+    </div>
   )
 
   return (

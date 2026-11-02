@@ -1,7 +1,6 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
@@ -62,47 +61,50 @@ export function ThroughputSectionChart({
   )
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <div>
-        <div className="mt-2 space-y-1">
-          <EthereumProjectsOnlyCheckbox
-            name="projectThroughputIncludeL2Only"
-            checked={includeL2Only}
-            onCheckedChange={setIncludeL2Only}
+    <div>
+      <div className="mt-2 space-y-1">
+        <EthereumProjectsOnlyCheckbox
+          name="projectThroughputIncludeL2Only"
+          checked={includeL2Only}
+          onCheckedChange={setIncludeL2Only}
+        />
+        <div className="flex justify-between gap-x-1">
+          <ProjectChartTimeRange
+            isPlaceholderData={isPlaceholderData}
+            timeRange={timeRange}
           />
-          <div className="flex justify-between gap-x-1">
-            <ProjectChartTimeRange timeRange={timeRange} />
-            <ChartRangeControls
-              name="throughput"
-              value={range}
-              setValue={setRange}
-              options={Object.values(DaThroughputTimeRangeValues).map((v) => ({
-                value: v,
-                label: v.toUpperCase(),
-              }))}
-            />
-          </div>
-        </div>
-        <div className="mb-2">
-          <ProjectDaAbsoluteThroughputChart
-            project={project}
-            dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
-            isLoading={isLoading}
-            milestones={milestones}
-            syncedUntil={data?.syncedUntil}
-            resolution={resolution}
+          <ChartRangeControls
+            name="throughput"
+            value={range}
+            setValue={setRange}
+            options={Object.values(DaThroughputTimeRangeValues).map((v) => ({
+              value: v,
+              label: v.toUpperCase(),
+            }))}
           />
         </div>
-        <DaThroughputByProjectChart
-          data={data?.byProjectChart.data}
+      </div>
+      <div className="mb-2">
+        <ProjectDaAbsoluteThroughputChart
+          isPlaceholderData={isPlaceholderData}
           project={project}
-          syncedUntil={data?.syncedUntil}
+          dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
           isLoading={isLoading}
-          customColors={customColors}
           milestones={milestones}
+          syncedUntil={data?.syncedUntil}
           resolution={resolution}
         />
       </div>
-    </ChartShowsPreviousData>
+      <DaThroughputByProjectChart
+        isPlaceholderData={isPlaceholderData}
+        data={data?.byProjectChart.data}
+        project={project}
+        syncedUntil={data?.syncedUntil}
+        isLoading={isLoading}
+        customColors={customColors}
+        milestones={milestones}
+        resolution={resolution}
+      />
+    </div>
   )
 }

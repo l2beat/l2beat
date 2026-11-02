@@ -1,6 +1,5 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useL2TvsDataKeys } from '~/pages/layer2s/tvs/components/L2TvsDataKeysContext'
 import type { TvsProjectFilter } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
@@ -64,16 +63,15 @@ export function L2BridgeTypeTvsChart({
   )
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <BridgeTypeTvsChart
-        data={chartData}
-        milestones={milestones}
-        unit={unit}
-        isLoading={isLoading}
-        syncedUntil={data?.syncedUntil}
-        dataKeys={tokenBridgeTypeDataKeys}
-        toggleDataKey={tokenBridgeTypeToggleDataKey}
-      />
-    </ChartShowsPreviousData>
+    <BridgeTypeTvsChart
+      isPlaceholderData={isPlaceholderData}
+      data={chartData}
+      milestones={milestones}
+      unit={unit}
+      isLoading={isLoading}
+      syncedUntil={data?.syncedUntil}
+      dataKeys={tokenBridgeTypeDataKeys}
+      toggleDataKey={tokenBridgeTypeToggleDataKey}
+    />
   )
 }

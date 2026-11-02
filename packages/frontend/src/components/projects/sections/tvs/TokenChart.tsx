@@ -6,7 +6,6 @@ import { ProjectTokenChart } from '~/components/chart/tvs/token/ProjectTokenChar
 import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import { TokenSummaryBox } from '~/components/chart/tvs/token/TokenSummaryBox'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
@@ -73,15 +72,14 @@ function TokenChartControls({
   )
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <TvsChartControls
-        className={className}
-        timeRange={timeRange}
-        range={{
-          value: range,
-          setValue: setRange,
-        }}
-      />
-    </ChartShowsPreviousData>
+    <TvsChartControls
+      isPlaceholderData={isPlaceholderData}
+      className={className}
+      timeRange={timeRange}
+      range={{
+        value: range,
+        setValue: setRange,
+      }}
+    />
   )
 }

@@ -1,6 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { formatCostValue } from '~/pages/layer2s/costs/utils/formatCostValue'
 import { useTRPC } from '~/trpc/React'
@@ -43,18 +42,17 @@ export function CostsCompareChart({
   const resolution = rangeToResolution(chartRange)
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <CompareMetricLineChart
-        projects={projects}
-        data={chartData}
-        isLoading={isLoading}
-        syncedUntil={data?.syncedUntil}
-        formatYAxisLabel={(value) => formatCostValue(value, unit)}
-        formatTooltipValue={(value) => formatCostValue(value, unit)}
-        renderTooltipTimestamp={(label) =>
-          formatRange(label, label + UnixTime.periodToSeconds(resolution))
-        }
-      />
-    </ChartShowsPreviousData>
+    <CompareMetricLineChart
+      isPlaceholderData={isPlaceholderData}
+      projects={projects}
+      data={chartData}
+      isLoading={isLoading}
+      syncedUntil={data?.syncedUntil}
+      formatYAxisLabel={(value) => formatCostValue(value, unit)}
+      formatTooltipValue={(value) => formatCostValue(value, unit)}
+      renderTooltipTimestamp={(label) =>
+        formatRange(label, label + UnixTime.periodToSeconds(resolution))
+      }
+    />
   )
 }

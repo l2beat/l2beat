@@ -2,7 +2,6 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -56,71 +55,74 @@ export function PrivacyAnonymitySetSection({
   )
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <ProjectSection {...projectSectionProps}>
-        {data !== undefined && !hasSyncedSeries ? (
-          <div className="rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
-            {copy.indexingNote}
-          </div>
-        ) : (
-          <>
-            <h3 className="mb-2 font-bold text-heading-20">
-              {ANONYMITY_SET_WINDOW_DAYS} day historic anonymity set
-            </h3>
-            <p className="mb-4 text-paragraph-15 text-secondary">
-              {copy.historicDescription}
-              {coverageNote !== undefined && <> {coverageNote}</>}
-            </p>
-            {data !== undefined && data.syncingLabels.length > 0 && (
-              <div className="mb-4 rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
-                Some configured series are still being indexed and are excluded
-                until their history is complete:{' '}
-                <span className="font-medium text-primary">
-                  {data.syncingLabels.join(', ')}
-                </span>
-                .
-              </div>
-            )}
-            <ChartControlsWrapper className="mb-4">
-              <ProjectChartTimeRange timeRange={timeRange} />
-              <PrivacyAnonymitySetChartRangeControls
-                range={range}
-                setRange={setRange}
-              />
-            </ChartControlsWrapper>
-            <PrivacyAnonymitySetChart
-              data={data?.history}
-              series={data?.series}
-              syncedUntil={data?.syncedUntil}
-              isLoading={isLoading}
-              project={project}
-              milestones={milestones}
-              type="history"
+    <ProjectSection {...projectSectionProps}>
+      {data !== undefined && !hasSyncedSeries ? (
+        <div className="rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
+          {copy.indexingNote}
+        </div>
+      ) : (
+        <>
+          <h3 className="mb-2 font-bold text-heading-20">
+            {ANONYMITY_SET_WINDOW_DAYS} day historic anonymity set
+          </h3>
+          <p className="mb-4 text-paragraph-15 text-secondary">
+            {copy.historicDescription}
+            {coverageNote !== undefined && <> {coverageNote}</>}
+          </p>
+          {data !== undefined && data.syncingLabels.length > 0 && (
+            <div className="mb-4 rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
+              Some configured series are still being indexed and are excluded
+              until their history is complete:{' '}
+              <span className="font-medium text-primary">
+                {data.syncingLabels.join(', ')}
+              </span>
+              .
+            </div>
+          )}
+          <ChartControlsWrapper className="mb-4">
+            <ProjectChartTimeRange
+              isPlaceholderData={isPlaceholderData}
+              timeRange={timeRange}
             />
-            <p className="mt-4 text-paragraph-14 text-secondary">
-              {copy.looksBackwardsNote}
-            </p>
+            <PrivacyAnonymitySetChartRangeControls
+              range={range}
+              setRange={setRange}
+            />
+          </ChartControlsWrapper>
+          <PrivacyAnonymitySetChart
+            isPlaceholderData={isPlaceholderData}
+            data={data?.history}
+            series={data?.series}
+            syncedUntil={data?.syncedUntil}
+            isLoading={isLoading}
+            project={project}
+            milestones={milestones}
+            type="history"
+          />
+          <p className="mt-4 text-paragraph-14 text-secondary">
+            {copy.looksBackwardsNote}
+          </p>
 
-            <h3 className="mt-4 mb-2 font-bold text-heading-20">
-              {copy.durationTitle}
-            </h3>
-            <p className="mb-4 text-paragraph-15 text-secondary">
-              {copy.durationDescription}
-              {data?.syncedUntil !== undefined && (
-                <> {copy.countedUntil(formatTimestamp(data.syncedUntil))}</>
-              )}
-            </p>
-            <PrivacyAnonymitySetChart
-              data={data?.holdingDuration}
-              series={data?.series}
-              isLoading={isLoading}
-              project={project}
-              type="holding-duration"
-              durationLabel={copy.durationLabel}
-            />
-          </>
-        )}
-      </ProjectSection>
-    </ChartShowsPreviousData>
+          <h3 className="mt-4 mb-2 font-bold text-heading-20">
+            {copy.durationTitle}
+          </h3>
+          <p className="mb-4 text-paragraph-15 text-secondary">
+            {copy.durationDescription}
+            {data?.syncedUntil !== undefined && (
+              <> {copy.countedUntil(formatTimestamp(data.syncedUntil))}</>
+            )}
+          </p>
+          <PrivacyAnonymitySetChart
+            isPlaceholderData={isPlaceholderData}
+            data={data?.holdingDuration}
+            series={data?.series}
+            isLoading={isLoading}
+            project={project}
+            type="holding-duration"
+            durationLabel={copy.durationLabel}
+          />
+        </>
+      )}
+    </ProjectSection>
   )
 }

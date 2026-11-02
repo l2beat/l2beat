@@ -1,6 +1,5 @@
 import { formatBytes, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
@@ -36,18 +35,17 @@ export function DataPostedCompareChart({
   )
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <CompareMetricLineChart
-        projects={projects}
-        data={chartData}
-        isLoading={isLoading}
-        syncedUntil={data?.syncedUntil}
-        formatYAxisLabel={(value) => formatBytes(value)}
-        formatTooltipValue={(value) => formatBytes(value)}
-        renderTooltipTimestamp={(label) =>
-          formatRange(label, label + UnixTime.DAY)
-        }
-      />
-    </ChartShowsPreviousData>
+    <CompareMetricLineChart
+      isPlaceholderData={isPlaceholderData}
+      projects={projects}
+      data={chartData}
+      isLoading={isLoading}
+      syncedUntil={data?.syncedUntil}
+      formatYAxisLabel={(value) => formatBytes(value)}
+      formatTooltipValue={(value) => formatBytes(value)}
+      renderTooltipTimestamp={(label) =>
+        formatRange(label, label + UnixTime.DAY)
+      }
+    />
   )
 }

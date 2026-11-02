@@ -1,10 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import {
-  ChartPreviousDataDim,
-  ChartShowsPreviousData,
-} from '~/components/core/chart/ChartPreviousData'
+import { ChartPreviousDataDim } from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -97,36 +94,34 @@ export function ProjectCostsChart({
   )
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <div>
-        <div className="mt-4 mb-3 flex justify-between gap-1">
-          <ProjectChartTimeRange timeRange={timeRange} />
-          <CostsChartRangeControls range={range} setRange={setRange} />
-        </div>
-        <div className="mt-4 mb-3">
-          <CostsChart
-            project={project}
-            data={chartData}
-            syncedUntil={data?.syncedUntil}
-            unit={unit}
-            isLoading={isLoading}
-            milestones={milestones}
-            range={shownInput.range}
-            hasBlobs={!!data?.hasBlobs}
-            tickCount={4}
-          />
-        </div>
-        <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
-        <HorizontalSeparator className="my-4" />
-        <ChartPreviousDataDim>
-          <ProjectCostsChartStats
-            data={data}
-            isLoading={isLoading}
-            unit={unit}
-          />
-        </ChartPreviousDataDim>
+    <div>
+      <div className="mt-4 mb-3 flex justify-between gap-1">
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
+        <CostsChartRangeControls range={range} setRange={setRange} />
       </div>
-    </ChartShowsPreviousData>
+      <div className="mt-4 mb-3">
+        <CostsChart
+          isPlaceholderData={isPlaceholderData}
+          project={project}
+          data={chartData}
+          syncedUntil={data?.syncedUntil}
+          unit={unit}
+          isLoading={isLoading}
+          milestones={milestones}
+          range={shownInput.range}
+          hasBlobs={!!data?.hasBlobs}
+          tickCount={4}
+        />
+      </div>
+      <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
+      <HorizontalSeparator className="my-4" />
+      <ChartPreviousDataDim isPlaceholderData={isPlaceholderData}>
+        <ProjectCostsChartStats data={data} isLoading={isLoading} unit={unit} />
+      </ChartPreviousDataDim>
+    </div>
   )
 }
 

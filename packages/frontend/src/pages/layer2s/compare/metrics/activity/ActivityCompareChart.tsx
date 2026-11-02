@@ -1,6 +1,5 @@
 import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { countPerSecond } from '~/server/features/layer2s/activity/utils/countPerSecond'
 import { useTRPC } from '~/trpc/React'
@@ -38,20 +37,19 @@ export function ActivityCompareChart({
   )
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <CompareMetricLineChart
-        projects={projects}
-        data={chartData}
-        isLoading={isLoading}
-        syncedUntil={data?.syncedUntil}
-        formatYAxisLabel={(value) => formatActivityCount(value)}
-        formatTooltipValue={(value) =>
-          `${formatActivityCount(value)} ${unit.toUpperCase()}`
-        }
-        renderTooltipTimestamp={(label) =>
-          formatRange(label, label + UnixTime.DAY)
-        }
-      />
-    </ChartShowsPreviousData>
+    <CompareMetricLineChart
+      isPlaceholderData={isPlaceholderData}
+      projects={projects}
+      data={chartData}
+      isLoading={isLoading}
+      syncedUntil={data?.syncedUntil}
+      formatYAxisLabel={(value) => formatActivityCount(value)}
+      formatTooltipValue={(value) =>
+        `${formatActivityCount(value)} ${unit.toUpperCase()}`
+      }
+      renderTooltipTimestamp={(label) =>
+        formatRange(label, label + UnixTime.DAY)
+      }
+    />
   )
 }

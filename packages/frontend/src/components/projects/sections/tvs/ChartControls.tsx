@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
@@ -26,18 +25,17 @@ export function ChartControls({ projectId }: { projectId: string }) {
     [data?.chart],
   )
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <TvsChartControls
-        timeRange={timeRange}
-        range={{
-          value: range,
-          setValue: setRange,
-        }}
-        unit={{
-          value: unit,
-          setValue: setUnit,
-        }}
-      />
-    </ChartShowsPreviousData>
+    <TvsChartControls
+      isPlaceholderData={isPlaceholderData}
+      timeRange={timeRange}
+      range={{
+        value: range,
+        setValue: setRange,
+      }}
+      unit={{
+        value: unit,
+        setValue: setUnit,
+      }}
+    />
   )
 }

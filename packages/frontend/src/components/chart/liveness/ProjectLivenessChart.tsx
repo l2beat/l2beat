@@ -2,10 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import {
-  ChartPreviousDataDim,
-  ChartShowsPreviousData,
-} from '~/components/core/chart/ChartPreviousData'
+import { ChartPreviousDataDim } from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -86,49 +83,51 @@ export function ProjectLivenessChart({
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <div className="flex flex-col">
-        <div
-          className={cn(
-            'flex flex-col gap-1',
-            hideSubtypeSwitch && 'flex-row justify-between',
+    <div className="flex flex-col">
+      <div
+        className={cn(
+          'flex flex-col gap-1',
+          hideSubtypeSwitch && 'flex-row justify-between',
+        )}
+      >
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
+        <ChartControlsWrapper className="flex-wrap-reverse">
+          {!hideSubtypeSwitch && (
+            <LivenessChartSubtypeControls
+              subtype={subtype}
+              setSubtype={setSubtype}
+              configuredSubtypes={configuredSubtypes}
+            />
           )}
-        >
-          <ProjectChartTimeRange timeRange={timeRange} />
-          <ChartControlsWrapper className="flex-wrap-reverse">
-            {!hideSubtypeSwitch && (
-              <LivenessChartSubtypeControls
-                subtype={subtype}
-                setSubtype={setSubtype}
-                configuredSubtypes={configuredSubtypes}
-              />
-            )}
-            <LivenessChartRangeControls range={range} setRange={setRange} />
-          </ChartControlsWrapper>
-        </div>
-        <div className="mt-4 mb-3">
-          <LivenessChart
-            data={chartData}
-            isLoading={isLoading}
-            project={project}
-            subtype={shownInput.subtype}
-            milestones={milestones}
-            lastValidTimestamp={lastValidTimestamp}
-            anyAnomalyLive={anyAnomalyLive}
-            resolution={resolution}
-            tickCount={4}
-          />
-        </div>
-        <ChartPreviousDataDim>
-          <LivenessChartStats
-            isLoading={isLoading}
-            stats={chart?.stats}
-            anomalies={anomalies}
-            configuredSubtypes={configuredSubtypes}
-            isArchived={isArchived}
-          />
-        </ChartPreviousDataDim>
+          <LivenessChartRangeControls range={range} setRange={setRange} />
+        </ChartControlsWrapper>
       </div>
-    </ChartShowsPreviousData>
+      <div className="mt-4 mb-3">
+        <LivenessChart
+          isPlaceholderData={isPlaceholderData}
+          data={chartData}
+          isLoading={isLoading}
+          project={project}
+          subtype={shownInput.subtype}
+          milestones={milestones}
+          lastValidTimestamp={lastValidTimestamp}
+          anyAnomalyLive={anyAnomalyLive}
+          resolution={resolution}
+          tickCount={4}
+        />
+      </div>
+      <ChartPreviousDataDim isPlaceholderData={isPlaceholderData}>
+        <LivenessChartStats
+          isLoading={isLoading}
+          stats={chart?.stats}
+          anomalies={anomalies}
+          configuredSubtypes={configuredSubtypes}
+          isArchived={isArchived}
+        />
+      </ChartPreviousDataDim>
+    </div>
   )
 }

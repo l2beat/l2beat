@@ -2,7 +2,6 @@ import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
@@ -84,60 +83,63 @@ export function ProjectActivityChart({
 
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <div className="flex flex-col">
-        <ChartControlsWrapper>
-          <ProjectChartTimeRange timeRange={timeRange} />
-          <ActivityChartRangeControls
-            range={range}
-            setRange={setRange}
-            hourlyRanges={chart?.hasHourly === false ? 'disabled' : 'enabled'}
-          />
-        </ChartControlsWrapper>
-        <div className="mt-4 mb-3">
-          <ActivityChart
-            data={chartData}
-            milestones={milestones}
-            scale={scale}
-            metric={metric}
-            isLoading={isLoading}
-            syncedUntil={chart?.syncedUntil}
-            type={type}
-            project={project}
-            tickCount={4}
-            resolution={resolution}
-          />
-        </div>
-        <div className="mb-2">
-          <ActivityRatioChart
-            data={ratioData}
-            syncedUntil={chart?.syncedUntil}
-            isLoading={isLoading}
-            resolution={resolution}
-          />
-        </div>
-
-        <div className="flex justify-between gap-4">
-          <ActivityMetricControls
-            value={metric}
-            onValueChange={setMetric}
-            projectChart
-          />
-          <RadioGroup
-            name="activityChartScale"
-            value={scale}
-            onValueChange={(value) => setScale(value as ChartScale)}
-          >
-            <RadioGroupItem value="symlog">LOG</RadioGroupItem>
-            <RadioGroupItem value="linear">LIN</RadioGroupItem>
-          </RadioGroup>
-        </div>
-        <ActivityChartStatsPanel
-          stats={chart?.stats}
+    <div className="flex flex-col">
+      <ChartControlsWrapper>
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
+        <ActivityChartRangeControls
+          range={range}
+          setRange={setRange}
+          hourlyRanges={chart?.hasHourly === false ? 'disabled' : 'enabled'}
+        />
+      </ChartControlsWrapper>
+      <div className="mt-4 mb-3">
+        <ActivityChart
+          isPlaceholderData={isPlaceholderData}
+          data={chartData}
+          milestones={milestones}
+          scale={scale}
           metric={metric}
           isLoading={isLoading}
+          syncedUntil={chart?.syncedUntil}
+          type={type}
+          project={project}
+          tickCount={4}
+          resolution={resolution}
         />
       </div>
-    </ChartShowsPreviousData>
+      <div className="mb-2">
+        <ActivityRatioChart
+          isPlaceholderData={isPlaceholderData}
+          data={ratioData}
+          syncedUntil={chart?.syncedUntil}
+          isLoading={isLoading}
+          resolution={resolution}
+        />
+      </div>
+
+      <div className="flex justify-between gap-4">
+        <ActivityMetricControls
+          value={metric}
+          onValueChange={setMetric}
+          projectChart
+        />
+        <RadioGroup
+          name="activityChartScale"
+          value={scale}
+          onValueChange={(value) => setScale(value as ChartScale)}
+        >
+          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
+          <RadioGroupItem value="linear">LIN</RadioGroupItem>
+        </RadioGroup>
+      </div>
+      <ActivityChartStatsPanel
+        stats={chart?.stats}
+        metric={metric}
+        isLoading={isLoading}
+      />
+    </div>
   )
 }

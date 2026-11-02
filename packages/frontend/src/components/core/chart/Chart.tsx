@@ -23,7 +23,6 @@ import { ChartLoader } from './ChartLoader'
 import { ChartMilestones } from './ChartMilestones'
 import { ChartNoDataSourceState } from './ChartNoDataSourceState'
 import { ChartNoDataState } from './ChartNoDataState'
-import { useChartShowsPreviousData } from './ChartPreviousData'
 import { ChartProjectLogo } from './ChartProjectLogo'
 import { ChartSettledSize } from './ChartSettledSize'
 import { sortLegend } from './utils/sortLegend'
@@ -99,6 +98,7 @@ function ChartContainer<T extends { timestamp: number }>({
   meta,
   data,
   isLoading,
+  isPlaceholderData,
   milestones,
   loaderClassName,
   logoClassName,
@@ -119,6 +119,8 @@ function ChartContainer<T extends { timestamp: number }>({
   loaderClassName?: string
   logoClassName?: string
   isLoading?: boolean
+  /** The data is a previous query's, kept on screen while this one loads. */
+  isPlaceholderData: boolean
   project?: ChartProject
   size?: 'regular' | 'small'
   noDataSourceMessage?: string
@@ -135,13 +137,12 @@ function ChartContainer<T extends { timestamp: number }>({
     (key) => interactiveLegend && !interactiveLegend?.dataKeys.includes(key),
   )
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
-  const showsPreviousData = useChartShowsPreviousData()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div
         ref={ref}
         className="group relative"
-        aria-busy={showsPreviousData || undefined}
+        aria-busy={isPlaceholderData || undefined}
       >
         <ChartSettledSize
           className={cn(
@@ -165,7 +166,7 @@ function ChartContainer<T extends { timestamp: number }>({
               // The plot dims as `previousChartDataClassName` does. Its tooltip
               // stays hidden: some charts format it with the new range's
               // resolution, which the old buckets do not have.
-              showsPreviousData && [
+              isPlaceholderData && [
                 '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
                 '[&_.recharts-surface]:opacity-40 [&_.recharts-surface]:transition-opacity [&_.recharts-surface]:delay-150 [&_.recharts-surface]:duration-200',
               ],
@@ -220,7 +221,11 @@ function ChartContainer<T extends { timestamp: number }>({
           />
         )}
         {!isLoading && milestones && (
-          <ChartMilestones data={data} milestones={milestones} />
+          <ChartMilestones
+            data={data}
+            milestones={milestones}
+            isPlaceholderData={isPlaceholderData}
+          />
         )}
       </div>
     </ChartContext.Provider>

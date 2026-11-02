@@ -4,7 +4,6 @@ import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeContr
 import { TvsValueChart } from '~/components/chart/tvs/TvsValueChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -58,20 +57,22 @@ export function TvsValueSection({
       : PrivacyFlowsChartRangeControls
 
   return (
-    <ChartShowsPreviousData value={isPlaceholderData}>
-      <ProjectSection {...projectSectionProps}>
-        <ChartControlsWrapper className="mb-4">
-          <ProjectChartTimeRange timeRange={timeRange} />
-          <RangeControls range={range} setRange={setRange} />
-        </ChartControlsWrapper>
-        <TvsValueChart
-          data={chartData}
-          syncedUntil={data?.syncedUntil}
-          isLoading={isLoading}
-          project={project}
-          milestones={milestones}
+    <ProjectSection {...projectSectionProps}>
+      <ChartControlsWrapper className="mb-4">
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
         />
-      </ProjectSection>
-    </ChartShowsPreviousData>
+        <RangeControls range={range} setRange={setRange} />
+      </ChartControlsWrapper>
+      <TvsValueChart
+        isPlaceholderData={isPlaceholderData}
+        data={chartData}
+        syncedUntil={data?.syncedUntil}
+        isLoading={isLoading}
+        project={project}
+        milestones={milestones}
+      />
+    </ProjectSection>
   )
 }

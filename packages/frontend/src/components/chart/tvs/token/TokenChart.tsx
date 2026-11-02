@@ -34,6 +34,7 @@ interface Props {
   project: ChartProject
   syncedUntil: number | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   milestones: Milestone[]
   token: ProjectToken
 }
@@ -42,6 +43,7 @@ export function TokenChart({
   data,
   project,
   isLoading,
+  isPlaceholderData,
   milestones,
   token,
   syncedUntil,
@@ -61,6 +63,7 @@ export function TokenChart({
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       meta={chartMeta}
       data={data}
       isLoading={isLoading}
