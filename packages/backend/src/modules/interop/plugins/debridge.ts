@@ -93,6 +93,7 @@ const DEBRIDGE_CHAIN_LOOKUP = [
   { chainId: '10', chain: 'optimism' },
   { chainId: '8453', chain: 'base' },
   { chainId: '59144', chain: 'linea' },
+  { chainId: '4663', chain: 'robinhood' },
   { chainId: '2741', chain: 'abstract' },
   // apechain not supported
   { chainId: '100', chain: 'gnosis' },

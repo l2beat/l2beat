@@ -9,6 +9,7 @@ import type { TokenIngestionProcessor } from '../../ingestion/TokenIngestionProc
 import { getLogger } from '../../logger'
 import { createAppRouter } from '../../trpc/appRouter'
 import { createTRPCContext } from '../../trpc/trpc'
+import type { TvsCoverageService } from '../../tvsCoverage/TvsCoverageService'
 
 const logger = getLogger().for('TrpcRouter')
 
@@ -19,6 +20,7 @@ export interface CreateTrpcRouterDeps {
   coingeckoClient: CoingeckoClient
   etherscanApiKey: string | undefined
   tokenIngestionProcessor: TokenIngestionProcessor
+  tvsCoverageService: TvsCoverageService | undefined
 }
 
 export function createTrpcRouter(deps: CreateTrpcRouterDeps): express.Router {
@@ -29,6 +31,7 @@ export function createTrpcRouter(deps: CreateTrpcRouterDeps): express.Router {
     coingeckoClient,
     etherscanApiKey,
     tokenIngestionProcessor,
+    tvsCoverageService,
   } = deps
 
   const router = express.Router()
@@ -39,6 +42,7 @@ export function createTrpcRouter(deps: CreateTrpcRouterDeps): express.Router {
       router: createAppRouter({
         coingeckoClient,
         etherscanApiKey,
+        tvsCoverageService,
       }),
       allowMethodOverride: true, // Allow POST for GET queries due to large payload
       createContext: ({ req }) =>

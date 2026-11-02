@@ -125,6 +125,23 @@ const LIFI_INTENTS_NETWORKS = defineNetworks('lifi-intents', [
   },
 ])
 
+// Not captured, only resolved as order destinations.
+// Chain ids from https://li.quest/v1/chains
+const LIFI_INTENTS_ONE_SIDED_NETWORKS = defineNetworks('lifi-intents', [
+  {
+    chain: 'solana',
+    chainId: 1151111081099710,
+  },
+  {
+    chain: 'tron',
+    chainId: 728126428,
+  },
+  {
+    chain: 'plasma',
+    chainId: 9745,
+  },
+])
+
 const standardOrder =
   '(address user, uint256 nonce, uint256 originChainId, uint32 expires, uint32 fillDeadline, address inputOracle, uint256[2][] inputs, (bytes32 oracle, bytes32 settler, uint256 chainId, bytes32 token, uint256 amount, bytes32 recipient, bytes callbackData, bytes context)[] outputs)'
 
@@ -214,6 +231,8 @@ export const LifiIntentsOutputProven = createInteropEventType<{
 
 export class LifiIntentsPlugin implements InteropPluginResyncable {
   readonly name = 'lifi-intents'
+
+  constructor(private oneSidedChains: string[] = []) {}
 
   getDataRequests(): DataRequest[] {
     return [
@@ -350,7 +369,7 @@ export class LifiIntentsPlugin implements InteropPluginResyncable {
         originChainId,
         destinationChainId,
         $dstChain: findChain(
-          LIFI_INTENTS_NETWORKS,
+          [...LIFI_INTENTS_NETWORKS, ...LIFI_INTENTS_ONE_SIDED_NETWORKS],
           (n) => n.chainId,
           destinationChainId,
         ),
@@ -411,9 +430,31 @@ export class LifiIntentsPlugin implements InteropPluginResyncable {
       orderId: outputRequested.args.orderId,
       outputHash: outputRequested.args.outputHash,
     })
-    if (!outputFilled) return
+    if (outputFilled) {
+      return createTransferMatch(outputRequested, outputFilled)
+    }
 
-    return createTransferMatch(outputRequested, outputFilled)
+    const dstChain = outputRequested.args.$dstChain
+    if (!this.oneSidedChains.includes(dstChain)) return
+
+    const includeSourceToken =
+      outputRequested.args.inputCount === 1 &&
+      outputRequested.args.outputCount === 1
+
+    return [
+      Result.Transfer('lifi-intents.Transfer', {
+        srcEvent: outputRequested,
+        srcTokenAddress: includeSourceToken
+          ? outputRequested.args.inputToken
+          : undefined,
+        srcAmount: includeSourceToken
+          ? outputRequested.args.inputAmount
+          : undefined,
+        srcWasBurned: false,
+        dstChain,
+        bridgeType: 'nonMinting',
+      }),
+    ]
   }
 
   private matchOutputProven(

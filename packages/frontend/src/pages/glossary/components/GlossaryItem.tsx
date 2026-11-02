@@ -1,4 +1,5 @@
 import { CopyButton } from '~/components/CopyButton'
+import { toProductionUrl } from '~/consts/productionOrigin'
 import type { CollectionEntry } from '~/content/getCollection'
 import { ChiliIcon } from '~/icons/Chili'
 
@@ -23,7 +24,7 @@ export function GlossaryItem(props: Props) {
           )}
         </a>
         <CopyButton
-          toCopy={`https://l2beat.com/glossary#${props.entry.id}`}
+          toCopy={toProductionUrl(`/glossary#${props.entry.id}`)}
           className="md:group-hover:fade-in-0 md:hidden md:group-hover:block md:group-hover:animate-in"
           iconClassName="size-5"
         />

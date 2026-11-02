@@ -4,6 +4,7 @@ import {
   EthereumAddress,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { iterateLogs } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -27,6 +28,10 @@ const transferLog =
 const parseLogTransferRedeemed = createEventParser(transferRedeemedLog)
 
 const parseTransfer = createEventParser(transferLog)
+
+const wethWithdrawalLog = 'event Withdrawal(address indexed src, uint256 wad)'
+
+const parseWethWithdrawal = createEventParser(wethWithdrawalLog)
 
 const ZERO_ADDRESS = EthereumAddress(
   '0x0000000000000000000000000000000000000000',
@@ -70,7 +75,7 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: transferRedeemedLog,
-        includeTxEvents: [transferLog],
+        includeTxEvents: [transferLog, wethWithdrawalLog],
         addresses: tokenBridgeAddresses,
       },
     ]
@@ -84,33 +89,28 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
     // Portal Token Bridge Relayer contracts also emit TransferRedeemed with
     // the same (emitterChainId, emitterAddress, sequence), causing duplicates.
     const network = wormholeNetworks.find((n) => n.chain === input.chain)
-    const tokenBridgeAddresses = network?.tokenBridge
-      ? [network.tokenBridge]
-      : null
-    const parsed = parseLogTransferRedeemed(input.log, tokenBridgeAddresses)
+    if (!network?.tokenBridge) return
+    const parsed = parseLogTransferRedeemed(input.log, [network.tokenBridge])
     if (!parsed) return
-    const nextLog = input.txLogs.find(
-      // biome-ignore lint/style/noNonNullAssertion: It's there
-      (x) => x.logIndex === input.log.logIndex! + 1,
+    const redeemed = findRedeemedTokens(
+      input,
+      network.tokenBridge,
+      network.weth,
     )
-    const transfer = nextLog && parseTransfer(nextLog, null)
 
     const senderAddress = EthereumAddress(
       `0x${parsed.emitterAddress.slice(-40)}`,
     )
-    const dstWasMinted = transfer
-      ? EthereumAddress(transfer.from) === ZERO_ADDRESS
-      : undefined
 
     return [
       TransferRedeemed.create(input, {
         sequence: parsed.sequence,
         $srcChain: findWormholeChain(wormholeNetworks, parsed.emitterChainId),
-        dstTokenAddress: nextLog && Address32.from(nextLog.address),
-        dstAmount: transfer?.value,
+        dstTokenAddress: redeemed?.tokenAddress,
+        dstAmount: redeemed?.amount,
         srcWormholeChainId: parsed.emitterChainId,
         sender: senderAddress,
-        dstWasMinted,
+        dstWasMinted: redeemed?.wasMinted,
       }),
     ]
   }
@@ -198,6 +198,75 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
         }),
       ]
     }
+  }
+}
+
+interface RedeemedTokens {
+  tokenAddress: Address32
+  amount: bigint
+  wasMinted: boolean
+}
+
+// The bridge mints or releases the tokens after TransferRedeemed. A legacy
+// relayer fee or a token tax adds smaller payouts of the same token, so the
+// largest payout before the next redemption is the user's. When unwrapping to
+// native, the bridge unwraps the relayer fee first and the recipient's amount
+// last, so the last unwrap is the user's.
+function findRedeemedTokens(
+  input: LogToCapture,
+  tokenBridge: EthereumAddress,
+  weth: EthereumAddress | undefined,
+): RedeemedTokens | undefined {
+  let redeemed: RedeemedTokens | undefined
+  // biome-ignore lint/style/noNonNullAssertion: It's there
+  for (const [log] of iterateLogs(input.txLogs, input.log.logIndex!, 'after')) {
+    if (parseLogTransferRedeemed(log, [tokenBridge])) break
+
+    const payout = parseRedeemedTokens(log, tokenBridge, weth)
+    if (!payout) continue
+    if (!redeemed) {
+      redeemed = payout
+    } else if (
+      payout.tokenAddress === Address32.NATIVE &&
+      redeemed.tokenAddress === Address32.NATIVE
+    ) {
+      redeemed = payout
+    } else if (
+      payout.tokenAddress === redeemed.tokenAddress &&
+      payout.wasMinted === redeemed.wasMinted &&
+      payout.amount > redeemed.amount
+    ) {
+      redeemed = payout
+    }
+  }
+  return redeemed
+}
+
+function parseRedeemedTokens(
+  log: LogToCapture['txLogs'][number],
+  tokenBridge: EthereumAddress,
+  weth: EthereumAddress | undefined,
+): RedeemedTokens | undefined {
+  // completeTransferAndUnwrapETH unwraps WETH and sends native ETH. Any
+  // contract can emit a Withdrawal, so only the bridge's WETH counts.
+  const withdrawal = weth && parseWethWithdrawal(log, [weth])
+  if (withdrawal) {
+    if (EthereumAddress(withdrawal.src) !== tokenBridge) return
+    return {
+      tokenAddress: Address32.NATIVE,
+      amount: withdrawal.wad,
+      wasMinted: false,
+    }
+  }
+
+  const transfer = parseTransfer(log, null)
+  if (!transfer) return
+  const from = EthereumAddress(transfer.from)
+  if (from !== ZERO_ADDRESS && from !== tokenBridge) return
+  return {
+    tokenAddress: Address32.from(log.address),
+    amount: transfer.value,
+    wasMinted: from === ZERO_ADDRESS,
   }
 }
 

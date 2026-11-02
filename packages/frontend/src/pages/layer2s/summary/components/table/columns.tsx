@@ -18,10 +18,6 @@ import { getL2CommonProjectColumns } from '~/components/table/common-project-col
 import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
-import {
-  WALK_AWAY_NOT_PASSED_PROJECTS,
-  WALK_AWAY_PASSED_PROJECTS,
-} from '~/consts/walkAwayProjects'
 import type { L2SummaryTableRow } from '../../utils/toTableRows'
 import { TotalCellWithTvsBreakdown } from './TotalCellWithTvsBreakdown'
 
@@ -76,13 +72,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
             stageConfig={ctx.row.original.stage}
             isAppchain={ctx.row.original.capability === 'appchain'}
             emergencyWarning={ctx.row.original.statuses?.emergencyWarning}
-            walkAway={
-              WALK_AWAY_PASSED_PROJECTS.includes(ctx.row.original.id)
-                ? 'passed'
-                : WALK_AWAY_NOT_PASSED_PROJECTS.includes(ctx.row.original.id)
-                  ? 'not-passed'
-                  : undefined
-            }
+            walkAway={ctx.row.original.walkAway}
           />
         ),
         sortingFn: sortStages,

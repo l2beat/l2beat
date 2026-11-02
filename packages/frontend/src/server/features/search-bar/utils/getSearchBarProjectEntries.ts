@@ -40,7 +40,6 @@ export function getSearchBarProjectEntries<
     never,
     | 'scalingInfo'
     | 'interopConfig'
-    | 'ecosystemConfig'
     | 'zkCatalogInfo'
     | 'privacyInfo'
     | 'defiInfo'
@@ -54,7 +53,6 @@ export function getSearchBarProjectEntries<
   if (
     !isEthereum &&
     !project.scalingInfo &&
-    !project.ecosystemConfig &&
     !project.interopConfig &&
     !project.zkCatalogInfo &&
     !project.privacyInfo &&
@@ -105,15 +103,6 @@ export function getSearchBarProjectEntries<
             project.interopConfig.shortName,
           ])
         : commonTags,
-    })
-  }
-
-  if (project.ecosystemConfig) {
-    results.push({
-      ...common,
-      href: `/ecosystems/${project.slug}`,
-      category: 'ecosystems',
-      kind: 'ecosystem',
     })
   }
 

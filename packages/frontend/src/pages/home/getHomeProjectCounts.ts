@@ -13,14 +13,12 @@ export interface HomeProjectCounts {
   /** Undefined when the tokens page is off or its data failed to load */
   tokens: number | undefined
   zkCatalog: number
-  ecosystems: number
 }
 
 export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
   const [
     l2Projects,
     zkProjects,
-    ecosystems,
     privacy,
     interopProtocols,
     ossification,
@@ -32,9 +30,6 @@ export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
     }),
     ps.getProjects({
       where: ['zkCatalogInfo'],
-    }),
-    ps.getProjects({
-      where: ['ecosystemConfig'],
     }),
     ps.getProjects({
       where: ['privacyInfo'],
@@ -57,7 +52,6 @@ export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
     ossification,
     tokens,
     zkCatalog: zkProjects.length,
-    ecosystems: ecosystems.length,
   }
 }
 

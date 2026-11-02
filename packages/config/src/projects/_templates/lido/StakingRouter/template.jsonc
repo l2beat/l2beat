@@ -26,6 +26,104 @@
     "getTotalModulesValidatorsBalance"
   ],
   "fields": {
+    "getModuleValidatorsBalance": {
+      "handler": {
+        "type": "array",
+        "method": "getModuleValidatorsBalance",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleActiveValidatorsCount": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleActiveValidatorsCount",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleLastDepositBlock": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleLastDepositBlock",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleMaxDepositsPerBlock": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleMaxDepositsPerBlock",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleMinDepositBlockDistance": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleMinDepositBlockDistance",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleNonce": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleNonce",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleStateAccounting": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleStateAccounting",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleStateDeposits": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleStateDeposits",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleIsActive": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleIsActive",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleIsDepositsPaused": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleIsDepositsPaused",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleIsStopped": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleIsStopped",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleStateConfig": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleStateConfig",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleStatus": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleStatus",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
+    "getStakingModuleWithdrawalCredentials": {
+      "handler": {
+        "type": "array",
+        "method": "getStakingModuleWithdrawalCredentials",
+        "indices": "{{ getStakingModuleIds }}"
+      }
+    },
     "accessControl": {
       "handler": { "type": "accessControl", "includeEmptyRoles": true }
     },

@@ -100,7 +100,32 @@
       "critical": true, // legacy deposit/withdrawal entrypoint trusted by L1Nullifier for legacy withdrawal finalization
       "category": "bridge-canonical",
       "description": "Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.",
-      "ignoreRelatives": ["l2Bridge", "l2TokenBeacon"]
+      "fields": {
+        "l2Bridge": { "edit": ["format", "ZksyncAddress"] },
+        "l2TokenBeacon": { "edit": ["format", "ZksyncAddress"] }
+      }
+    },
+    "zksync:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102": {
+      // L2 counterpart of the L1ERC20Bridge: mints and burns legacy bridged tokens
+      "critical": true,
+      "description": "Legacy L2 bridge of ZKsync Era. Deploys the bridged tokens of legacy deposits as beacon proxies of the l2TokenBeacon.",
+      "fields": {
+        "l1Bridge": { "edit": ["format", "EthAddress"] },
+        "l1SharedBridge": { "edit": ["format", "EthAddress"] }
+      }
+    },
+    "zksync:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6": {
+      // implementation of every bridged token on ZKsync Era, also used by the L2NativeTokenVault
+      "critical": true,
+      "fields": {
+        "owner": {
+          "edit": [
+            "if",
+            ["=", "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
+      }
     },
     "eth:0x41527B2d03844dB6b0945f25702cB958b6d55989": {
       // L1ERC20Bridge_wstETH: escrows wstETH counted in TVS, but Lido-governed (proxy admin is the Lido DAO Agent) — an external escrow outside the ossification perimeter.
@@ -117,9 +142,22 @@
     "gateway:0x0000000000000000000000000000000000000000": {
       "ignoreDiscovery": true
     },
+    "zksync:0x0000000000000000000000000000000000000000": {
+      "ignoreDiscovery": true
+    },
     "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
       // LidoAgent
       "ignoreDiscovery": true
+    }
+  },
+  "types": {
+    "ZksyncAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "zksync" }
+    },
+    "EthAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "eth" }
     }
   }
 }

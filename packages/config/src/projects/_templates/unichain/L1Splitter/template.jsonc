@@ -1,5 +1,15 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreInWatchMode": ["lastDisbursementTime"],
-  "description": "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address ({{l1Recipient}})."
+  "ignoreRelatives": ["l1Recipient"],
+  "description": "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address ({{l1Recipient}}).",
+  "fields": {
+    "l1Recipient": { "edit": ["format", "EthereumAddress"] }
+  },
+  "types": {
+    "EthereumAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "eth" }
+    }
+  }
 }

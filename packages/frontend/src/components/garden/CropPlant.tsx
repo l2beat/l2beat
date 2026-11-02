@@ -106,13 +106,16 @@ function timings(delay: number, motion: PlantMotion) {
   return {
     grow: at(
       '50% 100%',
-      `garden-grow .5s cubic-bezier(.18,.7,.24,1) ${delay}s both`,
+      `garden-grow .5s cubic-bezier(.18,.7,.24,1) ${delay}s backwards`,
     ),
-    leafL: at('100% 100%', `garden-leaf .3s ease-out ${delay + 0.15}s both`),
-    leafR: at('0% 100%', `garden-leaf .3s ease-out ${delay + 0.19}s both`),
+    leafL: at(
+      '100% 100%',
+      `garden-leaf .3s ease-out ${delay + 0.15}s backwards`,
+    ),
+    leafR: at('0% 100%', `garden-leaf .3s ease-out ${delay + 0.19}s backwards`),
     bloom: at(
       '50% 100%',
-      `garden-bloom .4s ${EASE_OUT_BACK} ${delay + 0.28}s both`,
+      `garden-bloom .4s ${EASE_OUT_BACK} ${delay + 0.28}s backwards`,
     ),
     idle: (name: string, duration: string) =>
       at(

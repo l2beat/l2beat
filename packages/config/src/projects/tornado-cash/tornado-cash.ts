@@ -333,7 +333,35 @@ export const tornadoCash: BaseProject = {
       content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
       governanceInfo: {
         upgrades: {
-          'Normal upgrade path': `Lock and optionally delegate TORN in the [Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) → submit a proposal with at least **${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** → wait ${formatSeconds(votingDelay)} → vote for ${formatSeconds(votingPeriod)} (extended by ${formatSeconds(voteExtendTime)} if the outcome changes during the last ${formatSeconds(closingPeriod)}) → pass with a simple majority and **${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN** quorum → wait ${formatSeconds(executionDelay)} → permissionless execution within ${formatSeconds(executionExpiration)}. The DAO controls protocol and periphery components, but cannot upgrade or modify existing pools.`,
+          'Normal upgrade path': {
+            steps: [
+              {
+                description:
+                  'Lock and optionally delegate TORN in the [Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce)',
+              },
+              {
+                description: `Submit a proposal with at least **${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN**`,
+              },
+              {
+                description: `Wait ${formatSeconds(votingDelay)}`,
+                isWait: true,
+              },
+              {
+                description: `Vote for ${formatSeconds(votingPeriod)} (extended by ${formatSeconds(voteExtendTime)} if the outcome changes during the last ${formatSeconds(closingPeriod)})`,
+              },
+              {
+                description: `Pass with a simple majority and **${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN** quorum`,
+              },
+              {
+                description: `Wait ${formatSeconds(executionDelay)}`,
+                isWait: true,
+              },
+              {
+                description: `Permissionless execution within ${formatSeconds(executionExpiration)}`,
+              },
+            ],
+            note: 'The DAO controls protocol and periphery components, but cannot upgrade or modify existing pools.',
+          },
           'Exit window': `**${formatSeconds(executionDelay)}** for DAO-controlled changes — an accepted proposal remains timelocked for this period before it can be executed. Existing Tornado Cash pools are immutable and cannot be upgraded by the DAO.`,
         },
         tokenGovernance: {

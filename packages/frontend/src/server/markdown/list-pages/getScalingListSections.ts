@@ -7,13 +7,10 @@ import {
 } from '../listPageMarkdown'
 
 export async function getScalingListSections(): Promise<LinkListSection[]> {
-  const [scaling, ecosystems] = await Promise.all([
-    ps.getProjects({
-      select: ['scalingInfo'],
-      optional: ['display', 'archivedAt'],
-    }),
-    ps.getProjects({ where: ['ecosystemConfig'], optional: ['display'] }),
-  ])
+  const scaling = await ps.getProjects({
+    select: ['scalingInfo'],
+    optional: ['display', 'archivedAt'],
+  })
   const active = scaling.filter((p) => !p.archivedAt)
   // Kept for historical reasons: no other markdown index lists them.
   const archived = scaling.filter((p) => p.archivedAt)
@@ -43,14 +40,6 @@ export async function getScalingListSections(): Promise<LinkListSection[]> {
       links: active
         .filter((p) => p.scalingInfo.layer === 'layer3')
         .map(scalingLink),
-    },
-    {
-      heading: 'Ecosystems (/ecosystems/{slug})',
-      links: ecosystems.map((p) => ({
-        name: p.name,
-        path: `/ecosystems/${p.slug}`,
-        description: firstSentence(p.display?.description ?? ''),
-      })),
     },
     ...archivedSections,
   ]

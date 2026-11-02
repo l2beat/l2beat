@@ -1,6 +1,6 @@
 # Ossification
 
-Ossification measures the maturity of the code securing a project. Code that holds value without changing has survived the potential attacks during its lifetime. The score ranks the time since the last critical change against the age of the code exploited in past incidents.
+Ossification measures the maturity of the code securing a project. Code that holds value without changing has survived the potential attacks during its lifetime. The score ranks the time since the last critical change against the age of the code exploited in past incidents. Projects without working proofs are left out: their proposer decides the state, so the age of the code says nothing.
 
 ## Clock and metrics
 
@@ -62,7 +62,7 @@ ossification.json┘
 - `deployments`: deployments and initializations of critical contracts, to find the genesis.
 - `observedSince`: the project start, or the earliest known contract start.
 
-Module reachability is the one `ProjectDiscovery` uses for contracts and permissions. A module whose critical contracts all retired still adds its past changes. The build stores the history in the `ossificationHistory` column of the config database.
+Module reachability is the one `ProjectDiscovery` uses for contracts and permissions. A module whose critical contracts all retired still adds its past changes. The build stores the history in the `ossificationHistory` column of the config database, except for projects listed as Others for missing proofs. They keep their config and `ossification.json`, and come back once their proofs work.
 
 ### Sources
 
@@ -93,7 +93,7 @@ Each critical change tags the `diffHistory.md` entry that recorded it as a code 
 - Critical updates: one tag per `updateId`, `code` if any of its changes is a code change.
 - Contract age: `ossifyingSince`, never before the genesis.
 
-The frontend computes battle-tested exposure from the TVS or DefiLlama TVL series.
+The frontend computes battle-tested exposure from the TVS without restricted RWA, or the DefiLlama TVL series.
 
 ### Parsing
 
