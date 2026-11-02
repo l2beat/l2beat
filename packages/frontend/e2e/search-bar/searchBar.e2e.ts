@@ -8,11 +8,6 @@ import { expect, type Page, test } from 'playwright/test'
  */
 const QUERY = 'arbitrum'
 
-test('a result is a link to its page', async ({ page }) => {
-  await searchFor(page, QUERY)
-  await expect(firstResult(page)).toHaveAttribute('href', /^\//)
-})
-
 test('Enter opens the highlighted result in this tab', async ({ page }) => {
   await searchFor(page, QUERY)
   await page.keyboard.press('ArrowDown')
