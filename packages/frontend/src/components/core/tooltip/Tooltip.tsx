@@ -4,6 +4,7 @@ import { cva } from 'class-variance-authority'
 import type React from 'react'
 import { createContext, useContext, useId, useRef, useState } from 'react'
 import { useDevice } from '~/hooks/useDevice'
+import { cn } from '~/utils/cn'
 import { mergeRefs } from '~/utils/mergeRefs'
 import {
   TooltipTriggerContextProvider,
@@ -106,6 +107,17 @@ const tooltipContentVariants = cva(
 
 const InsideHtmlCopyContext = createContext(false)
 
+const InPortalContext = createContext(false)
+
+/**
+ * Renders the tooltips inside it in a portal, above dialogs. Floating UI
+ * places a tooltip that renders inside a CSS size container (`@container`)
+ * away from its trigger, by the container's offset from the window.
+ */
+function TooltipsInPortal({ children }: { children: React.ReactNode }) {
+  return <InPortalContext value={true}>{children}</InPortalContext>
+}
+
 const TooltipContent = ({
   ref,
   className,
@@ -115,6 +127,18 @@ const TooltipContent = ({
 }: React.ComponentProps<typeof TooltipPrimitive.Content> &
   VariantProps<typeof tooltipContentVariants>) => {
   const { contentDescriptionId } = useTooltipTriggerContext()
+  const inPortal = useContext(InPortalContext)
+  const content = (
+    <TooltipPrimitive.Content
+      ref={ref}
+      sideOffset={sideOffset}
+      className={tooltipContentVariants({
+        fitContent,
+        className: cn(inPortal && 'z-1000', className),
+      })}
+      {...props}
+    />
+  )
 
   return (
     <>
@@ -127,12 +151,11 @@ const TooltipContent = ({
           </InsideHtmlCopyContext>
         </span>
       )}
-      <TooltipPrimitive.Content
-        ref={ref}
-        sideOffset={sideOffset}
-        className={tooltipContentVariants({ fitContent, className })}
-        {...props}
-      />
+      {inPortal ? (
+        <TooltipPrimitive.Portal>{content}</TooltipPrimitive.Portal>
+      ) : (
+        content
+      )}
     </>
   )
 }
@@ -157,5 +180,6 @@ export {
   TooltipProvider,
   TooltipTrigger,
   TooltipPortal,
+  TooltipsInPortal,
   TooltipVisualOnly,
 }

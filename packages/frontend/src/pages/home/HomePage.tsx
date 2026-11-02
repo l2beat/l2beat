@@ -1,6 +1,7 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { type ComponentProps, useEffect } from 'react'
+import { TooltipsInPortal } from '~/components/core/tooltip/Tooltip'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -72,72 +73,75 @@ export function HomePage({
               with a line between them below it. The last one leaves its line
               to the footer's. The outer box is the size container, so the
               inner one can turn into the three-column grid (`home-wide`). */}
-            <div className="@container/home">
-              <div
-                className={cn(
-                  'home-wide:home-tracks flex home-wide:grid flex-col md:gap-4 [&>.primary-card:last-child]:max-md:border-b-0 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b',
-                  hasCrops
-                    ? 'home-wide:home-areas'
-                    : 'home-wide:home-areas-no-crops',
-                )}
-              >
-                {/* Without the garden (it is behind a flag) the mandate takes
-                  the row. On phones it comes later, after Ethereum. */}
-                <div className="grid home-wide:contents grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(280px,300px)] md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(300px,320px)] xl:grid-cols-[minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
-                  {hasCrops && (
-                    <HomeCropsBanner
-                      projects={cropsProjects}
-                      className="home-wide:[grid-area:crops]"
-                    />
+            {/* The cards sit in size containers, which misplace tooltips. */}
+            <TooltipsInPortal>
+              <div className="@container/home">
+                <div
+                  className={cn(
+                    'home-wide:home-tracks flex home-wide:grid flex-col md:gap-4 [&>.primary-card:last-child]:max-md:border-b-0 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b',
+                    hasCrops
+                      ? 'home-wide:home-areas'
+                      : 'home-wide:home-areas-no-crops',
                   )}
-                  <HomeMandateBanner
-                    className={cn(
-                      !hasCrops && 'col-span-full',
-                      'home-wide:[grid-area:mandate] max-md:hidden',
+                >
+                  {/* Without the garden (it is behind a flag) the mandate takes
+                    the row. On phones it comes later, after Ethereum. */}
+                  <div className="grid home-wide:contents grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(280px,300px)] md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(300px,320px)] xl:grid-cols-[minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
+                    {hasCrops && (
+                      <HomeCropsBanner
+                        projects={cropsProjects}
+                        className="home-wide:[grid-area:crops]"
+                      />
                     )}
-                  />
-                </div>
-                {/* The domain cards subgrid the title, chart and ranking rows,
-                  so their parts stay level. */}
-                <div className="grid home-wide:contents @min-[880px]/home:grid-cols-2 grid-cols-1 md:gap-4">
-                  <HomePrivacyCard
-                    data={privacy}
-                    projectCount={projectCounts.privacy}
-                    className="home-wide:[grid-area:privacy]"
-                  />
-                  <HomeL2Card
-                    charts={l2Charts}
-                    topProjects={topL2Projects}
-                    projectCount={projectCounts.l2}
-                    className="home-wide:[grid-area:l2]"
-                  />
-                </div>
-                {/* Interop beside Ethereum and the recent cards, as tall as
-                  they are. Stacked below lg, the column dissolves so Interop
-                  follows Ethereum, the data before the reading. */}
-                <div className="grid home-wide:contents grid-cols-1 md:gap-4 lg:grid-cols-2">
-                  <div className="flex home-wide:contents min-w-0 flex-col max-lg:contents md:gap-4">
-                    <HomeEthereumCard
-                      charts={ethereumCharts}
-                      className="home-wide:[grid-area:ethereum]"
-                    />
-                    {/* The phones' mandate, between Ethereum and Interop. */}
-                    <HomeMandateBanner className="md:hidden" />
-                    <HomeRecentColumn
-                      research={research}
-                      recentChanges={recentChanges}
-                      recentProjects={recentProjects}
+                    <HomeMandateBanner
+                      className={cn(
+                        !hasCrops && 'col-span-full',
+                        'home-wide:[grid-area:mandate] max-md:hidden',
+                      )}
                     />
                   </div>
-                  <HomeInteropSection
-                    {...interop}
-                    className="home-wide:[grid-area:interop]"
-                  />
+                  {/* The domain cards subgrid the title, chart and ranking rows,
+                    so their parts stay level. */}
+                  <div className="grid home-wide:contents @min-[880px]/home:grid-cols-2 grid-cols-1 md:gap-4">
+                    <HomePrivacyCard
+                      data={privacy}
+                      projectCount={projectCounts.privacy}
+                      className="home-wide:[grid-area:privacy]"
+                    />
+                    <HomeL2Card
+                      charts={l2Charts}
+                      topProjects={topL2Projects}
+                      projectCount={projectCounts.l2}
+                      className="home-wide:[grid-area:l2]"
+                    />
+                  </div>
+                  {/* Interop beside Ethereum and the recent cards, as tall as
+                    they are. Stacked below lg, the column dissolves so Interop
+                    follows Ethereum, the data before the reading. */}
+                  <div className="grid home-wide:contents grid-cols-1 md:gap-4 lg:grid-cols-2">
+                    <div className="flex home-wide:contents min-w-0 flex-col max-lg:contents md:gap-4">
+                      <HomeEthereumCard
+                        charts={ethereumCharts}
+                        className="home-wide:[grid-area:ethereum]"
+                      />
+                      {/* The phones' mandate, between Ethereum and Interop. */}
+                      <HomeMandateBanner className="md:hidden" />
+                      <HomeRecentColumn
+                        research={research}
+                        recentChanges={recentChanges}
+                        recentProjects={recentProjects}
+                      />
+                    </div>
+                    <HomeInteropSection
+                      {...interop}
+                      className="home-wide:[grid-area:interop]"
+                    />
+                  </div>
+                  {/* The page's one action, last, across the full width. */}
+                  <HomeQuestionCard className="home-wide:[grid-area:question]" />
                 </div>
-                {/* The page's one action, last, across the full width. */}
-                <HomeQuestionCard className="home-wide:[grid-area:question]" />
               </div>
-            </div>
+            </TooltipsInPortal>
           </SideNavLayout>
         </div>
       </HydrationBoundary>

@@ -186,7 +186,7 @@ export function HomeRank({ rank }: { rank: number }) {
   )
 }
 
-/** A ranked row's icon and name, the row's one link. */
+/** A ranked row's icon and name, linking to the project page. */
 export function HomeRankedName({
   name,
   href,

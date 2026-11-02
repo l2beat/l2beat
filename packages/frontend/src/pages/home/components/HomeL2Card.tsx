@@ -93,7 +93,12 @@ export function HomeL2Card({
             id: 'stage',
             header: 'Stage',
             middle: true,
-            cell: (project) => <HomeStageBadge stage={project.stage} />,
+            cell: (project) => (
+              <HomeStageBadge
+                stage={project.stage}
+                projectHref={project.href}
+              />
+            ),
           },
           {
             id: 'tvs',
