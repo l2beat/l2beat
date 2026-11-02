@@ -167,7 +167,7 @@ function ChartContainer<T extends { timestamp: number }>({
               // resolution, which the old buckets do not have.
               showsPreviousData && [
                 '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
-                '[&_.recharts-surface]:animate-previous-chart-data motion-reduce:[&_.recharts-surface]:animate-none motion-reduce:[&_.recharts-surface]:opacity-40',
+                '[&_.recharts-surface]:opacity-40 [&_.recharts-surface]:transition-opacity [&_.recharts-surface]:delay-150 [&_.recharts-surface]:duration-200',
               ],
             )}
           >
