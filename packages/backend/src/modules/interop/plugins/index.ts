@@ -185,7 +185,7 @@ export function createInteropPlugins(
       new DeBridgePlugin(deps.oneSidedChains),
       new DeBridgeDlnPlugin(deps.oneSidedChains),
       new AgglayerPlugin(deps.oneSidedChains),
-      new CircleGatewayPlugIn(deps.configs),
+      new CircleGatewayPlugIn(deps.configs, deps.oneSidedChains),
       new CelerPlugIn(),
       new ButterNetworkPlugin(),
       new MesonPlugin(),

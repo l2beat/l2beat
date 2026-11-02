@@ -62,6 +62,11 @@ const ACROSS_CHAIN_NAME_FALLBACKS = [
     id: 728_126_428,
     querySpokePool: false,
   },
+  {
+    name: 'arc',
+    id: 5_042,
+    querySpokePool: false,
+  },
 ] as const satisfies AcrossBootstrapChain[]
 
 export function buildAcrossBootstrapChains(
