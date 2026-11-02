@@ -204,8 +204,14 @@ type GasZipApiChain = v.infer<typeof GasZipApiChain>
 
 const GasZipApiResponse = v.object({ chains: v.array(GasZipApiChain) })
 
+// Map normalized Gas.zip chain names to ours
+const GASZIP_CHAIN_NAME_TO_CHAIN: Record<string, string> = {
+  hypercore: 'hyperliquid',
+}
+
 function normalizeGasZipChainName(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, '')
+  const normalized = name.toLowerCase().replace(/[^a-z0-9]+/g, '')
+  return GASZIP_CHAIN_NAME_TO_CHAIN[normalized] ?? normalized
 }
 
 function buildBootstrapChainNamesByChainId(
