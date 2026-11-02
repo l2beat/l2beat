@@ -4275,6 +4275,20 @@
       "supply": "zero"
     },
     {
+      "name": "Ondo U.S. Dollar Yield",
+      "coingeckoId": "ondo-us-dollar-yield",
+      "address": "0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+      "symbol": "USDY",
+      "decimals": 18,
+      "deploymentTimestamp": 1689101183,
+      "coingeckoListingTimestamp": 1699401600,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Open Ecosystem Token",
       "coingeckoId": "open-ticketing-ecosystem",
       "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509",

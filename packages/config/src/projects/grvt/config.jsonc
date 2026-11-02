@@ -4,7 +4,8 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
-    "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
+    "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
+    "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45"
   ],
   "names": {
     "eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E": "Diamond",
@@ -13,6 +14,7 @@
     "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c": "GrvtBridgeAdminMultisig",
     "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a": "GRVTTransactionFilterer",
     "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65": "GRVTBridgeProxy",
+    "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45": "GRVTL1TreasuryVault",
     "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
   },
   "overrides": {
@@ -99,20 +101,6 @@
             {
               "type": "interact",
               "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
-            }
-          ]
-        }
-      }
-    },
-    "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65": {
-      "description": "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.",
-      "ignoreRelatives": ["baseToken"],
-      "fields": {
-        "depositApprover": {
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "approve deposits to GRVT via the GRVTBridgeProxy."
             }
           ]
         }

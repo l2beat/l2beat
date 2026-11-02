@@ -1,3 +1,324 @@
+Generated with discovered.json: 0xece3b641a42a254be06a89fafc0bbe7e2831132c
+
+# Diff at Mon, 02 Nov 2026 13:39:53 GMT:
+
+- id: 0430c49d
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7de2489d6143463905a64a13eea216e581898f3f block: 1792751305
+- current timestamp: 1793623332
+
+## Description
+
+Stage 0 (of 3) of ZIP-18 executed on L1: https://www.tally.xyz/gov/zksync/proposal/39818012355511486328740463691883430307761328158522613751057493126514636439545?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f. ZIP-18 resubmits the v31 upgrade from ZIP-16, which was approved but never executed. Stages 1 and 2 (proxy upgrades, new protocol versions v0.33.0 for Era and v0.31.2 for ZKsync OS chains, asset tracker, Priority Mode) are approved by the Security Council and ready for execution.
+
+Stage 0 changes:
+- Chain migrations are paused in ChainAssetHandler (to be unpaused in stage 2).
+- ProtocolUpgradeHandler upgraded: https://disco.l2beat.com/diff/eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B/eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811. L2 governance messages are now proven through the Bridgehub (with Era chain ID 324) instead of the Era diamond, and soft / hard freezes now also apply to chains of the ZKsync OS ChainTypeManager. All delays and freeze periods are unchanged.
+- SecurityCouncil, Guardians and EmergencyUpgradeBoard are redeployed with the same members and thresholds and set in the ProtocolUpgradeHandler. The old Guardians (now named LegacyGuardians) remains the VETO_GUARDIAN of ZkTokenGovernor and ZkGovOpsGovernor on ZKsync Era. SecurityCouncil (formatting only): https://disco.l2beat.com/diff/eth:0x59195219d1176E42f8e607e9AC114926D47f9035/eth:0x29D2e773A31C07D375c50F0110422832bd044d08, Guardians (L2 transactions now go through the Bridgehub): https://disco.l2beat.com/diff/eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8/eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F, EmergencyUpgradeBoard (same code): https://disco.l2beat.com/diff/eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111/eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C.
+- The ProtocolUpgradeHandler accepts ownership of the ZKsync OS ChainTypeManager and its shared ValidatorTimelock (MultisigCommitter, can require signatures of commit validators for batch commits, currently threshold 0) from the Governance contract eth:0xC66f0B45c05cF654eeC093650FD67865E85E8566. It also takes ownership of the (not yet discovered) L1AssetTracker, ChainRegistrationSender, two RollupDAManagers, ZKsyncOSDualVerifier and GovernanceUpgradeTimers. ZKsync OS chains (6 chains, none tracked) are thus now governed by the ZK token governance. Matter Labs keeps the admin role of the ZKsync OS ChainTypeManager through ChainAdminOwnable.
+
+Unrelated to ZIP-18: the Matter Labs Multisig upgraded the Era ServerNotifier to an implementation with identical source: https://disco.l2beat.com/diff/eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A/eth:0x9B337e022d136e8F2b6d2d8331831fF5B108c209.
+
+Config: added v31 shapes of ProtocolUpgradeHandler and Guardians, moved the ZKsyncOSChainTypeManager shape from adi/ChainTypeManager to shared-zk-stack/ChainTypeManager, added the MultisigCommitter template and its address to the initial addresses, named the old Guardians and the ZKsync OS ServerNotifier and L1GenesisUpgrade to keep contract names unique.
+
+## Watched changes
+
+```diff
+    contract MultisigCommitter (eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB) [shared-zk-stack/MultisigCommitter] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 0s. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days. This version (MultisigCommitter) can additionally require batch commitments to be signed by a set of commit validators: by default the shared set of 3 validators with a threshold of 0 (0 means no signatures are required), or a custom per-chain set and threshold if enabled by the owner.
++++ severity: MEDIUM
+      values.owner:
+-        "eth:0xC66f0B45c05cF654eeC093650FD67865E85E8566"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.pendingOwner:
+-        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","description":"set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).","role":".admin","via":[{"address":"eth:0x933dEA2C4241B1537fDD6da277eA62841B490172"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0xBfaa733261500101996A10A231794263567d52ab","role":"admin","via":[{"address":"eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b"},{"address":"eth:0x933dEA2C4241B1537fDD6da277eA62841B490172"}]}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"eth:0x933dEA2C4241B1537fDD6da277eA62841B490172","role":".owner"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncil (eth:0x59195219d1176E42f8e607e9AC114926D47f9035) [shared-zk-stack/SecurityCouncil]
+    +++ description: Custom Multisig implementation that has a general threshold of 6 but also specific thresholds for upgrade approvals (4) or soft freezes (3).
+```
+
+```diff
+    contract LegacyGuardians (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) [shared-zk-stack/Guardians] {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"extend the legal veto period, approve a protocol upgrade.","role":".guardians"}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111","description":"one of its 3/3 signers.","role":".GUARDIANS"}
+    }
+```
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111"
++        "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Governance (eth:0xC66f0B45c05cF654eeC093650FD67865E85E8566) [adi/Governance]
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
+```
+
+```diff
+    contract ChainAssetHandler (eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076) [shared-zk-stack/ChainAssetHandler] {
+    +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
++++ severity: MEDIUM
+      values.migrationPaused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      sourceHashes.1:
+-        "0xe7338cd500c37f1d7babf2aa7b9c2826f7f52ea69aafdaba9ace9138115981bd"
++        "0x94736426ab1ce890a3dc2ff8465aadec6e85a38613ef011bd5c755c3a556ecc0"
+      values.$implementation:
+-        "eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B"
++        "eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811"
+      values.$pastUpgrades.3:
++        ["2026-10-30T10:42:59.000Z","0xeca3bf13d10d5cd4d311e03eecea0156440367eff99e0b58ee17928edb399230",["eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811"]]
+      values.$upgradeCount:
+-        3
++        4
++++ severity: HIGH
+      values.emergencyUpgradeBoard:
+-        "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111"
++        "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C"
++++ severity: HIGH
+      values.guardians:
+-        "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8"
++        "eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F"
++++ severity: HIGH
+      values.securityCouncil:
+-        "eth:0x59195219d1176E42f8e607e9AC114926D47f9035"
++        "eth:0x29D2e773A31C07D375c50F0110422832bd044d08"
+      values.ZKSYNC_ERA:
+-        "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.ERA_CHAIN_ID:
++        324
+      values.ERA_CHAIN_TYPE_MANAGER:
++        "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.ZKSYNC_OS_CHAIN_TYPE_MANAGER:
++        "eth:0x1adF137F59949c9081157D5de1e002D1C992071F"
+      implementationNames.eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B:
+-        "ProtocolUpgradeHandler"
+      implementationNames.eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811:
++        "ProtocolUpgradeHandler"
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB","description":"set the ecosystem-wide minimum execution delay, manage the shared set of commit validators and its signing threshold, and allow chains to use a custom commit validator set.","role":".owner"}
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.","role":".owner"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EmergencyUpgradeBoard (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111) [shared-zk-stack/EmergencyUpgradeBoard]
+    +++ description: A custom contract allowing a 3/3 of eth:0x59195219d1176E42f8e607e9AC114926D47f9035, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+```diff
+    contract ServerNotifier (eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31) [shared-zk-stack/ServerNotifier] {
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+      values.$implementation:
+-        "eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A"
++        "eth:0x9B337e022d136e8F2b6d2d8331831fF5B108c209"
+      values.$pastUpgrades.2:
++        ["2026-10-29T13:08:59.000Z","0xbe54ecd76c119de868337f92e684024976b477057032eb57b6a6ffb948cc8251",["eth:0x9B337e022d136e8F2b6d2d8331831fF5B108c209"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A:
+-        "ServerNotifier"
+      implementationNames.eth:0x9B337e022d136e8F2b6d2d8331831fF5B108c209:
++        "ServerNotifier"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","role":"admin"}
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        19
++        20
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        19
++        20
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        4
++        5
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSChainTypeManager (eth:0x1adF137F59949c9081157D5de1e002D1C992071F) [shared-zk-stack/ChainTypeManager]
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncil (eth:0x29D2e773A31C07D375c50F0110422832bd044d08) [shared-zk-stack/SecurityCouncil]
+    +++ description: Custom Multisig implementation that has a general threshold of 6 but also specific thresholds for upgrade approvals (4) or soft freezes (3).
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSL1GenesisUpgrade (eth:0x2bf9B0B72573af5471c4f035271616139392Acd8) [shared-zk-stack/L1GenesisUpgrade]
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
++   Status: CREATED
+    contract Guardians (eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F) [shared-zk-stack/Guardians]
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyUpgradeBoard (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) [shared-zk-stack/EmergencyUpgradeBoard]
+    +++ description: A custom contract allowing a 3/3 of eth:0x29D2e773A31C07D375c50F0110422832bd044d08, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+```diff
++   Status: CREATED
+    contract ChainAdminOwnable (eth:0x933dEA2C4241B1537fDD6da277eA62841B490172) [shared-zk-stack/ChainAdmin]
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSServerNotifier (eth:0xBfaa733261500101996A10A231794263567d52ab) [shared-zk-stack/ServerNotifier]
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b) [global/ProxyAdmin]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../shared-zk-stack/.flat/ChainAdminOwnable.sol    | 2005 +++++++
+ .../.flat@1792751305/Governance.sol => /dev/null   |  542 --
+ .../projects/shared-zk-stack/.flat/Guardians.sol   | 1823 +++++++
+ .../ProtocolUpgradeHandler.sol                     | 1398 ++---
+ ...:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b.sol |  217 +
+ .../SecurityCouncil.sol                            |  715 ++-
+ .../TransparentUpgradeableProxy.p.sol              |  864 ++++
+ .../ZKsyncOSChainTypeManager.sol                   | 5454 ++++++++++++++++++++
+ .../.flat/ZKsyncOSL1GenesisUpgrade.sol             | 5337 +++++++++++++++++++
+ .../ZKsyncOSServerNotifier/ServerNotifier.sol      | 3160 ++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  864 ++++
+ 11 files changed, 20785 insertions(+), 1594 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792751305 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncil (eth:0x59195219d1176E42f8e607e9AC114926D47f9035) [shared-zk-stack/SecurityCouncil] {
+    +++ description: Custom Multisig implementation that has a general threshold of 6 but also specific thresholds for upgrade approvals (4) or soft freezes (3).
+      receivedPermissions.0.description:
+-        "soft freeze, hard freeze, approve a protocol upgrade."
++        "soft freeze, hard freeze (all chains of the Era and ZKsync OS ChainTypeManagers), approve a protocol upgrade."
+    }
+```
+
+```diff
+    contract LegacyGuardians (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) [shared-zk-stack/Guardians] {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      name:
+-        "Guardians"
++        "LegacyGuardians"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      fieldMeta.protocolFrozenUntil.description:
+-        "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"
++        "Timestamp until which ALL ZK chains connected to the main (Era) ChainTypeManager and, since v31, to the ZKsync OS ChainTypeManager are frozen. (Mailbox and Executor facets blocked)"
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938","role":".owner"}
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111) [shared-zk-stack/EmergencyUpgradeBoard] {
+    +++ description: A custom contract allowing a 3/3 of eth:0x59195219d1176E42f8e607e9AC114926D47f9035, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB","role":"admin","via":[{"address":"eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MultisigCommitter (eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB) [shared-zk-stack/MultisigCommitter]
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 0s. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days. This version (MultisigCommitter) can additionally require batch commitments to be signed by a set of commit validators: by default the shared set of 3 validators with a threshold of 0 (0 means no signatures are required), or a custom per-chain set and threshold if enabled by the owner.
+```
+
+```diff
++   Status: CREATED
+    contract Governance (eth:0xC66f0B45c05cF654eeC093650FD67865E85E8566) [adi/Governance]
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938) [global/ProxyAdmin]
+    +++ description: None
+```
+
 Generated with discovered.json: 0xab06571f493c120aa3ace82b9451c3d799fe6278
 
 # Diff at Fri, 23 Oct 2026 10:29:35 GMT:

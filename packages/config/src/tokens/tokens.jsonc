@@ -202,6 +202,11 @@
       "category": "rwaPublic"
     },
     {
+      "symbol": "USDY",
+      "address": "0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+      "category": "rwaPublic"
+    },
+    {
       "symbol": "mRe7BTC",
       "address": "0x9FB442d6B612a6dcD2acC67bb53771eF1D9F661A",
       "category": "rwaPublic"

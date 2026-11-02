@@ -6,6 +6,9 @@
     "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213", // BridgeHub
     "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
     "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+    // MultisigCommitter: shared ValidatorTimelock of the ZKsync OS ChainTypeManager, owned by the ProtocolUpgradeHandler since v31.
+    // The ChainTypeManager template ignores validatorTimelockPostV29 (normally configured per chain) and no project tracks the ZKsync OS chains.
+    "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
 
     "zksync:0x76705327e682F2d96943280D99464Ab61219e34f",
     "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
@@ -14,6 +17,10 @@
     "eth:0x2cf3bD6a9056b39999F3883955E183F655345063": "EraChainAdminProxy",
     "eth:0x085b8B6407f150D62adB1EF926F7f304600ec714": "ProtocolTimelockController(L2->L1)",
     "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213": "BridgeHub",
+    // replaced in the ProtocolUpgradeHandler by v31, but still the VETO_GUARDIAN of ZkTokenGovernor and ZkGovOpsGovernor
+    "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": "LegacyGuardians",
+    "eth:0xBfaa733261500101996A10A231794263567d52ab": "ZKsyncOSServerNotifier",
+    "eth:0x2bf9B0B72573af5471c4f035271616139392Acd8": "ZKsyncOSL1GenesisUpgrade",
 
     "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "ZkToken",
     "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": "ZkTokenProxyAdmin",
