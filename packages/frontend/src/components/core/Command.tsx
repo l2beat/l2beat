@@ -260,7 +260,9 @@ const CommandLinkItem = ({
  * the modifier a click would use for a new tab opens one.
  */
 function followHighlightedLinkOnEnter(e: React.KeyboardEvent<HTMLDivElement>) {
-  if (e.key !== 'Enter' || e.nativeEvent.isComposing) return
+  // Same IME guard as cmdk: 229 is Enter confirming a composition.
+  const isComposing = e.nativeEvent.isComposing || e.keyCode === 229
+  if (e.key !== 'Enter' || isComposing) return
   const link = e.currentTarget.querySelector(
     'a[cmdk-item][aria-selected="true"], [cmdk-item][aria-selected="true"] a[href]',
   )
