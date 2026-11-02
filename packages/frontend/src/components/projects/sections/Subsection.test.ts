@@ -9,6 +9,7 @@ import { renderToString } from 'react-dom/server'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ParentHeadingLevelProvider } from '~/components/markdown/ParentHeadingLevelContext'
+import { linkGlossaryTerms } from '~/utils/markdown/glossaryPlugin'
 import { Subsection, SubsectionHeading } from './Subsection'
 
 // Why: a subsection's title and everything under it must nest below the
@@ -19,7 +20,7 @@ describe(Subsection.name, () => {
     const html = renderToString(
       withChildren(
         GlossaryContextProvider,
-        { terms: [] },
+        { linkTerms: linkGlossaryTerms([]) },
         withChildren(
           ParentHeadingLevelProvider,
           { value: 2 },

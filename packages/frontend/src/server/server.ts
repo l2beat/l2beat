@@ -15,7 +15,11 @@ import {
   CLIENT_ASSETS_PATH,
   CLIENT_TEMPLATE_PATH,
 } from '../paths.mjs'
-import type { RenderData, ServerRenderFunction } from '../ssr/types'
+import type {
+  ClientSsrData,
+  RenderData,
+  ServerRenderFunction,
+} from '../ssr/types'
 import { jsonForInlineScript } from '../utils/jsonForInlineScript'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { getTokenGraphs } from './features/tokens/getTokenGraphs'
@@ -90,7 +94,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
       .replace('<!--app-html-->', rendered.html)
       .replace(
         '<!--ssr-data-->',
-        `window.__SSR_DATA__=${jsonForInlineScript(data.ssr)}`,
+        `window.__SSR_DATA__=${jsonForInlineScript({ ...data.ssr, glossaryTerms: rendered.glossaryTerms } satisfies ClientSsrData)}`,
       )
       .replace(
         '<!--env-data-->',

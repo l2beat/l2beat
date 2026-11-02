@@ -3,11 +3,13 @@ import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
+import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
 import type {
   ProjectDetailsSection,
   ProjectSectionId,
 } from '~/components/projects/sections/types'
 import type { EthereumProjectPageEntry } from '~/server/features/data-availability/project/getEthereumProjectEntry'
+import { linkGlossaryTerms } from '~/utils/markdown/glossaryPlugin'
 import { EthereumProjectPage } from './EthereumProjectPage'
 
 // Why: screen readers and LLMs navigate a page by its heading outline, so the
@@ -66,37 +68,41 @@ describe(EthereumProjectPage.name, () => {
 })
 
 function renderPage(): string {
-  return renderToString(
-    createElement(EthereumProjectPage, {
-      entry: ethereumEntry([
-        markdownSection(
-          'detailed-description',
-          'Detailed description',
-          '# Architecture\n\nBody\n\n## Upgradeability\n\nBody',
-        ),
-        {
-          type: 'Group',
-          props: {
-            id: 'da-layer',
-            title: 'Ethereum layer',
-            items: [
-              markdownSection(
-                'da-layer-technology',
-                'Technology',
-                // Real DA technology descriptions start at `##`.
-                '## Consensus\n\nBody',
-              ),
-            ],
-          },
+  const page = createElement(EthereumProjectPage, {
+    entry: ethereumEntry([
+      markdownSection(
+        'detailed-description',
+        'Detailed description',
+        '# Architecture\n\nBody\n\n## Upgradeability\n\nBody',
+      ),
+      {
+        type: 'Group',
+        props: {
+          id: 'da-layer',
+          title: 'Ethereum layer',
+          items: [
+            markdownSection(
+              'da-layer-technology',
+              'Technology',
+              // Real DA technology descriptions start at `##`.
+              '## Consensus\n\nBody',
+            ),
+          ],
         },
-      ]),
-      queryState: { mutations: [], queries: [] },
-      terms: [],
-      recentlyAddedProjects: [],
-      whatsNewItem: undefined,
-      whatsNew: undefined,
-      countdowns: PROJECT_COUNTDOWNS,
-    }),
+      },
+    ]),
+    queryState: { mutations: [], queries: [] },
+    recentlyAddedProjects: [],
+    whatsNewItem: undefined,
+    whatsNew: undefined,
+    countdowns: PROJECT_COUNTDOWNS,
+  })
+  return renderToString(
+    createElement(
+      GlossaryContextProvider,
+      { linkTerms: linkGlossaryTerms([]) },
+      page,
+    ),
   )
 }
 

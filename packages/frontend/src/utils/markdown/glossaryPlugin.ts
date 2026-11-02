@@ -4,9 +4,11 @@ import type { RenderRule } from 'markdown-it/lib/renderer.mjs'
 import type Token from 'markdown-it/lib/token.mjs'
 import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 
+const ignoreDelimiter = ':'
+
 export function linkGlossaryTerms(
   glossary: GlossaryTerm[],
-  ignoreDelimiter = ':',
+  onTermLinked?: (termId: string) => void,
 ) {
   const ignorePattern = new RegExp(
     `${ignoreDelimiter}([a-zA-Z\\s]+)${ignoreDelimiter}`,
@@ -58,6 +60,7 @@ export function linkGlossaryTerms(
         }
         const glossaryTermData = termToData.get(match[0].toLowerCase())
         if (!glossaryTermData) continue
+        onTermLinked?.(glossaryTermData.id)
         links.push({
           start,
           end,
@@ -196,7 +199,7 @@ function createGlossaryLink(id: string, term: string, description: string) {
 }
 
 // Escape special characters in the term to use it in a regex pattern
-function escapeRegExp(string: string) {
+export function escapeRegExp(string: string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
 }
 
