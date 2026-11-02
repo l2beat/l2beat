@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainSpecificAddress,
   formatSeconds,
   ProjectId,
@@ -89,6 +90,23 @@ const upgradeDelayDays =
   discovery.getContractValue<number>(UPGRADE_TIMELOCK, 'getMinDelay') / 86400
 const operatingDelayDays =
   discovery.getContractValue<number>(OPERATING_TIMELOCK, 'getMinDelay') / 86400
+const upgradeProposers = discovery.getContractValue<string[]>(
+  UPGRADE_TIMELOCK,
+  'proposers',
+)
+const upgradeSafe = upgradeProposers[0]
+assert(
+  upgradeProposers.length === 1 && upgradeSafe !== undefined,
+  'etherfi: the upgrade timelock should have one proposer',
+)
+const upgradeThreshold = discovery.getContractValue<number>(
+  upgradeSafe,
+  '$threshold',
+)
+const upgradeSigners = discovery.getContractValue<string[]>(
+  upgradeSafe,
+  '$members',
+).length
 
 export const etherfi: BaseProject = {
   id: ProjectId('etherfi'),
@@ -217,10 +235,10 @@ export const etherfi: BaseProject = {
         description: `Withdrawal requests are finalized with oracle reports, at most ${maxFinalizedPerDay} ETH a day. When the liquid buffer cannot cover the queue, requests wait for validators to exit through EigenLayer, which adds its own withdrawal delay. Instant redemption from the buffer costs up to ${maxExitFee}. The ${operationsSafe} Safe can pause all exits.`,
       },
       upgrades: {
-        value: '6/10 Safe',
+        value: `${upgradeThreshold}/${upgradeSigners} Safe`,
         secondLine: `${upgradeDelayDays}d · no veto`,
         sentiment: 'warning',
-        description: `A 6-of-10 Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock tunes parameters within fixed limits. Holders have no veto.`,
+        description: `A ${upgradeThreshold}-of-${upgradeSigners} Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock tunes parameters within fixed limits. Holders have no veto.`,
       },
     },
   },

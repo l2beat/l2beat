@@ -1,3 +1,68 @@
+Generated with discovered.json: 0x091850de58a0eb461aecc40003fabeccec9b7ab9
+
+# Diff at Mon, 02 Nov 2026 11:48:25 GMT:
+
+- id: 5160d689
+- author: vilcht (<dawdrobny@gmail.com>)
+- comparing to: main@a1cf0a990c45564159b583337ff7436e8a5c9407 block: 1792491551
+- current timestamp: 1792491551
+
+## Description
+
+Read the proposers of both timelocks, so discovery follows them to the Safes behind upgrades (6/10, 10-day delay) and parameter changes (the 4/7 operations Safe, 2-day delay).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792491551 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a","delay":172800,"role":".proposers"}]
+    }
+```
+
+```diff
+    contract EtherFiTimelock (eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761) [etherfi/EtherFiTimelock] {
+    +++ description: OpenZeppelin TimelockController governing contract upgrades and privileged operations. Two instances: a longer Upgrade timelock and a shorter Operating timelock.
+      values.proposers:
++        ["eth:0xcdd57D11476c22d265722F68390b036f3DA48c21"]
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a","role":"admin"},{"permission":"upgrade","from":"eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000","role":"admin"},{"permission":"upgrade","from":"eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9","role":"admin"},{"permission":"upgrade","from":"eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479","role":"admin"},{"permission":"upgrade","from":"eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63","role":"admin","via":[{"address":"eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc"}]},{"permission":"upgrade","from":"eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146","role":"admin","via":[{"address":"eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D"}]}]
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a","role":"admin"}
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000","role":"admin"}
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9","role":"admin"}
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479","role":"admin"}
+    }
+```
+
+```diff
+    contract EtherFiTimelock (eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a) [etherfi/EtherFiTimelock] {
+    +++ description: OpenZeppelin TimelockController governing contract upgrades and privileged operations. Two instances: a longer Upgrade timelock and a shorter Operating timelock.
+      values.proposers:
++        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xA195D4A57C4802651F67fB56349e10a7adDADD82) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xcdd57D11476c22d265722F68390b036f3DA48c21) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x60f6e191dfd02f93c8b96b9305182871183cc46a
 
 # Diff at Tue, 27 Oct 2026 11:31:37 GMT:
