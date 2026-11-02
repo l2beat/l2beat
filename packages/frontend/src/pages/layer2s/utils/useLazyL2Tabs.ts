@@ -80,8 +80,10 @@ export function useLazyL2TabEntries<T, TError, TKey extends QueryKey>(
       retry: () => {},
     }
   }
-  // A retry keeps the error until it settles, so it shows the skeleton.
-  const isFailed = query.isError && query.fetchStatus === 'idle'
+  // A retry keeps the error until it settles, so it shows the skeleton. A
+  // failed background refetch keeps the entries it already has.
+  const isFailed =
+    query.isError && query.fetchStatus === 'idle' && query.data === undefined
   return {
     entries: query.data ?? [],
     isLoading: query.data === undefined && !isFailed,
