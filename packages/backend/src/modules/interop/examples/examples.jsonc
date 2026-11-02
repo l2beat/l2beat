@@ -2017,6 +2017,55 @@
       ]
     }
   },
+  "cctpv2-plasma": {
+    "description": "CCTP v2 USDC to and from Plasma (domain 33, one-sided)",
+    "loadConfigs": ["cctp-v2"],
+    "txs": [
+      // Ethereum -> Plasma source-side only
+      {
+        "chain": "ethereum",
+        "tx": "0xa6dd4663dd4846f34f77fa20454303c78418cd800c085e8a954207c7ec916741"
+      },
+      // Plasma -> Base destination-side only
+      {
+        "chain": "base",
+        "tx": "0x87260111d7ffdd091a4eafcc0563cce902fc7a783d8b102734c289713b2a24db"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "cctp-v2.MessageSent",
+          "args": { "$dstChain": "plasma", "amount": "5828069237" }
+        },
+        {
+          "type": "cctp-v2.MessageReceived",
+          "args": { "$srcChain": "plasma", "dstAmount": "19999756376" }
+        }
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "cctp-v2.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "financials": { "symbol": "USDC" }
+          },
+          "dst": { "chain": "plasma" }
+        },
+        {
+          "type": "cctp-v2.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": { "chain": "plasma" },
+          "dst": {
+            "event": { "ctx": { "chain": "base" } },
+            "financials": { "symbol": "USDC" }
+          }
+        }
+      ]
+    }
+  },
   "wormhole-tokenbridge-to-bsc": {
     "loadConfigs": ["wormhole"],
     "txs": [
@@ -4071,6 +4120,59 @@
               "type": "stargate-v2.OFTReceived",
               "ctx": { "chain": "tempo" }
             }
+          }
+        }
+      ]
+    }
+  },
+  "stargatev2taxi-plasma": {
+    "description": "Stargate v2 ETH taxis to and from Plasma (one-sided)",
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      // Ethereum -> Plasma source-side only
+      {
+        "chain": "ethereum",
+        "tx": "0xba0269a7ef033c00984d66582fdbb4277c38670989e58a07e0afde528b235140"
+      },
+      // Plasma -> Ethereum destination-side only
+      {
+        "chain": "ethereum",
+        "tx": "0x71d142fd22c48b2e7174f9cb0eeba20d9f1af4c5f0b2ab3257a4878eaae666cc"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "stargate-v2.OFTSentTaxi",
+          "args": { "$dstChain": "plasma" }
+        },
+        {
+          "type": "stargate-v2.OFTReceived",
+          "args": {
+            "$srcChain": "plasma",
+            "amountReceivedLD": "3910000000000000"
+          }
+        }
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "stargate-v2-taxi.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "native",
+            "wasBurned": false
+          },
+          "dst": { "chain": "plasma" }
+        },
+        {
+          "type": "stargate-v2-taxi.Transfer",
+          "src": { "chain": "plasma" },
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAddress": "native",
+            "tokenAmount": "3910000000000000",
+            "wasMinted": false
           }
         }
       ]
