@@ -6,10 +6,9 @@ import {
   type ReactNode,
 } from 'react'
 import { renderToString } from 'react-dom/server'
-import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ParentHeadingLevelProvider } from '~/components/markdown/ParentHeadingLevelContext'
-import { linkGlossaryTerms } from '~/utils/markdown/glossaryPlugin'
+import { withEmptyGlossary } from '~/test/withEmptyGlossary'
 import { Subsection, SubsectionHeading } from './Subsection'
 
 // Why: a subsection's title and everything under it must nest below the
@@ -18,9 +17,7 @@ import { Subsection, SubsectionHeading } from './Subsection'
 describe(Subsection.name, () => {
   it('nests its heading, markdown and inner subsections below the parent', () => {
     const html = renderToString(
-      withChildren(
-        GlossaryContextProvider,
-        { linkTerms: linkGlossaryTerms([]) },
+      withEmptyGlossary(
         withChildren(
           ParentHeadingLevelProvider,
           { value: 2 },

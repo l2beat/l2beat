@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
+import type { GlossaryTerm } from '~/utils/markdown/glossaryMatcher'
 import { linkGlossaryTerms } from '~/utils/markdown/glossaryPlugin'
 import { getClientGlossaryTerms } from './getClientGlossaryTerms'
 

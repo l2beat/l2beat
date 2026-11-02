@@ -1,6 +1,5 @@
 import { StrictMode } from 'react'
 import { renderToStaticMarkup, renderToString } from 'react-dom/server'
-import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
 import { getClientGlossaryTerms } from '~/server/features/glossary/getClientGlossaryTerms'
 import { getGlossaryTerms } from '~/server/features/glossary/getGlossaryTerms'
 import { linkGlossaryTerms } from '~/utils/markdown/glossaryPlugin'
@@ -12,22 +11,16 @@ export async function render(
   data: RenderData,
   url: string,
 ): Promise<RenderResult> {
-  const pageElement = await getPageElement(data.ssr)
   const glossaryTerms = getGlossaryTerms()
   const linkedTermIds = new Set<string>()
-  const linkTerms = linkGlossaryTerms(glossaryTerms, (termId) =>
-    linkedTermIds.add(termId),
+  const pageElement = await getPageElement(
+    data.ssr,
+    linkGlossaryTerms(glossaryTerms, (termId) => linkedTermIds.add(termId)),
   )
   // Set after the await: concurrent requests would otherwise overwrite it
   // before this synchronous render reads it.
   globalThis.__FIX_SSR_URL__ = url
-  const html = renderToString(
-    <StrictMode>
-      <GlossaryContextProvider linkTerms={linkTerms}>
-        {pageElement}
-      </GlossaryContextProvider>
-    </StrictMode>,
-  )
+  const html = renderToString(pageElement)
   const head = renderToStaticMarkup(
     <StrictMode>
       <Head {...data.head} />

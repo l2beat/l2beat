@@ -1,5 +1,5 @@
-import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 import { getCollection } from '~/content/getCollection'
+import type { GlossaryTerm } from '~/utils/markdown/glossaryMatcher'
 
 export function getGlossaryTerms(): GlossaryTerm[] {
   return getCollection('glossary').map((term) => ({

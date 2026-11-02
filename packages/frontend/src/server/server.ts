@@ -88,13 +88,17 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   const renderToHtml = async (data: RenderData, url: string) => {
     const rendered = await render(data, url)
     const template = await getTemplate(options, url, productionTemplate)
+    const clientSsrData: ClientSsrData = {
+      ...data.ssr,
+      glossaryTerms: rendered.glossaryTerms,
+    }
 
     return template
       .replace('<!--app-head-->', rendered.head + pagePreloads(data.ssr.page))
       .replace('<!--app-html-->', rendered.html)
       .replace(
         '<!--ssr-data-->',
-        `window.__SSR_DATA__=${jsonForInlineScript({ ...data.ssr, glossaryTerms: rendered.glossaryTerms } satisfies ClientSsrData)}`,
+        `window.__SSR_DATA__=${jsonForInlineScript(clientSsrData)}`,
       )
       .replace(
         '<!--env-data-->',

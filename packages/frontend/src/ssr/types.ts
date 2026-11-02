@@ -1,5 +1,5 @@
-import type { GlossaryTerm } from '../components/markdown/GlossaryContext'
 import type { SsrData } from '../pages/pageTypes'
+import type { GlossaryTerm } from '../utils/markdown/glossaryMatcher'
 import type { HeadProps } from './head/Head'
 
 export interface RenderData {

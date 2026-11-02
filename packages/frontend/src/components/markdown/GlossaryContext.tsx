@@ -1,11 +1,5 @@
 import { createContext, useContext } from 'react'
 
-export interface GlossaryTerm {
-  id: string
-  matches: string[]
-  description: string
-}
-
 /** Turns the glossary terms in markdown into glossary links. */
 export type LinkGlossaryTerms = (markdown: string) => string
 
@@ -13,7 +7,7 @@ const GlossaryContext = createContext<LinkGlossaryTerms | null>(null)
 
 interface Props {
   linkTerms: LinkGlossaryTerms
-  children?: React.ReactNode
+  children: React.ReactNode
 }
 
 export function GlossaryContextProvider({ children, linkTerms }: Props) {
