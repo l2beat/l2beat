@@ -16,10 +16,15 @@ import {
 const Command = ({
   ref,
   className,
+  onKeyDown,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive>) => (
   <CommandPrimitive
     ref={ref}
+    onKeyDown={(e) => {
+      onKeyDown?.(e)
+      if (!e.defaultPrevented) followHighlightedLinkOnEnter(e)
+    }}
     className={cn(
       'flex size-full flex-col overflow-hidden rounded-[inherit] border border-divider bg-surface-primary primary-card:bg-surface-secondary focus-visible:border-brand focus-visible:outline-none dark:border-transparent',
       className,
@@ -213,6 +218,92 @@ const CommandItem = ({
 
 CommandItem.displayName = CommandPrimitive.Item.displayName
 
+/**
+ * An item that is a real link, so Cmd/Ctrl-click, middle-click and "Copy
+ * link" work like on any other link. Enter on the highlighted item is handled
+ * by `Command`.
+ *
+ * `onFollow` runs when the link is opened from the item, with whether this
+ * page stays: a dialog should stay open then, so several can be opened.
+ */
+const CommandLinkItem = ({
+  href,
+  onFollow,
+  className,
+  children,
+  ...props
+}: Omit<
+  React.ComponentProps<typeof CommandPrimitive.Item>,
+  'asChild' | 'onSelect'
+> & {
+  href: string
+  onFollow?: (staysOnPage: boolean) => void
+}) => (
+  <CommandItem asChild className={cn('cursor-pointer', className)} {...props}>
+    <a
+      href={href}
+      // Arrow keys move through the items; Tab would stop on every one.
+      tabIndex={-1}
+      onClick={(e) => onFollow?.(staysOnPage(e))}
+      onAuxClick={(e) => {
+        if (e.button === 1) onFollow?.(true)
+      }}
+    >
+      {children}
+    </a>
+  </CommandItem>
+)
+
+/**
+ * cmdk turns Enter into the item's `onSelect`, which can't see modifier
+ * keys. A link item, or a link inside an item, is followed here instead:
+ * Enter clicks it, and Enter with a modifier opens it in a new tab.
+ */
+function followHighlightedLinkOnEnter(e: React.KeyboardEvent<HTMLDivElement>) {
+  // Same IME guard as cmdk: 229 is Enter confirming a composition.
+  const isComposing = e.nativeEvent.isComposing || e.keyCode === 229
+  if (e.key !== 'Enter' || isComposing) return
+  const link = e.currentTarget.querySelector(
+    'a[cmdk-item][aria-selected="true"], [cmdk-item][aria-selected="true"] a[href]',
+  )
+  if (!(link instanceof HTMLAnchorElement)) return
+  e.preventDefault()
+
+  if (!staysOnPage(e)) {
+    link.click()
+    return
+  }
+  // Browsers differ in whether a scripted click honours modifier keys, so
+  // the click only tells `onFollow`, and the tab is opened here.
+  link.addEventListener('click', (click) => click.preventDefault(), {
+    once: true,
+  })
+  link.dispatchEvent(
+    new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      metaKey: e.metaKey,
+      ctrlKey: e.ctrlKey,
+      shiftKey: e.shiftKey,
+      altKey: e.altKey,
+    }),
+  )
+  window.open(link.href, '_blank', 'noopener')
+}
+
+/**
+ * A modified click leaves this page: Cmd/Ctrl opens a new tab, Shift a new
+ * window, and Alt downloads the link.
+ */
+function staysOnPage(e: {
+  metaKey: boolean
+  ctrlKey: boolean
+  shiftKey: boolean
+  altKey: boolean
+}) {
+  return e.metaKey || e.ctrlKey || e.shiftKey || e.altKey
+}
+
 export {
   Command,
   CommandDialog,
@@ -222,5 +313,6 @@ export {
   CommandEmpty,
   CommandGroup,
   CommandItem,
+  CommandLinkItem,
   CommandSeparator,
 }

@@ -9,14 +9,13 @@ import {
   CommandGroup,
   CommandInput,
   CommandInputActionButton,
-  CommandItem,
+  CommandLinkItem,
   CommandList,
 } from '~/components/core/Command'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
-import { useRouter } from '~/hooks/useRouter'
 import { useTracking } from '~/hooks/useTracking'
 import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { useTRPC } from '~/trpc/React'
@@ -40,7 +39,6 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   const [value, setValue] = useState('')
   const debouncedValue = useDebouncedValue(value, 200)
   const { open, setOpen } = useSearchBarContext()
-  const router = useRouter()
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
@@ -95,12 +93,16 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
     setOpen(false)
   }
 
-  function onItemSelect(item: SearchBarProject | AnySearchBarEntry) {
-    setOpen(false)
-    router.push(item.href)
+  function onItemFollow(
+    item: SearchBarProject | AnySearchBarEntry,
+    staysOnPage: boolean,
+  ) {
     track('searchBarProjectSelected', {
       name: item.name,
     })
+    // Stays open so several results can be opened side by side to compare.
+    if (staysOnPage) return
+    setOpen(false)
     // Clear after the dialog's close animation (100ms) so the input
     // doesn't visibly reset and flash the "Recently added" list mid-close.
     setTimeout(() => setValue(''), 200)
@@ -165,7 +167,10 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                 return (
                   <SearchBarItem
                     key={project.id}
-                    onSelect={() => onItemSelect(project)}
+                    href={project.href}
+                    onFollow={(staysOnPage) =>
+                      onItemFollow(project, staysOnPage)
+                    }
                     label={entryToLabel(project)}
                   >
                     <img
@@ -201,7 +206,10 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                   return (
                     <SearchBarItem
                       key={item.href}
-                      onSelect={() => onItemSelect(item)}
+                      href={item.href}
+                      onFollow={(staysOnPage) =>
+                        onItemFollow(item, staysOnPage)
+                      }
                       label={entryToLabel(item)}
                       value={
                         // I know it looks ugly but there is a bug in CMDK that scrolls to wrong item sometimes.
@@ -254,20 +262,23 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 }
 
 function SearchBarItem({
-  onSelect,
+  href,
+  onFollow,
   children,
   label,
   value,
 }: {
-  onSelect: () => void
+  href: string
+  onFollow: (staysOnPage: boolean) => void
   children: React.ReactNode
   label?: string
   value?: string
 }) {
   return (
-    <CommandItem
-      className="cursor-pointer gap-2 rounded-lg"
-      onSelect={onSelect}
+    <CommandLinkItem
+      className="gap-2 rounded-lg"
+      href={href}
+      onFollow={onFollow}
       value={value}
     >
       {children}
@@ -276,7 +287,7 @@ function SearchBarItem({
           {label}
         </div>
       )}
-    </CommandItem>
+    </CommandLinkItem>
   )
 }
 
