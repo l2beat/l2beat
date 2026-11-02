@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import { cn } from '~/utils/cn'
 
 /**
@@ -40,11 +40,15 @@ export const previousChartDataClassName =
  * The value the shown data was fetched with. While a chart shows the previous
  * query's data, the current value already belongs to the query still loading,
  * so a resolution derived from it would not match the buckets on screen.
+ * The value is kept after commit, so a render React throws away cannot leave
+ * one that never reached the screen.
  */
 export function useValueOfShownData<T>(value: T, showsPreviousData: boolean) {
   const shown = useRef(value)
-  if (!showsPreviousData) shown.current = value
-  return shown.current
+  useEffect(() => {
+    if (!showsPreviousData) shown.current = value
+  })
+  return showsPreviousData ? shown.current : value
 }
 
 /** Dims stats derived from the shown data along with the plot. */
