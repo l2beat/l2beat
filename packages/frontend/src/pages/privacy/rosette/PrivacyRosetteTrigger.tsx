@@ -11,6 +11,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import { TableLink } from '~/components/table/TableLink'
 import { getPrivacyAdversariesSectionHref } from '../adversaries/privacyAdversaryUi'
 import {
+  getPrivacyAssessmentLabel,
   PRIVACY_ASSESSMENT_TITLE,
   PrivacyRosetteAnalysis,
 } from './PrivacyRosetteAnalysis'
@@ -70,8 +71,15 @@ export function PrivacyRosetteTrigger({
           {children}
         </Link>
       </TooltipTrigger>
-      {/* Clear of the viewport edge, like the page's own gutter. */}
-      <TooltipContent fitContent collisionPadding={16}>
+      {/* Clear of the viewport edge, like the page's own gutter. While open,
+          screen readers announce the label, which keeps the reasons. */}
+      <TooltipContent
+        fitContent
+        collisionPadding={16}
+        aria-label={
+          isUnderReview ? undefined : getPrivacyAssessmentLabel(values)
+        }
+      >
         {/* The popup is a glance; the HTML copy keeps the reasons. */}
         <TooltipVisualOnly>
           <PizzaRosetteTooltip
