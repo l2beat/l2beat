@@ -305,8 +305,8 @@ function estimateQueuedWaits(
       : 0
 
   return queued.map(({ timestamp, from, to }) => {
-    // The middle request of the portion stands for all of it.
-    const ahead = Math.max(0, (from + to) / 2 - lastFinalized)
+    // The portion's requests are from + 1 to to; the middle one stands for all.
+    const ahead = Math.max(0, (from + 1 + to) / 2 - lastFinalized)
     const hoursLeft = finalizedPerHour > 0 ? ahead / finalizedPerHour : 0
     return {
       timestamp,

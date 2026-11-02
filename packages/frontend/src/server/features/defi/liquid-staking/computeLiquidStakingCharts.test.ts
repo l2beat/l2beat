@@ -121,11 +121,11 @@ describe(computeCostOfExitChart.name, () => {
     )
 
     // While the second is still queued, it waits at the pace of the
-    // finalizations so far: half a request an hour, with half a request
-    // ahead of it, so one more hour after the hour it has waited.
+    // finalizations so far: half a request an hour, with one request ahead
+    // of it, so two more hours after the hour it has waited.
     const partial = compute([project('etherfi')], snapshots.slice(0, -1))
     expect(present(partial.costOfExit[0]?.projects.etherfi)).toBeCloseTo(
-      (1 + 2) / 2 / 24,
+      (1 + 3) / 2 / 24,
       1e-12,
     )
     expect(partial.costOfExit[0]?.estimated).toEqual(['etherfi'])
@@ -252,8 +252,9 @@ describe(getQueueWaits.name, () => {
       ]),
     ).toEqual([
       { timestamp: HOUR, requests: 2, hours: 1, estimated: false },
-      // One request finalized an hour; the middle of 3 to 5 is one ahead.
-      { timestamp: 2 * HOUR, requests: 2, hours: 1, estimated: true },
+      // One request finalized an hour. Requests 4 and 5 are one and two
+      // ahead of the finalized 3, so they wait 1.5 hours on average.
+      { timestamp: 2 * HOUR, requests: 2, hours: 1.5, estimated: true },
     ])
   })
 
