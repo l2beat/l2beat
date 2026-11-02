@@ -40,7 +40,7 @@ export function ProjectCostsChart({
       { placeholderData: keepPreviousData },
     ),
   )
-  const shownRange = useValueOfShownData(range, isPlaceholderData)
+  const shownRange = useValueOfShownData(range, { data, isPlaceholderData })
 
   const chartData = useMemo(() => {
     if (!data) {

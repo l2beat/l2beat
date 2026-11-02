@@ -57,7 +57,10 @@ export function ProjectLivenessChart({
       { placeholderData: keepPreviousData },
     ),
   )
-  const shown = useValueOfShownData({ range, subtype }, isPlaceholderData)
+  const shown = useValueOfShownData(
+    { range, subtype },
+    { data: chart, isPlaceholderData },
+  )
 
   const anyAnomalyLive = anomalies.some(
     (anomaly) => anomaly.subtype === shown.subtype && isAnomalyOngoing(anomaly),

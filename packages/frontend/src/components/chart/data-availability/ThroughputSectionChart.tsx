@@ -45,7 +45,7 @@ export function ThroughputSectionChart({
       { placeholderData: keepPreviousData },
     ),
   )
-  const shownRange = useValueOfShownData(range, isPlaceholderData)
+  const shownRange = useValueOfShownData(range, { data, isPlaceholderData })
 
   const resolution = useMemo(() => rangeToResolution(shownRange), [shownRange])
 

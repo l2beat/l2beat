@@ -44,7 +44,7 @@ export function ProjectAssetCategoryTvsChart({
   )
   const shownExcludeRwaRestrictedTokens = useValueOfShownData(
     excludeRwaRestrictedTokens,
-    isPlaceholderData,
+    { data, isPlaceholderData },
   )
 
   const chartData = useMemo(

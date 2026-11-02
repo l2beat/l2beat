@@ -46,7 +46,7 @@ export function L2AssetCategoryTvsChart({
   )
   const shownExcludeRwaRestrictedTokens = useValueOfShownData(
     excludeRwaRestrictedTokens,
-    isPlaceholderData,
+    { data, isPlaceholderData },
   )
 
   const chartData = useMemo(

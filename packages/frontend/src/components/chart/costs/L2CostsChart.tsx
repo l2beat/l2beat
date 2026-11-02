@@ -73,7 +73,7 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
       { placeholderData: keepPreviousData },
     ),
   )
-  const shownRange = useValueOfShownData(range, isPlaceholderData)
+  const shownRange = useValueOfShownData(range, { data, isPlaceholderData })
 
   const chartData = useMemo(() => {
     return data?.chart.map(

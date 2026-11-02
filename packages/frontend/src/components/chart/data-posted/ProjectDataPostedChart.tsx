@@ -37,7 +37,7 @@ export function ProjectDataPostedChart({
       { placeholderData: keepPreviousData },
     ),
   )
-  const shownRange = useValueOfShownData(range, isPlaceholderData)
+  const shownRange = useValueOfShownData(range, { data, isPlaceholderData })
 
   const chartData = useMemo(
     () => data?.chart.map(([timestamp, ethereum]) => ({ timestamp, ethereum })),

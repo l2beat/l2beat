@@ -51,7 +51,7 @@ export function L2TvsCharts({ entries, milestones }: Props) {
       { placeholderData: keepPreviousData },
     ),
   )
-  const shownRange = useValueOfShownData(range, isPlaceholderData)
+  const shownRange = useValueOfShownData(range, { data, isPlaceholderData })
 
   const timeRange = getChartTimeRangeFromData(
     data?.chart.map(([timestamp]) => ({
