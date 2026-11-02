@@ -62,6 +62,11 @@ export function createLegacyPathsRouter() {
     },
   )
 
+  // The L2 list replaced the ecosystem pages, which grouped its projects.
+  router.get(['/ecosystems', '/ecosystems/*splat'], (_req, res) => {
+    res.redirect(301, '/layer2s/summary')
+  })
+
   router.get('/governance/publications/:id', (req, res) => {
     res.redirect(301, `/publications/${req.params.id}`)
   })

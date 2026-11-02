@@ -17,8 +17,8 @@ import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradie
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { useTRPC } from '~/trpc/React'
+import { MonthlyUpdateChartTimeRange } from './MonthlyUpdateChartTimeRange'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateTvsChart({
@@ -128,7 +128,7 @@ function Header({
     <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">TVS</div>
-        <EcosystemChartTimeRange timeRange={timeRange} />
+        <MonthlyUpdateChartTimeRange timeRange={timeRange} />
       </div>
       <div className="text-right">
         {stats?.total ? (

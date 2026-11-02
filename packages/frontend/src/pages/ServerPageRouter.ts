@@ -14,7 +14,6 @@ import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDefiRouter } from './defi/DefiRouter'
 import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
-import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createEthereumProjectRouter } from './ethereum/EthereumProjectRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGardenRouter } from './garden/GardenRouter'
@@ -66,7 +65,6 @@ export function createServerPageRouter(
     createChainProjectRouter,
     createBlobsRouter,
     createZkCatalogRouter,
-    createEcosystemsRouter,
     createGovernanceRouter,
     createNativeRollupsRouter,
     createFaqRouter,

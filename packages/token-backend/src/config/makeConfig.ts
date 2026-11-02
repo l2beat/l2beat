@@ -33,13 +33,42 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
         1_000,
       ),
     },
+    tvsCoverage: {
+      enabled: env.boolean('TVS_COVERAGE_ENABLED', true),
+      intervalMs: positiveInteger(
+        env,
+        'TVS_COVERAGE_INTERVAL_MS',
+        24 * 60 * 60_000,
+        MAX_TIMER_DELAY_MS,
+      ),
+      windowDays: positiveInteger(env, 'TVS_COVERAGE_WINDOW_DAYS', 90),
+      minChainVolumeUsd: env.integer(
+        'TVS_COVERAGE_MIN_CHAIN_VOLUME_USD',
+        10_000,
+      ),
+    },
   }
 }
 
-function positiveInteger(env: Env, key: string, fallback: number): number {
+// Node runs a timer with a longer delay after 1 ms.
+const MAX_TIMER_DELAY_MS = 2 ** 31 - 1
+
+function positiveInteger(
+  env: Env,
+  key: string,
+  fallback: number,
+  max = Number.POSITIVE_INFINITY,
+): number {
   const value = env.integer(key, fallback)
   if (value < 1) {
-    throw new Error(`Environment variable ${key} must be a positive integer!`)
+    throw new Error('Environment variable must be a positive integer', {
+      cause: { key, value },
+    })
+  }
+  if (value > max) {
+    throw new Error('Environment variable is too large', {
+      cause: { key, value, max },
+    })
   }
   return value
 }

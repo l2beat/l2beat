@@ -5,7 +5,6 @@ import type {
 } from '@l2beat/shared'
 import {
   type ChainSpecificAddress,
-  type CoingeckoId,
   EthereumAddress,
   isDateOnly,
   type KnownInteropBridgeType,
@@ -277,7 +276,6 @@ export interface BaseProject {
   trackedTxsConfig?: TrackedTxConfigEntryWithoutId[]
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
-  ecosystemConfig?: ProjectEcosystemConfig
   zkCatalogInfo?: ProjectZkCatalogInfo
 
   // discovery data
@@ -753,8 +751,21 @@ export interface ProjectScalingDa {
 export interface ProjectGovernanceInfo {
   securityCouncil?: Record<string, string>
   guardians?: Record<string, string>
-  upgrades?: Record<string, string>
+  upgrades?: Record<string, string | ProjectUpgradePath>
   tokenGovernance?: Record<string, string>
+}
+
+/** An upgrade path spelled out step by step, so pages can draw it as a timeline. */
+export interface ProjectUpgradePath {
+  steps: ProjectUpgradePathStep[]
+  /** Remarks about the path as a whole, such as its total duration. */
+  note?: string
+}
+
+export interface ProjectUpgradePathStep {
+  description: string
+  /** A stretch where nobody acts (timelock, veto window, delay), drawn apart from the steps where someone does. */
+  isWait?: boolean
 }
 
 export interface ProjectScalingTechnology {
@@ -1990,30 +2001,6 @@ export interface ProjectEcosystemInfo {
   sinceTimestamp?: UnixTime
   untilTimestamp?: UnixTime
 }
-
-export interface ProjectEcosystemConfig {
-  startedAt?: UnixTime
-  token: {
-    coingeckoId: CoingeckoId
-    description: string
-  }
-  links: {
-    buildOn: string
-    learnMore: string
-    governanceDelegateToL2BEAT: string
-    governanceProposals: string
-    tools?: string[]
-    grants?: string
-  }
-  firstBanner?: {
-    headlineText?: string
-    mainText?: string
-  }
-  secondBanner?: {
-    headlineText?: string
-    mainText?: string
-  }
-}
 // #endregion
 
 // #region discovery data
@@ -2188,7 +2175,6 @@ export interface ProjectDiscoveryUpdateSection {
 
 export type InteropPluginName =
   | 'across'
-  | 'across-settlement'
   | 'across-settlement-op'
   | 'across-settlement-orbit'
   | 'agglayer'
@@ -2221,7 +2207,6 @@ export type InteropPluginName =
   | 'lifi-intents'
   | 'maker-bridge'
   | 'mayan-forwarder'
-  | 'mayan-mctp'
   | 'mayan-mctp-fast'
   | 'mayan-swift'
   | 'mayan-swift-settlement'
@@ -2237,7 +2222,6 @@ export type InteropPluginName =
   | 'relay'
   | 'sky-bridge'
   | 'sorare-base'
-  | 'squid-coral'
   | 'stargate'
   | 'synthetix-bridge'
   | 'world-id'

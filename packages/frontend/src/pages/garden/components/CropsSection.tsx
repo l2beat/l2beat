@@ -67,7 +67,7 @@ function CropCard({
         </div>
       </div>
       {column.note && (
-        <p className="mt-4 max-w-2xl text-pretty text-paragraph-14 text-secondary md:text-paragraph-15">
+        <p className="mt-4 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15">
           {column.note}
         </p>
       )}

@@ -1,3 +1,5 @@
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
+
 export interface FaqItem {
   question: string
   /** Markdown, with paragraphs separated by a blank line. */
@@ -89,7 +91,7 @@ const items: { question: string; answer: string | string[] }[] = [
     question: 'What about data availability? Why is it important?',
     answer: [
       "To trustlessly withdraw coins from L2, users need to prove ownership of the coins to L1 smart contract that holds all the funds. For that they need to have access to all L2's transactions or its current state. To not introduce any additional trust assumptions, L2 transactions can simply be recorded on L1 (as cheap calldata).",
-      "For more details on data availability and its importance in security of scaling protocols, see our [data availability risk analysis](https://l2beat.com/layer2s/risk/data-availability), as well as Ethereum.org's [page on the topic](https://ethereum.org/en/developers/docs/data-availability/).",
+      `For more details on data availability and its importance in security of scaling protocols, see our [data availability risk analysis](${PRODUCTION_ORIGIN}/layer2s/risk/data-availability), as well as Ethereum.org's [page on the topic](https://ethereum.org/en/developers/docs/data-availability/).`,
     ],
   },
   // TVS

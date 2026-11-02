@@ -18,7 +18,6 @@ import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
 import { DefiTvlRepository } from './repositories/DefiTvlRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
-import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
 import { EthereumStakingDailyRepository } from './repositories/EthereumStakingDailyRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { HourlyActivityRepository } from './repositories/HourlyActivityRepository'
@@ -109,10 +108,6 @@ export function createDatabase(
     updateNotifier: new UpdateNotifierRepository(db),
     updateMessage: new UpdateMessageRepository(db),
     flatSources: new FlatSourcesRepository(db),
-    // #endregion
-
-    // #region Ecosystems
-    ecosystemToken: new EcosystemTokenRepository(db),
     // #endregion
 
     // #region CROPS

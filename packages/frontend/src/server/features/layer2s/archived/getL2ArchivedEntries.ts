@@ -5,6 +5,8 @@ import type {
   ProjectScalingStack,
 } from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
+import type { WalkAwayVerdict } from '~/consts/walkAwayProjects'
+import { getWalkAwayVerdict } from '~/consts/walkAwayProjects'
 import { getL2Risks } from '~/pages/layer2s/utils/getL2Risks'
 import { ps } from '~/server/projects'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
@@ -21,9 +23,14 @@ export async function getL2ArchivedEntries() {
       getProjectsChangeReport(),
       get7dTvsBreakdown({ type: 'layer2' }),
       ps.getProjects({
-        select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
+        select: [
+          'statuses',
+          'scalingInfo',
+          'scalingRisks',
+          'display',
+          'archivedAt',
+        ],
         optional: ['contracts'],
-        where: ['scalingInfo', 'archivedAt'],
       }),
       ps.getProjects({
         select: ['zkCatalogInfo'],
@@ -52,11 +59,12 @@ export interface L2ArchivedEntry extends Omit<CommonL2Entry, 'tab'> {
   stacks: ProjectScalingStack[] | undefined
   risks: RosetteValue[] | undefined
   totalTvs: number | undefined
+  walkAway: WalkAwayVerdict
 }
 
 function getL2ArchivedEntry(
   project: Project<
-    'scalingInfo' | 'statuses' | 'scalingRisks' | 'display',
+    'scalingInfo' | 'statuses' | 'scalingRisks' | 'display' | 'archivedAt',
     'contracts'
   >,
   changes: ProjectChanges,
@@ -81,5 +89,6 @@ function getL2ArchivedEntry(
       project.scalingRisks.stacked ?? project.scalingRisks.self,
     ),
     totalTvs: latestTvs?.breakdown.total,
+    walkAway: getWalkAwayVerdict(project),
   }
 }

@@ -200,6 +200,9 @@ export const hyperliquid: ScalingProject = {
       'Canonical USDC bridge between Arbitrum and Hyperliquid L1, validated by a permissioned set of Hyperliquid validators.',
     plugins: [
       {
+        // The plugin also records HyperEVM <-> HyperCore moves, which are
+        // internal to Hyperliquid L1 and don't go through this bridge
+        chain: 'arbitrum',
         plugin: 'hyperliquid-bridge',
         bridgeType: 'lockAndMint',
       },

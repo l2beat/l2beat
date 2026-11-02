@@ -257,7 +257,7 @@ export interface HomeRecentProject {
   name: string
   href: string
   iconUrl: string
-  category: 'l2' | 'interop' | 'zkCatalog' | 'ecosystems' | 'privacy'
+  category: 'l2' | 'interop' | 'zkCatalog' | 'privacy'
   l2Category: string | undefined
 }
 
@@ -268,7 +268,6 @@ async function getRecentProjectsForHome(
     optional: [
       'scalingInfo',
       'daLayer',
-      'ecosystemConfig',
       'interopConfig',
       'zkCatalogInfo',
       'privacyInfo',
@@ -280,7 +279,6 @@ async function getRecentProjectsForHome(
     .filter(
       (project) =>
         project.scalingInfo ||
-        project.ecosystemConfig ||
         project.interopConfig ||
         project.zkCatalogInfo ||
         project.privacyInfo,
@@ -320,16 +318,6 @@ async function getRecentProjectsForHome(
           href: `/zk-catalog/${project.slug}`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
           category: 'zkCatalog' as const,
-          l2Category: undefined,
-        }
-      }
-      if (project.ecosystemConfig) {
-        return {
-          id: project.id.toString(),
-          name: project.name,
-          href: `/ecosystems/${project.slug}`,
-          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-          category: 'ecosystems' as const,
           l2Category: undefined,
         }
       }
