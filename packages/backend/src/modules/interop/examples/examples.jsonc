@@ -2254,6 +2254,90 @@
       "transfers": ["cctp-v2.Transfer", "cctp-v2.Transfer", "cctp-v1.Transfer"]
     }
   },
+  "mayan-mctp-partial-solana": {
+    "description": "Mayan MCTP orders to Solana: the one-sided CCTP transfer consumes the Mayan forwarder event.",
+    "loadConfigs": ["wormhole", "cctp-v2", "cctp-v1"],
+    "txs": [
+      // Fast MCTP createOrder, Ethereum -> Solana (CCTP v2)
+      {
+        "chain": "ethereum",
+        "tx": "0xf3b9a415834034868eaad3bc59873f8a9af0ffec18287913e61325b4eea1b9d0"
+      },
+      // Fast MCTP bridge, Monad -> Solana (CCTP v2)
+      {
+        "chain": "monad",
+        "tx": "0x087c647372a308cc587e88b54a827f20e0fc0f1710db6165b20994cc444ca353"
+      },
+      // MCTP createOrder, Ethereum -> Solana (CCTP v1 + Wormhole)
+      {
+        "chain": "ethereum",
+        "tx": "0x4ff0af0952eab406cf9f4248dc18af10ec45172ffdf0c25c56f2d9cfe75f8973"
+      }
+    ],
+    "expects": {
+      "events": [
+        "cctp-v2.MessageSent",
+        "mayan-forwarder.MayanForwarded",
+        "cctp-v2.MessageSent",
+        "mayan-forwarder.MayanForwarded",
+        "cctp-v1.MessageSent",
+        "wormhole.LogMessagePublished",
+        "mayan-forwarder.MayanForwarded"
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "cctp-v2.Transfer",
+          "src": {
+            "event": {
+              "ctx": {
+                "chain": "ethereum",
+                "txHash": "0xf3b9a415834034868eaad3bc59873f8a9af0ffec18287913e61325b4eea1b9d0"
+              }
+            }
+          },
+          "dst": { "chain": "solana" },
+          "events": [
+            { "type": "cctp-v2.MessageSent" },
+            { "type": "mayan-forwarder.MayanForwarded" }
+          ]
+        },
+        {
+          "type": "cctp-v2.Transfer",
+          "src": {
+            "event": {
+              "ctx": {
+                "chain": "monad",
+                "txHash": "0x087c647372a308cc587e88b54a827f20e0fc0f1710db6165b20994cc444ca353"
+              }
+            }
+          },
+          "dst": { "chain": "solana" },
+          "events": [
+            { "type": "cctp-v2.MessageSent" },
+            { "type": "mayan-forwarder.MayanForwarded" }
+          ]
+        },
+        {
+          "type": "cctp-v1.Transfer",
+          "src": {
+            "event": {
+              "ctx": {
+                "chain": "ethereum",
+                "txHash": "0x4ff0af0952eab406cf9f4248dc18af10ec45172ffdf0c25c56f2d9cfe75f8973"
+              }
+            }
+          },
+          "dst": { "chain": "solana" },
+          "events": [
+            { "type": "cctp-v1.MessageSent" },
+            { "type": "mayan-forwarder.MayanForwarded" },
+            { "type": "wormhole.LogMessagePublished" }
+          ]
+        }
+      ]
+    }
+  },
   "msw": {
     "loadConfigs": ["wormhole"],
     "txs": [
