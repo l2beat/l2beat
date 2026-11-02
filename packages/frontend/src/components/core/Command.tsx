@@ -16,10 +16,15 @@ import {
 const Command = ({
   ref,
   className,
+  onKeyDown,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive>) => (
   <CommandPrimitive
     ref={ref}
+    onKeyDown={(e) => {
+      onKeyDown?.(e)
+      if (!e.defaultPrevented) followHighlightedLinkOnEnter(e)
+    }}
     className={cn(
       'flex size-full flex-col overflow-hidden rounded-[inherit] border border-divider bg-surface-primary primary-card:bg-surface-secondary focus-visible:border-brand focus-visible:outline-none dark:border-transparent',
       className,
@@ -213,6 +218,85 @@ const CommandItem = ({
 
 CommandItem.displayName = CommandPrimitive.Item.displayName
 
+/**
+ * An item that is a real link, so Cmd/Ctrl-click, middle-click and "Copy
+ * link" work like on any other link. Enter on the highlighted item is handled
+ * by `Command`.
+ *
+ * `onFollow` runs when the link is opened from the item, with whether it went
+ * to a new tab: a dialog should stay open then, so several can be opened.
+ */
+const CommandLinkItem = ({
+  href,
+  onFollow,
+  className,
+  children,
+  ...props
+}: Omit<
+  React.ComponentProps<typeof CommandPrimitive.Item>,
+  'asChild' | 'onSelect'
+> & {
+  href: string
+  onFollow?: (inNewTab: boolean) => void
+}) => (
+  <CommandItem asChild className={cn('cursor-pointer', className)} {...props}>
+    <a
+      href={href}
+      // Arrow keys move through the items; Tab would stop on every one.
+      tabIndex={-1}
+      onClick={(e) => onFollow?.(opensInNewTab(e))}
+      onAuxClick={(e) => {
+        if (e.button === 1) onFollow?.(true)
+      }}
+    >
+      {children}
+    </a>
+  </CommandItem>
+)
+
+/**
+ * cmdk turns Enter into the item's `onSelect`, which can't see modifier
+ * keys. A link item, or a link inside an item, is followed here instead: Enter clicks it, and Enter with
+ * the modifier a click would use for a new tab opens one.
+ */
+function followHighlightedLinkOnEnter(e: React.KeyboardEvent<HTMLDivElement>) {
+  if (e.key !== 'Enter' || e.nativeEvent.isComposing) return
+  const link = e.currentTarget.querySelector(
+    'a[cmdk-item][aria-selected="true"], [cmdk-item][aria-selected="true"] a[href]',
+  )
+  if (!(link instanceof HTMLAnchorElement)) return
+  e.preventDefault()
+
+  if (!opensInNewTab(e)) {
+    link.click()
+    return
+  }
+  // Browsers differ in whether a scripted click honours modifier keys, so
+  // the click only tells `onFollow`, and the tab is opened here.
+  link.addEventListener('click', (click) => click.preventDefault(), {
+    once: true,
+  })
+  link.dispatchEvent(
+    new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      metaKey: e.metaKey,
+      ctrlKey: e.ctrlKey,
+      shiftKey: e.shiftKey,
+    }),
+  )
+  window.open(link.href, '_blank', 'noopener')
+}
+
+/** Shift opens a new window, which leaves this tab open just the same. */
+function opensInNewTab(e: {
+  metaKey: boolean
+  ctrlKey: boolean
+  shiftKey: boolean
+}) {
+  return e.metaKey || e.ctrlKey || e.shiftKey
+}
+
 export {
   Command,
   CommandDialog,
@@ -222,5 +306,6 @@ export {
   CommandEmpty,
   CommandGroup,
   CommandItem,
+  CommandLinkItem,
   CommandSeparator,
 }

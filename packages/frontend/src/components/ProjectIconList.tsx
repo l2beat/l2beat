@@ -3,7 +3,6 @@ import { useCommandState } from 'cmdk'
 import { type ReactNode, useRef, useState } from 'react'
 import { useCanHover } from '~/hooks/useCanHover'
 import { useDevice } from '~/hooks/useDevice'
-import { useRouter } from '~/hooks/useRouter'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { StageBadge } from './badge/StageBadge'
@@ -319,7 +318,6 @@ function ProjectList({
   inDialog: boolean
   onNavigate: () => void
 }) {
-  const router = useRouter()
   const searchable = projects.length >= MIN_SEARCHABLE_PROJECTS
 
   return (
@@ -382,12 +380,6 @@ function ProjectList({
                   'data-[selected=true]:bg-transparent primary-card:data-[selected=true]:bg-transparent',
                 inDialog && project.href && 'active:bg-surface-secondary',
               )}
-              // Enter on the keyboard cursor; clicks go through the link.
-              onSelect={() => {
-                if (!project.href) return
-                onNavigate()
-                router.push(project.href)
-              }}
             >
               <ProjectRow
                 project={project}
