@@ -2552,6 +2552,62 @@
       ]
     }
   },
+  "mayan-swift-hypercore": {
+    "loadConfigs": ["wormhole"],
+    "description": "Order that Mayan's explorer lists as Ethereum -> HyperCore (65000). Onchain it targets HyperEVM (47) and the fill deposits the USDC into HyperCore.",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x5a484013bc9a4733f660e943bc9c8abbce157f2fca33eedfab77df29e0f69f7b"
+      },
+      {
+        "chain": "hyperevm",
+        "tx": "0xb18a69126f163214af843caf5b8f571d760bd13c84cb8e5f55bf0bb0fc27c841"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "args": { "$dstChain": "hyperevm" }
+        },
+        {
+          "type": "mayan-swift.OrderCreated",
+          "args": {
+            "key": "0x4d858c2b4d523dc08a42f6879a9312028c8d771da9bdbfb4b083344114cace8f",
+            "$dstChain": "hyperevm"
+          }
+        },
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "args": {
+            "key": "0x4d858c2b4d523dc08a42f6879a9312028c8d771da9bdbfb4b083344114cace8f"
+          },
+          "ctx": { "chain": "hyperevm" }
+        }
+      ],
+      "messages": [
+        {
+          "type": "mayan-swift.Message",
+          "app": "mayan-swift",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "hyperevm" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": { "event": { "ctx": { "chain": "hyperevm" } } }
+        },
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "src": { "event": { "ctx": { "chain": "hyperevm" } } },
+          "dst": { "chain": "hyperliquid" }
+        }
+      ]
+    }
+  },
   "mayan-swift-settlement": {
     "loadConfigs": ["wormhole"],
     "description": "Non-batched and batched Mayan Swift settlement flows.",

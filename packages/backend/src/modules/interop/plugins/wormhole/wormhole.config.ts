@@ -77,6 +77,7 @@ const WORMHOLE_RELAYER = EthereumAddress(
 // Map normalized upstream chain names (docs labels, SDK constant names) to ours
 const UPSTREAM_CHAIN_NAME_TO_CHAIN: Record<string, string> = {
   bnbsmartchain: 'bsc',
+  hypercore: 'hyperliquid',
   polygon: 'polygonpos',
   robinhoodchain: 'robinhood',
 }
