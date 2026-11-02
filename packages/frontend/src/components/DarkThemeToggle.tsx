@@ -17,12 +17,8 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
     const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark'
     const button = buttonRef.current
 
-    const prefersReducedMotion = matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches
-
-    // fallback if View Transitions API not supported, button not available, or reduced motion preferred
-    if (!document.startViewTransition || !button || prefersReducedMotion) {
+    // Reduced motion still transitions: globals.css turns the sweep into a fade.
+    if (!document.startViewTransition || !button) {
       setTheme(newTheme)
       return
     }

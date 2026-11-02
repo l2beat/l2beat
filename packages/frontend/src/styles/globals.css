@@ -833,6 +833,13 @@
   }
 }
 
+/* Every fade between two views, page or theme, shares the site's curve. Set on
+   the pseudo-tree, not :root, where an inherited property would restyle the
+   whole page at capture. */
+::view-transition {
+  --page-fade: 180ms var(--ease-out-quint);
+}
+
 /* The nav is captured on its own, so it doesn't fade with the page. */
 :root:active-view-transition-type(page-navigation) {
   [data-page-chrome="sidebar"] {
@@ -842,12 +849,6 @@
   [data-page-chrome="mobile-navbar"] {
     view-transition-name: page-chrome-mobile-navbar;
     view-transition-class: page-chrome;
-  }
-
-  /* On the pseudo-tree, not :root, where an inherited property would restyle
-     the whole page at capture. */
-  &::view-transition {
-    --page-fade: 180ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   /* The root captures only the viewport, so the fade works at any scroll
@@ -895,15 +896,27 @@
   }
 }
 
-/* Theme toggle view transition: DarkThemeToggle sets the class. */
+/* Theme toggle view transition: DarkThemeToggle sets the class. The circle
+   grows out of the button and eases out, so it answers the click at once. */
 .theme-transition::view-transition-old(root) {
   animation: none;
   z-index: 1;
 }
 
 .theme-transition::view-transition-new(root) {
-  animation: reveal-from-circle 0.4s ease-in-out;
+  animation: reveal-from-circle 400ms var(--ease-out-quint);
   z-index: 2;
+}
+
+/* Reduced motion swaps the sweep for a fade: no movement, but no sudden jump
+   from light to dark either. */
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition::view-transition-old(root) {
+    animation: var(--page-fade) both page-fade-out;
+  }
+  .theme-transition::view-transition-new(root) {
+    animation: var(--page-fade) both page-fade-in;
+  }
 }
 
 @keyframes reveal-from-circle {
