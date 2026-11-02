@@ -120,7 +120,9 @@ function PointTooltip({
       ref={ref}
       className={cn(
         tooltipContentVariants({ fitContent: true }),
-        'flex flex-col gap-1 px-3 py-2',
+        // Lines without leading need 2px more to look as far from the top
+        // and bottom as from the sides.
+        'flex flex-col gap-1 px-4 py-3.5',
       )}
     >
       {children}
