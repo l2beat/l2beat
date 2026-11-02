@@ -11,7 +11,6 @@ import { createCropAttestationsModule } from './modules/crop-attestations/CropAt
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createDefiTvlModule } from './modules/defi-tvl/DefiTvlModule'
-import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createInteropModule } from './modules/interop/engine/InteropModule'
 import { createPrivacyModule } from './modules/privacy/PrivacyModule'
@@ -83,7 +82,6 @@ export class Application {
       createDefiTvlModule(deps),
       createPrivacyModule(deps),
       createDaBeatModule(deps),
-      createEcosystemsModule(deps),
       createCropAttestationsModule(deps),
       createAnomaliesModule(deps),
       createBlockSyncModule(deps),

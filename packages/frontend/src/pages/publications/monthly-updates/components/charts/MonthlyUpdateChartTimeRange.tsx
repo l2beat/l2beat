@@ -5,7 +5,7 @@ interface Props {
   timeRange: [number, number] | undefined
 }
 
-export function EcosystemChartTimeRange({ timeRange }: Props) {
+export function MonthlyUpdateChartTimeRange({ timeRange }: Props) {
   if (!timeRange) {
     return <Skeleton className="my-[3px] h-[14px] w-44" />
   }

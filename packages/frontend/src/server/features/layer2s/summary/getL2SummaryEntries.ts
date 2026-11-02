@@ -112,7 +112,7 @@ export interface L2SummaryEntry extends CommonL2Entry {
   walkAway: WalkAwayVerdict | undefined
 }
 
-export function getL2SummaryEntry(
+function getL2SummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks' | 'display',
     'tvsInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig' | 'contracts'
