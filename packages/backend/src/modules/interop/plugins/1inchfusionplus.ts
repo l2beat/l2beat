@@ -21,71 +21,63 @@ import {
  */
 
 // https://business.1inch.com/portal/documentation/overview#supported-chains
+// Escrow factories: https://github.com/1inch/cross-chain-swap/blob/master/deployments.md
+// v1.1 is what 1inch's SDK uses now; v1.0 still settles older orders
 // chainconfeeg
+const FACTORY_V1_0 = EthereumAddress(
+  '0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A',
+)
+const FACTORY_V1_1 = EthereumAddress(
+  '0x03a25b3215a0e5c15cf23ac4d2e5cf86c0ff7efa',
+)
+const DEFAULT_FACTORIES = [FACTORY_V1_0, FACTORY_V1_1]
+const MONAD_HYPEREVM_FACTORIES = [
+  EthereumAddress('0x9e010857ed5aaa4fca6d5404f7c7c54b1bbb8ad2'),
+  EthereumAddress('0x8e6c3c2e2631de0a1d4fd46a15f79a1373486fa4'),
+]
+
 const ONEINCH_FUSIONPLUS_NETWORKS = defineNetworks('oneinch-fusion-plus', [
-  {
-    chain: 'ethereum',
-    chainId: 1,
-    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'), // escrowFactory contract
-  },
-  {
-    chain: 'arbitrum',
-    chainId: 42161,
-    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
-  },
-  {
-    chain: 'base',
-    chainId: 8453,
-    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
-  },
-  {
-    chain: 'optimism',
-    chainId: 10,
-    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
-  },
+  { chain: 'ethereum', chainId: 1, factories: DEFAULT_FACTORIES },
+  { chain: 'arbitrum', chainId: 42161, factories: DEFAULT_FACTORIES },
+  { chain: 'base', chainId: 8453, factories: DEFAULT_FACTORIES },
+  { chain: 'optimism', chainId: 10, factories: DEFAULT_FACTORIES },
   // no apechain
-  {
-    chain: 'polygonpos',
-    chainId: 137,
-    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
-  },
+  { chain: 'polygonpos', chainId: 137, factories: DEFAULT_FACTORIES },
   {
     chain: 'zksync2',
     chainId: 324,
-    address: EthereumAddress('0x584aEaB186D81dbB52a8a14820c573480c3d4773'),
+    factories: [
+      EthereumAddress('0x584aEaB186D81dbB52a8a14820c573480c3d4773'),
+      EthereumAddress('0xd9085ac07da21bd6eb003a530a524ab054ca8652'),
+    ],
   },
   // no abstract
   // no katana
+  { chain: 'bsc', chainId: 56, factories: DEFAULT_FACTORIES },
+  { chain: 'gnosis', chainId: 100, factories: DEFAULT_FACTORIES },
+  { chain: 'linea', chainId: 59144, factories: DEFAULT_FACTORIES },
+  { chain: 'unichain', chainId: 130, factories: DEFAULT_FACTORIES },
+  { chain: 'avalanche', chainId: 43114, factories: DEFAULT_FACTORIES },
   {
-    chain: 'bsc',
-    chainId: 56,
-    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
+    chain: 'robinhood',
+    chainId: 4663,
+    factories: [
+      EthereumAddress('0xa02b9cc95094bb27d1d041b9fbf09f65a366f7b3'),
+      EthereumAddress('0x50d26ea1e2460b3a42ff47466b955fc6bd906013'),
+    ],
   },
-  {
-    chain: 'gnosis',
-    chainId: 100,
-    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
-  },
-  {
-    chain: 'linea',
-    chainId: 59144,
-    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
-  },
-  {
-    chain: 'unichain',
-    chainId: 130,
-    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
-  },
-  {
-    chain: 'avalanche',
-    chainId: 43114,
-    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
-  },
-  // monad, tempo unsupported
+  { chain: 'monad', chainId: 143, factories: MONAD_HYPEREVM_FACTORIES },
+  { chain: 'hyperevm', chainId: 999, factories: MONAD_HYPEREVM_FACTORIES },
+  // tempo unsupported
 ])
 
 const parseSrcEscrowCreated = createEventParser(
   'event SrcEscrowCreated((bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) srcImmutables, (uint256 maker, uint256 amount, uint256 token, uint256 safetyDeposit, uint256 chainId) dstImmutablesComplement)',
+)
+
+// v1.1 adds `bytes parameters` to both structs
+const parseSrcEscrowCreatedV1_1 = createEventParser(
+  'event SrcEscrowCreated((bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks, bytes parameters) srcImmutables, (uint256 maker, uint256 amount, uint256 token, uint256 safetyDeposit, uint256 chainId, bytes parameters) dstImmutablesComplement)',
 )
 
 const parseDstEscrowCreated = createEventParser(
@@ -123,6 +115,24 @@ function toTokenAddress(value: bigint): Address32 {
   return Address32.from(`0x${address.toString(16).padStart(40, '0')}`)
 }
 
+// A v1.1 destination escrow pays the protocol fee (word 0 of `parameters`)
+// and the integrator fee (word 1) out of `amount`, and the maker gets the rest
+function getMakerAmount(complement: {
+  amount: bigint
+  parameters?: `0x${string}`
+}): bigint {
+  const parameters = complement.parameters
+  if (parameters === undefined || parameters.length < 2 + 128) {
+    return complement.amount
+  }
+  const fees =
+    BigInt(`0x${parameters.slice(2, 66)}`) +
+    BigInt(`0x${parameters.slice(66, 130)}`)
+  return fees <= complement.amount
+    ? complement.amount - fees
+    : complement.amount
+}
+
 export class OneinchFusionPlusPlugin implements InteropPlugin {
   readonly name = 'oneinch-fusion-plus'
 
@@ -132,7 +142,7 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
     )
     if (!network) return
 
-    const dstEscrowCreated = parseDstEscrowCreated(input.log, [network.address])
+    const dstEscrowCreated = parseDstEscrowCreated(input.log, network.factories)
     if (dstEscrowCreated) {
       return [
         DstEscrowCreated.create(input, {
@@ -152,7 +162,9 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
       ]
     }
 
-    const srcEscrowCreated = parseSrcEscrowCreated(input.log, [network.address])
+    const srcEscrowCreated =
+      parseSrcEscrowCreated(input.log, network.factories) ??
+      parseSrcEscrowCreatedV1_1(input.log, network.factories)
     if (srcEscrowCreated) {
       const { srcImmutables, dstImmutablesComplement } = srcEscrowCreated
       return [
@@ -161,7 +173,7 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
           srcTokenAddress: toTokenAddress(srcImmutables.token),
           srcAmount: srcImmutables.amount,
           dstTokenAddress: toTokenAddress(dstImmutablesComplement.token),
-          dstAmount: dstImmutablesComplement.amount,
+          dstAmount: getMakerAmount(dstImmutablesComplement),
           $dstChain: findChain(
             ONEINCH_FUSIONPLUS_NETWORKS,
             (n) => n.chainId,
