@@ -1,7 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { PROJECT_TVS_CHART_VALUE_KEYS } from '~/server/features/layer2s/tvs/projectTvsChartValues'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
@@ -19,11 +19,9 @@ export function TvsCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
-      getTvsCompareChartParams(queryProjects, config, chartRange),
-      { placeholderData: keepPreviousData },
-    ),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.tvs.detailedChartWithProjectsRanges,
+    getTvsCompareChartParams(queryProjects, config, chartRange),
   )
   const unit = config.tvs.unit
   // Index into `ProjectTvsChartDataPoint`, derived from the shared key order

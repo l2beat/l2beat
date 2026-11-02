@@ -1,7 +1,7 @@
 import { formatBytes, UnixTime } from '@l2beat/shared-pure'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
 import {
@@ -17,11 +17,9 @@ export function DataPostedCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.da.detailedChartWithProjectsRanges.queryOptions(
-      getDataPostedCompareChartParams(queryProjects, chartRange),
-      { placeholderData: keepPreviousData },
-    ),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.da.detailedChartWithProjectsRanges,
+    getDataPostedCompareChartParams(queryProjects, chartRange),
   )
 
   const chartData = useMemo(

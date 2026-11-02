@@ -1,14 +1,13 @@
 import type { Milestone } from '@l2beat/config'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartPreviousDataDim,
   ChartShowsPreviousData,
-  useValueOfShownData,
 } from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { LivenessChartRangeControls } from '~/pages/layer2s/liveness/components/LivenessChartRangeControls'
 import { LivenessChartSubtypeControls } from '~/pages/layer2s/liveness/components/LivenessChartSubtypeControls'
@@ -51,19 +50,16 @@ export function ProjectLivenessChart({
     data: chart,
     isLoading,
     isPlaceholderData,
-  } = useQuery(
-    trpc.liveness.projectChart.queryOptions(
-      { projectId: project.id, range, subtype },
-      { placeholderData: keepPreviousData },
-    ),
-  )
-  const shown = useValueOfShownData(
-    { range, subtype },
-    { data: chart, isPlaceholderData },
-  )
+    shownInput,
+  } = useChartQuery(trpc.liveness.projectChart, {
+    projectId: project.id,
+    range,
+    subtype,
+  })
 
   const anyAnomalyLive = anomalies.some(
-    (anomaly) => anomaly.subtype === shown.subtype && isAnomalyOngoing(anomaly),
+    (anomaly) =>
+      anomaly.subtype === shownInput.subtype && isAnomalyOngoing(anomaly),
   )
   const chartData = useMemo(() => {
     return chart?.data?.map(([timestamp, min, avg, max]) => {
@@ -86,7 +82,7 @@ export function ProjectLivenessChart({
     return lastValidTimestamp
   }, [chart?.data])
 
-  const resolution = rangeToResolution(shown.range)
+  const resolution = rangeToResolution(shownInput.range)
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
 
   return (
@@ -115,7 +111,7 @@ export function ProjectLivenessChart({
             data={chartData}
             isLoading={isLoading}
             project={project}
-            subtype={shown.subtype}
+            subtype={shownInput.subtype}
             milestones={milestones}
             lastValidTimestamp={lastValidTimestamp}
             anyAnomalyLive={anyAnomalyLive}

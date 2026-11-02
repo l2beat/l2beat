@@ -1,5 +1,4 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import round from 'lodash/round'
 import { useMemo, useState } from 'react'
 import { Area, AreaChart } from 'recharts'
@@ -20,6 +19,7 @@ import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleA
 import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -49,11 +49,9 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<Metric>('value')
   const [unit, setUnit] = useState<Unit>('absolute')
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.tvs.zkCatalogChart.queryOptions(
-      { range },
-      { placeholderData: keepPreviousData },
-    ),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.tvs.zkCatalogChart,
+    { range },
   )
 
   const pointsByTimestamp = useMemo(

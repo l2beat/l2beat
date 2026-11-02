@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef } from 'react'
+import { createContext, useContext } from 'react'
 import { cn } from '~/utils/cn'
 
 /**
@@ -35,26 +35,6 @@ export function useChartShowsPreviousData() {
  */
 export const previousChartDataClassName =
   'opacity-40 transition-opacity delay-150 duration-200'
-
-/**
- * The value the shown data was fetched with. While a chart shows the previous
- * query's data, the current value already belongs to the query still loading,
- * so a resolution derived from it would not match the buckets on screen.
- * A value is kept only once its own query brought data: TanStack keeps the
- * last data it had, so a request that failed must not claim it. It is kept
- * after commit, so a render React throws away cannot leave one either.
- */
-export function useValueOfShownData<T>(
-  value: T,
-  query: { data: unknown; isPlaceholderData: boolean },
-) {
-  const shown = useRef(value)
-  const hasOwnData = !query.isPlaceholderData && query.data !== undefined
-  useEffect(() => {
-    if (hasOwnData) shown.current = value
-  })
-  return query.isPlaceholderData ? shown.current : value
-}
 
 /** Dims stats derived from the shown data along with the plot. */
 export function ChartPreviousDataDim({

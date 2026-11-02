@@ -1,13 +1,10 @@
 import type { Milestone } from '@l2beat/config'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import {
-  ChartShowsPreviousData,
-  useValueOfShownData,
-} from '~/components/core/chart/ChartPreviousData'
+import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
 import {
@@ -31,20 +28,14 @@ export function ProjectAssetCategoryTvsChart({
     assetCategoryTvsChartMeta,
   )
 
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.tvs.detailedChart.queryOptions(
-      {
-        filter: { type: 'projects', projectIds: [project.id] },
-        range,
-        excludeAssociatedTokens: false,
-        excludeRwaRestrictedTokens,
-      },
-      { placeholderData: keepPreviousData },
-    ),
-  )
-  const shownExcludeRwaRestrictedTokens = useValueOfShownData(
-    excludeRwaRestrictedTokens,
-    { data, isPlaceholderData },
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.tvs.detailedChart,
+    {
+      filter: { type: 'projects', projectIds: [project.id] },
+      range,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens,
+    },
   )
 
   const chartData = useMemo(
@@ -109,7 +100,7 @@ export function ProjectAssetCategoryTvsChart({
           dataKeys={dataKeys}
           toggleDataKey={toggleDataKey}
           project={project}
-          excludeRwaRestrictedTokens={shownExcludeRwaRestrictedTokens}
+          excludeRwaRestrictedTokens={shownInput.excludeRwaRestrictedTokens}
         />
       </div>
     </ChartShowsPreviousData>

@@ -1,13 +1,12 @@
 import type { Milestone } from '@l2beat/config'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartPreviousDataDim,
   ChartShowsPreviousData,
-  useValueOfShownData,
 } from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -34,13 +33,10 @@ export function ProjectCostsChart({
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
 
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.costs.projectChart.queryOptions(
-      { range, projectId: project.id },
-      { placeholderData: keepPreviousData },
-    ),
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.costs.projectChart,
+    { range, projectId: project.id },
   )
-  const shownRange = useValueOfShownData(range, { data, isPlaceholderData })
 
   const chartData = useMemo(() => {
     if (!data) {
@@ -95,9 +91,9 @@ export function ProjectCostsChart({
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(chartData, {
-        bucket: rangeToResolution(shownRange),
+        bucket: rangeToResolution(shownInput.range),
       }),
-    [chartData, shownRange],
+    [chartData, shownInput.range],
   )
 
   return (
@@ -115,7 +111,7 @@ export function ProjectCostsChart({
             unit={unit}
             isLoading={isLoading}
             milestones={milestones}
-            range={shownRange}
+            range={shownInput.range}
             hasBlobs={!!data?.hasBlobs}
             tickCount={4}
           />

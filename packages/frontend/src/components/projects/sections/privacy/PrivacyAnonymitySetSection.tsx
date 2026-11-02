@@ -1,10 +1,10 @@
 import type { Milestone } from '@l2beat/config'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrivacyAnonymitySetChart } from '~/pages/privacy/project/components/PrivacyAnonymitySetChart'
 import { PrivacyAnonymitySetChartRangeControls } from '~/pages/privacy/project/components/PrivacyAnonymitySetChartRangeControls'
@@ -34,14 +34,12 @@ export function PrivacyAnonymitySetSection({
   const copy = anonymitySetCopy(anonymitySetType, ANONYMITY_SET_WINDOW_DAYS)
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.privacy.anonymitySetChart.queryOptions(
-      {
-        projectId: project.id,
-        range,
-      },
-      { placeholderData: keepPreviousData },
-    ),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.privacy.anonymitySetChart,
+    {
+      projectId: project.id,
+      range,
+    },
   )
   const timeRange = useMemo(
     () =>

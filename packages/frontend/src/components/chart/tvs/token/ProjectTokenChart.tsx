@@ -1,9 +1,9 @@
 import type { Milestone } from '@l2beat/config'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { useTRPC } from '~/trpc/React'
 import { TokenChart } from './TokenChart'
@@ -18,17 +18,15 @@ export function ProjectTokenChart({ project, milestones, token }: Props) {
   const trpc = useTRPC()
   const { range } = useTvsChartControlsContext()
 
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.tvs.tokenChart.queryOptions(
-      {
-        token: {
-          tokenId: token.id,
-          projectId: project.id,
-        },
-        range,
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.tvs.tokenChart,
+    {
+      token: {
+        tokenId: token.id,
+        projectId: project.id,
       },
-      { placeholderData: keepPreviousData },
-    ),
+      range,
+    },
   )
 
   const chartData = useMemo(() => {

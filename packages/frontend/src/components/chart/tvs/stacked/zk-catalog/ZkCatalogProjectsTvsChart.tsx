@@ -1,7 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatCurrency } from '@l2beat/shared-pure'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
@@ -22,6 +21,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
@@ -49,16 +49,14 @@ export function ZkCatalogProjectsTvsChart({
   const { range, unit } = useTvsChartControlsContext()
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
 
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
-      {
-        projects: projectsForTvs,
-        range,
-        excludeAssociatedTokens: false,
-        excludeRwaRestrictedTokens,
-      },
-      { placeholderData: keepPreviousData },
-    ),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.tvs.detailedChartWithProjectsRanges,
+    {
+      projects: projectsForTvs,
+      range,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens,
+    },
   )
 
   const projectLabels = useMemo(() => {

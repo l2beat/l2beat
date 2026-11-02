@@ -1,10 +1,7 @@
 import type { Milestone } from '@l2beat/config'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import {
-  ChartShowsPreviousData,
-  useValueOfShownData,
-} from '~/components/core/chart/ChartPreviousData'
+import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
@@ -67,13 +64,10 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
     }
   }, [entries, filters, tab])
 
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.costs.chart.queryOptions(
-      { range, filter },
-      { placeholderData: keepPreviousData },
-    ),
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.costs.chart,
+    { range, filter },
   )
-  const shownRange = useValueOfShownData(range, { data, isPlaceholderData })
 
   const chartData = useMemo(() => {
     return data?.chart.map(
@@ -122,9 +116,9 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(chartData, {
-        bucket: rangeToResolution(shownRange),
+        bucket: rangeToResolution(shownInput.range),
       }),
-    [chartData, shownRange],
+    [chartData, shownInput.range],
   )
 
   return (
@@ -138,7 +132,7 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
             unit={unit}
             isLoading={isLoading}
             milestones={milestones}
-            range={shownRange}
+            range={shownInput.range}
             hasBlobs={!!data?.hasBlobs}
           />
         </div>

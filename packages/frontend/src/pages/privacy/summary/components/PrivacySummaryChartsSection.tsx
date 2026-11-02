@@ -1,8 +1,8 @@
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChartTabs } from '~/pages/layer2s/summary/components/ChartTabs'
@@ -34,28 +34,18 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     data: flowsData,
     isLoading: isFlowsLoading,
     isPlaceholderData: isFlowsPlaceholderData,
-  } = useQuery(
-    trpc.privacy.flowsChart.queryOptions(
-      {
-        projectIds,
-        range,
-      },
-      { placeholderData: keepPreviousData },
-    ),
-  )
+  } = useChartQuery(trpc.privacy.flowsChart, {
+    projectIds,
+    range,
+  })
   const {
     data: tvlData,
     isLoading: isTvlLoading,
     isPlaceholderData: isTvlPlaceholderData,
-  } = useQuery(
-    trpc.tvs.chartByProjects.queryOptions(
-      {
-        projectIds: tvlProjectIds,
-        range,
-      },
-      { placeholderData: keepPreviousData },
-    ),
-  )
+  } = useChartQuery(trpc.tvs.chartByProjects, {
+    projectIds: tvlProjectIds,
+    range,
+  })
 
   const flowChartTimeRange = useMemo(
     () =>

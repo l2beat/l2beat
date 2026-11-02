@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { formatCostValue } from '~/pages/layer2s/costs/utils/formatCostValue'
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
@@ -22,11 +22,9 @@ export function CostsCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.costs.detailedChartWithProjectsRanges.queryOptions(
-      getCostsCompareChartParams(queryProjects, chartRange),
-      { placeholderData: keepPreviousData },
-    ),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.costs.detailedChartWithProjectsRanges,
+    getCostsCompareChartParams(queryProjects, chartRange),
   )
   const unit = config.costs.unit
 

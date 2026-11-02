@@ -1,12 +1,11 @@
 import type { Milestone } from '@l2beat/config'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartPreviousDataDim,
   ChartShowsPreviousData,
-  useValueOfShownData,
 } from '~/components/core/chart/ChartPreviousData'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DataPostedRangeControls } from '~/pages/layer2s/data-posted/DataPostedRangeControls'
 import { useTRPC } from '~/trpc/React'
@@ -31,20 +30,17 @@ export function ProjectDataPostedChart({
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
 
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.da.l2ProjectChart.queryOptions(
-      { range, projectId: project.id },
-      { placeholderData: keepPreviousData },
-    ),
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.da.l2ProjectChart,
+    { range, projectId: project.id },
   )
-  const shownRange = useValueOfShownData(range, { data, isPlaceholderData })
 
   const chartData = useMemo(
     () => data?.chart.map(([timestamp, ethereum]) => ({ timestamp, ethereum })),
     [data],
   )
 
-  const resolution = rangeToResolution(shownRange)
+  const resolution = rangeToResolution(shownInput.range)
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
 
   return (

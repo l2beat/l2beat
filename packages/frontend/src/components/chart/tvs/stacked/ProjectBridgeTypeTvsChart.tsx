@@ -1,10 +1,10 @@
 import type { Milestone } from '@l2beat/config'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
 import {
@@ -26,16 +26,14 @@ export function ProjectBridgeTypeTvsChart({
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
   const { dataKeys, toggleDataKey } = useChartDataKeys(bridgeTypeTvsChartMeta)
 
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.tvs.detailedChart.queryOptions(
-      {
-        filter: { type: 'projects', projectIds: [project.id] },
-        range,
-        excludeAssociatedTokens: false,
-        excludeRwaRestrictedTokens,
-      },
-      { placeholderData: keepPreviousData },
-    ),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.tvs.detailedChart,
+    {
+      filter: { type: 'projects', projectIds: [project.id] },
+      range,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens,
+    },
   )
 
   const chartData = useMemo(

@@ -1,9 +1,9 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
@@ -41,19 +41,14 @@ export function ProjectActivityChart({
     data: chart,
     isLoading,
     isPlaceholderData,
-  } = useQuery(
-    trpc.activity.chart.queryOptions(
-      {
-        range,
-        filter: {
-          type: 'projects',
-          projectIds: [project.id],
-        },
-        hourly: true,
-      },
-      { placeholderData: keepPreviousData },
-    ),
-  )
+  } = useChartQuery(trpc.activity.chart, {
+    range,
+    filter: {
+      type: 'projects',
+      projectIds: [project.id],
+    },
+    hourly: true,
+  })
 
   const type = getChartType(category)
   const resolution = chart?.resolution ?? 'day'

@@ -1,10 +1,10 @@
 import type { Milestone } from '@l2beat/config'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -47,18 +47,16 @@ export function L2ActivityChart({ milestones, entries }: Props) {
     RECATEGORISED_ACTIVITY_CHART_META,
   )
 
-  const { data, isLoading, isPlaceholderData } = useQuery(
-    trpc.activity.recategorisedChart.queryOptions(
-      {
-        range,
-        filter: {
-          type: 'projects',
-          projectIds: entries.map((entry) => entry.id),
-        },
-        hourly: true,
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.activity.recategorisedChart,
+    {
+      range,
+      filter: {
+        type: 'projects',
+        projectIds: entries.map((entry) => entry.id),
       },
-      { placeholderData: keepPreviousData },
-    ),
+      hourly: true,
+    },
   )
 
   const ratioData = useMemo(() => getRatioChartData(data), [data])
