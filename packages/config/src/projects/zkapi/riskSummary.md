@@ -11,6 +11,6 @@
 1. the operator withholds a signed balance and cancels the escape with the request it received.
 <br>
 ## Privacy can be lost if
-1. the operator ties a request to its deposit, since few active notes cover a top-tier budget (see privileged insider).
+1. the operator ties a request to its deposit, since few active notes cover its budget tier (see privileged insider).
 2. prompts identify the user to OpenRouter or the model provider (see privileged insider).
 3. the operator keeps request transcripts and indexer logs, which later tie requests to deposits (see privileged insider).

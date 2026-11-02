@@ -6,12 +6,15 @@ recompiled with gnark v0.16.3 after the EdDSA signature check was rewritten. The
 deposit circuits keep their second round keys.
 It reuses the first 80 contributions of the public
 [Perpetual Powers of Tau](https://github.com/privacy-ethereum/perpetualpowersoftau) ceremony (`pot28_0080`) as Phase 1.
-Phase 2 is a gnark-native MPC ceremony. At the time of writing, the round record still marks the round as
-in preparation, and neither the public verification bundle nor the bundle digests have been published,
-so the number of participants and contributions could not be checked.
+Phase 2 is a gnark-native MPC ceremony. Its published manifest records **16 participants** and **192 contributions**,
+16 per circuit. Participants are identified by GitHub username, and four of them show a Sunnyside Labs affiliation there.
+The coordinator served plain HTTP and contributions carry no signatures, so participant names rest on the coordinator's records.
+The public verification bundle, published on 29 October 2026, re-derives every registered key from these contributions.
 
 - Phase 1 ceremony (first 80 contributions are used): <https://github.com/privacy-ethereum/perpetualpowersoftau>.
 - Ceremony repository and contributor tooling: [https://github.com/sunnyside-io/privacy-boost-ceremony](https://github.com/sunnyside-io/privacy-boost-ceremony)
-- Round record: [rounds/2026-03.md](https://github.com/sunnyside-io/privacy-boost-ceremony/blob/26122120d04f04f0abe59a7119b9c9a12e7c209a/rounds/2026-03.md)
+- Round record with the bundle digests: [rounds/2026-03.md](https://github.com/sunnyside-io/privacy-boost-ceremony/blob/e1e5a01d9bc4ce5b0917d6302aa4d294b6539894/rounds/2026-03.md)
 - Contributor release: [ceremony/v0.0.5](https://github.com/sunnyside-io/privacy-boost-ceremony/releases/tag/ceremony%2Fv0.0.5)
-- Offline verification procedure: [https://github.com/sunnyside-io/privacy-boost-ceremony/blob/main/PUBLIC_VERIFICATION.md](https://github.com/sunnyside-io/privacy-boost-ceremony/blob/main/PUBLIC_VERIFICATION.md)
+- Offline verification procedure: [PUBLIC_VERIFICATION.md](https://github.com/sunnyside-io/privacy-boost-ceremony/blob/e1e5a01d9bc4ce5b0917d6302aa4d294b6539894/PUBLIC_VERIFICATION.md)
+- Public verification bundle: [https://file.ceremony.privacyboost.io/prod-20260923-public.tar.gz](https://file.ceremony.privacyboost.io/prod-20260923-public.tar.gz)
+- Derived key bundle: [https://file.ceremony.privacyboost.io/prod-20260923-keys.tar.gz](https://file.ceremony.privacyboost.io/prod-20260923-keys.tar.gz)

@@ -245,6 +245,13 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
   freshExit:
     'Wait before exiting and pick a different time of day than the deposit. Exit to a fresh address every time and spend from it with a different wallet than the one that deposited.',
 
+  // Network observer
+  /** Source under advice that names an IP-hiding route: the methodology lists the routes we checked. The frontend's `PRIVACY_IP_HIDING_ROUTES_ANCHOR` names the anchor. */
+  ipHidingRoutes: {
+    title: 'IP-hiding routes we checked',
+    url: '/publications/privacy-methodology#ip-hiding-routes',
+  },
+
   // Privileged insider
   /** Open clients served from a hosted frontend. */
   localBuild:

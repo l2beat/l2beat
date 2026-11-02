@@ -14,7 +14,7 @@ All notes derive from one recovery phrase. The website creates a random one or d
 
 ### App
 
-0xbow hosts the app, built from public source. It accepts the user's own RPC endpoint and a sign-in with the recovery phrase alone. It lists Fast Relay and Cloaked Relay, but Cloaked Relay refuses requests from the subdomain, and over Tor Fast Relay answers only some circuits. The site offers no way to submit a withdrawal yourself, while anyone can relay onchain. Accounts from the older 12-word key method send their deposit labels to 0xbow while they migrate.
+0xbow hosts the app, built from public source. It accepts the user's own RPC endpoint and a sign-in with the recovery phrase alone. It picks the first of Fast Relay and Cloaked Relay that answers, which over Tor is mostly Cloaked Relay. It offers no way to submit a withdrawal yourself, while anyone can relay onchain. Google Analytics gets a two-year cookie and the browser's screen size, language and version on every visit. That links a normal browser's visits even over an IP-hiding route. Accounts from the older 12-word key method send their deposit labels to 0xbow during migration.
 
 ### Exits
 
