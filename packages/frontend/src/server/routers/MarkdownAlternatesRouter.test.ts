@@ -140,8 +140,7 @@ describe(createMarkdownAlternatesRouter.name, () => {
         .map((p) => `/layer2s/projects/${p.slug}`)
         .toSorted()
 
-    const { 'Ecosystems (/ecosystems/{slug})': _, ...sections } =
-      await getSectionPaths('/layer2s/summary.md')
+    const sections = await getSectionPaths('/layer2s/summary.md')
 
     expect(pathsOf('layer2', true).length).toBeGreaterThan(0)
     expect(pathsOf('layer3', true).length).toBeGreaterThan(0)

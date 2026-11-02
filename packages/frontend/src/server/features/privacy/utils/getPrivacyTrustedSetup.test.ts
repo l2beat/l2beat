@@ -39,6 +39,28 @@ describe(getPrivacyTrustedSetup.name, () => {
     ).toEqual(undefined)
   })
 
+  it('labels repeated-participant updates as contributions', () => {
+    const result = getPrivacyTrustedSetup([
+      { ...trustedSetup, contributionCount: 54, proofSystem },
+    ])
+
+    expect(result.label).toEqual('54 contributions')
+    expect(toTrustedSetupSummaryValue(result).value).toEqual('54 contributions')
+  })
+
+  it('uses a published participant total when both metrics are available', () => {
+    expect(
+      getPrivacyTrustedSetup([
+        {
+          ...trustedSetup,
+          participantCount: 52,
+          contributionCount: 54,
+          proofSystem,
+        },
+      ]).label,
+    ).toEqual('52 participants')
+  })
+
   it('names a transparent setup', () => {
     expect(
       getPrivacyTrustedSetup([{ ...trustedSetup, risk: 'N/A', proofSystem }])

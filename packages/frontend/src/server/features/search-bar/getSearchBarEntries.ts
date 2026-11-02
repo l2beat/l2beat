@@ -51,7 +51,6 @@ export async function getSearchBarEntries(search: string) {
       ps.getProjects({
         optional: [
           'scalingInfo',
-          'ecosystemConfig',
           'interopConfig',
           'zkCatalogInfo',
           'privacyInfo',

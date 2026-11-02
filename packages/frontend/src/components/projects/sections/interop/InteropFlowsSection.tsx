@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import partition from 'lodash/partition'
 import { useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
   EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE,
@@ -13,7 +14,6 @@ import { FlowsChainsSelector } from '~/pages/interop/components/flows/FlowsChain
 import { FlowsParticleLegend } from '~/pages/interop/components/flows/FlowsParticleLegend'
 import { FlowsProtocolsSelector } from '~/pages/interop/components/flows/FlowsProtocolsSelector'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
-import { InactiveChainsDialog } from '~/pages/interop/components/flows/graph/InactiveChainsDialog'
 import { useScaledParticleCounts } from '~/pages/interop/components/flows/graph/utils/useScaledParticleCounts'
 import {
   InteropFlowsProvider,
@@ -171,7 +171,10 @@ function Content({
                 <span className="font-normal text-secondary text-xs leading-none md:text-base">
                   No transfers detected for
                 </span>
-                <InactiveChainsDialog chains={inactiveChains} />
+                <ProjectIconList
+                  projects={inactiveChains}
+                  title="Chains without transfers"
+                />
               </>
             )}
           </div>

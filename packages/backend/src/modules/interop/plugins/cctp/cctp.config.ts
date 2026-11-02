@@ -101,6 +101,7 @@ const OVERRIDES_V2 = [
   { chain: 'monad', domain: 15 }, // hyperevm removed bc it is auto fetched
   { chain: 'worldchain', domain: 14 },
   { chain: 'plasma', domain: 33 },
+  { chain: 'arc', domain: 26 },
 ]
 
 export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {

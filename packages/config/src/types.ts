@@ -5,7 +5,6 @@ import type {
 } from '@l2beat/shared'
 import {
   type ChainSpecificAddress,
-  type CoingeckoId,
   EthereumAddress,
   isDateOnly,
   type KnownInteropBridgeType,
@@ -275,7 +274,6 @@ export interface BaseProject {
   trackedTxsConfig?: TrackedTxConfigEntryWithoutId[]
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
-  ecosystemConfig?: ProjectEcosystemConfig
   zkCatalogInfo?: ProjectZkCatalogInfo
 
   // discovery data
@@ -1042,7 +1040,22 @@ export interface TrustedSetup {
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
+  /** Participant total, distinct from the number of contributed updates. */
   participantCount?: number
+  /** Participant-generated updates, excluding beacons. Contributors may repeat. */
+  contributionCount?: number
+  phases?: {
+    phase1?: TrustedSetupPhase
+    phase2?: TrustedSetupPhase
+  }
+}
+
+export interface TrustedSetupPhase {
+  /** Omit when the phase exists but its count is unknown. */
+  count?: number | { min: number; max: number }
+  /** Contributions need not identify distinct participants. */
+  unit: 'participants' | 'contributions'
+  description?: string
 }
 
 // #endregion
@@ -1926,30 +1939,6 @@ export interface ProjectEcosystemInfo {
   isPartOfSuperchain?: boolean
   sinceTimestamp?: UnixTime
   untilTimestamp?: UnixTime
-}
-
-export interface ProjectEcosystemConfig {
-  startedAt?: UnixTime
-  token: {
-    coingeckoId: CoingeckoId
-    description: string
-  }
-  links: {
-    buildOn: string
-    learnMore: string
-    governanceDelegateToL2BEAT: string
-    governanceProposals: string
-    tools?: string[]
-    grants?: string
-  }
-  firstBanner?: {
-    headlineText?: string
-    mainText?: string
-  }
-  secondBanner?: {
-    headlineText?: string
-    mainText?: string
-  }
 }
 // #endregion
 

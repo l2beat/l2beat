@@ -179,7 +179,7 @@ function FailureMechanism({
       </span>
       {failureMechanism.description ? (
         <Tooltip>
-          <TooltipTrigger asChild disabledOnMobile>
+          <TooltipTrigger asChild disabledOnTouch>
             {link}
           </TooltipTrigger>
           <TooltipContent>

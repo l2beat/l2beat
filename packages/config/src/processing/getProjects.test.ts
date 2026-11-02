@@ -20,6 +20,7 @@ import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
 import type { BaseProject } from '../types'
+import { ecosystems } from './ecosystems'
 import { hasEoaWithUpgradePermissions } from './getEoaRedWarning'
 import { getProjects } from './getProjects'
 import { layer2s, milestonesLayer2s } from './layer2s'
@@ -55,11 +56,12 @@ describe('getProjects', () => {
   })
 
   it('every project has statuses and display (except ecosystems and interop protocols)', () => {
+    const ecosystemIds = new Set(ecosystems.map((e) => e.id))
     const missing = projects
       .filter(
         (p) =>
           !(
-            (p.ecosystemConfig || p.interopConfig) &&
+            (ecosystemIds.has(p.id) || p.interopConfig) &&
             (!p.statuses || !p.display)
           ),
       )

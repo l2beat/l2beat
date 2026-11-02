@@ -254,6 +254,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     color: '#1E88E5',
     explorerUrl: 'https://app.lighter.xyz',
   },
+  {
+    id: 'arc',
+    name: 'Arc',
+    type: 'evm',
+    display: 'ARC',
+    color: '#1B3158',
+    explorerUrl: 'https://explorer.arc.io',
+  },
 ] as const
 
 export const INTEROP_ONE_SIDED_CHAINS = [
@@ -264,4 +272,5 @@ export const INTEROP_ONE_SIDED_CHAINS = [
   'tron',
   'hyperliquid',
   'lighter',
+  'arc',
 ] as const

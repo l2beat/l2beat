@@ -146,6 +146,20 @@ export interface InteropTransferDeployedTokenPairStatsByToken
   abstractTokenId: string
 }
 
+/** One side of a plugin's transfers of a token: what they minted and burned. */
+export interface InteropTransferSupplyChangeRecord {
+  plugin: string
+  chain: string
+  tokenAddress: string
+  /** Raw amount minted minus raw amount burned. */
+  netMinted: bigint
+  transferCount: number
+  /** Transfers that do not say whether, or how much, they minted or burned. */
+  unknownCount: number
+  valueUsd: number
+  unknownValueUsd: number
+}
+
 interface DeployedTokenPairStatsSelection {
   plugins: InteropTransferPluginMatcher[]
   sourceChains: string[]
@@ -1125,6 +1139,80 @@ export class InteropTransferRepository extends BaseRepository {
       }
     }
     return [...pairs.values()]
+  }
+
+  /**
+   * Sums each transfer side whose own time is at or after `since`. A side
+   * with no minted or burned flag counts as unknown, unless the plugin says
+   * the bridge does not mint.
+   */
+  async getSupplyChangesSince(
+    since: UnixTime,
+  ): Promise<InteropTransferSupplyChangeRecord[]> {
+    const from = UnixTime.toDate(since)
+    const result = await sql<{
+      plugin: string
+      chain: string
+      tokenAddress: string
+      netMinted: string
+      transferCount: string
+      unknownCount: string
+      valueUsd: number
+      unknownValueUsd: number
+    }>`
+      WITH "Side" AS (
+        SELECT
+          t."plugin",
+          side.*,
+          side."changed" IS NULL
+            OR (side."changed" AND side."change" IS NULL) AS "unknown"
+        FROM "InteropTransfer" t
+        CROSS JOIN LATERAL (
+          VALUES
+            (
+              t."srcChain",
+              t."srcTokenAddress",
+              COALESCE(t."srcTime", t."timestamp"),
+              -t."srcRawAmount",
+              t."srcWasBurned",
+              t."srcValueUsd"
+            ),
+            (
+              t."dstChain",
+              t."dstTokenAddress",
+              COALESCE(t."dstTime", t."timestamp"),
+              t."dstRawAmount",
+              t."dstWasMinted",
+              t."dstValueUsd"
+            )
+        ) AS side("chain", "tokenAddress", "time", "change", "changed", "valueUsd")
+        WHERE t."timestamp" >= ${from}
+          AND side."time" >= ${from}
+          AND side."tokenAddress" IS NOT NULL
+      )
+      SELECT
+        "plugin",
+        "chain",
+        "tokenAddress",
+        COALESCE(SUM("change") FILTER (WHERE "changed"), 0) AS "netMinted",
+        COUNT(*) AS "transferCount",
+        COUNT(*) FILTER (WHERE "unknown") AS "unknownCount",
+        COALESCE(SUM("valueUsd"), 0) AS "valueUsd",
+        COALESCE(SUM("valueUsd") FILTER (WHERE "unknown"), 0) AS "unknownValueUsd"
+      FROM "Side"
+      GROUP BY "plugin", "chain", "tokenAddress"
+    `.execute(this.db)
+
+    return result.rows.map((row) => ({
+      plugin: row.plugin,
+      chain: row.chain,
+      tokenAddress: row.tokenAddress,
+      netMinted: BigInt(row.netMinted),
+      transferCount: Number(row.transferCount),
+      unknownCount: Number(row.unknownCount),
+      valueUsd: Number(row.valueUsd),
+      unknownValueUsd: Number(row.unknownValueUsd),
+    }))
   }
 
   async getExistingItems(

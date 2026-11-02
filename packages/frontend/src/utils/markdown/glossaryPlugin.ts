@@ -30,7 +30,7 @@ export function linkGlossaryTerms(
     const ignoredOffsets = getIgnoredAndLinkOffsets(sourceText)
     const isWithinIgnoredOffset = (position: number) =>
       ignoredOffsets.some(
-        (link) => position >= link.start && position <= link.end,
+        (link) => position >= link.start && position < link.end,
       )
     const isIgnored = (start: number, end: number) =>
       sourceText.at(start - 1) === ignoreDelimiter &&
@@ -203,16 +203,38 @@ function escapeRegExp(string: string) {
 function getIgnoredAndLinkOffsets(text: string) {
   const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g
   const backtickPattern = /`([^`]*)`/g
+  // What markdown-it renders as an autolink or inline HTML: URL and email
+  // autolinks, open tags (quoted attributes may contain >), closing tags and
+  // comments
+  const angleBracketPattern = new RegExp(
+    [
+      /<[A-Za-z][A-Za-z0-9+.-]{1,31}:[^<>\s]*>/.source,
+      /<[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*>/
+        .source,
+      /<[A-Za-z][A-Za-z0-9-]*(?:\s+[A-Za-z_:][A-Za-z0-9_.:-]*(?:\s*=\s*(?:[^\s"'=<>`]+|'[^']*'|"[^"]*"))?)*\s*\/?>/
+        .source,
+      /<\/[A-Za-z][A-Za-z0-9-]*\s*>/.source,
+      /<!--[\s\S]*?-->/.source,
+    ].join('|'),
+    'g',
+  )
 
-  const linkOffsets = [...text.matchAll(linkPattern)].map((match) => ({
+  // markdown-it reads a < inside a code span as code, so code spans are
+  // blanked out (keeping offsets) before looking for tags and comments
+  const withoutCode = text.replace(backtickPattern, (code) =>
+    ' '.repeat(code.length),
+  )
+
+  return [
+    ...getOffsets(text, linkPattern),
+    ...getOffsets(text, backtickPattern),
+    ...getOffsets(withoutCode, angleBracketPattern),
+  ]
+}
+
+function getOffsets(text: string, pattern: RegExp) {
+  return [...text.matchAll(pattern)].map((match) => ({
     start: match.index,
     end: match.index + match[0].length,
   }))
-
-  const backtickOffsets = [...text.matchAll(backtickPattern)].map((match) => ({
-    start: match.index,
-    end: match.index + match[0].length,
-  }))
-
-  return linkOffsets.concat(backtickOffsets)
 }
