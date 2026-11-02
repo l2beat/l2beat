@@ -162,12 +162,22 @@ const TooltipVisualOnly = ({ children }: { children: React.ReactNode }) => {
   return isInsideHtmlCopy ? null : children
 }
 
+/**
+ * Left out of the tooltip popup but kept in its HTML copy, for text a
+ * compact popup drops but crawlers and LLMs should still read.
+ */
+const TooltipHtmlCopyOnly = ({ children }: { children: React.ReactNode }) => {
+  const isInsideHtmlCopy = useContext(InsideHtmlCopyContext)
+  return isInsideHtmlCopy ? children : null
+}
+
 const TooltipPortal = TooltipPrimitive.Portal
 TooltipPortal.displayName = TooltipPrimitive.Portal.displayName
 
 export {
   Tooltip,
   TooltipContent,
+  TooltipHtmlCopyOnly,
   tooltipContentVariants,
   TooltipProvider,
   TooltipTrigger,
