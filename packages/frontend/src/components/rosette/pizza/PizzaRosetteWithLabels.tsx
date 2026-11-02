@@ -4,18 +4,19 @@ import { PizzaRosetteLabels } from './PizzaRosetteLabels'
 
 export function PizzaRosetteWithLabels({ values }: { values: RosetteValue[] }) {
   return (
-    <div className="relative flex size-[200px] shrink-0 items-center justify-center">
+    <div className="relative flex size-[184px] shrink-0 items-center justify-center">
       <PizzaRosetteIcon
         values={values}
-        className="scale-75"
+        className="scale-[0.6667]"
         background="surface"
         disableSectionLinking
       />
       <PizzaRosetteLabels
         values={values}
-        containerSize={200}
-        textRadius={76}
+        containerSize={184}
+        textRadius={66}
         size="small"
+        textClassName="text-secondary text-subtitle-11"
       />
     </div>
   )

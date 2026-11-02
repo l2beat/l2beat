@@ -80,7 +80,7 @@ export function PrivacyRosetteTrigger({
             isUnderReview={isUnderReview}
           />
           {settings.hint && (
-            <p className="mt-2.5 font-normal text-paragraph-12 text-secondary leading-none">
+            <p className="mt-3 font-normal text-paragraph-12 text-secondary leading-none">
               {settings.hint}
             </p>
           )}
