@@ -16,7 +16,7 @@ export function PizzaRosetteWithLabels({ values }: { values: RosetteValue[] }) {
         containerSize={184}
         textRadius={66}
         size="small"
-        textClassName="text-secondary text-subtitle-11"
+        textClassName="text-subtitle-11"
       />
     </div>
   )
