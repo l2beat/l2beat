@@ -33,7 +33,7 @@ export function PrivacyAnonymitySetSection({
   const copy = anonymitySetCopy(anonymitySetType, ANONYMITY_SET_WINDOW_DAYS)
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.privacy.anonymitySetChart.queryOptions({
       projectId: project.id,
       range,
@@ -79,7 +79,7 @@ export function PrivacyAnonymitySetSection({
             </div>
           )}
           <ChartControlsWrapper className="mb-4">
-            <ProjectChartTimeRange timeRange={timeRange} />
+            <ProjectChartTimeRange timeRange={timeRange} isError={isError} />
             <PrivacyAnonymitySetChartRangeControls
               range={range}
               setRange={setRange}
@@ -90,6 +90,8 @@ export function PrivacyAnonymitySetSection({
             series={data?.series}
             syncedUntil={data?.syncedUntil}
             isLoading={isLoading}
+            isError={isError}
+            onRetry={refetch}
             project={project}
             milestones={milestones}
             type="history"
@@ -111,6 +113,8 @@ export function PrivacyAnonymitySetSection({
             data={data?.holdingDuration}
             series={data?.series}
             isLoading={isLoading}
+            isError={isError}
+            onRetry={refetch}
             project={project}
             type="holding-duration"
             durationLabel={copy.durationLabel}

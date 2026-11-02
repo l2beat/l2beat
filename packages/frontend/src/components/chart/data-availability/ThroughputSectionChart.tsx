@@ -35,7 +35,7 @@ export function ThroughputSectionChart({
   const { includeL2Only, setIncludeL2Only } = useIncludeL2Only()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.da.projectCharts.queryOptions({
       range,
       projectId: project.id,
@@ -69,7 +69,7 @@ export function ThroughputSectionChart({
           onCheckedChange={setIncludeL2Only}
         />
         <div className="flex justify-between gap-x-1">
-          <ProjectChartTimeRange timeRange={timeRange} />
+          <ProjectChartTimeRange timeRange={timeRange} isError={isError} />
           <ChartRangeControls
             name="throughput"
             value={range}
@@ -86,6 +86,8 @@ export function ThroughputSectionChart({
           project={project}
           dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
           milestones={milestones}
           syncedUntil={data?.syncedUntil}
           resolution={resolution}
@@ -96,6 +98,8 @@ export function ThroughputSectionChart({
         project={project}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={refetch}
         customColors={customColors}
         milestones={milestones}
         resolution={resolution}

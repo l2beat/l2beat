@@ -74,7 +74,7 @@ export function L2SummaryTvsChart({
 }) {
   const trpc = useTRPC()
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.tvs.recategorisedChart.queryOptions({
       range,
       excludeAssociatedTokens: false,
@@ -109,6 +109,8 @@ export function L2SummaryTvsChart({
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={refetch}
         interactiveLegend={{
           dataKeys,
           onItemClick: toggleDataKey,

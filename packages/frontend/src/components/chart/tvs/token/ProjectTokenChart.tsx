@@ -17,7 +17,7 @@ export function ProjectTokenChart({ project, milestones, token }: Props) {
   const trpc = useTRPC()
   const { range } = useTvsChartControlsContext()
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.tvs.tokenChart.queryOptions({
       token: {
         tokenId: token.id,
@@ -40,6 +40,8 @@ export function ProjectTokenChart({ project, milestones, token }: Props) {
         data={chartData}
         project={project}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={refetch}
         milestones={milestones}
         token={token}
         syncedUntil={data?.syncedUntil}

@@ -31,6 +31,8 @@ interface Props {
   project?: ChartProject
   syncedUntil: UnixTime | undefined
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   customColors: Record<string, string> | undefined
   milestones: Milestone[]
   resolution: ChartResolution
@@ -45,6 +47,8 @@ export function DaThroughputByProjectChart({
   project,
   syncedUntil,
   isLoading,
+  isError,
+  onRetry,
   customColors,
   milestones,
   resolution,
@@ -172,6 +176,8 @@ export function DaThroughputByProjectChart({
         disableOnboarding: disableLegendOnboarding,
       }}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       project={project}
       milestones={milestones}
     >

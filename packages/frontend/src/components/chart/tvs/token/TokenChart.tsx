@@ -34,6 +34,8 @@ interface Props {
   project: ChartProject
   syncedUntil: number | undefined
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   milestones: Milestone[]
   token: ProjectToken
 }
@@ -42,6 +44,8 @@ export function TokenChart({
   data,
   project,
   isLoading,
+  isError,
+  onRetry,
   milestones,
   token,
   syncedUntil,
@@ -64,6 +68,8 @@ export function TokenChart({
       meta={chartMeta}
       data={data}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       milestones={milestones}
       project={project}
     >

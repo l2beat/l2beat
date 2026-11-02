@@ -33,6 +33,8 @@ export interface HomeChartDataPoint {
 interface Props {
   data: HomeChartDataPoint[] | undefined
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   color: HomeChartColor
   tooltipLabel: string
   formatValue: (value: number) => string
@@ -67,6 +69,8 @@ const X_AXIS_PROPS = {
 export function HomeChart({
   data,
   isLoading,
+  isError,
+  onRetry,
   color,
   tooltipLabel,
   formatValue,
@@ -106,6 +110,8 @@ export function HomeChart({
           meta={meta}
           data={data}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={onRetry}
           size="small"
         >
           <AreaChart

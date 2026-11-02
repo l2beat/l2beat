@@ -36,7 +36,12 @@ export function EthereumActivityChart({
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('linear')
 
-  const { data: chart, isLoading } = useQuery(
+  const {
+    data: chart,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery(
     trpc.activity.ethereumChart.queryOptions({
       range,
     }),
@@ -73,7 +78,7 @@ export function EthereumActivityChart({
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange timeRange={timeRange} isError={isError} />
         <ActivityChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <div className="mt-4 mb-3">
@@ -83,6 +88,8 @@ export function EthereumActivityChart({
           scale={scale}
           metric={metric}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
           syncedUntil={chart?.syncedUntil}
           type={type}
           project={project}
@@ -94,6 +101,8 @@ export function EthereumActivityChart({
           data={ratioData}
           syncedUntil={chart?.syncedUntil}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
         />
       </div>
 

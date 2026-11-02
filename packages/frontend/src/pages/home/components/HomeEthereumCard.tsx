@@ -86,6 +86,7 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
           <HomeChart
             data={dataPostedChartData}
             isLoading={false}
+            isError={false}
             color="ethereum"
             tooltipLabel="Data posted"
             formatValue={(value) => formatBytes(value)}
@@ -110,6 +111,7 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
           <HomeChart
             data={activityChartData}
             isLoading={false}
+            isError={false}
             color="ethereum"
             tooltipLabel="UOPS"
             formatValue={(value) => formatActivityCount(value)}

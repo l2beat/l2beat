@@ -92,7 +92,7 @@ function ChartControls({
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
 
-  const { data } = useQuery(
+  const { data, isError } = useQuery(
     trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
       projects: projectsForTvs,
       range,
@@ -111,6 +111,7 @@ function ChartControls({
   return (
     <TvsChartControls
       timeRange={timeRange}
+      isError={isError}
       range={{
         value: range,
         setValue: setRange,

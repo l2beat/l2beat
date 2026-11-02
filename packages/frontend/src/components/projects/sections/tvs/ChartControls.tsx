@@ -10,7 +10,7 @@ export function ChartControls({ projectId }: { projectId: string }) {
   const trpc = useTRPC()
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
-  const { data } = useQuery(
+  const { data, isError } = useQuery(
     trpc.tvs.detailedChart.queryOptions({
       filter: { type: 'projects', projectIds: [projectId] },
       range,
@@ -29,6 +29,7 @@ export function ChartControls({ projectId }: { projectId: string }) {
   return (
     <TvsChartControls
       timeRange={timeRange}
+      isError={isError}
       range={{
         value: range,
         setValue: setRange,

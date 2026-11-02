@@ -48,7 +48,7 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<Metric>('value')
   const [unit, setUnit] = useState<Unit>('absolute')
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.tvs.zkCatalogChart.queryOptions({ range }),
   )
 
@@ -136,12 +136,14 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
             </RadioGroupItem>
           </RadioGroup>
         </div>
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange timeRange={timeRange} isError={isError} />
       </div>
       <ChartContainer
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={refetch}
         interactiveLegend={{
           dataKeys,
           onItemClick: toggleDataKey,

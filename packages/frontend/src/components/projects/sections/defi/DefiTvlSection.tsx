@@ -32,7 +32,7 @@ export function DefiTvlSection({
 }: DefiTvlSectionProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.defi.tvlChart.queryOptions({ projectId: project.id, range }),
   )
 
@@ -67,13 +67,15 @@ export function DefiTvlSection({
         </div>
       )}
       <ChartControlsWrapper className="mb-4">
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange timeRange={timeRange} isError={isError} />
         <TvsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <TvsValueChart
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={refetch}
         project={project}
       />
     </ProjectSection>

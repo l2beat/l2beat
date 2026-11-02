@@ -42,6 +42,8 @@ interface Props {
   project?: ChartProject
   resolution: ChartResolution
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   syncedUntil: number | undefined
   tickCount?: number
   milestones: Milestone[]
@@ -52,6 +54,8 @@ export function DataPostedChart({
   project,
   resolution,
   isLoading,
+  isError,
+  onRetry,
   syncedUntil,
   tickCount,
   milestones,
@@ -73,6 +77,8 @@ export function DataPostedChart({
       data={data}
       meta={filteredChartMeta}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       milestones={milestones}
       project={project}
       interactiveLegend={{

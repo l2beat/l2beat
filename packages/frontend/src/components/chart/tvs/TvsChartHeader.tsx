@@ -12,6 +12,7 @@ interface Props {
   change: number | undefined
   range: ChartRange
   timeRange: [number, number] | undefined
+  isError: boolean
 }
 
 export function TvsChartHeader({
@@ -20,6 +21,7 @@ export function TvsChartHeader({
   change,
   range,
   timeRange,
+  isError,
 }: Props) {
   const changeOverTime =
     range[0] === null ? (
@@ -35,7 +37,7 @@ export function TvsChartHeader({
           Total value secured
           <span className="max-md:hidden"> stacked by type</span>
         </h2>
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange timeRange={timeRange} isError={isError} />
       </div>
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right font-bold text-xl md:text-2xl">

@@ -78,6 +78,8 @@ export const RECATEGORISED_ACTIVITY_CHART_META = {
 interface Props {
   data: RecategorisedActivityChartData | undefined
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   milestones: Milestone[]
   chartMeta: ChartMeta
   interactiveLegend: {
@@ -90,6 +92,8 @@ interface Props {
 export function L2RecategorizedActivityChart({
   data,
   isLoading,
+  isError,
+  onRetry,
   milestones,
   scale,
   chartMeta,
@@ -135,6 +139,8 @@ export function L2RecategorizedActivityChart({
       meta={chartMeta}
       data={chartData}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       interactiveLegend={{
         dataKeys,
         onItemClick,

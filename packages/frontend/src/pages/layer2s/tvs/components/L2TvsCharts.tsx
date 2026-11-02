@@ -36,7 +36,7 @@ export function L2TvsCharts({ entries, milestones }: Props) {
     }
   }, [entries])
 
-  const { data } = useQuery(
+  const { data, isError } = useQuery(
     trpc.tvs.detailedChart.queryOptions({
       range,
       filter,
@@ -82,6 +82,7 @@ export function L2TvsCharts({ entries, milestones }: Props) {
         change={stats?.change}
         range={range}
         timeRange={timeRange}
+        isError={isError}
       />
       <div className="mt-4 mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
         {byBridgeTypeChart}

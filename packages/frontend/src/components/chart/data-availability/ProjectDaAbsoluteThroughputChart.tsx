@@ -37,6 +37,8 @@ interface Props {
     | undefined
   project: ChartProject
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   milestones: Milestone[]
   syncedUntil: UnixTime | undefined
   resolution: ChartResolution
@@ -52,6 +54,8 @@ export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
   project,
   isLoading,
+  isError,
+  onRetry,
   milestones,
   syncedUntil,
   resolution,
@@ -97,6 +101,8 @@ export function ProjectDaAbsoluteThroughputChart({
       data={chartData}
       project={hideProjectLogo ? undefined : project}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       interactiveLegend={{
         dataKeys,
         onItemClick: toggleDataKey,

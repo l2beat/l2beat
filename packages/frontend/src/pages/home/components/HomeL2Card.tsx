@@ -99,6 +99,7 @@ export function HomeL2Card({ charts, l2CategoryCounts }: Props) {
           <HomeChart
             data={tvsChartData}
             isLoading={false}
+            isError={false}
             color="pink"
             tooltipLabel="Total value secured"
             formatValue={(value) => formatCurrency(value, 'usd')}
@@ -122,6 +123,7 @@ export function HomeL2Card({ charts, l2CategoryCounts }: Props) {
           <HomeChart
             data={activityChartData}
             isLoading={false}
+            isError={false}
             color="pink"
             tooltipLabel="Layer 2s"
             formatValue={(value) => formatActivityCount(value)}

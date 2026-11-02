@@ -21,7 +21,7 @@ export function CostsCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.costs.detailedChartWithProjectsRanges.queryOptions(
       getCostsCompareChartParams(queryProjects, chartRange),
     ),
@@ -47,6 +47,8 @@ export function CostsCompareChart({
       projects={projects}
       data={chartData}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={refetch}
       syncedUntil={data?.syncedUntil}
       formatYAxisLabel={(value) => formatCostValue(value, unit)}
       formatTooltipValue={(value) => formatCostValue(value, unit)}

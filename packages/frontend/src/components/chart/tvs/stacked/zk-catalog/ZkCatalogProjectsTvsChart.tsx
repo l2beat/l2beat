@@ -48,7 +48,7 @@ export function ZkCatalogProjectsTvsChart({
   const { range, unit } = useTvsChartControlsContext()
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
       projects: projectsForTvs,
       range,
@@ -153,6 +153,8 @@ export function ZkCatalogProjectsTvsChart({
       data={chartData}
       meta={chartMeta}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={refetch}
       milestones={milestones}
       interactiveLegend={{
         dataKeys,

@@ -63,7 +63,7 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
     }
   }, [entries, filters, tab])
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.costs.chart.queryOptions({
       range,
       filter,
@@ -124,13 +124,15 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
 
   return (
     <div>
-      <Header timeRange={timeRange} />
+      <Header timeRange={timeRange} isError={isError} />
       <div className="mt-4 mb-3">
         <CostsChart
           data={chartData}
           syncedUntil={data?.syncedUntil}
           unit={unit}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
           milestones={milestones}
           range={range}
           hasBlobs={!!data?.hasBlobs}
@@ -152,14 +154,20 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
   )
 }
 
-function Header({ timeRange }: { timeRange: [number, number] | undefined }) {
+function Header({
+  timeRange,
+  isError,
+}: {
+  timeRange: [number, number] | undefined
+  isError: boolean
+}) {
   return (
     <header>
       <h2 className="font-bold text-xl md:text-2xl">
         Onchain costs
         <span className="max-md:hidden"> stacked by type</span>
       </h2>
-      <ChartTimeRange timeRange={timeRange} />
+      <ChartTimeRange timeRange={timeRange} isError={isError} />
     </header>
   )
 }

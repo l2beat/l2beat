@@ -25,7 +25,7 @@ export function ProjectBridgeTypeTvsChart({
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
   const { dataKeys, toggleDataKey } = useChartDataKeys(bridgeTypeTvsChartMeta)
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.tvs.detailedChart.queryOptions({
       filter: { type: 'projects', projectIds: [project.id] },
       range,
@@ -64,6 +64,8 @@ export function ProjectBridgeTypeTvsChart({
         milestones={milestones}
         unit={unit}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={refetch}
         tickCount={4}
         syncedUntil={data?.syncedUntil}
         dataKeys={dataKeys}

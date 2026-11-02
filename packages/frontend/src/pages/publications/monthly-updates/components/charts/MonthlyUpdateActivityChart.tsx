@@ -46,7 +46,7 @@ export function MonthlyUpdateActivityChart({
 }) {
   const trpc = useTRPC()
   const id = useId()
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.activity.chart.queryOptions({
       range: [from, to],
       filter: {
@@ -84,8 +84,14 @@ export function MonthlyUpdateActivityChart({
 
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
-      <Header timeRange={timeRange} stats={stats} />
-      <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+      <Header timeRange={timeRange} isError={isError} stats={stats} />
+      <ChartContainer
+        data={chartData}
+        meta={chartMeta}
+        isLoading={isLoading}
+        isError={isError}
+        onRetry={refetch}
+      >
         <AreaChart
           responsive
           data={chartData}
@@ -128,9 +134,11 @@ export function MonthlyUpdateActivityChart({
 
 function Header({
   timeRange,
+  isError,
   stats,
 }: {
   timeRange: [number, number] | undefined
+  isError: boolean
   stats: { latestUops: number; marketShare: number } | undefined
 }) {
   return (
@@ -138,7 +146,10 @@ function Header({
       <div>
         <div className="font-bold text-xl">Activity</div>
         <div className="font-medium text-secondary text-xs">
-          <MonthlyUpdateChartTimeRange timeRange={timeRange} />
+          <MonthlyUpdateChartTimeRange
+            timeRange={timeRange}
+            isError={isError}
+          />
         </div>
       </div>
       <div className="text-right">

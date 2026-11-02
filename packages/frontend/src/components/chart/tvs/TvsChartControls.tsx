@@ -8,11 +8,13 @@ import type { ChartRange } from '~/utils/range/range'
 
 export function TvsChartControls({
   timeRange,
+  isError,
   unit,
   range,
   className,
 }: {
   timeRange: [number, number] | undefined
+  isError: boolean
   unit?: {
     value: ChartUnit
     setValue: (unit: ChartUnit) => void
@@ -25,7 +27,7 @@ export function TvsChartControls({
 }) {
   return (
     <ChartControlsWrapper className={cn('flex-wrap gap-y-0', className)}>
-      <ProjectChartTimeRange timeRange={timeRange} />
+      <ProjectChartTimeRange timeRange={timeRange} isError={isError} />
       <div className="flex w-full items-center justify-between gap-1">
         {unit && (
           <TvsChartUnitControls unit={unit.value} setUnit={unit.setValue} />

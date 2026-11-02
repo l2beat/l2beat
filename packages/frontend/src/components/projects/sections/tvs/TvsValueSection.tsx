@@ -29,7 +29,7 @@ export function TvsValueSection({
 }: TvsValueSectionProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.tvs.chartByProjects.queryOptions({
       projectIds: [project.id],
       range,
@@ -58,13 +58,15 @@ export function TvsValueSection({
   return (
     <ProjectSection {...projectSectionProps}>
       <ChartControlsWrapper className="mb-4">
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange timeRange={timeRange} isError={isError} />
         <RangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <TvsValueChart
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={refetch}
         project={project}
         milestones={milestones}
       />

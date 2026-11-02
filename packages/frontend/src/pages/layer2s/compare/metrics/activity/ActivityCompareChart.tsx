@@ -18,7 +18,7 @@ export function ActivityCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.activity.detailedChartWithProjectsRanges.queryOptions(
       getActivityCompareChartParams(queryProjects, chartRange),
     ),
@@ -42,6 +42,8 @@ export function ActivityCompareChart({
       projects={projects}
       data={chartData}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={refetch}
       syncedUntil={data?.syncedUntil}
       formatYAxisLabel={(value) => formatActivityCount(value)}
       formatTooltipValue={(value) =>

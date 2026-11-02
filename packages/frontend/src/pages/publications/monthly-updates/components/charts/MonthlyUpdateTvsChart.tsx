@@ -34,7 +34,7 @@ export function MonthlyUpdateTvsChart({
 }) {
   const trpc = useTRPC()
   const id = useId()
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.tvs.chart.queryOptions({
       range: [from, to],
       excludeAssociatedTokens: false,
@@ -72,8 +72,19 @@ export function MonthlyUpdateTvsChart({
 
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
-      <Header timeRange={timeRange} stats={stats} unit={'usd'} />
-      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
+      <Header
+        timeRange={timeRange}
+        isError={isError}
+        stats={stats}
+        unit={'usd'}
+      />
+      <ChartContainer
+        data={chartData}
+        meta={chartMeta}
+        isLoading={isLoading}
+        isError={isError}
+        onRetry={refetch}
+      >
         <AreaChart
           responsive
           data={chartData}
@@ -117,10 +128,12 @@ export function MonthlyUpdateTvsChart({
 
 function Header({
   timeRange,
+  isError,
   stats,
   unit,
 }: {
   timeRange: [number, number] | undefined
+  isError: boolean
   stats: { total: number; marketShare: number } | undefined
   unit: string
 }) {
@@ -128,7 +141,7 @@ function Header({
     <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">TVS</div>
-        <MonthlyUpdateChartTimeRange timeRange={timeRange} />
+        <MonthlyUpdateChartTimeRange timeRange={timeRange} isError={isError} />
       </div>
       <div className="text-right">
         {stats?.total ? (

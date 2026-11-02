@@ -78,6 +78,14 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
     }),
   )
   const isLoading = fullData.isLoading || settlementOnly.isLoading
+  // The chart merges both series, so either one failing leaves nothing to plot
+  const isError = fullData.isError || settlementOnly.isError
+  const retryFailed = () =>
+    Promise.all(
+      [fullData, settlementOnly]
+        .filter((query) => query.isError)
+        .map((query) => query.refetch()),
+    )
 
   const chartData = useMemo(
     () =>
@@ -100,6 +108,8 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={retryFailed}
         interactiveLegend={{
           dataKeys,
           onItemClick: toggleDataKey,

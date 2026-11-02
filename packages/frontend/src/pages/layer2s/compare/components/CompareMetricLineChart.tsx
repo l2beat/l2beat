@@ -52,6 +52,8 @@ interface Props {
   projects: CompareProjectEntry[]
   data: CompareChartPoint[] | undefined
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   syncedUntil: number | undefined
   formatYAxisLabel: (value: number) => string
   formatTooltipValue: (value: number) => string
@@ -66,6 +68,8 @@ export function CompareMetricLineChart({
   projects,
   data,
   isLoading,
+  isError,
+  onRetry,
   syncedUntil,
   formatYAxisLabel,
   formatTooltipValue,
@@ -99,12 +103,14 @@ export function CompareMetricLineChart({
   return (
     <div className="flex flex-col">
       <div className="mt-3 mb-2">
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange timeRange={timeRange} isError={isError} />
       </div>
       <ChartContainer
         data={data}
         meta={chartMeta}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={onRetry}
         noDataSourceMessage="Please select at least one project"
       >
         {/* Without right:1 the chart last point is not hoverable for some reason */}

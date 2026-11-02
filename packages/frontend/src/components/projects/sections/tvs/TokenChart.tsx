@@ -51,7 +51,7 @@ function TokenChartControls({
 }) {
   const trpc = useTRPC()
   const { range, setRange } = useTvsChartControlsContext()
-  const { data } = useQuery(
+  const { data, isError } = useQuery(
     trpc.tvs.tokenChart.queryOptions({
       token: {
         tokenId: token.id,
@@ -73,6 +73,7 @@ function TokenChartControls({
     <TvsChartControls
       className={className}
       timeRange={timeRange}
+      isError={isError}
       range={{
         value: range,
         setValue: setRange,

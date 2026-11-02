@@ -32,6 +32,8 @@ interface Props {
   data: TvsValueChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   project?: ChartProject
   milestones?: Milestone[]
 }
@@ -48,6 +50,8 @@ export function TvsValueChart({
   data,
   syncedUntil,
   isLoading,
+  isError,
+  onRetry,
   project,
   milestones,
 }: Props) {
@@ -56,6 +60,8 @@ export function TvsValueChart({
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       project={project}
       milestones={milestones}
     >

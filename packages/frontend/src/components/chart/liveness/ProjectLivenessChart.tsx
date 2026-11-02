@@ -42,7 +42,12 @@ export function ProjectLivenessChart({
     getDefaultSubtype(configuredSubtypes),
   )
 
-  const { data: chart, isLoading } = useQuery(
+  const {
+    data: chart,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery(
     trpc.liveness.projectChart.queryOptions({
       projectId: project.id,
       range,
@@ -85,7 +90,7 @@ export function ProjectLivenessChart({
           hideSubtypeSwitch && 'flex-row justify-between',
         )}
       >
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange timeRange={timeRange} isError={isError} />
         <ChartControlsWrapper className="flex-wrap-reverse">
           {!hideSubtypeSwitch && (
             <LivenessChartSubtypeControls
@@ -101,6 +106,8 @@ export function ProjectLivenessChart({
         <LivenessChart
           data={chartData}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
           project={project}
           subtype={subtype}
           milestones={milestones}

@@ -70,6 +70,8 @@ export function BlobsThroughputChart({
           project={project}
           dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
           isLoading={total.isLoading}
+          isError={total.isError}
+          onRetry={total.refetch}
           milestones={milestones}
           syncedUntil={total.data?.syncedUntil}
           resolution={resolution}
@@ -81,6 +83,8 @@ export function BlobsThroughputChart({
           data={byProject.data?.byProjectChart.data}
           syncedUntil={byProject.data?.syncedUntil}
           isLoading={byProject.isLoading}
+          isError={byProject.isError}
+          onRetry={byProject.refetch}
           customColors={customColors}
           milestones={milestones}
           resolution={resolution}

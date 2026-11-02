@@ -26,7 +26,7 @@ export function ProjectDataPostedChart({
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.da.l2ProjectChart.queryOptions({
       range,
       projectId: project.id,
@@ -44,7 +44,7 @@ export function ProjectDataPostedChart({
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange timeRange={timeRange} isError={isError} />
         <DataPostedRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <div className="mt-4">
@@ -54,6 +54,8 @@ export function ProjectDataPostedChart({
           data={chartData}
           syncedUntil={data?.syncedUntil}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
           tickCount={4}
           project={project}
         />

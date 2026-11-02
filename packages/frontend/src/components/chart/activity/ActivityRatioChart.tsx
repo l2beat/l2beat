@@ -28,12 +28,16 @@ interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   resolution?: ActivityResolution
 }
 
 export function ActivityRatioChart({
   data,
   isLoading,
+  isError,
+  onRetry,
   syncedUntil,
   resolution = 'day',
 }: Props) {
@@ -51,6 +55,8 @@ export function ActivityRatioChart({
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       milestones={undefined}
       size="small"
     >

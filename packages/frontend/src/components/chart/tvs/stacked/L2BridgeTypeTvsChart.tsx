@@ -29,7 +29,7 @@ export function L2BridgeTypeTvsChart({
   const { tokenBridgeTypeDataKeys, tokenBridgeTypeToggleDataKey } =
     useL2TvsDataKeys()
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.tvs.detailedChart.queryOptions({
       range,
       excludeAssociatedTokens,
@@ -67,6 +67,8 @@ export function L2BridgeTypeTvsChart({
       milestones={milestones}
       unit={unit}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={refetch}
       syncedUntil={data?.syncedUntil}
       dataKeys={tokenBridgeTypeDataKeys}
       toggleDataKey={tokenBridgeTypeToggleDataKey}

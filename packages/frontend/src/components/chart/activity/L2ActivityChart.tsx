@@ -46,7 +46,7 @@ export function L2ActivityChart({ milestones, entries }: Props) {
     RECATEGORISED_ACTIVITY_CHART_META,
   )
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.activity.recategorisedChart.queryOptions({
       range,
       filter: {
@@ -72,12 +72,14 @@ export function L2ActivityChart({ milestones, entries }: Props) {
       <ActivityChartHeader resolution={data?.resolution ?? 'day'} />
       <L2RecategorizedActivityStats entries={entries} />
       <div className="mt-1 mb-2 flex items-center gap-2">
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange timeRange={timeRange} isError={isError} />
         {data && <IncompleteHoursHint data={data} />}
       </div>
       <L2RecategorizedActivityChart
         data={data}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={refetch}
         milestones={milestones}
         scale={scale}
         chartMeta={RECATEGORISED_ACTIVITY_CHART_META}
@@ -90,6 +92,8 @@ export function L2ActivityChart({ milestones, entries }: Props) {
         <ActivityRatioChart
           data={ratioData}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
           syncedUntil={data?.syncedUntil}
           resolution={data?.resolution}
         />

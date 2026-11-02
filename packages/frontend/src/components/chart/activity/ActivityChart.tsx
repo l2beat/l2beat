@@ -60,6 +60,8 @@ interface Props {
   data: ActivityChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   milestones: Milestone[]
   scale: ChartScale
   metric: ActivityMetric
@@ -74,6 +76,8 @@ export function ActivityChart({
   syncedUntil,
   milestones,
   isLoading,
+  isError,
+  onRetry,
   scale,
   type,
   metric,
@@ -116,6 +120,8 @@ export function ActivityChart({
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       interactiveLegend={
         project.id === ProjectId.ETHEREUM
           ? undefined

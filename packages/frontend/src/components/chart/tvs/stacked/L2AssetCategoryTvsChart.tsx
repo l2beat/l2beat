@@ -29,7 +29,7 @@ export function L2AssetCategoryTvsChart({
   const { assetCategoryDataKeys, assetCategoryToggleDataKey } =
     useL2TvsDataKeys()
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.tvs.detailedChart.queryOptions({
       range,
       excludeAssociatedTokens,
@@ -93,6 +93,8 @@ export function L2AssetCategoryTvsChart({
       milestones={milestones}
       unit={unit}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={refetch}
       syncedUntil={data?.syncedUntil}
       dataKeys={assetCategoryDataKeys}
       toggleDataKey={assetCategoryToggleDataKey}

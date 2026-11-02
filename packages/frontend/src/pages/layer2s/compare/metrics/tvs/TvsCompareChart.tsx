@@ -18,7 +18,7 @@ export function TvsCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
       getTvsCompareChartParams(queryProjects, config, chartRange),
     ),
@@ -53,6 +53,8 @@ export function TvsCompareChart({
       projects={projects}
       data={chartData}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={refetch}
       syncedUntil={data?.syncedUntil}
       formatYAxisLabel={(value) => formatCurrency(value, unit)}
       formatTooltipValue={(value) => formatCurrency(value, unit)}

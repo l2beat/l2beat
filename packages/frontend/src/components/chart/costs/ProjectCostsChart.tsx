@@ -29,7 +29,7 @@ export function ProjectCostsChart({
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.costs.projectChart.queryOptions({
       range,
       projectId: project.id,
@@ -97,7 +97,7 @@ export function ProjectCostsChart({
   return (
     <div>
       <div className="mt-4 mb-3 flex justify-between gap-1">
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange timeRange={timeRange} isError={isError} />
         <CostsChartRangeControls range={range} setRange={setRange} />
       </div>
       <div className="mt-4 mb-3">
@@ -107,6 +107,8 @@ export function ProjectCostsChart({
           syncedUntil={data?.syncedUntil}
           unit={unit}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
           milestones={milestones}
           range={range}
           hasBlobs={!!data?.hasBlobs}

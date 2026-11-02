@@ -15,6 +15,7 @@ import {
   ChartDataIndicator,
   type ChartDataIndicatorType,
 } from './ChartDataIndicator'
+import { ChartErrorState } from './ChartErrorState'
 import {
   legendOnboardingHintClassName,
   useChartLegendOnboarding,
@@ -98,6 +99,8 @@ function ChartContainer<T extends { timestamp: number }>({
   meta,
   data,
   isLoading,
+  isError,
+  onRetry,
   milestones,
   loaderClassName,
   logoClassName,
@@ -118,6 +121,10 @@ function ChartContainer<T extends { timestamp: number }>({
   loaderClassName?: string
   logoClassName?: string
   isLoading?: boolean
+  /** The chart's request failed. Shown instead of "No data" until data arrives. */
+  isError?: boolean
+  /** Usually the query's `refetch`. Without it the error state has no Retry button. */
+  onRetry?: () => unknown
   project?: ChartProject
   size?: 'regular' | 'small'
   noDataSourceMessage?: string
@@ -129,6 +136,7 @@ function ChartContainer<T extends { timestamp: number }>({
   const [ref, shouldMountChart] = useIsNearViewport()
 
   const hasData = data && data.length > 1
+  const showError = !!isError && !isLoading && !hasData
 
   const noDataSourcesSelected = Object.keys(meta).every(
     (key) => interactiveLegend && !interactiveLegend?.dataKeys.includes(key),
@@ -171,14 +179,19 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
+        {showError && <ChartErrorState size={size} onRetry={onRetry} />}
         {!hasData &&
           !isLoading &&
+          !showError &&
           !(noDataSourcesSelected && shouldMountChart) && (
             <ChartNoDataState size={size} />
           )}
-        {noDataSourcesSelected && !isLoading && shouldMountChart && (
-          <ChartNoDataSourceState message={noDataSourceMessage} />
-        )}
+        {noDataSourcesSelected &&
+          !isLoading &&
+          !showError &&
+          shouldMountChart && (
+            <ChartNoDataSourceState message={noDataSourceMessage} />
+          )}
         {shouldMountChart && size !== 'small' && (
           <Logo
             animated={false}

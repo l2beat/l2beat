@@ -36,7 +36,12 @@ export function ProjectActivityChart({
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('linear')
 
-  const { data: chart, isLoading } = useQuery(
+  const {
+    data: chart,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery(
     trpc.activity.chart.queryOptions({
       range,
       filter: {
@@ -83,7 +88,7 @@ export function ProjectActivityChart({
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange timeRange={timeRange} isError={isError} />
         <ActivityChartRangeControls
           range={range}
           setRange={setRange}
@@ -97,6 +102,8 @@ export function ProjectActivityChart({
           scale={scale}
           metric={metric}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
           syncedUntil={chart?.syncedUntil}
           type={type}
           project={project}
@@ -109,6 +116,8 @@ export function ProjectActivityChart({
           data={ratioData}
           syncedUntil={chart?.syncedUntil}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
           resolution={resolution}
         />
       </div>

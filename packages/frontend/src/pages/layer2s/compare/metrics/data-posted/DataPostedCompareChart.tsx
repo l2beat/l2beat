@@ -16,7 +16,7 @@ export function DataPostedCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.da.detailedChartWithProjectsRanges.queryOptions(
       getDataPostedCompareChartParams(queryProjects, chartRange),
     ),
@@ -40,6 +40,8 @@ export function DataPostedCompareChart({
       projects={projects}
       data={chartData}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={refetch}
       syncedUntil={data?.syncedUntil}
       formatYAxisLabel={(value) => formatBytes(value)}
       formatTooltipValue={(value) => formatBytes(value)}

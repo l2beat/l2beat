@@ -32,6 +32,8 @@ interface Props {
   projects: PrivacyTvlBreakdownProject[]
   syncedUntil: number | undefined
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
 }
 
 export function PrivacyTvlBreakdownChart({
@@ -39,6 +41,8 @@ export function PrivacyTvlBreakdownChart({
   projects,
   syncedUntil,
   isLoading,
+  isError,
+  onRetry,
 }: Props) {
   const chartMeta = useMemo<ChartMeta>(() => {
     const colors = generateAccessibleColors(projects.length)
@@ -74,6 +78,8 @@ export function PrivacyTvlBreakdownChart({
       data={chartData}
       meta={chartMeta}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       interactiveLegend={{
         dataKeys,
         onItemClick: toggleDataKey,

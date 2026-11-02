@@ -29,13 +29,23 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     () => tvlProjects.map((p) => p.id).sort(),
     [tvlProjects],
   )
-  const { data: flowsData, isLoading: isFlowsLoading } = useQuery(
+  const {
+    data: flowsData,
+    isLoading: isFlowsLoading,
+    isError: isFlowsError,
+    refetch: refetchFlows,
+  } = useQuery(
     trpc.privacy.flowsChart.queryOptions({
       projectIds,
       range,
     }),
   )
-  const { data: tvlData, isLoading: isTvlLoading } = useQuery(
+  const {
+    data: tvlData,
+    isLoading: isTvlLoading,
+    isError: isTvlError,
+    refetch: refetchTvl,
+  } = useQuery(
     trpc.tvs.chartByProjects.queryOptions({
       projectIds: tvlProjectIds,
       range,
@@ -65,12 +75,14 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
         <h2 className="font-bold text-lg md:text-xl">
           Total deposit and withdrawal counts
         </h2>
-        <ChartTimeRange timeRange={flowChartTimeRange} />
+        <ChartTimeRange timeRange={flowChartTimeRange} isError={isFlowsError} />
       </div>
       <PrivacyFlowChart
         data={flowsData?.chart}
         syncedUntil={flowsData?.syncedUntil}
         isLoading={isFlowsLoading}
+        isError={isFlowsError}
+        onRetry={refetchFlows}
         metric={'count'}
       />
     </div>
@@ -79,13 +91,15 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     <div>
       <div className="mb-3">
         <h2 className="font-bold text-lg md:text-xl">Total value locked</h2>
-        <ChartTimeRange timeRange={tvlChartTimeRange} />
+        <ChartTimeRange timeRange={tvlChartTimeRange} isError={isTvlError} />
       </div>
       <PrivacyTvlBreakdownChart
         data={tvlData?.chart}
         projects={tvlProjects}
         syncedUntil={tvlData?.syncedUntil}
         isLoading={isTvlLoading}
+        isError={isTvlError}
+        onRetry={refetchTvl}
       />
     </div>
   )

@@ -29,6 +29,8 @@ interface Props {
   data: PrivacyFlowsChartPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   metric: 'count' | 'value'
   scale?: ChartScale
   project?: ChartProject
@@ -52,6 +54,8 @@ export function PrivacyFlowChart({
   data,
   syncedUntil,
   isLoading,
+  isError,
+  onRetry,
   metric,
   scale = 'linear',
   project,
@@ -83,6 +87,8 @@ export function PrivacyFlowChart({
       data={chartData}
       meta={chartMeta}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       project={project}
       milestones={milestones}
       interactiveLegend={{

@@ -27,7 +27,7 @@ export function L2SummaryActivityChart({ range }: Props) {
     hiddenDataKeys,
   )
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.activity.recategorisedChart.queryOptions({
       range,
       filter: { type: 'all' },
@@ -43,6 +43,8 @@ export function L2SummaryActivityChart({ range }: Props) {
         <L2RecategorizedActivityChart
           data={data}
           isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
           milestones={[]}
           chartMeta={RECATEGORISED_ACTIVITY_CHART_META}
           interactiveLegend={{

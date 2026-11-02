@@ -33,7 +33,7 @@ export function PrivacyFlowsSection({
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<FlowsMetric>('count')
   const [scale, setScale] = useState<ChartScale>('linear')
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     trpc.privacy.flowsChart.queryOptions({
       projectIds: [project.id],
       range,
@@ -54,13 +54,15 @@ export function PrivacyFlowsSection({
   return (
     <ProjectSection {...projectSectionProps}>
       <ChartControlsWrapper className="mb-4">
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange timeRange={timeRange} isError={isError} />
         <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <PrivacyFlowChart
         data={data?.chart}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={refetch}
         metric={metric}
         scale={scale}
         project={project}

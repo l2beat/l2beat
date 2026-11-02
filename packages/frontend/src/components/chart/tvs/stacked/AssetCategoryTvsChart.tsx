@@ -28,6 +28,8 @@ interface Props {
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   tickCount?: number
   project?: ChartProject
   excludeRwaRestrictedTokens: boolean
@@ -72,6 +74,8 @@ export function AssetCategoryTvsChart({
   milestones,
   unit,
   isLoading,
+  isError,
+  onRetry,
   tickCount,
   dataKeys,
   toggleDataKey,
@@ -86,6 +90,8 @@ export function AssetCategoryTvsChart({
       data={data}
       meta={assetCategoryTvsChartMeta}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       milestones={milestones}
       project={project}
       interactiveLegend={{

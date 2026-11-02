@@ -50,6 +50,8 @@ interface Props {
   syncedUntil: number | undefined
   unit: CostsUnit
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   milestones: Milestone[]
   range: ChartRange
   hasBlobs: boolean
@@ -63,6 +65,8 @@ export function CostsChart({
   syncedUntil,
   unit,
   isLoading,
+  isError,
+  onRetry,
   milestones,
   range,
   tickCount,
@@ -118,6 +122,8 @@ export function CostsChart({
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       milestones={milestones}
       interactiveLegend={{
         dataKeys,

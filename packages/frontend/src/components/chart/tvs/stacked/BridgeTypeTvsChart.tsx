@@ -25,6 +25,8 @@ interface Props {
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   dataKeys: (keyof typeof bridgeTypeTvsChartMeta)[]
   toggleDataKey: (dataKey: string) => void
   tickCount?: number
@@ -55,6 +57,8 @@ export function BridgeTypeTvsChart({
   milestones,
   unit,
   isLoading,
+  isError,
+  onRetry,
   tickCount,
   dataKeys,
   toggleDataKey,
@@ -68,6 +72,8 @@ export function BridgeTypeTvsChart({
       data={data}
       meta={bridgeTypeTvsChartMeta}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       milestones={milestones}
       interactiveLegend={{
         dataKeys,

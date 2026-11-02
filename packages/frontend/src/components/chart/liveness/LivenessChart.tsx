@@ -44,6 +44,8 @@ interface LivenessChartDataPoint {
 interface Props {
   data: LivenessChartDataPoint[] | undefined
   isLoading: boolean
+  isError: boolean
+  onRetry?: () => unknown
   project?: ChartProject
   subtype: TrackedTxsConfigSubtype
   milestones: Milestone[]
@@ -71,6 +73,8 @@ const chartMeta = {
 export function LivenessChart({
   data,
   isLoading,
+  isError,
+  onRetry,
   project,
   subtype,
   milestones,
@@ -97,6 +101,8 @@ export function LivenessChart({
       data={data}
       meta={chartMeta}
       isLoading={isLoading}
+      isError={isError}
+      onRetry={onRetry}
       milestones={milestones}
       project={project}
     >
