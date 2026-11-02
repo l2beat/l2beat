@@ -226,7 +226,7 @@ export const lighter: ScalingProject = {
         noRedTrustedSetups: true,
         programHashesReproducible: null,
         proverSourcePublished: true,
-        verifierContractsReproducible: true,
+        verifierContractsReproducible: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

@@ -5437,6 +5437,20 @@
       "supply": "zero"
     },
     {
+      "name": "sGho",
+      "coingeckoId": "gho",
+      "address": "0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
+      "symbol": "sGho",
+      "decimals": 18,
+      "deploymentTimestamp": 1777981931,
+      "coingeckoListingTimestamp": 1689379200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30663/large/gho-token-logo.png?1720517092",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "SHIBA INU",
       "coingeckoId": "shiba-inu",
       "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",

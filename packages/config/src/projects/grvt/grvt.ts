@@ -64,17 +64,25 @@ export const grvt: ScalingProject = zkStackL2({
       address: ChainSpecificAddress(
         'eth:0x189b2c1CE2f4Cd8e535E98B005A2d7e798124B18',
       ),
-      tokens: ['USDC', 'USDY'],
+      tokens: ['USDC', 'USDY', 'sGho'],
       description:
-        'Yield strategy of the GRVTL1TreasuryVault that holds tokenized treasuries bought with USDC of the vault.',
+        'Yield strategy of the GRVTL1TreasuryVault that holds tokenized treasuries and sGHO bought with USDC of the vault.',
     }),
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(
         'eth:0xEC33298A3aC7A5F5B3f21A3218a5D8E862Da8a12',
       ),
-      tokens: ['USDT', 'USDY'],
+      tokens: ['USDT', 'USDY', 'sGho'],
       description:
-        'Yield strategy of the GRVTL1TreasuryVault that holds tokenized treasuries bought with USDT of the vault.',
+        'Yield strategy of the GRVTL1TreasuryVault that holds tokenized treasuries and sGHO bought with USDT of the vault.',
+    }),
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E',
+      ),
+      tokens: ['USDT', 'sGho'],
+      description:
+        'Yield strategy of the GRVTL1TreasuryVault that converts USDT of the vault to GHO and deposits it into sGHO.',
     }),
   ],
   daProvider: {
