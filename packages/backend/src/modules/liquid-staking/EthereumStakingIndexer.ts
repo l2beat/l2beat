@@ -14,7 +14,10 @@ import {
   ELECTRA_SLOT,
   readCreditedDeposits,
 } from './creditedDeposits'
-import { type ExecutionDayRpc, readExecutionDay } from './ethereumExecutionDay'
+import {
+  type ExecutionDayDune,
+  readExecutionDayFromDune,
+} from './duneExecutionDay'
 
 /**
  * Validators that earn nothing: those waiting to enter, and those exited but
@@ -42,15 +45,17 @@ const SUPPORTED_FORK_VERSIONS = [
 ]
 
 /**
- * A change re-reads every day from the start, at about 9M calls, so bump it
- * only when a fix changes what past days store.
+ * A change re-reads every day from the start: a Dune query and five beacon
+ * reads per day, about 100 Dune credits since 2024. Bump it when a fix changes
+ * what past days store.
  */
 const STORED_DATA_VERSION = '1'
 
 interface EthereumStakingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
-  rpc: ExecutionDayRpc & DepositsRpc
+  rpc: DepositsRpc
+  dune: ExecutionDayDune
   beacon: Pick<
     BeaconChainClient,
     | 'getTotalBalance'
@@ -135,7 +140,13 @@ export class EthereumStakingIndexer extends ManagedChildIndexer {
     }
     const toBlock = nextDayBlock - 1
     const [execution, deposits] = await Promise.all([
-      readExecutionDay(this.$.rpc, this.logger, fromBlock, toBlock),
+      readExecutionDayFromDune(
+        this.$.dune,
+        this.logger,
+        day,
+        fromBlock,
+        toBlock,
+      ),
       readCreditedDeposits(
         this.$.rpc,
         { from: fromBlock, to: toBlock },

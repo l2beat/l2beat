@@ -126,7 +126,7 @@ export async function makeConfig(
       )),
     liquidStaking:
       flags.isEnabled('liquid-staking') &&
-      (await getLiquidStakingConfig(ps, flags)),
+      (await getLiquidStakingConfig(ps, env, flags)),
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&
       (await getTrackedTxsConfig(ps, env, flags)),

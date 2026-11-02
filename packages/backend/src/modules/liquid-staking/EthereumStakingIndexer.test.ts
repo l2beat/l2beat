@@ -5,6 +5,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../test/database'
 import type { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
+import type { ExecutionDayDune } from './duneExecutionDay'
 import { EthereumStakingIndexer } from './EthereumStakingIndexer'
 
 describe(EthereumStakingIndexer.name, () => {
@@ -15,7 +16,7 @@ describe(EthereumStakingIndexer.name, () => {
   const day = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
 
   it('stores the day that ends at the next height', async () => {
-    const { indexer, daily, beacon, rpc } = createIndexer()
+    const { indexer, daily, beacon, rpc, dune } = createIndexer()
 
     // The previous height is the end of a stored day, `day`.
     expect(await indexer.update(day + 1, day + 5 * UnixTime.DAY)).toEqual(
@@ -34,6 +35,9 @@ describe(EthereumStakingIndexer.name, () => {
       day + 1,
       day + UnixTime.DAY,
     ])
+    expect(dune.query.calls[0]?.args[0]).toInclude(
+      `between ${day + 1} and ${day + UnixTime.DAY}`,
+    )
     expect(daily.upsertMany).toHaveBeenOnlyCalledWith([
       {
         timestamp: day,
@@ -114,17 +118,34 @@ function createIndexer() {
     }),
     getPendingDepositsAmount: mockFn().resolvesTo(7n),
   }
-  // Empty blocks keep the execution sums at zero; readExecutionDay has its own tests.
-  const rpc = {
-    getBlockWithTransactions: mockFn().resolvesTo({
-      miner: '0x1111111111111111111111111111111111111111',
-      baseFeePerGas: 1n,
-      withdrawals: [],
-      transactions: [],
-    }),
-    getBlockReceipts: mockFn().resolvesTo([]),
-    getLogs: mockFn().resolvesTo([]),
-  }
+  const rpc = { getLogs: mockFn().resolvesTo([]) }
+  // A complete day of empty sums for the blocks asked about;
+  // readExecutionDayFromDune has its own tests.
+  const dune = mockObject<ExecutionDayDune>({
+    query: async (sql, _performance, schema) => {
+      const [from, to] = (sql.match(/number between (\d+) and (\d+)/) ?? [])
+        .slice(1)
+        .map(Number)
+      return schema.parse([
+        {
+          blocks: (to ?? 0) - (from ?? 0) + 1,
+          first_block: from,
+          last_block: to,
+          incomplete_blocks: 0,
+          builder_blocks: 0,
+          large_builder_payment_blocks: null,
+          builder_payments: '0',
+          priority_fees: '0',
+          direct_transfers: '0',
+          withdrawal_count: 2,
+          withdrawal_span: 2,
+          first_withdrawal_block: from,
+          last_withdrawal_block: to,
+          withdrawals_gwei: '0',
+        },
+      ])
+    },
+  })
   const indexer = new EthereumStakingIndexer(
     {
       parents: [],
@@ -132,6 +153,7 @@ function createIndexer() {
       minHeight: UnixTime.fromDate(new Date('2024-01-02T00:00:00Z')),
       db: mockDatabase({ ethereumStakingDaily: daily }),
       rpc,
+      dune,
       beacon,
       // The block number stands in for the timestamp it was looked up for.
       blockTimestampProvider: {
@@ -142,5 +164,5 @@ function createIndexer() {
     },
     Logger.SILENT,
   )
-  return { indexer, daily, beacon, rpc }
+  return { indexer, daily, beacon, rpc, dune }
 }

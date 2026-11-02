@@ -1,3 +1,4 @@
+import type { Env } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getLiquidStakingConfigurationId } from '../../modules/liquid-staking/getLiquidStakingConfigurationId'
@@ -9,6 +10,7 @@ const SINCE_TIMESTAMP = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
 
 export async function getLiquidStakingConfig(
   ps: ProjectService,
+  env: Env,
   flags: FeatureFlags,
 ): Promise<LiquidStakingConfig | false> {
   const projects = (await ps.getProjects({ select: ['liquidStaking'] }))
@@ -30,5 +32,9 @@ export async function getLiquidStakingConfig(
 
   if (projects.length === 0) return false
 
-  return { sinceTimestamp: SINCE_TIMESTAMP, projects }
+  return {
+    sinceTimestamp: SINCE_TIMESTAMP,
+    duneApiKey: env.string('DUNE_API_KEY'),
+    projects,
+  }
 }
