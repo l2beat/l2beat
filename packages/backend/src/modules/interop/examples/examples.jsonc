@@ -4512,6 +4512,66 @@
     "messages": [{ "type": "opstack.L2ToL1Message", "app": "lido-wsteth" }],
     "transfers": ["lido-wsteth.L2ToL1Transfer"]
   },
+  "lido-steth-optimism-ethereum-deposit": {
+    "tags": ["lido"],
+    "description": "Optimism L1 → L2 stETH deposit, amounts are in stETH",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x17ec580d9374a5d69293a494c61dc9fcdf59a648dcb687db9e4ba75eafd9b981"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x31d388079b9d22010aaef89ecb7d40eecbab5bed5bb3fe0bc195f7ea3acbe819"
+      }
+    ],
+    "expects": {
+      "messages": [{ "type": "opstack.L1ToL2Message", "app": "lido-wsteth" }],
+      "transfers": [
+        {
+          "type": "lido-wsteth.L1ToL2Transfer",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000ae7ab96520de3a18e5e111b5eaab095312d7fe84",
+            "tokenAmount": "20808369595905386"
+          },
+          "dst": {
+            "tokenAddress": "0x00000000000000000000000076a50b8c7349ccddb7578c6627e79b5d99d24138",
+            "tokenAmount": "20808369595905385"
+          }
+        }
+      ]
+    }
+  },
+  "lido-steth-optimism-ethereum-withdrawal": {
+    "tags": ["lido"],
+    "description": "Optimism L2 → L1 stETH withdrawal, amounts are in stETH",
+    "txs": [
+      {
+        "chain": "optimism",
+        "tx": "0xbddb246630ff7a2bd980ffa8fcdff5c8dfc977861bf0122ac7da47c94708072a"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x63f8f5eef43c8f4f6d5c6e30b5915d5112b46c3ae1ae30ae24ad05076ddb2eee"
+      }
+    ],
+    "expects": {
+      "messages": [{ "type": "opstack.L2ToL1Message", "app": "lido-wsteth" }],
+      "transfers": [
+        {
+          "type": "lido-wsteth.L2ToL1Transfer",
+          "src": {
+            "tokenAddress": "0x00000000000000000000000076a50b8c7349ccddb7578c6627e79b5d99d24138",
+            "tokenAmount": "124540187869859786448"
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000ae7ab96520de3a18e5e111b5eaab095312d7fe84",
+            "tokenAmount": "124692521552351828884"
+          }
+        }
+      ]
+    }
+  },
   "sorare-base": {
     "txs": [
       {
