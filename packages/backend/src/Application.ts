@@ -13,6 +13,7 @@ import { initDataAvailabilityModule } from './modules/data-availability/DataAvai
 import { createDefiTvlModule } from './modules/defi-tvl/DefiTvlModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createInteropModule } from './modules/interop/engine/InteropModule'
+import { createLiquidStakingModule } from './modules/liquid-staking/LiquidStakingModule'
 import { createPrivacyModule } from './modules/privacy/PrivacyModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
@@ -80,6 +81,7 @@ export class Application {
       trackedTxsModule,
       initTvsModule(deps),
       createDefiTvlModule(deps),
+      createLiquidStakingModule(deps),
       createPrivacyModule(deps),
       createDaBeatModule(deps),
       createCropAttestationsModule(deps),

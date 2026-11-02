@@ -55,14 +55,94 @@ export class BeaconChainClient extends ClientCore {
       | 'genesis'
       | 'finalized'
       | 'justified'
-      | 'slot'
+      | number
       | `0x${string}`
     status?: string[]
   }) {
-    const endpoint = `eth/v1/beacon/states/${stateId}/validators?${new URLSearchParams(
-      status ? { status: status.join(',') } : {},
-    ).toString()}`
+    // Commas unencoded, as the beacon API lists several statuses.
+    const query = status ? `?status=${status.join(',')}` : ''
+    const endpoint = `eth/v1/beacon/states/${stateId}/validators${query}`
 
+    const { sum, count } = await this.sumStreamed(
+      endpoint,
+      /^data\.\d+\.balance/,
+    )
+    return {
+      // gwei to wei
+      totalStake: sum * 10n ** 9n,
+      numberOfValidators: count,
+    }
+  }
+
+  /** Every validator's balance at a state, summed in wei. */
+  async getTotalBalance(slot: number): Promise<bigint> {
+    const { sum } = await this.sumStreamed(
+      `eth/v1/beacon/states/${slot}/validator_balances`,
+      /^data\.\d+\.balance/,
+    )
+    return sum * 10n ** 9n
+  }
+
+  /**
+   * Sum of the deposits waiting to be credited at a state, in wei. The queue
+   * exists only since Electra.
+   */
+  async getPendingDepositsAmount(slot: number): Promise<bigint> {
+    const { sum } = await this.sumStreamed(
+      `eth/v1/beacon/states/${slot}/pending_deposits`,
+      /^data\.\d+\.amount/,
+    )
+    return sum * 10n ** 9n
+  }
+
+  /**
+   * The fork version of a state, and how many deposits from the deposit
+   * contract it has credited. From Electra the counter stops at the first new
+   * deposit, as those are credited in their own block. Only the start of the
+   * state is read, as both come before the validators, the fork first.
+   */
+  async getForkAndDepositIndex(
+    slot: number,
+  ): Promise<{ forkVersion: string; depositIndex: number }> {
+    let forkVersion: string | undefined
+    for await (const value of this.streamMatches(
+      `eth/v2/debug/beacon/states/${slot}`,
+      /^data\.(fork\.current_version|eth1_deposit_index)$/,
+    )) {
+      if (forkVersion === undefined) {
+        forkVersion = String(value)
+        continue
+      }
+      return { forkVersion, depositIndex: Number(value) }
+    }
+    throw new Error('BeaconChain state has no deposit index', {
+      cause: { slot },
+    })
+  }
+
+  /** Sums the integers at the paths matching `filter`, and counts them. */
+  private async sumStreamed(
+    endpoint: string,
+    filter: RegExp,
+  ): Promise<{ sum: bigint; count: number }> {
+    let sum = 0n
+    let count = 0
+    for await (const value of this.streamMatches(endpoint, filter)) {
+      sum += BigInt(value as string)
+      count++
+    }
+    return { sum, count }
+  }
+
+  /**
+   * Streams the values at the paths matching `filter`, so a response of
+   * hundreds of megabytes is never held in memory. Stopping early stops the
+   * download.
+   */
+  private async *streamMatches(
+    endpoint: string,
+    filter: RegExp,
+  ): AsyncGenerator<unknown> {
     const response = await this.$.http.fetchRaw(
       `${this.$.beaconApiUrl}${endpoint}`,
       { timeout: this.$.timeout },
@@ -74,35 +154,27 @@ export class BeaconChainClient extends ClientCore {
         endpoint,
         response: JSON.stringify(response),
       })
-      throw new Error(
-        `BeaconChain getValidators request failed with status: ${response.status}`,
-      )
+      throw new Error('BeaconChain request failed', {
+        cause: { endpoint, status: response.status },
+      })
     }
 
     if (!response.body) {
-      throw new Error('BeaconChain getValidators response has no body')
+      throw new Error('BeaconChain response has no body', {
+        cause: { endpoint },
+      })
     }
 
     // Native fetch returns a Web stream; stream-chain only accepts Node streams
-    const pipeline = chain([
-      Readable.fromWeb(response.body),
-      parser(),
-      pick({ filter: /^data\.\d+\.balance/ }),
-      streamValues(),
-    ])
-
-    let effectiveBalance = 0n
-    let numberOfValidators = 0
-
-    for await (const { value } of pipeline) {
-      // gwei to wei
-      effectiveBalance += BigInt(value) * 10n ** 9n
-      numberOfValidators++
-    }
-
-    return {
-      totalStake: effectiveBalance,
-      numberOfValidators,
+    const source = Readable.fromWeb(response.body)
+    const pipeline = chain([source, parser(), pick({ filter }), streamValues()])
+    try {
+      for await (const { value } of pipeline) {
+        yield value
+      }
+    } finally {
+      pipeline.destroy()
+      source.destroy()
     }
   }
 

@@ -77,6 +77,89 @@ describe(BeaconChainClient.name, () => {
     })
   })
 
+  describe(BeaconChainClient.prototype.getTotalBalance.name, () => {
+    it('sums every balance at the slot in wei', async () => {
+      const body = JSON.stringify({
+        data: [
+          { index: '0', balance: '32000000000' },
+          { index: '1', balance: '0' },
+          { index: '2', balance: '2048000000000' },
+        ],
+      })
+
+      const result = await withServer(
+        (req, res) => {
+          expect(req.url).toEqual(
+            '/eth/v1/beacon/states/8103597/validator_balances',
+          )
+          res.setHeader('Content-Type', 'application/json')
+          res.end(body)
+        },
+        (url) =>
+          mockClient({
+            http: new HttpClient(),
+            beaconApiUrl: `${url}/`,
+          }).getTotalBalance(8103597),
+      )
+
+      expect(result).toEqual(2_080_000_000_000_000_000_000n)
+    })
+  })
+
+  describe(BeaconChainClient.prototype.getForkAndDepositIndex.name, () => {
+    it('reads the counter without waiting for the rest of the state', async () => {
+      const result = await withServer(
+        (req, res) => {
+          expect(req.url).toEqual('/eth/v2/debug/beacon/states/8103597')
+          res.setHeader('Content-Type', 'application/json')
+          // The validators never arrive; the read must not wait for them.
+          res.write(
+            '{"data":{"slot":"8103597","fork":{"previous_version":"0x03000000","current_version":"0x03000000","epoch":"194048"},"eth1_deposit_index":"1639287",',
+          )
+          res.write('"validators":[')
+        },
+        (url) =>
+          mockClient({
+            http: new HttpClient(),
+            beaconApiUrl: `${url}/`,
+          }).getForkAndDepositIndex(8103597),
+      )
+
+      expect(result).toEqual({
+        forkVersion: '0x03000000',
+        depositIndex: 1639287,
+      })
+    })
+  })
+
+  describe(BeaconChainClient.prototype.getPendingDepositsAmount.name, () => {
+    it('sums the queued deposit amounts, in wei', async () => {
+      const body = JSON.stringify({
+        data: [
+          { pubkey: '0x01', amount: '32000000000', slot: '1' },
+          { pubkey: '0x02', amount: '1000000000', slot: '2' },
+        ],
+      })
+
+      const result = await withServer(
+        (req, res) => {
+          expect(req.url).toEqual(
+            '/eth/v1/beacon/states/11649024/pending_deposits',
+          )
+          res.setHeader('Content-Type', 'application/json')
+          res.end(body)
+        },
+        (url) =>
+          mockClient({
+            http: new HttpClient(),
+            beaconApiUrl: `${url}/`,
+          }).getPendingDepositsAmount(11649024),
+      )
+
+      expect(result).toEqual(33_000_000_000_000_000_000n)
+    })
+  })
+
   describe(BeaconChainClient.prototype.call.name, () => {
     it('should call beacon api and return result', async () => {
       const http = mockObject<HttpClient>({
