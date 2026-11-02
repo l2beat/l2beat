@@ -3,7 +3,10 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
+import {
+  ChartShowsPreviousData,
+  useValueOfShownData,
+} from '~/components/core/chart/ChartPreviousData'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
@@ -38,6 +41,10 @@ export function ProjectAssetCategoryTvsChart({
       },
       { placeholderData: keepPreviousData },
     ),
+  )
+  const shownExcludeRwaRestrictedTokens = useValueOfShownData(
+    excludeRwaRestrictedTokens,
+    isPlaceholderData,
   )
 
   const chartData = useMemo(
@@ -102,7 +109,7 @@ export function ProjectAssetCategoryTvsChart({
           dataKeys={dataKeys}
           toggleDataKey={toggleDataKey}
           project={project}
-          excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
+          excludeRwaRestrictedTokens={shownExcludeRwaRestrictedTokens}
         />
       </div>
     </ChartShowsPreviousData>

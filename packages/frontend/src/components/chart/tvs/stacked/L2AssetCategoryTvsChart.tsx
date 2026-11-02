@@ -1,7 +1,10 @@
 import type { Milestone } from '@l2beat/config'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
+import {
+  ChartShowsPreviousData,
+  useValueOfShownData,
+} from '~/components/core/chart/ChartPreviousData'
 import { useL2TvsDataKeys } from '~/pages/layer2s/tvs/components/L2TvsDataKeysContext'
 import type { TvsProjectFilter } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
 import { useTRPC } from '~/trpc/React'
@@ -40,6 +43,10 @@ export function L2AssetCategoryTvsChart({
       },
       { placeholderData: keepPreviousData },
     ),
+  )
+  const shownExcludeRwaRestrictedTokens = useValueOfShownData(
+    excludeRwaRestrictedTokens,
+    isPlaceholderData,
   )
 
   const chartData = useMemo(
@@ -101,7 +108,7 @@ export function L2AssetCategoryTvsChart({
         syncedUntil={data?.syncedUntil}
         dataKeys={assetCategoryDataKeys}
         toggleDataKey={assetCategoryToggleDataKey}
-        excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
+        excludeRwaRestrictedTokens={shownExcludeRwaRestrictedTokens}
       />
     </ChartShowsPreviousData>
   )
