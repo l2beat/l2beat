@@ -1,3 +1,4 @@
+import { RefreshIcon } from '~/icons/Refresh'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
 import { ChartStateMessage, chartStateIconClassName } from './ChartStateMessage'
@@ -31,16 +32,19 @@ export function ChartErrorState({
             // query without data returns to pending when it refetches.
             onClick={() => onRetry()}
             className={cn(
-              'font-medium transition-colors',
-              // Sized like the chart's own controls: a RadioGroup and its items
-              size === 'regular'
-                ? 'h-8 rounded-lg px-3 text-xs md:text-sm'
-                : 'h-6 rounded-md px-2 text-xs',
-              'bg-surface-primary primary-card:bg-surface-secondary hover:bg-surface-tertiary primary-card:hover:bg-surface-tertiary',
+              'flex items-center gap-1.5 rounded-md border border-divider bg-surface-primary font-medium text-primary leading-none transition-colors',
+              'primary-card:bg-surface-secondary hover:bg-surface-secondary primary-card:hover:bg-surface-tertiary',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
+              size === 'regular' ? 'h-8 px-3 text-sm' : 'h-7 px-2.5 text-xs',
             )}
           >
-            Retry
+            <RefreshIcon
+              className={cn(
+                'fill-secondary',
+                size === 'regular' ? 'size-4' : 'size-3.5',
+              )}
+            />
+            Try again
           </button>
         )
       }
