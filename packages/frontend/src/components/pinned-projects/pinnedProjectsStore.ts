@@ -11,25 +11,28 @@ export interface SavedProject {
   iconUrl: string
 }
 
-export interface YourProjects {
+export interface PinnedProjects {
   pinned: SavedProject[]
   recent: SavedProject[]
+  /** Stays true after the last unpin, so the pinning hint doesn't come back. */
+  hasPinned: boolean
 }
 
+// Already in visitors' browsers: a new key would drop their projects.
 export const STORAGE_KEY = 'l2beat-your-projects'
-const CHANGE_EVENT = 'l2beat-your-projects-change'
+const CHANGE_EVENT = 'l2beat-pinned-projects-change'
 /** Unpinned ones; pinned ones are kept on top of these, so they can't crowd them out. */
 const MAX_RECENT = 8
-const EMPTY: YourProjects = { pinned: [], recent: [] }
+const EMPTY: PinnedProjects = { pinned: [], recent: [], hasPinned: false }
 
 let cachedRaw: string | null | undefined
-let cached: YourProjects = EMPTY
+let cached: PinnedProjects = EMPTY
 
 // Storage can throw: blocked cookies make any access a SecurityError, and a
 // full quota fails writes. Without its projects the nav still works, so both
 // fall back quietly rather than taking the page down.
 
-function read(): YourProjects {
+function read(): PinnedProjects {
   let raw: string | null
   try {
     raw = localStorage.getItem(STORAGE_KEY)
@@ -38,19 +41,24 @@ function read(): YourProjects {
   }
   if (raw !== cachedRaw) {
     cachedRaw = raw
-    cached = parseYourProjects(raw)
+    cached = parsePinnedProjects(raw)
   }
   return cached
 }
 
 /** Whatever is stored, written by an older version or edited by hand. */
-function parseYourProjects(raw: string | null): YourProjects {
+function parsePinnedProjects(raw: string | null): PinnedProjects {
   if (!raw) return EMPTY
   try {
     const value: unknown = JSON.parse(raw)
     if (typeof value !== 'object' || value === null) return EMPTY
-    const { pinned, recent } = value as Record<string, unknown>
-    return { pinned: toProjects(pinned), recent: toProjects(recent) }
+    const { pinned, recent, hasPinned } = value as Record<string, unknown>
+    const pinnedProjects = toProjects(pinned)
+    return {
+      pinned: pinnedProjects,
+      recent: toProjects(recent),
+      hasPinned: hasPinned === true || pinnedProjects.length > 0,
+    }
   } catch {
     return EMPTY
   }
@@ -68,9 +76,17 @@ function toProjects(value: unknown): SavedProject[] {
   )
 }
 
-function write(update: (current: YourProjects) => YourProjects) {
+function write(update: (current: PinnedProjects) => PinnedProjects) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(update(read())))
+    const current = read()
+    const next = update(current)
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        ...next,
+        hasPinned: current.hasPinned || next.pinned.length > 0,
+      }),
+    )
   } catch {
     return
   }
@@ -87,7 +103,7 @@ function subscribe(listener: () => void) {
   }
 }
 
-export function useYourProjects(): YourProjects {
+export function usePinnedProjects(): PinnedProjects {
   return useSyncExternalStore(subscribe, read, () => EMPTY)
 }
 
@@ -101,9 +117,9 @@ export function recordProjectVisit(project: SavedProject) {
  * content-hashed and an old one stops resolving after a deploy.
  */
 export function withVisit(
-  current: YourProjects,
+  current: PinnedProjects,
   project: SavedProject,
-): YourProjects {
+): PinnedProjects {
   const pinnedHrefs = new Set(current.pinned.map((p) => p.href))
   let unpinnedLeft = MAX_RECENT
   const recent = [
@@ -111,13 +127,14 @@ export function withVisit(
     ...current.recent.filter((p) => p.href !== project.href),
   ].filter((p) => pinnedHrefs.has(p.href) || unpinnedLeft-- > 0)
   return {
+    ...current,
     pinned: current.pinned.map((p) => (p.href === project.href ? project : p)),
     recent,
   }
 }
 
 export function usePinnedState(project: SavedProject) {
-  const { pinned } = useYourProjects()
+  const { pinned } = usePinnedProjects()
   const isPinned = pinned.some((p) => p.href === project.href)
   const toggle = useCallback(() => {
     write((current) => ({

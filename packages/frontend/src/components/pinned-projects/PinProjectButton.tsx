@@ -6,7 +6,7 @@ import {
   recordProjectVisit,
   type SavedProject,
   usePinnedState,
-} from './yourProjectsStore'
+} from './pinnedProjectsStore'
 
 /**
  * Pins the project to the nav's "Pinned" list. Opening the page also adds

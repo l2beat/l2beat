@@ -4,20 +4,20 @@ import { usePathname } from '~/hooks/usePathname'
 import { PinIcon } from '~/icons/Pin'
 import { cn } from '~/utils/cn'
 import { SidebarGroup, SidebarGroupLabel } from '../core/Sidebar'
-import { prerenderYourProjects } from './prerenderYourProjects'
 import {
   pinProject,
   type SavedProject,
   STORAGE_KEY,
   unpinProject,
-  useYourProjects,
-} from './yourProjectsStore'
+  usePinnedProjects,
+} from './pinnedProjectsStore'
+import { prerenderPinnedProjects } from './prerenderPinnedProjects'
 
 /** Recent rows, so the announcement under them keeps its room. */
 const RECENT_ROWS = 5
 
 const WRAPPER_CLASS = 'contents'
-const LISTS_ROLE = 'your-projects'
+const LISTS_ROLE = 'pinned-projects'
 // React 19 sets innerHTML whenever this object changes identity, which would
 // wipe the prerendered lists before React takes over.
 const KEEP_SERVER_MARKUP = { __html: '' }
@@ -33,7 +33,7 @@ const KEEP_SERVER_MARKUP = { __html: '' }
  * hydrates, then swaps in its own. Without it the lists would pop in on every
  * page load.
  */
-export function NavYourProjects({ onNavigate }: { onNavigate: () => void }) {
+export function NavPinnedProjects({ onNavigate }: { onNavigate: () => void }) {
   const isHydrated = useIsHydrated()
 
   if (typeof window === 'undefined') {
@@ -56,13 +56,13 @@ export function NavYourProjects({ onNavigate }: { onNavigate: () => void }) {
   }
   return (
     <div key="live" className={WRAPPER_CLASS} data-role={LISTS_ROLE}>
-      <YourProjectsLists onNavigate={onNavigate} />
+      <PinnedProjectsLists onNavigate={onNavigate} />
     </div>
   )
 }
 
-function YourProjectsLists({ onNavigate }: { onNavigate: () => void }) {
-  const { pinned, recent } = useYourProjects()
+function PinnedProjectsLists({ onNavigate }: { onNavigate: () => void }) {
+  const { pinned, recent, hasPinned } = usePinnedProjects()
   const pathname = usePathname()
 
   const pinnedHrefs = new Set(pinned.map((project) => project.href))
@@ -83,17 +83,17 @@ function YourProjectsLists({ onNavigate }: { onNavigate: () => void }) {
   return (
     <>
       {pinned.length > 0 && (
-        <YourProjectsGroup label="Pinned">
+        <PinnedProjectsGroup label="Pinned">
           {pinned.map((project) => row(project, true))}
-        </YourProjectsGroup>
+        </PinnedProjectsGroup>
       )}
       {recentOnly.length > 0 && (
-        <YourProjectsGroup
+        <PinnedProjectsGroup
           label="Recently viewed"
-          withPinningHint={pinned.length === 0}
+          withPinningHint={!hasPinned}
         >
           {recentOnly.map((project) => row(project))}
-        </YourProjectsGroup>
+        </PinnedProjectsGroup>
       )}
     </>
   )
@@ -106,34 +106,34 @@ function YourProjectsLists({ onNavigate }: { onNavigate: () => void }) {
  */
 function PrerenderTemplates() {
   const placeholder: SavedProject = { href: '#', name: '', iconUrl: 'data:,' }
-  const script = `(${prerenderYourProjects.toString()})(document.currentScript.parentElement, ${JSON.stringify(STORAGE_KEY)}, ${RECENT_ROWS})`
+  const script = `(${prerenderPinnedProjects.toString()})(document.currentScript.parentElement, ${JSON.stringify(STORAGE_KEY)}, ${RECENT_ROWS})`
   return (
     <>
       <template data-list="pinned">
-        <YourProjectsGroup label="Pinned">
+        <PinnedProjectsGroup label="Pinned">
           <ProjectRow
             project={placeholder}
             isActive={false}
             onNavigate={() => {}}
             pinned
           />
-        </YourProjectsGroup>
+        </PinnedProjectsGroup>
       </template>
       <template data-list="recent">
-        <YourProjectsGroup label="Recently viewed" withPinningHint>
+        <PinnedProjectsGroup label="Recently viewed" withPinningHint>
           <ProjectRow
             project={placeholder}
             isActive={false}
             onNavigate={() => {}}
           />
-        </YourProjectsGroup>
+        </PinnedProjectsGroup>
       </template>
       <script dangerouslySetInnerHTML={{ __html: script }} />
     </>
   )
 }
 
-function YourProjectsGroup({
+function PinnedProjectsGroup({
   label,
   withPinningHint,
   children,
