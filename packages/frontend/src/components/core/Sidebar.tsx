@@ -122,6 +122,7 @@ function Sidebar({
       {/* This is what handles the sidebar gap on desktop */}
       <div className="relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear" />
       <div
+        data-page-chrome="sidebar"
         className={cn(
           'fixed inset-y-0 left-0 hidden h-svh w-(--sidebar-width) duration-200 ease-linear md:flex',
           className,

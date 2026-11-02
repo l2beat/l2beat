@@ -43,6 +43,11 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
     style.setProperty('--circle-y', `${y}px`)
     style.setProperty('--circle-radius', `${radius}px`)
 
+    // globals.css runs the circle reveal only under this class, so page
+    // navigations keep their own fade.
+    const root = document.documentElement
+    root.classList.add('theme-transition')
+
     // flushSync required: View Transitions API needs synchronous DOM updates,
     // but setTheme() triggers async React state updates
     document
@@ -50,6 +55,7 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
         flushSync(() => setTheme(newTheme))
       })
       .finished.finally(() => {
+        root.classList.remove('theme-transition')
         style.removeProperty('--circle-x')
         style.removeProperty('--circle-y')
         style.removeProperty('--circle-radius')

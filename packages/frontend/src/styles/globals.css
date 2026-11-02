@@ -818,13 +818,90 @@
   scrollbar-width: none !important; /* Firefox */
 }
 
-/* Theme toggle view transition */
-::view-transition-old(root) {
+/*
+ * Page navigations cross-fade: full page loads run as cross-document view
+ * transitions where the browser supports them (Chrome 126+, Safari 18.2+;
+ * others load as before). Reduced motion keeps plain page loads.
+ *
+ * The type scopes everything below to navigations, so the theme toggle's own
+ * transition (DarkThemeToggle) never captures the nav separately.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+    types: page-navigation;
+  }
+}
+
+/* The nav is captured on its own, so it doesn't fade with the page. */
+:root:active-view-transition-type(page-navigation) {
+  [data-page-chrome="sidebar"] {
+    view-transition-name: page-chrome-sidebar;
+    view-transition-class: page-chrome;
+  }
+  [data-page-chrome="mobile-navbar"] {
+    view-transition-name: page-chrome-mobile-navbar;
+    view-transition-class: page-chrome;
+  }
+
+  /* On the pseudo-tree, not :root, where an inherited property would restyle
+     the whole page at capture. */
+  &::view-transition {
+    --page-fade: 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* The root captures only the viewport, so the fade works at any scroll
+     position. Old and new share one curve and duration, so their opacities
+     sum to 1 and whatever both pages show (background, header) holds still. */
+  &::view-transition-old(root) {
+    animation: var(--page-fade) both page-fade-out;
+  }
+  &::view-transition-new(root) {
+    animation: var(--page-fade) both page-fade-in;
+  }
+
+  /* The nav swaps in one frame: the active link moves the moment the new
+     page shows, and nothing slides when the old page was scrolled past the
+     mobile navbar. */
+  &::view-transition-group(*.page-chrome) {
+    animation: none;
+  }
+  &::view-transition-old(*.page-chrome) {
+    display: none;
+  }
+  &::view-transition-new(*.page-chrome) {
+    animation: none;
+  }
+  /* When only one side has the nav (one page has none, or the new page had
+     not parsed it yet at capture), it fades with the page. */
+  &::view-transition-old(*.page-chrome):only-child {
+    display: block;
+    animation: var(--page-fade) both page-fade-out;
+  }
+  &::view-transition-new(*.page-chrome):only-child {
+    animation: var(--page-fade) both page-fade-in;
+  }
+}
+
+@keyframes page-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Theme toggle view transition: DarkThemeToggle sets the class. */
+.theme-transition::view-transition-old(root) {
   animation: none;
   z-index: 1;
 }
 
-::view-transition-new(root) {
+.theme-transition::view-transition-new(root) {
   animation: reveal-from-circle 0.4s ease-in-out;
   z-index: 2;
 }
