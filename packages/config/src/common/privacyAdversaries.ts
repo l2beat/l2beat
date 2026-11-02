@@ -259,8 +259,6 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
   /** Stealth addresses handed out by an operator. */
   operatorViewingKey: (operator: string) =>
     `${operator} holds the viewing key, so it can regenerate every address and tie its activity to the user's account.`,
-  localClientSpendingKeys: (operator: string) =>
-    `Verify address derivations and transactions with an inspected local app. This protects the user's spending keys but does not remove ${operator}'s view.`,
 
   // Future adversary
   /** Stealth addresses without onchain announcements. */

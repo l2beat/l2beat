@@ -39,7 +39,7 @@ export function getPrivacyMethodologySections() {
 
     ratings: joinBlocks([
       heading(2, 'Ratings'),
-      "The ratings assume a careful user follows ordinary hygiene and the review's advice, using settings offered by the reference app.",
+      "The ratings assume a careful user follows ordinary hygiene and the review's advice, using settings offered by the reference app. Ordinary hygiene means waiting between steps, common amounts, the largest pool, a fresh exit address through a relayer and a new network session per step.",
       bulletList([
         `**${VERDICT.good}** (green): the promised field stays hidden from this adversary.`,
         `**${VERDICT.warning}** (yellow): protection is limited, private use can be denied, or keeping the field hidden takes substantial effort beyond the app's options. A workaround must preserve ordinary use of the protocol.`,
@@ -58,6 +58,7 @@ export function getPrivacyMethodologySections() {
         ),
       ),
       'A third party ties requests to one user by content, session or timing. Content is what a request names, like an account or a hash. Session is what requests share, like an IP, a Tor circuit, a fingerprint or a login. Timing narrows the candidates to users active at the same moment. The network observer is green only when no third party ties both sides of the promised field by content or session. Timing must leave many candidates.',
+      "Vendors behind an operator's backend are third parties. Each one the backend needs or the operator declares, such as an RPC provider, is presumed to receive what its job needs, grouped by user. Open backend code or a specific public statement from the operator rebuts this.",
       `Bulk downloads and a local node keep content out of requests. An [IP-hiding route](#${PRIVACY_IP_HIDING_ROUTES_ANCHOR}) keeps the IP out. An app that routes its own traffic can also give each step its own session. A mixnet's cover traffic hides when the user is online, but only the app can hide when they act.`,
       'Counterparties (e.g. private transfer recipients) also learn what the protocol hands them, such as a received note. We report this under the chain analyst and rate it only when it reaches parties the user never dealt with voluntarily.',
       'The public observer, chain analyst and future adversary see the same public data with increasing ability.',
@@ -66,7 +67,7 @@ export function getPrivacyMethodologySections() {
     ipHidingRoutes: joinBlocks([
       // A raw heading, since markdown headings render without an id to link.
       `<h2 id="${PRIVACY_IP_HIDING_ROUTES_ANCHOR}">IP-hiding routes</h2>`,
-      "An IP-hiding route hides the user's IP from the services an app calls: by default no single company, whether it runs a hop or hosts one, should see both the user's IP and where the traffic goes (which disqualifies most VPN services. Our advice names one where an app needs it.",
+      "An IP-hiding route hides the user's IP from the services an app calls: by default no single company, whether it runs a hop or hosts one, should see both the user's IP and where the traffic goes, which disqualifies most VPN services. Our advice names one where an app needs it.",
       bulletList([
         '**Tor Browser**: websites, each site on its own circuit.',
         "**Tor for all traffic**: Tails or Whonix on a computer, Orbot's VPN mode on Android. Tor carries no UDP.",
