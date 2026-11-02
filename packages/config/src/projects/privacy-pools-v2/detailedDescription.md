@@ -32,7 +32,7 @@ The yield shares keep a fixed share count while their value grows, so the share 
 
 ### Exits
 
-**Ragequit.** The note's current owner can take out its full value, approved or not, directly from the vault, also while it is paused.
+**Ragequit.** The note's current owner can take out its full value, approved or not, directly from the vault, also while it is paused. It publishes the owner, the amount, the label and the commitment, which names the transaction that created the note.
 
 **Claim link.** A payment to an unregistered address can only be claimed with the link the payer holds. Until then the funds can neither move nor exit.
 
