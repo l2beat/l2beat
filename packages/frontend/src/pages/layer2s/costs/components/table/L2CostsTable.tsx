@@ -53,7 +53,7 @@ export function L2CostsTable({ entries }: Props) {
     },
   })
 
-  // Only on a metric switch: on mount the direction comes from the URL
+  // Only on a metric switch: on mount the URL or the default sets it
   const previousMetric = useRef(metric)
   useEffect(() => {
     if (previousMetric.current === metric) return

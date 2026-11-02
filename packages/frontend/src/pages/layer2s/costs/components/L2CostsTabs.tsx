@@ -18,6 +18,7 @@ import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { TabbedL2Entries } from '~/pages/layer2s/utils/groupByL2Tabs'
 import type { L2CostsEntry } from '~/server/features/layer2s/costs/getL2CostsEntries'
+import { useCostsMetricContext } from './CostsMetricContext'
 import { L2CostsTable } from './table/L2CostsTable'
 
 type Props = TabbedL2Entries<L2CostsEntry> & {
@@ -33,9 +34,11 @@ export function L2CostsTabs(props: Props) {
     others: props.others.filter(filterEntries),
   }
 
+  // The highest total costs first, the cheapest user op first
+  const { metric } = useCostsMetricContext()
   const initialSort = {
     id: 'total-cost',
-    desc: false,
+    desc: metric === 'total',
   }
 
   return (

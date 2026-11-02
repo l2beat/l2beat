@@ -1,6 +1,13 @@
-import { type Dispatch, type SetStateAction, useMemo, useRef } from 'react'
+import {
+  type Dispatch,
+  type SetStateAction,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import type { QueryParamCodec } from '~/utils/queryParamCodecs'
 import { useEventCallback } from './useEventCallback'
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 import { useQueryParam } from './useQueryParam'
 
 /**
@@ -25,23 +32,40 @@ export function useQueryState<T>(
   const [param, setParam] = useQueryParam(key, defaultParam, {
     replaceState: true,
   })
-  const value = useMemo(
-    () => codec.parse(param) ?? codec.getDefault(),
-    [codec, param],
-  )
+  // Holds the value as it was set, so reselecting "1y" an hour later moves
+  // the interval forward, and a calendar range isn't snapped to the preset
+  // its param names. Parsed again only when the param changes elsewhere.
+  const [state, setState] = useState(() => ({
+    param,
+    value: parseOrDefault(codec, param),
+  }))
+  let value = state.value
+  if (state.param !== param) {
+    // Back/Forward, or another hook reading the same key
+    value = parseOrDefault(codec, param)
+    setState({ param, value })
+  }
 
   // Functional updates read the latest value, also when a handler calls
   // the setter twice before React re-renders.
   const latest = useRef(value)
-  latest.current = value
+  useIsomorphicLayoutEffect(() => {
+    latest.current = value
+  }, [value])
 
   const setValue = useEventCallback((action: SetStateAction<T>) => {
     const next = isUpdater(action) ? action(latest.current) : action
     latest.current = next
-    setParam(codec.serialize(next))
+    const nextParam = codec.serialize(next)
+    setState({ param: nextParam, value: next })
+    setParam(nextParam)
   })
 
   return [value, setValue]
+}
+
+function parseOrDefault<T>(codec: QueryParamCodec<T>, param: string): T {
+  return codec.parse(param) ?? codec.getDefault()
 }
 
 function isUpdater<T>(action: SetStateAction<T>): action is (prev: T) => T {
