@@ -234,16 +234,21 @@ function FullList({
       onNavigate={() => setOpen(false)}
     />
   )
-  // Focusing the search field on touch raises the keyboard over the list, so
-  // focus the panel itself instead.
-  const onOpenAutoFocus = isTouch
-    ? (event: Event) => {
-        event.preventDefault()
-        if (event.currentTarget instanceof HTMLElement) {
-          event.currentTarget.focus()
+  // Rows are not tab stops, so with no search field Radix would focus the
+  // panel, outside cmdk's arrow-key and Enter handling: focus cmdk's root.
+  // Touch does the same, as focusing the search field raises the keyboard.
+  const searchable = projects.length >= MIN_SEARCHABLE_PROJECTS
+  const onOpenAutoFocus =
+    isTouch || !searchable
+      ? (event: Event) => {
+          event.preventDefault()
+          if (event.currentTarget instanceof HTMLElement) {
+            event.currentTarget
+              .querySelector<HTMLElement>('[cmdk-root]')
+              ?.focus()
+          }
         }
-      }
-    : undefined
+      : undefined
 
   if (isDesktop) {
     return (
@@ -315,7 +320,9 @@ function ProjectList({
   const searchable = projects.length >= MIN_SEARCHABLE_PROJECTS
 
   return (
-    <Command className="rounded-[inherit] primary-card:bg-surface-primary">
+    // The highlighted row shows where the keyboard is, so the focused root
+    // and list draw no focus ring of their own.
+    <Command className="rounded-[inherit] primary-card:bg-surface-primary focus-visible:border-divider dark:focus-visible:border-transparent">
       {/* Title, search and rows share a 14 px left edge. */}
       <div className="border-divider border-b">
         <div
@@ -345,6 +352,7 @@ function ProjectList({
       </div>
       <CommandList
         className={cn(
+          'outline-none',
           inDialog && 'max-h-[min(520px,60dvh)]',
           // Lists long enough to search can scroll: fade the cut-off row and
           // let the real last row scroll clear of the fade.
@@ -449,6 +457,9 @@ function ProjectRow({
     <a
       href={project.href}
       className={className}
+      // Keyboard users move through rows with cmdk's arrow keys; as a tab
+      // stop, Enter here would open cmdk's highlighted row, not this one.
+      tabIndex={-1}
       // cmdk also selects the item on click; the link already navigates.
       onClick={(event) => {
         event.stopPropagation()
