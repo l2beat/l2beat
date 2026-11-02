@@ -62,12 +62,30 @@ export function useLazyL2TabEntries<T, TError, TKey extends QueryKey>(
   lazy: LazyTabbedL2Entries<T>,
   tab: L2Tab,
   queryOptions: UseQueryOptions<T[], TError, T[], TKey>,
-): { entries: T[]; isLoading: boolean } {
+): {
+  entries: T[]
+  isLoading: boolean
+  /** Separate from an empty tab, which would read as "no results". */
+  isFailed: boolean
+  retry: () => void
+} {
   const isInitialTab = tab === lazy.initialTab
   const query = useQuery({ ...queryOptions, enabled: !isInitialTab })
 
   if (isInitialTab) {
-    return { entries: lazy.initialEntries, isLoading: false }
+    return {
+      entries: lazy.initialEntries,
+      isLoading: false,
+      isFailed: false,
+      retry: () => {},
+    }
   }
-  return { entries: query.data ?? [], isLoading: query.isPending }
+  // A retry keeps the error until it settles, so it shows the skeleton.
+  const isFailed = query.isError && query.fetchStatus === 'idle'
+  return {
+    entries: query.data ?? [],
+    isLoading: query.data === undefined && !isFailed,
+    isFailed,
+    retry: () => void query.refetch(),
+  }
 }

@@ -16,6 +16,7 @@ import { DisplayControls } from '~/components/table/display/DisplayControls'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
+import { TableLoadError } from '~/components/table/TableLoadError'
 import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { useTRPC } from '~/trpc/React'
 import type { L2Tab, LazyTabbedL2Entries } from '../../utils/lazyL2Tabs'
@@ -111,12 +112,15 @@ function L2SummaryTab({
 }) {
   const trpc = useTRPC()
   const filterEntries = useFilterEntries()
-  const { entries, isLoading } = useLazyL2TabEntries(
+  const { entries, isLoading, isFailed, retry } = useLazyL2TabEntries(
     lazy,
     tab,
     trpc.layer2s.summaryTabEntries.queryOptions({ tab }),
   )
 
+  if (isFailed) {
+    return <TableLoadError onRetry={retry} />
+  }
   return (
     <Table
       entries={entries.filter(filterEntries)}
