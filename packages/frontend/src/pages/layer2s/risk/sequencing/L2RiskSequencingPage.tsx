@@ -34,7 +34,10 @@ export function L2RiskSequencingPage({
           Sequencing
         </MainPageHeader>
         <PrimaryCard className="mt-4">
-          <TableSortingProvider initialSort={{ id: '#', desc: false }}>
+          <TableSortingProvider
+            initialSort={{ id: '#', desc: false }}
+            paramKey="decentralized-sort"
+          >
             <L2RiskSequencingTable entries={decentralizedEntries} />
           </TableSortingProvider>
           {inclusionDelayComparison && (
@@ -44,7 +47,10 @@ export function L2RiskSequencingPage({
           )}
         </PrimaryCard>
         <PrimaryCard className="mt-6">
-          <TableSortingProvider initialSort={{ id: '#', desc: false }}>
+          <TableSortingProvider
+            initialSort={{ id: '#', desc: false }}
+            paramKey="centralized-sort"
+          >
             <CentralizedSequencingTable entries={centralizedEntries} />
           </TableSortingProvider>
         </PrimaryCard>

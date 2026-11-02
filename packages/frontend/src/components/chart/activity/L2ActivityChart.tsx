@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useQuery } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
@@ -13,6 +13,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { useIsClient } from '~/hooks/useIsClient'
+import { useQueryState } from '~/hooks/useQueryState'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { useActivityChartRangeContext } from '~/pages/layer2s/activity/components/ActivityChartRangeContext'
 import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
@@ -22,6 +23,7 @@ import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2Ac
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
+import { oneOfCodec } from '~/utils/queryParamCodecs'
 import type { ChartRange } from '~/utils/range/range'
 import type { ChartScale } from '../types'
 import { ActivityChartHeader } from './ActivityChartHeader'
@@ -33,6 +35,8 @@ import {
 import { L2RecategorizedActivityStats } from './L2RecategorizedActivityStats'
 import { getRatioChartData } from './utils/getRatioChartData'
 
+const SCALE_CODEC = oneOfCodec<ChartScale>(['linear', 'symlog'], 'linear')
+
 interface Props {
   milestones: Milestone[]
   entries: L2ActivityEntry[]
@@ -41,7 +45,7 @@ interface Props {
 export function L2ActivityChart({ milestones, entries }: Props) {
   const trpc = useTRPC()
   const { range, setRange } = useActivityChartRangeContext()
-  const [scale, setScale] = useState<ChartScale>('linear')
+  const [scale, setScale] = useQueryState('scale', SCALE_CODEC)
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     RECATEGORISED_ACTIVITY_CHART_META,
   )

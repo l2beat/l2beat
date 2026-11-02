@@ -1,5 +1,12 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
+import { useQueryState } from '~/hooks/useQueryState'
 import type { LivenessTimeRange } from '~/server/features/layer2s/liveness/types'
+import { oneOfCodec } from '~/utils/queryParamCodecs'
+
+const TIME_RANGE_CODEC = oneOfCodec<LivenessTimeRange>(
+  ['30d', '90d', 'max'],
+  '30d',
+)
 
 type LivenessTimeRangeContextValue = {
   timeRange: LivenessTimeRange
@@ -14,7 +21,7 @@ interface Props {
 }
 
 export function LivenessTimeRangeContextProvider({ children }: Props) {
-  const [timeRange, setTimeRange] = useState<LivenessTimeRange>('30d')
+  const [timeRange, setTimeRange] = useQueryState('range', TIME_RANGE_CODEC)
   return (
     <LivenessTimeRangeContext.Provider
       value={{

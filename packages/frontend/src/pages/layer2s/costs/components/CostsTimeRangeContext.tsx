@@ -1,6 +1,9 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
+import { useQueryState } from '~/hooks/useQueryState'
+import { chartRangeCodec } from '~/utils/queryParamCodecs'
 import type { ChartRange } from '~/utils/range/range'
-import { optionToRange } from '~/utils/range/range'
+
+const RANGE_CODEC = chartRangeCodec('30d')
 
 type CostsTimeRangeContextValue = {
   range: ChartRange
@@ -16,7 +19,7 @@ interface Props {
 }
 
 export function CostsTimeRangeContextProvider({ children }: Props) {
-  const [range, setRange] = useState<ChartRange>(optionToRange('30d'))
+  const [range, setRange] = useQueryState('range', RANGE_CODEC)
   return (
     <CostsTimeRangeContext.Provider
       value={{

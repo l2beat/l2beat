@@ -1,6 +1,13 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
+import { useQueryState } from '~/hooks/useQueryState'
+import { oneOfCodec } from '~/utils/queryParamCodecs'
 
 export type CostsMetric = 'total' | 'per-l2-uop'
+
+const METRIC_CODEC = oneOfCodec<CostsMetric>(
+  ['total', 'per-l2-uop'],
+  'per-l2-uop',
+)
 
 type CostsMetricContextValue = {
   metric: CostsMetric
@@ -14,7 +21,7 @@ interface Props {
 }
 
 export function CostsMetricContextProvider({ children }: Props) {
-  const [metric, setMetric] = useState<CostsMetric>('per-l2-uop')
+  const [metric, setMetric] = useQueryState('metric', METRIC_CODEC)
   return (
     <CostsMetricContext.Provider
       value={{

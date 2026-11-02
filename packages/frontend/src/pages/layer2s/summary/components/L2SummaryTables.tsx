@@ -65,13 +65,16 @@ export function L2SummaryTables(props: Props) {
             <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider initialSort={initialSort} paramKey="rollups-sort">
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
             <L2SummaryRollupsTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider
+          initialSort={initialSort}
+          paramKey="validiumsAndOptimiums-sort"
+        >
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
             <L2SummaryValidiumsAndOptimiumsTable
@@ -79,7 +82,7 @@ export function L2SummaryTables(props: Props) {
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider initialSort={initialSort} paramKey="others-sort">
           <DirectoryTabsContent value="others">
             <OthersInfo />
             <L2SummaryOthersTable entries={entries.others} />

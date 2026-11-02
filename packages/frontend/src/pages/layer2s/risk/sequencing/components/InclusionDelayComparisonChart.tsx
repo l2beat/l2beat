@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -6,18 +6,25 @@ import {
   InclusionDelayChart,
   type InclusionDelayYAxisScale,
 } from '~/components/projects/sections/sequencing/InclusionDelayChart'
+import { useQueryState } from '~/hooks/useQueryState'
 import type {
   InclusionDelayComparison,
   InclusionDelayComparisonSeries,
 } from '~/server/features/layer2s/risks/sequencing/getL2RiskSequencingEntries'
 import { generateAccessibleColors } from '~/utils/generateColors'
+import { oneOfCodec } from '~/utils/queryParamCodecs'
+
+const SCALE_CODEC = oneOfCodec<InclusionDelayYAxisScale>(
+  ['linear', 'log'],
+  'log',
+)
 
 interface Props {
   comparison: InclusionDelayComparison
 }
 
 export function InclusionDelayComparisonChart({ comparison }: Props) {
-  const [yAxisScale, setYAxisScale] = useState<InclusionDelayYAxisScale>('log')
+  const [yAxisScale, setYAxisScale] = useQueryState('scale', SCALE_CODEC)
 
   const chartMeta = useMemo<ChartMeta>(
     () => getComparisonChartMeta(comparison.series),

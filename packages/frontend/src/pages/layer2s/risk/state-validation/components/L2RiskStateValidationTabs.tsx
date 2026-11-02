@@ -59,17 +59,26 @@ export function L2RiskStateValidationTabs({
             No Proofs <CountBadge>{filteredNoProofs.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider
+          initialSort={initialSort}
+          paramKey="validity-sort"
+        >
           <DirectoryTabsContent value="validity">
             <L2RiskValidityTable entries={filteredValidity} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider
+          initialSort={initialSort}
+          paramKey="optimistic-sort"
+        >
           <DirectoryTabsContent value="optimistic">
             <L2RiskOptimisticTable entries={filteredOptimistic} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider
+          initialSort={initialSort}
+          paramKey="noProofs-sort"
+        >
           <DirectoryTabsContent value="noProofs">
             <L2RiskNoProofsTable entries={filteredNoProofs} />
           </DirectoryTabsContent>

@@ -55,19 +55,22 @@ export function L2RiskDaTables(props: Props) {
             Others <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider initialSort={initialSort} paramKey="rollups-sort">
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
             <L2RiskDaTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider
+          initialSort={initialSort}
+          paramKey="validiumsAndOptimiums-sort"
+        >
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
             <L2RiskDaTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider initialSort={initialSort} paramKey="others-sort">
           <DirectoryTabsContent value="others">
             <OthersInfo />
             <L2RiskDaTable entries={entries.others} hideType />

@@ -61,7 +61,7 @@ export function L2CostsTabs(props: Props) {
             Others <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider initialSort={initialSort} paramKey="rollups-sort">
           <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
             <RollupsInfo />
             <L2CostsChart
@@ -73,7 +73,10 @@ export function L2CostsTabs(props: Props) {
             <L2CostsTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider
+          initialSort={initialSort}
+          paramKey="validiumsAndOptimiums-sort"
+        >
           <DirectoryTabsContent
             value="validiumsAndOptimiums"
             className="pt-4 sm:pt-3"
@@ -88,7 +91,7 @@ export function L2CostsTabs(props: Props) {
             <L2CostsTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider initialSort={initialSort} paramKey="others-sort">
           <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
             <OthersInfo />
             <L2CostsChart

@@ -1,6 +1,10 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
+import { useQueryState } from '~/hooks/useQueryState'
+import { oneOfCodec } from '~/utils/queryParamCodecs'
 
 export type ActivityMetric = 'tps' | 'uops'
+
+const METRIC_CODEC = oneOfCodec<ActivityMetric>(['tps', 'uops'], 'uops')
 
 type ActivityMetricContextValue = {
   metric: ActivityMetric
@@ -16,7 +20,7 @@ interface Props {
 }
 
 export function ActivityMetricContextProvider({ children }: Props) {
-  const [metric, setMetric] = useState<ActivityMetric>('uops')
+  const [metric, setMetric] = useQueryState('metric', METRIC_CODEC)
   return (
     <ActivityMetricContext.Provider
       value={{

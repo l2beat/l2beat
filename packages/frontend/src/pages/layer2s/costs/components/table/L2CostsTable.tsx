@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
@@ -53,7 +53,11 @@ export function L2CostsTable({ entries }: Props) {
     },
   })
 
+  // Only on a metric switch: on mount the direction comes from the URL
+  const previousMetric = useRef(metric)
   useEffect(() => {
+    if (previousMetric.current === metric) return
+    previousMetric.current = metric
     if (table.getState().sorting[0]?.id === 'total-cost') {
       setSorting([
         {

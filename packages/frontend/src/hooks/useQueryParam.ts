@@ -5,6 +5,23 @@ import {
   notifyLocationSearchChange,
 } from './useLocationSearch'
 
+/**
+ * Fired after `useQueryParam` rewrites the URL, so every other hook reading
+ * the same key (e.g. one chart per tab sharing a unit) picks the change up.
+ * `replaceState` and `pushState` fire no event of their own.
+ *
+ * Not `notifyLocationSearchChange`: `useUrlStateSync` fires that after
+ * rewriting the whole query (interop keeps only `from` and `to`), and
+ * re-reading then would reset the keys it dropped.
+ */
+const QUERY_PARAM_CHANGE_EVENT = 'l2beat:query-param-change'
+
+declare global {
+  interface WindowEventMap {
+    [QUERY_PARAM_CHANGE_EVENT]: Event
+  }
+}
+
 const getURLSearchParams = () => {
   if (typeof window !== 'undefined') {
     return new URLSearchParams(window.location.search)
@@ -34,29 +51,26 @@ export const useQueryParam = (
     }
 
     if (typeof window !== 'undefined') {
-      if (urlSearchParams.size > 0) {
-        const newUrl = `${window.location.pathname}?${urlSearchParams.toString()}`
-        if (opts?.replaceState) {
-          window.history.replaceState({}, '', newUrl)
-        } else {
-          window.history.pushState({}, '', newUrl)
-        }
+      const search = urlSearchParams.size > 0 ? `?${urlSearchParams}` : ''
+      // Keeps the hash, so sorting a table doesn't drop a section anchor
+      const newUrl = `${window.location.pathname}${search}${window.location.hash}`
+      if (opts?.replaceState) {
+        window.history.replaceState({}, '', newUrl)
       } else {
-        if (opts?.replaceState) {
-          window.history.replaceState({}, '', window.location.pathname)
-        } else {
-          window.history.pushState({}, '', window.location.pathname)
-        }
+        window.history.pushState({}, '', newUrl)
       }
+      window.dispatchEvent(new Event(QUERY_PARAM_CHANGE_EVENT))
       notifyLocationSearchChange()
     }
   }
 
-  useEventListener('popstate', () => {
+  const readFromUrl = () => {
     const params = new URLSearchParams(window.location.search)
-    const value = params.get(key)
-    setQuery(value ?? defaultVal)
-  })
+    setQuery(params.get(key) ?? defaultVal)
+  }
+
+  useEventListener('popstate', readFromUrl)
+  useEventListener(QUERY_PARAM_CHANGE_EVENT, readFromUrl)
 
   return [query, updateUrl]
 }

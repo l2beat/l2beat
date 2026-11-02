@@ -34,7 +34,7 @@ export function L2ActivityCard(props: Props) {
       <PrimaryCard className="mt-4">
         <L2ActivityChart entries={entries} milestones={props.milestones} />
         <HorizontalSeparator className="mt-5 mb-3" />
-        <TableSortingProvider initialSort={initialSort}>
+        <TableSortingProvider initialSort={initialSort} paramKey="sort">
           <L2ActivityTable entries={entries} />
         </TableSortingProvider>
       </PrimaryCard>

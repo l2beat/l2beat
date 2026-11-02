@@ -82,7 +82,10 @@ export function L2TvsTabs(props: Props) {
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <L2TvsDataKeysProvider>
-          <TableSortingProvider initialSort={initialSort}>
+          <TableSortingProvider
+            initialSort={initialSort}
+            paramKey="rollups-sort"
+          >
             <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
               <RollupsInfo />
               <L2TvsCharts
@@ -98,7 +101,10 @@ export function L2TvsTabs(props: Props) {
               />
             </DirectoryTabsContent>
           </TableSortingProvider>
-          <TableSortingProvider initialSort={initialSort}>
+          <TableSortingProvider
+            initialSort={initialSort}
+            paramKey="validiumsAndOptimiums-sort"
+          >
             <DirectoryTabsContent
               value="validiumsAndOptimiums"
               className="pt-4 sm:pt-3"
@@ -117,7 +123,10 @@ export function L2TvsTabs(props: Props) {
               />
             </DirectoryTabsContent>
           </TableSortingProvider>
-          <TableSortingProvider initialSort={initialSort}>
+          <TableSortingProvider
+            initialSort={initialSort}
+            paramKey="others-sort"
+          >
             <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
               <OthersInfo />
               <L2TvsCharts

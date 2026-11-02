@@ -47,7 +47,10 @@ export function L2ArchivedTableSection(props: Props) {
       />
       {WALK_AWAY_SECTIONS.map(({ verdict, ...section }, i) => (
         <PrimaryCard key={verdict} className={i === 0 ? 'mt-4' : 'mt-6'}>
-          <TableSortingProvider initialSort={initialSort}>
+          <TableSortingProvider
+            initialSort={initialSort}
+            paramKey={`${verdict}-sort`}
+          >
             <L2ArchivedTable
               {...section}
               entries={entries.filter((entry) => entry.walkAway === verdict)}

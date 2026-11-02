@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useQuery } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { L2AssetCategoryTvsChart } from '~/components/chart/tvs/stacked/L2AssetCategoryTvsChart'
 import { L2BridgeTypeTvsChart } from '~/components/chart/tvs/stacked/L2BridgeTypeTvsChart'
 import { TvsChartHeader } from '~/components/chart/tvs/TvsChartHeader'
@@ -10,13 +10,17 @@ import type { ChartUnit } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
+import { useQueryState } from '~/hooks/useQueryState'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import type { L2TvsEntry } from '~/server/features/layer2s/tvs/getL2TvsEntries'
 import type { TvsProjectFilter } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
 import { useTRPC } from '~/trpc/React'
+import { oneOfCodec } from '~/utils/queryParamCodecs'
 import { ChartTabs } from '../../summary/components/ChartTabs'
 import { useL2TvsTimeRangeContext } from './L2TvsTimeRangeContext'
+
+const UNIT_CODEC = oneOfCodec<ChartUnit>(['usd', 'eth'], 'usd')
 
 interface Props {
   entries: L2TvsEntry[]
@@ -27,7 +31,8 @@ export function L2TvsCharts({ entries, milestones }: Props) {
   const trpc = useTRPC()
   const { display } = useTvsDisplayControlsContext()
   const { range, setRange } = useL2TvsTimeRangeContext()
-  const [unit, setUnit] = useState<ChartUnit>('usd')
+  // Shared by the chart of every tab, like the range
+  const [unit, setUnit] = useQueryState('unit', UNIT_CODEC)
 
   const filter = useMemo<TvsProjectFilter>(() => {
     return {
