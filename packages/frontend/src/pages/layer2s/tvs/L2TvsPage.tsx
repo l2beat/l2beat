@@ -2,7 +2,10 @@ import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
-import type { BadgeLookup } from '~/components/projects/BadgeLookup'
+import {
+  type BadgeLookup,
+  BadgeLookupProvider,
+} from '~/components/projects/BadgeLookup'
 import { TvsDisplayControlsContextProvider } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
@@ -25,27 +28,30 @@ export function L2TvsPage({
   entries,
   milestones,
   queryState,
+  badgeLookup,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={queryState}>
-        <SideNavLayout>
-          <MainPageHeader>Value Secured</MainPageHeader>
-          <TableFilterContextProvider>
-            <TvsDisplayControlsContextProvider
-              initialValues={{
-                excludeAssociatedTokens: false,
-                excludeRwaRestrictedTokens: true,
-              }}
-            >
-              <L2TvsTimeRangeContextProvider>
-                <L2TvsTabs {...entries} milestones={milestones} />
-              </L2TvsTimeRangeContextProvider>
-            </TvsDisplayControlsContextProvider>
-          </TableFilterContextProvider>
-        </SideNavLayout>
-      </HydrationBoundary>
+      <BadgeLookupProvider lookup={badgeLookup}>
+        <HydrationBoundary state={queryState}>
+          <SideNavLayout>
+            <MainPageHeader>Value Secured</MainPageHeader>
+            <TableFilterContextProvider>
+              <TvsDisplayControlsContextProvider
+                initialValues={{
+                  excludeAssociatedTokens: false,
+                  excludeRwaRestrictedTokens: true,
+                }}
+              >
+                <L2TvsTimeRangeContextProvider>
+                  <L2TvsTabs {...entries} milestones={milestones} />
+                </L2TvsTimeRangeContextProvider>
+              </TvsDisplayControlsContextProvider>
+            </TableFilterContextProvider>
+          </SideNavLayout>
+        </HydrationBoundary>
+      </BadgeLookupProvider>
     </AppLayout>
   )
 }

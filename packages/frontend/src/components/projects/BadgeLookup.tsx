@@ -20,11 +20,11 @@ export function BadgeLookupProvider({
   lookup,
   children,
 }: {
-  lookup: BadgeLookup | undefined
+  lookup: BadgeLookup
   children: React.ReactNode
 }) {
   return (
-    <BadgeLookupContext.Provider value={lookup ?? {}}>
+    <BadgeLookupContext.Provider value={lookup}>
       {children}
     </BadgeLookupContext.Provider>
   )
@@ -42,8 +42,8 @@ export function resolveBadgeRefs(
   if (!refs) return []
   return refs.map((ref) => {
     const badge = lookup[ref.id]
-    // Throwing fails the server render, so a page whose data getter forgets
-    // `badgeLookup` breaks the all-pages e2e instead of quietly losing badges.
+    // Throwing fails the server render, so a page that shows badge rows
+    // without a provider breaks the all-pages e2e instead of losing badges.
     if (!badge)
       throw new Error('Badge missing from the page lookup', { cause: ref })
     return { ...badge, href: ref.href ?? badge.href }

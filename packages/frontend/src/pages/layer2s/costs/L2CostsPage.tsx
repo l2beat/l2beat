@@ -1,7 +1,10 @@
 import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import type { BadgeLookup } from '~/components/projects/BadgeLookup'
+import {
+  type BadgeLookup,
+  BadgeLookupProvider,
+} from '~/components/projects/BadgeLookup'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -25,24 +28,27 @@ export function L2CostsPage({
   entries,
   milestones,
   queryState,
+  badgeLookup,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={queryState}>
-        <SideNavLayout>
-          <TableFilterContextProvider>
-            <CostsTimeRangeContextProvider>
-              <CostsUnitContextProvider>
-                <CostsMetricContextProvider>
-                  <CostsHeader />
-                  <L2CostsTabs {...entries} milestones={milestones} />
-                </CostsMetricContextProvider>
-              </CostsUnitContextProvider>
-            </CostsTimeRangeContextProvider>
-          </TableFilterContextProvider>
-        </SideNavLayout>
-      </HydrationBoundary>
+      <BadgeLookupProvider lookup={badgeLookup}>
+        <HydrationBoundary state={queryState}>
+          <SideNavLayout>
+            <TableFilterContextProvider>
+              <CostsTimeRangeContextProvider>
+                <CostsUnitContextProvider>
+                  <CostsMetricContextProvider>
+                    <CostsHeader />
+                    <L2CostsTabs {...entries} milestones={milestones} />
+                  </CostsMetricContextProvider>
+                </CostsUnitContextProvider>
+              </CostsTimeRangeContextProvider>
+            </TableFilterContextProvider>
+          </SideNavLayout>
+        </HydrationBoundary>
+      </BadgeLookupProvider>
     </AppLayout>
   )
 }

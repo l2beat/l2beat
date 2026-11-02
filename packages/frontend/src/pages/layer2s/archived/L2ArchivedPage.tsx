@@ -1,5 +1,8 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
-import type { BadgeLookup } from '~/components/projects/BadgeLookup'
+import {
+  type BadgeLookup,
+  BadgeLookupProvider,
+} from '~/components/projects/BadgeLookup'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -12,15 +15,17 @@ interface Props extends AppLayoutProps {
   entries: L2ArchivedEntry[]
 }
 
-export function L2ArchivedPage({ entries, ...props }: Props) {
+export function L2ArchivedPage({ entries, badgeLookup, ...props }: Props) {
   return (
     <AppLayout {...props}>
-      <SideNavLayout>
-        <MainPageHeader>Archived</MainPageHeader>
-        <TableFilterContextProvider>
-          <L2ArchivedTableSection entries={entries} />
-        </TableFilterContextProvider>
-      </SideNavLayout>
+      <BadgeLookupProvider lookup={badgeLookup}>
+        <SideNavLayout>
+          <MainPageHeader>Archived</MainPageHeader>
+          <TableFilterContextProvider>
+            <L2ArchivedTableSection entries={entries} />
+          </TableFilterContextProvider>
+        </SideNavLayout>
+      </BadgeLookupProvider>
     </AppLayout>
   )
 }

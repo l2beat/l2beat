@@ -2,7 +2,10 @@ import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
-import type { BadgeLookup } from '~/components/projects/BadgeLookup'
+import {
+  type BadgeLookup,
+  BadgeLookupProvider,
+} from '~/components/projects/BadgeLookup'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -23,22 +26,25 @@ export function L2ActivityPage({
   entries,
   milestones,
   queryState,
+  badgeLookup,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={queryState}>
-        <SideNavLayout>
-          <TableFilterContextProvider>
-            <ActivityChartRangeContextProvider>
-              <ActivityMetricContextProvider>
-                <MainPageHeader>Activity</MainPageHeader>
-                <L2ActivityCard entries={entries} milestones={milestones} />
-              </ActivityMetricContextProvider>
-            </ActivityChartRangeContextProvider>
-          </TableFilterContextProvider>
-        </SideNavLayout>
-      </HydrationBoundary>
+      <BadgeLookupProvider lookup={badgeLookup}>
+        <HydrationBoundary state={queryState}>
+          <SideNavLayout>
+            <TableFilterContextProvider>
+              <ActivityChartRangeContextProvider>
+                <ActivityMetricContextProvider>
+                  <MainPageHeader>Activity</MainPageHeader>
+                  <L2ActivityCard entries={entries} milestones={milestones} />
+                </ActivityMetricContextProvider>
+              </ActivityChartRangeContextProvider>
+            </TableFilterContextProvider>
+          </SideNavLayout>
+        </HydrationBoundary>
+      </BadgeLookupProvider>
     </AppLayout>
   )
 }

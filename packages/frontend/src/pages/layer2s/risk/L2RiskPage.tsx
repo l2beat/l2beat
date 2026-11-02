@@ -1,5 +1,8 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
-import type { BadgeLookup } from '~/components/projects/BadgeLookup'
+import {
+  type BadgeLookup,
+  BadgeLookupProvider,
+} from '~/components/projects/BadgeLookup'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -13,15 +16,17 @@ interface Props extends AppLayoutProps {
   entries: TabbedL2Entries<L2RiskEntry>
 }
 
-export function L2RiskPage({ entries, ...props }: Props) {
+export function L2RiskPage({ entries, badgeLookup, ...props }: Props) {
   return (
     <AppLayout {...props}>
-      <SideNavLayout>
-        <MainPageHeader>Risk Analysis</MainPageHeader>
-        <TableFilterContextProvider>
-          <L2RiskTables {...entries} />
-        </TableFilterContextProvider>
-      </SideNavLayout>
+      <BadgeLookupProvider lookup={badgeLookup}>
+        <SideNavLayout>
+          <MainPageHeader>Risk Analysis</MainPageHeader>
+          <TableFilterContextProvider>
+            <L2RiskTables {...entries} />
+          </TableFilterContextProvider>
+        </SideNavLayout>
+      </BadgeLookupProvider>
     </AppLayout>
   )
 }

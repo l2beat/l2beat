@@ -1,5 +1,8 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
-import type { BadgeLookup } from '~/components/projects/BadgeLookup'
+import {
+  type BadgeLookup,
+  BadgeLookupProvider,
+} from '~/components/projects/BadgeLookup'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -22,20 +25,23 @@ export function L2RiskStateValidationPage({
   validity,
   optimistic,
   noProofs,
+  badgeLookup,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <SideNavLayout>
-        <MainPageHeader>State Validation</MainPageHeader>
-        <TableFilterContextProvider>
-          <L2RiskStateValidationTabs
-            validity={validity}
-            optimistic={optimistic}
-            noProofs={noProofs}
-          />
-        </TableFilterContextProvider>
-      </SideNavLayout>
+      <BadgeLookupProvider lookup={badgeLookup}>
+        <SideNavLayout>
+          <MainPageHeader>State Validation</MainPageHeader>
+          <TableFilterContextProvider>
+            <L2RiskStateValidationTabs
+              validity={validity}
+              optimistic={optimistic}
+              noProofs={noProofs}
+            />
+          </TableFilterContextProvider>
+        </SideNavLayout>
+      </BadgeLookupProvider>
     </AppLayout>
   )
 }
