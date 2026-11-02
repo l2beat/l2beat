@@ -2,10 +2,11 @@ import type { ClientSsrData } from './types'
 
 /*
  * The server writes the page data into `<script type="application/json">`
- * elements after `#root`, so the browser paints the SSR markup before it
- * downloads the data, and parses the data as JSON instead of as a JS literal.
- * Module scripts run after the document is parsed, so these are in the DOM by
- * the time anything reads them. The ids match `index.html`.
+ * elements, parsed here as JSON instead of as a JS literal. The SSR data goes
+ * after `#root`, so the browser paints the SSR markup before it downloads it;
+ * module scripts run after the document is parsed, so it is in the DOM by the
+ * time they read it. The env data is a few bytes and goes before `#root`. The
+ * ids match `index.html`.
  */
 
 let ssrData: ClientSsrData | undefined

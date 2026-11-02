@@ -10,9 +10,10 @@
 
 <body
   class="text-base text-primary md:text-lg font-roboto">
+  <!-- Before #root, so inline scripts there can read it; it is tiny -->
+  <script type="application/json" id="env-data"><!--env-data--></script>
   <div id="root"><!--app-html--></div>
   <!-- After #root, so the SSR markup paints before the browser downloads the data -->
-  <script type="application/json" id="env-data"><!--env-data--></script>
   <script type="application/json" id="ssr-data"><!--ssr-data--></script>
   <!-- One-time script to overwrite the stale cached 301 redirect for "/" (can be removed a few months after "/" stops redirecting) -->
   <script>
