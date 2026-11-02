@@ -5,6 +5,7 @@ import {
   serveMarkdown,
   serveMarkdownIfPreferred,
 } from '~/server/markdown/markdownAlternate'
+import { withQueryOf } from '~/server/utils/withQueryOf'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -22,8 +23,8 @@ export function createPrivacyRouter(
 ) {
   const router = express.Router()
 
-  router.get('/privacy', (_req, res) => {
-    res.redirect(301, '/privacy/summary')
+  router.get('/privacy', (req, res) => {
+    res.redirect(301, withQueryOf(req, '/privacy/summary'))
   })
 
   router.get('/privacy/summary', async (req, res) => {

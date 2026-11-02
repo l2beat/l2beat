@@ -5,6 +5,7 @@ import {
   serveMarkdown,
   serveMarkdownIfPreferred,
 } from '~/server/markdown/markdownAlternate'
+import { withQueryOf } from '~/server/utils/withQueryOf'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -32,8 +33,8 @@ export function createL2Router(
 ) {
   const router = express.Router()
 
-  router.get('/layer2s', (_req, res) => {
-    res.redirect(301, '/layer2s/summary')
+  router.get('/layer2s', (req, res) => {
+    res.redirect(301, withQueryOf(req, '/layer2s/summary'))
   })
 
   router.get('/layer2s/summary', async (req, res) => {

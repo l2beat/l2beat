@@ -10,6 +10,7 @@ import {
   serveMarkdownIfPreferred,
 } from '~/server/markdown/markdownAlternate'
 import { ps } from '~/server/projects'
+import { withQueryOf } from '~/server/utils/withQueryOf'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -49,8 +50,8 @@ export function createInteropRouter(
 ) {
   const router = express.Router()
 
-  router.get('/interop', (_req, res) => {
-    res.redirect(301, '/interop/summary')
+  router.get('/interop', (req, res) => {
+    res.redirect(301, withQueryOf(req, '/interop/summary'))
   })
 
   router.get(

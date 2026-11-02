@@ -1,4 +1,5 @@
 import express from 'express'
+import { withQueryOf } from '~/server/utils/withQueryOf'
 
 export function createMigratedProjectsRouter() {
   const router = express.Router()
@@ -6,10 +7,14 @@ export function createMigratedProjectsRouter() {
   for (const [from, to] of Object.entries(RENAMED_SCALING_SLUGS)) {
     const oldPath = `/layer2s/projects/${from}`
     const newPath = `/layer2s/projects/${to}`
-    router.get(oldPath, (_, res) => res.redirect(301, newPath))
-    router.get(`${oldPath}.md`, (_, res) => res.redirect(301, `${newPath}.md`))
-    router.get(`${oldPath}/tvs-breakdown`, (_, res) =>
-      res.redirect(301, `${newPath}/tvs-breakdown`),
+    router.get(oldPath, (req, res) =>
+      res.redirect(301, withQueryOf(req, newPath)),
+    )
+    router.get(`${oldPath}.md`, (req, res) =>
+      res.redirect(301, withQueryOf(req, `${newPath}.md`)),
+    )
+    router.get(`${oldPath}/tvs-breakdown`, (req, res) =>
+      res.redirect(301, withQueryOf(req, `${newPath}/tvs-breakdown`)),
     )
   }
   return router

@@ -45,6 +45,19 @@ describe(createL2Router.name, () => {
 
     expect(await response.text()).toEqual('<html />')
   })
+
+  it('keeps the query string when redirecting the index', async () => {
+    const response = await fetchFromRouter(
+      createRouter(),
+      '/layer2s?filter=rollups',
+      { redirect: 'manual' },
+    )
+
+    expect(response.status).toEqual(301)
+    expect(response.headers.get('location')).toEqual(
+      '/layer2s/summary?filter=rollups',
+    )
+  })
 })
 
 function createRouter() {

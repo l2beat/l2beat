@@ -18,6 +18,19 @@ import type { InteropTokenPage } from './token/renderInteropTokenMarkdown'
 // pins the route order: a page route registered first would swallow
 // "across.md" as the protocol slug or "usdc01.md" as the token id.
 describe(createInteropRouter.name, () => {
+  it('keeps the query string when redirecting the index', async () => {
+    const response = await fetchFromRouter(
+      createRouter(),
+      '/interop?from=ethereum&to=base',
+      { redirect: 'manual' },
+    )
+
+    expect(response.status).toEqual(301)
+    expect(response.headers.get('location')).toEqual(
+      '/interop/summary?from=ethereum&to=base',
+    )
+  })
+
   describe('protocol pages', () => {
     it('serves the protocol page as markdown on the .md URL', async () => {
       const response = await fetchFromRouter(

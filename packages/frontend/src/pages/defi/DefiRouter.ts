@@ -6,6 +6,7 @@ import {
   serveMarkdown,
   serveMarkdownIfPreferred,
 } from '~/server/markdown/markdownAlternate'
+import { withQueryOf } from '~/server/utils/withQueryOf'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -29,8 +30,8 @@ export function createDefiRouter(
   const router = express.Router()
 
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
-    router.get('/defi', (_req, res) => {
-      res.redirect(301, '/defi/summary')
+    router.get('/defi', (req, res) => {
+      res.redirect(301, withQueryOf(req, '/defi/summary'))
     })
 
     router.get('/defi/summary', async (req, res) => {

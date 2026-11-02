@@ -12,6 +12,10 @@ describe(createMigratedProjectsRouter.name, () => {
       '/layer2s/projects/zksync2/tvs-breakdown',
       '/layer2s/projects/zksync-era/tvs-breakdown',
     ],
+    [
+      '/layer2s/projects/zksync2?tab=tvs',
+      '/layer2s/projects/zksync-era?tab=tvs',
+    ],
   ] as const) {
     it(`redirects ${from} to ${to}`, async () => {
       const response = await fetchFromRouter(
@@ -21,9 +25,11 @@ describe(createMigratedProjectsRouter.name, () => {
       )
 
       expect(response.status).toEqual(301)
-      expect(
-        new URL(response.headers.get('location') ?? '', 'http://x').pathname,
-      ).toEqual(to)
+      const location = new URL(
+        response.headers.get('location') ?? '',
+        'http://x',
+      )
+      expect(location.pathname + location.search).toEqual(to)
     })
   }
 })

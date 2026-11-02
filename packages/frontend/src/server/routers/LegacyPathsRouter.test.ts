@@ -3,7 +3,9 @@ import { fetchFromRouter } from '~/test/fetchFromRouter'
 import { createLegacyPathsRouter } from './LegacyPathsRouter'
 
 // Method: request legacy URLs without following redirects and check the
-// permanent redirect target.
+// permanent redirect target, query included. Whether a bridge slug has an
+// interop protocol comes from the real project database: "across" is one,
+// "stargatev2" maps to one, and "nomad" has none.
 describe(createLegacyPathsRouter.name, () => {
   for (const [from, to] of [
     ['/data-availability', '/blobs'],
@@ -28,6 +30,21 @@ describe(createLegacyPathsRouter.name, () => {
       '/tokens/9HN5PN/opengraph-image.png',
     ],
     ['/Interop/Tokens/9HN5PN', '/tokens/9HN5PN'],
+    ['/bridges', '/interop'],
+    ['/bridges/summary', '/interop'],
+    ['/bridges/projects/across', '/interop/protocols/across'],
+    [
+      '/bridges/projects/across/opengraph-image.png',
+      '/interop/protocols/across',
+    ],
+    ['/bridges/projects/stargatev2', '/interop/protocols/stargate'],
+    ['/bridges/projects/nomad', '/interop'],
+    [
+      '/bridges/projects/across?utm_source=x',
+      '/interop/protocols/across?utm_source=x',
+    ],
+    ['/bridges/projects/nomad?utm_source=x', '/interop?utm_source=x'],
+    ['/scaling?filter=rollups', '/layer2s/summary?filter=rollups'],
   ] as const) {
     it(`redirects ${from} to ${to}`, async () => {
       const response = await fetchFromRouter(createLegacyPathsRouter(), from, {
@@ -35,9 +52,7 @@ describe(createLegacyPathsRouter.name, () => {
       })
 
       expect(response.status).toEqual(301)
-      expect(
-        new URL(response.headers.get('location') ?? '', 'http://x').pathname,
-      ).toEqual(to)
+      expect(locationPath(response)).toEqual(to)
     })
   }
 
@@ -58,3 +73,11 @@ describe(createLegacyPathsRouter.name, () => {
     })
   }
 })
+
+function locationPath(response: Response) {
+  const { pathname, search } = new URL(
+    response.headers.get('location') ?? '',
+    'http://x',
+  )
+  return pathname + search
+}

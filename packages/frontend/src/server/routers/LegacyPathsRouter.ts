@@ -1,12 +1,14 @@
-import express from 'express'
+import express, { type Request, type Response } from 'express'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { isChainProjectSlug } from '~/server/features/chains/getChainProjects'
+import { ps } from '~/server/projects'
+import { withQueryOf } from '~/server/utils/withQueryOf'
 
 export function createLegacyPathsRouter() {
   const router = express.Router()
 
   router.get('/project/:name', (req, res) => {
-    res.redirect(301, `/layer2s/projects/${req.params.name}`)
+    res.redirect(301, withQueryOf(req, `/layer2s/projects/${req.params.name}`))
   })
 
   // A live page, not a legacy path: skip the rest of this router.
@@ -20,62 +22,62 @@ export function createLegacyPathsRouter() {
       next('router')
       return
     }
-    res.redirect(301, `/layer2s/projects/${req.params.name}`)
+    res.redirect(301, withQueryOf(req, `/layer2s/projects/${req.params.name}`))
   })
 
-  router.get('/scaling/tvl', (_, res) => {
-    res.redirect(301, '/layer2s/tvs')
+  router.get('/scaling/tvl', (req, res) => {
+    res.redirect(301, withQueryOf(req, '/layer2s/tvs'))
   })
 
-  router.get('/scaling/detailedTvl', (_, res) => {
-    res.redirect(301, '/layer2s/tvs')
+  router.get('/scaling/detailedTvl', (req, res) => {
+    res.redirect(301, withQueryOf(req, '/layer2s/tvs'))
   })
 
-  router.get('/scaling/finality', (_, res) => {
-    res.redirect(301, '/layer2s/summary')
+  router.get('/scaling/finality', (req, res) => {
+    res.redirect(301, withQueryOf(req, '/layer2s/summary'))
   })
 
   router.get('/scaling/projects/:name/tvl-breakdown', (req, res) => {
-    res.redirect(301, `/layer2s/projects/${req.params.name}/tvs-breakdown`)
+    res.redirect(
+      301,
+      withQueryOf(req, `/layer2s/projects/${req.params.name}/tvs-breakdown`),
+    )
   })
 
   router.get('/data-availability/projects/:name/dac', (req, res) => {
-    res.redirect(301, `/layer2s/projects/${req.params.name}`)
+    res.redirect(301, withQueryOf(req, `/layer2s/projects/${req.params.name}`))
   })
 
   // Before the catch-all below: Ethereum's page outlived the other DA pages.
-  router.get('/data-availability/projects/ethereum/ethereum', (_req, res) => {
-    res.redirect(301, ETHEREUM_PROJECT_PATH)
+  router.get('/data-availability/projects/ethereum/ethereum', (req, res) => {
+    res.redirect(301, withQueryOf(req, ETHEREUM_PROJECT_PATH))
   })
-  router.get(
-    '/data-availability/projects/ethereum/ethereum.md',
-    (_req, res) => {
-      res.redirect(301, `${ETHEREUM_PROJECT_PATH}.md`)
-    },
-  )
+  router.get('/data-availability/projects/ethereum/ethereum.md', (req, res) => {
+    res.redirect(301, withQueryOf(req, `${ETHEREUM_PROJECT_PATH}.md`))
+  })
 
   // Blobs replaced the data availability pages.
   router.get(
     ['/data-availability', '/data-availability/*splat', '/da-risk-framework'],
-    (_req, res) => {
-      res.redirect(301, '/blobs')
+    (req, res) => {
+      res.redirect(301, withQueryOf(req, '/blobs'))
     },
   )
 
   router.get('/governance/publications/:id', (req, res) => {
-    res.redirect(301, `/publications/${req.params.id}`)
+    res.redirect(301, withQueryOf(req, `/publications/${req.params.id}`))
   })
 
-  router.get('/scaling/data-availability', (_, res) => {
-    res.redirect(301, '/layer2s/risk/data-availability')
+  router.get('/scaling/data-availability', (req, res) => {
+    res.redirect(301, withQueryOf(req, '/layer2s/risk/data-availability'))
   })
 
-  router.get('/scaling/sequencing', (_, res) => {
-    res.redirect(301, '/layer2s/risk/sequencing')
+  router.get('/scaling/sequencing', (req, res) => {
+    res.redirect(301, withQueryOf(req, '/layer2s/risk/sequencing'))
   })
 
-  router.get('/scaling', (_, res) => {
-    res.redirect(301, '/layer2s/summary')
+  router.get('/scaling', (req, res) => {
+    res.redirect(301, withQueryOf(req, '/layer2s/summary'))
   })
 
   router.get('/scaling/*splat', (req, res) => {
@@ -100,12 +102,42 @@ export function createLegacyPathsRouter() {
     res.redirect(301, target)
   })
 
-  router.get('/bridges/*splat', (_req, res) => {
-    res.redirect(301, '/interop')
-  })
-  router.get('/bridges', (_req, res) => {
-    res.redirect(301, '/interop')
+  // The bridges section became Interop: a bridge page goes to the protocol
+  // that took its place.
+  const redirectBridgePage = async (
+    req: Request<{ slug: string }>,
+    res: Response,
+  ) => {
+    const protocolPath = await findInteropProtocolPath(req.params.slug)
+    res.redirect(301, withQueryOf(req, protocolPath ?? '/interop'))
+  }
+  router.get('/bridges/projects/:slug', redirectBridgePage)
+  router.get('/bridges/projects/:slug/*splat', redirectBridgePage)
+  router.get(['/bridges', '/bridges/*splat'], (req, res) => {
+    res.redirect(301, withQueryOf(req, '/interop'))
   })
 
   return router
 }
+
+async function findInteropProtocolPath(bridgeSlug: string) {
+  const slug = BRIDGE_TO_INTEROP_SLUG.get(bridgeSlug) ?? bridgeSlug
+  const protocol = await ps.getProject({ slug, select: ['interopConfig'] })
+  return protocol && `/interop/protocols/${protocol.slug}`
+}
+
+/**
+ * Bridge pages whose protocol lives on under another slug. Only links the
+ * config makes plain: the protocol tracks the same contracts or token
+ * framework the bridge page did. Every other bridge slug either matches a
+ * protocol slug (across, cbridge, debridge, stargate, ...) or has no
+ * successor and falls back to the Interop summary.
+ */
+const BRIDGE_TO_INTEROP_SLUG = new Map([
+  // Stargate's interop config tracks the v2 pools and TokenMessaging.
+  ['stargatev2', 'stargate'],
+  // LayerZero's interop config is the OFT framework.
+  ['layerzerov2oft', 'layerzero'],
+  // Portal was Wormhole's token bridge, now Wormhole WTT.
+  ['portal', 'wormhole-wtt'],
+])
