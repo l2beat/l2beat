@@ -40,10 +40,10 @@ export async function getL2RiskDataAvailabilityData(
     },
     ssr: {
       page: 'L2RiskDataAvailabilityPage',
-      badges: getBadgeLookup(entries),
       props: {
         ...appLayoutProps,
         entries,
+        badgeLookup: getBadgeLookup(entries),
       },
     },
   }

@@ -77,10 +77,10 @@ export async function getHomeData(
     },
     ssr: {
       page: 'HomePage',
-      badges: getBadgeLookup(data.topChains),
       props: {
         ...appLayoutProps,
         ...data,
+        badgeLookup: getBadgeLookup(data.topChains),
       },
     },
   }

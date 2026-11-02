@@ -6,6 +6,10 @@ import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import { L2BeatDevTools } from '~/components/dev-tools/L2BeatDevTools'
 import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
+import {
+  type BadgeLookup,
+  BadgeLookupProvider,
+} from '~/components/projects/BadgeLookup'
 import { SearchBarContextProvider } from '~/components/search-bar/SearchBarContext'
 import { WhatsNewContextProvider } from '~/components/whats-new/WhatsNewContext'
 import {
@@ -24,6 +28,8 @@ export interface AppLayoutProps {
   /** The announcement at the end of the nav. */
   whatsNewItem: WhatsNewItem | undefined
   countdowns: typeof PROJECT_COUNTDOWNS
+  /** Badges that table rows point at by id; see `BadgeRef`. */
+  badgeLookup?: BadgeLookup
 }
 
 export function AppLayout({
@@ -33,6 +39,7 @@ export function AppLayout({
   whatsNew,
   whatsNewItem,
   countdowns,
+  badgeLookup,
 }: AppLayoutProps & {
   children: React.ReactNode
 }) {
@@ -49,17 +56,19 @@ export function AppLayout({
             env.NODE_ENV === 'development' && <L2BeatDevTools />}
           <CountdownsContextProvider countdowns={countdowns}>
             <GlossaryContextProvider terms={terms}>
-              <WhatsNewContextProvider whatsNew={whatsNew}>
-                <WhatsNewItemProvider item={whatsNewItem}>
-                  <SearchBarContextProvider
-                    recentlyAddedProjects={recentlyAddedProjects}
-                  >
-                    <ChartLegendOnboardingProvider>
-                      {children}
-                    </ChartLegendOnboardingProvider>
-                  </SearchBarContextProvider>
-                </WhatsNewItemProvider>
-              </WhatsNewContextProvider>
+              <BadgeLookupProvider lookup={badgeLookup}>
+                <WhatsNewContextProvider whatsNew={whatsNew}>
+                  <WhatsNewItemProvider item={whatsNewItem}>
+                    <SearchBarContextProvider
+                      recentlyAddedProjects={recentlyAddedProjects}
+                    >
+                      <ChartLegendOnboardingProvider>
+                        {children}
+                      </ChartLegendOnboardingProvider>
+                    </SearchBarContextProvider>
+                  </WhatsNewItemProvider>
+                </WhatsNewContextProvider>
+              </BadgeLookupProvider>
             </GlossaryContextProvider>
           </CountdownsContextProvider>
         </TooltipProvider>

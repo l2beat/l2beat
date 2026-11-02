@@ -41,10 +41,10 @@ export async function getL2RiskStateValidationData(
     },
     ssr: {
       page: 'L2RiskStateValidationPage',
-      badges: getBadgeLookup(entries),
       props: {
         ...appLayoutProps,
         ...entries,
+        badgeLookup: getBadgeLookup(entries),
       },
     },
   }

@@ -47,11 +47,11 @@ export async function getL2TvsData(
     },
     ssr: {
       page: 'L2TvsPage',
-      badges: getBadgeLookup(data.entries),
       props: {
         ...appLayoutProps,
         ...data,
         milestones: HOMEPAGE_MILESTONES,
+        badgeLookup: getBadgeLookup(data.entries),
       },
     },
   }

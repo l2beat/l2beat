@@ -39,13 +39,13 @@ export async function getL2RiskSequencingData(
     },
     ssr: {
       page: 'L2RiskSequencingPage',
-      badges: getBadgeLookup(
-        props.decentralizedEntries,
-        props.centralizedEntries,
-      ),
       props: {
         ...appLayoutProps,
         ...props,
+        badgeLookup: getBadgeLookup(
+          props.decentralizedEntries,
+          props.centralizedEntries,
+        ),
       },
     },
   }

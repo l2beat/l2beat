@@ -17,14 +17,14 @@ export type BadgeLookup = Record<string, BadgeWithParams>
 const BadgeLookupContext = createContext<BadgeLookup>({})
 
 export function BadgeLookupProvider({
-  badges,
+  lookup,
   children,
 }: {
-  badges: BadgeLookup | undefined
+  lookup: BadgeLookup | undefined
   children: React.ReactNode
 }) {
   return (
-    <BadgeLookupContext.Provider value={badges ?? {}}>
+    <BadgeLookupContext.Provider value={lookup ?? {}}>
       {children}
     </BadgeLookupContext.Provider>
   )

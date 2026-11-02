@@ -45,11 +45,11 @@ export async function getL2LivenessData(
     },
     ssr: {
       page: 'L2LivenessPage',
-      badges: getBadgeLookup(entries),
       props: {
         ...appLayoutProps,
         entries,
         projectsWithAnomalies: getProjectsWithAnomalies(entries),
+        badgeLookup: getBadgeLookup(entries),
       },
     },
   }

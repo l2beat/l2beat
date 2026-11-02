@@ -38,10 +38,10 @@ export async function getL2ArchivedData(
     },
     ssr: {
       page: 'L2ArchivedPage',
-      badges: getBadgeLookup(entries),
       props: {
         ...appLayoutProps,
         entries,
+        badgeLookup: getBadgeLookup(entries),
       },
     },
   }

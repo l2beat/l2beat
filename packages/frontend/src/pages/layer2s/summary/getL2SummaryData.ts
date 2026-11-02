@@ -42,10 +42,10 @@ export async function getL2SummaryData(
     },
     ssr: {
       page: 'L2SummaryPage',
-      badges: getBadgeLookup(data.entries),
       props: {
         ...appLayoutProps,
         ...data,
+        badgeLookup: getBadgeLookup(data.entries),
       },
     },
   }

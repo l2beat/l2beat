@@ -42,11 +42,11 @@ export async function getL2ActivityData(
     },
     ssr: {
       page: 'L2ActivityPage',
-      badges: getBadgeLookup(data.entries),
       props: {
         ...appLayoutProps,
         ...data,
         milestones: HOMEPAGE_MILESTONES,
+        badgeLookup: getBadgeLookup(data.entries),
       },
     },
   }
