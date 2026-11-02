@@ -41,7 +41,11 @@ function getServerSnapshot() {
   return searchAtPageLoad ?? getSsrRequestSearch()
 }
 
-function getSsrRequestSearch() {
-  const query = (globalThis.__FIX_SSR_URL__ as string).split('?')[1]
-  return query ? `?${query}` : ''
+/** The search of the URL being server-rendered, in `location.search` form. */
+export function getSsrRequestSearch() {
+  const url = globalThis.__FIX_SSR_URL__ as string
+  const queryStart = url.indexOf('?')
+  return queryStart === -1 || queryStart === url.length - 1
+    ? ''
+    : url.slice(queryStart)
 }

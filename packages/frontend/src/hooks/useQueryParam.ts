@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { useEventListener } from './useEventListener'
-import { notifyLocationSearchChange } from './useLocationSearch'
+import {
+  getSsrRequestSearch,
+  notifyLocationSearchChange,
+} from './useLocationSearch'
 
 const getURLSearchParams = () => {
   if (typeof window !== 'undefined') {
     return new URLSearchParams(window.location.search)
   }
-  return new URLSearchParams(globalThis.__FIX_SSR_URL__.split('?')[1])
+  return new URLSearchParams(getSsrRequestSearch())
 }
 
 export const useQueryParam = (
