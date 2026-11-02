@@ -75,14 +75,7 @@ function NavTabRow({
             })
             return (
               <a
-                ref={(node) => {
-                  if (node && isSelected) {
-                    node.scrollIntoView({
-                      block: 'nearest',
-                      inline: 'center',
-                    })
-                  }
-                }}
+                ref={isSelected ? centerInRow : undefined}
                 href={getHref(link)}
                 key={link.href}
                 data-state={isSelected ? 'selected' : undefined}
@@ -99,4 +92,13 @@ function NavTabRow({
       </div>
     </OverflowWrapper>
   )
+}
+
+/**
+ * Defined once, so React runs it when the selected tab mounts, not on every
+ * re-render: links re-render on each tab or filter change, and scrolling then
+ * would pull the page back up to the navbar.
+ */
+function centerInRow(node: HTMLAnchorElement | null) {
+  node?.scrollIntoView({ block: 'nearest', inline: 'center' })
 }
