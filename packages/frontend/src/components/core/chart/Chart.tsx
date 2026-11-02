@@ -262,9 +262,7 @@ function ChartTooltipWrapper({ children }: { children: React.ReactNode }) {
   const ref = React.useRef<HTMLDivElement>(null)
   useKeepTooltipInPlace(ref)
   return (
-    // Its lines are set without leading, so the text needs 2px more padding
-    // to sit as far from the top and bottom as from the sides.
-    <div ref={ref} className={cn(tooltipContentVariants(), 'py-3.5')}>
+    <div ref={ref} className={tooltipContentVariants()}>
       {children}
     </div>
   )
@@ -290,7 +288,7 @@ function ChartTooltipRows({
     <ScrollWithGradient
       data-chart-tooltip-rows
       // Its scrollbar sits in the tooltip's padding, clear of the values.
-      className={cn('-mr-4 overscroll-contain pr-4', className)}
+      className={cn('-mr-3 overscroll-contain pr-3', className)}
       {...keepTouchesInTooltip}
     >
       {children}
