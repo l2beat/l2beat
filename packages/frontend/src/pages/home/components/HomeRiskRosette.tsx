@@ -7,6 +7,7 @@ import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
 import { PizzaRosetteTooltip } from '~/components/rosette/pizza/PizzaRosetteTooltip'
 import type { RosetteValue } from '~/components/rosette/types'
 import { TableLink } from '~/components/table/TableLink'
+import { HOME_CELL_LINK_CLASS } from '../homeStyles'
 
 /**
  * The summary table's risk rosette at the ranking's 24px, so the rows keep
@@ -29,7 +30,11 @@ export function HomeRiskRosette({
   return (
     <Tooltip contentInHtml>
       <TooltipTrigger asChild disabledOnMobile>
-        <TableLink href={href} aria-label={`${projectName} risk analysis`}>
+        <TableLink
+          href={href}
+          aria-label={`${projectName} risk analysis`}
+          className={HOME_CELL_LINK_CLASS}
+        >
           <PizzaRosetteIcon
             values={values}
             className="size-6"

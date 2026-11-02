@@ -134,7 +134,7 @@ function clamp(value: number, min: number, max: number) {
 }
 
 /** Between the chart, labels included, and the tooltip. */
-const GAP = 12
+const GAP = 4
 
 /** The least room left between the tooltip and the window's edge. */
 const WINDOW_MARGIN = 8

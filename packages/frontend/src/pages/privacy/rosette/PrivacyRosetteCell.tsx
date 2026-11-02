@@ -11,6 +11,8 @@ interface Props {
   isUnderReview: boolean
   /** For the rosette, e.g. its size. */
   iconClassName?: string
+  /** For the link around it, e.g. its hover background. */
+  linkClassName?: string
 }
 
 export function PrivacyRosetteCell({
@@ -18,6 +20,7 @@ export function PrivacyRosetteCell({
   href,
   isUnderReview,
   iconClassName,
+  linkClassName,
 }: Props) {
   const values = getPrivacyAdversaryRosetteValues(adversaries)
   return (
@@ -26,6 +29,7 @@ export function PrivacyRosetteCell({
       isUnderReview={isUnderReview}
       href={href}
       placement="table"
+      linkClassName={linkClassName}
     >
       <PizzaRosetteIcon
         values={values}

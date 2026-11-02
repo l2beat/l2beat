@@ -1,6 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { PrivacyRosetteCell } from '~/pages/privacy/rosette/PrivacyRosetteCell'
 import type { HomePrivacyData } from '~/server/features/home/getHomePrivacyData'
+import { HOME_CELL_LINK_CLASS } from '../homeStyles'
 import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
@@ -75,6 +76,7 @@ export function HomePrivacyCard({
                 href={protocol.href}
                 isUnderReview={protocol.isUnderReview}
                 iconClassName="md:size-6"
+                linkClassName={HOME_CELL_LINK_CLASS}
               />
             ),
           },

@@ -68,6 +68,12 @@ export const HOME_ROW_LINES_CLASS =
 /** A row's linked name: underlined while its row (`group`) is hovered. */
 export const HOME_ROW_LINK_CLASS = 'underline-offset-2 group-hover:underline'
 
+/**
+ * For a `TableLink` around a badge or rosette in a row: its hover background
+ * hugs the content, 4px on every side, without moving it.
+ */
+export const HOME_CELL_LINK_CLASS = 'md:-m-1 min-h-0 md:rounded-md md:p-1'
+
 /** Every project, chain and token icon on the page. */
 export const HOME_ICON_CLASS = 'size-5 shrink-0 rounded-full'
 

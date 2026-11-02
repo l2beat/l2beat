@@ -54,6 +54,7 @@ interface Props {
   /** The project page. */
   href: string
   placement: keyof typeof PLACEMENTS
+  linkClassName?: string
   children: ReactNode
 }
 
@@ -63,6 +64,7 @@ export function PrivacyRosetteTrigger({
   isUnderReview,
   href,
   placement,
+  linkClassName,
   children,
 }: Props) {
   const settings = PLACEMENTS[placement]
@@ -81,7 +83,11 @@ export function PrivacyRosetteTrigger({
           <Link
             href={sectionHref}
             aria-label={settings.label}
-            className={cn(settings.linkClassName, 'max-md:hidden')}
+            className={cn(
+              settings.linkClassName,
+              linkClassName,
+              'max-md:hidden',
+            )}
           >
             {children}
           </Link>
