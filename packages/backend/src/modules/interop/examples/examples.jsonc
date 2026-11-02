@@ -1814,6 +1814,19 @@
       ]
     }
   },
+  "mayan-forwarder-mono-chain": {
+    "description": "Same-chain swaps paid out by MonoChainSwap, expect no events",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x1d0481684d6583c553b6c1d7f19a277c562006ce1145596dc12706199ef381e2"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x68575a81c31e144f5db1d525f7d5e30ebd94f44180abab8a77abbe4a6050bac8"
+      }
+    ]
+  },
   "meson": {
     "description": "Liquidity swap + tunnel samples from MESON_PLAN",
     "txs": [
