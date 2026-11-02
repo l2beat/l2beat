@@ -28,7 +28,10 @@ export interface AppLayoutProps {
   /** The announcement at the end of the nav. */
   whatsNewItem: WhatsNewItem | undefined
   countdowns: typeof PROJECT_COUNTDOWNS
-  /** Badges that table rows point at by id; see `BadgeRef`. */
+  /**
+   * Badges that table rows point at by id; see `BadgeRef`. Pages with such
+   * rows make it required in their own props, so a getter can't forget it.
+   */
   badgeLookup?: BadgeLookup
 }
 

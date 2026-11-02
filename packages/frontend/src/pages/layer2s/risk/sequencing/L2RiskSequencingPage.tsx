@@ -1,6 +1,7 @@
 import { Callout } from '~/components/Callout'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import type { BadgeLookup } from '~/components/projects/BadgeLookup'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import { InfoIcon } from '~/icons/Info'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -16,6 +17,7 @@ import { InclusionDelayComparisonChart } from './components/InclusionDelayCompar
 import { L2RiskSequencingTable } from './components/table/L2RiskSequencingTable'
 
 interface Props extends AppLayoutProps {
+  badgeLookup: BadgeLookup
   decentralizedEntries: L2RiskSequencingEntry[]
   centralizedEntries: L2RiskCentralizedSequencingEntry[]
   inclusionDelayComparison: InclusionDelayComparison | undefined

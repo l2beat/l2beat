@@ -4,6 +4,7 @@ import { L2SummaryActivityChart } from '~/components/chart/activity/L2SummaryAct
 import { L2SummaryTvsChart } from '~/components/chart/tvs/L2SummaryTvsChart'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import type { BadgeLookup } from '~/components/projects/BadgeLookup'
 import { TvsDisplayControlsContextProvider } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -21,6 +22,7 @@ import {
 } from './l2SummaryConstants'
 
 interface Props extends AppLayoutProps {
+  badgeLookup: BadgeLookup
   entries: TabbedL2Entries<L2SummaryEntry>
   queryState: DehydratedState
 }

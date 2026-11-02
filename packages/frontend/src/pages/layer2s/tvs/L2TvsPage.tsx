@@ -2,6 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import type { BadgeLookup } from '~/components/projects/BadgeLookup'
 import { TvsDisplayControlsContextProvider } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
@@ -14,6 +15,7 @@ import type { L2TvsEntry } from '~/server/features/layer2s/tvs/getL2TvsEntries'
 import { L2TvsTimeRangeContextProvider } from './components/L2TvsTimeRangeContext'
 
 interface Props extends AppLayoutProps {
+  badgeLookup: BadgeLookup
   entries: TabbedL2Entries<L2TvsEntry>
   milestones: Milestone[]
   queryState: DehydratedState

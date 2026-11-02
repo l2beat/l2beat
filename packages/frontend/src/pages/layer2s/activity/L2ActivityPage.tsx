@@ -2,6 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import type { BadgeLookup } from '~/components/projects/BadgeLookup'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -12,6 +13,7 @@ import { ActivityMetricContextProvider } from './components/ActivityMetricContex
 import { L2ActivityCard } from './components/L2ActivityCard'
 
 interface Props extends AppLayoutProps {
+  badgeLookup: BadgeLookup
   entries: L2ActivityEntry[]
   milestones: Milestone[]
   queryState: DehydratedState

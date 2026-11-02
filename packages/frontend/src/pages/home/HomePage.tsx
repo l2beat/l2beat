@@ -1,6 +1,7 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import type { BadgeLookup } from '~/components/projects/BadgeLookup'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -32,6 +33,7 @@ import type { HomeProjectCounts } from './getHomeProjectCounts'
 import type { HomeTopZkProver } from './toHomeTopZkProver'
 
 interface Props extends AppLayoutProps {
+  badgeLookup: BadgeLookup
   queryState: DehydratedState
   projectCounts: HomeProjectCounts
   topChains: L2SummaryEntry[]

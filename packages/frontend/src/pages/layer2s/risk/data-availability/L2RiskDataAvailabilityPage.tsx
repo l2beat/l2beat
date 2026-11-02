@@ -1,4 +1,5 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
+import type { BadgeLookup } from '~/components/projects/BadgeLookup'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -8,6 +9,7 @@ import type { L2RiskDaEntry } from '~/server/features/layer2s/risks/data-availab
 import { L2RiskDaTables } from './components/L2RiskDaTables'
 
 interface Props extends AppLayoutProps {
+  badgeLookup: BadgeLookup
   entries: TabbedL2Entries<L2RiskDaEntry>
 }
 

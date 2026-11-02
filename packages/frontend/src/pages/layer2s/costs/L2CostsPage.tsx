@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
+import type { BadgeLookup } from '~/components/projects/BadgeLookup'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -14,6 +15,7 @@ import { CostsUnitContextProvider } from './components/CostsUnitContext'
 import { L2CostsTabs } from './components/L2CostsTabs'
 
 interface Props extends AppLayoutProps {
+  badgeLookup: BadgeLookup
   entries: TabbedL2Entries<L2CostsEntry>
   milestones: Milestone[]
   queryState: DehydratedState

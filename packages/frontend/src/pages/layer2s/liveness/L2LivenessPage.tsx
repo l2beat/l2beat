@@ -1,3 +1,4 @@
+import type { BadgeLookup } from '~/components/projects/BadgeLookup'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -13,6 +14,7 @@ import {
 } from './components/RecentAnomalies'
 
 interface Props extends AppLayoutProps {
+  badgeLookup: BadgeLookup
   entries: TabbedL2Entries<L2LivenessEntry>
   projectsWithAnomalies: ProjectWithAnomaly[]
 }
