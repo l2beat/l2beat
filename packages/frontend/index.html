@@ -4,12 +4,29 @@
 <html lang="en" class="has-[.smooth-scroll]:scroll-smooth bg-header-primary lg:bg-background">
 
 <head>
-  <!-- Back and forward load without a page transition: it would capture the
-       page before the browser restores the scroll position, which then jumps.
-       Skipping rejects `ready`, so it is caught rather than reported as an
-       unhandled error. Inline, so it is in place before the module entry runs. -->
+  <!-- Page transitions (see globals.css). Inline, so they act before the
+       module entry runs.
+       - Back and forward load without a transition: it would capture the page
+         before the browser restores the scroll position, which then jumps.
+         Skipping rejects `ready`, so it is caught rather than reported as an
+         unhandled error.
+       - A transition captures the new page's first render, which over the
+         network can come before the nav has arrived: the old page then fades
+         into a blank one. For a navigation that animates, hold that render
+         until the sidebar has parsed (the mobile navbar comes before it).
+         Loads that don't animate paint as soon as they can. -->
   <script>
-    addEventListener('pageswap', function (e) { var t = e.viewTransition; if (t && e.activation && e.activation.navigationType === 'traverse') { t.ready.catch(function () { }); t.skipTransition() } })
+    addEventListener('pageswap', function (e) { var t = e.viewTransition; if (t && e.activation && e.activation.navigationType === 'traverse') { t.ready.catch(function () { }); t.skipTransition() } });
+    (function () {
+      var a = window.navigation && navigation.activation
+      if (!a || !a.from || (a.navigationType !== 'push' && a.navigationType !== 'replace')) return
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
+      var expect = document.createElement('link')
+      expect.rel = 'expect'
+      expect.href = '#nav-sidebar'
+      expect.setAttribute('blocking', 'render')
+      document.head.append(expect)
+    })()
   </script>
   <!--app-head-->
   <link rel="stylesheet" href="/src/styles/globals.css" />

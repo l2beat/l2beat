@@ -121,7 +121,11 @@ function Sidebar({
     <div className="group hidden text-primary lg:block">
       {/* This is what handles the sidebar gap on desktop */}
       <div className="relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear" />
+      {/* index.html holds a transitioning page's first render until this has
+          parsed. The server renders it for every viewport, as it can't tell
+          which one the reader has. */}
       <div
+        id="nav-sidebar"
         data-page-chrome="sidebar"
         className={cn(
           'fixed inset-y-0 left-0 hidden h-svh w-(--sidebar-width) duration-200 ease-linear md:flex',
