@@ -6240,6 +6240,70 @@
       ]
     }
   },
+  "hwr-scaled-decimals": {
+    // BSC USDC/USDT use 18 decimals and their routers scale amounts to 6
+    // decimals, so the Transfer search must look for the unscaled amount, not
+    // the router fee (USDC) or the WBNB swap leg (USDT). An ERC-721 route has
+    // no ERC-20 Transfer and must not fall back to a native transfer.
+    "loadConfigs": ["hyperlane"],
+    "txs": [
+      {
+        "chain": "bsc",
+        "tx": "0xf666e0e8f812189bbd7db51a4589f55a474d43d87d3990c13eb7baacacf5818f"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x4f3d581f129860ed0820e1bcdf172dff12286cbaaf055ec12844787a36db55a7"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x5e5480d2021206404bf22909d443e673737162f4d99db68b1d46c1ec625bbd9c"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4e002fc694090a7d1a0f30f358d37deeec86462f9ee473a0c3172e78dba9bcba"
+      },
+      {
+        "chain": "base",
+        "tx": "0xfcd529c909c5b3d2e7ca4767543fb0b8b7f9e590c84ca6577ead641e3f9c24b5"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xfed92a25f3c1da2c7078f60ea07cf9262c5ec85c02a414a1b63f76b0aef669cc"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "hyperlane.Message", "app": "hwr" },
+        { "type": "hyperlane.Message", "app": "hwr" },
+        { "type": "hyperlane.Message", "app": "unknown" }
+      ],
+      "transfers": [
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": {
+            "tokenAddress": "0x0000000000000000000000008ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+            "tokenAmount": "17980765171269150000000"
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "tokenAmount": "17978068461"
+          }
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": {
+            "tokenAddress": "0x00000000000000000000000055d398326f99059ff775485246999027b3197955",
+            "tokenAmount": "197208000000000000000"
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "tokenAmount": "197208000"
+          }
+        }
+      ]
+    }
+  },
   "oft": {
     "loadConfigs": ["layerzero-v2"],
     // 4 oft transfers
