@@ -41,35 +41,14 @@ export async function getSearchBarEntries(search: string) {
     ? EthereumAddress(trimmed)
     : undefined
 
-  const [tokens, projects] = await Promise.all([
+  const [tokens, searchBarEntries] = await Promise.all([
     address
       ? getAbstractTokensByAddress(address)
       : getActiveInteropAbstractTokens(),
     // Reading projects blocks the event loop, so it waits a turn to let the
     // token query reach the database first and overlap its round trip.
-    new Promise(setImmediate).then(() =>
-      ps.getProjects({
-        optional: [
-          'scalingInfo',
-          'interopConfig',
-          'zkCatalogInfo',
-          'privacyInfo',
-          'defiInfo',
-          'contracts',
-          'permissions',
-          'aliases',
-        ],
-      }),
-    ),
+    new Promise(setImmediate).then(getSearchableProjectEntries),
   ])
-
-  const l2ProjectIds = new Set(
-    projects.filter((p) => p.scalingInfo).map((p) => p.id),
-  )
-  const searchBarEntries = [
-    ...projects.flatMap((p) => getSearchBarProjectEntries(p)),
-    ...selectChainProjects(l2ProjectIds).map(getSearchBarChainEntry),
-  ]
 
   if (address) {
     // Tokens first: a bridge escrow lists the token contracts it holds, but
@@ -101,9 +80,7 @@ export async function getSearchBarEntries(search: string) {
   const matches = searchEntries(
     search,
     [...searchBarEntries, ...tokenEntries],
-    {
-      scoreMultiplier: (entry) => (entry.category === 'zkCatalog' ? 0.9 : 1),
-    },
+    { scoreMultiplier },
   )
   const result = [
     ...matches
@@ -120,4 +97,44 @@ export async function getSearchBarEntries(search: string) {
     type: 'name',
   })
   return result
+}
+
+/**
+ * Projects only, for pages that suggest where a visitor meant to go (the 404
+ * page). Tokens are left out: their query is the costly part of a search.
+ */
+export async function getSearchBarProjectMatches(
+  search: string,
+  limit: number,
+) {
+  const entries = await getSearchableProjectEntries()
+  return searchEntries(search, entries, { scoreMultiplier })
+    .slice(0, limit)
+    .map(toSearchBarProject)
+}
+
+function scoreMultiplier(entry: { category: string }) {
+  return entry.category === 'zkCatalog' ? 0.9 : 1
+}
+
+async function getSearchableProjectEntries(): Promise<SearchBarProjectEntry[]> {
+  const projects = await ps.getProjects({
+    optional: [
+      'scalingInfo',
+      'interopConfig',
+      'zkCatalogInfo',
+      'privacyInfo',
+      'defiInfo',
+      'contracts',
+      'permissions',
+      'aliases',
+    ],
+  })
+  const l2ProjectIds = new Set(
+    projects.filter((p) => p.scalingInfo).map((p) => p.id),
+  )
+  return [
+    ...projects.flatMap((p) => getSearchBarProjectEntries(p)),
+    ...selectChainProjects(l2ProjectIds).map(getSearchBarChainEntry),
+  ]
 }

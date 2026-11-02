@@ -31,13 +31,14 @@ import type { AnySearchBarEntry } from './types'
 
 interface Props {
   recentlyAdded: SearchBarProject[]
+  initialQuery?: string
 }
 
-export function SearchBarDialog({ recentlyAdded }: Props) {
+export function SearchBarDialog({ recentlyAdded, initialQuery = '' }: Props) {
   const trpc = useTRPC()
   const inputRef = useRef<HTMLInputElement>(null)
   const { track } = useTracking()
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(initialQuery)
   const debouncedValue = useDebouncedValue(value, 200)
   const { open, setOpen } = useSearchBarContext()
   const router = useRouter()

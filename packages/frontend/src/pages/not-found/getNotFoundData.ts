@@ -1,13 +1,25 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getSearchBarProjectMatches } from '~/server/features/search-bar/getSearchBarEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getSearchQueryFromUrl, getSectionIndexFromUrl } from './notFoundUrl'
+
+const SUGGESTIONS_LIMIT = 3
+// Shorter fragments fuzzy-match most project names, so the list would be noise.
+const SUGGESTIONS_MIN_QUERY_LENGTH = 3
 
 export async function getNotFoundData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const appLayoutProps = await getAppLayoutProps()
+  const searchQuery = getSearchQueryFromUrl(url)
+  const [appLayoutProps, suggestions] = await Promise.all([
+    getAppLayoutProps(),
+    searchQuery.length >= SUGGESTIONS_MIN_QUERY_LENGTH
+      ? getSearchBarProjectMatches(searchQuery, SUGGESTIONS_LIMIT)
+      : [],
+  ])
 
   return {
     head: {
@@ -28,7 +40,12 @@ export async function getNotFoundData(
     },
     ssr: {
       page: 'NotFoundPage',
-      props: appLayoutProps,
+      props: {
+        ...appLayoutProps,
+        searchQuery,
+        sectionIndex: getSectionIndexFromUrl(url),
+        suggestions,
+      },
     },
   }
 }
