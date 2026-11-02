@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "category": "shared",
+  "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least {{executionDelay_fmt}}. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days. This version (MultisigCommitter) can additionally require batch commitments to be signed by a set of commit validators: by default the shared set of {{sharedValidatorsCount}} validators with a threshold of {{sharedSigningThreshold}} (0 means no signatures are required), or a custom per-chain set and threshold if enabled by the owner.",
+  "ignoreRelatives": ["accessControl"],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the ecosystem-wide minimum execution delay, manage the shared set of commit validators and its signing threshold, and allow chains to use a custom commit validator set."
+        }
+      ]
+    },
+    "executionDelay": {
+      "description": "Ecosystem-wide minimum execution delay (in seconds), set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay.",
+      "severity": "HIGH"
+    },
+    "executionDelay_fmt": {
+      "severity": "HIGH",
+      "description": "Ecosystem-wide minimum execution delay, set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay.",
+      "handler": { "type": "call", "method": "executionDelay", "args": [] },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "sharedSigningThreshold": {
+      "description": "Number of signatures from the shared commit validator set required to commit a batch, for chains that do not use a custom validator set. 0 means batches can be committed without signatures.",
+      "severity": "HIGH"
+    },
+    "sharedValidatorsMember": {
+      "description": "Shared set of commit validators whose signatures are counted towards the sharedSigningThreshold.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "array",
+        "method": "sharedValidatorsMember",
+        "length": "{{ sharedValidatorsCount }}"
+      }
+    },
+    // chain-specific delays, custom validator sets and thresholds (`chainConfig(chain)`) and roles are configured per project,
+    // since the template cannot know the chain address
+    "revertedBlocks": {
+      "handler": {
+        "type": "event",
+        "select": [
+          "totalBatchesCommitted",
+          "totalBatchesVerified",
+          "totalBatchesExecuted"
+        ],
+        "add": { "event": "BlocksRevert" }
+      }
+    }
+  }
+}

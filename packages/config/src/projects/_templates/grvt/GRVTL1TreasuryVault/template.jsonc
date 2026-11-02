@@ -1,0 +1,134 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Holds most of the exchange reserves of GRVT on Ethereum, which the exchange withdraws from GRVT to this vault. The funds can be allocated to whitelisted yield strategies, bridged back to the exchange on GRVT, and yield above the allocated principal is harvested to the yieldRecipient. Strategies and their allocation caps are whitelisted by the VAULT_ADMIN_ROLE.",
+  "critical": true,
+  "ignoreRelatives": [
+    "getSupportedVaultTokens",
+    "getTrackedTvlTokens",
+    "grvtBridgeProxyFeeToken",
+    "l2ExchangeRecipient",
+    "trackedTvlTokenTotals",
+    "wrappedNativeToken"
+  ],
+  "ignoreInWatchMode": ["availableNativeForRebalance", "trackedTvlTokenTotals"],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl" }
+    },
+    "defaultAdmin": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE",
+        "includeEmptyRoles": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the VAULT_ADMIN_ROLE in the GRVTL1TreasuryVault."
+        }
+      ]
+    },
+    "vaultAdmin": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "VAULT_ADMIN_ROLE",
+        "includeEmptyRoles": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "whitelist yield strategies and their allocation caps, set the supported and bridgeable tokens, manage the operational roles, pause and unpause, withdraw funds from strategies, harvest yield and send ETH to the yield recipient."
+        }
+      ]
+    },
+    "allocator": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "ALLOCATOR_ROLE",
+        "includeEmptyRoles": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "allocate the funds of the GRVTL1TreasuryVault to whitelisted strategies and withdraw them back to the vault."
+        }
+      ]
+    },
+    "rebalancer": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "REBALANCER_ROLE",
+        "includeEmptyRoles": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "bridge funds from the GRVTL1TreasuryVault to the exchange on GRVT."
+        }
+      ]
+    },
+    "yieldHarvester": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "YIELD_HARVESTER_ROLE",
+        "includeEmptyRoles": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "harvest the yield above the allocated principal from the strategies of the GRVTL1TreasuryVault to the yield recipient."
+        }
+      ]
+    },
+    "pauser": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PAUSER_ROLE",
+        "includeEmptyRoles": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause allocations to strategies, yield harvests and bridging to GRVT in the GRVTL1TreasuryVault."
+        }
+      ]
+    },
+    // one field per supported token: `getVaultTokenStrategies` takes the token as an argument
+    "strategiesUSDT": {
+      "description": "Strategies that hold USDT of the vault, including withdraw-only strategies that cannot receive new allocations.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "getVaultTokenStrategies",
+        "args": ["0xdAC17F958D2ee523a2206206994597C13D831ec7"]
+      }
+    },
+    "strategiesUSDC": {
+      "description": "Strategies that hold USDC of the vault, including withdraw-only strategies that cannot receive new allocations.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "getVaultTokenStrategies",
+        "args": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+      }
+    },
+    "getSupportedVaultTokens": {
+      "description": "Tokens that the vault can allocate to strategies. A new token needs its own strategies field in this template."
+    },
+    "l2ExchangeRecipient": {
+      "description": "Exchange contract on GRVT that receives the funds bridged from the vault.",
+      "type": "L2"
+    },
+    "yieldRecipient": {
+      "description": "Receives the yield harvested from strategies. Only the yieldRecipientTimelockController can change it.",
+      "severity": "MEDIUM"
+    },
+    "paused": {
+      "description": "Stops allocations to strategies, yield harvests and bridging to GRVT. Withdrawals from strategies stay available.",
+      "severity": "MEDIUM"
+    }
+  }
+}

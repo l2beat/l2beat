@@ -8,5 +8,11 @@
     "hash": "0xe7338cd500c37f1d7babf2aa7b9c2826f7f52ea69aafdaba9ace9138115981bd",
     "address": "eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B",
     "blockNumber": 23588465
+  },
+  "ProtocolUpgradeHandler_v31.sol": {
+    "hash": "0x94736426ab1ce890a3dc2ff8465aadec6e85a38613ef011bd5c755c3a556ecc0",
+    "address": "eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811",
+    "chain": "ethereum",
+    "blockNumber": 26327178
   }
 }
