@@ -11,5 +11,7 @@ export interface LiquidStakingProjectConfig {
 
 export interface LiquidStakingConfig {
   sinceTimestamp: UnixTime
+  /** The network indexer reads each day's execution sums from Dune. */
+  duneApiKey: string
   projects: LiquidStakingProjectConfig[]
 }

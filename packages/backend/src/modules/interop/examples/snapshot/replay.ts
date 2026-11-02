@@ -155,16 +155,6 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     return Promise.all(txHashes.map((h) => this.getTransactionReceipt(h)))
   }
 
-  getBlockReceipts(blockNumber: number): Promise<Receipt[]> {
-    const key = this.buildSnapshotKey(['blockReceipts', blockNumber.toString()])
-    const snapshot = this.$.inputs.readRpc<Receipt[]>(key)
-    if (snapshot) {
-      return Promise.resolve(snapshot)
-    }
-
-    throw new ReplayError(key)
-  }
-
   getBalance(
     holder: EthereumAddress,
     blockNumber: number | 'latest',

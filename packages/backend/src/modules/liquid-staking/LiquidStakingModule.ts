@@ -1,3 +1,4 @@
+import { DuneQueryService } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { DailyIndexer } from '../../tools/DailyIndexer'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
@@ -22,6 +23,10 @@ export function createLiquidStakingModule({
   const beacon = providers.clients.beacon
   if (!beacon) {
     throw new Error('liquid-staking needs ETHEREUM_BEACON_API_URL')
+  }
+  const duneClient = providers.clients.dune
+  if (!duneClient) {
+    throw new Error('liquid-staking needs DUNE_API_KEY')
   }
 
   const { sinceTimestamp, projects } = config.liquidStaking
@@ -60,6 +65,7 @@ export function createLiquidStakingModule({
       minHeight: sinceTimestamp + UnixTime.DAY,
       db,
       rpc,
+      dune: new DuneQueryService({ logger, duneClient }),
       beacon,
       blockTimestampProvider: providers.blockTimestamp,
     },
