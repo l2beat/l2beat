@@ -255,8 +255,6 @@ export class WormholeConfigPlugin
       input: Bytes.fromHex(data),
     }))
 
-    const previousNetworks = this.store.get(WormholeConfig) ?? []
-
     const networkPromises = this.chains.map(async (chain) => {
       const rpc = this.rpcs.get(chain.name)
       if (!rpc) return undefined
