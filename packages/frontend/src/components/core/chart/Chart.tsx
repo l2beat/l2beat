@@ -197,6 +197,8 @@ function ChartContainer<T extends { timestamp: number }>({
             animated={false}
             className={cn(
               'pointer-events-none absolute right-3 bottom-12 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14',
+              // On narrow charts the watermark would sit on the state message
+              !hasData && !isLoading && 'max-md:hidden',
               !!interactiveLegend &&
                 !interactiveLegend.disableOnboarding &&
                 !hasFinishedOnboardingInitial

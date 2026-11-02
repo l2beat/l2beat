@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
 import { ChartStateMessage, chartStateIconClassName } from './ChartStateMessage'
@@ -14,51 +13,37 @@ export function ChartErrorState({
   size: 'regular' | 'small'
   onRetry?: () => unknown
 }) {
-  const { isRetrying, retry } = useRetry(onRetry)
   return (
     <ChartStateMessage
       size={size}
       icon={
-        <RoundedWarningIcon className={cn('size-9', chartStateIconClassName)} />
+        <RoundedWarningIcon
+          className={cn('size-9 max-md:size-7', chartStateIconClassName)}
+        />
       }
       title="Couldn't load chart"
-      description="The request for this chart failed. Please try again."
+      description="Something went wrong on our end."
       action={
-        retry && (
+        onRetry && (
           <button
             type="button"
-            onClick={retry}
-            disabled={isRetrying}
+            // Retrying puts the chart back into its loading state, since a
+            // query without data returns to pending when it refetches.
+            onClick={() => onRetry()}
             className={cn(
-              'h-8 rounded-lg px-3 font-medium text-xs transition-colors md:text-sm',
+              'font-medium transition-colors',
+              // Sized like the chart's own controls: a RadioGroup and its items
+              size === 'regular'
+                ? 'h-8 rounded-lg px-3 text-xs md:text-sm'
+                : 'h-6 rounded-md px-2 text-xs',
               'bg-surface-primary primary-card:bg-surface-secondary hover:bg-surface-tertiary primary-card:hover:bg-surface-tertiary',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
-              'disabled:cursor-default disabled:opacity-50',
             )}
           >
-            {isRetrying ? 'Retrying…' : 'Retry'}
+            Retry
           </button>
         )
       }
     />
   )
-}
-
-/**
- * TanStack Query keeps `isError` true while it refetches a failed query, so
- * the button tracks its own pending retry to give feedback on the click.
- */
-function useRetry(onRetry: (() => unknown) | undefined) {
-  const [isRetrying, setIsRetrying] = useState(false)
-  if (!onRetry) return { isRetrying, retry: undefined }
-
-  const retry = async () => {
-    setIsRetrying(true)
-    try {
-      await onRetry()
-    } finally {
-      setIsRetrying(false)
-    }
-  }
-  return { isRetrying, retry }
 }

@@ -19,7 +19,14 @@ export function ChartStateMessage({
   action?: ReactNode
 }) {
   return (
-    <div className="absolute inset-0 z-30 flex select-none flex-col items-center justify-center gap-4 text-center">
+    <div
+      className={cn(
+        'absolute inset-0 z-30 flex select-none flex-col items-center justify-center text-center',
+        size === 'regular' ? 'gap-4 max-md:gap-3' : 'gap-1.5',
+        // Center on the plot, not plot plus legend, as the loader does
+        'group-has-[.recharts-legend-wrapper]:pb-7',
+      )}
+    >
       {size === 'regular' && icon}
       <span
         className={cn(
