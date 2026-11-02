@@ -3,11 +3,10 @@
   "project": "uniswapv2",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
+    "commit": "58b1bd612e52cfdb571468f23c261a7142d9ae17"
   },
   "discoveredAt": 1791537166,
   "collections": {
-    "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
     "_libs/solmate": { "name": "Solmate", "kind": "library" },
     "celo": { "name": "Celo", "kind": "project" },
     "compound": { "name": "Compound", "kind": "project" },
@@ -22,18 +21,11 @@
       "date": "2021-03-23",
       "document": "uniswapv3/reports/audit-2.pdf"
     },
-    "contracts__audits__2018-10": {
-      "collections": ["_libs/openzeppelin"],
-      "title": "Open Zeppelin v2.0 Security Audit",
-      "auditor": "Level K",
-      "date": "2018-10-21",
-      "document": "_libs/openzeppelin/reports/contracts__audits__2018-10.pdf"
-    },
     "dapp-org-uniswap-v2-2020-05": {
       "collections": ["uniswapv2"],
       "title": "Uniswap V2 Audit Report",
       "auditor": "dapp.org",
-      "date": "2020-05-06",
+      "date": "2020-04-30",
       "document": "uniswapv2/reports/dapp.org - Uniswap V2 Audit Report.html"
     },
     "openzeppelin-compound-alpha-governance-2020-02": {
@@ -762,16 +754,16 @@
         "timestamp": 1588610042,
         "contracts": 1,
         "withoutSource": 0,
-        "units": { "identical": 0, "differs": 0, "none": 6 },
-        "lines": { "total": 369, "covered": 0 },
-        "reports": ["contracts__audits__2018-10"]
+        "units": { "identical": 6, "differs": 0, "none": 0 },
+        "lines": { "total": 369, "covered": 369 },
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
       },
       {
         "timestamp": 1588710145,
         "contracts": 2,
         "withoutSource": 0,
-        "units": { "identical": 0, "differs": 0, "none": 11 },
-        "lines": { "total": 694, "covered": 0 },
+        "units": { "identical": 11, "differs": 0, "none": 0 },
+        "lines": { "total": 694, "covered": 694 },
         "changes": [
           {
             "address": "eth:0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc",
@@ -779,14 +771,6 @@
             "kind": "added"
           }
         ]
-      },
-      {
-        "timestamp": 1588723200,
-        "contracts": 2,
-        "withoutSource": 0,
-        "units": { "identical": 11, "differs": 0, "none": 0 },
-        "lines": { "total": 694, "covered": 694 },
-        "reports": ["dapp-org-uniswap-v2-2020-05"]
       },
       {
         "timestamp": 1589850429,
