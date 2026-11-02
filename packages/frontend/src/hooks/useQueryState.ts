@@ -1,6 +1,7 @@
 import {
   type Dispatch,
   type SetStateAction,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -68,6 +69,13 @@ export function useQueryState<T>(
     })
     setParam(nextParam)
   })
+
+  // A value that took a new default would otherwise leave the old param in
+  // the URL, and a reload would show that instead
+  const isStaleParam = current.isDefault && current.param !== defaultParam
+  useEffect(() => {
+    if (isStaleParam) setValue(codec.getDefault())
+  }, [isStaleParam, codec, setValue])
 
   return [value, setValue]
 }
