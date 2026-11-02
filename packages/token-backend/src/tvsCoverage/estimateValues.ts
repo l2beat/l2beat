@@ -1,10 +1,11 @@
-import { getErrorMessage } from '@l2beat/shared-pure'
+import { getErrorMessage, UnixTime } from '@l2beat/shared-pure'
 import type {
   Coverage,
   CoverageRow,
   CoverageStatus,
   MintedCopy,
 } from './coverage'
+import type { NetMinted, SupplyChange, TokenSupply } from './supplyChange'
 import { tokenKey } from './tokens'
 
 export interface VaultAsset {
@@ -24,12 +25,14 @@ export interface ChainReader {
   /**
    * Results line up with `calls`, and a call that fails yields `undefined`.
    * Calls that fail because of the RPC, not the contract, are reported in
-   * `warnings`. Throws when the chain cannot be read at all.
+   * `warnings`. Throws when the chain cannot be read at all. With `before`,
+   * reads the state at the last block before that time.
    */
   read(
     chain: string,
     calls: ChainCall[],
     warnings: string[],
+    before?: UnixTime,
   ): Promise<ChainCallResult[]>
 }
 
@@ -79,12 +82,19 @@ export interface RowValue {
   priceUsd: number | undefined
   valueUsd: number | undefined
   vaultAsset: (VaultAsset & { counted: boolean }) | undefined
+  supplyChange: SupplyChange | undefined
 }
 
 export interface ValueEstimates {
   values: Map<string, RowValue>
   warnings: string[]
-  stats: { rows: number; chainCalls: number; coingeckoIds: number }
+  stats: {
+    rows: number
+    chainCalls: number
+    pastSupplyCalls: number
+    coingeckoIds: number
+    supplyChanges: number
+  }
 }
 
 const ESTIMATED_STATUSES = new Set<CoverageStatus>([
@@ -105,6 +115,7 @@ export async function estimateValues(
   coverage: Coverage,
   reader: ChainReader,
   prices: PriceSource,
+  netMinted: NetMinted,
 ): Promise<ValueEstimates> {
   const plans = coverage.rows
     .filter((row) => ESTIMATED_STATUSES.has(row.status))
@@ -131,12 +142,24 @@ export async function estimateValues(
     reads.execute(reader, warnings),
   ])
 
+  // The supplies that were read, as they were when the compared transfers
+  // start. Read after the rest, so a chain's RPC gets one batch at a time.
+  const pastSupplies = new ChainReads(netMinted.since)
+  for (const plan of plans) {
+    const supply = reads.readSupply(supplyRead(plan))
+    if (supply) pastSupplies.add(supply.chain, totalSupplyCall(supply.address))
+  }
+  await pastSupplies.execute(reader, warnings)
+
   const values = new Map(
     plans.map((plan) => {
       const market = plan.row.pricing
         ? marketData.get(plan.row.pricing.coingeckoId)
         : undefined
-      return [rowKey(plan.row), toRowValue(plan, reads, market, coverage)]
+      return [
+        rowKey(plan.row),
+        toRowValue(plan, reads, market, coverage, pastSupplies, netMinted),
+      ]
     }),
   )
   return {
@@ -145,7 +168,11 @@ export async function estimateValues(
     stats: {
       rows: plans.length,
       chainCalls: reads.size,
+      pastSupplyCalls: pastSupplies.size,
       coingeckoIds: coingeckoIds.length,
+      supplyChanges: Array.from(values.values()).filter(
+        (value) => value.supplyChange,
+      ).length,
     },
   }
 }
@@ -219,12 +246,21 @@ function planRow(row: CoverageRow, coverage: Coverage): RowPlan {
   }
 }
 
+// The total supply read for a row: its own, or its minted copy's.
+function supplyRead(plan: RowPlan): AmountRead | undefined {
+  return plan.row.side === 'chain' ? plan.amount : plan.mintedCopy?.amount
+}
+
 function totalSupply(
   chain: string,
   token: string,
   decimals: number | undefined,
 ): AmountRead {
-  return amountRead(chain, token, decimals, [{ type: 'totalSupply', token }])
+  return amountRead(chain, token, decimals, [totalSupplyCall(token)])
+}
+
+function totalSupplyCall(token: string): ChainCall {
+  return { type: 'totalSupply', token }
 }
 
 function amountRead(
@@ -247,6 +283,8 @@ class ChainReads {
   private readonly calls = new Map<string, Map<string, ChainCall>>()
   private readonly results = new Map<string, Map<string, ChainCallResult>>()
   private readonly failures = new Map<string, AmountGap>()
+
+  constructor(private readonly before?: UnixTime) {}
 
   get size() {
     let size = 0
@@ -272,13 +310,19 @@ class ChainReads {
       Array.from(this.calls, async ([chain, byKey]) => {
         const calls = Array.from(byKey.values())
         try {
-          const results = await reader.read(chain, calls, warnings)
+          const results = await reader.read(chain, calls, warnings, this.before)
           this.results.set(
             chain,
             new Map(calls.map((call, i) => [callKey(call), results[i]])),
           )
         } catch (error) {
-          warnings.push(`Reading ${chain} failed: ${getErrorMessage(error)}`)
+          const at =
+            this.before === undefined
+              ? ''
+              : ` before ${UnixTime.toDate(this.before).toISOString()}`
+          warnings.push(
+            `Reading ${chain}${at} failed: ${getErrorMessage(error)}`,
+          )
           this.failures.set(
             chain,
             error instanceof MissingRpcError ? 'noRpc' : 'readFailed',
@@ -297,15 +341,28 @@ class ChainReads {
     if (failure) return { amount: undefined, gap: failure }
 
     const values = amount.calls.map((call) => this.get(amount.chain, call))
-    const decimals =
-      amount.decimals ??
-      this.get(amount.chain, { type: 'decimals', token: amount.token })
+    const decimals = this.decimals(amount)
     // A partial sum would understate the amount, so one failed read fails it.
-    if (!values.every(isBigint) || typeof decimals !== 'number') {
+    if (!values.every(isBigint) || decimals === undefined) {
       return { amount: undefined, gap: 'readFailed' }
     }
     const raw = values.reduce((total, value) => total + value, 0n)
     return { amount: Number(raw) / 10 ** decimals, gap: undefined }
+  }
+
+  readSupply(read: AmountRead | undefined): TokenSupply | undefined {
+    if (!read) return undefined
+    const { amount } = this.readAmount(read)
+    const decimals = this.decimals(read)
+    if (amount === undefined || decimals === undefined) return undefined
+    return { chain: read.chain, address: read.token, amount, decimals }
+  }
+
+  private decimals(amount: AmountRead): number | undefined {
+    const decimals =
+      amount.decimals ??
+      this.get(amount.chain, { type: 'decimals', token: amount.token })
+    return typeof decimals === 'number' ? decimals : undefined
   }
 }
 
@@ -314,6 +371,8 @@ function toRowValue(
   reads: ChainReads,
   market: MarketData | undefined,
   coverage: Coverage,
+  pastSupplies: ChainReads,
+  netMinted: NetMinted,
 ): RowValue {
   const { row } = plan
   const own = plan.amount && reads.readAmount(plan.amount)
@@ -334,6 +393,9 @@ function toRowValue(
   const vault = plan.readsVault
     ? reads.get(row.chain, { type: 'vaultAsset', token: row.address })
     : undefined
+  const supply = reads.readSupply(supplyRead(plan))
+  const pastSupply =
+    supply && pastSupplies.get(supply.chain, totalSupplyCall(supply.address))
 
   return {
     amount,
@@ -359,6 +421,14 @@ function toRowValue(
           }),
         }
       : undefined,
+    supplyChange:
+      supply && isBigint(pastSupply)
+        ? netMinted.supplyChange(
+            supply,
+            Number(pastSupply) / 10 ** supply.decimals,
+            priceUsd,
+          )
+        : undefined,
   }
 }
 

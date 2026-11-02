@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Coverage, CoverageRow, MintedCopy } from './coverage'
 import {
@@ -8,12 +9,16 @@ import {
   MissingRpcError,
   rowKey,
 } from './estimateValues'
+import { NetMinted } from './supplyChange'
 
 const TOKEN = '0x1111111111111111111111111111111111111111'
 const ESCROW_A = '0x2222222222222222222222222222222222222222'
 const ESCROW_B = '0x3333333333333333333333333333333333333333'
 const ASSET = '0x4444444444444444444444444444444444444444'
 const MINTED = '0x5555555555555555555555555555555555555555'
+const SINCE = UnixTime(100)
+
+const noTransfers = new NetMinted(SINCE, [])
 
 describe(estimateValues.name, () => {
   it('values a chain token by total supply capped at circulating supply', async () => {
@@ -32,6 +37,7 @@ describe(estimateValues.name, () => {
           circulatingSupplyUnknown: false,
         },
       }),
+      noTransfers,
     )
 
     expect(values.get(rowKey(row))).toEqual({
@@ -44,6 +50,7 @@ describe(estimateValues.name, () => {
       priceUsd: 2,
       valueUsd: 6,
       vaultAsset: undefined,
+      supplyChange: undefined,
     })
   })
 
@@ -61,6 +68,7 @@ describe(estimateValues.name, () => {
           circulatingSupplyUnknown: true,
         },
       }),
+      noTransfers,
     )
 
     expect(values.get(rowKey(row))).toEqual(
@@ -90,6 +98,7 @@ describe(estimateValues.name, () => {
           circulatingSupplyUnknown: false,
         },
       }),
+      noTransfers,
     )
 
     expect(values.get(rowKey(row))).toEqual({
@@ -102,6 +111,7 @@ describe(estimateValues.name, () => {
       priceUsd: 10,
       valueUsd: 50,
       vaultAsset: undefined,
+      supplyChange: undefined,
     })
   })
 
@@ -124,6 +134,7 @@ describe(estimateValues.name, () => {
       }),
       reader,
       prices({}),
+      noTransfers,
     )
 
     expect(values.get(rowKey(row))).toEqual(
@@ -145,11 +156,13 @@ describe(estimateValues.name, () => {
       coverage([row], { escrows: [ESCROW_A], minted }),
       reader,
       prices({}),
+      noTransfers,
     )
     const unlisted = await estimateValues(
       coverage([row], { escrows: [], minted }),
       reader,
       prices({}),
+      noTransfers,
     )
 
     for (const { values } of [listed, unlisted]) {
@@ -166,15 +179,25 @@ describe(estimateValues.name, () => {
     ]
     const reader = fakeReader({ [`totalSupply:${TOKEN}`]: 1n })
 
-    await estimateValues(coverage(rows), reader, prices({}))
+    await estimateValues(coverage(rows), reader, prices({}), noTransfers)
 
-    expect(reader.read).toHaveBeenOnlyCalledWith(
+    expect(reader.read).toHaveBeenCalledTimes(2)
+    expect(reader.read).toHaveBeenNthCalledWith(
+      1,
       'base',
       [
         { type: 'totalSupply', token: TOKEN },
         { type: 'vaultAsset', token: TOKEN },
       ],
       [],
+      undefined,
+    )
+    expect(reader.read).toHaveBeenNthCalledWith(
+      2,
+      'base',
+      [{ type: 'totalSupply', token: TOKEN }],
+      [],
+      SINCE,
     )
   })
 
@@ -203,12 +226,14 @@ describe(estimateValues.name, () => {
           circulatingSupplyUnknown: false,
         },
       }),
+      noTransfers,
     )
 
     expect(reader.read).toHaveBeenCalledWith(
       'arbitrum',
       [{ type: 'totalSupply', token: MINTED }],
       [],
+      undefined,
     )
     expect(values.get(rowKey(row))).toEqual({
       amount: 9,
@@ -226,6 +251,7 @@ describe(estimateValues.name, () => {
       priceUsd: 1,
       valueUsd: 9,
       vaultAsset: undefined,
+      supplyChange: undefined,
     })
   })
 
@@ -236,7 +262,12 @@ describe(estimateValues.name, () => {
       [`decimals:${TOKEN}`]: 6,
     })
 
-    const { values } = await estimateValues(coverage([row]), reader, prices({}))
+    const { values } = await estimateValues(
+      coverage([row]),
+      reader,
+      prices({}),
+      noTransfers,
+    )
 
     expect(values.get(rowKey(row))?.amount).toEqual(2)
   })
@@ -252,6 +283,7 @@ describe(estimateValues.name, () => {
       coverage([row], { counted: [`base:${ASSET}`] }),
       reader,
       prices({}),
+      noTransfers,
     )
 
     expect(values.get(rowKey(row))?.vaultAsset).toEqual({
@@ -274,6 +306,7 @@ describe(estimateValues.name, () => {
       coverage([coverageRow({ status: 'counted' }), nonEvm, native, noEscrows]),
       reader,
       prices({}),
+      noTransfers,
     )
 
     expect(Array.from(values.values()).map((value) => value.amountGap)).toEqual(
@@ -296,6 +329,7 @@ describe(estimateValues.name, () => {
       coverage([noRpc, failed]),
       reader,
       prices({}),
+      noTransfers,
     )
 
     expect(values.get(rowKey(noRpc))?.amountGap).toEqual('noRpc')
@@ -325,11 +359,120 @@ describe(estimateValues.name, () => {
           circulatingSupplyUnknown: false,
         },
       }),
+      noTransfers,
     )
 
     expect(warnings).toEqual(['Reading failing failed: timeout'])
     expect(values.get(rowKey(failing))?.valueUsd).toEqual(undefined)
     expect(values.get(rowKey(working))?.valueUsd).toEqual(7)
+  })
+
+  it('compares the uncapped total supply with the one before the transfers', async () => {
+    const row = coverageRow({ decimals: undefined })
+    const reader = fakeReader(
+      { [`totalSupply:${TOKEN}`]: 5_000_000n, [`decimals:${TOKEN}`]: 6 },
+      { [`totalSupply:${TOKEN}`]: 4_000_000n },
+    )
+
+    const { values, stats } = await estimateValues(
+      coverage([row]),
+      reader,
+      prices({
+        'usd-coin': {
+          priceUsd: 2,
+          circulatingSupply: 3,
+          circulatingSupplyUnknown: false,
+        },
+      }),
+      new NetMinted(SINCE, [
+        {
+          plugin: 'cctp-v2',
+          chain: 'base',
+          tokenAddress: TOKEN,
+          netMinted: 250_000n,
+          transferCount: 1,
+          unknownCount: 0,
+          valueUsd: 1,
+          unknownValueUsd: 0,
+        },
+      ]),
+    )
+
+    expect(values.get(rowKey(row))?.supplyChange).toEqual({
+      since: SINCE,
+      amount: 1,
+      netMintedByBridge: [
+        { plugin: 'cctp-v2', amount: 0.25, unknownTransfers: 0 },
+      ],
+      unexplained: 0.75,
+      unexplainedUsd: 1.5,
+    })
+    expect(stats).toEqual(
+      expect.subset({ chainCalls: 3, pastSupplyCalls: 1, supplyChanges: 1 }),
+    )
+  })
+
+  it("compares the supply of an escrow row's minted copy", async () => {
+    const rows = [
+      coverageRow({ side: 'escrow', chain: 'ethereum', decimals: 0 }),
+      coverageRow({ chain: 'arbitrum', address: MINTED, decimals: 2 }),
+    ]
+    const reader = fakeReader(
+      {
+        [`balanceOf:${TOKEN}:${ESCROW_A}`]: 0n,
+        [`totalSupply:${MINTED}`]: 900n,
+      },
+      { [`totalSupply:${MINTED}`]: 800n },
+    )
+
+    const { values } = await estimateValues(
+      coverage(rows, {
+        escrows: [ESCROW_A],
+        minted: {
+          chain: 'arbitrum',
+          address: MINTED,
+          symbol: 'USDC.e',
+          decimals: 2,
+        },
+      }),
+      reader,
+      prices({}),
+      noTransfers,
+    )
+
+    expect(reader.read).toHaveBeenCalledWith(
+      'arbitrum',
+      [{ type: 'totalSupply', token: MINTED }],
+      [],
+      SINCE,
+    )
+    for (const row of rows) {
+      expect(values.get(rowKey(row))?.supplyChange).toEqual(
+        expect.subset({ amount: 1, unexplained: 1, unexplainedUsd: undefined }),
+      )
+    }
+  })
+
+  it('has no supply change when either supply cannot be read', async () => {
+    const failed = coverageRow()
+    const notDeployedYet = coverageRow({ address: ASSET })
+    const reader = fakeReader({ [`totalSupply:${ASSET}`]: 1n })
+
+    const { values } = await estimateValues(
+      coverage([failed, notDeployedYet]),
+      reader,
+      prices({}),
+      noTransfers,
+    )
+
+    expect(reader.read).toHaveBeenLastCalledWith(
+      'base',
+      [{ type: 'totalSupply', token: ASSET }],
+      [],
+      SINCE,
+    )
+    expect(values.get(rowKey(failed))?.supplyChange).toEqual(undefined)
+    expect(values.get(rowKey(notDeployedYet))?.supplyChange).toEqual(undefined)
   })
 })
 
@@ -373,16 +516,25 @@ function coverage(
   })
 }
 
-function fakeReader(results: Record<string, ChainCallResult>) {
+function fakeReader(
+  results: Record<string, ChainCallResult>,
+  pastResults: Record<string, ChainCallResult> = {},
+) {
   return {
-    read: mockFn(async (_chain: string, calls: ChainCall[], _: string[]) =>
-      calls.map((call) => {
-        const key =
-          call.type === 'balanceOf'
-            ? `${call.type}:${call.token}:${call.holder}`
-            : `${call.type}:${call.token}`
-        return results[key]
-      }),
+    read: mockFn(
+      async (
+        _chain: string,
+        calls: ChainCall[],
+        _: string[],
+        before?: UnixTime,
+      ) =>
+        calls.map((call) => {
+          const key =
+            call.type === 'balanceOf'
+              ? `${call.type}:${call.token}:${call.holder}`
+              : `${call.type}:${call.token}`
+          return (before === undefined ? results : pastResults)[key]
+        }),
     ),
   }
 }
