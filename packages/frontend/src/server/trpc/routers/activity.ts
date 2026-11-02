@@ -1,4 +1,5 @@
 import { v as z } from '@l2beat/validate'
+import { getActivityChangeEvents } from '~/server/features/layer2s/activity/getActivityChangeEvents'
 import {
   ActivityChartParams,
   getActivityChart,
@@ -38,6 +39,14 @@ export const activityRouter = router({
     .query(({ input }) =>
       getRecategorisedActivityChart(input.filter, input.range, input.hourly),
     ),
+  changeEvents: procedure
+    .input(
+      z.object({
+        range: ChartRange,
+        filter: ActivityProjectFilter,
+      }),
+    )
+    .query(({ input }) => getActivityChangeEvents(input.filter, input.range)),
   chartStats: procedure
     .input(
       z.object({
