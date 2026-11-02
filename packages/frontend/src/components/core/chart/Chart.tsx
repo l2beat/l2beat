@@ -164,9 +164,6 @@ function ChartContainer<T extends { timestamp: number }>({
                 '[&_.recharts-reference-area]:hidden',
               ],
               (isLoading || !hasData) && 'pointer-events-none',
-              // A legend for series that failed to load is noise, but it
-              // keeps its space so the page doesn't jump when Retry works.
-              showError && '[&_.recharts-legend-wrapper]:invisible',
             )}
           >
             {shouldMountChart ? children : <div />}
@@ -195,7 +192,7 @@ function ChartContainer<T extends { timestamp: number }>({
           shouldMountChart && (
             <ChartNoDataSourceState message={noDataSourceMessage} />
           )}
-        {shouldMountChart && !showError && size !== 'small' && (
+        {shouldMountChart && size !== 'small' && (
           <Logo
             animated={false}
             className={cn(
@@ -209,7 +206,7 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {shouldMountChart && !showError && size !== 'small' && project && (
+        {shouldMountChart && size !== 'small' && project && (
           <ChartProjectLogo
             project={project}
             className={cn(
@@ -222,7 +219,7 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {!isLoading && !showError && milestones && (
+        {!isLoading && milestones && (
           <ChartMilestones data={data} milestones={milestones} />
         )}
       </div>
