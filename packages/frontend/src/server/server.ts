@@ -85,17 +85,13 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     const rendered = await render(data, url)
     const template = await getTemplate(options, url, productionTemplate)
 
+    // Pass the data through functions, so `replace` does not read a `$&` or
+    // `$'` in it as a pattern
     return template
       .replace('<!--app-head-->', rendered.head + pagePreloads(data.ssr.page))
       .replace('<!--app-html-->', rendered.html)
-      .replace(
-        '<!--ssr-data-->',
-        `window.__SSR_DATA__=${jsonForInlineScript(data.ssr)}`,
-      )
-      .replace(
-        '<!--env-data-->',
-        `window.__ENV__=${jsonForInlineScript(getClientEnvData())}`,
-      )
+      .replace('<!--ssr-data-->', () => jsonForInlineScript(data.ssr))
+      .replace('<!--env-data-->', () => jsonForInlineScript(getClientEnvData()))
   }
 
   app.use(timeout('25s'))
