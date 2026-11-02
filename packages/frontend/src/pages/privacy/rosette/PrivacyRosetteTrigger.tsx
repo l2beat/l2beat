@@ -11,6 +11,7 @@ import {
 import {
   Tooltip,
   TooltipContent,
+  TooltipHtmlCopyOnly,
   TooltipTrigger,
   TooltipVisualOnly,
 } from '~/components/core/tooltip/Tooltip'
@@ -19,6 +20,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { cn } from '~/utils/cn'
 import { getPrivacyAdversariesSectionHref } from '../adversaries/privacyAdversaryUi'
 import { PrivacyRosetteAnalysis } from './PrivacyRosetteAnalysis'
+import { PrivacyRosetteSummary } from './PrivacyRosetteSummary'
 import { useFollowLinkAfterClose } from './useFollowLinkAfterClose'
 
 const PLACEMENTS = {
@@ -31,7 +33,7 @@ const PLACEMENTS = {
     label: 'Privacy assessment',
     // The reasons appear nowhere else on the summary page.
     contentInHtml: true,
-    hint: 'Click the rosette for the full assessment.',
+    hint: 'Click for the reasons behind each verdict.',
     drawerLinkLabel: 'Open project page',
     isSectionOnPage: false,
   },
@@ -57,7 +59,7 @@ interface Props {
   children: ReactNode
 }
 
-/** The privacy risk analysis in a tooltip from md up and in a drawer below. */
+/** The privacy verdicts in a tooltip from md up, and with their reasons in a drawer below. */
 export function PrivacyRosetteTrigger({
   values,
   isUnderReview,
@@ -86,13 +88,21 @@ export function PrivacyRosetteTrigger({
             {children}
           </Link>
         </TooltipTrigger>
-        <TooltipContent fitContent>
-          {analysis}
-          {settings.hint && (
-            <TooltipVisualOnly>
-              <p className="mt-3 text-secondary text-xs">{settings.hint}</p>
-            </TooltipVisualOnly>
-          )}
+        {/* Clear of the viewport edge, like the page's own gutter. */}
+        <TooltipContent fitContent collisionPadding={16}>
+          {/* The popup is a glance; the HTML copy keeps the reasons. */}
+          <TooltipVisualOnly>
+            <PrivacyRosetteSummary
+              values={values}
+              isUnderReview={isUnderReview}
+            />
+            {settings.hint && (
+              <p className="mt-2.5 font-normal text-paragraph-12 text-secondary leading-none">
+                {settings.hint}
+              </p>
+            )}
+          </TooltipVisualOnly>
+          <TooltipHtmlCopyOnly>{analysis}</TooltipHtmlCopyOnly>
         </TooltipContent>
       </Tooltip>
       <Drawer open={open} onOpenChange={setOpen}>
