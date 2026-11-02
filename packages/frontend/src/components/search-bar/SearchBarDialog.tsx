@@ -16,6 +16,7 @@ import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
+import { usePathname } from '~/hooks/usePathname'
 import { useTracking } from '~/hooks/useTracking'
 import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { useTRPC } from '~/trpc/React'
@@ -45,9 +46,10 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   const debouncedValue = useDebouncedValue(value, 200)
   const { open, setOpen } = useSearchBarContext()
   const pinnedProjects = usePinnedProjects()
+  const pathname = usePathname()
   const emptyState = useMemo(
-    () => getEmptyStateGroups(pinnedProjects, recentlyAdded),
-    [pinnedProjects, recentlyAdded],
+    () => getEmptyStateGroups(pinnedProjects, recentlyAdded, pathname),
+    [pinnedProjects, recentlyAdded, pathname],
   )
 
   useGlobalShortcut('/', () => setOpen((open) => !open))

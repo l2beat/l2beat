@@ -19,11 +19,13 @@ interface EmptyStateGroups<T extends { href: string }> {
 /**
  * What the dialog lists before anything is typed: the visitor's way back to
  * their projects first, then what's new. A project appears once, in the
- * first group that has it.
+ * first group that has it. The page being viewed is left out of Recently
+ * viewed: opening it records a visit, so it would always take the first slot.
  */
 export function getEmptyStateGroups<T extends { href: string }>(
   { pinned, recent }: Pick<PinnedProjects, 'pinned' | 'recent'>,
   recentlyAdded: T[],
+  currentHref: string,
 ): EmptyStateGroups<T> {
   const shown = new Set<string>()
   const takeUnshown = <P extends { href: string }>(
@@ -36,7 +38,10 @@ export function getEmptyStateGroups<T extends { href: string }>(
   }
 
   const pinnedGroup = takeUnshown(pinned, MAX_PINNED)
-  const recentlyViewed = takeUnshown(recent, MAX_RECENTLY_VIEWED)
+  const recentlyViewed = takeUnshown(
+    recent.filter((p) => p.href !== currentHref),
+    MAX_RECENTLY_VIEWED,
+  )
   const hasOwn = pinnedGroup.length > 0 || recentlyViewed.length > 0
   return {
     pinned: pinnedGroup,

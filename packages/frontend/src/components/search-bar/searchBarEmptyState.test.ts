@@ -8,6 +8,7 @@ describe(getEmptyStateGroups.name, () => {
     const groups = getEmptyStateGroups(
       { pinned: saved('a', 'b'), recent: saved('b', 'c', 'a', 'd') },
       added('d', 'e', 'c'),
+      '/elsewhere',
     )
 
     expect(hrefs(groups)).toEqual({
@@ -24,6 +25,7 @@ describe(getEmptyStateGroups.name, () => {
         recent: saved('p1', 'r1', 'r2', 'r3', 'r4'),
       },
       added('a1', 'a2', 'a3', 'a4', 'a5', 'a6'),
+      '/elsewhere',
     )
 
     expect(hrefs(groups)).toEqual({
@@ -33,12 +35,23 @@ describe(getEmptyStateGroups.name, () => {
     })
   })
 
+  it('leaves the page being viewed out of recently viewed', () => {
+    const groups = getEmptyStateGroups(
+      { pinned: [], recent: saved('here', 'r1', 'r2', 'r3') },
+      [],
+      'here',
+    )
+
+    expect(hrefs(groups).recentlyViewed).toEqual(['r1', 'r2', 'r3'])
+  })
+
   it('keeps every recently added project for a visitor with none of their own', () => {
     const recentlyAdded = added(...Array.from({ length: 15 }, (_, i) => `${i}`))
 
     const groups = getEmptyStateGroups(
       { pinned: [], recent: [] },
       recentlyAdded,
+      '/elsewhere',
     )
 
     expect(groups.recentlyAdded).toEqual(recentlyAdded)
