@@ -152,6 +152,27 @@ describe(computeCostOfExitChart.name, () => {
     )
   })
 
+  it('takes the market only when a pool could fill the sale for most of the day', () => {
+    const quoted = {
+      lockTime: 40 * DAY,
+      marketExitEth: (100_899n * ETH) / 1000n,
+      marketExitValueEth: 101n * ETH,
+    }
+    const unfilled = { lockTime: 40 * DAY }
+    const charts = compute(
+      [project('wbeth')],
+      [
+        snapshot('wbeth', START + DAY, 1.0),
+        // One hour of three could sell; the other two found no pool deep enough.
+        snapshot('wbeth', DAY_31, 1.01, quoted),
+        snapshot('wbeth', DAY_31 + HOUR, 1.01, unfilled),
+        snapshot('wbeth', DAY_31 + 2 * HOUR, 1.01, unfilled),
+      ],
+    )
+    // So the exit is the unwrap, which waits out the lock.
+    expect(present(charts.costOfExit[0]?.projects.wbeth)).toEqual(40)
+  })
+
   it('exits Rocket Pool at once only while its buffer holds the reference exit', () => {
     const at = (instantExitEth: bigint) =>
       compute(

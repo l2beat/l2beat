@@ -193,15 +193,22 @@ class ExitCostSeries {
     return days === null ? null : { days, estimated: false }
   }
 
-  /** Selling at a discount costs the days of yield the discount equals. */
+  /**
+   * Selling at a discount costs the days of yield the discount equals. Like
+   * the instant exit, it counts only when a pool could fill the sale for most
+   * of the day.
+   */
   private marketAt(day: number, annualYield: number | null): ExitCost | null {
-    const discounts = (this.hoursByDay.get(day) ?? []).flatMap((s) =>
+    const hours = this.hoursByDay.get(day) ?? []
+    const discounts = hours.flatMap((s) =>
       s.marketExitEth !== null && s.marketExitValueEth
         ? [1 - toEth(s.marketExitEth) / toEth(s.marketExitValueEth)]
         : [],
     )
     const discount = median(discounts)
-    if (discount === undefined) return null
+    if (discount === undefined || discounts.length * 2 < hours.length) {
+      return null
+    }
     // Selling at a premium exits for free.
     const days = toYieldDays(Math.max(0, discount), annualYield)
     return days === null ? null : { days, estimated: false }
