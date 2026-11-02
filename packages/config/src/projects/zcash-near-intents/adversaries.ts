@@ -4,11 +4,14 @@ import type { PrivacyFieldExposure } from '../../types'
 const INTENTS =
   'https://github.com/near/intents/blob/fa44ede9e874931c39a6c4246de82bc40f4f8d99/'
 const BRIDGE =
-  'https://github.com/Near-One/btc-bridge/blob/4711c2f1d035a208464b9729bb24e45ed9ab7831/contracts/satoshi-bridge/src/'
+  'https://github.com/Near-One/btc-bridge/blob/66d239120981ba58ae92f73dc6860e0369b4ad28/contracts/satoshi-bridge/src/'
 const ZODL =
   'https://github.com/zodl-inc/zodl-ios/blob/75b83d7601573e165e2dacdfaffb69750dadd05f/secant/Sources/'
 const ZODL_SDK =
   'https://github.com/zodl-inc/zodl-swift-wallet-sdk/blob/191d0347186a1c6fcd207eead24a891049444041/Sources/ZcashLightClientKit/'
+// The sync engine Zodl 3.15.0 ships, through SDK 5.0.0 (zodl-slipstream 0.2.0).
+const SLIPSTREAM =
+  'https://github.com/zodl-inc/slipstream/blob/3bd434ce6023a000cc377634d8cd2b184161857a/core/src/'
 const DOCS = 'https://docs.near-intents.org/'
 
 const PAYOUT_RECIPIENT: PrivacyFieldExposure = {
@@ -34,7 +37,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         amount: 'private',
         asset: {
           verdict: 'exposed',
-          note: 'Only ZEC exists inside the pool. The assets swapped from and to are public on NEAR.',
+          note: 'Only ZEC exists inside the pool, and the assets swapped from and to are public on NEAR.',
         },
         linkage: 'private',
       },
@@ -46,11 +49,11 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'Withdrawal message names the target Zcash address',
-          url: BRIDGE + 'api/token_receiver.rs#L8-L16',
+          url: BRIDGE + 'api/token_receiver.rs#L12-L18',
         },
         {
           title: 'Payouts are encrypted to an all-zero outgoing viewing key',
-          url: BRIDGE + 'zcash_utils/orchard_policy.rs#L13-L63',
+          url: BRIDGE + 'zcash_utils/orchard_policy.rs#L11-L64',
         },
         {
           title: 'Zodl creates a fresh shielded address for every quote',
@@ -84,7 +87,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'Deposit address derived per quote from the deposit message',
-          url: BRIDGE + 'deposit_msg.rs#L49-L52',
+          url: BRIDGE + 'deposit_msg.rs#L50-L53',
         },
         {
           title: 'Bridge change address and UTXO set',
@@ -95,9 +98,9 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        "Each sync sends the user's transparent addresses to lightwalletd outside Tor, so lightwalletd can tie the payout fetch and the exit to that user by timing.",
+        "Each sync sends the account's transparent addresses to lightwalletd before fetching its transactions, so lightwalletd can tie the payout and the exit to the account.",
       exposureContinued:
-        "Zodl's Tor isolates each 1Click request, payout fetch and transaction, while block sync and these address lookups stay direct.",
+        "With Tor on, each 1Click request and each sent transaction gets its own circuit, and sync lookups go over Tor while blocks download directly. Tor hides the user's IP from the lookups, not the addresses they name.",
       advice:
         'Turn on Tor in Zodl and point it at a lightwalletd server the user runs.',
       interior: {
@@ -112,23 +115,22 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Tor is off unless the user enables it',
-          url:
-            ZODL + 'Dependencies/SDKSynchronizer/SDKSynchronizerLive.swift#L45',
+          title: 'Zodl syncs with the Slipstream engine',
+          url: ZODL + 'Models/WalletConfig.swift#L14-L25',
         },
         {
           title:
-            "Every sync looks up the account's transparent addresses directly",
-          url:
-            ZODL_SDK + 'Block/FetchUnspentTxOutputs/UTXOFetcher.swift#L39-L52',
+            "Each sync opens one connection and looks up the account's transparent addresses first",
+          url: SLIPSTREAM + 'engine.rs#L246-L282',
         },
         {
-          title: 'Each transaction fetch and send gets its own Tor connection',
-          url: ZODL_SDK + 'Modules/Service/LightWalletService.swift#L146-L159',
+          title:
+            'Blocks download directly, lookups go over isolated Tor circuits',
+          url: SLIPSTREAM + 'connector.rs#L17-L22',
         },
         {
-          title: 'Compact blocks download over a direct connection',
-          url: ZODL_SDK + 'Block/Download/BlockDownloader.swift#L187',
+          title: 'Each sent transaction gets its own Tor circuit',
+          url: ZODL_SDK + 'Transaction/EndpointSubmitter.swift#L26-L41',
         },
       ],
     },
@@ -150,12 +152,13 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: '1Click terms: IP and wallet data, screening, custody',
+          title:
+            '1Click terms: IP and wallet data, screening, custody (2026-10-30)',
           url: DOCS + 'security-compliance/terms-of-service',
         },
         {
           title: 'Any account can be locked by the multisig or a locker',
-          url: INTENTS + 'defuse/src/contract/accounts/force.rs#L21-L33',
+          url: INTENTS + 'defuse/src/contract/accounts/force.rs#L19-L33',
         },
         {
           title: 'Owner-only mint of the wrapped Ethereum assets',
@@ -196,7 +199,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'Payouts are encrypted to an all-zero outgoing viewing key',
-          url: BRIDGE + 'zcash_utils/orchard_policy.rs#L13-L63',
+          url: BRIDGE + 'zcash_utils/orchard_policy.rs#L11-L64',
         },
       ],
     },

@@ -12,7 +12,7 @@ Users trust the NEAR Intents operator, which holds the Ethereum funds in a custo
 
 ### App
 
-Zodl, formerly Zashi, is rated with its built-in Tor on. It syncs from public lightwalletd servers, which serve the Zcash chain to light wallets, zec.rocks by default. Tor carries swap requests, payout fetches and transactions, each on its own circuit. Block sync and lookups of the account's transparent addresses stay direct, so the server can tie the isolated requests to the account by timing.
+Zodl, formerly Zashi, is rated with its built-in Tor switched on manually. It syncs from public lightwalletd servers, which serve the Zcash chain to light wallets, zec.rocks by default. Each sync looks up the transparent addresses of every account in the wallet over one Tor connection. The custom server setting can move all of this to a lightwalletd the user runs.
 
 ### Custody
 

@@ -1,7 +1,7 @@
 {
   "name": "zkmoney",
-  "timestamp": 1793012002,
-  "configHash": "0x937336ad351c040950b6a5a816ae0f9656fc379ec2c307837f984db7f7619403",
+  "timestamp": 1793367325,
+  "configHash": "0xe9fa6587b5a2a4aa8bcf605c9b6debeb2d88c763dcab1fba0927a47bc97aea98",
   "entries": [
     {
       "name": "NitroValidator",
@@ -352,7 +352,7 @@
         "$immutable": true,
         "ensNode": "0xf605999a299a7229da9f2a3c65acf5cb829ae965cfe467f053e1b97c50b0eec2",
         "ensNodeOwner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
-        "ensResolver": "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F",
+        "ensResolver": "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525",
         "NAME_REGISTRY": "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a",
         "SIPA_FACTORY": "eth:0xc357E34D4C7520a83C9Ec0a242Ba52b4ecABa1Fc",
         "VERIFIER": "eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451"
@@ -686,8 +686,8 @@
           "extensions": []
         },
         "owner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
-        "registrationController": "eth:0x10EB6fecD2DCE6DA55d25C355374c970D5D11E23",
-        "resolver": "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F"
+        "registrationController": "eth:0x45F626E2a4D63232677C96B163ac46e20514a915",
+        "resolver": "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525"
       },
       "fieldMeta": {
         "owner": { "severity": "MEDIUM" },
@@ -1039,12 +1039,12 @@
         "resolverOperators": {
           "eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664": [
             [
-              "103084522734471857115051869841763019900578383836917791387182750820147840889585",
-              "112601459342247942869064749588970208967989742799476805946984122328994807074558"
+              "78424701733732488215665087776877938889254215889323330557684387640730288987814",
+              "91380317572347884033234557058971661735677496832042332515746246346312091580181"
             ],
-            "0x07248288047b1945ad7453dc2ca9f73b2320b5ab4ba042875d1d11073131848e",
-            "https://d2yb6xtgmawdj1.cloudfront.net/{sender}/{data}.json",
-            "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449"
+            "0x1847cc9b9248ca3a57e3c90c91188c2c41262b860b6be229966d843956f00ae7",
+            "https://rop-v6.v6-prod.oxide.zk.money/{sender}/{data}.json",
+            "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C"
           ]
         }
       },
@@ -2258,7 +2258,7 @@
     "zkmoney/UnprocessedDepositRefundVerifier": "0x973590db53f201980888f82d4c8ccc44430edb76a016489d94d133c448daaf8d",
     "zkmoney/ZkMoneyPortal": "0x4849cf15f068d591a1aa63a22d45dab667cc83726b39e596ca465b8c122c6383"
   },
-  "usedBlockNumbers": { "ethereum": 26276386 },
+  "usedBlockNumbers": { "ethereum": 26305904 },
   "permissionsConfigHash": "0x60d7677d3e8ec52df80ea33848cb8348b3af7871c21ffa59f693ad708cb59bfb",
   "permissions": {
     "eth:0x05406F53174EC1bFE5C94aF253CdD62A4adF2F29": {

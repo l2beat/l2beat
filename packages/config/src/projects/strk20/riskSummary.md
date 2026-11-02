@@ -1,9 +1,9 @@
 ## Funds can be stolen if
 1. the proof system or virtual Starknet execution model is broken, allowing invalid actions.
 2. the Starknet sequencer includes a transaction with fabricated proof facts.
-3. a multisig deploys a malicious pool upgrade, which takes effect without delay.
-4. an external DeFi helper or target protocol invoked by the user mishandles assets.
-5. a multisig upgrades the anonymizer, which takes effect without delay and can move everything shadow accounts hold (see [upgrades and governance](#upgrades-and-governance)).
+3. the 7/12 multisig deploys a malicious [upgrade](#upgrades-and-governance) of the pool or of the anonymizer, which owns every shadow account, with no delay.
+4. the 2/4 multisig deploys a malicious [upgrade](#upgrades-and-governance) of the pool or of the anonymizer, with a one-day delay.
+5. an external DeFi helper or target protocol invoked by the user mishandles assets.
 <br>
 ## Funds can be lost if
 1. a user loses the Starknet account key or viewing key required to spend their notes.

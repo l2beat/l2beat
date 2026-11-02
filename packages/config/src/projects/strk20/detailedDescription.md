@@ -1,6 +1,6 @@
-STRK-20 lets the user shield any ERC-20 token on Starknet, send it privately to other users, use it in DeFi and withdraw it to any address. Senders, amounts and which deposit funds which withdrawal stay hidden inside the pool. Deposits, withdrawals, the first payment to each new contact and DeFi calls are public.
+STRK-20 lets the user shield any ERC-20 token on Starknet, send it privately, use it in DeFi and withdraw it to any address. Senders, amounts and which deposit funds which withdrawal stay hidden inside the pool. Deposits, withdrawals, the first payment to each new contact and DeFi calls are public.
 
-Users trust the holder of the auditor key, which can decrypt every user's history, and the holder of the screener key, which approves deposits. Multisigs can upgrade the [pool](https://voyager.online/contract/0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a) and the contract that owns every shadow account without delay. Leaving needs StarkWare's sequencer, which alone checks proofs and includes pool transactions.
+Users trust the holder of the auditor key, which can decrypt every user's history, and the holder of the screener key, which approves deposits. A multisig can upgrade the [pool](https://voyager.online/contract/0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a) and the contract that owns every shadow account without delay. Leaving needs StarkWare's sequencer, which alone checks proofs and includes pool transactions.
 
 ### Architecture
 
@@ -19,11 +19,11 @@ A shadow account is a contract the pool deploys for one user, app and index. The
 
 ### Keys
 
-The user's Starknet account signs every action, and their viewing key decrypts their notes. Bramble derives the viewing key on the device from a signature of the account key. Registration cannot be changed, so a leaked viewing key exposes the user's history for good.
+The user's Starknet account signs every action, and their viewing key decrypts their notes. The app derives the viewing key on the device from a signature of the account key. Registration cannot be changed, so a leaked viewing key exposes the user's history for good.
 
 ### App
 
-Bramble is an open-source Chromium extension that Starknet Holdings publishes. By default it talks to Starknet Holdings' gateway, which forwards note discovery to StarkWare's discovery service and relayed transactions to AVNU's paymaster. Starkscan, also run by Starknet Holdings, serves the activity list. The settings point the RPC, discovery service, prover and paymaster elsewhere. A self-run discovery service keeps the viewing key from the gateway. A self-run [prover](https://github.com/starkware-libs/sequencer/tree/main/crates/starknet_transaction_prover) (high hardware requirements) covers transfers and withdrawals, while deposits need a prover with screening credentials.
+The app is an open-source Chromium extension that Starknet Holdings publishes. By default it talks to Starknet Holdings' gateway, which forwards note discovery to StarkWare's discovery service and relayed transactions to AVNU's paymaster. Starkscan, also run by Starknet Holdings, serves the activity list. The settings point the RPC, discovery service, prover and paymaster elsewhere. A self-run discovery service keeps the viewing key from the gateway. A self-run [prover](https://github.com/starkware-libs/sequencer/tree/f2d0c93a057675f6c9eab7292c2fcb13a6dea24d/crates/starknet_transaction_prover) (high hardware requirements) covers transfers and withdrawals, while deposits need a prover with screening credentials.
 
 ### Compliance
 
