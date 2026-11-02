@@ -46,6 +46,9 @@ export const MAX_VISIBLE_PROJECTS = 5
 // Short lists are scanned faster than searched.
 const MIN_SEARCHABLE_PROJECTS = 7
 
+/** A cmdk value no row has: rows use "<name> <id>". */
+const NO_ROW = '-'
+
 /**
  * Overlapping project icons, each linking to its project. When they don't
  * all fit, a "+N" button opens the full list.
@@ -322,7 +325,13 @@ function ProjectList({
   return (
     // The highlighted row shows where the keyboard is, so the focused root
     // and list draw no focus ring of their own.
-    <Command className="rounded-[inherit] primary-card:bg-surface-primary focus-visible:border-divider dark:focus-visible:border-transparent">
+    <Command
+      className="rounded-[inherit] primary-card:bg-surface-primary focus-visible:border-divider dark:focus-visible:border-transparent"
+      // No row starts highlighted. cmdk scrolls the highlighted row into view
+      // on mount, before Radix has placed the popover, which scrolls the page.
+      // The first arrow key, hover or search highlights a row.
+      defaultValue={NO_ROW}
+    >
       {/* Title, search and rows share a 14 px left edge. */}
       <div className="border-divider border-b">
         <div
