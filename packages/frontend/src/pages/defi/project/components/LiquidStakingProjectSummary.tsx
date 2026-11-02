@@ -1,4 +1,4 @@
-import { formatCurrency } from '@l2beat/shared-pure'
+import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
@@ -7,10 +7,11 @@ import type {
   LiquidStakingLatestValue,
   LiquidStakingSummary,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange, formatTimestamp } from '~/utils/dates'
 import {
   formatLatestValue,
   LIQUID_STAKING_METRICS,
+  type LiquidStakingMetric,
   TVL_TOOLTIP,
 } from '../../liquid-staking/liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../../liquid-staking/liquidStakingRisks'
@@ -41,7 +42,7 @@ export function LiquidStakingProjectSummary({
             <ProjectSummaryStat
               key={metric.key}
               title={metric.title}
-              tooltip={withDate(metric.tooltip, latest)}
+              tooltip={withDate(metric, latest)}
               value={
                 latest ? formatLatestValue(metric, latest) : <NoDataBadge />
               }
@@ -66,8 +67,13 @@ export function LiquidStakingProjectSummary({
   )
 }
 
-function withDate(text: string, latest: LiquidStakingLatestValue | undefined) {
-  return latest
-    ? `${text} Latest value from ${formatTimestamp(latest.timestamp, { mode: 'date' })}.`
-    : text
+function withDate(
+  metric: LiquidStakingMetric,
+  latest: LiquidStakingLatestValue | undefined,
+) {
+  if (!latest) return metric.tooltip
+  const date = metric.dailyBuckets
+    ? formatRange(latest.timestamp, latest.timestamp + UnixTime.DAY)
+    : formatTimestamp(latest.timestamp, { mode: 'date' })
+  return `${metric.tooltip} Latest value from ${date}.`
 }

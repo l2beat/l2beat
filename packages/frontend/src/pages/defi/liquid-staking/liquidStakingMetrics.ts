@@ -12,6 +12,11 @@ export interface LiquidStakingMetric {
   title: string
   tooltip: string
   format: (value: number) => string
+  /**
+   * A value is a day's average or median, not a moment, so its date shows as
+   * the day's range. A yield is the 30 days up to its date.
+   */
+  dailyBuckets: boolean
 }
 
 export const YIELD_METRIC: LiquidStakingMetric = {
@@ -20,6 +25,7 @@ export const YIELD_METRIC: LiquidStakingMetric = {
   tooltip:
     "What a holder earned, net of protocol fees: the annualised change of the token's exchange rate over the previous 30 days.",
   format: formatYield,
+  dailyBuckets: false,
 }
 
 export const COST_OF_EXIT_METRIC: LiquidStakingMetric = {
@@ -28,6 +34,7 @@ export const COST_OF_EXIT_METRIC: LiquidStakingMetric = {
   tooltip:
     "How many days of staking yield a holder gives up to exit about 100 ETH, by the cheapest route: the protocol's withdrawal queue, which earns nothing while it waits; the protocol's instant exit, for its fee; or selling on the best onchain pool, for its discount. ~ marks an estimate: requests still queued are timed at the last 7 days' pace.",
   format: formatDays,
+  dailyBuckets: true,
 }
 
 /** A latest value, marked with ~ when it's an estimate. */
