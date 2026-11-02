@@ -1,3 +1,4 @@
+import { getLogger } from '../../utils/logger'
 import {
   getInteropDashboardData,
   type InteropDashboardData,
@@ -15,8 +16,14 @@ export async function getHomeTopInteropProtocols(
   if (chainIds.length === 0) {
     return []
   }
-  const data = await getInteropDashboardData({ from: chainIds, to: chainIds })
-  return selectHomeTopInteropProtocols(data)
+  // Interop reads its own tables, which should not take the home page down.
+  try {
+    const data = await getInteropDashboardData({ from: chainIds, to: chainIds })
+    return selectHomeTopInteropProtocols(data)
+  } catch (error) {
+    getLogger().warn('Home top interop protocols failed', { error })
+    return []
+  }
 }
 
 export function selectHomeTopInteropProtocols(
