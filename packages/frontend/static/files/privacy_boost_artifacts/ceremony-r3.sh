@@ -4,8 +4,9 @@
 # (every phase 2 contribution, the phase 1 link, key re-derivation), then each finalized
 # verifying key against the SSTORE2 key data the Base verifiers read.
 #
-# usage: scripts/ceremony-r3.sh <workdir> [fetch|build|verify|onchain|all]
-# needs docker, curl, cast (foundry), python3, ~12 GB disk. Untrusted code runs only in containers.
+# usage: ceremony-r3.sh <workdir> [fetch|build|verify|summary|onchain|all]
+# needs docker, git, curl, tar, jq, sha256sum, realpath, cast (foundry), python3, ~10 GB disk.
+# Untrusted code runs only in containers.
 # onchain reads BASE_RPC_URL from the environment and never prints it.
 set -euo pipefail
 
@@ -292,6 +293,12 @@ case "$STEP" in
   verify) verify ;;
   summary) summary ;;
   onchain) onchain ;;
-  all) fetch && build && verify && onchain ;;
+  # one command per step: set -e does not reach into functions run inside an && list
+  all)
+    fetch
+    build
+    verify
+    onchain
+    ;;
   *) echo "unknown step $STEP" >&2; exit 2 ;;
 esac

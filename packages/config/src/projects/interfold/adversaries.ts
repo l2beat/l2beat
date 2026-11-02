@@ -107,9 +107,9 @@ export function interfoldAdversaries(
       futureAdversary: {
         sentiment: 'warning',
         exposureShort:
-          'Whoever breaks elliptic-curve cryptography learns only what the chain analyst sees: the totals can show how a voter with outsized weight voted.',
+          'Whoever breaks elliptic-curve cryptography learns at least what the chain analyst sees: the totals can show how a voter with outsized weight voted.',
         exposureContinued:
-          "Ballots and key shares rest on lattice assumptions with no known quantum attack, and ballot proofs are zero knowledge. A recovered wallet key can replace a voter's ballot in an open vote but opens no past one.",
+          'Ballots and key shares rest on lattice assumptions with no known quantum attack, and a recovered wallet key opens no past ballot. Whether the zero-knowledge ballot proofs still hide the vote after such a break is unverified.',
         sources: [
           {
             title: 'Key shares are BFV-encrypted to each recipient',

@@ -63,7 +63,8 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      exposureShort: "A withdrawal hides among the DAI portal's depositors.",
+      exposureShort:
+        "A DAI withdrawal hides among the DAI portal's depositors, an sUSDS one among the sUSDS portal's.",
       exposureContinued:
         "Each payment shows the payee the payer's Aztec address, and with it any name the payer claimed. The anonymity set is still small.",
       advice: `${S.commonAmounts} ${S.freshExit}`,
