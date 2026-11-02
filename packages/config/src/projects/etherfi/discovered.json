@@ -138,6 +138,11 @@
       }
     },
     {
+      "address": "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x0e706A98F414F49A412107641c0820b0153Ff5Dc",
       "type": "EOA",
       "proxyType": "EOA"
@@ -970,6 +975,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "UpgradeableBeacon",
       "address": "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F",
       "type": "Contract",
@@ -1082,6 +1092,11 @@
     },
     {
       "address": "eth:0x4277a6d2313B1aE16D17099bfE5FEf3510C9aBe7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x4507cfB4B077d5DBdDd520c701E30173d5b59Fad",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1311,6 +1326,11 @@
         "eth:0x3B44A093b9736af765f98F3245998f63bc757970": "RoleRegistry"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0x648aA14e4424e0825A5cE739C8C68610e143FB79",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EtherFiRateLimiter",
@@ -1660,6 +1680,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EtherFiNodesManager",
       "address": "eth:0x8B71140AD2e5d1E7018d2a7f8a288BD3CD38916F",
       "type": "Contract",
@@ -1879,6 +1904,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 864000,
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "proposers": ["eth:0xcdd57D11476c22d265722F68390b036f3DA48c21"],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       },
       "implementationNames": {
@@ -2026,6 +2052,45 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Safe",
+      "address": "eth:0xA195D4A57C4802651F67fB56349e10a7adDADD82",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xfeed46c11F57B7126a773EeC6ae9cA7aE1C03C9a",
+      "sinceTimestamp": 1777390679,
+      "sinceBlock": 24979505,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b",
+          "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
+          "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f",
+          "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120",
+          "eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6",
+          "eth:0xD61F8148847Ec48CB5Ae729978dD9E4c3be319CE",
+          "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xb2de7e68ad278710a8d1256cb80505521d75b22e001ba8cd57859196406ea537",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 7 (29%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xA195D4A57C4802651F67fB56349e10a7adDADD82": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
       "name": "ProxyAdmin",
       "address": "eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc",
       "type": "Contract",
@@ -2114,6 +2179,16 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "eth:0xcb3bD5d7C40844fb599c14413F281A0241C45DFB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EtherfiOFTAdapterUpgradeable",
       "address": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
       "type": "Contract",
@@ -2188,6 +2263,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 172800,
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "proposers": ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       },
       "implementationNames": {
@@ -2264,6 +2340,48 @@
         "eth:0xA6Ca0607190d03CF16fe6F2865Cf40c3D160ccf3": "WeETH"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0xcdd57D11476c22d265722F68390b036f3DA48c21",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x4507cfB4B077d5DBdDd520c701E30173d5b59Fad",
+      "sinceTimestamp": 1708088063,
+      "sinceBlock": 19240588,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xcb3bD5d7C40844fb599c14413F281A0241C45DFB",
+          "eth:0xDE3bf1FA3B3829342bC4356592Bb7CF3BAAD8264",
+          "eth:0xA195D4A57C4802651F67fB56349e10a7adDADD82",
+          "eth:0x9506429A421757711806c5cAF25ba1830E349B09",
+          "eth:0x4507cfB4B077d5DBdDd520c701E30173d5b59Fad",
+          "eth:0x5c8c76F2e990F194462dC5f8a8c76Ba16966Ed42",
+          "eth:0x0fCe5cd3FB6F3b3FB7f0f707070A0A7e2442f444",
+          "eth:0x648aA14e4424e0825A5cE739C8C68610e143FB79",
+          "eth:0x2f2806e8b288428f23707A69faA60f52BC565c17",
+          "eth:0x173286FaFABEA063eeB3726Ee5eFD4ff414057B9"
+        ],
+        "$threshold": 6,
+        "domainSeparator": "0xc470a8965cc889dbb57dec7cbc8454a8cd227c13dc52ee57835a6a9207b51c83",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "6 of 10 (60%)",
+        "nonce": 184,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xcdd57D11476c22d265722F68390b036f3DA48c21": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
     },
     {
       "name": "DepositAdapter",
@@ -2395,6 +2513,11 @@
         "eth:0x2474d68d6E9f7Be77C9A343ce21DBE16F0743BD3": "NodeOperatorManager"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xD61F8148847Ec48CB5Ae729978dD9E4c3be319CE",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EtherfiL1SyncPoolETH",
@@ -2572,6 +2695,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xE63794CF405678382764A4dEc1e56C43B45605C9",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2613,6 +2741,11 @@
         "eth:0xf4718766a7fc8c81F788669B0985FAC03D064D29": "AvsOperator"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xf8a86ea1Ac39EC529814c377Bd484387D395421e",
@@ -4451,6 +4584,9 @@
     "eth:0xA000244b4a36D57Ea1ECB39b5F02f255e4C8cd52": [
       "constructor(address _singleton)"
     ],
+    "eth:0xA195D4A57C4802651F67fB56349e10a7adDADD82": [
+      "constructor(address _singleton)"
+    ],
     "eth:0xA4C83200e0c9a61296C63333F2Bd22559058852E": [
       "constructor(address _roleRegistry)",
       "error AvsAlreadyDisabled()",
@@ -4937,6 +5073,9 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0xcdd57D11476c22d265722F68390b036f3DA48c21": [
+      "constructor(address _singleton)"
+    ],
     "eth:0xcfC6d9Bd7411962Bfe7145451A7EF71A24b6A7A2": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -5281,7 +5420,7 @@
     "etherfi/EtherFiRedemptionManager": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "etherfi/EtherFiRestaker": "0x1eb1651b121d0752c8415f827851d3ca1f011a0fb65643b8b9fd7edfb2e9c085",
     "etherfi/EtherFiRewardsRouter": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "etherfi/EtherFiTimelock": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "etherfi/EtherFiTimelock": "0x8768b5997e5a70c65d19705f9ea784d9f18f69dd3cf02d87022181faffc830f1",
     "etherfi/EtherFiViewer": "0xbdd2dfe732e39e3d2c44f44b1a86effdfe8420b487f93fe8bbfd7b733ed709ec",
     "etherfi/LiquidityPool": "0xa9a8f9d677a0a0a62457f0db1825c147856731db123de5c621b78b3a1b563731",
     "etherfi/Liquifier": "0x28f6f9604cde1dda69182b5c61c07f7c92194eef59686da3fafd0b826ef9e429",
@@ -5302,7 +5441,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 26233152 },
-  "permissionsConfigHash": "0x5b21b45871bd824fec8e8f3f8f7ee95d115f37020224072eafa7e01eaeb747b1",
+  "permissionsConfigHash": "0x0a0ed0a59c73ea655ea4220318e4d962cee832c3f59c30e8bd0e5f154872df4d",
   "permissions": {
     "eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a": {
       "directlyReceivedPermissions": [
@@ -5331,10 +5470,28 @@
           "from": "eth:0xD0Ff8996DB4bDB46870b7E833b7532f484fEad1A",
           "role": "admin"
         }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
+          "delay": 172800,
+          "role": ".proposers"
+        }
       ]
     },
     "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761": {
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D",
+          "role": ".owner"
+        },
         {
           "permission": "upgrade",
           "from": "eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a",
@@ -5354,34 +5511,6 @@
           "permission": "upgrade",
           "from": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
           "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D",
-          "role": ".owner"
         }
       ]
     },
@@ -5409,6 +5538,86 @@
           "permission": "upgrade",
           "from": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
           "role": "admin"
+        }
+      ]
+    },
+    "eth:0xcdd57D11476c22d265722F68390b036f3DA48c21": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc" },
+            {
+              "address": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D" },
+            {
+              "address": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+              "delay": 864000
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+          "delay": 864000,
+          "role": ".proposers"
         }
       ]
     },

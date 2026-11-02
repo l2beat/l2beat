@@ -86,10 +86,12 @@ describe(`${createDefiRouter.name} with only Ossification enabled`, () => {
     expect(await response.text()).toEqual('<html />')
   })
 
-  it('does not serve the DeFi summary', async () => {
+  it('does not serve the DeFi category pages', async () => {
     const router = createRouter()
 
-    expect((await fetchFromRouter(router, '/defi/summary')).status).toEqual(404)
+    expect(
+      (await fetchFromRouter(router, '/defi/liquid-staking')).status,
+    ).toEqual(404)
     expect((await fetchFromRouter(router, '/defi')).status).toEqual(404)
   })
 })

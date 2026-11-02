@@ -11,6 +11,7 @@ import {
 import { env } from '~/env'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { manifest } from '~/utils/Manifest'
+import { isListedDefiProject } from '../../defi/isListedDefiProject'
 import type { SearchBarProjectEntry } from '../types'
 
 function extractProjectAddresses(
@@ -55,7 +56,7 @@ export function getSearchBarProjectEntries<
     !project.interopConfig &&
     !project.zkCatalogInfo &&
     !project.privacyInfo &&
-    !(env.CLIENT_SIDE_DEFI_ENABLED && project.defiInfo)
+    !(env.CLIENT_SIDE_DEFI_ENABLED && isListedDefiProject(project.defiInfo))
   ) {
     return []
   }
@@ -139,7 +140,7 @@ export function getSearchBarProjectEntries<
     })
   }
 
-  if (env.CLIENT_SIDE_DEFI_ENABLED && project.defiInfo) {
+  if (env.CLIENT_SIDE_DEFI_ENABLED && isListedDefiProject(project.defiInfo)) {
     results.push({
       ...common,
       href: `/defi/projects/${project.slug}`,

@@ -98,7 +98,7 @@ const mainPages: MainPage[] = [
   },
   {
     type: 'defi',
-    title: 'Summary',
+    title: 'Liquid Staking',
   },
   {
     title: 'ZK Catalog',
