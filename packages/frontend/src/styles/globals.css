@@ -563,6 +563,30 @@
   --animate-row-highlight: row-highlight 2.5s ease-in-out;
   --animate-row-highlight-no-opacity: row-highlight-no-opacity 2.5s ease-in-out;
   --animate-badge-dialog-loading: badge-dialog-loading 1.2s linear infinite;
+  /* A chart showing the previous data while new data loads: it fades after
+     150 ms, so a fast response never blinks, then breathes until it lands. */
+  --animate-previous-chart-data:
+    previous-chart-data-dim 200ms ease-out 150ms both, previous-chart-data-pulse
+    1.6s ease-in-out 350ms infinite;
+
+  @keyframes previous-chart-data-dim {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0.4;
+    }
+  }
+
+  @keyframes previous-chart-data-pulse {
+    0%,
+    100% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.65;
+    }
+  }
 
   @keyframes badge-dialog-loading {
     0% {

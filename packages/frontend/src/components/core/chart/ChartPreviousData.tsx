@@ -29,12 +29,13 @@ export function useChartShowsPreviousData() {
 }
 
 /**
- * Dims what shows the previous data. The delay keeps a fetch that answers
- * fast from blinking; there is no transition back, so the new data appears
- * at full strength at once.
+ * Dims what shows the previous data and lets it breathe while the new data
+ * loads (`--animate-previous-chart-data`). There is no transition back, so
+ * the new data appears at full strength at once. With reduced motion it only
+ * dims.
  */
 export const previousChartDataClassName =
-  'opacity-40 transition-opacity delay-150 duration-200'
+  'animate-previous-chart-data motion-reduce:animate-none motion-reduce:opacity-40'
 
 /**
  * The value the shown data was fetched with. While a chart shows the previous
