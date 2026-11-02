@@ -18,7 +18,6 @@ import {
   DrawerTitle,
 } from '~/components/core/Drawer'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { LoadingBar } from '~/components/core/LoadingBar'
 import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useDevice } from '~/hooks/useDevice'
@@ -125,7 +124,11 @@ function BadgesDialogBody({
 
   return (
     <div className="relative bg-surface-primary" aria-busy={isSwitchingBadges}>
-      {isSwitchingBadges && <LoadingBar className="bg-surface-secondary/60" />}
+      {isSwitchingBadges && (
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-0.5 overflow-hidden bg-surface-secondary/60">
+          <div className="h-full w-2/5 animate-badge-dialog-loading rounded-full bg-brand" />
+        </div>
+      )}
 
       <div className="overflow-hidden bg-radial-[at_50%_200%] from-brand-red/30 via-brand-black/10 to-transparent px-4 py-6 md:px-6 md:py-7">
         <div
