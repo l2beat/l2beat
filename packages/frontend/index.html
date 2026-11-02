@@ -13,6 +13,8 @@
   <script><!--ssr-data--></script>
   <script><!--env-data--></script>
   <div id="root"><!--app-html--></div>
+  <!-- Chrome doesn't lay out a prerendered page (see speculationRules.ts) by itself, which would leave all of it to the first frame after the click -->
+  <script>if (document.prerendering) document.documentElement.getBoundingClientRect()</script>
   <!-- One-time script to overwrite the stale cached 301 redirect for "/" (can be removed a few months after "/" stops redirecting) -->
   <script>
     (function () { try { if (window.location.pathname === "/" || localStorage.getItem("root-redirect-cache-purged")) return; fetch("/", { cache: "reload", redirect: "manual" }).then(function () { localStorage.setItem("root-redirect-cache-purged", "1") }).catch(function () { }) } catch (e) { } })();
