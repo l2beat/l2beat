@@ -7,17 +7,19 @@ import { PizzaRosetteWithLabels } from './PizzaRosetteWithLabels'
 export function PizzaRosetteTooltip({
   values,
   isUnderReview,
+  title = 'Risk analysis',
 }: {
   values: RosetteValue[]
   isUnderReview?: boolean
+  title?: string
 }) {
   if (isUnderReview) {
-    return <RiskAnalysisUnderReview title="Risk analysis" />
+    return <RiskAnalysisUnderReview title={title} />
   }
 
   return (
     <div className="flex flex-col">
-      <span className="mb-2 text-heading-16">Risk analysis</span>
+      <span className="mb-2 text-heading-16">{title}</span>
       <div className="flex items-center gap-6">
         <TooltipVisualOnly>
           <PizzaRosetteWithLabels values={values} />

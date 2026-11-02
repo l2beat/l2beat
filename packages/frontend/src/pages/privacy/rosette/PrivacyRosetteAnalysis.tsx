@@ -1,12 +1,11 @@
 import { RiskAnalysisUnderReview } from '~/components/rosette/RiskAnalysisUnderReview'
 import type { RosetteValue } from '~/components/rosette/types'
-import { SentimentText } from '~/components/SentimentText'
 
 export const PRIVACY_ASSESSMENT_TITLE = 'Privacy assessment'
 
 /**
- * The privacy take on the L2 risk analysis, with each verdict explained by
- * its reason. Shown in the drawer below md, and in the tooltip's HTML copy.
+ * Each privacy verdict with its reason, as plain text for the tooltip's HTML
+ * copy, which crawlers and screen readers read; the popup shows no reasons.
  */
 export function PrivacyRosetteAnalysis({
   values,
@@ -20,29 +19,15 @@ export function PrivacyRosetteAnalysis({
   }
 
   return (
-    <div className="flex flex-col">
-      <span className="mb-3 text-heading-16">{PRIVACY_ASSESSMENT_TITLE}</span>
-      <ul className="flex flex-col gap-3">
+    <>
+      <span>{PRIVACY_ASSESSMENT_TITLE}</span>
+      <ul>
         {values.map((value) => (
           <li key={value.name}>
-            <div className="flex items-baseline justify-between gap-3">
-              <span className="font-semibold text-label-value-13">
-                {value.name}
-              </span>
-              <SentimentText
-                sentiment={value.sentiment ?? 'neutral'}
-                vibrant
-                className="shrink-0 font-semibold text-label-value-13"
-              >
-                {value.value}
-              </SentimentText>
-            </div>
-            <p className="mt-0.5 text-pretty font-normal text-paragraph-13 text-secondary">
-              {value.description}
-            </p>
+            {value.name}: {value.value}. {value.description}
           </li>
         ))}
       </ul>
-    </div>
+    </>
   )
 }
