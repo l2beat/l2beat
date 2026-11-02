@@ -5,6 +5,7 @@ import { getL2RiskStateValidationEntries } from '~/server/features/layer2s/risks
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 
 export async function getL2RiskStateValidationData(
   req: Request,
@@ -40,6 +41,7 @@ export async function getL2RiskStateValidationData(
     },
     ssr: {
       page: 'L2RiskStateValidationPage',
+      badges: getBadgeLookup(entries),
       props: {
         ...appLayoutProps,
         ...entries,

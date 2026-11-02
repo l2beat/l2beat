@@ -6,6 +6,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 import { optionToRange } from '~/utils/range/range'
 import {
   SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
@@ -41,6 +42,7 @@ export async function getL2SummaryData(
     },
     ssr: {
       page: 'L2SummaryPage',
+      badges: getBadgeLookup(data.entries),
       props: {
         ...appLayoutProps,
         ...data,

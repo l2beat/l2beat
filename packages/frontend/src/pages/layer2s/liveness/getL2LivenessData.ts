@@ -9,6 +9,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { manifest } from '~/utils/Manifest'
+import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import type { TabbedL2Entries } from '../utils/groupByL2Tabs'
 
@@ -44,6 +45,7 @@ export async function getL2LivenessData(
     },
     ssr: {
       page: 'L2LivenessPage',
+      badges: getBadgeLookup(entries),
       props: {
         ...appLayoutProps,
         entries,

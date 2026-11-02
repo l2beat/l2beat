@@ -13,6 +13,7 @@ import {
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
+import { useBadges } from '~/components/projects/BadgeLookup'
 import {
   ProjectTooltipContent,
   type ProjectTooltipSectionData,
@@ -362,10 +363,11 @@ export function ProjectNameInfoTooltip({
 }) {
   const projectName = project.shortName ?? project.name
   const sections = getTooltipSections(project)
+  const badges = useBadges(project.badges)
   const hasTooltipContent =
     !!project.description ||
     !!project.quantumResistance ||
-    (project.badges?.length ?? 0) > 0 ||
+    badges.length > 0 ||
     sections.length > 0
 
   if (!hasTooltipContent) {
@@ -383,7 +385,7 @@ export function ProjectNameInfoTooltip({
             projectName={projectName}
             description={project.description}
             sections={sections}
-            badges={project.badges}
+            badges={badges}
             sectionsFirst
           />
         </TooltipContent>

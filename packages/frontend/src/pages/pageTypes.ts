@@ -1,3 +1,4 @@
+import type { BadgeLookup } from '~/components/projects/BadgeLookup'
 import type { pageLoaders } from './pageLoaders'
 
 export type Pages = {
@@ -10,5 +11,7 @@ export type SsrData = {
   [K in PageName]: {
     page: K
     props: Parameters<Pages[K]>[0]
+    /** Badges that table rows point at by id; see `BadgeRef`. */
+    badges?: BadgeLookup
   }
 }[PageName]
