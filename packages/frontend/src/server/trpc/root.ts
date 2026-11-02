@@ -4,6 +4,7 @@ import { costsRouter } from './routers/costs'
 import { daRouter } from './routers/da'
 import { defiRouter } from './routers/defi'
 import { interopRouter } from './routers/interop'
+import { layer2sRouter } from './routers/layer2s'
 import { livenessRouter } from './routers/liveness'
 import { privacyRouter } from './routers/privacy'
 import { projectsRouter } from './routers/projects'
@@ -22,6 +23,7 @@ export const appRouter = router({
   tvs: tvsRouter,
   da: daRouter,
   defi: defiRouter,
+  layer2s: layer2sRouter,
   liveness: livenessRouter,
   projects: projectsRouter,
   searchBar: searchBarRouter,

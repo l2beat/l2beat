@@ -1,7 +1,15 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getL2SummaryEntries } from '~/server/features/layer2s/summary/getL2SummaryEntries'
+import {
+  type L2Tab,
+  parseL2Tab,
+  toLazyTabbedL2Entries,
+} from '~/pages/layer2s/utils/lazyL2Tabs'
+import {
+  getCachedL2SummaryEntries,
+  type L2SummaryEntry,
+} from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -17,15 +25,17 @@ export async function getL2SummaryData(
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData> {
-  const [appLayoutProps, data] = await Promise.all([
+  const tab = parseL2Tab(req.query.tab)
+  const [appLayoutProps, entries, queryState] = await Promise.all([
     getAppLayoutProps(),
+    getCachedL2SummaryEntries(),
     cache.get(
       {
-        key: ['layer2s', 'summary', 'data'],
+        key: ['layer2s', 'summary', 'query-state', tab],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      getCachedData,
+      () => getQueryState(tab),
     ),
   ])
 
@@ -43,21 +53,26 @@ export async function getL2SummaryData(
       page: 'L2SummaryPage',
       props: {
         ...appLayoutProps,
-        ...data,
+        entries: toLazyTabbedL2Entries(entries, tab, getRowCount),
+        queryState,
       },
     },
   }
 }
 
-async function getCachedData() {
+/** The DA column lists each layer in its own row. */
+function getRowCount(entry: L2SummaryEntry) {
+  return Math.max(1, entry.dataAvailability?.length ?? 1)
+}
+
+async function getQueryState(tab: L2Tab) {
   const helpers = getSsrHelpers()
 
   const tvsChartRange = optionToRange(...SCALING_SUMMARY_TVS_CHART_RANGE_ARGS)
   const activityChartRange = optionToRange(
     ...SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
   )
-  const [entries] = await Promise.all([
-    getL2SummaryEntries(),
+  await Promise.all([
     helpers.queryClient.prefetchQuery(
       helpers.trpc.tvs.recategorisedChart.queryOptions({
         range: tvsChartRange,
@@ -72,17 +87,16 @@ async function getCachedData() {
         filter: { type: 'all' },
       }),
     ),
+    // The TVS breakdown of the tab the page opens on, so its table renders
+    // complete. Other tabs fetch theirs when opened.
     helpers.queryClient.prefetchQuery(
       helpers.trpc.tvs.table.queryOptions({
-        type: 'rollups',
+        type: tab,
         excludeAssociatedTokens: false,
         excludeRwaRestrictedTokens: true,
       }),
     ),
   ])
 
-  return {
-    entries,
-    queryState: helpers.dehydrate(),
-  }
+  return helpers.dehydrate()
 }

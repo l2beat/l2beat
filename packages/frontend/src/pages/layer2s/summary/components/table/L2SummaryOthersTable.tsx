@@ -6,21 +6,21 @@ import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
-import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { useTRPC } from '~/trpc/React'
 import { toTableRows } from '../../utils/toTableRows'
 import { getL2SummaryOthersColumns } from './columns'
+import type { L2SummaryTableProps } from './L2SummaryTableProps'
 
-interface Props {
-  entries: L2SummaryEntry[]
-}
-
-export function L2SummaryOthersTable({ entries }: Props) {
+export function L2SummaryOthersTable({
+  entries,
+  isLoading,
+  skeletonCount,
+}: L2SummaryTableProps) {
   const trpc = useTRPC()
   const { sorting, setSorting } = useTableSorting()
   const { display } = useTvsDisplayControlsContext()
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading: isTvsLoading } = useQuery(
     trpc.tvs.table.queryOptions({
       type: 'others',
       excludeAssociatedTokens: display.excludeAssociatedTokens,
@@ -38,8 +38,8 @@ export function L2SummaryOthersTable({ entries }: Props) {
   )
 
   const columns = useMemo(
-    () => getL2SummaryOthersColumns({ isTvsLoading: isLoading }),
-    [isLoading],
+    () => getL2SummaryOthersColumns({ isTvsLoading }),
+    [isTvsLoading],
   )
 
   const table = useTable('L2SummaryOthersTable', {
@@ -62,7 +62,11 @@ export function L2SummaryOthersTable({ entries }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable
+        table={table}
+        isLoading={isLoading}
+        skeletonCount={skeletonCount}
+      />
     </>
   )
 }

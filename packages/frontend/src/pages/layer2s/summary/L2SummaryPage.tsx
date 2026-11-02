@@ -9,7 +9,7 @@ import { TableFilterContextProvider } from '~/components/table/filters/TableFilt
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { TabbedL2Entries } from '~/pages/layer2s/utils/groupByL2Tabs'
+import type { LazyTabbedL2Entries } from '~/pages/layer2s/utils/lazyL2Tabs'
 import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { optionToRange } from '~/utils/range/range'
 import { ChartTabs } from './components/ChartTabs'
@@ -21,7 +21,7 @@ import {
 } from './l2SummaryConstants'
 
 interface Props extends AppLayoutProps {
-  entries: TabbedL2Entries<L2SummaryEntry>
+  entries: LazyTabbedL2Entries<L2SummaryEntry>
   queryState: DehydratedState
 }
 

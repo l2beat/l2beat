@@ -17,6 +17,7 @@ import { getL2Risks } from '~/pages/layer2s/utils/getL2Risks'
 import { groupByL2Tabs } from '~/pages/layer2s/utils/groupByL2Tabs'
 import { ps } from '~/server/projects'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import { optionToRange } from '~/utils/range/range'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
@@ -30,6 +31,23 @@ import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnoma
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
+
+const cache = new FrontendInMemoryCache('getL2SummaryEntries')
+
+/**
+ * Shared by the page and the tRPC route that loads a hidden tab, so opening
+ * a tab reads the same snapshot instead of querying the database again.
+ */
+export function getCachedL2SummaryEntries() {
+  return cache.get(
+    {
+      key: ['layer2s', 'summary', 'entries'],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    getL2SummaryEntries,
+  )
+}
 
 export async function getL2SummaryEntries() {
   const { tabs } = await getL2SummaryData()

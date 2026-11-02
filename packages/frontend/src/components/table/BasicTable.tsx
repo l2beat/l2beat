@@ -160,7 +160,10 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
               return (
                 <TableRow highlightId={undefined} key={i}>
                   <TableCell colSpan={100}>
-                    <Skeleton className="h-6 w-full md:h-8" />
+                    {/* Full cell height, like the links in real rows, so both rows are as tall */}
+                    <div className="flex h-10 items-center md:h-14">
+                      <Skeleton className="h-6 w-full md:h-8" />
+                    </div>
                   </TableCell>
                 </TableRow>
               )
