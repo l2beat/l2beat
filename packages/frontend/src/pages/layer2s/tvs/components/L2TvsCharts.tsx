@@ -8,7 +8,10 @@ import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeContr
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { ChartShowsPreviousData } from '~/components/core/chart/ChartPreviousData'
+import {
+  ChartShowsPreviousData,
+  useValueOfShownData,
+} from '~/components/core/chart/ChartPreviousData'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
@@ -48,6 +51,7 @@ export function L2TvsCharts({ entries, milestones }: Props) {
       { placeholderData: keepPreviousData },
     ),
   )
+  const shownRange = useValueOfShownData(range, isPlaceholderData)
 
   const timeRange = getChartTimeRangeFromData(
     data?.chart.map(([timestamp]) => ({
@@ -85,7 +89,7 @@ export function L2TvsCharts({ entries, milestones }: Props) {
           unit={unit}
           value={stats?.total}
           change={stats?.change}
-          range={range}
+          range={shownRange}
           timeRange={timeRange}
         />
         <div className="mt-4 mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
