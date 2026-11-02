@@ -12,7 +12,6 @@ import {
   link,
 } from '~/server/markdown/markdown'
 import { TRUSTED_SETUP_FRAMEWORK_LINK } from '~/server/markdown/zkSectionBodies'
-import { formatDate } from '~/utils/dates'
 import { PRIVACY_ADVERSARY_VERDICT as VERDICT } from '../adversaries/privacyAdversaryUi'
 import { PRIVACY_COLUMN_DESCRIPTIONS as COLUMNS } from '../privacySummaryColumns'
 import {
@@ -67,13 +66,12 @@ export function getPrivacyMethodologySections() {
     ipHidingRoutes: joinBlocks([
       // A raw heading, since markdown headings render without an id to link.
       `<h2 id="${PRIVACY_IP_HIDING_ROUTES_ANCHOR}">IP-hiding routes</h2>`,
-      "An IP-hiding route hides the user's IP from the services an app calls: by default no single company, whether it runs a hop or hosts one, sees both the IP and where the traffic goes. Advice names one where an app needs it.",
+      "An IP-hiding route hides the user's IP from the services an app calls: by default no single company, whether it runs a hop or hosts one, should see both the user's IP and where the traffic goes (which disqualifies most VPN services. Our advice names one where an app needs it.",
       bulletList([
         '**Tor Browser**: websites, each site on its own circuit.',
         "**Tor for all traffic**: Tails or Whonix on a computer, Orbot's VPN mode on Android. Tor carries no UDP.",
         '**NymVPN**: all traffic on desktop and mobile, UDP included. Its exits accept only listed ports.',
       ]),
-      `Checked on ${formatDate('2026-11-02')}.`,
     ]),
 
     referenceApp: joinBlocks([
