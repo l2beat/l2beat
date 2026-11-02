@@ -22,15 +22,18 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { useChart } from './Chart'
 import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
+import { previousChartDataClassName } from './ChartPreviousData'
 
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
   milestones: Milestone[]
+  isPlaceholderData: boolean
 }
 
 export function ChartMilestones<T extends { timestamp: number }>({
   data,
   milestones,
+  isPlaceholderData,
 }: Props<T>) {
   const ref = useRef<HTMLDivElement>(null)
   // A ResizeObserver reports after layout. Reading the width in an effect
@@ -44,7 +47,11 @@ export function ChartMilestones<T extends { timestamp: number }>({
   if (timestampedMilestones.length < 2) return null
 
   return (
-    <div data-role="milestones" ref={ref}>
+    <div
+      data-role="milestones"
+      ref={ref}
+      className={cn(isPlaceholderData && previousChartDataClassName)}
+    >
       {timestampedMilestones.map((data, index) => {
         if (width === undefined || data.milestones.length === 0) return null
         const x = index / (timestampedMilestones.length - 1)

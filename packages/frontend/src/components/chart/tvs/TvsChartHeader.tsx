@@ -1,5 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
+import { previousChartDataClassName } from '~/components/core/chart/ChartPreviousData'
 import { INFINITY } from '~/consts/characters'
+import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { Skeleton } from '../../core/Skeleton'
@@ -12,6 +14,7 @@ interface Props {
   change: number | undefined
   range: ChartRange
   timeRange: [number, number] | undefined
+  isPlaceholderData: boolean
 }
 
 export function TvsChartHeader({
@@ -20,6 +23,7 @@ export function TvsChartHeader({
   change,
   range,
   timeRange,
+  isPlaceholderData,
 }: Props) {
   const changeOverTime =
     range[0] === null ? (
@@ -35,9 +39,17 @@ export function TvsChartHeader({
           Total value secured
           <span className="max-md:hidden"> stacked by type</span>
         </h2>
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange
+          timeRange={timeRange}
+          isPlaceholderData={isPlaceholderData}
+        />
       </div>
-      <div className="flex flex-col items-end">
+      <div
+        className={cn(
+          'flex flex-col items-end',
+          isPlaceholderData && previousChartDataClassName,
+        )}
+      >
         <div className="whitespace-nowrap text-right font-bold text-xl md:text-2xl">
           {value === undefined ? (
             <Skeleton className="my-[5px] h-5 w-32 md:my-1.5 md:h-6" />

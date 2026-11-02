@@ -1,5 +1,4 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
 import round from 'lodash/round'
 import { useMemo, useState } from 'react'
 import { Area, AreaChart } from 'recharts'
@@ -19,6 +18,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -48,8 +48,9 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<Metric>('value')
   const [unit, setUnit] = useState<Unit>('absolute')
-  const { data, isLoading } = useQuery(
-    trpc.tvs.zkCatalogChart.queryOptions({ range }),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.tvs.zkCatalogChart,
+    { range },
   )
 
   const pointsByTimestamp = useMemo(
@@ -136,9 +137,13 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
             </RadioGroupItem>
           </RadioGroup>
         </div>
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
       </div>
       <ChartContainer
+        isPlaceholderData={isPlaceholderData}
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}

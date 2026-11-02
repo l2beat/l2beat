@@ -85,7 +85,12 @@ export function MonthlyUpdateActivityChart({
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
       <Header timeRange={timeRange} stats={stats} />
-      <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+      <ChartContainer
+        isPlaceholderData={false}
+        data={chartData}
+        meta={chartMeta}
+        isLoading={isLoading}
+      >
         <AreaChart
           responsive
           data={chartData}

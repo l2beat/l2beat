@@ -103,6 +103,7 @@ export function HomeChart({
     <div className="relative h-full min-h-[120px]">
       <div className={`${FILL_HEIGHT_CLASS} ${Y_AXIS_TICK_SIZE_CLASS}`}>
         <ChartContainer
+          isPlaceholderData={false}
           meta={meta}
           data={data}
           isLoading={isLoading}

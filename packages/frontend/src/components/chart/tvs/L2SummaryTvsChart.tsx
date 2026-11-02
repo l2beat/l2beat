@@ -106,6 +106,7 @@ export function L2SummaryTvsChart({
         range={range}
       />
       <ChartContainer
+        isPlaceholderData={false}
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}

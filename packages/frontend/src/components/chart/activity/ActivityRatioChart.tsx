@@ -28,12 +28,14 @@ interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   resolution?: ActivityResolution
 }
 
 export function ActivityRatioChart({
   data,
   isLoading,
+  isPlaceholderData,
   syncedUntil,
   resolution = 'day',
 }: Props) {
@@ -48,6 +50,7 @@ export function ActivityRatioChart({
   } satisfies ChartMeta
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={chartMeta}
       isLoading={isLoading}

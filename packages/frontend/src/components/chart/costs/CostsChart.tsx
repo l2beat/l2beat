@@ -50,6 +50,7 @@ interface Props {
   syncedUntil: number | undefined
   unit: CostsUnit
   isLoading: boolean
+  isPlaceholderData: boolean
   milestones: Milestone[]
   range: ChartRange
   hasBlobs: boolean
@@ -63,6 +64,7 @@ export function CostsChart({
   syncedUntil,
   unit,
   isLoading,
+  isPlaceholderData,
   milestones,
   range,
   tickCount,
@@ -115,6 +117,7 @@ export function CostsChart({
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={chartMeta}
       isLoading={isLoading}

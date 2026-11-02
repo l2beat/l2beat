@@ -32,6 +32,7 @@ interface Props {
   projects: PrivacyTvlBreakdownProject[]
   syncedUntil: number | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
 }
 
 export function PrivacyTvlBreakdownChart({
@@ -39,6 +40,7 @@ export function PrivacyTvlBreakdownChart({
   projects,
   syncedUntil,
   isLoading,
+  isPlaceholderData,
 }: Props) {
   const chartMeta = useMemo<ChartMeta>(() => {
     const colors = generateAccessibleColors(projects.length)
@@ -71,6 +73,7 @@ export function PrivacyTvlBreakdownChart({
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={chartData}
       meta={chartMeta}
       isLoading={isLoading}
