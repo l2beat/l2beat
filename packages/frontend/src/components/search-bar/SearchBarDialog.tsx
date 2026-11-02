@@ -95,13 +95,13 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 
   function onItemFollow(
     item: SearchBarProject | AnySearchBarEntry,
-    inNewTab: boolean,
+    staysOnPage: boolean,
   ) {
     track('searchBarProjectSelected', {
       name: item.name,
     })
     // Stays open so several results can be opened side by side to compare.
-    if (inNewTab) return
+    if (staysOnPage) return
     setOpen(false)
     // Clear after the dialog's close animation (100ms) so the input
     // doesn't visibly reset and flash the "Recently added" list mid-close.
@@ -168,7 +168,9 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                   <SearchBarItem
                     key={project.id}
                     href={project.href}
-                    onFollow={(inNewTab) => onItemFollow(project, inNewTab)}
+                    onFollow={(staysOnPage) =>
+                      onItemFollow(project, staysOnPage)
+                    }
                     label={entryToLabel(project)}
                   >
                     <img
@@ -205,7 +207,9 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                     <SearchBarItem
                       key={item.href}
                       href={item.href}
-                      onFollow={(inNewTab) => onItemFollow(item, inNewTab)}
+                      onFollow={(staysOnPage) =>
+                        onItemFollow(item, staysOnPage)
+                      }
                       label={entryToLabel(item)}
                       value={
                         // I know it looks ugly but there is a bug in CMDK that scrolls to wrong item sometimes.
@@ -265,7 +269,7 @@ function SearchBarItem({
   value,
 }: {
   href: string
-  onFollow: (inNewTab: boolean) => void
+  onFollow: (staysOnPage: boolean) => void
   children: React.ReactNode
   label?: string
   value?: string

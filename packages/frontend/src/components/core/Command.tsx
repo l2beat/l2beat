@@ -223,8 +223,8 @@ CommandItem.displayName = CommandPrimitive.Item.displayName
  * link" work like on any other link. Enter on the highlighted item is handled
  * by `Command`.
  *
- * `onFollow` runs when the link is opened from the item, with whether it went
- * to a new tab: a dialog should stay open then, so several can be opened.
+ * `onFollow` runs when the link is opened from the item, with whether this
+ * page stays: a dialog should stay open then, so several can be opened.
  */
 const CommandLinkItem = ({
   href,
@@ -237,14 +237,14 @@ const CommandLinkItem = ({
   'asChild' | 'onSelect'
 > & {
   href: string
-  onFollow?: (inNewTab: boolean) => void
+  onFollow?: (staysOnPage: boolean) => void
 }) => (
   <CommandItem asChild className={cn('cursor-pointer', className)} {...props}>
     <a
       href={href}
       // Arrow keys move through the items; Tab would stop on every one.
       tabIndex={-1}
-      onClick={(e) => onFollow?.(opensInNewTab(e))}
+      onClick={(e) => onFollow?.(staysOnPage(e))}
       onAuxClick={(e) => {
         if (e.button === 1) onFollow?.(true)
       }}
@@ -256,8 +256,8 @@ const CommandLinkItem = ({
 
 /**
  * cmdk turns Enter into the item's `onSelect`, which can't see modifier
- * keys. A link item, or a link inside an item, is followed here instead: Enter clicks it, and Enter with
- * the modifier a click would use for a new tab opens one.
+ * keys. A link item, or a link inside an item, is followed here instead:
+ * Enter clicks it, and Enter with a modifier opens it in a new tab.
  */
 function followHighlightedLinkOnEnter(e: React.KeyboardEvent<HTMLDivElement>) {
   // Same IME guard as cmdk: 229 is Enter confirming a composition.
@@ -269,7 +269,7 @@ function followHighlightedLinkOnEnter(e: React.KeyboardEvent<HTMLDivElement>) {
   if (!(link instanceof HTMLAnchorElement)) return
   e.preventDefault()
 
-  if (!opensInNewTab(e)) {
+  if (!staysOnPage(e)) {
     link.click()
     return
   }
@@ -285,18 +285,23 @@ function followHighlightedLinkOnEnter(e: React.KeyboardEvent<HTMLDivElement>) {
       metaKey: e.metaKey,
       ctrlKey: e.ctrlKey,
       shiftKey: e.shiftKey,
+      altKey: e.altKey,
     }),
   )
   window.open(link.href, '_blank', 'noopener')
 }
 
-/** Shift opens a new window, which leaves this tab open just the same. */
-function opensInNewTab(e: {
+/**
+ * A modified click leaves this page: Cmd/Ctrl opens a new tab, Shift a new
+ * window, and Alt downloads the link.
+ */
+function staysOnPage(e: {
   metaKey: boolean
   ctrlKey: boolean
   shiftKey: boolean
+  altKey: boolean
 }) {
-  return e.metaKey || e.ctrlKey || e.shiftKey
+  return e.metaKey || e.ctrlKey || e.shiftKey || e.altKey
 }
 
 export {
