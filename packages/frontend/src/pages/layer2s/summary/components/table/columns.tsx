@@ -145,7 +145,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
                 <ValueWithPercentageChange
                   change={data?.change}
                   changePeriod={data.changePeriod}
-                  disabledOnMobile
+                  disabledOnTouch
                 >
                   {formatActivityCount(data.pastDayUops)}
                 </ValueWithPercentageChange>

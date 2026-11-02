@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useRef, useState } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
-import { useDevice } from '~/hooks/useDevice'
+import { useCanHover } from '~/hooks/useCanHover'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -71,7 +71,7 @@ function ChartMilestone({
   milestonesAtPoint: Milestone[]
   allMilestones: Milestone[]
 }) {
-  const { isDesktop } = useDevice()
+  const canHover = useCanHover()
   const triggerMilestone = milestonesAtPoint[0]
   assert(triggerMilestone)
   const milestoneIndex = allMilestones.indexOf(triggerMilestone)
@@ -80,13 +80,14 @@ function ChartMilestone({
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
 
   const common = cn(
-    'absolute bottom-5 flex items-center justify-center group-has-[.recharts-legend-wrapper]:bottom-[34px]',
+    'absolute bottom-5 flex items-center justify-center group-has-[.recharts-legend-wrapper]:bottom-[34px] max-lg:scale-75',
     !hasFinishedOnboardingInitial &&
       interactiveLegend &&
       !interactiveLegend.disableOnboarding &&
       'group-has-[.recharts-legend-wrapper]:bottom-[46px]',
   )
-  if (isDesktop) {
+  // A tooltip needs hover, so touch gets the drawer at any width.
+  if (canHover !== false) {
     return (
       <Tooltip delayDuration={0} disableHoverableContent={false}>
         <TooltipTrigger asChild>
@@ -104,7 +105,7 @@ function ChartMilestone({
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <div className={cn(common, 'scale-75 cursor-pointer')} style={{ left }}>
+        <div className={cn(common, 'cursor-pointer')} style={{ left }}>
           <MilestoneMarker milestones={milestonesAtPoint} />
         </div>
       </DrawerTrigger>

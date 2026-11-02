@@ -77,7 +77,7 @@ export function PrivacyRosetteTrigger({
   return (
     <>
       <Tooltip contentInHtml={settings.contentInHtml}>
-        <TooltipTrigger asChild disabledOnMobile>
+        <TooltipTrigger asChild disabledOnTouch>
           <Link
             href={sectionHref}
             aria-label={settings.label}
