@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import { RefreshIcon } from '~/icons/Refresh'
 import { cn } from '~/utils/cn'
-import { Button } from '../Button'
 
 /**
  * Shown when the chart's request failed, as opposed to `ChartNoDataState`,
- * which means the request succeeded and there is nothing to plot.
+ * which means the request succeeded and there is nothing to plot. Kept quiet
+ * on purpose: a failed request is usually transient, and Retry fixes it.
  */
 export function ChartErrorState({
   size,
@@ -19,35 +19,44 @@ export function ChartErrorState({
     <div
       role="alert"
       data-role="chart-error"
-      className="absolute inset-0 z-30 flex select-none flex-col items-center justify-center gap-3 text-center"
+      className={cn(
+        'absolute inset-1 z-30 flex select-none items-center justify-center rounded-lg border border-divider border-dashed text-center',
+        size === 'regular' ? 'flex-col gap-3' : 'gap-2',
+      )}
     >
-      <RoundedWarningIcon
-        sentiment="bad"
-        className={cn('size-8', size === 'small' && 'hidden')}
-      />
-      <span
-        className={cn(
-          'font-medium text-2xl text-primary leading-none',
-          size === 'small' && 'text-lg',
-        )}
-      >
-        Couldn&apos;t load chart
-      </span>
-      <span
-        className={cn('text-secondary text-sm', size === 'small' && 'hidden')}
-      >
-        The request for this chart failed.
-      </span>
-      {retry && (
-        <Button
-          variant="outline"
-          size="sm"
-          className="px-4"
-          disabled={isRetrying}
-          onClick={retry}
+      <div className="flex flex-col items-center gap-1.5">
+        <span
+          className={cn(
+            'font-medium text-primary',
+            size === 'regular' ? 'text-label-value-15' : 'text-label-value-13',
+          )}
         >
-          {isRetrying ? 'Retrying…' : 'Retry'}
-        </Button>
+          Couldn&apos;t load this chart
+        </span>
+        {size === 'regular' && (
+          <span className="text-secondary text-xs">
+            Something went wrong on our side.
+          </span>
+        )}
+      </div>
+      {retry && (
+        <button
+          type="button"
+          onClick={retry}
+          disabled={isRetrying}
+          className={cn(
+            'flex h-8 items-center gap-1.5 rounded-lg px-3 font-medium text-primary text-xs transition-colors md:text-sm',
+            'bg-surface-primary primary-card:bg-surface-secondary hover:bg-surface-tertiary primary-card:hover:bg-surface-tertiary',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
+            'disabled:cursor-default disabled:text-secondary disabled:hover:bg-surface-primary primary-card:disabled:hover:bg-surface-secondary',
+            size === 'small' && 'h-7 px-2',
+          )}
+        >
+          <RefreshIcon
+            className={cn('size-3.5', isRetrying && 'animate-spin')}
+          />
+          Try again
+        </button>
       )}
     </div>
   )
