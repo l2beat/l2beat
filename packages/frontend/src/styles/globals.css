@@ -67,6 +67,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* For `view-transition-name`s of the nav, which stays put across page loads.
+   Off while the theme toggle runs: a named part would be lifted out of its
+   circle reveal and fade on its own. The class sits on the subject, so
+   toggling the attribute restyles only these elements, not the page. */
+@custom-variant page-transition (&:where(:root:not([data-theme-transition]) *));
+
 /* A mouse or trackpad: an iPad is as wide as a laptop but has no hover, and
    a narrow window still has one. `not-can-hover:` is touch. The outer
    parentheses keep `not-` negating both features: `not (a) and (b)` is not
@@ -829,13 +835,65 @@
   scrollbar-width: none !important; /* Firefox */
 }
 
-/* Theme toggle view transition */
-::view-transition-old(root) {
+/* Page loads cross-fade, and the parts named with `page-transition:` stay
+   put. No animation at all under reduced motion: even a fade on every click
+   is motion the user asked to be spared. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+/* People switch pages tens of times a visit, so everything is done in
+   150 ms. The active pill and tab underlines slide on a strong ease-out:
+   the page has already kept the user waiting, so they move at once and
+   settle gently. The old and new pictures inherit the curve. */
+:root:not([data-theme-transition])::view-transition-group(*) {
+  animation-duration: 150ms;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* The old label leaves before the new one is fully in, so a sliding pill
+   never shows both. */
+:root:not([data-theme-transition])::view-transition-old(*) {
+  animation-duration: 100ms;
+}
+
+:root:not([data-theme-transition])::view-transition-new(*) {
+  animation-duration: 150ms;
+}
+
+/* The content fades through rather than across: the old page is gone
+   before the new one shows, so two tables never overlap mid-fade. The nav
+   is named, so it stays solid over the dip. */
+:root:not([data-theme-transition])::view-transition-old(root) {
+  animation: page-fade-out 50ms ease-out both;
+}
+
+:root:not([data-theme-transition])::view-transition-new(root) {
+  animation: page-fade-in 120ms cubic-bezier(0.23, 1, 0.32, 1) 30ms both;
+}
+
+@keyframes page-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Theme toggle view transition. DarkThemeToggle sets the attribute, so a
+   page load does not reveal from a circle with no centre. */
+:root[data-theme-transition]::view-transition-old(root) {
   animation: none;
   z-index: 1;
 }
 
-::view-transition-new(root) {
+:root[data-theme-transition]::view-transition-new(root) {
   animation: reveal-from-circle 0.4s ease-in-out;
   z-index: 2;
 }

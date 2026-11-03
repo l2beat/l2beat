@@ -42,6 +42,8 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
     style.setProperty('--circle-x', `${x}px`)
     style.setProperty('--circle-y', `${y}px`)
     style.setProperty('--circle-radius', `${radius}px`)
+    // Tells globals.css this is the circle reveal, not a page load.
+    document.documentElement.dataset.themeTransition = ''
 
     // flushSync required: View Transitions API needs synchronous DOM updates,
     // but setTheme() triggers async React state updates
@@ -53,6 +55,7 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
         style.removeProperty('--circle-x')
         style.removeProperty('--circle-y')
         style.removeProperty('--circle-radius')
+        delete document.documentElement.dataset.themeTransition
       })
   }
 

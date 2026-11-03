@@ -100,8 +100,10 @@ function Sidebar({
           // animation. The 1% see-through keeps Chrome drawing the page beneath,
           // so closing isn't delayed on Android. From `sm` the sheet is
           // `max-w-sm`, so the page beside it stays dimmed.
-          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background/99 p-0 text-primary md:max-w-(--sidebar-width-desktop) [&>button]:hidden"
-          overlayClassName="animate-none! max-sm:bg-background/99"
+          // Named like the desktop sidebar, which is not rendered beside it:
+          // tapping a link in the menu fades the menu out over the next page.
+          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background/99 p-0 text-primary page-transition:[view-transition-name:nav-sidebar] md:max-w-(--sidebar-width-desktop) [&>button]:hidden"
+          overlayClassName="animate-none! max-sm:bg-background/99 page-transition:[view-transition-name:nav-sidebar-overlay]"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
@@ -127,6 +129,7 @@ function Sidebar({
       <div
         className={cn(
           'fixed inset-y-0 left-0 hidden h-svh w-(--sidebar-width) duration-200 ease-linear md:flex',
+          'page-transition:[view-transition-name:nav-sidebar]',
           className,
         )}
         {...props}
