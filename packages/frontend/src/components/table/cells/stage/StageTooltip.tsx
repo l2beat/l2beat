@@ -1,4 +1,4 @@
-import type { ProjectScalingStage, Stage } from '@l2beat/config'
+import type { Stage } from '@l2beat/config'
 import {
   getStageTextClassname,
   StageBadge,
@@ -16,9 +16,10 @@ import { UnderReviewIcon } from '~/icons/UnderReview'
 import { WalkAwayNotPassedIcon } from '~/icons/WalkAwayNotPassed'
 import { WalkAwayPassedIcon } from '~/icons/WalkAwayPassed'
 import { cn } from '~/utils/cn'
+import type { TableStage } from './tableStage'
 
 interface StageTooltipProps {
-  stageConfig: ProjectScalingStage
+  stageConfig: TableStage
   isAppchain: boolean
   emergencyWarning?: string
   walkAway?: 'passed' | 'not-passed'

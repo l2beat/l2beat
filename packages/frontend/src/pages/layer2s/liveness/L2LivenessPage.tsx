@@ -1,7 +1,3 @@
-import {
-  type BadgeLookup,
-  BadgeLookupProvider,
-} from '~/components/projects/BadgeLookup'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -17,7 +13,6 @@ import {
 } from './components/RecentAnomalies'
 
 interface Props extends AppLayoutProps {
-  badgeLookup: BadgeLookup
   entries: TabbedL2Entries<L2LivenessEntry>
   projectsWithAnomalies: ProjectWithAnomaly[]
 }
@@ -25,25 +20,22 @@ interface Props extends AppLayoutProps {
 export function L2LivenessPage({
   entries,
   projectsWithAnomalies,
-  badgeLookup,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <BadgeLookupProvider lookup={badgeLookup}>
-        <SideNavLayout>
-          <LivenessTimeRangeContextProvider>
-            <LivenessHeader />
-            <RecentAnomalies
-              projectsWithAnomalies={projectsWithAnomalies}
-              className="max-md:mt-4 md:mb-6"
-            />
-            <TableFilterContextProvider>
-              <L2LivenessTables {...entries} />
-            </TableFilterContextProvider>
-          </LivenessTimeRangeContextProvider>
-        </SideNavLayout>
-      </BadgeLookupProvider>
+      <SideNavLayout>
+        <LivenessTimeRangeContextProvider>
+          <LivenessHeader />
+          <RecentAnomalies
+            projectsWithAnomalies={projectsWithAnomalies}
+            className="max-md:mt-4 md:mb-6"
+          />
+          <TableFilterContextProvider>
+            <L2LivenessTables {...entries} />
+          </TableFilterContextProvider>
+        </LivenessTimeRangeContextProvider>
+      </SideNavLayout>
     </AppLayout>
   )
 }

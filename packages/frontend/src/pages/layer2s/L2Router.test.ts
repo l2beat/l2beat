@@ -45,11 +45,40 @@ describe(createL2Router.name, () => {
 
     expect(await response.text()).toEqual('<html />')
   })
+
+  it('serves the upgrade lists the page leaves out as JSON', async () => {
+    const response = await fetchFromRouter(
+      createRouter(),
+      '/layer2s/projects/arbitrum/past-upgrades.json',
+    )
+
+    expect(response.status).toEqual(200)
+    expect(response.headers.get('content-type')).toEqual(
+      'application/json; charset=utf-8',
+    )
+    expect(await response.json()).toEqual(PAST_UPGRADES)
+  })
 })
+
+const PAST_UPGRADES = {
+  project: [
+    {
+      isInitialDeployment: true,
+      timestamp: 1700000000,
+      transactionHash: { hash: '0x01', href: 'https://etherscan.io/tx/0x01' },
+      implementations: [],
+    },
+  ],
+}
 
 function createRouter() {
   const manifest = mockObject<Manifest>({})
-  const cachedPage = { head: {}, props: { projectEntry: ENTRY } }
+  const cachedPage = {
+    head: {},
+    props: { projectEntry: ENTRY },
+    projectEntry: ENTRY,
+    pastUpgrades: PAST_UPGRADES,
+  }
   const cache = mockObject<InMemoryCache>({
     get: (async () => cachedPage) as InMemoryCache['get'],
   })
@@ -102,7 +131,6 @@ const ENTRY: ProjectL2Entry = {
     stage: 'Stage 1',
     downgradePending: undefined,
     message: undefined,
-    summary: [],
   },
   walkAway: undefined,
   discoUiHref: undefined,

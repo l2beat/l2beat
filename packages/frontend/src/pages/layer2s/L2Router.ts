@@ -17,6 +17,7 @@ import { getL2LivenessData } from './liveness/getL2LivenessData'
 import {
   getL2ProjectData,
   getL2ProjectMarkdown,
+  getL2ProjectPastUpgrades,
 } from './project/getL2ProjectData'
 import { getL2ProjectTvsBreakdownData } from './project/tvs-breakdown/getL2ProjectTvsBreakdownData'
 import { getL2RiskDataAvailabilityData } from './risk/data-availability/getL2RiskDataAvailabilityData'
@@ -130,6 +131,25 @@ export function createL2Router(
     '/layer2s/projects/:slug.md',
     validateRoute({ params: v.object({ slug: v.string() }) }),
     serveMarkdown(getProjectMarkdown),
+  )
+
+  router.get(
+    '/layer2s/projects/:slug/past-upgrades.json',
+    validateRoute({ params: v.object({ slug: v.string() }) }),
+    async (req, res) => {
+      const upgrades = await getL2ProjectPastUpgrades(
+        req.params.slug,
+        manifest,
+        cache,
+      )
+      // The router sets text/html for pages, and res.json keeps a set type
+      res.type('json')
+      if (!upgrades) {
+        res.status(404).json({})
+        return
+      }
+      res.status(200).json(upgrades)
+    },
   )
 
   router.get(

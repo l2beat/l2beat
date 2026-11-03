@@ -16,6 +16,7 @@ import {
   CommandSeparator,
 } from './core/Command'
 import { Popover, PopoverContent, PopoverTrigger } from './core/Popover'
+import { Skeleton } from './core/Skeleton'
 import { linkVariants } from './link/CustomLink'
 
 const MAX_TOKENS = 25
@@ -25,9 +26,20 @@ interface Props {
   value: ProjectToken | undefined
   setValue: (token: ProjectToken | undefined) => void
   className?: string
+  /** The list is still on its way; see `LazyTokensControls`. */
+  isLoading?: boolean
+  /** Called when the picker is about to open, so a lazy list can start loading. */
+  onOpenIntent?: () => void
 }
 
-export function TokenCombobox({ tokens, value, setValue, className }: Props) {
+export function TokenCombobox({
+  tokens,
+  value,
+  setValue,
+  className,
+  isLoading,
+  onOpenIntent,
+}: Props) {
   const [open, setOpen] = React.useState(false)
 
   const onSelect = (currentValue: string) => {
@@ -41,8 +53,18 @@ export function TokenCombobox({ tokens, value, setValue, className }: Props) {
 
   return (
     <div className={cn('flex items-center gap-2', className)}>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger className="group/popover-trigger h-8 justify-between">
+      <Popover
+        open={open}
+        onOpenChange={(open) => {
+          if (open) onOpenIntent?.()
+          setOpen(open)
+        }}
+      >
+        <PopoverTrigger
+          className="group/popover-trigger h-8 justify-between"
+          onPointerEnter={onOpenIntent}
+          onFocus={onOpenIntent}
+        >
           {value ? (
             <TokenItem token={value} />
           ) : (
@@ -57,18 +79,28 @@ export function TokenCombobox({ tokens, value, setValue, className }: Props) {
               className="min-w-48"
             />
             <CommandList>
-              <CommandEmpty>
-                <p>Can&apos;t find a token you&apos;re looking for?</p>
-                <a
-                  className={linkVariants()}
-                  href={externalLinks.tokenRequest}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Request it here
-                </a>
-              </CommandEmpty>
-              <TokenGroup value={value} tokens={tokens} onSelect={onSelect} />
+              {isLoading ? (
+                <TokenListSkeleton />
+              ) : (
+                <>
+                  <CommandEmpty>
+                    <p>Can&apos;t find a token you&apos;re looking for?</p>
+                    <a
+                      className={linkVariants()}
+                      href={externalLinks.tokenRequest}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Request it here
+                    </a>
+                  </CommandEmpty>
+                  <TokenGroup
+                    value={value}
+                    tokens={tokens}
+                    onSelect={onSelect}
+                  />
+                </>
+              )}
             </CommandList>
           </Command>
         </PopoverContent>
@@ -154,4 +186,14 @@ function tokenFilter(search: string, token: ProjectToken) {
     return true
   }
   return false
+}
+
+function TokenListSkeleton() {
+  return (
+    <div className="space-y-2 p-2" aria-busy="true" aria-label="Loading tokens">
+      {Array.from({ length: 6 }, (_, i) => (
+        <Skeleton key={i} className="h-6 w-full" />
+      ))}
+    </div>
+  )
 }

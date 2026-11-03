@@ -4,20 +4,18 @@ import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/Projec
 import { SelectedTokenContextProvider } from '~/components/chart/tvs/token/SelectedTokenContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { L2RwaRestrictedTokensContextProvider } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
-import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import type { ChartRange } from '~/utils/range/range'
 import { TvsChartControlsContextProvider } from '../../../chart/tvs/TvsChartControlsContext'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { ChartControls } from './ChartControls'
 import { TokenChart } from './TokenChart'
-import { TokensControls } from './TokensControls'
+import { LazyTokensControls } from './TokensControls'
 import { TvsBreakdownButton } from './TvsBreakdownButton'
 import { TvsProjectStats } from './TvsProjectStats'
 
 export interface L2TvsSectionProps extends ProjectSectionProps {
   id: 'tvs'
-  tokens: ProjectToken[] | undefined
   project: ChartProject
   milestones: Milestone[]
   tvsInfo: ProjectTvsInfo
@@ -28,7 +26,6 @@ export interface L2TvsSectionProps extends ProjectSectionProps {
 export function L2TvsSection({
   project,
   milestones,
-  tokens,
   tvsInfo,
   tvsBreakdownUrl,
   defaultRange,
@@ -59,7 +56,7 @@ export function L2TvsSection({
               milestones={milestones}
             />
             <div>
-              <TokensControls tokens={tokens} />
+              <LazyTokensControls projectId={project.id} />
               <TokenChart project={project} milestones={milestones} />
             </div>
             <TvsProjectStats

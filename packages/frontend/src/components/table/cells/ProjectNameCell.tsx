@@ -3,7 +3,10 @@ import type {
   ProjectScalingCapability,
   ProjectScalingPurpose,
 } from '@l2beat/config'
+import { useQuery } from '@tanstack/react-query'
 import type React from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
   TooltipContent,
@@ -13,7 +16,6 @@ import {
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
-import { useBadges } from '~/components/projects/BadgeLookup'
 import {
   ProjectTooltipContent,
   type ProjectTooltipSectionData,
@@ -30,6 +32,7 @@ import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { PrimaryValueCell } from './PrimaryValueCell'
@@ -383,11 +386,11 @@ export function ProjectNameInfoTooltip({
 }) {
   const projectName = project.shortName ?? project.name
   const sections = getTooltipSections(project)
-  const badges = useBadges(project.badges)
+  const lazyDetails = useLazyTooltipDetails(project.lazyTooltipProjectId)
   const hasTooltipContent =
     !!project.description ||
+    !!project.lazyTooltipProjectId ||
     !!project.quantumResistance ||
-    badges.length > 0 ||
     sections.length > 0
 
   if (!hasTooltipContent) {
@@ -396,22 +399,62 @@ export function ProjectNameInfoTooltip({
 
   return (
     <Tooltip disableHoverableContent={false}>
-      <TooltipTrigger disabledOnTouch asChild>
+      <TooltipTrigger
+        disabledOnTouch
+        asChild
+        onPointerEnter={lazyDetails.loadSoon}
+        onPointerLeave={lazyDetails.cancelLoadSoon}
+        onFocus={lazyDetails.load}
+      >
         {children}
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent sideOffset={16} className="flex flex-col gap-2">
           <ProjectTooltipContent
             projectName={projectName}
-            description={project.description}
+            description={project.description ?? lazyDetails.data?.description}
             sections={sections}
-            badges={badges}
+            badges={lazyDetails.data?.badges}
             sectionsFirst
           />
+          {lazyDetails.isLoading && <Skeleton className="h-10 w-full" />}
         </TooltipContent>
       </TooltipPortal>
     </Tooltip>
   )
+}
+
+/**
+ * Starts the request once the pointer has rested on the name for a moment,
+ * so the details are usually there when the tooltip opens 300 ms in, while a
+ * pointer sweeping across the table sends nothing.
+ */
+function useLazyTooltipDetails(projectId: string | undefined) {
+  const trpc = useTRPC()
+  const [wanted, setWanted] = useState(false)
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const query = useQuery(
+    trpc.projects.nameTooltip.queryOptions(
+      { projectId: projectId ?? '' },
+      { enabled: !!projectId && wanted, staleTime: Number.POSITIVE_INFINITY },
+    ),
+  )
+
+  const load = () => setWanted(true)
+  const cancelLoadSoon = () => clearTimeout(timer.current)
+  const loadSoon = () => {
+    cancelLoadSoon()
+    timer.current = setTimeout(load, 100)
+  }
+  useEffect(() => () => clearTimeout(timer.current), [])
+
+  return {
+    data: query.data,
+    isLoading: !!projectId && (!wanted || query.isLoading),
+    load,
+    loadSoon,
+    cancelLoadSoon,
+  }
 }
 
 function getTooltipSections(project: ProjectCellProject) {

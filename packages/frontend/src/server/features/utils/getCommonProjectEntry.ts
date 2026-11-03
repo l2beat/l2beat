@@ -1,6 +1,5 @@
 import type { ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
-import type { BadgeRef } from '~/components/projects/BadgeLookup'
 import type { RowBackgroundColor } from '~/components/table/utils/rowType'
 import type { UnderReviewStatus } from '~/utils/project/underReview'
 
@@ -28,7 +27,12 @@ export interface CommonProjectEntry {
       }
     | undefined
   description?: string
-  badges?: BadgeRef[]
+  /**
+   * Set on L2 table rows, which leave out the description and badges: the
+   * name tooltip loads them for this project from `projects.nameTooltip` as
+   * it is about to open. Unset when the project has neither.
+   */
+  lazyTooltipProjectId?: ProjectId
 }
 
 export interface ProjectVerificationWarnings {

@@ -154,10 +154,9 @@ export function ContractEntry({
               ))
             )}
           </div>
-          {contract.pastUpgrades?.upgrades &&
-            contract.pastUpgrades.upgrades.length > 0 && (
-              <PastUpgradesDialog pastUpgrades={contract.pastUpgrades} />
-            )}
+          {contract.pastUpgrades && (
+            <PastUpgradesDialog pastUpgrades={contract.pastUpgrades} />
+          )}
           {contract.description && (
             <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
               {contract.description}

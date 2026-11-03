@@ -25,7 +25,7 @@ export function getBadgeLink(
 }
 
 /** The link that is the same for every project wearing the badge, if any. */
-export function getSharedBadgeLink(badge: Badge): string | undefined {
+function getSharedBadgeLink(badge: Badge): string | undefined {
   if (badge.action?.type !== 'scalingFilter') return undefined
   return `/layer2s/summary?filters=${getFilterSearchParams({
     [badge.action.id]: {

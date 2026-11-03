@@ -5,7 +5,6 @@ import type {
   ProjectRedWarning,
   ProjectScalingCategory,
   ProjectScalingProofSystem,
-  ProjectScalingStage,
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
@@ -14,6 +13,10 @@ import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import {
+  type TableStage,
+  toTableStage,
+} from '~/components/table/cells/stage/tableStage'
 import type { WalkAwayVerdict } from '~/consts/walkAwayProjects'
 import { getWalkAwayVerdict } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
@@ -67,7 +70,6 @@ import {
 } from '../interop/getProjectInteropData'
 import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
-import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
 import { getL2DaSolutions } from './getL2DaSolutions'
 import type { L2Rosette } from './getL2RosetteValues'
@@ -141,7 +143,8 @@ export interface ProjectL2Entry {
   sections: ProjectDetailsSection[]
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
-  stageConfig: ProjectScalingStage
+  /** The header's stage cell; the stage section carries the full stage. */
+  stageConfig: TableStage
   walkAway: WalkAwayVerdict | undefined
   discoUiHref: string | undefined
 }
@@ -184,7 +187,6 @@ export async function getL2ProjectEntry(
     projectsChangeReport,
     activityProjectStats,
     tvsStats,
-    tokens,
     liveness,
     contractUtils,
     l2TvsSection,
@@ -200,7 +202,6 @@ export async function getL2ProjectEntry(
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
     get7dTvsBreakdown({ type: 'layer2' }),
-    getTokensForProject(project),
     getLiveness(project.id),
     getContractUtils(),
     getL2TvsSection(project),
@@ -337,7 +338,7 @@ export async function getL2ProjectEntry(
     stageConfig:
       project.scalingInfo.type === 'Other'
         ? { stage: 'NotApplicable' as const }
-        : project.scalingStage,
+        : toTableStage(project.scalingStage),
     walkAway: getWalkAwayVerdict(project),
     discoUiHref: project.discoveryInfo?.hasDiscoUi
       ? `https://disco.l2beat.com/ui/p/${project.id}`
@@ -407,7 +408,6 @@ export async function getL2ProjectEntry(
         tvsBreakdownUrl: `/layer2s/projects/${project.slug}/tvs-breakdown`,
         compareUrl: getProjectCompareUrl(project, 'tvs'),
         milestones: sortedMilestones,
-        tokens,
         tvsInfo: project.tvsInfo,
         project: chartProject,
         ...l2TvsSection,

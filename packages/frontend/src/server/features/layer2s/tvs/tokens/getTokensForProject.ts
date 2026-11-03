@@ -1,7 +1,9 @@
 import type { Project, TvsToken } from '@l2beat/config'
-import { notUndefined, type TokenId } from '@l2beat/shared-pure'
+import { notUndefined, ProjectId, type TokenId } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { getLatestTvsTimestamp } from '../utils/getLatestTvsTimestamp'
 
@@ -13,6 +15,21 @@ export type ProjectToken = {
   category: TvsToken['category']
   value: number
   iconUrl: string
+}
+
+export const ProjectTokensParams = v.object({ projectId: v.string() })
+export type ProjectTokensParams = v.infer<typeof ProjectTokensParams>
+
+/**
+ * The token picker's list, fetched when the picker is about to open. Sent
+ * with the page, arbitrum's 352 tokens were 74 KB of its page data.
+ */
+export async function getProjectTokens({ projectId }: ProjectTokensParams) {
+  const project = await ps.getProject({
+    id: ProjectId(projectId),
+    optional: ['tvsConfig'],
+  })
+  return project ? ((await getTokensForProject(project)) ?? []) : []
 }
 
 export async function getTokensForProject(

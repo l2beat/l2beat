@@ -10,6 +10,10 @@ import { getScalingMetadataDescription } from '~/ssr/head/projectMetaDescription
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import {
+  type DeferredPastUpgrades,
+  deferPastUpgrades,
+} from '~/utils/project/contracts-and-permissions/deferPastUpgrades'
 import { getL2ProjectStructuredData } from './getL2ProjectStructuredData'
 import { renderL2ProjectMarkdown } from './renderL2ProjectMarkdown'
 
@@ -40,7 +44,17 @@ export async function getL2ProjectMarkdown(
   cache: InMemoryCache,
 ): Promise<string | undefined> {
   const data = await getCachedL2ProjectPage(slug, manifest, cache)
-  return data && renderL2ProjectMarkdown(data.props.projectEntry)
+  return data && renderL2ProjectMarkdown(data.projectEntry)
+}
+
+/** The upgrade lists the page leaves out, for its past upgrades dialogs. */
+export async function getL2ProjectPastUpgrades(
+  slug: string,
+  manifest: Manifest,
+  cache: InMemoryCache,
+): Promise<DeferredPastUpgrades | undefined> {
+  const data = await getCachedL2ProjectPage(slug, manifest, cache)
+  return data?.pastUpgrades
 }
 
 function getCachedL2ProjectPage(
@@ -103,6 +117,12 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
       getProjectSectionLinks(slug),
       getProjectVersionLinks(slug, 'layer2s'),
     ])
+  const { value: clientEntry, upgrades: pastUpgrades } = deferPastUpgrades(
+    projectEntry,
+    // Served by the L2 router from this same cache entry
+    `/layer2s/projects/${project.slug}/past-upgrades.json`,
+  )
+
   return {
     head: {
       manifest,
@@ -135,10 +155,13 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
     },
     props: {
       ...appLayoutProps,
-      projectEntry,
+      projectEntry: clientEntry,
       sectionLinks,
       versionLinks,
       queryState: helpers.dehydrate(),
     },
+    /** The whole entry, upgrade lists included, for the markdown alternate. */
+    projectEntry,
+    pastUpgrades,
   }
 }

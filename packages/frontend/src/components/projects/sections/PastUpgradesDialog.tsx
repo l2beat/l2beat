@@ -1,4 +1,5 @@
 import { formatSeconds, type UnixTime } from '@l2beat/shared-pure'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import {
@@ -18,6 +19,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/core/Drawer'
+import { Skeleton } from '~/components/core/Skeleton'
 import { UtcDateTime } from '~/components/core/UtcDateTime'
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { CustomLink } from '~/components/link/CustomLink'
@@ -25,6 +27,7 @@ import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { DiffoIcon } from '~/icons/Diffo'
 import { HistoryClockIcon } from '~/icons/HistoryClock'
 import { cn } from '~/utils/cn'
+import type { DeferredPastUpgrades } from '~/utils/project/contracts-and-permissions/deferPastUpgrades'
 import type { PastUpgradeProxyContract } from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
 
 export interface PastUpgradesData {
@@ -47,6 +50,11 @@ export interface PastUpgradesData {
     avgInterval: number | null
     lastInterval: number | null
   }
+  /**
+   * Set when the page left `upgrades` empty and serves the list at `src`,
+   * keyed by `key`; see `deferPastUpgrades`. `length` sizes the skeleton.
+   */
+  deferred?: { src: string; key: string; length: number }
 }
 
 export function PastUpgradesDialog({
@@ -56,6 +64,7 @@ export function PastUpgradesDialog({
   pastUpgrades: PastUpgradesData
   showProxyContract?: boolean
 }) {
+  const prefetch = usePrefetchPastUpgrades(pastUpgrades)
   const trigger = (
     <div className="mt-2 flex items-center gap-1">
       <HistoryClockIcon className="size-3.5 fill-brand" />
@@ -68,7 +77,13 @@ export function PastUpgradesDialog({
   return (
     <>
       <Dialog>
-        <DialogTrigger className="max-md:hidden">{trigger}</DialogTrigger>
+        <DialogTrigger
+          className="max-md:hidden"
+          onPointerEnter={prefetch}
+          onFocus={prefetch}
+        >
+          {trigger}
+        </DialogTrigger>
         <DialogContent className="flex max-h-[90dvh] w-full flex-col overflow-y-hidden bg-surface-primary md:max-w-[720px]">
           <DialogClose />
           <DialogHeader>
@@ -79,18 +94,17 @@ export function PastUpgradesDialog({
           </DialogHeader>
           <PastUpgradesStats pastUpgrades={pastUpgrades} />
           <ScrollWithGradient className="-mr-2 space-y-3 pr-2">
-            {pastUpgrades.upgrades?.map((upgrade) => (
-              <PastUpgradeEntry
-                key={`${upgrade.transactionHash.hash}-${upgrade.proxyContract?.address ?? 'no-proxy'}-${upgrade.timestamp.toString()}`}
-                upgrade={upgrade}
-                showProxyContract={showProxyContract}
-              />
-            ))}
+            <PastUpgradesList
+              pastUpgrades={pastUpgrades}
+              showProxyContract={showProxyContract}
+            />
           </ScrollWithGradient>
         </DialogContent>
       </Dialog>
       <Drawer>
-        <DrawerTrigger className="md:hidden">{trigger}</DrawerTrigger>
+        <DrawerTrigger className="md:hidden" onFocus={prefetch}>
+          {trigger}
+        </DrawerTrigger>
         <DrawerContent className="max-h-[90dvh]">
           <DrawerHeader className="flex items-center justify-between">
             <DrawerTitle className="font-semibold text-label-value-18">
@@ -102,18 +116,80 @@ export function PastUpgradesDialog({
           </DrawerHeader>
           <PastUpgradesStats pastUpgrades={pastUpgrades} />
           <ScrollWithGradient className="mt-2 max-h-[50dvh] space-y-2">
-            {pastUpgrades.upgrades?.map((upgrade) => (
-              <PastUpgradeEntry
-                key={`${upgrade.transactionHash.hash}-${upgrade.proxyContract?.address ?? 'no-proxy'}-${upgrade.timestamp.toString()}`}
-                upgrade={upgrade}
-                showProxyContract={showProxyContract}
-              />
-            ))}
+            <PastUpgradesList
+              pastUpgrades={pastUpgrades}
+              showProxyContract={showProxyContract}
+            />
           </ScrollWithGradient>
         </DrawerContent>
       </Drawer>
     </>
   )
+}
+
+function PastUpgradesList({
+  pastUpgrades,
+  showProxyContract,
+}: {
+  pastUpgrades: PastUpgradesData
+  showProxyContract: boolean
+}) {
+  const { upgrades, isError } = usePastUpgrades(pastUpgrades)
+  if (isError) {
+    return <p className="text-paragraph-15">Couldn't load past upgrades.</p>
+  }
+  if (!upgrades) {
+    return Array.from(
+      { length: Math.min(pastUpgrades.deferred?.length ?? 0, 5) },
+      (_, i) => <Skeleton key={i} className="h-[118px] w-full rounded-sm" />,
+    )
+  }
+  return upgrades.map((upgrade) => (
+    <PastUpgradeEntry
+      key={`${upgrade.transactionHash.hash}-${upgrade.proxyContract?.address ?? 'no-proxy'}-${upgrade.timestamp.toString()}`}
+      upgrade={upgrade}
+      showProxyContract={showProxyContract}
+    />
+  ))
+}
+
+function pastUpgradesQueryOptions(src: string) {
+  return {
+    queryKey: ['pastUpgrades', src],
+    queryFn: async (): Promise<DeferredPastUpgrades> => {
+      const res = await fetch(src)
+      if (!res.ok) {
+        throw new Error('Past upgrades request failed', {
+          cause: { status: res.status, src },
+        })
+      }
+      return res.json()
+    },
+    // The lists change only with a deploy or a new discovery run.
+    staleTime: Number.POSITIVE_INFINITY,
+  }
+}
+
+function usePastUpgrades(pastUpgrades: PastUpgradesData) {
+  const deferred = pastUpgrades.deferred
+  const query = useQuery({
+    ...pastUpgradesQueryOptions(deferred?.src ?? ''),
+    enabled: !!deferred,
+  })
+  if (!deferred) return { upgrades: pastUpgrades.upgrades, isError: false }
+  return {
+    upgrades: query.data?.[deferred.key],
+    isError: query.isError || (query.data && !query.data[deferred.key]),
+  }
+}
+
+/** Starts loading on hover or focus, before the click opens the dialog. */
+function usePrefetchPastUpgrades(pastUpgrades: PastUpgradesData) {
+  const queryClient = useQueryClient()
+  const src = pastUpgrades.deferred?.src
+  return () => {
+    if (src) void queryClient.prefetchQuery(pastUpgradesQueryOptions(src))
+  }
 }
 
 export function PastUpgradesStats({

@@ -23,7 +23,6 @@ import { getOrganizationStructuredData } from '~/ssr/head/structured-data/getOrg
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 import { optionToRange } from '~/utils/range/range'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import {
@@ -80,7 +79,6 @@ export async function getHomeData(
       props: {
         ...appLayoutProps,
         ...data,
-        badgeLookup: getBadgeLookup(data.topChains),
       },
     },
   }

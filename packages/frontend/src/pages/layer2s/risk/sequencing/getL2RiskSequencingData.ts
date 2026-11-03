@@ -5,7 +5,6 @@ import { getL2RiskSequencingEntries } from '~/server/features/layer2s/risks/sequ
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 
 export async function getL2RiskSequencingData(
   req: Request,
@@ -42,10 +41,6 @@ export async function getL2RiskSequencingData(
       props: {
         ...appLayoutProps,
         ...props,
-        badgeLookup: getBadgeLookup(
-          props.decentralizedEntries,
-          props.centralizedEntries,
-        ),
       },
     },
   }

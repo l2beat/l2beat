@@ -1,5 +1,3 @@
-import type { ProjectScalingStage } from '@l2beat/config'
-
 import { StageBadge } from '~/components/badge/StageBadge'
 import {
   Tooltip,
@@ -13,9 +11,10 @@ import { StopwatchIcon } from '~/icons/Stopwatch'
 import { WalkAwayNotPassedIcon } from '~/icons/WalkAwayNotPassed'
 import { WalkAwayPassedIcon } from '~/icons/WalkAwayPassed'
 import { StageTooltip } from './StageTooltip'
+import type { TableStage } from './tableStage'
 
 interface StageCellProps {
-  stageConfig: ProjectScalingStage
+  stageConfig: TableStage
   isAppchain: boolean
   href?: string
   emergencyWarning?: string

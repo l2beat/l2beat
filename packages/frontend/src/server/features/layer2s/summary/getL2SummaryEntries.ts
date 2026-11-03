@@ -6,11 +6,14 @@ import type {
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingStack,
-  ProjectScalingStage,
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
+import {
+  type TableStage,
+  toTableStage,
+} from '~/components/table/cells/stage/tableStage'
 import type { WalkAwayVerdict } from '~/consts/walkAwayProjects'
 import { getWalkAwayVerdict } from '~/consts/walkAwayProjects'
 import { getL2TableRisks } from '~/pages/layer2s/utils/getL2Risks'
@@ -88,12 +91,18 @@ export async function getL2SummaryData() {
 
 export interface L2SummaryEntry extends CommonL2Entry {
   capability: ProjectScalingCapability
-  stage: ProjectScalingStage
+  stage: TableStage
   proofSystem: ProjectScalingProofSystem | undefined
   purposes: ProjectScalingPurpose[]
   stacks: ProjectScalingStack[] | undefined
-  dataAvailability: ProjectScalingDa[] | undefined
-  reasonsForBeingOther: ReasonForBeingInOther[] | undefined
+  /** The DA column shows the layer and the bridge's name, nothing more. */
+  dataAvailability:
+    | { layer: ProjectScalingDa['layer']; bridge: { value: string } }[]
+    | undefined
+  /** The "Why am I here?" badges and their tooltips. */
+  reasonsForBeingOther:
+    | Omit<ReasonForBeingInOther, 'shortDescription'>[]
+    | undefined
   tvs: {
     associatedTokens: ProjectAssociatedToken[]
     warnings: WarningWithSentiment[]
@@ -134,16 +143,21 @@ function getL2SummaryEntry(
     stage:
       project.scalingInfo.type === 'Other' || !project.scalingStage
         ? { stage: 'NotApplicable' as const }
-        : project.scalingStage,
+        : toTableStage(project.scalingStage),
     capability: project.scalingInfo.capability,
     proofSystem: getProofSystemWithName(
       project.scalingInfo.proofSystem,
       zkCatalogProjects,
     ),
     stacks: project.scalingInfo.stacks,
-    dataAvailability: project.scalingDa,
+    dataAvailability: project.scalingDa?.map((da) => ({
+      layer: da.layer,
+      bridge: { value: da.bridge.value },
+    })),
     purposes: project.scalingInfo.purposes,
-    reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
+    reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther?.map(
+      ({ shortDescription: _, ...reason }) => reason,
+    ),
     tvs: {
       associatedTokens: project.tvsInfo?.associatedTokens ?? [],
       warnings: project.tvsInfo?.warnings ?? [],

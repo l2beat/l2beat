@@ -1086,7 +1086,6 @@ const ENTRY: ProjectL2Entry = {
     stage: 'Stage 1',
     downgradePending: undefined,
     message: undefined,
-    summary: [],
   },
   walkAway: undefined,
   discoUiHref: undefined,

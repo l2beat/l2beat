@@ -2,7 +2,7 @@ import type { Project, ProjectScalingProofSystem } from '@l2beat/config'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import { getRowBackgroundColor } from '~/components/table/utils/rowType'
 import { manifest } from '~/utils/Manifest'
-import { getBadgeRef } from '~/utils/project/getBadgeWithParams'
+import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
@@ -108,10 +108,11 @@ export function getCommonL2Entry({
           value: badge.name,
         })),
     ],
-    description: project.display?.description,
-    badges: project.display.badges
-      .map((badge) => getBadgeRef(badge, project))
-      .filter((b) => b !== undefined),
+    lazyTooltipProjectId:
+      project.display.description ||
+      project.display.badges.some((badge) => !!getBadgeWithParams(badge))
+        ? project.id
+        : undefined,
   }
 }
 
