@@ -5,10 +5,8 @@ import { fetchFromRouter } from '~/test/fetchFromRouter'
 import type { Manifest } from '~/utils/Manifest'
 import { createNewNameRouter } from './NewNameRouter'
 
-// Method: mount the real router with a render function that records what it
-// was asked to render, so the real content entry has to load.
 describe(createNewNameRouter.name, () => {
-  it('renders the announcement from its content entry', async () => {
+  it('renders the announcement', async () => {
     const rendered: RenderData[] = []
     const router = createNewNameRouter(manifest, async (data) => {
       rendered.push(data)
