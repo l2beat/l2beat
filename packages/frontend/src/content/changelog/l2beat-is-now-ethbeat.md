@@ -3,8 +3,8 @@ title: "L2BEAT is now ETHBEAT"
 summary: "Same team, research and data, under a name that covers the whole of Ethereum."
 publishedAt: "2026-11-04T00:00:00.000Z"
 whatsNew:
-  image: "/meta-images/publications/l2beat-is-now-ethbeat.png"
-  alt: "L2BEAT is now ETHBEAT"
+  image: "/meta-images/publications/l2beat-is-now-ethbeat-banner.png"
+  alt: "L2BEAT covered layer 2s, then ZK, interop, privacy, tokens and blobs; ETHBEAT covers all of Ethereum."
   href: "/l2beat-is-now-ethbeat"
   disabledOnMatches: ['/l2beat-is-now-ethbeat']
   expiresAt: "2026-11-30T23:59:59.000Z"
