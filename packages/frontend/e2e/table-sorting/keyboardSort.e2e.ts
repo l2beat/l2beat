@@ -2,8 +2,8 @@ import { expect, test } from 'playwright/test'
 
 /**
  * Keyboard and screen-reader users sort through the header's sort buttons.
- * This tabs between two of them, sorts with Enter and Space, and reads the
- * result from the real table's `aria-sort`, the way a screen reader would.
+ * This tabs through them, sorts with Enter and Space, and reads the result
+ * from the real table's `aria-sort`, the way a screen reader would.
  * The visible sort buttons live in the sticky header's copy, so this also
  * checks the copy and the real header stay in step.
  */
@@ -23,7 +23,12 @@ test('a table header sorts from the keyboard', async ({ browser }) => {
   await expect(proofSystemHeader).toHaveAttribute('aria-sort', 'none')
   await expect(valueSecuredHeader).toHaveAttribute('aria-sort', 'descending')
 
+  // `#` is pinned, so its button sits in a separate layer of the header copy.
+  // Focus must still meet it first, where it shows.
   await page.getByRole('button', { name: /^name$/i }).focus()
+  await page.keyboard.press('Shift+Tab')
+  await expect(page.getByRole('button', { name: /^#$/ })).toBeFocused()
+  await page.keyboard.press('Tab')
   await page.keyboard.press('Tab')
   await expect(
     page.getByRole('button', { name: /^proof system$/i }),
