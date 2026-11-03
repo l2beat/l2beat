@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
 import {
@@ -48,7 +49,7 @@ export const STATIC_PAGE_PATHS = [
   '/native-rollups',
   '/faq',
   '/about-us',
-  '/l2beat-is-now-ethbeat',
+  RENAME_ANNOUNCEMENT_PATH,
   '/brand-kit',
   '/changelog',
   '/donate',

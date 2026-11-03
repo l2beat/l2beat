@@ -1,3 +1,4 @@
+import { SITE_NAME } from '~/consts/siteName'
 import { env } from '~/env'
 import { jsonForInlineScript } from '~/utils/jsonForInlineScript'
 import type { Manifest } from '~/utils/Manifest'
@@ -108,7 +109,7 @@ function OpengraphMeta({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
-      <meta property="og:site_name" content="ETHBEAT" />
+      <meta property="og:site_name" content={SITE_NAME} />
       {<meta property="og:type" content={opengraph.type} />}
       <meta property="og:image" content={opengraph.image} />
       <meta property="og:image:width" content={size.width.toString()} />

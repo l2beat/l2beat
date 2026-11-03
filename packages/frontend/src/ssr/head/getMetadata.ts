@@ -1,5 +1,6 @@
 import compact from 'lodash/compact'
 import { PRODUCTION_ORIGIN, toProductionUrl } from '~/consts/productionOrigin'
+import { SITE_NAME } from '~/consts/siteName'
 import { env } from '~/env'
 import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import type { Manifest } from '~/utils/Manifest'
@@ -36,7 +37,7 @@ export interface Metadata {
 type PartialMetadata = {
   /** What the page is called: its last breadcrumb and, by default, its title. */
   name?: string
-  /** For titles that say more than "<name> - L2BEAT". */
+  /** For titles that say more than "<name> - <SITE_NAME>". */
   title?: string
   description?: string
   url: string
@@ -76,7 +77,7 @@ export function getMetadata(
   // Production, whatever host rendered the page
   const canonicalUrl = toProductionUrl(strippedPath)
   return {
-    title: title ?? (name ? `${name} - ETHBEAT` : SITE_TITLE),
+    title: title ?? (name ? `${name} - ${SITE_NAME}` : SITE_TITLE),
     description,
     url: baseUrl + strippedPath,
     openGraph: {

@@ -1,7 +1,10 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
-import { SITE_NAME_WITH_FORMER } from '~/consts/siteName'
+import {
+  RENAME_ANNOUNCEMENT_PATH,
+  SITE_NAME_WITH_FORMER,
+} from '~/consts/siteName'
 import { env } from '~/env'
 import {
   type LinkListSection,
@@ -321,7 +324,7 @@ const PAGE_SECTIONS: LinkListSection[] = [
       },
       {
         name: 'L2BEAT is now ETHBEAT',
-        path: staticPagePath('/l2beat-is-now-ethbeat'),
+        path: staticPagePath(RENAME_ANNOUNCEMENT_PATH),
         description:
           'The rename from L2BEAT: what changed, what did not, and the old and new URLs.',
       },

@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import { SITE_NAME } from '~/consts/siteName'
 import type { SvgIconProps } from '~/icons/SvgIcon'
 import { cn } from '~/utils/cn'
 
@@ -23,7 +24,7 @@ export function Logo({
       viewBox={`0 0 ${small ? '501' : '1038'} 442`}
       fill="none"
       role="img"
-      aria-label="ETHBEAT logo"
+      aria-label={`${SITE_NAME} logo`}
       {...props}
     >
       {/* The beat scales around the heart's bbox centre (250.5, 221). Using an SVG

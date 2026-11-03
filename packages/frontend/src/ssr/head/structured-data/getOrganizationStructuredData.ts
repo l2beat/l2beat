@@ -1,12 +1,13 @@
 import { externalLinks } from '~/consts/externalLinks'
 import { toProductionUrl } from '~/consts/productionOrigin'
+import { SITE_NAME } from '~/consts/siteName'
 import { env } from '~/env'
 
 /** L2BEAT as the author or publisher embedded in other blocks. */
 export const L2BEAT_ORGANIZATION = {
   '@type': 'Organization' as const,
   '@id': toProductionUrl('/#organization'),
-  name: 'ETHBEAT',
+  name: SITE_NAME,
   url: toProductionUrl(''),
   logo: toProductionUrl('/logo.png'),
 }
