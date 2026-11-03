@@ -132,7 +132,7 @@ function Stat({
 function ScalingFactorTooltip({ metric }: { metric: ActivityMetric }) {
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger aria-label="About the scaling factor">
         <InfoIcon className="size-3 fill-current" />
       </TooltipTrigger>
       <TooltipContent>

@@ -162,7 +162,7 @@ export function CompareProjectPicker({
                   type="button"
                   aria-label={`Remove ${project.name}`}
                   onClick={() => toggleProject(project.slug)}
-                  className="flex size-4 cursor-pointer items-center justify-center rounded-full hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                  className="after:-inset-1 relative flex size-4 cursor-pointer items-center justify-center rounded-full after:absolute after:content-[''] hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 >
                   <CloseIcon className="size-2 fill-secondary" aria-hidden />
                 </button>
@@ -205,7 +205,11 @@ export function CompareProjectPicker({
         onEscapeKeyDown={onEscapeKeyDown}
         fullScreenMobile
       >
-        <Command shouldFilter={false} className="rounded-none">
+        <Command
+          shouldFilter={false}
+          className="rounded-none"
+          label="Search projects"
+        >
           <CommandInput
             placeholder="Search projects by name"
             value={search}

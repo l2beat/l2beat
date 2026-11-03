@@ -1,23 +1,11 @@
 import { useQueryClient } from '@tanstack/react-query'
-import ansiHTML from 'ansi-html'
 import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router'
 import { Checkbox } from '../../../components/Checkbox'
+import { useTheme } from '../../../theme'
 import { usePanelStore } from '../store/panel-store'
+import { renderAnsi } from './renderAnsi'
 import { useTerminalStore } from './store'
-
-ansiHTML.setColors({
-  reset: ['F0D8BD', '1D1816'], // [fg, bg]
-  black: '000000',
-  red: 'FB4A35',
-  green: '9DDE6C',
-  yellow: 'FABD30',
-  blue: '8B8BE8',
-  magenta: 'a73db5',
-  cyan: '1c92a8',
-  lightgrey: 'D3D3D3',
-  darkgrey: 'A9A9A9',
-})
 
 export function TerminalPanel() {
   const queryClient = useQueryClient()
@@ -36,6 +24,7 @@ export function TerminalPanel() {
     killCommand,
   } = useTerminalStore()
   const selectedAddress = usePanelStore((state) => state.selected[0])
+  const theme = useTheme()
 
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
@@ -137,9 +126,9 @@ export function TerminalPanel() {
       </div>
       <div
         ref={outputRef}
-        className="flex-1 overflow-auto whitespace-pre bg-coffee-900 p-2 font-mono text-gray-300"
+        className="flex-1 overflow-auto whitespace-pre bg-coffee-900 p-2 font-mono"
         dangerouslySetInnerHTML={{
-          __html: ansiHTML(output),
+          __html: renderAnsi(output, theme),
         }}
       />
     </div>

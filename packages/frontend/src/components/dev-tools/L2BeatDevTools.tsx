@@ -189,12 +189,13 @@ export function L2BeatDevTools() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
+        aria-label="Open L2BEAT dev tools"
         className={cn(
           'flex size-12 items-center justify-center gap-2 rounded-full border border-divider bg-surface-primary shadow-lg transition-colors hover:bg-surface-primary-hover',
           isOpen && 'hidden',
         )}
       >
-        <Logo animated={false} small className="mt-1 mr-px h-6" />
+        <Logo animated={false} small className="mt-1 mr-px h-6" aria-hidden />
       </button>
     </div>
   )

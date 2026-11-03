@@ -79,6 +79,9 @@ export function ProjectL2Summary({ project }: Props) {
                 <TooltipTrigger className="w-full cursor-pointer" asChild>
                   <ConditionalLink
                     className="flex items-center gap-1"
+                    aria-label={
+                      project.header.tvs ? 'View tokens breakdown' : undefined
+                    }
                     href={
                       project.header.tvs
                         ? `/layer2s/projects/${project.slug}/tvs-breakdown`

@@ -12,7 +12,7 @@ export function OVMIcon(props: SvgIconProps) {
         width="24"
         height="24"
         viewBox="0 0 24 24"
-        aria-label="OVM icon"
+        aria-label="OVM logo"
         {...props}
         style={{ fill: `url(#${gradientId})` }}
         className={cn('dark:hidden', props.className)}
@@ -40,7 +40,7 @@ export function OVMIcon(props: SvgIconProps) {
         width="24"
         height="24"
         viewBox="0 0 24 24"
-        aria-label="OVM badge icon"
+        aria-label="OVM logo"
         {...props}
         className={cn('hidden dark:inline dark:fill-current', props.className)}
       >

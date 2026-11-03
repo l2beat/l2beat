@@ -35,7 +35,7 @@ export function ActivityChartHeader({
 function SwitchInfoTooltip() {
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger aria-label="About UOPS and TPS">
         <InfoIcon className="size-3.5 fill-blue-700" />
       </TooltipTrigger>
       <TooltipContent>

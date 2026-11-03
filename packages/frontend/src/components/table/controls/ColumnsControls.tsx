@@ -100,7 +100,7 @@ function HiddenColumnsSegment<T>({
         <button
           type="button"
           aria-label="Show all columns"
-          className="flex size-4 items-center justify-center rounded-sm transition-colors duration-150 ease-out hover:bg-surface-tertiary hover:text-primary"
+          className="after:-inset-1 relative flex size-4 items-center justify-center rounded-sm transition-colors duration-150 ease-out after:absolute after:content-[''] hover:bg-surface-tertiary hover:text-primary"
           // Radix's trigger listens for pointerdown, so stopping only click
           // would still open the picker.
           onPointerDown={(e) => e.stopPropagation()}

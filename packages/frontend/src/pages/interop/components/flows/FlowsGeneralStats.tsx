@@ -153,6 +153,7 @@ export function FlowsGeneralStatsView({
                       from: [srcChain.id],
                       to: [dstChain.id],
                     })}
+                    aria-label={`View ${srcChain.name} to ${dstChain.name} transfers`}
                     className="flex items-center gap-1.5 rounded p-1 transition-opacity hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
                   >
                     <TopRouteIcons srcChain={srcChain} dstChain={dstChain} />
@@ -259,9 +260,9 @@ function TopRouteIcons({
 }) {
   return (
     <>
-      <img src={srcChain.iconUrl} alt={srcChain.id} className="size-5" />
-      <ArrowRightIcon className="size-4 fill-brand" />
-      <img src={dstChain.iconUrl} alt={dstChain.id} className="size-5" />
+      <img src={srcChain.iconUrl} alt={srcChain.name} className="size-5" />
+      <ArrowRightIcon className="size-4 fill-brand" aria-label="to" />
+      <img src={dstChain.iconUrl} alt={dstChain.name} className="size-5" />
     </>
   )
 }

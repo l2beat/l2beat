@@ -8,7 +8,6 @@ export function BridgesIcon({ className, ...props }: SvgIconProps) {
       width="20"
       height="20"
       viewBox="0 0 20 20"
-      aria-label="Bridges icon"
       fill="none"
       className={cn('stroke-primary', className)}
       {...props}

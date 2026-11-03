@@ -86,7 +86,10 @@
   --secondary: #5f6470;
   --positive: #007408;
   --warning: #ab8000;
-  --negative: #d70000;
+  /* --warning stays bright for icons and tints (3:1); text needs 4.5:1 on --background (WCAG AA). */
+  --warning-text: #806000;
+  /* Dark enough for 4.5:1 on --background, since it also colours text. */
+  --negative: #c40000;
   --brand: #9621bf;
   --selection-brand-share: 30%;
   /* The nav's current page. */
@@ -163,6 +166,7 @@
   --secondary: #abb1c1;
   --positive: #12d660;
   --warning: #ffc107;
+  --warning-text: #ffc107;
   --negative: #ff3d3d;
   --brand: #db8bf7;
   --selection-brand-share: 50%;
@@ -501,6 +505,7 @@
   --color-secondary: var(--secondary);
   --color-positive: var(--positive);
   --color-warning: var(--warning);
+  --color-warning-text: var(--warning-text);
   --color-negative: var(--negative);
   --color-brand: var(--brand);
   --color-nav-active: var(--nav-active);
