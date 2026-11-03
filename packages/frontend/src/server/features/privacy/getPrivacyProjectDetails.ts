@@ -363,11 +363,11 @@ async function getScalingProjects(
   project: PrivacyProject,
 ): Promise<ProjectIconListItem[]> {
   const ids = project.privacyInfo.scalingProjects
-  if (!ids) return []
+  if (!ids || ids.length === 0) return []
   const scalingProjects = await ps.getProjects({
     ids,
     select: ['scalingInfo'],
-    optional: ['scalingStage'],
+    optional: ['scalingStage', ...PROJECT_PAGE_METADATA_FIELDS],
   })
   return getScalingProjectItems(ids, scalingProjects)
 }

@@ -1,28 +1,20 @@
-import type {
-  PrivacyCategory,
-  ProjectScalingInfo,
-  ProjectScalingStage,
-} from '@l2beat/config'
+import type { ProjectScalingInfo, ProjectScalingStage } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { manifest } from '~/utils/Manifest'
+import {
+  getProjectUrl,
+  type ProjectPageMetadata,
+} from '~/utils/project/getProjectUrl'
+import { isAssignedStage } from '~/utils/project/isAssignedStage'
 
-interface LinkedProject {
-  id: ProjectId
-  slug: string
+interface LinkedProject extends ProjectPageMetadata {
   name: string
 }
 
 interface ScalingProject extends LinkedProject {
-  scalingInfo: Pick<ProjectScalingInfo, 'type'>
+  scalingInfo: ProjectScalingInfo
   scalingStage?: ProjectScalingStage
-}
-
-interface PrivacyLinkedProject extends LinkedProject {
-  privacyInfo?: {
-    category: Pick<PrivacyCategory, 'label'>
-    scalingProjects?: ProjectId[]
-  }
 }
 
 /** The scaling projects a privacy project runs on, in its configured order. */
@@ -36,12 +28,9 @@ export function getScalingProjectItems(
     const stage = project.scalingStage?.stage
     return [
       {
-        ...toItem(project, `/layer2s/projects/${project.slug}`),
+        ...toItem(project),
         description: project.scalingInfo.type,
-        stage:
-          stage === 'NotApplicable' || stage === 'UnderReview'
-            ? undefined
-            : stage,
+        stage: stage && isAssignedStage(stage) ? stage : undefined,
       },
     ]
   })
@@ -50,25 +39,20 @@ export function getScalingProjectItems(
 /** The privacy projects that run on a scaling project. */
 export function getPrivacyProjectsRunningOn(
   scalingProjectId: ProjectId,
-  projects: PrivacyLinkedProject[],
+  projects: LinkedProject[],
 ): ProjectIconListItem[] {
   return projects.flatMap((p) =>
     p.privacyInfo?.scalingProjects?.includes(scalingProjectId)
-      ? [
-          {
-            ...toItem(p, `/privacy/projects/${p.slug}`),
-            description: p.privacyInfo.category.label,
-          },
-        ]
+      ? [{ ...toItem(p), description: p.privacyInfo.category.label }]
       : [],
   )
 }
 
-function toItem(project: LinkedProject, href: string): ProjectIconListItem {
+function toItem(project: LinkedProject): ProjectIconListItem {
   return {
     id: project.id,
     name: project.name,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    href,
+    href: getProjectUrl(project),
   }
 }

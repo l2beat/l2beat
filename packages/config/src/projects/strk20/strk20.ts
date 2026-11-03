@@ -195,7 +195,6 @@ export const strk20: BaseProject = {
       ],
     },
     trackedOn: ['starknet'],
-    scalingProjects: [ProjectId('starknet')],
     tokens: getPrivacyTokens(),
     zkCatalogId: ProjectId('stwo'),
     exitWindow: {
