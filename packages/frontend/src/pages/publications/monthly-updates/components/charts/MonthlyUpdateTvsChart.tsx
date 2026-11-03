@@ -18,6 +18,7 @@ import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChar
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useTRPC } from '~/trpc/React'
+import { rangeToResolution } from '~/utils/range/range'
 import { MonthlyUpdateChartTimeRange } from './MonthlyUpdateChartTimeRange'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
@@ -111,7 +112,12 @@ export function MonthlyUpdateTvsChart({
           />
           <ChartTooltip
             filterNull={false}
-            content={<TvsCustomTooltip unit="usd" />}
+            content={
+              <TvsCustomTooltip
+                unit="usd"
+                resolution={rangeToResolution([from, to])}
+              />
+            }
           />
           <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>

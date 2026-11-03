@@ -16,8 +16,9 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
+import type { ChartResolution } from '~/utils/range/range'
 
 export interface PrivacyTvlBreakdownProject {
   id: string
@@ -33,6 +34,7 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   isPlaceholderData: boolean
+  resolution: ChartResolution
 }
 
 export function PrivacyTvlBreakdownChart({
@@ -41,6 +43,7 @@ export function PrivacyTvlBreakdownChart({
   syncedUntil,
   isLoading,
   isPlaceholderData,
+  resolution,
 }: Props) {
   const chartMeta = useMemo<ChartMeta>(() => {
     const colors = generateAccessibleColors(projects.length)
@@ -111,13 +114,20 @@ export function PrivacyTvlBreakdownChart({
           }}
           syncedUntil={syncedUntil}
         />
-        <ChartTooltip filterNull={false} content={<CustomTooltip />} />
+        <ChartTooltip
+          filterNull={false}
+          content={<CustomTooltip resolution={resolution} />}
+        />
       </AreaChart>
     </ChartContainer>
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+function CustomTooltip({
+  payload,
+  label,
+  resolution,
+}: CustomChartTooltipProps & { resolution: ChartResolution }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
 
@@ -131,9 +141,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, {
-            mode: 'datetime',
-          })}
+          {formatSnapshotTimestamp(label, resolution)}
         </div>
         {visible.length > 1 && (
           <>

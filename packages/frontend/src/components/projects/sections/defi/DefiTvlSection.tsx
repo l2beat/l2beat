@@ -76,6 +76,7 @@ export function DefiTvlSection({
       </ChartControlsWrapper>
       <TvsValueChart
         isPlaceholderData={isPlaceholderData}
+        resolution={data?.resolution ?? 'day'}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}

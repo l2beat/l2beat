@@ -9,6 +9,7 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import type { ChartResolution } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
 import { StackedTvsChartTooltip } from './StackedTvsChartTooltip'
 
@@ -29,6 +30,7 @@ interface Props {
   unit: ChartUnit
   isLoading: boolean
   isPlaceholderData: boolean
+  resolution: ChartResolution
   tickCount?: number
   project?: ChartProject
   excludeRwaRestrictedTokens: boolean
@@ -74,6 +76,7 @@ export function AssetCategoryTvsChart({
   unit,
   isLoading,
   isPlaceholderData,
+  resolution,
   tickCount,
   dataKeys,
   toggleDataKey,
@@ -177,6 +180,7 @@ export function AssetCategoryTvsChart({
         <ChartTooltip
           content={
             <StackedTvsChartTooltip
+              resolution={resolution}
               unit={unit}
               meta={assetCategoryTvsChartMeta}
             />

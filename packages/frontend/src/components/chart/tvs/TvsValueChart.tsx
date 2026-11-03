@@ -21,7 +21,8 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
+import type { ChartResolution } from '~/utils/range/range'
 
 interface TvsValueChartDataPoint {
   timestamp: number
@@ -33,6 +34,7 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   isPlaceholderData: boolean
+  resolution: ChartResolution
   project?: ChartProject
   milestones?: Milestone[]
 }
@@ -50,6 +52,7 @@ export function TvsValueChart({
   syncedUntil,
   isLoading,
   isPlaceholderData,
+  resolution,
   project,
   milestones,
 }: Props) {
@@ -74,7 +77,10 @@ export function TvsValueChart({
           stroke="url(#tvs-value-stroke)"
           isAnimationActive={false}
         />
-        <ChartTooltip filterNull={false} content={<TvsValueChartTooltip />} />
+        <ChartTooltip
+          filterNull={false}
+          content={<TvsValueChartTooltip resolution={resolution} />}
+        />
         <ChartCommonComponents
           data={data}
           isLoading={isLoading}
@@ -90,16 +96,18 @@ export function TvsValueChart({
   )
 }
 
-function TvsValueChartTooltip({ payload, label }: CustomChartTooltipProps) {
+function TvsValueChartTooltip({
+  payload,
+  label,
+  resolution,
+}: CustomChartTooltipProps & { resolution: ChartResolution }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
 
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, {
-          mode: 'datetime',
-        })}
+        {formatSnapshotTimestamp(label, resolution)}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">

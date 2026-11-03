@@ -22,7 +22,8 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
+import type { ChartResolution } from '~/utils/range/range'
 
 type TokenChartDataPoint = {
   timestamp: number
@@ -35,6 +36,7 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   isPlaceholderData: boolean
+  resolution: ChartResolution
   milestones: Milestone[]
   token: ProjectToken
 }
@@ -44,6 +46,7 @@ export function TokenChart({
   project,
   isLoading,
   isPlaceholderData,
+  resolution,
   milestones,
   token,
   syncedUntil,
@@ -92,13 +95,20 @@ export function TokenChart({
           }}
           syncedUntil={syncedUntil}
         />
-        <ChartTooltip filterNull={false} content={<CustomTooltip />} />
+        <ChartTooltip
+          filterNull={false}
+          content={<CustomTooltip resolution={resolution} />}
+        />
       </AreaChart>
     </ChartContainer>
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+function CustomTooltip({
+  payload,
+  label,
+  resolution,
+}: CustomChartTooltipProps & { resolution: ChartResolution }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
 
@@ -106,7 +116,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     <ChartTooltipWrapper>
       <div className="flex min-w-48 flex-col gap-1">
         <div className="mb-1 font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { mode: 'datetime' })}
+          {formatSnapshotTimestamp(label, resolution)}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
