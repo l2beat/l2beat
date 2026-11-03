@@ -1,5 +1,6 @@
 import type { SortDirection } from '@tanstack/react-table'
 import type React from 'react'
+import { useId } from 'react'
 
 import { cn } from '~/utils/cn'
 
@@ -25,6 +26,7 @@ export function SortingArrows({
   onClick,
   'aria-label': ariaLabel,
 }: Props) {
+  const stateId = useId()
   return (
     <label className="group/sorting-arrows flex w-max cursor-pointer select-none items-end gap-1 rounded-sm has-focus-visible:ring-2 has-focus-visible:ring-brand has-focus-visible:ring-offset-1 has-focus-visible:ring-offset-transparent">
       <button
@@ -32,6 +34,9 @@ export function SortingArrows({
         className="flex focus-visible:outline-none"
         onClick={onClick}
         aria-label={ariaLabel}
+        // The visible buttons sit in the sticky header's presentational copy,
+        // where the real header's aria-sort does not reach.
+        aria-describedby={direction ? stateId : undefined}
       >
         <svg
           width="12"
@@ -57,6 +62,11 @@ export function SortingArrows({
             )}
           />
         </svg>
+        {direction && (
+          <span id={stateId} className="sr-only">
+            {direction === 'asc' ? 'sorted ascending' : 'sorted descending'}
+          </span>
+        )}
       </button>
       {children}
     </label>

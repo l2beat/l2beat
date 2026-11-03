@@ -38,6 +38,10 @@ test('a table header sorts from the keyboard', async ({ browser }) => {
   await expect(valueSecuredHeader).toHaveAttribute('aria-sort', 'none')
   const firstDirection = await proofSystemHeader.getAttribute('aria-sort')
   expect(['ascending', 'descending']).toContain(firstDirection)
+  // The focused button says so too: its header copy is presentational.
+  await expect(page.locator(':focus')).toHaveAccessibleDescription(
+    `sorted ${firstDirection}`,
+  )
 
   await page.keyboard.press('Space')
   await expect(proofSystemHeader).toHaveAttribute(
