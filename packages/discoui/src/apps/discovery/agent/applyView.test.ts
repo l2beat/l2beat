@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { collectOutgoingFields } from '../panel-nodes/store/actions/group'
 import type { Node, State } from '../panel-nodes/store/State'
 import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
 import { emptyHistoryState } from '../panel-nodes/store/utils/history'
@@ -64,6 +65,11 @@ describe(applyView.name, () => {
       view({ show: ['gone'], only: ['gone'], select: 'lost' }),
     )
     expect(receipt.missing).toEqual(['gone', 'lost'])
+  })
+
+  it('hides nothing when no contract to keep is in the graph', () => {
+    const { nodes } = applyView(stateOf(GRAPH), view({ only: ['gone'] }))
+    expect(hiddenIds(nodes)).toEqual([])
   })
 
   it('shows what an earlier view hid', () => {
@@ -241,6 +247,25 @@ describe(applyView.name, () => {
     }
   })
 
+  it('updates the fields of every group a member left', () => {
+    const [root, bridge, escrow, admin, council, oracle] = GRAPH as [
+      Node,
+      Node,
+      Node,
+      Node,
+      Node,
+      Node,
+    ]
+    const inner = group('inner', [admin, bridge])
+    const outer = group('outer', [inner, oracle])
+    const { nodes } = applyView(
+      stateOf([root, escrow, council, outer]),
+      view({ groups: [{ name: 'Control', color: 1, members: ['admin'] }] }),
+    )
+    const targets = findNode(nodes, 'outer')?.fields.map((f) => f.target)
+    expect(targets).toEqual(['escrow'])
+  })
+
   it('arranges groups in lanes left to right without overlaps', () => {
     const { nodes } = applyView(
       stateOf(GRAPH),
@@ -311,6 +336,15 @@ function node(id: string, targets: string[], isInitial = false): Node {
     isReachable: true,
     opened: false,
     subnodes: [],
+  }
+}
+
+function group(id: string, members: Node[]): Node {
+  return {
+    ...node(id, []),
+    addressType: 'Group',
+    fields: collectOutgoingFields(members),
+    subnodes: members,
   }
 }
 

@@ -179,11 +179,9 @@ function applyVisibility(
   let result = revealItems(nodes, view.show).nodes
   let connectors: string[] = []
   let isolatedAway: string[] = []
-  if (view.only !== undefined) {
-    const isolated = isolate(
-      result,
-      view.only.filter((id) => leafIds.has(id)),
-    )
+  const onlyPresent = view.only?.filter((id) => leafIds.has(id)) ?? []
+  if (onlyPresent.length > 0) {
+    const isolated = isolate(result, onlyPresent)
     result = isolated.nodes
     connectors = isolated.connectors
     isolatedAway = isolated.hidden
@@ -268,12 +266,17 @@ function groupAtTop(
   }
   const isEmptyGroup = (node: Node) =>
     node.addressType === 'Group' && node.subnodes.length === 0
+  const rebuilt = new Set<string>()
   const pruned = mapGraphItems(nodes, (node) => {
     if (node.subnodes.length === 0) return node
     const subnodes = node.subnodes.filter(
       (sub) => !ids.has(sub.id) && !isEmptyGroup(sub),
     )
-    if (subnodes.length === node.subnodes.length) return node
+    const isChanged =
+      subnodes.length !== node.subnodes.length ||
+      node.subnodes.some((sub) => rebuilt.has(sub.id))
+    if (!isChanged) return node
+    rebuilt.add(node.id)
     const fields = collectOutgoingFields(subnodes)
     return {
       ...node,
