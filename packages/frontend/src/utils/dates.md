@@ -13,7 +13,7 @@ Every date and time on the site is in UTC and uses one format. Build each one wi
 | Chart snapshot | `3 Jun 2026` or `3 Jun 2026, 14:00 UTC` | `formatSnapshotTimestamp(ts, resolution)` |
 | Range | `30 Jun — 2 Jul 2026` | `formatRange(from, to)` |
 | Range within a day | `3 Jun 2026, 01:00 — 02:00 UTC` | `formatRange(from, to)` |
-| Chart axis ticks | `3 Jun`, `Jun ‘26`, `2026` | `getXAxisProps` |
+| Chart axis ticks | `3 Jun`, `Jun ‘26`, `2026` | `getTimeTicks` |
 
 - Clock times are 24-hour and end with `UTC`.
 - Name other zones by offset (`UTC+2`, `UTC-4`). An abbreviation like `CET` or `IST` can mean several zones.

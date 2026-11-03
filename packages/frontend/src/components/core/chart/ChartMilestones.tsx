@@ -20,8 +20,8 @@ import {
   DrawerTrigger,
 } from '../Drawer'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
-import { useChart } from './Chart'
-import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
+import { useChart } from './ChartContext'
+import { useLegendHint } from './ChartLegendOnboardingContext'
 import { previousChartDataClassName } from './ChartPreviousData'
 
 interface Props<T extends { timestamp: number }> {
@@ -84,14 +84,11 @@ function ChartMilestone({
   const milestoneIndex = allMilestones.indexOf(triggerMilestone)
   assert(milestoneIndex !== -1)
   const { interactiveLegend } = useChart()
-  const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
+  const { keepsRoom: keepsHintRoom } = useLegendHint(interactiveLegend)
 
   const common = cn(
-    'absolute bottom-5 flex items-center justify-center group-has-[.recharts-legend-wrapper]:bottom-[34px] max-lg:scale-75',
-    !hasFinishedOnboardingInitial &&
-      interactiveLegend &&
-      !interactiveLegend.disableOnboarding &&
-      'group-has-[.recharts-legend-wrapper]:bottom-[46px]',
+    'absolute bottom-5 flex items-center justify-center group-has-[.chart-legend]:bottom-[34px] max-lg:scale-75',
+    keepsHintRoom && 'group-has-[.chart-legend]:bottom-[46px]',
   )
   // A tooltip needs hover, so touch gets the drawer at any width.
   if (canHover !== false) {
