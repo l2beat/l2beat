@@ -17,7 +17,7 @@ const items: { question: string; answer: string | string[] }[] = [
   {
     question: 'What is the overall purpose of this site?',
     answer:
-      'ETHBEAT was created to provide transparent and verifiable insights into emerging layer two (L2) technologies which, in line with the [rollup-centric Ethereum scaling roadmap](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698) are aimed at scaling Ethereum. Since then we have expanded to cover the interoperability protocols that connect these chains, privacy protocols on Ethereum, and the ZK technology many of these projects rely on.',
+      'We started as L2BEAT to provide transparent and verifiable insights into emerging layer two (L2) technologies which, in line with the [rollup-centric Ethereum scaling roadmap](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698) are aimed at scaling Ethereum. Since then we have expanded to cover the interoperability protocols that connect these chains, privacy protocols on Ethereum, and the ZK technology many of these projects rely on.',
   },
   {
     question: 'What does ETHBEAT cover besides L2s?',

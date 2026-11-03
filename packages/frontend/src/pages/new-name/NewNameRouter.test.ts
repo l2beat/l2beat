@@ -17,9 +17,7 @@ describe(createNewNameRouter.name, () => {
 
     expect(response.status).toEqual(200)
     expect(rendered.map((data) => data.ssr.page)).toEqual(['NewNamePage'])
-    expect(rendered[0]?.head.metadata.title).toEqual(
-      'L2BEAT is now ETHBEAT - ETHBEAT',
-    )
+    expect(rendered[0]?.head.metadata.title).toEqual('L2BEAT is now ETHBEAT')
   })
 })
 

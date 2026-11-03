@@ -115,4 +115,4 @@ No waiver of any term of these Terms shall be deemed a further or continuing wai
 
 
 ## 13. Contact Information
-If you have any questions or concerns about these Terms, please contact us at legal@l2beat.com
+If you have any questions or concerns about these Terms, please contact us at legal@ethbeat.org

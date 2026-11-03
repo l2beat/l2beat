@@ -15,6 +15,8 @@ export async function getNewNameData(
       manifest,
       metadata: getMetadata(manifest, {
         name: NEW_NAME.title,
+        // Already names the site, so no " - ETHBEAT" suffix
+        title: NEW_NAME.title,
         description:
           'L2BEAT is now ETHBEAT: why we renamed, what we cover now beyond layer 2s, and what changes for links, the API and badges.',
         url,
