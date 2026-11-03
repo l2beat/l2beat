@@ -15,6 +15,8 @@ import { HorizontalSeparator } from './HorizontalSeparator'
 
 const SIDEBAR_WIDTH = '15rem'
 const SIDEBAR_WIDTH_MOBILE = '100%'
+/** Lets the mobile menu buttons point `aria-controls` at the sheet. */
+export const MOBILE_SIDEBAR_ID = 'mobile-sidebar'
 
 type SidebarContextProps = {
   openMobile: boolean
@@ -92,6 +94,7 @@ function Sidebar({
         {/* From the left, where the desktop sidebar sits: the whole screen
             on phones, the desktop sidebar's width from tablets up. */}
         <SheetContent
+          id={MOBILE_SIDEBAR_ID}
           // iOS Safari tints its toolbars from the overlay and swaps the tint in
           // one frame, so a full-width sheet needs a matching overlay and no
           // animation. The 1% see-through keeps Chrome drawing the page beneath,
