@@ -257,7 +257,7 @@ export function StageSection({
                           Principle
                         </span>
                         <Tooltip>
-                          <TooltipTrigger>
+                          <TooltipTrigger aria-label="About principles">
                             <InfoIcon className="size-3 fill-brand" />
                           </TooltipTrigger>
                           <TooltipContent>

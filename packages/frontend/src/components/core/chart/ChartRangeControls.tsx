@@ -92,6 +92,9 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
         }}
       >
         <DrawerTrigger
+          aria-label={
+            selectedOption === 'custom' ? 'Custom date range' : undefined
+          }
           className={cn(
             selectTriggerClassnames,
             'z-0 h-8 bg-surface-primary primary-card:bg-surface-secondary',
@@ -148,6 +151,7 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
       >
         <VerticalSeparator />
         <PopoverTrigger
+          aria-label="Custom date range"
           data-state={selectedOption === 'custom' ? 'checked' : 'unchecked'}
           className={cn(
             'flex w-9 items-center justify-center p-0',

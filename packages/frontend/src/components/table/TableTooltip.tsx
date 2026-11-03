@@ -14,7 +14,10 @@ interface Props {
 export function TableTooltip({ children }: Props) {
   return (
     <Tooltip>
-      <TooltipTrigger className={cn('mb-px', hitAreaClassName)}>
+      <TooltipTrigger
+        className={cn('mb-px', hitAreaClassName)}
+        aria-label="More info"
+      >
         <InfoIcon className="size-3 fill-current" />
       </TooltipTrigger>
       <TooltipPortal>
