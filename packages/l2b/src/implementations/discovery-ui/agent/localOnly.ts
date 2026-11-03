@@ -6,11 +6,16 @@ const LOOPBACK_HOSTNAMES = ['localhost', '127.0.0.1', '[::1]']
 // The server listens on every interface, so routes that act for the
 // researcher refuse other machines, pages that rebind their domain to this
 // machine (they still name it in the Host header), and pages on other sites
-// that post here (the browser names them in the Origin header).
+// (the browser names them in the Origin or Sec-Fetch-Site header).
 export function localOnly(refusal: string): RequestHandler {
   return (req, res, next) => {
     if (
-      isLocalRequest(req.socket.remoteAddress, req.hostname, req.get('origin'))
+      isLocalRequest(
+        req.socket.remoteAddress,
+        req.hostname,
+        req.get('origin'),
+        req.get('sec-fetch-site'),
+      )
     ) {
       next()
       return
@@ -23,11 +28,16 @@ export function isLocalRequest(
   remoteAddress: string | undefined,
   hostname: string,
   origin: string | undefined,
+  fetchSite: string | undefined,
 ): boolean {
   if (remoteAddress === undefined) {
     return false
   }
   if (origin !== undefined && !isLocalOrigin(origin)) {
+    return false
+  }
+  // A frame or link from another site may omit Origin, but not this.
+  if (fetchSite === 'cross-site') {
     return false
   }
   return (
