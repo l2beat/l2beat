@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import type { Header } from '@tanstack/react-table'
+import type { Header, SortDirection } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
 import { SortingArrows } from './SortingArrows'
 
@@ -70,4 +70,32 @@ export function ValueAndChangeSortingHeader<TData>({
       </SortingArrows>
     </div>
   )
+}
+
+/**
+ * For the header cell's `aria-sort`. The cell holds the change companion's
+ * sort control too, so sorting by the change sorts by this cell as well.
+ */
+export function getHeaderAriaSort<TData>(header: Header<TData, unknown>) {
+  if (!header.column.getCanSort()) {
+    return undefined
+  }
+  const changeSortColumnId = header.column.columnDef.meta?.changeSortColumnId
+  const changeColumn = changeSortColumnId
+    ? header.getContext().table.getColumn(changeSortColumnId)
+    : undefined
+  return toAriaSort(
+    header.column.getIsSorted() || changeColumn?.getIsSorted() || false,
+  )
+}
+
+function toAriaSort(direction: false | SortDirection) {
+  switch (direction) {
+    case 'asc':
+      return 'ascending'
+    case 'desc':
+      return 'descending'
+    case false:
+      return 'none'
+  }
 }
