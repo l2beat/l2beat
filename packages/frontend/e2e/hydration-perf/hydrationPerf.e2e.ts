@@ -101,6 +101,9 @@ async function measureLoad(
   path: string,
 ): Promise<Measurement> {
   const page = await context.newPage()
+  // A page that failed to hydrate would measure low too.
+  const pageErrors: Error[] = []
+  page.on('pageerror', (error) => pageErrors.push(error))
   await page.addInitScript(collectLongTasks)
   const cdp = await context.newCDPSession(page)
   await cdp.send('Performance.enable')
@@ -108,6 +111,7 @@ async function measureLoad(
   // An error page would measure low and could lower a ceiling.
   expect(response?.ok(), `navigation to ${path}`).toBe(true)
   await waitUntilQuiet(() => page.evaluate(countActivity))
+  expect(pageErrors, `client errors while loading ${path}`).toEqual([])
 
   const { metrics } = await cdp.send('Performance.getMetrics')
   const byName = Object.fromEntries(metrics.map((m) => [m.name, m.value]))
