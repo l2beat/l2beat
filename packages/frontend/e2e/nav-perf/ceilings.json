@@ -3,12 +3,12 @@
     "jsChunks": 32
   },
   "/layer2s/summary": {
-    "jsChunks": 31
+    "jsChunks": 32
   },
   "/layer2s/projects/arbitrum": {
     "jsChunks": 50
   },
   "/layer2s/activity": {
-    "jsChunks": 27
+    "jsChunks": 28
   }
 }

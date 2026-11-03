@@ -16,6 +16,12 @@ type ChunkingContext = Rolldown.ChunkingContext
  * `entriesAwareMergeThreshold` can't promise that: it picks the target by
  * pages alone, and even at 1 kB it had /defi/summary load the 98 kB chart
  * chunk.
+ *
+ * Keep the client entry's code off barrels such as @l2beat/shared-pure. The
+ * module graph here comes from before tree-shaking, so the plan counts all a
+ * barrel re-exports as the entry's and leaves it alone. Tree-shaking then
+ * drops most of it from the entry, and Rolldown splits it into dozens of tiny
+ * chunks. The e2e/nav-perf ratchet catches this.
  */
 export function smallSharedChunks(maxBytes: number) {
   const candidates: string[] = []

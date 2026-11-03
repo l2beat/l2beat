@@ -1,8 +1,11 @@
-import { assert } from '@l2beat/shared-pure'
 import type MarkdownIt from 'markdown-it'
 import type { RenderRule } from 'markdown-it/lib/renderer.mjs'
 import type Token from 'markdown-it/lib/token.mjs'
 import { GlossaryMatcher, type GlossaryTerm } from './glossaryMatcher'
+
+// The client entry imports this module, so it throws rather than import
+// `assert` from the @l2beat/shared-pure barrel, which would split each page
+// into dozens more chunks (see smallSharedChunks.mts)
 
 const ignoreDelimiter = ':'
 
@@ -104,7 +107,7 @@ export function glossaryPlugin(md: MarkdownIt) {
     self,
   ) => {
     const token = tokens[index]
-    assert(token, 'Token is not defined')
+    if (!token) throw new Error('Token is not defined')
     const link = parseGlossaryHref(token.attrGet('href'))
     if (link) {
       token.attrSet('data-link-role', 'glossary')
@@ -164,9 +167,11 @@ interface GlossaryLink {
 function parseGlossaryHref(href: string | null): GlossaryLink | undefined {
   if (!href?.includes('/glossary#')) return undefined
   const [cleanHref, encodedDescription] = href.split('?description=')
-  assert(cleanHref && encodedDescription, 'Href or description is not defined')
+  if (!cleanHref || !encodedDescription) {
+    throw new Error('Href or description is not defined')
+  }
   const termId = cleanHref.split('#')[1]
-  assert(termId, 'Glossary term id is not defined')
+  if (!termId) throw new Error('Glossary term id is not defined')
   return {
     href: cleanHref,
     termId,
