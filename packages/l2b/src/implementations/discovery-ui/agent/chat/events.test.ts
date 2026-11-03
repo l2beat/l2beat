@@ -197,6 +197,25 @@ describe(appendToLog.name, () => {
       { type: 'tool', id: 'u', outputAppend: 'other' },
     ])
   })
+
+  it('keeps only the tail of a first command output', () => {
+    const log: ChatEvent[] = []
+    const outputAppend = `${'x'.repeat(8_000)}END`
+    appendToLog(log, {
+      type: 'tool',
+      id: 't',
+      status: 'completed',
+      outputAppend,
+    })
+    expect(log).toEqual([
+      {
+        type: 'tool',
+        id: 't',
+        status: 'completed',
+        outputAppend: `${'x'.repeat(7_997)}END`,
+      },
+    ])
+  })
 })
 
 describe(describeScreen.name, () => {

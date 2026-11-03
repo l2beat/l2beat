@@ -286,7 +286,15 @@ export function appendToLog(log: ChatEvent[], event: ChatEvent) {
       return
     }
   }
-  log.push(event)
+  log.push(clipOutput(event))
+}
+
+function clipOutput(event: ChatEvent): ChatEvent {
+  if (event.type !== 'tool' || event.outputAppend === undefined) {
+    return event
+  }
+  const outputAppend = event.outputAppend.slice(-TERMINAL_OUTPUT_LENGTH_MAX)
+  return { ...event, outputAppend }
 }
 
 // The panel shows only this much of a command's tail, so the log keeps no more.
