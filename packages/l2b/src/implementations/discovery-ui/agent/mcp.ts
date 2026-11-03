@@ -64,10 +64,12 @@ export function attachMcpRouter(app: Express, ui: DiscoUi) {
     try {
       res.json({ jsonrpc: '2.0', id, result: await answer(ui, method, params) })
     } catch (error) {
-      if (!(error instanceof RpcError)) {
-        throw error
+      if (error instanceof RpcError) {
+        res.json(rpcError(id, error.code, `${error.message}: ${error.detail}`))
+        return
       }
-      res.json(rpcError(id, error.code, `${error.message}: ${error.detail}`))
+      console.error('Agent tool failed', error)
+      res.json(rpcError(id, -32603, 'Internal error'))
     }
   })
 
