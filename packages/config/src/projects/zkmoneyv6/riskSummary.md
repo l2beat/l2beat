@@ -16,4 +16,4 @@
 4. the resolver operator links deposits paid through a name to their recipients (see privileged insider).
 5. the default endpoints, Alchemy and Aztec Labs' Aztec nodes, see deposit addresses and withdrawals in one session (see network observer and privileged insider).
 6. a portal freezes, and refunds publish note or deposit amounts on Ethereum.
-7. elliptic-curve cryptography is broken, which decrypts data published to Ethereum (see future adversary).
+7. elliptic-curve cryptography is broken, which decrypts notes and events and ties withdrawals to their accounts (see future adversary).

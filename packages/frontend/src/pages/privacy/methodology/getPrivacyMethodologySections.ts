@@ -67,11 +67,17 @@ export function getPrivacyMethodologySections() {
     ipHidingRoutes: joinBlocks([
       // A raw heading, since markdown headings render without an id to link.
       `<h2 id="${PRIVACY_IP_HIDING_ROUTES_ANCHOR}">IP-hiding routes</h2>`,
-      "An IP-hiding route hides the user's IP from the services an app calls: by default no single company, whether it runs a hop or hosts one, should see both the user's IP and where the traffic goes, which disqualifies most VPN services. Our advice names one where an app needs it.",
+      "An IP-hiding route hides the user's IP from the services an app calls. Our advice names one where an app needs it. Its entry sees the user's IP, and its exit sees the destination. We list a route when it passes three checks:",
+      bulletList([
+        "It carries all of the app's traffic, and the exit gets no identifier that links connections.",
+        'One operator or hosting company holds both the entry and the exit of at most 1% of connections, at every location we test.',
+        "Its client's source and node list are public.",
+      ]),
+      'A route is decentralised when any two operators or hosting companies together hold the entry and the exit of at most 10% of connections. All routes below are.',
       bulletList([
         '**Tor Browser**: websites, each site on its own circuit.',
         "**Tor for all traffic**: Tails or Whonix on a computer, Orbot's VPN mode on Android. Tor carries no UDP.",
-        '**NymVPN**: all traffic on desktop and mobile, UDP included. Its exits accept only listed ports.',
+        '**NymVPN with the Random profile**: all traffic on desktop and mobile, UDP included. Its exits accept only listed ports. Its default and mixnet profiles pick gateways near the user, which fails the second check in some regions.',
       ]),
     ]),
 
