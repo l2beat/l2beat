@@ -9,6 +9,7 @@ import {
   type ChartInteractiveLegend,
   type ChartMeta,
   type ChartProject,
+  isSeriesSelected,
 } from './ChartContext'
 import { ChartLegend } from './ChartLegend'
 import { useLegendHint } from './ChartLegendOnboardingContext'
@@ -70,14 +71,13 @@ export function ChartContainer<T extends { timestamp: number }>({
   // An empty chart has no sources to deselect.
   const noDataSourcesSelected =
     metaKeys.length > 0 &&
-    metaKeys.every(
-      (key) => interactiveLegend && !interactiveLegend.dataKeys.includes(key),
-    )
+    metaKeys.every((key) => !isSeriesSelected(interactiveLegend, key))
   const { keepsRoom: keepsHintRoom } = useLegendHint(interactiveLegend)
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div
         ref={ref}
+        data-chart-container
         className="group relative"
         aria-busy={isPlaceholderData || undefined}
       >

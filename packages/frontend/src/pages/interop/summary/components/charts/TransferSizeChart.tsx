@@ -69,8 +69,7 @@ const TICK_OFFSET = 8
 const BAR_SIZE = 10
 const MAX_BAR_SIZE = 24
 
-const gridClassName =
-  'stroke-primary/25 dark:stroke-primary/40 [stroke-dasharray:5_5]'
+const gridClassName = 'stroke-(--chart-grid) [stroke-dasharray:5_5]'
 // The page's y tick overrides, which also restyled the category labels.
 const yTickClassName = 'fill-secondary font-bold! text-subtitle-11'
 
@@ -129,14 +128,9 @@ function TransferSizeBars({
   // Its callbacks run on events, after the layout below is computed.
   const tooltip = useChartTooltip({
     count: data.length,
-    anchorOf: (index) => {
-      // The band's middle, half way along the value axis.
-      const center = bandStart(index) + band / 2
-      const middle = horizontal
-        ? plot.x + plot.width / 2
-        : plot.y + plot.height / 2
-      return horizontal ? { x: middle, y: center } : { x: center, y: middle }
-    },
+    // The band's middle, half way along the value axis.
+    anchorOf: (index) =>
+      axes.point(bandStart(index) + band / 2, valueToPixel(50)),
     place: (anchor, size) => placeInPlot(anchor, size, plot, horizontal),
     arrowKeys: horizontal ? 'upDown' : 'leftRight',
   })
@@ -162,15 +156,14 @@ function TransferSizeBars({
     height: Math.max(0, plotBottom - plotTop),
   }
 
+  const axes = getAxes(plot, horizontal)
   const count = data.length
-  const band = count > 0 ? (horizontal ? plot.height : plot.width) / count : 0
-  const bandStart = (i: number) => (horizontal ? plot.y : plot.x) + i * band
+  const band = count > 0 ? axes.band.length / count : 0
+  const bandStart = (i: number) => axes.band.start + i * band
   const bar = getBarPosition(band, horizontal)
   // Percentages map onto the value axis, 0-100.
   const valueToPixel = (value: number) =>
-    horizontal
-      ? plot.x + (value / 100) * plot.width
-      : plot.y + plot.height - (value / 100) * plot.height
+    axes.value.zero + (value / 100) * axes.value.length
 
   const row = active ? data[active.index] : undefined
 
@@ -187,11 +180,13 @@ function TransferSizeBars({
       tooltip.clear()
       return
     }
-    const along = horizontal ? y - plot.y : x - plot.x
-    const index = Math.min(count - 1, Math.floor(along / band))
+    const { band: along, value } = axes.split({ x, y })
+    const index = Math.min(
+      count - 1,
+      Math.floor((along - axes.band.start) / band),
+    )
     // The tooltip follows the pointer along the band, centred across it.
-    const center = bandStart(index) + band / 2
-    tooltip.select(index, horizontal ? { x, y: center } : { x: center, y })
+    tooltip.select(index, axes.point(bandStart(index) + band / 2, value))
   }
 
   const hasSize = width > 0 && height > 0
@@ -227,19 +222,12 @@ function TransferSizeBars({
           {active && (
             <rect
               className="fill-primary/25"
-              {...(horizontal
-                ? {
-                    x: plot.x + 0.5,
-                    y: bandStart(active.index),
-                    width: plot.width - 1,
-                    height: band,
-                  }
-                : {
-                    x: bandStart(active.index),
-                    y: plot.y + 0.5,
-                    width: band,
-                    height: plot.height - 1,
-                  })}
+              {...axes.rect(
+                bandStart(active.index),
+                band,
+                Math.min(valueToPixel(0), valueToPixel(100)) + 0.5,
+                Math.abs(axes.value.length) - 1,
+              )}
             />
           )}
           <g clipPath={`url(#${clipId})`}>
@@ -250,16 +238,17 @@ function TransferSizeBars({
                 cumulative += point[bucket]
                 const a = valueToPixel(from)
                 const b = valueToPixel(cumulative)
-                const start = bandStart(i) + bar.offset
                 const length = Math.abs(b - a)
                 if (length === 0 || bar.size === 0) return null
                 return (
                   <rect
                     key={`${point.name}-${bucket}`}
-                    x={horizontal ? Math.min(a, b) : start}
-                    y={horizontal ? start : Math.min(a, b)}
-                    width={horizontal ? length : bar.size}
-                    height={horizontal ? bar.size : length}
+                    {...axes.rect(
+                      bandStart(i) + bar.offset,
+                      bar.size,
+                      Math.min(a, b),
+                      length,
+                    )}
                     fill={chartMeta[bucket].color}
                     fillOpacity={0.8}
                   />
@@ -270,23 +259,13 @@ function TransferSizeBars({
           {/* Over the bars, like the time-series grid. */}
           <g className={gridClassName}>
             {PERCENT_TICKS.map((tick) => {
-              const at = valueToPixel(tick)
-              return horizontal ? (
-                <line
-                  key={tick}
-                  x1={at}
-                  x2={at}
-                  y1={plot.y}
-                  y2={plot.y + plot.height}
-                />
-              ) : (
-                <line
-                  key={tick}
-                  x1={plot.x}
-                  x2={plot.x + plot.width}
-                  y1={at}
-                  y2={at}
-                />
+              const from = axes.point(axes.band.start, valueToPixel(tick))
+              const to = axes.point(
+                axes.band.start + axes.band.length,
+                valueToPixel(tick),
+              )
+              return (
+                <line key={tick} x1={from.x} y1={from.y} x2={to.x} y2={to.y} />
               )
             })}
           </g>
@@ -340,7 +319,7 @@ function TransferSizeBars({
                 x2={plot.x + plot.width}
                 y1={plot.y + plot.height}
                 y2={plot.y + plot.height}
-                stroke="#666"
+                className="stroke-secondary"
               />
               <g>
                 {data.map((point, i) => (
@@ -395,6 +374,42 @@ function TransferSizeBars({
   )
 }
 
+type Plot = { x: number; y: number; width: number; height: number }
+
+/**
+ * The band axis runs along the categories and the value axis across them:
+ * x and y in a vertical chart, swapped in a horizontal one. Positions are
+ * given as (band, value) and turned into x and y here.
+ */
+function getAxes(plot: Plot, horizontal: boolean) {
+  return horizontal
+    ? {
+        band: { start: plot.y, length: plot.height },
+        value: { zero: plot.x, length: plot.width },
+        point: (band: number, value: number) => ({ x: value, y: band }),
+        split: ({ x, y }: Anchor) => ({ band: y, value: x }),
+        rect: (band: number, size: number, value: number, length: number) => ({
+          x: value,
+          y: band,
+          width: length,
+          height: size,
+        }),
+      }
+    : {
+        band: { start: plot.x, length: plot.width },
+        // Values grow upwards, so this axis starts at the bottom.
+        value: { zero: plot.y + plot.height, length: -plot.height },
+        point: (band: number, value: number) => ({ x: band, y: value }),
+        split: ({ x, y }: Anchor) => ({ band: x, value: y }),
+        rect: (band: number, size: number, value: number, length: number) => ({
+          x: band,
+          y: value,
+          width: size,
+          height: length,
+        }),
+      }
+}
+
 /**
  * A stack's position in its band: a fixed bar size centred, or the band
  * less 10% each side, capped at the maximum bar size.
@@ -421,7 +436,7 @@ function getBarPosition(band: number, horizontal: boolean) {
 function placeInPlot(
   anchor: Anchor,
   size: { width: number; height: number },
-  plot: { x: number; y: number; width: number; height: number },
+  plot: Plot,
   horizontal: boolean,
 ): Anchor {
   const { width: w, height: h } = size

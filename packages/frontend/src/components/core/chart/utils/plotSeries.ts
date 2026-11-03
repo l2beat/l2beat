@@ -1,3 +1,5 @@
+import { toNumber } from './toNumber'
+
 /** What stacking and the y extent need from a series. */
 export interface PlotSeries<T> {
   key: string
@@ -96,8 +98,4 @@ export function getIsolatedPoints<T>(
       (plotted[i - 1]?.top[key] ?? null) === null &&
       (plotted[i + 1]?.top[key] ?? null) === null,
   )
-}
-
-function toNumber(value: unknown): number | null {
-  return typeof value === 'number' && Number.isFinite(value) ? value : null
 }

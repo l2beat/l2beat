@@ -1,10 +1,13 @@
-import { assert, formatCurrency } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { arc, type PieArcDatum, pie } from 'd3-shape'
 import { type ReactNode, useMemo } from 'react'
 import { cn } from '~/utils/cn'
-import { ChartContext, type ChartMeta, useChart } from './ChartContext'
-import { ChartDataIndicator } from './ChartDataIndicator'
-import { ChartTooltipWrapper } from './ChartTooltip'
+import { ChartContext, type ChartMeta } from './ChartContext'
+import {
+  ChartTooltipRow,
+  ChartTooltipValue,
+  ChartTooltipWrapper,
+} from './ChartTooltip'
 import { placeBeside, useChartTooltip } from './useChartTooltip'
 
 /** A slice; its label and color come from the chart meta. */
@@ -131,25 +134,12 @@ function DonutTooltip({
   format: (value: number) => string
   className?: string
 }) {
-  const config = useChart().meta[entry.name]
-  assert(config, 'Chart meta is missing')
   return (
     <ChartTooltipWrapper>
       <div className={cn('flex flex-col gap-1', className)}>
-        <div className="flex items-center justify-between gap-x-3">
-          <span className="flex items-center gap-1">
-            <ChartDataIndicator
-              backgroundColor={config.color}
-              type={config.indicatorType}
-            />
-            <span className="whitespace-nowrap leading-none sm:w-fit">
-              {config.label}
-            </span>
-          </span>
-          <span className="whitespace-nowrap font-medium leading-none">
-            {format(entry.value)}
-          </span>
-        </div>
+        <ChartTooltipRow name={entry.name} gap="gap-x-3" wrapLabel={false}>
+          <ChartTooltipValue value={entry.value} format={format} />
+        </ChartTooltipRow>
       </div>
     </ChartTooltipWrapper>
   )

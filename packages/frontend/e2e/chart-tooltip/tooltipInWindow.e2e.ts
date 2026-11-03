@@ -61,7 +61,9 @@ test('a tapped chart tooltip stays inside its chart on a phone', async ({
   const section = page.locator('#privacy-anonymity-set')
   // Charts mount only once they near the viewport.
   await section.evaluate((e) => e.scrollIntoView({ block: 'end' }))
-  const container = section.locator('.group:has(.ts-chart-host)').last()
+  const container = section
+    .locator('[data-chart-container]:has(.ts-chart-host)')
+    .last()
   const chart = container.locator('[data-chart-hover]')
   await chart.evaluate((e) => e.scrollIntoView({ block: 'center' }))
   await expect(container.locator(`${CHART} path`).first()).toBeVisible()
@@ -87,12 +89,12 @@ test('a tapped chart tooltip stays inside its chart on a phone', async ({
   expect(tooltipBox!.y + tooltipBox!.height).toBeLessThanOrEqual(bottom)
 
   const lines = await container
-    .locator('.chart-legend .group\\/legend-item')
+    .locator('.chart-legend [data-chart-legend-item]')
     .count()
-  const rows = tooltip.locator('[class*="justify-between"]')
+  const rows = tooltip.locator('[data-chart-tooltip-row]')
   await expect(rows).toHaveCount(lines)
   // Scroll to the last row.
-  const scroller = tooltip.locator('.overflow-y-auto')
+  const scroller = tooltip.locator('[data-chart-tooltip-rows]')
   await scroller.evaluate((e) => {
     e.scrollTop = e.scrollHeight
   })

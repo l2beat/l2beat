@@ -16,7 +16,7 @@ import { scaleLinear } from '@tanstack/charts/scales/linear'
 import { curveMonotoneX, curveStep, curveStepAfter } from 'd3-shape'
 import { type ReactNode, useId, useMemo, useRef, useState } from 'react'
 import { cn } from '~/utils/cn'
-import { useChart } from './ChartContext'
+import { isSeriesSelected, useChart } from './ChartContext'
 import { ChartHoverOverlay, ChartSceneStore } from './ChartHoverOverlay'
 import { NoDataPatternDef } from './defs/NoDataPatternDef'
 import {
@@ -154,9 +154,6 @@ const Y_SCALE = 'y'
 const RIGHT_SCALE = 'right-y'
 
 const chartClassNames = cn(
-  '[--chart-grid:color-mix(in_oklab,var(--primary)_25%,transparent)] dark:[--chart-grid:color-mix(in_oklab,var(--primary)_40%,transparent)]',
-  // The theme's muted color, which paints all tick labels.
-  '[--chart-tick-label:color-mix(in_oklab,var(--primary)_50%,transparent)] dark:[--chart-tick-label:color-mix(in_oklab,var(--primary)_70%,transparent)]',
   // The axis options have no per-axis label color, so the x labels are
   // matched by their scene keys, which are not a documented API.
   '[&_text[data-ts-key^="x-tick-label"]]:fill-secondary',
@@ -195,9 +192,7 @@ export function TimeSeriesChart<T, K extends string>({
   const rows = data ?? EMPTY
   const visible = series.filter(
     (s) =>
-      !interactiveLegend ||
-      meta[s.key] === undefined ||
-      interactiveLegend.dataKeys.includes(s.key),
+      meta[s.key] === undefined || isSeriesSelected(interactiveLegend, s.key),
   )
   const plotted = usePlotted(rows, visible)
   const stacked = getStackedKeys(visible)
@@ -233,18 +228,50 @@ export function TimeSeriesChart<T, K extends string>({
   // The hover overlay maps rows to pixels with the last rendered scales.
   const [sceneRef] = useState(() => new ChartSceneStore())
 
-  // Callers pass inline props; a new definition rebuilds the whole scene, so
-  // the memo keys on values and functions are read through refs. Scale
-  // factories are stable imports, so they are keyed on directly.
+  // Callers pass inline props, and a new definition rebuilds the whole
+  // scene, so the memos key on values (JSON drops functions) and read
+  // functions through refs. A formatter enters the key through the labels it
+  // gives the ticks, so changing one rebuilds the scene. Scale factories are
+  // stable imports, so they are keyed on directly.
   const axesRef = useRef({ yAxis, rightAxis, xAxis })
   axesRef.current = { yAxis, rightAxis, xAxis }
   const xRef = useRef(x)
   xRef.current = x
+  const seriesKey = JSON.stringify(visible.map(({ value, value0, ...s }) => s))
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: keyed on values, see above
+  const { left, right } = useMemo(() => {
+    const leftKeys = visible.filter((s) => s.axis !== 'right').map((s) => s.key)
+    const rightKeys = visible
+      .filter((s) => s.axis === 'right')
+      .map((s) => s.key)
+    return {
+      left: getYAxisTicks(getExtent(plotted, leftKeys), yAxis, leftKeys.length),
+      right:
+        rightAxis && hasRightAxis
+          ? getYAxisTicks(
+              getExtent(plotted, rightKeys),
+              rightAxis,
+              rightKeys.length,
+            )
+          : undefined,
+    }
+  }, [
+    plotted,
+    seriesKey,
+    JSON.stringify([yAxis, rightAxis]),
+    yAxis.scale,
+    rightAxis?.scale,
+  ])
+
   const optionsKey = JSON.stringify([
-    visible.map(({ value, value0, ...s }) => s),
+    seriesKey,
     yAxis,
     rightAxis,
+    left.ticks.map((v) => yAxis.format?.(v)),
+    right?.ticks.map((v) => rightAxis?.format?.(v)),
     xAxis?.ticks,
+    xAxis?.ticks.map(xAxis.format),
     xAxis?.domain,
     margin,
     areas,
@@ -256,27 +283,6 @@ export function TimeSeriesChart<T, K extends string>({
   // biome-ignore lint/correctness/useExhaustiveDependencies: keyed on values, see above
   const definition = useMemo(() => {
     const getX = (point: Plotted<T>) => xRef.current(point.row)
-    const leftSeries = visible.filter((s) => s.axis !== 'right')
-    const rightSeries = visible.filter((s) => s.axis === 'right')
-    const left = getYAxisTicks(
-      getExtent(
-        plotted,
-        leftSeries.map((s) => s.key),
-      ),
-      yAxis,
-      leftSeries.length,
-    )
-    const right =
-      rightAxis && hasRightAxis
-        ? getYAxisTicks(
-            getExtent(
-              plotted,
-              rightSeries.map((s) => s.key),
-            ),
-            rightAxis,
-            rightSeries.length,
-          )
-        : undefined
 
     const baseOf = (s: { axis?: 'right' }) =>
       (s.axis === 'right' && right ? right : left).domain[0]
@@ -297,17 +303,7 @@ export function TimeSeriesChart<T, K extends string>({
       const curve = s.curve ? CURVES[s.curve] : undefined
       const yScale = scaleOf(s)
       const top = (p: Plotted<T>) => p.top[s.key] ?? null
-      const edges = [
-        { id: s.key, y: top },
-        ...(s.value0 && s.stroke
-          ? [
-              {
-                id: `${s.key}-bottom`,
-                y: (p: Plotted<T>) => p.bottom[s.key] ?? null,
-              },
-            ]
-          : []),
-      ]
+      const edges = getEdges<T>(s)
       const withValue = (y: (p: Plotted<T>) => number | null) =>
         plotted.filter((p) => y(p) !== null)
       const line = (
@@ -548,6 +544,7 @@ export function TimeSeriesChart<T, K extends string>({
                 }
               : {}),
           },
+          // The theme's muted color paints all tick labels.
           theme: { muted: 'var(--chart-tick-label)' },
           margin: chartMargin,
           // Not clipped, so lines at the domain's ends keep their full width;
@@ -560,7 +557,7 @@ export function TimeSeriesChart<T, K extends string>({
       pointer: false,
       keyboard: false,
     })
-  }, [plotted, optionsKey, yAxis.scale, rightAxis?.scale])
+  }, [plotted, left, right, optionsKey, yAxis.scale, rightAxis?.scale])
 
   // Within a stack, only its top series marks the hovered row.
   const stackTops = new Map(
@@ -571,22 +568,16 @@ export function TimeSeriesChart<T, K extends string>({
       (s) =>
         s.activeDot ?? (!stacked.has(s.key) || stackTops.get(s.axis) === s.key),
     )
-    .flatMap((s) => [
-      {
-        key: s.key,
-        value: (_row: T, index: number) => plotted[index]?.top[s.key],
+    .flatMap((s) =>
+      getEdges<T>(s).map(({ id, y }) => ({
+        key: id,
+        value: (_row: T, index: number) => {
+          const point = plotted[index]
+          return point && y(point)
+        },
         scale: scaleOf(s),
-      },
-      ...(s.value0 && s.stroke
-        ? [
-            {
-              key: `${s.key}-bottom`,
-              value: (_row: T, index: number) => plotted[index]?.bottom[s.key],
-              scale: scaleOf(s),
-            },
-          ]
-        : []),
-    ])
+      })),
+    )
 
   const visibleKeys = visible.map((s) => s.key)
   return (
@@ -658,6 +649,16 @@ function useIds() {
 
 function paint(value: string | FillGradient | StrokeGradient, id: string) {
   return typeof value === 'string' ? value : `url(#${id})`
+}
+
+/** The lines a series draws: its top, and a stroked band's bottom too. */
+function getEdges<T>(s: { key: string; value0?: unknown; stroke?: unknown }) {
+  const top = (p: Plotted<T>) => p.top[s.key] ?? null
+  const bottom = (p: Plotted<T>) => p.bottom[s.key] ?? null
+  return [
+    { id: s.key, y: top },
+    ...(s.value0 && s.stroke ? [{ id: `${s.key}-bottom`, y: bottom }] : []),
+  ]
 }
 
 function getTimestamp<T>(row: T) {

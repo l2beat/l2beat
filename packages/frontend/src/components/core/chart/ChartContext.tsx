@@ -27,6 +27,14 @@ export interface ChartInteractiveLegend {
   disableOnboarding?: boolean
 }
 
+/** Whether a series is drawn: all are, without an interactive legend. */
+export function isSeriesSelected(
+  legend: ChartInteractiveLegend | undefined,
+  key: string,
+) {
+  return !legend || legend.dataKeys.includes(key)
+}
+
 type ChartContextProps = {
   meta: ChartMeta
   interactiveLegend?: ChartInteractiveLegend

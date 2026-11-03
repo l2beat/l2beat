@@ -2,7 +2,7 @@ import { type ReactNode, useRef } from 'react'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../OverflowWrapper'
-import { useChart } from './ChartContext'
+import { isSeriesSelected, useChart } from './ChartContext'
 import { ChartDataIndicator } from './ChartDataIndicator'
 import {
   legendOnboardingHintClassName,
@@ -48,11 +48,11 @@ export function ChartLegend({
         <OverflowWrapper childrenRef={contentRef} className="min-w-0">
           <div className="flex h-3.5 w-max items-center gap-2" ref={contentRef}>
             {items.map(({ key, config }) => {
-              const isHidden =
-                interactiveLegend && !interactiveLegend.dataKeys.includes(key)
+              const isHidden = !isSeriesSelected(interactiveLegend, key)
               return (
                 <div
                   key={key}
+                  data-chart-legend-item
                   className={cn(
                     'group/legend-item flex items-center gap-[3px] transition-opacity [&>svg]:text-secondary',
                     interactiveLegend && 'cursor-pointer select-none',

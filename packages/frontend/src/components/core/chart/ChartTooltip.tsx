@@ -5,6 +5,7 @@ import { cn } from '~/utils/cn'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
 import { useChart } from './ChartContext'
 import { ChartDataIndicator } from './ChartDataIndicator'
+import { toNumber } from './utils/toNumber'
 
 export interface TooltipEntry<K extends string = string> {
   name: K
@@ -99,7 +100,10 @@ export function ChartTooltipRow({
   const config = meta[name]
   if (!config) return null
   return (
-    <div className={cn('flex w-full items-center justify-between', gap)}>
+    <div
+      data-chart-tooltip-row
+      className={cn('flex w-full items-center justify-between', gap)}
+    >
       <span className="flex items-center gap-1">
         <ChartDataIndicator
           backgroundColor={config.color}
@@ -139,10 +143,6 @@ export function ChartTooltipValue({
       {value === null ? 'No data' : format(value)}
     </span>
   )
-}
-
-function toNumber(value: unknown): number | null {
-  return typeof value === 'number' && Number.isFinite(value) ? value : null
 }
 
 /** Scrolling the tooltip must not move the chart's hover beneath it. */

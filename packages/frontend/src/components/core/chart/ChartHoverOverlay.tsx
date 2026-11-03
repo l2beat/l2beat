@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react'
 import { placeBeside, useChartTooltip } from './useChartTooltip'
+import { isNumber } from './utils/toNumber'
 
 const ACTIVE_DOT_RADIUS = 3
 
@@ -218,10 +219,6 @@ export function ChartHoverOverlay<T>({
       </div>
     </div>
   )
-}
-
-function isNumber(value: unknown): value is number {
-  return typeof value === 'number' && Number.isFinite(value)
 }
 
 /** Index of the row closest to `x`; rows are sorted by x. */
