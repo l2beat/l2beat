@@ -1,5 +1,6 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { EM_DASH } from '~/consts/characters'
+import type { ChartResolution } from './range/range'
 
 export const MONTHS: Record<string, { shortName: string }> = {
   '01': { shortName: 'Jan' },
@@ -94,11 +95,14 @@ export function formatTimestamp(
 }
 
 /**
- * A chart snapshot: "3 Jun 2026" for a point at UTC midnight, where daily data
- * sits, and "3 Jun 2026, 14:00 UTC" for a point within a day.
+ * A chart snapshot: "3 Jun 2026" in daily data. Finer data always shows the
+ * time, midnight included, so neighboring points read alike.
  */
-export function formatSnapshotTimestamp(timestamp: number) {
-  const mode = UnixTime.isFull(timestamp, 'day') ? 'date' : 'datetime'
+export function formatSnapshotTimestamp(
+  timestamp: number,
+  resolution: ChartResolution,
+) {
+  const mode = resolution === 'day' ? 'date' : 'datetime'
   return formatTimestamp(timestamp, { mode })
 }
 

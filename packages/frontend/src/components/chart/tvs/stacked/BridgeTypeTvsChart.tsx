@@ -9,6 +9,7 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import type { ChartResolution } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
 import { StackedTvsChartTooltip } from './StackedTvsChartTooltip'
 
@@ -26,6 +27,7 @@ interface Props {
   unit: ChartUnit
   isLoading: boolean
   isPlaceholderData: boolean
+  resolution: ChartResolution
   dataKeys: (keyof typeof bridgeTypeTvsChartMeta)[]
   toggleDataKey: (dataKey: string) => void
   tickCount?: number
@@ -57,6 +59,7 @@ export function BridgeTypeTvsChart({
   unit,
   isLoading,
   isPlaceholderData,
+  resolution,
   tickCount,
   dataKeys,
   toggleDataKey,
@@ -125,7 +128,11 @@ export function BridgeTypeTvsChart({
 
         <ChartTooltip
           content={
-            <StackedTvsChartTooltip unit={unit} meta={bridgeTypeTvsChartMeta} />
+            <StackedTvsChartTooltip
+              unit={unit}
+              meta={bridgeTypeTvsChartMeta}
+              resolution={resolution}
+            />
           }
           filterNull={false}
         />

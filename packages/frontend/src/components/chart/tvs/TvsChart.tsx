@@ -3,6 +3,7 @@ import type { CustomChartTooltipProps } from '~/components/core/chart/Chart'
 import { ChartTooltipWrapper, useChart } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { formatSnapshotTimestamp } from '~/utils/dates'
+import type { ChartResolution } from '~/utils/range/range'
 import type { ChartUnit } from '../types'
 
 export interface TvsChartDataPoint {
@@ -14,7 +15,8 @@ export function TvsCustomTooltip({
   payload,
   label,
   unit,
-}: CustomChartTooltipProps & { unit: ChartUnit }) {
+  resolution,
+}: CustomChartTooltipProps & { unit: ChartUnit; resolution: ChartResolution }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
 
@@ -22,7 +24,7 @@ export function TvsCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col">
         <div className="mb-3 font-medium text-label-value-14 text-secondary">
-          {formatSnapshotTimestamp(label)}
+          {formatSnapshotTimestamp(label, resolution)}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {

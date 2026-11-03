@@ -6,6 +6,7 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
+import { rangeToResolution } from '~/utils/range/range'
 import {
   AssetCategoryTvsChart,
   assetCategoryTvsChartMeta,
@@ -90,6 +91,7 @@ export function ProjectAssetCategoryTvsChart({
     <div className="mt-4 mb-3">
       <AssetCategoryTvsChart
         isPlaceholderData={isPlaceholderData}
+        resolution={rangeToResolution(shownInput.range)}
         data={chartData}
         milestones={milestones}
         unit={unit}

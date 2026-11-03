@@ -33,7 +33,12 @@ import { ChevronIcon } from '~/icons/Chevron'
 import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { useTRPC } from '~/trpc/React'
 import { formatSnapshotTimestamp } from '~/utils/dates'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import {
+  type ChartRange,
+  type ChartResolution,
+  optionToRange,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { getTvsSeriesStats, type TvsSeriesStats } from './getTvsSeriesStats'
 import { mergeTvsSeries } from './mergeTvsSeries'
 
@@ -145,14 +150,21 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
             }}
             syncedUntil={syncedUntil}
           />
-          <ChartTooltip content={<CustomTooltip />} filterNull={false} />
+          <ChartTooltip
+            content={<CustomTooltip resolution={rangeToResolution(range)} />}
+            filterNull={false}
+          />
         </AreaChart>
       </ChartContainer>
     </div>
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+function CustomTooltip({
+  payload,
+  label,
+  resolution,
+}: CustomChartTooltipProps & { resolution: ChartResolution }) {
   if (!payload || typeof label !== 'number') return null
 
   const validPayload = payload.filter((p) => p.type !== 'none' && !p.hide)
@@ -165,7 +177,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     <ChartTooltipWrapper>
       <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatSnapshotTimestamp(label)}
+          {formatSnapshotTimestamp(label, resolution)}
         </div>
         {validPayload.length > 1 && (
           <>

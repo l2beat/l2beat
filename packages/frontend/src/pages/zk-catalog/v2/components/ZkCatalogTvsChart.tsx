@@ -27,7 +27,11 @@ import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
-import type { ChartRange } from '~/utils/range/range'
+import {
+  type ChartRange,
+  type ChartResolution,
+  rangeToResolution,
+} from '~/utils/range/range'
 
 type Metric = 'value' | 'projects'
 type Unit = 'absolute' | 'percentage'
@@ -48,7 +52,7 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<Metric>('value')
   const [unit, setUnit] = useState<Unit>('absolute')
-  const { data, isLoading, isPlaceholderData } = useChartQuery(
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.tvs.zkCatalogChart,
     { range },
   )
@@ -200,6 +204,7 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
                 metric={metric}
                 unit={unit}
                 pointsByTimestamp={pointsByTimestamp}
+                resolution={rangeToResolution(shownInput.range)}
               />
             }
           />
@@ -232,10 +237,12 @@ function CustomTooltip({
   metric,
   unit,
   pointsByTimestamp,
+  resolution,
 }: CustomChartTooltipProps & {
   metric: Metric
   unit: Unit
   pointsByTimestamp: Map<number, Point>
+  resolution: ChartResolution
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -258,7 +265,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatSnapshotTimestamp(label)}
+          {formatSnapshotTimestamp(label, resolution)}
         </div>
         {unit === 'absolute' && (
           <>

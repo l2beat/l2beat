@@ -68,7 +68,7 @@ export function PrivacyAnonymitySetChart(props: Props) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(meta)
   const formatTooltipTitle =
     props.type === 'history'
-      ? (timestamp: number) => formatSnapshotTimestamp(timestamp)
+      ? (timestamp: number) => formatSnapshotTimestamp(timestamp, 'day')
       : (days: number) => `${days}-day ${props.durationLabel}`
 
   return (

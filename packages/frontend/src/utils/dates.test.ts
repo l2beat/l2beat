@@ -62,37 +62,26 @@ describe('dates', () => {
   })
 
   describe(formatSnapshotTimestamp.name, () => {
-    it('shows only the date for a point at UTC midnight, as daily data is', () => {
-      expect(formatSnapshotTimestamp(at('2026-06-03T00:00:00Z'))).toEqual(
-        '3 Jun 2026',
-      )
+    it('shows only the date in daily data', () => {
+      expect(
+        formatSnapshotTimestamp(at('2026-06-03T00:00:00Z'), 'day'),
+      ).toEqual('3 Jun 2026')
     })
 
-    it('adds the UTC time for a point within a day', () => {
-      expect(formatSnapshotTimestamp(at('2026-06-03T00:30:00Z'))).toEqual(
-        '3 Jun 2026, 00:30 UTC',
-      )
-    })
-
-    it('decides per point in hourly data, so its midnight hour reads as the day', () => {
+    it('shows the time on every point of finer data, midnight included', () => {
       const hourly = [
         '2026-06-02T23:00:00Z',
         '2026-06-03T00:00:00Z',
         '2026-06-03T01:00:00Z',
-      ].map((iso) => formatSnapshotTimestamp(at(iso)))
+      ].map((iso) => formatSnapshotTimestamp(at(iso), 'hour'))
       expect(hourly).toEqual([
         '2 Jun 2026, 23:00 UTC',
-        '3 Jun 2026',
+        '3 Jun 2026, 00:00 UTC',
         '3 Jun 2026, 01:00 UTC',
       ])
-    })
-
-    it('uses UTC midnight west of UTC', () => {
-      withTimezone('America/New_York', () => {
-        expect(formatSnapshotTimestamp(at('2026-06-03T00:00:00Z'))).toEqual(
-          '3 Jun 2026',
-        )
-      })
+      expect(
+        formatSnapshotTimestamp(at('2026-06-03T00:00:00Z'), 'six hours'),
+      ).toEqual('3 Jun 2026, 00:00 UTC')
     })
   })
 

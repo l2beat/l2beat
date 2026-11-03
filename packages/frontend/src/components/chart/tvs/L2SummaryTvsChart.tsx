@@ -37,7 +37,11 @@ import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
 import { useTRPC } from '~/trpc/React'
 import { formatSnapshotTimestamp } from '~/utils/dates'
-import type { ChartRange } from '~/utils/range/range'
+import {
+  type ChartRange,
+  type ChartResolution,
+  rangeToResolution,
+} from '~/utils/range/range'
 import type { ChartUnit } from '../types'
 import { tvsRangeToReadable } from './tvsRangeToReadable'
 
@@ -162,14 +166,21 @@ export function L2SummaryTvsChart({
             }}
             syncedUntil={data?.syncedUntil}
           />
-          <ChartTooltip content={<CustomTooltip />} filterNull={false} />
+          <ChartTooltip
+            content={<CustomTooltip resolution={rangeToResolution(range)} />}
+            filterNull={false}
+          />
         </AreaChart>
       </ChartContainer>
     </div>
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+function CustomTooltip({
+  payload,
+  label,
+  resolution,
+}: CustomChartTooltipProps & { resolution: ChartResolution }) {
   if (!payload || typeof label !== 'number') return null
 
   const validPayload = payload.filter((p) => p.type !== 'none' && !p.hide)
@@ -186,7 +197,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     <ChartTooltipWrapper>
       <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatSnapshotTimestamp(label)}
+          {formatSnapshotTimestamp(label, resolution)}
         </div>
         {validPayload.length > 1 && (
           <>

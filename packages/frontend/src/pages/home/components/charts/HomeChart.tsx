@@ -201,7 +201,7 @@ function HomeChartTooltip({
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {dayRange
             ? formatRange(label, label + UnixTime.DAY)
-            : formatSnapshotTimestamp(label)}
+            : formatSnapshotTimestamp(label, 'day')}
         </div>
         <div className="flex flex-col gap-2">
           {entries.map(({ entry, config }) => (

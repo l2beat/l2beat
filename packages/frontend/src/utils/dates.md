@@ -10,7 +10,7 @@ Every date and time on the site is in UTC and uses one format. Build each one wi
 | Exact time in React | `3 Jun 2026, 14:00 UTC` | `<UtcDateTime timestamp={ts} />` |
 | Exact time in a string | `3 Jun 2026, 14:00 UTC` | `formatTimestamp(ts, { mode: 'datetime' })` |
 | Time of day | `14:00 UTC` | `formatTimestamp(ts, { mode: 'time' })` |
-| Chart snapshot | `3 Jun 2026` or `3 Jun 2026, 14:00 UTC` | `formatSnapshotTimestamp(ts)` |
+| Chart snapshot | `3 Jun 2026` or `3 Jun 2026, 14:00 UTC` | `formatSnapshotTimestamp(ts, resolution)` |
 | Range | `30 Jun — 2 Jul 2026` | `formatRange(from, to)` |
 | Range within a day | `3 Jun 2026, 01:00 — 02:00 UTC` | `formatRange(from, to)` |
 | Chart axis ticks | `3 Jun`, `Jun ‘26`, `2026` | `getXAxisProps` |
@@ -23,7 +23,7 @@ Every date and time on the site is in UTC and uses one format. Build each one wi
 
 The tooltip date follows what the point measures:
 
-- **Snapshot** (value secured: the value at one moment): one date, `formatSnapshotTimestamp(label)`. It reads `3 Jun 2026` at UTC midnight, where daily points sit, and `3 Jun 2026, 14:00 UTC` within a day. It decides per point, so in hourly data the midnight point also reads as the day.
+- **Snapshot** (value secured: the value at one moment): one date, `formatSnapshotTimestamp(label, resolution)`. Daily data reads `3 Jun 2026`. Finer data shows the time on every point, `3 Jun 2026, 00:00 UTC` included, so scrubbing across midnight doesn't drop the time from one point. Take `resolution` from `rangeToResolution(shownInput.range)`: `shownInput` matches the data on screen while a new range loads.
 - **Bucket** (activity, costs, data posted, liveness, DA throughput: a sum or average over a period): the period as a range, `formatRange(label, label + UnixTime.periodToSeconds(resolution))`. A daily bucket reads `4 — 5 Jun 2026`. That range is intentional.
 
 ## Why UTC
