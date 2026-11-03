@@ -11,7 +11,8 @@ import type { getInteropFigures } from './InteropFigures'
 /** The busiest protocols, in a corner beside the graph. */
 const CORNER_PROTOCOLS_COUNT = 3
 
-const CORNER_CLASS = 'pointer-events-auto flex max-w-[180px] flex-col gap-4'
+const CORNER_CLASS =
+  'pointer-events-auto flex max-w-[180px] flex-col gap-4 home-wide:gap-6'
 
 /**
  * The figures in the four corners the graph's ring leaves free: totals top
@@ -19,7 +20,8 @@ const CORNER_CLASS = 'pointer-events-auto flex max-w-[180px] flex-col gap-4'
  * busiest protocols bottom right (or, without them, the top protocol beside
  * the token). In the page's three columns (`home-wide`) the card is much
  * wider than tall, so the corners would sit far apart: each side's figures
- * stand in one column instead, centred on the graph.
+ * stand in one column instead, in the section's grid beside the ring, their
+ * straight edge towards it.
  */
 export function InteropCornerFigures({
   figures,
@@ -30,11 +32,11 @@ export function InteropCornerFigures({
 }) {
   const protocols = allProtocols.slice(0, CORNER_PROTOCOLS_COUNT)
   return (
-    <div className="pointer-events-none absolute inset-0 interop-corners:block home-wide:interop-corners:grid hidden grid-cols-[auto_1fr_auto] content-center gap-y-6">
+    <div className="pointer-events-none absolute inset-0 interop-corners:block home-wide:interop-corners:contents hidden">
       <div
         className={cn(
           CORNER_CLASS,
-          'home-wide:static absolute top-0 left-0 home-wide:col-start-1 home-wide:row-start-1',
+          'home-wide:static absolute top-0 left-0 home-wide:col-start-1 home-wide:row-start-2 home-wide:items-end home-wide:justify-self-end home-wide:text-right',
         )}
       >
         {figures.volume}
@@ -43,7 +45,7 @@ export function InteropCornerFigures({
       <div
         className={cn(
           CORNER_CLASS,
-          'home-wide:static absolute top-0 right-0 home-wide:col-start-3 home-wide:row-start-1 items-end home-wide:justify-self-end text-right',
+          'home-wide:static absolute top-0 right-0 home-wide:col-start-3 home-wide:row-start-2 home-wide:items-start items-end home-wide:justify-self-start home-wide:text-left text-right',
         )}
       >
         {figures.activeRoutes}
@@ -55,7 +57,7 @@ export function InteropCornerFigures({
         <div
           className={cn(
             CORNER_CLASS,
-            'home-wide:col-start-1 home-wide:row-start-2',
+            'home-wide:col-start-1 home-wide:row-start-3 home-wide:mb-6 home-wide:items-end home-wide:justify-self-end home-wide:text-right',
           )}
         >
           {figures.topToken}
@@ -66,7 +68,7 @@ export function InteropCornerFigures({
             // As close to its list as the other corners' labels to their rows.
             className={cn(
               CORNER_CLASS,
-              'home-wide:col-start-3 home-wide:row-start-2 max-w-[220px] items-end gap-1.5 home-wide:justify-self-end text-right',
+              'home-wide:col-start-3 home-wide:row-start-3 home-wide:mb-6 max-w-[220px] home-wide:items-start items-end gap-1.5 home-wide:gap-1.5 home-wide:justify-self-start home-wide:text-left text-right',
             )}
           >
             <span className={HOME_TEXT.meta}>Top protocols</span>

@@ -84,8 +84,8 @@ function Content({ className }: { className?: string }) {
         link={{ href: '/interop/summary', label: 'Dashboard' }}
       />
       {/* From lg the section is as tall as the column beside it, its body at
-          least 480px (in the page's three columns 560px, 640px once they are
-          over 1700px: the card is wide there, and the graph is as big as the
+          least 480px (in the page's three columns 568px, 648px once they are
+          over 1700px, so the research list beside it ends on a whole row: the card is wide there, and the graph is as big as the
           body is tall); from md to lg it has the whole row, so its body is
           480px tall. Either way the body is a size container (it never sets
           the height itself). Roughly
@@ -97,7 +97,7 @@ function Content({ className }: { className?: string }) {
           figures, the graph as a square (smaller when the height runs out, so
           nothing spills), then as many top protocols as the height left holds.
           Below md it stacks too, the graph a fixed-size square. */}
-      <div className="relative flex home-wide:@min-[1700px]/home:min-h-[640px] home-wide:min-h-[560px] min-w-0 flex-col gap-5 md:max-lg:h-[480px] lg:min-h-[480px] lg:flex-1 lg:basis-0 md:[container:interop-body/size]">
+      <div className="relative flex home-wide:@min-[1700px]/home:min-h-[648px] home-wide:min-h-[568px] min-w-0 flex-col gap-5 md:max-lg:h-[480px] lg:min-h-[480px] lg:flex-1 lg:basis-0 md:[container:interop-body/size]">
         {figures && (
           // Two rows of three on shared tracks, spread from edge to edge: the
           // first column flush left, the last flush right, so the figures
@@ -111,28 +111,36 @@ function Content({ className }: { className?: string }) {
             {figures.topProtocol}
           </div>
         )}
-        <div className="pointer-events-none interop-corners:absolute interop-corners:inset-x-12 interop-corners:inset-y-0 flex interop-stacked:aspect-square interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center [&_text]:stroke-[4px] [&_text]:stroke-surface-primary [&_text]:[paint-order:stroke] [&_text]:[stroke-linejoin:round]">
-          <FlowsGraphPanel
-            activeChains={graphChains}
-            data={data}
-            hasEnoughChains={hasEnoughChains}
-            hasEnoughProtocols={hasEnoughProtocols}
-            isLoading={isLoading}
-            // Chain labels hang below the bubbles; pb keeps them in the
-            // section, and on phones px keeps the outer ones off its edges.
-            className="pb-6 max-sm:px-2 max-lg:order-none"
-            maxSizeClassName="max-w-[460px] md:max-w-none"
-          />
-        </div>
-        {data && figures && (
-          <>
-            <InteropTopProtocols protocols={data.stats.topProtocols} />
+        {/* In the page's three columns the card is much wider than tall: the
+            graph and the figures beside it share one grid: the ring in the
+            middle track, centred on the card whatever the figures' widths,
+            and each side's figures against it. */}
+        <div className="home-wide:absolute home-wide:inset-0 home-wide:grid contents home-wide:grid-cols-[minmax(0,1fr)_100cqh_minmax(0,1fr)] home-wide:grid-rows-[1fr_auto_auto_1fr] home-wide:gap-x-8 home-wide:gap-y-16">
+          <div className="pointer-events-none home-wide:interop-corners:static interop-corners:absolute interop-corners:inset-x-12 interop-corners:inset-y-0 home-wide:col-start-2 home-wide:row-span-full flex interop-stacked:aspect-square interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center [&_text]:stroke-[4px] [&_text]:stroke-surface-primary [&_text]:[paint-order:stroke] [&_text]:[stroke-linejoin:round]">
+            <FlowsGraphPanel
+              activeChains={graphChains}
+              data={data}
+              hasEnoughChains={hasEnoughChains}
+              hasEnoughProtocols={hasEnoughProtocols}
+              isLoading={isLoading}
+              // Chain labels hang below the bubbles; pb keeps them in the
+              // section, and on phones px keeps the outer ones off its edges.
+              className="pb-6 max-sm:px-2 max-lg:order-none"
+              maxSizeClassName="max-w-[460px] md:max-w-none"
+            />
+          </div>
+          {data && figures && (
+            <>
+              <InteropTopProtocols protocols={data.stats.topProtocols} />
+            </>
+          )}
+          {data && figures && (
             <InteropCornerFigures
               figures={figures}
               protocols={data.stats.topProtocols}
             />
-          </>
-        )}
+          )}
+        </div>
       </div>
     </HomeCard>
   )
