@@ -484,21 +484,26 @@ async function close(board: BoardSummary) {
 // is refused with the reason and the board stays as it was.
 function SpecEditor(props: { board: ResolvedBoard; onDone: () => void }) {
   const { board } = props
+  const latest = `${JSON.stringify(board.spec, null, 2)}\n`
+  const [base, setBase] = useState(latest)
+  const [text, setText] = useState(latest)
+  // A clean buffer follows the board when an agent or another tab changes it.
+  if (latest !== base && text === base) {
+    setBase(latest)
+    setText(latest)
+  }
   const files = useMemo<EditorFile[]>(
     () => [
       {
         id: `board-${board.id}`,
         name: 'board.json',
-        content: `${JSON.stringify(board.spec, null, 2)}\n`,
+        content: base,
         readOnly: false,
         language: 'json',
       },
     ],
-    // The editor keeps what the researcher typed while the board refetches.
-    [board.id],
+    [board.id, base],
   )
-  const original = files[0]?.content ?? ''
-  const [text, setText] = useState(original)
   const [error, setError] = useState<string>()
   useEffect(() => () => useBoardUiStore.setState({ draftOf: undefined }), [])
 
@@ -506,11 +511,19 @@ function SpecEditor(props: { board: ResolvedBoard; onDone: () => void }) {
     setText(content)
     setError(undefined)
     useBoardUiStore.setState({
-      draftOf: content === original ? undefined : board.id,
+      draftOf: content === base ? undefined : board.id,
     })
   }
 
   const apply = async (content: string) => {
+    if (
+      latest !== base &&
+      !window.confirm(
+        'The board changed while you edited it. Apply your JSON over it?',
+      )
+    ) {
+      return
+    }
     setError(undefined)
     try {
       await replaceBoard(board.id, JSON.parse(content))
