@@ -1,5 +1,5 @@
 ---
-  lastUpdated: "2024-10-28"
+  lastUpdated: "2026-11-04"
 ---
 
 ## 1. General Information
