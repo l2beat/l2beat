@@ -1,26 +1,19 @@
 import type { Milestone } from '@l2beat/config'
-import { assert, formatCurrency } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart } from 'recharts'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
   ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
+} from '~/components/core/chart/ChartContext'
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
+  ChartTooltipRow,
+  ChartTooltipValue,
   ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
+import { CHART_GRADIENTS } from '~/components/core/chart/gradients'
+import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -72,80 +65,57 @@ export function TokenChart({
       isLoading={isLoading}
       milestones={milestones}
       project={project}
+      legend
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <defs>
-          <PinkFillGradientDef id="fill" />
-          <PinkStrokeGradientDef id="stroke" />
-        </defs>
-        <ChartLegend content={<ChartLegendContent />} />
-        <Area
-          dataKey="value"
-          fill="url(#fill)"
-          fillOpacity={1}
-          stroke="url(#stroke)"
-          isAnimationActive={false}
-        />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            tickFormatter: (value: number) => formatCurrency(value, 'usd'),
-            tickCount: 4,
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartTooltip
-          filterNull={false}
-          content={<CustomTooltip resolution={resolution} />}
-        />
-      </AreaChart>
+      <TimeSeriesChart
+        data={data}
+        ariaLabel="Token value"
+        series={[
+          {
+            key: 'value',
+            fill: CHART_GRADIENTS.pink.fill,
+            stroke: CHART_GRADIENTS.pink.stroke,
+          },
+        ]}
+        yAxis={{
+          format: (value) => formatCurrency(value, 'usd'),
+          tickCount: 4,
+        }}
+        syncedUntil={syncedUntil}
+        renderTooltip={(row, keys) => (
+          <CustomTooltip row={row} keys={keys} resolution={resolution} />
+        )}
+      />
     </ChartContainer>
   )
 }
 
 function CustomTooltip({
-  payload,
-  label,
+  row,
+  keys,
   resolution,
-}: CustomChartTooltipProps & { resolution: ChartResolution }) {
-  const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
+}: {
+  row: TokenChartDataPoint
+  keys: 'value'[]
+  resolution: ChartResolution
+}) {
+  const payload = getTooltipEntries(row, keys)
 
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-48 flex-col gap-1">
         <div className="mb-1 font-medium text-label-value-14 text-secondary">
-          {formatSnapshotTimestamp(label, resolution)}
+          {formatSnapshotTimestamp(row.timestamp, resolution)}
         </div>
         <div className="flex flex-col gap-2">
-          {payload.map((entry) => {
-            if (entry.name === undefined) return null
-            const config = meta[entry.name]
-            assert(config, 'No config')
-
-            return (
-              <div
-                key={entry.name}
-                className="flex items-center justify-between gap-x-1"
-              >
-                <span className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
-                  </span>
-                </span>
-                <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.value !== null && entry.value !== undefined
-                    ? formatCurrency(entry.value, 'usd')
-                    : 'No data'}
-                </span>
-              </div>
-            )
-          })}
+          {payload.map((entry) => (
+            <ChartTooltipRow key={entry.name} name={entry.name} gap="gap-x-1">
+              <ChartTooltipValue
+                value={entry.value}
+                format={(value) => formatCurrency(value, 'usd')}
+              />
+            </ChartTooltipRow>
+          ))}
         </div>
       </div>
     </ChartTooltipWrapper>

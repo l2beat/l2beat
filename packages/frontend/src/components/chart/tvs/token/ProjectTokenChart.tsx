@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { useTRPC } from '~/trpc/React'
