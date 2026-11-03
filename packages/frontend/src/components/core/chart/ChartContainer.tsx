@@ -68,10 +68,12 @@ export function ChartContainer<T extends { timestamp: number }>({
   const hasData = data && data.length > 1
 
   const metaKeys = Object.keys(meta)
-  // An empty chart has no sources to deselect.
+  // Empty meta means nothing is picked only where the user picks the
+  // sources, as on the compare page; elsewhere the chart has no data.
   const noDataSourcesSelected =
-    metaKeys.length > 0 &&
-    metaKeys.every((key) => !isSeriesSelected(interactiveLegend, key))
+    metaKeys.length > 0
+      ? metaKeys.every((key) => !isSeriesSelected(interactiveLegend, key))
+      : noDataSourceMessage !== undefined
   const { keepsRoom: keepsHintRoom } = useLegendHint(interactiveLegend)
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
@@ -95,7 +97,8 @@ export function ChartContainer<T extends { timestamp: number }>({
                 'relative min-h-0 flex-1 select-none text-xs outline-none',
                 ignorePointerWhileScrollingClassName,
                 (isLoading || !hasData) && 'pointer-events-none',
-                noDataSourcesSelected && '[&_[data-chart-tooltip]]:hidden',
+                noDataSourcesSelected &&
+                  '[&_[data-chart-cursor]]:hidden [&_[data-chart-tooltip]]:hidden',
                 // The plot dims and its hover stays hidden: some charts
                 // format the tooltip with the new range's resolution, which
                 // the old buckets do not have.

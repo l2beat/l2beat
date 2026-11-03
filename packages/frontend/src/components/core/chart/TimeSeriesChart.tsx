@@ -41,6 +41,11 @@ import {
 
 type Value = number | null | undefined
 
+/**
+ * `value` and `value0` must be pure functions of the row: the chart redraws
+ * when `data` changes, not when they do. To change what is plotted, pass new
+ * rows.
+ */
 export interface ChartSeries<K extends string, T = unknown> {
   key: K
   /** Plotted value; `row[key]` by default. The top edge of a band. */
@@ -139,6 +144,7 @@ interface Props<T, K extends string> {
   margin?: { top?: number; right?: number; bottom?: number; left?: number }
   syncedUntil?: number
   referenceAreas?: ChartReferenceArea[]
+  /** Dots outside the axes' domains are not drawn. */
   referenceDots?: ChartReferenceDot[]
   /** Charts with the same id show their hover together, by x value. */
   syncId?: string
@@ -209,10 +215,14 @@ export function TimeSeriesChart<T, K extends string>({
           return row !== undefined ? x(row) : undefined
         })()
       : undefined
-  const areas: ChartReferenceArea[] = [
-    ...(lastSyncedX !== undefined ? [{ x1: lastSyncedX }] : []),
-    ...(referenceAreas ?? []),
-  ]
+  // With every series deselected the plot is empty, areas included.
+  const areas: ChartReferenceArea[] =
+    visible.length === 0
+      ? []
+      : [
+          ...(lastSyncedX !== undefined ? [{ x1: lastSyncedX }] : []),
+          ...(referenceAreas ?? []),
+        ]
   const gradients = visible.flatMap((s) => [
     ...(typeof s.fill === 'object'
       ? [{ id: ids.fill(s.key), gradient: s.fill }]
@@ -284,8 +294,9 @@ export function TimeSeriesChart<T, K extends string>({
   const definition = useMemo(() => {
     const getX = (point: Plotted<T>) => xRef.current(point.row)
 
-    const baseOf = (s: { axis?: 'right' }) =>
-      (s.axis === 'right' && right ? right : left).domain[0]
+    const yTicksOf = (s: { axis?: 'right' }) =>
+      s.axis === 'right' && right ? right : left
+    const baseOf = (s: { axis?: 'right' }) => yTicksOf(s).domain[0]
 
     type Mark = ChartMark<
       Plotted<T>,
@@ -297,9 +308,13 @@ export function TimeSeriesChart<T, K extends string>({
       string
     >
     const fills: Mark[] = []
-    const strokes: Mark[] = []
+    // Reference areas cover a filled series, line included, but not a
+    // line-only series.
+    const areaStrokes: Mark[] = []
+    const lineStrokes: Mark[] = []
     const isolatedDots: Mark[] = []
     visible.forEach((s, i) => {
+      const strokes = s.fill ? areaStrokes : lineStrokes
       const curve = s.curve ? CURVES[s.curve] : undefined
       const yScale = scaleOf(s)
       const top = (p: Plotted<T>) => p.top[s.key] ?? null
@@ -427,7 +442,17 @@ export function TimeSeriesChart<T, K extends string>({
       ),
     )
 
+    const xDomain = xAxis?.domain ?? [
+      rows.length > 0 ? xRef.current(rows[0] as T) : 0,
+      rows.length > 0 ? lastX : 1,
+    ]
+    const isInDomain = (d: ChartReferenceDot) => {
+      const [y0, y1] = yTicksOf(d).domain
+      return d.x >= xDomain[0] && d.x <= xDomain[1] && d.y >= y0 && d.y <= y1
+    }
+
     const dotMarks = (referenceDots ?? []).flatMap((d, i) => {
+      if (!isInDomain(d)) return []
       const yScale = scaleOf(d)
       const marks = [
         decorative(
@@ -466,10 +491,6 @@ export function TimeSeriesChart<T, K extends string>({
       return marks
     })
 
-    const xDomain = xAxis?.domain ?? [
-      rows.length > 0 ? xRef.current(rows[0] as T) : 0,
-      rows.length > 0 ? lastX : 1,
-    ]
     const xTicks = xAxis
       ? {
           // A label centred on the left edge would be cut off.
@@ -492,9 +513,10 @@ export function TimeSeriesChart<T, K extends string>({
           : undefined
         return {
           marks: [
-            ...areaMarks,
             ...fills,
-            ...strokes,
+            ...areaStrokes,
+            ...areaMarks,
+            ...lineStrokes,
             // A mark rather than the axis grid, so it is drawn over the
             // fills.
             decorative(
