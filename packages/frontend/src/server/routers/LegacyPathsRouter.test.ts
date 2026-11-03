@@ -28,6 +28,8 @@ describe(createLegacyPathsRouter.name, () => {
       '/tokens/9HN5PN/opengraph-image.png',
     ],
     ['/Interop/Tokens/9HN5PN', '/tokens/9HN5PN'],
+    ['/ecosystems/superchain', '/layer2s/summary'],
+    ['/ecosystems/agglayer.md', '/layer2s/summary'],
   ] as const) {
     it(`redirects ${from} to ${to}`, async () => {
       const response = await fetchFromRouter(createLegacyPathsRouter(), from, {

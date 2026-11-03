@@ -9,6 +9,7 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import type { ChartResolution } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
 import { StackedTvsChartTooltip } from './StackedTvsChartTooltip'
 
@@ -28,6 +29,8 @@ interface Props {
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
+  isPlaceholderData: boolean
+  resolution: ChartResolution
   tickCount?: number
   project?: ChartProject
   excludeRwaRestrictedTokens: boolean
@@ -72,6 +75,8 @@ export function AssetCategoryTvsChart({
   milestones,
   unit,
   isLoading,
+  isPlaceholderData,
+  resolution,
   tickCount,
   dataKeys,
   toggleDataKey,
@@ -83,6 +88,7 @@ export function AssetCategoryTvsChart({
   // But for single one it should not start from 0
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={assetCategoryTvsChartMeta}
       isLoading={isLoading}
@@ -174,6 +180,7 @@ export function AssetCategoryTvsChart({
         <ChartTooltip
           content={
             <StackedTvsChartTooltip
+              resolution={resolution}
               unit={unit}
               meta={assetCategoryTvsChartMeta}
             />

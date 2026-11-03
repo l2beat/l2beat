@@ -150,7 +150,10 @@ function TrustedSetupsSummaryCell({
 
   return (
     <Tooltip>
-      <TooltipTrigger className="flex items-center gap-1.5">
+      <TooltipTrigger
+        className="flex items-center gap-1.5"
+        aria-label="Trusted setups"
+      >
         {risks.map((risk) => (
           <TrustedSetupRiskDot
             key={risk}

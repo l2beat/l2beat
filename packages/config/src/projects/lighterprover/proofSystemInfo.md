@@ -1,6 +1,6 @@
 ## Description
 
-Lighter prover is a zk proving system for Lighter L2 based on [Plonky2](https://github.com/0xPolygonZero/plonky2/tree/main) circuits. It verifies the logic for regular state transition of Lighter L2, as well as state transitions in the “desert mode” when L2 is shut down and users exit, using different sets of circuits. The circuits are proven with a STARK which is wrapped into a Plonk SNARK before settling onchain.
+Lighter prover is a zk proving system for Lighter L2 based on [Plonky2](https://github.com/0xPolygonZero/plonky2/tree/main) circuits. It verifies the logic for regular state transition of Lighter L2, state transitions in the “desert mode” when L2 is shut down and users exit, as well as one-off state root upgrades, using different sets of circuits. The circuits are proven with a STARK which is wrapped into a Plonk SNARK before settling onchain.
 
 ## Proof system
 
@@ -10,7 +10,7 @@ However Lighter wraps these STARK in a [gnark](https://github.com/Consensys/gnar
 
 ### Lighter Circuits
 
-The proof system operates on Lighter STF circuits and desert mode circuits. All published circuits are available [here](https://github.com/elliottech/lighter-prover/tree/main). 
+The proof system operates on Lighter STF circuits, desert mode circuits and state root upgrade circuits. All published circuits are available [here](https://github.com/elliottech/lighter-prover/tree/main). 
 
 Lighter proof system defines circuits for proving all transactions, including internal, L1 and L2 transactions. The full list of available transactions that define Lighter STF can be seen [here](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/transactions). 
 

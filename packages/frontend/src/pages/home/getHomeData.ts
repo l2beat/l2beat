@@ -9,8 +9,8 @@ import { getDaProjectEconomicSecurity } from '~/server/features/data-availabilit
 import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { getHomeL2Charts } from '~/server/features/home/getHomeL2Charts'
 import { getHomeTopChainsTvsData } from '~/server/features/home/getHomeTopChainsTvsData'
+import { getHomeTopInteropProtocols } from '~/server/features/home/getHomeTopInteropProtocols'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
-import { TOP_PROTOCOLS_LIMIT } from '~/server/features/layer2s/interop/utils/pickTopProtocolEntries'
 import { getOngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
 import { getL2SummaryData } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { getPrivacyProjects } from '~/server/features/privacy/getPrivacyProjects'
@@ -23,6 +23,7 @@ import { getOrganizationStructuredData } from '~/ssr/head/structured-data/getOrg
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { getBadgeLookup } from '~/utils/project/getBadgeWithParams'
 import { optionToRange } from '~/utils/range/range'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import {
@@ -79,6 +80,7 @@ export async function getHomeData(
       props: {
         ...appLayoutProps,
         ...data,
+        badgeLookup: getBadgeLookup(data.topChains),
       },
     },
   }
@@ -118,9 +120,8 @@ async function getCachedData(manifest: Manifest) {
     defaultFlowChainOrder,
   )
 
-  // The interop prefetch inputs must match the client queries exactly
-  // (HomeTopInteropProtocolsCard, HomeInteropCard) so hydration avoids a
-  // refetch.
+  // The flows prefetch input must match HomeInteropCard's query exactly so
+  // hydration avoids a refetch.
   const chartRange = optionToRange(HOME_CHART_RANGE)
 
   const [
@@ -134,6 +135,7 @@ async function getCachedData(manifest: Manifest) {
     ethereumEconomicSecurity,
     privacyEntries,
     zkCatalogEntries,
+    topInteropProtocols,
   ] = await Promise.all([
     getL2SummaryData(),
     getRecentProjectsForHome(manifest),
@@ -145,19 +147,11 @@ async function getCachedData(manifest: Manifest) {
     getEthereumEconomicSecurity(),
     getPrivacyEntriesForHome(),
     getZkCatalogEntries(),
-    defaultSelectedFlowChains.length > 0
-      ? helpers.queryClient.prefetchQuery(
-          helpers.trpc.interop.dashboard.queryOptions({
-            from: defaultSelectedFlowChains,
-            to: defaultSelectedFlowChains,
-            limit: TOP_PROTOCOLS_LIMIT,
-          }),
-        )
-      : undefined,
+    getHomeTopInteropProtocols(defaultSelectedFlowChains),
     defaultSelectedFlowChains.length >= MIN_SELECTED_CHAINS &&
     protocolIds.length >= MIN_SELECTED_PROTOCOLS
       ? helpers.queryClient.prefetchQuery(
-          helpers.trpc.interop.flows.queryOptions({
+          helpers.trpc.interop.flowsOverview.queryOptions({
             chains: defaultSelectedFlowChains,
             protocolIds,
           }),
@@ -193,6 +187,7 @@ async function getCachedData(manifest: Manifest) {
     topZkProvers: zkCatalogEntries
       .slice(0, TOP_ZK_PROVERS_COUNT)
       .map(toHomeTopZkProver),
+    topInteropProtocols,
     l2Charts,
     ethereumCharts,
     ethereumEconomicSecurity,
@@ -257,7 +252,7 @@ export interface HomeRecentProject {
   name: string
   href: string
   iconUrl: string
-  category: 'l2' | 'interop' | 'zkCatalog' | 'ecosystems' | 'privacy'
+  category: 'l2' | 'interop' | 'zkCatalog' | 'privacy'
   l2Category: string | undefined
 }
 
@@ -268,7 +263,6 @@ async function getRecentProjectsForHome(
     optional: [
       'scalingInfo',
       'daLayer',
-      'ecosystemConfig',
       'interopConfig',
       'zkCatalogInfo',
       'privacyInfo',
@@ -280,7 +274,6 @@ async function getRecentProjectsForHome(
     .filter(
       (project) =>
         project.scalingInfo ||
-        project.ecosystemConfig ||
         project.interopConfig ||
         project.zkCatalogInfo ||
         project.privacyInfo,
@@ -320,16 +313,6 @@ async function getRecentProjectsForHome(
           href: `/zk-catalog/${project.slug}`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
           category: 'zkCatalog' as const,
-          l2Category: undefined,
-        }
-      }
-      if (project.ecosystemConfig) {
-        return {
-          id: project.id.toString(),
-          name: project.name,
-          href: `/ecosystems/${project.slug}`,
-          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-          category: 'ecosystems' as const,
           l2Category: undefined,
         }
       }

@@ -1,4 +1,4 @@
-import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
@@ -36,8 +36,12 @@ import { CustomLink } from '~/components/link/CustomLink'
 import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
 import { useTRPC } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
-import type { ChartRange } from '~/utils/range/range'
+import { formatSnapshotTimestamp } from '~/utils/dates'
+import {
+  type ChartRange,
+  type ChartResolution,
+  rangeToResolution,
+} from '~/utils/range/range'
 import type { ChartUnit } from '../types'
 import { tvsRangeToReadable } from './tvsRangeToReadable'
 
@@ -106,6 +110,7 @@ export function L2SummaryTvsChart({
         range={range}
       />
       <ChartContainer
+        isPlaceholderData={false}
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
@@ -161,14 +166,21 @@ export function L2SummaryTvsChart({
             }}
             syncedUntil={data?.syncedUntil}
           />
-          <ChartTooltip content={<CustomTooltip />} filterNull={false} />
+          <ChartTooltip
+            content={<CustomTooltip resolution={rangeToResolution(range)} />}
+            filterNull={false}
+          />
         </AreaChart>
       </ChartContainer>
     </div>
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+function CustomTooltip({
+  payload,
+  label,
+  resolution,
+}: CustomChartTooltipProps & { resolution: ChartResolution }) {
   if (!payload || typeof label !== 'number') return null
 
   const validPayload = payload.filter((p) => p.type !== 'none' && !p.hide)
@@ -181,16 +193,11 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     }
     return acc + curr.value
   }, null)
-  const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="font-medium text-label-value-14 text-secondary">
-          {isFullDay
-            ? formatTimestamp(label)
-            : formatTimestamp(label, {
-                mode: 'datetime',
-              })}
+          {formatSnapshotTimestamp(label, resolution)}
         </div>
         {validPayload.length > 1 && (
           <>

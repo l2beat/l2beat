@@ -3,13 +3,7 @@ import { SvgIcon } from './SvgIcon'
 
 export function SummaryIcon(props: SvgIconProps) {
   return (
-    <SvgIcon
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      aria-label="Summary icon"
-      {...props}
-    >
+    <SvgIcon width="20" height="20" viewBox="0 0 20 20" {...props}>
       <g clipPath="url(#clip0_78_3)">
         <g clipPath="url(#clip1_78_3)">
           <path

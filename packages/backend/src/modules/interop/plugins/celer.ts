@@ -48,6 +48,11 @@ export const CELER_NETWORKS = defineNetworks('celer', [
   { celerChainId: 59144, chain: 'linea' },
   { celerChainId: 196, chain: 'xlayer' },
   { celerChainId: 43114, chain: 'avalanche' },
+  { celerChainId: 100, chain: 'gnosis' },
+  { celerChainId: 130, chain: 'unichain' },
+  { celerChainId: 999, chain: 'hyperevm' },
+  { celerChainId: 42220, chain: 'celo' },
+  { celerChainId: 9745, chain: 'plasma' },
   // monad, tempo unsupported
 ])
 

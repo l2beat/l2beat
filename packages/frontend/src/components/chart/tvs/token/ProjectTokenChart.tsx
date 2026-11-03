@@ -1,10 +1,11 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { useTRPC } from '~/trpc/React'
+import { rangeToResolution } from '~/utils/range/range'
 import { TokenChart } from './TokenChart'
 
 interface Props {
@@ -17,14 +18,15 @@ export function ProjectTokenChart({ project, milestones, token }: Props) {
   const trpc = useTRPC()
   const { range } = useTvsChartControlsContext()
 
-  const { data, isLoading } = useQuery(
-    trpc.tvs.tokenChart.queryOptions({
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.tvs.tokenChart,
+    {
       token: {
         tokenId: token.id,
         projectId: project.id,
       },
       range,
-    }),
+    },
   )
 
   const chartData = useMemo(() => {
@@ -37,6 +39,8 @@ export function ProjectTokenChart({ project, milestones, token }: Props) {
   return (
     <div className="mt-4 mb-3">
       <TokenChart
+        isPlaceholderData={isPlaceholderData}
+        resolution={rangeToResolution(shownInput.range)}
         data={chartData}
         project={project}
         isLoading={isLoading}

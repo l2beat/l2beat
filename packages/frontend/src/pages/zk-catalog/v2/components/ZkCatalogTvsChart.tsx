@@ -1,5 +1,4 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
 import round from 'lodash/round'
 import { useMemo, useState } from 'react'
 import { Area, AreaChart } from 'recharts'
@@ -19,15 +18,20 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
-import type { ChartRange } from '~/utils/range/range'
+import {
+  type ChartRange,
+  type ChartResolution,
+  rangeToResolution,
+} from '~/utils/range/range'
 
 type Metric = 'value' | 'projects'
 type Unit = 'absolute' | 'percentage'
@@ -48,8 +52,9 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<Metric>('value')
   const [unit, setUnit] = useState<Unit>('absolute')
-  const { data, isLoading } = useQuery(
-    trpc.tvs.zkCatalogChart.queryOptions({ range }),
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.tvs.zkCatalogChart,
+    { range },
   )
 
   const pointsByTimestamp = useMemo(
@@ -136,9 +141,13 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
             </RadioGroupItem>
           </RadioGroup>
         </div>
-        <ChartTimeRange timeRange={timeRange} />
+        <ChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
       </div>
       <ChartContainer
+        isPlaceholderData={isPlaceholderData}
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
@@ -195,6 +204,7 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
                 metric={metric}
                 unit={unit}
                 pointsByTimestamp={pointsByTimestamp}
+                resolution={rangeToResolution(shownInput.range)}
               />
             }
           />
@@ -227,10 +237,12 @@ function CustomTooltip({
   metric,
   unit,
   pointsByTimestamp,
+  resolution,
 }: CustomChartTooltipProps & {
   metric: Metric
   unit: Unit
   pointsByTimestamp: Map<number, Point>
+  resolution: ChartResolution
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -253,7 +265,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { mode: 'datetime' })}
+          {formatSnapshotTimestamp(label, resolution)}
         </div>
         {unit === 'absolute' && (
           <>

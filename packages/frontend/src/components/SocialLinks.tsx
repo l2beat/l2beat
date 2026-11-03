@@ -39,9 +39,15 @@ export function SocialLinks({ variant }: Props) {
     },
   ]
   return links.map(({ href, title, icon: Icon }) => (
-    <a key={title} rel="noopener noreferrer" href={href} target="_blank">
+    <a
+      key={title}
+      rel="noopener noreferrer"
+      href={href}
+      target="_blank"
+      aria-label={title}
+    >
       <Icon
-        aria-label={title}
+        aria-hidden
         className={cn(
           'size-6',
           variant === 'gray' &&

@@ -1,6 +1,6 @@
 Zama Confidential Tokens let users hold and send tokens on Ethereum with hidden balances and transfer amounts. A user wraps a token into its confidential version, such as USDC into cUSDC, swaps, lends, pays others with it and unwraps it back. Who pays whom and every wrap and unwrap amount stay public.
 
-Users trust the {{kmsSignerCount}} operators of the key management service (KMS), who share the decryption key. They also trust {{coprocessorSignerCount}} coprocessor operators, Zama for the relayer and app, and two governance multisigs. Any {{kmsKeyThreshold}} KMS operators together can decrypt every amount, and the multisigs can upgrade every contract instantly. Unwraps need {{kmsThreshold}} KMS signatures, so funds leave only while the KMS and the coprocessors run.
+Users trust the {{kmsSignerCount}} operators of the key management service (KMS), who share the decryption key. They also trust {{coprocessorSignerCount}} coprocessor operators, Zama for the relayer and app, and Zama's governance multisigs. Any {{kmsKeyThreshold}} KMS operators together can decrypt every amount, and the multisigs can upgrade every contract instantly. Unwraps need {{kmsThreshold}} KMS signatures, so funds leave only while the KMS and the coprocessors run.
 
 ![Zama Confidential Tokens architecture](/images/architecture/zama.png#center)
 
@@ -28,7 +28,7 @@ A swap is a sealed-bid auction on ConfidentialSwap. It locks the user's tokens i
 
 ### KMS
 
-The [KMS operators](https://docs.zama.org/protocol/protocol-apps/addresses/mainnet/ethereum#operator-staking) are Zama, Dfns, Figment, Fireblocks, InfStones, Unit410, LayerZero, Ledger, Omakase, Stake Capital, OpenZeppelin, Etherscan and Conduit. Each holds a share of the FHE secret key and a key that signs results for Ethereum. They decrypt an amount only for accounts that the ACL, an onchain access list, allows. [Zama states](https://docs.zama.org/protocol/protocol/overview/kms) that they run in AWS Nitro enclaves, but Ethereum checks only their signatures. Removing an operator onchain leaves its key share intact.
+The [KMS operators](https://docs.zama.org/protocol/protocol-apps/addresses/mainnet/ethereum#operator-staking) are Zama, Dfns, Figment, Fireblocks, InfStones, Unit410, LayerZero, Ledger, Omakase, Stake Capital, OpenZeppelin, Etherscan and Conduit. Each holds a share of the FHE secret key and a key that signs results for Ethereum. They decrypt an amount only for accounts that the ACL, an onchain access list, allows. [Zama states](https://github.com/zama-ai/fhevm/blob/e3a7d1e263655f2b0dbd6230c3b00a7693fb8609/docs/protocol/architecture/kms.md#L58) that they run in AWS Nitro enclaves, but Ethereum checks only their signatures. Removing an operator onchain leaves its key share intact.
 
 ### Coprocessors
 

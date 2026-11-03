@@ -17,8 +17,9 @@ import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradie
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { useTRPC } from '~/trpc/React'
+import { rangeToResolution } from '~/utils/range/range'
+import { MonthlyUpdateChartTimeRange } from './MonthlyUpdateChartTimeRange'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateTvsChart({
@@ -73,7 +74,12 @@ export function MonthlyUpdateTvsChart({
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
       <Header timeRange={timeRange} stats={stats} unit={'usd'} />
-      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
+      <ChartContainer
+        isPlaceholderData={false}
+        meta={chartMeta}
+        data={chartData}
+        isLoading={isLoading}
+      >
         <AreaChart
           responsive
           data={chartData}
@@ -106,7 +112,12 @@ export function MonthlyUpdateTvsChart({
           />
           <ChartTooltip
             filterNull={false}
-            content={<TvsCustomTooltip unit="usd" />}
+            content={
+              <TvsCustomTooltip
+                unit="usd"
+                resolution={rangeToResolution([from, to])}
+              />
+            }
           />
           <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>
@@ -128,7 +139,7 @@ function Header({
     <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">TVS</div>
-        <EcosystemChartTimeRange timeRange={timeRange} />
+        <MonthlyUpdateChartTimeRange timeRange={timeRange} />
       </div>
       <div className="text-right">
         {stats?.total ? (

@@ -16,7 +16,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { PinkFillGradientDef } from '~/components/core/chart/defs/PinkGradientDef'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatRange, formatTimestamp } from '~/utils/dates'
+import { formatRange, formatSnapshotTimestamp } from '~/utils/dates'
 
 export type HomeChartColor = 'pink' | 'ethereum'
 
@@ -103,6 +103,7 @@ export function HomeChart({
     <div className="relative h-full min-h-[120px]">
       <div className={`${FILL_HEIGHT_CLASS} ${Y_AXIS_TICK_SIZE_CLASS}`}>
         <ChartContainer
+          isPlaceholderData={false}
           meta={meta}
           data={data}
           isLoading={isLoading}
@@ -200,7 +201,7 @@ function HomeChartTooltip({
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {dayRange
             ? formatRange(label, label + UnixTime.DAY)
-            : formatTimestamp(label)}
+            : formatSnapshotTimestamp(label, 'day')}
         </div>
         <div className="flex flex-col gap-2">
           {entries.map(({ entry, config }) => (

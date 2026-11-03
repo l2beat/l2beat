@@ -3,5 +3,11 @@
     "hash": "0xa3c9609fa3339ddc0e181fab5d3efbbf649271f1d7ca7455764c482718c042ec",
     "address": "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
     "blockNumber": 22188285
+  },
+  "Guardians_v31.sol": {
+    "hash": "0x8ee3e8bfe5f38496621356fedc7f7261f3ee290426d9d4ec9e416918c7846ee3",
+    "address": "eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F",
+    "chain": "ethereum",
+    "blockNumber": 26327178
   }
 }

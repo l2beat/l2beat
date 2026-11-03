@@ -60,6 +60,7 @@ interface Props {
   data: ActivityChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   milestones: Milestone[]
   scale: ChartScale
   metric: ActivityMetric
@@ -74,6 +75,7 @@ export function ActivityChart({
   syncedUntil,
   milestones,
   isLoading,
+  isPlaceholderData,
   scale,
   type,
   metric,
@@ -113,6 +115,7 @@ export function ActivityChart({
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={chartMeta}
       isLoading={isLoading}

@@ -28,9 +28,9 @@ import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChar
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
+import { MonthlyUpdateChartTimeRange } from './MonthlyUpdateChartTimeRange'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateActivityChart({
@@ -85,7 +85,12 @@ export function MonthlyUpdateActivityChart({
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
       <Header timeRange={timeRange} stats={stats} />
-      <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+      <ChartContainer
+        isPlaceholderData={false}
+        data={chartData}
+        meta={chartMeta}
+        isLoading={isLoading}
+      >
         <AreaChart
           responsive
           data={chartData}
@@ -138,7 +143,7 @@ function Header({
       <div>
         <div className="font-bold text-xl">Activity</div>
         <div className="font-medium text-secondary text-xs">
-          <EcosystemChartTimeRange timeRange={timeRange} />
+          <MonthlyUpdateChartTimeRange timeRange={timeRange} />
         </div>
       </div>
       <div className="text-right">

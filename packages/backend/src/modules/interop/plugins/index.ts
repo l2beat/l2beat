@@ -184,8 +184,8 @@ export function createInteropPlugins(
     eventPlugins: [
       new DeBridgePlugin(deps.oneSidedChains),
       new DeBridgeDlnPlugin(deps.oneSidedChains),
-      new AgglayerPlugin(),
-      new CircleGatewayPlugIn(deps.configs),
+      new AgglayerPlugin(deps.oneSidedChains),
+      new CircleGatewayPlugIn(deps.configs, deps.oneSidedChains),
       new CelerPlugIn(),
       new ButterNetworkPlugin(),
       new MesonPlugin(),
@@ -194,7 +194,7 @@ export function createInteropPlugins(
       {
         name: 'layerzero',
         plugins: [
-          new StargatePlugin(deps.configs), // should be run before ofts, lzv2
+          new StargatePlugin(deps.configs, deps.oneSidedChains), // should be run before ofts, lzv2
           new LayerZeroV2OFTsPlugin(deps.configs, deps.oneSidedChains), // should be run before LayerZeroV2
           new LayerZeroV2Plugin(deps.configs),
         ],
@@ -269,7 +269,7 @@ export function createInteropPlugins(
         ],
       },
       new OneinchFusionPlusPlugin(),
-      new LifiIntentsPlugin(),
+      new LifiIntentsPlugin(deps.oneSidedChains),
       new HyperliquidBridgePlugin(deps.oneSidedChains),
       new LighterBridgePlugin(deps.oneSidedChains),
       new BaseSolBridgePlugin(deps.oneSidedChains),

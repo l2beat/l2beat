@@ -3,7 +3,6 @@ import { env } from '~/env'
 import { ChevronIcon } from '~/icons/Chevron'
 import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
-import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { L2Icon } from '~/icons/pages/L2'
 import { OssificationIcon } from '~/icons/pages/Ossification'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
@@ -101,13 +100,6 @@ export function HomeStatsStrip({
         <ZkCatalogIcon className="size-5 stroke-purple-500 dark:stroke-purple-450" />
       ),
       iconBgClassName: 'bg-purple-500/10 dark:bg-purple-450/10',
-    },
-    {
-      label: 'Ecosystems',
-      metric: { count: counts.ecosystems, unit: 'ecosystems' },
-      href: '/ecosystems/agglayer',
-      icon: <EcosystemsIcon className="size-5 stroke-teal-500" />,
-      iconBgClassName: 'bg-teal-500/10',
     },
   ]
 

@@ -1,6 +1,6 @@
 ## Funds can be stolen if
 1. the verifier or the circuits accept an invalid withdrawal.
-2. the PayyMultisig upgrades the RollupV1 contract or overwrites the state root, which takes effect without delay.
+2. the PayyMultisig deploys a malicious [upgrade](#upgrades-and-governance) of RollupV1 or overwrites its state root, with no delay.
 <br>
 ## Funds can be lost if
 1. a user loses the note data or the keys required to spend their notes.

@@ -1,6 +1,6 @@
-Privacy Pools v2 by 0xbow lets you deposit ETH, USDC or USDT into one pool, then send, swap, earn Aave yield and withdraw without a visible link to the deposit. Only deposits that 0xbow's association set provider (ASP) approves can be spent privately. Depositors, recipients, amounts and timing at the pool's edges stay public.
+Privacy Pools v2 by 0xbow lets you deposit ETH, USDC or USDT, then send, swap, earn Aave yield and withdraw without a visible link to the deposit. Only deposits that 0xbow's association set provider (ASP) approves can be spent privately. Depositors, recipients, amounts and timing at the pool's edges stay public.
 
-Users trust 0xbow, which runs the ASP, the only relayer and the website, and a multisig that can upgrade every core contract without delay. The ASP can withhold or revoke approval for any deposit. Exiting is permissionless: a note's owner can ragequit it from the vault, losing their privacy, unless that multisig blocks it.
+Users trust 0xbow, which runs the ASP, the only relayer and the website, and a multisig that can upgrade every core contract without delay. The ASP can withhold or revoke approval for any deposit. Users also trust Aave, which holds the assets behind the yield shares. Exiting is permissionless: a note's owner can ragequit it from the vault, losing their privacy, unless that multisig blocks it.
 
 ### Architecture
 
@@ -15,7 +15,7 @@ Each deposit gets a label, a private ID that only the depositor and the ASP can 
 1. **Register.** Two transactions from your wallet add your account to the Keystore and publish your viewing public key.
 2. **Shield.** You deposit through the Entrypoint. USDC, USDT and ETH pass through a PPRouter that supplies Aave and deposits the shares. Your address, asset and amount are public, and the data that ties the deposit to its label goes onchain encrypted to the ASP.
 3. **Approval.** The ASP screens the depositor, adds the label's hash to its list and posts the root onchain, with the list on IPFS.
-4. **Send.** A transact proof spends your notes and creates one for the recipient, encrypted to their viewing key and published onchain, plus change for you. An unregistered recipient gets a claim link instead. 0xbow's relayer submits the proof onchain and takes its fee as a public withdrawal.
+4. **Send.** A transact proof spends your notes and creates one for the recipient, encrypted to their viewing key and published onchain, plus change for you. An unregistered recipient gets a claim link instead. 0xbow's relayer submits the proof and takes its fee as a public withdrawal.
 5. **Withdraw.** The relayer pays any address, minus its fee. Change stays as a note.
 
 ### Keys
@@ -24,7 +24,7 @@ All keys derive from one signature of the user's wallet. Contract wallets and si
 
 ### App
 
-0xbow hosts the app, built from public source. It reads the chain from Alchemy under 0xbow's key unless the user sets an endpoint per chain. It downloads the pool's events whole from the ASP but offers only 0xbow's relayer. Its Tor option requires a user-run Tor gateway and covers only RPC calls. It does not support connecting a local node with Tor enabled. Privacy Pools v2 is deployed on BNB Chain, Citrea, Optimism, Base, Arbitrum and Robinhood Chain, which L2BEAT does not track.
+0xbow hosts the app, built from public source. It reads the chain from Alchemy under 0xbow's key unless the user sets an endpoint per chain. It downloads the pool's events whole from the ASP but offers only 0xbow's relayer. Its Tor option requires a user-run Tor gateway and covers only RPC calls. Privacy Pools v2 is deployed on BNB Chain, Citrea, Optimism, Base, Arbitrum and Robinhood Chain, which L2BEAT does not track.
 
 ### Swaps and yield
 
@@ -40,12 +40,12 @@ The yield shares keep a fixed share count while their value grows, so the share 
 
 ### Compliance
 
-The ASP screens each depositor before approving the deposit, under 0xbow's own due diligence, and may reject it. A later list can drop an approved label, which freezes every note that carries it. A rejected deposit can leave only by ragequit.
+The ASP screens each depositor before approving the deposit, under 0xbow's own due diligence, and may reject it. A rejected deposit can leave only by ragequit.
 
 ### Fees
 
-Deposits pay no vetting fee today. The relayer quotes its fee per request and takes it from the sent or withdrawn asset. You accept the fee before sending, and the relayer cannot raise it. A private transfer pays that fee as a public payout from the vault. The yield shares keep {{yieldFee}} of the Aave yield for 0xbow.
+Deposits pay no vetting fee today. The relayer quotes its fee per request and takes it from the sent or withdrawn asset. You accept the fee before sending, and the relayer cannot raise it. The yield shares keep {{yieldFee}} of the Aave yield for 0xbow.
 
 ### Anonymity set
 
-One vault holds every asset, but a withdrawal names its asset. The set is therefore the ASP-approved deposits of that asset whose notes still hold at least the withdrawn amount, including the notes that transfers and reshields created from them. We count every depositor of the asset, approved or not.
+One vault holds every asset, but a withdrawal names its asset. The set is therefore the ASP-approved deposits of that asset whose notes still hold at least the withdrawn amount. Notes that transfers and reshields created from them count too. We count every depositor of the asset, approved or not.

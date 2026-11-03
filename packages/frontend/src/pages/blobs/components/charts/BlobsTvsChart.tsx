@@ -1,4 +1,4 @@
-import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { AreaChart } from 'recharts'
@@ -32,8 +32,13 @@ import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { useTRPC } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { formatSnapshotTimestamp } from '~/utils/dates'
+import {
+  type ChartRange,
+  type ChartResolution,
+  optionToRange,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { getTvsSeriesStats, type TvsSeriesStats } from './getTvsSeriesStats'
 import { mergeTvsSeries } from './mergeTvsSeries'
 
@@ -97,6 +102,7 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
     <div className="flex flex-col gap-4 lg:contents">
       <Header stats={stats} isLoading={isLoading} range={range} />
       <ChartContainer
+        isPlaceholderData={false}
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
@@ -144,14 +150,21 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
             }}
             syncedUntil={syncedUntil}
           />
-          <ChartTooltip content={<CustomTooltip />} filterNull={false} />
+          <ChartTooltip
+            content={<CustomTooltip resolution={rangeToResolution(range)} />}
+            filterNull={false}
+          />
         </AreaChart>
       </ChartContainer>
     </div>
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+function CustomTooltip({
+  payload,
+  label,
+  resolution,
+}: CustomChartTooltipProps & { resolution: ChartResolution }) {
   if (!payload || typeof label !== 'number') return null
 
   const validPayload = payload.filter((p) => p.type !== 'none' && !p.hide)
@@ -159,17 +172,12 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     if (curr.value === null || curr.value === undefined) return acc
     return (acc ?? 0) + curr.value
   }, null)
-  const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="font-medium text-label-value-14 text-secondary">
-          {isFullDay
-            ? formatTimestamp(label)
-            : formatTimestamp(label, {
-                mode: 'datetime',
-              })}
+          {formatSnapshotTimestamp(label, resolution)}
         </div>
         {validPayload.length > 1 && (
           <>

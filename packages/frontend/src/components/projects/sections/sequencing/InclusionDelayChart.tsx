@@ -71,7 +71,12 @@ export function InclusionDelayChart({
   )
 
   return (
-    <ChartContainer data={data} meta={chartMeta} isLoading={false}>
+    <ChartContainer
+      isPlaceholderData={false}
+      data={data}
+      meta={chartMeta}
+      isLoading={false}
+    >
       <ComposedChart
         responsive
         data={data}

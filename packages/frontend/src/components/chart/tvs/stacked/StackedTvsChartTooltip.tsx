@@ -7,7 +7,8 @@ import { ChartTooltipWrapper } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
+import type { ChartResolution } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
 
 export function StackedTvsChartTooltip({
@@ -15,7 +16,12 @@ export function StackedTvsChartTooltip({
   label,
   unit,
   meta,
-}: CustomChartTooltipProps & { unit: ChartUnit; meta: ChartMeta }) {
+  resolution,
+}: CustomChartTooltipProps & {
+  unit: ChartUnit
+  meta: ChartMeta
+  resolution: ChartResolution
+}) {
   if (!payload || typeof label !== 'number') return null
 
   const total = payload.reduce<number | null>((acc, curr) => {
@@ -33,7 +39,7 @@ export function StackedTvsChartTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-46 flex-col sm:w-66!">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { mode: 'datetime' })}
+          {formatSnapshotTimestamp(label, resolution)}
         </div>
         {actualPayload.length > 1 && (
           <>

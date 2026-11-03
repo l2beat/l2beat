@@ -110,6 +110,8 @@ const actionsColumn = columnHelper.display({
       <button
         className="flex h-full w-full items-center justify-end p-1"
         onClick={toggleExpandedHandler}
+        aria-label={isExpanded ? 'Hide details' : 'Show details'}
+        aria-expanded={isExpanded}
       >
         <ChevronIcon
           className={cn(

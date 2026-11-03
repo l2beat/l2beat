@@ -14,6 +14,7 @@ import {
   type VerifierStatus,
 } from '~/pages/zk-catalog/v2/components/zkCatalogUi'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
+import { getTrustedSetupParticipantSummaries } from '~/utils/project/getTrustedSetupParticipantSummaries'
 import { configMarkdown } from './configMarkdown'
 import { bulletList, heading, joinBlocks, link, subsection } from './markdown'
 
@@ -35,6 +36,10 @@ export function renderTrustedSetups(
         bulletList([
           `Risk: ${formatTrustedSetupRisk(setup.risk)}`,
           `Proof systems: ${setup.proofSystems.map(formatTag).join(', ')}`,
+          ...getTrustedSetupParticipantSummaries(setup).map(
+            ({ label, value, unit, description }) =>
+              `${label}: ${value}${unit ? ` ${unit}` : ''}${description ? ` (${description})` : ''}`,
+          ),
         ]),
         configMarkdown(setup.description, level + 1),
       ]),

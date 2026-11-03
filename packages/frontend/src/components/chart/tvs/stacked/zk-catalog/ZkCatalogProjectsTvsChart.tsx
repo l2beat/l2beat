@@ -1,7 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatCurrency } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
@@ -21,12 +20,14 @@ import { ChartCommonComponents } from '~/components/core/chart/ChartCommonCompon
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
+import { type ChartResolution, rangeToResolution } from '~/utils/range/range'
 
 interface ZkCatalogProjectsTvsChartProps {
   project: ChartProject
@@ -48,13 +49,14 @@ export function ZkCatalogProjectsTvsChart({
   const { range, unit } = useTvsChartControlsContext()
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
 
-  const { data, isLoading } = useQuery(
-    trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.tvs.detailedChartWithProjectsRanges,
+    {
       projects: projectsForTvs,
       range,
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens,
-    }),
+    },
   )
 
   const projectLabels = useMemo(() => {
@@ -150,6 +152,7 @@ export function ZkCatalogProjectsTvsChart({
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={chartData}
       meta={chartMeta}
       isLoading={isLoading}
@@ -189,7 +192,11 @@ export function ZkCatalogProjectsTvsChart({
         />
         <ChartTooltip
           content={
-            <CustomTooltip unit={unit} sinceByProjectId={sinceByProjectId} />
+            <CustomTooltip
+              unit={unit}
+              sinceByProjectId={sinceByProjectId}
+              resolution={rangeToResolution(shownInput.range)}
+            />
           }
           filterNull={false}
         />
@@ -203,9 +210,11 @@ function CustomTooltip({
   label,
   unit,
   sinceByProjectId,
+  resolution,
 }: CustomChartTooltipProps & {
   unit: ChartUnit
   sinceByProjectId: Map<string, number>
+  resolution: ChartResolution
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -225,7 +234,7 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, { mode: 'datetime' })}
+        {formatSnapshotTimestamp(label, resolution)}
       </div>
       <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
         <span>Total</span>
