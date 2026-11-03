@@ -40,7 +40,7 @@ For ENS lookups, the resolver operator derives each deposit address from a secre
 
 ### Migration from v5
 
-Balances of the frozen v5 deployment move here through refunds. The wallet refunds v5 notes to a migration contract, which deposits them into the v6 portal for the same account. Users can instead withdraw v5 balances to Ethereum.
+Balances of the frozen v5 deployment move here through refunds. The wallet refunds v5 notes and deposits not yet claimed on Aztec v5 to a migration contract, which deposits each refund into the v6 portal for the same account. Users can instead withdraw v5 balances to Ethereum.
 
 ### Exits
 

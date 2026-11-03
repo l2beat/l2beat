@@ -3,7 +3,7 @@ Mayan Swift source data comes either from the surrounding MayanForwarder event
 or directly from MayanSwift calldata. The protocol itself is lock/release, so it never burns or mints.
 */
 
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { getInteropTransactionDataCandidates } from '../dto/interopTransaction'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { findParsedAround, findTransferLogBefore } from './logScan'
@@ -73,13 +73,15 @@ const parseTransfer = createEventParser(transferLog)
 const orderSourceContracts = [...MAYAN_SWIFT_SOURCE_CONTRACTS]
 const orderDestinationContracts = [...MAYAN_SWIFT_DESTINATION_CONTRACTS]
 
+// Orders to one-sided chains wait for their unlock, which takes up to ~2 days
+// on low-traffic source chains.
 export const OrderCreated = createInteropEventType<{
   key: string
   $dstChain?: string
   amountIn?: bigint
   srcTokenAddress?: Address32
   dstTokenAddress?: Address32
-}>('mayan-swift.OrderCreated')
+}>('mayan-swift.OrderCreated', { ttl: 2 * UnixTime.DAY })
 
 export const OrderFulfilled = createInteropEventType<{
   key: string
@@ -98,6 +100,15 @@ export const SettlementSent = createInteropEventType<{
   key: string
   $dstChain?: string
 }>('mayan-swift.SettlementSent')
+
+// OrderUnlocked event emitted on source chain when settlement is processed
+// $srcChain is the chain where SettlementSent was emitted (the transfer destination chain)
+// It's extracted from the Wormhole VAA in the transaction input and used to mark events
+// as unsupported when the settlement source chain is not in our supported chains list
+export const OrderUnlocked = createInteropEventType<{
+  key: string
+  $srcChain?: string
+}>('mayan-swift.OrderUnlocked')
 
 type FulfilledOrderEvent = InteropEvent<{
   key: string
@@ -418,28 +429,31 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
     )
   }
 
-  matchTypes = [OrderCreated, OrderFulfilled, OrderRefunded]
+  matchTypes = [OrderFulfilled, OrderRefunded, OrderUnlocked]
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    if (OrderCreated.checkType(event)) {
-      const hasTerminalEvent =
-        db.find(OrderFulfilled, { key: event.args.key }) ??
-        db.find(OrderRefunded, { key: event.args.key })
-      if (hasTerminalEvent) return
+    // The fill on a one-sided chain is not captured, so an order to one is
+    // counted once the source chain unlocks it, and never if it is refunded.
+    if (OrderUnlocked.checkType(event)) {
+      const orderCreated = db.find(OrderCreated, { key: event.args.key })
+      if (!orderCreated) return
 
-      const mayanForwarded = findMayanSwiftForwardedAfter(db, event)
-      const dstChain = mayanForwarded?.args.$dstChain ?? event.args.$dstChain
+      const mayanForwarded = findMayanSwiftForwardedAfter(db, orderCreated)
+      const dstChain =
+        mayanForwarded?.args.$dstChain ?? orderCreated.args.$dstChain
       if (!dstChain || !this.oneSidedChains.includes(dstChain)) return
 
       return [
         Result.Transfer('mayan-swift.Transfer', {
-          srcEvent: event,
+          srcEvent: orderCreated,
           dstChain,
-          srcAmount: mayanForwarded?.args.amountIn ?? event.args.amountIn,
+          srcAmount:
+            mayanForwarded?.args.amountIn ?? orderCreated.args.amountIn,
           srcTokenAddress:
-            mayanForwarded?.args.tokenIn ?? event.args.srcTokenAddress,
+            mayanForwarded?.args.tokenIn ?? orderCreated.args.srcTokenAddress,
           dstTokenAddress:
-            mayanForwarded?.args.tokenOut ?? event.args.dstTokenAddress,
-          extraEvents: mayanForwarded ? [mayanForwarded] : undefined,
+            mayanForwarded?.args.tokenOut ?? orderCreated.args.dstTokenAddress,
+          extraEvents: mayanForwarded ? [event, mayanForwarded] : [event],
+          timestamp: event.ctx.timestamp,
           bridgeType: 'nonMinting',
           srcWasBurned: false,
           dstWasMinted: false,

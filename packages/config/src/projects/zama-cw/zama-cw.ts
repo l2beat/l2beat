@@ -358,9 +358,9 @@ export const zamaCw: BaseProject = {
       name: 'Zama app',
       url: 'https://app.zama.org',
       since: '2026-10-09',
-      // Next.js build id of the served app, read from its chunks.
-      build: 'Rh4Nfrd-QpbxA2axbN31u',
-      checked: '2026-10-22',
+      // Vercel deployment id of the served app, the data-dpl-id of its pages.
+      build: 'dpl_HkkjtLU1mXu9VT5nadJciMGnnY1t',
+      checked: '2026-10-30',
       checkedApps: [
         {
           name: 'Zerion',
@@ -390,6 +390,14 @@ export const zamaCw: BaseProject = {
           source: 'https://ct-7984-chriswilder.netlify.app',
           checked: '2026-10-27',
         },
+        {
+          name: 'fhevm-wallet',
+          finding:
+            "Needs the user's own Zama API key on mainnet, which Zama reviews and bills, so Zama ties every request to the user.",
+          fix: 'Relay requests under a key that is not tied to the user.',
+          source:
+            'https://github.com/mocarram/fhevm-wallet/blob/f942463b53c0637ffbd4573d0a6f7a7558e21aeb/src/core/fhe/FheService.ts#L40-L52',
+        },
       ],
     },
     deployedOn: ['ethereum'],
@@ -415,7 +423,7 @@ export const zamaCw: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        "The contracts, the SDK and the KMS and coprocessor sources are public. Zama's app source is unpublished.",
+        "The contracts, the SDK and the coprocessor source are public. The source of the KMS nodes and of Zama's app is not.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.fhe,

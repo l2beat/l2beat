@@ -294,7 +294,7 @@ export const zkmoney: BaseProject = {
   ossificationHistory: discovery.getOssificationHistory(PORTAL_SINCE),
   statuses: {
     yellowWarning:
-      'Both portals are frozen since Aztec made its v6 rollup canonical, and deposits revert. Balances leave only through refunds. The released wallet refunds them into zk.money on Aztec v6 or to Ethereum.',
+      'Both portals are frozen since Aztec made its v6 rollup canonical, and deposits revert. Balances leave only through refunds. The current zk.money wallet refunds them into zk.money on Aztec v6 or to Ethereum.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -328,6 +328,15 @@ export const zkmoney: BaseProject = {
         'Aztec Labs relaunches zk.money as a private DAI wallet on the Aztec network.',
       type: 'general',
     },
+    {
+      // Frozen event of the sUSDS portal in tx 0x9abf414e… two blocks later.
+      title: 'Portals freeze as Aztec v6 becomes canonical',
+      url: 'https://etherscan.io/tx/0x5b0143724130c6e28fe751fd0f3146cb224d936f2070b033c2fc84fab26b1249',
+      date: '2026-10-26T00:00:00Z',
+      description:
+        'Deposits stop for good, and balances leave only through refunds.',
+      type: 'general',
+    },
   ],
   escrows: [
     {
@@ -347,6 +356,8 @@ export const zkmoney: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    // Kept at the release the cells were rated on while the portals were live.
+    // Later releases run v5 only to refund it, see the Exits section.
     referenceApp: {
       name: 'zk.money Desktop',
       url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.5.0',
@@ -377,6 +388,7 @@ export const zkmoney: BaseProject = {
     },
     deployedOn: ['ethereum'],
     trackedOn: ['ethereum'],
+    runsOn: [ProjectId('aztecnetwork')],
     tokens: privacyTokens,
     zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {
@@ -390,8 +402,8 @@ export const zkmoney: BaseProject = {
           'Withdrawals and refunds need a live AWS Nitro enclave running the approved image. The approved sUSDS image is absent from the documented public downloads. The assessed wallet requires modification to replace zk.money services.',
       },
     },
-    // Hosted wallet build on 2026-10-22: 8ba50bc, absent from the public
-    // mirror at 00e54087. The DAI privacy reference is Desktop v0.5.0.
+    // Hosted wallet build on 2026-10-30: ea3459dc, absent from the public
+    // mirror (main 8fd1984). The DAI privacy reference is Desktop v0.5.0.
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',

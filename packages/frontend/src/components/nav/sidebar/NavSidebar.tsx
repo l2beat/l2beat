@@ -53,7 +53,11 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
           fixed bar at the top; the full-screen sheet alone keeps the navbar's. */}
       <SidebarHeader className="max-lg:sticky max-lg:top-0 max-lg:h-16 max-lg:bg-background max-lg:px-3.5 max-lg:pt-0 max-lg:pb-px">
         <div className="flex h-[38px] flex-row items-center justify-between max-lg:h-full">
-          <a href={logoLink} onClick={closeMobileSidebar}>
+          <a
+            href={logoLink}
+            onClick={closeMobileSidebar}
+            aria-label="Go to home"
+          >
             <Logo className="block h-8 w-auto" />
           </a>
           <div className="flex flex-row items-center gap-4 max-lg:gap-2 md:max-lg:gap-3">

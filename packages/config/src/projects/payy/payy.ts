@@ -153,8 +153,8 @@ export const payy: ScalingProject = {
         ' Payy blocks are produced by validators running the Solid BFT consensus protocol, and state updates are settled on Ethereum by a whitelisted prover. Onchain, the current validator set consists of a single address, and a single prover address has been whitelisted since initialization.',
       references: [
         {
-          title: 'Payy docs - Rollup',
-          url: 'https://docs.payy.network/payy-network/04_rollup',
+          title: 'Payy docs - Rollup (archived 2026-01-16)',
+          url: 'https://web.archive.org/web/20260116054706/https://docs.payy.network/payy-network/04_rollup',
         },
       ],
     },

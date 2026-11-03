@@ -46,6 +46,7 @@ import type {
   PrivacyRelayerStat,
 } from './types'
 import { getPrivacyBucketTvls } from './utils/getPrivacyBucketTvls'
+import { getScalingProjectItems } from './utils/getPrivacyScalingLinks'
 import {
   getPrivacyChainLinks,
   getPrivacyDeployedOnChains,
@@ -100,6 +101,8 @@ export interface PrivacyProjectDetails {
   chains: PrivacyChainLink[]
   /** Every chain with a deployment; the untracked ones are dimmed. */
   deployedOn: ProjectIconListItem[]
+  /** The scaling projects the protocol runs on, for the cross-links. */
+  scalingProjects: ProjectIconListItem[]
   assets: PrivacyAsset[]
   summary: {
     bucketCount: number
@@ -154,6 +157,7 @@ export async function getPrivacyProjectDetails(
     relayerStat,
     chainTvl,
     chainProjects,
+    scalingProjects,
     ossification,
   ] = await Promise.all([
     getPrivacyProjectFlowData(
@@ -167,6 +171,7 @@ export async function getPrivacyProjectDetails(
     getRelayerStat(project, chain, UnixTime(now - 30 * UnixTime.DAY), now),
     isMultiChain ? getChainTvl(projectId, chain, now) : undefined,
     getChainProjects(),
+    getScalingProjects(project),
     getProjectOssification(project),
   ])
   const chains = getPrivacyChainLinks(trackedOn, project.slug, chainProjects)
@@ -377,6 +382,7 @@ export async function getPrivacyProjectDetails(
       trackedOn,
       chainProjects,
     ),
+    scalingProjects,
     assets: orderedAssets,
     summary: {
       bucketCount: summaryBucketCount,
@@ -479,6 +485,19 @@ async function getChainTvl(
         ? undefined
         : calculatePercentageChange(latest.value, weekAgo.value),
   }
+}
+
+async function getScalingProjects(
+  project: PrivacyProject,
+): Promise<ProjectIconListItem[]> {
+  const ids = project.privacyInfo.scalingProjects
+  if (!ids || ids.length === 0) return []
+  const scalingProjects = await ps.getProjects({
+    ids,
+    select: ['scalingInfo'],
+    optional: ['scalingStage', ...PROJECT_PAGE_METADATA_FIELDS],
+  })
+  return getScalingProjectItems(ids, scalingProjects)
 }
 
 const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7

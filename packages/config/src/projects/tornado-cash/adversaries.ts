@@ -93,9 +93,10 @@ export function tornadoCashAdversaries(upgradeDelay: string) {
       },
       futureAdversary: {
         sentiment: 'warning',
-        exposureShort: 'Commitments use a Pedersen hash on an elliptic curve.',
+        exposureShort:
+          'Whoever breaks elliptic-curve cryptography can test whether a given deposit could fund a withdrawal, since commitments use a Pedersen hash on an elliptic curve.',
         exposureContinued:
-          'Whoever breaks elliptic-curve cryptography could test whether a given deposit can fund a withdrawal, shrinking the candidate set without singling out one deposit. Notes backed up onchain are encrypted with elliptic-curve keys and become readable.',
+          'The test shrinks the candidate set without singling out one deposit. Notes backed up onchain are encrypted with elliptic-curve keys and become readable.',
         advice:
           "Keep the note on the user's device and leave the onchain backup off.",
         sources: [

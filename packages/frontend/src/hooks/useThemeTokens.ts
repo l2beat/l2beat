@@ -20,7 +20,7 @@ const LIGHT_TOKENS: ThemeTokens = {
   surface: '#fafafa',
   surfaceSecondary: '#e6e7ec',
   divider: '#ccd0da',
-  negative: '#d70000',
+  negative: '#c40000',
 }
 
 /** Follows the theme toggle, which swaps a class on the root element */

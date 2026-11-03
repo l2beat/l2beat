@@ -108,6 +108,7 @@ const ENTRY: ProjectPrivacyEntry = {
   chain: 'ethereum',
   chains: [],
   deployedOn: [],
+  scalingProjects: [],
   exitWindow: { ...RISK, walkawayTest: { passed: true } },
   trustedSetup: { ...RISK, risk: 'green', label: RISK.value },
   reproducibility: RISK,

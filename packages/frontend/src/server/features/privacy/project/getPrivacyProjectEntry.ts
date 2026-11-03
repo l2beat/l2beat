@@ -74,6 +74,7 @@ export interface ProjectPrivacyEntry {
   chains: PrivacyChainLink[]
   /** Every chain with a deployment; the untracked ones are dimmed. */
   deployedOn: ProjectIconListItem[]
+  scalingProjects: ProjectIconListItem[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
   reproducibility: PrivacySummaryValue
@@ -388,6 +389,7 @@ export async function getPrivacyProjectEntry(
     chainSubtitle,
     chains: details.chains,
     deployedOn: details.deployedOn,
+    scalingProjects: details.scalingProjects,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
       getPrivacyTrustedSetup(details.trustedSetups),

@@ -43,7 +43,7 @@ export function Settings() {
         <div className="flex flex-col gap-3">
           <div>
             <div
-              className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm hover:text-white"
+              className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm hover:text-coffee-50"
               onClick={toggleEnableDimming}
             >
               <Checkbox checked={preferences.enableDimming} />
@@ -56,7 +56,7 @@ export function Settings() {
           </div>
           <div>
             <div
-              className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm hover:text-white"
+              className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm hover:text-coffee-50"
               onClick={toggleHideLargeArrays}
             >
               <Checkbox checked={preferences.hideLargeArrays} />
@@ -69,7 +69,7 @@ export function Settings() {
           </div>
           <div>
             <div
-              className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm hover:text-white"
+              className="flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm hover:text-coffee-50"
               onClick={toggleHighlightOverlapping}
             >
               <Checkbox checked={preferences.highlightOverlapping !== false} />

@@ -20,14 +20,17 @@ Run `l2b` from `packages/config`. Its `.env` holds RPC keys: never read or print
 - `l2b why <project> <address>`: every contract field that references the address, followed or ignored.
 - `l2b events <chain:address> <EventName>`: the raw logs of an event.
 - `<project>/.flat/`: the flattened source of every contract discovery analyzed.
-- `abis` in `discovered.json`: discovery calls only functions without arguments (and probes single `uint256` getters at indices 0 to 4). Functions with other arguments, events, constructor arguments and private variables need a handler.
+- `abis` in `discovered.json`: discovery calls only functions without arguments (and probes single `uint256` getters at indices 0 to 4). Functions with other arguments, events, constructor arguments (`constructorArgs`, e.g. a verifier set at deployment) and private variables need a handler.
 
 ## Templates
 
 A template is `_templates/<name>/template.jsonc` with a `shapes.json` of source hashes. It applies to every contract with that source, in every project, so it is where anything about a contract's code goes. `config.jsonc` overrides are for this project's addresses.
 
 - Before writing one, search `_templates` for the contract name: an existing template may fit, and templates of similar contracts are the best examples.
-- `l2b init-template <project>/<Contract>` creates `template.jsonc`. `l2b add-shape <chain> <blockNumber> <Contract>.sol <project>/<Contract> <0xaddress>` records the source hash of the deployment in `shapes.json`.
+- `l2b init-template <project>/<Contract>` creates `template.jsonc`. `l2b add-shape <chain> <blockNumber> <Contract>.sol <project>/<Contract> <0xaddress>` records the source hash of the deployment in `shapes.json`. For a proxy, pass the implementation address. A second shape needs its own file name. Templates cannot set `critical: false`.
+- A template's `displayName` overrides every source name it covers, so leave it out when one template covers distinctly named contracts.
+- Descriptions are read in `l2b ui` next to links, permissions, fields and source: what the contract is and does in a sentence or two, nothing those already show, no risk commentary. Field descriptions only where the name leaves the meaning open.
+- `config.jsonc` keeps what only this project needs: seeds for contracts nothing discovered references (`l2b why`, a `copy` field drives no discovery), `names` where the source name cannot carry it (instances sharing a source name, unverified contracts), no override a template already sets, no default values. EOA names carry no role.
 - Discovery refuses a template it cannot parse and reports every mistake with its path. A key in the wrong place can still be ignored without an error: `ignoreRelative` goes inside the `handler`, not on the field.
 
 ## Ossification

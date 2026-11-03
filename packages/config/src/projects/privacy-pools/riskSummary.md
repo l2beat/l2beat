@@ -9,5 +9,6 @@
 ## Privacy can be lost if
 1. the ASP leaves deposits out of its latest list, which blocks their private exit, up to halting all private withdrawals (see privileged insider).
 2. the ASP keeps only a few deposits in its latest list, so withdrawals proven against it point to one of them (see privileged insider).
-3. Fast Relay refuses a withdrawal, so the user must self-relay or find a relayer elsewhere (see chain analyst).
-4. a user withdraws signed in with a wallet on the default RPC, so Alchemy ties the wallet to the withdrawal by timing (see network observer).
+3. 0xbow pairs the IP of a deposit session with the session waiting for a withdrawal across its website and ASP feeds (see privileged insider).
+4. both relayers the website lists refuse a withdrawal, so the user must self-relay or find a relayer elsewhere (see chain analyst).
+5. a user withdraws signed in with a wallet on the default RPC, so Alchemy ties the wallet to the withdrawal by timing (see network observer).

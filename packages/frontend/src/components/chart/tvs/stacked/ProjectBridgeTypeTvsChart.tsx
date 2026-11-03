@@ -1,11 +1,12 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
+import { rangeToResolution } from '~/utils/range/range'
 import {
   BridgeTypeTvsChart,
   bridgeTypeTvsChartMeta,
@@ -25,7 +26,7 @@ export function ProjectBridgeTypeTvsChart({
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
   const { dataKeys, toggleDataKey } = useChartDataKeys(bridgeTypeTvsChartMeta)
 
-  const { data, isLoading, isPlaceholderData } = useChartQuery(
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.tvs.detailedChart,
     {
       filter: { type: 'projects', projectIds: [project.id] },
@@ -62,6 +63,7 @@ export function ProjectBridgeTypeTvsChart({
     <div className="mt-4 mb-3">
       <BridgeTypeTvsChart
         isPlaceholderData={isPlaceholderData}
+        resolution={rangeToResolution(shownInput.range)}
         data={chartData}
         milestones={milestones}
         unit={unit}

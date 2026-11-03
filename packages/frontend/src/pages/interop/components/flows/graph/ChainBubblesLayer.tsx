@@ -1,5 +1,5 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import type { ChainData } from '~/server/features/layer2s/interop/getInteropFlows'
+import type { FlowsGraphChainData } from '~/server/features/layer2s/interop/getInteropFlowsOverview'
 import { cn } from '~/utils/cn'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
@@ -12,7 +12,7 @@ import { getChainColor } from './utils/getChainColor'
 interface ChainBubblesLayerProps {
   interopChains: InteropChainWithIcon[]
   layout: FlowsGraphLayout
-  chainData: ChainData[]
+  chainData: FlowsGraphChainData[]
   isSmallScreen: boolean
 }
 

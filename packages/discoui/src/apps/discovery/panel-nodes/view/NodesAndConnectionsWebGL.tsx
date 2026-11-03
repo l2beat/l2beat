@@ -1,8 +1,14 @@
+import { assert } from '@l2beat/shared-pure'
 import { type ComponentType, useEffect, useMemo, useRef, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { ApiAddressType } from '../../../../api/types'
 import { ADDRESS_ICON_COMPONENTS } from '../../../../components/AddressIcon'
+import {
+  IconArrowHeadLeft,
+  IconArrowHeadRight,
+} from '../../../../icons/IconArrowHead'
 import { IconInitial } from '../../../../icons/IconInitial'
+import { useTheme } from '../../../../theme'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
@@ -19,29 +25,22 @@ import {
 import { getRowLayout, type NodeRow } from '../store/utils/rows'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
+import {
+  DARK_GRAPH_PALETTE,
+  type GraphPalette,
+  HEADER_INITIAL,
+  HEADER_TEMPLATE,
+  HEADER_TEXT_ON_DARK,
+  HEADER_TEXT_ON_LIGHT,
+  HEADER_UNVERIFIED,
+  LIGHT_GRAPH_PALETTE,
+  type RGBA,
+  TEXT_ON_ACCENT,
+} from './colors/graphPalette'
 
 // ============================================================================
 // Constants
 // ============================================================================
-
-type RGBA = [number, number, number, number]
-
-const COFFEE_600: RGBA = [0x59 / 255, 0x4c / 255, 0x43 / 255, 1]
-const COFFEE_400: RGBA = [0xa9 / 255, 0x87 / 255, 0x63 / 255, 1]
-const COFFEE_200: RGBA = [0xf0 / 255, 0xd8 / 255, 0xbd / 255, 1]
-const GRID_DOT: RGBA = [0x3c / 255, 0x33 / 255, 0x2d / 255, 0.6]
-const AUTUMN_300: RGBA = [0xba / 255, 0xd8 / 255, 0x0a / 255, 1]
-const AUX_RED: RGBA = [0xfb / 255, 0x4a / 255, 0x35 / 255, 1]
-const AUX_GREEN: RGBA = [0x9d / 255, 0xde / 255, 0x6c / 255, 1]
-const AUX_ORANGE: RGBA = [0xfe / 255, 0x80 / 255, 0x19 / 255, 1]
-
-const DEFAULT_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.6)
-const DIMMED_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.18)
-const GRAYED_CONNECTION_COLOR = withAlpha(COFFEE_200, 0.1)
-const BLACK: RGBA = [0, 0, 0, 1]
-const NODE_BODY: RGBA = [0x12 / 255, 0x0f / 255, 0x0e / 255, 1]
-// Transparent ring color: a plain fill.
-const NO_RING: RGBA = [0, 0, 0, 0]
 
 const HEADER_ICON_SIZE = 16
 const ICON_VIEW_BOX = 16
@@ -60,12 +59,29 @@ const CONTAINER_CORNER_RADIUS = 12
 const CONTAINER_OUTLINE_WIDTH = 2
 const CONTAINER_Z = 1
 const OVERLAP_BORDER_WIDTH = 2
+const NODE_BORDER_WIDTH = 1
+// The arrow glyph spans 3..13 of its 16-unit cell, see IconArrowHead. Edges
+// stop at its base so the line never shows past the tip.
+const ARROW_HEAD_CELL = 16
+const ARROW_HEAD_TIP = 13 / 16
+const ARROW_HEAD_LENGTH = (10 / 16) * ARROW_HEAD_CELL
+const HEADER_BADGE_STEP = 11
+const HIGHLIGHTED_ROW_INSET = 3
+const HIGHLIGHTED_ROW_RADIUS = 4
+// Below this zoom field text is under 5 px and names under 6 px, so all text
+// goes at once and the overview shows shapes with chain captions.
+const NODE_DETAIL_MIN_SCALE = 0.4
+
+export function drawsNodeDetail(scale: number): boolean {
+  return scale >= NODE_DETAIL_MIN_SCALE
+}
 
 const HEADER_FONT: FontSpec = {
   weight: 500,
   size: 14,
   family: 'ui-sans-serif, system-ui, sans-serif',
 }
+
 const FIELD_FONT: FontSpec = {
   size: 12,
   family: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
@@ -80,19 +96,25 @@ const FOOTER_FONT: FontSpec = {
 
 const CONNECTION_SEGMENTS = 32
 const GRID_DOT_RADIUS_PER_CELL = 0.05
-const INITIAL_RING_WIDTH = 15
-const CONNECTION_CONTROL_OFFSET = 50
+// Control points sit half the horizontal gap out, so a long edge leaves and
+// reaches its nodes level instead of bending sharply at the arrowhead.
+const CONNECTION_CONTROL_OFFSET_MIN = 50
+const CONNECTION_CONTROL_OFFSET_MAX = 200
+const CONNECTION_CONTROL_GAP_SHARE = 0.5
 const DASH_ON_WORLD = 5
 const DASH_OFF_WORLD = 5
 const PERIMETER_SAMPLES_PER_CORNER = 8
 
 // Floats per instance for each pipeline.
-const QUAD_STRIDE_F = 18 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z, ring.rgba
+const QUAD_STRIDE_F = 14 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z
 const TEXT_STRIDE_F = 13 // pos.xy, size.xy, uv.xyzw, color.rgba, z
 const LINE_STRIDE_F = 6 // pos.xy, color.rgba
 const CONNECTION_STRIDE_F = 12 // from.xy, to.xy, controlX.xy, color.rgba, width, dashed
 const CONNECTION_WIDTH = 1.5
 const HIGHLIGHTED_CONNECTION_WIDTH = 2.5
+// Zoomed out, world-space edges would thin to a fraction of a pixel and fade.
+const CONNECTION_MIN_STROKE_PX = 1
+const CONNECTION_MIN_INK_RATIO = 0.6
 
 // ============================================================================
 // Types
@@ -122,6 +144,7 @@ interface DrawData {
   selectedContainers: Set<string>
   enableDimming: boolean
   markUnreachableEntries: boolean
+  palette: GraphPalette
   anyNodeSelected: boolean
   liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>
 }
@@ -145,7 +168,11 @@ interface RenderNode {
   isGroup: boolean
 }
 
-type IconAtlasId = ApiAddressType | 'InitialCircle'
+type IconAtlasId =
+  | ApiAddressType
+  | 'InitialCircle'
+  | 'ArrowHeadLeft'
+  | 'ArrowHeadRight'
 
 interface AtlasGlyph {
   u0: number
@@ -188,7 +215,6 @@ layout(location = 3) in vec4 i_color;
 layout(location = 4) in vec4 i_radii; // TL, TR, BR, BL
 layout(location = 5) in float i_border;
 layout(location = 6) in float i_z;
-layout(location = 7) in vec4 i_ring;
 uniform vec2 u_offset;
 uniform float u_scale;
 uniform vec2 u_resolution;
@@ -197,7 +223,6 @@ out vec2 v_local;
 out vec2 v_halfSize;
 out vec4 v_radii;
 out float v_border;
-out vec4 v_ring;
 void main() {
   float pad = (i_border * 0.5) + 1.0;
   vec2 quadSize = i_size + vec2(pad * 2.0);
@@ -212,7 +237,6 @@ void main() {
   v_halfSize = i_size * 0.5;
   v_radii = i_radii;
   v_border = i_border;
-  v_ring = i_ring;
 }`
 
 const ROUND_FS = `#version 300 es
@@ -222,9 +246,7 @@ in vec2 v_local;
 in vec2 v_halfSize;
 in vec4 v_radii;
 in float v_border;
-in vec4 v_ring;
 out vec4 fragColor;
-const float RING_WIDTH = ${INITIAL_RING_WIDTH}.0;
 float pickRadius(vec2 p, vec4 r) {
   float top    = (p.x > 0.0) ? r.y : r.x;
   float bottom = (p.x > 0.0) ? r.z : r.w;
@@ -247,12 +269,7 @@ void main() {
     alpha = 1.0 - smoothstep(-aa, aa, d);
   }
   if (alpha <= 0.0) discard;
-  // Rings repeating every RING_WIDTH from the center, fading from the ring
-  // color into the fill, mark initial contracts' headers.
-  vec3 color = v_ring.a > 0.0
-    ? mix(v_ring.rgb, v_color.rgb, mod(length(v_local), RING_WIDTH) / RING_WIDTH)
-    : v_color.rgb;
-  fragColor = vec4(color, v_color.a * alpha);
+  fragColor = vec4(v_color.rgb, v_color.a * alpha);
 }`
 
 // Fullscreen triangle with a dot at the center of every grid cell, so panning
@@ -296,9 +313,13 @@ const FADE_FS = `#version 300 es
 precision mediump float;
 uniform sampler2D u_layer;
 uniform float u_alpha;
+uniform vec3 u_background;
 out vec4 fragColor;
+// The layer fades toward the canvas color rather than turning see-through, so
+// edges running under a faded node stay hidden like under an opaque one.
 void main() {
-  fragColor = texelFetch(u_layer, ivec2(gl_FragCoord.xy), 0) * u_alpha;
+  vec4 layer = texelFetch(u_layer, ivec2(gl_FragCoord.xy), 0);
+  fragColor = vec4(layer.rgb * u_alpha + u_background * layer.a * (1.0 - u_alpha), layer.a);
 }`
 
 // Tinted alpha-mask quads. Shared by all text passes and the icon pass; the
@@ -354,9 +375,11 @@ uniform vec2 u_resolution;
 out vec4 v_color;
 out float v_arc;
 out float v_across;
-flat out float v_halfWidth;
+flat out float v_capRadius;
 flat out float v_dashed;
 const float SEGMENTS = ${CONNECTION_SEGMENTS}.0;
+const float MIN_STROKE_PX = ${CONNECTION_MIN_STROKE_PX}.0;
+const float MIN_INK_RATIO = ${CONNECTION_MIN_INK_RATIO};
 vec2 bezier(float t) {
   float mt = 1.0 - t;
   vec2 p1 = vec2(i_controlX.x, i_from.y);
@@ -378,13 +401,19 @@ void main() {
   vec2 normal = tangentLength > 1e-6
     ? vec2(-tangent.y, tangent.x) / tangentLength
     : vec2(0.0, 1.0);
-  vec2 world = bezier(t) + normal * (i_stroke.x * 0.5 * a_vertex.y);
+  float strokeWidth = max(i_stroke.x, MIN_STROKE_PX / u_scale);
+  // A floored stroke would carry more ink than the edge has, so it gives the
+  // extra back as transparency, down to a floor that keeps it visible.
+  float inkRatio = i_stroke.x / strokeWidth;
+  vec2 world = bezier(t) + normal * (strokeWidth * 0.5 * a_vertex.y);
   vec2 screen = world * u_scale + u_offset;
   vec2 ndc = (screen / u_resolution * 2.0 - 1.0) * vec2(1.0, -1.0);
   gl_Position = vec4(ndc, 0.0, 1.0);
-  v_color = i_color;
-  v_halfWidth = i_stroke.x * 0.5;
-  v_across = v_halfWidth * a_vertex.y;
+  v_color = vec4(i_color.rgb, i_color.a * max(inkRatio, MIN_INK_RATIO));
+  // Dash caps keep the edge's own width; the widened stroke's would fill the
+  // gaps when zoomed out.
+  v_capRadius = i_stroke.x * 0.5;
+  v_across = strokeWidth * 0.5 * a_vertex.y;
   v_dashed = i_stroke.y;
   v_arc = 0.0;
   if (i_stroke.y > 0.5) {
@@ -404,7 +433,7 @@ precision highp float;
 in vec4 v_color;
 in float v_arc;
 in float v_across;
-flat in float v_halfWidth;
+flat in float v_capRadius;
 flat in float v_dashed;
 out vec4 fragColor;
 const float DASH_ON = ${DASH_ON_WORLD}.0;
@@ -415,7 +444,7 @@ void main() {
     float phase = mod(v_arc, DASH_PERIOD);
     if (phase > DASH_ON) {
       float along = min(phase - DASH_ON, DASH_PERIOD - phase);
-      float d = length(vec2(along, v_across)) - v_halfWidth;
+      float d = length(vec2(along, v_across)) - v_capRadius;
       float aa = max(fwidth(d), 1e-4);
       coverage = 1.0 - smoothstep(-aa, aa, d);
       if (coverage <= 0.0) discard;
@@ -709,6 +738,8 @@ const ICON_LIST = [
     Component: ADDRESS_ICON_COMPONENTS[id],
   })),
   { id: 'InitialCircle' as const, Component: IconInitial },
+  { id: 'ArrowHeadLeft' as const, Component: IconArrowHeadLeft },
+  { id: 'ArrowHeadRight' as const, Component: IconArrowHeadRight },
 ]
 
 async function buildIconAtlas(
@@ -813,6 +844,7 @@ interface Uniforms {
   fade: {
     layer: WebGLUniformLocation
     alpha: WebGLUniformLocation
+    background: WebGLUniformLocation
   }
   grid: {
     offset: WebGLUniformLocation
@@ -863,10 +895,10 @@ interface InstancedPassBuffer extends PassBuffer {
   attributes: InstanceAttributes
 }
 
-// pos.xy, size.xy, color.rgba, radii.xyzw, border, z, ring.rgba
+// pos.xy, size.xy, color.rgba, radii.xyzw, border, z
 const ROUND_ATTRIBUTES: InstanceAttributes = {
   strideF: QUAD_STRIDE_F,
-  sizes: [2, 2, 4, 4, 1, 1, 4],
+  sizes: [2, 2, 4, 4, 1, 1],
 }
 // pos.xy, size.xy, uv.xyzw, color.rgba, z
 const TEXT_ATTRIBUTES: InstanceAttributes = {
@@ -898,6 +930,7 @@ interface Buffers {
   fieldText: InstancedPassBuffer
   footerText: InstancedPassBuffer
   icon: InstancedPassBuffer
+  arrowHead: InstancedPassBuffer
   connections: PassBuffer
   overlap: PassBuffer
 }
@@ -919,6 +952,7 @@ interface PassCounts {
   fieldText: PassLayout
   footerText: PassLayout
   icon: PassLayout
+  arrowHead: PassLayout
   connections: number
   overlap: number
 }
@@ -933,8 +967,6 @@ const DIMMED_RANGE = 2
 const OPAQUE_RANGE = 3
 type NodeRange = typeof GRAYED_RANGE | typeof DIMMED_RANGE | typeof OPAQUE_RANGE
 type DrawRange = typeof CONTAINER_RANGE | NodeRange
-const GRAYED_ALPHA = 0.2
-const DIMMED_ALPHA = 0.3
 
 // Instance index where each range ends, in draw order.
 type PassLayout = readonly [number, number, number, number]
@@ -1051,6 +1083,7 @@ class WebGLRenderer {
     fieldText: EMPTY_LAYOUT,
     footerText: EMPTY_LAYOUT,
     icon: EMPTY_LAYOUT,
+    arrowHead: EMPTY_LAYOUT,
     connections: 0,
     overlap: 0,
   }
@@ -1089,6 +1122,7 @@ class WebGLRenderer {
       fade: {
         layer: requireUniform(gl, this.programs.fade, 'u_layer'),
         alpha: requireUniform(gl, this.programs.fade, 'u_alpha'),
+        background: requireUniform(gl, this.programs.fade, 'u_background'),
       },
       grid: {
         offset: requireUniform(gl, this.programs.grid, 'u_offset'),
@@ -1151,6 +1185,7 @@ class WebGLRenderer {
     const fieldText = this.createTextPassBuffer(cornerQuad)
     const footerText = this.createTextPassBuffer(cornerQuad)
     const icon = this.createTextPassBuffer(cornerQuad)
+    const arrowHead = this.createTextPassBuffer(cornerQuad)
     const connectionStrip = createConnectionStrip(gl)
     const connections = this.createConnectionPassBuffer(connectionStrip)
     const overlap = this.createLinePassBuffer()
@@ -1165,6 +1200,7 @@ class WebGLRenderer {
       fieldText,
       footerText,
       icon,
+      arrowHead,
       connections,
       overlap,
     }
@@ -1266,12 +1302,24 @@ class WebGLRenderer {
     // by how the instance buffers are filled (selected last). Overlap borders
     // draw last.
     gl.disable(gl.DEPTH_TEST)
-    this.drawGridPass(transform, res)
+    this.drawGridPass(transform, res, data.palette.gridDot)
     this.drawConnectionPass(transform, res)
     gl.enable(gl.DEPTH_TEST)
     this.drawNodeRange(CONTAINER_RANGE, transform, res)
-    this.drawFadedRange(GRAYED_RANGE, GRAYED_ALPHA, transform, res)
-    this.drawFadedRange(DIMMED_RANGE, DIMMED_ALPHA, transform, res)
+    this.drawFadedRange(
+      GRAYED_RANGE,
+      data.palette.grayedAlpha,
+      data.palette.canvas,
+      transform,
+      res,
+    )
+    this.drawFadedRange(
+      DIMMED_RANGE,
+      data.palette.dimmedAlpha,
+      data.palette.canvas,
+      transform,
+      res,
+    )
     this.drawNodeRange(OPAQUE_RANGE, transform, res)
     gl.disable(gl.DEPTH_TEST)
     this.drawLinePass(this.buffers.overlap, this.counts.overlap, transform, res)
@@ -1297,24 +1345,32 @@ class WebGLRenderer {
 
   private rebuildAll(data: DrawData) {
     const renderNodes = buildRenderNodes(data)
+    const spans = liveConnections(data)
     this.counts.round = this.buildRound(
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.palette,
     )
     this.counts.icon = this.buildIcons(
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.palette,
+    )
+    this.counts.arrowHead = this.buildArrowHeads(
+      renderNodes,
+      arrowHeadsByTarget(spans, data),
     )
     this.counts.headerText = this.buildHeaderText(
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.palette,
     )
-    this.counts.fieldText = this.buildFieldText(renderNodes)
-    this.counts.footerText = this.buildFooterText(renderNodes)
-    this.counts.connections = this.buildConnections(data)
+    this.counts.fieldText = this.buildFieldText(renderNodes, data.palette)
+    this.counts.footerText = this.buildFooterText(renderNodes, data.palette)
+    this.counts.connections = this.buildConnections(data, spans)
     this.counts.overlap = this.buildOverlap(renderNodes)
   }
 
@@ -1322,11 +1378,12 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    palette: GraphPalette,
   ): PassLayout {
-    // Upper bound: 4 quads (body, header, selection, group outline) per node,
-    // plus one pill per visible field, plus two quads (outline, header bar)
-    // per open-group container.
-    let maxInstances = renderNodes.length * 4 + containers.length * 2
+    // Upper bound: 5 quads (body, header, border, selection, group outline)
+    // per node, plus one pill per visible field, plus two quads (outline,
+    // header bar) per open-group container.
+    let maxInstances = renderNodes.length * 5 + containers.length * 2
     for (const rn of renderNodes) maxInstances += rn.visibleFields.length
     if (maxInstances === 0) return EMPTY_LAYOUT
     const buf = this.ensureRound(maxInstances)
@@ -1336,8 +1393,10 @@ class WebGLRenderer {
     const w = CONTAINER_OUTLINE_WIDTH
     let n = 0
     for (const { box: b, headerBox: h, id } of containers) {
-      const line = selectedContainers.has(id) ? AUTUMN_300 : COFFEE_200
-      const bar = selectedContainers.has(id) ? AUTUMN_300 : COFFEE_600
+      const line = selectedContainers.has(id) ? palette.accent : palette.text
+      const bar = selectedContainers.has(id)
+        ? palette.accentFill
+        : palette.containerBar
       writeRound(
         buf,
         n++,
@@ -1352,7 +1411,6 @@ class WebGLRenderer {
         r,
         w,
         CONTAINER_Z,
-        NO_RING,
       )
       writeRound(
         buf,
@@ -1368,7 +1426,6 @@ class WebGLRenderer {
         0,
         0,
         CONTAINER_Z,
-        NO_RING,
       )
     }
     for (const rn of renderNodes) {
@@ -1385,14 +1442,13 @@ class WebGLRenderer {
           y - inset,
           width + inset * 2,
           height + inset * 2,
-          AUTUMN_300,
+          palette.accent,
           corner + inset,
           corner + inset,
           corner + inset,
           corner + inset,
           SELECTION_OUTLINE_WIDTH,
           z,
-          NO_RING,
         )
       }
 
@@ -1403,25 +1459,18 @@ class WebGLRenderer {
         y,
         width,
         height,
-        NODE_BODY,
+        palette.nodeBody,
         corner,
         corner,
         corner,
         corner,
         0,
         z,
-        NO_RING,
       )
 
-      const { color: headerCssColor, ringColor } = getColor(node)
+      const { color: headerCssColor } = getColor(node)
       const headerRgb = cssRgbToRgba(headerCssColor)
       const headerColor = flags.isGrayedOut ? desaturate(headerRgb) : headerRgb
-      const ringRgb = cssRgbToRgba(ringColor)
-      const headerRing = !node.isInitial
-        ? NO_RING
-        : flags.isGrayedOut
-          ? desaturate(ringRgb)
-          : ringRgb
       const headerBR = rn.fullHeight ? corner : 0
       const headerBL = rn.fullHeight ? corner : 0
       writeRound(
@@ -1438,7 +1487,22 @@ class WebGLRenderer {
         headerBL,
         0,
         z,
-        headerRing,
+      )
+
+      writeRound(
+        buf,
+        n++,
+        x,
+        y,
+        width,
+        height,
+        palette.nodeBorder,
+        corner,
+        corner,
+        corner,
+        corner,
+        NODE_BORDER_WIDTH,
+        z,
       )
 
       if (rn.isGroup) {
@@ -1450,36 +1514,33 @@ class WebGLRenderer {
           y - inset,
           width + inset * 2,
           height + inset * 2,
-          COFFEE_200,
+          palette.text,
           corner + inset,
           corner + inset,
           corner + inset,
           corner + inset,
           GROUP_OUTLINE_WIDTH,
           z,
-          NO_RING,
         )
       }
 
-      for (const { index, visibleRow } of rn.visibleFields) {
-        if (flags.fieldHighlighted[index]) {
-          const rowY = y + HEADER_HEIGHT + visibleRow * FIELD_HEIGHT
-          const pillRadius = FIELD_HEIGHT / 2
+      for (let row = 0; row < rn.rows.length; row++) {
+        if (isRowHighlighted(rn, row)) {
+          const rowY = y + HEADER_HEIGHT + row * FIELD_HEIGHT
           writeRound(
             buf,
             n++,
-            x,
+            x + HIGHLIGHTED_ROW_INSET,
             rowY,
-            width,
+            width - HIGHLIGHTED_ROW_INSET * 2,
             FIELD_HEIGHT,
-            AUTUMN_300,
-            pillRadius,
-            pillRadius,
-            pillRadius,
-            pillRadius,
+            palette.highlightedRowFill,
+            HIGHLIGHTED_ROW_RADIUS,
+            HIGHLIGHTED_ROW_RADIUS,
+            HIGHLIGHTED_ROW_RADIUS,
+            HIGHLIGHTED_ROW_RADIUS,
             0,
             z,
-            NO_RING,
           )
         }
       }
@@ -1493,6 +1554,7 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    palette: GraphPalette,
   ): PassLayout {
     let max = renderNodes.length * 3 + containers.length
     for (const rn of renderNodes) max += rn.visibleFields.length
@@ -1503,7 +1565,7 @@ class WebGLRenderer {
     let n = 0
     for (const { headerBox: h, id } of containers) {
       const iconY = h.y + (h.height - HEADER_ICON_SIZE) / 2
-      const color = selectedContainers.has(id) ? BLACK : COFFEE_200
+      const color = selectedContainers.has(id) ? TEXT_ON_ACCENT : palette.text
       n += this.emitIcon(
         buf,
         n,
@@ -1522,9 +1584,11 @@ class WebGLRenderer {
       const iconY = y + (headerH - HEADER_ICON_SIZE) / 2
 
       const { isDark } = getColor(node)
-      const headerTextColor = isDark ? COFFEE_200 : BLACK
+      const headerTextColor = isDark
+        ? HEADER_TEXT_ON_DARK
+        : HEADER_TEXT_ON_LIGHT
       const addrColor =
-        node.addressType === 'Unverified' ? AUX_RED : headerTextColor
+        node.addressType === 'Unverified' ? HEADER_UNVERIFIED : headerTextColor
       n += this.emitIcon(
         buf,
         n,
@@ -1536,9 +1600,8 @@ class WebGLRenderer {
         z,
       )
 
-      let rightX = x + width - HEADER_PADDING
+      let rightX = x + width - HEADER_PADDING - HEADER_ICON_SIZE
       if (node.hasTemplate) {
-        rightX -= HEADER_ICON_SIZE
         n += this.emitIcon(
           buf,
           n,
@@ -1546,12 +1609,12 @@ class WebGLRenderer {
           rightX,
           iconY,
           HEADER_ICON_SIZE,
-          AUX_ORANGE,
+          HEADER_TEMPLATE,
           z,
         )
+        rightX -= HEADER_BADGE_STEP
       }
       if (node.isInitial) {
-        rightX -= HEADER_ICON_SIZE
         n += this.emitIcon(
           buf,
           n,
@@ -1559,7 +1622,7 @@ class WebGLRenderer {
           rightX,
           iconY,
           HEADER_ICON_SIZE,
-          AUX_GREEN,
+          HEADER_INITIAL,
           z,
         )
       }
@@ -1577,10 +1640,10 @@ class WebGLRenderer {
           const useAutumn =
             flags.isSelected || flags.fieldHighlighted[index] === 1
           const dotColor = flags.isGrayedOut
-            ? desaturate(COFFEE_400)
+            ? desaturate(palette.dot)
             : useAutumn
-              ? AUTUMN_300
-              : COFFEE_400
+              ? palette.accent
+              : palette.dot
           n += this.emitIcon(
             buf,
             n,
@@ -1596,6 +1659,49 @@ class WebGLRenderer {
     }
 
     this.upload(this.buffers.icon.data, buf, n, TEXT_STRIDE_F)
+    return layout.finish(n)
+  }
+
+  private buildArrowHeads(
+    renderNodes: readonly RenderNode[],
+    arrowHeads: ReadonlyMap<string, ArrowHeads>,
+  ): PassLayout {
+    if (arrowHeads.size === 0) return EMPTY_LAYOUT
+    const buf = this.ensureText(renderNodes.length * 2)
+    const layout = new PassLayoutBuilder()
+    let n = 0
+    for (const { node, z, range } of renderNodes) {
+      layout.enter(range, n)
+      const arrows = arrowHeads.get(node.id)
+      if (arrows === undefined) continue
+      const { x, y, width } = node.box
+      const cellY = y + HEADER_HEIGHT / 2 - ARROW_HEAD_CELL / 2
+      if (arrows.left) {
+        n += this.emitIcon(
+          buf,
+          n,
+          'ArrowHeadRight',
+          x - ARROW_HEAD_CELL * ARROW_HEAD_TIP,
+          cellY,
+          ARROW_HEAD_CELL,
+          arrows.left,
+          z,
+        )
+      }
+      if (arrows.right) {
+        n += this.emitIcon(
+          buf,
+          n,
+          'ArrowHeadLeft',
+          x + width - ARROW_HEAD_CELL * (1 - ARROW_HEAD_TIP),
+          cellY,
+          ARROW_HEAD_CELL,
+          arrows.right,
+          z,
+        )
+      }
+    }
+    this.upload(this.buffers.arrowHead.data, buf, n, TEXT_STRIDE_F)
     return layout.finish(n)
   }
 
@@ -1632,6 +1738,7 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    palette: GraphPalette,
   ): PassLayout {
     let maxChars = 0
     for (const { node } of renderNodes) maxChars += node.name.length
@@ -1650,7 +1757,7 @@ class WebGLRenderer {
         h.x + HEADER_PADDING + HEADER_ICON_SIZE + HEADER_ITEM_GAP,
         baselineY,
         atlas,
-        selectedContainers.has(id) ? BLACK : COFFEE_200,
+        selectedContainers.has(id) ? TEXT_ON_ACCENT : palette.text,
         h.x + h.width - HEADER_PADDING,
         CONTAINER_Z,
       )
@@ -1658,22 +1765,25 @@ class WebGLRenderer {
     for (const { node, flags, z, range, headerH } of renderNodes) {
       layout.enter(range, n)
       const { isDark } = getColor(node)
-      const baseColor = isDark ? COFFEE_200 : BLACK
+      const baseColor = isDark ? HEADER_TEXT_ON_DARK : HEADER_TEXT_ON_LIGHT
       const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
       const startX =
         node.box.x + HEADER_PADDING + HEADER_ICON_SIZE + HEADER_ITEM_GAP
-      let rightX = node.box.x + node.box.width - HEADER_PADDING
-      if (node.hasTemplate) rightX -= HEADER_ICON_SIZE
-      if (node.isInitial) rightX -= HEADER_ICON_SIZE
-      const maxX = rightX - HEADER_ITEM_GAP
+      const badges = Number(node.hasTemplate) + Number(node.isInitial)
+      const badgesWidth =
+        badges === 0 ? 0 : HEADER_ICON_SIZE + (badges - 1) * HEADER_BADGE_STEP
+      const maxX =
+        node.box.x +
+        node.box.width -
+        HEADER_PADDING -
+        badgesWidth -
+        HEADER_ITEM_GAP
       const baselineY = node.box.y + headerH / 2 + atlas.refSize / 2 - 2
-      // A short name sits centered between the address icon and the badges.
-      const slack = maxX - startX - measureString(node.name, atlas)
       n += writeStringInstances(
         buf,
         n,
         node.name,
-        startX + Math.max(0, slack / 2),
+        startX,
         baselineY,
         atlas,
         color,
@@ -1685,7 +1795,10 @@ class WebGLRenderer {
     return layout.finish(n)
   }
 
-  private buildFieldText(renderNodes: readonly RenderNode[]): PassLayout {
+  private buildFieldText(
+    renderNodes: readonly RenderNode[],
+    palette: GraphPalette,
+  ): PassLayout {
     let maxChars = 0
     for (const rn of renderNodes) {
       for (const row of rn.rows) {
@@ -1703,17 +1816,21 @@ class WebGLRenderer {
       for (let row = 0; row < rn.rows.length; row++) {
         const rowY = node.box.y + HEADER_HEIGHT + row * FIELD_HEIGHT
         const baselineY = rowY + FIELD_HEIGHT / 2 + atlas.refSize / 2 - 2
-        const baseColor = isRowHighlighted(rn, row) ? BLACK : COFFEE_200
+        const baseColor = isRowHighlighted(rn, row)
+          ? palette.highlightedRowText
+          : palette.text
         const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
+        const startX = node.box.x + HEADER_PADDING
+        const maxX = node.box.x + node.box.width - HEADER_PADDING
         n += writeStringInstances(
           buf,
           n,
-          (rn.rows[row] as NodeRow).label,
-          node.box.x + HEADER_PADDING,
+          ellipsizeStart((rn.rows[row] as NodeRow).label, atlas, maxX - startX),
+          startX,
           baselineY,
           atlas,
           color,
-          node.box.x + node.box.width - HEADER_PADDING,
+          maxX,
           z,
         )
       }
@@ -1722,7 +1839,10 @@ class WebGLRenderer {
     return layout.finish(n)
   }
 
-  private buildFooterText(renderNodes: readonly RenderNode[]): PassLayout {
+  private buildFooterText(
+    renderNodes: readonly RenderNode[],
+    palette: GraphPalette,
+  ): PassLayout {
     let any = false
     let maxChars = 0
     for (const { node } of renderNodes) {
@@ -1752,7 +1872,7 @@ class WebGLRenderer {
         footerBottom - FOOTER_LINE_HEIGHT,
         FOOTER_LINE_HEIGHT,
       )
-      const baseColor = withAlpha(COFFEE_200, 0.4)
+      const baseColor = palette.footerText
       const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
       const labelWidth = measureString(label, atlas)
       const startX = node.box.x + (node.box.width - labelWidth) / 2
@@ -1786,8 +1906,10 @@ class WebGLRenderer {
   }
 
   // Highlighted connections go last so they draw on top.
-  private buildConnections(data: DrawData): number {
-    const spans = liveConnections(data)
+  private buildConnections(
+    data: DrawData,
+    spans: readonly ConnectionSpan[],
+  ): number {
     if (spans.length === 0) return 0
     const buffer = this.ensureConnections(spans.length)
     const highlighted: ConnectionSpan[] = []
@@ -1811,7 +1933,7 @@ class WebGLRenderer {
         n++,
         span,
         HIGHLIGHTED_CONNECTION_WIDTH,
-        AUTUMN_300,
+        data.palette.accent,
       )
     }
     return this.upload(
@@ -1862,6 +1984,7 @@ class WebGLRenderer {
   private drawGridPass(
     transform: { offsetX: number; offsetY: number; scale: number },
     res: [number, number],
+    gridDot: RGBA,
   ) {
     const gl = this.gl
     gl.useProgram(this.programs.grid)
@@ -1873,7 +1996,7 @@ class WebGLRenderer {
     gl.uniform1f(this.uniforms.grid.scale, transform.scale)
     gl.uniform2f(this.uniforms.grid.resolution, res[0], res[1])
     gl.uniform1f(this.uniforms.grid.cellSize, getGridCellSize(transform.scale))
-    gl.uniform4fv(this.uniforms.grid.color, GRID_DOT)
+    gl.uniform4fv(this.uniforms.grid.color, gridDot)
     gl.bindVertexArray(null)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
   }
@@ -1884,6 +2007,15 @@ class WebGLRenderer {
     res: [number, number],
   ) {
     this.drawRoundPass(range, transform, res)
+    this.drawTextPass(
+      this.buffers.arrowHead,
+      this.iconAtlas.texture,
+      this.counts.arrowHead,
+      range,
+      transform,
+      res,
+    )
+    if (!drawsNodeDetail(transform.scale)) return
     this.drawTextPass(
       this.buffers.icon,
       this.iconAtlas.texture,
@@ -1921,6 +2053,7 @@ class WebGLRenderer {
   private drawFadedRange(
     range: NodeRange,
     alpha: number,
+    background: RGBA,
     transform: { offsetX: number; offsetY: number; scale: number },
     res: [number, number],
   ) {
@@ -1942,6 +2075,12 @@ class WebGLRenderer {
     gl.bindTexture(gl.TEXTURE_2D, layer.texture)
     gl.uniform1i(this.uniforms.fade.layer, 0)
     gl.uniform1f(this.uniforms.fade.alpha, alpha)
+    gl.uniform3f(
+      this.uniforms.fade.background,
+      background[0],
+      background[1],
+      background[2],
+    )
     gl.bindVertexArray(null)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
     this.useCoverageBlending()
@@ -2096,6 +2235,7 @@ class WebGLRenderer {
       this.buffers.fieldText,
       this.buffers.footerText,
       this.buffers.icon,
+      this.buffers.arrowHead,
       this.buffers.connections,
       this.buffers.overlap,
     ]) {
@@ -2199,12 +2339,42 @@ function connectionColor(span: ConnectionSpan, data: DrawData): RGBA {
     data.markUnreachableEntries &&
     !(span.node.isReachable && span.target.isReachable)
   ) {
-    return GRAYED_CONNECTION_COLOR
+    return data.palette.connectionGrayed
   }
   if (data.enableDimming && data.anyNodeSelected) {
-    return DIMMED_CONNECTION_COLOR
+    return data.palette.connectionDimmed
   }
-  return DEFAULT_CONNECTION_COLOR
+  return data.palette.connection
+}
+
+interface ArrowHeads {
+  left?: RGBA
+  right?: RGBA
+}
+
+// Every edge into a node meets at one point on its header, so one arrow per
+// side marks them all; it takes the accent when any of them is highlighted.
+function arrowHeadsByTarget(
+  spans: readonly ConnectionSpan[],
+  data: DrawData,
+): Map<string, ArrowHeads> {
+  const result = new Map<string, ArrowHeads>()
+  for (const span of spans) {
+    const side = span.field.connection.to.direction
+    const heads = result.get(span.target.id) ?? {}
+    if (heads[side] === data.palette.accent) continue
+    heads[side] = isConnectionHighlighted(span, data)
+      ? data.palette.accent
+      : arrowHeadColor(span, data)
+    result.set(span.target.id, heads)
+  }
+  return result
+}
+
+function arrowHeadColor(span: ConnectionSpan, data: DrawData): RGBA {
+  const color = connectionColor(span, data)
+  if (color === data.palette.connection) return data.palette.dot
+  return color
 }
 
 // ============================================================================
@@ -2222,10 +2392,12 @@ function writeConnection(
   const b = i * CONNECTION_STRIDE_F
   out[b] = from.x
   out[b + 1] = from.y
-  out[b + 2] = to.x
+  out[b + 2] =
+    to.x + (to.direction === 'left' ? -ARROW_HEAD_LENGTH : ARROW_HEAD_LENGTH)
   out[b + 3] = to.y
-  out[b + 4] = from.x + controlOffset(from.direction)
-  out[b + 5] = to.x + controlOffset(to.direction)
+  const offset = controlOffset(Math.abs(to.x - from.x))
+  out[b + 4] = from.x + (from.direction === 'left' ? -offset : offset)
+  out[b + 5] = to.x + (to.direction === 'left' ? -offset : offset)
   out[b + 6] = color[0]
   out[b + 7] = color[1]
   out[b + 8] = color[2]
@@ -2235,10 +2407,11 @@ function writeConnection(
   return i + 1
 }
 
-function controlOffset(direction: 'left' | 'right'): number {
-  return direction === 'left'
-    ? -CONNECTION_CONTROL_OFFSET
-    : CONNECTION_CONTROL_OFFSET
+function controlOffset(gap: number): number {
+  return Math.min(
+    CONNECTION_CONTROL_OFFSET_MAX,
+    Math.max(CONNECTION_CONTROL_OFFSET_MIN, gap * CONNECTION_CONTROL_GAP_SHARE),
+  )
 }
 
 // (t, side) pairs along the curve, two per sample, for a triangle strip.
@@ -2271,7 +2444,6 @@ function writeRound(
   rBL: number,
   border: number,
   z: number,
-  ring: RGBA,
 ) {
   const base = i * QUAD_STRIDE_F
   out[base] = x
@@ -2288,10 +2460,6 @@ function writeRound(
   out[base + 11] = rBL
   out[base + 12] = border
   out[base + 13] = z
-  out[base + 14] = ring[0]
-  out[base + 15] = ring[1]
-  out[base + 16] = ring[2]
-  out[base + 17] = ring[3]
 }
 
 function writeTextQuad(
@@ -2322,6 +2490,52 @@ function writeTextQuad(
   out[base + 10] = color[2]
   out[base + 11] = color[3]
   out[base + 12] = z
+}
+
+// Field paths share their start (`accessControl.`) and differ at the end
+// (`EXECUTOR_ROLE.members[1]`), so a long one keeps its tail. A cut inside a
+// word moves to where the next word starts when that drops only a few
+// characters; a cut at a word start stays, so `L1_` is not lost.
+const WORD_SNAP_MAX = 6
+function ellipsizeStart(text: string, atlas: FontAtlas, width: number): string {
+  if (measureString(text, atlas) <= width) return text
+  const chars = Array.from(text)
+  const budget = width - atlas.getGlyph('…').advance
+  let used = 0
+  let tail = chars.length
+  while (tail > 0) {
+    const advance = atlas.getGlyph(chars[tail - 1] as string).advance
+    if (used + advance > budget) break
+    used += advance
+    tail--
+  }
+  assert(tail > 0, 'Start ellipsis must drop a character')
+  if (!isWordCharacter(chars[tail - 1] as string)) {
+    return `…${chars.slice(tail).join('')}`
+  }
+  for (let i = tail; i < chars.length - 1 && i < tail + WORD_SNAP_MAX; i++) {
+    if (chars[i] === '.' || chars[i] === '_') {
+      tail = i + 1
+      break
+    }
+    if (startsCamelCaseWord(chars, i)) {
+      tail = i
+      break
+    }
+  }
+  return `…${chars.slice(tail).join('')}`
+}
+
+function isWordCharacter(char: string): boolean {
+  return char !== '.' && char !== '_'
+}
+
+function startsCamelCaseWord(chars: readonly string[], i: number): boolean {
+  const current = chars[i] as string
+  const previous = chars[i - 1]
+  if (previous === undefined) return false
+  if (current === current.toLowerCase()) return false
+  return previous !== previous.toUpperCase()
 }
 
 function writeStringInstances(
@@ -2557,10 +2771,6 @@ function pushArc(
 // Color & flag helpers
 // ============================================================================
 
-function withAlpha(c: RGBA, a: number): RGBA {
-  return [c[0], c[1], c[2], a]
-}
-
 function desaturate(c: RGBA): RGBA {
   const g = c[0] * 0.299 + c[1] * 0.587 + c[2] * 0.114
   return [g, g, g, c[3]]
@@ -2614,6 +2824,7 @@ function buildDrawData(
   enableDimming: boolean,
   highlightOverlapping: boolean,
   markUnreachableEntries: boolean,
+  palette: GraphPalette,
 ): DrawData {
   const selectedSet = new Set(selected)
   const visible: Node[] = []
@@ -2687,6 +2898,7 @@ function buildDrawData(
     ),
     enableDimming,
     markUnreachableEntries,
+    palette,
     anyNodeSelected,
     liveGroupTargets,
   }
@@ -2750,6 +2962,8 @@ export function NodesAndConnectionsWebGL() {
     (s) => s.markUnreachableEntries,
   )
 
+  const theme = useTheme()
+
   const graph = useMemo(() => buildRenderGraph(nodes), [nodes])
 
   const data = useMemo(
@@ -2763,6 +2977,7 @@ export function NodesAndConnectionsWebGL() {
         enableDimming,
         highlightOverlapping,
         markUnreachableEntries,
+        theme === 'light' ? LIGHT_GRAPH_PALETTE : DARK_GRAPH_PALETTE,
       ),
     [
       graph,
@@ -2770,6 +2985,7 @@ export function NodesAndConnectionsWebGL() {
       enableDimming,
       highlightOverlapping,
       markUnreachableEntries,
+      theme,
     ],
   )
   dataRef.current = data

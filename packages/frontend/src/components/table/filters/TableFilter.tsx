@@ -63,6 +63,7 @@ export function TableFilter({ filter, possibleValues }: Props) {
       <button
         className="h-full rounded-r-lg pr-2.5 pl-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
         onClick={() => dispatch({ type: 'remove', payload: { id: filter.id } })}
+        aria-label={`Remove ${filterIdToLabel[filter.id]} filter`}
       >
         <div className="inline-flex size-3 items-center justify-center rounded-sm bg-brand">
           <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />

@@ -175,10 +175,12 @@ export const zkapi: BaseProject = {
       name: 'OA Chat',
       url: 'https://chat.openanonymity.ai',
       since: '2026-10-12',
-      // The served release 99da543 is not in the public repo, so the app
-      // counts as closed. Sources pin the public repo at 60ed5be.
-      build: '99da543',
-      checked: '2026-10-22',
+      // build.json of the served build OI3IE56B names oa-chat a2623612, and
+      // 415 served files match it. The landing and sign-in pages and the
+      // Fathom loader come from a private repository, so the app counts as
+      // closed. Sources pin a2623612.
+      build: 'OI3IE56B',
+      checked: '2026-10-30',
       checkedApps: [
         {
           name: 'zkapi-clientd',
@@ -195,7 +197,7 @@ export const zkapi: BaseProject = {
             "Sends request proofs and withdrawals through OpenZK's own server, so OpenZK also sees each request's time and budget.",
           fix: "Send zkAPI calls straight to Open Anonymity's servers, so only the operator sees them, as in OA Chat.",
           source: 'https://openzk.app/zkapi/browser-config.json',
-          checked: '2026-10-27',
+          checked: '2026-10-30',
         },
       ],
     },
@@ -261,7 +263,7 @@ export const zkapi: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The browser app and the local daemon have public source and build instructions. The verifier enclave image rebuilds from source and matches its hardware attestation. The hosted frontend, the daemon releases and the key stations remain unreproduced.',
+        "The browser app and the local daemon have public source and build instructions. The hosted app adds a private layer for its sign-in pages and analytics, so it does not rebuild from that source. The verifier enclave's attested image rebuilds from public source. The daemon releases and the stations remain unreproduced.",
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: zkApiAdversaries,
@@ -270,6 +272,19 @@ export const zkapi: BaseProject = {
       content: readProjectMarkdown('zkapi', 'upgradesAndGovernance'),
     },
   },
+  milestones: [
+    {
+      // EF blog, 2026-10-01: "zkAPI is live on Ethereum mainnet today", links
+      // the vault 0x4386…81fe and OA Chat. The first deposit is from
+      // 2026-09-30.
+      title: 'zkAPI mainnet launch',
+      url: 'https://blog.ethereum.org/2026/10/01/introducing-zkapi',
+      date: '2026-10-01T00:00:00Z',
+      description:
+        'The Ethereum Foundation and Open Anonymity open the ETH vault, OA Chat and the local client.',
+      type: 'general',
+    },
+  ],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),

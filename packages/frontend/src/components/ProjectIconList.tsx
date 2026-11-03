@@ -232,6 +232,13 @@ function ProjectIcon({
               {project.description}
             </p>
           )}
+          {project.stage && (
+            <StageBadge
+              stage={project.stage}
+              isAppchain={false}
+              className="mt-1"
+            />
+          )}
         </TooltipContent>
       </TooltipPortal>
     </Tooltip>
@@ -371,7 +378,9 @@ function ProjectList({
             <CountChip total={projects.length} />
           </span>
           {inDialog && (
-            <DialogClose className="-my-2 -mr-3 static flex size-10 items-center justify-center [&_svg]:size-3.5 [&_svg]:fill-secondary hover:[&_svg]:fill-primary" />
+            // Already 40px, and in flow, where DialogClose's grown hit area
+            // would cover the dialog itself
+            <DialogClose className="-my-2 -mr-3 static flex size-10 items-center justify-center after:hidden [&_svg]:size-3.5 [&_svg]:fill-secondary hover:[&_svg]:fill-primary" />
           )}
         </div>
         {searchable && (
