@@ -8,7 +8,10 @@ import {
 } from '../../homeStyles'
 import { HomeRank, HomeRankedName } from '../HomeRankedTable'
 
-/** Protocols under the graph; stacked from lg, as many as the height holds. */
+/**
+ * Protocols under the graph. Stacked from lg, and beside the graph in the
+ * page's three columns, as many as the height holds.
+ */
 const TOP_PROTOCOLS_COUNT = 5
 
 /** The busiest protocols over the last 24h, ranked like the other cards. */
@@ -21,13 +24,13 @@ export function InteropTopProtocols({
     return null
   }
   return (
-    <div className="flex interop-corners:hidden interop-stacked:min-h-0 min-w-0 interop-stacked:flex-1 interop-stacked:basis-0 flex-col gap-2 interop-stacked:overflow-hidden">
+    <div className="home-wide:col-start-1 home-wide:row-start-2 flex interop-corners:hidden home-wide:min-h-0 interop-stacked:min-h-0 min-w-0 interop-stacked:flex-1 interop-stacked:basis-0 flex-col gap-2 home-wide:overflow-hidden interop-stacked:overflow-hidden">
       <h3 className={HOME_TEXT.sectionTitle}>Top protocols</h3>
-      {/* Stacked from lg, the list takes the height left and shows as many
-          whole rows as fit. */}
+      {/* Stacked from lg, and in the page's three columns, the list takes the
+          height left and shows as many whole rows as fit. */}
       <ol
         className={cn(
-          'interop-stacked:home-fill-rows interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden',
+          'interop-stacked:home-fill-rows home-wide:home-fill-rows home-wide:min-h-0 interop-stacked:min-h-0 home-wide:flex-1 interop-stacked:flex-1 home-wide:basis-0 interop-stacked:basis-0 home-wide:overflow-hidden interop-stacked:overflow-hidden',
           HOME_ROW_LINES_CLASS,
         )}
       >
@@ -39,7 +42,8 @@ export function InteropTopProtocols({
               // icons and names line up.
               'flex w-full items-center gap-4',
               HOME_ROW_CLASS,
-              index >= TOP_PROTOCOLS_COUNT && 'interop-stacked:flex hidden',
+              index >= TOP_PROTOCOLS_COUNT &&
+                'home-wide:flex interop-stacked:flex hidden',
             )}
           >
             <HomeRank rank={index + 1} />
