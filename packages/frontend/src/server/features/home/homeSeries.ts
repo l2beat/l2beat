@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/shared-pure'
+
 /**
  * A day of a home sparkline: its value, then the parts it breaks down into,
  * if any, for the tooltip (e.g. rollups and validiums & optimiums).
@@ -8,9 +10,35 @@ export type HomeSeriesPoint = [
   ...parts: (number | null)[],
 ]
 
+/**
+ * What a home sparkline draws, as it draws it, so the client does not have
+ * to know how each figure is bucketed.
+ */
+export type HomeSparklineSeries =
+  | {
+      /** A value per day, e.g. TVS at the end of each day. */
+      kind: 'daily'
+      points: HomeSeriesPoint[]
+      /** The tooltip's names for each point's parts, in their order. */
+      partLabels?: string[]
+    }
+  | {
+      /**
+       * Daily figures that swing day to day (activity, deposits), as weekly
+       * averages: the trend the change describes. See `toWeeklyAverages`.
+       */
+      kind: 'weekly'
+      points: [timestamp: number, value: number | null][]
+      /**
+       * Amounts per day (deposits, blob data) beside a total: the high and
+       * low say "/day", so the chart's scale does not read as the figure's.
+       */
+      perDay: boolean
+    }
+
 /** A headline figure with its change, and the sparkline under it. */
 export interface HomeKpi {
-  chart: HomeSeriesPoint[]
+  chart: HomeSparklineSeries
   /** The latest level, e.g. TVS, or the total over the range. */
   value: number | undefined
   /** Ratio over the chart's period, e.g. 0.12 for +12%. */
@@ -18,7 +46,7 @@ export interface HomeKpi {
 }
 
 export const EMPTY_HOME_KPI: HomeKpi = {
-  chart: [],
+  chart: { kind: 'daily', points: [] },
   value: undefined,
   change: undefined,
 }
@@ -73,6 +101,14 @@ export function toWeeklyAverages(
   return weeks.reverse()
 }
 
+/** A daily series drawn as its weekly averages. */
+export function toWeeklySparkline(
+  series: HomeSeriesPoint[],
+  { perDay }: { perDay: boolean },
+): HomeSparklineSeries {
+  return { kind: 'weekly', points: toWeeklyAverages(series), perDay }
+}
+
 /**
  * The change from the first week's average to the last week's: for daily
  * flows, e.g. activity, which swing too much day to day for two single days
@@ -86,6 +122,16 @@ export function computeWeeklyAverageChange(
   }
   const weeks = toWeeklyAverages(series)
   return getChange(weeks.at(0)?.[1], weeks.at(-1)?.[1])
+}
+
+/**
+ * Where the period as long as `[from, to]` before it starts, for a total's
+ * change. The range runs to the start of `to`'s day: days are whole.
+ */
+export function getPreviousRangeStart([from, to]: [number | null, number]):
+  | number
+  | null {
+  return from !== null ? from - (UnixTime.toStartOf(to, 'day') - from) : null
 }
 
 /**

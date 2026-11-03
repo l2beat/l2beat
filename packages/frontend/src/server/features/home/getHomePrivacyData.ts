@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import type { ChartRange } from '~/utils/range/range'
 import { getPrivacyFlowsChart } from '../privacy/getPrivacyFlowsChart'
 import { getPrivacyProjects } from '../privacy/getPrivacyProjects'
@@ -12,8 +11,10 @@ import {
   computeSeriesChange,
   EMPTY_HOME_KPI,
   getLatestValue,
+  getPreviousRangeStart,
   type HomeKpi,
   type HomeSeriesPoint,
+  toWeeklySparkline,
 } from './homeSeries'
 
 const TOP_PROTOCOLS_COUNT = 5
@@ -69,8 +70,7 @@ export async function getHomePrivacyData(
   // Deposits are a sum over the range, so their change compares the range
   // with the one before it: the flows chart is fetched for both.
   const [from, to] = range
-  const previousFrom =
-    from !== null ? from - (UnixTime.toStartOf(to, 'day') - from) : null
+  const previousFrom = getPreviousRangeStart(range)
 
   const [entries, tvlChart, flowsChart] = await Promise.all([
     getPrivacySummaryEntries(projects),
@@ -106,12 +106,12 @@ export async function getHomePrivacyData(
 
   return {
     tvl: {
-      chart: tvl,
+      chart: { kind: 'daily', points: tvl },
       value: getLatestValue(tvl),
       change: computeSeriesChange(tvl),
     },
     deposits: {
-      chart: deposits,
+      chart: toWeeklySparkline(deposits, { perDay: true }),
       value: deposits.length > 0 ? total : undefined,
       change,
     },

@@ -16,6 +16,7 @@ import {
   getLatestValue,
   type HomeKpi,
   type HomeSeriesPoint,
+  toWeeklySparkline,
 } from './homeSeries'
 
 export interface HomeL2Charts {
@@ -82,7 +83,11 @@ async function getHomeTvsChart(
     ],
   )
   return {
-    chart,
+    chart: {
+      kind: 'daily',
+      points: chart,
+      partLabels: ['Rollups', 'Validiums & Optimiums'],
+    },
     value: getLatestValue(chart),
     change: computeSeriesChange(chart),
   }
@@ -94,45 +99,36 @@ async function getHomeActivityChart(
   const db = getDb()
   const projects = await getActivityProjects()
 
-  const rollups = projects
-    .filter(
-      (p) =>
-        p.scalingInfo.type === 'ZK Rollup' ||
-        p.scalingInfo.type === 'Optimistic Rollup',
-    )
-    .map((p) => p.id)
-  const validiumsAndOptimiums = projects
-    .filter(
-      (p) =>
-        p.scalingInfo.type === 'Validium' || p.scalingInfo.type === 'Optimium',
-    )
+  // Rollups and validiums & optimiums, as for the value secured.
+  const projectIds = projects
+    .filter((p) => ACTIVITY_TYPES.has(p.scalingInfo.type))
     .map((p) => p.id)
 
   const adjustedRange = await getFullySyncedActivityRange(range)
-  const [rollupEntries, validiumAndOptimiumEntries] = await Promise.all([
-    db.activity.getSummedByTimestamp(rollups, adjustedRange),
-    db.activity.getSummedByTimestamp(validiumsAndOptimiums, adjustedRange),
-  ])
-
-  const toSeries = (entries: { timestamp: number; uopsCount: number }[]) =>
-    entries.map((entry) => ({
-      timestamp: entry.timestamp,
-      value: entry.uopsCount,
-    }))
-  const chart = mergeSeriesByTimestamp(
-    toSeries(rollupEntries),
-    toSeries(validiumAndOptimiumEntries),
-  ).map(([timestamp, rollups, vAndO]): HomeSeriesPoint => {
-    const count = sum(rollups, vAndO)
-    return [timestamp, count !== null ? countPerSecond(count) : null]
-  })
+  const entries = await db.activity.getSummedByTimestamp(
+    projectIds,
+    adjustedRange,
+  )
+  const chart = entries.map(
+    (entry): HomeSeriesPoint => [
+      entry.timestamp,
+      countPerSecond(entry.uopsCount),
+    ],
+  )
 
   return {
-    chart,
+    chart: toWeeklySparkline(chart, { perDay: false }),
     value: getLatestValue(chart),
     change: computeWeeklyAverageChange(chart),
   }
 }
+
+const ACTIVITY_TYPES = new Set<string | undefined>([
+  'ZK Rollup',
+  'Optimistic Rollup',
+  'Validium',
+  'Optimium',
+])
 
 export function mergeSeriesByTimestamp(
   seriesA: { timestamp: number; value: number | null }[],
@@ -168,12 +164,19 @@ function getMockHomeL2Charts(range: ChartRange): HomeL2Charts {
 
   return {
     tvs: {
-      chart: timestamps.map((timestamp) => [+timestamp, 5000, 3000, 2000]),
+      chart: {
+        kind: 'daily',
+        points: timestamps.map((timestamp) => [+timestamp, 5000, 3000, 2000]),
+        partLabels: ['Rollups', 'Validiums & Optimiums'],
+      },
       value: 5000,
       change: 0,
     },
     activity: {
-      chart: timestamps.map((timestamp) => [+timestamp, countPerSecond(24000)]),
+      chart: toWeeklySparkline(
+        timestamps.map((timestamp) => [+timestamp, countPerSecond(24000)]),
+        { perDay: false },
+      ),
       value: countPerSecond(24000),
       change: 0,
     },

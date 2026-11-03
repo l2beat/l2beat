@@ -11,8 +11,10 @@ import {
   computeRangeTotal,
   computeWeeklyAverageChange,
   EMPTY_HOME_KPI,
+  getPreviousRangeStart,
   type HomeKpi,
   type HomeSeriesPoint,
+  toWeeklySparkline,
 } from './homeSeries'
 
 export interface HomeEthereumCharts {
@@ -77,7 +79,7 @@ async function getEthereumActivitySparkline(
 
   const pastDayCount = uopsByTimestamp.get(syncedUntil)
   return {
-    chart,
+    chart: toWeeklySparkline(chart, { perDay: false }),
     value:
       pastDayCount !== undefined ? countPerSecond(pastDayCount) : undefined,
     change: computeWeeklyAverageChange(chart),
@@ -92,7 +94,7 @@ async function getEthereumDaSparkline(
   const [from, to] = getFullySyncedDaRange(range)
   // The headline is the total over the range, so its change compares that
   // total with the range before it: the totals are fetched for both.
-  const previousFrom = from !== null ? from - (to - from) : null
+  const previousFrom = getPreviousRangeStart([from, to])
 
   const totalRecords = await db.dataAvailability.getByProjectIdsAndTimeRange(
     ['ethereum'],
@@ -135,7 +137,7 @@ async function getEthereumDaSparkline(
   )
 
   return {
-    chart,
+    chart: toWeeklySparkline(chart, { perDay: true }),
     value: total,
     trackedShare: total > 0 ? Math.min(trackedTotal / total, 1) : undefined,
     change,
@@ -148,12 +150,18 @@ function getMockHomeEthereumCharts(range: ChartRange): HomeEthereumCharts {
 
   return {
     activity: {
-      chart: timestamps.map((timestamp) => [+timestamp, 11]),
+      chart: toWeeklySparkline(
+        timestamps.map((timestamp) => [+timestamp, 11]),
+        { perDay: false },
+      ),
       value: 11,
       change: 0,
     },
     da: {
-      chart: timestamps.map((timestamp) => [+timestamp, 250_000_000_000]),
+      chart: toWeeklySparkline(
+        timestamps.map((timestamp) => [+timestamp, 250_000_000_000]),
+        { perDay: true },
+      ),
       value: timestamps.length * 250_000_000_000,
       trackedShare: 0.87,
       change: 0,

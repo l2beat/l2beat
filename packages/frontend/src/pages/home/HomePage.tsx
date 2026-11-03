@@ -60,8 +60,7 @@ export function HomePage({
   const hasCrops = cropsProjects.length > 0
 
   return (
-    // Home shows What's new in its own card, so not in the nav too.
-    <AppLayout {...props} whatsNewItem={undefined}>
+    <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <div className="home-theme contents">
           <SideNavLayout

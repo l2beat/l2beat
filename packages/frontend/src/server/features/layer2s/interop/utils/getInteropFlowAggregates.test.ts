@@ -111,7 +111,7 @@ describe(getInteropFlowAggregates.name, () => {
     expect(result.tokenIds.toSorted()).toEqual(['dai', 'eth', 'usdc', 'usdt'])
   })
 
-  it('lists the 15 busiest protocols, busiest first', () => {
+  it('lists as many of the busiest protocols as asked, busiest first', () => {
     const volumes = [3, 16, 1, 12, 5, 15, 2, 10, 4, 14, 6, 9, 7, 13, 8, 11]
     const result = getInteropFlowAggregates(
       volumes.map((volume) =>
@@ -129,6 +129,7 @@ describe(getInteropFlowAggregates.name, () => {
         }),
       ),
       new Set(),
+      15,
     )
 
     expect(result.topProtocols).toEqual(

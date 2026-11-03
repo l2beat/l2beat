@@ -50,10 +50,8 @@ export function HomeEthereumCard({
           chart={
             <HomeSparkline
               label="Blob data"
-              data={da.chart}
+              series={da.chart}
               formatValue={(value) => formatBytes(value)}
-              weeklyAverage
-              perDay
             />
           }
         />
@@ -68,9 +66,8 @@ export function HomeEthereumCard({
           chart={
             <HomeSparkline
               label="Activity/UOPS"
-              data={activity.chart}
+              series={activity.chart}
               formatValue={(value) => `${formatActivityCount(value)} UOPS`}
-              weeklyAverage
             />
           }
         />

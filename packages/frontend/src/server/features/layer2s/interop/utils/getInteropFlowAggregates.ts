@@ -36,17 +36,15 @@ export interface InteropFlowAggregates {
   chainTokenCounts: Map<string, number>
   chainProtocolCounts: Map<string, number>
   topToken: TopEntry | undefined
-  /** Busiest first, `TOP_PROTOCOLS_COUNT` at most. */
+  /** Busiest first, `topProtocolsCount` at most. */
   topProtocols: TopEntry[]
   tokenIds: string[]
 }
 
-/** The most protocols `topProtocols` lists. */
-const TOP_PROTOCOLS_COUNT = 15
-
 export function getInteropFlowAggregates(
   records: InteropTransferWithTokens[],
   subgroupProjects: Set<ProjectId>,
+  topProtocolsCount = 1,
 ): InteropFlowAggregates {
   const flowMap = new Map<string, { volume: number; transferCount: number }>()
   const chainTokens = new GroupedVolumes()
@@ -100,7 +98,7 @@ export function getInteropFlowAggregates(
   const chainTopTokens = chainTokens.topByGroup(3)
   const chainPairTopTokens = pairTokens.topByGroup(3)
   const topToken = topEntries(globalTokens, 3)[0]
-  const topProtocols = topEntries(globalProtocols, TOP_PROTOCOLS_COUNT)
+  const topProtocols = topEntries(globalProtocols, topProtocolsCount)
 
   return {
     flows: toFlows(flowMap),

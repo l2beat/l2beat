@@ -1,9 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { type ReactNode, useLayoutEffect, useRef } from 'react'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
-import { WEEK_DAYS } from '~/server/features/home/homeSeries'
+import {
+  type HomeSparklineSeries,
+  WEEK_DAYS,
+} from '~/server/features/home/homeSeries'
 import { cn } from '~/utils/cn'
-import { formatRange, formatTimestamp } from '~/utils/dates'
+import { formatRange, formatSnapshotTimestamp } from '~/utils/dates'
 import type { SparklinePoint } from './sparklineScale'
 
 /**
@@ -13,34 +16,35 @@ import type { SparklinePoint } from './sparklineScale'
 export function SparklineTooltip({
   point,
   formatValue,
-  partLabels,
-  weeklyAverage,
+  series,
   anchorX,
   side,
 }: {
   point: SparklinePoint
   formatValue: (value: number) => string
-  partLabels: string[] | undefined
-  weeklyAverage: boolean | undefined
+  /** What the point belongs to: its period and the names of its parts. */
+  series: HomeSparklineSeries
   /** The active point's x, in the chart's pixels. */
   anchorX: number
   side: 'above' | 'below'
 }) {
   const label = point.timestamp
+  const weekly = series.kind === 'weekly'
+  const partLabels = series.kind === 'daily' ? series.partLabels : undefined
   const format = (value: unknown) =>
     typeof value === 'number' ? formatValue(value) : 'No data'
   return (
     <PointTooltip anchorX={anchorX} side={side}>
       <div className="whitespace-nowrap text-label-value-13 text-secondary">
-        {weeklyAverage
+        {weekly
           ? formatRange(label, label + WEEK_DAYS * UnixTime.DAY)
-          : formatTimestamp(label)}
+          : formatSnapshotTimestamp(label, 'day')}
       </div>
       <div className="flex items-baseline gap-1.5 whitespace-nowrap">
         <span className="font-semibold text-label-value-15 tabular-nums">
           {format(point.value)}
         </span>
-        {weeklyAverage && (
+        {weekly && (
           <span className="text-label-value-13 text-secondary">
             daily average
           </span>

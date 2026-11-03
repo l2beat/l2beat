@@ -18,32 +18,17 @@ import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartSceneStore } from '~/components/core/chart/ChartHoverOverlay'
 import { AREA_FILL_OPACITY } from '~/components/core/chart/tint'
-import {
-  type HomeSeriesPoint,
-  toWeeklyAverages,
-} from '~/server/features/home/homeSeries'
+import type { HomeSparklineSeries } from '~/server/features/home/homeSeries'
 import { cn } from '~/utils/cn'
 import { HOME_CHART_HEIGHT_CLASS } from '../../homeStyles'
 import { SparklineTooltip } from './SparklineTooltip'
 import { getSparklineScale, type SparklinePoint } from './sparklineScale'
 
 interface Props {
-  data: HomeSeriesPoint[]
+  series: HomeSparklineSeries
   /** What the chart shows, for screen readers: the figure's label. */
   label: string
   formatValue: (value: number) => string
-  /** The tooltip's names for the parts each point breaks down into. */
-  partLabels?: string[]
-  /**
-   * Daily figures that swing day to day (activity, deposits): drawn as weekly
-   * averages, so the line shows the trend the yearly change describes.
-   */
-  weeklyAverage?: boolean
-  /**
-   * Amounts per day (deposits, blob data) beside a yearly total: the high and
-   * low say "/day", so the chart's scale does not read as the figure's.
-   */
-  perDay?: boolean
 }
 
 /** Every home sparkline shares the brand colour, so the cards read as a set. */
@@ -60,24 +45,17 @@ const META: ChartMeta = {
  * The high and low hairlines bound the plot; their values sit outside it,
  * above and below, so the line never runs through them.
  */
-export function HomeSparkline({
-  data: dailyData,
-  label,
-  formatValue,
-  partLabels,
-  weeklyAverage,
-  perDay,
-}: Props) {
+export function HomeSparkline({ series, label, formatValue }: Props) {
   const data = useMemo(
     () =>
-      (weeklyAverage ? toWeeklyAverages(dailyData) : dailyData).map(
+      series.points.map(
         ([timestamp, value, ...parts]): SparklinePoint => ({
           timestamp,
           value,
           parts,
         }),
       ),
-    [dailyData, weeklyAverage],
+    [series],
   )
 
   return (
@@ -95,11 +73,9 @@ export function HomeSparkline({
         >
           <SparklineChart
             data={data}
+            series={series}
             label={label}
             formatValue={formatValue}
-            partLabels={partLabels}
-            weeklyAverage={weeklyAverage}
-            perDay={perDay}
           />
         </ChartContainer>
       </div>
@@ -109,17 +85,16 @@ export function HomeSparkline({
 
 function SparklineChart({
   data,
+  series,
   label,
   formatValue,
-  partLabels,
-  weeklyAverage,
-  perDay,
-}: Omit<Props, 'data'> & { data: SparklinePoint[] }) {
+}: Props & { data: SparklinePoint[] }) {
   // The scrub area maps points to pixels with the last rendered scales. It
   // is a sibling, so scrubbing does not render the chart again.
   const [sceneRef] = useState(() => new ChartSceneStore())
   // A weekly series has few enough points to show its corners.
-  const curve = weeklyAverage ? 'monotone' : 'linear'
+  const curve = series.kind === 'weekly' ? 'monotone' : 'linear'
+  const perDay = series.kind === 'weekly' && series.perDay
   const definition = useMemo(
     () =>
       getDefinition(data, curve, (value) =>
@@ -145,11 +120,10 @@ function SparklineChart({
       />
       <ScrubArea
         data={data}
+        series={series}
         label={label}
         sceneRef={sceneRef}
         formatValue={formatValue}
-        partLabels={partLabels}
-        weeklyAverage={weeklyAverage}
       />
     </>
   )
@@ -161,18 +135,13 @@ function SparklineChart({
  */
 function ScrubArea({
   data,
+  series,
   label,
   sceneRef,
   formatValue,
-  partLabels,
-  weeklyAverage,
-}: {
+}: Props & {
   data: SparklinePoint[]
-  label: string
   sceneRef: ChartSceneStore
-  formatValue: (value: number) => string
-  partLabels?: string[]
-  weeklyAverage: boolean | undefined
 }) {
   const id = useId()
   const [active, setActive] = useState<number>()
@@ -281,8 +250,7 @@ function ScrubArea({
             anchorX={x}
             side={touch ? 'above' : 'below'}
             formatValue={formatValue}
-            partLabels={partLabels}
-            weeklyAverage={weeklyAverage}
+            series={series}
           />
         </>
       )}

@@ -1,6 +1,8 @@
 import { formatActivityCount, formatCurrency } from '@l2beat/shared-pure'
+import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
 import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
 import type { HomeTopL2Project } from '../getHomeData'
+import { HOME_CELL_LINK_CLASS } from '../homeStyles'
 import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
@@ -9,7 +11,6 @@ import {
   HomeRankedValue,
   HomeRankedValueWithChange,
 } from './HomeRankedTable'
-import { HomeRiskRosette } from './HomeRiskRosette'
 import { HomeStageBadge } from './HomeStageBadge'
 
 interface Props {
@@ -48,9 +49,8 @@ export function HomeL2Card({
           chart={
             <HomeSparkline
               label="Value secured"
-              data={tvs.chart}
+              series={tvs.chart}
               formatValue={(value) => formatCurrency(value, 'usd')}
-              partLabels={['Rollups', 'Validiums & Optimiums']}
             />
           }
         />
@@ -65,9 +65,8 @@ export function HomeL2Card({
           chart={
             <HomeSparkline
               label="Activity/UOPS"
-              data={activity.chart}
+              series={activity.chart}
               formatValue={(value) => `${formatActivityCount(value)} UOPS`}
-              weeklyAverage
             />
           }
         />
@@ -83,11 +82,14 @@ export function HomeL2Card({
             middle: true,
             minTableWidth: 640,
             cell: (project) => (
-              <HomeRiskRosette
+              // At the ranking's 24px, so the rows keep their height.
+              <PizzaRosetteCell
                 projectName={project.name}
                 values={project.risks}
                 href={project.risksHref}
                 isUnderReview={project.risksUnderReview}
+                iconClassName="md:size-6"
+                linkClassName={HOME_CELL_LINK_CLASS}
               />
             ),
           },

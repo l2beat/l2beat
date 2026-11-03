@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { PlainLink } from '~/components/PlainLink'
 import { cn } from '~/utils/cn'
 import { formatPublicationDate } from '~/utils/dates'
@@ -57,7 +58,7 @@ function Research({ items }: { items: HomeResearchItem[] }) {
                 {item.shortTitle ?? item.title}
               </span>
               <span className={HOME_TEXT.meta}>
-                {formatPublicationDate(new Date(item.publishedOn * 1000))}
+                {formatPublicationDate(UnixTime.toDate(item.publishedOn))}
               </span>
             </span>
           </PlainLink>

@@ -58,14 +58,21 @@ export async function getHomeData(
 ): Promise<RenderData> {
   const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps(),
-    cache.get(
-      {
-        key: ['home', 'data'],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getCachedData(manifest),
-    ),
+    cache
+      .get(
+        {
+          key: ['home', 'data'],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
+        () => getCachedData(manifest),
+      )
+      // A failed section's empty card is shown, but not cached: the next
+      // request asks again, and a stale page keeps its real data meanwhile.
+      .catch((error) => {
+        if (error instanceof IncompleteHomeDataError) return error.data
+        throw error
+      }),
   ])
 
   return {
@@ -99,6 +106,13 @@ async function getCachedData(manifest: Manifest) {
   // The sections that read the databases each fall back to empty on their
   // own, so one failing query costs its card, not the page. The rest come
   // from the project config.
+  const failedSections: string[] = []
+  const orEmpty: OrEmpty = (section, data, empty) =>
+    data.catch((error) => {
+      getLogger().error('Home section failed', { section, error })
+      failedSections.push(section)
+      return empty
+    })
   const [
     topL2Projects,
     recentProjects,
@@ -132,12 +146,12 @@ async function getCachedData(manifest: Manifest) {
       getHomeEthereumCharts(chartRange),
       EMPTY_HOME_ETHEREUM_CHARTS,
     ),
-    getInteropFlowsForHome(manifest, helpers),
+    getInteropFlowsForHome(manifest, helpers, orEmpty),
     orEmpty('privacy', getHomePrivacyData(chartRange), EMPTY_HOME_PRIVACY_DATA),
     orEmpty('cropsProjects', getHomeCropsProjects(manifest), []),
   ])
 
-  return {
+  const data = {
     queryState: helpers.dehydrate(),
     projectCounts,
     cropsProjects,
@@ -156,6 +170,26 @@ async function getCachedData(manifest: Manifest) {
     },
     research: getHomeResearch(),
   }
+  if (failedSections.length > 0) {
+    throw new IncompleteHomeDataError(data, failedSections)
+  }
+  return data
+}
+
+/** The section's data, or `empty` (logged) when getting it fails. */
+type OrEmpty = <T>(section: string, data: Promise<T>, empty: T) => Promise<T>
+
+/**
+ * The page with its failed sections empty. Thrown, so the cache does not
+ * store it.
+ */
+class IncompleteHomeDataError extends Error {
+  constructor(
+    readonly data: Awaited<ReturnType<typeof getCachedData>>,
+    failedSections: string[],
+  ) {
+    super('Home data incomplete', { cause: { failedSections } })
+  }
 }
 
 /**
@@ -167,6 +201,7 @@ async function getCachedData(manifest: Manifest) {
 async function getInteropFlowsForHome(
   manifest: Manifest,
   helpers: ReturnType<typeof getSsrHelpers>,
+  orEmpty: OrEmpty,
 ) {
   const [l2Projects, interopProjects] = await Promise.all([
     ps.getProjects({ select: ['scalingInfo'] }),
@@ -319,19 +354,5 @@ function getRecentProjectListing(
       href: `/interop/protocols/${slug}`,
       label: 'Interoperability',
     }
-  }
-}
-
-/** The section's data, or `empty` (logged) when getting it fails. */
-async function orEmpty<T>(
-  section: string,
-  data: Promise<T>,
-  empty: T,
-): Promise<T> {
-  try {
-    return await data
-  } catch (error) {
-    getLogger().error('Home section failed', { section, error })
-    return empty
   }
 }

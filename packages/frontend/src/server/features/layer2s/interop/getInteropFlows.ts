@@ -80,7 +80,7 @@ interface FlowsStats {
   topRoute: { srcChain: string; dstChain: string; volume: number } | undefined
   topChain: FlowChain | undefined
   topToken: FlowToken | undefined
-  /** Busiest first. */
+  /** Busiest first, as many as `topProtocolsCount` asks for. */
   topProtocols: FlowProtocol[]
 }
 
@@ -97,9 +97,11 @@ type GetInteropFlowsParams = InteropFlowsParams & {
 
 export async function getInteropFlows(
   params: GetInteropFlowsParams,
+  /** The interop page shows the top protocol, the home page a list. */
+  topProtocolsCount = 1,
 ): Promise<InteropFlowsData> {
   if (env.MOCK) {
-    return getMockInteropFlows()
+    return getMockInteropFlows(topProtocolsCount)
   }
 
   const snapshotTimestamp = await getPromotedInteropSnapshotTimestamp(
@@ -157,7 +159,11 @@ export async function getInteropFlows(
     topToken: topTokenEntry,
     topProtocols: topProtocolEntries,
     tokenIds,
-  } = getInteropFlowAggregates(scopedRecords, subgroupProjects)
+  } = getInteropFlowAggregates(
+    scopedRecords,
+    subgroupProjects,
+    topProtocolsCount,
+  )
 
   const selectedProject =
     params.protocolIds.length === 1
@@ -407,7 +413,7 @@ function computeChainsData(
   })
 }
 
-function getMockInteropFlows(): InteropFlowsData {
+function getMockInteropFlows(topProtocolsCount: number): InteropFlowsData {
   const chainIds = getInteropChains().map((c) => c.id)
 
   const flows: Flow[] = []
@@ -494,7 +500,7 @@ function getMockInteropFlows(): InteropFlowsData {
         iconUrl: '/icons/ethereum.png',
         volume: 1_000_000,
       },
-      topProtocols: MOCK_TOP_PROTOCOLS,
+      topProtocols: MOCK_TOP_PROTOCOLS.slice(0, topProtocolsCount),
     },
   }
 }
