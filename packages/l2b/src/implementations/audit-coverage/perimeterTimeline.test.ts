@@ -239,6 +239,24 @@ describe(buildPerimeterTimeline.name, () => {
       ['B', 1000000],
     ])
   })
+
+  it('leaves verifiers out unless they are proxies', () => {
+    const timeline = buildPerimeterTimeline(
+      discovery([
+        entry({ address: A, name: 'Verifier', critical: true }),
+        entry({
+          address: B,
+          name: 'Wallet',
+          critical: true,
+          values: { $implementation: I1 },
+        }),
+        entry({ address: I2, name: 'Other', critical: true }),
+      ]),
+      1000000,
+      new Set([A, B]),
+    )
+    expect(timeline.members.map((m) => m.name)).toEqual(['Wallet', 'Other'])
+  })
 })
 
 describe(perimeterAt.name, () => {

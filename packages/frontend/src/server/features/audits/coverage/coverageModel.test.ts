@@ -80,22 +80,43 @@ describe('coverageModel', () => {
         critical: { sinceTimestamp: 1, untilTimestamp: 2 },
       },
       'eth:0x4': { name: 'D', source: FLAT_B, critical: { sinceTimestamp: 1 } },
+      'eth:0x5': { name: 'V', source: FLAT_B, critical: true, verifier: true },
+      'eth:0x6': { name: 'W', source: FLAT_B, verifier: true },
     }
 
     it('shows the current critical perimeter when one exists', () => {
       expect(selectContracts(coverage({ contracts }))).toEqual({
         selection: 'critical',
         addresses: ['eth:0x1', 'eth:0x4'],
+        verifiers: 1,
       })
     })
 
     it('shows every contract without critical ones', () => {
       const all = coverage({
-        contracts: { 'eth:0x2': contracts['eth:0x2'] as Contract },
+        contracts: {
+          'eth:0x2': contracts['eth:0x2'] as Contract,
+          'eth:0x6': contracts['eth:0x6'] as Contract,
+        },
       })
       expect(selectContracts(all)).toEqual({
         selection: 'all',
         addresses: ['eth:0x2'],
+        verifiers: 1,
+      })
+    })
+
+    it('keeps a critical selection made only of verifiers', () => {
+      const onlyVerifiers = coverage({
+        contracts: {
+          'eth:0x2': contracts['eth:0x2'] as Contract,
+          'eth:0x5': contracts['eth:0x5'] as Contract,
+        },
+      })
+      expect(selectContracts(onlyVerifiers)).toEqual({
+        selection: 'critical',
+        addresses: [],
+        verifiers: 1,
       })
     })
 

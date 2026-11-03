@@ -35,6 +35,8 @@ export interface ProjectCoverage {
   stackCollection: string | undefined
   contracts: AuditsContractEntry[]
   contractsWithoutSource: number
+  /** ZK verifiers left out of `contracts`, see selectContracts. */
+  verifiers: number
   summary: UnitsSummary
   /** Reports referenced by a unit of a shown contract. */
   matched: Set<string>
@@ -45,7 +47,7 @@ export function buildProjectCoverage(
   projectId: string,
   stacks: ProjectScalingStack[] | undefined,
 ): ProjectCoverage {
-  const { selection, addresses } = selectContracts(coverage)
+  const { selection, addresses, verifiers } = selectContracts(coverage)
   const stackCollection = stackCollectionOf(stacks, coverage)
   const toRef = (id: string): AuditsUnitReportRef =>
     toReportRef(coverage, id, projectId, stackCollection)
@@ -155,6 +157,7 @@ export function buildProjectCoverage(
     stackCollection,
     contracts,
     contractsWithoutSource: contracts.filter((c) => c.noSource).length,
+    verifiers,
     summary: summarizeUnits(
       contracts.flatMap((c) => c.sources.flatMap((s) => s.units)),
     ),

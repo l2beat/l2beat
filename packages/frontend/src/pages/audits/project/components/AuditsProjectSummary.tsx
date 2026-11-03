@@ -14,12 +14,17 @@ import { AuditsDisclaimer } from './AuditsDisclaimer'
 
 type Props = Pick<
   AuditsProjectDetails,
-  'coverage' | 'contracts' | 'fullyCoveredContracts' | 'discoUiHref'
+  | 'coverage'
+  | 'contracts'
+  | 'verifiers'
+  | 'fullyCoveredContracts'
+  | 'discoUiHref'
 >
 
 export function AuditsProjectSummary({
   coverage,
   contracts,
+  verifiers,
   fullyCoveredContracts,
   discoUiHref,
 }: Props) {
@@ -77,6 +82,13 @@ export function AuditsProjectSummary({
           )}
         </ChartStatsItem>
       </ChartStats>
+      {verifiers > 0 && (
+        <p className="mt-4 text-secondary text-xs">
+          {formatInteger(verifiers)} ZK{' '}
+          {verifiers === 1 ? 'verifier is' : 'verifiers are'} left out of every
+          number: zk program audits are not tracked yet.
+        </p>
+      )}
       <AuditsDisclaimer className="mt-4" />
     </>
   )

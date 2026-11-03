@@ -107,6 +107,7 @@ export async function getAuditsProjectDetails(
     datasetUrl: `https://github.com/${coverage.dataset.repository}/tree/${coverage.dataset.commit}`,
     contracts: model.contracts.length,
     contractsWithoutSource: model.contractsWithoutSource,
+    verifiers: model.verifiers,
     fullyCoveredContracts: countFullyCoveredContracts(model.contracts),
     coverage: { units: model.summary.units, lines: model.summary.lines },
     uniqueUnits: model.summary.uniqueUnits,

@@ -34,6 +34,7 @@ import {
   readAuditDataset,
 } from '../implementations/audit-coverage/auditDataset'
 import { deployedSourceFromDiscovery } from '../implementations/audit-coverage/deployedSource'
+import { getVerifierAddresses } from '../implementations/audit-coverage/verifiers'
 import { createCliLogger } from '../implementations/common/CliLogger'
 import { File, HttpUrl } from './types'
 
@@ -96,6 +97,7 @@ export const AuditCoverage = command({
     }
 
     const covering = cli.status()
+    const verifiers = await getVerifierAddresses()
     const launch = args.history ? await getLaunch(args.project) : undefined
     const warnings: string[] = []
     const history: AuditCoverageHistoryOptions | undefined = args.history
@@ -119,6 +121,7 @@ export const AuditCoverage = command({
         objects,
         code,
         dataset: { repository: dataset.repository, commit: dataset.commit },
+        verifiers,
       },
       deployedSourceFromDiscovery(),
       (address, covered, count) =>
@@ -188,9 +191,10 @@ function summary(coverage: Coverage): string {
       }
     }
   }
-  const contracts = Object.keys(coverage.contracts).length
+  const contracts = Object.values(coverage.contracts)
+  const verifiers = contracts.filter((c) => c.verifier).length
   const percent = lines === 0 ? 0 : (100 * covered) / lines
-  return `${contracts} contracts, ${percent.toFixed(1)}% of ${lines} lines in distinct flat sources match audited code`
+  return `${contracts.length} contracts (${verifiers} verifiers), ${percent.toFixed(1)}% of ${lines} lines in distinct flat sources match audited code`
 }
 
 /**

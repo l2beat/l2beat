@@ -14,6 +14,9 @@ import { getCoverageTrendColor } from './coverageScale'
 const WIDTH = 240
 const HEIGHT = 32
 const PAD = 4
+// Room on the right for the value at the top of the plot, its only y label.
+const LABEL_WIDTH = 36
+const PLOT_RIGHT = WIDTH - PAD - LABEL_WIDTH
 // Zero, fully audited, is the bottom of the plot; year ticks and labels
 // hang below it.
 const PLOT_TOP = 2
@@ -28,8 +31,10 @@ function snap(x: number) {
 /**
  * AuditsCoverageChart at its MAX range on one line: the uncovered lines from
  * the launch to the present, rising from zero at the bottom and colored by
- * whether the present is below (green) or above (red) the launch. A link to
- * the full chart.
+ * whether the present is above the launch (red) or not (green). The highest
+ * value is written at its own level, the top of the plot unless the series
+ * is zero throughout, so that the scale is readable. A link to the full
+ * chart.
  */
 export function AuditsCoverageSparkline({
   history,
@@ -49,10 +54,11 @@ export function AuditsCoverageSparkline({
   const last = points[points.length - 1]
   if (first === undefined || last === undefined) return null
 
-  const toX = getTimeScale(launch, to, PAD, WIDTH - PAD)
+  const toX = getTimeScale(launch, to, PAD, PLOT_RIGHT)
   const years = getYearTicks(launch, to)
   const labeled = getLabeledTicks(years, toX, 24)
-  const max = Math.max(1, ...points.map((point) => point.uncovered))
+  const highest = Math.max(...points.map((point) => point.uncovered))
+  const max = Math.max(1, highest)
   const toY = (value: number) =>
     PLOT_BOTTOM - (value / max) * (PLOT_BOTTOM - PLOT_TOP)
   const line = points
@@ -82,10 +88,31 @@ export function AuditsCoverageSparkline({
             width={WIDTH}
             height={HEIGHT}
             viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+            // The label's glyph box reaches a pixel above the top edge.
+            overflow="visible"
             role="img"
-            aria-label={`Unaudited lines over time. ${now}, ${then}. ${trend}`}
+            aria-label={`Unaudited lines over time, up to ${formatInteger(highest)}. ${now}, ${then}. ${trend}`}
           >
             <path d={area} fill={color} fillOpacity={0.15} />
+            <line
+              x1={PLOT_RIGHT}
+              x2={PLOT_RIGHT + 3}
+              y1={snap(toY(highest))}
+              y2={snap(toY(highest))}
+              stroke="var(--secondary)"
+              strokeOpacity={0.7}
+              {...CRISP}
+            />
+            <text
+              x={PLOT_RIGHT + 5}
+              // Centered on the tick, but never above the top edge.
+              y={Math.max(toY(highest) + 1, PLOT_TOP + 3)}
+              fontSize={9}
+              fill="var(--secondary)"
+              dominantBaseline="middle"
+            >
+              {formatInteger(highest)}
+            </text>
             <path
               d={line}
               fill="none"

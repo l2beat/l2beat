@@ -1,5 +1,9 @@
 import { expect } from 'earl'
-import { getValueDomain, getValueTicks } from './coverageScale'
+import {
+  getCoverageTrendColor,
+  getValueDomain,
+  getValueTicks,
+} from './coverageScale'
 
 describe(getValueDomain.name, () => {
   it('pads the visible range on both sides', () => {
@@ -28,5 +32,13 @@ describe(getValueTicks.name, () => {
     expect(getValueTicks({ min: 0, max: 115 })).toEqual([0, 50, 100])
     expect(getValueTicks({ min: 3500, max: 14800 })).toEqual([5000, 10000])
     expect(getValueTicks({ min: 0, max: 10 })).toEqual([0, 5, 10])
+  })
+})
+
+describe(getCoverageTrendColor.name, () => {
+  it('is green unless the series ends above its start', () => {
+    expect(getCoverageTrendColor(100, 50)).toEqual('var(--positive)')
+    expect(getCoverageTrendColor(100, 100)).toEqual('var(--positive)')
+    expect(getCoverageTrendColor(100, 150)).toEqual('var(--negative)')
   })
 })

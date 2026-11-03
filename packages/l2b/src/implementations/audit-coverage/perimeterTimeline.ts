@@ -4,6 +4,7 @@ import {
   get$Implementations,
 } from '@l2beat/discovery'
 import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { isVerifierContract } from './verifiers'
 
 // The contracts the audits dashboard shows, over time: which contracts were
 // in the perimeter at a moment and which code each one ran. Reconstructed
@@ -56,16 +57,21 @@ export interface PastUpgrade {
 
 /**
  * The members of the perimeter and the code of each over time. Without a
- * launch the series starts at the earliest member.
+ * launch the series starts at the earliest member. Verifier contracts are
+ * never members, as the dashboard leaves them out, see verifiers.ts.
  */
 export function buildPerimeterTimeline(
   discovery: DiscoveryOutput,
   launch: number | undefined,
+  verifiers: Set<ChainSpecificAddress> = new Set(),
 ): PerimeterTimeline {
   const warnings: string[] = []
   const entries = discovery.entries.filter((e) => e.type === 'Contract')
   const critical = entries.filter((e) => e.critical !== undefined)
-  const selected = critical.length > 0 ? critical : entries
+  const selected = (critical.length > 0 ? critical : entries).filter(
+    (e) =>
+      !isVerifierContract(e.address, get$Implementations(e.values), verifiers),
+  )
   const drafts = selected.map((entry) => toDraft(entry, warnings))
   const starts = drafts.map((d) => d.since).filter(isDefined)
   assert(

@@ -285,6 +285,8 @@ export interface AuditsProjectDetails {
   datasetUrl: string
   contracts: number
   contractsWithoutSource: number
+  /** ZK verifiers among the selected contracts, left out of every number. */
+  verifiers: number
   /** Contracts whose every counted unit is identical to audited code. */
   fullyCoveredContracts: number
   coverage: AuditCoverageNumbers

@@ -67,7 +67,7 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        "Lines of the critical contracts not covered by the audits published by then, from the launch to today. The line falls as audits cover code and rises as unaudited code is deployed. Green when there are fewer unaudited lines now than at the launch, red when there are more. Click one to open the project's full timeline.",
+        "Lines of the critical contracts not covered by the audits published by then, from the launch to today. The line falls as audits cover code and rises as unaudited code is deployed. Green when there are no more unaudited lines now than at the launch, red when there are more. Click one to open the project's full timeline.",
     },
   }),
   columnHelper.accessor(

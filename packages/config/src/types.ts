@@ -2491,6 +2491,8 @@ const AuditCoverageContract = v.object({
     .optional(),
   source: v.string(),
   implementations: v.record(v.string(), v.string()).optional(),
+  /** A zk verifier known to the zk catalog; left out of the dashboard. */
+  verifier: v.literal(true).optional(),
 })
 
 const AuditCoverageHistoryPoint = v.object({

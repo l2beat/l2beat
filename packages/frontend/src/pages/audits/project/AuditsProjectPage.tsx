@@ -78,6 +78,7 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
                     <AuditsProjectSummary
                       coverage={details.coverage}
                       contracts={details.contracts}
+                      verifiers={details.verifiers}
                       fullyCoveredContracts={details.fullyCoveredContracts}
                       discoUiHref={details.discoUiHref}
                     />

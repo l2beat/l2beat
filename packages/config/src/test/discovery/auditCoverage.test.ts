@@ -77,8 +77,9 @@ describe('audit-coverage.json', () => {
 
 /**
  * The dashboard's numbers over its contract selection, as the frontend
- * computes them (coverageModel.ts): interfaces excluded, covered lines are
- * the lines of identical units and the `covered` of differing ones.
+ * computes them (coverageModel.ts): verifiers and interfaces excluded,
+ * covered lines are the lines of identical units and the `covered` of
+ * differing ones.
  */
 function presentNumbers(coverage: ProjectAuditCoverage) {
   const addresses = Object.keys(coverage.contracts)
@@ -86,7 +87,9 @@ function presentNumbers(coverage: ProjectAuditCoverage) {
     const value = coverage.contracts[address]?.critical
     return value === true || (value !== undefined && !value.untilTimestamp)
   })
-  const selected = critical.length > 0 ? critical : addresses
+  const selected = (critical.length > 0 ? critical : addresses).filter(
+    (address) => !coverage.contracts[address]?.verifier,
+  )
   const numbers = {
     contracts: selected.length,
     withoutSource: 0,

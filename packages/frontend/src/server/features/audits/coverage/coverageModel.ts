@@ -20,20 +20,25 @@ export function isFlatHash(source: string): boolean {
 /**
  * The contracts the dashboard shows: the current critical perimeter when the
  * project has one (critical is true or its window has not ended), the same
- * rule as ossification, else every contract discovery found.
+ * rule as ossification, else every contract discovery found. ZK verifiers
+ * are left out either way: zk program audits are not tracked yet, so their
+ * generated Solidity would only count as unaudited code. `verifiers` counts
+ * the ones left out of the selection.
  */
 export function selectContracts(coverage: ProjectAuditCoverage): {
   selection: 'critical' | 'all'
   addresses: string[]
+  verifiers: number
 } {
-  const addresses = Object.keys(coverage.contracts)
-  const critical = addresses.filter((address) => {
+  const isCritical = (address: string) => {
     const value = coverage.contracts[address]?.critical
     return value === true || (value !== undefined && !value.untilTimestamp)
-  })
-  return critical.length > 0
-    ? { selection: 'critical', addresses: critical }
-    : { selection: 'all', addresses }
+  }
+  const all = Object.keys(coverage.contracts)
+  const selection = all.some(isCritical) ? 'critical' : 'all'
+  const selected = selection === 'critical' ? all.filter(isCritical) : all
+  const addresses = selected.filter((a) => !coverage.contracts[a]?.verifier)
+  return { selection, addresses, verifiers: selected.length - addresses.length }
 }
 
 /**

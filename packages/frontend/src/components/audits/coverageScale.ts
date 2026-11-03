@@ -28,11 +28,12 @@ export function getValueDomain(values: number[]): ValueDomain {
   return { min: Math.max(0, low - padding), max: high + padding }
 }
 
-/** Green when a series ends with fewer uncovered lines than it starts. */
+/**
+ * Green when a series ends with no more uncovered lines than it starts, a
+ * flat one included, red when it ends with more.
+ */
 export function getCoverageTrendColor(start: number, end: number): string {
-  if (end < start) return 'var(--positive)'
-  if (end > start) return 'var(--negative)'
-  return 'var(--secondary)'
+  return end > start ? 'var(--negative)' : 'var(--positive)'
 }
 
 /** Round values inside the domain, at most a handful of them. */

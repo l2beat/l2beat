@@ -183,7 +183,15 @@ describe(coverageHistoryOfProject.name, () => {
   it('covers the perimeter at every change and reuses unaffected flats', async () => {
     const warnings: string[] = []
     const result = await coverageHistoryOfProject(
-      { project: 'p', index, code, discovery, launch: T_LAUNCH, coverage },
+      {
+        project: 'p',
+        index,
+        code,
+        discovery,
+        launch: T_LAUNCH,
+        verifiers: new Set(),
+        coverage,
+      },
       getDeployedSource,
       { progress: () => {}, warn: (m) => warnings.push(m) },
     )
@@ -258,7 +266,15 @@ describe(coverageHistoryOfProject.name, () => {
   it('reports unverified code and counts no lines for it', async () => {
     const warnings: string[] = []
     const result = await coverageHistoryOfProject(
-      { project: 'p', index, code, discovery, launch: T_LAUNCH, coverage },
+      {
+        project: 'p',
+        index,
+        code,
+        discovery,
+        launch: T_LAUNCH,
+        verifiers: new Set(),
+        coverage,
+      },
       async (address) =>
         address === V1 ? { kind: 'unverified' } : getDeployedSource(address),
       { progress: () => {}, warn: (m) => warnings.push(m) },

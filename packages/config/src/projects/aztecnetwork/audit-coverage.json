@@ -3,27 +3,28 @@
   "project": "aztecnetwork",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
+    "commit": "29fc7fd763e95c91755451e0b531c457bc921dc2"
   },
-  "discoveredAt": 1792144307,
+  "discoveredAt": 1793006682,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
-    "_libs/safe": { "name": "Safe", "kind": "library" },
+    "_libs/safe": { "name": "Safe (library)", "kind": "library" },
     "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
     "base": { "name": "Base Chain", "kind": "project" },
     "roninnetwork": { "name": "Ronin", "kind": "project" },
+    "safe": { "name": "Safe", "kind": "project" },
     "zksync2": { "name": "ZKsync Era", "kind": "project" }
   },
   "reports": {
     "ackee-safe-1-4-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Contracts 1.4.0 Security Review",
       "auditor": "Ackee Blockchain",
       "date": "2023-03-28",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
     },
     "ackee-safe-1-5-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account Security Review",
       "auditor": "Ackee Blockchain Security",
       "date": "2025-05-28",
@@ -114,14 +115,14 @@
       "document": "roninnetwork/reports/CertiK - Ronin DPoS Contracts (2023-03).pdf"
     },
     "certora-safe-1-3-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account v1.3.0 Security Assessment",
       "auditor": "Certora",
       "date": "2026-07-29",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Certora.pdf"
     },
     "certora-safe-1-5-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
       "auditor": "Certora",
       "date": "2025-01-14",
@@ -212,28 +213,28 @@
       "document": "aztecnetwork/reports/Cyfrin - Barretenberg Logic.pdf"
     },
     "g0-safe-1-1-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe v1.1.0",
       "auditor": "G0 Group",
       "date": "2019-11-11",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_0.pdf"
     },
     "g0-safe-1-1-1": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe v1.1.0 and v1.1.1",
       "auditor": "G0 Group",
       "date": "2019-11-11",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_1.pdf"
     },
     "g0-safe-1-3-0-final": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
       "auditor": "G0 Group",
       "date": "2021-05-01",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
     },
     "g0-safe-1-3-0-initial": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
       "auditor": "G0 Group",
       "date": "2021-04-01",
@@ -6023,7 +6024,8 @@
     },
     "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC": {
       "name": "HonkVerifier",
-      "source": "3e0cbb7f3634d344c58d185ce5d6e537c20e6e4bdf441fbe28fe1e5759661673"
+      "source": "3e0cbb7f3634d344c58d185ce5d6e537c20e6e4bdf441fbe28fe1e5759661673",
+      "verifier": true
     },
     "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": {
       "name": "Governance",
@@ -6051,7 +6053,8 @@
     },
     "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7": {
       "name": "Outbox",
-      "source": "d0db9a180913f8df17cc909c286426888f76804d1b83f25fa0b97adb4cd76a9a"
+      "source": "d0db9a180913f8df17cc909c286426888f76804d1b83f25fa0b97adb4cd76a9a",
+      "critical": true
     },
     "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a": {
       "name": "ProtocolTreasury",
@@ -6067,7 +6070,8 @@
     },
     "eth:0x8A36b8F2Ca71D8d8Bd98e03Ebf8B4D0939Daf0bA": {
       "name": "SlashingProposer",
-      "source": "acec4087e52b8a9bdacaca1b39e4e8d9530478d486a4bf0c8af669cac24ca67e"
+      "source": "acec4087e52b8a9bdacaca1b39e4e8d9530478d486a4bf0c8af669cac24ca67e",
+      "critical": true
     },
     "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34": {
       "name": "Rollup",
@@ -6083,7 +6087,8 @@
     },
     "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c": {
       "name": "FeeJuicePortal",
-      "source": "95b2ed0a127bf8beec8f28bbcdb33324f2770b7c9791268eb9459abe832d517d"
+      "source": "95b2ed0a127bf8beec8f28bbcdb33324f2770b7c9791268eb9459abe832d517d",
+      "critical": true
     },
     "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": {
       "name": "SlashVeto Council",
@@ -6094,11 +6099,13 @@
     },
     "eth:0xCD6855470A01aBcd989126A1183Fb50673952548": {
       "name": "Slasher",
-      "source": "93550939fe013b481c755f29b398fb0eaee7ad549e66dee1678896dbbd261a26"
+      "source": "93550939fe013b481c755f29b398fb0eaee7ad549e66dee1678896dbbd261a26",
+      "critical": true
     },
     "eth:0xD6E890c615d6f99681a00771C20ed04516288898": {
       "name": "RewardExtLib",
-      "source": "1c22a9d8094e5baa10d9ad8fc7776493aa072d71b5d58f5ae66b55f15cf0c889"
+      "source": "1c22a9d8094e5baa10d9ad8fc7776493aa072d71b5d58f5ae66b55f15cf0c889",
+      "critical": true
     },
     "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f": {
       "name": "ZkMoneyPortal_sUSDS",
@@ -6116,42 +6123,62 @@
     },
     "eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411": {
       "name": "ValidatorOperationsExtLib",
-      "source": "4685a3772efafd59610fde102f3930f3fd7fe24dacc275cd62241e501701f1b9"
+      "source": "4685a3772efafd59610fde102f3930f3fd7fe24dacc275cd62241e501701f1b9",
+      "critical": true
     },
     "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A": {
       "name": "EscapeHatch",
-      "source": "84d9e32d163dda0ad324b548d064bece0b01770c5149dfc98f88da9f3d8ed778"
+      "source": "84d9e32d163dda0ad324b548d064bece0b01770c5149dfc98f88da9f3d8ed778",
+      "critical": true
     }
   },
   "history": {
-    "launch": 1790298635,
+    "launch": 1782803327,
     "points": [
       {
-        "timestamp": 1790298635,
-        "contracts": 1,
+        "timestamp": 1782803327,
+        "contracts": 7,
         "withoutSource": 0,
-        "units": { "identical": 42, "differs": 3, "none": 7 },
-        "lines": { "total": 3188, "covered": 1912 },
+        "units": { "identical": 277, "differs": 56, "none": 21 },
+        "lines": { "total": 26136, "covered": 23738 },
         "reports": [
           "ackee-safe-1-4-0",
           "ackee-safe-1-5-0",
           "cantina-escape-hatch-2026-02-24",
-          "cantina-nitro-validator-2024-12",
+          "cantina-governance-2025-11-12",
           "cantina-payload-2026-03-05",
           "cantina-rollup-contracts-2025-11-12",
           "contracts__audits__2018-10",
+          "contracts__audits__2023-05-v4.9",
           "contracts__audits__2023-10-v5.0",
           "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-07-v5.4",
           "contracts__audits__2026-02-v5.6",
+          "konnov-pani-governance-formal-verification-2025-09-15",
           "veridise-governance-2025-10-13"
         ]
       },
       {
-        "timestamp": 1791316739,
-        "contracts": 2,
+        "timestamp": 1790298635,
+        "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 84, "differs": 6, "none": 14 },
-        "lines": { "total": 6377, "covered": 3824 },
+        "units": { "identical": 319, "differs": 59, "none": 28 },
+        "lines": { "total": 29324, "covered": 25650 },
+        "changes": [
+          {
+            "address": "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449",
+            "name": "ZkMoneyPortal",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1791316739,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 361, "differs": 62, "none": 35 },
+        "lines": { "total": 32513, "covered": 27562 },
         "changes": [
           {
             "address": "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
@@ -6161,11 +6188,11 @@
         ]
       },
       {
-        "timestamp": 1792144307,
-        "contracts": 2,
+        "timestamp": 1793006682,
+        "contracts": 9,
         "withoutSource": 0,
-        "units": { "identical": 84, "differs": 6, "none": 14 },
-        "lines": { "total": 6377, "covered": 3824 }
+        "units": { "identical": 361, "differs": 62, "none": 35 },
+        "lines": { "total": 32513, "covered": 27562 }
       }
     ],
     "undatedReports": []

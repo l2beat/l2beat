@@ -3,18 +3,19 @@
   "project": "tornado-cash",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
+    "commit": "29fc7fd763e95c91755451e0b531c457bc921dc2"
   },
   "discoveredAt": 1791619122,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
-    "_libs/safe": { "name": "Safe", "kind": "library" },
+    "_libs/safe": { "name": "Safe (library)", "kind": "library" },
     "arbitrum": { "name": "Arbitrum One", "kind": "project" },
     "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
     "bob": { "name": "BOB", "kind": "project" },
     "celo": { "name": "Celo", "kind": "project" },
     "mantle": { "name": "Mantle", "kind": "project" },
     "privacy-pools": { "name": "Privacy Pools", "kind": "project" },
+    "safe": { "name": "Safe", "kind": "project" },
     "tornado-cash": { "name": "Tornado Cash", "kind": "project" },
     "uniswapv3": { "name": "Uniswap V3", "kind": "project" },
     "zksync2": { "name": "ZKsync Era", "kind": "project" }
@@ -70,20 +71,20 @@
       "document": "uniswapv3/reports/audit-2.pdf"
     },
     "ackee-safe-1-4-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Contracts 1.4.0 Security Review",
       "auditor": "Ackee Blockchain",
       "date": "2023-03-28",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
     },
     "akhunov-audit-results-note": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Gnosis Safe Audit Results",
       "auditor": "Alexey Akhunov",
       "document": "_libs/safe/reports/safe-early__docs__alexey_audit.md"
     },
     "akhunov-gnosis-safe-2018": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Gnosis Safe Audit Report",
       "auditor": "Alexey Akhunov",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report.pdf"
@@ -103,7 +104,7 @@
       "document": "aztecnetwork/reports/Cantina - Rollup Contracts.pdf"
     },
     "certora-safe-1-3-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account v1.3.0 Security Assessment",
       "auditor": "Certora",
       "date": "2026-07-29",
@@ -159,28 +160,28 @@
       "document": "bob/reports/Cure53 - BOB Modified USDC Bridge Library (WP1).pdf"
     },
     "g0-safe-1-1-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe v1.1.0",
       "auditor": "G0 Group",
       "date": "2019-11-11",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_0.pdf"
     },
     "g0-safe-1-1-1": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe v1.1.0 and v1.1.1",
       "auditor": "G0 Group",
       "date": "2019-11-11",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_1.pdf"
     },
     "g0-safe-1-3-0-final": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
       "auditor": "G0 Group",
       "date": "2021-05-01",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
     },
     "g0-safe-1-3-0-initial": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
       "auditor": "G0 Group",
       "date": "2021-04-01",
@@ -2791,7 +2792,8 @@
     "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A": {
       "name": "Verifier",
       "source": "e711e435dbe6345c2bb3025e6ca53a20e070b73bd84bc6fa2de8a9c016940192",
-      "critical": true
+      "critical": true,
+      "verifier": true
     },
     "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af": {
       "name": "Pool_5M_cDAI",
@@ -2889,33 +2891,19 @@
         ]
       },
       {
-        "timestamp": 1589278208,
-        "contracts": 13,
-        "withoutSource": 1,
-        "units": { "identical": 0, "differs": 44, "none": 3 },
-        "lines": { "total": 3063, "covered": 2658 },
-        "changes": [
-          {
-            "address": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
-            "name": "Verifier",
-            "kind": "added"
-          }
-        ]
-      },
-      {
         "timestamp": 1612483200,
-        "contracts": 13,
+        "contracts": 12,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 44, "none": 3 },
-        "lines": { "total": 3327, "covered": 2922 },
+        "units": { "identical": 11, "differs": 44, "none": 1 },
+        "lines": { "total": 3133, "covered": 2922 },
         "reports": ["oz-celo-contracts-mainnet-releases-1-3"]
       },
       {
         "timestamp": 1616114822,
-        "contracts": 21,
+        "contracts": 20,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 60, "none": 38 },
-        "lines": { "total": 9041, "covered": 3826 },
+        "units": { "identical": 11, "differs": 60, "none": 36 },
+        "lines": { "total": 8847, "covered": 3826 },
         "changes": [
           {
             "address": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
@@ -2961,58 +2949,58 @@
       },
       {
         "timestamp": 1636070400,
-        "contracts": 21,
+        "contracts": 20,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 60, "none": 38 },
-        "lines": { "total": 9041, "covered": 3826 },
+        "units": { "identical": 11, "differs": 60, "none": 36 },
+        "lines": { "total": 8847, "covered": 3826 },
         "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
       },
       {
         "timestamp": 1686700800,
-        "contracts": 21,
+        "contracts": 20,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 68, "none": 30 },
-        "lines": { "total": 9041, "covered": 5090 },
+        "units": { "identical": 11, "differs": 68, "none": 28 },
+        "lines": { "total": 8847, "covered": 5090 },
         "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
       },
       {
         "timestamp": 1709164800,
-        "contracts": 21,
+        "contracts": 20,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 68, "none": 30 },
-        "lines": { "total": 9041, "covered": 5090 },
+        "units": { "identical": 11, "differs": 68, "none": 28 },
+        "lines": { "total": 8847, "covered": 5090 },
         "reports": ["code4rena-zksync-era-2023-10"]
       },
       {
         "timestamp": 1716508800,
-        "contracts": 21,
+        "contracts": 20,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 76, "none": 22 },
-        "lines": { "total": 9041, "covered": 5802 },
+        "units": { "identical": 11, "differs": 76, "none": 20 },
+        "lines": { "total": 8847, "covered": 5802 },
         "reports": ["oxorio-privacy-pools-v1-2024-05"]
       },
       {
         "timestamp": 1762905600,
-        "contracts": 21,
+        "contracts": 20,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 76, "none": 22 },
-        "lines": { "total": 9041, "covered": 5802 },
+        "units": { "identical": 11, "differs": 76, "none": 20 },
+        "lines": { "total": 8847, "covered": 5802 },
         "reports": ["cantina-rollup-contracts-2025-11-12"]
       },
       {
         "timestamp": 1772668800,
-        "contracts": 21,
+        "contracts": 20,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 76, "none": 22 },
-        "lines": { "total": 9041, "covered": 5802 },
+        "units": { "identical": 11, "differs": 76, "none": 20 },
+        "lines": { "total": 8847, "covered": 5802 },
         "reports": ["cantina-payload-2026-03-05"]
       },
       {
         "timestamp": 1791619122,
-        "contracts": 21,
+        "contracts": 20,
         "withoutSource": 1,
-        "units": { "identical": 11, "differs": 76, "none": 22 },
-        "lines": { "total": 9041, "covered": 5802 }
+        "units": { "identical": 11, "differs": 76, "none": 20 },
+        "lines": { "total": 8847, "covered": 5802 }
       }
     ],
     "undatedReports": []

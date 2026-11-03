@@ -36,6 +36,8 @@ export interface CoverageHistoryInputs {
   code: AuditedCode
   discovery: DiscoveryOutput
   launch: number | undefined
+  /** Verifier deployments of the zk catalog, never members of the perimeter. */
+  verifiers: Set<ChainSpecificAddress>
   /** The main pass's output, which gives the present. */
   coverage: Pick<
     AuditCoverage,
@@ -94,7 +96,11 @@ export async function coverageHistoryOfProject(
   log: CoverageHistoryLog,
 ): Promise<CoverageHistoryResult> {
   const { project, index, code, coverage } = inputs
-  const timeline = buildPerimeterTimeline(inputs.discovery, inputs.launch)
+  const timeline = buildPerimeterTimeline(
+    inputs.discovery,
+    inputs.launch,
+    inputs.verifiers,
+  )
   for (const warning of timeline.warnings) log.warn(warning)
   const dates = reportDates(index)
   const firstCounted = firstCountedAt(code, dates)

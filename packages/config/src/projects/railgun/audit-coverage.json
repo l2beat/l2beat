@@ -3,15 +3,16 @@
   "project": "railgun",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
+    "commit": "29fc7fd763e95c91755451e0b531c457bc921dc2"
   },
   "discoveredAt": 1792756093,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
-    "_libs/safe": { "name": "Safe", "kind": "library" },
+    "_libs/safe": { "name": "Safe (library)", "kind": "library" },
     "arbitrum": { "name": "Arbitrum One", "kind": "project" },
     "optimism": { "name": "OP Mainnet", "kind": "project" },
     "railgun": { "name": "Railgun", "kind": "project" },
+    "safe": { "name": "Safe", "kind": "project" },
     "scroll": { "name": "Scroll", "kind": "project" },
     "starknet": { "name": "Starknet", "kind": "project" },
     "zksync2": { "name": "ZKsync Era", "kind": "project" }
@@ -25,14 +26,14 @@
       "document": "railgun/reports/2021_07-abdk-railgun-circom-and-solidity-audit.pdf"
     },
     "ackee-safe-1-4-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Contracts 1.4.0 Security Review",
       "auditor": "Ackee Blockchain",
       "date": "2023-03-28",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
     },
     "ackee-safe-1-5-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account Security Review",
       "auditor": "Ackee Blockchain Security",
       "date": "2025-05-28",

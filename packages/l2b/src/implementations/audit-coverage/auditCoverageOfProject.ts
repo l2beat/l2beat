@@ -24,12 +24,15 @@ import {
 } from './coverageHistory'
 import { type CoveredUnit, coverFlat } from './coverFlat'
 import type { GetDeployedSource } from './deployedSource'
+import { isVerifierContract } from './verifiers'
 
 export interface AuditCoverageInputs {
   index: AuditIndex
   objects: AuditObjects
   code: AuditedCode
   dataset: { repository: string; commit: string }
+  /** Verifier deployments of the zk catalog, see verifiers.ts. */
+  verifiers: Set<ChainSpecificAddress>
 }
 
 /** Also cover the perimeter's history, see coverageHistory.ts. */
@@ -88,7 +91,12 @@ export async function auditCoverageOfProject(
         return [covered.id, covered.first]
       })
     }
-    contracts[entry.address] = toContract(entry, addresses, sources)
+    contracts[entry.address] = toContract(
+      entry,
+      addresses,
+      sources,
+      inputs.verifiers,
+    )
   }
   const covered = await (history === undefined
     ? undefined
@@ -99,6 +107,7 @@ export async function auditCoverageOfProject(
           code: inputs.code,
           discovery: discovered,
           launch: history.launch,
+          verifiers: inputs.verifiers,
           coverage: {
             contracts,
             flats,
@@ -140,6 +149,7 @@ function toContract(
   entry: EntryParameters,
   addresses: ChainSpecificAddress[],
   sources: string[],
+  verifiers: Set<ChainSpecificAddress>,
 ): Contract {
   const [source, ...implementations] = sources
   assert(source !== undefined, `${entry.address} has no source`)
@@ -152,6 +162,9 @@ function toContract(
     contract.implementations = Object.fromEntries(
       implementations.map((s, i) => [addresses[i + 1], s]),
     )
+  }
+  if (isVerifierContract(entry.address, addresses.slice(1), verifiers)) {
+    contract.verifier = true
   }
   return contract
 }
