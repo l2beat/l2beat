@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Logo } from '~/components/Logo'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
@@ -81,78 +82,99 @@ function Hero() {
 }
 
 /**
- * The shift, with no weights on the areas: L2BEAT's map is one block, layer
- * 2s; ETHBEAT's is a grid of equal tiles in which layer 2s are one among
- * many, and the last tile is left open for what comes next.
+ * A new centre: L2BEAT had layer 2s in the middle, with what they rely on
+ * around them; ETHBEAT has Ethereum (the heart) in the middle, with layer 2s
+ * as one of many equal discs around it. No disc is bigger than another.
  */
 function FocusShift() {
   return (
     <section aria-labelledby="focus-heading">
-      <h2
-        id="focus-heading"
-        className={cn(STATEMENT, 'max-w-[22ch] text-balance')}
-      >
-        From layer 2s to the whole of Ethereum
+      <h2 id="focus-heading" className={STATEMENT}>
+        A new centre
       </h2>
-      <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-2 md:gap-6 lg:gap-10">
-        <FocusMap
+      <div className="mt-10 grid gap-12 md:mt-12 md:grid-cols-2 md:gap-6 lg:gap-10">
+        <Orbit
           name="L2BEAT"
-          caption="Built around layer 2s"
-          className="grid-cols-1"
-          areas={[{ ...LAYER_2S, large: true }]}
+          caption="Layer 2s at the centre"
+          centre={
+            <div className="flex size-[30%] items-center justify-center rounded-full bg-[#e6e3dd] font-inter font-semibold text-[clamp(16px,4.4cqw,22px)] text-brand-ink tracking-[-0.02em] dark:bg-[#3d4358] dark:text-pure-white">
+              Layer 2s
+            </div>
+          }
+          radius={28}
+          size={20.8}
+          satellites={L2BEAT_AROUND}
         />
-        <FocusMap
+        <Orbit
           name="ETHBEAT"
-          caption="The whole of Ethereum"
-          className="grid-cols-3 grid-rows-3"
-          areas={[
-            LAYER_2S,
-            ...ETHEREUM_AREAS.map((label) => ({ label, colors: AREA })),
-            { label: 'And more', colors: OPEN_AREA },
-          ]}
+          caption="Ethereum at the centre"
+          centre={
+            <Logo small animated={false} className="mt-0 h-auto w-[30%]" />
+          }
+          radius={33}
+          size={18.4}
+          satellites={ETHBEAT_AROUND}
         />
       </div>
-      <p className="mt-6 text-[14px] text-secondary leading-5">
-        We keep covering layer 2s. They are now one part of what we look at.
+      <p className="mt-6 max-w-[36rem] text-[14px] text-secondary leading-5">
+        L2BEAT looked at layer 2s and what they rely on. ETHBEAT looks at
+        everything built on Ethereum.
       </p>
     </section>
   )
 }
 
-interface FocusArea {
+interface Satellite {
   label: string
-  /** Ground and text together, so every tile keeps 4.5:1. */
+  /** Ground and text together, so every disc keeps 4.5:1. */
   colors: string
-  large?: boolean
 }
 
-const LAYER_2S: FocusArea = {
-  label: 'Layer 2s',
-  colors: 'bg-[#e6e3dd] text-brand-ink dark:bg-[#3d4358] dark:text-pure-white',
-}
-// One colour for all of them: none of them outweighs the others.
-const AREA = 'bg-brand-pink text-brand-ink'
-const OPEN_AREA = 'bg-[#ffd9e4] text-brand-ink'
-const ETHEREUM_AREAS = [
-  'Ethereum L1',
-  'Privacy',
-  'ZK proving',
-  'Interop',
-  'Liquid staking',
-  'DeFi',
-  'Tokens',
+const LAYER_2S_COLORS =
+  'bg-[#e6e3dd] text-brand-ink dark:bg-[#3d4358] dark:text-pure-white'
+const AREA_COLORS = 'bg-brand-pink text-brand-ink'
+const SOFT_COLORS = 'bg-[#ffd9e4] text-brand-ink'
+
+const L2BEAT_AROUND: Satellite[] = [
+  { label: 'Bridges', colors: SOFT_COLORS },
+  { label: 'Data availability', colors: SOFT_COLORS },
+  { label: 'ZK proofs', colors: SOFT_COLORS },
+]
+const ETHBEAT_AROUND: Satellite[] = [
+  { label: 'Layer 2s', colors: LAYER_2S_COLORS },
+  ...[
+    'Ethereum L1',
+    'Privacy',
+    'ZK proving',
+    'Interop',
+    'Liquid staking',
+    'DeFi',
+    'Tokens',
+  ].map((label) => ({ label, colors: AREA_COLORS })),
+  { label: 'And more', colors: SOFT_COLORS },
 ]
 
-function FocusMap({
+/**
+ * One system: a centre, a ring and equal discs spaced evenly on it, the first
+ * at the top. Positions and sizes are percentages of the square, and type
+ * follows its width (cqw), so the drawing scales from a phone to a desktop.
+ */
+function Orbit({
   name,
   caption,
-  areas,
-  className,
+  centre,
+  radius,
+  size,
+  satellites,
 }: {
   name: string
   caption: string
-  areas: FocusArea[]
-  className: string
+  centre: ReactNode
+  /** Ring radius, as a percentage of the square's width. */
+  radius: number
+  /** Disc diameter, as a percentage of the square's width. */
+  size: number
+  satellites: Satellite[]
 }) {
   return (
     <figure>
@@ -162,28 +184,37 @@ function FocusMap({
           {caption}
         </span>
       </figcaption>
-      <ul
-        aria-label={`${name}'s focus`}
-        className={cn('grid aspect-[4/3] gap-1', className)}
-      >
-        {areas.map((area) => (
-          <li
-            key={area.label}
-            className={cn('flex min-w-0 rounded-md p-2.5 md:p-3', area.colors)}
-          >
-            <span
-              className={cn(
-                'font-inter font-semibold leading-tight',
-                area.large
-                  ? 'text-[20px] tracking-[-0.02em] md:text-[24px]'
-                  : 'text-[13px] md:text-[15px]',
-              )}
-            >
-              {area.label}
-            </span>
-          </li>
-        ))}
-      </ul>
+      <div className="relative aspect-square [container-type:inline-size]">
+        <div
+          aria-hidden
+          className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 rounded-full border-2 border-divider"
+          style={{ width: `${2 * radius}%`, height: `${2 * radius}%` }}
+        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          {centre}
+        </div>
+        <ul aria-label={`${name}: ${caption}`}>
+          {satellites.map((satellite, i) => {
+            const angle = (2 * Math.PI * i) / satellites.length - Math.PI / 2
+            return (
+              <li
+                key={satellite.label}
+                className={cn(
+                  '-translate-x-1/2 -translate-y-1/2 absolute flex aspect-square items-center justify-center rounded-full p-[1.2cqw] text-center font-inter font-semibold text-[clamp(11px,2.9cqw,15px)] leading-[1.15]',
+                  satellite.colors,
+                )}
+                style={{
+                  width: `${size}%`,
+                  left: `${50 + radius * Math.cos(angle)}%`,
+                  top: `${50 + radius * Math.sin(angle)}%`,
+                }}
+              >
+                {satellite.label}
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     </figure>
   )
 }
