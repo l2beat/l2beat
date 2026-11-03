@@ -24,6 +24,12 @@ export interface TextMeasure {
   inkLeft(text: string, size: number, weight: Weight): number
 }
 
+/**
+ * The width satori needs for text the font measures at `measured`. It sets
+ * each word a little wider than that, so keep 2% spare plus a few px.
+ */
+export const satoriWidth = (measured: number) => measured * 1.02 + 8
+
 export function createTextMeasure(fonts: OpengraphFonts): TextMeasure {
   const faces = {
     600: parse(fonts.semiBold),

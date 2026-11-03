@@ -1,10 +1,11 @@
 import type { Project } from '@l2beat/config'
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
+import { readFileSync } from 'fs'
 import path from 'path'
 import type { OpengraphKit } from '~/components/opengraph-image/heartbeat/render'
 import { renderOpengraphPng } from '~/components/opengraph-image/heartbeat/render'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/Project'
 import { ps } from '~/server/projects'
+import { writeIfMissing } from './writeIfMissing'
 
 type ProjectPageType = ReturnType<typeof getOpengraphProjectTypes>[number]
 
@@ -22,6 +23,7 @@ export async function generateProjectOgImages(kit: OpengraphKit) {
   for (const project of projects) {
     for (const type of getOpengraphProjectTypes(project)) {
       await writeIfMissing(
+        'PROJECT DETAILS',
         `${type}/projects/${project.slug}`,
         project.name,
         () =>
@@ -43,7 +45,7 @@ export async function generateProjectOgImages(kit: OpengraphKit) {
     }
   }
 
-  await writeIfMissing('projects/ethereum', 'Ethereum', () =>
+  await writeIfMissing('PROJECT DETAILS', 'projects/ethereum', 'Ethereum', () =>
     renderOpengraphPng(
       <ProjectOpengraphImage
         measure={kit.measure}
@@ -78,23 +80,6 @@ function getLabel(
 function getLogoSrc(slug: string) {
   const file = path.join(process.cwd(), 'static/icons', `${slug}.png`)
   return `data:image/png;base64,${readFileSync(file).toString('base64')}`
-}
-
-async function writeIfMissing(
-  pagePath: string,
-  name: string,
-  render: () => Promise<Buffer>,
-) {
-  const outputDir = path.join(process.cwd(), 'static/meta-images', pagePath)
-  const outputFile = path.join(outputDir, 'opengraph-image.png')
-  if (existsSync(outputFile)) {
-    return
-  }
-  console.time(`[PROJECT DETAILS] ${name}`)
-  const pngBuffer = await render()
-  mkdirSync(outputDir, { recursive: true })
-  writeFileSync(outputFile, pngBuffer)
-  console.timeEnd(`[PROJECT DETAILS] ${name}`)
 }
 
 export function getOpengraphProjectTypes(

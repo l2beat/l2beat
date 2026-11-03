@@ -2,12 +2,12 @@ import type { ReactNode } from 'react'
 import {
   beatsStart,
   HEART_RATIO,
-  heartLeftAt,
   INK,
   lockup,
   PINK,
   place,
   pulse,
+  pulseEntryX,
   pulseY,
   stroke,
   svgDataUri,
@@ -36,7 +36,7 @@ const heart = place(
   HEART_HEIGHT,
 )
 const lineY = pulseY(heart)
-const lineEnd = heartLeftAt(heart, lineY) + 4
+const lineEnd = pulseEntryX(heart) + 4
 const labelRoom = beatsStart(lineEnd, PULSE_SCALE) - LABEL_CLEARANCE - MARGIN
 const decor = svgDataUri(
   OG_SIZE.width,
@@ -185,8 +185,3 @@ export function wordSpans({
 }
 
 export type TitlePart = string | { highlight: string }
-
-export const titleText = (parts: TitlePart[]) =>
-  parts
-    .map((part) => (typeof part === 'string' ? part : part.highlight))
-    .join('')

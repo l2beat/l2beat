@@ -1,10 +1,10 @@
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
-import path from 'node:path'
 import { HomeOpengraphImage } from '~/components/opengraph-image/Home'
 import type { OpengraphKit } from '~/components/opengraph-image/heartbeat/render'
 import { renderOpengraphPng } from '~/components/opengraph-image/heartbeat/render'
 import type { MainPage } from '~/components/opengraph-image/MainPage'
 import { MainPageOpengraphImage } from '~/components/opengraph-image/MainPage'
+import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
+import { writeIfMissing } from './writeIfMissing'
 
 // Labels name the page's section, and only when the title doesn't already.
 const mainPages: MainPage[] = [
@@ -69,15 +69,15 @@ const mainPages: MainPage[] = [
     label: 'For projects',
     title: 'Submit your protocol',
   },
-  { path: 'l2beat-is-now-ethbeat', title: 'L2BEAT is now ETHBEAT' },
+  { path: RENAME_ANNOUNCEMENT_PATH.slice(1), title: 'L2BEAT is now ETHBEAT' },
 ]
 
 export async function generateMainPageOgImages(kit: OpengraphKit) {
-  await writeIfMissing('home', 'Home', () =>
+  await writeIfMissing('MAIN PAGE', 'home', 'Home', () =>
     renderOpengraphPng(<HomeOpengraphImage measure={kit.measure} />, kit),
   )
   for (const page of mainPages) {
-    await writeIfMissing(page.path, page.title, () =>
+    await writeIfMissing('MAIN PAGE', page.path, page.title, () =>
       renderOpengraphPng(
         <MainPageOpengraphImage
           measure={kit.measure}
@@ -88,21 +88,4 @@ export async function generateMainPageOgImages(kit: OpengraphKit) {
       ),
     )
   }
-}
-
-async function writeIfMissing(
-  pagePath: string,
-  name: string,
-  render: () => Promise<Buffer>,
-) {
-  const outputDir = path.join(process.cwd(), 'static/meta-images', pagePath)
-  const outputFile = path.join(outputDir, 'opengraph-image.png')
-  if (existsSync(outputFile)) {
-    return
-  }
-  console.time(`[MAIN PAGE] ${name}`)
-  const pngBuffer = await render()
-  mkdirSync(outputDir, { recursive: true })
-  writeFileSync(outputFile, pngBuffer)
-  console.timeEnd(`[MAIN PAGE] ${name}`)
 }

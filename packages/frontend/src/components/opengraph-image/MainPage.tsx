@@ -1,5 +1,5 @@
 import { COLUMN, HeartbeatFrame, wordSpans } from './heartbeat/Frame'
-import type { TextMeasure } from './heartbeat/text'
+import { satoriWidth, type TextMeasure } from './heartbeat/text'
 
 export interface MainPage {
   /** Where the image goes, under static/meta-images. */
@@ -37,7 +37,7 @@ export function MainPageOpengraphImage({ measure, label, title }: Props) {
  */
 function fitTitle(measure: TextMeasure, title: string) {
   const fitsOneLine = (size: number) =>
-    measure.width(title, size, 700) <= COLUMN - slack(COLUMN)
+    satoriWidth(measure.width(title, size, 700)) <= COLUMN
   for (let size = 96; size >= 56; size--) {
     if (fitsOneLine(size)) return { size, width: COLUMN }
   }
@@ -48,17 +48,14 @@ function fitTitle(measure: TextMeasure, title: string) {
   return { size: 44, width: COLUMN }
 }
 
-// Satori sets each word a little wider than the font measures it, so a line
-// keeps 2% spare. Every word but the last carries a space as its right margin,
-// and satori's flex wrap counts that margin.
-const slack = (width: number) => 8 + width * 0.02
-
+// Every word but the last carries a space as its right margin, and satori's
+// flex wrap counts that margin.
 function lineCount(widths: number[], space: number, width: number) {
   let lines = 1
   let x = 0
   widths.forEach((w, i) => {
     const item = w + (i < widths.length - 1 ? space : 0)
-    if (x > 0 && x + item > width - slack(width)) {
+    if (x > 0 && satoriWidth(x + item) > width) {
       lines++
       x = 0
     }

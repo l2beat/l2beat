@@ -1,11 +1,11 @@
 import { Canvas, MARGIN, type TitlePart, wordSpans } from './heartbeat/Frame'
 import {
-  heartLeftAt,
   INK,
   lockup,
   PINK,
   placeByRight,
   pulse,
+  pulseEntryX,
   pulseY,
   stroke,
   svgDataUri,
@@ -38,7 +38,7 @@ const logo = placeByRight(W - MARGIN, top + HEART_HEIGHT / 2, HEART_HEIGHT)
 const lineY = pulseY(logo)
 const line = pulse({
   x0: 0,
-  x1: heartLeftAt(logo, lineY) + 4,
+  x1: pulseEntryX(logo) + 4,
   y: lineY,
   scale: 0.9,
 })

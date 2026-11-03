@@ -1,5 +1,5 @@
 import { COLUMN, HeartbeatFrame } from './heartbeat/Frame'
-import type { TextMeasure } from './heartbeat/text'
+import { satoriWidth, type TextMeasure } from './heartbeat/text'
 
 interface Props {
   measure: TextMeasure
@@ -69,10 +69,9 @@ const logoSize = (size: number) =>
 function fitRow(measure: TextMeasure, name: string) {
   for (let size = 96; size > 38; size--) {
     const width =
-      measure.width(name, size, 700, -0.01 * size) * 1.02 +
+      satoriWidth(measure.width(name, size, 700, -0.01 * size)) +
       logoSize(size) +
-      GAP +
-      8
+      GAP
     if (width <= COLUMN) return size
   }
   return 38

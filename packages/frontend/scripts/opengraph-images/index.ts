@@ -1,14 +1,15 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import express from 'express'
-import { loadOpengraphKit } from '~/components/opengraph-image/heartbeat/render'
+import {
+  loadOpengraphKit,
+  OG_SIZE,
+} from '~/components/opengraph-image/heartbeat/render'
 import { generateExternalPublicationThumbnails } from './projects/generateExternalPublicationThumbnails'
 import { generateGovernanceReviewOgImages } from './projects/generateGovernanceReviewOgImages'
 import { generateMainPageOgImages } from './projects/generateMainPageOgImages'
 import { generateMonthlyUpdateOgImages } from './projects/generateMonthlyUpdateOgImages'
 import { generateProjectOgImages } from './projects/generateProjectOgImages'
-
-const ogImageSize = { width: 1200, height: 630 }
 
 async function main() {
   const app = express()
@@ -30,10 +31,10 @@ async function main() {
 
   await generateMainPageOgImages(kit)
   await generateProjectOgImages(kit)
-  await generateMonthlyUpdateOgImages(ogImageSize, {
+  await generateMonthlyUpdateOgImages(OG_SIZE, {
     montserratBold,
   })
-  await generateGovernanceReviewOgImages(ogImageSize, {
+  await generateGovernanceReviewOgImages(OG_SIZE, {
     ptSerifBold,
   })
   await generateExternalPublicationThumbnails()
