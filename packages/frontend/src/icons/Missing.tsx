@@ -8,6 +8,7 @@ export function MissingIcon(props: SvgIconProps) {
       height="16"
       viewBox="0 0 17 16"
       fill="#FF0000"
+      aria-label="Missing"
       {...props}
     >
       <path
