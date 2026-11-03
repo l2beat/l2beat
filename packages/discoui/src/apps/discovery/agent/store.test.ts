@@ -21,6 +21,14 @@ describe(toFocus.name, () => {
     expect([...toFocus(show, 0).nodes]).toEqual(['bridge'])
   })
 
+  it('focuses the code contract next to the step contracts', () => {
+    const show: AgentShow = {
+      ...SHOW,
+      steps: [{ note: 'code', paths: [['a', 'b']], nodes: [], select: 'z' }],
+    }
+    expect([...toFocus(show, 0).nodes]).toEqual(['a', 'b', 'z'])
+  })
+
   it('collects every contract of a step and keys the step', () => {
     const focus = toFocus(SHOW, 0)
     expect(focus.key).toEqual('boot-7:0')
@@ -53,6 +61,17 @@ describe('useAgentStore', () => {
     useAgentStore.getState().start(SHOW)
     useAgentStore.getState().selectForAgent('b')
     usePanelStore.getState().select(['picked'])
+    useAgentStore.getState().clear()
+    expect(usePanelStore.getState().selected).toEqual(['picked'])
+  })
+
+  it('keeps a selection made between two answers', () => {
+    usePanelStore.getState().select(['mine'])
+    useAgentStore.getState().start(SHOW)
+    useAgentStore.getState().selectForAgent('b')
+    usePanelStore.getState().select(['picked'])
+    useAgentStore.getState().start(SHOW)
+    useAgentStore.getState().selectForAgent('c')
     useAgentStore.getState().clear()
     expect(usePanelStore.getState().selected).toEqual(['picked'])
   })

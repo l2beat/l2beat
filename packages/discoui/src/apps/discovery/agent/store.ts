@@ -89,9 +89,9 @@ export const useAgentStore = create<State>((set, get) => ({
       focus: toFocus(show, 0),
       view: 'path',
       selectionBefore:
-        state.show === undefined
-          ? usePanelStore.getState().selected
-          : state.selectionBefore,
+        state.show !== undefined && isAgentSelection(state.agentSelection)
+          ? state.selectionBefore
+          : usePanelStore.getState().selected,
     })),
   goToStep: (index) => {
     const show = get().show
@@ -108,9 +108,7 @@ export const useAgentStore = create<State>((set, get) => ({
   },
   clear: () => {
     const { selectionBefore, agentSelection } = get()
-    const selected = usePanelStore.getState().selected
-    const untouched = selected.length === 1 && selected[0] === agentSelection
-    if (selectionBefore !== undefined && untouched) {
+    if (selectionBefore !== undefined && isAgentSelection(agentSelection)) {
       usePanelStore.getState().select(selectionBefore)
     }
     set({
@@ -121,6 +119,11 @@ export const useAgentStore = create<State>((set, get) => ({
     })
   },
 }))
+
+function isAgentSelection(agentSelection: string | undefined): boolean {
+  const selected = usePanelStore.getState().selected
+  return selected.length === 1 && selected[0] === agentSelection
+}
 
 // Closing the agent in one tab closes it everywhere, and a reload won't bring
 // it back.
@@ -163,11 +166,11 @@ export function toFocus(show: AgentShow, stepIndex: number): AgentFocus {
   }
 }
 
-// A step that only points at code still focuses the contract it shows.
 function focusedContracts(step: AgentStep): Set<string> {
   const shown = new Set([...step.paths.flat(), ...step.nodes])
-  if (shown.size > 0) {
-    return shown
+  const selected = step.select ?? step.code?.address
+  if (selected !== undefined) {
+    shown.add(selected)
   }
-  return new Set([step.select ?? step.code?.address ?? []].flat())
+  return shown
 }
