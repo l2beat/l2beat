@@ -27,14 +27,7 @@ export function createPrivacyRouter(
   })
 
   router.get('/privacy/summary', async (req, res) => {
-    const data = await cache.get(
-      {
-        key: ['privacy', 'summary', req.originalUrl],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getPrivacySummaryData(manifest, req.originalUrl, cache),
-    )
+    const data = await getPrivacySummaryData(manifest, req.originalUrl, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })

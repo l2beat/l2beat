@@ -19,11 +19,11 @@ export async function getL2CostsData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['layer2s', 'costs', 'data'],
+        key: ['layer2s', 'costs', 'data', req.query.tab],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      () => getCachedData(cache, req.query.tab),
+      () => getCachedData(req.query.tab),
     ),
   ])
 
@@ -52,18 +52,11 @@ export async function getL2CostsData(
   }
 }
 
-async function getCachedData(cache: InMemoryCache, tab: 'rollups' | 'others') {
+async function getCachedData(tab: 'rollups' | 'others') {
   const helpers = getSsrHelpers()
   const [entries, queryState] = await Promise.all([
     getL2CostsEntries(helpers),
-    cache.get(
-      {
-        key: ['layer2s', 'costs', 'data', 'query-state', tab],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getQueryState(tab),
-    ),
+    getQueryState(tab),
   ])
 
   return {
