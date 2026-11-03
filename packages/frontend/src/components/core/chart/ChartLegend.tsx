@@ -45,11 +45,13 @@ export function ChartLegend({
         )}
       >
         {leading}
-        {/* the padding keeps a focused item clear of the 30px edge fades */}
+        {/* the padding fits the focus outline inside the scroll clip, the
+            negative margin hides that padding from the layout, and scroll-px
+            keeps a focused item clear of the 30px edge fades */}
         <OverflowWrapper
           childrenRef={contentRef}
-          className="min-w-0"
-          childrenClassName="scroll-px-[30px]"
+          className="-m-[3px] min-w-0"
+          childrenClassName="p-[3px] scroll-px-[30px]"
         >
           <div className="flex h-3.5 w-max items-center gap-2" ref={contentRef}>
             {items.map(({ key, config }) => {
@@ -64,7 +66,7 @@ export function ChartLegend({
                   className={cn(
                     'group/legend-item flex items-center gap-[3px] *:transition-opacity [&>svg]:text-secondary',
                     interactiveLegend &&
-                      'focus-visible:-outline-offset-1 cursor-pointer select-none rounded-xs focus-visible:outline-1 focus-visible:outline-brand',
+                      'cursor-pointer select-none rounded-xs focus-visible:outline-1 focus-visible:outline-brand focus-visible:outline-offset-2',
                     // dims the content only, so the focus outline keeps its contrast
                     isHidden && '*:opacity-50',
                   )}
