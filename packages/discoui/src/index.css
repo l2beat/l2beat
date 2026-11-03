@@ -1,6 +1,8 @@
 @import "./markdown.css" layer(base);
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme static {
   --color-*: initial;
   --color-transparent: transparent;

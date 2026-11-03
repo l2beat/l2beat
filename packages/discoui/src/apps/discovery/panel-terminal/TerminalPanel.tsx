@@ -1,38 +1,11 @@
 import { useQueryClient } from '@tanstack/react-query'
-import ansiHTML from 'ansi-html'
 import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router'
 import { Checkbox } from '../../../components/Checkbox'
-import { type Theme, useTheme } from '../../../theme'
+import { useTheme } from '../../../theme'
 import { usePanelStore } from '../store/panel-store'
+import { renderAnsi } from './renderAnsi'
 import { useTerminalStore } from './store'
-
-const ANSI_COLORS: Record<Theme, Parameters<typeof ansiHTML.setColors>[0]> = {
-  dark: {
-    reset: ['F0D8BD', '1D1816'], // [fg, bg]
-    black: '000000',
-    red: 'FB4A35',
-    green: '9DDE6C',
-    yellow: 'FABD30',
-    blue: '8B8BE8',
-    magenta: 'a73db5',
-    cyan: '1c92a8',
-    lightgrey: 'D3D3D3',
-    darkgrey: 'A9A9A9',
-  },
-  light: {
-    reset: ['3B2D23', 'FCF9F4'],
-    black: '000000',
-    red: 'C8281A',
-    green: '4F8A1B',
-    yellow: 'A86F00',
-    blue: '5656C4',
-    magenta: '8E2FA0',
-    cyan: '11768A',
-    lightgrey: '6B6B6B',
-    darkgrey: '8A8A8A',
-  },
-}
 
 export function TerminalPanel() {
   const queryClient = useQueryClient()
@@ -160,10 +133,4 @@ export function TerminalPanel() {
       />
     </div>
   )
-}
-
-// ansi-html keeps its colors in module state, so set them for every render.
-function renderAnsi(output: string, theme: Theme): string {
-  ansiHTML.setColors(ANSI_COLORS[theme])
-  return ansiHTML(output)
 }
