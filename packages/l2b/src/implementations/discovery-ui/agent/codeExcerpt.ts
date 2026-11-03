@@ -71,7 +71,24 @@ function continuationAfter(code: string, close: number): number | undefined {
     return undefined
   }
   const open = blockOpen(code, at)
-  return open === undefined ? undefined : closingBrace(code, open)
+  return open === undefined ? statementEnd(code, at) : closingBrace(code, open)
+}
+
+// An else without braces, like `else revert Forbidden();`, ends at its
+// semicolon. Semicolons in parentheses do not end it.
+function statementEnd(code: string, from: number): number | undefined {
+  let parens = 0
+  for (let at = from; at < code.length; at++) {
+    at = endOfCommentOrString(code, at)
+    if (code[at] === '(') {
+      parens++
+    } else if (code[at] === ')') {
+      parens = Math.max(parens - 1, 0)
+    } else if (code[at] === ';' && parens === 0) {
+      return at
+    }
+  }
+  return undefined
 }
 
 function startsWithWord(code: string, at: number, word: string): boolean {

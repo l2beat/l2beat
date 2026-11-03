@@ -159,6 +159,19 @@ describe(excerptAt.name, () => {
     )
   })
 
+  it('goes on through an else without braces', () => {
+    const code = [
+      'if (authorized) {',
+      '  transfer();',
+      '} else if (paused) revert Paused();',
+      'else revert Forbidden();',
+      'elsewhere();',
+    ].join('\n')
+    const excerpt = excerptAt(code, 0, 1)
+    expect(excerpt.lines).toEqual(code.split('\n').slice(0, 4))
+    expect(excerpt.isCut).toEqual(false)
+  })
+
   it('cuts a long block', () => {
     const body = Array.from({ length: 100 }, (_, i) => `  x = ${i};`)
     const code = ['function long() {', ...body, '}'].join('\n')
