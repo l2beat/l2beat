@@ -1524,9 +1524,9 @@ class WebGLRenderer {
         )
       }
 
-      for (const { index, visibleRow } of rn.visibleFields) {
-        if (flags.fieldHighlighted[index]) {
-          const rowY = y + HEADER_HEIGHT + visibleRow * FIELD_HEIGHT
+      for (let row = 0; row < rn.rows.length; row++) {
+        if (isRowHighlighted(rn, row)) {
+          const rowY = y + HEADER_HEIGHT + row * FIELD_HEIGHT
           writeRound(
             buf,
             n++,
