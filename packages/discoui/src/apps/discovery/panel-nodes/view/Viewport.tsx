@@ -4,6 +4,7 @@ import { useDockingStore } from '../../multi-view/store'
 import { useSearchStore } from '../../search/store'
 import { useStore } from '../store/store'
 import { effectiveTool } from '../store/utils/tool'
+import { ChainCaptions } from './ChainCaptions'
 import { useDesktopControls } from './hooks/useDesktopControls'
 import { useTouchControls } from './hooks/useTouchControls'
 import { MouseSelection } from './MouseSelection'
@@ -92,6 +93,7 @@ export function Viewport() {
       )}
     >
       <NodesAndConnectionsWebGL />
+      <ChainCaptions />
       <MouseSelection />
     </div>
   )

@@ -25,6 +25,7 @@ export function AutoLayoutMenu() {
   return (
     <ToolbarMenu
       label="Layout"
+      icon={<IconControlFlow />}
       description="Arranges the selected nodes, or every visible node when nothing is selected."
       sections={[
         [
