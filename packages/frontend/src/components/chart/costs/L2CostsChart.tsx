@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
@@ -63,11 +63,9 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
     }
   }, [entries, filters, tab])
 
-  const { data, isLoading } = useQuery(
-    trpc.costs.chart.queryOptions({
-      range,
-      filter,
-    }),
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.costs.chart,
+    { range, filter },
   )
 
   const chartData = useMemo(() => {
@@ -117,22 +115,23 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(chartData, {
-        bucket: rangeToResolution(range),
+        bucket: rangeToResolution(shownInput.range),
       }),
-    [chartData, range],
+    [chartData, shownInput.range],
   )
 
   return (
     <div>
-      <Header timeRange={timeRange} />
+      <Header isPlaceholderData={isPlaceholderData} timeRange={timeRange} />
       <div className="mt-4 mb-3">
         <CostsChart
+          isPlaceholderData={isPlaceholderData}
           data={chartData}
           syncedUntil={data?.syncedUntil}
           unit={unit}
           isLoading={isLoading}
           milestones={milestones}
-          range={range}
+          range={shownInput.range}
           hasBlobs={!!data?.hasBlobs}
         />
       </div>
@@ -152,14 +151,23 @@ export function L2CostsChart({ tab, milestones, entries }: Props) {
   )
 }
 
-function Header({ timeRange }: { timeRange: [number, number] | undefined }) {
+function Header({
+  timeRange,
+  isPlaceholderData,
+}: {
+  timeRange: [number, number] | undefined
+  isPlaceholderData: boolean
+}) {
   return (
     <header>
       <h2 className="font-bold text-xl md:text-2xl">
         Onchain costs
         <span className="max-md:hidden"> stacked by type</span>
       </h2>
-      <ChartTimeRange timeRange={timeRange} />
+      <ChartTimeRange
+        isPlaceholderData={isPlaceholderData}
+        timeRange={timeRange}
+      />
     </header>
   )
 }

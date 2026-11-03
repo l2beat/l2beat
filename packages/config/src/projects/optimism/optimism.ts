@@ -85,7 +85,6 @@ export const optimism: ScalingProject = opStackL2({
             'opstack-standardbridge.L1ToL2Transfer',
             'beefy-bridge.L1ToL2Transfer',
             'maker-bridge.L1ToL2Transfer',
-            'sorare-base.L1ToL2Transfer',
             'lido-wsteth.L1ToL2Transfer',
             'synthetix-bridge.L1ToL2Transfer',
           ],
@@ -109,7 +108,6 @@ export const optimism: ScalingProject = opStackL2({
             'opstack-standardbridge.L1ToL2Transfer',
             'beefy-bridge.L1ToL2Transfer',
             'maker-bridge.L1ToL2Transfer',
-            'sorare-base.L1ToL2Transfer',
             'lido-wsteth.L1ToL2Transfer',
             'synthetix-bridge.L1ToL2Transfer',
           ],
@@ -145,11 +143,6 @@ export const optimism: ScalingProject = opStackL2({
       {
         chain: 'optimism',
         plugin: 'maker-bridge',
-        bridgeType: 'lockAndMint',
-      },
-      {
-        chain: 'optimism',
-        plugin: 'sorare-base',
         bridgeType: 'lockAndMint',
       },
       {

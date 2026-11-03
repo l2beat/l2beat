@@ -32,6 +32,7 @@ interface Props {
   data: TvsValueChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   project?: ChartProject
   milestones?: Milestone[]
 }
@@ -48,11 +49,13 @@ export function TvsValueChart({
   data,
   syncedUntil,
   isLoading,
+  isPlaceholderData,
   project,
   milestones,
 }: Props) {
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={data}
       meta={chartMeta}
       isLoading={isLoading}

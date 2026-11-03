@@ -67,6 +67,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* A mouse or trackpad: an iPad is as wide as a laptop but has no hover, and
+   a narrow window still has one. `not-can-hover:` is touch. The outer
+   parentheses keep `not-` negating both features: `not (a) and (b)` is not
+   a valid query, and a browser drops it. */
+@custom-variant can-hover (@media ((hover: hover) and (pointer: fine)));
+
 :root {
   /* Prevent horizontal overscroll on mobile to avoid unwanted scrolling when swiping on charts.
      Not applied on desktop to preserve MacOS swipe-back gesture. */

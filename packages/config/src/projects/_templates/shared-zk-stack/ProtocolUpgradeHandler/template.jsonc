@@ -24,7 +24,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "soft freeze, hard freeze, approve a protocol upgrade."
+          "description": "soft freeze, hard freeze (all chains of the Era and ZKsync OS ChainTypeManagers), approve a protocol upgrade."
         }
       ]
     },
@@ -36,7 +36,7 @@
       "edit": ["format", "ZkSyncAddress"]
     },
     "protocolFrozenUntil": {
-      "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)",
+      "description": "Timestamp until which ALL ZK chains connected to the main (Era) ChainTypeManager and, since v31, to the ZKsync OS ChainTypeManager are frozen. (Mailbox and Executor facets blocked)",
       "severity": "MEDIUM" // freeze (pause) state set by the Security Council: reviewed, but does not change the rules
     },
     "emergencyUpgradesExecuted": {

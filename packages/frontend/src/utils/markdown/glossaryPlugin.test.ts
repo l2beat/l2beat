@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import MarkdownIt from 'markdown-it'
-import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
+import type { GlossaryTerm } from './glossaryMatcher'
 import { glossaryPlugin, linkGlossaryTerms } from './glossaryPlugin'
 
 describe(linkGlossaryTerms.name, () => {
@@ -64,10 +64,65 @@ describe(linkGlossaryTerms.name, () => {
     )
   })
 
+  it('links a term that starts with punctuation on every call', () => {
+    const committee = linkGlossaryTerms([
+      { id: 'dac', matches: ['(DAC)'], description: 'DAC' },
+    ])
+    const linked = `Run by a committee [(DAC)](/glossary#dac?description=${encodeURIComponent('DAC')}).`
+    expect(committee('Run by a committee (DAC).')).toEqual(linked)
+    expect(committee('Run by a committee (DAC).')).toEqual(linked)
+  })
+
   it('should not replace terms within existing markdown links', () => {
     const input = 'Check out more here: [Blob](https://example.com).'
     const output = linkTerms(input)
     expect(output).toEqual(input)
+  })
+
+  it('should not replace terms within autolinks or HTML tags', () => {
+    const input =
+      'List: <https://github.com/org/repo/blob/main/README.md>. <a href="https://example.com/blob">here</a>'
+    const output = linkTerms(input)
+    expect(output).toEqual(input)
+  })
+
+  it('should not replace terms in autolinks with an apostrophe', () => {
+    const input = "<https://example.com/bob's/blob>"
+    const output = linkTerms(input)
+    expect(output).toEqual(input)
+  })
+
+  it('should replace terms between a < and a > that are not a tag', () => {
+    const output = linkTerms('Up to <10 Blob per block, a > b')
+    expect(output).toEqual(
+      `Up to <10 [Blob](/glossary#blob?description=${encodeURIComponent(
+        'Blob description',
+      )}) per block, a > b`,
+    )
+  })
+
+  it('should not read a comment marker inside a code span as a comment', () => {
+    const output = linkTerms('Use `<!--` before a Blob. <!-- note -->')
+    expect(output).toEqual(
+      `Use \`<!--\` before a [Blob](/glossary#blob?description=${encodeURIComponent(
+        'Blob description',
+      )}). <!-- note -->`,
+    )
+  })
+
+  it('should not replace terms in HTML attributes that contain >', () => {
+    const input = '<abbr title="a > blob">x</abbr>'
+    const output = linkTerms(input)
+    expect(output).toEqual(input)
+  })
+
+  it('should replace terms right after an HTML tag', () => {
+    const output = linkTerms('<span>Blob</span>')
+    expect(output).toEqual(
+      `<span>[Blob](/glossary#blob?description=${encodeURIComponent(
+        'Blob description',
+      )})</span>`,
+    )
   })
 
   it('should ignore linking terms wrapped with delimiters', () => {

@@ -37,6 +37,7 @@ interface Props {
     | undefined
   project: ChartProject
   isLoading: boolean
+  isPlaceholderData: boolean
   milestones: Milestone[]
   syncedUntil: UnixTime | undefined
   resolution: ChartResolution
@@ -52,6 +53,7 @@ export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
   project,
   isLoading,
+  isPlaceholderData,
   milestones,
   syncedUntil,
   resolution,
@@ -93,6 +95,7 @@ export function ProjectDaAbsoluteThroughputChart({
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       meta={projectChartMeta}
       data={chartData}
       project={hideProjectLogo ? undefined : project}

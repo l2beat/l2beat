@@ -220,7 +220,7 @@ function ProtocolRow({
             className="group inline-flex items-center gap-1"
           >
             <span className={nameClassName}>{protocol.name}</span>
-            <ArrowRightIcon className="size-3 shrink-0 fill-brand opacity-0 transition-opacity group-hover:opacity-100" />
+            <ArrowRightIcon className="size-3 shrink-0 fill-brand not-can-hover:opacity-100 opacity-0 transition-opacity group-hover:opacity-100" />
           </a>
         )}
         {isCanonical && (

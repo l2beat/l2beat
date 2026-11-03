@@ -83,7 +83,8 @@ export async function getEcosystemMonthlyUpdateEntries(
       whereNot: ['archivedAt'],
     }),
     ps.getProjects({
-      select: ['ecosystemConfig', 'colors'],
+      ids: ecosystemUpdateEntries.map((e) => e.ecosystemId as ProjectId),
+      select: ['colors'],
     }),
     ps.getProjects({
       ids: ecosystemUpdateEntries.flatMap(
@@ -139,7 +140,7 @@ export async function getEcosystemMonthlyUpdateEntries(
 
 function getEcosystemMonthlyUpdateEntry(
   ecosystemUpdateEntry: EcosystemUpdate,
-  ecosystem: Project<'ecosystemConfig' | 'colors'>,
+  ecosystem: Project<'colors'>,
   projects: Project<'ecosystemInfo'>[],
   tvs: SevenDayTvsBreakdown,
   activity: ActivityLatestUopsData,

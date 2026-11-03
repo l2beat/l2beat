@@ -50,12 +50,13 @@ const contentWrapperVariants = cva(
   },
 )
 
-const contentAreaVariants = cva('mx-auto flex w-full min-w-0 grow flex-col', {
+/** The content's column. The footer shares it, so their edges line up. */
+const columnVariants = cva('mx-auto w-full min-w-0', {
   variants: {
     variant: {
       default: 'max-w-(--breakpoint-lg) md:px-5 lg:pl-0',
       wide: 'max-w-412 md:px-5 lg:pl-0',
-      home: 'max-w-none px-4 pb-6 max-md:px-0 md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px]',
+      home: 'md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px]',
     },
   },
 })
@@ -63,19 +64,9 @@ const contentAreaVariants = cva('mx-auto flex w-full min-w-0 grow flex-col', {
 const footerVariants = cva(undefined, {
   variants: {
     variant: {
-      default: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
-      wide: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
-      home: 'max-md:border-t-0 md:px-12 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6',
-    },
-  },
-})
-
-const footerInnerVariants = cva(undefined, {
-  variants: {
-    variant: {
-      default: 'max-w-[1142px]',
-      wide: 'max-w-[1142px]',
-      home: 'max-w-none max-lg:[&>p]:ml-0',
+      default: undefined,
+      wide: undefined,
+      home: 'max-md:border-t-0 lg:pt-12',
     },
   },
 })
@@ -122,14 +113,20 @@ export function SideNavLayout({
           <main
             id={MAIN_CONTENT_ID}
             tabIndex={-1}
-            className={cn(contentAreaVariants({ variant }), 'outline-none')}
+            className={cn(
+              columnVariants({ variant }),
+              'flex grow flex-col outline-none',
+              // Below lg the footer is a bordered band, so cards keep clear of it.
+              // On phones home's last section draws the footer's top rule.
+              variant === 'home' ? 'md:pb-6' : 'md:max-lg:pb-6',
+            )}
           >
             {children}
           </main>
           {whatsNew && <FloatingWhatsNew whatsNew={whatsNew} />}
           <Footer
             className={footerVariants({ variant })}
-            innerContainerClassName={footerInnerVariants({ variant })}
+            columnClassName={columnVariants({ variant })}
           />
         </div>
       </div>

@@ -31,6 +31,7 @@ interface Props {
   project?: ChartProject
   syncedUntil: UnixTime | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   customColors: Record<string, string> | undefined
   milestones: Milestone[]
   resolution: ChartResolution
@@ -45,6 +46,7 @@ export function DaThroughputByProjectChart({
   project,
   syncedUntil,
   isLoading,
+  isPlaceholderData,
   customColors,
   milestones,
   resolution,
@@ -164,6 +166,7 @@ export function DaThroughputByProjectChart({
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={chartData}
       meta={chartMeta}
       interactiveLegend={{

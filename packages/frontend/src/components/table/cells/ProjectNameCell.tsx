@@ -374,7 +374,7 @@ export function ProjectNameInfoTooltip({
 
   return (
     <Tooltip disableHoverableContent={false}>
-      <TooltipTrigger disabledOnMobile asChild>
+      <TooltipTrigger disabledOnTouch asChild>
         {children}
       </TooltipTrigger>
       <TooltipPortal>

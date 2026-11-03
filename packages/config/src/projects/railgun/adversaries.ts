@@ -46,7 +46,7 @@ export function railgunAdversaries(upgradeDelay: string) {
           'The candidates for an unshield are the shields of the same token.',
         exposureContinued:
           'In-pool transfers break a one-to-one match, while timing and exact amounts narrow it.',
-        advice: `${S.commonAmounts} ${S.freshExit}`,
+        advice: `${S.largeAnonymitySet} ${S.commonAmounts} ${S.freshExit}`,
         interior: INTERIOR,
         sources: [
           {

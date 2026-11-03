@@ -98,6 +98,7 @@ function ChartContainer<T extends { timestamp: number }>({
   meta,
   data,
   isLoading,
+  isPlaceholderData,
   milestones,
   loaderClassName,
   logoClassName,
@@ -118,6 +119,8 @@ function ChartContainer<T extends { timestamp: number }>({
   loaderClassName?: string
   logoClassName?: string
   isLoading?: boolean
+  /** The data is a previous query's, kept on screen while this one loads. */
+  isPlaceholderData: boolean
   project?: ChartProject
   size?: 'regular' | 'small'
   noDataSourceMessage?: string
@@ -136,7 +139,11 @@ function ChartContainer<T extends { timestamp: number }>({
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
-      <div ref={ref} className="group relative">
+      <div
+        ref={ref}
+        className="group relative"
+        aria-busy={isPlaceholderData || undefined}
+      >
         <ChartSettledSize
           className={cn(
             size === 'regular' &&
@@ -156,6 +163,13 @@ function ChartContainer<T extends { timestamp: number }>({
                 '[&_.recharts-reference-area]:hidden',
               ],
               (isLoading || !hasData) && 'pointer-events-none',
+              // The plot dims as `previousChartDataClassName` does. Its tooltip
+              // stays hidden: some charts format it with the new range's
+              // resolution, which the old buckets do not have.
+              isPlaceholderData && [
+                '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
+                '[&_.recharts-surface]:opacity-40 [&_.recharts-surface]:transition-opacity [&_.recharts-surface]:delay-150 [&_.recharts-surface]:duration-200',
+              ],
             )}
           >
             {shouldMountChart ? children : <div />}
@@ -207,7 +221,11 @@ function ChartContainer<T extends { timestamp: number }>({
           />
         )}
         {!isLoading && milestones && (
-          <ChartMilestones data={data} milestones={milestones} />
+          <ChartMilestones
+            data={data}
+            milestones={milestones}
+            isPlaceholderData={isPlaceholderData}
+          />
         )}
       </div>
     </ChartContext.Provider>

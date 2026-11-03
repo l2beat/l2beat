@@ -10,9 +10,11 @@
 <br>
 ## Funds can be frozen if
 1. the admin multisig lets the state tree fill by lowering its capacity, which stops every ragequit, deposit and spend, with no delay.
+2. Aave pauses a reserve behind the yield shares, which stops redeeming them for the underlying asset.
 <br>
 ## Use can be stopped if
 1. the admin multisig pauses deposits and spends, or raises the vetting fee on deposits up to 99.99% of their value.
+2. Aave freezes the reserves behind the yield shares, which stops every deposit through the app.
 <br>
 ## Privacy can be lost if
 1. the ASP leaves deposits out of its latest list, which freezes every note from them, up to halting all private spends (see privileged insider).
@@ -20,5 +22,5 @@
 3. 0xbow's relayer refuses a withdrawal, so the user must self-relay from a public wallet (see chain analyst).
 4. a note's label, which passes to every later payee, links to its deposit when timed against the ASP's updates (see chain analyst).
 5. 0xbow pairs the IP of a deposit session with the IP of a withdrawal request across its ASP and relayer (see privileged insider).
-6. a user keeps the default RPCs, which see their account at sign-in and can time it against the withdrawal (see network observer).
+6. a user keeps the default RPCs, which see their account at sign-in and can time it against the withdrawal (see network observer and privileged insider).
 7. elliptic-curve cryptography is broken, which decrypts every onchain note from the published viewing keys (see future adversary).

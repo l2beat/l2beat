@@ -97,6 +97,7 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
     <div className="flex flex-col gap-4 lg:contents">
       <Header stats={stats} isLoading={isLoading} range={range} />
       <ChartContainer
+        isPlaceholderData={false}
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}

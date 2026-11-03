@@ -64,10 +64,10 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'warning',
       exposureShort:
-        "In practice the anonymity set is zk.money's users on Aztec, although the L2 contract is permissionless.",
+        "A DAI withdrawal hides among the DAI portal's depositors, an sUSDS one among the sUSDS portal's.",
       exposureContinued:
-        'The first payment to a name from outside zk.money is publicly tied to that name. A migrated v5 balance arrives as one deposit of its full amount, in the same transaction as its v5 refund. A payee can tell which payments come from the same payer, since each pair shares one secret for tagging notes.',
-      advice: `Give outside payers a deposit address the user's wallet created. ${S.commonAmounts} ${S.freshExit}`,
+        "Each payment shows the payee the payer's Aztec address, and with it any name the payer claimed. The anonymity set is still small.",
+      advice: `${S.commonAmounts} ${S.freshExit}`,
       interior: {
         ...INTERIOR,
         amount: {
@@ -81,18 +81,18 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          contract: 'MigrationExecutor',
-          title: 'Each v5 refund is deposited into the v6 portal',
+          contract: 'OxidePortal',
+          title:
+            '219 depositors to 2026-10-30: 42 traced funders and 177 v5 migrations',
         },
         { contract: 'RegistrationSIPA' },
         {
-          title: 'Resolver notifies the recipient of each deposit address',
-          url: `${OXIDE}noir-projects/oxide_token_contract/src/main.nr#L237-L251`,
+          title: "Each payment's Transfer event names the payer to the payee",
+          url: `${OXIDE}noir-projects/oxide_token_contract/src/main.nr#L155-L157`,
         },
         {
-          title:
-            'The notification and the sweep request share one Aztec transaction',
-          url: `${ZKMONEY_REPO}packages/sdk/src/services/sipaIntents.ts#L343-L358`,
+          contract: 'AccountMetadataRegistry',
+          title: 'Names map to Aztec addresses',
         },
       ],
     },
@@ -101,9 +101,9 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Alchemy, called under Aztec Labs' key, sees an account's deposit addresses and withdrawals in one session unless the user sets their own Ethereum node.",
       exposureContinued:
-        "Desktop has no Tor setting. Routing all of the computer's traffic through Tor works, but Chrome's QUIC traffic to WalletConnect bypasses Tor unless UDP is blocked.",
+        'Desktop has no Tor setting, and Chrome sends WalletConnect traffic over UDP. Tor carries no UDP, so a Tor route must block UDP or that traffic bypasses it.',
       advice:
-        "Set the user's own Ethereum node as the L1 endpoint. Run Desktop on a system that sends all traffic through Tor and blocks UDP, such as Whonix.",
+        "Set the user's own Ethereum node as the L1 endpoint. Send all of the computer's traffic through an IP-hiding route that carries UDP, or through Tor with UDP blocked, as Whonix does.",
       interior: {
         ...INTERIOR,
         sender: {
@@ -112,10 +112,11 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         },
         linkage: {
           verdict: 'atRisk',
-          note: "Private only with the user's own Ethereum node and all traffic through Tor.",
+          note: "Private only with the user's own Ethereum node and all traffic through an IP-hiding route.",
         },
       },
       sources: [
+        S.ipHidingRoutes,
         {
           title:
             'Endpoint settings: Aztec node, old-network node, L1 RPC and enclave',
@@ -153,7 +154,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
           title: 'One approved image for both portals',
         },
         {
-          title: 'The image list has no download for the approved image',
+          title: 'The documented image list omits the approved image',
           url: 'https://docs.zk.money/docs/run-an-enclave',
         },
         {

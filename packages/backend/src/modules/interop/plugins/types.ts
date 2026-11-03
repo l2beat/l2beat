@@ -67,6 +67,8 @@ export type InteropTransfer = {
   events: InteropEvent[]
   src: TransferSide
   dst: TransferSide
+  // When the transfer is counted, if not when its latest side happened.
+  timestamp?: UnixTime
 }
 
 export interface InteropIgnore {
@@ -372,6 +374,7 @@ export type InteropTransferOptions = {
 
   bridgeType?: KnownInteropBridgeType
   extraEvents?: InteropEvent[]
+  timestamp?: UnixTime
 } & (
   | {
       srcEvent: InteropEvent
@@ -441,6 +444,7 @@ function Transfer(
     events,
     src,
     dst,
+    timestamp: options.timestamp,
   }
 }
 

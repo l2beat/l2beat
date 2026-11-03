@@ -4,7 +4,7 @@ import '@tanstack/react-table'
 import type { CellContext } from '@tanstack/react-table'
 import type { ReactNode } from 'react'
 import type { PersistedColumns } from './src/components/table/persistedColumnVisibility'
-import type { SsrData } from './src/pages/pageTypes'
+import type { ClientSsrData } from './src/ssr/types'
 
 declare module '@tanstack/react-table' {
   interface TableMeta<_TData extends RowData> {
@@ -50,7 +50,7 @@ declare global {
   var __FIX_SSR_URL__: string
 
   interface Window {
-    __SSR_DATA__: SsrData
+    __SSR_DATA__: ClientSsrData
     __ENV__: Record<string, string>
     op: {
       q?: string[][]

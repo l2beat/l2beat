@@ -67,6 +67,7 @@ export function BlobsThroughputChart({
       />
       {view === 'total' ? (
         <ProjectDaAbsoluteThroughputChart
+          isPlaceholderData={false}
           project={project}
           dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
           isLoading={total.isLoading}
@@ -78,6 +79,7 @@ export function BlobsThroughputChart({
         />
       ) : (
         <DaThroughputByProjectChart
+          isPlaceholderData={false}
           data={byProject.data?.byProjectChart.data}
           syncedUntil={byProject.data?.syncedUntil}
           isLoading={byProject.isLoading}
