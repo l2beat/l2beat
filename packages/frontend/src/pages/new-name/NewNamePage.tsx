@@ -219,7 +219,11 @@ function Orbit({
   )
 }
 
-/** The question L2BEAT was built to answer, and the seven ways it did. */
+/**
+ * The question L2BEAT was built to answer, and the seven ways it did. From lg
+ * the question sits beside the opening as a pull quote, so the capped measure
+ * does not leave half the sheet empty.
+ */
 function History() {
   const { history } = NEW_NAME
   return (
@@ -227,19 +231,21 @@ function History() {
       <h2 id="history-heading" className={STATEMENT}>
         {history.heading}
       </h2>
-      <div className={cn(BODY, 'mt-8 space-y-6 md:mt-10')}>
-        {history.opening.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
+      <div className="mt-8 md:mt-10 lg:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-x-16">
+        <div className={cn(BODY, 'space-y-6')}>
+          {history.opening.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
+        <p
+          className={cn(
+            DISPLAY,
+            'mt-10 max-w-[30ch] text-balance text-[24px] leading-[1.2] md:mt-12 md:text-[30px] lg:mt-0 lg:border-brand-pink lg:border-l-[3px] lg:pl-8',
+          )}
+        >
+          {history.question}
+        </p>
       </div>
-      <p
-        className={cn(
-          DISPLAY,
-          'mt-10 max-w-[30ch] text-balance text-[24px] leading-[1.2] md:mt-12 md:text-[30px]',
-        )}
-      >
-        {history.question}
-      </p>
       <p className={cn(BODY, 'mt-10 md:mt-12')}>{history.practicesIntro}</p>
       <ol className="mt-6 border-divider border-t">
         {history.practices.map((practice, i) => (
