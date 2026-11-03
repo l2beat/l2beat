@@ -221,17 +221,23 @@ function PredefinedOptions({
         const disabledReason = option.disabled
           ? option.disabledReason
           : undefined
+        // A natively disabled button takes no focus or taps, so a bar option
+        // with a reason stays focusable and only announces itself disabled,
+        // letting its tooltip open on hover, tap and focus
+        const explainsInTooltip = layout === 'bar' && !!disabledReason
         const button = (
           <button
             key={option.value}
             onClick={() => {
+              if (option.disabled) return
               const range = optionToRange(option.value)
               setValue(range)
               setInternalValue(undefined)
               track('chartRangeSelected', { name, value: option.value })
             }}
             type="button"
-            disabled={option.disabled}
+            disabled={option.disabled && !explainsInTooltip}
+            aria-disabled={explainsInTooltip || undefined}
             aria-describedby={
               layout === 'drawer'
                 ? disabledReasons.find((r) => r.reason === disabledReason)?.id
@@ -241,11 +247,8 @@ function PredefinedOptions({
               selectedOption === option.value ? 'checked' : 'unchecked'
             }
             className={cn(
-              'rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+              'rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 md:text-sm',
               layout === 'bar' ? 'h-full' : 'h-10 min-w-0 flex-1 px-1',
-              // A disabled button swallows taps without firing click, so
-              // they go through to the tooltip's wrapper
-              layout === 'bar' && disabledReason && 'pointer-events-none',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
               'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
             )}
@@ -253,21 +256,12 @@ function PredefinedOptions({
             {option.label}
           </button>
         )
-        if (layout === 'drawer' || !disabledReason) {
+        if (!explainsInTooltip) {
           return button
         }
         return (
           <Tooltip key={option.value}>
-            <TooltipTrigger asChild>
-              {/* Focusable, as the disabled button is not, so the keyboard
-                  reaches the reason too */}
-              <span
-                tabIndex={0}
-                className="flex h-full cursor-not-allowed rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent"
-              >
-                {button}
-              </span>
-            </TooltipTrigger>
+            <TooltipTrigger asChild>{button}</TooltipTrigger>
             <TooltipContent>{disabledReason}</TooltipContent>
           </Tooltip>
         )
