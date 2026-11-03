@@ -1,4 +1,4 @@
-import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
@@ -36,7 +36,7 @@ import { CustomLink } from '~/components/link/CustomLink'
 import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
 import { useTRPC } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import type { ChartUnit } from '../types'
 import { tvsRangeToReadable } from './tvsRangeToReadable'
@@ -182,16 +182,11 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     }
     return acc + curr.value
   }, null)
-  const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="font-medium text-label-value-14 text-secondary">
-          {isFullDay
-            ? formatTimestamp(label)
-            : formatTimestamp(label, {
-                mode: 'datetime',
-              })}
+          {formatSnapshotTimestamp(label)}
         </div>
         {validPayload.length > 1 && (
           <>

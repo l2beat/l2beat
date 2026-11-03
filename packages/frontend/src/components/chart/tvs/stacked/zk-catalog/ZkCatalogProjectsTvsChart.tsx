@@ -25,7 +25,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 
 interface ZkCatalogProjectsTvsChartProps {
@@ -227,7 +227,7 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, { mode: 'datetime' })}
+        {formatSnapshotTimestamp(label)}
       </div>
       <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
         <span>Total</span>

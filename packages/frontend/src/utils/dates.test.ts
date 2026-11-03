@@ -6,23 +6,14 @@ import {
   formatLocalDateTime,
   formatPublicationDate,
   formatRange,
+  formatSnapshotTimestamp,
   formatTimestamp,
   getNextDateForDayOfWeek,
 } from './dates'
+import { withTimezone } from './withTimezone'
 
 const at = (iso: string) => UnixTime.fromDate(new Date(iso))
 const TIMEZONES = ['UTC', 'America/New_York', 'Asia/Tokyo']
-
-function withTimezone(tz: string, fn: () => void) {
-  const original = process.env.TZ
-  process.env.TZ = tz
-  try {
-    fn()
-  } finally {
-    if (original === undefined) Reflect.deleteProperty(process.env, 'TZ')
-    else process.env.TZ = original
-  }
-}
 
 describe('dates', () => {
   describe(formatTimestamp.name, () => {
@@ -67,6 +58,41 @@ describe('dates', () => {
       expect(
         formatRange(at('2026-06-30T01:00:00Z'), at('2026-06-30T02:00:00Z')),
       ).toEqual('30 Jun 2026, 01:00 — 02:00 UTC')
+    })
+  })
+
+  describe(formatSnapshotTimestamp.name, () => {
+    it('shows only the date for a point at UTC midnight, as daily data is', () => {
+      expect(formatSnapshotTimestamp(at('2026-06-03T00:00:00Z'))).toEqual(
+        '3 Jun 2026',
+      )
+    })
+
+    it('adds the UTC time for a point within a day', () => {
+      expect(formatSnapshotTimestamp(at('2026-06-03T00:30:00Z'))).toEqual(
+        '3 Jun 2026, 00:30 UTC',
+      )
+    })
+
+    it('decides per point in hourly data, so its midnight hour reads as the day', () => {
+      const hourly = [
+        '2026-06-02T23:00:00Z',
+        '2026-06-03T00:00:00Z',
+        '2026-06-03T01:00:00Z',
+      ].map((iso) => formatSnapshotTimestamp(at(iso)))
+      expect(hourly).toEqual([
+        '2 Jun 2026, 23:00 UTC',
+        '3 Jun 2026',
+        '3 Jun 2026, 01:00 UTC',
+      ])
+    })
+
+    it('uses UTC midnight west of UTC', () => {
+      withTimezone('America/New_York', () => {
+        expect(formatSnapshotTimestamp(at('2026-06-03T00:00:00Z'))).toEqual(
+          '3 Jun 2026',
+        )
+      })
     })
   })
 

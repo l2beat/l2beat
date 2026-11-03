@@ -1,4 +1,4 @@
-import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { AreaChart } from 'recharts'
@@ -32,7 +32,7 @@ import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { useTRPC } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { getTvsSeriesStats, type TvsSeriesStats } from './getTvsSeriesStats'
 import { mergeTvsSeries } from './mergeTvsSeries'
@@ -160,17 +160,12 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     if (curr.value === null || curr.value === undefined) return acc
     return (acc ?? 0) + curr.value
   }, null)
-  const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="font-medium text-label-value-14 text-secondary">
-          {isFullDay
-            ? formatTimestamp(label)
-            : formatTimestamp(label, {
-                mode: 'datetime',
-              })}
+          {formatSnapshotTimestamp(label)}
         </div>
         {validPayload.length > 1 && (
           <>

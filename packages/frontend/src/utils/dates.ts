@@ -93,6 +93,15 @@ export function formatTimestamp(
   return formatTimeAndDate(date, time, opts?.mode)
 }
 
+/**
+ * A chart snapshot: "3 Jun 2026" for a point at UTC midnight, where daily data
+ * sits, and "3 Jun 2026, 14:00 UTC" for a point within a day.
+ */
+export function formatSnapshotTimestamp(timestamp: number) {
+  const mode = UnixTime.isFull(timestamp, 'day') ? 'date' : 'datetime'
+  return formatTimestamp(timestamp, { mode })
+}
+
 export function formatDate(date: string) {
   const [year, month, day] = date.split('-')
   assert(day !== undefined, 'Day is undefined')

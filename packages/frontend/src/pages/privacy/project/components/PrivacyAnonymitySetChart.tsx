@@ -20,7 +20,7 @@ import { ChartCommonComponents } from '~/components/core/chart/ChartCommonCompon
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import type { PrivacyAnonymitySetChartResponse } from '~/server/features/privacy/getPrivacyAnonymitySetChart'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 
 const COLORS = [
   'var(--chart-emerald)',
@@ -68,7 +68,7 @@ export function PrivacyAnonymitySetChart(props: Props) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(meta)
   const formatTooltipTitle =
     props.type === 'history'
-      ? (timestamp: number) => formatTimestamp(timestamp)
+      ? (timestamp: number) => formatSnapshotTimestamp(timestamp)
       : (days: number) => `${days}-day ${props.durationLabel}`
 
   return (

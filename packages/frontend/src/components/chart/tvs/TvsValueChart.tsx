@@ -21,7 +21,7 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 
 interface TvsValueChartDataPoint {
   timestamp: number
@@ -97,9 +97,7 @@ function TvsValueChartTooltip({ payload, label }: CustomChartTooltipProps) {
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, {
-          mode: 'datetime',
-        })}
+        {formatSnapshotTimestamp(label)}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">

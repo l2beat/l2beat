@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { PROJECT_TVS_CHART_VALUE_KEYS } from '~/server/features/layer2s/tvs/projectTvsChartValues'
 import { useTRPC } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 import {
   CompareMetricLineChart,
   toCompareChartPoints,
@@ -56,11 +56,7 @@ export function TvsCompareChart({
       syncedUntil={data?.syncedUntil}
       formatYAxisLabel={(value) => formatCurrency(value, unit)}
       formatTooltipValue={(value) => formatCurrency(value, unit)}
-      renderTooltipTimestamp={(label) =>
-        formatTimestamp(label, {
-          mode: 'datetime',
-        })
-      }
+      renderTooltipTimestamp={(label) => formatSnapshotTimestamp(label)}
     />
   )
 }

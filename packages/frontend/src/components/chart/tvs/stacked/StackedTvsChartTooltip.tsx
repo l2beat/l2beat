@@ -7,7 +7,7 @@ import { ChartTooltipWrapper } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 import type { ChartUnit } from '../../types'
 
 export function StackedTvsChartTooltip({
@@ -33,7 +33,7 @@ export function StackedTvsChartTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-46 flex-col sm:w-66!">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { mode: 'datetime' })}
+          {formatSnapshotTimestamp(label)}
         </div>
         {actualPayload.length > 1 && (
           <>

@@ -2,7 +2,7 @@ import { assert, formatCurrency } from '@l2beat/shared-pure'
 import type { CustomChartTooltipProps } from '~/components/core/chart/Chart'
 import { ChartTooltipWrapper, useChart } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 import type { ChartUnit } from '../types'
 
 export interface TvsChartDataPoint {
@@ -22,9 +22,7 @@ export function TvsCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col">
         <div className="mb-3 font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, {
-            mode: 'datetime',
-          })}
+          {formatSnapshotTimestamp(label)}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {

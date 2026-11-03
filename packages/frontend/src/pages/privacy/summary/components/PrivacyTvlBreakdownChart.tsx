@@ -16,7 +16,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 
 export interface PrivacyTvlBreakdownProject {
@@ -131,9 +131,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, {
-            mode: 'datetime',
-          })}
+          {formatSnapshotTimestamp(label)}
         </div>
         {visible.length > 1 && (
           <>

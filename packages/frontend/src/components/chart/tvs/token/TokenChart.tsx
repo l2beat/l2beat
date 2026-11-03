@@ -22,7 +22,7 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
 
 type TokenChartDataPoint = {
   timestamp: number
@@ -106,7 +106,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     <ChartTooltipWrapper>
       <div className="flex min-w-48 flex-col gap-1">
         <div className="mb-1 font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { mode: 'datetime' })}
+          {formatSnapshotTimestamp(label)}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
