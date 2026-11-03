@@ -68,18 +68,18 @@ const ARROW_HEAD_LENGTH = (10 / 16) * ARROW_HEAD_CELL
 const HEADER_BADGE_STEP = 11
 const HIGHLIGHTED_ROW_INSET = 3
 const HIGHLIGHTED_ROW_RADIUS = 4
-// Below these on-screen sizes text is noise, so the overview shows only shapes.
-const FIELD_TEXT_MIN_PX = 5
-const HEADER_TEXT_MIN_PX = 5
+// Below this zoom field text is under 5 px and names under 6 px, so all text
+// goes at once and the overview shows shapes with chain captions.
+const NODE_DETAIL_MIN_SCALE = 0.4
+
+export function drawsNodeDetail(scale: number): boolean {
+  return scale >= NODE_DETAIL_MIN_SCALE
+}
 
 const HEADER_FONT: FontSpec = {
   weight: 500,
   size: 14,
   family: 'ui-sans-serif, system-ui, sans-serif',
-}
-
-export function drawsHeaderText(scale: number): boolean {
-  return HEADER_FONT.size * scale >= HEADER_TEXT_MIN_PX
 }
 
 const FIELD_FONT: FontSpec = {
@@ -375,7 +375,7 @@ uniform vec2 u_resolution;
 out vec4 v_color;
 out float v_arc;
 out float v_across;
-flat out float v_halfWidth;
+flat out float v_capRadius;
 flat out float v_dashed;
 const float SEGMENTS = ${CONNECTION_SEGMENTS}.0;
 const float MIN_STROKE_PX = ${CONNECTION_MIN_STROKE_PX}.0;
@@ -410,8 +410,10 @@ void main() {
   vec2 ndc = (screen / u_resolution * 2.0 - 1.0) * vec2(1.0, -1.0);
   gl_Position = vec4(ndc, 0.0, 1.0);
   v_color = vec4(i_color.rgb, i_color.a * max(inkRatio, MIN_INK_RATIO));
-  v_halfWidth = strokeWidth * 0.5;
-  v_across = v_halfWidth * a_vertex.y;
+  // Dash caps keep the edge's own width; the widened stroke's would fill the
+  // gaps when zoomed out.
+  v_capRadius = i_stroke.x * 0.5;
+  v_across = strokeWidth * 0.5 * a_vertex.y;
   v_dashed = i_stroke.y;
   v_arc = 0.0;
   if (i_stroke.y > 0.5) {
@@ -431,7 +433,7 @@ precision highp float;
 in vec4 v_color;
 in float v_arc;
 in float v_across;
-flat in float v_halfWidth;
+flat in float v_capRadius;
 flat in float v_dashed;
 out vec4 fragColor;
 const float DASH_ON = ${DASH_ON_WORLD}.0;
@@ -442,7 +444,7 @@ void main() {
     float phase = mod(v_arc, DASH_PERIOD);
     if (phase > DASH_ON) {
       float along = min(phase - DASH_ON, DASH_PERIOD - phase);
-      float d = length(vec2(along, v_across)) - v_halfWidth;
+      float d = length(vec2(along, v_across)) - v_capRadius;
       float aa = max(fwidth(d), 1e-4);
       coverage = 1.0 - smoothstep(-aa, aa, d);
       if (coverage <= 0.0) discard;
@@ -2013,7 +2015,7 @@ class WebGLRenderer {
       transform,
       res,
     )
-    if (!drawsHeaderText(transform.scale)) return
+    if (!drawsNodeDetail(transform.scale)) return
     this.drawTextPass(
       this.buffers.icon,
       this.iconAtlas.texture,
@@ -2030,7 +2032,6 @@ class WebGLRenderer {
       transform,
       res,
     )
-    if (FIELD_FONT.size * transform.scale < FIELD_TEXT_MIN_PX) return
     this.drawTextPass(
       this.buffers.fieldText,
       this.fieldAtlas.texture,

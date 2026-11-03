@@ -4,7 +4,7 @@ import type { Box, Node } from '../store/State'
 import { useStore } from '../store/store'
 import { buildRenderGraph } from '../store/utils/renderGraph'
 import { getChainHeaderColor } from './colors/colors'
-import { drawsHeaderText } from './NodesAndConnectionsWebGL'
+import { drawsNodeDetail } from './NodesAndConnectionsWebGL'
 
 const CAPTION_OFFSET_PX = 28
 const CAPTION_MIN_EDGE_PX = 8
@@ -21,26 +21,29 @@ export function ChainCaptions() {
   const captions = useMemo(() => chainCaptions(nodes), [nodes])
 
   if (captions.length < 2) return null
-  if (drawsHeaderText(scale)) return null
-  return captions.map((caption) => (
-    <div
-      key={caption.name}
-      className="pointer-events-none absolute flex select-none items-center gap-2 whitespace-nowrap font-medium text-coffee-200 text-sm"
-      style={{
-        left: Math.max(CAPTION_MIN_EDGE_PX, caption.box.x * scale + offsetX),
-        top: Math.max(
-          CAPTION_MIN_EDGE_PX,
-          caption.box.y * scale + offsetY - CAPTION_OFFSET_PX,
-        ),
-      }}
-    >
-      <span
-        className="size-2.5 rounded-xs"
-        style={{ backgroundColor: caption.color }}
-      />
-      {caption.name}
-    </div>
-  ))
+  if (drawsNodeDetail(scale)) return null
+  return captions.map((caption) => {
+    const left = caption.box.x * scale + offsetX
+    const top = caption.box.y * scale + offsetY
+    if (left + caption.box.width * scale < 0) return null
+    if (top + caption.box.height * scale < 0) return null
+    return (
+      <div
+        key={caption.name}
+        className="pointer-events-none absolute flex select-none items-center gap-2 whitespace-nowrap font-medium text-coffee-200 text-sm"
+        style={{
+          left: Math.max(CAPTION_MIN_EDGE_PX, left),
+          top: Math.max(CAPTION_MIN_EDGE_PX, top - CAPTION_OFFSET_PX),
+        }}
+      >
+        <span
+          className="size-2.5 rounded-xs"
+          style={{ backgroundColor: caption.color }}
+        />
+        {caption.name}
+      </div>
+    )
+  })
 }
 
 function chainCaptions(nodes: readonly Node[]): ChainCaption[] {
