@@ -23,7 +23,7 @@ export function NativeRollupsPage({ talks, contributors, ...props }: Props) {
     <AppLayout {...props}>
       <SideNavLayout variant="wide">
         <MainPageHeader>Native Rollups</MainPageHeader>
-        <main className="[--accent:var(--color-purple-100)] dark:[--accent:var(--color-pink-200)]">
+        <div className="[--accent:var(--color-purple-100)] dark:[--accent:var(--color-pink-200)]">
           <Hero />
           <WhyNativeSection />
           <HowItWorksSection />
@@ -33,7 +33,7 @@ export function NativeRollupsPage({ talks, contributors, ...props }: Props) {
           <CoreProtocolSection />
           <MaterialsSection talks={talks} />
           <ContributorsSection contributors={contributors} />
-        </main>
+        </div>
       </SideNavLayout>
     </AppLayout>
   )

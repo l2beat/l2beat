@@ -1,4 +1,5 @@
 import { expect, test } from 'playwright/test'
+import { MAIN_CONTENT_ID } from '~/components/SkipToContentLink'
 import { getPages } from '~/server/pagePaths'
 
 const PAGE_SHARD_COUNT = getPageShardCount()
@@ -34,9 +35,44 @@ for (let shardIndex = 0; shardIndex < PAGE_SHARD_COUNT; shardIndex++) {
           contentLength === undefined || Number.parseInt(contentLength) > 0,
           `Empty response received from ${response.url()}`,
         ).toBe(true)
+
+        expectLandmarks(page, await response.text())
       })
     }
   })
+}
+
+test('the skip link is the first Tab stop and moves focus into main', async ({
+  page,
+}) => {
+  await page.goto('/layer2s/summary')
+
+  await page.keyboard.press('Tab')
+  const skipLink = page.getByRole('link', { name: 'Skip to content' })
+  await expect(skipLink).toBeFocused()
+  await expect(skipLink).toBeInViewport()
+
+  await page.keyboard.press('Enter')
+  await expect(page.locator('main')).toBeFocused()
+})
+
+/**
+ * Checked on the server-rendered HTML rather than in a browser, so it costs
+ * nothing per page: one `<main>` per page, and on pages with anything to Tab
+ * to, the skip link comes first.
+ */
+function expectLandmarks(path: string, html: string) {
+  const mainCount = html.match(/<main\b/g)?.length ?? 0
+  expect(mainCount, `${path} should have exactly one <main>`).toBe(1)
+
+  const firstFocusable = html.match(
+    /<(a|button|input|select|textarea)\b[^>]*>/,
+  )?.[0]
+  if (firstFocusable) {
+    expect(firstFocusable, `${path} should start with the skip link`).toContain(
+      `href="#${MAIN_CONTENT_ID}"`,
+    )
+  }
 }
 
 function getPageShardCount() {

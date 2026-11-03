@@ -73,7 +73,7 @@ export function EcosystemProjectPage({
                   links={ecosystem.links.header}
                   hasRwaRestrictedTvs={ecosystem.hasRwaRestrictedTvs}
                 />
-                <main className="my-(--ecosystem-spacing) grid grid-cols-12 gap-(--ecosystem-spacing)">
+                <div className="my-(--ecosystem-spacing) grid grid-cols-12 gap-(--ecosystem-spacing)">
                   <EcosystemMobileProjectLinks
                     links={ecosystem.links.header}
                     className="col-span-12"
@@ -178,7 +178,7 @@ export function EcosystemProjectPage({
                     className="col-span-12"
                     href={ecosystem.links.ecosystemUpdate}
                   />
-                </main>
+                </div>
                 <HorizontalSeparator className="my-4 max-md:hidden" />
                 <TableFilterContextProvider>
                   <EcosystemProjectPageTables ecosystem={ecosystem} />

@@ -33,11 +33,11 @@ export function StagesPage({ content, lastUpdated, ...props }: Props) {
             </CustomLink>
             .
           </p>
-          <main>
+          <div>
             <Article className="[&>h2:first-child]:mt-8">
               {content.content}
             </Article>
-          </main>
+          </div>
         </PrimaryCard>
         <ScrollToTopButton />
       </SideNavLayout>

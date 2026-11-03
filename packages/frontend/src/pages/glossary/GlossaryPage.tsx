@@ -18,14 +18,14 @@ export function GlossaryPage({ glossaryEntries, ...props }: Props) {
       <SideNavLayout>
         <MainPageHeader className="relative z-10">Glossary</MainPageHeader>
         <Header glossaryEntries={glossaryEntries} />
-        <main className="md:-mt-2 mt-0 flex gap-8 border-divider border-t md:border-t-0">
+        <div className="md:-mt-2 mt-0 flex gap-8 border-divider border-t md:border-t-0">
           <PrimaryCard className="">
             {glossaryEntries.map((entry) => (
               <GlossaryItem key={entry.id} entry={entry} />
             ))}
           </PrimaryCard>
           <GlossarySideNav entries={glossaryEntries} />
-        </main>
+        </div>
         <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>

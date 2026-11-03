@@ -32,7 +32,7 @@ export function GovernancePage({
       <SideNavLayout>
         <MainPageHeader>Governance</MainPageHeader>
         <Header delegatedProjects={delegatedProjects} />
-        <main>
+        <div>
           <div className="grid md:mt-6 md:gap-6 lg:grid-cols-8 lg:gap-6 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-surface-primary">
             <RecentPublicationsSection publications={publications} />
             <OfficeHoursSection />
@@ -43,7 +43,7 @@ export function GovernancePage({
             <OurApproachSection className="lg:col-span-4" />
             <OurMissionSection className="lg:col-span-4" />
           </div>
-        </main>
+        </div>
       </SideNavLayout>
     </AppLayout>
   )

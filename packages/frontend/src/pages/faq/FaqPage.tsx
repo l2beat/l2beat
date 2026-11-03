@@ -23,7 +23,7 @@ export function FaqPage(props: AppLayoutProps) {
       <SideNavLayout>
         <MainPageHeader>FAQ</MainPageHeader>
         <Header />
-        <main className="mt-0 flex gap-8 border-divider border-t md:mt-6 md:border-t-0">
+        <div className="mt-0 flex gap-8 border-divider border-t md:mt-6 md:border-t-0">
           <PrimaryCard>
             {faqItemsWithId.map((item) => (
               <section
@@ -44,7 +44,7 @@ export function FaqPage(props: AppLayoutProps) {
             ))}
           </PrimaryCard>
           <FaqSideNav entries={faqItemsWithId} />
-        </main>
+        </div>
         <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>

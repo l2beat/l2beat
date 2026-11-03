@@ -20,11 +20,11 @@ export function TermsOfServicePage({ content, lastUpdated, ...props }: Props) {
           <p className="font-medium text-2xs text-purple-100 uppercase dark:text-pink-200">
             Last updated on {lastUpdated}
           </p>
-          <main>
+          <div>
             <Article className="[&>h2:first-child]:mt-8">
               {content.content}
             </Article>
-          </main>
+          </div>
         </PrimaryCard>
         <ScrollToTopButton />
       </SideNavLayout>

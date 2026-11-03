@@ -34,12 +34,12 @@ export function IntegrateCropsPage({
       <SideNavLayout>
         <div className="flex grow flex-col pb-24">
           <GardenPageHeader title="Integrate CROPS" />
-          <main>
+          <div>
             <BadgeSection badges={badges} href={BADGE_HREF} />
             <SectionDivider id="api" label="For wallets and interfaces" />
             <EndpointsSection endpoints={endpoints} examples={examples} />
             <AttestationsSection attestations={attestations} />
-          </main>
+          </div>
         </div>
         <ScrollToTopButton />
       </SideNavLayout>

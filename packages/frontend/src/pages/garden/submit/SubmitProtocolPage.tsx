@@ -13,11 +13,11 @@ export function SubmitProtocolPage(props: AppLayoutProps) {
       <SideNavLayout backdrop={<PlotBackground />}>
         <div className="flex grow flex-col pb-24">
           <GardenPageHeader title="Submit your protocol" />
-          <main>
+          <div>
             <HeroSection />
             <ProcessSection />
             <ClosingSection />
-          </main>
+          </div>
         </div>
         <ScrollToTopButton />
       </SideNavLayout>

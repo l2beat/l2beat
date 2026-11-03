@@ -3,6 +3,10 @@ import { SidebarProvider, useSidebar } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
 import { NavSidebar } from '~/components/nav/sidebar/NavSidebar'
+import {
+  MAIN_CONTENT_ID,
+  SkipToContentLink,
+} from '~/components/SkipToContentLink'
 import { TopBanner } from '~/components/TopBanner'
 import { useWhatsNewContext } from '~/components/whats-new/WhatsNewContext'
 import type { WhatsNewWidget } from '~/components/whats-new/WhatsNewWidget'
@@ -95,6 +99,7 @@ export function SideNavLayout({
 
   return (
     <SidebarProvider data-with-backdrop={backdrop ? '' : undefined}>
+      <SkipToContentLink />
       {backdrop}
       <div className="relative flex grow flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>
@@ -113,10 +118,15 @@ export function SideNavLayout({
           <div className={bannerWrapperVariants({ variant })}>
             {topChildren}
           </div>
-          <div className={contentAreaVariants({ variant })}>
+          {/* tabIndex lets the skip link move focus here, not only scroll */}
+          <main
+            id={MAIN_CONTENT_ID}
+            tabIndex={-1}
+            className={cn(contentAreaVariants({ variant }), 'outline-none')}
+          >
             {children}
-            {whatsNew && <FloatingWhatsNew whatsNew={whatsNew} />}
-          </div>
+          </main>
+          {whatsNew && <FloatingWhatsNew whatsNew={whatsNew} />}
           <Footer
             className={footerVariants({ variant })}
             innerContainerClassName={footerInnerVariants({ variant })}

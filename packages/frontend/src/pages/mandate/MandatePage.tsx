@@ -14,9 +14,9 @@ export function MandatePage({ content, ...props }: Props) {
       <SideNavLayout>
         <MainPageHeader>Mandate</MainPageHeader>
         <PrimaryCard className="md:p-8">
-          <main>
+          <div>
             <Article>{content}</Article>
-          </main>
+          </div>
         </PrimaryCard>
       </SideNavLayout>
     </AppLayout>

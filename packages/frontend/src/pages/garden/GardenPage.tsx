@@ -26,7 +26,7 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
             title="The CROPS guide"
             description="A curated list of distinguished projects that follow the CROPS values: censorship resistance, open source, privacy and security."
           />
-          <main>
+          <div>
             <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-5">
               <GardenTable entries={entries} />
             </div>
@@ -34,7 +34,7 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
             <GardenCallouts />
             <PlantLegendSection />
             <CropsSection />
-          </main>
+          </div>
         </div>
         <ScrollToTopButton />
       </SideNavLayout>

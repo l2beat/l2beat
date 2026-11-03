@@ -18,7 +18,7 @@ export function MultisigReportPage({ multisigReportImage, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <main className="flex flex-col md:items-center">
+        <div className="flex flex-col md:items-center">
           <ReportBanner image={multisigReportImage} />
           <ReportDownloadButton fileUrl={multisigReportUrl} />
           <div className="mt-12 mb-6 w-full leading-7">
@@ -62,7 +62,7 @@ export function MultisigReportPage({ multisigReportImage, ...props }: Props) {
             fileUrl={multisigReportUrl}
             className="visible mt-12 md:invisible"
           />
-        </main>
+        </div>
       </SideNavLayout>
     </AppLayout>
   )
