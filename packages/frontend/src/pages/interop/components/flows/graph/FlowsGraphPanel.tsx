@@ -3,7 +3,7 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { Logo } from '~/components/Logo'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { CursorClickIcon } from '~/icons/CursorClick'
-import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
+import type { InteropFlowsGraphData } from '~/server/features/layer2s/interop/getInteropFlowsOverview'
 import { cn } from '~/utils/cn'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { MIN_SELECTED_CHAINS, MIN_SELECTED_PROTOCOLS } from '../consts'
@@ -12,7 +12,7 @@ import { FlowsGraphSkeleton } from './FlowsGraphSkeleton'
 
 interface FlowsGraphPanelProps {
   activeChains: InteropChainWithIcon[]
-  data: InteropFlowsData | undefined
+  data: InteropFlowsGraphData | undefined
   hasEnoughChains: boolean
   hasEnoughProtocols: boolean
   isLoading: boolean

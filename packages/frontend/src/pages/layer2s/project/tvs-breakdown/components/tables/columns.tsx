@@ -162,8 +162,11 @@ export const columns = [
         <div className="flex items-center gap-1">
           <Tooltip>
             <TooltipTrigger asChild disabledOnTouch>
-              <button onClick={() => setSelectedToken(ctx.row.original)}>
-                <a href="#token-chart">
+              <button
+                aria-label="Preview historical chart"
+                onClick={() => setSelectedToken(ctx.row.original)}
+              >
+                <a href="#token-chart" aria-label="Preview historical chart">
                   <LineChartIcon className="size-4" />
                 </a>
               </button>
@@ -175,6 +178,8 @@ export const columns = [
           <button
             onClick={toggleExpandedHandler}
             className="h-full cursor-pointer p-1 align-middle"
+            aria-label={isExpended ? 'Hide details' : 'Show details'}
+            aria-expanded={isExpended}
           >
             <ChevronIcon
               className={cn(

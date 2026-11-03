@@ -93,17 +93,13 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
       glossaryTerms: rendered.glossaryTerms,
     }
 
+    // Pass the data through functions, so `replace` does not read a `$&` or
+    // `$'` in it as a pattern
     return template
       .replace('<!--app-head-->', rendered.head + pagePreloads(data.ssr.page))
       .replace('<!--app-html-->', rendered.html)
-      .replace(
-        '<!--ssr-data-->',
-        `window.__SSR_DATA__=${jsonForInlineScript(clientSsrData)}`,
-      )
-      .replace(
-        '<!--env-data-->',
-        `window.__ENV__=${jsonForInlineScript(getClientEnvData())}`,
-      )
+      .replace('<!--ssr-data-->', () => jsonForInlineScript(clientSsrData))
+      .replace('<!--env-data-->', () => jsonForInlineScript(getClientEnvData()))
   }
 
   app.use(timeout('25s'))

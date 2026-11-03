@@ -1,5 +1,6 @@
 import { TooltipProvider } from '../../../../components/Tooltip'
 import { IS_READONLY } from '../../../../config/readonly'
+import { cn } from '../../../../utils/cn'
 import { useStore } from '../store/store'
 import { AutoLayoutMenu } from './canvas/AutoLayoutMenu'
 import { HistoryButtons } from './canvas/HistoryButtons'
@@ -13,21 +14,34 @@ import { GroupButtons } from './selection/GroupButtons'
 import { HideButton } from './selection/HideButton'
 import { ModuleButton } from './selection/ModuleButton'
 import { SelectionName } from './selection/SelectionName'
+import { selectOnlySelectedNode } from './selection/selectOnlySelectedNode'
 import { ValuesButton } from './selection/ValuesButton'
 import { Toolbar, ToolbarSection } from './Toolbar'
 
 export function Controls() {
   const hasSelection = useStore((state) => state.selected.length > 0)
+  const onlySelected = useStore(selectOnlySelectedNode)
+  const isGroupSelected =
+    onlySelected !== undefined && onlySelected.subnodes.length > 0
 
   return (
     <TooltipProvider>
       <div className="@container pointer-events-none absolute inset-x-2 bottom-3 z-10 flex flex-col items-center gap-1.5">
         {hasSelection && (
           <Toolbar label="Selection">
-            <ToolbarSection label="Selected nodes">
+            <ToolbarSection
+              label="Selected nodes"
+              className={cn(!isGroupSelected && '@max-md:hidden')}
+            >
               <SelectionName />
             </ToolbarSection>
-            <ToolbarSection label="Appearance">
+            <ToolbarSection
+              label="Appearance"
+              className={cn(
+                !isGroupSelected &&
+                  '@max-md:ml-0 @max-md:border-l-0 @max-md:pl-0',
+              )}
+            >
               <ColorButton />
               <ValuesButton />
               <HideButton />

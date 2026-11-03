@@ -3,7 +3,8 @@ import { useMemo } from 'react'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { PROJECT_TVS_CHART_VALUE_KEYS } from '~/server/features/layer2s/tvs/projectTvsChartValues'
 import { useTRPC } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
+import { formatSnapshotTimestamp } from '~/utils/dates'
+import { rangeToResolution } from '~/utils/range/range'
 import {
   CompareMetricLineChart,
   toCompareChartPoints,
@@ -18,7 +19,7 @@ export function TvsCompareChart({
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
-  const { data, isLoading, isPlaceholderData } = useChartQuery(
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.tvs.detailedChartWithProjectsRanges,
     getTvsCompareChartParams(queryProjects, config, chartRange),
   )
@@ -57,9 +58,7 @@ export function TvsCompareChart({
       formatYAxisLabel={(value) => formatCurrency(value, unit)}
       formatTooltipValue={(value) => formatCurrency(value, unit)}
       renderTooltipTimestamp={(label) =>
-        formatTimestamp(label, {
-          mode: 'datetime',
-        })
+        formatSnapshotTimestamp(label, rangeToResolution(shownInput.range))
       }
     />
   )

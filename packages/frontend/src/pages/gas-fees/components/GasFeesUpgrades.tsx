@@ -30,10 +30,8 @@ export function GasFeesUpgrades({
     u.timestamp < to
 
   return (
-    // Out of flow on desktop, so the timeline takes the chart's height
-    // instead of setting it
-    <div className="flex h-full flex-col lg:absolute lg:inset-y-0 lg:right-0 lg:left-6">
-      <h3 className="font-bold text-lg">Ethereum upgrades</h3>
+    <div className="flex h-full flex-col">
+      <h2 className="font-bold text-xl">Ethereum upgrades</h2>
       <ol className="-mx-2 mt-2 min-h-0 flex-1 overflow-y-auto border-divider border-t px-2 py-2">
         {upgrades.map((upgrade) => {
           const inRange = isInRange(upgrade)

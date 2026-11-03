@@ -66,6 +66,7 @@ export interface ProjectPrivacyEntry {
   hasTvl: boolean
   attributes: PrivacyAttribute[]
   trackedOn: ProjectIconListItem[]
+  scalingProjects: ProjectIconListItem[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
   reproducibility: PrivacySummaryValue
@@ -364,6 +365,7 @@ export async function getPrivacyProjectEntry(
     hasTvl: details.hasTvl,
     attributes: details.attributes,
     trackedOn: details.trackedOn,
+    scalingProjects: details.scalingProjects,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
       getPrivacyTrustedSetup(details.trustedSetups),

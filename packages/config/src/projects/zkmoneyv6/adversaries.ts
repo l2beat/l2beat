@@ -166,9 +166,9 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'bad',
       exposureShort:
-        'Whoever breaks elliptic-curve cryptography can decrypt historical notes and payment events published to Ethereum.',
+        "Whoever breaks elliptic-curve cryptography can decrypt the notes and events published to Ethereum, since each Aztec address is its owner's encryption key.",
       exposureContinued:
-        'Registered Aztec addresses identify the accounts. Deposit addresses paid through a name and enclave communication use the same class of cryptography.',
+        "Each withdrawal publishes a record encrypted to its account, so it links to the account's registration deposit and to deposits paid through its name.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -178,16 +178,20 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       },
       sources: [
         {
+          title: "Messages are encrypted to the recipient's address",
+          url: 'https://github.com/aztec-labs-eng/aztec-node/blob/v6.0.0/noir-projects/aztec-nr/aztec/src/messages/encryption/aes128.nr#L235-L266',
+        },
+        {
           contract: 'AccountMetadataRegistry',
-          title: 'Registered Aztec addresses',
+          title: 'Names map to Aztec addresses',
         },
         {
-          title: 'Addresses paid through a name use secp256k1 key exchange',
-          url: `${ZKMONEY_REPO}packages/front-core/src/oxide/resolverPayments.ts#L171`,
+          title: 'Each withdrawal emits a recovery record to its account',
+          url: `${OXIDE}noir-projects/oxide_token_contract/src/main.nr#L317-L330`,
         },
         {
-          title: 'Enclave channel uses P-256 HPKE',
-          url: `${OXIDE}yarn-project/oxide-lib-tee/src/encryption.ts#L1-L3`,
+          title: 'Deposits paid through a name are announced to the recipient',
+          url: `${OXIDE}noir-projects/oxide_token_contract/src/main.nr#L241-L252`,
         },
       ],
     },

@@ -16,7 +16,7 @@ export function ChartNoDataState({
       />
       <span
         className={cn(
-          'font-medium text-2xl text-yellow-700 leading-none dark:text-yellow-200',
+          'font-medium text-2xl text-warning-text leading-none',
           size === 'small' && 'text-xl',
         )}
       >

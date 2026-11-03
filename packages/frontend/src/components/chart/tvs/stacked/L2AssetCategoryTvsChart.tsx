@@ -4,7 +4,7 @@ import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useL2TvsDataKeys } from '~/pages/layer2s/tvs/components/L2TvsDataKeysContext'
 import type { TvsProjectFilter } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
 import { useTRPC } from '~/trpc/React'
-import type { ChartRange } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
 import { AssetCategoryTvsChart } from './AssetCategoryTvsChart'
 
@@ -91,6 +91,7 @@ export function L2AssetCategoryTvsChart({
   return (
     <AssetCategoryTvsChart
       isPlaceholderData={isPlaceholderData}
+      resolution={rangeToResolution(shownInput.range)}
       data={chartData}
       milestones={milestones}
       unit={unit}

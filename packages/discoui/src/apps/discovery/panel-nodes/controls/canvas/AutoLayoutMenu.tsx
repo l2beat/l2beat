@@ -2,6 +2,7 @@ import type { Node } from '../../store/State'
 import { useStore } from '../../store/store'
 import { centerLocationsInViewport } from '../../store/utils/centerLocationsInViewport'
 import { clusterLayout } from '../../store/utils/clusterLayout'
+import { flowLayout } from '../../store/utils/flowLayout'
 import {
   type GraphEdge,
   getGraphProjection,
@@ -10,6 +11,7 @@ import { containerBoxes } from '../../store/utils/renderGraph'
 import { stackAutoLayout } from '../../store/utils/stackLayout'
 import type { NodeLocations } from '../../store/utils/storage'
 import { IconControlCluster } from '../icons/IconControlCluster'
+import { IconControlFlow } from '../icons/IconControlFlow'
 import { IconControlStack } from '../icons/IconControlStack'
 import { ToolbarMenu } from '../ToolbarMenu'
 
@@ -23,9 +25,15 @@ export function AutoLayoutMenu() {
   return (
     <ToolbarMenu
       label="Layout"
+      icon={<IconControlFlow />}
       description="Arranges the selected nodes, or every visible node when nothing is selected."
       sections={[
         [
+          {
+            label: 'Flow',
+            icon: <IconControlFlow />,
+            onSelect: () => applyAutoLayout(flowLayout),
+          },
           {
             label: 'Stack',
             icon: <IconControlStack />,

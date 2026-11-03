@@ -175,9 +175,9 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'bad',
       exposureShort:
-        "All of an account's rotated addresses share one incoming viewing key on the Pallas curve, and every payout address is public on NEAR.",
+        "Whoever breaks elliptic-curve cryptography recovers an account's incoming viewing key from any of its payout addresses, which are public on NEAR.",
       exposureContinued:
-        "Whoever breaks elliptic-curve cryptography recovers that key from any one address and decrypts every note the account ever received. Those include the change notes of its exits, which join both legs of every round trip. ZIP 2005's quantum recoverability protects only funds.",
+        "All of the account's rotated addresses share that key, so it decrypts every note the account ever received. Those include the change notes of its exits, which join both legs of every round trip. ZIP 2005's quantum recoverability protects only funds.",
       interior: {
         sender: {
           verdict: 'atRisk',

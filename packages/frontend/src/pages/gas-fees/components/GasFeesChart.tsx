@@ -1,20 +1,22 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { scaleLog } from 'd3-scale'
 import { useMemo } from 'react'
-import { Line, LineChart, ReferenceLine } from 'recharts'
-import {
-  ChartContainer,
-  type ChartMeta,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  type CustomChartTooltipProps,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { ChartContainer } from '~/components/core/chart/ChartContainer'
+import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import {
+  ChartTooltipRow,
+  ChartTooltipWrapper,
+  getTooltipEntries,
+} from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import {
+  type ChartReferenceArea,
+  type ChartReferenceDot,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import type { GasFeesChartData } from '~/server/features/gas-fees/getGasFeesChart'
@@ -56,8 +58,6 @@ interface Props {
   setScale: (scale: GasFeesScale) => void
   highlightedChainId: string | undefined
   highlightedUpgradeId: string | undefined
-  /** Controls set beside the title, such as the range */
-  headerRight?: React.ReactNode
 }
 
 type Point = { timestamp: number } & Record<string, number | null>
@@ -75,7 +75,6 @@ export function GasFeesChart({
   setScale,
   highlightedChainId,
   highlightedUpgradeId,
-  headerRight,
 }: Props) {
   const meta = useMemo<ChartMeta>(
     () =>
@@ -112,6 +111,7 @@ export function GasFeesChart({
   )
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
     useChartDataKeys(meta, hidden)
+  const shownKeys = dataKeys.map(String)
 
   const points = useMemo<Point[] | undefined>(
     () =>
@@ -125,13 +125,12 @@ export function GasFeesChart({
     [data, chains],
   )
 
-  const yAxis = useMemo(
-    () => getYAxis(points, dataKeys, scale),
-    [points, dataKeys, scale],
-  )
-  const upgradeLines = useMemo(
-    () => getUpgradeLines(points, upgrades),
-    [points, upgrades],
+  const yAxis = getYAxis(points, shownKeys, scale)
+  const markers = getUpgradeMarkers(
+    points,
+    upgrades,
+    highlightedUpgradeId,
+    yAxis.top,
   )
   const timeRange = useMemo(() => getChartTimeRangeFromData(points), [points])
 
@@ -147,21 +146,6 @@ export function GasFeesChart({
             timeRange={timeRange}
           />
         </div>
-        {headerRight}
-      </ChartControlsWrapper>
-      <div className="flex flex-wrap justify-between gap-2">
-        <RadioGroup
-          name="gasFeesMetric"
-          value={metric}
-          onValueChange={(value) => setMetric(value as GasFeesMetric)}
-          className="max-w-full overflow-x-auto"
-        >
-          {GAS_FEES_METRICS.map((m) => (
-            <RadioGroupItem key={m} value={m} className="whitespace-nowrap">
-              {GAS_FEES_METRIC_LABELS[m].short}
-            </RadioGroupItem>
-          ))}
-        </RadioGroup>
         <RadioGroup
           name="gasFeesScale"
           value={scale}
@@ -170,111 +154,73 @@ export function GasFeesChart({
           <RadioGroupItem value="log">Log</RadioGroupItem>
           <RadioGroupItem value="lin">Lin</RadioGroupItem>
         </RadioGroup>
-      </div>
+      </ChartControlsWrapper>
+      <RadioGroup
+        name="gasFeesMetric"
+        value={metric}
+        onValueChange={(value) => setMetric(value as GasFeesMetric)}
+        className="max-w-full overflow-x-auto"
+      >
+        {GAS_FEES_METRICS.map((m) => (
+          <RadioGroupItem key={m} value={m} className="whitespace-nowrap">
+            {GAS_FEES_METRIC_LABELS[m].short}
+          </RadioGroupItem>
+        ))}
+      </RadioGroup>
       <ChartContainer
         data={points}
         meta={meta}
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
-        interactiveLegend={{ dataKeys, onItemClick: toggleDataKey }}
+        interactiveLegend={{ dataKeys: shownKeys, onItemClick: toggleDataKey }}
         noDataSourceMessage="Select at least one chain"
         size="large"
-      >
-        {/* Without right:1 the last point is not hoverable */}
-        <LineChart responsive data={points} margin={{ top: 20, right: 1 }}>
+        legend
+        legendLeading={
           <ChartLegendToggleAll
             showAllSelected={showAllSelected}
             onToggleAll={toggleAllDataKeys}
           />
-          {upgradeLines.map((line) => {
-            const highlighted = line.id === highlightedUpgradeId
-            return (
-              <ReferenceLine
-                key={line.id}
-                x={line.x}
-                stroke={highlighted ? 'var(--brand)' : 'var(--secondary)'}
-                strokeOpacity={
-                  highlighted ? 1 : line.kind === 'upgrade' ? 0.6 : 0.35
-                }
-                strokeWidth={highlighted ? 2 : 1}
-                strokeDasharray={line.kind === 'upgrade' ? '4 3' : '1 3'}
-                label={
-                  line.kind === 'upgrade' || highlighted
-                    ? (props: { viewBox?: { x?: number; y?: number } }) => (
-                        // A highlighted label takes a row of its own, below
-                        // the others, which fade so it can't be misread
-                        <text
-                          x={(props.viewBox?.x ?? 0) + 4}
-                          y={
-                            (props.viewBox?.y ?? 0) +
-                            11 +
-                            (highlighted ? 2 : line.row) * 13
-                          }
-                          fontSize={11}
-                          fontWeight={highlighted ? 700 : 500}
-                          fill={
-                            highlighted ? 'var(--brand)' : 'var(--secondary)'
-                          }
-                          fillOpacity={
-                            highlightedUpgradeId && !highlighted ? 0.35 : 1
-                          }
-                          stroke="var(--surface-primary)"
-                          strokeWidth={3}
-                          paintOrder="stroke"
-                        >
-                          {line.label}
-                        </text>
-                      )
-                    : undefined
-                }
-              />
-            )
-          })}
-          {chains.map((chain) => (
-            <Line
-              key={chain.id}
-              dataKey={chain.id}
-              hide={!dataKeys.includes(chain.id)}
-              stroke={chain.color}
-              strokeWidth={chain.id === 'ethereum' ? 2.5 : 1.75}
-              strokeOpacity={
-                highlightedChainId !== undefined &&
-                highlightedChainId !== chain.id
-                  ? 0.2
-                  : 1
-              }
-              className="[&_.recharts-line-curve]:transition-[stroke-opacity] [&_.recharts-line-curve]:duration-200 motion-reduce:[&_.recharts-line-curve]:transition-none"
-              dot={false}
-              isAnimationActive={false}
+        }
+      >
+        <TimeSeriesChart
+          data={points}
+          ariaLabel={GAS_FEES_METRIC_LABELS[shownMetric].title}
+          series={chains.map((chain) => ({
+            key: chain.id,
+            stroke: chain.color,
+            strokeWidth: chain.id === 'ethereum' ? 2.5 : 1.75,
+          }))}
+          highlight={highlightedChainId}
+          yAxis={yAxis.options}
+          referenceAreas={markers.areas}
+          referenceDots={markers.labels}
+          renderTooltip={(row, keys) => (
+            <GasFeesTooltip
+              row={row}
+              keys={keys}
+              smoothed={data?.smoothed ?? false}
             />
-          ))}
-          <ChartCommonComponents
-            data={points}
-            isLoading={isLoading}
-            yAxis={yAxis}
-            syncedUntil={undefined}
-          />
-          <ChartTooltip
-            content={<GasFeesTooltip smoothed={data?.smoothed ?? false} />}
-          />
-        </LineChart>
+          )}
+        />
       </ChartContainer>
     </div>
   )
 }
 
+/** Log: whole powers of ten, so every gridline is 10× the one below */
 function getYAxis(
   points: Point[] | undefined,
-  dataKeys: string[],
+  keys: string[],
   scale: GasFeesScale,
 ) {
   if (scale === 'lin') {
-    return { tickCount: 4, tickFormatter: (v: number) => formatFee(v) }
+    return { options: { tickCount: 4, format: formatFee }, top: undefined }
   }
   let min = Number.POSITIVE_INFINITY
   let max = 0
   for (const point of points ?? []) {
-    for (const key of dataKeys) {
+    for (const key of keys) {
       const value = point[key]
       if (typeof value === 'number' && value > 0) {
         min = Math.min(min, value)
@@ -282,82 +228,88 @@ function getYAxis(
       }
     }
   }
-  if (max === 0) return { tickCount: 4 }
-  // Whole powers of ten, so every gridline is 10× the one below
+  if (max === 0) return { options: { tickCount: 4 }, top: undefined }
   const lo = Math.floor(Math.log10(min))
   const hi = Math.ceil(Math.log10(max))
   const ticks = Array.from({ length: hi - lo + 1 }, (_, i) => 10 ** (lo + i))
   return {
-    scale: 'log' as const,
-    domain: [10 ** lo, 10 ** hi],
-    ticks,
-    allowDataOverflow: true,
-    tickFormatter: (v: number) => formatFeeTick(v),
+    options: {
+      scale: scaleLog,
+      domain: [10 ** lo, 10 ** hi] as const,
+      ticks,
+      format: formatFeeTick,
+    },
+    top: 10 ** hi,
   }
 }
 
 /**
- * One line per upgrade inside the data, snapped to the first point on or
- * after its date. Close labels alternate between two rows.
+ * A thin bar per upgrade inside the data, and a label above each
+ * upgrade (gas limit raises stay unlabeled unless highlighted). Close
+ * labels alternate between two rows.
  */
-function getUpgradeLines(
+function getUpgradeMarkers(
   points: Point[] | undefined,
   upgrades: GasFeesUpgrade[],
-) {
-  if (!points?.length) return []
-  const first = points[0]?.timestamp ?? 0
-  const last = points[points.length - 1]?.timestamp ?? 0
+  highlightedId: string | undefined,
+  top: number | undefined,
+): { areas: ChartReferenceArea[]; labels: ChartReferenceDot[] } {
+  const first = points?.[0]?.timestamp
+  const last = points?.at(-1)?.timestamp
+  if (first === undefined || last === undefined) {
+    return { areas: [], labels: [] }
+  }
   const span = last - first
-  const lines: {
-    id: string
-    kind: GasFeesUpgrade['kind']
-    x: number
-    label: string
-    row: number
-  }[] = []
-  let lastLabelled: { x: number; row: number } | undefined
+  const width = Math.max(UnixTime.DAY, span / 400)
+  const areas: ChartReferenceArea[] = []
+  const labels: ChartReferenceDot[] = []
+  let previous: { x: number; row: number } | undefined
   for (const upgrade of [...upgrades].reverse()) {
     const at = upgrade.timestamp
     if (at === null || at < first || at > last) continue
-    const point = points.find((p) => p.timestamp >= at)
-    if (!point) continue
-    const crowded =
-      lastLabelled !== undefined &&
-      (point.timestamp - lastLabelled.x) / span < 0.06
-    const row =
-      upgrade.kind === 'upgrade' && crowded ? 1 - (lastLabelled?.row ?? 0) : 0
-    if (upgrade.kind === 'upgrade') {
-      lastLabelled = { x: point.timestamp, row }
-    }
-    lines.push({
-      id: upgrade.id,
-      kind: upgrade.kind,
-      x: point.timestamp,
-      label: upgrade.title,
-      row,
+    const highlighted = upgrade.id === highlightedId
+    areas.push({
+      x1: at,
+      x2: at + (highlighted ? width * 2 : width),
+      fill: highlighted ? 'var(--brand)' : 'var(--secondary)',
+      fillOpacity: highlighted ? 0.9 : upgrade.kind === 'upgrade' ? 0.35 : 0.18,
+    })
+    if (top === undefined) continue
+    if (upgrade.kind !== 'upgrade' && !highlighted) continue
+    const crowded = previous !== undefined && (at - previous.x) / span < 0.06
+    const row = highlighted ? 2 : crowded ? 1 - (previous?.row ?? 0) : 0
+    if (!highlighted) previous = { x: at, row }
+    labels.push({
+      x: at,
+      y: top,
+      r: 0,
+      label: {
+        text: upgrade.title,
+        position: 'bottom',
+        offset: 2 + row * 13,
+        fill: highlighted ? 'var(--brand)' : 'var(--secondary)',
+        fontWeight: highlighted ? 700 : 500,
+      },
     })
   }
-  return lines
+  return { areas, labels }
 }
 
 function GasFeesTooltip({
-  payload,
-  label,
+  row,
+  keys,
   smoothed,
-}: CustomChartTooltipProps & { smoothed: boolean }) {
-  const { meta } = useChart()
-  if (!payload || typeof label !== 'number') return null
-
-  const visible = payload.filter(
-    (entry) =>
-      entry.type !== 'none' &&
-      !entry.hide &&
-      entry.value !== null &&
-      entry.value !== undefined,
+}: {
+  row: Point
+  keys: string[]
+  smoothed: boolean
+}) {
+  const entries = getTooltipEntries(row, keys, { skipNull: true }).sort(
+    (a, b) => b.value - a.value,
   )
-  if (visible.length === 0) return null
-  const ethereum = payload.find((e) => e.name === 'ethereum')?.value
-  const sorted = [...visible].sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
+  if (entries.length === 0) return null
+  const ethereum = row.ethereum
+  const t = row.timestamp
 
   return (
     <ChartTooltipWrapper>
@@ -365,33 +317,23 @@ function GasFeesTooltip({
         <div className="font-medium text-label-value-14 text-secondary">
           {/* A daily bucket, or the week a 7-day average covers */}
           {smoothed
-            ? formatRange(label - 6 * UnixTime.DAY, label + UnixTime.DAY)
-            : formatRange(label, label + UnixTime.DAY)}
+            ? formatRange(t - 6 * UnixTime.DAY, t + UnixTime.DAY)
+            : formatRange(t, t + UnixTime.DAY)}
           {smoothed && <span className="block text-2xs">7-day average</span>}
         </div>
         <div className="mt-2 flex flex-col gap-2">
-          {sorted.map((entry) => {
-            const config = entry.name ? meta[entry.name] : undefined
-            if (!config || entry.value === undefined || entry.value === null)
-              return null
+          {entries.map((entry) => {
             const times =
               entry.name !== 'ethereum' && typeof ethereum === 'number'
                 ? ethereum / entry.value
                 : undefined
             return (
-              <div
+              <ChartTooltipRow
                 key={entry.name}
-                className="flex items-center justify-between gap-x-3"
+                name={entry.name}
+                gap="gap-x-3"
+                wrapLabel={false}
               >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="font-medium text-label-value-14">
-                    {config.label}
-                  </span>
-                </div>
                 <span className="flex items-baseline gap-1.5 whitespace-nowrap">
                   {times !== undefined && (
                     <span className="text-2xs text-secondary tabular-nums">
@@ -402,7 +344,7 @@ function GasFeesTooltip({
                     {formatFee(entry.value)}
                   </span>
                 </span>
-              </div>
+              </ChartTooltipRow>
             )
           })}
         </div>

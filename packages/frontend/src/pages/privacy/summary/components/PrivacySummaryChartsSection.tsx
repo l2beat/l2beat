@@ -6,7 +6,7 @@ import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChar
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChartTabs } from '~/pages/layer2s/summary/components/ChartTabs'
 import { useTRPC } from '~/trpc/React'
-import type { ChartRange } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
 import { PrivacyFlowsChartRangeControls } from '../../project/components/PrivacyFlowsChartRangeControls'
 import type { PrivacyTvlBreakdownProject } from './PrivacyTvlBreakdownChart'
@@ -41,6 +41,7 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     data: tvlData,
     isLoading: isTvlLoading,
     isPlaceholderData: isTvlPlaceholderData,
+    shownInput: tvlShownInput,
   } = useChartQuery(trpc.tvs.chartByProjects, {
     projectIds: tvlProjectIds,
     range,
@@ -94,6 +95,7 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
       </div>
       <PrivacyTvlBreakdownChart
         isPlaceholderData={isTvlPlaceholderData}
+        resolution={rangeToResolution(tvlShownInput.range)}
         data={tvlData?.chart}
         projects={tvlProjects}
         syncedUntil={tvlData?.syncedUntil}

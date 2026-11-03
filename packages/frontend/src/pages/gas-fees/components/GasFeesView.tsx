@@ -53,8 +53,8 @@ export function GasFeesView({ chains, upgrades, initialRange }: Props) {
   const showWholeHistory = useCallback(() => setRange(optionToRange('max')), [])
 
   return (
-    // Three cards, read top to bottom: today, history, and how chains compare.
-    // On mobile they run edge to edge, split by a line.
+    // Read top to bottom: today, history, and how chains compare. On mobile
+    // the sections run edge to edge, split by a line.
     <div className="flex flex-col md:gap-4 [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
       <GasFeesRecent
         chains={chains}
@@ -64,35 +64,48 @@ export function GasFeesView({ chains, upgrades, initialRange }: Props) {
         pinnedChainId={pinnedChainId}
         setPinnedChainId={setPinnedChainId}
       />
-      <PrimaryCard>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
-          <GasFeesChart
-            chains={chains}
-            upgrades={upgrades}
-            data={chart.data}
-            isLoading={chart.isLoading}
-            isPlaceholderData={chart.isPlaceholderData}
-            shownMetric={chart.shownInput.metric}
-            metric={metric}
-            setMetric={setMetric}
-            scale={scale}
-            setScale={setScale}
-            highlightedChainId={highlightedChainId}
-            highlightedUpgradeId={highlightedUpgradeId}
-            headerRight={
-              <ChartRangeControls
-                name="gasFeesRange"
-                value={range}
-                setValue={setRange}
-                options={GAS_FEES_RANGE_OPTIONS.map((value) => ({
-                  value,
-                  label: RANGE_LABELS[value],
-                }))}
-              />
-            }
+      {/* History: the stats and the chart on the left; the range, which
+          drives them and the table, heads the column on the right, with the
+          upgrades below it, cut to the left column's height */}
+      <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-[minmax(0,1fr)_340px] lg:grid-rows-[auto_minmax(0,1fr)]">
+        <div className="flex justify-end max-md:px-4 max-md:py-3 lg:col-start-2 lg:row-start-1">
+          <ChartRangeControls
+            name="gasFeesRange"
+            value={range}
+            setValue={setRange}
+            options={GAS_FEES_RANGE_OPTIONS.map((value) => ({
+              value,
+              label: RANGE_LABELS[value],
+            }))}
           />
-          {/* The timeline takes the chart's height and scrolls inside */}
-          <div className="relative border-divider max-lg:h-[420px] max-lg:border-t max-lg:pt-5 lg:border-l">
+        </div>
+        <div className="flex min-w-0 flex-col md:gap-4 lg:col-start-1 lg:row-span-2 lg:row-start-1">
+          <PrimaryCard>
+            <GasFeesStats
+              stats={summary.data?.stats}
+              range={summary.shownInput.range}
+              isLoading={summary.isLoading}
+            />
+          </PrimaryCard>
+          <PrimaryCard>
+            <GasFeesChart
+              chains={chains}
+              upgrades={upgrades}
+              data={chart.data}
+              isLoading={chart.isLoading}
+              isPlaceholderData={chart.isPlaceholderData}
+              shownMetric={chart.shownInput.metric}
+              metric={metric}
+              setMetric={setMetric}
+              scale={scale}
+              setScale={setScale}
+              highlightedChainId={highlightedChainId}
+              highlightedUpgradeId={highlightedUpgradeId}
+            />
+          </PrimaryCard>
+        </div>
+        <PrimaryCard className="relative max-lg:h-[480px] lg:col-start-2 lg:row-start-2">
+          <div className="absolute inset-0 p-4 md:px-6 md:py-5">
             <GasFeesUpgrades
               upgrades={upgrades}
               metric={metric}
@@ -102,15 +115,8 @@ export function GasFeesView({ chains, upgrades, initialRange }: Props) {
               showWholeHistory={showWholeHistory}
             />
           </div>
-        </div>
-        <div className="mt-5 border-divider border-t pt-5">
-          <GasFeesStats
-            stats={summary.data?.stats}
-            range={summary.shownInput.range}
-            isLoading={summary.isLoading}
-          />
-        </div>
-      </PrimaryCard>
+        </PrimaryCard>
+      </div>
       <PrimaryCard>
         <GasFeesTable
           chains={chains}

@@ -157,8 +157,8 @@ export const strk20Adversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'bad',
       exposureShort:
-        'The proofs rest only on hashes, the encryption on elliptic curves.',
-      exposureContinued: `Channel keys, note contents and the auditor escrow all use this encryption. Whoever breaks elliptic-curve cryptography recovers the auditor key from its onchain public key, and with it every escrowed viewing key and the whole history. ${S.walletSignatureAccounts()}`,
+        'Whoever breaks elliptic-curve cryptography recovers the auditor key from its onchain public key, and with it every escrowed viewing key and the whole history.',
+      exposureContinued: `Channel keys and note contents use the same elliptic-curve encryption. ${S.walletSignatureAccounts()}`,
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

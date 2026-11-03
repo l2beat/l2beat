@@ -27,6 +27,15 @@
   <meta name="twitter:image:height" content="630">
 
   <link rel="stylesheet" href="/src/index.css" />
+  <script>
+    {
+      const settings = JSON.parse(localStorage.getItem('discovery-app-settings-v1'))
+      const setting = settings?.state?.theme ?? 'system'
+      const systemPrefersLight = matchMedia('(prefers-color-scheme: light)').matches
+      const isLight = setting === 'light' || (setting === 'system' && systemPrefersLight)
+      document.documentElement.dataset.theme = isLight ? 'light' : 'dark'
+    }
+  </script>
 </head>
 
 <body class="h-full w-full bg-coffee-800 text-coffee-200">

@@ -1,4 +1,5 @@
 import { v as z } from '@l2beat/validate'
+import { getEnvData } from './ssr/pageDataScripts'
 
 const coerceBoolean = z.string().transform((val) => {
   return val !== 'false' && val !== '0'
@@ -130,7 +131,7 @@ function getRawEnv(): Record<
   string | undefined
 > {
   if (typeof process === 'undefined') {
-    return window.__ENV__
+    return getEnvData()
   }
 
   return {

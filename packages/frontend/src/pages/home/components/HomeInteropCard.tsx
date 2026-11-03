@@ -9,7 +9,7 @@ import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
-import { FlowsGeneralStats } from '~/pages/interop/components/flows/FlowsGeneralStats'
+import { FlowsGeneralStatsView } from '~/pages/interop/components/flows/FlowsGeneralStats'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import {
   type InteropFlowsProtocol,
@@ -55,14 +55,13 @@ function HomeInteropCardContent({
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
 
+  // Not gated on the selection: the stats panel shows totals even when the
+  // graph asks for more chains.
   const { data, isLoading } = useQuery(
-    trpc.interop.flows.queryOptions(
-      {
-        chains: selectedChains,
-        protocolIds: selectedProtocols,
-      },
-      { enabled: hasEnoughChains && hasEnoughProtocols },
-    ),
+    trpc.interop.flowsOverview.queryOptions({
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+    }),
   )
 
   const activeIds = useMemo(
@@ -213,7 +212,13 @@ function HomeInteropCardContent({
           </div>
         </div>
         <div className="@min-[800px]:order-3 @min-[800px]:block hidden h-full">
-          <FlowsGeneralStats title="" description="" linkTopRouteToSummary />
+          <FlowsGeneralStatsView
+            title=""
+            description=""
+            linkTopRouteToSummary
+            data={data}
+            isLoading={isLoading}
+          />
         </div>
       </div>
     </HomeCard>
