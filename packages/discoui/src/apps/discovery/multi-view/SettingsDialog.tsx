@@ -78,7 +78,7 @@ export function SettingsDialog() {
 }
 
 const OPTION_CLASS =
-  'flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm hover:text-white'
+  'flex cursor-pointer select-none items-center gap-2 font-medium text-coffee-100 text-sm hover:text-coffee-50'
 const HINT_CLASS = 'mt-1 pl-6 text-coffee-300 text-xs leading-4'
 
 function SectionHeading(props: { children: string; first?: boolean }) {

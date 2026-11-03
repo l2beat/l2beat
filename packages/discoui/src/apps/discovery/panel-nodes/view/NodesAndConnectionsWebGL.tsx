@@ -19,27 +19,22 @@ import {
 import { getRowLayout, type NodeRow } from '../store/utils/rows'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
+import {
+  DARK_GRAPH_PALETTE,
+  type GraphPalette,
+  HEADER_INITIAL,
+  HEADER_TEMPLATE,
+  HEADER_TEXT_ON_DARK,
+  HEADER_TEXT_ON_LIGHT,
+  HEADER_UNVERIFIED,
+  type RGBA,
+  TEXT_ON_ACCENT,
+} from './colors/graphPalette'
 
 // ============================================================================
 // Constants
 // ============================================================================
 
-type RGBA = [number, number, number, number]
-
-const COFFEE_600: RGBA = [0x59 / 255, 0x4c / 255, 0x43 / 255, 1]
-const COFFEE_400: RGBA = [0xa9 / 255, 0x87 / 255, 0x63 / 255, 1]
-const COFFEE_200: RGBA = [0xf0 / 255, 0xd8 / 255, 0xbd / 255, 1]
-const GRID_DOT: RGBA = [0x3c / 255, 0x33 / 255, 0x2d / 255, 0.6]
-const AUTUMN_300: RGBA = [0xba / 255, 0xd8 / 255, 0x0a / 255, 1]
-const AUX_RED: RGBA = [0xfb / 255, 0x4a / 255, 0x35 / 255, 1]
-const AUX_GREEN: RGBA = [0x9d / 255, 0xde / 255, 0x6c / 255, 1]
-const AUX_ORANGE: RGBA = [0xfe / 255, 0x80 / 255, 0x19 / 255, 1]
-
-const DEFAULT_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.6)
-const DIMMED_CONNECTION_COLOR = withAlpha(COFFEE_400, 0.18)
-const GRAYED_CONNECTION_COLOR = withAlpha(COFFEE_200, 0.1)
-const BLACK: RGBA = [0, 0, 0, 1]
-const NODE_BODY: RGBA = [0x12 / 255, 0x0f / 255, 0x0e / 255, 1]
 // Transparent ring color: a plain fill.
 const NO_RING: RGBA = [0, 0, 0, 0]
 
@@ -122,6 +117,7 @@ interface DrawData {
   selectedContainers: Set<string>
   enableDimming: boolean
   markUnreachableEntries: boolean
+  palette: GraphPalette
   anyNodeSelected: boolean
   liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>
 }
@@ -1266,7 +1262,7 @@ class WebGLRenderer {
     // by how the instance buffers are filled (selected last). Overlap borders
     // draw last.
     gl.disable(gl.DEPTH_TEST)
-    this.drawGridPass(transform, res)
+    this.drawGridPass(transform, res, data.palette.gridDot)
     this.drawConnectionPass(transform, res)
     gl.enable(gl.DEPTH_TEST)
     this.drawNodeRange(CONTAINER_RANGE, transform, res)
@@ -1301,19 +1297,22 @@ class WebGLRenderer {
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.palette,
     )
     this.counts.icon = this.buildIcons(
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.palette,
     )
     this.counts.headerText = this.buildHeaderText(
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.palette,
     )
-    this.counts.fieldText = this.buildFieldText(renderNodes)
-    this.counts.footerText = this.buildFooterText(renderNodes)
+    this.counts.fieldText = this.buildFieldText(renderNodes, data.palette)
+    this.counts.footerText = this.buildFooterText(renderNodes, data.palette)
     this.counts.connections = this.buildConnections(data)
     this.counts.overlap = this.buildOverlap(renderNodes)
   }
@@ -1322,6 +1321,7 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    palette: GraphPalette,
   ): PassLayout {
     // Upper bound: 4 quads (body, header, selection, group outline) per node,
     // plus one pill per visible field, plus two quads (outline, header bar)
@@ -1336,8 +1336,10 @@ class WebGLRenderer {
     const w = CONTAINER_OUTLINE_WIDTH
     let n = 0
     for (const { box: b, headerBox: h, id } of containers) {
-      const line = selectedContainers.has(id) ? AUTUMN_300 : COFFEE_200
-      const bar = selectedContainers.has(id) ? AUTUMN_300 : COFFEE_600
+      const line = selectedContainers.has(id) ? palette.accent : palette.text
+      const bar = selectedContainers.has(id)
+        ? palette.accent
+        : palette.containerBar
       writeRound(
         buf,
         n++,
@@ -1385,7 +1387,7 @@ class WebGLRenderer {
           y - inset,
           width + inset * 2,
           height + inset * 2,
-          AUTUMN_300,
+          palette.accent,
           corner + inset,
           corner + inset,
           corner + inset,
@@ -1403,7 +1405,7 @@ class WebGLRenderer {
         y,
         width,
         height,
-        NODE_BODY,
+        palette.nodeBody,
         corner,
         corner,
         corner,
@@ -1450,7 +1452,7 @@ class WebGLRenderer {
           y - inset,
           width + inset * 2,
           height + inset * 2,
-          COFFEE_200,
+          palette.text,
           corner + inset,
           corner + inset,
           corner + inset,
@@ -1472,7 +1474,7 @@ class WebGLRenderer {
             rowY,
             width,
             FIELD_HEIGHT,
-            AUTUMN_300,
+            palette.accent,
             pillRadius,
             pillRadius,
             pillRadius,
@@ -1493,6 +1495,7 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    palette: GraphPalette,
   ): PassLayout {
     let max = renderNodes.length * 3 + containers.length
     for (const rn of renderNodes) max += rn.visibleFields.length
@@ -1503,7 +1506,7 @@ class WebGLRenderer {
     let n = 0
     for (const { headerBox: h, id } of containers) {
       const iconY = h.y + (h.height - HEADER_ICON_SIZE) / 2
-      const color = selectedContainers.has(id) ? BLACK : COFFEE_200
+      const color = selectedContainers.has(id) ? TEXT_ON_ACCENT : palette.text
       n += this.emitIcon(
         buf,
         n,
@@ -1522,9 +1525,11 @@ class WebGLRenderer {
       const iconY = y + (headerH - HEADER_ICON_SIZE) / 2
 
       const { isDark } = getColor(node)
-      const headerTextColor = isDark ? COFFEE_200 : BLACK
+      const headerTextColor = isDark
+        ? HEADER_TEXT_ON_DARK
+        : HEADER_TEXT_ON_LIGHT
       const addrColor =
-        node.addressType === 'Unverified' ? AUX_RED : headerTextColor
+        node.addressType === 'Unverified' ? HEADER_UNVERIFIED : headerTextColor
       n += this.emitIcon(
         buf,
         n,
@@ -1546,7 +1551,7 @@ class WebGLRenderer {
           rightX,
           iconY,
           HEADER_ICON_SIZE,
-          AUX_ORANGE,
+          HEADER_TEMPLATE,
           z,
         )
       }
@@ -1559,7 +1564,7 @@ class WebGLRenderer {
           rightX,
           iconY,
           HEADER_ICON_SIZE,
-          AUX_GREEN,
+          HEADER_INITIAL,
           z,
         )
       }
@@ -1577,10 +1582,10 @@ class WebGLRenderer {
           const useAutumn =
             flags.isSelected || flags.fieldHighlighted[index] === 1
           const dotColor = flags.isGrayedOut
-            ? desaturate(COFFEE_400)
+            ? desaturate(palette.dot)
             : useAutumn
-              ? AUTUMN_300
-              : COFFEE_400
+              ? palette.accent
+              : palette.dot
           n += this.emitIcon(
             buf,
             n,
@@ -1632,6 +1637,7 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    palette: GraphPalette,
   ): PassLayout {
     let maxChars = 0
     for (const { node } of renderNodes) maxChars += node.name.length
@@ -1650,7 +1656,7 @@ class WebGLRenderer {
         h.x + HEADER_PADDING + HEADER_ICON_SIZE + HEADER_ITEM_GAP,
         baselineY,
         atlas,
-        selectedContainers.has(id) ? BLACK : COFFEE_200,
+        selectedContainers.has(id) ? TEXT_ON_ACCENT : palette.text,
         h.x + h.width - HEADER_PADDING,
         CONTAINER_Z,
       )
@@ -1658,7 +1664,7 @@ class WebGLRenderer {
     for (const { node, flags, z, range, headerH } of renderNodes) {
       layout.enter(range, n)
       const { isDark } = getColor(node)
-      const baseColor = isDark ? COFFEE_200 : BLACK
+      const baseColor = isDark ? HEADER_TEXT_ON_DARK : HEADER_TEXT_ON_LIGHT
       const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
       const startX =
         node.box.x + HEADER_PADDING + HEADER_ICON_SIZE + HEADER_ITEM_GAP
@@ -1685,7 +1691,10 @@ class WebGLRenderer {
     return layout.finish(n)
   }
 
-  private buildFieldText(renderNodes: readonly RenderNode[]): PassLayout {
+  private buildFieldText(
+    renderNodes: readonly RenderNode[],
+    palette: GraphPalette,
+  ): PassLayout {
     let maxChars = 0
     for (const rn of renderNodes) {
       for (const row of rn.rows) {
@@ -1703,7 +1712,9 @@ class WebGLRenderer {
       for (let row = 0; row < rn.rows.length; row++) {
         const rowY = node.box.y + HEADER_HEIGHT + row * FIELD_HEIGHT
         const baselineY = rowY + FIELD_HEIGHT / 2 + atlas.refSize / 2 - 2
-        const baseColor = isRowHighlighted(rn, row) ? BLACK : COFFEE_200
+        const baseColor = isRowHighlighted(rn, row)
+          ? TEXT_ON_ACCENT
+          : palette.text
         const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
         n += writeStringInstances(
           buf,
@@ -1722,7 +1733,10 @@ class WebGLRenderer {
     return layout.finish(n)
   }
 
-  private buildFooterText(renderNodes: readonly RenderNode[]): PassLayout {
+  private buildFooterText(
+    renderNodes: readonly RenderNode[],
+    palette: GraphPalette,
+  ): PassLayout {
     let any = false
     let maxChars = 0
     for (const { node } of renderNodes) {
@@ -1752,7 +1766,7 @@ class WebGLRenderer {
         footerBottom - FOOTER_LINE_HEIGHT,
         FOOTER_LINE_HEIGHT,
       )
-      const baseColor = withAlpha(COFFEE_200, 0.4)
+      const baseColor = palette.footerText
       const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
       const labelWidth = measureString(label, atlas)
       const startX = node.box.x + (node.box.width - labelWidth) / 2
@@ -1811,7 +1825,7 @@ class WebGLRenderer {
         n++,
         span,
         HIGHLIGHTED_CONNECTION_WIDTH,
-        AUTUMN_300,
+        data.palette.accent,
       )
     }
     return this.upload(
@@ -1862,6 +1876,7 @@ class WebGLRenderer {
   private drawGridPass(
     transform: { offsetX: number; offsetY: number; scale: number },
     res: [number, number],
+    gridDot: RGBA,
   ) {
     const gl = this.gl
     gl.useProgram(this.programs.grid)
@@ -1873,7 +1888,7 @@ class WebGLRenderer {
     gl.uniform1f(this.uniforms.grid.scale, transform.scale)
     gl.uniform2f(this.uniforms.grid.resolution, res[0], res[1])
     gl.uniform1f(this.uniforms.grid.cellSize, getGridCellSize(transform.scale))
-    gl.uniform4fv(this.uniforms.grid.color, GRID_DOT)
+    gl.uniform4fv(this.uniforms.grid.color, gridDot)
     gl.bindVertexArray(null)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
   }
@@ -2199,12 +2214,12 @@ function connectionColor(span: ConnectionSpan, data: DrawData): RGBA {
     data.markUnreachableEntries &&
     !(span.node.isReachable && span.target.isReachable)
   ) {
-    return GRAYED_CONNECTION_COLOR
+    return data.palette.connectionGrayed
   }
   if (data.enableDimming && data.anyNodeSelected) {
-    return DIMMED_CONNECTION_COLOR
+    return data.palette.connectionDimmed
   }
-  return DEFAULT_CONNECTION_COLOR
+  return data.palette.connection
 }
 
 // ============================================================================
@@ -2557,10 +2572,6 @@ function pushArc(
 // Color & flag helpers
 // ============================================================================
 
-function withAlpha(c: RGBA, a: number): RGBA {
-  return [c[0], c[1], c[2], a]
-}
-
 function desaturate(c: RGBA): RGBA {
   const g = c[0] * 0.299 + c[1] * 0.587 + c[2] * 0.114
   return [g, g, g, c[3]]
@@ -2614,6 +2625,7 @@ function buildDrawData(
   enableDimming: boolean,
   highlightOverlapping: boolean,
   markUnreachableEntries: boolean,
+  palette: GraphPalette,
 ): DrawData {
   const selectedSet = new Set(selected)
   const visible: Node[] = []
@@ -2687,6 +2699,7 @@ function buildDrawData(
     ),
     enableDimming,
     markUnreachableEntries,
+    palette,
     anyNodeSelected,
     liveGroupTargets,
   }
@@ -2763,6 +2776,7 @@ export function NodesAndConnectionsWebGL() {
         enableDimming,
         highlightOverlapping,
         markUnreachableEntries,
+        DARK_GRAPH_PALETTE,
       ),
     [
       graph,

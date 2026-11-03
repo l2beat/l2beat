@@ -137,7 +137,7 @@ export function TerminalPanel() {
       </div>
       <div
         ref={outputRef}
-        className="flex-1 overflow-auto whitespace-pre bg-coffee-900 p-2 font-mono text-gray-300"
+        className="flex-1 overflow-auto whitespace-pre bg-coffee-900 p-2 font-mono"
         dangerouslySetInnerHTML={{
           __html: ansiHTML(output),
         }}

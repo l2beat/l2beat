@@ -60,7 +60,7 @@ export function ConfigHealthReportPage() {
         <div className="flex flex-wrap items-center gap-2">
           <Button
             size="small"
-            className="border-autumn-300 bg-autumn-300 font-semibold text-coffee-900 hover:bg-autumn-200 hover:text-coffee-900"
+            className="border-autumn-300 bg-autumn-300 font-semibold text-black hover:bg-autumn-200"
             disabled={configHealth.isPending}
             onClick={() => void configHealth.generate()}
           >
