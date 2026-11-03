@@ -24,7 +24,7 @@ export function InteropTopProtocols({
     return null
   }
   return (
-    <div className="home-wide:col-start-1 home-wide:row-start-2 flex interop-corners:hidden home-wide:min-h-0 interop-stacked:min-h-0 min-w-0 interop-stacked:flex-1 interop-stacked:basis-0 flex-col gap-2 home-wide:overflow-hidden interop-stacked:overflow-hidden">
+    <div className="home-wide:col-start-2 home-wide:row-start-2 flex interop-corners:hidden home-wide:min-h-0 interop-stacked:min-h-0 min-w-0 interop-stacked:flex-1 interop-stacked:basis-0 flex-col gap-2 home-wide:overflow-hidden interop-stacked:overflow-hidden">
       <h3 className={HOME_TEXT.sectionTitle}>Top protocols</h3>
       {/* Stacked from lg, and in the page's three columns, the list takes the
           height left and shows as many whole rows as fit. */}

@@ -95,17 +95,17 @@ function Content({ className }: { className?: string }) {
           nothing spills), then as many top protocols as the height left holds.
           Below md it stacks too, the graph a fixed-size square.
           In the page's three columns (`home-wide`) the card is about twice as
-          wide as tall, so it splits in two instead: the figures over the top
-          protocols, as many as fit, beside the graph as a square as tall as
-          the body. The body is 568px tall there (648px over 1700px), so the
+          wide as tall, so it splits in two instead: the graph as a square as
+          tall as the body, and beside it the figures over the top protocols,
+          as many as fit. The body is 568px tall there (648px over 1700px), so the
           research list beside the card ends on a whole row. */}
       <div className="relative flex home-wide:@min-[1700px]/home:min-h-[648px] home-wide:min-h-[568px] min-w-0 flex-col gap-5 md:max-lg:h-[480px] lg:min-h-[480px] lg:flex-1 lg:basis-0 md:[container:interop-body/size]">
-        <div className="home-wide:absolute home-wide:inset-0 home-wide:grid contents home-wide:grid-cols-[minmax(0,1fr)_100cqh] home-wide:grid-rows-[auto_minmax(0,1fr)] home-wide:gap-x-12 home-wide:gap-y-8">
+        <div className="home-wide:absolute home-wide:inset-0 home-wide:grid contents home-wide:grid-cols-[100cqh_minmax(0,1fr)] home-wide:grid-rows-[auto_minmax(0,1fr)] home-wide:gap-x-12 home-wide:gap-y-8">
           {figures && (
             // Two rows of three on shared tracks, spread from edge to edge: the
             // first column flush left, the last flush right, so the figures
             // span the width the graph or the list under them takes.
-            <div className="home-wide:col-start-1 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] justify-between gap-x-3 gap-y-6 sm:gap-x-6">
+            <div className="home-wide:col-start-2 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] justify-between gap-x-3 gap-y-6 sm:gap-x-6">
               {figures.volume}
               {figures.transfers}
               {figures.activeRoutes}
@@ -114,7 +114,7 @@ function Content({ className }: { className?: string }) {
               {figures.topProtocol}
             </div>
           )}
-          <div className="pointer-events-none interop-corners:absolute interop-corners:inset-x-12 interop-corners:inset-y-0 home-wide:col-start-2 home-wide:row-span-2 home-wide:row-start-1 flex interop-stacked:aspect-square home-wide:min-h-0 interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center [&_text]:stroke-[4px] [&_text]:stroke-surface-primary [&_text]:[paint-order:stroke] [&_text]:[stroke-linejoin:round]">
+          <div className="pointer-events-none interop-corners:absolute interop-corners:inset-x-12 interop-corners:inset-y-0 home-wide:col-start-1 home-wide:row-span-2 home-wide:row-start-1 flex interop-stacked:aspect-square home-wide:min-h-0 interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center [&_text]:stroke-[4px] [&_text]:stroke-surface-primary [&_text]:[paint-order:stroke] [&_text]:[stroke-linejoin:round]">
             <FlowsGraphPanel
               activeChains={graphChains}
               data={data}
