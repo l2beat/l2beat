@@ -54,6 +54,7 @@ function chainCaptions(nodes: readonly Node[]): ChainCaption[] {
   // A closed group draws in place of its members, so each member's chain
   // takes the group's box.
   for (const [id, node] of topLevelByDescendant(visible)) {
+    if (graph.hidden.has(id)) continue
     const shortName = id.split(':')[0]
     const chain = AVAILABLE_CHAINS.find((c) => c.shortName === shortName)
     if (chain === undefined) continue
