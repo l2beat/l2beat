@@ -37,38 +37,26 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
 
   return (
     <>
-      <NavTabRow
-        links={links}
-        pathname={pathname}
-        underlineClassName="page-transition:[view-transition-name:mobile-nav-tab-underline]"
-      />
+      <NavTabRow links={links} pathname={pathname} />
       {activeSubLinks && (
         <NavTabRow
           links={activeSubLinks}
           pathname={pathname}
           tabClassName="h-8 text-2xs"
-          underlineClassName="page-transition:[view-transition-name:mobile-nav-subtab-underline]"
         />
       )}
     </>
   )
 }
 
-/**
- * The selected tab's underline is an element of its own, so a page load can
- * slide it to the next tab. Each row names it differently: a name used twice
- * on a page cancels the transition.
- */
 function NavTabRow({
   links,
   pathname,
   tabClassName,
-  underlineClassName,
 }: {
   links: NavLink[]
   pathname: string
   tabClassName?: string
-  underlineClassName: string
 }) {
   return (
     <OverflowWrapper className="bg-surface-primary">
@@ -95,21 +83,12 @@ function NavTabRow({
                 key={link.href}
                 data-state={isSelected ? 'selected' : undefined}
                 className={cn(
-                  'relative flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b bg-header-primary px-4 font-medium text-xs leading-none',
-                  'data-[state=selected]:text-nav-active',
+                  'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b bg-header-primary px-4 font-medium text-xs leading-none',
+                  'data-[state=selected]:border-nav-active data-[state=selected]:text-nav-active',
                   tabClassName,
                 )}
               >
                 {link.shortTitle ?? link.title}
-                {isSelected && (
-                  <span
-                    aria-hidden
-                    className={cn(
-                      '-bottom-px absolute inset-x-0 h-px bg-nav-active',
-                      underlineClassName,
-                    )}
-                  />
-                )}
               </a>
             )
           })}
