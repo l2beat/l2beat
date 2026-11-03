@@ -33,7 +33,9 @@ for (const path of Object.keys(ceilings)) {
     await page.goto(path, { waitUntil: 'load' })
     await page.goto(FROM, { waitUntil: 'load' })
 
-    await page.goto(path, { waitUntil: 'load' })
+    const response = await page.goto(path, { waitUntil: 'load' })
+    // An error page loads few chunks and would pass any ceiling
+    expect(response?.ok(), `status of ${path}`).toBe(true)
     const { jsChunks, firstPaintMs } = await page.evaluate(async () => {
       const scripts = performance
         .getEntriesByType('resource')
