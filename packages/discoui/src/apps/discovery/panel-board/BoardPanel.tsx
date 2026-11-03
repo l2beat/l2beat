@@ -79,6 +79,13 @@ export function BoardPanel() {
   }, [])
   const open = list.data?.open ?? []
   const active = open.find((b) => b.id === chosen) ?? open[open.length - 1]
+  // A board shown by falling back stays shown when the list grows.
+  const activeId = active?.id
+  useEffect(() => {
+    if (activeId !== undefined && activeId !== chosen) {
+      activateBoard(project, activeId)
+    }
+  }, [project, activeId, chosen])
 
   return (
     <div className="flex h-full flex-col bg-coffee-900 text-coffee-200">
