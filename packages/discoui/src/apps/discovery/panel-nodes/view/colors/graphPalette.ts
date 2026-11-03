@@ -10,6 +10,7 @@ export interface GraphPalette {
   containerBar: RGBA
   gridDot: RGBA
   accent: RGBA
+  accentFill: RGBA
   connection: RGBA
   connectionDimmed: RGBA
   connectionGrayed: RGBA
@@ -24,9 +25,24 @@ export const DARK_GRAPH_PALETTE: GraphPalette = {
   containerBar: rgbaFromHex('#594c43', 1),
   gridDot: rgbaFromHex('#3c332d', 0.6),
   accent: rgbaFromHex('#bad80a', 1),
+  accentFill: rgbaFromHex('#bad80a', 1),
   connection: rgbaFromHex('#a98763', 0.6),
   connectionDimmed: rgbaFromHex('#a98763', 0.18),
   connectionGrayed: rgbaFromHex('#f0d8bd', 0.1),
+}
+
+export const LIGHT_GRAPH_PALETTE: GraphPalette = {
+  nodeBody: rgbaFromHex('#ffffff', 1),
+  text: rgbaFromHex('#3b2d23', 1),
+  footerText: rgbaFromHex('#3b2d23', 0.5),
+  dot: rgbaFromHex('#8a6b4c', 1),
+  containerBar: rgbaFromHex('#d5c6b4', 1),
+  gridDot: rgbaFromHex('#d5c6b4', 0.8),
+  accent: rgbaFromHex('#6d8c00', 1),
+  accentFill: rgbaFromHex('#bad80a', 1),
+  connection: rgbaFromHex('#8a6b4c', 0.6),
+  connectionDimmed: rgbaFromHex('#8a6b4c', 0.18),
+  connectionGrayed: rgbaFromHex('#3b2d23', 0.1),
 }
 
 // Node headers keep their picked color in every theme, so what is drawn on

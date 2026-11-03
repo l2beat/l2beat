@@ -3,7 +3,10 @@ import { Checkbox } from '../../../components/Checkbox'
 import { Dialog } from '../../../components/Dialog'
 import { IconGear } from '../../../icons/IconGear'
 import { cn } from '../../../utils/cn'
-import { useGlobalSettingsStore } from '../store/global-settings-store'
+import {
+  type ThemeSetting,
+  useGlobalSettingsStore,
+} from '../store/global-settings-store'
 
 const MAX_DEPTH_LIMIT = 100
 
@@ -13,6 +16,7 @@ export function SettingsDialog() {
   )
   const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
   const peekDefinitions = useGlobalSettingsStore((s) => s.peekDefinitions)
+  const theme = useGlobalSettingsStore((s) => s.theme)
   const setUserSettings = useGlobalSettingsStore((s) => s.setUserSettings)
 
   return (
@@ -29,7 +33,11 @@ export function SettingsDialog() {
 
         <div className="flex flex-col">
           <SectionHeading first>Visuals</SectionHeading>
-          <div>
+          <ThemePicker
+            value={theme}
+            onChange={(theme) => setUserSettings({ theme })}
+          />
+          <div className="mt-3">
             <div
               className={OPTION_CLASS}
               onClick={() =>
@@ -74,6 +82,46 @@ export function SettingsDialog() {
         </div>
       </Dialog.Body>
     </Dialog.Root>
+  )
+}
+
+const THEME_OPTIONS: { value: ThemeSetting; label: string }[] = [
+  { value: 'system', label: 'System default' },
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+]
+
+function ThemePicker(props: {
+  value: ThemeSetting
+  onChange: (value: ThemeSetting) => void
+}) {
+  return (
+    <div className="flex items-center gap-2 font-medium text-coffee-100 text-sm">
+      <span>Theme</span>
+      <div
+        role="radiogroup"
+        aria-label="Theme"
+        className="inline-flex h-7 items-center gap-0.5 rounded-sm border border-coffee-700 bg-coffee-900 p-0.5"
+      >
+        {THEME_OPTIONS.map((option) => (
+          <button
+            key={option.value}
+            type="button"
+            role="radio"
+            aria-checked={props.value === option.value}
+            className={cn(
+              'flex h-full items-center rounded-xs px-2 text-xs transition-colors duration-100',
+              props.value === option.value
+                ? 'bg-autumn-300 text-black'
+                : 'text-coffee-300 hover:bg-coffee-700 hover:text-coffee-100',
+            )}
+            onClick={() => props.onChange(option.value)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+    </div>
   )
 }
 

@@ -128,3 +128,58 @@
     @apply bg-coffee-700;
   }
 }
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --color-coffee-50: #140f0c;
+  --color-coffee-100: #2a201a;
+  --color-coffee-200: #3b2d23;
+  --color-coffee-300: #66503e;
+  --color-coffee-400: #8a6b4c;
+  --color-coffee-500: #b09a82;
+  --color-coffee-600: #d5c6b4;
+  --color-coffee-700: #e8ddcf;
+  --color-coffee-800: #f5eee5;
+  --color-coffee-900: #fcf9f4;
+
+  --color-autumn-200: #7fa200;
+  --color-autumn-300: #6d8c00;
+  --color-autumn-600: #3d7f24;
+
+  --color-aux-blue: #5656c4;
+  --color-aux-orange: #c45a00;
+  --color-aux-red: #c8281a;
+  --color-aux-green: #4f8a1b;
+  --color-aux-teal: #3f7a62;
+  --color-aux-yellow: #a86f00;
+  --color-aux-amber: #c78a00;
+  --color-aux-cyan: #11768a;
+  --color-aux-pink: #b8466a;
+  --color-aux-purple: #8e2fa0;
+
+  --editor-active-line: rgba(60, 40, 20, 0.05);
+  --editor-active-line-number: #2a201a;
+  --editor-selection-match: rgba(60, 120, 200, 0.15);
+  --editor-bracket-match: rgba(0, 120, 0, 0.18);
+  --editor-search-match: rgba(234, 92, 0, 0.25);
+  --editor-search-match-selected: rgba(170, 190, 215, 1);
+  --editor-goto-target: rgba(60, 40, 20, 0.08);
+  --editor-shadow: rgba(60, 40, 20, 0.18);
+  --diff-removed: rgba(255, 0, 0, 0.15);
+  --diff-inserted-line: rgba(155, 185, 85, 0.25);
+  --diff-inserted-text: rgba(120, 170, 20, 0.3);
+  --diff-diagonal: rgba(60, 40, 20, 0.1);
+}
+
+/* Lime stays the fill color, as black text reads well on it; on paper, lime
+   text and lines do not, so everything else takes the darker olive. */
+[data-theme="light"]
+  :is(.bg-autumn-300, .hover\:bg-autumn-200, .hover\:bg-autumn-300) {
+  --color-autumn-200: #d4f417;
+  --color-autumn-300: #bad80a;
+}
+
+[data-theme="light"] img[src$="logo.svg"] {
+  filter: brightness(0.25);
+}

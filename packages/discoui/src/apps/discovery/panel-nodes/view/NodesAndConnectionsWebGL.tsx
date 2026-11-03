@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import type { ApiAddressType } from '../../../../api/types'
 import { ADDRESS_ICON_COMPONENTS } from '../../../../components/AddressIcon'
 import { IconInitial } from '../../../../icons/IconInitial'
+import { useTheme } from '../../../../theme'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
@@ -27,6 +28,7 @@ import {
   HEADER_TEXT_ON_DARK,
   HEADER_TEXT_ON_LIGHT,
   HEADER_UNVERIFIED,
+  LIGHT_GRAPH_PALETTE,
   type RGBA,
   TEXT_ON_ACCENT,
 } from './colors/graphPalette'
@@ -1338,7 +1340,7 @@ class WebGLRenderer {
     for (const { box: b, headerBox: h, id } of containers) {
       const line = selectedContainers.has(id) ? palette.accent : palette.text
       const bar = selectedContainers.has(id)
-        ? palette.accent
+        ? palette.accentFill
         : palette.containerBar
       writeRound(
         buf,
@@ -1474,7 +1476,7 @@ class WebGLRenderer {
             rowY,
             width,
             FIELD_HEIGHT,
-            palette.accent,
+            palette.accentFill,
             pillRadius,
             pillRadius,
             pillRadius,
@@ -2763,6 +2765,8 @@ export function NodesAndConnectionsWebGL() {
     (s) => s.markUnreachableEntries,
   )
 
+  const theme = useTheme()
+
   const graph = useMemo(() => buildRenderGraph(nodes), [nodes])
 
   const data = useMemo(
@@ -2776,7 +2780,7 @@ export function NodesAndConnectionsWebGL() {
         enableDimming,
         highlightOverlapping,
         markUnreachableEntries,
-        DARK_GRAPH_PALETTE,
+        theme === 'light' ? LIGHT_GRAPH_PALETTE : DARK_GRAPH_PALETTE,
       ),
     [
       graph,
@@ -2784,6 +2788,7 @@ export function NodesAndConnectionsWebGL() {
       enableDimming,
       highlightOverlapping,
       markUnreachableEntries,
+      theme,
     ],
   )
   dataRef.current = data
