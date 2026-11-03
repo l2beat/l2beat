@@ -445,6 +445,26 @@ export function SEQUENCER_SELF_SEQUENCE_ZK(delay?: number): TableReadyValue {
   }
 }
 
+export function SEQUENCER_PRIORITY_MODE_ZK(delay: number): TableReadyValue {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Self sequence',
+    description: `Users can force transactions to be included by sending them to an L1 queue. If the first queued transaction stays unprocessed for ${delayString}, anyone can activate Priority Mode, in which anyone can submit batches with validity proofs through a permissionless validator contract. Proposing new blocks requires creating ZK proofs.`,
+    sentiment: 'good',
+    orderHint: delay,
+  }
+}
+
+export function PROPOSER_PRIORITY_MODE_ZK(delay: number): TableReadyValue {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Self propose',
+    description: `If the whitelisted validators do not process a queued L1 transaction for ${delayString}, anyone can activate Priority Mode and from then on submit batches with validity proofs through a permissionless validator contract. Only governance can deactivate it.`,
+    sentiment: 'good',
+    orderHint: delay,
+  }
+}
+
 export function SEQUENCER_FORCE_VIA_L1(delay?: number): TableReadyValue {
   const delayString =
     delay !== undefined ? ' for more than ' + formatSeconds(delay) : ''
@@ -869,6 +889,7 @@ export const RISK_VIEW = {
   // sequencerFailure
   SEQUENCER_SELF_SEQUENCE,
   SEQUENCER_SELF_SEQUENCE_ZK,
+  SEQUENCER_PRIORITY_MODE_ZK,
   SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
   SEQUENCER_FORCE_VIA_L1,
   SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL,
@@ -889,6 +910,7 @@ export const RISK_VIEW = {
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK,
   PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY,
   PROPOSER_SELF_PROPOSE_ZK,
+  PROPOSER_PRIORITY_MODE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
   PROPOSER_POS,
 

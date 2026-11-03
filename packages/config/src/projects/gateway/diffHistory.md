@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x397f234b4871e027841b8f633057f6ba26768361
+
+# Diff at Tue, 03 Nov 2026 15:44:59 GMT:
+
+- id: 12087446
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5dabdf7cb402311ede1c313c1891f2094a550030 block: 1770639543
+- current timestamp: 1770639543
+
+## Description
+
+Discovery rerun on the same block number: only the description of `getDAValidatorPair` in the shared Diamond template changed (its second return value becomes an L2 DA commitment scheme from v31). No onchain change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770639543 (main branch discovery), not current.
+
+```diff
+    contract Gateway (eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getDAValidatorPair.description:
+-        "l1da, l2da"
++        "l1da, l2da (before v31) or l1da, L2 DA commitment scheme (from v31)."
+      fieldMeta.priorityModeCanBeActivated:
++        {"severity":"HIGH","description":"1 once the chain admin permanently allowed Priority Mode (ZKsync OS permanent rollups only). Then anyone can activate it as soon as the first unprocessed priority transaction is older than 4 days, after which only the shared PermissionlessValidator can settle batches (anyone can submit through it) and only the ChainTypeManager owner can deactivate it."}
+      fieldMeta.priorityModeInfo:
++        {"severity":"HIGH","description":"Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address."}
+      fieldMeta.priorityModeTransactionFilterer:
++        {"severity":"HIGH","description":"TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering."}
+    }
+```
+
 Generated with discovered.json: 0x3f200e634768aefb46f13a67a407d59fc4f9fde6
 
 # Diff at Mon, 02 Nov 2026 13:39:39 GMT:

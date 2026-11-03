@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
+  "description": "The only address allowed to commit, prove and execute batches of a chain while its Priority Mode (escape hatch) is active. Anyone can call it to settle batches of such a chain in one transaction, bypassing the ValidatorTimelock delay. A chain enters Priority Mode when its admin has permanently allowed it, it is a permanent rollup and a priority transaction has not been processed for 4 days."
+}

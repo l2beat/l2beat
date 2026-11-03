@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "category": "shared",
+  "description": "Specialized asset handler for chains as assets, i.e. chain migrations between Ethereum and whitelisted settlement layers. It records the migration number and the batch intervals of each chain per settlement layer, which the MessageRoot uses to validate proofs, and gates migrations on the chain being upgraded to v31 with its base token registered in the L1AssetTracker.",
+  "ignoreMethods": [
+    "isMigrationInProgress",
+    "isReadyForMigration",
+    "isValidSettlementLayer",
+    "migrationInterval",
+    "migrationNumber"
+  ],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and resume chain migrations, pause and unpause the handler, re-sync its MessageRoot and AssetRouter references from the Bridgehub and backfill historical migration intervals of chains that settled on the legacy Gateway."
+        }
+      ]
+    },
+    "migrationPaused": {
+      "description": "Stops chains from starting or finalizing migrations to and from settlement layers. Must be true while a new protocol version is registered in a ChainTypeManager.",
+      "severity": "MEDIUM"
+    },
+    "paused": {
+      "description": "Pauses starting and finalizing migrations (in addition to migrationPaused).",
+      "severity": "MEDIUM"
+    },
+    "migrations": {
+      "description": "zk chain migrations that were started (chainId, migration number, target settlement layer). Any chain's migration appears here; Era's own settlement moves are tracked as HIGH on its Diamond (getSettlementLayer).",
+      "handler": {
+        "type": "event",
+        "select": ["chainId", "migrationNumber", "settlementLayerChainId"],
+        "add": { "event": "MigrationStarted" }
+      }
+    },
+    "migrationsFinalized": {
+      "description": "zk chain migrations that were finalized on Ethereum (chainId, migration number).",
+      "handler": {
+        "type": "event",
+        "select": ["chainId", "migrationNumber"],
+        "add": { "event": "MigrationFinalized" }
+      }
+    }
+  }
+}
