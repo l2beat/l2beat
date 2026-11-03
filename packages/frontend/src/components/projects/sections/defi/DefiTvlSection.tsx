@@ -9,7 +9,7 @@ import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
-import { type ChartRange, rangeToResolution } from '~/utils/range/range'
+import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -32,7 +32,7 @@ export function DefiTvlSection({
 }: DefiTvlSectionProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
     trpc.defi.tvlChart,
     { projectId: project.id, range },
   )
@@ -76,7 +76,7 @@ export function DefiTvlSection({
       </ChartControlsWrapper>
       <TvsValueChart
         isPlaceholderData={isPlaceholderData}
-        resolution={rangeToResolution(shownInput.range)}
+        resolution={data?.resolution ?? 'day'}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}

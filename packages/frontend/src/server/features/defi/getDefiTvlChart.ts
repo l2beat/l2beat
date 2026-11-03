@@ -3,7 +3,11 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { ChartRange } from '~/utils/range/range'
+import {
+  ChartRange,
+  type ChartResolution,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { getTvsChartByProjects } from '../tvs/getTvsChartByProjects'
 
 export const DefiTvlChartParams = v.object({
@@ -15,6 +19,7 @@ export type DefiTvlChartParams = v.infer<typeof DefiTvlChartParams>
 
 export interface DefiTvlChartResponse {
   chart: [timestamp: number, valueUsd: number | null][]
+  resolution: ChartResolution
   syncedUntil: number | undefined
   sourceTimestamp: number | undefined
 }
@@ -30,7 +35,12 @@ export async function getDefiTvlChart(
   const tvl = project?.defiInfo.tvl
 
   if (!tvl) {
-    return { chart: [], syncedUntil: undefined, sourceTimestamp: undefined }
+    return {
+      chart: [],
+      resolution: 'day',
+      syncedUntil: undefined,
+      sourceTimestamp: undefined,
+    }
   }
 
   if (env.MOCK || tvl.source === 'l2beat') {
@@ -43,6 +53,7 @@ export async function getDefiTvlChart(
         timestamp,
         valuesByProject[projectId] ?? null,
       ]),
+      resolution: rangeToResolution(params.range),
       syncedUntil: result.syncedUntil,
       sourceTimestamp: result.syncedUntil,
     }
@@ -66,6 +77,8 @@ export async function getDefiTvlChart(
 
   return {
     chart,
+    // Daily history mixed with an hourly current value, so every point shows its time
+    resolution: 'hour',
     syncedUntil: latest?.timestamp,
     sourceTimestamp: latest?.sourceTimestamp,
   }
