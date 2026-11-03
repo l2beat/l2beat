@@ -844,11 +844,46 @@
   }
 }
 
-/* Short, so a click still feels instant. */
-:root:not([data-theme-transition])::view-transition-group(*),
-:root:not([data-theme-transition])::view-transition-old(*),
+/* People switch pages tens of times a visit, so everything is done in
+   150 ms. The active pill and tab underlines slide on a strong ease-out:
+   the page has already kept the user waiting, so they move at once and
+   settle gently. The old and new pictures inherit the curve. */
+:root:not([data-theme-transition])::view-transition-group(*) {
+  animation-duration: 150ms;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* The old label leaves before the new one is fully in, so a sliding pill
+   never shows both. */
+:root:not([data-theme-transition])::view-transition-old(*) {
+  animation-duration: 100ms;
+}
+
 :root:not([data-theme-transition])::view-transition-new(*) {
   animation-duration: 150ms;
+}
+
+/* The content fades through rather than across: the old page is gone
+   before the new one shows, so two tables never overlap mid-fade. The nav
+   is named, so it stays solid over the dip. */
+:root:not([data-theme-transition])::view-transition-old(root) {
+  animation: page-fade-out 50ms ease-out both;
+}
+
+:root:not([data-theme-transition])::view-transition-new(root) {
+  animation: page-fade-in 120ms cubic-bezier(0.23, 1, 0.32, 1) 30ms both;
+}
+
+@keyframes page-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
 }
 
 /* Theme toggle view transition. DarkThemeToggle sets the attribute, so a
