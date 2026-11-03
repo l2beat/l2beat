@@ -230,7 +230,7 @@ function PreviewItem(props: {
 }
 
 function SectionHeader(props: { title: string }) {
-  return <h2 className="p-2 font-bold text-2xl text-blue-600">{props.title}</h2>
+  return <h2 className="p-2 font-bold text-2xl">{props.title}</h2>
 }
 
 function includesAddress(addresses: AddressFieldValue[], address?: string) {

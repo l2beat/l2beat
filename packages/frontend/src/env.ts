@@ -1,4 +1,5 @@
 import { v as z } from '@l2beat/validate'
+import { getEnvData } from './ssr/pageDataScripts'
 
 const coerceBoolean = z.string().transform((val) => {
   return val !== 'false' && val !== '0'
@@ -29,6 +30,12 @@ const CLIENT_CONFIG = {
     .enum(['development', 'test', 'production'])
     .default('development'),
   DEPLOYMENT_ENV: z.enum(['preview', 'staging', 'production']).optional(),
+  // Where production is served from: canonical URLs, sitemap, llms.txt and
+  // JSON-LD point here, whatever host rendered them.
+  PRODUCTION_ORIGIN: z
+    .string()
+    .transform((v) => new URL(v).origin)
+    .default('https://l2beat.com'),
   CLIENT_SIDE_GITCOIN_ROUND_LIVE: coerceBoolean.default(false),
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: coerceBoolean.default(false),
   CLIENT_SIDE_DEFI_ENABLED: featureFlag,
@@ -122,7 +129,7 @@ function getRawEnv(): Record<
   string | undefined
 > {
   if (typeof process === 'undefined') {
-    return window.__ENV__
+    return getEnvData()
   }
 
   return {
@@ -138,6 +145,7 @@ function getRawEnv(): Record<
     COOLIFY_URL: process.env.COOLIFY_URL,
     COOLIFY_RESOURCE_UUID: process.env.COOLIFY_RESOURCE_UUID,
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
+    PRODUCTION_ORIGIN: process.env.PRODUCTION_ORIGIN,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
     ES_ENABLED: process.env.ES_ENABLED,

@@ -26,7 +26,10 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     match: 'privacy',
     href: '/privacy',
     icon: (
-      <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
+      <PrivacyIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
     ),
   },
   {
@@ -165,7 +168,10 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     match: 'tokens',
     href: '/tokens',
     icon: (
-      <TokensIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
+      <TokensIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
     ),
   },
   env.CLIENT_SIDE_BLOBS_PAGE && {

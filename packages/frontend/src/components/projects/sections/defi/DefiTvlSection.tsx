@@ -1,11 +1,11 @@
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { TvsValueChart } from '~/components/chart/tvs/TvsValueChart'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
@@ -32,8 +32,9 @@ export function DefiTvlSection({
 }: DefiTvlSectionProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = useQuery(
-    trpc.defi.tvlChart.queryOptions({ projectId: project.id, range }),
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.defi.tvlChart,
+    { projectId: project.id, range },
   )
 
   const chartData = useMemo(
@@ -67,10 +68,15 @@ export function DefiTvlSection({
         </div>
       )}
       <ChartControlsWrapper className="mb-4">
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
         <TvsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <TvsValueChart
+        isPlaceholderData={isPlaceholderData}
+        resolution={data?.resolution ?? 'day'}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}

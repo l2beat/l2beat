@@ -23,6 +23,18 @@ export interface AggregatedInteropDeployedTokenRecord {
   burnedValueUsd: number | undefined
 }
 
+export interface AggregatedInteropDeployedTokenStats {
+  id: string
+  bridgeType: InteropBridgeType
+  srcChain: string
+  dstChain: string
+  tokenChain: string
+  tokenAddress: string
+  volume: number
+  transferCount: number
+  lastSeen: UnixTime
+}
+
 export function toRecord(
   row: Selectable<AggregatedInteropDeployedToken>,
 ): AggregatedInteropDeployedTokenRecord {
@@ -106,6 +118,48 @@ export class AggregatedInteropDeployedTokenRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getSummedByTimestamps(
+    timestamps: UnixTime[],
+  ): Promise<AggregatedInteropDeployedTokenStats[]> {
+    if (timestamps.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('AggregatedInteropDeployedToken')
+      .select((eb) => [
+        'id',
+        'bridgeType',
+        'srcChain',
+        'dstChain',
+        'tokenChain',
+        'tokenAddress',
+        sql<number>`sum(volume)::double precision`.as('volume'),
+        sql<number>`sum("transferCount")::integer`.as('transferCount'),
+        eb.fn.max('timestamp').as('lastSeen'),
+      ])
+      .where('timestamp', 'in', timestamps.map(UnixTime.toDate))
+      .groupBy([
+        'id',
+        'bridgeType',
+        'srcChain',
+        'dstChain',
+        'tokenChain',
+        'tokenAddress',
+      ])
+      .execute()
+
+    return rows.map((row) => ({
+      id: row.id,
+      bridgeType: row.bridgeType as InteropBridgeType,
+      srcChain: row.srcChain,
+      dstChain: row.dstChain,
+      tokenChain: row.tokenChain,
+      tokenAddress: row.tokenAddress,
+      volume: Number(row.volume),
+      transferCount: Number(row.transferCount),
+      lastSeen: UnixTime.fromDate(row.lastSeen),
+    }))
   }
 
   async deleteAllButEarliestPerDayBefore(timestamp: UnixTime): Promise<number> {

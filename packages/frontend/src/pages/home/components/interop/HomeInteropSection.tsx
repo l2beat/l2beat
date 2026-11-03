@@ -53,7 +53,7 @@ function Content({ className }: { className?: string }) {
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
 
   const { data, isLoading } = useQuery(
-    trpc.interop.flows.queryOptions(
+    trpc.interop.flowsOverview.queryOptions(
       { chains: selectedChains, protocolIds: selectedProtocols },
       { enabled: hasEnoughChains && hasEnoughProtocols },
     ),

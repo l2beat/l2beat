@@ -24,21 +24,19 @@ export function FlowsGeneralStats() {
     selectedProtocols,
     setHighlightedChainPair,
   } = useInteropFlows()
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions({
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+    }),
+  )
 
-  const queryInput = {
-    chains: selectedChains,
-    protocolIds: selectedProtocols,
-  }
   const tokensQueryInput = {
     from: selectedChains,
     to: selectedChains,
     protocolIds: selectedProtocols,
     id: undefined,
   }
-
-  const { data, isLoading } = useQuery(
-    trpc.interop.flows.queryOptions(queryInput),
-  )
 
   const { dollarsPerParticle } = useScaledParticleCounts(
     selectedChains,
@@ -211,9 +209,9 @@ function TopRouteIcons({
 }) {
   return (
     <>
-      <img src={srcChain.iconUrl} alt={srcChain.id} className="size-5" />
-      <ArrowRightIcon className="size-4 fill-brand" />
-      <img src={dstChain.iconUrl} alt={dstChain.id} className="size-5" />
+      <img src={srcChain.iconUrl} alt={srcChain.name} className="size-5" />
+      <ArrowRightIcon className="size-4 fill-brand" aria-label="to" />
+      <img src={dstChain.iconUrl} alt={dstChain.name} className="size-5" />
     </>
   )
 }

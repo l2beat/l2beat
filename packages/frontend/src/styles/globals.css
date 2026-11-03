@@ -68,6 +68,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* A mouse or trackpad: an iPad is as wide as a laptop but has no hover, and
+   a narrow window still has one. `not-can-hover:` is touch. The outer
+   parentheses keep `not-` negating both features: `not (a) and (b)` is not
+   a valid query, and a browser drops it. */
+@custom-variant can-hover (@media ((hover: hover) and (pointer: fine)));
+
 :root {
   /* Prevent horizontal overscroll on mobile to avoid unwanted scrolling when swiping on charts.
      Not applied on desktop to preserve MacOS swipe-back gesture. */
@@ -81,7 +87,10 @@
   --secondary: #5f6470;
   --positive: #007408;
   --warning: #ab8000;
-  --negative: #d70000;
+  /* --warning stays bright for icons and tints (3:1); text needs 4.5:1 on --background (WCAG AA). */
+  --warning-text: #806000;
+  /* Dark enough for 4.5:1 on --background, since it also colours text. */
+  --negative: #c40000;
   --brand: #ff3776;
   /* Text in the brand colour: #FF3776 is too light to read as small text, so
      a shade that keeps 4.5:1 on every surface, the grey ones included. */
@@ -112,6 +121,9 @@
   --row-highlight: #ff8fb0;
 
   /* Chart colors */
+  /* Chart grid lines and axis tick labels. */
+  --chart-grid: color-mix(in oklab, var(--primary) 25%, transparent);
+  --chart-tick-label: color-mix(in oklab, var(--primary) 50%, transparent);
   --chart-ethereum: #2a5bd8;
   --chart-ethereum-secondary: #53a3ff;
   --chart-pink: #ff3776;
@@ -137,6 +149,7 @@
   --secondary: #abb1c1;
   --positive: #12d660;
   --warning: #ffc107;
+  --warning-text: #ffc107;
   --negative: #ff3d3d;
   --brand-deep: #ff7aa5;
   --brand-light: #ffa3c0;
@@ -164,6 +177,8 @@
   --row-highlight: #a3204f;
 
   /* Chart colors */
+  --chart-grid: color-mix(in oklab, var(--primary) 40%, transparent);
+  --chart-tick-label: color-mix(in oklab, var(--primary) 70%, transparent);
   --chart-ethereum: #3387ff;
   --chart-ethereum-secondary: #5d82cf;
   --chart-cyan: #40cbe3;
@@ -491,6 +506,7 @@
   --color-secondary: var(--secondary);
   --color-positive: var(--positive);
   --color-warning: var(--warning);
+  --color-warning-text: var(--warning-text);
   --color-negative: var(--negative);
   --color-brand: var(--brand);
   --color-brand-deep: var(--brand-deep);

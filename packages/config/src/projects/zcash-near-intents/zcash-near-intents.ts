@@ -149,7 +149,7 @@ export const zcashNearIntents: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The Verifier, the bridge token, the Zcash bridge and Zodl are open source. The bridge back end, the 1Click API and the solver relay that every Ethereum leg needs are closed.',
+        "The Verifier, the bridge token, the Zcash bridge and Zodl are open source, but Zodl's App Store builds cannot be rebuilt from that source. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.bridged,

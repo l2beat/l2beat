@@ -1,6 +1,6 @@
 {
   "name": "scroll",
-  "timestamp": 1791455050,
+  "timestamp": 1793617880,
   "configHash": "0x1225a960840a9c2071ba8b70ebbb38104cadc4f0ca6420e7e6a416116ed20031",
   "entries": [
     {
@@ -141,7 +141,7 @@
       "address": "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6",
       "type": "Contract",
       "sourceHashes": [
-        "0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"
+        "0x7312852db9210bd6059c373b7fd3d49a42216c9f9fa7a2f55ebb755ebf411416"
       ],
       "proxyType": "immutable",
       "critical": { "sinceTimestamp": 1790041547 },
@@ -150,7 +150,7 @@
       "sinceBlock": 25979805,
       "values": { "$immutable": true },
       "implementationNames": {
-        "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6": ""
+        "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6": "OpenVmHalo2Verifier"
       },
       "references": [
         {
@@ -782,11 +782,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1791447599,
+        "getFirstUnfinalizedMessageEnqueueTime": 1793615063,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 999091,
-        "nextUnfinalizedQueueIndex": 999089,
+        "nextCrossDomainMessageIndex": 999253,
+        "nextUnfinalizedQueueIndex": 999252,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1956,14 +1956,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 520247,
+        "lastFinalizedBatchIndex": 520670,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 520247,
-          "lastFinalizedBatchIndex": 520247,
-          "lastFinalizeTimestamp": 1791451727,
+          "lastCommittedBatchIndex": 520670,
+          "lastFinalizedBatchIndex": 520670,
+          "lastFinalizeTimestamp": 1793614751,
           "flags": 1,
           "reserved": 0
         },
@@ -2612,7 +2612,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 4892343672312,
+        "totalBridgedUSDC": 4180318310041,
         "withdrawPaused": false
       },
       "fieldMeta": {
@@ -3493,9 +3493,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x1e548ca2690260942785bf416ec0ed0a1ed6ae1f8bd7b7b6868c10fa315441e4",
+        "messageRoot": "0x960f7aac557b335ef620f4031c7a37ebcb8caf58fe38d13d97e7a3dce23ab725",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 323829,
+        "nextMessageIndex": 324034,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "fieldMeta": { "owner": { "severity": "MEDIUM" } },
@@ -5003,6 +5003,14 @@
       "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
+    ],
+    "eth:0x0d2A59fd7060460F07c30C2817b4E79576da01C6": [
+      "error InvalidAppExeCommit(bytes32 actual)",
+      "error InvalidAppVmCommit(bytes32 actual)",
+      "error InvalidProofDataLength(uint256 expected, uint256 actual)",
+      "error InvalidPublicValuesLength(uint256 expected, uint256 actual)",
+      "error ProofVerificationFailed()",
+      "function verify(bytes publicValues, bytes proofData, bytes32 appExeCommit, bytes32 appVmCommit) view"
     ],
     "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
@@ -7298,7 +7306,7 @@
     "scroll/SystemConfig": "0x9b33b6c888c1460d4702e2f5ef9eb200122d6c94a2f8db964ba3d798d8e23fd8",
     "tokens/circle/MasterMinter": "0x4ecc241fb1c41dc92b97207ddd89fc61a51d7a6fc2dc5b29fe727faadea66a2a"
   },
-  "usedBlockNumbers": { "ethereum": 26147062, "scroll": 35310392 },
+  "usedBlockNumbers": { "ethereum": 26326712, "scroll": 35577047 },
   "permissionsConfigHash": "0x1fdcf5985cec267259dde3933c194f02f0cbf35d9450d14f2cc909758efe4e25",
   "permissions": {
     "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": {

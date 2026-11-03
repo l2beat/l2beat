@@ -14,7 +14,10 @@ export type {
   ActivityRecord,
   ActivityTotals,
 } from './repositories/ActivityRepository'
-export type { AggregatedInteropDeployedTokenRecord } from './repositories/AggregatedInteropDeployedTokenRepository'
+export type {
+  AggregatedInteropDeployedTokenRecord,
+  AggregatedInteropDeployedTokenStats,
+} from './repositories/AggregatedInteropDeployedTokenRepository'
 export type { AggregatedInteropTokenRecord } from './repositories/AggregatedInteropTokenRepository'
 export type { AggregatedInteropTokensPairRecord } from './repositories/AggregatedInteropTokensPairRepository'
 export type {
@@ -96,6 +99,7 @@ export {
   type InteropTransferFinancialsFilter,
   type InteropTransferFinancialsStats,
   type InteropTransferRecord,
+  type InteropTransferSupplyChangeRecord,
   type InteropTransfersDetailedStatsRecord,
   type InteropTransfersStatsRecord,
   type InteropTransferTimeRange,
@@ -174,6 +178,10 @@ export type {
 } from './repositories/TokenValueRepository'
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'
 export type { TvsBlockTimestampRecord } from './repositories/TvsBlockTimestampRepository'
+export type {
+  TvsCoverageDismissalKey,
+  TvsCoverageDismissalRecord,
+} from './repositories/TvsCoverageDismissalRepository'
 export type { TvsEscrowValueRecord } from './repositories/TvsEscrowValueRepository'
 export type { TvsPriceRecord } from './repositories/TvsPriceRepository'
 export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'

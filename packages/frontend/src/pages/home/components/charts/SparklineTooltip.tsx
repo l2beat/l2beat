@@ -1,6 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { type ReactNode, useLayoutEffect, useRef } from 'react'
-import type { CustomChartTooltipProps } from '~/components/core/chart/Chart'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { WEEK_DAYS } from '~/server/features/home/homeSeries'
 import { cn } from '~/utils/cn'
@@ -12,26 +11,22 @@ import type { SparklinePoint } from './sparklineScale'
  * named beside the chart. Placed off the chart by `PointTooltip`.
  */
 export function SparklineTooltip({
-  payload,
-  label,
+  point,
   formatValue,
   partLabels,
   weeklyAverage,
   anchorX,
   side,
-}: CustomChartTooltipProps & {
+}: {
+  point: SparklinePoint
   formatValue: (value: number) => string
   partLabels: string[] | undefined
   weeklyAverage: boolean | undefined
   /** The active point's x, in the chart's pixels. */
-  anchorX: number | undefined
+  anchorX: number
   side: 'above' | 'below'
 }) {
-  const entry = payload?.[0]
-  if (!entry || typeof label !== 'number' || anchorX === undefined) {
-    return null
-  }
-  const point = entry.payload as SparklinePoint | undefined
+  const label = point.timestamp
   const format = (value: unknown) =>
     typeof value === 'number' ? formatValue(value) : 'No data'
   return (
@@ -43,7 +38,7 @@ export function SparklineTooltip({
       </div>
       <div className="flex items-baseline gap-1.5 whitespace-nowrap">
         <span className="font-semibold text-label-value-15 tabular-nums">
-          {format(entry.value)}
+          {format(point.value)}
         </span>
         {weeklyAverage && (
           <span className="text-label-value-13 text-secondary">
@@ -58,7 +53,7 @@ export function SparklineTooltip({
         >
           <span className="text-secondary">{partLabel}</span>
           <span className="font-medium tabular-nums">
-            {format(point?.parts[index])}
+            {format(point.parts[index])}
           </span>
         </div>
       ))}
@@ -71,9 +66,8 @@ export function SparklineTooltip({
  * line it describes: on its `side` of the chart, or the other one where the
  * window has no room. It centres on the active point, within the chart's
  * width where it fits, so it spills less onto the charts beside, and always
- * inside the window. Recharts leaves the wrapper where the chart puts it (its
- * corner); after every render this moves it into place, before the frame is
- * painted.
+ * inside the window. After every render it moves into place, before the frame
+ * is painted.
  */
 function PointTooltip({
   anchorX,
@@ -87,9 +81,8 @@ function PointTooltip({
   const ref = useRef<HTMLDivElement>(null)
   useLayoutEffect(() => {
     const box = ref.current
-    const wrapper = box?.closest<HTMLElement>('.recharts-tooltip-wrapper')
-    const chart = wrapper?.offsetParent
-    if (!box || !wrapper || !chart) return
+    const chart = box?.offsetParent
+    if (!box || !chart) return
     const rect = chart.getBoundingClientRect()
     const { offsetWidth: width, offsetHeight: height } = box
     const { clientWidth, clientHeight } = document.documentElement
@@ -113,14 +106,15 @@ function PointTooltip({
         ? fits(roomAbove) || (!fits(roomBelow) && roomAbove >= roomBelow)
         : !fits(roomBelow) && (fits(roomAbove) || roomAbove > roomBelow)
     const top = above ? -GAP - height : chart.clientHeight + GAP
-    wrapper.style.transform = `translate(${left}px, ${top}px)`
+    box.style.transform = `translate(${left}px, ${top}px)`
   })
   return (
     <div
       ref={ref}
       className={cn(
         tooltipContentVariants({ fitContent: true }),
-        'flex flex-col gap-1 px-3 py-2',
+        // Above the cards beside the chart.
+        'pointer-events-none absolute top-0 left-0 z-110 flex flex-col gap-1 px-3 py-2',
       )}
     >
       {children}

@@ -6,7 +6,7 @@ A one-sided chain is a chain we reference in interop matching, but do not captur
 
 Current config:
 
-- `INTEROP_ONE_SIDED_CHAINS = ['solana', 'xlayer', 'adi', 'plasma', 'tron', 'hyperliquid', 'lighter']`
+- `INTEROP_ONE_SIDED_CHAINS = ['solana', 'xlayer', 'adi', 'plasma', 'tron', 'hyperliquid', 'lighter', 'arc']`
 - This list is a policy/allowlist input; partial transfer creation itself is not auto-gated by framework assertions.
 
 ## Why do we need them?
@@ -115,3 +115,4 @@ Note:
 - Partial transfer support is implemented in the transfer type API and matching loop.
 - `oneSidedChains` is currently config-level policy data; plugin/matching logic decides when to use it.
 - Unsupported marking is event-based and mainly affects unmatched events; matched events consumed into a transfer are not treated as unsupported.
+- Events whose `$srcChain`/`$dstChain` is a configured one-sided chain are never marked unsupported: they wait for a match until their TTL, so a plugin can emit the partial transfer later (e.g. when the source chain settles).

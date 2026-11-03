@@ -34,6 +34,7 @@ export function WhatsNewWidgetCloseable({
       onClick={() => setIsClosed(true)}
     >
       <button
+        aria-label="Dismiss What's new"
         className="absolute top-1 right-1 bg-primary-invert p-1 shadow-lg"
         onClick={() => {
           track('whatsNewClicked', {

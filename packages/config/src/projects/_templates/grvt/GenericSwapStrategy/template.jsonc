@@ -1,0 +1,74 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Yield strategy of the GRVTL1TreasuryVault for one vault token. Whitelisted operators swap registered receipt tokens (e.g. tokenized treasuries) with the strategy at the price of their price sources, within per-swap and per-token exposure caps. Only the vault can allocate to and withdraw from it.",
+  "ignoreRelatives": [
+    "positionBreakdown",
+    "receiptTokens",
+    "tvlTokens",
+    "vaultToken"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl" }
+    },
+    "operator": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "OPERATOR_ROLE",
+        "includeEmptyRoles": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "swap registered receipt tokens with the strategy at the price of their price sources, within the configured caps."
+        }
+      ]
+    },
+    "pauser": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PAUSER_ROLE",
+        "includeEmptyRoles": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause swaps, disable receipt tokens and remove price sources from the whitelist."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register receipt tokens with their price sources and caps, and whitelist price sources."
+        }
+      ]
+    },
+    "receiptTokens": {
+      "description": "Tokens that the strategy can hold in exchange for the vault token.",
+      "severity": "HIGH"
+    },
+    "priceSources": {
+      "description": "Whitelisted price sources that can price receipt tokens.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "priceSource",
+        "ignoreRelative": true,
+        "add": {
+          "event": "PriceSourceWhitelisted",
+          "where": ["=", "#whitelisted", true]
+        },
+        "remove": {
+          "event": "PriceSourceWhitelisted",
+          "where": ["!=", "#whitelisted", true]
+        }
+      }
+    },
+    "swapsPaused": {
+      "severity": "MEDIUM"
+    }
+  }
+}

@@ -47,6 +47,7 @@ export function HomeL2Card({
           change={tvs.change}
           chart={
             <HomeSparkline
+              label="Value secured"
               data={tvs.chart}
               formatValue={(value) => formatCurrency(value, 'usd')}
               partLabels={['Rollups', 'Validiums & Optimiums']}
@@ -63,6 +64,7 @@ export function HomeL2Card({
           change={activity.change}
           chart={
             <HomeSparkline
+              label="Activity/UOPS"
               data={activity.chart}
               formatValue={(value) => `${formatActivityCount(value)} UOPS`}
               weeklyAverage

@@ -29,7 +29,9 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
   onResize.current = options.onResize
 
   useEffect(() => {
-    if (!ref?.current) return
+    // Observing before the client flag flips would record the first size
+    // without storing it, and the observer that follows sees no change.
+    if (!isClient || !ref?.current) return
 
     if (typeof window === 'undefined' || !('ResizeObserver' in window)) return
 
@@ -57,9 +59,7 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
         if (onResize.current) {
           onResize.current(newSize)
         } else {
-          if (isClient) {
-            setSize(newSize)
-          }
+          setSize(newSize)
         }
       }
     })

@@ -4,7 +4,7 @@
   "critical": true,
   "category": "core",
   "description": "Routing table of zk.money deposit addresses. For each listed token it names the portal that deposit addresses using this table sweep into, and per intent the fee for the beneficiary and the tip for the sweeper. Rows and intents can only be added, never changed or removed.",
-  "ignoreRelatives": ["rows"],
+  "ignoreRelatives": ["rows", "_$beneficiary"],
   "fields": {
     "owner": {
       "severity": "MEDIUM",

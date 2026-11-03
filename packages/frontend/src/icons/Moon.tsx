@@ -8,7 +8,6 @@ export function MoonIcon(props: SvgIconProps) {
       height="24"
       viewBox="0 0 24 24"
       fill="currentColor"
-      role="img"
       {...props}
     >
       <g clipPath="url(#clip0_6535_74751)">

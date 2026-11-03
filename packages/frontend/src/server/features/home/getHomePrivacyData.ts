@@ -122,7 +122,7 @@ export async function getHomePrivacyData(
       href: entry.href,
       iconUrl: entry.icon,
       tvl: entry.hasTvl ? entry.totalValueLockedUsd : undefined,
-      tvlChange: entry.hasTvl ? entry.totalValueLockedChange : undefined,
+      tvlChange: entry.hasTvl ? entry.totalValueLockedChange7d : undefined,
       deposited30d: entry.totalValueDeposited30dUsd,
       adversaries: entry.adversaries,
       isUnderReview: entry.isUnderReview,

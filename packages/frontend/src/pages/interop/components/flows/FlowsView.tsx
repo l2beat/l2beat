@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import partition from 'lodash/partition'
 import { Skeleton } from '~/components/core/Skeleton'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import { CursorClickIcon } from '~/icons/CursorClick'
@@ -13,7 +14,6 @@ import { FlowsChainsSelector } from './FlowsChainsSelector'
 import { FlowsGeneralStats } from './FlowsGeneralStats'
 import { FlowsProtocolsSelector } from './FlowsProtocolsSelector'
 import { FlowsGraphPanel } from './graph/FlowsGraphPanel'
-import { InactiveChainsDialog } from './graph/InactiveChainsDialog'
 import { ProtocolsByVolumeCard } from './protocols-by-volume/ProtocolsByVolumeCard'
 import { FlowsSelectedPathPanel } from './selection-panel/FlowsSelectedPathPanel'
 import {
@@ -121,7 +121,10 @@ function FlowsViewContent({
                   <span className="font-normal text-secondary text-xs leading-none md:text-base">
                     No transfers detected for
                   </span>
-                  <InactiveChainsDialog chains={inactiveChains} />
+                  <ProjectIconList
+                    projects={inactiveChains}
+                    title="Chains without transfers"
+                  />
                 </>
               )}
             </div>

@@ -29,7 +29,7 @@ export function HomeRiskRosette({
     values.some((value) => value.sentiment === 'UnderReview')
   return (
     <Tooltip contentInHtml>
-      <TooltipTrigger asChild disabledOnMobile>
+      <TooltipTrigger asChild disabledOnTouch>
         <TableLink
           href={href}
           aria-label={`${projectName} risk analysis`}

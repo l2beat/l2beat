@@ -11,7 +11,7 @@ interface Props {
   containerClassName?: string
   changeContainerClassName?: string
   changePeriod?: PercentageChangePeriod
-  disabledOnMobile?: boolean
+  disabledOnTouch?: boolean
 }
 
 export function ValueWithPercentageChange({
@@ -22,7 +22,7 @@ export function ValueWithPercentageChange({
   changeClassName,
   changeContainerClassName,
   changePeriod,
-  disabledOnMobile,
+  disabledOnTouch,
 }: Props) {
   return (
     <div className={cn('flex flex-wrap items-center', containerClassName)}>
@@ -35,7 +35,7 @@ export function ValueWithPercentageChange({
           className={cn('font-medium', changeContainerClassName)}
           textClassName={changeClassName}
           period={changePeriod}
-          disabledOnMobile={disabledOnMobile}
+          disabledOnTouch={disabledOnTouch}
         />
       )}
     </div>

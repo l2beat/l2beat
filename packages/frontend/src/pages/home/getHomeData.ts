@@ -203,7 +203,7 @@ async function getInteropFlowsForHome(
     protocolIds.length >= MIN_SELECTED_PROTOCOLS
   ) {
     await helpers.queryClient.prefetchQuery(
-      helpers.trpc.interop.flows.queryOptions({
+      helpers.trpc.interop.flowsOverview.queryOptions({
         chains: defaultSelectedFlowChains,
         protocolIds,
       }),
@@ -267,13 +267,7 @@ async function getRecentProjectsForHome(
   manifest: Manifest,
 ): Promise<HomeRecentProject[]> {
   const projects = await ps.getProjects({
-    optional: [
-      'scalingInfo',
-      'ecosystemConfig',
-      'interopConfig',
-      'zkCatalogInfo',
-      'privacyInfo',
-    ],
+    optional: ['scalingInfo', 'interopConfig', 'zkCatalogInfo', 'privacyInfo'],
     whereNot: ['archivedAt'],
   })
 
@@ -295,11 +289,7 @@ async function getRecentProjectsForHome(
 function getRecentProjectListing(
   project: Project<
     never,
-    | 'scalingInfo'
-    | 'ecosystemConfig'
-    | 'interopConfig'
-    | 'zkCatalogInfo'
-    | 'privacyInfo'
+    'scalingInfo' | 'interopConfig' | 'zkCatalogInfo' | 'privacyInfo'
   >,
 ): Pick<HomeRecentProject, 'name' | 'href' | 'label'> | undefined {
   const { name, slug, scalingInfo } = project
@@ -320,9 +310,6 @@ function getRecentProjectListing(
   }
   if (project.zkCatalogInfo) {
     return { name, href: `/zk-catalog/${slug}`, label: 'ZK Catalog' }
-  }
-  if (project.ecosystemConfig) {
-    return { name, href: `/ecosystems/${slug}`, label: 'Ecosystem' }
   }
   // Scaling projects that are also interop protocols are handled by the
   // scaling branch, matching the redirect on /interop/protocols/:slug.

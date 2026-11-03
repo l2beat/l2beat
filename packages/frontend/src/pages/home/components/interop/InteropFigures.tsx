@@ -2,7 +2,7 @@ import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { EM_DASH } from '~/consts/characters'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
-import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
+import type { InteropFlowsOverview } from '~/server/features/layer2s/interop/getInteropFlowsOverview'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { HOME_ICON_CLASS, HOME_TEXT } from '../../homeStyles'
@@ -13,7 +13,7 @@ import { HOME_ICON_CLASS, HOME_TEXT } from '../../homeStyles'
  * there are none, a "Top protocol" slot with dashes stands in for it.
  */
 export function getInteropFigures(
-  stats: InteropFlowsData['stats'],
+  stats: InteropFlowsOverview['stats'],
   chains: InteropChainWithIcon[],
 ) {
   const { topChain, topToken } = stats

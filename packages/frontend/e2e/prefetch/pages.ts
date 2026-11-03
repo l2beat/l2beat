@@ -14,7 +14,7 @@ export interface PageToVerify {
  * prefetches are not useful for this check.
  */
 export const PAGES: PageToVerify[] = [
-  page('/', ['interop.flows']),
+  page('/', ['interop.flowsOverview']),
   page('/layer2s/summary', [
     'tvs.recategorisedChart',
     'activity.recategorisedChart',

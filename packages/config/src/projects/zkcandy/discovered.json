@@ -1105,7 +1105,7 @@
   "usedBlockNumbers": { "ethereum": 25745364 },
   "permissionsConfigHash": "0x3684f43fa2f85e044830926d25b0911356238c6f57b371fa2e2b7af85a7ce1a7",
   "modelledAgainst": {
-    "shared-zk-stack": "0x5c5ff23838fc7b5156f4cf75b1dd2efc5d47beb9f0b3f7434d20690afdbf2fd0"
+    "shared-zk-stack": "0xcddcd0a18868fcd04d7ceadd5de3410ecdb121dcc2aabbe07ac6228da07a1a28"
   },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
@@ -1123,6 +1123,22 @@
           "permission": "upgrade",
           "from": "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
           "role": "admin"
+        }
+      ]
+    },
+    "eth:0x29D2e773A31C07D375c50F0110422832bd044d08": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C",
+          "description": "one of its 3/3 signers.",
+          "role": ".SECURITY_COUNCIL"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "description": "soft freeze, hard freeze (all chains of the Era and ZKsync OS ChainTypeManagers), approve a protocol upgrade.",
+          "role": ".securityCouncil"
         }
       ]
     },
@@ -1171,6 +1187,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
+          "role": ".admin",
+          "via": [
+            { "address": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
           "role": ".admin",
@@ -1189,6 +1214,15 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xBfaa733261500101996A10A231794263567d52ab",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b" },
+            { "address": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
           "role": "admin",
           "via": [
@@ -1202,39 +1236,16 @@
           "permission": "act",
           "from": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063",
           "role": ".owner"
-        }
-      ]
-    },
-    "eth:0x59195219d1176E42f8e607e9AC114926D47f9035": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "soft freeze, hard freeze, approve a protocol upgrade.",
-          "role": ".securityCouncil"
         },
         {
-          "permission": "interact",
-          "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
-          "description": "one of its 3/3 signers.",
-          "role": ".SECURITY_COUNCIL"
+          "permission": "act",
+          "from": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172",
+          "role": ".owner"
         }
       ]
     },
     "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": {
       "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "extend the legal veto period, approve a protocol upgrade.",
-          "role": ".guardians"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
-          "description": "one of its 3/3 signers.",
-          "role": ".GUARDIANS"
-        },
         {
           "permission": "interact",
           "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
@@ -1269,118 +1280,42 @@
         }
       ]
     },
-    "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": {
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
-          "role": "admin"
-        }
-      ]
-    },
-    "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": {
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-          "description": "pause / unpause the bridge.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "description": "pause, unpause and set critical escrow address references.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
-          "description": "pause, resume chain migrations.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
-          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "description": "control all roles in the ZkToken access control, including the minter roles.",
-          "role": ".DefaultAdmin"
-        }
-      ]
-    },
-    "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111": {
+    "eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C",
+          "description": "one of its 3/3 signers.",
+          "role": ".GUARDIANS"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "description": "extend the legal veto period, approve a protocol upgrade.",
+          "role": ".guardians"
+        }
+      ]
+    },
+    "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
+          "description": "set the ecosystem-wide minimum execution delay, manage the shared set of commit validators and its signing threshold, and allow chains to use a custom commit validator set.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
@@ -1441,6 +1376,24 @@
           "description": "control all roles in the ZkToken access control, including the minter roles.",
           "role": ".DefaultAdmin",
           "via": [
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938" },
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         },
@@ -1552,11 +1505,153 @@
         }
       ]
     },
+    "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
+          "role": ".admin"
+        }
+      ]
+    },
+    "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
+          "description": "set the ecosystem-wide minimum execution delay, manage the shared set of commit validators and its signing threshold, and allow chains to use a custom commit validator set.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+          "description": "pause / unpause the bridge.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "description": "pause, unpause and set critical escrow address references.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
+          "description": "pause, resume chain migrations.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
+          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "control all roles in the ZkToken access control, including the minter roles.",
+          "role": ".DefaultAdmin"
+        }
+      ]
+    },
     "eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": {
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
+          "from": "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C",
           "description": "one of its 3/3 signers.",
           "role": ".ZK_FOUNDATION_SAFE"
         },
@@ -1565,6 +1660,29 @@
           "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
           "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
           "role": ".PROPOSE_GUARDIAN"
+        }
+      ]
+    },
+    "eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBfaa733261500101996A10A231794263567d52ab",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xff3582a0310916cd62442A4CA88Bf1C757D68938": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "role": "admin"
         }
       ]
     },

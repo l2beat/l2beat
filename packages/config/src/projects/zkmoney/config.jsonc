@@ -10,7 +10,9 @@
     "eth:0x03b21bba8e75a1bd0354c5ecbec078cf59c85343", // SwapEscrowFactory
     "eth:0x3b5d8c731364902eafa46be327afb044c10c5952", // SwapEscrowFactoryV2
     "eth:0xc357e34d4c7520a83c9ec0a242ba52b4ecaba1fc", // SIPAFactory
-    "eth:0x9c4A7d65AFDC2b4eF1164264D9585ED64c869054" // SkyEscrowFactory
+    "eth:0x9c4A7d65AFDC2b4eF1164264D9585ED64c869054", // SkyEscrowFactory
+    "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F", // Resolver
+    "eth:0x10EB6fecD2DCE6DA55d25C355374c970D5D11E23" // RegistrationController
   ],
   "names": {
     "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f": "ZkMoneyPortal_sUSDS",
@@ -30,7 +32,14 @@
         "eth:0x5C412Ba5B338F3e5E2a1332069bdd3Aae6ae6b8a": "https://etherscan.io/address/0x9c4A7d65AFDC2b4eF1164264D9585ED64c869054#code"
       }
     },
+    "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a": {
+      "ignoreRelatives": ["registrationController", "resolver"]
+    },
+    "eth:0xDA79Bae4485c40291363D885Aae5B543d2D0Efa9": {
+      "ignoreRelatives": ["resolverOperators"]
+    },
     "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F": {
+      "ignoreRelatives": ["ensResolver"],
       "fields": {
         "ensNode": {
           "handler": {

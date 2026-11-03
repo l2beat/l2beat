@@ -13,7 +13,9 @@ import {
   ProjectNameInfoTooltip,
 } from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
+import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import {
   adjustTableValue,
   sortTableValues,
@@ -134,28 +136,40 @@ function getColumns(anonymitySetTooltip: string | undefined) {
         },
       },
     ),
-    columnHelper.accessor('totalValueLockedUsd', {
-      id: OPTIONAL_COLUMNS.tvl,
-      header: 'TVL',
-      cell: (ctx) => {
-        if (!ctx.row.original.hasTvl) {
-          return <NotApplicableBadge />
-        }
+    ...withChangeSort(
+      columnHelper,
+      columnHelper.accessor('totalValueLockedUsd', {
+        id: OPTIONAL_COLUMNS.tvl,
+        header: 'TVL',
+        cell: (ctx) => {
+          if (!ctx.row.original.hasTvl) {
+            return <NotApplicableBadge />
+          }
 
-        const value = ctx.getValue()
-        return (
-          <MetricCell>
-            {value === undefined ? undefined : formatCurrency(value, 'usd')}
-          </MetricCell>
-        )
-      },
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        tooltip:
-          'Total USD value currently held across all tracked assets for the protocol.',
-      },
-    }),
+          const value = ctx.getValue()
+          if (value === undefined) {
+            return <NoDataBadge />
+          }
+          return (
+            <ValueWithPercentageChange
+              change={ctx.row.original.totalValueLockedChange7d}
+              changePeriod="7D"
+              className="font-medium text-sm md:text-sm"
+              containerClassName="flex-nowrap justify-end"
+            >
+              {formatCurrency(value, 'usd')}
+            </ValueWithPercentageChange>
+          )
+        },
+        sortUndefined: 'last',
+        meta: {
+          align: 'right',
+          tooltip:
+            'Total USD value currently held across all tracked assets for the protocol, shown together with a percentage change compared to 7D ago.',
+        },
+      }),
+      (entry) => ({ change: entry.totalValueLockedChange7d, period: '7D' }),
+    ),
     columnHelper.accessor('totalValueDeposited30dUsd', {
       id: OPTIONAL_COLUMNS.volume30d,
       header: '30D vol.',

@@ -39,6 +39,7 @@ export function HomePrivacyCard({
           change={tvl.change}
           chart={
             <HomeSparkline
+              label="Value locked"
               data={tvl.chart}
               formatValue={(value) => formatCurrency(value, 'usd')}
             />
@@ -54,6 +55,7 @@ export function HomePrivacyCard({
           change={deposits.change}
           chart={
             <HomeSparkline
+              label="Deposits"
               data={deposits.chart}
               formatValue={(value) => formatCurrency(value, 'usd')}
               weeklyAverage

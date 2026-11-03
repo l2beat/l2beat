@@ -47,6 +47,19 @@ export type ProtocolEntry = {
   snapshotTimestamp: number | undefined
 } & FilterableEntry
 
+/** What the short protocol tables (logo, name, category, volume) read. */
+export type CompactProtocolEntry = Pick<
+  ProtocolEntry,
+  | 'slug'
+  | 'iconUrl'
+  | 'name'
+  | 'description'
+  | 'type'
+  | 'isAggregate'
+  | 'subgroup'
+  | 'volume'
+>
+
 export type ProtocolDisplayable = {
   name: string
   slug: string

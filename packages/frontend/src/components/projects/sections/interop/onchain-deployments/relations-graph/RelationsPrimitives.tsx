@@ -37,7 +37,7 @@ export function PanelSection({
         {title}
         {hint && (
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger aria-label={`About ${title}`}>
               <InfoIcon className="size-3 fill-current" />
             </TooltipTrigger>
             <TooltipContent>{hint}</TooltipContent>

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x2379a9a2d17aa65afb2ed32b4a1b6748a99dc659
+
+# Diff at Mon, 02 Nov 2026 10:19:25 GMT:
+
+- id: 0fc1d9ee
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2b8b049061be5f8409b34d1e5cecb04776a60491 block: 1793184565
+- current timestamp: 1793614694
+
+## Description
+
+On 2026-10-29 the ForwardingTable owner moved the sweep-fee beneficiary from the deployer EOA to FPCFunderDAI, which converts DAI into Fee Juice for the ClaimFPC. The template now ignores the beneficiary as a relative, as PlainWithdrawalExecutor's does for its BENEFICIARY.
+
+## Watched changes
+
+```diff
+    contract ForwardingTable (eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C) [zkmoney/v6/ForwardingTable] {
+    +++ description: Routing table of zk.money deposit addresses. For each listed token it names the portal that deposit addresses using this table sweep into, and per intent the fee for the beneficiary and the tip for the sweeper. Rows and intents can only be added, never changed or removed.
++++ description: Receives the beneficiary fee of each sweep through this table.
++++ severity: MEDIUM
+      values._$beneficiary:
+-        "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601"
++        "eth:0x88ef976262BF715a3B0D24146fC3bb1B18464e61"
+    }
+```
+
 Generated with discovered.json: 0xecc7fcef7b208945eca0780721b8de594fe55f5b
 
 # Diff at Wed, 28 Oct 2026 11:19:00 GMT:
