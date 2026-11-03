@@ -206,6 +206,13 @@ function ProjectIcon({
               {project.description}
             </p>
           )}
+          {project.stage && (
+            <StageBadge
+              stage={project.stage}
+              isAppchain={false}
+              className="mt-1"
+            />
+          )}
         </TooltipContent>
       </TooltipPortal>
     </Tooltip>
