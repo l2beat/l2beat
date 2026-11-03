@@ -107,7 +107,7 @@ const STATE_NAME = cn(
 )
 
 /**
- * The question L2BEAT was built to answer, and the seven ways it did. From lg
+ * The question L2BEAT was built to answer, and the seven ways it did. From 960px
  * the question sits beside the opening as a pull quote, so the capped measure
  * does not leave half the sheet empty.
  */
@@ -118,7 +118,7 @@ function History() {
       <h2 id="history-heading" className={STATEMENT}>
         {history.heading}
       </h2>
-      <div className="mt-8 md:mt-10 lg:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-x-16">
+      <div className="mt-8 md:mt-10 lg:gap-x-16 min-[960px]:grid min-[960px]:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] min-[960px]:items-center min-[960px]:gap-x-12">
         <div className={cn(BODY, 'space-y-6')}>
           {history.opening.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
@@ -127,7 +127,7 @@ function History() {
         <p
           className={cn(
             DISPLAY,
-            'mt-10 max-w-[30ch] text-balance border-brand border-l-[3px] pl-5 text-[24px] leading-[1.2] md:mt-12 md:pl-[41px] md:text-[30px] lg:mt-0 lg:text-[32px]',
+            'mt-10 max-w-[30ch] text-balance border-brand border-l-[3px] pl-5 text-[24px] leading-[1.2] md:mt-12 md:pl-[41px] md:text-[30px] lg:pl-[41px] lg:text-[32px] min-[960px]:mt-0 min-[960px]:pl-8 min-[960px]:text-[26px]',
           )}
         >
           {history.question}
@@ -159,16 +159,21 @@ function History() {
 
 /**
  * How Ethereum changed, and the three questions we now ask of all of it. From
- * lg the areas we cover sit beside the argument, as the mandate's sources do.
+ * 960px the questions sit beside the opening, as History's pull quote does, and
+ * the areas we cover beside the rest, as the mandate's sources do. Narrower,
+ * the side column fits only a word or two of a question a line.
  */
 function Change() {
   const { change } = NEW_NAME
   return (
     <section
       aria-labelledby="change-heading"
-      className="lg:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-x-16"
+      className="lg:gap-x-16 min-[960px]:grid min-[960px]:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] min-[960px]:gap-x-12"
     >
-      <h2 id="change-heading" className={cn(STATEMENT, 'lg:col-span-2')}>
+      <h2
+        id="change-heading"
+        className={cn(STATEMENT, 'min-[960px]:col-span-2')}
+      >
         {change.heading}
       </h2>
       <div className={cn(BODY, 'mt-8 space-y-6 md:mt-10')}>
@@ -176,25 +181,27 @@ function Change() {
           <p key={paragraph}>{paragraph}</p>
         ))}
       </div>
-      <ul className="mt-10 flex flex-col gap-6 border-brand border-l-[3px] pl-5 md:mt-12 md:gap-8 md:pl-[41px] lg:col-span-2">
+      <ul className="mt-10 flex flex-col gap-6 border-brand border-l-[3px] pl-5 md:mt-12 md:gap-8 md:pl-[41px] lg:pl-[41px] min-[960px]:mt-10 min-[960px]:gap-7 min-[960px]:self-center min-[960px]:pl-8">
         {change.questions.map((question) => (
           <li
             key={question}
             className={cn(
               DISPLAY,
-              'max-w-[32ch] text-balance text-[24px] leading-[1.15] md:text-[30px] lg:text-[32px]',
+              'max-w-[32ch] text-balance text-[24px] leading-[1.15] md:text-[30px] lg:text-[28px] min-[960px]:max-w-none min-[960px]:text-[26px]',
             )}
           >
             {question}
           </li>
         ))}
       </ul>
-      <div className={cn(BODY, 'mt-10 space-y-6 md:mt-12')}>
+      <div
+        className={cn(BODY, 'mt-10 space-y-6 md:mt-12 min-[960px]:col-start-1')}
+      >
         {change.after.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
       </div>
-      <Coverage className="max-lg:mt-12 max-lg:max-w-[36rem] lg:col-start-2 lg:row-start-4 lg:mt-12" />
+      <Coverage className="mt-12 max-[959px]:max-w-[36rem] min-[960px]:col-start-2 min-[960px]:row-start-3" />
     </section>
   )
 }
