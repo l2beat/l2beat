@@ -71,13 +71,13 @@ function FocusShift() {
   return (
     <section
       aria-labelledby="focus-heading"
-      className="grid gap-y-8 md:grid-cols-[0.72fr_1fr] md:grid-rows-[auto_1fr] md:gap-x-8 md:gap-y-10 lg:gap-x-12"
+      className="grid gap-y-8 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:grid-rows-[auto_1fr] md:gap-x-8 md:gap-y-10 lg:gap-x-16"
     >
       <div className="md:col-start-1 md:row-start-1">
         <h2 id="focus-heading" className={STATEMENT}>
           A new centre
         </h2>
-        <p className={cn(BODY, 'mt-5 text-balance md:max-w-none')}>
+        <p className={cn(BODY, 'mt-8 md:mt-10 md:max-w-none')}>
           L2BEAT was built around layer&nbsp;2s. ETHBEAT is built around
           Ethereum, and layer&nbsp;2s are one of the many things around it.
         </p>
@@ -127,7 +127,7 @@ function History() {
         <p
           className={cn(
             DISPLAY,
-            'mt-10 max-w-[30ch] text-balance text-[24px] leading-[1.2] md:mt-12 md:text-[30px] lg:mt-0 lg:border-brand lg:border-l-[3px] lg:pl-8',
+            'mt-10 max-w-[30ch] text-balance border-brand border-l-[3px] pl-5 text-[24px] leading-[1.2] md:mt-12 md:pl-[41px] md:text-[30px] lg:mt-0 lg:text-[32px]',
           )}
         >
           {history.question}
@@ -138,15 +138,15 @@ function History() {
         {history.practices.map((practice, i) => (
           <li
             key={practice.name}
-            className="grid gap-x-16 gap-y-2 border-divider border-b py-6 md:py-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
+            className="grid gap-y-2 border-divider border-b py-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-x-8 md:py-8 lg:gap-x-16"
           >
-            <h3 className="flex gap-4 font-bold font-inter text-[20px] leading-tight tracking-[-0.02em] md:text-[24px]">
+            <h3 className="flex gap-4 text-balance font-bold font-inter text-[20px] leading-tight tracking-[-0.02em] md:text-[24px]">
               <span className="w-7 shrink-0 text-brand-deep tabular-nums dark:text-brand">
                 {i + 1}
               </span>
               {practice.name}
             </h3>
-            <p className="max-w-[36rem] text-pretty text-[17px] leading-[1.6] max-lg:pl-11 md:text-[18px]">
+            <p className="max-w-[36rem] text-pretty text-[17px] leading-[1.6] max-md:pl-11 md:text-[18px]">
               {practice.text}
             </p>
           </li>
@@ -176,13 +176,13 @@ function Change() {
           <p key={paragraph}>{paragraph}</p>
         ))}
       </div>
-      <ul className="mt-10 flex flex-col gap-6 border-brand border-l-[3px] pl-5 md:mt-12 md:gap-8 md:pl-8 lg:col-span-2">
+      <ul className="mt-10 flex flex-col gap-6 border-brand border-l-[3px] pl-5 md:mt-12 md:gap-8 md:pl-[41px] lg:col-span-2">
         {change.questions.map((question) => (
           <li
             key={question}
             className={cn(
               DISPLAY,
-              'max-w-[32ch] text-balance text-[24px] leading-[1.15] md:text-[36px] lg:text-[40px]',
+              'max-w-[32ch] text-balance text-[24px] leading-[1.15] md:text-[30px] lg:text-[32px]',
             )}
           >
             {question}
@@ -194,7 +194,7 @@ function Change() {
           <p key={paragraph}>{paragraph}</p>
         ))}
       </div>
-      <Coverage className="max-lg:mt-12 lg:col-start-2 lg:row-start-4 lg:mt-12" />
+      <Coverage className="max-lg:mt-12 max-lg:max-w-[36rem] lg:col-start-2 lg:row-start-4 lg:mt-12" />
     </section>
   )
 }
@@ -204,7 +204,10 @@ function Coverage({ className }: { className?: string }) {
   const { coverage } = NEW_NAME
   return (
     <aside aria-labelledby="coverage-heading" className={className}>
-      <h3 id="coverage-heading" className="font-bold text-heading-18">
+      <h3
+        id="coverage-heading"
+        className="font-bold font-inter text-[20px] tracking-[-0.02em]"
+      >
         {coverage.heading}
       </h3>
       <ul className="mt-4 flex flex-col border-divider border-t">
@@ -217,7 +220,7 @@ function Coverage({ className }: { className?: string }) {
               {area.label}
               <span
                 aria-hidden
-                className="text-secondary transition-transform group-hover:translate-x-1 group-hover:text-link"
+                className="transition-transform group-hover:translate-x-1"
               >
                 →
               </span>
@@ -268,13 +271,19 @@ function Practical() {
       <h2 id="practical-heading" className={STATEMENT}>
         {practical.heading}
       </h2>
-      <div className="mt-10 grid gap-10 md:mt-12 lg:grid-cols-2 lg:gap-x-16">
-        <NoteList heading="What changed" notes={practical.changed} />
-        <NoteList heading="What stays the same" notes={practical.unchanged} />
+      {/* From lg the two lists share rows (subgrid), so their rules line up. */}
+      <div className="mt-10 grid gap-y-14 md:mt-12 md:gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_repeat(4,auto)] lg:gap-x-16 lg:gap-y-0">
+        <NoteList heading="What changed" notes={practical.changed} paired />
+        <NoteList
+          heading="What stays the same"
+          notes={practical.unchanged}
+          paired
+        />
       </div>
-      <div className="mt-12 border-divider border-t pt-10 md:mt-16 md:pt-12">
+      {/* The lists above close on a rule, so space alone opens this group. */}
+      <div className="mt-16 md:mt-20">
         <h3 className={HEADING}>{practical.links.heading}</h3>
-        <p className="mt-3 max-w-[36rem] text-pretty text-[17px] leading-[1.6] md:text-[18px]">
+        <p className="mt-5 max-w-[36rem] text-pretty text-[17px] leading-[1.6] md:text-[18px]">
           {practical.links.text}
         </p>
         <div className="mt-8">
@@ -302,32 +311,39 @@ function NoteList({
   heading,
   notes,
   columns,
+  paired,
 }: {
   heading?: string
   notes: readonly Note[]
   /** Two columns from lg, for a list that spans the sheet. */
   columns?: boolean
+  /** Beside another four-note list from lg: take the parent's rows. */
+  paired?: boolean
 }) {
   return (
-    <div>
-      {heading && (
-        <h3 className="mb-5 font-bold font-inter text-[20px] tracking-[-0.02em]">
-          {heading}
-        </h3>
-      )}
+    <div className={cn(paired && 'lg:row-span-5 lg:grid lg:grid-rows-subgrid')}>
+      {heading && <h3 className={cn(HEADING, 'mb-5 md:mb-6')}>{heading}</h3>}
+      {/* Ruled rows, as the practices and the coverage list. In two columns
+          each column's first row takes the top rule. */}
       <ul
         className={cn(
-          'flex flex-col gap-4',
-          columns && 'lg:grid lg:grid-cols-2 lg:gap-x-16',
+          'border-divider border-t max-lg:max-w-[36rem]',
+          paired && 'lg:row-span-4 lg:grid lg:grid-rows-subgrid',
+          columns &&
+            'lg:grid lg:grid-cols-2 lg:gap-x-16 lg:border-t-0 lg:[&>li:nth-child(-n+2)]:border-t',
         )}
       >
         {notes.map((note) => (
           <li
             key={note.lead}
-            className="max-w-[36rem] text-pretty text-[16px] leading-[1.6] md:text-[17px]"
+            className="border-divider border-b py-5 text-[17px] leading-[1.6] md:text-[18px]"
           >
-            <strong className="font-semibold">{note.lead}</strong>{' '}
-            <NoteText note={note} />
+            <h4 className="font-bold font-inter text-[20px] leading-tight tracking-[-0.02em]">
+              {note.lead}
+            </h4>
+            <p className="mt-1.5 text-pretty">
+              <NoteText note={note} />
+            </p>
           </li>
         ))}
       </ul>
@@ -342,7 +358,7 @@ function NoteText({ note }: { note: Note }) {
   const anchor = (
     <a
       href={link.href}
-      className="text-link underline decoration-link-stroke underline-offset-[0.2em] hover:decoration-current"
+      className="whitespace-nowrap text-link underline decoration-link-stroke underline-offset-[0.2em] hover:decoration-current"
     >
       {link.label}
     </a>
@@ -367,19 +383,14 @@ function NoteText({ note }: { note: Note }) {
 /** Old and new addresses side by side: only the domain changes. */
 function UrlMap({ paths }: { paths: readonly string[] }) {
   return (
-    <dl className="grid w-fit max-w-full grid-cols-1 gap-y-1 overflow-x-auto rounded-lg bg-surface-secondary p-5 font-mono text-[13px] sm:grid-cols-[max-content_max-content] sm:gap-x-5 sm:gap-y-3 md:p-6 md:text-[14px]">
+    <dl className="grid w-full max-w-full grid-cols-1 gap-y-1 overflow-x-auto rounded-lg bg-surface-secondary p-5 font-mono text-[13px] sm:w-fit sm:grid-cols-[max-content_max-content] sm:gap-x-3 sm:gap-y-3 md:w-full md:grid-cols-[max-content_1fr] md:p-6 md:text-[14px] xl:grid-cols-2 xl:gap-x-16">
       {['', ...paths].map((path, i) => (
         <div key={path} className="contents">
-          <dt
-            className={cn(
-              'whitespace-nowrap text-secondary',
-              i > 0 && 'max-sm:mt-3',
-            )}
-          >
+          <dt className={cn('whitespace-nowrap', i > 0 && 'max-sm:mt-3')}>
             l2beat.com{path}
           </dt>
           <dd className="whitespace-nowrap">
-            <span aria-hidden className="mr-2 font-sans text-secondary">
+            <span aria-hidden className="mr-3">
               →
             </span>
             <span className="font-semibold">ethbeat.org</span>

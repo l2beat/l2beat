@@ -7,7 +7,7 @@ interface Practice {
   text: string
 }
 
-/** One line of the practical notes: a bold lead-in, then the detail. */
+/** One of the practical notes: a short title, then the detail. */
 export interface Note {
   lead: string
   text: string
@@ -16,7 +16,7 @@ export interface Note {
 
 export const NEW_NAME = {
   title: 'L2BEAT is now ETHBEAT',
-  lede: 'Our work has grown well beyond layer 2s, and our new name and mandate reflect that.',
+  lede: 'Our work has grown well beyond layer\u00a02s, and our new name and mandate reflect that.',
 
   history: {
     heading: 'Five years of L2BEAT',
@@ -101,39 +101,39 @@ export const NEW_NAME = {
     heading: 'What this means for you',
     changed: [
       {
-        lead: 'The name and the logo.',
-        text: 'ETHBEAT, with a new hand-lettered heart.',
+        lead: 'The name and the logo',
+        text: 'ETHBEAT, with a new hand\u2011lettered heart.',
       },
       {
-        lead: 'The address.',
+        lead: 'The address',
         text: 'The site now lives at ethbeat.org. Every l2beat.com link redirects permanently to the same page there.',
       },
       {
-        lead: 'Link previews.',
+        lead: 'Link previews',
         text: 'Pages shared on X, Telegram and elsewhere show new preview images. Platforms cache previews, so older posts may show the old ones for a while.',
       },
       {
-        lead: 'Social accounts.',
+        lead: 'Social accounts',
         text: 'On X we are now @ethbeat_org. Our other accounts will follow.',
         link: { label: '@ethbeat_org', href: 'https://x.com/ethbeat_org' },
       },
     ] satisfies Note[],
     unchanged: [
       {
-        lead: 'The team and our independence.',
+        lead: 'The team and our independence',
         text: 'The same people do the research, funded in the open as a public good.',
         link: { label: 'How we are funded', href: '/donate' },
       },
       {
-        lead: 'The methodology.',
-        text: 'Our risk frameworks, the Stages framework and every assessment are unchanged. No project was re-scored because of the rename.',
+        lead: 'The methodology',
+        text: 'Our risk frameworks, the Stages framework and every assessment are unchanged. No project was re\u2011scored because of the rename.',
       },
       {
-        lead: 'The data.',
+        lead: 'The data',
         text: 'Every project page, chart and history is where it was, under the same path.',
       },
       {
-        lead: 'Open source.',
+        lead: 'Open source',
         text: 'The code and every project config stay at github.com/l2beat/l2beat.',
         link: {
           label: 'github.com/l2beat/l2beat',
@@ -152,19 +152,19 @@ export const NEW_NAME = {
       ],
       notes: [
         {
-          lead: 'The API.',
+          lead: 'The API',
           text: 'Same endpoints, same responses. Point your clients at ethbeat.org when you can: most HTTP clients follow redirects, some do not.',
         },
         {
-          lead: 'Badges.',
+          lead: 'Badges',
           text: 'CROPS badges keep loading from their old URLs and now show the new name. A badge pasted as inline markup keeps its old text until you copy the markup again.',
         },
         {
-          lead: 'Forum, Disco and tools.',
+          lead: 'Forum, Disco and tools',
           text: 'They move to ethbeat.org later on launch day, and their l2beat.com addresses redirect there too.',
         },
         {
-          lead: 'Citing us.',
+          lead: 'Citing us',
           text: '"ETHBEAT (formerly L2BEAT)" helps readers who know the old name.',
         },
       ] satisfies Note[],

@@ -12,8 +12,9 @@ const INK = '#0d0c0c'
 const PINK = 'var(--brand)'
 const SECTOR = 'var(--surface-tertiary)'
 const OPEN_SECTOR = 'var(--surface-secondary)'
-const HUB = 'var(--primary)'
-const ON_HUB = 'var(--surface-primary)'
+// Ink in both modes: a light hub would be the brightest thing on a dark page.
+const HUB = INK
+const ON_HUB = '#ffffff'
 const ON_SECTOR = 'var(--primary)'
 
 const OPEN = 'And more'
