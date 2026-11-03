@@ -259,7 +259,14 @@ function PredefinedOptions({
         return (
           <Tooltip key={option.value}>
             <TooltipTrigger asChild>
-              <span className="flex h-full cursor-not-allowed">{button}</span>
+              {/* Focusable, as the disabled button is not, so the keyboard
+                  reaches the reason too */}
+              <span
+                tabIndex={0}
+                className="flex h-full cursor-not-allowed rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent"
+              >
+                {button}
+              </span>
             </TooltipTrigger>
             <TooltipContent>{disabledReason}</TooltipContent>
           </Tooltip>
