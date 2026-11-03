@@ -31,7 +31,7 @@ export function SearchResultRow(props: {
       className={cn(
         'flex h-7 cursor-pointer items-center gap-2.5 px-3 text-[13px] [contain-intrinsic-size:auto_28px] [content-visibility:auto]',
         props.highlighted
-          ? 'bg-coffee-700 shadow-[inset_2px_0_0_#BAD80A]'
+          ? 'bg-coffee-700 shadow-[inset_2px_0_0_var(--color-autumn-300)]'
           : 'text-coffee-200',
       )}
     >
