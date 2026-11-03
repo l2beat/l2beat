@@ -251,10 +251,6 @@ function NavCollapsibleItem({
                         exact: item.exactMatch,
                       })}
                       onClick={closeMobileSidebar}
-                      // The pill slides to the next page's link. Group hrefs
-                      // do not nest, so at most one is active per page, and
-                      // a name used twice would cancel the transition.
-                      className="data-[active=true]:page-transition:[view-transition-name:nav-sidebar-active]"
                     >
                       <span className="leading-tight">{item.title}</span>
                     </SidebarGroupSubButton>

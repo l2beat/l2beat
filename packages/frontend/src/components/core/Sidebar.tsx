@@ -101,7 +101,8 @@ function Sidebar({
           // so closing isn't delayed on Android. From `sm` the sheet is
           // `max-w-sm`, so the page beside it stays dimmed.
           // Named like the desktop sidebar, which is not rendered beside it:
-          // tapping a link in the menu fades the menu out over the next page.
+          // tapping a link in the menu removes the menu at once, without the
+          // page's fade.
           className="z-999 w-(--sidebar-width) animate-none! border-none bg-background/99 p-0 text-primary page-transition:[view-transition-name:nav-sidebar] md:max-w-(--sidebar-width-desktop) [&>button]:hidden"
           overlayClassName="animate-none! max-sm:bg-background/99 page-transition:[view-transition-name:nav-sidebar-overlay]"
           style={

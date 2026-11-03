@@ -850,7 +850,7 @@
 }
 
 /* People switch pages tens of times a visit, so everything is done in
-   150 ms. The active pill and tab underlines slide on a strong ease-out:
+   150 ms. The tab underlines slide on a strong ease-out:
    the page has already kept the user waiting, so they move at once and
    settle gently. The old and new pictures inherit the curve. */
 :root:not([data-theme-transition])::view-transition-group(*) {
@@ -858,8 +858,8 @@
   animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* The old label leaves before the new one is fully in, so a sliding pill
-   never shows both. */
+/* The old underline leaves before the new one is fully in, so a sliding
+   tab never shows both. */
 :root:not([data-theme-transition])::view-transition-old(*) {
   animation-duration: 100ms;
 }
@@ -877,6 +877,19 @@
 
 :root:not([data-theme-transition])::view-transition-new(root) {
   animation: page-fade-in 120ms cubic-bezier(0.23, 1, 0.32, 1) 30ms both;
+}
+
+/* The sidebar does not animate: the next page's sidebar replaces the old
+   one in the first frame, and the mobile menu is gone at once. */
+:root:not([data-theme-transition])::view-transition-group(nav-sidebar),
+:root:not([data-theme-transition])::view-transition-group(nav-sidebar-overlay),
+:root:not([data-theme-transition])::view-transition-new(nav-sidebar) {
+  animation: none;
+}
+
+:root:not([data-theme-transition])::view-transition-old(nav-sidebar),
+:root:not([data-theme-transition])::view-transition-old(nav-sidebar-overlay) {
+  display: none;
 }
 
 @keyframes page-fade-out {
