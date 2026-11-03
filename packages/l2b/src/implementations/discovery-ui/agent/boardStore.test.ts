@@ -109,6 +109,7 @@ describe(BoardStore.name, () => {
     expect(store.markSaved(board.id, 'multisigs')?.unsaved).toEqual(false)
     expect(store.replace(board.id, MULTISIGS)?.unsaved).toEqual(false)
     expect(store.replace(board.id, ESCROWS)?.unsaved).toEqual(true)
+    expect(store.replace(board.id, MULTISIGS)?.unsaved).toEqual(false)
     expect(store.get(board.id)?.savedAs).toEqual('multisigs')
   })
 

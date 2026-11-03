@@ -45,6 +45,7 @@ export class BoardFileError extends Error {
 // researcher can read, edit and commit it like any other config.
 export class BoardStore {
   private readonly boards = new Map<string, Board>()
+  private readonly savedSpecs = new Map<string, string>()
 
   open(project: string, spec: BoardSpec): Board {
     return this.add({ project, spec, savedAs: undefined, unsaved: true })
@@ -55,25 +56,29 @@ export class BoardStore {
   openSaved(project: string, name: string, spec: BoardSpec): Board {
     const open = this.list(project).find((b) => b.savedAs === name)
     if (open === undefined) {
-      return this.add({ project, spec, savedAs: name, unsaved: false })
+      const board = this.add({ project, spec, savedAs: name, unsaved: false })
+      this.savedSpecs.set(board.id, JSON.stringify(spec))
+      return board
     }
     if (open.unsaved) {
       return open
     }
+    this.savedSpecs.set(open.id, JSON.stringify(spec))
     return this.set({ ...open, spec })
   }
 
   replace(id: string, spec: BoardSpec): Board | undefined {
     const board = this.boards.get(id)
     if (board === undefined) return undefined
-    // Applying the same spec again leaves a saved board saved.
-    const isSame = JSON.stringify(board.spec) === JSON.stringify(spec)
-    return this.set({ ...board, spec, unsaved: board.unsaved || !isSame })
+    const unsaved = this.savedSpecs.get(id) !== JSON.stringify(spec)
+    return this.set({ ...board, spec, unsaved })
   }
 
   markSaved(id: string, name: string): Board | undefined {
     const board = this.boards.get(id)
-    return board && this.set({ ...board, savedAs: name, unsaved: false })
+    if (board === undefined) return undefined
+    this.savedSpecs.set(id, JSON.stringify(board.spec))
+    return this.set({ ...board, savedAs: name, unsaved: false })
   }
 
   get(id: string): Board | undefined {
@@ -83,6 +88,7 @@ export class BoardStore {
   close(id: string): Board | undefined {
     const board = this.boards.get(id)
     this.boards.delete(id)
+    this.savedSpecs.delete(id)
     return board
   }
 
