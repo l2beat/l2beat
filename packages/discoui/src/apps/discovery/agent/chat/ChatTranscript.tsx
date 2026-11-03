@@ -251,6 +251,8 @@ function OpenBoardButton(props: { boardId: string }) {
     queryKey: ['boards', project, revision],
     queryFn: () => listBoards(project as string),
     enabled: project !== undefined,
+    placeholderData: (previous, previousQuery) =>
+      previousQuery?.queryKey[1] === project ? previous : undefined,
   })
   const isOpen = list.data?.open.some((b) => b.id === props.boardId)
   if (project === undefined || isOpen !== true) return null
