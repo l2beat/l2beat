@@ -24,10 +24,19 @@ export function getTheme(): Theme {
   return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
 }
 
+/**
+ * A pick this tab could not store (storage blocked or full). Without it, the
+ * next system theme change would undo the pick.
+ */
+let unstoredPick: Theme | undefined
+
 export function setTheme(theme: Theme) {
   try {
     localStorage.setItem(STORAGE_KEY, theme)
-  } catch {}
+    unstoredPick = undefined
+  } catch {
+    unstoredPick = theme
+  }
   applyTheme(theme)
 }
 
@@ -43,6 +52,8 @@ export function watchThemeChanges() {
   window.addEventListener('storage', (event) => {
     if (event.key === STORAGE_KEY) applyTheme(resolve(readPreference()))
   })
+  // Catches a change made between the inline script and these listeners.
+  applyTheme(resolve(readPreference()))
 }
 
 function applyTheme(theme: Theme) {
@@ -60,7 +71,7 @@ function readPreference(): ThemePreference {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored === 'light' || stored === 'dark') return stored
   } catch {}
-  return 'system'
+  return unstoredPick ?? 'system'
 }
 
 function resolve(preference: ThemePreference): Theme {
