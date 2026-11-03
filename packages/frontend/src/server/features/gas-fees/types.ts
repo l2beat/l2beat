@@ -6,7 +6,6 @@ export const GAS_FEES_METRICS = [
   'transfer',
   'erc20',
   'swap',
-  'nftMint',
 ] as const
 export type GasFeesMetric = (typeof GAS_FEES_METRICS)[number]
 export const GasFeesMetric = v.enum(GAS_FEES_METRICS)
@@ -27,12 +26,10 @@ export interface GasFeesRecord {
   transfer: number
   erc20: number
   swap: number
-  nftMint: number
 }
 
 export const GAS_PER_ACTION = {
   transfer: 21_000,
   erc20: 65_000,
   swap: 180_000,
-  nftMint: 120_000,
 } as const

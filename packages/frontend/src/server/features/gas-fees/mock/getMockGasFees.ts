@@ -327,7 +327,6 @@ function generate(until: number): Map<GasFeesChainId, GasFeesRecord[]> {
       transfer: GAS_PER_ACTION.transfer * perGas,
       erc20: GAS_PER_ACTION.erc20 * perGas,
       swap: GAS_PER_ACTION.swap * perGas,
-      nftMint: GAS_PER_ACTION.nftMint * perGas,
     }
   })
 
@@ -390,7 +389,6 @@ function generate(until: number): Map<GasFeesChainId, GasFeesRecord[]> {
         transfer: action(GAS_PER_ACTION.transfer),
         erc20: action(GAS_PER_ACTION.erc20),
         swap: action(GAS_PER_ACTION.swap),
-        nftMint: action(GAS_PER_ACTION.nftMint),
       })
     })
     result.set(chain.id, records)
@@ -463,5 +461,76 @@ function spikes(seed: number, p: number, min: number, max: number) {
     const out = m
     m = 1 + (m - 1) * 0.45
     return out
+  }
+}
+
+export interface MockRecentGasFees {
+  /** Starts of the last 24 full UTC hours, oldest first */
+  hours: number[]
+  ethereum: { baseFeeGwei: number[]; priorityFeeGwei: number[] }
+  /** Average fee per transaction in USD, per hour */
+  avgFee: Map<GasFeesChainId, number[]>
+}
+
+// A few unusual hours (spikes on Base, Ethereum and Arbitrum, a dip on ZKsync),
+// so the prototype shows what they look like. Keyed by hours ago.
+const DEMO_SPIKES: Partial<Record<GasFeesChainId, Record<number, number>>> = {
+  ethereum: { 7: 3.2, 6: 1.8 },
+  base: { 4: 6, 3: 3.5, 2: 1.6 },
+  arbitrum: { 12: 1.7, 11: 1.4 },
+  zksync2: { 18: 0.55, 17: 0.5, 16: 0.5, 15: 0.55, 14: 0.65 },
+}
+
+/** Hourly fees for the last day, around each chain's latest daily level */
+export function getMockRecentGasFees(): MockRecentGasFees {
+  const end = UnixTime.toStartOf(UnixTime.now(), 'hour')
+  const hours = Array.from(
+    { length: 24 },
+    (_, i) => end - (24 - i) * UnixTime.HOUR,
+  )
+  const daily = getMockGasFees()
+
+  const shape = (chainIndex: number, hour: number, hoursAgo: number) => {
+    // Busiest in the US and EU afternoon
+    const utcHour = new Date(hour * 1000).getUTCHours()
+    const diurnal = 1 + 0.12 * Math.sin((2 * Math.PI * (utcHour - 9)) / 24)
+    // Seeded by the hour itself, so an hour keeps its value as time moves on
+    const r = rng(hour / UnixTime.HOUR + chainIndex * 7919)
+    const u = Math.max(r(), 1e-9)
+    const n = Math.exp(
+      0.1 * Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * r()),
+    )
+    const chainId = GAS_FEES_CHAINS[chainIndex]?.id
+    const spike = (chainId && DEMO_SPIKES[chainId]?.[hoursAgo]) ?? 1
+    return diurnal * n * spike
+  }
+
+  const avgFee = new Map<GasFeesChainId, number[]>()
+  GAS_FEES_CHAINS.forEach((chain, chainIndex) => {
+    const records = daily.get(chain.id) ?? []
+    if (records.length === 0) return
+    // Around the chain's usual level, the median day of the past 30
+    const pastMonth = records
+      .slice(-30)
+      .map((r) => r.totalFees / r.txCount)
+      .sort((a, b) => a - b)
+    const level = pastMonth[Math.floor(pastMonth.length / 2)] ?? 0
+    avgFee.set(
+      chain.id,
+      hours.map((hour, i) => level * shape(chainIndex, hour, 24 - i)),
+    )
+  })
+
+  const prio = ethPriority(end)
+  const base = Math.max(ethGasPrice(end) - prio, prio * 0.5)
+  return {
+    hours,
+    ethereum: {
+      baseFeeGwei: hours.map((hour, i) => base * shape(0, hour, 24 - i)),
+      priorityFeeGwei: hours.map(
+        (hour, i) => prio * Math.sqrt(shape(0, hour + 1, 24 - i)),
+      ),
+    },
+    avgFee,
   }
 }

@@ -1,7 +1,6 @@
-import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Line, LineChart, ReferenceArea, ReferenceLine } from 'recharts'
+import { Line, LineChart, ReferenceLine } from 'recharts'
 import {
   ChartContainer,
   type ChartMeta,
@@ -14,7 +13,6 @@ import { ChartCommonComponents } from '~/components/core/chart/ChartCommonCompon
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
-import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -26,14 +24,12 @@ import {
   type GasFeesMetric,
 } from '~/server/features/gas-fees/types'
 import { formatRange } from '~/utils/dates'
-import type { ChartRange } from '~/utils/range/range'
 import type { GasFeesScale } from './GasFeesView'
 import {
   formatFee,
   formatFeeTick,
   formatTimes,
   GAS_FEES_METRIC_LABELS,
-  GAS_FEES_RANGE_OPTIONS,
 } from './metrics'
 import type { GasFeesChain } from './types'
 
@@ -46,14 +42,6 @@ const DEFAULT_VISIBLE_CHAINS = [
   'optimism',
 ]
 
-const RANGE_LABELS: Record<(typeof GAS_FEES_RANGE_OPTIONS)[number], string> = {
-  '7d': '7D',
-  '30d': '30D',
-  '90d': '90D',
-  '1y': '1Y',
-  max: 'Max',
-}
-
 interface Props {
   chains: GasFeesChain[]
   upgrades: GasFeesUpgrade[]
@@ -62,14 +50,14 @@ interface Props {
   isPlaceholderData: boolean
   /** The metric of the data on screen, which lags `metric` while it loads */
   shownMetric: GasFeesMetric
-  range: ChartRange
-  setRange: (range: ChartRange) => void
   metric: GasFeesMetric
   setMetric: (metric: GasFeesMetric) => void
   scale: GasFeesScale
   setScale: (scale: GasFeesScale) => void
   highlightedChainId: string | undefined
-  markedUpgrade: GasFeesUpgrade | undefined
+  highlightedUpgradeId: string | undefined
+  /** Controls set beside the title, such as the range */
+  headerRight?: React.ReactNode
 }
 
 type Point = { timestamp: number } & Record<string, number | null>
@@ -81,14 +69,13 @@ export function GasFeesChart({
   isLoading,
   isPlaceholderData,
   shownMetric,
-  range,
-  setRange,
   metric,
   setMetric,
   scale,
   setScale,
   highlightedChainId,
-  markedUpgrade,
+  highlightedUpgradeId,
+  headerRight,
 }: Props) {
   const meta = useMemo<ChartMeta>(
     () =>
@@ -142,10 +129,9 @@ export function GasFeesChart({
     () => getYAxis(points, dataKeys, scale),
     [points, dataKeys, scale],
   )
-  const milestones = useMemo(() => toMilestones(upgrades), [upgrades])
-  const mark = useMemo(
-    () => getMarkedArea(points, markedUpgrade),
-    [points, markedUpgrade],
+  const upgradeLines = useMemo(
+    () => getUpgradeLines(points, upgrades),
+    [points, upgrades],
   )
   const timeRange = useMemo(() => getChartTimeRangeFromData(points), [points])
 
@@ -161,15 +147,7 @@ export function GasFeesChart({
             timeRange={timeRange}
           />
         </div>
-        <ChartRangeControls
-          name="gasFeesRange"
-          value={range}
-          setValue={setRange}
-          options={GAS_FEES_RANGE_OPTIONS.map((value) => ({
-            value,
-            label: RANGE_LABELS[value],
-          }))}
-        />
+        {headerRight}
       </ChartControlsWrapper>
       <div className="flex flex-wrap justify-between gap-2">
         <RadioGroup
@@ -198,7 +176,6 @@ export function GasFeesChart({
         meta={meta}
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
-        milestones={milestones}
         interactiveLegend={{ dataKeys, onItemClick: toggleDataKey }}
         noDataSourceMessage="Select at least one chain"
         size="large"
@@ -209,28 +186,50 @@ export function GasFeesChart({
             showAllSelected={showAllSelected}
             onToggleAll={toggleAllDataKeys}
           />
-          {mark && (
-            <ReferenceArea
-              x1={mark.from}
-              x2={mark.to}
-              fill="var(--brand)"
-              fillOpacity={0.12}
-              ifOverflow="hidden"
-            />
-          )}
-          {mark && (
-            <ReferenceLine
-              x={mark.at}
-              stroke="var(--brand)"
-              strokeDasharray="3 3"
-              label={{
-                value: mark.label,
-                position: 'insideTopLeft',
-                fill: 'var(--brand)',
-                fontSize: 12,
-              }}
-            />
-          )}
+          {upgradeLines.map((line) => {
+            const highlighted = line.id === highlightedUpgradeId
+            return (
+              <ReferenceLine
+                key={line.id}
+                x={line.x}
+                stroke={highlighted ? 'var(--brand)' : 'var(--secondary)'}
+                strokeOpacity={
+                  highlighted ? 1 : line.kind === 'upgrade' ? 0.6 : 0.35
+                }
+                strokeWidth={highlighted ? 2 : 1}
+                strokeDasharray={line.kind === 'upgrade' ? '4 3' : '1 3'}
+                label={
+                  line.kind === 'upgrade' || highlighted
+                    ? (props: { viewBox?: { x?: number; y?: number } }) => (
+                        // A highlighted label takes a row of its own, below
+                        // the others, which fade so it can't be misread
+                        <text
+                          x={(props.viewBox?.x ?? 0) + 4}
+                          y={
+                            (props.viewBox?.y ?? 0) +
+                            11 +
+                            (highlighted ? 2 : line.row) * 13
+                          }
+                          fontSize={11}
+                          fontWeight={highlighted ? 700 : 500}
+                          fill={
+                            highlighted ? 'var(--brand)' : 'var(--secondary)'
+                          }
+                          fillOpacity={
+                            highlightedUpgradeId && !highlighted ? 0.35 : 1
+                          }
+                          stroke="var(--surface-primary)"
+                          strokeWidth={3}
+                          paintOrder="stroke"
+                        >
+                          {line.label}
+                        </text>
+                      )
+                    : undefined
+                }
+              />
+            )
+          })}
           {chains.map((chain) => (
             <Line
               key={chain.id}
@@ -297,43 +296,48 @@ function getYAxis(
   }
 }
 
-function toMilestones(upgrades: GasFeesUpgrade[]): Milestone[] {
-  return upgrades.flatMap((u) =>
-    u.timestamp === null || u.kind !== 'upgrade'
-      ? []
-      : [
-          {
-            type: 'general' as const,
-            title: u.title,
-            url: u.url,
-            date: UnixTime.toDate(u.timestamp).toISOString(),
-            description: u.summary,
-          },
-        ],
-  )
-}
-
-/** The ±30 days the timeline compares, snapped to points on the chart */
-function getMarkedArea(
+/**
+ * One line per upgrade inside the data, snapped to the first point on or
+ * after its date. Close labels alternate between two rows.
+ */
+function getUpgradeLines(
   points: Point[] | undefined,
-  upgrade: GasFeesUpgrade | undefined,
+  upgrades: GasFeesUpgrade[],
 ) {
-  const at = upgrade?.timestamp
-  if (!points?.length || !upgrade || at === null || at === undefined) return
-  const window = 30 * UnixTime.DAY
-  const inside = points.filter(
-    (p) => p.timestamp >= at - window && p.timestamp < at + window,
-  )
-  const first = inside[0]
-  const last = inside[inside.length - 1]
-  const atPoint = points.find((p) => p.timestamp >= at)
-  if (!first || !last || !atPoint) return
-  return {
-    from: first.timestamp,
-    to: last.timestamp,
-    at: atPoint.timestamp,
-    label: upgrade.title,
+  if (!points?.length) return []
+  const first = points[0]?.timestamp ?? 0
+  const last = points[points.length - 1]?.timestamp ?? 0
+  const span = last - first
+  const lines: {
+    id: string
+    kind: GasFeesUpgrade['kind']
+    x: number
+    label: string
+    row: number
+  }[] = []
+  let lastLabelled: { x: number; row: number } | undefined
+  for (const upgrade of [...upgrades].reverse()) {
+    const at = upgrade.timestamp
+    if (at === null || at < first || at > last) continue
+    const point = points.find((p) => p.timestamp >= at)
+    if (!point) continue
+    const crowded =
+      lastLabelled !== undefined &&
+      (point.timestamp - lastLabelled.x) / span < 0.06
+    const row =
+      upgrade.kind === 'upgrade' && crowded ? 1 - (lastLabelled?.row ?? 0) : 0
+    if (upgrade.kind === 'upgrade') {
+      lastLabelled = { x: point.timestamp, row }
+    }
+    lines.push({
+      id: upgrade.id,
+      kind: upgrade.kind,
+      x: point.timestamp,
+      label: upgrade.title,
+      row,
+    })
   }
+  return lines
 }
 
 function GasFeesTooltip({

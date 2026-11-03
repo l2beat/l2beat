@@ -4,6 +4,7 @@ import {
   GasFeesChartParams,
   getGasFeesChart,
 } from '~/server/features/gas-fees/getGasFeesChart'
+import { getGasFeesRecent } from '~/server/features/gas-fees/getGasFeesRecent'
 import {
   GasFeesSummaryParams,
   getGasFeesSummary,
@@ -22,4 +23,5 @@ export const gasFeesRouter = router({
   summary: gasFeesPageProcedure
     .input(GasFeesSummaryParams)
     .query(({ input }) => getGasFeesSummary(input)),
+  recent: gasFeesPageProcedure.query(() => getGasFeesRecent()),
 })

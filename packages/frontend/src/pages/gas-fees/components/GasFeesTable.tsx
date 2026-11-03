@@ -19,67 +19,78 @@ import type {
   GasFeesSummaryRow,
 } from '~/server/features/gas-fees/getGasFeesSummary'
 import { cn } from '~/utils/cn'
-import type { ChartRange } from '~/utils/range/range'
-import { formatFee, formatTimes, getPeriodLabel } from './metrics'
+import { formatFee, formatTimes } from './metrics'
 import type { GasFeesChain } from './types'
 
 interface Props {
   chains: GasFeesChain[]
   summary: GasFeesSummary | undefined
-  range: ChartRange
   isLoading: boolean
+  period: string
+  highlightedChainId: string | undefined
   setHighlightedChainId: (id: string | undefined) => void
 }
 
-const SPLIT_PARTS = [
-  { key: 'base', label: 'Base fee', color: 'bg-chart-stacked-blue' },
-  { key: 'priority', label: 'Priority fee', color: 'bg-chart-stacked-pink' },
-  { key: 'l1Data', label: 'L1 data fee', color: 'bg-chart-stacked-yellow' },
-  { key: 'unsplit', label: 'Before London (no split)', color: 'bg-secondary' },
-] as const
+const COLUMN_COUNT = 12
 
 export function GasFeesTable({
   chains,
   summary,
-  range,
   isLoading,
+  period,
+  highlightedChainId,
   setHighlightedChainId,
 }: Props) {
-  const period = getPeriodLabel(range)
   const notLive = summary?.notLiveIds
     .map((id) => chains.find((c) => c.id === id)?.name)
     .filter(Boolean)
+  const unsplit = summary?.rows.find((r) => r.id === 'ethereum')?.split.unsplit
 
   return (
     <div className="flex flex-col gap-3">
-      <div>
-        <h2 className="font-bold text-xl">Ethereum vs Layer 2s</h2>
-        <p className="text-secondary text-xs">
-          Averages and totals, {period}. Change compares the average fee with
-          the previous period of the same length. Action costs assume fixed gas
-          per action (ETH transfer 21K, ERC-20 transfer 65K, swap 180K) at each
-          day's typical fee.
-        </p>
-      </div>
+      <h2 className="font-bold text-xl">
+        Ethereum vs Layer 2s
+        <span className="font-normal text-secondary"> · {period}</span>
+      </h2>
       <Table
         header={
           <TableHeader>
             <TableHeaderRow>
               <TableHead>Chain</TableHead>
               <TableHead align="right">Avg fee</TableHead>
-              <TableHead align="right">Change</TableHead>
+              <TableHead align="right" tooltip="Avg fee vs the previous period">
+                Change
+              </TableHead>
               <TableHead align="right">Median fee</TableHead>
-              <TableHead align="right">ETH transfer</TableHead>
-              <TableHead align="right">ERC-20 transfer</TableHead>
-              <TableHead align="right">Swap</TableHead>
+              <TableHead align="right" tooltip="21,000 gas">
+                ETH transfer
+              </TableHead>
+              <TableHead align="right" tooltip="65,000 gas">
+                ERC-20
+              </TableHead>
+              <TableHead align="right" tooltip="180,000 gas">
+                Swap
+              </TableHead>
               <TableHead align="right">Total fees</TableHead>
               <TableHead
                 align="right"
-                tooltip="What users paid for: the base fee, the priority tip they added, and on L2s the cost of posting data to Ethereum."
+                tooltip="Set by the protocol from demand and burned on Ethereum. On L2s, the L2's own execution fee."
               >
-                Fee split
+                Base fee
               </TableHead>
-              <TableHead align="right">vs Ethereum</TableHead>
+              <TableHead
+                align="right"
+                tooltip="A tip users add to be included sooner. Bots racing for ordering often pay most of it."
+              >
+                Priority fee
+              </TableHead>
+              <TableHead
+                align="right"
+                tooltip="What L2 users pay for posting their data to Ethereum."
+              >
+                L1 data
+              </TableHead>
+              <TableHead align="right">Cheaper by</TableHead>
             </TableHeaderRow>
           </TableHeader>
         }
@@ -88,7 +99,7 @@ export function GasFeesTable({
           {isLoading || !summary
             ? chains.map((chain) => (
                 <TableRow key={chain.id} highlightId={undefined}>
-                  <TableCell colSpan={10}>
+                  <TableCell colSpan={COLUMN_COUNT}>
                     <Skeleton className="h-6 w-full" />
                   </TableCell>
                 </TableRow>
@@ -101,21 +112,21 @@ export function GasFeesTable({
                     key={row.id}
                     row={row}
                     chain={chain}
+                    highlighted={row.id === highlightedChainId}
                     setHighlightedChainId={setHighlightedChainId}
                   />
                 )
               })}
         </TableBody>
       </Table>
-      <div className="flex flex-wrap gap-x-4 gap-y-1 text-2xs text-secondary">
-        {SPLIT_PARTS.map((part) => (
-          <span key={part.key} className="flex items-center gap-1.5">
-            <span className={cn('size-2 rounded-sm', part.color)} />
-            {part.key === 'base' ? 'Base fee (L2: execution)' : part.label}
+      <div className="flex flex-col gap-1 text-2xs text-secondary">
+        {unsplit !== undefined && unsplit > 0 && (
+          <span>
+            Ethereum's base and priority fees start at London (5 Aug 2021).
           </span>
-        ))}
+        )}
         {notLive && notLive.length > 0 && (
-          <span>Not live yet in this period: {notLive.join(', ')}</span>
+          <span>Not live yet: {notLive.join(', ')}</span>
         )}
       </div>
     </div>
@@ -125,17 +136,24 @@ export function GasFeesTable({
 function Row({
   row,
   chain,
+  highlighted,
   setHighlightedChainId,
 }: {
   row: GasFeesSummaryRow
   chain: GasFeesChain
+  highlighted: boolean
   setHighlightedChainId: (id: string | undefined) => void
 }) {
   const isEthereum = row.id === 'ethereum'
+  const { base, priority, l1Data } = row.split
+  const splitTotal = base + (priority ?? 0) + l1Data
   return (
     <TableRow
       highlightId={undefined}
-      className={cn(isEthereum && 'bg-surface-secondary/50')}
+      className={cn(
+        isEthereum && 'bg-surface-secondary/50',
+        highlighted && 'bg-surface-secondary',
+      )}
       onMouseEnter={() => setHighlightedChainId(row.id)}
       onMouseLeave={() => setHighlightedChainId(undefined)}
     >
@@ -184,71 +202,48 @@ function Row({
       <TableCell align="right" className="tabular-nums">
         {formatFee(row.totalFees)}
       </TableCell>
-      <TableCell align="right">
-        <SplitBar split={row.split} note={chain.noPriorityFeeNote} />
-      </TableCell>
+      <SplitCell value={base} total={splitTotal} />
+      {priority === null ? (
+        <TableCell align="right">
+          <Tooltip>
+            <TooltipTrigger className="text-secondary underline decoration-dotted underline-offset-2">
+              n/a
+            </TooltipTrigger>
+            <TooltipContent className="w-64">
+              {chain.noPriorityFeeNote}
+            </TooltipContent>
+          </Tooltip>
+        </TableCell>
+      ) : (
+        <SplitCell value={priority} total={splitTotal} />
+      )}
+      {isEthereum ? (
+        <TableCell align="right" className="text-secondary">
+          {EM_DASH}
+        </TableCell>
+      ) : (
+        <SplitCell value={l1Data} total={splitTotal} />
+      )}
       <TableCell align="right" className="font-medium tabular-nums">
         {row.timesCheaper === null ? (
           <span className="font-normal text-secondary">baseline</span>
         ) : (
-          `${formatTimes(row.timesCheaper)} cheaper`
+          formatTimes(row.timesCheaper)
         )}
       </TableCell>
     </TableRow>
   )
 }
 
-function SplitBar({
-  split,
-  note,
-}: {
-  split: GasFeesSummaryRow['split']
-  note: string | undefined
-}) {
-  const total =
-    split.base + (split.priority ?? 0) + split.l1Data + split.unsplit
-  const parts = SPLIT_PARTS.map((part) => ({
-    ...part,
-    value: split[part.key],
-  }))
+function SplitCell({ value, total }: { value: number; total: number }) {
   return (
-    <Tooltip>
-      <TooltipTrigger className="ml-auto flex h-2 w-28 gap-0.5 overflow-hidden rounded-sm">
-        {parts.map((part) =>
-          part.value ? (
-            <span
-              key={part.key}
-              className={part.color}
-              style={{ width: `${(part.value / total) * 100}%` }}
-            />
-          ) : null,
-        )}
-      </TooltipTrigger>
-      <TooltipContent className="w-64">
-        <div className="flex flex-col gap-1">
-          {parts
-            .filter((part) => part.value !== 0)
-            .map((part) => (
-              <div
-                key={part.key}
-                className="flex items-center justify-between gap-2 text-xs"
-              >
-                <span className="flex items-center gap-1.5">
-                  <span className={cn('size-2 rounded-sm', part.color)} />
-                  {part.label}
-                </span>
-                <span className="tabular-nums">
-                  {part.value === null
-                    ? 'n/a'
-                    : `${((part.value / total) * 100).toFixed(1)}%`}
-                </span>
-              </div>
-            ))}
-          {note && split.priority === null && (
-            <p className="mt-1 text-2xs text-secondary">{note}</p>
-          )}
-        </div>
-      </TooltipContent>
-    </Tooltip>
+    <TableCell align="right" className="tabular-nums">
+      <span className="flex flex-col items-end leading-tight">
+        <span>{formatFee(value)}</span>
+        <span className="text-2xs text-secondary">
+          {total ? Math.round((value / total) * 100) : 0}%
+        </span>
+      </span>
+    </TableCell>
   )
 }

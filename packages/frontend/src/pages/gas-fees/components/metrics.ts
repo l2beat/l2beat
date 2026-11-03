@@ -35,11 +35,6 @@ export const GAS_FEES_METRIC_LABELS: Record<
     title: 'Cost of a token swap',
     description: '180,000 gas at the typical fee',
   },
-  nftMint: {
-    short: 'NFT mint',
-    title: 'Cost of an NFT mint',
-    description: '120,000 gas at the typical fee',
-  },
 }
 
 /** Two significant digits below a dollar: fees span $100 to a hundredth of a cent */

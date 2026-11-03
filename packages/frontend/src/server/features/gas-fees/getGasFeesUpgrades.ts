@@ -16,9 +16,11 @@ export interface GasFeesUpgrade {
   url: string
   /** Day it activated, null when not scheduled yet */
   timestamp: number | null
-  /** Ethereum, 30 days before vs 30 days after */
-  ethereum: BeforeAfter | null
-  /** The median L2, only where the upgrade was about L2 costs */
+  /**
+   * The median L2, 30 days before vs after, only for upgrades made to cut L2
+   * costs. Ethereum's own fees aren't compared: demand moves them as much as
+   * an upgrade does, and a gas limit raise adds room rather than cutting fees.
+   */
   l2Median: BeforeAfter | null
 }
 
@@ -26,7 +28,7 @@ type BeforeAfter = Record<GasFeesMetric, { before: number; after: number }>
 
 const WINDOW_DAYS = 30
 
-const UPGRADES: (Omit<GasFeesUpgrade, 'timestamp' | 'ethereum' | 'l2Median'> & {
+const UPGRADES: (Omit<GasFeesUpgrade, 'timestamp' | 'l2Median'> & {
   date: string | null
   compareL2s?: boolean
 })[] = [
@@ -127,7 +129,6 @@ const UPGRADES: (Omit<GasFeesUpgrade, 'timestamp' | 'ethereum' | 'l2Median'> & {
 export function getGasFeesUpgrades(): GasFeesUpgrade[] {
   // Fake data until fees are tracked: see getMockGasFees
   const data = getMockGasFees()
-  const ethereum = data.get('ethereum') ?? []
   const l2s = GAS_FEES_CHAINS.filter((c) => c.id !== 'ethereum').map(
     (c) => data.get(c.id) ?? [],
   )
@@ -138,7 +139,6 @@ export function getGasFeesUpgrades(): GasFeesUpgrade[] {
     return {
       ...upgrade,
       timestamp,
-      ethereum: timestamp === null ? null : beforeAfter([ethereum], timestamp),
       l2Median:
         timestamp !== null && compareL2s ? beforeAfter(l2s, timestamp) : null,
     }

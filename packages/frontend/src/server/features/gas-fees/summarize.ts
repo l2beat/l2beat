@@ -12,12 +12,13 @@ export interface GasFeesTotals {
   l1DataFees: number
   /** Fees from days without a split (Ethereum before London) */
   unsplitFees: number
+  /** Transactions on days with a split, for base and priority fees per tx */
+  splitTxCount: number
   avgFee: number
   medianFee: number
   transfer: number
   erc20: number
   swap: number
-  nftMint: number
 }
 
 export function inRange(records: GasFeesRecord[], [from, to]: ChartRange) {
@@ -40,11 +41,11 @@ export function summarize(records: GasFeesRecord[]): GasFeesTotals | undefined {
   let priorityFees: number | null = null
   let l1DataFees = 0
   let unsplitFees = 0
+  let splitTxCount = 0
   let medianWeighted = 0
   let transfer = 0
   let erc20 = 0
   let swap = 0
-  let nftMint = 0
   for (const r of records) {
     txCount += r.txCount
     totalFees += r.totalFees
@@ -53,6 +54,7 @@ export function summarize(records: GasFeesRecord[]): GasFeesTotals | undefined {
       unsplitFees += r.totalFees
     } else {
       baseFees = (baseFees ?? 0) + r.baseFees
+      splitTxCount += r.txCount
       if (r.priorityFees !== null) {
         priorityFees = (priorityFees ?? 0) + r.priorityFees
       }
@@ -61,7 +63,6 @@ export function summarize(records: GasFeesRecord[]): GasFeesTotals | undefined {
     transfer += r.transfer
     erc20 += r.erc20
     swap += r.swap
-    nftMint += r.nftMint
   }
   const n = records.length
   return {
@@ -72,12 +73,12 @@ export function summarize(records: GasFeesRecord[]): GasFeesTotals | undefined {
     priorityFees,
     l1DataFees,
     unsplitFees,
+    splitTxCount,
     avgFee: totalFees / txCount,
     medianFee: medianWeighted / txCount,
     transfer: transfer / n,
     erc20: erc20 / n,
     swap: swap / n,
-    nftMint: nftMint / n,
   }
 }
 

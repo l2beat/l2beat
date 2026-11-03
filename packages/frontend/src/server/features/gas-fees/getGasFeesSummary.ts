@@ -38,9 +38,12 @@ export interface GasFeesSummary {
   notLiveIds: GasFeesChainId[]
   stats: {
     ethereumAvgFee: GasFeesStat
-    typicalL2AvgFee: GasFeesStat
+    /** Per transaction, over days with a split (since London) */
+    ethereumBaseFee: GasFeesStat
+    ethereumPriorityFee: GasFeesStat
+    /** True when the range starts before London, so the split covers part of it */
+    splitIsPartial: boolean
     l2sCheaperBy: GasFeesStat
-    totalFees: GasFeesStat & { l2Share: number }
   }
 }
 
@@ -129,24 +132,16 @@ function getStats(
 ): GasFeesSummary['stats'] {
   const current = getPeriodStats(data, range)
   const previous = previousRange && getPeriodStats(data, previousRange)
+  const stat = (key: Exclude<keyof typeof current, 'splitIsPartial'>) => ({
+    value: current[key],
+    previous: previous?.[key],
+  })
   return {
-    ethereumAvgFee: {
-      value: current.ethereumAvgFee,
-      previous: previous?.ethereumAvgFee,
-    },
-    typicalL2AvgFee: {
-      value: current.typicalL2AvgFee,
-      previous: previous?.typicalL2AvgFee,
-    },
-    l2sCheaperBy: {
-      value: current.l2sCheaperBy,
-      previous: previous?.l2sCheaperBy,
-    },
-    totalFees: {
-      value: current.totalFees,
-      previous: previous?.totalFees,
-      l2Share: current.totalFees ? current.l2Fees / current.totalFees : 0,
-    },
+    ethereumAvgFee: stat('ethereumAvgFee'),
+    ethereumBaseFee: stat('ethereumBaseFee'),
+    ethereumPriorityFee: stat('ethereumPriorityFee'),
+    splitIsPartial: current.splitIsPartial,
+    l2sCheaperBy: stat('l2sCheaperBy'),
   }
 }
 
@@ -156,24 +151,24 @@ function getPeriodStats(
 ) {
   const ethereumRecords = data.get('ethereum') ?? []
   const ethereum = summarize(inRange(ethereumRecords, range))
-  const l2AvgFees: number[] = []
   const ratios: number[] = []
-  let l2Fees = 0
   for (const chain of GAS_FEES_CHAINS) {
     if (chain.id === 'ethereum') continue
     const records = data.get(chain.id) ?? []
     const totals = summarize(inRange(records, range))
     if (!totals) continue
-    l2AvgFees.push(totals.avgFee)
-    l2Fees += totals.totalFees
     const ratio = timesCheaper(ethereumRecords, records, range, totals)
     if (ratio !== null) ratios.push(ratio)
   }
+  const perSplitTx = (fees: number | null | undefined) =>
+    ethereum?.splitTxCount && fees !== null && fees !== undefined
+      ? fees / ethereum.splitTxCount
+      : undefined
   return {
     ethereumAvgFee: ethereum?.avgFee,
-    typicalL2AvgFee: median(l2AvgFees),
+    ethereumBaseFee: perSplitTx(ethereum?.baseFees),
+    ethereumPriorityFee: perSplitTx(ethereum?.priorityFees),
+    splitIsPartial: (ethereum?.unsplitFees ?? 0) > 0,
     l2sCheaperBy: median(ratios),
-    totalFees: (ethereum?.totalFees ?? 0) + l2Fees,
-    l2Fees,
   }
 }

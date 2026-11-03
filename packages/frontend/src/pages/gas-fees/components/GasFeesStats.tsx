@@ -12,31 +12,40 @@ interface Props {
 
 export function GasFeesStats({ stats, range, isLoading }: Props) {
   const period = getPeriodLabel(range)
+  // Before London there was no split, so over Max these cover less than the avg
+  const sinceLondon = stats?.splitIsPartial ? ' since London' : ''
   return (
     <div className="grid grid-cols-2 gap-y-4 xl:grid-cols-4 xl:divide-x xl:divide-divider">
       <Stat
-        label="Ethereum avg fee"
+        label="Ethereum avg fee per tx"
         value={stats?.ethereumAvgFee.value}
         format={formatFee}
         isLoading={isLoading}
+        footer={<FeeChange stat={stats?.ethereumAvgFee} period={period} />}
+      />
+      <Stat
+        label="Base fee per tx"
+        value={stats?.ethereumBaseFee.value}
+        format={formatFee}
+        isLoading={isLoading}
         footer={
-          <FeeChange
-            value={stats?.ethereumAvgFee.value}
-            previous={stats?.ethereumAvgFee.previous}
-            period={period}
+          <Share
+            part={stats?.ethereumBaseFee.value}
+            stats={stats}
+            note={`burned${sinceLondon}`}
           />
         }
       />
       <Stat
-        label="Typical L2 avg fee"
-        value={stats?.typicalL2AvgFee.value}
+        label="Priority fee per tx"
+        value={stats?.ethereumPriorityFee.value}
         format={formatFee}
         isLoading={isLoading}
         footer={
-          <FeeChange
-            value={stats?.typicalL2AvgFee.value}
-            previous={stats?.typicalL2AvgFee.previous}
-            period={period}
+          <Share
+            part={stats?.ethereumPriorityFee.value}
+            stats={stats}
+            note={`tips${sinceLondon}`}
           />
         }
       />
@@ -49,24 +58,6 @@ export function GasFeesStats({ stats, range, isLoading }: Props) {
           stats?.l2sCheaperBy.previous !== undefined
             ? `${formatTimes(stats.l2sCheaperBy.previous)} in prev. period`
             : `Median L2, ${period}`
-        }
-      />
-      <Stat
-        label="Fees paid, all chains"
-        value={stats?.totalFees.value}
-        format={formatFee}
-        isLoading={isLoading}
-        footer={
-          stats && (
-            <>
-              <FeeChange
-                value={stats.totalFees.value}
-                previous={stats.totalFees.previous}
-                period={period}
-              />
-              {` · L2s ${Math.round(stats.totalFees.l2Share * 100)}%`}
-            </>
-          )
         }
       />
     </div>
@@ -103,18 +94,43 @@ function Stat({
   )
 }
 
+/** The part's share of base + priority, which the two stats split */
+function Share({
+  part,
+  stats,
+  note,
+}: {
+  part: number | undefined
+  stats: GasFeesSummary['stats'] | undefined
+  note: string
+}) {
+  const base = stats?.ethereumBaseFee.value
+  const priority = stats?.ethereumPriorityFee.value
+  if (part === undefined || base === undefined || priority === undefined) {
+    return <>{note}</>
+  }
+  return (
+    <>
+      <span className="font-medium text-primary tabular-nums">
+        {Math.round((part / (base + priority)) * 100)}%
+      </span>{' '}
+      {note}
+    </>
+  )
+}
+
 /** Lower fees read as good news: green going down, red going up */
 function FeeChange({
-  value,
-  previous,
+  stat,
   period,
 }: {
-  value: number | undefined
-  previous: number | undefined
+  stat: { value: number | undefined; previous: number | undefined } | undefined
   period: string
 }) {
-  if (value === undefined || previous === undefined) return <>{period}</>
-  const change = value / previous - 1
+  if (stat?.value === undefined || stat.previous === undefined) {
+    return <>{period}</>
+  }
+  const change = stat.value / stat.previous - 1
   return (
     <>
       <span
@@ -125,7 +141,7 @@ function FeeChange({
       >
         {change < 0 ? '▼' : '▲'} {Math.abs(change * 100).toFixed(1)}%
       </span>{' '}
-      vs prev.
+      vs prev. period
     </>
   )
 }

@@ -10,8 +10,8 @@ interface Props {
   metric: GasFeesMetric
   /** The chart's range: upgrades outside it are dimmed */
   range: ChartRange
-  markedUpgradeId: string | undefined
-  setMarkedUpgradeId: (id: string | undefined) => void
+  highlightedUpgradeId: string | undefined
+  setHighlightedUpgradeId: (id: string | undefined) => void
   showWholeHistory: () => void
 }
 
@@ -19,8 +19,8 @@ export function GasFeesUpgrades({
   upgrades,
   metric,
   range,
-  markedUpgradeId,
-  setMarkedUpgradeId,
+  highlightedUpgradeId,
+  setHighlightedUpgradeId,
   showWholeHistory,
 }: Props) {
   const [from, to] = range
@@ -30,18 +30,11 @@ export function GasFeesUpgrades({
     u.timestamp < to
 
   return (
-    // Out of flow on desktop, so the timeline takes the left column's height
+    // Out of flow on desktop, so the timeline takes the chart's height
     // instead of setting it
-    <div className="flex h-full flex-col lg:absolute lg:inset-0 lg:px-6 lg:py-5">
-      <h2 className="font-bold text-xl">What changed</h2>
-      <p className="text-secondary text-xs">
-        Ethereum upgrades and gas limit raises, newest first
-      </p>
-      <div className="mt-2 flex justify-between border-divider border-b pb-2 font-medium text-2xs text-secondary">
-        <span>{GAS_FEES_METRIC_LABELS[metric].short} on Ethereum</span>
-        <span>30 days before → after</span>
-      </div>
-      <ol className="-mx-2 min-h-0 flex-1 overflow-y-auto px-2 py-2">
+    <div className="flex h-full flex-col lg:absolute lg:inset-y-0 lg:right-0 lg:left-6">
+      <h3 className="font-bold text-lg">Ethereum upgrades</h3>
+      <ol className="-mx-2 mt-2 min-h-0 flex-1 overflow-y-auto border-divider border-t px-2 py-2">
         {upgrades.map((upgrade) => {
           const inRange = isInRange(upgrade)
           return (
@@ -51,15 +44,15 @@ export function GasFeesUpgrades({
                 className={cn(
                   'relative w-full rounded-lg py-2 pr-2 pl-6 text-left transition-colors',
                   'hover:bg-surface-secondary',
-                  markedUpgradeId === upgrade.id && 'bg-surface-secondary',
+                  highlightedUpgradeId === upgrade.id && 'bg-surface-secondary',
                   upgrade.kind === 'next' &&
                     'mb-2 border border-divider border-dashed',
                   upgrade.kind !== 'next' && !inRange && 'opacity-50',
                 )}
-                onMouseEnter={() => setMarkedUpgradeId(upgrade.id)}
-                onMouseLeave={() => setMarkedUpgradeId(undefined)}
-                onFocus={() => setMarkedUpgradeId(upgrade.id)}
-                onBlur={() => setMarkedUpgradeId(undefined)}
+                onMouseEnter={() => setHighlightedUpgradeId(upgrade.id)}
+                onMouseLeave={() => setHighlightedUpgradeId(undefined)}
+                onFocus={() => setHighlightedUpgradeId(upgrade.id)}
+                onBlur={() => setHighlightedUpgradeId(undefined)}
                 onClick={() => {
                   if (upgrade.timestamp !== null && !inRange) showWholeHistory()
                 }}
@@ -92,24 +85,17 @@ export function GasFeesUpgrades({
                     No date set yet
                   </p>
                 )}
-                {upgrade.ethereum && (
-                  <Change
-                    label={upgrade.l2Median ? 'Ethereum' : undefined}
-                    {...upgrade.ethereum[metric]}
-                  />
-                )}
                 {upgrade.l2Median && (
-                  <Change label="L2 median" {...upgrade.l2Median[metric]} />
+                  <Change
+                    label={`L2 median ${GAS_FEES_METRIC_LABELS[metric].short.toLowerCase()}, 30 days before → after`}
+                    {...upgrade.l2Median[metric]}
+                  />
                 )}
               </button>
             </li>
           )
         })}
       </ol>
-      <p className="border-divider border-t pt-2 text-2xs text-secondary">
-        Fees in USD also move with demand and the ETH price, so not every change
-        is the upgrade's doing. Hover an item to see its window on the chart.
-      </p>
     </div>
   )
 }
@@ -133,15 +119,15 @@ function Change({
   before,
   after,
 }: {
-  label?: string
+  label: string
   before: number
   after: number
 }) {
   const change = after / before - 1
   return (
-    <div className="mt-1 flex items-baseline justify-between gap-2 text-xs tabular-nums">
-      <span className="text-secondary">{label}</span>
-      <span className="flex items-baseline gap-2">
+    <div className="mt-1 flex flex-col gap-0.5 text-xs tabular-nums">
+      <span className="text-2xs text-secondary">{label}</span>
+      <span className="flex items-baseline justify-between gap-2">
         <span className="text-secondary">
           {formatFee(before)} →{' '}
           <span className="text-primary">{formatFee(after)}</span>
