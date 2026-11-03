@@ -2,6 +2,7 @@ import { v as z } from '@l2beat/validate'
 import type { Request, Response } from 'express'
 import { MCP_PATH } from '../mcp'
 import type { AgentContext } from '../router'
+import { trackStream } from '../session'
 import { ACP_PROTOCOL_VERSION, AcpConnection } from './acp'
 import {
   appendToLog,
@@ -75,6 +76,7 @@ export class ChatSession {
     })
     res.write(frame({ type: 'replay', events: this.log }))
     this.tabs.add(res)
+    trackStream(req, res)
     const keepalive = setInterval(
       () => res.write(': keepalive\n\n'),
       KEEPALIVE_INTERVAL_MS,
