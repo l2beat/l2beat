@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xc17f52008174b02ac9a765aec98a751b598db6c4
+Generated with discovered.json: 0xf741482a4fb51bc962d2901cdcd7166b2f1dc039
 
 # Diff at Tue, 03 Nov 2026 15:44:54 GMT:
 
@@ -41,6 +41,15 @@ discovery. Values are for block 1792059502 (main branch discovery), not current.
 +        {"severity":"HIGH","description":"Raw Priority Mode storage: last byte canBeActivated, byte before it activated, then the PermissionlessValidator address."}
       fieldMeta.priorityModeTransactionFilterer:
 +        {"severity":"HIGH","description":"TransactionFilterer that replaces the chain's own filterer once Priority Mode is allowed. Set by the ChainTypeManager owner, zero means no filtering."}
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (eth:0x0A0F8912162Ff83A036883dbaDA42efF647a3065) [shared-zk-stack/L1NativeTokenVault] {
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+      sourceHashes.1:
+-        "0xeac1b0724c69c33183ce8e24a8f3ac28eb5adb9925dff647396c8d165f0ecae9"
++        "0xcacbab74b3abde440d2b92fb0b9499baa58dcaf51bc91222f687508934da689b"
     }
 ```
 
