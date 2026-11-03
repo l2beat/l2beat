@@ -931,8 +931,6 @@ const DIMMED_RANGE = 2
 const OPAQUE_RANGE = 3
 type NodeRange = typeof GRAYED_RANGE | typeof DIMMED_RANGE | typeof OPAQUE_RANGE
 type DrawRange = typeof CONTAINER_RANGE | NodeRange
-const GRAYED_ALPHA = 0.2
-const DIMMED_ALPHA = 0.3
 
 // Instance index where each range ends, in draw order.
 type PassLayout = readonly [number, number, number, number]
@@ -1268,8 +1266,8 @@ class WebGLRenderer {
     this.drawConnectionPass(transform, res)
     gl.enable(gl.DEPTH_TEST)
     this.drawNodeRange(CONTAINER_RANGE, transform, res)
-    this.drawFadedRange(GRAYED_RANGE, GRAYED_ALPHA, transform, res)
-    this.drawFadedRange(DIMMED_RANGE, DIMMED_ALPHA, transform, res)
+    this.drawFadedRange(GRAYED_RANGE, data.palette.grayedAlpha, transform, res)
+    this.drawFadedRange(DIMMED_RANGE, data.palette.dimmedAlpha, transform, res)
     this.drawNodeRange(OPAQUE_RANGE, transform, res)
     gl.disable(gl.DEPTH_TEST)
     this.drawLinePass(this.buffers.overlap, this.counts.overlap, transform, res)

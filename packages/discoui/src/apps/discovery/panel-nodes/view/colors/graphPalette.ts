@@ -14,6 +14,8 @@ export interface GraphPalette {
   connection: RGBA
   connectionDimmed: RGBA
   connectionGrayed: RGBA
+  grayedAlpha: number
+  dimmedAlpha: number
 }
 
 // WebGL cannot read the CSS variables in index.css, so these repeat them.
@@ -29,20 +31,24 @@ export const DARK_GRAPH_PALETTE: GraphPalette = {
   connection: rgbaFromHex('#a98763', 0.6),
   connectionDimmed: rgbaFromHex('#a98763', 0.18),
   connectionGrayed: rgbaFromHex('#f0d8bd', 0.1),
+  grayedAlpha: 0.2,
+  dimmedAlpha: 0.3,
 }
 
 export const LIGHT_GRAPH_PALETTE: GraphPalette = {
   nodeBody: rgbaFromHex('#ffffff', 1),
-  text: rgbaFromHex('#3b2d23', 1),
-  footerText: rgbaFromHex('#3b2d23', 0.5),
-  dot: rgbaFromHex('#8a6b4c', 1),
-  containerBar: rgbaFromHex('#d5c6b4', 1),
-  gridDot: rgbaFromHex('#d5c6b4', 0.8),
-  accent: rgbaFromHex('#6d8c00', 1),
+  text: rgbaFromHex('#412e18', 1),
+  footerText: rgbaFromHex('#412e18', 0.5),
+  dot: rgbaFromHex('#856441', 1),
+  containerBar: rgbaFromHex('#baafa2', 1),
+  gridDot: rgbaFromHex('#ded6cc', 0.6),
+  accent: rgbaFromHex('#5f6f00', 1),
   accentFill: rgbaFromHex('#bad80a', 1),
-  connection: rgbaFromHex('#8a6b4c', 0.6),
-  connectionDimmed: rgbaFromHex('#8a6b4c', 0.18),
-  connectionGrayed: rgbaFromHex('#3b2d23', 0.1),
+  connection: rgbaFromHex('#856441', 0.6),
+  connectionDimmed: rgbaFromHex('#856441', 0.18),
+  connectionGrayed: rgbaFromHex('#412e18', 0.1),
+  grayedAlpha: 0.28,
+  dimmedAlpha: 0.4,
 }
 
 // Node headers keep their picked color in every theme, so what is drawn on
