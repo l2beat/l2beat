@@ -13,9 +13,9 @@ import type {
   StructuredDataPage,
 } from './structured-data/StructuredData'
 
-export const SITE_TITLE = 'ETHBEAT - The state of the layer two ecosystem'
+export const SITE_TITLE = 'ETHBEAT - The heartbeat of the Ethereum ecosystem'
 const SITE_DESCRIPTION =
-  'ETHBEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.'
+  'ETHBEAT is an independent research and analytics site for Ethereum. We check what Layer 2s, interop, privacy and ZK systems really inherit from it.'
 
 type OpenGraph = {
   type: 'article' | 'website'
