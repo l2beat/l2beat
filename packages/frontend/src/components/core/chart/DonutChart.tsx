@@ -1,5 +1,4 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import { arc, type PieArcDatum, pie } from 'd3-shape'
 import { type ReactNode, useMemo } from 'react'
 import { cn } from '~/utils/cn'
 import { ChartContext, type ChartMeta } from './ChartContext'
@@ -47,37 +46,22 @@ export function DonutChart({
   /** US dollars by default. */
   formatValue?: (value: number) => string
 }) {
-  const { arcs, path } = useMemo(() => {
-    const total = data.reduce((acc, entry) => acc + entry.value, 0)
-    // d3 measures clockwise from 12 o'clock; starting at 3 o'clock and going
-    // counter-clockwise is d3's π/2..π/2-2π. Empty slices are left out, so
-    // the arrow keys cannot land on one the pointer could never hover.
-    const arcs =
-      total > 0
-        ? pie<DonutChartEntry>()
-            .value((entry) => entry.value)
-            .sort(null)
-            .startAngle(Math.PI / 2)
-            .endAngle(Math.PI / 2 - 2 * Math.PI)(data)
-            .filter((slice) => slice.value > 0)
-        : []
-    const path = arc<PieArcDatum<DonutChartEntry>>()
-      .innerRadius(innerRadius)
-      .outerRadius(outerRadius)
-    return { arcs, path }
-  }, [data, innerRadius, outerRadius])
+  const slices = useMemo(() => layoutSlices(data), [data])
 
   /** A slice's middle, in the chart's pixels. */
   function anchorOf(index: number) {
     const root = tooltip.rootRef.current
-    const slice = arcs[index]
+    const slice = slices[index]
     if (!root || !slice) return { x: 0, y: 0 }
-    const [dx, dy] = path.centroid(slice)
+    const [dx, dy] = polar(
+      (innerRadius + outerRadius) / 2,
+      (slice.start + slice.end) / 2,
+    )
     return { x: root.offsetWidth / 2 + dx, y: root.offsetHeight / 2 + dy }
   }
 
   const tooltip = useChartTooltip({
-    count: arcs.length,
+    count: slices.length,
     anchorOf,
     place: (anchor, size) =>
       tooltipPosition ??
@@ -87,7 +71,7 @@ export function DonutChart({
       ),
     wrap: true,
   })
-  const active = tooltip.active ? arcs[tooltip.active.index] : undefined
+  const active = tooltip.active ? slices[tooltip.active.index] : undefined
 
   return (
     <ChartContext.Provider value={{ meta }}>
@@ -105,11 +89,11 @@ export function DonutChart({
             overflow="visible"
             onPointerLeave={tooltip.interactiveProps.onPointerLeave}
           >
-            {arcs.map((d, i) => (
+            {slices.map((slice, i) => (
               <path
-                key={d.data.name}
-                d={path(d) ?? undefined}
-                fill={meta[d.data.name]?.color}
+                key={slice.entry.name}
+                d={slicePath(slice, innerRadius, outerRadius)}
+                fill={meta[slice.entry.name]?.color}
                 onPointerEnter={() => tooltip.select(i, anchorOf(i))}
                 onPointerDown={() => tooltip.select(i, anchorOf(i))}
               />
@@ -120,7 +104,7 @@ export function DonutChart({
         <div {...tooltip.tooltipProps}>
           {active && (
             <DonutTooltip
-              entry={active.data}
+              entry={active.entry}
               format={formatValue}
               className={tooltipClassName}
             />
@@ -198,6 +182,62 @@ function DonutCenter({ lines, value, compact }: DonutCenterLabel) {
       ))}
     </text>
   )
+}
+
+// Drawn by hand: d3-shape's pie and arc would load it on the donut-only
+// pages too, as a chunk every time-series page then loads on its own
+// (e2e/nav-perf).
+interface Slice {
+  entry: DonutChartEntry
+  /** Radians clockwise from 3 o'clock, as on screen. */
+  start: number
+  end: number
+}
+
+/**
+ * From 3 o'clock, counter-clockwise, in data order. Empty slices are left
+ * out, so the arrow keys cannot land on one the pointer could never hover.
+ */
+function layoutSlices(data: DonutChartEntry[]): Slice[] {
+  const total = data.reduce((sum, entry) => sum + Math.max(entry.value, 0), 0)
+  if (total === 0) return []
+  const slices: Slice[] = []
+  let angle = 0
+  for (const entry of data) {
+    if (entry.value <= 0) continue
+    const end = angle - (2 * Math.PI * entry.value) / total
+    slices.push({ entry, start: angle, end })
+    angle = end
+  }
+  return slices
+}
+
+function slicePath(slice: Slice, inner: number, outer: number) {
+  const span = slice.start - slice.end
+  if (span > 2 * Math.PI - 1e-6) {
+    // An arc cannot end where it starts, so a whole ring is two halves, with
+    // the hole drawn the other way round to cut it out.
+    const ring = (r: number, sweep: number) =>
+      `M${r},0A${r},${r},0,1,${sweep},${-r},0A${r},${r},0,1,${sweep},${r},0`
+    return `${ring(outer, 0)}${inner > 0 ? ring(inner, 1) : ''}Z`
+  }
+  const large = span > Math.PI ? 1 : 0
+  // Thousandths of a pixel keep the path short.
+  const at = (radius: number, angle: number) =>
+    polar(radius, angle)
+      .map((v) => Math.round(v * 1000) / 1000)
+      .join(',')
+  return [
+    `M${at(outer, slice.start)}`,
+    `A${outer},${outer},0,${large},0,${at(outer, slice.end)}`,
+    `L${at(inner, slice.end)}`,
+    `A${inner},${inner},0,${large},1,${at(inner, slice.start)}`,
+    'Z',
+  ].join('')
+}
+
+function polar(radius: number, angle: number): [number, number] {
+  return [radius * Math.cos(angle), radius * Math.sin(angle)]
 }
 
 function formatUsd(value: number) {
