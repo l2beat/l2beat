@@ -60,9 +60,9 @@ const CONTAINER_OUTLINE_WIDTH = 2
 const CONTAINER_Z = 1
 const OVERLAP_BORDER_WIDTH = 2
 const NODE_BORDER_WIDTH = 1
-const ARROW_HEAD_CELL = 18
+const ARROW_HEAD_CELL = 16
 // The arrow glyph's tip sits this far into its cell, see IconArrowHead.
-const ARROW_HEAD_TIP = 12 / 16
+const ARROW_HEAD_TIP = 14 / 16
 const HEADER_BADGE_STEP = 11
 const HIGHLIGHTED_ROW_INSET = 3
 const HIGHLIGHTED_ROW_RADIUS = 4
@@ -94,7 +94,11 @@ const FOOTER_FONT: FontSpec = {
 
 const CONNECTION_SEGMENTS = 32
 const GRID_DOT_RADIUS_PER_CELL = 0.05
-const CONNECTION_CONTROL_OFFSET = 50
+// Control points sit half the horizontal gap out, so a long edge leaves and
+// reaches its nodes level instead of bending sharply at the arrowhead.
+const CONNECTION_CONTROL_OFFSET_MIN = 50
+const CONNECTION_CONTROL_OFFSET_MAX = 200
+const CONNECTION_CONTROL_GAP_SHARE = 0.5
 const DASH_ON_WORLD = 5
 const DASH_OFF_WORLD = 5
 const PERIMETER_SAMPLES_PER_CORNER = 8
@@ -2354,8 +2358,9 @@ function writeConnection(
   out[b + 1] = from.y
   out[b + 2] = to.x
   out[b + 3] = to.y
-  out[b + 4] = from.x + controlOffset(from.direction)
-  out[b + 5] = to.x + controlOffset(to.direction)
+  const offset = controlOffset(Math.abs(to.x - from.x))
+  out[b + 4] = from.x + (from.direction === 'left' ? -offset : offset)
+  out[b + 5] = to.x + (to.direction === 'left' ? -offset : offset)
   out[b + 6] = color[0]
   out[b + 7] = color[1]
   out[b + 8] = color[2]
@@ -2365,10 +2370,11 @@ function writeConnection(
   return i + 1
 }
 
-function controlOffset(direction: 'left' | 'right'): number {
-  return direction === 'left'
-    ? -CONNECTION_CONTROL_OFFSET
-    : CONNECTION_CONTROL_OFFSET
+function controlOffset(gap: number): number {
+  return Math.min(
+    CONNECTION_CONTROL_OFFSET_MAX,
+    Math.max(CONNECTION_CONTROL_OFFSET_MIN, gap * CONNECTION_CONTROL_GAP_SHARE),
+  )
 }
 
 // (t, side) pairs along the curve, two per sample, for a triangle strip.
