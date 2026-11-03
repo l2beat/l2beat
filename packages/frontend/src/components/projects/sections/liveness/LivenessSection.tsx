@@ -137,7 +137,7 @@ function OngoingAnomalies({
         <div className="rounded-lg bg-surface-secondary px-5 py-4">
           <div className="mb-3 flex items-center gap-2">
             <RoundedWarningIcon className="size-4" sentiment="warning" />
-            <SubsectionHeading className="font-medium text-base text-warning uppercase">
+            <SubsectionHeading className="font-medium text-base text-warning-text uppercase">
               Potential ongoing{' '}
               {pluralize(unapprovedAnomalies.length, 'anomaly', 'anomalies')}
             </SubsectionHeading>
