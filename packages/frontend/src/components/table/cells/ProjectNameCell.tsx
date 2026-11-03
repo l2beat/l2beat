@@ -160,7 +160,7 @@ export function ProjectNameMobileStatusIcons({
           (value) => value !== undefined,
         ) && (
           <MobileProjectIconTooltip
-            label="Unverified contracts"
+            label="Verification warning"
             icon={<UnverifiedIcon className="size-4 fill-red-300" />}
             contentClassName="flex flex-col gap-2"
           >
