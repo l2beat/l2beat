@@ -9,7 +9,6 @@ export function L2Icon({ className, ...props }: SvgIconProps) {
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      aria-label="Layer 2s icon"
       className={cn('stroke-primary', className)}
       {...props}
     >
