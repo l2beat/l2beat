@@ -25,7 +25,12 @@ export function InteropTopProtocols({
   }
   return (
     <div className="home-wide:col-start-2 home-wide:row-start-2 flex interop-corners:hidden home-wide:min-h-0 interop-stacked:min-h-0 min-w-0 interop-stacked:flex-1 interop-stacked:basis-0 flex-col gap-2 home-wide:overflow-hidden interop-stacked:overflow-hidden">
-      <h3 className={HOME_TEXT.sectionTitle}>Top protocols</h3>
+      {/* A header row like the ranked tables': the title over the names, the
+          value's header over its column. */}
+      <div className="flex items-baseline justify-between gap-4">
+        <h3 className={HOME_TEXT.sectionTitle}>Top protocols</h3>
+        <span className={HOME_TEXT.meta}>Volume</span>
+      </div>
       {/* Stacked from lg, and in the page's three columns, the list takes the
           height left and shows as many whole rows as fit. */}
       <ol
