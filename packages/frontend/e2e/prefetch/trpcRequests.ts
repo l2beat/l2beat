@@ -101,6 +101,27 @@ function parseCalls(rawUrl: string): TrpcCall[] {
 }
 
 /**
+ * In production, pages come from the in-memory page cache (5 min + 25 min
+ * stale-while-revalidate) and the edge (1 min + 5 min), so prefetched data
+ * arrives up to 36 min old. The test server renders it fresh, so this moves
+ * each `dataUpdatedAt` back: a client staleTime shorter than the page caches
+ * then refetches every prefetch on load, and the check fails.
+ */
+const PAGE_CACHES_MAX_AGE_MS = 36 * 60 * 1000
+
+async function agePrefetches(page: Page) {
+  await page.route('**/*', async (route) => {
+    if (route.request().resourceType() !== 'document') return route.fallback()
+    const response = await route.fetch()
+    const body = (await response.text()).replace(
+      /"dataUpdatedAt":(\d+)/g,
+      (_, at) => `"dataUpdatedAt":${Number(at) - PAGE_CACHES_MAX_AGE_MS}`,
+    )
+    await route.fulfill({ response, body })
+  })
+}
+
+/**
  * Layer 2: verifies the client serves prefetched queries from the hydrated
  * cache instead of refetching. Loads each page and:
  *  - FAILS if a prefetched query's exact key is requested over the wire
@@ -114,6 +135,8 @@ export async function checkNoRefetch(
 ): Promise<NoRefetchResult> {
   const { url, prefetched } = item
   const observed = new Map<string, unknown[]>()
+
+  await agePrefetches(page)
 
   page.on('request', (request) => {
     const reqUrl = request.url()

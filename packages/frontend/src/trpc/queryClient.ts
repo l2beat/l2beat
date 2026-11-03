@@ -8,9 +8,16 @@ export const createQueryClient = () =>
   new QueryClient({
     defaultOptions: {
       queries: {
-        // With SSR, we usually want to set some default staleTime
-        // above 0 to avoid refetching immediately on the client
-        staleTime: 10 * UnixTime.MINUTE * 1000,
+        staleTime: STALE_AFTER_MS,
       },
     },
   })
+
+/**
+ * Prefetched queries reach the browser up to 36 min old: the in-memory page
+ * cache keeps them 5 min + 25 min stale-while-revalidate, the edge 1 min +
+ * 5 min. A staleTime below that refetches on hydration the data the page was
+ * just rendered with, and draws its charts a second time. Chart data updates
+ * hourly, so an hour keeps shown data at most one update behind.
+ */
+const STALE_AFTER_MS = UnixTime.HOUR * 1000

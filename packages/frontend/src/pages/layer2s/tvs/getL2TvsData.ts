@@ -24,11 +24,11 @@ export async function getL2TvsData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['layer2s', 'tvs', 'data'],
+        key: ['layer2s', 'tvs', 'data', req.query.tab],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      () => getCachedData(cache, req.query.tab),
+      () => getCachedData(req.query.tab),
     ),
   ])
 
@@ -58,23 +58,12 @@ export async function getL2TvsData(
 }
 
 async function getCachedData(
-  cache: InMemoryCache,
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
 ) {
   const entries = await getL2TvsEntries()
-
-  const queryState = await cache.get(
-    {
-      key: ['layer2s', 'tvs', 'data', 'query-state', tab],
-      ttl: 5 * 60,
-      staleWhileRevalidate: 25 * 60,
-    },
-    () => getQueryState(tab, entries),
-  )
-
   return {
     entries,
-    queryState,
+    queryState: await getQueryState(tab, entries),
   }
 }
 
