@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import type { DateRange } from 'react-day-picker'
 import { Calendar } from '~/components/core/Calendar'
 import {
@@ -19,6 +19,7 @@ import { cn } from '~/utils/cn'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Skeleton } from '../Skeleton'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { VerticalSeparator } from '../VerticalSeparator'
 import {
   type ChartRangeOptionValue,
@@ -30,7 +31,7 @@ export { rangeToOption, type ChartRangeOptionValue }
 interface ChartRangeOption {
   value: ChartRangeOptionValue
   disabled?: boolean
-  /** Shown on hover over a disabled option */
+  /** Shown in a tooltip in the bar and as text under the options in the drawer */
   disabledReason?: string
   label: string
 }
@@ -111,6 +112,7 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
             Predefined
           </p>
           <PredefinedOptions
+            layout="drawer"
             name={name}
             options={options}
             setValue={(range) => {
@@ -137,6 +139,7 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
   return (
     <Popover>
       <PredefinedOptions
+        layout="bar"
         name={name}
         options={options}
         setValue={setValue}
@@ -174,7 +177,16 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
   )
 }
 
+/**
+ * `bar` sits inline in the chart header, so it stays 32px tall and explains a
+ * disabled option in a tooltip, which the app's Tooltip opens on tap too.
+ * `drawer` is the touch layout: options are 40px tall so they are easy to
+ * hit, and the reasons are written out under them, as nothing hovers there.
+ */
+type PredefinedOptionsLayout = 'bar' | 'drawer'
+
 function PredefinedOptions({
+  layout,
   name,
   options,
   setValue,
@@ -182,6 +194,7 @@ function PredefinedOptions({
   selectedOption,
   children,
 }: {
+  layout: PredefinedOptionsLayout
   name: string
   options: ChartRangeOption[]
   setValue: (range: ChartRange) => void
@@ -190,14 +203,24 @@ function PredefinedOptions({
   children?: React.ReactNode
 }) {
   const { track } = useTracking()
-  return (
+  const idPrefix = useId()
+  const disabledReasons = groupDisabledReasons(options).map((group, i) => ({
+    ...group,
+    id: `${idPrefix}-${i}`,
+  }))
+
+  const group = (
     <div
       className={cn(
-        'group/radio-group inline-flex h-8 w-max items-center gap-1 rounded-lg p-1 font-medium',
+        'group/radio-group items-center gap-1 rounded-lg p-1 font-medium',
+        layout === 'bar' ? 'inline-flex h-8 w-max' : 'flex w-full',
         'bg-surface-primary primary-card:bg-surface-secondary',
       )}
     >
       {options.map((option) => {
+        const disabledReason = option.disabled
+          ? option.disabledReason
+          : undefined
         const button = (
           <button
             key={option.value}
@@ -209,11 +232,20 @@ function PredefinedOptions({
             }}
             type="button"
             disabled={option.disabled}
+            aria-describedby={
+              layout === 'drawer'
+                ? disabledReasons.find((r) => r.reason === disabledReason)?.id
+                : undefined
+            }
             data-state={
               selectedOption === option.value ? 'checked' : 'unchecked'
             }
             className={cn(
-              'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+              'rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+              layout === 'bar' ? 'h-full' : 'h-10 min-w-0 flex-1 px-1',
+              // A disabled button swallows taps without firing click, so
+              // they go through to the tooltip's wrapper
+              layout === 'bar' && disabledReason && 'pointer-events-none',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
               'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
             )}
@@ -221,22 +253,51 @@ function PredefinedOptions({
             {option.label}
           </button>
         )
-        // A disabled button gets no hover, so the reason sits around it
-        return option.disabled && option.disabledReason ? (
-          <span
-            key={option.value}
-            className="flex h-full"
-            title={option.disabledReason}
-          >
-            {button}
-          </span>
-        ) : (
-          button
+        if (layout === 'drawer' || !disabledReason) {
+          return button
+        }
+        return (
+          <Tooltip key={option.value}>
+            <TooltipTrigger asChild>
+              <span className="flex h-full cursor-not-allowed">{button}</span>
+            </TooltipTrigger>
+            <TooltipContent>{disabledReason}</TooltipContent>
+          </Tooltip>
         )
       })}
       {children}
     </div>
   )
+
+  if (layout === 'bar') {
+    return group
+  }
+  return (
+    <>
+      {group}
+      {disabledReasons.map(({ reason, labels, id }) => (
+        <p key={id} id={id} className="mt-2 text-label-value-12 text-secondary">
+          <span className="font-medium text-primary">{labels.join(', ')}:</span>{' '}
+          {reason}
+        </p>
+      ))}
+    </>
+  )
+}
+
+/** One line per reason, as options are usually disabled for the same one */
+function groupDisabledReasons(options: ChartRangeOption[]) {
+  const groups: { reason: string; labels: string[] }[] = []
+  for (const option of options) {
+    if (!option.disabled || !option.disabledReason) continue
+    const group = groups.find((g) => g.reason === option.disabledReason)
+    if (group) {
+      group.labels.push(option.label)
+    } else {
+      groups.push({ reason: option.disabledReason, labels: [option.label] })
+    }
+  }
+  return groups
 }
 
 function CalendarComponent({

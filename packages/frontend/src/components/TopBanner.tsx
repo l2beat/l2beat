@@ -28,12 +28,14 @@ export function TopBanner({ className }: { className?: string }) {
         className,
       )}
     >
-      <div className="absolute right-3">
-        <CloseIcon
-          onClick={() => setIsHidden(true)}
-          className="size-[12px] cursor-pointer fill-white transition-colors duration-200 hover:fill-white/90 md:size-[16px]"
-        />
-      </div>
+      <button
+        type="button"
+        aria-label="Close banner"
+        onClick={() => setIsHidden(true)}
+        className="after:-inset-2.5 absolute right-3 flex cursor-pointer after:absolute after:content-['']"
+      >
+        <CloseIcon className="size-[12px] fill-white transition-colors duration-200 hover:fill-white/90 md:size-[16px]" />
+      </button>
       <div className="text-balance text-center text-sm max-md:px-6">
         We recently introduced recategorisation and some projects were moved to
         Others.
