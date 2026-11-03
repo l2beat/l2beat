@@ -60,9 +60,11 @@ const CONTAINER_OUTLINE_WIDTH = 2
 const CONTAINER_Z = 1
 const OVERLAP_BORDER_WIDTH = 2
 const NODE_BORDER_WIDTH = 1
+// The arrow glyph spans 3..13 of its 16-unit cell, see IconArrowHead. Edges
+// stop at its base so the line never shows past the tip.
 const ARROW_HEAD_CELL = 16
-// The arrow glyph's tip sits this far into its cell, see IconArrowHead.
-const ARROW_HEAD_TIP = 14 / 16
+const ARROW_HEAD_TIP = 13 / 16
+const ARROW_HEAD_LENGTH = (10 / 16) * ARROW_HEAD_CELL
 const HEADER_BADGE_STEP = 11
 const HIGHLIGHTED_ROW_INSET = 3
 const HIGHLIGHTED_ROW_RADIUS = 4
@@ -926,6 +928,7 @@ interface Buffers {
   fieldText: InstancedPassBuffer
   footerText: InstancedPassBuffer
   icon: InstancedPassBuffer
+  arrowHead: InstancedPassBuffer
   connections: PassBuffer
   overlap: PassBuffer
 }
@@ -947,6 +950,7 @@ interface PassCounts {
   fieldText: PassLayout
   footerText: PassLayout
   icon: PassLayout
+  arrowHead: PassLayout
   connections: number
   overlap: number
 }
@@ -1077,6 +1081,7 @@ class WebGLRenderer {
     fieldText: EMPTY_LAYOUT,
     footerText: EMPTY_LAYOUT,
     icon: EMPTY_LAYOUT,
+    arrowHead: EMPTY_LAYOUT,
     connections: 0,
     overlap: 0,
   }
@@ -1178,6 +1183,7 @@ class WebGLRenderer {
     const fieldText = this.createTextPassBuffer(cornerQuad)
     const footerText = this.createTextPassBuffer(cornerQuad)
     const icon = this.createTextPassBuffer(cornerQuad)
+    const arrowHead = this.createTextPassBuffer(cornerQuad)
     const connectionStrip = createConnectionStrip(gl)
     const connections = this.createConnectionPassBuffer(connectionStrip)
     const overlap = this.createLinePassBuffer()
@@ -1192,6 +1198,7 @@ class WebGLRenderer {
       fieldText,
       footerText,
       icon,
+      arrowHead,
       connections,
       overlap,
     }
@@ -1348,6 +1355,9 @@ class WebGLRenderer {
       data.containers,
       data.selectedContainers,
       data.palette,
+    )
+    this.counts.arrowHead = this.buildArrowHeads(
+      renderNodes,
       arrowHeadsByTarget(spans, data),
     )
     this.counts.headerText = this.buildHeaderText(
@@ -1543,9 +1553,8 @@ class WebGLRenderer {
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
     palette: GraphPalette,
-    arrowHeads: ReadonlyMap<string, ArrowHeads>,
   ): PassLayout {
-    let max = renderNodes.length * 5 + containers.length
+    let max = renderNodes.length * 3 + containers.length
     for (const rn of renderNodes) max += rn.visibleFields.length
     if (max === 0) return EMPTY_LAYOUT
     const buf = this.ensureText(max)
@@ -1588,32 +1597,6 @@ class WebGLRenderer {
         flags.isGrayedOut ? desaturate(addrColor) : addrColor,
         z,
       )
-
-      const arrows = arrowHeads.get(node.id)
-      if (arrows?.left) {
-        n += this.emitIcon(
-          buf,
-          n,
-          'ArrowHeadRight',
-          x - ARROW_HEAD_CELL * ARROW_HEAD_TIP,
-          y + HEADER_HEIGHT / 2 - ARROW_HEAD_CELL / 2,
-          ARROW_HEAD_CELL,
-          arrows.left,
-          z,
-        )
-      }
-      if (arrows?.right) {
-        n += this.emitIcon(
-          buf,
-          n,
-          'ArrowHeadLeft',
-          x + width - ARROW_HEAD_CELL * (1 - ARROW_HEAD_TIP),
-          y + HEADER_HEIGHT / 2 - ARROW_HEAD_CELL / 2,
-          ARROW_HEAD_CELL,
-          arrows.right,
-          z,
-        )
-      }
 
       let rightX = x + width - HEADER_PADDING - HEADER_ICON_SIZE
       if (node.hasTemplate) {
@@ -1674,6 +1657,49 @@ class WebGLRenderer {
     }
 
     this.upload(this.buffers.icon.data, buf, n, TEXT_STRIDE_F)
+    return layout.finish(n)
+  }
+
+  private buildArrowHeads(
+    renderNodes: readonly RenderNode[],
+    arrowHeads: ReadonlyMap<string, ArrowHeads>,
+  ): PassLayout {
+    if (arrowHeads.size === 0) return EMPTY_LAYOUT
+    const buf = this.ensureText(renderNodes.length * 2)
+    const layout = new PassLayoutBuilder()
+    let n = 0
+    for (const { node, z, range } of renderNodes) {
+      layout.enter(range, n)
+      const arrows = arrowHeads.get(node.id)
+      if (arrows === undefined) continue
+      const { x, y, width } = node.box
+      const cellY = y + HEADER_HEIGHT / 2 - ARROW_HEAD_CELL / 2
+      if (arrows.left) {
+        n += this.emitIcon(
+          buf,
+          n,
+          'ArrowHeadRight',
+          x - ARROW_HEAD_CELL * ARROW_HEAD_TIP,
+          cellY,
+          ARROW_HEAD_CELL,
+          arrows.left,
+          z,
+        )
+      }
+      if (arrows.right) {
+        n += this.emitIcon(
+          buf,
+          n,
+          'ArrowHeadLeft',
+          x + width - ARROW_HEAD_CELL * (1 - ARROW_HEAD_TIP),
+          cellY,
+          ARROW_HEAD_CELL,
+          arrows.right,
+          z,
+        )
+      }
+    }
+    this.upload(this.buffers.arrowHead.data, buf, n, TEXT_STRIDE_F)
     return layout.finish(n)
   }
 
@@ -1979,6 +2005,14 @@ class WebGLRenderer {
     res: [number, number],
   ) {
     this.drawRoundPass(range, transform, res)
+    this.drawTextPass(
+      this.buffers.arrowHead,
+      this.iconAtlas.texture,
+      this.counts.arrowHead,
+      range,
+      transform,
+      res,
+    )
     if (!drawsHeaderText(transform.scale)) return
     this.drawTextPass(
       this.buffers.icon,
@@ -2200,6 +2234,7 @@ class WebGLRenderer {
       this.buffers.fieldText,
       this.buffers.footerText,
       this.buffers.icon,
+      this.buffers.arrowHead,
       this.buffers.connections,
       this.buffers.overlap,
     ]) {
@@ -2356,7 +2391,8 @@ function writeConnection(
   const b = i * CONNECTION_STRIDE_F
   out[b] = from.x
   out[b + 1] = from.y
-  out[b + 2] = to.x
+  out[b + 2] =
+    to.x + (to.direction === 'left' ? -ARROW_HEAD_LENGTH : ARROW_HEAD_LENGTH)
   out[b + 3] = to.y
   const offset = controlOffset(Math.abs(to.x - from.x))
   out[b + 4] = from.x + (from.direction === 'left' ? -offset : offset)
