@@ -44,8 +44,9 @@ export function InteropTopProtocols({
             key={slug}
             className={cn(
               // The ranked tables' gaps, so stacked under them on phones the
-              // icons and names line up.
-              'flex w-full items-center gap-4',
+              // icons and names line up; wider in the page's three columns, as
+              // theirs are past 480px.
+              'flex w-full items-center gap-4 home-wide:gap-5',
               HOME_ROW_CLASS,
               index >= TOP_PROTOCOLS_COUNT &&
                 'home-wide:flex interop-stacked:flex hidden',

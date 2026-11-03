@@ -96,16 +96,17 @@ function Content({ className }: { className?: string }) {
           Below md it stacks too, the graph a fixed-size square.
           In the page's three columns (`home-wide`) the card is about twice as
           wide as tall, so it splits in two instead: the graph as a square as
-          tall as the body, and beside it the figures over the top protocols,
-          as many as fit. The body is 568px tall there (648px over 1700px), so the
+          tall as the body less its labels' 24px, and beside it the figures
+          over the top protocols, as many as fit. The body is 568px tall there (648px over 1700px), so the
           research list beside the card ends on a whole row. */}
       <div className="relative flex home-wide:@min-[1700px]/home:min-h-[648px] home-wide:min-h-[568px] min-w-0 flex-col gap-5 md:max-lg:h-[480px] lg:min-h-[480px] lg:flex-1 lg:basis-0 md:[container:interop-body/size]">
-        <div className="home-wide:absolute home-wide:inset-0 home-wide:grid contents home-wide:grid-cols-[100cqh_minmax(0,1fr)] home-wide:grid-rows-[auto_minmax(0,1fr)] home-wide:gap-x-12 home-wide:gap-y-8">
+        <div className="home-wide:absolute home-wide:inset-0 home-wide:grid contents home-wide:grid-cols-[calc(100cqh-24px)_minmax(0,1fr)] home-wide:grid-rows-[auto_minmax(0,1fr)] home-wide:gap-x-12 home-wide:gap-y-12">
           {figures && (
             // Two rows of three on shared tracks, spread from edge to edge: the
             // first column flush left, the last flush right, so the figures
-            // span the width the graph or the list under them takes.
-            <div className="home-wide:col-start-2 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] justify-between gap-x-3 gap-y-6 sm:gap-x-6">
+            // span the width the graph or the list under them takes. Over the
+            // list, the last column also aligns right, on its values' edge.
+            <div className="home-wide:col-start-2 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] justify-between gap-x-3 gap-y-6 sm:gap-x-6 home-wide:[&>:nth-child(3)]:items-end home-wide:[&>:nth-child(3)]:text-right">
               {figures.volume}
               {figures.transfers}
               {figures.activeRoutes}
