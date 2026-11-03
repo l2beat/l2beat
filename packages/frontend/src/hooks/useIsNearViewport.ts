@@ -19,7 +19,10 @@ export function useIsNearViewport(
     (element) => {
       if (!element || isNear) return
       const reveal = () => startTransition(() => setIsNear(true))
-      if (typeof IntersectionObserver === 'undefined') {
+      if (
+        typeof IntersectionObserver === 'undefined' ||
+        isNearViewportWhilePrerendering(element, rootMargin)
+      ) {
         reveal()
         return
       }
@@ -47,4 +50,17 @@ export function useIsNearViewport(
   )
 
   return [ref, isNear]
+}
+
+/**
+ * A page Chromium prerenders on hover (see speculationRules.ts) gets no
+ * IntersectionObserver callbacks until it is shown, which would leave mounting
+ * to the click. Measuring forces the layout instead, so what is near the top
+ * of the page mounts while it is still hidden. `rootMargin` is one px value.
+ */
+function isNearViewportWhilePrerendering(element: Element, rootMargin: string) {
+  if (!document.prerendering) return false
+  const margin = Number.parseFloat(rootMargin)
+  const { top, bottom } = element.getBoundingClientRect()
+  return bottom >= -margin && top <= window.innerHeight + margin
 }

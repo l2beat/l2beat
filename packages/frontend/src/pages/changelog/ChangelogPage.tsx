@@ -8,6 +8,7 @@ import { ArrowIcon } from '~/icons/Arrow'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { whenPageShown } from '~/utils/whenPageShown'
 
 interface ChangelogPageEntry {
   id: string
@@ -39,7 +40,9 @@ export function ChangelogPage({ entries, ...props }: Props) {
     const latestChangelogEntry = entries[0]
     if (!latestChangelogEntry) return
 
-    setLastReadChangelogEntryId(latestChangelogEntry.id)
+    return whenPageShown(() =>
+      setLastReadChangelogEntryId(latestChangelogEntry.id),
+    )
   }, [entries, setLastReadChangelogEntryId])
 
   const lastReadEntryIndex = lastReadChangelogEntryIdOnLoad

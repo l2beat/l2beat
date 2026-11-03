@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { usePathname } from '~/hooks/usePathname'
 import { PinIcon } from '~/icons/Pin'
 import { cn } from '~/utils/cn'
+import { whenPageShown } from '~/utils/whenPageShown'
 import {
   recordProjectVisit,
   type SavedProject,
@@ -32,9 +33,7 @@ export function PinProjectButton({
   )
   const { isPinned, toggle } = usePinnedState(project)
 
-  useEffect(() => {
-    recordProjectVisit(project)
-  }, [project])
+  useEffect(() => whenPageShown(() => recordProjectVisit(project)), [project])
 
   return (
     <button

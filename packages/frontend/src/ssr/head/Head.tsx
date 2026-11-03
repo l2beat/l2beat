@@ -92,7 +92,19 @@ export function Head({ manifest, metadata }: HeadProps) {
                   });`,
             }}
           />
-          <script src="https://analytics.l2beat.com/op1.js" defer async />
+          {/*
+            op1.js tracks a screen view as soon as it loads, so a page
+            prerendered on hover (speculationRules.ts) loads it only once it
+            is shown. Calls made before then wait in the window.op queue.
+          */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){
+                function load(){var s=document.createElement('script');s.src='https://analytics.l2beat.com/op1.js';s.async=true;document.head.appendChild(s)}
+                if(document.prerendering){document.addEventListener('prerenderingchange',load,{once:true})}else{load()}
+              })()`,
+            }}
+          />
         </>
       )}
     </>

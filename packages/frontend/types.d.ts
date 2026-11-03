@@ -67,4 +67,9 @@ declare global {
       ): void
     }
   }
+
+  interface Document {
+    /** Missing from TypeScript's DOM types; undefined outside Chromium. */
+    readonly prerendering?: boolean
+  }
 }

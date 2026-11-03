@@ -23,32 +23,32 @@ export const NOT_PAGES = [
 ]
 
 /**
- * Lets Chromium fetch a page's HTML while the pointer rests on a link to it
+ * Lets Chromium prerender a page while the pointer rests on a link to it
  * ("moderate": 200 ms on desktop; on mobile, links near the last tap once
- * scrolling stops), so the click doesn't wait for the network. Others ignore
- * the script.
+ * scrolling stops): it loads, runs its JS and hydrates in a hidden tab, so the
+ * click swaps in a page that is already interactive. Hydration is 150–900 ms
+ * of main-thread work per page, which a prefetch of the HTML still left to
+ * the click. Others ignore the script.
  *
- * - Only the HTML: no script runs, so neither analytics nor tRPC see a
- *   prefetch. Pages come from the Cloudflare cache, which serves prefetches
- *   like any other request, so the origin sees one only on a miss.
- * - Chrome keeps the response in memory for the navigation, so the page's
- *   `max-age=0` doesn't make it unusable.
- * - No prerendering: on top of this prefetch it measured no faster, while it
- *   would run every page's JS and tRPC calls for links that are never
- *   followed.
+ * - Pages come from the Cloudflare cache, which serves speculative requests
+ *   like any other, so the origin sees one only on a miss.
+ * - Side effects that must count real visits only (analytics, "recently
+ *   viewed") wait for the page to be shown: see `whenPageShown`.
+ * - The prefetch rule is the fallback when Chrome won't prerender (Save-Data,
+ *   low memory, a full prerender quota), so the click still skips the network.
  */
 export const speculationRules = {
-  prefetch: [
-    {
-      where: {
-        and: [
-          // Resolved against the page's URL, so it matches only this origin.
-          { href_matches: '/*' },
-          { not: { href_matches: NOT_PAGES } },
-          { not: { selector_matches: '[download], [target="_blank"]' } },
-        ],
-      },
-      eagerness: 'moderate',
-    },
-  ],
+  prerender: [{ where: pageLinks(), eagerness: 'moderate' }],
+  prefetch: [{ where: pageLinks(), eagerness: 'moderate' }],
+}
+
+function pageLinks() {
+  return {
+    and: [
+      // Resolved against the page's URL, so it matches only this origin.
+      { href_matches: '/*' },
+      { not: { href_matches: NOT_PAGES } },
+      { not: { selector_matches: '[download], [target="_blank"]' } },
+    ],
+  }
 }

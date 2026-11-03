@@ -44,7 +44,7 @@ export function MetricsMiddleware() {
         contentType: res.get('Content-Type'),
         referer: req.headers.referer ?? 'unknown',
         userAgent: req.headers['user-agent'] ?? 'unknown',
-        // "prefetch" on requests made by speculation rules (speculationRules.ts),
+        // "prefetch" or "prefetch;prerender" on requests made by speculation rules (speculationRules.ts),
         // to measure their share of origin load.
         purpose: req.headers['sec-purpose'],
       })
