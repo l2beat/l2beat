@@ -96,7 +96,10 @@ export function DesktopProjectNavigation({
                   router.push(value)
                 }}
               >
-                <SelectTrigger className="max-w-45">
+                <SelectTrigger
+                  className="max-w-45"
+                  aria-label="Project variant"
+                >
                   <div className="min-w-0 max-w-31 truncate">
                     <SelectValue />
                   </div>
