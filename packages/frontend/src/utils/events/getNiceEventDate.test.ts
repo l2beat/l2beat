@@ -26,6 +26,12 @@ describe(getNiceEventDate.name, () => {
     )
   })
 
+  it('keeps the times of a long event within a UTC day', () => {
+    expect(niceDate('2021-01-13T00:00:00Z', '2021-01-13T23:30:00Z')).toEqual(
+      '13 Jan 2021, 00:00 — 23:30 UTC',
+    )
+  })
+
   it('shows a date range for an event over several days', () => {
     expect(niceDate('2021-01-13T13:00:00Z', '2021-01-20T13:00:00Z')).toEqual(
       '13 —\n20 Jan 2021',

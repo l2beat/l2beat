@@ -59,6 +59,12 @@ describe('dates', () => {
         formatRange(at('2026-06-30T01:00:00Z'), at('2026-06-30T02:00:00Z')),
       ).toEqual('30 Jun 2026, 01:00 — 02:00 UTC')
     })
+
+    it('formats a long range within one UTC day as UTC hours', () => {
+      expect(
+        formatRange(at('2026-06-03T00:00:00Z'), at('2026-06-03T23:30:00Z')),
+      ).toEqual('3 Jun 2026, 00:00 — 23:30 UTC')
+    })
   })
 
   describe(formatSnapshotTimestamp.name, () => {

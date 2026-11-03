@@ -64,7 +64,9 @@ export function formatRange(from: number, to: number) {
   const parsedFrom = parseTimestamp(from)
   const parsedTo = parseTimestamp(to)
 
-  if (to - from >= 23 * UnixTime.HOUR) {
+  const sameDay =
+    UnixTime.toStartOf(from, 'day') === UnixTime.toStartOf(to, 'day')
+  if (to - from >= 23 * UnixTime.HOUR && !sameDay) {
     // "30 Jun — 2 Jul 2026": the start drops the parts it shares with the end
     const sameYear = parsedFrom.year === parsedTo.year
     const fromDate = toNiceDate(
