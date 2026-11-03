@@ -4,7 +4,6 @@ import { SvgIcon } from './SvgIcon'
 export function CodeIcon(props: SvgIconProps) {
   return (
     <SvgIcon
-      aria-label="Code icon"
       width="16"
       height="16"
       viewBox="0 0 16 16"

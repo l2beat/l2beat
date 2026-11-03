@@ -7,7 +7,7 @@ export function UnverifiedIcon(props: SvgIconProps) {
       viewBox="0 0 20 20"
       width="20"
       height="20"
-      aria-label="Unverified icon"
+      aria-label="Unverified"
       {...props}
     >
       <g clipPath="url(#clip0_254_2597)">
