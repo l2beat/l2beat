@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
+import {
+  DECLARATION_BODY as BODY,
+  DeclarationHero,
+  DeclarationLayout,
+  DECLARATION_DISPLAY as DISPLAY,
+  DECLARATION_INSET as INSET,
+  DECLARATION_SHEET as SHEET,
+  DECLARATION_STATEMENT as STATEMENT,
+} from '~/components/declaration/Declaration'
 import { Logo } from '~/components/Logo'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
-import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { cn } from '~/utils/cn'
 import { MANDATE, type MandateSource } from './mandateText'
 
@@ -15,58 +23,29 @@ import { MANDATE, type MandateSource } from './mandateText'
  */
 export function MandatePage(props: AppLayoutProps) {
   return (
-    <AppLayout {...props}>
-      {/* Home's colours: ink text, white sheets and pink links. */}
-      <div className="home-theme contents">
-        <SideNavLayout childrenWrapperClassName="max-md:bg-surface-primary">
-          <main className="flex flex-col gap-4 max-md:gap-0">
-            <Belief />
-            {/* From lg the sources sit beside the argument, in the room its
-                measure leaves; below it they close the sheet, so the verbs
-                follow the argument directly. */}
-            <PrimaryCard
-              className={cn(
-                SHEET,
-                'flex flex-col lg:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-x-16',
-              )}
-            >
-              <Argument />
-              <Sources className="max-lg:order-last max-lg:mt-16 md:max-lg:mt-24 lg:col-start-2 lg:row-start-1 lg:pt-1.5" />
-              <Verbs className="lg:col-span-2" />
-            </PrimaryCard>
-            <Pledge />
-          </main>
-        </SideNavLayout>
-      </div>
-    </AppLayout>
+    <DeclarationLayout {...props}>
+      <Belief />
+      {/* From lg the sources sit beside the argument, in the room its
+          measure leaves; below it they close the sheet, so the verbs
+          follow the argument directly. */}
+      <PrimaryCard
+        className={cn(
+          SHEET,
+          'flex flex-col lg:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-x-16',
+        )}
+      >
+        <Argument />
+        <Sources className="max-lg:order-last max-lg:mt-16 md:max-lg:mt-24 lg:col-start-2 lg:row-start-1 lg:pt-1.5" />
+        <Verbs className="lg:col-span-2" />
+      </PrimaryCard>
+      <Pledge />
+    </DeclarationLayout>
   )
 }
 
-// One inset for every block, so the belief, the argument and the pledge all
-// start on the same edge.
-const INSET = 'px-5 md:px-12 lg:px-16'
-const SHEET = cn(INSET, 'py-12 md:py-16')
-// Inter Bold at −3%, the brand's headline setting.
-const DISPLAY = 'font-inter font-bold tracking-[-0.03em]'
-// About 60 characters a line at every width, the sheet's columns included.
-const BODY =
-  'max-w-[36rem] text-pretty text-[18px] leading-[1.65] md:text-[20px] md:leading-[1.6]'
-// The verbs and the pledge: one step below the belief.
-const STATEMENT = cn(
-  DISPLAY,
-  'text-[28px] leading-[1.1] md:text-[36px] lg:text-[40px] xl:text-[44px]',
-)
-
 function Belief() {
   return (
-    // On the page's own ground, no card: the one thing on the page not on a
-    // sheet. Short enough that the argument starts on a laptop's first screen.
-    <header
-      className={cn(
-        INSET,
-        'flex items-center gap-6 pt-8 pb-6 max-sm:flex-col-reverse max-sm:items-start sm:justify-between sm:gap-10 md:pt-12 md:pb-12 lg:pt-14',
-      )}
-    >
+    <DeclarationHero>
       <h1
         className={cn(
           DISPLAY,
@@ -75,12 +54,7 @@ function Belief() {
       >
         {MANDATE.belief}
       </h1>
-      <Logo
-        small
-        animated={false}
-        className="mt-0 h-14 w-auto shrink-0 sm:h-32 lg:h-44 xl:h-48"
-      />
-    </header>
+    </DeclarationHero>
   )
 }
 
@@ -259,7 +233,7 @@ function Signature({ className }: { className?: string }) {
       data-state={state}
       className={cn('group/sign flex items-center', className)}
     >
-      <span className="h-[3px] min-w-0 flex-1 origin-left bg-brand-pink group-data-[state=waiting]/sign:scale-x-0 group-data-[state=signing]/sign:[animation:mandate-rule_0.7s_cubic-bezier(0.23,1,0.32,1)_both]" />
+      <span className="h-[3px] min-w-0 flex-1 origin-left bg-brand group-data-[state=waiting]/sign:scale-x-0 group-data-[state=signing]/sign:[animation:mandate-rule_0.7s_cubic-bezier(0.23,1,0.32,1)_both]" />
       {/* The beat from the home page's charter, 3px like the line. */}
       <svg viewBox="0 -34 47 68" className="-mx-px h-16 w-11 shrink-0">
         <path
@@ -270,7 +244,7 @@ function Signature({ className }: { className?: string }) {
           vectorEffect="non-scaling-stroke"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="stroke-brand-pink [stroke-dasharray:1] group-data-[state=signing]/sign:[animation:mandate-sign_0.45s_ease-out_0.6s_both] group-data-[state=waiting]/sign:[stroke-dashoffset:1]"
+          className="stroke-brand [stroke-dasharray:1] group-data-[state=signing]/sign:[animation:mandate-sign_0.45s_ease-out_0.6s_both] group-data-[state=waiting]/sign:[stroke-dashoffset:1]"
         />
       </svg>
       <Logo

@@ -1,8 +1,16 @@
 import type { ReactNode } from 'react'
+import {
+  DECLARATION_BODY as BODY,
+  DeclarationHero,
+  DeclarationLayout,
+  DECLARATION_DISPLAY as DISPLAY,
+  DECLARATION_INSET as INSET,
+  DECLARATION_SHEET as SHEET,
+  DECLARATION_STATEMENT as STATEMENT,
+} from '~/components/declaration/Declaration'
 import { Logo } from '~/components/Logo'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
-import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { cn } from '~/utils/cn'
 import { NEW_NAME, type Note } from './newNameText'
 
@@ -13,52 +21,30 @@ import { NEW_NAME, type Note } from './newNameText'
  */
 export function NewNamePage(props: AppLayoutProps) {
   return (
-    <AppLayout {...props}>
-      {/* Home's colours: ink text, white sheets and pink links. */}
-      <div className="home-theme contents">
-        <SideNavLayout childrenWrapperClassName="max-md:bg-surface-primary">
-          <main className="flex flex-col gap-4 max-md:gap-0">
-            <Hero />
-            <PrimaryCard className={SHEET}>
-              <FocusShift />
-            </PrimaryCard>
-            <PrimaryCard className={SHEET}>
-              <History />
-            </PrimaryCard>
-            <PrimaryCard className={SHEET}>
-              <Change />
-            </PrimaryCard>
-            <MandateLink />
-            <PrimaryCard className={cn(SHEET, 'md:mb-4')}>
-              <Practical />
-            </PrimaryCard>
-          </main>
-        </SideNavLayout>
-      </div>
-    </AppLayout>
+    <DeclarationLayout {...props}>
+      <Hero />
+      <PrimaryCard className={SHEET}>
+        <FocusShift />
+      </PrimaryCard>
+      <PrimaryCard className={SHEET}>
+        <History />
+      </PrimaryCard>
+      <PrimaryCard className={SHEET}>
+        <Change />
+      </PrimaryCard>
+      <MandateLink />
+      <PrimaryCard className={cn(SHEET, 'md:mb-4')}>
+        <Practical />
+      </PrimaryCard>
+    </DeclarationLayout>
   )
 }
 
-// The mandate page's measures, so the two read as one set.
-const INSET = 'px-5 md:px-12 lg:px-16'
-const SHEET = cn(INSET, 'py-12 md:py-16')
-const DISPLAY = 'font-inter font-bold tracking-[-0.03em]'
-const BODY =
-  'max-w-[36rem] text-pretty text-[18px] leading-[1.65] md:text-[20px] md:leading-[1.6]'
-const STATEMENT = cn(
-  DISPLAY,
-  'text-[28px] leading-[1.1] md:text-[36px] lg:text-[40px]',
-)
 const HEADING = cn(DISPLAY, 'text-[24px] leading-[1.15] md:text-[28px]')
 
 function Hero() {
   return (
-    <header
-      className={cn(
-        INSET,
-        'flex items-center gap-6 pt-8 pb-6 max-sm:flex-col-reverse max-sm:items-start sm:justify-between sm:gap-10 md:pt-12 md:pb-12 lg:pt-14',
-      )}
-    >
+    <DeclarationHero>
       <div className="flex-1">
         <h1
           className={cn(
@@ -72,12 +58,7 @@ function Hero() {
         </h1>
         <p className={cn(BODY, 'mt-5 md:mt-6')}>{NEW_NAME.lede}</p>
       </div>
-      <Logo
-        small
-        animated={false}
-        className="mt-0 h-14 w-auto shrink-0 sm:h-32 lg:h-44 xl:h-48"
-      />
-    </header>
+    </DeclarationHero>
   )
 }
 
@@ -132,7 +113,7 @@ interface Satellite {
 
 const LAYER_2S_COLORS =
   'bg-[#e6e3dd] text-brand-ink dark:bg-[#3d4358] dark:text-pure-white'
-const AREA_COLORS = 'bg-brand-pink text-brand-ink'
+const AREA_COLORS = 'bg-brand text-brand-ink'
 const SOFT_COLORS = 'bg-[#ffd9e4] text-brand-ink'
 
 const L2BEAT_AROUND: Satellite[] = [
@@ -240,7 +221,7 @@ function History() {
         <p
           className={cn(
             DISPLAY,
-            'mt-10 max-w-[30ch] text-balance text-[24px] leading-[1.2] md:mt-12 md:text-[30px] lg:mt-0 lg:border-brand-pink lg:border-l-[3px] lg:pl-8',
+            'mt-10 max-w-[30ch] text-balance text-[24px] leading-[1.2] md:mt-12 md:text-[30px] lg:mt-0 lg:border-brand lg:border-l-[3px] lg:pl-8',
           )}
         >
           {history.question}
@@ -254,7 +235,7 @@ function History() {
             className="grid gap-x-16 gap-y-2 border-divider border-b py-6 md:py-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
           >
             <h3 className="flex gap-4 font-bold font-inter text-[20px] leading-tight tracking-[-0.02em] md:text-[24px]">
-              <span className="w-7 shrink-0 text-brand-deep tabular-nums dark:text-brand-pink">
+              <span className="w-7 shrink-0 text-brand-deep tabular-nums dark:text-brand">
                 {i + 1}
               </span>
               {practice.name}
@@ -289,7 +270,7 @@ function Change() {
           <p key={paragraph}>{paragraph}</p>
         ))}
       </div>
-      <ul className="mt-10 flex flex-col gap-6 border-brand-pink border-l-[3px] pl-5 md:mt-12 md:gap-8 md:pl-8 lg:col-span-2">
+      <ul className="mt-10 flex flex-col gap-6 border-brand border-l-[3px] pl-5 md:mt-12 md:gap-8 md:pl-8 lg:col-span-2">
         {change.questions.map((question) => (
           <li
             key={question}
@@ -364,7 +345,7 @@ function MandateLink() {
       </div>
       <a
         href="/mandate"
-        className="mt-8 inline-flex items-center gap-2 rounded-full bg-brand-pink px-6 py-3 font-bold font-inter text-[18px] text-brand-ink transition-opacity hover:opacity-90 md:mt-10"
+        className="mt-8 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 font-bold font-inter text-[18px] text-brand-ink transition-opacity hover:opacity-90 md:mt-10"
       >
         {NEW_NAME.mandate.link}
         <span aria-hidden>→</span>
