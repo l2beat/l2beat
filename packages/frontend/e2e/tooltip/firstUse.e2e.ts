@@ -60,18 +60,35 @@ test('focus that lands inside a trigger stays on that element', async ({
   await page.context().close()
 })
 
+test('focus opens a tooltip whose trigger was disabled at first', async ({
+  browser,
+}) => {
+  const page = await openPage(browser, '/layer2s/compare')
+  // Its tooltip is disabled until the chart limit is reached
+  const add = page.getByRole('button', { name: 'Add chart' })
+  while ((await add.getAttribute('aria-disabled')) !== 'true') {
+    await add.click()
+  }
+  await page.mouse.move(0, 0)
+
+  await add.focus()
+  await expect(page.getByRole('tooltip')).toBeVisible()
+  await expect(add).toBeFocused()
+  await page.context().close()
+})
+
 declare global {
   interface Window {
     __tooltip: { firstMove: number; appeared: number }
   }
 }
 
-async function openPage(browser: Browser) {
+async function openPage(browser: Browser, path = PAGE) {
   const context = await browser.newContext({
     viewport: { width: 1400, height: 900 },
   })
   const page = await context.newPage()
-  await page.goto(PAGE, { waitUntil: 'networkidle' })
+  await page.goto(path, { waitUntil: 'networkidle' })
   return page
 }
 

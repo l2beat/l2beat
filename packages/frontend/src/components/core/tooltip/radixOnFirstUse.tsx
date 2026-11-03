@@ -97,7 +97,8 @@ export function useKeepFocusAcrossRadixMount(tooltip: RadixOnFirstUse) {
     }
     return () => {
       tooltip.cancelHoverOpen()
-      tooltip.rememberFocusIn(node)
+      // Read now, not on mount: a trigger that starts disabled gets its node later.
+      tooltip.rememberFocusIn(tooltip.triggerRef.current)
     }
   }, [])
 }
