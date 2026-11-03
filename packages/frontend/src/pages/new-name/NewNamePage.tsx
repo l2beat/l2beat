@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react'
 import {
   DECLARATION_BODY as BODY,
   DeclarationHero,
@@ -12,11 +11,12 @@ import { Logo } from '~/components/Logo'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { cn } from '~/utils/cn'
+import { CentreDrawing } from './centreDrawing'
 import { NEW_NAME, type Note } from './newNameText'
 
 /**
  * The rename, told the way the mandate is set: the name on the page's own
- * ground beside the heart, the shift in focus drawn as two maps, the story on
+ * ground beside the heart, the shift in focus drawn as two rings, the story on
  * white sheets, and the mandate in ink. The practical notes close the page.
  */
 export function NewNamePage(props: AppLayoutProps) {
@@ -63,142 +63,48 @@ function Hero() {
 }
 
 /**
- * A new centre: L2BEAT had layer 2s in the middle, with what they rely on
- * around them; ETHBEAT has Ethereum (the heart) in the middle, with layer 2s
- * as one of many equal discs around it. No disc is bigger than another.
+ * A new centre: L2BEAT had layer 2s in the middle, ringed by what they rely
+ * on; ETHBEAT has Ethereum in the middle, and layer 2s are one of its equal
+ * sectors (the pink one). No sector is bigger than another.
  */
 function FocusShift() {
   return (
-    <section aria-labelledby="focus-heading">
-      <h2 id="focus-heading" className={STATEMENT}>
-        A new centre
-      </h2>
-      <div className="mt-10 grid gap-12 md:mt-12 md:grid-cols-2 md:gap-6 lg:gap-10">
-        <Orbit
-          name="L2BEAT"
-          caption="Layer 2s at the centre"
-          centre={
-            <div className="flex size-[30%] items-center justify-center rounded-full bg-[#e6e3dd] font-inter font-semibold text-[clamp(16px,4.4cqw,22px)] text-brand-ink tracking-[-0.02em] dark:bg-[#3d4358] dark:text-pure-white">
-              Layer 2s
-            </div>
-          }
-          radius={28}
-          size={20.8}
-          satellites={L2BEAT_AROUND}
-        />
-        <Orbit
-          name="ETHBEAT"
-          caption="Ethereum at the centre"
-          centre={
-            <Logo small animated={false} className="mt-0 h-auto w-[30%]" />
-          }
-          radius={33}
-          size={18.4}
-          satellites={ETHBEAT_AROUND}
-        />
+    <section
+      aria-labelledby="focus-heading"
+      className="grid gap-y-8 md:grid-cols-[0.72fr_1fr] md:grid-rows-[auto_1fr] md:gap-x-8 md:gap-y-10 lg:gap-x-12"
+    >
+      <div className="md:col-start-1 md:row-start-1">
+        <h2 id="focus-heading" className={STATEMENT}>
+          A new centre
+        </h2>
+        <p className={cn(BODY, 'mt-5 text-balance md:max-w-none')}>
+          L2BEAT was built around layer&nbsp;2s. ETHBEAT is built around
+          Ethereum, and layer&nbsp;2s are one of the many things around it.
+        </p>
       </div>
-      <p className="mt-6 max-w-[36rem] text-[14px] text-secondary leading-5">
-        L2BEAT looked at layer 2s and what they rely on. ETHBEAT looks at
-        everything built on Ethereum.
-      </p>
+      <figure className="md:col-start-1 md:row-start-2 md:self-end">
+        <h3 className={STATE_NAME}>L2BEAT</h3>
+        <CentreDrawing
+          kind="l2beat"
+          className="max-w-[86%] md:max-w-none"
+          label="L2BEAT: layer 2s at the centre, with bridges, data availability and ZK around them"
+        />
+      </figure>
+      <figure className="md:col-start-2 md:row-span-2 md:row-start-1 md:self-end">
+        <h3 className={STATE_NAME}>ETHBEAT</h3>
+        <CentreDrawing
+          kind="ethbeat"
+          label="ETHBEAT: Ethereum at the centre, with layer 2s, privacy, ZK, interop, staking, DeFi, tokens and more around it, all the same size"
+        />
+      </figure>
     </section>
   )
 }
 
-interface Satellite {
-  label: string
-  /** Ground and text together, so every disc keeps 4.5:1. */
-  colors: string
-}
-
-const LAYER_2S_COLORS =
-  'bg-[#e6e3dd] text-brand-ink dark:bg-[#3d4358] dark:text-pure-white'
-const AREA_COLORS = 'bg-brand text-brand-ink'
-const SOFT_COLORS = 'bg-[#ffd9e4] text-brand-ink'
-
-const L2BEAT_AROUND: Satellite[] = [
-  { label: 'Bridges', colors: SOFT_COLORS },
-  { label: 'Data availability', colors: SOFT_COLORS },
-  { label: 'ZK proofs', colors: SOFT_COLORS },
-]
-const ETHBEAT_AROUND: Satellite[] = [
-  { label: 'Layer 2s', colors: LAYER_2S_COLORS },
-  ...[
-    'Ethereum L1',
-    'Privacy',
-    'ZK proving',
-    'Interop',
-    'Liquid staking',
-    'DeFi',
-    'Tokens',
-  ].map((label) => ({ label, colors: AREA_COLORS })),
-  { label: 'And more', colors: SOFT_COLORS },
-]
-
-/**
- * One system: a centre, a ring and equal discs spaced evenly on it, the first
- * at the top. Positions and sizes are percentages of the square, and type
- * follows its width (cqw), so the drawing scales from a phone to a desktop.
- */
-function Orbit({
-  name,
-  caption,
-  centre,
-  radius,
-  size,
-  satellites,
-}: {
-  name: string
-  caption: string
-  centre: ReactNode
-  /** Ring radius, as a percentage of the square's width. */
-  radius: number
-  /** Disc diameter, as a percentage of the square's width. */
-  size: number
-  satellites: Satellite[]
-}) {
-  return (
-    <figure>
-      <figcaption className="mb-4 flex flex-wrap items-baseline gap-x-3">
-        <span className={HEADING}>{name}</span>
-        <span className="font-medium text-[15px] text-secondary">
-          {caption}
-        </span>
-      </figcaption>
-      <div className="relative aspect-square [container-type:inline-size]">
-        <div
-          aria-hidden
-          className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 rounded-full border-2 border-divider"
-          style={{ width: `${2 * radius}%`, height: `${2 * radius}%` }}
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          {centre}
-        </div>
-        <ul aria-label={`${name}: ${caption}`}>
-          {satellites.map((satellite, i) => {
-            const angle = (2 * Math.PI * i) / satellites.length - Math.PI / 2
-            return (
-              <li
-                key={satellite.label}
-                className={cn(
-                  '-translate-x-1/2 -translate-y-1/2 absolute flex aspect-square items-center justify-center rounded-full p-[1.2cqw] text-center font-inter font-semibold text-[clamp(11px,2.9cqw,15px)] leading-[1.15]',
-                  satellite.colors,
-                )}
-                style={{
-                  width: `${size}%`,
-                  left: `${50 + radius * Math.cos(angle)}%`,
-                  top: `${50 + radius * Math.sin(angle)}%`,
-                }}
-              >
-                {satellite.label}
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-    </figure>
-  )
-}
+const STATE_NAME = cn(
+  DISPLAY,
+  'mb-2 text-[24px] leading-none md:mb-3 md:text-[28px] lg:mb-5 lg:text-[32px]',
+)
 
 /**
  * The question L2BEAT was built to answer, and the seven ways it did. From lg
