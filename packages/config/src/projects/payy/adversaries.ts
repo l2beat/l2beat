@@ -167,9 +167,9 @@ export const payyAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'bad',
       exposureShort:
-        'The per-transaction proofs are public and not zero-knowledge, and the commitments inside them rest on elliptic curves.',
+        'Whoever breaks elliptic-curve cryptography learns at least what the public observer sees: which notes fund which.',
       exposureContinued:
-        'How much more whoever breaks elliptic-curve cryptography extracts from those proofs is not established.',
+        'The public per-transaction proofs lack zero knowledge, and their commitments rest on elliptic curves. How much more such a break extracts from them is not established.',
       interior: {
         sender: 'atRisk',
         recipient: 'atRisk',
