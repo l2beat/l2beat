@@ -104,7 +104,9 @@ async function measureLoad(
   await page.addInitScript(collectLongTasks)
   const cdp = await context.newCDPSession(page)
   await cdp.send('Performance.enable')
-  await page.goto(path, { waitUntil: 'load' })
+  const response = await page.goto(path, { waitUntil: 'load' })
+  // An error page would measure low and could lower a ceiling.
+  expect(response?.ok(), `navigation to ${path}`).toBe(true)
   await waitUntilQuiet(() => page.evaluate(countActivity))
 
   const { metrics } = await cdp.send('Performance.getMetrics')
@@ -134,6 +136,9 @@ async function waitUntilQuiet(countActivity: () => Promise<number>) {
     }
     await new Promise((resolve) => setTimeout(resolve, 250))
   }
+  // Counted past this point, work that never settles would slip under the
+  // ceiling.
+  throw new Error('Page did not settle', { cause: { maxWaitMs: MAX_WAIT_MS } })
 }
 
 function bestOf(runs: Measurement[]): Measurement {

@@ -4,6 +4,7 @@ import type {
   VisibilityState,
 } from '@tanstack/react-table'
 import { useReactTable } from '@tanstack/react-table'
+import { useState } from 'react'
 import { getPersistedColumnsStorageKey } from '~/components/table/persistedColumnVisibility'
 import { useLocalStorage } from './useLocalStorage'
 
@@ -20,13 +21,18 @@ export function useTable<TData extends RowData>(
     { initializeWithValue: false },
   )
 
-  // Flips in the same effect pass that reads storage, so the markup is marked
-  // as applied in the very render that removes the columns. Until then the
-  // pre-paint script hides them with CSS. See persistedColumnVisibility.ts.
-  // With nothing stored the state keeps this very object and there are no
-  // rules to turn off, so the table does not re-render right after
-  // hydration.
-  const isPersistedVisibilityApplied = columnVisibility !== ALL_VISIBLE
+  // Flips in the same render that puts stored visibility into state, so the
+  // markup is marked as applied in the very render that removes the columns.
+  // Until then the pre-paint script hides them with CSS. See
+  // persistedColumnVisibility.ts. With nothing stored the state keeps this
+  // very object and there are no rules to turn off, so the table does not
+  // re-render right after hydration. It never flips back: if another tab
+  // clears the stored value, the rules must stay off.
+  const [isPersistedVisibilityApplied, setPersistedVisibilityApplied] =
+    useState(false)
+  if (!isPersistedVisibilityApplied && columnVisibility !== ALL_VISIBLE) {
+    setPersistedVisibilityApplied(true)
+  }
 
   // Caller-controlled visibility takes precedence, so persistence is disabled
   // entirely rather than writing values that would never be read back.
