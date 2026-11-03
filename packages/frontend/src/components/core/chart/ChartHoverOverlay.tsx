@@ -9,7 +9,7 @@ import {
 import { placeBeside, useChartTooltip } from './useChartTooltip'
 import { isNumber } from './utils/toNumber'
 
-const ACTIVE_DOT_RADIUS = 3
+const ACTIVE_DOT_RADIUS = 4
 
 export interface OverlayDot<T> {
   key: string
@@ -43,9 +43,10 @@ const syncListeners = new Map<string, Set<SyncListener>>()
 /**
  * Crosshair, active dots and tooltip for a time series. React renders only
  * when the hovered row changes; moves within a row just translate the
- * tooltip. The tooltip sits below and right of the pointer (left past the
- * middle of the plot), may leave the chart but not the window. Arrow keys
- * move it between rows, Home and End jump to the ends, Escape closes it.
+ * tooltip. The tooltip sits below and right of the hovered row, at the
+ * pointer's height (left past the middle of the plot), may leave the chart
+ * but not the window. Arrow keys move it between rows, Home and End jump
+ * to the ends, Escape closes it.
  */
 export function ChartHoverOverlay<T>({
   rows,
@@ -54,6 +55,7 @@ export function ChartHoverOverlay<T>({
   sceneRef,
   ariaLabel,
   syncId,
+  dotRadius = ACTIVE_DOT_RADIUS,
   renderTooltip,
 }: {
   rows: T[]
@@ -62,6 +64,7 @@ export function ChartHoverOverlay<T>({
   sceneRef: ChartSceneStore
   ariaLabel: string
   syncId?: string
+  dotRadius?: number
   renderTooltip: (row: T) => ReactNode
 }) {
   const [self] = useState(() => ({}))
@@ -128,6 +131,7 @@ export function ChartHoverOverlay<T>({
     [sceneRef],
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: anchorOf reads refs
   useEffect(() => {
     if (!syncId) return
     const listeners = syncListeners.get(syncId) ?? new Set()
@@ -147,11 +151,7 @@ export function ChartHoverOverlay<T>({
         setActive(null)
         return
       }
-      setActive({
-        index,
-        x: scene.scales.x?.map(getX(row)) ?? 0,
-        y: scene.chart.y + scene.chart.height / 2,
-      })
+      setActive({ index, ...anchorOf(index) })
     }
     listeners.add(listener)
     return () => {
@@ -160,14 +160,21 @@ export function ChartHoverOverlay<T>({
   }, [syncId, self, sceneRef, setActive])
 
   function onPointerMove(event: PointerEvent<HTMLDivElement>) {
-    const invert = sceneRef.current?.scales.x?.invert
-    if (!invert || rows.length === 0) return
+    const xScale = sceneRef.current?.scales.x
+    if (!xScale?.invert || rows.length === 0) return
     // Layout is clean between moves (only transforms change), so this
     // does not force one.
     const rect = event.currentTarget.getBoundingClientRect()
-    const x = event.clientX - rect.left
-    const y = event.clientY - rect.top
-    tooltip.select(nearestIndex(rows, getX, Number(invert(x))), { x, y })
+    const index = nearestIndex(
+      rows,
+      getX,
+      Number(xScale.invert(event.clientX - rect.left)),
+    )
+    // x snaps to the hovered row; only y follows the pointer.
+    tooltip.select(index, {
+      x: xScale.map(getX(rows[index] as T)),
+      y: event.clientY - rect.top,
+    })
   }
 
   const xScale = scene?.scales.x
@@ -205,9 +212,9 @@ export function ChartHoverOverlay<T>({
                 data-chart-cursor
                 className="pointer-events-none absolute rounded-full bg-primary"
                 style={{
-                  width: ACTIVE_DOT_RADIUS * 2,
-                  height: ACTIVE_DOT_RADIUS * 2,
-                  transform: `translate(${cx - ACTIVE_DOT_RADIUS}px, ${scale.map(value) - ACTIVE_DOT_RADIUS}px)`,
+                  width: dotRadius * 2,
+                  height: dotRadius * 2,
+                  transform: `translate(${cx - dotRadius}px, ${scale.map(value) - dotRadius}px)`,
                 }}
               />
             )

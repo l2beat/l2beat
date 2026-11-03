@@ -150,6 +150,8 @@ interface Props<T, K extends string> {
   syncId?: string
   /** Fades the other series' lines. */
   highlight?: K
+  /** Radius of the hover dots; 4 px by default. */
+  activeDotRadius?: number
   renderTooltip: (row: T, visibleKeys: K[]) => ReactNode
 }
 
@@ -192,6 +194,7 @@ export function TimeSeriesChart<T, K extends string>({
   referenceDots,
   syncId,
   highlight,
+  activeDotRadius,
   renderTooltip,
 }: Props<T, K>) {
   const { meta, interactiveLegend } = useChart()
@@ -638,6 +641,7 @@ export function TimeSeriesChart<T, K extends string>({
         sceneRef={sceneRef}
         ariaLabel={ariaLabel}
         syncId={syncId}
+        dotRadius={activeDotRadius}
         renderTooltip={(row) => renderTooltip(row, visibleKeys)}
       />
     </>

@@ -105,6 +105,7 @@ export function HomeChart({
             ariaLabel={tooltipLabel}
             margin={MARGIN}
             syncedUntil={syncedUntil}
+            activeDotRadius={3}
             yAxis={{
               format: formatValue,
               unit: yAxisUnit,

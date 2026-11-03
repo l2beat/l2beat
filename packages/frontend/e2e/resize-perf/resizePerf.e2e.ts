@@ -57,7 +57,9 @@ for (const path of Object.keys(ceilings)) {
     await cdp.send('Performance.enable')
     await page.goto(path, { waitUntil: 'networkidle' })
     await page.waitForTimeout(1500)
-    await page.evaluate(installProbes)
+    const observedCharts = await page.evaluate(installProbes)
+    // Else a selector change would pass the ratchet at 0 re-renders.
+    expect(observedCharts, `charts observed on ${path}`).toBeGreaterThan(0)
     await page.waitForTimeout(300)
 
     const runs: Measurement[] = []
@@ -162,9 +164,11 @@ const installProbes = `(() => {
   requestAnimationFrame(loop)
   const observer = new MutationObserver((mutations) => { w.__chartRerenders += mutations.length })
   // A chart re-renders a resized scene into a new viewBox.
-  for (const svg of document.querySelectorAll('svg.ts-chart')) {
+  const charts = document.querySelectorAll('svg.ts-chart')
+  for (const svg of charts) {
     observer.observe(svg, { attributes: true, attributeFilter: ['viewBox'] })
   }
+  return charts.length
 })()`
 
 const resetProbes = `(() => {
