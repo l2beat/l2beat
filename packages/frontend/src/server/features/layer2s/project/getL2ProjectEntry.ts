@@ -11,6 +11,7 @@ import type {
 } from '@l2beat/config'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -58,6 +59,7 @@ import {
   getUnderReviewStatus,
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
+import { getPrivacyProjectsRunningOn } from '../../privacy/utils/getPrivacyScalingLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
@@ -135,6 +137,7 @@ export interface ProjectL2Entry {
       uopsWeeklyChangePeriod: PercentageChangePeriod
     }
     gasTokens?: string[]
+    privacyProjects: ProjectIconListItem[]
     interop?: ProjectInteropData['summary']
   }
   rosette: L2Rosette
@@ -286,6 +289,7 @@ export async function getL2ProjectEntry(
       .map((badge) => getBadgeWithParamsAndLink(badge, project))
       .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
+    privacyProjects: getPrivacyProjectsRunningOn(project.id, allProjects),
     interop: interopData?.summary,
   }
 

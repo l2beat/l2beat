@@ -395,6 +395,7 @@ export const zkmoneyv6: BaseProject = {
       ],
     },
     trackedOn: ['ethereum'],
+    runsOn: [ProjectId('aztecnetworkv6')],
     tokens: privacyTokens,
     zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {

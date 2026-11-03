@@ -79,6 +79,7 @@ const ENTRY: ProjectPrivacyEntry = {
   hasTvl: false,
   attributes: [],
   trackedOn: [],
+  scalingProjects: [],
   exitWindow: { ...RISK, walkawayTest: { passed: true } },
   trustedSetup: { ...RISK, risk: 'green', label: RISK.value },
   reproducibility: RISK,

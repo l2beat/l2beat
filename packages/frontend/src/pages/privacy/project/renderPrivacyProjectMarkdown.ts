@@ -103,6 +103,10 @@ function getFacts(entry: ProjectPrivacyEntry) {
       label: 'Tracked on',
       value: entry.trackedOn.map((chain) => chain.name).join(', '),
     },
+    entry.scalingProjects.length > 0 && {
+      label: 'Runs on',
+      value: entry.scalingProjects.map((project) => project.name).join(', '),
+    },
     entry.attributes.length > 0 && {
       label: 'Attributes',
       value: entry.attributes.map((attribute) => attribute.label).join(', '),

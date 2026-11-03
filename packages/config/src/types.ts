@@ -1128,6 +1128,17 @@ export interface ProjectPrivacyInfo {
    * for its icon.
    */
   trackedOn: string[]
+  /**
+   * Scaling projects the protocol runs on besides its trackedOn chains:
+   * zk.money is tracked on Ethereum but runs on Aztec.
+   */
+  runsOn?: ProjectId[]
+  /**
+   * Derived when projects are built, so it can't drift from trackedOn: the
+   * scaling projects of the trackedOn chains, then runsOn. Linked both ways
+   * between their project pages.
+   */
+  scalingProjects?: ProjectId[]
   tokens: ProjectPrivacyToken[]
   /**
    * A project tracks relayers either through onchain events or through
