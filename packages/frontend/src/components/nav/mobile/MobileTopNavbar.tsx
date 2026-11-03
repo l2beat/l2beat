@@ -33,7 +33,7 @@ export function MobileTopNavbar({
         painted with the page, so meanwhile its slot shows the navbar's colour
         instead of the grey backdrop behind it.
       */}
-      <div className="sticky top-0">
+      <div className="sticky top-0 page-transition:[view-transition-name:mobile-navbar]">
         <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-divider border-b bg-header-primary px-3.5">
           {/* Left side */}
           <div className="flex min-w-0 items-center gap-3">
