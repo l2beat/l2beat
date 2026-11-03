@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react'
+import type { RadixOnFirstUse } from './radixOnFirstUse'
 
-type TooltipTriggerContextValue = {
+type TooltipTriggerContextValue = RadixOnFirstUse & {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   /** Present only when the tooltip opted into contentInHtml. */

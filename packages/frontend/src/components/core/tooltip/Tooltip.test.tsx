@@ -1,3 +1,4 @@
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { expect } from 'earl'
 import {
   getTooltipTriggerDescription,
@@ -6,6 +7,7 @@ import {
 import {
   Tooltip,
   TooltipContent,
+  TooltipPortal,
   TooltipTrigger,
   TooltipVisualOnly,
 } from './Tooltip'
@@ -91,5 +93,78 @@ describe(Tooltip.name, () => {
       'Why this is Stage 1',
     )
     expect(html).not.toInclude('Click to view details')
+  })
+
+  it('renders a controlled open tooltip', () => {
+    const html = renderOnServer(
+      <Tooltip open>
+        <TooltipTrigger>Stage 1</TooltipTrigger>
+        <TooltipContent>Why this is Stage 1</TooltipContent>
+      </Tooltip>,
+    )
+
+    expect(getTooltipTriggerDescription(html).text).toEqual(
+      'Why this is Stage 1',
+    )
+  })
+
+  // Until a tooltip is first used it renders without Radix, and Radix takes
+  // over in the browser. Comparing the server HTML to what Radix renders for
+  // the same trigger shows the swap changes nothing on screen.
+  describe('before first use', () => {
+    it('renders the trigger as Radix does', () => {
+      const html = renderOnServer(
+        <Tooltip>
+          <TooltipTrigger className="size-5">Stage 1</TooltipTrigger>
+          <TooltipContent>Why this is Stage 1</TooltipContent>
+        </Tooltip>,
+      )
+
+      expect(html).toEqual(
+        renderOnServer(
+          <TooltipPrimitive.Root>
+            <TooltipPrimitive.Trigger
+              data-role="tooltip-trigger"
+              className="size-5"
+            >
+              Stage 1
+            </TooltipPrimitive.Trigger>
+            <TooltipPrimitive.Content>
+              Why this is Stage 1
+            </TooltipPrimitive.Content>
+          </TooltipPrimitive.Root>,
+        ),
+      )
+    })
+
+    it('renders a trigger with asChild as Radix does', () => {
+      const html = renderOnServer(
+        <Tooltip>
+          <TooltipTrigger asChild disabledOnTouch>
+            <a href="/scaling/projects/arbitrum" className="size-5">
+              Arbitrum
+            </a>
+          </TooltipTrigger>
+          <TooltipPortal>
+            <TooltipContent>Arbitrum One</TooltipContent>
+          </TooltipPortal>
+        </Tooltip>,
+      )
+
+      expect(html).toEqual(
+        renderOnServer(
+          <TooltipPrimitive.Root>
+            <TooltipPrimitive.Trigger asChild>
+              <a href="/scaling/projects/arbitrum" className="size-5">
+                Arbitrum
+              </a>
+            </TooltipPrimitive.Trigger>
+            <TooltipPrimitive.Portal>
+              <TooltipPrimitive.Content>Arbitrum One</TooltipPrimitive.Content>
+            </TooltipPrimitive.Portal>
+          </TooltipPrimitive.Root>,
+        ),
+      )
+    })
   })
 })

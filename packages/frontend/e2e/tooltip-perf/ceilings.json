@@ -1,0 +1,14 @@
+{
+  "/layer2s/summary": {
+    "poppers": 3
+  },
+  "/layer2s/risk": {
+    "poppers": 2
+  },
+  "/layer2s/tvs": {
+    "poppers": 4
+  },
+  "/layer2s/activity": {
+    "poppers": 3
+  }
+}
