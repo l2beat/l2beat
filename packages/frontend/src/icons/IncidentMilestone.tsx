@@ -7,7 +7,8 @@ export function IncidentMilestoneIcon({ className, ...props }: SvgIconProps) {
       width="20"
       height="20"
       viewBox="0 0 20 20"
-      aria-hidden
+      role="img"
+      aria-label="Incident"
       className={cn('fill-red-800 stroke-red-700', className)}
       {...props}
     >
