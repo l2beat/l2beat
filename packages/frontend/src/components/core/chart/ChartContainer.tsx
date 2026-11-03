@@ -65,9 +65,10 @@ export function ChartContainer<T extends { timestamp: number }>({
   // is about to be seen.
   const [ref, shouldMountChart] = useIsNearViewport()
 
-  const hasData = data && data.length > 1
-
   const metaKeys = Object.keys(meta)
+  // A chart without series has nothing to draw, e.g. the data-posted chart
+  // while nothing was posted in the range.
+  const hasData = data && data.length > 1 && metaKeys.length > 0
   // Empty meta means nothing is picked only where the user picks the
   // sources, as on the compare page; elsewhere the chart has no data.
   const noDataSourcesSelected =

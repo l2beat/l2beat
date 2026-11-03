@@ -21,6 +21,7 @@ export function ChartLegend({
   className?: string
 }) {
   const contentRef = useRef<HTMLDivElement>(null)
+  const stripRef = useRef<HTMLDivElement>(null)
   const { meta, interactiveLegend } = useChart()
   const { setHasFinishedOnboarding } = useChartLegendOnboarding()
   const { showsHint, keepsRoom } = useLegendHint(interactiveLegend)
@@ -45,13 +46,13 @@ export function ChartLegend({
         )}
       >
         {leading}
-        {/* the padding fits the focus outline inside the scroll clip, the
-            negative margin hides that padding from the layout, and scroll-px
-            keeps a focused item clear of the 30px edge fades */}
+        {/* the padding fits the focus outline inside the scroll clip, and
+            the negative margin hides that padding from the layout */}
         <OverflowWrapper
+          ref={stripRef}
           childrenRef={contentRef}
           className="-m-[3px] min-w-0"
-          childrenClassName="p-[3px] scroll-px-[30px]"
+          childrenClassName="p-[3px]"
         >
           <div className="flex h-3.5 w-max items-center gap-2" ref={contentRef}>
             {items.map(({ key, config }) => {
@@ -83,11 +84,7 @@ export function ChartLegend({
                   // Chrome leaves a partly visible item where it is on focus
                   onFocus={
                     interactiveLegend
-                      ? (e) =>
-                          e.currentTarget.scrollIntoView({
-                            block: 'nearest',
-                            inline: 'nearest',
-                          })
+                      ? (e) => revealInStrip(stripRef.current, e.currentTarget)
                       : undefined
                   }
                 >
@@ -126,4 +123,24 @@ export function ChartLegend({
       )}
     </div>
   )
+}
+
+/** The width of the strip's edge fades, which a focused item must clear. */
+const EDGE_FADE = 30
+
+/**
+ * Scrolls the legend strip so `item` clears the edge fades. Not
+ * `scrollIntoView`: that scrolls the page too, and browsers focus the
+ * clicked item again when the window regains focus, so the page would jump
+ * back to the chart.
+ */
+function revealInStrip(strip: HTMLElement | null, item: HTMLElement) {
+  if (!strip) return
+  const visible = strip.getBoundingClientRect()
+  const { left, right } = item.getBoundingClientRect()
+  if (left < visible.left + EDGE_FADE) {
+    strip.scrollLeft -= visible.left + EDGE_FADE - left
+  } else if (right > visible.right - EDGE_FADE) {
+    strip.scrollLeft += right - (visible.right - EDGE_FADE)
+  }
 }

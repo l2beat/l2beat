@@ -98,7 +98,13 @@ export function DonutChart({
         className={cn('relative select-none text-xs outline-none', className)}
       >
         <svg className="absolute inset-0 size-full" aria-hidden>
-          <svg x="50%" y="50%" overflow="visible">
+          {/* moving from a slice into the hole hides its tooltip */}
+          <svg
+            x="50%"
+            y="50%"
+            overflow="visible"
+            onPointerLeave={tooltip.interactiveProps.onPointerLeave}
+          >
             {arcs.map((d, i) => (
               <path
                 key={d.data.name}
