@@ -78,6 +78,7 @@ export const RECATEGORISED_ACTIVITY_CHART_META = {
 interface Props {
   data: RecategorisedActivityChartData | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   milestones: Milestone[]
   chartMeta: ChartMeta
   interactiveLegend: {
@@ -90,6 +91,7 @@ interface Props {
 export function L2RecategorizedActivityChart({
   data,
   isLoading,
+  isPlaceholderData,
   milestones,
   scale,
   chartMeta,
@@ -132,6 +134,7 @@ export function L2RecategorizedActivityChart({
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       meta={chartMeta}
       data={chartData}
       isLoading={isLoading}

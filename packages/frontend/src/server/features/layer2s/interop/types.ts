@@ -47,6 +47,19 @@ export type ProtocolEntry = {
   snapshotTimestamp: number | undefined
 } & FilterableEntry
 
+/** What the short protocol tables (logo, name, category, volume) read. */
+export type CompactProtocolEntry = Pick<
+  ProtocolEntry,
+  | 'slug'
+  | 'iconUrl'
+  | 'name'
+  | 'description'
+  | 'type'
+  | 'isAggregate'
+  | 'subgroup'
+  | 'volume'
+>
+
 export type ProtocolDisplayable = {
   name: string
   slug: string
@@ -89,7 +102,6 @@ export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
-  limit: v.number().optional(),
 })
 
 export type InteropProtocolParams = v.infer<typeof InteropProtocolParams>

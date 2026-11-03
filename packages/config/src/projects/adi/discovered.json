@@ -365,13 +365,14 @@
       "name": "ZKsyncOSChainTypeManager",
       "address": "eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA",
       "type": "Contract",
-      "template": "adi/ChainTypeManager",
+      "template": "shared-zk-stack/ChainTypeManager",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x6bc5b4d3a049af17ddd605f095ab123765781a3bad4f7a0e27a2b665b27c025e"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,2.",
+      "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,2.",
+      "critical": true,
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1764062063,
       "sinceBlock": 23874860,
@@ -404,6 +405,12 @@
         "storedBatchZero": "0x18bd4bd6909643336ab04fcab99eff346bc4e74799aeeb2ed809341e3a1df6f9",
         "validatorTimelock": "eth:0x0000000000000000000000000000000000000000",
         "validatorTimelockPostV29": "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "admin": { "severity": "MEDIUM" },
+        "validatorTimelock": { "severity": "HIGH" },
+        "validatorTimelockPostV29": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA": "TransparentUpgradeableProxy",
@@ -2739,7 +2746,6 @@
     ]
   },
   "usedTemplates": {
-    "adi/ChainTypeManager": "0xbe2d88a172590cb3a629ad843086d648ed322c86eb23d4da6a7f43dfe04b8f0c",
     "adi/Governance": "0x46af5a5c4f79ce9ea6efb5ec445c6bb975a26e603abb09e50fe8a0e16f4e2e32",
     "adi/RollupDAManager": "0xf2275524272d21fe66f4b8c5eb42b74741a62235cc5e1db16e4ebaae56a9bcbb",
     "adi/ServerNotifier": "0x2d0a5ede7827c3fa5e2cb0e4568c676a952552562731371e4f9e101aebd288f2",
@@ -2750,6 +2756,7 @@
     "shared-zk-stack/BridgeHub": "0x85d84032c3f2eae0ff0e6a0d3e425dd5bf1ae3a31fc2ef68fea4aa5f442edbd9",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/ChainAssetHandler": "0x8014df0d446cdb3c3b832daf6f52f4993f5315bacda2db187328db9c6a777312",
+    "shared-zk-stack/ChainTypeManager": "0x02d9f1f23d9ab85badca08caf6e170014e63af1bd7f8704f587cefdf0f1768cf",
     "shared-zk-stack/CTMDeploymentTracker": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
     "shared-zk-stack/Diamond": "0xf8ceb7cc4613a5afb74ab717732cca35ae7826aaa6ba9643d656020bdb3cec08",
     "shared-zk-stack/L1AssetRouter": "0xb597793119e11f9fbaa496fc36287066fea595339e79f752b30faf484e03b720",

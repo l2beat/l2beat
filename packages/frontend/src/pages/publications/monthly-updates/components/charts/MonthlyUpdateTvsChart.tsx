@@ -73,7 +73,12 @@ export function MonthlyUpdateTvsChart({
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
       <Header timeRange={timeRange} stats={stats} unit={'usd'} />
-      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
+      <ChartContainer
+        isPlaceholderData={false}
+        meta={chartMeta}
+        data={chartData}
+        isLoading={isLoading}
+      >
         <AreaChart
           responsive
           data={chartData}

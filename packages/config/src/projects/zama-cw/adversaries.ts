@@ -8,8 +8,8 @@ const OZ =
   'https://github.com/OpenZeppelin/openzeppelin-confidential-contracts/blob/23ba15402346027f2416667acbb1e741179f8485/contracts/token/ERC7984/'
 const WRAPPER =
   'https://github.com/zama-ai/protocol-apps/blob/85eef95c797da20875fe7eeae7f8d212d760486f/contracts/confidential-wrapper/contracts/ConfidentialWrapper.sol'
-const KMS =
-  'https://github.com/zama-ai/kms/blob/b5cd5cf465dc488ff04ac8c19f3ef12877abffa0/'
+const FHEVM =
+  'https://github.com/zama-ai/fhevm/blob/e3a7d1e263655f2b0dbd6230c3b00a7693fb8609/'
 // @zama-fhe/sdk v3.6.0, the release line the app bundles.
 const SDK =
   'https://github.com/zama-ai/sdk/blob/464764577777367e869c47ae53e6ba0de35e3f93/packages/sdk/src/'
@@ -108,16 +108,22 @@ export function zamaCwAdversaries(
       networkObserver: {
         sentiment: 'good',
         exposureShort:
-          "No third party sees an amount, and the user's address and decryption requests go only to Zama's servers.",
+          'No third party sees a transfer amount, since the app encrypts amounts on the device and reads balances under a key only the device holds.',
         exposureContinued:
-          "The app encrypts amounts on the device with Zama's open SDK and reads balances under a key only the device holds.",
+          "A swap quote sends the cleartext amount to Zama's server, which can pass it to LI.FI.",
         advice:
-          'Reject the analytics prompt, so Google Analytics and Sentry receive nothing.',
-        interior: INTERIOR,
+          'Reject the analytics prompt, so Google Analytics and Sentry receive nothing, and skip swaps for amounts that must stay hidden.',
+        interior: {
+          ...INTERIOR,
+          amount: {
+            verdict: 'atRisk',
+            note: 'Private only without swaps, whose quotes can reach LI.FI.',
+          },
+        },
         sources: [
           {
             title:
-              'Served app, build Rh4Nfrd-QpbxA2axbN31u (checked 2026-10-22)',
+              'Served app, deployment dpl_HkkjtLU1mXu9VT5nadJciMGnnY1t (checked 2026-10-30)',
             url: 'https://app.zama.org',
           },
           {
@@ -134,12 +140,13 @@ export function zamaCwAdversaries(
         sentiment: 'bad',
         exposureShort: `Any ${kmsKeyThreshold} of the ${kmsOperatorCount} KMS operators can combine their key shares and decrypt every balance and transfer ever made.`,
         exposureContinued:
-          "The token owner can instantly appoint an observer that sees all amounts. Zama's closed-source app can read amounts before encryption, and today sends every swap amount to Zama in cleartext. The swap's compliance address decrypts every swap, and the vault feature shares balances with Merkl by default.",
+          "The token owner can instantly appoint an observer that sees all amounts, and the swap's compliance address decrypts every swap. Zama's closed-source app can read amounts before encryption, sends every swap amount to Zama in cleartext and shares vault balances with Merkl by default.",
         interior: ALL_EXPOSED,
         sources: [
           {
-            title: 'KMS parties and key-share threshold',
-            url: `${KMS}ai-docs/ARCHITECTURE.md#L22-L25`,
+            title:
+              'The key is secret-shared among the operators and holds while at most a third collude',
+            url: `${FHEVM}docs/protocol/architecture/kms.md#L47-L53`,
           },
           {
             title: 'Observer gets a wildcard delegation without expiration',
@@ -166,15 +173,12 @@ export function zamaCwAdversaries(
         sources: [
           {
             contract: 'Decryption',
-            title: 'A wallet signature authorizes a user decryption request',
+            title:
+              'A wallet signature authorizes a user decryption request and names the key the reply is encrypted to',
           },
           {
             contract: 'ACL',
             title: 'Permissions on past ciphertexts have no expiry',
-          },
-          {
-            title: 'Replies are encrypted to the key the request names',
-            url: `${KMS}core/service/src/cryptography/hybrid_ml_kem.rs`,
           },
           {
             title: 'Coprocessor ciphertext store (public listing)',

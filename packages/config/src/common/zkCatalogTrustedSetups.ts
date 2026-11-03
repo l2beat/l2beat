@@ -259,7 +259,7 @@ export const TRUSTED_SETUPS = {
       },
     },
     shortDescription:
-      'Circuit-specific trusted setup for the 12 Groth16 Privacy Boost epoch, forced withdrawal and gift claim circuits deployed in late September 2026. Phase 1 used 61 Perpetual Powers of Tau participant contributions and a public randomness beacon. The published phase 2 round record reports 16 participants and 16 contributions per circuit. The proving system could be broken if either phase 1 or 2 is compromised.',
+      'Circuit-specific trusted setup for the 12 Groth16 Privacy Boost epoch, forced withdrawal and gift claim circuits deployed in late September 2026. Phase 1 used 61 Perpetual Powers of Tau participant contributions and a public randomness beacon. The published phase 2 round record reports 16 participants and 16 contributions per circuit. Its public bundle reproduces the deployed keys. The proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyBoostv3.md'),
   },
   Railgun: {
@@ -276,7 +276,7 @@ export const TRUSTED_SETUPS = {
       },
     },
     shortDescription:
-      'Circuit-specific trusted setup for 54 Groth16 Railgun circuits over BN254. Phase 1 used 54 participant contributions and a public randomness beacon, with 304 phase 2 contributions. Proving system could be broken if either phase 1 or 2 is compromised.',
+      'Circuit-specific trusted setup for 54 Groth16 Railgun circuits over BN254. Phase 1 used 54 participant contributions and a public randomness beacon. The published 1×1 circuit transcript counts 304 phase 2 contributions. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/Railgun.md'),
   },
 } as const satisfies Record<string, TrustedSetup>

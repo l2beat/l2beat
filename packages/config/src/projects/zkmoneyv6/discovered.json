@@ -1,6 +1,6 @@
 {
   "name": "zkmoneyv6",
-  "timestamp": 1793184565,
+  "timestamp": 1793614694,
   "configHash": "0xd80a9cf67c2cfb583c26883d787174606d797b54cf6ce2131ada6f7f801180b8",
   "entries": [
     {
@@ -207,13 +207,13 @@
       "sinceTimestamp": 1793018447,
       "sinceBlock": 26276922,
       "values": {
-        "_$cachedAvailable": "99999053482787899218107",
+        "_$cachedAvailable": "99985783151859038609816",
         "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "_$freezeCheckpointCount": 0,
         "_$freezeCheckpointNumber": 0,
         "_$freezeEpochNumber": 0,
         "_$frozen": false,
-        "_$lastUpdatedTime": 1793174387,
+        "_$lastUpdatedTime": 1793595959,
         "$immutable": true,
         "FROZEN_DEPOSITS_REFUND_VERIFIER": "eth:0xa460C3130D1701a94f76d1122362C0D127f1C6A3",
         "FROZEN_NOTES_REFUND_VERIFIER": "eth:0x880F3C8356A930522896A7c539157D4c87F95377",
@@ -856,13 +856,13 @@
       "sinceTimestamp": 1793015927,
       "sinceBlock": 26276712,
       "values": {
-        "_$cachedAvailable": "99992401381985583850247",
+        "_$cachedAvailable": "99999500139161295162008",
         "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "_$freezeCheckpointCount": 0,
         "_$freezeCheckpointNumber": 0,
         "_$freezeEpochNumber": 0,
         "_$frozen": false,
-        "_$lastUpdatedTime": 1793182907,
+        "_$lastUpdatedTime": 1793614103,
         "$immutable": true,
         "FROZEN_DEPOSITS_REFUND_VERIFIER": "eth:0xa460C3130D1701a94f76d1122362C0D127f1C6A3",
         "FROZEN_NOTES_REFUND_VERIFIER": "eth:0x880F3C8356A930522896A7c539157D4c87F95377",
@@ -1168,7 +1168,7 @@
       "sinceTimestamp": 1793019251,
       "sinceBlock": 26276989,
       "values": {
-        "_$beneficiary": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
+        "_$beneficiary": "eth:0x88ef976262BF715a3B0D24146fC3bb1B18464e61",
         "$immutable": true,
         "addedIntents": [],
         "owner": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
@@ -2150,7 +2150,7 @@
     "zkmoney/SwapEscrowFactoryV2": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",
     "zkmoney/SwapEscrowV2": "0x84cc242a76dad9bb39d117b773e1d6d5aa9175466c4c41d63c1d181ab30b41cc",
     "zkmoney/v6/DepositSIPA": "0x3fd8e9865b619085d7554a73acb4bca89e060fcbfe1bf56bc749b9db7d07100b",
-    "zkmoney/v6/ForwardingTable": "0x9216366b231f5045f8559e85bad93464099a4f5fdbe32ae82a88c56010b570c1",
+    "zkmoney/v6/ForwardingTable": "0x304b5810e0629fa676ccd1a1006fdcf61aa1374aed3c71740e0841539d6ffcbc",
     "zkmoney/v6/FrozenDepositsRefundVerifier": "0xcd6b5c72e46197d4f6c321e85994f3ec7158aa2469e0e692cf87b2fde037ca62",
     "zkmoney/v6/FrozenNotesRefundVerifier": "0x5930755c4ddd0870fe4c835a237c59046fefbcdf7e14897e42136dbeede28722",
     "zkmoney/v6/MigrationExecutor": "0xc8706e4f9eda557a3e4261fcec4d957be85d7071fdd3fff8872400a2017464dd",
@@ -2165,7 +2165,7 @@
     "zkmoney/v6/UnprocessedDepositRefundVerifier": "0x7597d2213cb07f1cfca0eab680b611acc813f6c9e7849accbff64abd84fd7f0d",
     "zkmoney/v6/UserOpSIPA": "0xd2c68e7858153cdb3b7db447ee96d8da53d3eb8e68e1f66fb3a24eb53d6cc67c"
   },
-  "usedBlockNumbers": { "ethereum": 26290733 },
+  "usedBlockNumbers": { "ethereum": 26326447 },
   "permissionsConfigHash": "0xbd241bafbb1fb3f4d6032ae69967ba9755a25f9e4f0269a58e585ccc7cd203bc",
   "permissions": {
     "eth:0x04Ffc6aD66934937737DD5Fea303bd0903B7625e": {

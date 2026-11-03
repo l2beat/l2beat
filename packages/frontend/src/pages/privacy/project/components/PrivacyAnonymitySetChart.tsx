@@ -44,6 +44,7 @@ type Props = {
   data: Point[] | undefined
   series: Series[] | undefined
   isLoading: boolean
+  isPlaceholderData: boolean
   project: ChartProject
 } & (
   | { type: 'history'; milestones: Milestone[]; syncedUntil?: number }
@@ -51,7 +52,7 @@ type Props = {
 )
 
 export function PrivacyAnonymitySetChart(props: Props) {
-  const { data, series = [], isLoading, project } = props
+  const { data, series = [], isLoading, isPlaceholderData, project } = props
   const meta = useMemo(() => getChartMeta(series), [series])
   const chartData = useMemo(
     () =>
@@ -72,6 +73,7 @@ export function PrivacyAnonymitySetChart(props: Props) {
 
   return (
     <ChartContainer
+      isPlaceholderData={isPlaceholderData}
       data={chartData}
       meta={meta}
       isLoading={isLoading}

@@ -4,6 +4,7 @@ import { type ReactNode, useState } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
+import type { InteropFlowsOverview } from '~/server/features/layer2s/interop/getInteropFlowsOverview'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -16,12 +17,7 @@ import { FlowsParticleLegend } from './FlowsParticleLegend'
 import { useScaledParticleCounts } from './graph/utils/useScaledParticleCounts'
 import { useInteropFlows } from './utils/InteropFlowsContext'
 
-export function FlowsGeneralStats({
-  title = 'General stats',
-  description = 'For past 24h between the selected chains and protocols',
-  className,
-  linkTopRouteToSummary = false,
-}: {
+interface FlowsGeneralStatsOptions {
   title?: string
   description?: string
   className?: string
@@ -30,8 +26,34 @@ export function FlowsGeneralStats({
    * instead of highlighting it on the local graph. Used on the home page.
    */
   linkTopRouteToSummary?: boolean
-}) {
+}
+
+export function FlowsGeneralStats(options: FlowsGeneralStatsOptions) {
   const trpc = useTRPC()
+  const { selectedChains, selectedProtocols } = useInteropFlows()
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions({
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+    }),
+  )
+  return (
+    <FlowsGeneralStatsView {...options} data={data} isLoading={isLoading} />
+  )
+}
+
+/** Takes the data as props so the home page can feed it the slim overview. */
+export function FlowsGeneralStatsView({
+  title = 'General stats',
+  description = 'For past 24h between the selected chains and protocols',
+  className,
+  linkTopRouteToSummary = false,
+  data,
+  isLoading,
+}: FlowsGeneralStatsOptions & {
+  data: InteropFlowsOverview | undefined
+  isLoading: boolean
+}) {
   const [isTokensDialogOpen, setIsTokensDialogOpen] = useState(false)
   const {
     selectedChains,
@@ -40,20 +62,12 @@ export function FlowsGeneralStats({
     setHighlightedChainPair,
   } = useInteropFlows()
 
-  const queryInput = {
-    chains: selectedChains,
-    protocolIds: selectedProtocols,
-  }
   const tokensQueryInput = {
     from: selectedChains,
     to: selectedChains,
     protocolIds: selectedProtocols,
     id: undefined,
   }
-
-  const { data, isLoading } = useQuery(
-    trpc.interop.flows.queryOptions(queryInput),
-  )
 
   const { dollarsPerParticle } = useScaledParticleCounts(
     selectedChains,

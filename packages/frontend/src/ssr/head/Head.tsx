@@ -4,6 +4,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { FontStyles } from './FontStyles'
 import { fonts } from './fonts'
 import type { Metadata } from './getMetadata'
+import { speculationRules } from './speculationRules'
 
 export interface HeadProps {
   manifest: Manifest
@@ -71,6 +72,12 @@ export function Head({ manifest, metadata }: HeadProps) {
           }}
         />
       ))}
+      <script
+        type="speculationrules"
+        dangerouslySetInnerHTML={{
+          __html: jsonForInlineScript(speculationRules),
+        }}
+      />
       {env.CLIENT_SIDE_OPENPANEL_CLIENT_ID && (
         <>
           <script

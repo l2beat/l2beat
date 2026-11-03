@@ -2,29 +2,20 @@ import { assert } from '@l2beat/shared-pure'
 import type MarkdownIt from 'markdown-it'
 import type { RenderRule } from 'markdown-it/lib/renderer.mjs'
 import type Token from 'markdown-it/lib/token.mjs'
-import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
+import { GlossaryMatcher, type GlossaryTerm } from './glossaryMatcher'
+
+const ignoreDelimiter = ':'
 
 export function linkGlossaryTerms(
   glossary: GlossaryTerm[],
-  ignoreDelimiter = ':',
+  onTermLinked?: (termId: string) => void,
 ) {
   const ignorePattern = new RegExp(
     `${ignoreDelimiter}([a-zA-Z\\s]+)${ignoreDelimiter}`,
     'gi',
   )
 
-  const termToData = new Map(
-    glossary.flatMap((entry) =>
-      entry.matches.map((term) => [
-        term.toLowerCase(),
-        { id: entry.id, description: entry.description },
-      ]),
-    ),
-  )
-
-  const glossaryTerms = [...termToData.keys()].sort(
-    (a, b) => b.length - a.length,
-  )
+  const matcher = new GlossaryMatcher(glossary)
 
   return (sourceText: string) => {
     const ignoredOffsets = getIgnoredAndLinkOffsets(sourceText)
@@ -44,8 +35,7 @@ export function linkGlossaryTerms(
     const overlapsLink = (start: number, end: number) =>
       links.some((link) => start < link.end && end > link.start)
 
-    for (const term of glossaryTerms) {
-      const pattern = new RegExp(`(?<!\\w)(${escapeRegExp(term)})(?!\\w)`, 'gi')
+    for (const { term, pattern } of matcher.findMatches(sourceText)) {
       for (const match of sourceText.matchAll(pattern)) {
         const start = match.index
         const end = start + match[0].length
@@ -56,16 +46,11 @@ export function linkGlossaryTerms(
         ) {
           continue
         }
-        const glossaryTermData = termToData.get(match[0].toLowerCase())
-        if (!glossaryTermData) continue
+        onTermLinked?.(term.id)
         links.push({
           start,
           end,
-          markdown: createGlossaryLink(
-            glossaryTermData.id,
-            match[0],
-            glossaryTermData.description,
-          ),
+          markdown: createGlossaryLink(term.id, match[0], term.description),
         })
       }
     }
@@ -193,11 +178,6 @@ function createGlossaryLink(id: string, term: string, description: string) {
   const href = `/glossary#${id}?description=${encodeURIComponent(description)}`
 
   return `[${term}](${href})`
-}
-
-// Escape special characters in the term to use it in a regex pattern
-function escapeRegExp(string: string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
 }
 
 function getIgnoredAndLinkOffsets(text: string) {

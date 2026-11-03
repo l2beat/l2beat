@@ -1,9 +1,9 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
 import {
@@ -25,13 +25,14 @@ export function ProjectBridgeTypeTvsChart({
   const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
   const { dataKeys, toggleDataKey } = useChartDataKeys(bridgeTypeTvsChartMeta)
 
-  const { data, isLoading } = useQuery(
-    trpc.tvs.detailedChart.queryOptions({
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.tvs.detailedChart,
+    {
       filter: { type: 'projects', projectIds: [project.id] },
       range,
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens,
-    }),
+    },
   )
 
   const chartData = useMemo(
@@ -60,6 +61,7 @@ export function ProjectBridgeTypeTvsChart({
   return (
     <div className="mt-4 mb-3">
       <BridgeTypeTvsChart
+        isPlaceholderData={isPlaceholderData}
         data={chartData}
         milestones={milestones}
         unit={unit}

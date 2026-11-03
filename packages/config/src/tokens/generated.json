@@ -4275,6 +4275,20 @@
       "supply": "zero"
     },
     {
+      "name": "Ondo U.S. Dollar Yield",
+      "coingeckoId": "ondo-us-dollar-yield",
+      "address": "0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+      "symbol": "USDY",
+      "decimals": 18,
+      "deploymentTimestamp": 1689101183,
+      "coingeckoListingTimestamp": 1699401600,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Open Ecosystem Token",
       "coingeckoId": "open-ticketing-ecosystem",
       "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509",
@@ -5418,6 +5432,20 @@
       "coingeckoListingTimestamp": 1597104000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/11970/large/serum-logo.png?1696511829",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "sGho",
+      "coingeckoId": "gho",
+      "address": "0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
+      "symbol": "sGho",
+      "decimals": 18,
+      "deploymentTimestamp": 1777981931,
+      "coingeckoListingTimestamp": 1689379200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30663/large/gho-token-logo.png?1720517092",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

@@ -1,9 +1,9 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrivacyAnonymitySetChart } from '~/pages/privacy/project/components/PrivacyAnonymitySetChart'
 import { PrivacyAnonymitySetChartRangeControls } from '~/pages/privacy/project/components/PrivacyAnonymitySetChartRangeControls'
@@ -33,11 +33,12 @@ export function PrivacyAnonymitySetSection({
   const copy = anonymitySetCopy(anonymitySetType, ANONYMITY_SET_WINDOW_DAYS)
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = useQuery(
-    trpc.privacy.anonymitySetChart.queryOptions({
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.privacy.anonymitySetChart,
+    {
       projectId: project.id,
       range,
-    }),
+    },
   )
   const timeRange = useMemo(
     () =>
@@ -79,13 +80,17 @@ export function PrivacyAnonymitySetSection({
             </div>
           )}
           <ChartControlsWrapper className="mb-4">
-            <ProjectChartTimeRange timeRange={timeRange} />
+            <ProjectChartTimeRange
+              isPlaceholderData={isPlaceholderData}
+              timeRange={timeRange}
+            />
             <PrivacyAnonymitySetChartRangeControls
               range={range}
               setRange={setRange}
             />
           </ChartControlsWrapper>
           <PrivacyAnonymitySetChart
+            isPlaceholderData={isPlaceholderData}
             data={data?.history}
             series={data?.series}
             syncedUntil={data?.syncedUntil}
@@ -108,6 +113,7 @@ export function PrivacyAnonymitySetSection({
             )}
           </p>
           <PrivacyAnonymitySetChart
+            isPlaceholderData={isPlaceholderData}
             data={data?.holdingDuration}
             series={data?.series}
             isLoading={isLoading}

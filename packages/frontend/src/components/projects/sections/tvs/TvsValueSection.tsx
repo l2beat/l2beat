@@ -1,11 +1,11 @@
 import type { Milestone } from '@l2beat/config'
-import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { TvsValueChart } from '~/components/chart/tvs/TvsValueChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/components/PrivacyFlowsChartRangeControls'
 import { useTRPC } from '~/trpc/React'
@@ -29,11 +29,12 @@ export function TvsValueSection({
 }: TvsValueSectionProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = useQuery(
-    trpc.tvs.chartByProjects.queryOptions({
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.tvs.chartByProjects,
+    {
       projectIds: [project.id],
       range,
-    }),
+    },
   )
 
   const chartData = useMemo(
@@ -58,10 +59,14 @@ export function TvsValueSection({
   return (
     <ProjectSection {...projectSectionProps}>
       <ChartControlsWrapper className="mb-4">
-        <ProjectChartTimeRange timeRange={timeRange} />
+        <ProjectChartTimeRange
+          isPlaceholderData={isPlaceholderData}
+          timeRange={timeRange}
+        />
         <RangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <TvsValueChart
+        isPlaceholderData={isPlaceholderData}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}

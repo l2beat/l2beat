@@ -35,7 +35,7 @@ export const payyAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Spend graph explorer built from Payy blocks (by L2BEAT)',
+          title: 'Spend graph explorer built from Payy blocks',
           url: 'https://sekuba.github.io/payy-graph/',
         },
         {
@@ -74,8 +74,9 @@ export const payyAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Public block API',
-          url: 'https://validators.mainnet.payy.network/v0/blocks',
+          title:
+            'Public amounts fix every note along a path without splits or merges',
+          url: 'https://github.com/sekuba/payy-graph/blob/8b41a6b340ab46dde414ed6f8bb7acba970aeacc/src/graph/amounts.ts#L11-L23',
         },
         {
           title: 'One deposit address stored per wallet',
