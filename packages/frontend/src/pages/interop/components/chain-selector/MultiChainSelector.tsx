@@ -31,6 +31,7 @@ export function MultiChainSelector({ chains, protocols }: Props) {
               className="cursor-pointer rounded-lg border border-brand p-[11px] max-md:self-end"
               onClick={swapPaths}
               title="Swap From and To"
+              aria-label="Swap From and To chains"
             >
               <SwapIcon className="size-4 fill-brand" />
             </button>

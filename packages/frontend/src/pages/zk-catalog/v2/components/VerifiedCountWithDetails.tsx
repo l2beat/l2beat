@@ -87,8 +87,8 @@ export function CountWithAttesters({
         </span>
       )}
       <Tooltip>
-        <TooltipTrigger>
-          <Icon className="size-4" />
+        <TooltipTrigger aria-label={typeToTooltip(type)}>
+          <Icon className="size-4" aria-hidden />
         </TooltipTrigger>
         <TooltipContent>{typeToTooltip(type)}</TooltipContent>
       </Tooltip>

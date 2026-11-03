@@ -205,7 +205,11 @@ export function CompareProjectPicker({
         onEscapeKeyDown={onEscapeKeyDown}
         fullScreenMobile
       >
-        <Command shouldFilter={false} className="rounded-none">
+        <Command
+          shouldFilter={false}
+          className="rounded-none"
+          label="Search projects"
+        >
           <CommandInput
             placeholder="Search projects by name"
             value={search}

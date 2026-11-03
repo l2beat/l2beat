@@ -43,10 +43,11 @@ export function ProjectL2Stats({ project, className }: Props) {
           <span className="mb-0.5 flex items-center gap-2">
             {project.header.tvs.warning && (
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger aria-label="TVS warning">
                   <RoundedWarningIcon
                     sentiment={project.header.tvs.warning.sentiment}
                     className="size-4"
+                    aria-hidden
                   />
                 </TooltipTrigger>
                 <TooltipContent>
