@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from 'react'
+import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import type { SearchBarProject } from '~/server/features/search-bar/types'
-import { SearchBarDialog } from './SearchBarDialog'
+import { ClosedSearchBarDialog, SearchBarDialog } from './SearchBarDialog'
 
 type SearchBarContextValue = {
   open: boolean
@@ -19,10 +20,18 @@ export function SearchBarContextProvider({
   recentlyAddedProjects,
 }: Props) {
   const [open, setOpen] = useState(false)
+  const [hasOpened, setHasOpened] = useState(false)
+  if (open && !hasOpened) setHasOpened(true)
+
+  useGlobalShortcut('/', () => setOpen((open) => !open))
 
   return (
     <SearchBarContext.Provider value={{ open, setOpen }}>
-      <SearchBarDialog recentlyAdded={recentlyAddedProjects} />
+      {hasOpened ? (
+        <SearchBarDialog recentlyAdded={recentlyAddedProjects} />
+      ) : (
+        <ClosedSearchBarDialog />
+      )}
       {children}
     </SearchBarContext.Provider>
   )

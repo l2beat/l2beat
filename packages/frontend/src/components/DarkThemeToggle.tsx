@@ -23,7 +23,7 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
 
     // fallback if View Transitions API not supported, button not available, or reduced motion preferred
     if (!document.startViewTransition || !button || prefersReducedMotion) {
-      setTheme(newTheme)
+      withoutTransitions(() => flushSync(() => setTheme(newTheme)))
       return
     }
 
@@ -49,7 +49,7 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
     // but setTheme() triggers async React state updates
     document
       .startViewTransition(() => {
-        flushSync(() => setTheme(newTheme))
+        withoutTransitions(() => flushSync(() => setTheme(newTheme)))
       })
       .finished.finally(() => {
         style.removeProperty('--circle-x')
@@ -76,4 +76,23 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
       />
     </button>
   )
+}
+
+/**
+ * Swaps the theme without every colour transition on the page animating to
+ * the new palette. `flushSync` makes next-themes' effect apply the class
+ * before the rule is gone.
+ *
+ * next-themes' own `disableTransitionOnChange` does the same, but also on
+ * every page load, where it costs two restyles of the whole document while
+ * the page hydrates.
+ */
+function withoutTransitions(change: () => void) {
+  const style = document.createElement('style')
+  style.textContent = '*,*::before,*::after{transition:none!important}'
+  document.head.appendChild(style)
+  change()
+  // Restyles now, while the rule still applies.
+  getComputedStyle(document.body).opacity
+  setTimeout(() => style.remove(), 1)
 }
