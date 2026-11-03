@@ -3,6 +3,7 @@ import { AVAILABLE_CHAINS } from '../../../../config/chains'
 import type { Box, Node } from '../store/State'
 import { useStore } from '../store/store'
 import { buildRenderGraph } from '../store/utils/renderGraph'
+import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getChainHeaderColor } from './colors/colors'
 import { drawsNodeDetail } from './NodesAndConnectionsWebGL'
 
@@ -48,10 +49,12 @@ export function ChainCaptions() {
 
 function chainCaptions(nodes: readonly Node[]): ChainCaption[] {
   const graph = buildRenderGraph(nodes)
+  const visible = graph.nodes.filter((node) => !graph.hidden.has(node.id))
   const byChain = new Map<string, ChainCaption>()
-  for (const node of graph.nodes) {
-    if (graph.hidden.has(node.id)) continue
-    const shortName = node.id.split(':')[0]
+  // A closed group draws in place of its members, so each member's chain
+  // takes the group's box.
+  for (const [id, node] of topLevelByDescendant(visible)) {
+    const shortName = id.split(':')[0]
     const chain = AVAILABLE_CHAINS.find((c) => c.shortName === shortName)
     if (chain === undefined) continue
     const caption = byChain.get(chain.name)
