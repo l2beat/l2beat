@@ -1,3 +1,106 @@
+Generated with discovered.json: 0x0d453b0c7cb37b407e78412dc8ac961b723f4ba8
+
+# Diff at Mon, 02 Nov 2026 17:43:02 GMT:
+
+- id: 7246989a
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7de2489d6143463905a64a13eea216e581898f3f block: 1791619122
+- current timestamp: 1793640598
+
+## Description
+
+Add the BSC and Arbitrum pools: four fixed-denomination native-token pools per chain at the shared CREATE2 addresses, their Verifier, the MiMC hasher (same bytecode as on Ethereum) and the ownerless TornadoProxyLight router. The sidechains have no governance, registry or relayer registry.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791619122 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract TornadoProxyLight (arb1:0x0D5550d52428E7e3175bfc9550207e4ad3859b17) [tornado-cash/TornadoProxyLight]
+    +++ description: Immutable, ownerless router of the sidechain pools. It forwards deposits and withdrawals to a pool and emits the encrypted note backup, with no registry, fee or relayer logic.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_100_ETH (arb1:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD) [tornado-cash/TornadoCash_eth_sidechain]
+    +++ description: Fixed-denomination Tornado Cash pool for 100 ETH deposits.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_10_ETH (arb1:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a) [tornado-cash/TornadoCash_eth_sidechain]
+    +++ description: Fixed-denomination Tornado Cash pool for 10 ETH deposits.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_0.1_ETH (arb1:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F) [tornado-cash/TornadoCash_eth_sidechain]
+    +++ description: Fixed-denomination Tornado Cash pool for 0.1 ETH deposits.
+```
+
+```diff
++   Status: CREATED
+    contract MiMCHasher (arb1:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A) [N/A]
+    +++ description: MiMC hasher used by every Tornado pool on Arbitrum for commitment-tree operations, the same bytecode as the Ethereum hasher, manually verified against the pinned Tornado circomlib generator.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_1_ETH (arb1:0xd47438C816c9E7f2E2888E060936a499Af9582b3) [tornado-cash/TornadoCash_eth_sidechain]
+    +++ description: Fixed-denomination Tornado Cash pool for 1 ETH deposits.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (arb1:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6) [tornado-cash/Verifier]
+    +++ description: Groth16 verifier contract used by Tornado Cash pool withdrawal proofs.
+```
+
+```diff
++   Status: CREATED
+    contract TornadoProxyLight (bnb:0x0D5550d52428E7e3175bfc9550207e4ad3859b17) [tornado-cash/TornadoProxyLight]
+    +++ description: Immutable, ownerless router of the sidechain pools. It forwards deposits and withdrawals to a pool and emits the encrypted note backup, with no registry, fee or relayer logic.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_100_BNB (bnb:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD) [tornado-cash/TornadoCash_eth_sidechain]
+    +++ description: Fixed-denomination Tornado Cash pool for 100 BNB deposits.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_10_BNB (bnb:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a) [tornado-cash/TornadoCash_eth_sidechain]
+    +++ description: Fixed-denomination Tornado Cash pool for 10 BNB deposits.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_0.1_BNB (bnb:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F) [tornado-cash/TornadoCash_eth_sidechain]
+    +++ description: Fixed-denomination Tornado Cash pool for 0.1 BNB deposits.
+```
+
+```diff
++   Status: CREATED
+    contract MiMCHasher (bnb:0xBaffBE0e6C73d4dAd3f813194695FDC5829c962A) [N/A]
+    +++ description: MiMC hasher used by every Tornado pool on BSC for commitment-tree operations, the same bytecode as the Ethereum hasher, manually verified against the pinned Tornado circomlib generator.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_1_BNB (bnb:0xd47438C816c9E7f2E2888E060936a499Af9582b3) [tornado-cash/TornadoCash_eth_sidechain]
+    +++ description: Fixed-denomination Tornado Cash pool for 1 BNB deposits.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (bnb:0xfc9859303c0ac1a7721ECE639f2e249D8FD72ac6) [tornado-cash/Verifier]
+    +++ description: Groth16 verifier contract used by Tornado Cash pool withdrawal proofs.
+```
+
 Generated with discovered.json: 0x8f523afc15fbc31e7e1c5f4e3f18a8f169db93b4
 
 # Diff at Sat, 24 Oct 2026 16:41:09 GMT:

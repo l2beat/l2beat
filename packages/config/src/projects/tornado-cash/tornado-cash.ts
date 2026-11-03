@@ -17,12 +17,34 @@ import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { getTokenByAddress } from '../../tokens/getTokenByAddress'
+import {
+  getTokenByAddress,
+  getTokenBySymbol,
+} from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { tornadoCashAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('tornado-cash')
+
+/**
+ * Sidechain deployments of the fixed-amount pools. They share CREATE2
+ * addresses, have no governance, no relayer registry and no instance
+ * registry, so their pools are listed in the discovery config by name.
+ */
+interface TornadoSidechain {
+  chain: string
+  chainId: number
+  nativeSymbol: string
+}
+
+const TRACKED_SIDECHAINS: TornadoSidechain[] = [
+  { chain: 'bsc', chainId: 56, nativeSymbol: 'BNB' },
+  { chain: 'arbitrum', chainId: 42161, nativeSymbol: 'ETH' },
+]
+
+// Deployments with pools too small to track, shown as dimmed icons.
+const UNTRACKED_DEPLOYMENTS = ['gnosis', 'avalanche', 'polygonpos', 'optimism']
 
 const TORNADO_DEPOSIT_EVENT =
   '0xa945e51eec50ab98c161376f0db4cf2aeba3ec92755fe2fcd388bdbbb80ff196'
@@ -120,6 +142,7 @@ function formatDenomination(amount: bigint, decimals: number): string {
 
 interface TornadoBucket {
   id: string
+  chain: string
   address: ChainSpecificAddress
   tokenAddress: EthereumAddress
   tokenInfo: {
@@ -134,6 +157,10 @@ interface TornadoBucket {
   depositEvent: string
   withdrawalEvent: string
 }
+
+const NATIVE_TOKEN_ADDRESS = EthereumAddress(
+  '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+)
 
 const BUCKETS = getTornadoBuckets()
 const TORNADO_CASH_SINCE_TIMESTAMP = UnixTime(
@@ -157,7 +184,7 @@ export const tornadoCash: BaseProject = {
   },
   display: {
     description:
-      'An unconditional privacy pool of fixed amounts with immutable contracts, and an app pinned on ENS by token governance.',
+      'An unconditional privacy pool of fixed amounts with immutable contracts on Ethereum and several sidechains, and an app pinned on ENS by token governance.',
     detailedDescription: readProjectMarkdown(
       'tornado-cash',
       'detailedDescription',
@@ -298,7 +325,15 @@ export const tornadoCash: BaseProject = {
         },
       ],
     },
-    trackedOn: ['ethereum'],
+    deployedOn: [
+      'ethereum',
+      ...TRACKED_SIDECHAINS.map((sidechain) => sidechain.chain),
+      ...UNTRACKED_DEPLOYMENTS,
+    ],
+    trackedOn: [
+      'ethereum',
+      ...TRACKED_SIDECHAINS.map((sidechain) => sidechain.chain),
+    ],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',
@@ -414,7 +449,7 @@ export const tornadoCash: BaseProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
     zkVerifiers: [
-      discovery.getContract('Verifier').address,
+      discovery.getContract('Verifier', 'ethereum').address,
       discovery.getContract('BatchTreeUpdateVerifier').address,
       discovery.getContract('TreeUpdateVerifier').address,
       discovery.getContract('RewardVerifier').address,
@@ -427,10 +462,12 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
   const grouped = new Map<string, ProjectPrivacyToken>()
 
   for (const bucket of BUCKETS) {
-    let asset = grouped.get(bucket.tokenInfo.symbol)
+    const key = `${bucket.chain}:${bucket.tokenInfo.symbol}`
+    let asset = grouped.get(key)
     if (!asset) {
       asset = {
         token: {
+          chain: bucket.chain,
           address: bucket.tokenAddress,
           iconUrl: bucket.tokenInfo.iconUrl,
           symbol: bucket.tokenInfo.symbol,
@@ -440,7 +477,7 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
         },
         buckets: [],
       }
-      grouped.set(bucket.tokenInfo.symbol, asset)
+      grouped.set(key, asset)
     }
 
     asset.token.sinceTimestamp = UnixTime(
@@ -477,10 +514,12 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
     })
   }
 
-  return Array.from(grouped.values()).sort((a, b) =>
-    a.token.symbol.localeCompare(b.token.symbol, undefined, {
-      numeric: true,
-    }),
+  return Array.from(grouped.values()).sort(
+    (a, b) =>
+      a.token.chain.localeCompare(b.token.chain) ||
+      a.token.symbol.localeCompare(b.token.symbol, undefined, {
+        numeric: true,
+      }),
   )
 }
 
@@ -490,42 +529,69 @@ function getTornadoBuckets(): TornadoBucket[] {
     'getAllInstanceAddresses',
   )
 
-  const pools = poolAddresses.map((address) => discovery.getContract(address))
+  const ethereumPools = poolAddresses.map((address) => ({
+    pool: discovery.getContract(address),
+    chain: 'ethereum',
+    chainId: 1,
+    nativeSymbol: 'ETH',
+  }))
+  const sidechainPools = TRACKED_SIDECHAINS.flatMap((sidechain) =>
+    discovery
+      .getEntries()
+      .filter(
+        (entry) =>
+          entry.type === 'Contract' &&
+          entry.name?.startsWith('Pool_') &&
+          ChainSpecificAddress.longChain(entry.address) === sidechain.chain,
+      )
+      .map((pool) => ({ pool, ...sidechain })),
+  )
 
-  return pools.map((pool) => {
-    const token = pool.values?.token?.toString()
-    const isNativeEth = token === undefined
-    const tokenAddress = isNativeEth
-      ? EthereumAddress('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')
-      : EthereumAddress(
-          ChainSpecificAddress.address(token as ChainSpecificAddress),
-        )
-    const resolved = getTokenByAddress(tokenAddress.toString())
-    assert(resolved, `Unknown token ${token}`)
+  return [...ethereumPools, ...sidechainPools].map(
+    ({ pool, chain, chainId, nativeSymbol }) => {
+      const token = pool.values?.token?.toString()
+      const isNative = token === undefined
+      const tokenAddress = isNative
+        ? NATIVE_TOKEN_ADDRESS
+        : EthereumAddress(
+            ChainSpecificAddress.address(token as ChainSpecificAddress),
+          )
+      const resolved = isNative
+        ? getTokenBySymbol(nativeSymbol, chainId)
+        : getTokenByAddress(tokenAddress.toString(), chainId)
+      assert(resolved, `Unknown token ${token}`)
 
-    const denominationAmount = BigInt(
-      pool.values?.denomination?.toString() ?? 0,
-    )
-    const denomination = formatDenomination(
-      denominationAmount,
-      resolved.decimals,
-    )
+      const denominationAmount = BigInt(
+        pool.values?.denomination?.toString() ?? 0,
+      )
+      const denomination = formatDenomination(
+        denominationAmount,
+        resolved.decimals,
+      )
 
-    return {
-      id: `tornado-${resolved.symbol}-${denomination}`,
-      address: pool.address,
-      tokenAddress,
-      tokenInfo: {
-        symbol: resolved.symbol,
-        decimals: resolved.decimals,
-        priceId: resolved.coingeckoId,
-        iconUrl: resolved.iconUrl,
-      },
-      denomination,
-      denominationAmount: denominationAmount.toString(),
-      sinceTimestamp: pool.sinceTimestamp ?? 0,
-      depositEvent: TORNADO_DEPOSIT_EVENT,
-      withdrawalEvent: TORNADO_WITHDRAWAL_EVENT,
-    }
-  })
+      // Ethereum ids predate the sidechains and stay as they are.
+      const id =
+        chain === 'ethereum'
+          ? `tornado-${resolved.symbol}-${denomination}`
+          : `tornado-${chain}-${resolved.symbol}-${denomination}`
+
+      return {
+        id,
+        chain,
+        address: pool.address,
+        tokenAddress,
+        tokenInfo: {
+          symbol: resolved.symbol,
+          decimals: resolved.decimals,
+          priceId: resolved.coingeckoId,
+          iconUrl: resolved.iconUrl,
+        },
+        denomination,
+        denominationAmount: denominationAmount.toString(),
+        sinceTimestamp: pool.sinceTimestamp ?? 0,
+        depositEvent: TORNADO_DEPOSIT_EVENT,
+        withdrawalEvent: TORNADO_WITHDRAWAL_EVENT,
+      }
+    },
+  )
 }

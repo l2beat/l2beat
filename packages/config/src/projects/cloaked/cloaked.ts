@@ -64,6 +64,7 @@ export const cloaked: BaseProject = {
         },
       ],
     },
+    deployedOn: ['ethereum'],
     trackedOn: ['ethereum'],
     // Cloaked balances live in arbitrary one-time EOAs and cannot be
     // attributed using public chain data. Its Privacy Pools integration uses

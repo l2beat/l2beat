@@ -3,5 +3,11 @@
     "hash": "0x0642c913712ca7d22bb11e5be42f712f7895cbcf1f3e2a8104ce8d67baef4345",
     "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8",
     "blockNumber": 12802673
+  },
+  "ProxyAdmin_arbitrum": {
+    "hash": "0x5ba92a6a680d26adb4bb861606bfc99c1cd0b2672627e45173427d523d130354",
+    "address": "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527",
+    "chain": "arbitrum",
+    "blockNumber": 520627823
   }
 }

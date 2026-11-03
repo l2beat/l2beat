@@ -1,7 +1,12 @@
 import type { ProjectScalingInfo } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getPrivacyTrackedChains } from './getPrivacyTrackedChains'
+import {
+  getPrivacyChainLinks,
+  getPrivacyDeployedOnChains,
+  getPrivacyTrackedChains,
+  UNTRACKED_CHAIN_NOTE,
+} from './getPrivacyTrackedChains'
 
 describe(getPrivacyTrackedChains.name, () => {
   const NO_PAGE = {
@@ -53,6 +58,31 @@ describe(getPrivacyTrackedChains.name, () => {
     expect(ethereumChain?.href).toEqual('/projects/ethereum')
     expect(polygonChain?.href).toEqual(undefined)
     expect(arbitrumChain?.href).toEqual('/layer2s/projects/arbitrum')
+  })
+
+  it('dims the deployed chains that are not tracked', () => {
+    const result = getPrivacyDeployedOnChains(
+      ['ethereum', 'polygonpos', 'arbitrum'],
+      ['ethereum', 'arbitrum'],
+      projects,
+    )
+    expect(result.map((c) => [c.id, c.dimmed, c.description])).toEqual([
+      ['ethereum', undefined, undefined],
+      ['polygonpos', true, UNTRACKED_CHAIN_NOTE],
+      ['arbitrum', undefined, undefined],
+    ])
+  })
+
+  it('links the tracked chains to the project page, bare on the primary one', () => {
+    const result = getPrivacyChainLinks(
+      ['ethereum', 'arbitrum'],
+      'railgun',
+      projects,
+    )
+    expect(result.map((c) => [c.id, c.href])).toEqual([
+      ['ethereum', '/privacy/projects/railgun'],
+      ['arbitrum', '/privacy/projects/railgun?chain=arbitrum'],
+    ])
   })
 
   it('skips chains without a matching chainConfig', () => {

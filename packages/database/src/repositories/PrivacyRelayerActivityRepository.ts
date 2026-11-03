@@ -65,6 +65,7 @@ export class PrivacyRelayerActivityRepository extends BaseRepository {
     projectId: string,
     fromInclusive: UnixTime,
     toExclusive: UnixTime,
+    chain?: string,
   ): Promise<number> {
     const row = await this.db
       .selectFrom('PrivacyRelayerActivity')
@@ -72,6 +73,7 @@ export class PrivacyRelayerActivityRepository extends BaseRepository {
       .where('projectId', '=', projectId)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .$if(chain !== undefined, (qb) => qb.where('chain', '=', chain ?? ''))
       .executeTakeFirstOrThrow()
 
     return Number(row.relayerCount)

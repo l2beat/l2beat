@@ -19,6 +19,8 @@ export interface PrivacyFlowsSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
   milestones: Milestone[]
+  /** Flows on one chain only, for projects tracked on several. */
+  chain?: string
 }
 
 type FlowsMetric = 'count' | 'value'
@@ -27,6 +29,7 @@ export function PrivacyFlowsSection({
   defaultRange,
   project,
   milestones,
+  chain,
   ...projectSectionProps
 }: PrivacyFlowsSectionProps) {
   const trpc = useTRPC()
@@ -38,6 +41,7 @@ export function PrivacyFlowsSection({
     {
       projectIds: [project.id],
       range,
+      chain,
     },
   )
 

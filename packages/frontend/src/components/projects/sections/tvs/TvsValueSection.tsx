@@ -18,6 +18,15 @@ export interface TvsValueSectionProps extends ProjectSectionProps {
   project: ChartProject
   milestones: Milestone[]
   rangeControls: 'tvs' | 'privacy'
+  /** The value of the project's escrows on one chain, for projects tracked on several. */
+  chain?: string
+}
+
+interface ChartData {
+  data: { timestamp: number; value: number | null }[] | undefined
+  syncedUntil: number | undefined
+  isLoading: boolean
+  isPlaceholderData: boolean
 }
 
 export function TvsValueSection({
@@ -25,18 +34,63 @@ export function TvsValueSection({
   project,
   milestones,
   rangeControls,
+  chain,
   ...projectSectionProps
 }: TvsValueSectionProps) {
-  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
+  const RangeControls =
+    rangeControls === 'tvs'
+      ? TvsChartRangeControls
+      : PrivacyFlowsChartRangeControls
+
+  const renderChart = (chart: ChartData) => {
+    const timeRange = getChartTimeRangeFromData(chart.data)
+    return (
+      <ProjectSection {...projectSectionProps}>
+        <ChartControlsWrapper className="mb-4">
+          <ProjectChartTimeRange
+            isPlaceholderData={chart.isPlaceholderData}
+            timeRange={timeRange}
+          />
+          <RangeControls range={range} setRange={setRange} />
+        </ChartControlsWrapper>
+        <TvsValueChart
+          isPlaceholderData={chart.isPlaceholderData}
+          data={chart.data}
+          syncedUntil={chart.syncedUntil}
+          isLoading={chart.isLoading}
+          project={project}
+          milestones={milestones}
+        />
+      </ProjectSection>
+    )
+  }
+
+  return chain ? (
+    <ChainValueChart project={project} chain={chain} range={range}>
+      {renderChart}
+    </ChainValueChart>
+  ) : (
+    <ProjectValueChart project={project} range={range}>
+      {renderChart}
+    </ProjectValueChart>
+  )
+}
+
+function ProjectValueChart({
+  project,
+  range,
+  children,
+}: {
+  project: ChartProject
+  range: ChartRange
+  children: (chart: ChartData) => React.ReactNode
+}) {
+  const trpc = useTRPC()
   const { data, isLoading, isPlaceholderData } = useChartQuery(
     trpc.tvs.chartByProjects,
-    {
-      projectIds: [project.id],
-      range,
-    },
+    { projectIds: [project.id], range },
   )
-
   const chartData = useMemo(
     () =>
       data?.chart.map(([timestamp, valuesByProject]) => ({
@@ -45,34 +99,38 @@ export function TvsValueSection({
       })),
     [data, project.id],
   )
+  return children({
+    data: chartData,
+    syncedUntil: data?.syncedUntil,
+    isLoading,
+    isPlaceholderData,
+  })
+}
 
-  const timeRange = useMemo(
-    () => getChartTimeRangeFromData(chartData),
-    [chartData],
+function ChainValueChart({
+  project,
+  chain,
+  range,
+  children,
+}: {
+  project: ChartProject
+  chain: string
+  range: ChartRange
+  children: (chart: ChartData) => React.ReactNode
+}) {
+  const trpc = useTRPC()
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
+    trpc.tvs.chartByProjectChain,
+    { projectId: project.id, chain, range },
   )
-
-  const RangeControls =
-    rangeControls === 'tvs'
-      ? TvsChartRangeControls
-      : PrivacyFlowsChartRangeControls
-
-  return (
-    <ProjectSection {...projectSectionProps}>
-      <ChartControlsWrapper className="mb-4">
-        <ProjectChartTimeRange
-          isPlaceholderData={isPlaceholderData}
-          timeRange={timeRange}
-        />
-        <RangeControls range={range} setRange={setRange} />
-      </ChartControlsWrapper>
-      <TvsValueChart
-        isPlaceholderData={isPlaceholderData}
-        data={chartData}
-        syncedUntil={data?.syncedUntil}
-        isLoading={isLoading}
-        project={project}
-        milestones={milestones}
-      />
-    </ProjectSection>
+  const chartData = useMemo(
+    () => data?.chart.map(([timestamp, value]) => ({ timestamp, value })),
+    [data],
   )
+  return children({
+    data: chartData,
+    syncedUntil: data?.syncedUntil,
+    isLoading,
+    isPlaceholderData,
+  })
 }

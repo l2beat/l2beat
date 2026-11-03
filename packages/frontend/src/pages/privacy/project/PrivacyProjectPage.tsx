@@ -30,6 +30,7 @@ import {
   getPrivacyAdversaryRosetteValues,
   PRIVACY_ADVERSARIES_SECTION_ID,
 } from '../adversaries/privacyAdversaryUi'
+import { PrivacyChainSwitcher } from './components/PrivacyChainSwitcher'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import {
   MOBILE_SUMMARY_ROWS,
@@ -56,6 +57,9 @@ export function PrivacyProjectPage({
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
   const adversaries = getPrivacyAdversariesSummary(entry.sections)
+  const chainSwitcher = entry.chains.length > 1 && (
+    <PrivacyChainSwitcher chains={entry.chains} current={entry.chain} />
+  )
 
   return (
     <AppLayout {...props}>
@@ -112,10 +116,16 @@ export function PrivacyProjectPage({
                     />
                   )}
                   <HorizontalSeparator className="my-4 md:hidden" />
+                  {chainSwitcher && (
+                    <div className="mb-4 flex md:hidden [&>button]:w-full">
+                      {chainSwitcher}
+                    </div>
+                  )}
                   <div className="mb-3 max-md:hidden">
                     <DesktopProjectLinks
                       projectLinks={entry.projectLinks}
                       discoUiHref={entry.discoveryHref}
+                      trailing={chainSwitcher || undefined}
                     />
                   </div>
                 </div>
@@ -151,6 +161,11 @@ export function PrivacyProjectPage({
                             href={entry.href}
                             isUnderReview={entry.isUnderReview}
                             reproducibility={entry.reproducibility}
+                            assessedChainName={
+                              entry.chains.length > 1
+                                ? entry.chains[0]?.name
+                                : undefined
+                            }
                             className="md:mt-4"
                           />
 
@@ -162,12 +177,12 @@ export function PrivacyProjectPage({
                             )}
                           >
                             <ProjectSummaryStat
-                              title="Tracked on"
-                              tooltip="Chains on which the protocol deployment is tracked by L2BEAT."
+                              title="Deployed on"
+                              tooltip="Chains with a deployment of the protocol. Dimmed chains are deployed but not tracked by L2BEAT."
                               value={
                                 <ProjectIconList
-                                  projects={entry.trackedOn}
-                                  title="Tracked on"
+                                  projects={entry.deployedOn}
+                                  title="Deployed on"
                                 />
                               }
                             />
@@ -226,6 +241,7 @@ export function PrivacyProjectPage({
                     <DesktopProjectNavigation
                       project={{
                         title: entry.shortName ?? entry.name,
+                        subtitle: entry.chainSubtitle,
                         slug: entry.slug,
                         isUnderReview: entry.isUnderReview,
                         icon: entry.icon,

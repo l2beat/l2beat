@@ -24,6 +24,15 @@ const env = new Env({})
 const POOL = EthereumAddress('0x1111111111111111111111111111111111111111')
 const TOKEN = EthereumAddress('0x2222222222222222222222222222222222222222')
 
+// Every chain a privacy project is tracked on, since Railgun samples Waku
+// relayers on all of its chains and the builder asserts each has a config.
+const CHAIN_CONFIGS = [
+  { name: 'ethereum', chainId: 1, apis: [] },
+  { name: 'arbitrum', chainId: 42161, apis: [] },
+  { name: 'bsc', chainId: 56, apis: [] },
+  { name: 'polygonpos', chainId: 137, apis: [] },
+] as ChainConfig[]
+
 describe(getPrivacyConfig.name, () => {
   it('indexes additional withdrawals of a bucket next to its single deposit', async () => {
     const configs = await getFlowConfigs({
@@ -183,7 +192,7 @@ describe(getPrivacyConfig.name, () => {
       ps,
       env,
       new FeatureFlags('privacy'),
-      [{ name: 'ethereum', chainId: 1, apis: [] } as ChainConfig],
+      CHAIN_CONFIGS,
     )
 
     if (!config) throw new Error('Privacy config not created')
@@ -218,15 +227,19 @@ describe(getPrivacyConfig.name, () => {
       projectService,
       env,
       new FeatureFlags('privacy'),
-      [{ name: 'ethereum', chainId: 1, apis: [] } as ChainConfig],
+      CHAIN_CONFIGS,
     )
 
     if (!config) throw new Error('Privacy config not created')
-    const source = wakuOnlyProject.privacyInfo.relayerTracking
-    if (source?.type !== 'railgunWaku') {
+    const tracking = wakuOnlyProject.privacyInfo.relayerTracking
+    if (tracking?.type !== 'railgunWaku') {
       throw new Error('Railgun should declare railgunWaku relayer tracking')
     }
-    expect(config.relayerSampleConfigs).toEqual([
+    const source = tracking.sources.find((s) => s.chainId === 1)
+    if (!source) throw new Error('Railgun should sample Ethereum relayers')
+    expect(
+      config.relayerSampleConfigs.filter((c) => c.chain === 'ethereum'),
+    ).toEqual([
       {
         id: PrivacyRelayerSampler.idToConfigurationId({
           projectId: 'railgun',
@@ -243,6 +256,87 @@ describe(getPrivacyConfig.name, () => {
     expect(config.relayerConfigs).toHaveLength(0)
     expect(config.blockTimestampConfigs).toHaveLength(0)
     expect(config.chains).toHaveLength(0)
+  })
+
+  it('groups a multi-chain project into one indexer set per chain', async () => {
+    const project = await ps.getProject({
+      slug: 'railgun',
+      select: ['privacyInfo'],
+    })
+    if (!project) throw new Error('Railgun project not found')
+    const projectService = mockObject<ProjectService>({
+      getProjects: mockFn().resolvesToOnce([project]),
+    })
+
+    const config = await getPrivacyConfig(
+      projectService,
+      env,
+      new FeatureFlags('privacy'),
+      [
+        { name: 'ethereum', chainId: 1, apis: [] },
+        { name: 'arbitrum', chainId: 42161, apis: [] },
+        { name: 'bsc', chainId: 56, apis: [] },
+        { name: 'polygonpos', chainId: 137, apis: [] },
+      ] as ChainConfig[],
+    )
+
+    if (!config) throw new Error('Privacy config not created')
+    expect(new Set(config.chains)).toEqual(
+      new Set(['ethereum', 'arbitrum', 'bsc', 'polygonpos']),
+    )
+    for (const chain of config.chains) {
+      const flows = config.flowConfigs.filter((c) => c.chain === chain)
+      expect(flows.length).toBeGreaterThan(0)
+      expect(
+        flows.every((c) => c.chain === chain && c.projectId === 'railgun'),
+      ).toEqual(true)
+    }
+  })
+
+  it('builds one Railgun Waku sample config per source chain', async () => {
+    const project = await ps.getProject({
+      slug: 'railgun',
+      select: ['privacyInfo'],
+    })
+    if (!project) throw new Error('Railgun project not found')
+
+    const sources = [
+      { chainId: 1, sinceTimestamp: UnixTime(1788134400) },
+      { chainId: 42161, sinceTimestamp: UnixTime(1788220800) },
+    ]
+    const projectService = mockObject<ProjectService>({
+      getProjects: mockFn().resolvesToOnce([
+        {
+          ...project,
+          privacyInfo: {
+            ...project.privacyInfo,
+            tokens: [],
+            relayerTracking: { type: 'railgunWaku' as const, sources },
+          },
+        },
+      ]),
+    })
+
+    const config = await getPrivacyConfig(
+      projectService,
+      env,
+      new FeatureFlags('privacy'),
+      [
+        { name: 'ethereum', chainId: 1, apis: [] },
+        { name: 'arbitrum', chainId: 42161, apis: [] },
+      ] as ChainConfig[],
+    )
+
+    if (!config) throw new Error('Privacy config not created')
+    expect(
+      config.relayerSampleConfigs.map((c) => [c.chain, c.chainId]),
+    ).toEqual([
+      ['ethereum', 1],
+      ['arbitrum', 42161],
+    ])
+    expect(new Set(config.relayerSampleConfigs.map((c) => c.id)).size).toEqual(
+      2,
+    )
   })
 
   describe('erc20Transfer sources', () => {
@@ -343,7 +437,7 @@ describe(getPrivacyConfig.name, () => {
       ps,
       new Env({ PRIVACY_MIN_TIMESTAMP: minTimestamp.toString() }),
       new FeatureFlags('privacy'),
-      [{ name: 'ethereum', chainId: 1, apis: [] } as ChainConfig],
+      CHAIN_CONFIGS,
     )
 
     if (config === false) throw new Error('Privacy config should be enabled')
@@ -435,6 +529,7 @@ async function getFlowConfigs(flows: BucketFlows) {
 
   const token: ProjectPrivacyToken = {
     token: {
+      chain: 'ethereum',
       address: TOKEN,
       iconUrl: undefined,
       symbol: 'TKN',

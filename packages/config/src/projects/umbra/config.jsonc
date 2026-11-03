@@ -3,8 +3,21 @@
   "name": "umbra",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
+    // Umbra, StealthKeyRegistry and UmbraBatchSend share addresses on every chain
     "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
     "eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
-    "eth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB"
+    "eth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+    "oeth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+    "oeth:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
+    "oeth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+    "matic:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+    "matic:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
+    "matic:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+    "base:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+    "base:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
+    "base:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+    "arb1:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+    "arb1:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
+    "arb1:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB"
   ]
 }

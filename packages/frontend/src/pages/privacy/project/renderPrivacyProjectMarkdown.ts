@@ -99,9 +99,17 @@ function getFacts(entry: ProjectPrivacyEntry) {
       label: RELAYER_STAT_COPY[relayerStat.kind].title,
       value: formatCount(relayerStat.value),
     },
-    entry.trackedOn.length > 0 && {
-      label: 'Tracked on',
-      value: entry.trackedOn.map((chain) => chain.name).join(', '),
+    entry.chains.length > 1 && {
+      label: 'Showing',
+      value: `Deployment on ${entry.chains.find((chain) => chain.id === entry.chain)?.name ?? entry.chain}. Statistics and contracts follow the chain; the risk assessment describes ${entry.chains[0]?.name}.`,
+    },
+    entry.deployedOn.length > 0 && {
+      label: 'Deployed on',
+      value: entry.deployedOn
+        .map((chain) =>
+          chain.dimmed ? `${chain.name} (not tracked)` : chain.name,
+        )
+        .join(', '),
     },
     entry.attributes.length > 0 && {
       label: 'Attributes',

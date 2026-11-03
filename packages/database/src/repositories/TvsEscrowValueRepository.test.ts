@@ -46,6 +46,54 @@ describeDatabase(TvsEscrowValueRepository.name, (db) => {
     })
   })
 
+  describe(
+    TvsEscrowValueRepository.prototype.getDailyValueByProjectAndChain.name,
+    () => {
+      it('sums the chain escrows at the last timestamp of each day', async () => {
+        const day = UnixTime.fromDate(new Date('2026-10-01T00:00:00Z'))
+        await repository.upsertMany([
+          escrowValue({ timestamp: day, escrowAddress: '0xa', value: 1 }),
+          escrowValue({ timestamp: day, escrowAddress: '0xb', value: 2 }),
+          escrowValue({
+            timestamp: day + UnixTime.HOUR,
+            escrowAddress: '0xa',
+            value: 10,
+          }),
+          escrowValue({
+            timestamp: day + UnixTime.HOUR,
+            escrowAddress: '0xb',
+            value: 20,
+          }),
+          escrowValue({
+            timestamp: day + UnixTime.HOUR,
+            escrowAddress: '0xc',
+            chain: 'arbitrum',
+            value: 100,
+          }),
+          escrowValue({ timestamp: day + UnixTime.DAY, value: 7 }),
+          escrowValue({
+            timestamp: day + UnixTime.DAY,
+            projectId: 'other',
+            configurationId: 'b'.repeat(12),
+            value: 1000,
+          }),
+        ])
+
+        expect(
+          await repository.getDailyValueByProjectAndChain(
+            'project',
+            'ethereum',
+            day,
+            day + 2 * UnixTime.DAY,
+          ),
+        ).toEqual([
+          { timestamp: day + UnixTime.HOUR, value: 30 },
+          { timestamp: day + UnixTime.DAY, value: 7 },
+        ])
+      })
+    },
+  )
+
   describe(TvsEscrowValueRepository.prototype.deleteByConfigIds.name, () => {
     it('deletes rows of the given configurations', async () => {
       const kept = escrowValue({ configurationId: 'b'.repeat(12) })

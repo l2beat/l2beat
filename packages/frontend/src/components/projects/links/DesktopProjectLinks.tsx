@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -22,13 +23,19 @@ import type { ProjectLink } from './types'
 interface Props {
   projectLinks: ProjectLink[]
   discoUiHref?: string
+  /** Rendered at the right end of the row, e.g. a chain switcher. */
+  trailing?: ReactNode
 }
 
-export function DesktopProjectLinks({ projectLinks, discoUiHref }: Props) {
+export function DesktopProjectLinks({
+  projectLinks,
+  discoUiHref,
+  trailing,
+}: Props) {
   const markdownHref = getMarkdownAlternatePath(usePathname())
   return (
     <NavigationMenu asChild>
-      <div>
+      <div className="flex items-center justify-between gap-4">
         <NavigationMenuList>
           {projectLinks.map((link) => (
             <ProjectLinkItem key={link.name} projectLink={link} />
@@ -36,6 +43,7 @@ export function DesktopProjectLinks({ projectLinks, discoUiHref }: Props) {
           {markdownHref && <MarkdownLink href={markdownHref} />}
           {discoUiHref && <DiscoUiLink href={discoUiHref} />}
         </NavigationMenuList>
+        {trailing}
       </div>
     </NavigationMenu>
   )

@@ -4,22 +4,147 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "railgun-ARB",
+      "priceId": "arbitrum",
+      "symbol": "ARB",
+      "name": "Arbitrum",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "chain": "arbitrum",
+        "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+        "decimals": 18,
+        "sinceTimestamp": 1679529600
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1679529600
+        },
+        "priceId": "arbitrum"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "railgun-BUSD",
+      "priceId": "binance-usd",
+      "symbol": "BUSD",
+      "name": "BUSD Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9576/large/busd.png?1785507511",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+        "chain": "bsc",
+        "escrowAddress": "0x590162bf4b50F6576a459B75309eE21D92178A10",
+        "decimals": 18,
+        "sinceTimestamp": 1651429688
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1651429688
+        },
+        "priceId": "binance-usd"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Binance-Peg"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "railgun-DAI",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-        "decimals": 18,
-        "sinceTimestamp": 1651422389
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "decimals": 18,
+            "sinceTimestamp": 1651422389
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+            "chain": "arbitrum",
+            "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "decimals": 18,
+            "sinceTimestamp": 1674903439
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+            "chain": "polygonpos",
+            "escrowAddress": "0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+            "decimals": 18,
+            "sinceTimestamp": 1651425442
+          }
+        ]
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "dai",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "chain": "ethereum",
+              "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+              "decimals": 18,
+              "sinceTimestamp": 1651422389
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1674903439
+            },
+            "priceId": "dai"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1651425442
+            },
+            "priceId": "dai"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -60,6 +185,43 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "railgun-polygonpos-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin (PoS)",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+        "chain": "polygonpos",
+        "escrowAddress": "0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+        "decimals": 6,
+        "sinceTimestamp": 1651425442
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1651425442
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Polygon PoS"
+          }
+        ]
+      },
+      "displaySymbol": "USDC.e"
+    },
+    {
       "mode": "auto",
       "id": "railgun-RAIL",
       "priceId": "railgun",
@@ -80,18 +242,154 @@
     },
     {
       "mode": "auto",
+      "id": "railgun-TEL",
+      "priceId": "telcoin",
+      "symbol": "TEL",
+      "name": "Telcoin (PoS)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/1899/large/telcoin-gray.png?1790362476",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
+        "chain": "polygonpos",
+        "escrowAddress": "0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+        "decimals": 2,
+        "sinceTimestamp": 1651425442
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1651425442
+        },
+        "priceId": "telcoin"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
       "id": "railgun-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
       "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "decimals": 6,
+            "sinceTimestamp": 1651422389
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+            "chain": "arbitrum",
+            "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "decimals": 6,
+            "sinceTimestamp": 1674903439
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+            "chain": "bsc",
+            "escrowAddress": "0x590162bf4b50F6576a459B75309eE21D92178A10",
+            "decimals": 18,
+            "sinceTimestamp": 1651429688
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+            "chain": "polygonpos",
+            "escrowAddress": "0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+            "decimals": 6,
+            "sinceTimestamp": 1689890042
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+              "decimals": 6,
+              "sinceTimestamp": 1651422389
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1674903439
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1651429688
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1689890042
+            },
+            "priceId": "usd-coin"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "railgun-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "USD Coin (Arb1)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
+        "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+        "chain": "arbitrum",
         "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
         "decimals": 6,
-        "sinceTimestamp": 1651422389
+        "sinceTimestamp": 1674903439
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1674903439
+        },
+        "priceId": "usd-coin"
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -105,14 +403,169 @@
       "name": "Tether USD",
       "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "chain": "ethereum",
-        "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-        "decimals": 6,
-        "sinceTimestamp": 1651422389
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "chain": "ethereum",
+            "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "decimals": 6,
+            "sinceTimestamp": 1651422389
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+            "chain": "arbitrum",
+            "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "decimals": 6,
+            "sinceTimestamp": 1706918400
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x55d398326f99059fF775485246999027B3197955",
+            "chain": "bsc",
+            "escrowAddress": "0x590162bf4b50F6576a459B75309eE21D92178A10",
+            "decimals": 18,
+            "sinceTimestamp": 1651429688
+          }
+        ]
       },
       "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+              "decimals": 6,
+              "sinceTimestamp": 1651422389
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1706918400
+            },
+            "priceId": "tether"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1651429688
+            },
+            "priceId": "tether"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "railgun-USDT0",
+      "priceId": "usdt0",
+      "symbol": "USDT0",
+      "name": "USDT0",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+        "chain": "polygonpos",
+        "escrowAddress": "0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+        "decimals": 6,
+        "sinceTimestamp": 1737590400
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1737590400
+        },
+        "priceId": "usdt0"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "railgun-WBNB",
+      "priceId": "wbnb",
+      "symbol": "WBNB",
+      "name": "Wrapped BNB",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12591/large/binance-coin-logo.png?1696512401",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+        "chain": "bsc",
+        "escrowAddress": "0x590162bf4b50F6576a459B75309eE21D92178A10",
+        "decimals": 18,
+        "sinceTimestamp": 1651429688
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1651429688
+        },
+        "priceId": "wbnb"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "railgun-wBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "wBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+        "chain": "arbitrum",
+        "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+        "decimals": 8,
+        "sinceTimestamp": 1674903439
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1674903439
+        },
+        "priceId": "wrapped-bitcoin"
+      },
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -143,14 +596,103 @@
       "name": "Wrapped Ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "chain": "ethereum",
-        "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-        "decimals": 18,
-        "sinceTimestamp": 1651422389
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "chain": "ethereum",
+            "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "decimals": 18,
+            "sinceTimestamp": 1651422389
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+            "chain": "arbitrum",
+            "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+            "decimals": 18,
+            "sinceTimestamp": 1674903439
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+            "chain": "polygonpos",
+            "escrowAddress": "0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+            "decimals": 18,
+            "sinceTimestamp": 1651425442
+          }
+        ]
       },
       "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "weth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "chain": "ethereum",
+              "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+              "decimals": 18,
+              "sinceTimestamp": 1651422389
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1674903439
+            },
+            "priceId": "weth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1651425442
+            },
+            "priceId": "weth"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "railgun-WPOL",
+      "priceId": "wmatic",
+      "symbol": "WPOL",
+      "name": "Wrapped Polygon Ecosystem Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14073/large/matic.png?1696513797",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+        "chain": "polygonpos",
+        "escrowAddress": "0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+        "decimals": 18,
+        "sinceTimestamp": 1651425442
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1651425442
+        },
+        "priceId": "wmatic"
+      },
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     }

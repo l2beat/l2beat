@@ -46,11 +46,14 @@ type DepositSource = Extract<
 
 const WAIT_STEP = `Wait for a randomized duration of time up to ${ANONYMITY_SET_WINDOW_DAYS} days. Do not rely on human judgement to pick a random number.`
 
+/** The project's series, or only those on `chain` when given. */
 export function getPrivacyAnonymitySetSeries(
   project: PrivacyAnonymitySetProject,
+  chain?: string,
 ): PrivacyAnonymitySetSeries[] {
-  return getPrivacyAnonymitySetSources(project.privacyInfo).flatMap(
-    (anonymitySet) => {
+  return getPrivacyAnonymitySetSources(project.privacyInfo)
+    .filter((source) => chain === undefined || source.chain === chain)
+    .flatMap((anonymitySet) => {
       const { bucketId, chain, address, sinceTimestamp, source } = anonymitySet
       const base: SeriesBase = {
         configurationId: createPrivacyAnonymitySetConfigurationId({
@@ -68,8 +71,7 @@ export function getPrivacyAnonymitySetSeries(
       return anonymitySet.type === 'key-registrations'
         ? [getKeyRegistrationsSeries(base, project.name)]
         : getDepositSeries(base, anonymitySet, project.name)
-    },
-  )
+    })
 }
 
 /** Key registrations replace bucket sets; the config tests reject a project with both. */

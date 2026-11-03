@@ -1,8 +1,1035 @@
 {
   "name": "railgun",
-  "timestamp": 1792756093,
-  "configHash": "0x0c3e2877cc5b1aa4ebc5f6e5230b6f5144d679fb900c5e4cb51a9c220462f2d1",
+  "timestamp": 1793641516,
+  "configHash": "0x2a3cac8d9bc825bde024813214e4ffc86411b7d6ea5d064f6e0a378206c48677",
   "entries": [
+    {
+      "address": "arb1:0x20Fa11c4F794eC1db3527bF618B02754FF393bD5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Treasury",
+      "address": "arb1:0x3B374464a714525498e445ba050B91571937bFc8",
+      "type": "Contract",
+      "template": "railgun/Treasury",
+      "sourceHashes": [
+        "0x6719d1d65fb919b52e894f249bcbbde8d2fddde75de20893e50e1b96ec608f06",
+        "0xde83ebac8a9327e2a558ae2f7bc2592cb4d72f0dbc6c6cbd496ba2188dedd743"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Collects Railgun fees. Managed through access control roles.",
+      "ignoreInWatchMode": ["RAILBalance"],
+      "deployerAddress": "arb1:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1674903435,
+      "sinceBlock": 56109823,
+      "values": {
+        "$admin": "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527",
+        "$implementation": "arb1:0x39f3df0a8A2a7469e03A9519A4cDd22525B080c1",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa"]
+          },
+          "TRANSFER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa"]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminRoleMembers": [
+          "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa"
+        ],
+        "RAILBalance": "0",
+        "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
+        "transferRoleMembers": [
+          "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa"
+        ]
+      },
+      "fieldMeta": {
+        "RAILBalance": {
+          "description": "Arbitrum has no RAIL token: Railgun's Arbitrum governance is secured by RAIL staked on Ethereum."
+        },
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the treasury proxy.",
+          "type": "PERMISSION"
+        },
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current treasury implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": "Identifier of the role that administers every treasury role."
+        },
+        "TRANSFER_ROLE": {
+          "description": "Identifier of the role that authorizes ETH and ERC20 transfers out of the treasury."
+        },
+        "accessControl": {
+          "description": "Current treasury role memberships reconstructed from AccessControl events."
+        },
+        "defaultAdminRoleMembers": {
+          "severity": "HIGH",
+          "description": "Addresses that currently hold DEFAULT_ADMIN_ROLE on the treasury.",
+          "type": "PERMISSION"
+        },
+        "transferRoleMembers": {
+          "severity": "HIGH",
+          "description": "Addresses that currently hold TRANSFER_ROLE on the treasury.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "arb1:0x3B374464a714525498e445ba050B91571937bFc8": "PausableUpgradableProxy",
+        "arb1:0x39f3df0a8A2a7469e03A9519A4cDd22525B080c1": "Treasury"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527",
+      "type": "Contract",
+      "template": "railgun/ProxyAdmin",
+      "sourceHashes": [
+        "0x5ba92a6a680d26adb4bb861606bfc99c1cd0b2672627e45173427d523d130354"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.",
+      "critical": true,
+      "deployerAddress": "arb1:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1674903429,
+      "sinceBlock": 56109801,
+      "values": {
+        "$immutable": true,
+        "owner": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa"
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "MEDIUM",
+          "description": "Controller that can operate any Railgun proxy administered by this ProxyAdmin.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527": "ProxyAdmin"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "RelayAdapt",
+      "address": "arb1:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b",
+      "type": "Contract",
+      "template": "railgun/RelayAdapt",
+      "sourceHashes": [
+        "0x8727ddbfca515cb5994d3b867f0ac090e4c070425cd1d707eec73b742d8a2ab7"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "arb1:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
+      "sinceTimestamp": 1753718532,
+      "sinceBlock": 362505138,
+      "values": {
+        "$immutable": true,
+        "railgun": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+        "wBase": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+      },
+      "implementationNames": {
+        "arb1:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b": "RelayAdapt"
+      }
+    },
+    {
+      "name": "Delegator",
+      "address": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa",
+      "type": "Contract",
+      "template": "railgun/Delegator",
+      "sourceHashes": [
+        "0x4312b189d4ac9d726f91850590edd1bdbb2da91196bd9765a03601a8447e0c62"
+      ],
+      "proxyType": "immutable",
+      "description": "Permission router proxy owned by Railgun governance.",
+      "critical": true,
+      "deployerAddress": "arb1:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1674903419,
+      "sinceBlock": 56109765,
+      "values": {
+        "$criticalDelegatedPermissionsRaw": {
+          "arb1:0x7D9ef64f35B6Afda8d258d1d2548a9aC997e35A1": [],
+          "arb1:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E": []
+        },
+        "$delegatedPermissionsRaw": {
+          "arb1:0x7D9ef64f35B6Afda8d258d1d2548a9aC997e35A1": [
+            {
+              "contractAddress": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+              "selector": "0x2ec0f359"
+            }
+          ],
+          "arb1:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E": [
+            {
+              "contractAddress": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+              "selector": "0x2ec0f359"
+            }
+          ]
+        },
+        "$immutable": true,
+        "criticalDelegatedPermissions": [],
+        "delegatedCallers": [
+          "arb1:0x7D9ef64f35B6Afda8d258d1d2548a9aC997e35A1",
+          "arb1:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E"
+        ],
+        "delegatedPermissions": [
+          [
+            "arb1:0x7D9ef64f35B6Afda8d258d1d2548a9aC997e35A1",
+            [
+              {
+                "contractAddress": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+                "selector": "0x2ec0f359"
+              }
+            ]
+          ],
+          [
+            "arb1:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E",
+            [
+              {
+                "contractAddress": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+                "selector": "0x2ec0f359"
+              }
+            ]
+          ]
+        ],
+        "owner": "arb1:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC",
+        "verificationKeyDelegates": []
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "MEDIUM",
+          "description": "Current controller of the Delegator. The owner bypasses the permission bitmap and can call any target through this contract.",
+          "type": "PERMISSION"
+        },
+        "$delegatedPermissionsRaw": {
+          "description": "Internal raw delegated permission map keyed by caller, reconstructed from GrantPermission and RevokePermission events before filtering out callers with no remaining permissions.",
+          "type": "PERMISSION"
+        },
+        "delegatedPermissions": {
+          "description": "Current non-owner delegated call permissions as active [caller, permissions[]] pairs, filtered to callers that still retain at least one delegated permission.",
+          "type": "PERMISSION"
+        },
+        "delegatedCallers": {
+          "description": "Addresses that currently retain at least one delegated permission through the Delegator.",
+          "type": "PERMISSION"
+        },
+        "$criticalDelegatedPermissionsRaw": {
+          "description": "Internal permission map restricted to critical Railgun targets and wildcard permissions.",
+          "type": "PERMISSION"
+        },
+        "criticalDelegatedPermissions": {
+          "severity": "HIGH",
+          "description": "Active delegated permissions targeting a critical Railgun contract, including wildcard permissions.",
+          "type": "PERMISSION"
+        },
+        "verificationKeyDelegates": {
+          "severity": "HIGH",
+          "description": "Delegated callers currently allowed to update Railgun smart wallet SNARK verification keys through the Delegator.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa": "Delegator"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "ArbitrumExecutor",
+      "address": "arb1:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC",
+      "type": "Contract",
+      "template": "railgun/ArbitrumExecutor",
+      "sourceHashes": [
+        "0x24ee587da4fbf9619faf09134c425555a51340139a3396af42c61134270757b8"
+      ],
+      "proxyType": "immutable",
+      "description": "Executes Railgun governance tasks on Arbitrum. The Ethereum Voting contract (SENDER_L1) readies a task through a retryable ticket, after which anyone can execute its calls through the Arbitrum Delegator within 1mo 10d.",
+      "critical": true,
+      "deployerAddress": "arb1:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1674903698,
+      "sinceBlock": 56110717,
+      "values": {
+        "$immutable": true,
+        "ARB_RETRYABLE_TX": "arb1:0x000000000000000000000000000000000000006E",
+        "DELEGATOR": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa",
+        "EXPIRY_TIME": "1mo 10d",
+        "newTicketTimeout": 604800,
+        "SENDER_L1": "arb1:0x20Fa11c4F794eC1db3527bF618B02754FF393bD5",
+        "ticketTimeLeft": []
+      },
+      "fieldMeta": {
+        "SENDER_L1": {
+          "severity": "HIGH",
+          "description": "Ethereum contract whose aliased address may ready tasks for execution: the Railgun Voting contract."
+        },
+        "DELEGATOR": {
+          "severity": "HIGH",
+          "description": "Arbitrum Delegator through which readied tasks are executed."
+        },
+        "EXPIRY_TIME": {
+          "description": "Time after creation within which a readied task can be executed."
+        }
+      },
+      "implementationNames": {
+        "arb1:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC": "ArbitrumExecutor"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "RailgunSmartWallet",
+      "address": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+      "type": "Contract",
+      "template": "railgun/RailgunSmartWallet",
+      "sourceHashes": [
+        "0x6719d1d65fb919b52e894f249bcbbde8d2fddde75de20893e50e1b96ec608f06",
+        "0xb6d8961a0f486e51d0c52fe1292f627928dba2087f6e643379207033c0966965"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.",
+      "critical": true,
+      "deployerAddress": "arb1:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1674903439,
+      "sinceBlock": 56109834,
+      "values": {
+        "$admin": "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527",
+        "$implementation": "arb1:0x4799527d8B767354FfC14E849cAE94A644A1F221",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "blocklistAdditionCount": 0,
+        "blocklistRemovalCount": 0,
+        "feeChangeCount": 1,
+        "logicOwnershipChangeCount": 3,
+        "nftFee": 25,
+        "owner": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa",
+        "paused": 0,
+        "proxyOwnershipChangeCount": 0,
+        "proxyPauseCount": 0,
+        "proxyUnpauseCount": 1,
+        "shieldFee": 25,
+        "tokenBlocklist": [],
+        "treasury": "arb1:0x3B374464a714525498e445ba050B91571937bFc8",
+        "unshieldFee": 25,
+        "verificationKeyChangeCount": 198,
+        "ZERO_VALUE": "0x0488f89b25bc7011eaf6a5edce71aeafb9fe706faa3c0a5cd9cbe868ae3b9ffc"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "MEDIUM",
+          "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet proxy.",
+          "type": "PERMISSION"
+        },
+        "$implementation": {
+          "description": "Current Railgun smart wallet implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "owner": {
+          "severity": "MEDIUM",
+          "description": "Governance-controlled owner of the smart wallet logic.",
+          "type": "PERMISSION"
+        },
+        "treasury": {
+          "severity": "MEDIUM",
+          "description": "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
+        },
+        "shieldFee": {
+          "severity": "MEDIUM",
+          "description": "Basis-point fee charged on shield operations.",
+          "type": "RISK_PARAMETER"
+        },
+        "unshieldFee": {
+          "severity": "HIGH",
+          "description": "Basis-point fee charged on unshield operations.",
+          "type": "RISK_PARAMETER"
+        },
+        "nftFee": {
+          "severity": "LOW",
+          "description": "Flat fee placeholder for NFT flows. The source notes that NFT fee logic is not currently implemented.",
+          "type": "RISK_PARAMETER"
+        },
+        "tokenBlocklist": {
+          "severity": "MEDIUM",
+          "description": "Tokens currently blocked from being newly shielded into Railgun, reconstructed from blocklist events.",
+          "type": "EXTERNAL"
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Whether the smart wallet proxy currently blocks all calls to its implementation."
+        },
+        "proxyOwnershipChangeCount": {
+          "description": "Number of proxy ownership transfers, including changes later reverted."
+        },
+        "proxyPauseCount": {
+          "severity": "MEDIUM",
+          "description": "Number of times the proxy has been paused."
+        },
+        "proxyUnpauseCount": {
+          "severity": "MEDIUM",
+          "description": "Number of times the proxy has been unpaused."
+        },
+        "logicOwnershipChangeCount": {
+          "description": "Number of logic ownership transfers, including changes later reverted."
+        },
+        "feeChangeCount": {
+          "description": "Number of fee schedule changes, including changes later reverted."
+        },
+        "blocklistAdditionCount": {
+          "severity": "MEDIUM",
+          "description": "Number of token blocklist additions, including additions later reverted."
+        },
+        "blocklistRemovalCount": {
+          "severity": "MEDIUM",
+          "description": "Number of token blocklist removals, including removals later reverted."
+        },
+        "verificationKeyChangeCount": {
+          "severity": "HIGH",
+          "description": "Number of SNARK verification key changes, including keys later replaced or restored."
+        },
+        "ZERO_VALUE": {
+          "description": "Base zero value used to seed the commitment-tree zero hash chain."
+        },
+        "zeros": {
+          "description": "Precomputed zero hashes for the 16-level commitment tree."
+        }
+      },
+      "implementationNames": {
+        "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9": "PausableUpgradableProxy",
+        "arb1:0x4799527d8B767354FfC14E849cAE94A644A1F221": "RailgunSmartWallet"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2",
+      "type": "Contract",
+      "template": "railgun/ProxyAdmin",
+      "sourceHashes": [
+        "0x0642c913712ca7d22bb11e5be42f712f7895cbcf1f3e2a8104ce8d67baef4345"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.",
+      "critical": true,
+      "deployerAddress": "bnb:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1633843449,
+      "sinceBlock": 11643060,
+      "values": {
+        "$immutable": true,
+        "owner": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7"
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "MEDIUM",
+          "description": "Controller that can operate any Railgun proxy administered by this ProxyAdmin.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2": "ProxyAdmin"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "RailTokenFixedSupply",
+      "address": "bnb:0x3F847b01d4d498a293e3197B186356039eCd737F",
+      "type": "Contract",
+      "template": "railgun/RailTokenFixedSupply",
+      "sourceHashes": [
+        "0x9b331d28db80054b46b40ff9d1bd2cc4586044a8cd0f22ded9f522bcabc9ad88"
+      ],
+      "proxyType": "immutable",
+      "description": "RAIL governance token of this chain's Railgun deployment, minted once to its initial holder with no owner and no further minting. Staking it gives voting power in this chain's DAO.",
+      "critical": true,
+      "deployerAddress": "bnb:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1633700190,
+      "sinceBlock": 11595450,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "Rail BSC",
+        "symbol": "RAILBSC",
+        "totalSupply": "44,546,789.495998077268495206"
+      },
+      "fieldMeta": {
+        "totalSupply": { "description": "Fixed RAIL supply on this chain." }
+      },
+      "implementationNames": {
+        "bnb:0x3F847b01d4d498a293e3197B186356039eCd737F": "RailTokenFixedSupply"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "Delegator",
+      "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7",
+      "type": "Contract",
+      "template": "railgun/Delegator",
+      "sourceHashes": [
+        "0xb2e5d4b92141657f0ac259d83e128a7a6504cd491e1326fa625354186d937b28"
+      ],
+      "proxyType": "immutable",
+      "description": "Permission router proxy owned by Railgun governance.",
+      "critical": true,
+      "deployerAddress": "bnb:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1633843437,
+      "sinceBlock": 11643056,
+      "values": {
+        "$criticalDelegatedPermissionsRaw": {
+          "bnb:0x0219B4C1ADcEC8f4206b528832F66aB76766873D": [],
+          "bnb:0x17cF6Db98B05a0329c983f3a3b45d37d9cf1De86": [],
+          "bnb:0xCC29DBF69896278a0C6B886Ef8Cc30A56fA6164a": [],
+          "bnb:0xEd0e97cA39973Dc97416460b113F161Be6F07a08": [],
+          "bnb:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E": []
+        },
+        "$delegatedPermissionsRaw": {
+          "bnb:0x0219B4C1ADcEC8f4206b528832F66aB76766873D": [],
+          "bnb:0x17cF6Db98B05a0329c983f3a3b45d37d9cf1De86": [],
+          "bnb:0xCC29DBF69896278a0C6B886Ef8Cc30A56fA6164a": [],
+          "bnb:0xEd0e97cA39973Dc97416460b113F161Be6F07a08": [
+            {
+              "contractAddress": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+              "selector": "0x2ec0f359"
+            }
+          ],
+          "bnb:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E": [
+            {
+              "contractAddress": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+              "selector": "0x2ec0f359"
+            }
+          ]
+        },
+        "$immutable": true,
+        "criticalDelegatedPermissions": [],
+        "delegatedCallers": [
+          "bnb:0xEd0e97cA39973Dc97416460b113F161Be6F07a08",
+          "bnb:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E"
+        ],
+        "delegatedPermissions": [
+          [
+            "bnb:0xEd0e97cA39973Dc97416460b113F161Be6F07a08",
+            [
+              {
+                "contractAddress": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+                "selector": "0x2ec0f359"
+              }
+            ]
+          ],
+          [
+            "bnb:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E",
+            [
+              {
+                "contractAddress": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+                "selector": "0x2ec0f359"
+              }
+            ]
+          ]
+        ],
+        "owner": "bnb:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88",
+        "verificationKeyDelegates": []
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "MEDIUM",
+          "description": "Current controller of the Delegator. The owner bypasses the permission bitmap and can call any target through this contract.",
+          "type": "PERMISSION"
+        },
+        "$delegatedPermissionsRaw": {
+          "description": "Internal raw delegated permission map keyed by caller, reconstructed from GrantPermission and RevokePermission events before filtering out callers with no remaining permissions.",
+          "type": "PERMISSION"
+        },
+        "delegatedPermissions": {
+          "description": "Current non-owner delegated call permissions as active [caller, permissions[]] pairs, filtered to callers that still retain at least one delegated permission.",
+          "type": "PERMISSION"
+        },
+        "delegatedCallers": {
+          "description": "Addresses that currently retain at least one delegated permission through the Delegator.",
+          "type": "PERMISSION"
+        },
+        "$criticalDelegatedPermissionsRaw": {
+          "description": "Internal permission map restricted to critical Railgun targets and wildcard permissions.",
+          "type": "PERMISSION"
+        },
+        "criticalDelegatedPermissions": {
+          "severity": "HIGH",
+          "description": "Active delegated permissions targeting a critical Railgun contract, including wildcard permissions.",
+          "type": "PERMISSION"
+        },
+        "verificationKeyDelegates": {
+          "severity": "HIGH",
+          "description": "Delegated callers currently allowed to update Railgun smart wallet SNARK verification keys through the Delegator.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7": "Delegator"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "RailgunSmartWallet",
+      "address": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+      "type": "Contract",
+      "template": "railgun/RailgunSmartWallet",
+      "sourceHashes": [
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
+        "0xb6d8961a0f486e51d0c52fe1292f627928dba2087f6e643379207033c0966965"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.",
+      "critical": true,
+      "deployerAddress": "bnb:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1651429688,
+      "sinceBlock": 17431925,
+      "values": {
+        "$admin": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2",
+        "$implementation": "bnb:0x4799527d8B767354FfC14E849cAE94A644A1F221",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "blocklistAdditionCount": 0,
+        "blocklistRemovalCount": 0,
+        "feeChangeCount": 1,
+        "logicOwnershipChangeCount": 2,
+        "nftFee": 0,
+        "owner": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7",
+        "paused": 0,
+        "proxyOwnershipChangeCount": 0,
+        "proxyPauseCount": 0,
+        "proxyUnpauseCount": 1,
+        "shieldFee": 25,
+        "tokenBlocklist": [],
+        "treasury": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+        "unshieldFee": 25,
+        "verificationKeyChangeCount": 150,
+        "ZERO_VALUE": "0x0488f89b25bc7011eaf6a5edce71aeafb9fe706faa3c0a5cd9cbe868ae3b9ffc"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "MEDIUM",
+          "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet proxy.",
+          "type": "PERMISSION"
+        },
+        "$implementation": {
+          "description": "Current Railgun smart wallet implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "owner": {
+          "severity": "MEDIUM",
+          "description": "Governance-controlled owner of the smart wallet logic.",
+          "type": "PERMISSION"
+        },
+        "treasury": {
+          "severity": "MEDIUM",
+          "description": "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
+        },
+        "shieldFee": {
+          "severity": "MEDIUM",
+          "description": "Basis-point fee charged on shield operations.",
+          "type": "RISK_PARAMETER"
+        },
+        "unshieldFee": {
+          "severity": "HIGH",
+          "description": "Basis-point fee charged on unshield operations.",
+          "type": "RISK_PARAMETER"
+        },
+        "nftFee": {
+          "severity": "LOW",
+          "description": "Flat fee placeholder for NFT flows. The source notes that NFT fee logic is not currently implemented.",
+          "type": "RISK_PARAMETER"
+        },
+        "tokenBlocklist": {
+          "severity": "MEDIUM",
+          "description": "Tokens currently blocked from being newly shielded into Railgun, reconstructed from blocklist events.",
+          "type": "EXTERNAL"
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Whether the smart wallet proxy currently blocks all calls to its implementation."
+        },
+        "proxyOwnershipChangeCount": {
+          "description": "Number of proxy ownership transfers, including changes later reverted."
+        },
+        "proxyPauseCount": {
+          "severity": "MEDIUM",
+          "description": "Number of times the proxy has been paused."
+        },
+        "proxyUnpauseCount": {
+          "severity": "MEDIUM",
+          "description": "Number of times the proxy has been unpaused."
+        },
+        "logicOwnershipChangeCount": {
+          "description": "Number of logic ownership transfers, including changes later reverted."
+        },
+        "feeChangeCount": {
+          "description": "Number of fee schedule changes, including changes later reverted."
+        },
+        "blocklistAdditionCount": {
+          "severity": "MEDIUM",
+          "description": "Number of token blocklist additions, including additions later reverted."
+        },
+        "blocklistRemovalCount": {
+          "severity": "MEDIUM",
+          "description": "Number of token blocklist removals, including removals later reverted."
+        },
+        "verificationKeyChangeCount": {
+          "severity": "HIGH",
+          "description": "Number of SNARK verification key changes, including keys later replaced or restored."
+        },
+        "ZERO_VALUE": {
+          "description": "Base zero value used to seed the commitment-tree zero hash chain."
+        },
+        "zeros": {
+          "description": "Precomputed zero hashes for the 16-level commitment tree."
+        }
+      },
+      "implementationNames": {
+        "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10": "PausableUpgradableProxy",
+        "bnb:0x4799527d8B767354FfC14E849cAE94A644A1F221": "RailgunSmartWallet"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Staking",
+      "address": "bnb:0x753f0F9BA003DDA95eb9284533Cf5B0F19e441dc",
+      "type": "Contract",
+      "template": "railgun/Staking",
+      "sourceHashes": [
+        "0x12d1c6ff9fbd0f99b457b153c78e8f364a9aad6b9bfed98b2b682b53870cc5e4"
+      ],
+      "proxyType": "immutable",
+      "description": "RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.",
+      "critical": true,
+      "ignoreInWatchMode": ["RAILStaked"],
+      "deployerAddress": "bnb:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1633700196,
+      "sinceBlock": 11595452,
+      "values": {
+        "$immutable": true,
+        "DEPLOY_TIME": 1633700196,
+        "intervalAtTime": [],
+        "RAILStaked": "0",
+        "SNAPSHOT_INTERVAL": 86400,
+        "SNAPSHOT_INTERVAL_fmt": "1d",
+        "STAKE_LOCKTIME": 2592000,
+        "STAKE_LOCKTIME_fmt": "1mo",
+        "stakingToken": "bnb:0x3F847b01d4d498a293e3197B186356039eCd737F"
+      },
+      "fieldMeta": {
+        "RAILStaked": {
+          "description": "Total RAIL locked in this contract by governance participants for voting power."
+        },
+        "stakingToken": {
+          "description": "RAIL token contract that users lock here to obtain voting power."
+        },
+        "STAKE_LOCKTIME": {
+          "description": "Delay between unlocking a stake and being able to claim the underlying RAIL.",
+          "type": "RISK_PARAMETER"
+        },
+        "SNAPSHOT_INTERVAL": {
+          "description": "Length of the interval used when taking governance voting-power snapshots.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "bnb:0x753f0F9BA003DDA95eb9284533Cf5B0F19e441dc": "Staking"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "GovernorRewards",
+      "address": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+      "type": "Contract",
+      "template": "railgun/GovernorRewards",
+      "sourceHashes": [
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
+        "0xfe182358adbab091fd4af273d3cd98fe8b507eeb8a230e1b538a26a612d68ee9"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.",
+      "deployerAddress": "bnb:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1669147019,
+      "sinceBlock": 23283971,
+      "values": {
+        "$admin": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2",
+        "$implementation": "bnb:0x370C9B5148AA04257Bc8289Ba1eE69f9F286B4E0",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "BASIS_POINTS": 10000,
+        "DISTRIBUTION_INTERVAL": 1209600,
+        "intervalAtTime": [],
+        "intervalBP": 420,
+        "owner": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7",
+        "staking": "bnb:0x753f0F9BA003DDA95eb9284533Cf5B0F19e441dc",
+        "STAKING_DEPLOY_TIME": 1633700196,
+        "STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER": 14,
+        "treasury": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards proxy.",
+          "type": "PERMISSION"
+        },
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current GovernorRewards implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "owner": {
+          "severity": "HIGH",
+          "description": "Current owner of the GovernorRewards logic.",
+          "type": "PERMISSION"
+        },
+        "staking": {
+          "severity": "HIGH",
+          "description": "Staking contract whose snapshots determine each interval's reward allocation."
+        },
+        "treasury": {
+          "severity": "HIGH",
+          "description": "Treasury contract that supplies tokens distributed by GovernorRewards."
+        },
+        "intervalBP": {
+          "severity": "HIGH",
+          "description": "Basis points of treasury balance earmarked for rewards on each distribution interval.",
+          "type": "RISK_PARAMETER"
+        },
+        "DISTRIBUTION_INTERVAL": {
+          "severity": "HIGH",
+          "description": "Length of one reward-distribution interval.",
+          "type": "RISK_PARAMETER"
+        },
+        "STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER": {
+          "severity": "HIGH",
+          "description": "Number of staking snapshot intervals combined into one rewards interval.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8": "PausableUpgradableProxy",
+        "bnb:0x370C9B5148AA04257Bc8289Ba1eE69f9F286B4E0": "GovernorRewards"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "Voting",
+      "address": "bnb:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88",
+      "type": "Contract",
+      "template": "railgun/Voting",
+      "sourceHashes": [
+        "0xb43f60b5a1864a059b570289a0d863684c488d36606efea6af35821ad64b0e69"
+      ],
+      "proxyType": "immutable",
+      "description": "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.",
+      "critical": true,
+      "deployerAddress": "bnb:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1662742842,
+      "sinceBlock": 21186883,
+      "values": {
+        "$immutable": true,
+        "DELEGATOR_CONTRACT": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7",
+        "EXECUTION_END_OFFSET": 1209600,
+        "EXECUTION_START_OFFSET": 604800,
+        "PROPOSAL_SPONSOR_THRESHOLD": "500000000000000000000000",
+        "proposalCount": 13,
+        "QUORUM": "2000000000000000000000000",
+        "SPONSOR_LOCKOUT_TIME": 604800,
+        "SPONSOR_WINDOW": 2592000,
+        "STAKING_CONTRACT": "bnb:0x753f0F9BA003DDA95eb9284533Cf5B0F19e441dc",
+        "VOTING_NAY_END_OFFSET": 518400,
+        "VOTING_START_OFFSET": 172800,
+        "VOTING_YAY_END_OFFSET": 432000
+      },
+      "fieldMeta": {
+        "proposalCount": {
+          "description": "Number of governance proposals published. Proposals are updates, but do not change the system until executed."
+        },
+        "DELEGATOR_CONTRACT": {
+          "description": "Delegator contract that executes successful proposal actions."
+        },
+        "STAKING_CONTRACT": {
+          "description": "Staking contract whose snapshots determine sponsorship and voting power."
+        },
+        "QUORUM": {
+          "description": "Minimum affirmative voting power required for a proposal to reach quorum.",
+          "type": "RISK_PARAMETER"
+        },
+        "PROPOSAL_SPONSOR_THRESHOLD": {
+          "description": "Minimum sponsorship required before a proposal can be moved into the voting phase.",
+          "type": "RISK_PARAMETER"
+        },
+        "SPONSOR_WINDOW": {
+          "description": "Maximum time after publication during which a proposal can collect sponsorship.",
+          "type": "RISK_PARAMETER"
+        },
+        "SPONSOR_LOCKOUT_TIME": {
+          "description": "Cooldown that limits how often the same account can newly sponsor different proposals.",
+          "type": "RISK_PARAMETER"
+        },
+        "VOTING_START_OFFSET": {
+          "description": "Delay between calling a proposal to vote and the opening of the voting window.",
+          "type": "RISK_PARAMETER"
+        },
+        "VOTING_YAY_END_OFFSET": {
+          "description": "Deadline for casting affirmative votes after a vote has been called.",
+          "type": "RISK_PARAMETER"
+        },
+        "VOTING_NAY_END_OFFSET": {
+          "description": "Deadline for casting negative votes after a vote has been called.",
+          "type": "RISK_PARAMETER"
+        },
+        "EXECUTION_START_OFFSET": {
+          "description": "Delay between a successful vote and when execution can begin.",
+          "type": "RISK_PARAMETER"
+        },
+        "EXECUTION_END_OFFSET": {
+          "description": "End of the execution window for a successful proposal.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "bnb:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88": "Voting"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "GovernorRewards",
+      "address": "bnb:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
+        "0x74063ef2d88d57a23455db3f45eb9d33a8f91acf572f2ffd54741bc945498a43"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Abandoned first GovernorRewards proxy. Every call to it reverts, but it still holds TRANSFER_ROLE on the BSC Treasury.",
+      "deployerAddress": "bnb:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1662742770,
+      "sinceBlock": 21186859,
+      "values": {
+        "$admin": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7",
+        "$implementation": "bnb:0x7D9ef64f35B6Afda8d258d1d2548a9aC997e35A1",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "distributionIntervalToStakingInterval": [],
+        "intervalAtTime": [],
+        "precalculatedGlobalSnapshots": []
+      },
+      "implementationNames": {
+        "bnb:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b": "PausableUpgradableProxy",
+        "bnb:0x7D9ef64f35B6Afda8d258d1d2548a9aC997e35A1": "GovernorRewards"
+      }
+    },
+    {
+      "name": "Treasury",
+      "address": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+      "type": "Contract",
+      "template": "railgun/Treasury",
+      "sourceHashes": [
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
+        "0x38e90021f1f1c6b5378b5a32d25769119a4c3c07b14c2f813eb2b7a6264172cd"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Collects Railgun fees. Managed through access control roles.",
+      "ignoreInWatchMode": ["RAILBalance"],
+      "deployerAddress": "bnb:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1662742692,
+      "sinceBlock": 21186833,
+      "values": {
+        "$admin": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2",
+        "$implementation": "bnb:0x1a73E89D101Ea0083691A624962bb86831EEC757",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7"]
+          },
+          "TRANSFER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7",
+              "bnb:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b",
+              "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8"
+            ]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminRoleMembers": [
+          "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7"
+        ],
+        "RAILBalance": "0.629712485507993196",
+        "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
+        "transferRoleMembers": [
+          "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7",
+          "bnb:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b",
+          "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8"
+        ]
+      },
+      "fieldMeta": {
+        "RAILBalance": {
+          "description": "RAIL held by the treasury, movable by holders of TRANSFER_ROLE."
+        },
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the treasury proxy.",
+          "type": "PERMISSION"
+        },
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current treasury implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": "Identifier of the role that administers every treasury role."
+        },
+        "TRANSFER_ROLE": {
+          "description": "Identifier of the role that authorizes ETH and ERC20 transfers out of the treasury."
+        },
+        "accessControl": {
+          "description": "Current treasury role memberships reconstructed from AccessControl events."
+        },
+        "defaultAdminRoleMembers": {
+          "severity": "HIGH",
+          "description": "Addresses that currently hold DEFAULT_ADMIN_ROLE on the treasury.",
+          "type": "PERMISSION"
+        },
+        "transferRoleMembers": {
+          "severity": "HIGH",
+          "description": "Addresses that currently hold TRANSFER_ROLE on the treasury.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094": "PausableUpgradableProxy",
+        "bnb:0x1a73E89D101Ea0083691A624962bb86831EEC757": "Treasury"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "RelayAdapt",
+      "address": "bnb:0xF82d00fC51F730F42A00F85E74895a2849ffF2Dd",
+      "type": "Contract",
+      "template": "railgun/RelayAdapt",
+      "sourceHashes": [
+        "0x8727ddbfca515cb5994d3b867f0ac090e4c070425cd1d707eec73b742d8a2ab7"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "bnb:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
+      "sinceTimestamp": 1753718756,
+      "sinceBlock": 55627697,
+      "values": {
+        "$immutable": true,
+        "railgun": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+        "wBase": "bnb:0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+      },
+      "implementationNames": {
+        "bnb:0xF82d00fC51F730F42A00F85E74895a2849ffF2Dd": "RelayAdapt"
+      }
+    },
     {
       "name": "RelayAdapt7702_05ae",
       "address": "eth:0x05ae73c5925d843864ae6F261f3175De2ebCd963",
@@ -998,7 +2025,7 @@
         "defaultAdminRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
         ],
-        "RAILBalance": "2,026,604.203074334105502209",
+        "RAILBalance": "2,028,870.626226010477865625",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "transferRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
@@ -1072,7 +2099,7 @@
         "$immutable": true,
         "DEPLOY_TIME": 1625670240,
         "intervalAtTime": [],
-        "RAILStaked": "42,527,262.006558543126287672",
+        "RAILStaked": "41,631,776.50625965587401681",
         "SNAPSHOT_INTERVAL": 86400,
         "SNAPSHOT_INTERVAL_fmt": "1d",
         "STAKE_LOCKTIME": 2592000,
@@ -1311,9 +2338,1095 @@
         "eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C": "RailgunSmartWallet"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "RailgunSmartWallet",
+      "address": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+      "type": "Contract",
+      "template": "railgun/RailgunSmartWallet",
+      "sourceHashes": [
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
+        "0xb6d8961a0f486e51d0c52fe1292f627928dba2087f6e643379207033c0966965"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.",
+      "critical": true,
+      "deployerAddress": "matic:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1651425442,
+      "sinceBlock": 27803253,
+      "values": {
+        "$admin": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A",
+        "$implementation": "matic:0x4799527d8B767354FfC14E849cAE94A644A1F221",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "blocklistAdditionCount": 0,
+        "blocklistRemovalCount": 0,
+        "feeChangeCount": 1,
+        "logicOwnershipChangeCount": 2,
+        "nftFee": 0,
+        "owner": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7",
+        "paused": 0,
+        "proxyOwnershipChangeCount": 0,
+        "proxyPauseCount": 0,
+        "proxyUnpauseCount": 1,
+        "shieldFee": 25,
+        "tokenBlocklist": [],
+        "treasury": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+        "unshieldFee": 25,
+        "verificationKeyChangeCount": 150,
+        "ZERO_VALUE": "0x0488f89b25bc7011eaf6a5edce71aeafb9fe706faa3c0a5cd9cbe868ae3b9ffc"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "MEDIUM",
+          "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet proxy.",
+          "type": "PERMISSION"
+        },
+        "$implementation": {
+          "description": "Current Railgun smart wallet implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "owner": {
+          "severity": "MEDIUM",
+          "description": "Governance-controlled owner of the smart wallet logic.",
+          "type": "PERMISSION"
+        },
+        "treasury": {
+          "severity": "MEDIUM",
+          "description": "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
+        },
+        "shieldFee": {
+          "severity": "MEDIUM",
+          "description": "Basis-point fee charged on shield operations.",
+          "type": "RISK_PARAMETER"
+        },
+        "unshieldFee": {
+          "severity": "HIGH",
+          "description": "Basis-point fee charged on unshield operations.",
+          "type": "RISK_PARAMETER"
+        },
+        "nftFee": {
+          "severity": "LOW",
+          "description": "Flat fee placeholder for NFT flows. The source notes that NFT fee logic is not currently implemented.",
+          "type": "RISK_PARAMETER"
+        },
+        "tokenBlocklist": {
+          "severity": "MEDIUM",
+          "description": "Tokens currently blocked from being newly shielded into Railgun, reconstructed from blocklist events.",
+          "type": "EXTERNAL"
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Whether the smart wallet proxy currently blocks all calls to its implementation."
+        },
+        "proxyOwnershipChangeCount": {
+          "description": "Number of proxy ownership transfers, including changes later reverted."
+        },
+        "proxyPauseCount": {
+          "severity": "MEDIUM",
+          "description": "Number of times the proxy has been paused."
+        },
+        "proxyUnpauseCount": {
+          "severity": "MEDIUM",
+          "description": "Number of times the proxy has been unpaused."
+        },
+        "logicOwnershipChangeCount": {
+          "description": "Number of logic ownership transfers, including changes later reverted."
+        },
+        "feeChangeCount": {
+          "description": "Number of fee schedule changes, including changes later reverted."
+        },
+        "blocklistAdditionCount": {
+          "severity": "MEDIUM",
+          "description": "Number of token blocklist additions, including additions later reverted."
+        },
+        "blocklistRemovalCount": {
+          "severity": "MEDIUM",
+          "description": "Number of token blocklist removals, including removals later reverted."
+        },
+        "verificationKeyChangeCount": {
+          "severity": "HIGH",
+          "description": "Number of SNARK verification key changes, including keys later replaced or restored."
+        },
+        "ZERO_VALUE": {
+          "description": "Base zero value used to seed the commitment-tree zero hash chain."
+        },
+        "zeros": {
+          "description": "Precomputed zero hashes for the 16-level commitment tree."
+        }
+      },
+      "implementationNames": {
+        "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71": "PausableUpgradableProxy",
+        "matic:0x4799527d8B767354FfC14E849cAE94A644A1F221": "RailgunSmartWallet"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "GovernorRewards",
+      "address": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+      "type": "Contract",
+      "template": "railgun/GovernorRewards",
+      "sourceHashes": [
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
+        "0xfe182358adbab091fd4af273d3cd98fe8b507eeb8a230e1b538a26a612d68ee9"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.",
+      "deployerAddress": "matic:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1669146467,
+      "sinceBlock": 35938117,
+      "values": {
+        "$admin": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A",
+        "$implementation": "matic:0x627A890680FDce711f15912C7253e8dee0022D25",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "BASIS_POINTS": 10000,
+        "DISTRIBUTION_INTERVAL": 1209600,
+        "intervalAtTime": [],
+        "intervalBP": 420,
+        "owner": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7",
+        "staking": "matic:0x9AC2bA4bf7FaCB0bbB33447e5fF8f8D63B71dDC1",
+        "STAKING_DEPLOY_TIME": 1634534721,
+        "STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER": 14,
+        "treasury": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards proxy.",
+          "type": "PERMISSION"
+        },
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current GovernorRewards implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "owner": {
+          "severity": "HIGH",
+          "description": "Current owner of the GovernorRewards logic.",
+          "type": "PERMISSION"
+        },
+        "staking": {
+          "severity": "HIGH",
+          "description": "Staking contract whose snapshots determine each interval's reward allocation."
+        },
+        "treasury": {
+          "severity": "HIGH",
+          "description": "Treasury contract that supplies tokens distributed by GovernorRewards."
+        },
+        "intervalBP": {
+          "severity": "HIGH",
+          "description": "Basis points of treasury balance earmarked for rewards on each distribution interval.",
+          "type": "RISK_PARAMETER"
+        },
+        "DISTRIBUTION_INTERVAL": {
+          "severity": "HIGH",
+          "description": "Length of one reward-distribution interval.",
+          "type": "RISK_PARAMETER"
+        },
+        "STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER": {
+          "severity": "HIGH",
+          "description": "Number of staking snapshot intervals combined into one rewards interval.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52": "PausableUpgradableProxy",
+        "matic:0x627A890680FDce711f15912C7253e8dee0022D25": "GovernorRewards"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A",
+      "type": "Contract",
+      "template": "railgun/ProxyAdmin",
+      "sourceHashes": [
+        "0x0642c913712ca7d22bb11e5be42f712f7895cbcf1f3e2a8104ce8d67baef4345"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.",
+      "critical": true,
+      "deployerAddress": "matic:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1634534773,
+      "sinceBlock": 20336209,
+      "values": {
+        "$immutable": true,
+        "owner": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7"
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "MEDIUM",
+          "description": "Controller that can operate any Railgun proxy administered by this ProxyAdmin.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A": "ProxyAdmin"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "Delegator",
+      "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7",
+      "type": "Contract",
+      "template": "railgun/Delegator",
+      "sourceHashes": [
+        "0xb2e5d4b92141657f0ac259d83e128a7a6504cd491e1326fa625354186d937b28"
+      ],
+      "proxyType": "immutable",
+      "description": "Permission router proxy owned by Railgun governance.",
+      "critical": true,
+      "deployerAddress": "matic:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1634534733,
+      "sinceBlock": 20336199,
+      "values": {
+        "$criticalDelegatedPermissionsRaw": {
+          "matic:0x0219B4C1ADcEC8f4206b528832F66aB76766873D": [],
+          "matic:0x17cF6Db98B05a0329c983f3a3b45d37d9cf1De86": [],
+          "matic:0xCC29DBF69896278a0C6B886Ef8Cc30A56fA6164a": [],
+          "matic:0x4025ee6512DBbda97049Bcf5AA5D38C54aF6bE8a": [],
+          "matic:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E": []
+        },
+        "$delegatedPermissionsRaw": {
+          "matic:0x0219B4C1ADcEC8f4206b528832F66aB76766873D": [],
+          "matic:0x17cF6Db98B05a0329c983f3a3b45d37d9cf1De86": [],
+          "matic:0xCC29DBF69896278a0C6B886Ef8Cc30A56fA6164a": [],
+          "matic:0x4025ee6512DBbda97049Bcf5AA5D38C54aF6bE8a": [
+            {
+              "contractAddress": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+              "selector": "0x2ec0f359"
+            }
+          ],
+          "matic:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E": [
+            {
+              "contractAddress": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+              "selector": "0x2ec0f359"
+            }
+          ]
+        },
+        "$immutable": true,
+        "criticalDelegatedPermissions": [],
+        "delegatedCallers": [
+          "matic:0x4025ee6512DBbda97049Bcf5AA5D38C54aF6bE8a",
+          "matic:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E"
+        ],
+        "delegatedPermissions": [
+          [
+            "matic:0x4025ee6512DBbda97049Bcf5AA5D38C54aF6bE8a",
+            [
+              {
+                "contractAddress": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+                "selector": "0x2ec0f359"
+              }
+            ]
+          ],
+          [
+            "matic:0x010EAaE0CDE3104CA56b8F17D4FCf8E60485855E",
+            [
+              {
+                "contractAddress": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+                "selector": "0x2ec0f359"
+              }
+            ]
+          ]
+        ],
+        "owner": "matic:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88",
+        "verificationKeyDelegates": []
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "MEDIUM",
+          "description": "Current controller of the Delegator. The owner bypasses the permission bitmap and can call any target through this contract.",
+          "type": "PERMISSION"
+        },
+        "$delegatedPermissionsRaw": {
+          "description": "Internal raw delegated permission map keyed by caller, reconstructed from GrantPermission and RevokePermission events before filtering out callers with no remaining permissions.",
+          "type": "PERMISSION"
+        },
+        "delegatedPermissions": {
+          "description": "Current non-owner delegated call permissions as active [caller, permissions[]] pairs, filtered to callers that still retain at least one delegated permission.",
+          "type": "PERMISSION"
+        },
+        "delegatedCallers": {
+          "description": "Addresses that currently retain at least one delegated permission through the Delegator.",
+          "type": "PERMISSION"
+        },
+        "$criticalDelegatedPermissionsRaw": {
+          "description": "Internal permission map restricted to critical Railgun targets and wildcard permissions.",
+          "type": "PERMISSION"
+        },
+        "criticalDelegatedPermissions": {
+          "severity": "HIGH",
+          "description": "Active delegated permissions targeting a critical Railgun contract, including wildcard permissions.",
+          "type": "PERMISSION"
+        },
+        "verificationKeyDelegates": {
+          "severity": "HIGH",
+          "description": "Delegated callers currently allowed to update Railgun smart wallet SNARK verification keys through the Delegator.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7": "Delegator"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "RailTokenFixedSupply",
+      "address": "matic:0x92A9C92C215092720C731c96D4Ff508c831a714f",
+      "type": "Contract",
+      "template": "railgun/RailTokenFixedSupply",
+      "sourceHashes": [
+        "0x9b331d28db80054b46b40ff9d1bd2cc4586044a8cd0f22ded9f522bcabc9ad88"
+      ],
+      "proxyType": "immutable",
+      "description": "RAIL governance token of this chain's Railgun deployment, minted once to its initial holder with no owner and no further minting. Staking it gives voting power in this chain's DAO.",
+      "critical": true,
+      "deployerAddress": "matic:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1634534697,
+      "sinceBlock": 20336191,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "RAIL Polygon",
+        "symbol": "RAILPOLY",
+        "totalSupply": "55,000,000"
+      },
+      "fieldMeta": {
+        "totalSupply": { "description": "Fixed RAIL supply on this chain." }
+      },
+      "implementationNames": {
+        "matic:0x92A9C92C215092720C731c96D4Ff508c831a714f": "RailTokenFixedSupply"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "Staking",
+      "address": "matic:0x9AC2bA4bf7FaCB0bbB33447e5fF8f8D63B71dDC1",
+      "type": "Contract",
+      "template": "railgun/Staking",
+      "sourceHashes": [
+        "0x12d1c6ff9fbd0f99b457b153c78e8f364a9aad6b9bfed98b2b682b53870cc5e4"
+      ],
+      "proxyType": "immutable",
+      "description": "RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.",
+      "critical": true,
+      "ignoreInWatchMode": ["RAILStaked"],
+      "deployerAddress": "matic:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1634534721,
+      "sinceBlock": 20336196,
+      "values": {
+        "$immutable": true,
+        "DEPLOY_TIME": 1634534721,
+        "intervalAtTime": [],
+        "RAILStaked": "0",
+        "SNAPSHOT_INTERVAL": 86400,
+        "SNAPSHOT_INTERVAL_fmt": "1d",
+        "STAKE_LOCKTIME": 2592000,
+        "STAKE_LOCKTIME_fmt": "1mo",
+        "stakingToken": "matic:0x92A9C92C215092720C731c96D4Ff508c831a714f"
+      },
+      "fieldMeta": {
+        "RAILStaked": {
+          "description": "Total RAIL locked in this contract by governance participants for voting power."
+        },
+        "stakingToken": {
+          "description": "RAIL token contract that users lock here to obtain voting power."
+        },
+        "STAKE_LOCKTIME": {
+          "description": "Delay between unlocking a stake and being able to claim the underlying RAIL.",
+          "type": "RISK_PARAMETER"
+        },
+        "SNAPSHOT_INTERVAL": {
+          "description": "Length of the interval used when taking governance voting-power snapshots.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "matic:0x9AC2bA4bf7FaCB0bbB33447e5fF8f8D63B71dDC1": "Staking"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "Voting",
+      "address": "matic:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88",
+      "type": "Contract",
+      "template": "railgun/Voting",
+      "sourceHashes": [
+        "0xb43f60b5a1864a059b570289a0d863684c488d36606efea6af35821ad64b0e69"
+      ],
+      "proxyType": "immutable",
+      "description": "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.",
+      "critical": true,
+      "deployerAddress": "matic:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1662742702,
+      "sinceBlock": 32895118,
+      "values": {
+        "$immutable": true,
+        "DELEGATOR_CONTRACT": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7",
+        "EXECUTION_END_OFFSET": 1209600,
+        "EXECUTION_START_OFFSET": 604800,
+        "PROPOSAL_SPONSOR_THRESHOLD": "500000000000000000000000",
+        "proposalCount": 13,
+        "QUORUM": "2000000000000000000000000",
+        "SPONSOR_LOCKOUT_TIME": 604800,
+        "SPONSOR_WINDOW": 2592000,
+        "STAKING_CONTRACT": "matic:0x9AC2bA4bf7FaCB0bbB33447e5fF8f8D63B71dDC1",
+        "VOTING_NAY_END_OFFSET": 518400,
+        "VOTING_START_OFFSET": 172800,
+        "VOTING_YAY_END_OFFSET": 432000
+      },
+      "fieldMeta": {
+        "proposalCount": {
+          "description": "Number of governance proposals published. Proposals are updates, but do not change the system until executed."
+        },
+        "DELEGATOR_CONTRACT": {
+          "description": "Delegator contract that executes successful proposal actions."
+        },
+        "STAKING_CONTRACT": {
+          "description": "Staking contract whose snapshots determine sponsorship and voting power."
+        },
+        "QUORUM": {
+          "description": "Minimum affirmative voting power required for a proposal to reach quorum.",
+          "type": "RISK_PARAMETER"
+        },
+        "PROPOSAL_SPONSOR_THRESHOLD": {
+          "description": "Minimum sponsorship required before a proposal can be moved into the voting phase.",
+          "type": "RISK_PARAMETER"
+        },
+        "SPONSOR_WINDOW": {
+          "description": "Maximum time after publication during which a proposal can collect sponsorship.",
+          "type": "RISK_PARAMETER"
+        },
+        "SPONSOR_LOCKOUT_TIME": {
+          "description": "Cooldown that limits how often the same account can newly sponsor different proposals.",
+          "type": "RISK_PARAMETER"
+        },
+        "VOTING_START_OFFSET": {
+          "description": "Delay between calling a proposal to vote and the opening of the voting window.",
+          "type": "RISK_PARAMETER"
+        },
+        "VOTING_YAY_END_OFFSET": {
+          "description": "Deadline for casting affirmative votes after a vote has been called.",
+          "type": "RISK_PARAMETER"
+        },
+        "VOTING_NAY_END_OFFSET": {
+          "description": "Deadline for casting negative votes after a vote has been called.",
+          "type": "RISK_PARAMETER"
+        },
+        "EXECUTION_START_OFFSET": {
+          "description": "Delay between a successful vote and when execution can begin.",
+          "type": "RISK_PARAMETER"
+        },
+        "EXECUTION_END_OFFSET": {
+          "description": "End of the execution window for a successful proposal.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "matic:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88": "Voting"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "GovernorRewards",
+      "address": "matic:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
+        "0x74063ef2d88d57a23455db3f45eb9d33a8f91acf572f2ffd54741bc945498a43"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Abandoned first GovernorRewards proxy. Every call to it reverts, but it still holds TRANSFER_ROLE on the Polygon PoS Treasury.",
+      "deployerAddress": "matic:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1662742658,
+      "sinceBlock": 32895098,
+      "values": {
+        "$admin": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7",
+        "$implementation": "matic:0x7D9ef64f35B6Afda8d258d1d2548a9aC997e35A1",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "distributionIntervalToStakingInterval": [],
+        "intervalAtTime": [],
+        "precalculatedGlobalSnapshots": []
+      },
+      "implementationNames": {
+        "matic:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b": "PausableUpgradableProxy",
+        "matic:0x7D9ef64f35B6Afda8d258d1d2548a9aC997e35A1": "GovernorRewards"
+      }
+    },
+    {
+      "name": "Treasury",
+      "address": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+      "type": "Contract",
+      "template": "railgun/Treasury",
+      "sourceHashes": [
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
+        "0x38e90021f1f1c6b5378b5a32d25769119a4c3c07b14c2f813eb2b7a6264172cd"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Collects Railgun fees. Managed through access control roles.",
+      "ignoreInWatchMode": ["RAILBalance"],
+      "deployerAddress": "matic:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "sinceTimestamp": 1662742614,
+      "sinceBlock": 32895076,
+      "values": {
+        "$admin": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A",
+        "$implementation": "matic:0x1a73E89D101Ea0083691A624962bb86831EEC757",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7"]
+          },
+          "TRANSFER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7",
+              "matic:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b",
+              "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52"
+            ]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminRoleMembers": [
+          "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7"
+        ],
+        "RAILBalance": "547,846.531646829963594526",
+        "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
+        "transferRoleMembers": [
+          "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7",
+          "matic:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b",
+          "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52"
+        ]
+      },
+      "fieldMeta": {
+        "RAILBalance": {
+          "description": "RAIL held by the treasury, movable by holders of TRANSFER_ROLE."
+        },
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the treasury proxy.",
+          "type": "PERMISSION"
+        },
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current treasury implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": "Identifier of the role that administers every treasury role."
+        },
+        "TRANSFER_ROLE": {
+          "description": "Identifier of the role that authorizes ETH and ERC20 transfers out of the treasury."
+        },
+        "accessControl": {
+          "description": "Current treasury role memberships reconstructed from AccessControl events."
+        },
+        "defaultAdminRoleMembers": {
+          "severity": "HIGH",
+          "description": "Addresses that currently hold DEFAULT_ADMIN_ROLE on the treasury.",
+          "type": "PERMISSION"
+        },
+        "transferRoleMembers": {
+          "severity": "HIGH",
+          "description": "Addresses that currently hold TRANSFER_ROLE on the treasury.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094": "PausableUpgradableProxy",
+        "matic:0x1a73E89D101Ea0083691A624962bb86831EEC757": "Treasury"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "RelayAdapt",
+      "address": "matic:0xF82d00fC51F730F42A00F85E74895a2849ffF2Dd",
+      "type": "Contract",
+      "template": "railgun/RelayAdapt",
+      "sourceHashes": [
+        "0x8727ddbfca515cb5994d3b867f0ac090e4c070425cd1d707eec73b742d8a2ab7"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "matic:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
+      "sinceTimestamp": 1753718857,
+      "sinceBlock": 74519683,
+      "values": {
+        "$immutable": true,
+        "railgun": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+        "wBase": "matic:0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270"
+      },
+      "implementationNames": {
+        "matic:0xF82d00fC51F730F42A00F85E74895a2849ffF2Dd": "RelayAdapt"
+      }
     }
   ],
   "abis": {
+    "arb1:0x39f3df0a8A2a7469e03A9519A4cDd22525B080c1": [
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function TRANSFER_ROLE() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initializeTreasury(address _admin)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferERC20(address _token, address _to, uint256 _amount)",
+      "function transferETH(address _to, uint256 _amount)"
+    ],
+    "arb1:0x3B374464a714525498e445ba050B91571937bFc8": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "arb1:0x4799527d8B767354FfC14E849cAE94A644A1F221": [
+      "event Action(address caller, tuple(uint32 nullifiersCount, uint32 commitmentsCount, bool hasUnshield, bytes32 boundParamsHash)[] txconfigs)",
+      "event AddToBlocklist(address indexed token)",
+      "event FeeChange(uint256 shieldFee, uint256 unshieldFee, uint256 nftFee)",
+      "event Initialized(uint8 version)",
+      "event Nullified(uint16 treeNumber, bytes32[] nullifier)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemoveFromBlocklist(address indexed token)",
+      "event Shield(uint256 treeNumber, uint256 startPosition, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value)[] commitments, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey)[] shieldCiphertext, uint256[] fees)",
+      "event Transact(uint256 treeNumber, uint256 startPosition, bytes32[] hash, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] ciphertext)",
+      "event TreasuryChange(address treasury)",
+      "event Unshield(address to, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint256 amount, uint256 fee)",
+      "event VerifyingKeySet(uint256 nullifiers, uint256 commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) verifyingKey)",
+      "function ZERO_VALUE() view returns (bytes32)",
+      "function addToBlocklist(address[] _tokens)",
+      "function addVector(uint256 vector)",
+      "function changeFee(uint120 _shieldFee, uint120 _unshieldFee, uint256 _nftFee)",
+      "function changeTreasury(address _treasury)",
+      "function checkSafetyVectors()",
+      "function getFee(uint136 _amount, bool _isInclusive, uint120 _feeBP) pure returns (uint120, uint120)",
+      "function getInsertionTreeNumberAndStartingIndex(uint256 _newCommitments) view returns (uint256, uint256)",
+      "function getTokenID(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) _tokenData) pure returns (bytes32)",
+      "function getVerificationKey(uint256 _nullifiers, uint256 _commitments) view returns (tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic))",
+      "function hashBoundParams(tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) _boundParams) pure returns (uint256)",
+      "function hashCommitment(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) _commitmentPreimage) pure returns (bytes32)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function initializeRailgunLogic(address _treasury, uint120 _shieldFee, uint120 _unshieldFee, uint256 _nftFee, address _owner)",
+      "function lastEventBlock() view returns (uint256)",
+      "function merkleRoot() view returns (bytes32)",
+      "function nextLeafIndex() view returns (uint256)",
+      "function nftFee() view returns (uint256)",
+      "function nullifiers(uint256, bytes32) view returns (bool)",
+      "function owner() view returns (address)",
+      "function removeFromBlocklist(address[] _tokens)",
+      "function removeVector(uint256 vector)",
+      "function renounceOwnership()",
+      "function rootHistory(uint256, bytes32) view returns (bool)",
+      "function setVerificationKey(uint256 _nullifiers, uint256 _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey)",
+      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
+      "function shieldFee() view returns (uint120)",
+      "function snarkSafetyVector(uint256) view returns (bool)",
+      "function sumCommitments(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions) pure returns (uint256)",
+      "function tokenBlocklist(address) view returns (bool)",
+      "function tokenIDMapping(bytes32) view returns (uint8 tokenType, address tokenAddress, uint256 tokenSubID)",
+      "function transact(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)",
+      "function treeNumber() view returns (uint256)",
+      "function unshieldFee() view returns (uint120)",
+      "function validateCommitmentPreimage(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) _note) pure returns (bool, string)",
+      "function validateTransaction(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage) _transaction) view returns (bool, string, bytes32)",
+      "function verify(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage) _transaction) view returns (bool, bytes32)",
+      "function verifyProof(tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey, tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) _proof, uint256[] _inputs) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527": [
+      "constructor(address _admin)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function owner() view returns (address)",
+      "function pause(address _proxy)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function transferProxyOwnership(address _proxy, address _newOwner)",
+      "function unpause(address _proxy)",
+      "function upgrade(address _proxy, address _newImplementation)"
+    ],
+    "arb1:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b": [
+      "constructor(address _railgun, address _wBase)",
+      "error CallFailed(uint256 callIndex, bytes revertReason)",
+      "event CallError(uint256 callIndex, bytes revertReason)",
+      "function getAdaptParams(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) pure returns (bytes32)",
+      "function multicall(bool _requireSuccess, tuple(address to, bytes data, uint256 value)[] _calls) payable",
+      "function railgun() view returns (address)",
+      "function relay(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) payable",
+      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
+      "function transfer(tuple(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, address to, uint256 value)[] _transfers)",
+      "function unwrapBase(uint256 _amount)",
+      "function wBase() view returns (address)",
+      "function wrapBase(uint256 _amount)"
+    ],
+    "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa": [
+      "constructor(address _admin)",
+      "event GrantPermission(address indexed caller, address indexed contractAddress, bytes4 indexed selector)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RevokePermission(address indexed caller, address indexed contractAddress, bytes4 indexed selector)",
+      "function callContract(address _contract, bytes _data, uint256 _value) returns (bool success, bytes returnData)",
+      "function checkPermission(address _caller, address _contract, bytes4 _selector) view returns (bool)",
+      "function owner() view returns (address)",
+      "function permissions(address, address, bytes4) view returns (bool)",
+      "function renounceOwnership()",
+      "function setPermission(address _caller, address _contract, bytes4 _selector, bool _permission)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "arb1:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC": [
+      "constructor(address _senderL1, address _delegator)",
+      "error ExecutionFailed(uint256 index, bytes data)",
+      "event TaskCreated(uint256 id)",
+      "event TaskExecuted(uint256 id)",
+      "event TaskReady(uint256 id)",
+      "function ARB_RETRYABLE_TX() view returns (address)",
+      "function DELEGATOR() view returns (address)",
+      "function EXPIRY_TIME() view returns (uint256)",
+      "function SENDER_L1() view returns (address)",
+      "function createTask(tuple(address callContract, bytes data, uint256 value)[] _actions) returns (uint256)",
+      "function executeTask(uint256 _task)",
+      "function getActions(uint256 _tasks) view returns (tuple(address callContract, bytes data, uint256 value)[])",
+      "function newTicketTimeout() view returns (uint256)",
+      "function readyTask(uint256 _task)",
+      "function redeem(uint256 _ticket) returns (bytes32)",
+      "function tasks(uint256) view returns (uint256 creationTime, uint8 state)",
+      "function ticketTimeLeft(uint256 _ticket) view returns (uint256)"
+    ],
+    "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "bnb:0x1a73E89D101Ea0083691A624962bb86831EEC757": [
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function TRANSFER_ROLE() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initializeTreasury(address _admin)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferERC20(address _token, address _to, uint256 _amount)",
+      "function transferETH(address _to, uint256 _amount)"
+    ],
+    "bnb:0x370C9B5148AA04257Bc8289Ba1eE69f9F286B4E0": [
+      "event Claim(address token, address account, uint256 amount, uint256 startInterval, uint256 endInterval)",
+      "event Initialized(uint8 version)",
+      "event IntervalBPChange(uint256 oldIntervalBP, uint256 newIntervalBP)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BASIS_POINTS() view returns (uint256)",
+      "function DISTRIBUTION_INTERVAL() view returns (uint256)",
+      "function STAKING_DEPLOY_TIME() view returns (uint256)",
+      "function STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER() view returns (uint256)",
+      "function addTokens(address[] _tokens)",
+      "function addVector(uint256 vector)",
+      "function calculateRewards(address[] _tokens, address _account, uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints, bool _ignoreClaimed) view returns (uint256[])",
+      "function checkSafetyVectors()",
+      "function claim(address[] _tokens, address _account, uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints)",
+      "function currentInterval() view returns (uint256)",
+      "function distributionIntervalToStakingInterval(uint256 _distributionInterval) pure returns (uint256)",
+      "function earmark(address _token)",
+      "function earmarked(address, uint256) view returns (uint256)",
+      "function fetchAccountSnapshots(uint256 _startingInterval, uint256 _endingInterval, address _account, uint256[] _hints) view returns (uint256[])",
+      "function fetchGlobalSnapshots(uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints) view returns (uint256[])",
+      "function getClaimed(address _account, address _token, uint256 _interval) view returns (bool)",
+      "function initializeGovernorRewards(address _staking, address _treasury, uint256 _startingInterval, address[] _tokens)",
+      "function intervalAtTime(uint256 _time) view returns (uint256)",
+      "function intervalBP() view returns (uint256)",
+      "function nextEarmarkInterval(address) view returns (uint256)",
+      "function nextSnapshotPreCalcInterval() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function precalculatedGlobalSnapshots(uint256) view returns (uint256)",
+      "function prefetchGlobalSnapshots(uint256 _endingInterval, uint256[] _hints, address[] _postProcessTokens)",
+      "function removeTokens(address[] _tokens)",
+      "function removeVector(uint256 vector)",
+      "function renounceOwnership()",
+      "function safetyVector(uint256) view returns (bool)",
+      "function setIntervalBP(uint256 _newIntervalBP)",
+      "function staking() view returns (address)",
+      "function tokens(address) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)"
+    ],
+    "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2": [
+      "constructor(address _admin)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function owner() view returns (address)",
+      "function pause(address _proxy)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function transferProxyOwnership(address _proxy, address _newOwner)",
+      "function unpause(address _proxy)",
+      "function upgrade(address _proxy, address _newImplementation)"
+    ],
+    "bnb:0x3F847b01d4d498a293e3197B186356039eCd737F": [
+      "constructor(address _initialHolder, uint256 _initialSupply, string name, string symbol)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function name() view returns (string)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
+    ],
+    "bnb:0x4799527d8B767354FfC14E849cAE94A644A1F221": [
+      "event Action(address caller, tuple(uint32 nullifiersCount, uint32 commitmentsCount, bool hasUnshield, bytes32 boundParamsHash)[] txconfigs)",
+      "event AddToBlocklist(address indexed token)",
+      "event FeeChange(uint256 shieldFee, uint256 unshieldFee, uint256 nftFee)",
+      "event Initialized(uint8 version)",
+      "event Nullified(uint16 treeNumber, bytes32[] nullifier)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemoveFromBlocklist(address indexed token)",
+      "event Shield(uint256 treeNumber, uint256 startPosition, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value)[] commitments, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey)[] shieldCiphertext, uint256[] fees)",
+      "event Transact(uint256 treeNumber, uint256 startPosition, bytes32[] hash, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] ciphertext)",
+      "event TreasuryChange(address treasury)",
+      "event Unshield(address to, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint256 amount, uint256 fee)",
+      "event VerifyingKeySet(uint256 nullifiers, uint256 commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) verifyingKey)",
+      "function ZERO_VALUE() view returns (bytes32)",
+      "function addToBlocklist(address[] _tokens)",
+      "function addVector(uint256 vector)",
+      "function changeFee(uint120 _shieldFee, uint120 _unshieldFee, uint256 _nftFee)",
+      "function changeTreasury(address _treasury)",
+      "function checkSafetyVectors()",
+      "function getFee(uint136 _amount, bool _isInclusive, uint120 _feeBP) pure returns (uint120, uint120)",
+      "function getInsertionTreeNumberAndStartingIndex(uint256 _newCommitments) view returns (uint256, uint256)",
+      "function getTokenID(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) _tokenData) pure returns (bytes32)",
+      "function getVerificationKey(uint256 _nullifiers, uint256 _commitments) view returns (tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic))",
+      "function hashBoundParams(tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) _boundParams) pure returns (uint256)",
+      "function hashCommitment(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) _commitmentPreimage) pure returns (bytes32)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function initializeRailgunLogic(address _treasury, uint120 _shieldFee, uint120 _unshieldFee, uint256 _nftFee, address _owner)",
+      "function lastEventBlock() view returns (uint256)",
+      "function merkleRoot() view returns (bytes32)",
+      "function nextLeafIndex() view returns (uint256)",
+      "function nftFee() view returns (uint256)",
+      "function nullifiers(uint256, bytes32) view returns (bool)",
+      "function owner() view returns (address)",
+      "function removeFromBlocklist(address[] _tokens)",
+      "function removeVector(uint256 vector)",
+      "function renounceOwnership()",
+      "function rootHistory(uint256, bytes32) view returns (bool)",
+      "function setVerificationKey(uint256 _nullifiers, uint256 _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey)",
+      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
+      "function shieldFee() view returns (uint120)",
+      "function snarkSafetyVector(uint256) view returns (bool)",
+      "function sumCommitments(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions) pure returns (uint256)",
+      "function tokenBlocklist(address) view returns (bool)",
+      "function tokenIDMapping(bytes32) view returns (uint8 tokenType, address tokenAddress, uint256 tokenSubID)",
+      "function transact(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)",
+      "function treeNumber() view returns (uint256)",
+      "function unshieldFee() view returns (uint120)",
+      "function validateCommitmentPreimage(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) _note) pure returns (bool, string)",
+      "function validateTransaction(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage) _transaction) view returns (bool, string, bytes32)",
+      "function verify(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage) _transaction) view returns (bool, bytes32)",
+      "function verifyProof(tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey, tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) _proof, uint256[] _inputs) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7": [
+      "constructor(address _admin)",
+      "event GrantPermission(address indexed caller, address indexed contractAddress, bytes4 indexed selector)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RevokePermission(address indexed caller, address indexed contractAddress, bytes4 indexed selector)",
+      "function callContract(address _contract, bytes _data, uint256 _value) returns (bool success, bytes returnData)",
+      "function checkPermission(address _caller, address _contract, bytes4 _selector) view returns (bool)",
+      "function owner() view returns (address)",
+      "function permissions(address, address, bytes4) view returns (bool)",
+      "function renounceOwnership()",
+      "function setPermission(address _caller, address _contract, bytes4 _selector, bool _permission)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "bnb:0x753f0F9BA003DDA95eb9284533Cf5B0F19e441dc": [
+      "constructor(address _stakingToken)",
+      "event Claim(address indexed account, uint256 indexed stakeID)",
+      "event Delegate(address indexed owner, address indexed _from, address indexed to, uint256 stakeID, uint256 amount)",
+      "event Stake(address indexed account, uint256 indexed stakeID, uint256 amount)",
+      "event Unlock(address indexed account, uint256 indexed stakeID)",
+      "function DEPLOY_TIME() view returns (uint256)",
+      "function SNAPSHOT_INTERVAL() view returns (uint256)",
+      "function STAKE_LOCKTIME() view returns (uint256)",
+      "function accountSnapshot(address _account, uint256 _index) view returns (tuple(uint256 interval, uint256 votingPower))",
+      "function accountSnapshotAt(address _account, uint256 _interval, uint256 _hint) view returns (tuple(uint256 interval, uint256 votingPower))",
+      "function accountSnapshotLength(address _account) view returns (uint256)",
+      "function claim(uint256 _stakeID)",
+      "function currentInterval() view returns (uint256)",
+      "function delegate(uint256 _stakeID, address _to)",
+      "function globalsSnapshot(uint256 _index) view returns (tuple(uint256 interval, uint256 totalVotingPower, uint256 totalStaked))",
+      "function globalsSnapshotAt(uint256 _interval, uint256 _hint) view returns (tuple(uint256 interval, uint256 totalVotingPower, uint256 totalStaked))",
+      "function globalsSnapshotLength() view returns (uint256)",
+      "function intervalAtTime(uint256 _time) view returns (uint256)",
+      "function latestAccountSnapshotInterval(address _account) view returns (uint256)",
+      "function latestGlobalsSnapshotInterval() view returns (uint256)",
+      "function stake(uint256 _amount) returns (uint256)",
+      "function stakes(address, uint256) view returns (address delegate, uint256 amount, uint256 staketime, uint256 locktime, uint256 claimedTime)",
+      "function stakesLength(address _account) view returns (uint256)",
+      "function stakingToken() view returns (address)",
+      "function totalStaked() view returns (uint256)",
+      "function totalVotingPower() view returns (uint256)",
+      "function undelegate(uint256 _stakeID)",
+      "function unlock(uint256 _stakeID)",
+      "function votingPower(address) view returns (uint256)"
+    ],
+    "bnb:0x7D9ef64f35B6Afda8d258d1d2548a9aC997e35A1": [
+      "event Claim(address token, address account, uint256 amount, uint256 startInterval, uint256 endInterval)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BASIS_POINTS() view returns (uint256)",
+      "function DISTRIBUTION_INTERVAL() view returns (uint256)",
+      "function STAKING_DEPLOY_TIME() view returns (uint256)",
+      "function STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER() view returns (uint256)",
+      "function addTokens(address[] _tokens)",
+      "function calculateRewards(address[] _tokens, address _account, uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints, bool _ignoreClaimed) view returns (uint256[])",
+      "function claim(address[] _tokens, address _account, uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints)",
+      "function currentInterval() view returns (uint256)",
+      "function distributionIntervalToStakingInterval(uint256 _distributionInterval) pure returns (uint256)",
+      "function earmark(address _token)",
+      "function earmarked(address, uint256) view returns (uint256)",
+      "function fetchAccountSnapshots(uint256 _startingInterval, uint256 _endingInterval, address _account, uint256[] _hints) view returns (uint256[])",
+      "function fetchGlobalSnapshots(uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints) view returns (uint256[])",
+      "function getClaimed(address _account, address _token, uint256 _interval) view returns (bool)",
+      "function initializeGovernorRewards(address _owner, address _staking, address _treasury, uint256 _startingInterval, address[] _tokens)",
+      "function intervalAtTime(uint256 _time) view returns (uint256)",
+      "function intervalBP() view returns (uint256)",
+      "function nextEarmarkInterval(address) view returns (uint256)",
+      "function nextSnapshotPreCalcInterval() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function precalculatedGlobalSnapshots(uint256) view returns (uint256)",
+      "function prefetchGlobalSnapshots(uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints, address[] _postProcessTokens)",
+      "function removeTokens(address[] _tokens)",
+      "function renounceOwnership()",
+      "function setIntervalBP(uint256 _newIntervalBP)",
+      "function staking() view returns (address)",
+      "function tokens(address) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)"
+    ],
+    "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "bnb:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88": [
+      "constructor(address _stakingContract, address _delegator)",
+      "error ExecutionFailed(uint256 index, bytes data)",
+      "event Execution(uint256 indexed id)",
+      "event Proposal(uint256 indexed id, address indexed proposer)",
+      "event Sponsorship(uint256 indexed id, address indexed sponsor, uint256 amount)",
+      "event SponsorshipRevocation(uint256 indexed id, address indexed sponsor, uint256 amount)",
+      "event VoteCall(uint256 indexed id)",
+      "event VoteCast(uint256 indexed id, address indexed voter, bool affirmative, uint256 votes)",
+      "event VoteKeySet(address indexed account, address votingKey)",
+      "function DELEGATOR_CONTRACT() view returns (address)",
+      "function EXECUTION_END_OFFSET() view returns (uint256)",
+      "function EXECUTION_START_OFFSET() view returns (uint256)",
+      "function PROPOSAL_SPONSOR_THRESHOLD() view returns (uint256)",
+      "function QUORUM() view returns (uint256)",
+      "function SPONSOR_LOCKOUT_TIME() view returns (uint256)",
+      "function SPONSOR_WINDOW() view returns (uint256)",
+      "function STAKING_CONTRACT() view returns (address)",
+      "function VOTING_NAY_END_OFFSET() view returns (uint256)",
+      "function VOTING_START_OFFSET() view returns (uint256)",
+      "function VOTING_YAY_END_OFFSET() view returns (uint256)",
+      "function callVote(uint256 _id)",
+      "function createProposal(string _proposalDocument, tuple(address callContract, bytes data, uint256 value)[] _actions) returns (uint256)",
+      "function executeProposal(uint256 _id)",
+      "function getActions(uint256 _id) view returns (tuple(address callContract, bytes data, uint256 value)[])",
+      "function getSponsored(uint256 _id, address _account) view returns (uint256)",
+      "function getVotes(uint256 _id, address _account) view returns (uint256)",
+      "function lastSponsored(address) view returns (uint256 lastSponsorTime, uint256 proposalID)",
+      "function proposals(uint256) view returns (bool executed, address proposer, string proposalDocument, uint256 publishTime, uint256 voteCallTime, uint256 sponsorship, uint256 yayVotes, uint256 nayVotes, uint256 sponsorInterval, uint256 votingInterval)",
+      "function proposalsLength() view returns (uint256)",
+      "function setVotingKey(address _votingKey)",
+      "function sponsorProposal(uint256 _id, uint256 _amount, address _account, uint256 _hint)",
+      "function unsponsorProposal(uint256 _id, uint256 _amount, address _account)",
+      "function vote(uint256 _id, uint256 _amount, bool _affirmative, address _account, uint256 _hint)",
+      "function votingKey(address) view returns (address)"
+    ],
+    "bnb:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "bnb:0xF82d00fC51F730F42A00F85E74895a2849ffF2Dd": [
+      "constructor(address _railgun, address _wBase)",
+      "error CallFailed(uint256 callIndex, bytes revertReason)",
+      "event CallError(uint256 callIndex, bytes revertReason)",
+      "function getAdaptParams(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) pure returns (bytes32)",
+      "function multicall(bool _requireSuccess, tuple(address to, bytes data, uint256 value)[] _calls) payable",
+      "function railgun() view returns (address)",
+      "function relay(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) payable",
+      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
+      "function transfer(tuple(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, address to, uint256 value)[] _transfers)",
+      "function unwrapBase(uint256 _amount)",
+      "function wBase() view returns (address)",
+      "function wrapBase(uint256 _amount)"
+    ],
     "eth:0x05ae73c5925d843864ae6F261f3175De2ebCd963": [
       "constructor(address _railgun, address _wBase)",
       "error CallFailed(uint256 callIndex, bytes revertReason)",
@@ -1779,15 +3892,325 @@
       "function transferOwnership(address _newOwner)",
       "function unpause()",
       "function upgrade(address _newImplementation)"
+    ],
+    "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "matic:0x1a73E89D101Ea0083691A624962bb86831EEC757": [
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function TRANSFER_ROLE() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initializeTreasury(address _admin)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferERC20(address _token, address _to, uint256 _amount)",
+      "function transferETH(address _to, uint256 _amount)"
+    ],
+    "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A": [
+      "constructor(address _admin)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function owner() view returns (address)",
+      "function pause(address _proxy)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function transferProxyOwnership(address _proxy, address _newOwner)",
+      "function unpause(address _proxy)",
+      "function upgrade(address _proxy, address _newImplementation)"
+    ],
+    "matic:0x4799527d8B767354FfC14E849cAE94A644A1F221": [
+      "event Action(address caller, tuple(uint32 nullifiersCount, uint32 commitmentsCount, bool hasUnshield, bytes32 boundParamsHash)[] txconfigs)",
+      "event AddToBlocklist(address indexed token)",
+      "event FeeChange(uint256 shieldFee, uint256 unshieldFee, uint256 nftFee)",
+      "event Initialized(uint8 version)",
+      "event Nullified(uint16 treeNumber, bytes32[] nullifier)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemoveFromBlocklist(address indexed token)",
+      "event Shield(uint256 treeNumber, uint256 startPosition, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value)[] commitments, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey)[] shieldCiphertext, uint256[] fees)",
+      "event Transact(uint256 treeNumber, uint256 startPosition, bytes32[] hash, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] ciphertext)",
+      "event TreasuryChange(address treasury)",
+      "event Unshield(address to, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint256 amount, uint256 fee)",
+      "event VerifyingKeySet(uint256 nullifiers, uint256 commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) verifyingKey)",
+      "function ZERO_VALUE() view returns (bytes32)",
+      "function addToBlocklist(address[] _tokens)",
+      "function addVector(uint256 vector)",
+      "function changeFee(uint120 _shieldFee, uint120 _unshieldFee, uint256 _nftFee)",
+      "function changeTreasury(address _treasury)",
+      "function checkSafetyVectors()",
+      "function getFee(uint136 _amount, bool _isInclusive, uint120 _feeBP) pure returns (uint120, uint120)",
+      "function getInsertionTreeNumberAndStartingIndex(uint256 _newCommitments) view returns (uint256, uint256)",
+      "function getTokenID(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) _tokenData) pure returns (bytes32)",
+      "function getVerificationKey(uint256 _nullifiers, uint256 _commitments) view returns (tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic))",
+      "function hashBoundParams(tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) _boundParams) pure returns (uint256)",
+      "function hashCommitment(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) _commitmentPreimage) pure returns (bytes32)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function initializeRailgunLogic(address _treasury, uint120 _shieldFee, uint120 _unshieldFee, uint256 _nftFee, address _owner)",
+      "function lastEventBlock() view returns (uint256)",
+      "function merkleRoot() view returns (bytes32)",
+      "function nextLeafIndex() view returns (uint256)",
+      "function nftFee() view returns (uint256)",
+      "function nullifiers(uint256, bytes32) view returns (bool)",
+      "function owner() view returns (address)",
+      "function removeFromBlocklist(address[] _tokens)",
+      "function removeVector(uint256 vector)",
+      "function renounceOwnership()",
+      "function rootHistory(uint256, bytes32) view returns (bool)",
+      "function setVerificationKey(uint256 _nullifiers, uint256 _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey)",
+      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
+      "function shieldFee() view returns (uint120)",
+      "function snarkSafetyVector(uint256) view returns (bool)",
+      "function sumCommitments(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions) pure returns (uint256)",
+      "function tokenBlocklist(address) view returns (bool)",
+      "function tokenIDMapping(bytes32) view returns (uint8 tokenType, address tokenAddress, uint256 tokenSubID)",
+      "function transact(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)",
+      "function treeNumber() view returns (uint256)",
+      "function unshieldFee() view returns (uint120)",
+      "function validateCommitmentPreimage(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) _note) pure returns (bool, string)",
+      "function validateTransaction(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage) _transaction) view returns (bool, string, bytes32)",
+      "function verify(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage) _transaction) view returns (bool, bytes32)",
+      "function verifyProof(tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey, tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) _proof, uint256[] _inputs) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7": [
+      "constructor(address _admin)",
+      "event GrantPermission(address indexed caller, address indexed contractAddress, bytes4 indexed selector)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RevokePermission(address indexed caller, address indexed contractAddress, bytes4 indexed selector)",
+      "function callContract(address _contract, bytes _data, uint256 _value) returns (bool success, bytes returnData)",
+      "function checkPermission(address _caller, address _contract, bytes4 _selector) view returns (bool)",
+      "function owner() view returns (address)",
+      "function permissions(address, address, bytes4) view returns (bool)",
+      "function renounceOwnership()",
+      "function setPermission(address _caller, address _contract, bytes4 _selector, bool _permission)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "matic:0x627A890680FDce711f15912C7253e8dee0022D25": [
+      "event Claim(address token, address account, uint256 amount, uint256 startInterval, uint256 endInterval)",
+      "event Initialized(uint8 version)",
+      "event IntervalBPChange(uint256 oldIntervalBP, uint256 newIntervalBP)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BASIS_POINTS() view returns (uint256)",
+      "function DISTRIBUTION_INTERVAL() view returns (uint256)",
+      "function STAKING_DEPLOY_TIME() view returns (uint256)",
+      "function STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER() view returns (uint256)",
+      "function addTokens(address[] _tokens)",
+      "function addVector(uint256 vector)",
+      "function calculateRewards(address[] _tokens, address _account, uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints, bool _ignoreClaimed) view returns (uint256[])",
+      "function checkSafetyVectors()",
+      "function claim(address[] _tokens, address _account, uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints)",
+      "function currentInterval() view returns (uint256)",
+      "function distributionIntervalToStakingInterval(uint256 _distributionInterval) pure returns (uint256)",
+      "function earmark(address _token)",
+      "function earmarked(address, uint256) view returns (uint256)",
+      "function fetchAccountSnapshots(uint256 _startingInterval, uint256 _endingInterval, address _account, uint256[] _hints) view returns (uint256[])",
+      "function fetchGlobalSnapshots(uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints) view returns (uint256[])",
+      "function getClaimed(address _account, address _token, uint256 _interval) view returns (bool)",
+      "function initializeGovernorRewards(address _staking, address _treasury, uint256 _startingInterval, address[] _tokens)",
+      "function intervalAtTime(uint256 _time) view returns (uint256)",
+      "function intervalBP() view returns (uint256)",
+      "function nextEarmarkInterval(address) view returns (uint256)",
+      "function nextSnapshotPreCalcInterval() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function precalculatedGlobalSnapshots(uint256) view returns (uint256)",
+      "function prefetchGlobalSnapshots(uint256 _endingInterval, uint256[] _hints, address[] _postProcessTokens)",
+      "function removeTokens(address[] _tokens)",
+      "function removeVector(uint256 vector)",
+      "function renounceOwnership()",
+      "function safetyVector(uint256) view returns (bool)",
+      "function setIntervalBP(uint256 _newIntervalBP)",
+      "function staking() view returns (address)",
+      "function tokens(address) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)"
+    ],
+    "matic:0x7D9ef64f35B6Afda8d258d1d2548a9aC997e35A1": [
+      "event Claim(address token, address account, uint256 amount, uint256 startInterval, uint256 endInterval)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BASIS_POINTS() view returns (uint256)",
+      "function DISTRIBUTION_INTERVAL() view returns (uint256)",
+      "function STAKING_DEPLOY_TIME() view returns (uint256)",
+      "function STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER() view returns (uint256)",
+      "function addTokens(address[] _tokens)",
+      "function calculateRewards(address[] _tokens, address _account, uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints, bool _ignoreClaimed) view returns (uint256[])",
+      "function claim(address[] _tokens, address _account, uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints)",
+      "function currentInterval() view returns (uint256)",
+      "function distributionIntervalToStakingInterval(uint256 _distributionInterval) pure returns (uint256)",
+      "function earmark(address _token)",
+      "function earmarked(address, uint256) view returns (uint256)",
+      "function fetchAccountSnapshots(uint256 _startingInterval, uint256 _endingInterval, address _account, uint256[] _hints) view returns (uint256[])",
+      "function fetchGlobalSnapshots(uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints) view returns (uint256[])",
+      "function getClaimed(address _account, address _token, uint256 _interval) view returns (bool)",
+      "function initializeGovernorRewards(address _owner, address _staking, address _treasury, uint256 _startingInterval, address[] _tokens)",
+      "function intervalAtTime(uint256 _time) view returns (uint256)",
+      "function intervalBP() view returns (uint256)",
+      "function nextEarmarkInterval(address) view returns (uint256)",
+      "function nextSnapshotPreCalcInterval() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function precalculatedGlobalSnapshots(uint256) view returns (uint256)",
+      "function prefetchGlobalSnapshots(uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints, address[] _postProcessTokens)",
+      "function removeTokens(address[] _tokens)",
+      "function renounceOwnership()",
+      "function setIntervalBP(uint256 _newIntervalBP)",
+      "function staking() view returns (address)",
+      "function tokens(address) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)"
+    ],
+    "matic:0x92A9C92C215092720C731c96D4Ff508c831a714f": [
+      "constructor(address _initialHolder, uint256 _initialSupply, string name, string symbol)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function name() view returns (string)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
+    ],
+    "matic:0x9AC2bA4bf7FaCB0bbB33447e5fF8f8D63B71dDC1": [
+      "constructor(address _stakingToken)",
+      "event Claim(address indexed account, uint256 indexed stakeID)",
+      "event Delegate(address indexed owner, address indexed _from, address indexed to, uint256 stakeID, uint256 amount)",
+      "event Stake(address indexed account, uint256 indexed stakeID, uint256 amount)",
+      "event Unlock(address indexed account, uint256 indexed stakeID)",
+      "function DEPLOY_TIME() view returns (uint256)",
+      "function SNAPSHOT_INTERVAL() view returns (uint256)",
+      "function STAKE_LOCKTIME() view returns (uint256)",
+      "function accountSnapshot(address _account, uint256 _index) view returns (tuple(uint256 interval, uint256 votingPower))",
+      "function accountSnapshotAt(address _account, uint256 _interval, uint256 _hint) view returns (tuple(uint256 interval, uint256 votingPower))",
+      "function accountSnapshotLength(address _account) view returns (uint256)",
+      "function claim(uint256 _stakeID)",
+      "function currentInterval() view returns (uint256)",
+      "function delegate(uint256 _stakeID, address _to)",
+      "function globalsSnapshot(uint256 _index) view returns (tuple(uint256 interval, uint256 totalVotingPower, uint256 totalStaked))",
+      "function globalsSnapshotAt(uint256 _interval, uint256 _hint) view returns (tuple(uint256 interval, uint256 totalVotingPower, uint256 totalStaked))",
+      "function globalsSnapshotLength() view returns (uint256)",
+      "function intervalAtTime(uint256 _time) view returns (uint256)",
+      "function latestAccountSnapshotInterval(address _account) view returns (uint256)",
+      "function latestGlobalsSnapshotInterval() view returns (uint256)",
+      "function stake(uint256 _amount) returns (uint256)",
+      "function stakes(address, uint256) view returns (address delegate, uint256 amount, uint256 staketime, uint256 locktime, uint256 claimedTime)",
+      "function stakesLength(address _account) view returns (uint256)",
+      "function stakingToken() view returns (address)",
+      "function totalStaked() view returns (uint256)",
+      "function totalVotingPower() view returns (uint256)",
+      "function undelegate(uint256 _stakeID)",
+      "function unlock(uint256 _stakeID)",
+      "function votingPower(address) view returns (uint256)"
+    ],
+    "matic:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88": [
+      "constructor(address _stakingContract, address _delegator)",
+      "error ExecutionFailed(uint256 index, bytes data)",
+      "event Execution(uint256 indexed id)",
+      "event Proposal(uint256 indexed id, address indexed proposer)",
+      "event Sponsorship(uint256 indexed id, address indexed sponsor, uint256 amount)",
+      "event SponsorshipRevocation(uint256 indexed id, address indexed sponsor, uint256 amount)",
+      "event VoteCall(uint256 indexed id)",
+      "event VoteCast(uint256 indexed id, address indexed voter, bool affirmative, uint256 votes)",
+      "event VoteKeySet(address indexed account, address votingKey)",
+      "function DELEGATOR_CONTRACT() view returns (address)",
+      "function EXECUTION_END_OFFSET() view returns (uint256)",
+      "function EXECUTION_START_OFFSET() view returns (uint256)",
+      "function PROPOSAL_SPONSOR_THRESHOLD() view returns (uint256)",
+      "function QUORUM() view returns (uint256)",
+      "function SPONSOR_LOCKOUT_TIME() view returns (uint256)",
+      "function SPONSOR_WINDOW() view returns (uint256)",
+      "function STAKING_CONTRACT() view returns (address)",
+      "function VOTING_NAY_END_OFFSET() view returns (uint256)",
+      "function VOTING_START_OFFSET() view returns (uint256)",
+      "function VOTING_YAY_END_OFFSET() view returns (uint256)",
+      "function callVote(uint256 _id)",
+      "function createProposal(string _proposalDocument, tuple(address callContract, bytes data, uint256 value)[] _actions) returns (uint256)",
+      "function executeProposal(uint256 _id)",
+      "function getActions(uint256 _id) view returns (tuple(address callContract, bytes data, uint256 value)[])",
+      "function getSponsored(uint256 _id, address _account) view returns (uint256)",
+      "function getVotes(uint256 _id, address _account) view returns (uint256)",
+      "function lastSponsored(address) view returns (uint256 lastSponsorTime, uint256 proposalID)",
+      "function proposals(uint256) view returns (bool executed, address proposer, string proposalDocument, uint256 publishTime, uint256 voteCallTime, uint256 sponsorship, uint256 yayVotes, uint256 nayVotes, uint256 sponsorInterval, uint256 votingInterval)",
+      "function proposalsLength() view returns (uint256)",
+      "function setVotingKey(address _votingKey)",
+      "function sponsorProposal(uint256 _id, uint256 _amount, address _account, uint256 _hint)",
+      "function unsponsorProposal(uint256 _id, uint256 _amount, address _account)",
+      "function vote(uint256 _id, uint256 _amount, bool _affirmative, address _account, uint256 _hint)",
+      "function votingKey(address) view returns (address)"
+    ],
+    "matic:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "matic:0xF82d00fC51F730F42A00F85E74895a2849ffF2Dd": [
+      "constructor(address _railgun, address _wBase)",
+      "error CallFailed(uint256 callIndex, bytes revertReason)",
+      "event CallError(uint256 callIndex, bytes revertReason)",
+      "function getAdaptParams(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) pure returns (bytes32)",
+      "function multicall(bool _requireSuccess, tuple(address to, bytes data, uint256 value)[] _calls) payable",
+      "function railgun() view returns (address)",
+      "function relay(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) payable",
+      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
+      "function transfer(tuple(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, address to, uint256 value)[] _transfers)",
+      "function unwrapBase(uint256 _amount)",
+      "function wBase() view returns (address)",
+      "function wrapBase(uint256 _amount)"
     ]
   },
   "usedTemplates": {
+    "railgun/ArbitrumExecutor": "0x22c6390eadd400f7fa1d9c774d2d973b00d05e57d78d8b72acc1ca13958ebafb",
     "railgun/Delegator": "0x2c91127a011a17bb979524982176ee5000361a4ba132b3453175c60717c3a150",
     "railgun/GovernorRewards": "0x57affc64455412dccc40619b5fe609e68f9e5cc7e9e974ee0eb337aceb11a2a5",
     "railgun/IntervalPayouts": "0x09fe161481fbf0d6537d95f2fea87b62f20bcf765449ab946ee2af02f60ec1c1",
     "railgun/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "railgun/RailgunSmartWallet": "0x37b1d894b0d4d01f78663b7d5d6121dc4653de757fc91d28f9dc1d4d47a7c236",
     "railgun/RailToken": "0x804530e37ec6008f7e038487ae7914ce758ee7b27c21a98172234dc96f3fe682",
+    "railgun/RailTokenFixedSupply": "0x51b5b2a948620efba893dadd9de376229931742cfc6ba9c6e01b9994365186e3",
     "railgun/RelayAdapt": "0xe64239195c9b233532c77144e0b1161bdf296080b3fbe1d7857a20920c72f5df",
     "railgun/RelayAdapt7702": "0xe64239195c9b233532c77144e0b1161bdf296080b3fbe1d7857a20920c72f5df",
     "railgun/Staking": "0x7be0011fe230d0df425b604fe047026ba396620550299ad956bef1743a90dd8e",
@@ -1796,9 +4219,498 @@
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
   },
-  "usedBlockNumbers": { "ethereum": 26255125 },
-  "permissionsConfigHash": "0x0ad4b020142c6516aa3fd10a1e068768851caebfa05399eafcf07058109f09cc",
+  "usedBlockNumbers": {
+    "arbitrum": 520636567,
+    "bsc": 131283192,
+    "ethereum": 26328673,
+    "polygonpos": 96624040
+  },
+  "permissionsConfigHash": "0x634030c34bce21629bd07b55bb239650c452b0265ec8b332545ddba13354666f",
   "permissions": {
+    "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3B374464a714525498e445ba050B91571937bFc8",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x3B374464a714525498e445ba050B91571937bFc8",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "role": "admin"
+        }
+      ]
+    },
+    "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x3B374464a714525498e445ba050B91571937bFc8",
+          "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury.",
+          "role": ".defaultAdminRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x3B374464a714525498e445ba050B91571937bFc8",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "add or remove allowed SNARK safety vectors.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "add or remove tokens from the shielding blocklist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "change the shield, unshield, and NFT fee schedule.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "change the treasury that receives protocol fees.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "arb1:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3B374464a714525498e445ba050B91571937bFc8",
+          "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury.",
+          "role": ".defaultAdminRoleMembers",
+          "via": [
+            { "address": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x3B374464a714525498e445ba050B91571937bFc8",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527" },
+            { "address": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x3B374464a714525498e445ba050B91571937bFc8",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers",
+          "via": [
+            { "address": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa",
+          "description": "grant or revoke delegated caller permissions and transfer ownership of the Delegator.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "add or remove allowed SNARK safety vectors.",
+          "role": ".owner",
+          "via": [
+            { "address": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "add or remove tokens from the shielding blocklist.",
+          "role": ".owner",
+          "via": [
+            { "address": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "change the shield, unshield, and NFT fee schedule.",
+          "role": ".owner",
+          "via": [
+            { "address": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "change the treasury that receives protocol fees.",
+          "role": ".owner",
+          "via": [
+            { "address": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527" },
+            { "address": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x3B374464a714525498e445ba050B91571937bFc8",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527" },
+            { "address": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xb00a75949806158a90A86f70B4d4393619A4D527" },
+            { "address": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0xbB7d93eF65F4131eD13aeE0497503d57ff74Ccfa",
+          "role": ".owner"
+        }
+      ]
+    },
+    "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "role": "admin"
+        }
+      ]
+    },
+    "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "description": "add or remove allowed SNARK safety vectors.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "description": "add or remove tokens from the shielding blocklist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "description": "change the shield, unshield, and NFT fee schedule.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "description": "change the treasury that receives protocol fees.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+          "description": "add or remove allowed reward safety vectors.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+          "description": "add or remove reward tokens from the distribution set.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+          "description": "change the per-interval reward rate.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury.",
+          "role": ".defaultAdminRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b",
+          "role": "admin"
+        }
+      ]
+    },
+    "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    },
+    "bnb:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7",
+          "description": "grant or revoke delegated caller permissions and transfer ownership of the Delegator.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "description": "add or remove allowed SNARK safety vectors.",
+          "role": ".owner",
+          "via": [
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "description": "add or remove tokens from the shielding blocklist.",
+          "role": ".owner",
+          "via": [
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "description": "change the shield, unshield, and NFT fee schedule.",
+          "role": ".owner",
+          "via": [
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "description": "change the treasury that receives protocol fees.",
+          "role": ".owner",
+          "via": [
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2" },
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+          "description": "add or remove allowed reward safety vectors.",
+          "role": ".owner",
+          "via": [
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+          "description": "add or remove reward tokens from the distribution set.",
+          "role": ".owner",
+          "via": [
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+          "description": "change the per-interval reward rate.",
+          "role": ".owner",
+          "via": [
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2" },
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury.",
+          "role": ".defaultAdminRoleMembers",
+          "via": [
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2" },
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers",
+          "via": [
+            { "address": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8" },
+            { "address": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2" },
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers",
+          "via": [
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0x590162bf4b50F6576a459B75309eE21D92178A10",
+          "role": "admin",
+          "via": [
+            { "address": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2" },
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xa7A9582C2563a1b923dbff6a8A2fa625ee2FB1f8",
+          "role": "admin",
+          "via": [
+            { "address": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2" },
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b",
+          "role": "admin",
+          "via": [
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "role": "admin",
+          "via": [
+            { "address": "bnb:0x3bb38Cd4c801cb0bEd481Bc3fC4b14B06D81C5D2" },
+            { "address": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "bnb:0x4A7532f58259524251D7df1052762dc23c98Bae7",
+          "role": ".owner"
+        }
+      ]
+    },
+    "bnb:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "bnb:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    },
     "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": {
       "directlyReceivedPermissions": [
         {
@@ -2273,6 +5185,310 @@
         {
           "permission": "interact",
           "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    },
+    "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    },
+    "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "role": "admin"
+        }
+      ]
+    },
+    "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "description": "add or remove allowed SNARK safety vectors.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "description": "add or remove tokens from the shielding blocklist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "description": "change the shield, unshield, and NFT fee schedule.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "description": "change the treasury that receives protocol fees.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+          "description": "add or remove allowed reward safety vectors.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+          "description": "add or remove reward tokens from the distribution set.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+          "description": "change the per-interval reward rate.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury.",
+          "role": ".defaultAdminRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b",
+          "role": "admin"
+        }
+      ]
+    },
+    "matic:0xc3f2C8F9d5F0705De706b1302B7a039e1e11aC88": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "description": "add or remove allowed SNARK safety vectors.",
+          "role": ".owner",
+          "via": [
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "description": "add or remove tokens from the shielding blocklist.",
+          "role": ".owner",
+          "via": [
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "description": "change the shield, unshield, and NFT fee schedule.",
+          "role": ".owner",
+          "via": [
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "description": "change the treasury that receives protocol fees.",
+          "role": ".owner",
+          "via": [
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A" },
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+          "description": "add or remove allowed reward safety vectors.",
+          "role": ".owner",
+          "via": [
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+          "description": "add or remove reward tokens from the distribution set.",
+          "role": ".owner",
+          "via": [
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+          "description": "change the per-interval reward rate.",
+          "role": ".owner",
+          "via": [
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A" },
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7",
+          "description": "grant or revoke delegated caller permissions and transfer ownership of the Delegator.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury.",
+          "role": ".defaultAdminRoleMembers",
+          "via": [
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A" },
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers",
+          "via": [
+            { "address": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52" },
+            { "address": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A" },
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers",
+          "via": [
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x19B620929f97b7b990801496c3b361CA5dEf8C71",
+          "role": "admin",
+          "via": [
+            { "address": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A" },
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x25f795A8eC8aF7904aa403fF2Cc7205ce683BF52",
+          "role": "admin",
+          "via": [
+            { "address": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A" },
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b",
+          "role": "admin",
+          "via": [
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
+          "role": "admin",
+          "via": [
+            { "address": "matic:0x3c53C163C2EcE58470ee219E647f18D133885C3A" },
+            { "address": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "matic:0x5f67441090FbDf57F1D9f28dd65a29b0bB3E83a7",
+          "role": ".owner"
+        }
+      ]
+    },
+    "matic:0xd0198Dde1187b12aF01a743d9e9f2B4B84e8f59b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0xdca05161eE5b5FA6DF170191c88857E70FFB4094",
           "description": "transfer ETH or ERC20s out of the treasury.",
           "role": ".transferRoleMembers"
         }

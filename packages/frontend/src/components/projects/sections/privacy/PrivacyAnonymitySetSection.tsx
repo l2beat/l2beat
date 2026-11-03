@@ -21,6 +21,8 @@ export interface PrivacyAnonymitySetSectionProps extends ProjectSectionProps {
   project: ChartProject
   milestones: Milestone[]
   anonymitySetType: PrivacyAnonymitySetType
+  /** Sets on one chain only, for projects tracked on several. */
+  chain?: string
 }
 
 export function PrivacyAnonymitySetSection({
@@ -28,6 +30,7 @@ export function PrivacyAnonymitySetSection({
   project,
   milestones,
   anonymitySetType,
+  chain,
   ...projectSectionProps
 }: PrivacyAnonymitySetSectionProps) {
   const copy = anonymitySetCopy(anonymitySetType, ANONYMITY_SET_WINDOW_DAYS)
@@ -38,6 +41,7 @@ export function PrivacyAnonymitySetSection({
     {
       projectId: project.id,
       range,
+      chain,
     },
   )
   const timeRange = useMemo(

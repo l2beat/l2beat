@@ -9825,6 +9825,38 @@
     }
   ],
   "polygonpos": [
+    // Railgun pool assets on Polygon PoS. WPOL wraps the gas token, which the
+    // chain's L1 escrow already counts, so it carries "zero" supply like USDC.e.
+    {
+      "symbol": "WPOL",
+      "address": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "coingeckoId": "wmatic",
+      "source": "native",
+      "supply": "zero"
+    },
+    {
+      "symbol": "TEL",
+      "address": "0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
+      "coingeckoId": "telcoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "DAI",
+      "address": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+      "coingeckoId": "dai",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "WETH",
+      "address": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+      "coingeckoId": "weth",
+      "category": "ether",
+      "source": "canonical",
+      "supply": "zero"
+    },
     {
       "symbol": "USDT0",
       "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -10210,6 +10242,58 @@
             "slug": "layerzerov2oft"
           }
         ]
+      }
+    }
+  ],
+  // BSC has no coingeckoPlatform, so every entry names its coingeckoId.
+  "bsc": [
+    {
+      // Gas token, held natively by the Tornado Cash BNB pools. Added to
+      // generated.json by hand, like the ETH entries of the other chains.
+      "symbol": "BNB",
+      "category": "other",
+      "source": "native",
+      "supply": "zero"
+    },
+    {
+      // Wraps the gas token, so it carries no supply of its own.
+      "symbol": "WBNB",
+      "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      "coingeckoId": "wbnb",
+      "source": "native",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x55d398326f99059fF775485246999027B3197955",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Binance-Peg" }]
+      }
+    },
+    {
+      "symbol": "BUSD",
+      "address": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+      "coingeckoId": "binance-usd",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Binance-Peg" }]
+      }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Binance-Peg" }]
       }
     }
   ],

@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ArbitrumExecutor",
+  "critical": true,
+  "description": "Executes Railgun governance tasks on Arbitrum. The Ethereum Voting contract (SENDER_L1) readies a task through a retryable ticket, after which anyone can execute its calls through the Arbitrum Delegator within {{EXPIRY_TIME}}.",
+  "category": "gov",
+  "ignoreMethods": ["getActions", "tasks"],
+  "fields": {
+    "SENDER_L1": {
+      "description": "Ethereum contract whose aliased address may ready tasks for execution: the Railgun Voting contract.",
+      "severity": "HIGH"
+    },
+    "DELEGATOR": {
+      "description": "Arbitrum Delegator through which readied tasks are executed.",
+      "severity": "HIGH"
+    },
+    "EXPIRY_TIME": {
+      "description": "Time after creation within which a readied task can be executed.",
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}

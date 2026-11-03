@@ -255,6 +255,7 @@ export const payy: ScalingProject = {
       url: 'https://payy.network',
       since: '2026-10-13',
     },
+    deployedOn: ['ethereum'],
     trackedOn: ['ethereum'],
     detailedDescription: readProjectMarkdown('payy', 'detailedDescription', {
       multisigStats: discovery.getMultisigStats('PayyMultisig'),

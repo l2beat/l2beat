@@ -6,6 +6,7 @@ import type {
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { sortTableValues } from '~/components/table/sorting/sortTableValues'
 import {
   getRowBackgroundColor,
@@ -14,13 +15,16 @@ import {
 import { env } from '~/env'
 import { getPrivacyAdversariesTableValue } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 import {
   getPrivacyAnonymitySetSummaries,
   type PrivacyAnonymitySetSummary,
 } from './anonymity-set/getPrivacyAnonymitySetSummaries'
 import type { PrivacyAdversariesSummary, PrivacyProject } from './types'
+import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetup,
@@ -35,6 +39,8 @@ export interface PrivacySummaryEntry {
   icon: string
   href: string
   description: string
+  /** The tracked chains, in config order: the first is the primary chain. */
+  chains: ProjectIconListItem[]
   isTracked: boolean
   hasTvl: boolean
   totalValueLockedUsd?: number
@@ -73,8 +79,10 @@ export async function getPrivacySummaryEntries(
 ): Promise<PrivacySummaryEntry[]> {
   const currentDay = UnixTime.toStartOf(UnixTime.now(), 'day')
 
+  const chainProjects = await getChainProjects()
+
   if (env.MOCK) {
-    return getMockPrivacySummaryEntries(projects, currentDay)
+    return getMockPrivacySummaryEntries(projects, chainProjects, currentDay)
   }
 
   const db = getDb()
@@ -107,7 +115,7 @@ export async function getPrivacySummaryEntries(
     )
 
     return {
-      ...getPrivacySummaryBaseEntry(project),
+      ...getPrivacySummaryBaseEntry(project, chainProjects),
       ...getTrackingMetrics({
         poolsTracked: getPoolsTracked(project),
         totalValueLockedUsd: projectTvl?.breakdown.total,
@@ -125,6 +133,7 @@ export async function getPrivacySummaryEntries(
 
 async function getMockPrivacySummaryEntries(
   projects: PrivacyProject[],
+  chainProjects: Awaited<ReturnType<typeof getChainProjects>>,
   currentDay: UnixTime,
 ): Promise<PrivacySummaryEntry[]> {
   const anonymitySets = await getPrivacyAnonymitySetSummaries(
@@ -135,7 +144,7 @@ async function getMockPrivacySummaryEntries(
   return projects
     .map((project): PrivacySummaryEntry => {
       return {
-        ...getPrivacySummaryBaseEntry(project),
+        ...getPrivacySummaryBaseEntry(project, chainProjects),
         ...getTrackingMetrics({
           poolsTracked: getPoolsTracked(project),
           totalValueLockedUsd:
@@ -156,8 +165,16 @@ async function getMockPrivacySummaryEntries(
     .sort(comparePrivacySummaryEntries)
 }
 
+function getChainProjects() {
+  return ps.getProjects({
+    select: ['chainConfig'],
+    optional: [...PROJECT_PAGE_METADATA_FIELDS],
+  })
+}
+
 function getPrivacySummaryBaseEntry(
   project: PrivacyProject,
+  chainProjects: Awaited<ReturnType<typeof getChainProjects>>,
 ): PrivacySummaryBaseEntry {
   return {
     id: project.id,
@@ -167,6 +184,10 @@ function getPrivacySummaryBaseEntry(
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     href: `/privacy/projects/${project.slug}`,
     description: project.display.description,
+    chains: getPrivacyTrackedChains(
+      project.privacyInfo.trackedOn,
+      chainProjects,
+    ),
     hasTvl: project.tvsConfig !== undefined,
     isUnderReview: !!project.statuses.reviewStatus,
     redWarning: project.statuses.redWarning,

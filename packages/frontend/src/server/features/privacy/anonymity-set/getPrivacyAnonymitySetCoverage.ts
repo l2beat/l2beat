@@ -20,6 +20,7 @@ export async function getPrivacyAnonymitySetCoverage(
   db: Database,
   project: PrivacyAnonymitySetProject,
   currentDay: UnixTime,
+  chain?: string,
 ): Promise<PrivacyAnonymitySetCoverage | undefined> {
   if (project.privacyInfo.anonymitySet?.type !== 'partially-attributed') {
     return undefined
@@ -27,7 +28,9 @@ export async function getPrivacyAnonymitySetCoverage(
 
   const from = currentDay - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
   const trackedBucketIds = unique(
-    getPrivacyAnonymitySetSeries(project).map((series) => series.bucketId),
+    getPrivacyAnonymitySetSeries(project, chain).map(
+      (series) => series.bucketId,
+    ),
   )
   const [attributed, total] = await Promise.all([
     db.privacyAnonymitySetEvent.getDepositCount(
@@ -35,12 +38,14 @@ export async function getPrivacyAnonymitySetCoverage(
       trackedBucketIds,
       from,
       currentDay,
+      chain,
     ),
     db.privacyFlowEvent.getNonZeroDepositCount(
       project.id,
       trackedBucketIds,
       from,
       currentDay,
+      chain,
     ),
   ])
 

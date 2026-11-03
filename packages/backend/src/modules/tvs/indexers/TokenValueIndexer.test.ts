@@ -361,13 +361,17 @@ describe(TokenValueIndexer.name, () => {
     // history, which is how escrow values get backfilled.
     it('changes only for tokens that store escrow values', () => {
       const pooled = createPooledToken('pooled')
-      const single = createMockToken('single')
+      const singlePool = createSinglePoolToken('single-pool')
+      const minted = createMockToken('minted')
 
       expect(TokenValueIndexer.idToConfigurationId(pooled, true)).not.toEqual(
         TokenValueIndexer.idToConfigurationId(pooled, false),
       )
-      expect(TokenValueIndexer.idToConfigurationId(single, true)).toEqual(
-        TokenValueIndexer.idToConfigurationId(single, false),
+      expect(
+        TokenValueIndexer.idToConfigurationId(singlePool, true),
+      ).not.toEqual(TokenValueIndexer.idToConfigurationId(singlePool, false))
+      expect(TokenValueIndexer.idToConfigurationId(minted, true)).toEqual(
+        TokenValueIndexer.idToConfigurationId(minted, false),
       )
     })
   })
@@ -392,26 +396,35 @@ describe(TokenValueIndexer.name, () => {
     }
   }
 
+  function createPool(escrowAddress: string) {
+    return {
+      type: 'balanceOfEscrow',
+      address: 'native',
+      escrowAddress: EthereumAddress(escrowAddress),
+      sinceTimestamp: 0,
+      decimals: 18,
+      chain: 'ethereum',
+    } as const
+  }
+
   function createPooledToken(id: string): TvsToken {
-    const pool = (escrowAddress: string) =>
-      ({
-        type: 'balanceOfEscrow',
-        address: 'native',
-        escrowAddress: EthereumAddress(escrowAddress),
-        sinceTimestamp: 0,
-        decimals: 18,
-        chain: 'ethereum',
-      }) as const
     return {
       ...createMockToken(id),
       amount: {
         type: 'calculation',
         operator: 'sum',
         arguments: [
-          pool('0x1111111111111111111111111111111111111111'),
-          pool('0x2222222222222222222222222222222222222222'),
+          createPool('0x1111111111111111111111111111111111111111'),
+          createPool('0x2222222222222222222222222222222222222222'),
         ],
       },
+    }
+  }
+
+  function createSinglePoolToken(id: string): TvsToken {
+    return {
+      ...createMockToken(id),
+      amount: createPool('0x3333333333333333333333333333333333333333'),
     }
   }
 

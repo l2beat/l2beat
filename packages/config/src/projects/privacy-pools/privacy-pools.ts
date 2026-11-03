@@ -215,6 +215,7 @@ export const privacyPools: BaseProject = {
         },
       ],
     },
+    deployedOn: ['ethereum'],
     trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),
     relayerTracking: {
@@ -273,6 +274,7 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
     if (!token) {
       token = {
         token: {
+          chain: 'ethereum',
           address: bucket.tokenAddress,
           iconUrl: bucket.tokenInfo.iconUrl,
           symbol: bucket.tokenInfo.symbol,

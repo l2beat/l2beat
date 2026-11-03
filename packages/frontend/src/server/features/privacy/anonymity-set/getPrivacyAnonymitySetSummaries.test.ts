@@ -227,6 +227,7 @@ function makeToken(
 ): ProjectPrivacyToken {
   return {
     token: {
+      chain: 'ethereum',
       address: EthereumAddress.ZERO,
       iconUrl: undefined,
       symbol,

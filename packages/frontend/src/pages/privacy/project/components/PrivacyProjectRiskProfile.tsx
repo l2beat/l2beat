@@ -34,6 +34,8 @@ interface Props {
   href: string
   isUnderReview: boolean
   reproducibility: PrivacySummaryValue
+  /** Name of the primary chain the assessment describes, for projects tracked on several. */
+  assessedChainName?: string
   className?: string
 }
 
@@ -44,8 +46,12 @@ export function PrivacyProjectRiskProfile({
   href,
   isUnderReview,
   reproducibility,
+  assessedChainName,
   className,
 }: Props) {
+  const chainNote = assessedChainName
+    ? ` The assessment describes the deployment on ${assessedChainName}.`
+    : ''
   return (
     <div
       className={cn(
@@ -78,7 +84,7 @@ export function PrivacyProjectRiskProfile({
       />
       <ProjectSummaryStat
         title="Exit window"
-        tooltip="Time users have to withdraw before a malicious upgrade can take effect."
+        tooltip={`Time users have to withdraw before a malicious upgrade can take effect.${chainNote}`}
         value={
           <RiskValue
             value={exitWindow}

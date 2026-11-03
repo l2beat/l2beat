@@ -148,6 +148,7 @@ function makeProject(
     tokens: [
       {
         token: {
+          chain: 'ethereum',
           address: EthereumAddress.ZERO,
           iconUrl: undefined,
           symbol: 'ETH',

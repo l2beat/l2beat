@@ -211,6 +211,7 @@ const privacyTokens: ProjectPrivacyToken[] = trackedWrappers.map(
     underlyingToken,
   }) => ({
     token: {
+      chain: 'ethereum',
       address: underlyingAddress,
       iconUrl: underlyingToken.iconUrl,
       symbol: underlyingToken.symbol,
@@ -391,6 +392,7 @@ export const zamaCw: BaseProject = {
         },
       ],
     },
+    deployedOn: ['ethereum'],
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
     anonymitySet: {

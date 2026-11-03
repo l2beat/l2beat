@@ -76,6 +76,22 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
         ).toEqual({ average: 20, observedDays: 3 })
       })
 
+      it('keeps only the given chain', async () => {
+        await repository.upsertMany([
+          sample(0, 10),
+          { ...sample(1, 50, 'project', 'b'.repeat(12)), chain: 'arbitrum' },
+        ])
+
+        expect(
+          await repository.getAverageRelayerCount(
+            'project',
+            START,
+            day(3),
+            'arbitrum',
+          ),
+        ).toEqual({ average: 50, observedDays: 1 })
+      })
+
       it('returns undefined when there are no samples', async () => {
         expect(
           await repository.getAverageRelayerCount('project', START, day(1)),

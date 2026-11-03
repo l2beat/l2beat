@@ -4,6 +4,101 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "tornado-cash-BNB",
+      "priceId": "binancecoin",
+      "symbol": "BNB",
+      "name": "BNB",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?1696501970",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "bsc",
+            "escrowAddress": "0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD",
+            "decimals": 18,
+            "sinceTimestamp": 1623279471
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "bsc",
+            "escrowAddress": "0x330bdFADE01eE9bF63C209Ee33102DD334618e0a",
+            "decimals": 18,
+            "sinceTimestamp": 1623279453
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "bsc",
+            "escrowAddress": "0x84443CFd09A48AF6eF360C6976C5392aC5023a1F",
+            "decimals": 18,
+            "sinceTimestamp": 1623279420
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "bsc",
+            "escrowAddress": "0xd47438C816c9E7f2E2888E060936a499Af9582b3",
+            "decimals": 18,
+            "sinceTimestamp": 1623279441
+          }
+        ]
+      },
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1623279471
+            },
+            "priceId": "binancecoin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1623279453
+            },
+            "priceId": "binancecoin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1623279420
+            },
+            "priceId": "binancecoin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1623279441
+            },
+            "priceId": "binancecoin"
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "tornado-cash-cDAI",
       "priceId": "cdai",
       "symbol": "cDAI",
@@ -142,12 +237,138 @@
             "escrowAddress": "0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
             "decimals": 18,
             "sinceTimestamp": 1577296976
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD",
+            "decimals": 18,
+            "sinceTimestamp": 1638186812
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0x330bdFADE01eE9bF63C209Ee33102DD334618e0a",
+            "decimals": 18,
+            "sinceTimestamp": 1638186085
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0x84443CFd09A48AF6eF360C6976C5392aC5023a1F",
+            "decimals": 18,
+            "sinceTimestamp": 1638186812
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0xd47438C816c9E7f2E2888E060936a499Af9582b3",
+            "decimals": 18,
+            "sinceTimestamp": 1638185856
           }
         ]
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "ethereum",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "native",
+              "chain": "ethereum",
+              "escrowAddress": "0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+              "decimals": 18,
+              "sinceTimestamp": 1576523323
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "ethereum",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "native",
+              "chain": "ethereum",
+              "escrowAddress": "0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
+              "decimals": 18,
+              "sinceTimestamp": 1576534673
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "ethereum",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "native",
+              "chain": "ethereum",
+              "escrowAddress": "0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
+              "decimals": 18,
+              "sinceTimestamp": 1576536415
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "ethereum",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "native",
+              "chain": "ethereum",
+              "escrowAddress": "0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
+              "decimals": 18,
+              "sinceTimestamp": 1577296976
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1638186812
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1638186085
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1638186812
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1638185856
+            },
+            "priceId": "ethereum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

@@ -250,6 +250,7 @@ assert(
 const privacyTokens: ProjectPrivacyToken[] = [
   {
     token: {
+      chain: 'ethereum',
       address: underlyingAddress.toString(),
       iconUrl: underlying.iconUrl,
       symbol: underlying.symbol,
@@ -374,6 +375,7 @@ export const zkmoney: BaseProject = {
         },
       ],
     },
+    deployedOn: ['ethereum'],
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
     zkCatalogId: ProjectId('barretenberg'),

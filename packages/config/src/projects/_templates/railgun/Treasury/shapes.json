@@ -3,5 +3,11 @@
     "hash": "0x38e90021f1f1c6b5378b5a32d25769119a4c3c07b14c2f813eb2b7a6264172cd",
     "address": "eth:0xA092c7577354EA82a6c7e55B423c3DD80f0dF255",
     "blockNumber": 15138802
+  },
+  "Treasury_arbitrum": {
+    "hash": "0xde83ebac8a9327e2a558ae2f7bc2592cb4d72f0dbc6c6cbd496ba2188dedd743",
+    "address": "arb1:0x39f3df0a8A2a7469e03A9519A4cDd22525B080c1",
+    "chain": "arbitrum",
+    "blockNumber": 520627823
   }
 }

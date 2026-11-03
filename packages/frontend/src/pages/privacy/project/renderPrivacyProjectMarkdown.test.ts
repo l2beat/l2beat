@@ -38,7 +38,8 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       '- Deposits 30D: 540',
       '- Deposits Total: 98.00 K',
       '- Active Relayers 30D: 7',
-      '- Tracked on: Ethereum, BNB Smart Chain',
+      '- Showing: Deployment on Ethereum. Statistics and contracts follow the chain; the risk assessment describes Ethereum.',
+      '- Deployed on: Ethereum, BNB Smart Chain, Gnosis (not tracked)',
       '- Attributes: ZK, Fixed amounts',
       '- Reference app: Classic app (most private of 2 checked)',
       'Tornado Cash is a non-custodial mixer.',
@@ -176,6 +177,22 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       '## Assets Breakdown',
       '## Risk summary',
     ])
+  })
+
+  it('puts the chain of a per-chain section in its heading', () => {
+    const markdown = renderPrivacyProjectMarkdown({
+      ...ENTRY,
+      sections: ENTRY.sections.map((section) =>
+        section.type === 'TvsValueSection'
+          ? {
+              ...section,
+              props: { ...section.props, subtitle: 'on BNB Smart Chain' },
+            }
+          : section,
+      ),
+    })
+
+    expect(markdown).toInclude('## Value Locked on BNB Smart Chain')
   })
 
   it('points chart sections to the HTML page', () => {
@@ -592,9 +609,32 @@ const ENTRY: ProjectPrivacyEntry = {
       description: 'Deposits come in fixed denominations.',
     },
   ],
-  trackedOn: [
+  chain: 'ethereum',
+  chainSubtitle: 'on Ethereum',
+  chains: [
+    {
+      id: 'ethereum',
+      name: 'Ethereum',
+      iconUrl: '/icons/ethereum.png',
+      href: '/privacy/projects/tornado-cash',
+    },
+    {
+      id: 'bsc',
+      name: 'BNB Smart Chain',
+      iconUrl: '/icons/bsc.png',
+      href: '/privacy/projects/tornado-cash?chain=bsc',
+    },
+  ],
+  deployedOn: [
     { id: 'ethereum', name: 'Ethereum', iconUrl: '/icons/ethereum.png' },
     { id: 'bsc', name: 'BNB Smart Chain', iconUrl: '/icons/bsc.png' },
+    {
+      id: 'gnosis',
+      name: 'Gnosis',
+      iconUrl: '/icons/gnosis.png',
+      dimmed: true,
+      description: 'Deployed, not tracked by L2BEAT',
+    },
   ],
   exitWindow: {
     value: 'Infinite',

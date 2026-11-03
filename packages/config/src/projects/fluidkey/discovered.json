@@ -1,7 +1,7 @@
 {
   "name": "fluidkey",
-  "timestamp": 1792144252,
-  "configHash": "0x71d98b475cc05d2f3897c2b044b30e83e4e60ea0725c6b691d9b83dd4ee5dd36",
+  "timestamp": 1793640020,
+  "configHash": "0x04cb7612d14c4cdff76e85c53c8ae3e64f0fb25a19e4007c2e1f4d6ecb854b8e",
   "entries": [
     {
       "address": "arb1:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1",
@@ -100,7 +100,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -220,7 +220,7 @@
         ],
         "$upgradeCount": 1,
         "decimals": 18,
-        "holders": 2204,
+        "holders": 2246,
         "name": "Fluidkey Score",
         "owner": "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
         "symbol": "FKS",
@@ -266,7 +266,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -286,6 +286,38 @@
     },
     {
       "address": "base:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SmartAccountRelayer",
+      "address": "bnb:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+      "type": "Contract",
+      "template": "fluidkey/SmartAccountRelayer",
+      "sourceHashes": [
+        "0xbedcb217211aa7fe4a5ca4239c15e653b8aeebd5b61a99acb35e0418f9859b09"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable contract through which Fluidkey submits Safe deployments, sends, auto-earn deposits and score transfers. Anyone can submit an operation, but each needs a signature from the authorized caller. It holds no rights over Safes, so a send still needs the Safe owner's signature.",
+      "deployerAddress": "bnb:0x629F72215a9914F6d3D061F306E923F5DD9dFc60",
+      "sinceTimestamp": 1779235534,
+      "sinceBlock": 99290220,
+      "values": {
+        "$immutable": true,
+        "authorizedCaller": "bnb:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a"
+      },
+      "fieldMeta": {
+        "authorizedCaller": {
+          "description": "Address whose signature every forwarded operation needs."
+        }
+      },
+      "implementationNames": {
+        "bnb:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": "SmartAccountRelayer"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "bnb:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -435,7 +467,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -482,7 +514,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -597,7 +629,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -717,7 +749,7 @@
         "getChainId": 137,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -837,7 +869,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1138,6 +1170,15 @@
       "function transferFrom(address from, address to, uint256 value) returns (bool)",
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "bnb:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": [
+      "constructor(address _authorizedCaller)",
+      "error OperationAlreadyExecuted()",
+      "error UnauthorizedSignature()",
+      "event OperationRelayed(uint256 indexed operationId, bool indexed success)",
+      "function authorizedCaller() view returns (address)",
+      "function relayOperation(uint256 operationId, address to, bytes data, bytes signature) returns (bool success, bytes returnData)",
+      "function usedOperationIds(uint256) view returns (bool)"
     ],
     "eth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": [
       "constructor(address _authorizedRelayer, address _wrappedNative, address _owner)",
@@ -1664,14 +1705,15 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": {
-    "arbitrum": 515339592,
-    "base": 52677452,
-    "ethereum": 26204309,
-    "gnosis": 48784392,
-    "optimism": 158272737,
-    "polygonpos": 95625944
+    "arbitrum": 520631013,
+    "base": 53425336,
+    "bsc": 131279867,
+    "ethereum": 26328548,
+    "gnosis": 49074777,
+    "optimism": 159020621,
+    "polygonpos": 96623042
   },
-  "permissionsConfigHash": "0x371809e28349e048c51f6e732bb69ecf4593111970edb74312c87cb44f07946e",
+  "permissionsConfigHash": "0x0d28fd2387326d187cb03b268d7299d13cca3588d8acc380a53eb5b784a0a8a0",
   "permissions": {
     "arb1:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
       "receivedPermissions": [
@@ -1739,6 +1781,16 @@
         {
           "permission": "interact",
           "from": "base:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+          "description": "authorize every call this contract forwards.",
+          "role": ".authorizedCaller"
+        }
+      ]
+    },
+    "bnb:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "bnb:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
           "description": "authorize every call this contract forwards.",
           "role": ".authorizedCaller"
         }

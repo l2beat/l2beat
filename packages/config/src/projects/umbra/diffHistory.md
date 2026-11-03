@@ -1,3 +1,118 @@
+Generated with discovered.json: 0x29ac27ca03a9eac9c5abf33a09d138c6fb01cd53
+
+# Diff at Mon, 02 Nov 2026 17:43:41 GMT:
+
+- id: 3f2e1c2f
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7de2489d6143463905a64a13eea216e581898f3f block: 1791530581
+- current timestamp: 1793639811
+
+## Description
+
+Add the Optimism, Polygon PoS, Base and Arbitrum deployments of Umbra, StealthKeyRegistry and UmbraBatchSend, which share their Ethereum addresses.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791530581 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract StealthKeyRegistry (arb1:0x31fe56609C65Cd0C510E7125f051D440424D38f3) [umbra/StealthKeyRegistry]
+    +++ description: Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.
+```
+
+```diff
++   Status: CREATED
+    EOA (arb1:0xb4435399AB53D6136C9AEEBb77a0120620b117F9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UmbraBatchSend (arb1:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB) [umbra/UmbraBatchSend]
+    +++ description: Helper the app uses to send several stealth payments in one transaction. It pulls the tokens from the sender and calls the Umbra contract once per payment, so each payment emits its own Announcement. It holds no funds between transactions.
+```
+
+```diff
++   Status: CREATED
+    contract Umbra (arb1:0xFb2dc580Eed955B528407b4d36FfaFe3da685401) [umbra/Umbra]
+    +++ description: Main entry point of the Umbra protocol, routing all ETH and ERC-20 stealth payments. On send, it emits an Announcement event that the recipient scans to detect the payment. ETH is forwarded directly to a fresh stealth address, ERC-20s are escrowed in this smart contract.
+```
+
+```diff
++   Status: CREATED
+    contract StealthKeyRegistry (base:0x31fe56609C65Cd0C510E7125f051D440424D38f3) [umbra/StealthKeyRegistry]
+    +++ description: Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.
+```
+
+```diff
++   Status: CREATED
+    EOA (base:0xb4435399AB53D6136C9AEEBb77a0120620b117F9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UmbraBatchSend (base:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB) [umbra/UmbraBatchSend]
+    +++ description: Helper the app uses to send several stealth payments in one transaction. It pulls the tokens from the sender and calls the Umbra contract once per payment, so each payment emits its own Announcement. It holds no funds between transactions.
+```
+
+```diff
++   Status: CREATED
+    contract Umbra (base:0xFb2dc580Eed955B528407b4d36FfaFe3da685401) [umbra/Umbra]
+    +++ description: Main entry point of the Umbra protocol, routing all ETH and ERC-20 stealth payments. On send, it emits an Announcement event that the recipient scans to detect the payment. ETH is forwarded directly to a fresh stealth address, ERC-20s are escrowed in this smart contract.
+```
+
+```diff
++   Status: CREATED
+    contract StealthKeyRegistry (matic:0x31fe56609C65Cd0C510E7125f051D440424D38f3) [umbra/StealthKeyRegistry]
+    +++ description: Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.
+```
+
+```diff
++   Status: CREATED
+    EOA (matic:0xb4435399AB53D6136C9AEEBb77a0120620b117F9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UmbraBatchSend (matic:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB) [umbra/UmbraBatchSend]
+    +++ description: Helper the app uses to send several stealth payments in one transaction. It pulls the tokens from the sender and calls the Umbra contract once per payment, so each payment emits its own Announcement. It holds no funds between transactions.
+```
+
+```diff
++   Status: CREATED
+    contract Umbra (matic:0xFb2dc580Eed955B528407b4d36FfaFe3da685401) [umbra/Umbra]
+    +++ description: Main entry point of the Umbra protocol, routing all ETH and ERC-20 stealth payments. On send, it emits an Announcement event that the recipient scans to detect the payment. ETH is forwarded directly to a fresh stealth address, ERC-20s are escrowed in this smart contract.
+```
+
+```diff
++   Status: CREATED
+    contract StealthKeyRegistry (oeth:0x31fe56609C65Cd0C510E7125f051D440424D38f3) [umbra/StealthKeyRegistry]
+    +++ description: Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.
+```
+
+```diff
++   Status: CREATED
+    EOA (oeth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UmbraBatchSend (oeth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB) [umbra/UmbraBatchSend]
+    +++ description: Helper the app uses to send several stealth payments in one transaction. It pulls the tokens from the sender and calls the Umbra contract once per payment, so each payment emits its own Announcement. It holds no funds between transactions.
+```
+
+```diff
++   Status: CREATED
+    contract Umbra (oeth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401) [umbra/Umbra]
+    +++ description: Main entry point of the Umbra protocol, routing all ETH and ERC-20 stealth payments. On send, it emits an Announcement event that the recipient scans to detect the payment. ETH is forwarded directly to a fresh stealth address, ERC-20s are escrowed in this smart contract.
+```
+
 Generated with discovered.json: 0x65d1864764a06ec2d29b0f3061380fbc51de5120
 
 # Diff at Fri, 09 Oct 2026 07:24:21 GMT:

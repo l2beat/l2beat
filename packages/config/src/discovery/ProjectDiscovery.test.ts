@@ -56,6 +56,25 @@ describe(ProjectDiscovery.name, () => {
         `Assertion Error: Found more than one contracts of ${name} name (${projectName})`,
       )
     })
+
+    it('returns the contract of a repeated name on the given chain', () => {
+      const contract = discovery.getContract(
+        'DuplicatedNameContractMock',
+        'arbitrum',
+      )
+
+      expect(contract.address).toEqual(
+        ChainSpecificAddress('arb1:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
+      )
+    })
+
+    it('should throw an error if the name has no contract on the given chain', () => {
+      const name = 'DuplicatedNameContractMock'
+
+      expect(() => discovery.getContract(name, 'optimism')).toThrow(
+        `Assertion Error: Found no contract of ${name} name on optimism (${projectName})`,
+      )
+    })
   })
 
   describe(ProjectDiscovery.prototype.getOssificationHistory.name, () => {

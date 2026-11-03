@@ -11,6 +11,8 @@ import { getFullySyncedPrivacyRange } from './utils/getFullySyncedPrivacyRange'
 export const PrivacyFlowsChartParams = v.object({
   projectIds: v.array(v.string()),
   range: ChartRange,
+  /** Flows on one chain only; every chain when left out. */
+  chain: v.string().optional(),
 })
 
 export type PrivacyFlowsChartParams = v.infer<typeof PrivacyFlowsChartParams>
@@ -43,9 +45,20 @@ export async function getPrivacyFlowsChart(
   const [from, to] = getFullySyncedPrivacyRange(params.range)
 
   const [dailyRows, syncedUntil, firstTimestamp] = await Promise.all([
-    db.privacyFlowEvent.getDailyByProjectIds(params.projectIds, from, to),
-    db.privacyFlowEvent.getLatestTimestampByProjectIds(params.projectIds),
-    db.privacyFlowEvent.getFirstTimestampByProjectIds(params.projectIds),
+    db.privacyFlowEvent.getDailyByProjectIds(
+      params.projectIds,
+      from,
+      to,
+      params.chain,
+    ),
+    db.privacyFlowEvent.getLatestTimestampByProjectIds(
+      params.projectIds,
+      params.chain,
+    ),
+    db.privacyFlowEvent.getFirstTimestampByProjectIds(
+      params.projectIds,
+      params.chain,
+    ),
   ])
 
   const projectIds = new Set(params.projectIds)

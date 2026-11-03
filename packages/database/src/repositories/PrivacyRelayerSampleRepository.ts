@@ -78,6 +78,7 @@ export class PrivacyRelayerSampleRepository extends BaseRepository {
     projectId: string,
     fromInclusive: UnixTime,
     toExclusive: UnixTime,
+    chain?: string,
   ): Promise<{ average: number; observedDays: number } | undefined> {
     const row = await this.db
       .selectFrom('PrivacyRelayerSample')
@@ -88,6 +89,7 @@ export class PrivacyRelayerSampleRepository extends BaseRepository {
       .where('projectId', '=', projectId)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .$if(chain !== undefined, (qb) => qb.where('chain', '=', chain ?? ''))
       .executeTakeFirst()
 
     if (row?.averageCount === undefined || row.averageCount === null) {
