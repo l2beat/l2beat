@@ -6,6 +6,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
+import type { CompactProtocolEntry } from '~/server/features/layer2s/interop/types'
 import type { OngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
 import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import type { TvsTableData } from '~/server/features/layer2s/tvs/getTvsTableData'
@@ -38,6 +39,7 @@ interface Props extends AppLayoutProps {
   topChainsTvsData: TvsTableData
   topPrivacyProtocols: PrivacySummaryEntry[]
   topZkProvers: HomeTopZkProver[]
+  topInteropProtocols: CompactProtocolEntry[]
   l2Charts: HomeL2Charts
   ethereumCharts: HomeEthereumCharts
   ethereumEconomicSecurity: number | undefined
@@ -59,6 +61,7 @@ export function HomePage({
   topChainsTvsData,
   topPrivacyProtocols,
   topZkProvers,
+  topInteropProtocols,
   l2Charts,
   ethereumCharts,
   ethereumEconomicSecurity,
@@ -132,10 +135,7 @@ export function HomePage({
               <HomeRecentProjectsCard projects={recentProjects} />
             </div>
             <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-2">
-              <HomeTopInteropProtocolsCard
-                interopChains={interopChains}
-                defaultSelectedFlowChains={defaultSelectedFlowChains}
-              />
+              <HomeTopInteropProtocolsCard protocols={topInteropProtocols} />
               <HomeTopPrivacyProtocolsCard entries={topPrivacyProtocols} />
               <HomeTopChainsCard
                 entries={topChains}
