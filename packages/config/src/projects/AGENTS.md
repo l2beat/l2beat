@@ -34,6 +34,7 @@ Read:
 - `context`: the open project, selected contracts, the code the researcher selected, the agent step on screen and a graph summary. Read it first: "this" means the selection.
 - `state`: the graph contract by contract: visible, hidden, in which group.
 - `permissions`: start here for "who controls this". Who can act on the contract, through which contracts, with what delay and the multisigs behind each holder, with a ready path for `show`.
+- `find`: what a selector matches; when nothing, the values that exist. Selectors: a contract, `all`, `name:*Escrow*`, `template:orbitstack/*`, `category:*Bridges`, `type:eoa|multisig|contract`, `chain:eth`, `controlledBy:<contract>`, `upgradeableBy:<contract>`. The last two count signers: `upgradeableBy:"Security Council"` matches what a multisig it signs for can upgrade.
 
 Point:
 - `show`: steps that draw paths holder first, select a contract and highlight a snippet of its code. A function header opens at its implementation, not at an interface declaring it. Several steps make a tour the researcher pages through, for "how does this work".
@@ -42,7 +43,6 @@ Change the graph:
 - `control_map`: start here for "show me the power structure". One lane per fastest way to upgrade, with the multisigs that sign for it, colored by delay.
 - `view`: hides, isolates, groups, colors and lays groups out in lanes. The researcher sees it as a pending view and keeps it, saves it as a layout or discards it; views sent before they decide stack. The result says what actually happened: what else got hidden, what stayed to keep things connected. Initial contracts and ones nothing references cannot be hidden in DiscoUI, so the view sets them aside in a closed group.
 - `dryRun` on `view` and `control_map` reports all that without touching the graph; use it instead of trying a view out on the researcher.
-- `find`: what a selector matches; when nothing, the values that exist. Selectors: a contract, `all`, `name:*Escrow*`, `template:orbitstack/*`, `category:*Bridges`, `type:eoa|multisig|contract`, `chain:eth`, `controlledBy:<contract>`, `upgradeableBy:<contract>`. The last two count signers: `upgradeableBy:"Security Council"` matches what a multisig it signs for can upgrade.
 - `discard`: put back the graph from before all your pending views.
 
 A wrong name or selector fails with candidates, a snippet that is not in the code fails too: fix it and call again. A snippet opens where it is implemented, past interface declarations; found more than once, it opens at the first and the result lists the others: quote a longer snippet, or when they are other implementations, name them in the note. Keep notes short, the details go in your reply.
