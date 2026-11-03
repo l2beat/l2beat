@@ -17,6 +17,7 @@ import path, { join } from 'path'
 import { getCodePaths } from '../discovery/getCodePaths'
 import { localOnly } from './agent/localOnly'
 import { attachAgentRouter } from './agent/router'
+import { closeAgentStreams } from './agent/session'
 import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
@@ -482,6 +483,7 @@ export function createDiscoveryUiApp({
 }
 
 function shutdown(server: Server) {
+  closeAgentStreams()
   server.close(() => {
     process.exit(0)
   })

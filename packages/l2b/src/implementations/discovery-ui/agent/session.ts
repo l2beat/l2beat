@@ -8,6 +8,16 @@ export const AGENT_PROTOCOL = 2
 const VIEW_PROTOCOL = 2
 const RECEIPT_TIMEOUT_MS = 5_000
 
+// Event streams never finish on their own, so a server closing gracefully
+// would wait on every open tab.
+const openStreams = new Set<Response>()
+
+export function closeAgentStreams() {
+  for (const res of openStreams) {
+    res.end()
+  }
+}
+
 // What the agent and the open tabs share. Event ids carry a per-boot prefix,
 // so a tab that outlives a server restart never mistakes a new event for one
 // it already has.
@@ -40,6 +50,7 @@ export class AgentSession<Context, Receipt> {
       res.write(frame({ ...this.latestShow, replay: true }))
     }
     this.tabs.set(res, Number(req.query.protocol ?? 1))
+    openStreams.add(res)
     const keepalive = setInterval(
       () => res.write(': keepalive\n\n'),
       KEEPALIVE_INTERVAL_MS,
@@ -47,6 +58,7 @@ export class AgentSession<Context, Receipt> {
     req.on('close', () => {
       clearInterval(keepalive)
       this.tabs.delete(res)
+      openStreams.delete(res)
       // With no tab open, nothing is on screen: a closed project's selection
       // must not answer for the next tab, which reports its own.
       if (this.tabs.size === 0) {
