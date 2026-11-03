@@ -18,6 +18,7 @@ const REPORT_DELAY_MS = 300
 const REPORTER_KEY = 'discoui:agent-context-reporter'
 const TAB_ID = `${Date.now()}-${Math.random()}`
 const CODE_TEXT_LENGTH_MAX = 8_000
+const NO_CONTEXT = { selected: [], panels: [] }
 
 // The report waiting out its delay, which a message sent meanwhile flushes:
 // a question about "this" is about what was selected when it was asked.
@@ -105,15 +106,15 @@ export function AgentContextReporter(props: { project: string }) {
   // Leaving the project page or closing the tab leaves no project on screen,
   // so the agent must not keep answering about the last one.
   useEffect(() => {
-    const leave = () => {
-      if (localStorage.getItem(REPORTER_KEY) === TAB_ID) {
-        void putContext({ selected: [], panels: [] }, true)
-      }
+    const isReporter = () => localStorage.getItem(REPORTER_KEY) === TAB_ID
+    // A closing page cannot wait for a report in flight.
+    const close = () => {
+      if (isReporter()) void sendContext(NO_CONTEXT, true)
     }
-    window.addEventListener('pagehide', leave)
+    window.addEventListener('pagehide', close)
     return () => {
-      window.removeEventListener('pagehide', leave)
-      leave()
+      window.removeEventListener('pagehide', close)
+      if (isReporter()) void putContext(NO_CONTEXT)
     }
   }, [])
 
@@ -153,7 +154,15 @@ function readCodeSelection(address: string | undefined) {
 // nothing that matters.
 // Browsers cap a keepalive body at 64 KiB, which a full report of a large
 // graph passes, so only the small clear sent as the tab closes keeps alive.
-async function putContext(context: object, keepalive = false) {
+// One report at a time, so a large older one never lands after a newer one.
+let reportsSent: Promise<void> = Promise.resolve()
+
+function putContext(context: object): Promise<void> {
+  reportsSent = reportsSent.then(() => sendContext(context, false))
+  return reportsSent
+}
+
+async function sendContext(context: object, keepalive: boolean) {
   const response = await fetch('/api/agent/context', {
     method: 'PUT',
     keepalive,
