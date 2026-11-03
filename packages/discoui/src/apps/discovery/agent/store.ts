@@ -98,7 +98,12 @@ export const useAgentStore = create<State>((set, get) => ({
     if (show === undefined || index < 0 || index >= show.steps.length) {
       return
     }
-    set({ focus: toFocus(show, index) })
+    set((state) => ({
+      focus: toFocus(show, index),
+      selectionBefore: isAgentSelection(state.agentSelection)
+        ? state.selectionBefore
+        : usePanelStore.getState().selected,
+    }))
   },
   setView: (view) => set({ view }),
   setNoteHeight: (noteHeightPx) => set({ noteHeightPx }),

@@ -65,6 +65,17 @@ describe('useAgentStore', () => {
     expect(usePanelStore.getState().selected).toEqual(['picked'])
   })
 
+  it('keeps a selection made between two steps', () => {
+    usePanelStore.getState().select(['mine'])
+    useAgentStore.getState().start(SHOW)
+    useAgentStore.getState().selectForAgent('b')
+    usePanelStore.getState().select(['picked'])
+    useAgentStore.getState().goToStep(1)
+    useAgentStore.getState().selectForAgent('d')
+    useAgentStore.getState().clear()
+    expect(usePanelStore.getState().selected).toEqual(['picked'])
+  })
+
   it('keeps a selection made between two answers', () => {
     usePanelStore.getState().select(['mine'])
     useAgentStore.getState().start(SHOW)
