@@ -3,6 +3,7 @@ import type { NavGroup, NavLink } from '~/components/nav/types'
 import { env } from '~/env'
 import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
+import { GasFeesIcon } from '~/icons/pages/GasFees'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
@@ -166,6 +167,16 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/blobs',
     icon: (
       <BlobsIcon className="transition-colors duration-300 group-data-[active=true]:fill-nav-active" />
+    ),
+  },
+  env.CLIENT_SIDE_GAS_FEES_PAGE && {
+    type: 'single',
+    section: 'more',
+    title: 'Gas fees',
+    match: 'gas-fees',
+    href: '/gas-fees',
+    icon: (
+      <GasFeesIcon className="transition-colors duration-300 group-data-[active=true]:fill-nav-active" />
     ),
   },
 ])
